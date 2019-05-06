@@ -1,0 +1,77 @@
+<div class="tab-content active" id="pan-tab">
+  <a href="#" class="back-btn"></a>
+  <div class="lyt-tabs">
+      <div class="lhs">
+          <div class="swiper-container form-swiper swiper-container-horizontal swiper-container-fade" data-index="0">
+              <div class="swiper-wrapper" style="transition-duration: 0ms;">
+                  <div class="swiper-slide swiper-slide-active" style="width: 504px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;">
+                      <div class="title-wrap">
+                          <h4 class="title">Select <span class="cm-line-break"></span>applicant type</h4>
+                          <h5 class="subtitle">Individuals</h5>
+                          <p class="note">Can be any person who is Salaried or Self employed working Professional/ Non-Professional or Non-Salaried Individuals like Students, Retired Individuals, Housewives etc.</p>
+                          <h5 class="subtitle">Non-Individuals</h5>
+                          <p class="note">Can be any company - Pvt Ltd, Public Ltd, Partnership firm, Propritership; Trust; Society; HUF etc.</p>
+                      </div>
+                  </div>
+                  <div class="swiper-slide swiper-slide-next" style="width: 504px; opacity: 0; transform: translate3d(-504px, 0px, 0px); transition-duration: 0ms;">
+                      <div class="title-wrap">
+                          <h4 class="title">Enter applicant's <span class="cm-line-break"></span>PAN details</h4>
+                      </div>
+                  </div>
+                  <div class="swiper-slide" style="width: 504px; opacity: 0; transform: translate3d(-1008px, 0px, 0px); transition-duration: 0ms;">
+                      <div class="title-wrap">
+                          <h4 class="title">Enter applicant's <span class="cm-line-break"></span>PAN details</h4>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="rhs">
+          <div class="swiper-container form-swiper swiper-container-horizontal" data-index="1">
+              <div class="swiper-wrapper" style="transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;">
+                  <div class="swiper-slide swiper-slide-active" style="width: 781px;">
+                      <form class="bs-form">
+                          <div class="form-wrap">
+                              <div class="bs-radio">
+                                  <input type="radio" name="applicant-type" id="individual">
+                                  <label for="individual"><span>Individual</span></label>
+                              </div>
+                              <div class="bs-radio">
+                                  <input type="radio" name="applicant-type" id="non-individual">
+                                  <label for="non-individual"><span>Non-Individual</span></label>
+                              </div>
+                          </div>
+                      </form>
+                  </div>
+                  <div class="swiper-slide swiper-slide-next" style="width: 781px; display: none;">
+                      <form class="bs-form" id="pan-form">
+                          <div class="form-wrap">
+                              <div class="form-group last">
+                                  <input type="text" class="form-control" id="pan-inpt" data-validation-attr="pan" required="">
+                                  <label for="pan-inpt">Enter PAN number</label>
+                              </div>
+                          </div>
+                          <div class="btn-wrap">
+                              <button class="btn btn-primary disabled">Next</button>
+                          </div>
+
+                      </form>
+                  </div>
+                  <div class="swiper-slide" style="width: 781px; display: none;">
+                      <form class="bs-form">
+                          <div class="form-wrap">
+                              <div class="bs-file">
+                                  <input type="file" class="form-control" id="file">
+                                  <label for="file"><span>click photo of PAN card</span></label>
+                              </div>
+                          </div>
+                          <div class="btn-wrap">
+                              <button class="btn btn-primary disabled">Next</button>
+                          </div>
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
