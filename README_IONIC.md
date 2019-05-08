@@ -38,8 +38,10 @@ npx cap add android
 ```
 
 ##Error
-------
+-------
+
 ###Capacitor could not find the web assets directory 
+
   ###  "/media/ICICI/Angular6/ionic/OCS-QDE/www".
   ###  Please create it, and make sure it has an index.html file. You can change
   ###  the path of this directory in capacitor.config.json.
@@ -54,4 +56,25 @@ ng build --prod
 ```
 npx cap add android
 ```
+
+# To install cordova plugin
+
+```
+npm install cordova-plugin-name
+
+```
+
+http://ngcordova.com/docs/plugins/
+
+### After any plugin installation
+
+```
+
+ng build --prod
+
+npx cap sync
+
+```
+
+open the project in Androidstudio build it.
 
