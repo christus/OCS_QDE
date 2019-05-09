@@ -1,0 +1,691 @@
+<main>
+  <div class="main">
+      <div class="lyt-home">
+          <div class="tabs">
+              <ul class="tabs-head">
+                <li class="tab-link pending" [ngClass]="{'active': (activeTab == 0)}">
+                  <a href="javascript:void(0);" (click)="tabSwitch(0)">PAN</a>
+                </li>
+                <li class="tab-link" [ngClass]="{'active': (activeTab == 1)}">
+                  <a href="javascript:void(0);" (click)="tabSwitch(1)">personal details</a>
+                </li>
+                <li class="tab-link" [ngClass]="{'active': (activeTab == 2)}">
+                  <a href="javascript:void(0);" (click)="tabSwitch(2)">contact details</a>
+                </li>
+                <li class="tab-link" [ngClass]="{'active': (activeTab == 3)}">
+                  <a href="javascript:void(0);" (click)="tabSwitch(3)">communication address</a>
+                </li>
+                <li class="tab-link" [ngClass]="{'active': (activeTab == 4)}">
+                  <a href="javascript:void(0);" (click)="tabSwitch(4)">marital status</a>
+                </li>
+                <li class="tab-link" [ngClass]="{'active': (activeTab == 5)}">
+                  <a href="javascript:void(0);" (click)="tabSwitch(5)">family details</a>
+                </li>
+                <li class="tab-link" [ngClass]="{'active': (activeTab == 6)}">
+                  <a href="javascript:void(0);" (click)="tabSwitch(6)">other</a>
+                </li>
+                <li class="tab-link" [ngClass]="{'active': (activeTab == 7)}">
+                  <a href="javascript:void(0);" (click)="tabSwitch(7)">occupation details</a>
+                </li>
+                <li class="tab-link" [ngClass]="{'active': (activeTab == 8)}">
+                  <a href="javascript:void(0);" (click)="tabSwitch(8)">offical correspondence</a>
+                </li>
+            </ul>
+              <div class="tabs-contents" #tabContents>
+                <div class="tab-content" [ngClass]="{'active': (activeTab == 0)}">
+                  <a href="javascript:void(0);" class="back-btn" (click)="goToPrevSlide(panSlider2)"></a>
+                  <div class="lyt-tabs">
+                      <div class="lhs">
+
+                          <div  class="swiper-container form-swiper"
+                                [swiper]="lhsConfig"
+                                #panSlider1="ngxSwiper">
+                              <div class="swiper-wrapper">
+                                  <div class="swiper-slide">
+                                      <div class="title-wrap">
+                                          <h4 class="title">Select <span class="cm-line-break"></span>applicant type</h4>
+                                          <h5 class="subtitle">Individuals</h5>
+                                          <p class="note">Can be any person who is Salaried or Self employed working Professional/ Non-Professional or Non-Salaried Individuals like Students, Retired Individuals, Housewives etc.</p>
+                                          <h5 class="subtitle">Non-Individuals</h5>
+                                          <p class="note">Can be any company - Pvt Ltd, Public Ltd, Partnership firm, Propritership; Trust; Society; HUF etc.</p>
+                                      </div>
+                                  </div>
+                                  <div class="swiper-slide">
+                                      <div class="title-wrap">
+                                          <h4 class="title">Enter applicant's <span class="cm-line-break"></span>PAN details</h4>
+                                      </div>
+                                  </div>
+                                  <div class="swiper-slide">
+                                      <div class="title-wrap">
+                                          <h4 class="title">Enter applicant's  <span class="cm-line-break"></span>PAN details</h4>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+
+                      </div>
+                      <div class="rhs">
+                          <div  class="swiper-container form-swiper"
+                                [swiper]="rhsConfig"
+                                (slidePrevTransitionStart)="slidePrevTransitionStart(panSlider1)"
+                                (slideNextTransitionStart)="slideNextTransitionStart(panSlider1)"
+                                #panSlider2="ngxSwiper">
+                              <div class="swiper-wrapper">
+                                  <div class="swiper-slide">
+                                      <form class="bs-form">
+                                          <div class="form-wrap">
+                                              <div class="bs-radio">
+                                                  <input  type="radio"
+                                                          name="applicant-type"
+                                                          id="individual"
+
+                                                          (change)="goToNextSlide(panSlider2)" />
+                                                  <label for="individual"><span>Individual</span></label>
+                                              </div>
+                                              <div class="bs-radio">
+                                                  <input  type="radio"
+                                                          name="applicant-type"
+                                                          id="non-individual"
+
+                                                          (change)="goToNextSlide(panSlider2)" />
+                                                  <label for="non-individual"><span>Non-Individual</span></label>
+                                              </div>
+                                          </div>
+                                      </form>
+                                  </div>
+                                  <div class="swiper-slide">
+                                      <form class="bs-form" id="pan-form">
+                                          <div class="form-wrap">
+                                              <div class="form-group last">
+                                                  <input  type="text"
+                                                          class="form-control"
+                                                          id="pan-inpt"
+                                                          data-validation-attr="pan"
+                                                          required>
+                                                  <label for="pan-inpt">Enter PAN number</label>
+                                              </div>
+                                          </div>
+                                          <div class="btn-wrap">
+                                              <button class="btn btn-primary disabled" (click)="goToNextSlide()">Next</button>
+                                          </div>
+
+                                      </form>
+                                  </div>
+                                  <div class="swiper-slide">
+                                      <form class="bs-form">
+                                          <div class="form-wrap">
+                                              <div class="bs-file">
+                                                  <input type="file" class="form-control" id="file">
+                                                  <label for="file"><span>click photo of PAN card</span></label>
+                                              </div>
+                                          </div>
+                                          <div class="btn-wrap">
+                                              <button class="btn btn-primary disabled" (click)="tabSwitch(1)">Next</button>
+                                          </div>
+                                      </form>
+                                  </div>
+                              </div>
+                          </div>
+
+                      </div>
+                  </div>
+
+                </div>
+
+                <div class="tab-content" [ngClass]="{'active': (activeTab == 1)}">
+                    <a href="javascript:void(0);" class="back-btn" (click)="goToPrevSlide(pdSlider2)"></a>
+
+                    <div class="lyt-tabs">
+                        <div class="lhs">
+                            <div  class="swiper-container form-swiper"
+                                  [swiper]="lhsConfig"
+                                  #pdSlider1="ngxSwiper">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                        <div class="title-wrap">
+                                          <h4 class="title">Enter applicant’s <span class="cm-line-break"></span>full name</h4>
+                                          <p class="note">Kindly enter the basic personal details of the main applicant</p>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <div class="title-wrap">
+                                            <h4 class="title">Select applicant’s <span class="cm-line-break"></span>gender</h4>
+                                            <p class="note">Kindly enter the basic personal details of the main applicant</p>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <div class="title-wrap">
+                                            <h4 class="title">Select applicant’s <span class="cm-line-break"></span>qualification</h4>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <div class="title-wrap">
+                                            <h4 class="title">Select applicant’s <span class="cm-line-break">date of birth and</span> <span class="cm-line-break">birth place</span></h4>
+                                            <p class="note">Kindly enter the basic personal details of the main applicant</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="rhs">
+                            <div  class="swiper-container form-swiper"
+                                  [swiper]="rhsConfig"
+                                  (slidePrevTransitionStart)="slidePrevTransitionStart(pdSlider1)"
+                                  (slideNextTransitionStart)="slideNextTransitionStart(pdSlider1)"
+                                  #pdSlider2="ngxSwiper">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                        <form class="bs-form" id="personal-form">
+                                            <div class="form-wrap">
+                                                <div class="form-group">
+                                                    <span class="control-title">Title</span>
+                                                    <ng-select [searchable]="false" [(ngModel)]="temp">
+                                                            <ng-option value="yes">Yes</ng-option>
+                                                            <ng-option value="no">No</ng-option>
+                                                    </ng-select>                                                     
+                                                </div>
+                                                <div class="form-group">
+                                                  <input type="text" class="form-control" data-validation-attr="name" id="name">
+                                                  <label for="name">First name</label>
+                                                </div>
+                                                <div class="form-group typ-optional">
+                                                  <input type="text" class="form-control" id="mname">
+                                                  <label for="mname">Middle name</label>
+                                                  <span class="optional">Optional</span>
+                                                </div>
+                                                <div class="form-group">
+                                                  <input type="text" class="form-control" data-validation-attr="name" id="lname" required>
+                                                  <label for="lname">Last name</label>
+                                                </div>
+                                            </div>
+                                            <div class="btn-wrap">
+                                              <button class="btn btn-primary disabled" (click)="goToNextSlide(pdSlider2)">Next</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <form class="bs-form">
+                                            <div class="form-wrap">
+                                                <div class="bs-radio">
+                                                    <input type="radio" name="maleFemale" id="male" (change)="goToNextSlide(pdSlider2)">
+                                                    <label for="male"><span>Male</span></label>
+                                                </div>
+                                                <div class="bs-radio">
+                                                    <input type="radio" name="maleFemale" id="female" (change)="goToNextSlide(pdSlider2)">
+                                                    <label for="female"><span>Female</span></label>
+                                                </div>
+                                                <div class="bs-radio">
+                                                    <input type="radio" name="maleFemale" id="thirdGender" (change)="goToNextSlide(pdSlider2)">
+                                                    <label for="thirdGender"><span>Third Gender</span></label>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <form class="bs-form">
+                                            <div class="form-wrap">
+                                                <div class="form-group">
+                                                    <span class="control-title">Qualification</span>
+                                                    <select class="js-select" name="state">
+                                                        <option value="o1">Below SSC</option>
+                                                        <option value="o2">SSC</option>
+                                                        <option value="o3">Under Graduate</option>
+                                                        <option value="o4">Graduate</option>
+                                                        <option value="o5">Post Graduate</option>
+                                                        <option value="o6">Professional</option>
+                                                        <option value="o7">Below SSC</option>
+                                                        <option value="o8">SSC</option>
+                                                        <option value="o9">Under Graduate</option>
+                                                        <option value="o10">Graduate</option>
+                                                        <option value="o11">Post Graduate</option>
+                                                        <option value="o12">Professional</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="btn-wrap">
+                                              <button class="btn btn-primary disabled" (click)="goToNextSlide()">Next</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <form class="bs-form">
+                                            <div class="form-wrap">
+                                                <div class="form-group typ-select">
+                                                    <span class="control-title">Date of Birth</span>
+                                                    <select class="js-select" name="a">
+                                                        <option class="select">DD</option>
+                                                        <option>01</option>
+                                                        <option>02</option>
+                                                        <option>04</option>
+                                                        <option>05</option>
+                                                        <option>06</option>
+                                                        <option>07</option>
+                                                        <option>08</option>
+                                                        <option>09</option>
+                                                        <option>10</option>
+                                                        <option>11</option>
+                                                        <option>12</option>
+                                                        <option>13</option>
+                                                        <option>14</option>
+                                                        <option>15</option>
+                                                        <option>16</option>
+                                                        <option>17</option>
+                                                    </select>
+                                                    <select class="js-select" name="b">
+                                                        <option class="select">MM</option>
+                                                        <option>01</option>
+                                                        <option>02</option>
+                                                        <option>04</option>
+                                                        <option>05</option>
+                                                        <option>06</option>
+                                                        <option>07</option>
+                                                        <option>08</option>
+                                                        <option>09</option>
+                                                        <option>10</option>
+                                                        <option>11</option>
+                                                        <option>12</option>
+                                                    </select>
+                                                    <select class="js-select" name="c">
+                                                        <option class="select">YY</option>
+                                                        <option>2001</option>
+                                                        <option>2002</option>
+                                                        <option>2004</option>
+                                                        <option>2005</option>
+                                                        <option>2006</option>
+                                                        <option>2007</option>
+                                                        <option>2008</option>
+                                                        <option>2009</option>
+                                                        <option>2010</option>
+                                                        <option>2011</option>
+                                                        <option>2012</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <span class="control-title">Birth place</span>
+                                                    <select class="js-select" name="state">
+                                                        <option>Pune</option>
+                                                        <option>Kolkota</option>
+                                                        <option>Mumbai</option>
+                                                        <option>Delhi</option>
+                                                        <option>Madras</option>
+                                                        <option>Madhya Pradesh</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="btn-wrap">
+                                                <button class="btn btn-primary disabled" (click)="tabSwitch(2)">Next</button>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+                <div class="tab-content" [ngClass]="{'active': (activeTab == 2)}">
+                  <a href="javascript:void(0);" class="back-btn" (click)="tabSwitch(1)"></a>
+                  <div class="lyt-tabs">
+                      <div class="lhs">
+                          <div class="title-wrap">
+                              <h4 class="title">Enter applicant’s <span class="cm-line-break"></span>contact details</h4>
+                              <p class="note">Please capture the primary contact details as these <span class="cm-line-break"></span> will be used for all communication purposes <span class="cm-line-break"></span> between ICICI HFC and main applicant</p>
+                          </div>
+                      </div>
+                      <div class="rhs">
+                          <form class="bs-form" id="contact-form">
+                              <div class="form-wrap">
+                                  <div class="form-group">
+                                      <input type="text" class="form-control" id="pref-email" data-validation-attr="email" required>
+                                      <label for="pref-email">Preferred email ID</label>
+                                      <span class="alternate-data"><a href="#" class="alter-btn">+ Add</a> alternate email id</span>
+                                  </div>
+                                  <div class="form-group typ-alternative">
+                                      <input type="text" class="form-control" id="alter-email" data-validation-attr="email01">
+                                      <label for="alter-email">Alternate email ID</label>
+                                      <span class="alternate-data"><a href="#" class="alter-btn">- Remove</a> alternate email id</span>
+                                  </div>
+                                  <div class="form-group typ-mob">
+                                      <input type="tel" class="form-control" id="mob-no" data-validation-attr="mobileno" maxlength="10" im-insert="true" required>
+                                      <label for="mob-no">Mobile number</label>
+                                      <span class="optional">10 digit</span>
+                                      <a href="#" class="sent-otp modal-init" data-target="sent-otp-modal"><span class="text">sent OTP</span><span class="icon icon-tick"></span></a>
+                                      <span class="alternate-data"><a href="#" class="alter-btn">+ Add</a> alternate phone number</span>
+                                  </div>
+                                  <div class="form-group typ-alternative typ-mob">
+                                      <input type="tel" class="form-control" id="alter-mob" data-validation-attr="mobileno01" maxlength="10">
+                                      <label for="alter-mob">Alternate mobile no</label>
+                                      <span class="optional">10 digit</span>
+                                      <a href="#" class="sent-otp modal-init" data-target="sent-otp-modal"><span class="text">sent OTP</span><span class="icon icon-tick"></span></a>
+                                      <span class="alternate-data"><a href="#" class="alter-btn">- Remove</a> alternate email id</span>
+                                  </div>
+                                  <div class="residence-no">
+                                      <div class="form-group">
+                                          <input type="text" class="form-control" id="std">
+                                          <label for="std">STD</label>
+                                      </div>
+                                      <span class="seperator">-</span>
+                                      <div class="form-group">
+                                          <input type="text" class="form-control" id="res-no" data-validation-attr="residenceno">
+                                          <label for="res-no">Residence number</label>
+                                      </div>
+                                      <span class="alternate-data"><a href="#" class="alter-btn">+ Add</a> alternate phone number</span>
+                                  </div>
+                                  <div class="residence-no typ-alternative">
+                                      <div class="form-group">
+                                          <input type="text" class="form-control" id="altrstd">
+                                          <label for="altrstd">STD</label>
+                                      </div>
+                                      <span class="seperator">-</span>
+                                      <div class="form-group">
+                                          <input type="text" class="form-control" id="altr-res-no" data-validation-attr="residenceno01">
+                                          <label for="altr-res-no">Residence number</label>
+                                      </div>
+                                      <span class="alternate-data"><a href="#" class="alter-btn">- Remove</a> alternate email id</span>
+                                  </div>
+                              </div>
+                              <div class="btn-wrap">
+                                  <button class="btn btn-primary disabled" (click)="tabSwitch(3)">Next</button>
+                              </div>
+                          </form>
+                      </div>
+                  </div>
+              </div>
+
+                
+
+              <div class="tab-content" [ngClass]="{'active': (activeTab == 3)}">
+                <a href="javascript:void(0);" class="back-btn" (click)="tabSwitch(2)"></a>
+
+                <div class="lyt-tabs">
+                    <div class="lhs">
+                        <div class="title-wrap">
+                            <h4 class="title">Enter applicant’s <span class="cm-line-break"></span>address</h4>
+                            <p class="note">Please enter primary address of the main <span class="cm-line-break"></span> applicant as this will be used for all officia <span class="cm-line-break"></span> communications.</p>
+                        </div>
+                    </div>
+                    <div class="rhs">
+                        <form class="bs-form" id="address-form">
+                            <div class="form-wrap">
+                                <div class="form-group">
+                                    <span class="control-title">Residential status</span>
+                                    <select class="js-select" name="state">
+                                        <option value="o1">Owned</option>
+                                        <option value="o2">Rented</option>
+                                        <option value="o3">Company provided</option>
+                                        <option value="o4">Other</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="address1">
+                                    <label for="address1">Address line 1</label>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="address2">
+                                    <label for="address2">Address line 2</label>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="pincode">
+                                    <label for="pincode">Pincode</label>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="cityState">
+                                    <label for="cityState">City/State</label>
+                                </div>
+                                <div class="bs-checkbox typ-withForm">
+                                    <input type="checkbox" name="applicant-type" id="permanentAddress">
+                                    <label for="permanentAddress"><span>Current Address is Permanent Address</span></label>
+                                </div>
+                                <div class="form-group typ-range">
+                                    <span class="control-title">Number of years in current residence</span>
+                                    <input type="text" class="form-control" id="no-yrs">
+                                    <div id="year-range" class="range-slider"></div>
+                                </div>
+                            </div>
+                            <div class="btn-wrap">
+                                <button class="btn btn-primary disabled" (click)="tabSwitch(4)">Next</button>
+                            </div>
+                        </form>
+                    </div>
+                  </div>
+
+                </div>
+
+
+                <div class="tab-content"  [ngClass]="{'active': (activeTab == 4)}">
+                  <a href="javascript:void(0);" class="back-btn" (click)="tabSwitch(3)"></a>
+
+                  <div class="lyt-tabs">
+                      <div class="lhs">
+                          <div  class="swiper-container form-swiper"
+                                [swiper]="lhsConfig"
+                                #maritalSlider1="ngxSwiper">
+                              <div class="swiper-wrapper">
+                                  <div class="swiper-slide">
+                                      <div class="title-wrap">
+                                          <h4 class="title">Select applicant’s <span class="cm-line-break"></span>marital status</h4>
+                                          <p class="note">Marital details are required to evaluate
+                                              <span class="cm-line-break">credit-worthiness of the main applicant & for other </span>
+                                              <span class="cm-line-break">regulatory purposes.</span>
+                                          </p>
+                                      </div>
+                                  </div>
+                                  <div class="swiper-slide">
+                                      <div class="title-wrap">
+                                          <h4 class="title">Select applicant’s <span class="cm-line-break"></span>spouse's name</h4>
+                                      </div>
+                                  </div>
+                                  <div class="swiper-slide">
+                                      <div class="title-wrap">
+                                          <h4 class="title">Is your spouse <span class="cm-line-break"></span>earning?</h4>
+                                      </div>
+                                  </div>
+                                  <div class="swiper-slide">
+                                      <div class="title-wrap">
+                                          <h4 class="title">Enter annual <span class="cm-line-break">income of applicant's </span><span class="cm-line-break">spouse</span></h4>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+
+                      </div>
+                      <div class="rhs">
+                          <div  class="swiper-container form-swiper"
+                                [swiper]="rhsConfig"
+                                (slidePrevTransitionStart)="slidePrevTransitionStart(maritalSlider1)"
+                                (slideNextTransitionStart)="slideNextTransitionStart(maritalSlider1)"
+                                #maritalSlider2="ngxSwiper">
+                              <div class="swiper-wrapper">
+                                  <div class="swiper-slide">
+                                      <form class="bs-form">
+                                          <div class="form-wrap">
+                                              <div class="form-group">
+                                                  <span class="control-title">Marital statust</span>
+                                                  <select class="js-select" name="state">
+                                                      <option value="o1">Single</option>
+                                                      <option value="o2">Married</option>
+                                                      <option value="o3">Divorced</option>
+                                                      <option value="o4">Widowed</option>
+                                                  </select>
+                                              </div>
+                                          </div>
+                                          <div class="btn-wrap">
+                                            <button class="btn btn-primary disabled" (click)="goToNextSlide(maritalSlider2)">Next</button>
+                                          </div>
+                                      </form>
+                                  </div>
+                                  <div class="swiper-slide">
+                                      <form class="bs-form" id="spouse-form">
+                                          <div class="form-wrap">
+                                              <div class="form-group">
+                                                  <span class="control-title">Title</span>
+                                                  <select class="js-select" name="state">
+                                                      <option value="o1">Mr</option>
+                                                      <option value="Ms">Ms</option>
+                                                      <option value="o2">Mrs</option>
+                                                      <option value="o3">Dr</option>
+                                                  </select>
+                                              </div>
+                                              <div class="form-group">
+                                                  <input type="text" class="form-control" id="spouse-name">
+                                                  <label for="spouse-name">First name</label>
+                                              </div>
+                                          </div>
+                                          <div class="btn-wrap">
+                                              <button class="btn btn-primary disabled" (click)="goToNextSlide(maritalSlider2)">Next</button>
+                                          </div>
+                                      </form>
+                                  </div>
+                                  <div class="swiper-slide">
+                                      <form class="bs-form">
+                                          <div class="form-wrap">
+                                              <div class="bs-radio">
+                                                  <input type="radio" name="yesNo" id="yes" (change)="goToNextSlide(maritalSlider2)">
+                                                  <label for="yes"><span>Yes</span></label>
+                                              </div>
+                                              <div class="bs-radio">
+                                                  <input type="radio" name="yesNo" id="no" (change)="goToNextSlide(maritalSlider2)">
+                                                  <label for="no"><span>No</span></label>
+                                              </div>
+                                          </div>
+                                      </form>
+                                  </div>
+                                  <div class="swiper-slide">
+                                      <form class="bs-form">
+                                          <div class="form-wrap">
+                                              <div class="form-group inr">
+                                                <input type="text" class="form-control" id="amount">
+                                                <label for="amount">Amount (in lakhs)</label>
+                                                <span class="addon">
+                                                  <span class="icon icon-inr"></span>
+                                                </span>
+                                                <span class="in-word"></span>
+                                              </div>
+                                          </div>
+                                          <div class="btn-wrap">
+                                              <button class="btn btn-primary disabled" (click)="tabSwitch(6)">Next</button>
+                                          </div>
+                                      </form>
+                                  </div>
+                              </div>
+                          </div>
+
+                      </div>
+                  </div>
+
+              </div>
+
+
+              <div class="tab-content" [ngClass]="{'active': (activeTab == 5)}">
+                <a href="javascript:void(0);" class="back-btn" (click)="tabSwitch(4)"></a>
+                <div class="lyt-tabs">
+                    <div class="lhs">
+                        <div  class="swiper-container form-swiper"
+                              [swiper]="lhsConfig"
+                              #familySlider1="ngxSwiper">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <div class="title-wrap">
+                                        <h4 class="title">Enter applicant’s <span class="cm-line-break"></span>family details</h4>
+                                        <p class="note">Family details are required to evaluate
+                                            <span class="cm-line-break">credit-worthiness of the main applicant & for </span>
+                                            <span class="cm-line-break">other regulatory purposes.</span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="title-wrap">
+                                        <h4 class="title">Enter applicant’s <span class="cm-line-break"></span>family details</h4>
+                                        <p class="note">Family details are required to evaluate
+                                            <span class="cm-line-break">credit-worthiness of the main applicant & for </span>
+                                            <span class="cm-line-break">other regulatory purposes.</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="rhs">
+                        <div  class="swiper-container form-swiper"
+                              [swiper]="rhsConfig"
+                              (slidePrevTransitionStart)="slidePrevTransitionStart(familySlider1)"
+                              (slideNextTransitionStart)="slideNextTransitionStart(familySlider1)"
+                              #familySlider2="ngxSwiper">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <form class="bs-form">
+                                        <div class="form-wrap">
+                                            <div class="form-group typ-range">
+                                                <span class="control-title">Enter number of dependents</span>
+                                                <input type="text" class="form-control" id="no-yrs">
+                                                <span class="yr-text">Years</span>
+                                                <div id="year-range" class="range-slider"></div>
+                                            </div>
+                                        </div>
+                                        <div class="btn-wrap">
+                                            <button class="btn btn-primary disabled" (click)="goToNextSlide(familySlider2)">Next</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="swiper-slide">
+                                    <form class="bs-form" id="spouse-form">
+                                        <div class="form-wrap">
+                                            <div class="form-group">
+                                                <span class="control-title">Title</span>
+                                                <!-- <select class="js-select" name="state">
+                                                    <option value="o1">Mr</option>
+                                                <option value="Ms">Ms</option>
+                                                <option value="o2">Mrs</option>
+                                                    <option value="o3">Dr</option>
+                                                </select> -->
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" id="father-name">
+                                                <label for="father-name">Father's name</label>
+                                            </div>
+                                            <div class="form-group">
+                                                <span class="control-title">Title</span>
+                                                <!-- <select class="js-select" name="state">
+                                                    <option value="o1">Mr</option>
+                                                    <option value="Ms">Ms</option>
+                                                    <option value="o2">Mrs</option>
+                                                    <option value="o3">Dr</option>
+                                               </select> -->
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" id="mother-name">
+                                                <label for="mother-name">Mother's name</label>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" id="maiden-name">
+                                                <label for="maiden-name">Mother's maiden name</label>
+                                            </div>
+                                        </div>
+                                        <div class="btn-wrap">
+                                            <button class="btn btn-primary disabled"  (click)="tabSwitch(6)">Next</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+
+              </div>
+            </div>
+        </div>
+    </div>
+  <span class="cm-autoSave"><span class="cm-bold">Autosaved</span> <span>at 09:26 AM</span></span>
+</main>
+
+<div class="overlay"></div>
