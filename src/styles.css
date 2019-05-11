@@ -2,8 +2,6 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import '~swiper/dist/css/swiper.min.css';
-
-
 @import "~@ng-select/ng-select/themes/default.theme.css";
 
 /* Libraries CSS */
@@ -5324,7 +5322,6 @@ img {
 	color: #bbb;
 	transform: translate(-50%, 0)
 }
-
 
 /* Custome select css */
 

@@ -1,0 +1,14 @@
+.transOpacity500ms {
+    -webkit-transition: all 500ms ease-out 300ms;
+    -o-transition: all 500ms ease-out 300ms;
+    -moz-transition: all 500ms ease-out 300ms;
+    transition: all 500ms ease-out 300ms;
+}
+
+.fadeOut {
+    opacity: 0;
+}
+
+.fadeIn {
+    opacity: 1;
+}

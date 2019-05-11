@@ -33,7 +33,7 @@
             </ul>
               <div class="tabs-contents" #tabContents>
                 <div class="tab-content" [ngClass]="{'active': (activeTab == 0)}">
-                  <a href="javascript:void(0);" class="back-btn" (click)="goToPrevSlide(panSlider2)"></a>
+                  <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(panSlider2)"></a>
                   <div class="lyt-tabs">
                       <div class="lhs">
 
@@ -133,7 +133,7 @@
                 </div>
 
                 <div class="tab-content" [ngClass]="{'active': (activeTab == 1)}">
-                    <a href="javascript:void(0);" class="back-btn" (click)="goToPrevSlide(pdSlider2)"></a>
+                    <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(pdSlider2)"></a>
 
                     <div class="lyt-tabs">
                         <div class="lhs">
@@ -179,10 +179,10 @@
                                             <div class="form-wrap">
                                                 <div class="form-group">
                                                     <span class="control-title">Title</span>
-                                                    <ng-select [searchable]="false" [(ngModel)]="temp">
-                                                            <ng-option value="yes">Yes</ng-option>
-                                                            <ng-option value="no">No</ng-option>
-                                                    </ng-select>                                                     
+                                                    <ng-select [searchable]="false" [(ngModel)]="temp" name="temp">
+                                                        <ng-option value="yes">Yes</ng-option>
+                                                        <ng-option value="no">No</ng-option>
+                                                    </ng-select>
                                                 </div>
                                                 <div class="form-group">
                                                   <input type="text" class="form-control" data-validation-attr="name" id="name">
@@ -329,7 +329,7 @@
 
 
                 <div class="tab-content" [ngClass]="{'active': (activeTab == 2)}">
-                  <a href="javascript:void(0);" class="back-btn" (click)="tabSwitch(1)"></a>
+                  <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
                   <div class="lyt-tabs">
                       <div class="lhs">
                           <div class="title-wrap">
@@ -340,29 +340,45 @@
                       <div class="rhs">
                           <form class="bs-form" id="contact-form">
                               <div class="form-wrap">
-                                  <div class="form-group">
+                                  <div class="form-group" [ngClass]="{'prefer': isAlternateEmailId}">
                                       <input type="text" class="form-control" id="pref-email" data-validation-attr="email" required>
                                       <label for="pref-email">Preferred email ID</label>
-                                      <span class="alternate-data"><a href="#" class="alter-btn">+ Add</a> alternate email id</span>
+                                      <span class="alternate-data">
+                                          <a  href="javascript:void(0);"
+                                              class="alter-btn"
+                                              (click)="addRemoveEmailField()">+ Add</a> alternate email id
+                                        </span>
                                   </div>
-                                  <div class="form-group typ-alternative">
+                                  <div class="form-group transOpacity500ms fadeOut" [ngClass]="{'typ-alternative': !isAlternateEmailId, 'fadeIn': isAlternateEmailId}">
                                       <input type="text" class="form-control" id="alter-email" data-validation-attr="email01">
                                       <label for="alter-email">Alternate email ID</label>
-                                      <span class="alternate-data"><a href="#" class="alter-btn">- Remove</a> alternate email id</span>
+                                      <span class="alternate-data">
+                                        <a  href="javascript:void(0);"
+                                            class="alter-btn"
+                                            (click)="addRemoveEmailField()">- Remove</a> alternate email id
+                                      </span>
                                   </div>
                                   <div class="form-group typ-mob">
                                       <input type="tel" class="form-control" id="mob-no" data-validation-attr="mobileno" maxlength="10" im-insert="true" required>
                                       <label for="mob-no">Mobile number</label>
                                       <span class="optional">10 digit</span>
                                       <a href="#" class="sent-otp modal-init" data-target="sent-otp-modal"><span class="text">sent OTP</span><span class="icon icon-tick"></span></a>
-                                      <span class="alternate-data"><a href="#" class="alter-btn">+ Add</a> alternate phone number</span>
+                                      <span class="alternate-data">
+                                        <a  href="javascript:void(0);"
+                                            class="alter-btn"
+                                            (click)="addRemoveMobileNumberField()">+ Add</a> alternate phone number
+                                      </span>
                                   </div>
-                                  <div class="form-group typ-alternative typ-mob">
+                                  <div class="form-group typ-mob" [ngClass]="{'typ-alternative': !isAlternateMobileNumber}">
                                       <input type="tel" class="form-control" id="alter-mob" data-validation-attr="mobileno01" maxlength="10">
                                       <label for="alter-mob">Alternate mobile no</label>
                                       <span class="optional">10 digit</span>
                                       <a href="#" class="sent-otp modal-init" data-target="sent-otp-modal"><span class="text">sent OTP</span><span class="icon icon-tick"></span></a>
-                                      <span class="alternate-data"><a href="#" class="alter-btn">- Remove</a> alternate email id</span>
+                                      <span class="alternate-data">
+                                        <a  href="javascript:void(0);"
+                                            class="alter-btn"
+                                            (click)="addRemoveMobileNumberField()">- Remove</a> alternate email id
+                                      </span>
                                   </div>
                                   <div class="residence-no">
                                       <div class="form-group">
@@ -374,9 +390,13 @@
                                           <input type="text" class="form-control" id="res-no" data-validation-attr="residenceno">
                                           <label for="res-no">Residence number</label>
                                       </div>
-                                      <span class="alternate-data"><a href="#" class="alter-btn">+ Add</a> alternate phone number</span>
+                                      <span class="alternate-data">
+                                        <a  href="javascript:void(0);"
+                                            class="alter-btn"
+                                            (click)="addRemoveResidenceNumberField()">+ Add</a> alternate phone number
+                                      </span>
                                   </div>
-                                  <div class="residence-no typ-alternative">
+                                  <div class="residence-no" [ngClass]="{'typ-alternative': !isAlternateResidenceNumber}">
                                       <div class="form-group">
                                           <input type="text" class="form-control" id="altrstd">
                                           <label for="altrstd">STD</label>
@@ -386,7 +406,11 @@
                                           <input type="text" class="form-control" id="altr-res-no" data-validation-attr="residenceno01">
                                           <label for="altr-res-no">Residence number</label>
                                       </div>
-                                      <span class="alternate-data"><a href="#" class="alter-btn">- Remove</a> alternate email id</span>
+                                      <span class="alternate-data">
+                                        <a href="javascript:void(0);"
+                                            class="alter-btn"
+                                            (click)="addRemoveResidenceNumberField()">- Remove</a> alternate email id
+                                      </span>
                                   </div>
                               </div>
                               <div class="btn-wrap">
@@ -400,7 +424,7 @@
                 
 
               <div class="tab-content" [ngClass]="{'active': (activeTab == 3)}">
-                <a href="javascript:void(0);" class="back-btn" (click)="tabSwitch(2)"></a>
+                <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
 
                 <div class="lyt-tabs">
                     <div class="lhs">
@@ -410,7 +434,7 @@
                         </div>
                     </div>
                     <div class="rhs">
-                        <form class="bs-form" id="address-form">
+                        <form class="bs-form">
                             <div class="form-wrap">
                                 <div class="form-group">
                                     <span class="control-title">Residential status</span>
@@ -443,13 +467,13 @@
                                 </div>
                                 <div class="form-group typ-range">
                                     <span class="control-title">Number of years in current residence</span>
-                                    <input type="text" [value]="value" class="form-control" id="no-yrs">
+                                    <input type="text" class="form-control" id="no-yrs" [value]="value">
                                     <div id="year-range" class="range-slider"></div>
                                     <ng5-slider [(value)]="value" [options]="options"></ng5-slider>
                                 </div>
                             </div>
                             <div class="btn-wrap">
-                                <button class="btn btn-primary disabled" (click)="tabSwitch(4)">Next</button>
+                                <button type="button" class="btn btn-primary disabled" (click)="tabSwitch(4)">Next</button>
                             </div>
                         </form>
                     </div>
@@ -459,7 +483,7 @@
 
 
                 <div class="tab-content"  [ngClass]="{'active': (activeTab == 4)}">
-                  <a href="javascript:void(0);" class="back-btn" (click)="tabSwitch(3)"></a>
+                  <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(maritalSlider2)"></a>
 
                   <div class="lyt-tabs">
                       <div class="lhs">
@@ -516,7 +540,7 @@
                                               </div>
                                           </div>
                                           <div class="btn-wrap">
-                                            <button class="btn btn-primary disabled" (click)="goToNextSlide(maritalSlider2)">Next</button>
+                                            <button type="button" class="btn btn-primary disabled" (click)="goToNextSlide(maritalSlider2)">Next</button>
                                           </div>
                                       </form>
                                   </div>
@@ -525,6 +549,10 @@
                                           <div class="form-wrap">
                                               <div class="form-group">
                                                   <span class="control-title">Title</span>
+                                                  <ng-select class="custom" [searchable]="false">
+                                                    <ng-option value="yes">Yes</ng-option>
+                                                    <ng-option value="yes">Yes</ng-option>
+                                                  </ng-select>
                                                   <select class="js-select" name="state">
                                                       <option value="o1">Mr</option>
                                                       <option value="Ms">Ms</option>
@@ -538,7 +566,7 @@
                                               </div>
                                           </div>
                                           <div class="btn-wrap">
-                                              <button class="btn btn-primary disabled" (click)="goToNextSlide(maritalSlider2)">Next</button>
+                                              <button type="button" class="btn btn-primary disabled" (click)="goToNextSlide(maritalSlider2)">Next</button>
                                           </div>
                                       </form>
                                   </div>
@@ -569,7 +597,7 @@
                                               </div>
                                           </div>
                                           <div class="btn-wrap">
-                                              <button class="btn btn-primary disabled" (click)="tabSwitch(6)">Next</button>
+                                              <button type="button" class="btn btn-primary disabled" (click)="tabSwitch(6)">Next</button>
                                           </div>
                                       </form>
                                   </div>
@@ -583,7 +611,7 @@
 
 
               <div class="tab-content" [ngClass]="{'active': (activeTab == 5)}">
-                <a href="javascript:void(0);" class="back-btn" (click)="tabSwitch(4)"></a>
+                <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(familySlider2)"></a>
                 <div class="lyt-tabs">
                     <div class="lhs">
                         <div  class="swiper-container form-swiper"
@@ -630,7 +658,7 @@
                                             </div>
                                         </div>
                                         <div class="btn-wrap">
-                                            <button class="btn btn-primary disabled" (click)="goToNextSlide(familySlider2)">Next</button>
+                                            <button type="button" class="btn btn-primary disabled" (click)="goToNextSlide(familySlider2)">Next</button>
                                         </div>
                                     </form>
                                 </div>
@@ -639,12 +667,12 @@
                                         <div class="form-wrap">
                                             <div class="form-group">
                                                 <span class="control-title">Title</span>
-                                                <!-- <select class="js-select" name="state">
-                                                    <option value="o1">Mr</option>
-                                                <option value="Ms">Ms</option>
-                                                <option value="o2">Mrs</option>
-                                                    <option value="o3">Dr</option>
-                                                </select> -->
+                                                <select class="js-select" name="state">
+                                                                            <option value="o1">Mr</option>
+                                                                        <option value="Ms">Ms</option>
+                                                                        <option value="o2">Mrs</option>
+                                                                            <option value="o3">Dr</option>
+                                                                        </select>
                                             </div>
                                             <div class="form-group">
                                                 <input type="text" class="form-control" id="father-name">
@@ -652,12 +680,12 @@
                                             </div>
                                             <div class="form-group">
                                                 <span class="control-title">Title</span>
-                                                <!-- <select class="js-select" name="state">
-                                                    <option value="o1">Mr</option>
-                                                    <option value="Ms">Ms</option>
-                                                    <option value="o2">Mrs</option>
-                                                    <option value="o3">Dr</option>
-                                               </select> -->
+                                                <select class="js-select" name="state">
+                                                                                <option value="o1">Mr</option>
+                                                                        <option value="Ms">Ms</option>
+                                                                        <option value="o2">Mrs</option>
+                                                                                <option value="o3">Dr</option>
+                                                                            </select>
                                             </div>
                                             <div class="form-group">
                                                 <input type="text" class="form-control" id="mother-name">
@@ -669,7 +697,7 @@
                                             </div>
                                         </div>
                                         <div class="btn-wrap">
-                                            <button class="btn btn-primary disabled"  (click)="tabSwitch(6)">Next</button>
+                                            <button type="button" class="btn btn-primary disabled"  (click)="tabSwitch(6)">Next</button>
                                         </div>
                                     </form>
                                 </div>
@@ -682,8 +710,175 @@
             </div>
 
 
-              </div>
+            <div class="tab-content" [ngClass]="{'active': (activeTab == 6)}">
+                <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
+
+                <div class="lyt-tabs">
+                    <div class="lhs">
+                        <div class="title-wrap">
+                            <h4 class="title">Enter relevant <span class="cm-line-break"></span>details</h4>
+                            <p class="note">We may need this details for regulatory
+                                <span class="cm-line-break">purposes.</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="rhs">
+                        <form class="bs-form">
+                            <div class="form-wrap">
+                                <div class="form-group">
+                                    <span class="control-title">Religion</span>
+                                    <select class="js-select typ-religion" name="religion">
+                                                    <option value="Hindu">Hindu</option>
+                                                    <option value="Muslim">Muslim</option>
+                                                    <option value="Sikh">Sikh</option>
+                                                    <option value="christian">christian</option>
+                                                    <option value="Buddist">Buddist</option>
+                                                    <option value="Other">Other(Please Specify)</option>
+                                                </select>
+                                </div>
+                                <div class="form-group hidden">
+                                    <input type="text" class="form-control">
+                                    <label for="">Specify other religion</label>
+                                </div>
+                                <div class="form-group">
+                                    <span class="control-title">Category</span>
+                                    <select class="js-select" name="religion">
+                                        <option value="General">General</option>
+                                        <option value="SC">SC</option>
+                                        <option value="CS">CS</option>
+                                        <option value="OBC">OBC</option>
+                                        <option value="MBC">MBC</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="btn-wrap">
+                                <button type="button" class="btn btn-primary disabled" (click)="tabSwitch(7)">Next</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
             </div>
+
+            <div class="tab-content" [ngClass]="{'active': (activeTab == 7)}">
+                <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
+
+                <div class="lyt-tabs">
+                    <div class="lhs">
+                        <div class="title-wrap">
+                            <h4 class="title">Enter applicant’s <span class="cm-line-break"></span>current occupation <span class="cm-line-break"></span>details</h4>
+                            <p class="note">We may need this details for regulatory
+                                <span class="cm-line-break">purposes.</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="rhs">
+                        <form class="bs-form">
+                            <div class="form-wrap">
+                                <div class="form-group">
+                                    <span class="control-title">Occupation type</span>
+                                    <select class="js-select" name="occupation">
+                                        <option value="oc1">Salaried</option>
+                                        <option value="oc2">Self Employed Professional</option>
+                                        <option value="oc3">Self Employed Non Professional</option>
+                                        <option value="oc4">Homemaker</option>
+                                        <option value="oc5">Student</option>
+                                        <option value="oc6">Retired</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control">
+                                    <label for="">Company name</label>
+                                </div>
+                                <div class="form-group typ-range">
+                                    <span class="control-title">Years in current employment/bussiness</span>
+                                    <input type="text" class="form-control" id="no-yrs">
+                                    <span class="yr-text">Years</span>
+                                    <div class="range-slider"></div>
+                                </div>
+                                <div class="form-group typ-range">
+                                    <span class="control-title">Total Work Experience</span>
+                                    <input type="text" class="form-control" id="no-yrs">
+                                    <span class="yr-text">Years</span>
+                                    <div class="range-slider"></div>
+                                </div>
+                            </div>
+
+                            <div class="btn-wrap">
+                                <button type="button" class="btn btn-primary disabled" (click)="tabSwitch(8)">Next</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+              </div>
+
+              <div class="tab-content" [ngClass]="{'active': (activeTab == 8)}">
+                <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
+
+                <div class="lyt-tabs">
+                    <div class="lhs">
+                        <div class="title-wrap">
+                            <h4 class="title">Enter applicant’s <span class="cm-line-break"></span>professional contact <span class="cm-line-break"></span>details</h4>
+                            <p class="note">In case, main application is currently not work-
+                                <span class="cm-line-break">ing, pleases enter details of the co-applicant</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="rhs">
+                        <form class="bs-form">
+                            <div class="form-wrap">
+                                <div class="form-group">
+                                    <input type="text" class="form-control">
+                                    <label for="">Office address line1</label>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control">
+                                    <label for="">Office address line2</label>
+                                </div>
+                                <div class="form-group typ-optional">
+                                    <input type="text" class="form-control">
+                                    <label for="">Landmark</label>
+                                    <span class="optional">optional</span>
+                                </div>
+                                <div class="form-group typ-optional">
+                                    <input type="text" class="form-control">
+                                    <label for="">Pincode</label>
+                                </div>
+                                <div class="form-group typ-optional">
+                                    <input type="text" class="form-control">
+                                    <label for="">City/State</label>
+                                </div>
+                                <div class="residence-no">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="std03">
+                                        <label for="std03">STD</label>
+                                    </div>
+                                    <span class="seperator">-</span>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="res-no03" data-validation-attr="residenceno">
+                                        <label for="res-no03">Office number</label>
+                                    </div>
+                                </div>
+                                <div class="form-group typ-optional">
+                                    <input type="text" class="form-control" id="off-email">
+                                    <label for="off-email">Office email ID</label>
+                                </div>
+
+                            </div>
+
+                            <div class="btn-wrap">
+                                <button type="button" class="btn btn-primary disabled">Next</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+            </div>
+          </div>
         </div>
     </div>
   <span class="cm-autoSave"><span class="cm-bold">Autosaved</span> <span>at 09:26 AM</span></span>

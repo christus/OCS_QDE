@@ -6,7 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { SwiperModule } from 'ngx-swiper-wrapper';
 import { SWIPER_CONFIG } from 'ngx-swiper-wrapper';
 import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
-import { Select2Module } from 'ng2-select2';
+// import { Select2Module } from 'ng2-select2';
 
 import { AppComponent } from './app.component';
 
@@ -47,18 +47,10 @@ import { LeadsListComponent } from './applicant-dashboard/leads-list/leads-list.
 import { ApplicantQdeComponent } from './applicant-dashboard/applicant-qde/applicant-qde.component';
 
 
-
-// import { LSelect2Module } from 'ngx-select2';
-
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
 
 import { Ng5SliderModule } from 'ng5-slider';
-
-
-
-
-
 
 // Routes are temporarily in app.module.ts
 const appRoutes: Routes = [
@@ -105,12 +97,10 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     ApplicantQdeComponent,
   ],
   imports: [
-    FormsModule,
     BrowserModule,
     RouterModule.forRoot(appRoutes),
     SwiperModule,
-    // Select2Module,
-    // LSelect2Module,
+    FormsModule,
     NgSelectModule,
     Ng5SliderModule
   ],

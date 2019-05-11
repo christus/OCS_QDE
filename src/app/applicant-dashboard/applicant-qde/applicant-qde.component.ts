@@ -1,14 +1,10 @@
 import { Component, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
     
 import * as Swiper from 'swiper/dist/js/swiper.js';
-import { Select2OptionData } from 'ng2-select2';
+// import { Select2Component } from 'ng2-select2';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Options } from 'ng5-slider';
-
-
-import {NgSelectModule, NgOption} from '@ng-select/ng-select';
-
-
 
 @Component({
   selector: 'app-applicant-qde',
@@ -32,6 +28,7 @@ export class ApplicantQdeComponent implements OnInit {
       return  value + '<b>y</b>';
     }
   };
+
   private lhsConfig = {
     noSwiping: true,
     onlyExternal: true,
@@ -51,44 +48,44 @@ export class ApplicantQdeComponent implements OnInit {
     effect: "slide",
   };
 
-  public exampleData: Array<any>;
-
-  // options: any = {
-  //   multiple: true,
-  //   maximumSelectionLength: 1,
-  //   minimumResultsForSearch: -1
-  // };
-
-
   private activeTab: number = 0;
 
   @ViewChild('tabContents') private tabContents: ElementRef;
-  //@ViewChild(Select2Component) private select2: Select2Component;
+  // @ViewChild(Select2Component) private select2: Select2Component;
 
-  constructor(private renderer: Renderer2) { }
+  // All Swiper Sliders
+  @ViewChild('panSlider1') private panSlider1: ElementRef;
+  @ViewChild('panSlider2') private panSlider2: ElementRef;
+  @ViewChild('pdSlider1') private pdSlider1: ElementRef;
+  @ViewChild('pdSlider2') private pdSlider2: ElementRef;
+  @ViewChild('maritalSlider1') private maritalSlider1: ElementRef;
+  @ViewChild('maritalSlider2') private maritalSlider2: ElementRef;
+  @ViewChild('familySlider1') private familySlider1: ElementRef;
+  @ViewChild('familySlider2') private familySlider2: ElementRef;
+
+  private isAlternateEmailId: boolean = false;
+  private isAlternateMobileNumber: boolean = false;
+  private isAlternateResidenceNumber: boolean = false;
+
+  constructor(private renderer: Renderer2,
+              private route: ActivatedRoute,
+              private router: Router) { }
 
   ngOnInit() {
-   // this.renderer.addClass(this.select2.selector.nativeElement, 'js-select');
+    // this.renderer.addClass(this.select2.selector.nativeElement, 'js-select');
 
-    this.exampleData = [
-      {
-        id: 'basic1',
-        text: 'Basic 1'
-      },
-      {
-        id: 'basic2',
-        disabled: true,
-        text: 'Basic 2'
-      },
-      {
-        id: 'basic3',
-        text: 'Basic 3'
-      },
-      {
-        id: 'basic4',
-        text: 'Basic 4'
+    this.route.fragment.subscribe((fragment) => {
+
+      if(fragment == 'pan' || fragment == null) {
+        this.tabSwitch(0);
+      } if(fragment == 'personal-details') {
+        this.tabSwitch(1);
+      } if(fragment == 'contact-details') {
+        this.tabSwitch(2);
       }
-    ];
+
+      // if Conditions for all tabs
+    });
   }
 
   /**
@@ -130,6 +127,31 @@ export class ApplicantQdeComponent implements OnInit {
 
   tabSwitch(tabIndex: number) {
     this.activeTab = tabIndex;
+  }
+
+  onBackButtonClick(swiperInstance ?: Swiper) {
+
+    if(this.activeTab > 0) {
+      if(swiperInstance != null && swiperInstance.getIndex() > 0) {
+        // Go to Previous Slide
+        this.goToPrevSlide(swiperInstance);
+      } else {
+        // Go To Previous Tab
+        this.tabSwitch(this.activeTab - 1);
+      }
+    }
+  }
+
+  addRemoveEmailField() {
+    this.isAlternateEmailId = !this.isAlternateEmailId;
+  }
+
+  addRemoveMobileNumberField() {
+    this.isAlternateMobileNumber = !this.isAlternateMobileNumber;
+  }
+
+  addRemoveResidenceNumberField() {
+    this.isAlternateResidenceNumber = !this.isAlternateResidenceNumber;
   }
 
   private temp;
