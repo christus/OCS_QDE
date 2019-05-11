@@ -13,19 +13,17 @@ import { Options } from 'ng5-slider';
 })
 export class ApplicantQdeComponent implements OnInit {
   
-  value: number = 6;
+  value: number = 0;
 
   minValue: number = 1;
-  maxValue: number = 8;
   options: Options = {
     floor: 0,
     ceil: 6,
     showTicksValues: false,
     showSelectionBar: true,
-    tickValueStep: 1,
     showTicks: true,
-    getLegend: (value: number): string => {
-      return  value + '<b>y</b>';
+    getLegend: (sliderVal: number): string => {
+      return  sliderVal + '<b>y</b>';
     }
   };
 
@@ -85,7 +83,17 @@ export class ApplicantQdeComponent implements OnInit {
       }
 
       // if Conditions for all tabs
+
+      
     });
+
+    
+  }
+
+
+  valuechange(newValue) {
+    console.log(newValue);
+    this.value  = newValue;
   }
 
   /**
