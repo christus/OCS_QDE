@@ -443,8 +443,9 @@
                                 </div>
                                 <div class="form-group typ-range">
                                     <span class="control-title">Number of years in current residence</span>
-                                    <input type="text" class="form-control" id="no-yrs">
+                                    <input type="text" [value]="value" class="form-control" id="no-yrs">
                                     <div id="year-range" class="range-slider"></div>
+                                    <ng5-slider [(value)]="value" [options]="options"></ng5-slider>
                                 </div>
                             </div>
                             <div class="btn-wrap">

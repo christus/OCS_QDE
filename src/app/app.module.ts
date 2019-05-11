@@ -53,6 +53,9 @@ import { ApplicantQdeComponent } from './applicant-dashboard/applicant-qde/appli
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
 
+import { Ng5SliderModule } from 'ng5-slider';
+
+
 
 
 
@@ -108,7 +111,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     SwiperModule,
     // Select2Module,
     // LSelect2Module,
-    NgSelectModule
+    NgSelectModule,
+    Ng5SliderModule
   ],
   providers: [
     {

@@ -3,6 +3,8 @@ import { Component, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/co
 import * as Swiper from 'swiper/dist/js/swiper.js';
 import { Select2OptionData } from 'ng2-select2';
 
+import { Options } from 'ng5-slider';
+
 
 import {NgSelectModule, NgOption} from '@ng-select/ng-select';
 
@@ -15,6 +17,21 @@ import {NgSelectModule, NgOption} from '@ng-select/ng-select';
 })
 export class ApplicantQdeComponent implements OnInit {
   
+  value: number = 6;
+
+  minValue: number = 1;
+  maxValue: number = 8;
+  options: Options = {
+    floor: 0,
+    ceil: 6,
+    showTicksValues: false,
+    showSelectionBar: true,
+    tickValueStep: 1,
+    showTicks: true,
+    getLegend: (value: number): string => {
+      return  value + '<b>y</b>';
+    }
+  };
   private lhsConfig = {
     noSwiping: true,
     onlyExternal: true,
