@@ -12,3 +12,7 @@
 .fadeIn {
     opacity: 1;
 }
+
+.typ-range {
+    overflow: visible;
+}

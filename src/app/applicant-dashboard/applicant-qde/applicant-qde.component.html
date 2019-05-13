@@ -226,20 +226,20 @@
                                             <div class="form-wrap">
                                                 <div class="form-group">
                                                     <span class="control-title">Qualification</span>
-                                                    <select class="js-select" name="state">
-                                                        <option value="o1">Below SSC</option>
-                                                        <option value="o2">SSC</option>
-                                                        <option value="o3">Under Graduate</option>
-                                                        <option value="o4">Graduate</option>
-                                                        <option value="o5">Post Graduate</option>
-                                                        <option value="o6">Professional</option>
-                                                        <option value="o7">Below SSC</option>
-                                                        <option value="o8">SSC</option>
-                                                        <option value="o9">Under Graduate</option>
-                                                        <option value="o10">Graduate</option>
-                                                        <option value="o11">Post Graduate</option>
-                                                        <option value="o12">Professional</option>
-                                                    </select>
+                                                    <ng-select [searchable]="false" [(ngModel)]="state" name="state">
+                                                        <ng-option value="o1">Below SSC</ng-option>
+                                                        <ng-option value="o2">SSC</ng-option>
+                                                        <ng-option value="o3">Under Graduate</ng-option>
+                                                        <ng-option value="o4">Graduate</ng-option>
+                                                        <ng-option value="o5">Post Graduate</ng-option>
+                                                        <ng-option value="o6">Professional</ng-option>
+                                                        <ng-option value="o7">Below SSC</ng-option>
+                                                        <ng-option value="o8">SSC</ng-option>
+                                                        <ng-option value="o9">Under Graduate</ng-option>
+                                                        <ng-option value="o10">Graduate</ng-option>
+                                                        <ng-option value="o11">Post Graduate</ng-option>
+                                                        <ng-option value="o12">Professional</ng-option>
+                                                    </ng-select>
                                                 </div>
                                             </div>
                                             <div class="btn-wrap">

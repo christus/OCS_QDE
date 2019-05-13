@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Renderer2, AfterViewInit } from '@angular/core';
     
 import * as Swiper from 'swiper/dist/js/swiper.js';
 // import { Select2Component } from 'ng2-select2';
@@ -11,7 +11,7 @@ import { Options } from 'ng5-slider';
   templateUrl: './applicant-qde.component.html',
   styleUrls: ['./applicant-qde.component.css']
 })
-export class ApplicantQdeComponent implements OnInit {
+export class ApplicantQdeComponent implements OnInit, AfterViewInit {
   
   value: number = 0;
 
@@ -19,8 +19,9 @@ export class ApplicantQdeComponent implements OnInit {
   options: Options = {
     floor: 0,
     ceil: 6,
+    step: 1,
     showTicksValues: false,
-    showSelectionBar: true,
+    // showSelectionBar: true,
     showTicks: true,
     getLegend: (sliderVal: number): string => {
       return  sliderVal + '<b>y</b>';
@@ -29,6 +30,7 @@ export class ApplicantQdeComponent implements OnInit {
 
   private lhsConfig = {
     noSwiping: true,
+    noSwipingClass: '',
     onlyExternal: true,
     autoplay: false,
     speed: 900,
@@ -65,6 +67,17 @@ export class ApplicantQdeComponent implements OnInit {
   private isAlternateMobileNumber: boolean = false;
   private isAlternateResidenceNumber: boolean = false;
 
+  private fragments = [ 'pan',
+                        'personal',
+                        'contact',
+                        'address',
+                        'marital',
+                        'family',
+                        'other',
+                        'occupation',
+                        'correspondence'
+  ];
+
   constructor(private renderer: Renderer2,
               private route: ActivatedRoute,
               private router: Router) { }
@@ -73,21 +86,24 @@ export class ApplicantQdeComponent implements OnInit {
     // this.renderer.addClass(this.select2.selector.nativeElement, 'js-select');
 
     this.route.fragment.subscribe((fragment) => {
-
-      if(fragment == 'pan' || fragment == null) {
-        this.tabSwitch(0);
-      } if(fragment == 'personal-details') {
-        this.tabSwitch(1);
-      } if(fragment == 'contact-details') {
-        this.tabSwitch(2);
+      let localFragment = fragment;
+      
+      if(fragment == null) {
+        localFragment = 'pan';
       }
 
-      // if Conditions for all tabs
-
+      // Replace Fragments in url
+      if(this.fragments.includes(localFragment)) {
+        this.tabSwitch(this.fragments.indexOf(localFragment));
+      }
       
     });
 
     
+  }
+
+  ngAfterViewInit() {
+
   }
 
 
@@ -133,8 +149,15 @@ export class ApplicantQdeComponent implements OnInit {
     swiperInstance.prevSlide();
   }
 
-  tabSwitch(tabIndex: number) {
-    this.activeTab = tabIndex;
+  tabSwitch(tabIndex ?: number) {
+
+    // Check for invalid tabIndex
+    if(tabIndex < this.fragments.length) {
+
+      this.router.navigate([], { fragment: this.fragments[tabIndex]});
+  
+      this.activeTab = tabIndex;
+    }
   }
 
   onBackButtonClick(swiperInstance ?: Swiper) {
