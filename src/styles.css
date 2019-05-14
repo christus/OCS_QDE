@@ -5489,3 +5489,7 @@ img {
   .ng5-slider {
 	top: 24px !important;
   }
+
+  .hide {
+	  display: none;
+  }

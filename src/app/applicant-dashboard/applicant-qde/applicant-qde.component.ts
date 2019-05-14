@@ -66,6 +66,9 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
   private isAlternateEmailId: boolean = false;
   private isAlternateMobileNumber: boolean = false;
   private isAlternateResidenceNumber: boolean = false;
+  
+  private applicantIndividual:boolean = true;
+  
 
   private fragments = [ 'pan',
                         'personal',
@@ -75,7 +78,11 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
                         'family',
                         'other',
                         'occupation',
-                        'correspondence'
+                        'correspondence',
+                        'organization',
+                        'regAddress',
+                        'corpAddr',
+                        'revenueAddr'
   ];
 
   constructor(private renderer: Renderer2,
@@ -157,6 +164,12 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
       this.router.navigate([], { fragment: this.fragments[tabIndex]});
   
       this.activeTab = tabIndex;
+
+      if(tabIndex == 9) {
+        this.applicantIndividual = false;
+      }else if(tabIndex == 0) {
+        this.applicantIndividual = true;
+      }
     }
   }
 
