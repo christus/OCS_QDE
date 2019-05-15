@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild, ElementRef, Renderer2, AfterViewInit } from '@angular/core';
     
 import * as Swiper from 'swiper/dist/js/swiper.js';
+// import { Select2Component } from 'ng2-select2';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Options } from 'ng5-slider';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-applicant-qde',
@@ -122,8 +124,11 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
    * Use to sync between lhs and rhs sliders
    * @param swiperInstance RHS Swiper Instance
    */
-  goToNextSlide(swiperInstance: Swiper) {
+  goToNextSlide(swiperInstance: Swiper, form?: NgForm) {
 
+    if (form && !form.valid) {
+      return;
+    }
     // Create ngModel of radio button in future
     swiperInstance.nextSlide();
   }

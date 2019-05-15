@@ -1,144 +1,177 @@
 <main>
   <div class="main">
-        <div class="lyt-home typ-co-app">
-          <div class="step1">
-              <div class="lyt-tabs">
-                  <div class="lhs" >
-                    <div  class="swiper-container form-swiper"
-                      [swiper]="lhsConfig"
-                      #coApplicant1="ngxSwiper">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide">
-                                <div class="title-wrap">
-                                    <h4 class="title">Do you want to <span class="cm-line-break"></span>add another <span class="cm-line-break"></span>co-applicant?</h4>
+   
+      <div class="lyt-home">
+          <div class="tabs">
+              <ul class="tabs-head">
+                <li class="tab-link pending" [ngClass]="{'active': (activeTab == 0)}">
+                    <a href="javascript:void(0);" (click)="tabSwitch(0)">Dashboard</a>
+                </li>
+                <li class="tab-link" [ngClass]="{'active': (activeTab == 1), 'hide': (!applicantIndividual)}">
+                  <a href="javascript:void(0);" (click)="tabSwitch(1)">PAN</a>
+                </li>
+                <li class="tab-link" [ngClass]="{'active': (activeTab == 2), 'hide': (!applicantIndividual)}">
+                  <a href="javascript:void(0);" (click)="tabSwitch(2)">personal details</a>
+                </li>
+                <li class="tab-link" [ngClass]="{'active': (activeTab == 3), 'hide': (!applicantIndividual)}">
+                  <a href="javascript:void(0);" (click)="tabSwitch(3)">contact details</a>
+                </li>
+                <li class="tab-link" [ngClass]="{'active': (activeTab == 4), 'hide': (!applicantIndividual)}">
+                  <a href="javascript:void(0);" (click)="tabSwitch(4)">communication address</a>
+                </li>
+                <li class="tab-link" [ngClass]="{'active': (activeTab == 5), 'hide': (!applicantIndividual)}">
+                  <a href="javascript:void(0);" (click)="tabSwitch(5)">marital status</a>
+                </li>
+                <li class="tab-link" [ngClass]="{'active': (activeTab == 6), 'hide': (!applicantIndividual)}">
+                  <a href="javascript:void(0);" (click)="tabSwitch(6)">family details</a>
+                </li>
+                <li class="tab-link" [ngClass]="{'active': (activeTab == 7), 'hide': (!applicantIndividual)}">
+                  <a href="javascript:void(0);" (click)="tabSwitch(7)">other</a>
+                </li>
+                <li class="tab-link" [ngClass]="{'active': (activeTab == 8), 'hide': (!applicantIndividual)}">
+                  <a href="javascript:void(0);" (click)="tabSwitch(8)">occupation details</a>
+                </li>
+                <li class="tab-link" [ngClass]="{'active': (activeTab == 8), 'hide': (!applicantIndividual)}">
+                  <a href="javascript:void(0);" (click)="tabSwitch(9)">offical correspondence</a>
+                </li>
+                <li class="tab-link hide" [ngClass]="{'active': (activeTab == 10), 'hide': (applicantIndividual)}">
+                    <a href="javascript:void(0);" (click)="tabSwitch(10)">ORGANIZATION DETAILS</a>
+                </li>
+                <li class="tab-link hide" [ngClass]="{'active': (activeTab == 11), 'hide': (applicantIndividual)}">
+                    <a href="javascript:void(0);" (click)="tabSwitch(11)">REGISTERED ADDRESS</a>
+                </li>
+                <li class="tab-link hide" [ngClass]="{'active': (activeTab == 12), 'hide': (applicantIndividual)}">
+                    <a href="javascript:void(0);" (click)="tabSwitch(12)">CORPORATE ADDRESS</a>
+                </li>
+                <li class="tab-link hide" [ngClass]="{'active': (activeTab == 13), 'hide': (applicantIndividual)}">
+                    <a href="javascript:void(0);" (click)="tabSwitch(13)">REVENUE DETAILS</a>
+                </li>
+            </ul>
+              <div class="tabs-contents" #tabContents>
+                    <div class="tab-content" [ngClass]="{'active': (activeTab == 0)}">
+                        <!-- <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(panSlider2)"></a> -->
+                        <div class="lyt-tabs">
+
+                            <div class="lhs" >
+                                <div  class="swiper-container form-swiper"
+                                [swiper]="lhsConfig"
+                                #coApplicant1="ngxSwiper">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide">
+                                            <div class="title-wrap">
+                                                <h4 class="title">Co-Applicant<span class="cm-line-break"></span>list</h4>
+                                            </div>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <div class="title-wrap">
+                                                <h4 class="title">Do you want to <span class="cm-line-break"></span>add another <span class="cm-line-break"></span>co-applicant?</h4>
+                                            </div>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <div class="title-wrap">
+                                                <h4 class="title">Select <span class="cm-line-break"></span>co-applicant type</h4>
+                                                <h5 class="subtitle">Individuals</h5>
+                                                <p class="note">Can be any person who is Salaried or Self employed working Professional/ Non-Professional or Non-Salaried Individuals like Students, Retired Individuals, Housewives etc.</p>
+                                                <h5 class="subtitle">Non-Individuals</h5>
+                                                <p class="note">Can be any company - Pvt Ltd, Public Ltd, Partnership firm, Propritership; Trust; Society; HUF etc.</p>
+                                            </div>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <div class="title-wrap">
+                                                <h4 class="title">Relationship with <span class="cm-line-break"></span>the applicant</h4>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                           <div class="swiper-slide">
-                              <div class="title-wrap">
-                                  <h4 class="title">Select <span class="cm-line-break"></span>co-applicant type</h4>
-                                  <h5 class="subtitle">Individuals</h5>
-                                  <p class="note">Can be any person who is Salaried or Self employed working Professional/ Non-Professional or Non-Salaried Individuals like Students, Retired Individuals, Housewives etc.</p>
-                                  <h5 class="subtitle">Non-Individuals</h5>
-                                  <p class="note">Can be any company - Pvt Ltd, Public Ltd, Partnership firm, Propritership; Trust; Society; HUF etc.</p>
-                              </div>
-                           </div>
-                            <div class="swiper-slide">
-                                <div class="title-wrap">
-                                    <h4 class="title">Relationship with <span class="cm-line-break"></span>the applicant</h4>
+                            <div class="rhs">
+                                <div  class="swiper-container form-swiper"
+                                [swiper]="rhsConfig"
+                                (slidePrevTransitionStart)="slidePrevTransitionStart(coApplicant1)"
+                                (slideNextTransitionStart)="slideNextTransitionStart(coApplicant1)"
+                                #coApplicant2="ngxSwiper">
+                                <div class="swiper-wrapper">
+
+                                    <div class="swiper-slide">
+                                        <div class="right-panel">
+                                            <button class="btn btn-default view-form">Create</button>
+                                        </div>
+                                        <form class="bs-form">
+                                            <div class="form-wrap">
+                                                <div class="bs-radio typ-doc">
+                                                    <input type="radio" name="doc-upload" id="applicant-radio">
+                                                    <label for="applicant-radio">
+                                                        <span class="icon icon-close"></span>
+                                                    </label>
+                                                    <span class="desc-text">01 | <span>Co-Applicant</span></span>
+                                                </div>
+                                                <div class="bs-radio typ-doc">
+                                                    <input type="radio" name="doc-upload" id="applicant-radio">
+                                                    <label for="applicant-radio">
+                                                        <span class="icon icon-close"></span>
+                                                    </label>
+                                                    <span class="desc-text">02 | <span>Co-Applicant</span></span>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                    <div class="swiper-slide">
+                                    <form class="bs-form">
+                                        <div class="form-wrap">
+                                            <div class="bs-radio">
+                                                <input type="radio" name="applicant-add" id="add-yes" (change)="goToNextSlide(coApplicant2)">
+                                                <label for="add-yes"><span>Yes</span></label>
+                                            </div>
+                                            <div class="bs-radio">
+                                                <input type="radio" name="applicant-add" id="add-no" (change)="goToNextSlide(coApplicant2)">
+                                                <label for="add-no"><span>No</span></label>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <form class="bs-form">
+                                            <div class="form-wrap">
+                                                <div class="bs-radio">
+                                                    <input type="radio" name="coapplicant-typ"  (change)="goToNextSlide(coApplicant2); setApplicationType(true)">
+                                                    <label for="coapp-in"><span>Individual</span></label>
+                                                </div>
+                                                <div class="bs-radio">
+                                                    <input type="radio" name="coapplicant-typ" (change)="goToNextSlide(coApplicant2); setApplicationType(false)">
+                                                    <label for="coapp-nonin"><span>Non-Individual</span></label>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                    <div class="swiper-slide">
+                                        <form class="bs-form">
+                                            <div class="form-wrap">
+                                                <div class="form-group last">
+                                                    <select class="js-select" name="relationship" required>
+                                                        <option value="" selected>Partner</option>
+                                                        <option value="">Director</option>
+                                                        <option value="">Shareholder</option>
+                                                        <option value="">Trustee</option>
+                                                        <option value="">Karta</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="btn-wrap">
+                                                <button class="btn btn-primary not-usual btn-step2" (click)="goToFirstTab()">Next</button>
+                                            </div>
+                                        </form>
+                                    </div>
+
+
                                 </div>
                             </div>
                         </div>
                     </div>
-                  </div>
-                  <div class="rhs">
-                    <div  class="swiper-container form-swiper"
-                      [swiper]="rhsConfig"
-                      (slidePrevTransitionStart)="slidePrevTransitionStart(coApplicant1)"
-                      (slideNextTransitionStart)="slideNextTransitionStart(coApplicant1)"
-                      #coApplicant2="ngxSwiper">
-                      <div class="swiper-wrapper">
-                          
-                        <div class="swiper-slide">
-                          <form class="bs-form">
-                              <div class="form-wrap">
-                                  <div class="bs-radio">
-                                      <input type="radio" name="applicant-add" id="add-yes" (change)="goToNextSlide(coApplicant2)">
-                                      <label for="add-yes"><span>Yes</span></label>
-                                  </div>
-                                  <div class="bs-radio">
-                                      <input type="radio" name="applicant-add" id="add-no" (change)="goToNextSlide(coApplicant2)">
-                                      <label for="add-no"><span>No</span></label>
-                                  </div>
-                              </div>
-                          </form>
-                        </div>
-                        <div class="swiper-slide">
-                            <form class="bs-form">
-                                <div class="form-wrap">
-                                    <div class="bs-radio">
-                                        <input type="radio" name="coapplicant-typ"  (change)="goToNextSlide(coApplicant2)">
-                                        <label for="coapp-in"><span>Individual</span></label>
-                                    </div>
-                                    <div class="bs-radio">
-                                        <input type="radio" name="coapplicant-typ" (change)="goToNextSlide(coApplicant2)">
-                                        <label for="coapp-nonin"><span>Non-Individual</span></label>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-
-                        <div class="swiper-slide">
-                            <form class="bs-form">
-                                <div class="form-wrap">
-                                    <div class="form-group last">
-                                        <select class="js-select" name="relationship" required>
-                                            <option value="" selected>Partner</option>
-                                            <option value="">Director</option>
-                                            <option value="">Shareholder</option>
-                                            <option value="">Trustee</option>
-                                            <option value="">Karta</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="btn-wrap">
-                                    <button class="btn btn-primary not-usual btn-step2" (click)="tabSwitch(0)">Next</button>
-                                </div>
-                            </form>
-                        </div>
-
-
-                      </div>
-                  </div>
                 </div>
-
-            </div>
-        </div>
-      </div>
-      <div class="lyt-home">
-          <div class="tabs">
-              <ul class="tabs-head">
-                <li class="tab-link pending" [ngClass]="{'active': (activeTab == 0), 'hide': (!applicantIndividual)}">
-                  <a href="javascript:void(0);" (click)="tabSwitch(0)">PAN</a>
-                </li>
-                <li class="tab-link" [ngClass]="{'active': (activeTab == 1), 'hide': (!applicantIndividual)}">
-                  <a href="javascript:void(0);" (click)="tabSwitch(1)">personal details</a>
-                </li>
-                <li class="tab-link" [ngClass]="{'active': (activeTab == 2), 'hide': (!applicantIndividual)}">
-                  <a href="javascript:void(0);" (click)="tabSwitch(2)">contact details</a>
-                </li>
-                <li class="tab-link" [ngClass]="{'active': (activeTab == 3), 'hide': (!applicantIndividual)}">
-                  <a href="javascript:void(0);" (click)="tabSwitch(3)">communication address</a>
-                </li>
-                <li class="tab-link" [ngClass]="{'active': (activeTab == 4), 'hide': (!applicantIndividual)}">
-                  <a href="javascript:void(0);" (click)="tabSwitch(4)">marital status</a>
-                </li>
-                <li class="tab-link" [ngClass]="{'active': (activeTab == 5), 'hide': (!applicantIndividual)}">
-                  <a href="javascript:void(0);" (click)="tabSwitch(5)">family details</a>
-                </li>
-                <li class="tab-link" [ngClass]="{'active': (activeTab == 6), 'hide': (!applicantIndividual)}">
-                  <a href="javascript:void(0);" (click)="tabSwitch(6)">other</a>
-                </li>
-                <li class="tab-link" [ngClass]="{'active': (activeTab == 7), 'hide': (!applicantIndividual)}">
-                  <a href="javascript:void(0);" (click)="tabSwitch(7)">occupation details</a>
-                </li>
-                <li class="tab-link" [ngClass]="{'active': (activeTab == 8), 'hide': (!applicantIndividual)}">
-                  <a href="javascript:void(0);" (click)="tabSwitch(8)">offical correspondence</a>
-                </li>
-                <li class="tab-link hide" [ngClass]="{'active': (activeTab == 9), 'hide': (applicantIndividual)}">
-                    <a href="javascript:void(0);" (click)="tabSwitch(9)">ORGANIZATION DETAILS</a>
-                </li>
-                <li class="tab-link hide" [ngClass]="{'active': (activeTab == 10), 'hide': (applicantIndividual)}">
-                    <a href="javascript:void(0);" (click)="tabSwitch(10)">REGISTERED ADDRESS</a>
-                </li>
-                <li class="tab-link hide" [ngClass]="{'active': (activeTab == 11), 'hide': (applicantIndividual)}">
-                    <a href="javascript:void(0);" (click)="tabSwitch(11)">CORPORATE ADDRESS</a>
-                </li>
-                <li class="tab-link hide" [ngClass]="{'active': (activeTab == 12), 'hide': (applicantIndividual)}">
-                    <a href="javascript:void(0);" (click)="tabSwitch(12)">REVENUE DETAILS</a>
-                </li>
-            </ul>
-              <div class="tabs-contents" #tabContents>
-                <div class="tab-content" [ngClass]="{'active': (activeTab == 0)}">
+                
+                <div class="tab-content" [ngClass]="{'active': (activeTab == 1)}">
                   <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(panSlider2)"></a>
                   <div class="lyt-tabs">
                       <div class="lhs">
@@ -147,15 +180,6 @@
                                 [swiper]="lhsConfig"
                                 #panSlider1="ngxSwiper">
                               <div class="swiper-wrapper">
-                                  <div class="swiper-slide">
-                                      <div class="title-wrap">
-                                          <h4 class="title">Select <span class="cm-line-break"></span>applicant type</h4>
-                                          <h5 class="subtitle">Individuals</h5>
-                                          <p class="note">Can be any person who is Salaried or Self employed working Professional/ Non-Professional or Non-Salaried Individuals like Students, Retired Individuals, Housewives etc.</p>
-                                          <h5 class="subtitle">Non-Individuals</h5>
-                                          <p class="note">Can be any company - Pvt Ltd, Public Ltd, Partnership firm, Propritership; Trust; Society; HUF etc.</p>
-                                      </div>
-                                  </div>
                                   <div class="swiper-slide">
                                       <div class="title-wrap">
                                           <h4 class="title">Enter applicant's <span class="cm-line-break"></span>PAN details</h4>
@@ -177,26 +201,7 @@
                                 (slideNextTransitionStart)="slideNextTransitionStart(panSlider1)"
                                 #panSlider2="ngxSwiper">
                               <div class="swiper-wrapper">
-                                  <div class="swiper-slide">
-                                      <form class="bs-form">
-                                          <div class="form-wrap">
-                                              <div class="bs-radio">
-                                                  <input  type="radio"
-                                                          name="applicant-type"
-                                                          id="individual"
-                                                          (change)="goToNextSlide(panSlider2)" />
-                                                  <label for="individual"><span>Individual</span></label>
-                                              </div>
-                                              <div class="bs-radio">
-                                                  <input  type="radio"
-                                                          name="applicant-type"
-                                                          id="non-individual"
-                                                          (change)="tabSwitch(9)" />
-                                                  <label for="non-individual"><span>Non-Individual</span></label>
-                                              </div>
-                                          </div>
-                                      </form>
-                                  </div>
+                                  
                                   <div class="swiper-slide">
                                       <form class="bs-form" id="pan-form">
                                           <div class="form-wrap">
@@ -236,7 +241,7 @@
 
                 </div>
 
-                <div class="tab-content" [ngClass]="{'active': (activeTab == 1)}">
+                <div class="tab-content" [ngClass]="{'active': (activeTab == 2)}">
                     <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(pdSlider2)"></a>
 
                     <div class="lyt-tabs">
@@ -432,7 +437,7 @@
 
 
 
-                <div class="tab-content" [ngClass]="{'active': (activeTab == 2)}">
+                <div class="tab-content" [ngClass]="{'active': (activeTab == 3)}">
                   <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
                   <div class="lyt-tabs">
                       <div class="lhs">
@@ -527,7 +532,7 @@
 
                 
 
-              <div class="tab-content" [ngClass]="{'active': (activeTab == 3)}">
+              <div class="tab-content" [ngClass]="{'active': (activeTab == 4)}">
                 <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
 
                 <div class="lyt-tabs">
@@ -585,7 +590,7 @@
                 </div>
 
 
-                <div class="tab-content"  [ngClass]="{'active': (activeTab == 4)}">
+                <div class="tab-content"  [ngClass]="{'active': (activeTab == 5)}">
                   <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(maritalSlider2)"></a>
 
                   <div class="lyt-tabs">
@@ -713,7 +718,7 @@
               </div>
 
 
-              <div class="tab-content" [ngClass]="{'active': (activeTab == 5)}">
+              <div class="tab-content" [ngClass]="{'active': (activeTab == 6)}">
                 <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(familySlider2)"></a>
                 <div class="lyt-tabs">
                     <div class="lhs">
@@ -813,7 +818,7 @@
             </div>
 
 
-            <div class="tab-content" [ngClass]="{'active': (activeTab == 6)}">
+            <div class="tab-content" [ngClass]="{'active': (activeTab == 7)}">
                 <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
 
                 <div class="lyt-tabs">
@@ -864,7 +869,7 @@
 
             </div>
 
-            <div class="tab-content" [ngClass]="{'active': (activeTab == 7)}">
+            <div class="tab-content" [ngClass]="{'active': (activeTab == 8)}">
                 <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
 
                 <div class="lyt-tabs">
@@ -917,7 +922,7 @@
 
               </div>
 
-              <div class="tab-content" [ngClass]="{'active': (activeTab == 8)}">
+              <div class="tab-content" [ngClass]="{'active': (activeTab == 9)}">
                 <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
 
                 <div class="lyt-tabs">
@@ -979,7 +984,7 @@
                 </div>
             </div>
 
-            <div class="tab-content" [ngClass]="{'active': (activeTab == 9)}">
+            <div class="tab-content" [ngClass]="{'active': (activeTab == 10)}">
                  <a  href="javascript:void(0);" class="back-btn"  (click)="tabSwitch(0)"></a> 
 
                 <div class="lyt-tabs">
@@ -1064,7 +1069,7 @@
             </div>
 
 
-            <div class="tab-content"  [ngClass]="{'active': (activeTab == 10)}">
+            <div class="tab-content"  [ngClass]="{'active': (activeTab == 11)}">
                 <a  href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
                 <div class="lyt-tabs">
                     <div class="lhs">
@@ -1101,7 +1106,7 @@
                     </div>
                 </div>
             </div>
-            <div class="tab-content" [ngClass]="{'active': (activeTab == 11)}">
+            <div class="tab-content" [ngClass]="{'active': (activeTab == 12)}">
                 <a href="#" class="back-btn" (click)="onBackButtonClick()"></a>
                 <div class="lyt-tabs">
                     <div class="lhs">
@@ -1153,7 +1158,7 @@
                 </div>
             </div>
 
-            <div class="tab-content" [ngClass]="{'active': (activeTab == 12)}">
+            <div class="tab-content" [ngClass]="{'active': (activeTab == 13)}">
                 <a href="#" class="back-btn" (click)="onBackButtonClick()"></a>
 
                 <div class="lyt-tabs">

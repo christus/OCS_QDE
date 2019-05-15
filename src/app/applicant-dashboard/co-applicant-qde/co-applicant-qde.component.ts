@@ -74,6 +74,7 @@ export class CoApplicantQdeComponent implements OnInit, AfterViewInit {
   
 
   private fragments = [ 
+                        'dashboard',
                         'pan',
                         'personal',
                         'contact',
@@ -86,8 +87,8 @@ export class CoApplicantQdeComponent implements OnInit, AfterViewInit {
                         'organization',
                         'regAddress',
                         'corpAddr',
-                        'revenueAddr',
-                        'coApplicant'
+                        'revenueAddr'
+                        
   ];
 
   constructor(private renderer: Renderer2,
@@ -101,7 +102,7 @@ export class CoApplicantQdeComponent implements OnInit, AfterViewInit {
       let localFragment = fragment;
       
       if(fragment == null) {
-        localFragment = 'pan';
+        localFragment = 'dashboard';
       }
 
       // Replace Fragments in url
@@ -170,11 +171,26 @@ export class CoApplicantQdeComponent implements OnInit, AfterViewInit {
   
       this.activeTab = tabIndex;
 
-      if(tabIndex == 9) {
-        this.applicantIndividual = false;
-      }else if(tabIndex == 0) {
-        this.applicantIndividual = true;
-      }
+      // if(tabIndex == 9) {
+      //   this.applicantIndividual = false;
+      // }else if(tabIndex == 0) {
+      //   this.applicantIndividual = true;
+      // }
+    }
+  }
+
+  setApplicationType(value: boolean) {
+    console.log(value);
+    this.applicantIndividual = value;
+  }
+
+
+  // switch to corresponding tab after selecting relationship  
+  goToFirstTab() {
+    if(this.applicantIndividual) {
+      this.tabSwitch(1);
+    }else {
+      this.tabSwitch(10);
     }
   }
 

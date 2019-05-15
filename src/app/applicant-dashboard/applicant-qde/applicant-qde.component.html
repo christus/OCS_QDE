@@ -104,19 +104,30 @@
                                       </form>
                                   </div>
                                   <div class="swiper-slide">
-                                      <form class="bs-form" id="pan-form">
+                                      <form class="bs-form" id="pan-form" #f="ngForm">
                                           <div class="form-wrap">
                                               <div class="form-group last">
                                                   <input  type="text"
                                                           class="form-control"
+                                                          ngModel
                                                           id="pan-inpt"
-                                                          data-validation-attr="pan"
+                                                          minlength="10"
+                                                          maxlength="10"
+                                                          pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}"                                                    
+                                                          name="pan"
+                                                          #pan="ngModel"
                                                           required>
-                                                  <label for="pan-inpt">Enter PAN number</label>
+                                                  <label for="pan-inpt">Enter PAN numbers</label>
+                                                  <div *ngIf="pan.touched || pan.invalid" class="invalid-feedback">
+                                                      <div *ngIf="pan.errors?.required">*PAN number is required</div>
+                                                      <div *ngIf="pan.errors?.pattern ? true : false">*PAN not valid</div>
+                                                      <div *ngIf="pan.errors?.minlength || pan.errors?.maxlength">*PAN must be at least {{pan.errors.minlength.requiredLength}} characters</div>
+                                                  </div>
+
                                               </div>
                                           </div>
                                           <div class="btn-wrap">
-                                              <button class="btn btn-primary disabled" (click)="goToNextSlide()">Next</button>
+                                              <button class="btn btn-primary disabled" (click)="goToNextSlide(panSlider2, f)">Next</button>
                                           </div>
 
                                       </form>
@@ -185,18 +196,24 @@
                                   #pdSlider2="ngxSwiper">
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide">
-                                        <form class="bs-form" id="personal-form">
+                                        <form class="bs-form" id="personal-form" #nameForm="ngForm">
                                             <div class="form-wrap">
+                                               <!--  <div class="form-group">
+                                                   <span class="control-title">Title</span>
+                                                   <ng-select [searchable]="false" [(ngModel)]="temp" name="temp">
+                                                       <ng-option value="yes">Yes</ng-option>
+                                                       <ng-option value="no">No</ng-option>
+                                                   </ng-select>
+                                               </div> -->
                                                 <div class="form-group">
-                                                    <span class="control-title">Title</span>
-                                                    <ng-select [searchable]="false" [(ngModel)]="temp" name="temp">
-                                                        <ng-option value="yes">Yes</ng-option>
-                                                        <ng-option value="no">No</ng-option>
-                                                    </ng-select>
-                                                </div>
-                                                <div class="form-group">
-                                                  <input type="text" class="form-control" data-validation-attr="name" id="name">
+                                                  <input type="text" class="form-control" id="name" ngModel name="firstName" 
+                                                    #firstName="ngModel" 
+                                                    required 
+                                                    pattern="">
                                                   <label for="name">First name</label>
+                                                  <div *ngIf="firstName.touched || firstName.invalid" class="invalid-feedback">
+                                                      <div *ngIf="firstName.errors?.required">*FirstName number is required</div>
+                                                  </div>
                                                 </div>
                                                 <div class="form-group typ-optional">
                                                   <input type="text" class="form-control" id="mname">
@@ -204,12 +221,15 @@
                                                   <span class="optional">Optional</span>
                                                 </div>
                                                 <div class="form-group">
-                                                  <input type="text" class="form-control" data-validation-attr="name" id="lname" required>
+                                                  <input type="text" class="form-control" ngModel name="lastName" #lastName="ngModel" id="lname" required>
                                                   <label for="lname">Last name</label>
+                                                  <div *ngIf="lastName.touched || lastName.invalid" class="invalid-feedback">
+                                                    <div *ngIf="lastname.errors?.required">*LastName is required</div>
+                                                  </div>
                                                 </div>
                                             </div>
                                             <div class="btn-wrap">
-                                              <button class="btn btn-primary disabled" (click)="goToNextSlide(pdSlider2)">Next</button>
+                                              <button class="btn btn-primary disabled" (click)="goToNextSlide(pdSlider2, nameForm)">Next</button>
                                             </div>
                                         </form>
                                     </div>
