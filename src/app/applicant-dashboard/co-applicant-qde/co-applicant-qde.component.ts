@@ -6,12 +6,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Options } from 'ng5-slider';
 
 @Component({
-  selector: 'app-applicant-qde',
-  templateUrl: './applicant-qde.component.html',
-  styleUrls: ['./applicant-qde.component.css']
+  selector: 'app-co-applicant-qde',
+  templateUrl: './co-applicant-qde.component.html',
+  styleUrls: ['./co-applicant-qde.component.css']
 })
-export class ApplicantQdeComponent implements OnInit, AfterViewInit {
-  
+export class CoApplicantQdeComponent implements OnInit, AfterViewInit {
+
+
   value: number = 0;
 
   minValue: number = 1;
@@ -53,6 +54,9 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
   // @ViewChild(Select2Component) private select2: Select2Component;
 
   // All Swiper Sliders
+  @ViewChild('coApplicant1') private coApplicant1: ElementRef;
+  @ViewChild('coApplicant2') private coApplicant2: ElementRef;
+
   @ViewChild('panSlider1') private panSlider1: ElementRef;
   @ViewChild('panSlider2') private panSlider2: ElementRef;
   @ViewChild('pdSlider1') private pdSlider1: ElementRef;
@@ -69,7 +73,8 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
   private applicantIndividual:boolean = true;
   
 
-  private fragments = [ 'pan',
+  private fragments = [ 
+                        'pan',
                         'personal',
                         'contact',
                         'address',
@@ -81,7 +86,8 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
                         'organization',
                         'regAddress',
                         'corpAddr',
-                        'revenueAddr'
+                        'revenueAddr',
+                        'coApplicant'
   ];
 
   constructor(private renderer: Renderer2,
@@ -198,4 +204,5 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
   }
 
   private temp;
+
 }

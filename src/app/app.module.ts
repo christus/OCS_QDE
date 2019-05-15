@@ -12,22 +12,13 @@ import { AppComponent } from './app.component';
 
 // Applicant Details
 import { ApplicantDashboardComponent } from './applicant-dashboard/applicant-dashboard.component';
-import { ContactDetailsComponent } from './applicant-dashboard/contact-details/contact-details.component';
 import { EnterMPINComponent } from './Login/enter-mpin/enter-mpin.component';
 import { ForgotMPINComponent } from './Login/forgot-mpin/forgot-mpin.component';
 import { LoginComponent } from './Login/login/login.component';
 import { LoginWithMPINComponent } from './Login/login-with-mpin/login-with-mpin.component';
 import { MenubarHeaderComponent } from './menubar-header/menubar-header.component';
-import { PanComponent } from './applicant-dashboard/applicant-qde/pan/pan.component';
 
 import { UserLoginComponent } from './Login/user-login/user-login.component';
-import { PersonalDetailsComponent } from './applicant-dashboard/personal-details/personal-details.component';
-import { CommunicationAddressComponent } from './applicant-dashboard/communication-address/communication-address.component';
-import { MaritalStatusComponent } from './applicant-dashboard/marital-status/marital-status.component';
-import { FamilyDetailsComponent } from './applicant-dashboard/family-details/family-details.component';
-import { OtherComponent } from './applicant-dashboard/other/other.component';
-import { OccupationDetailsComponent } from './applicant-dashboard/occupation-details/occupation-details.component';
-import { OfficialCorrespondenceComponent } from './applicant-dashboard/official-correspondence/official-correspondence.component';
 
 // Co-Applicant Details
 // import { CoAppOrgDetailsComponent } from './Co-ApplicantDetails/co-app-org-details/co-app-org-details.component';
@@ -51,6 +42,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
 
 import { Ng5SliderModule } from 'ng5-slider';
+import { CoApplicantQdeComponent } from './applicant-dashboard/co-applicant-qde/co-applicant-qde.component';
 
 // Routes are temporarily in app.module.ts
 const appRoutes: Routes = [
@@ -65,21 +57,12 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
 @NgModule({
   declarations: [
     AppComponent,
-    ContactDetailsComponent,
     EnterMPINComponent,
     ForgotMPINComponent,
     LoginComponent,
     LoginWithMPINComponent,
     MenubarHeaderComponent,
-    PanComponent,
     UserLoginComponent,
-    PersonalDetailsComponent,
-    CommunicationAddressComponent,
-    MaritalStatusComponent,
-    FamilyDetailsComponent,
-    OtherComponent,
-    OccupationDetailsComponent,
-    OfficialCorrespondenceComponent,
     // CoAppOrgDetailsComponent,
     // CoAppCorpAddrComponent,
     // CoAppRevenueDetailsComponent,
@@ -95,6 +78,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     ApplicantDashboardComponent,
     LeadsListComponent,
     ApplicantQdeComponent,
+    CoApplicantQdeComponent
   ],
   imports: [
     BrowserModule,
