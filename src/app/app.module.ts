@@ -46,7 +46,12 @@ import { CoApplicantQdeComponent } from './applicant-dashboard/co-applicant-qde/
 
 // Routes are temporarily in app.module.ts
 const appRoutes: Routes = [
-  { path: '', component: ApplicantDashboardComponent }
+  { path: '', component: ApplicantDashboardComponent, children: [
+    { path: '', redirectTo: 'applicant' ,pathMatch: 'full'},
+    { path: 'applicant', component: ApplicantQdeComponent },
+    { path: 'leads', component: LeadsListComponent },
+    { path: 'co-applicant', component: CoApplicantQdeComponent }
+  ] }
 ];
  
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
