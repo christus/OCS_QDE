@@ -43,6 +43,8 @@ import { FormsModule } from '@angular/forms';
 
 import { Ng5SliderModule } from 'ng5-slider';
 import { CoApplicantQdeComponent } from './applicant-dashboard/co-applicant-qde/co-applicant-qde.component';
+import { LoanQdeComponent } from './applicant-dashboard/loan-qde/loan-qde.component';
+import { ReferencesQdeComponent } from './applicant-dashboard/references-qde/references-qde.component';
 
 // Routes are temporarily in app.module.ts
 const appRoutes: Routes = [
@@ -50,7 +52,9 @@ const appRoutes: Routes = [
     { path: '', redirectTo: 'applicant' ,pathMatch: 'full'},
     { path: 'applicant', component: ApplicantQdeComponent },
     { path: 'leads', component: LeadsListComponent },
-    { path: 'co-applicant', component: CoApplicantQdeComponent }
+    { path: 'co-applicant', component: CoApplicantQdeComponent },
+    { path: 'loan', component: LoanQdeComponent},
+    { path: 'references', component: ReferencesQdeComponent }
   ] }
 ];
  
@@ -83,14 +87,17 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     ApplicantDashboardComponent,
     LeadsListComponent,
     ApplicantQdeComponent,
-    CoApplicantQdeComponent
+    CoApplicantQdeComponent,
+    LoanQdeComponent,
+    ReferencesQdeComponent,
+
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(appRoutes),
     SwiperModule,
     FormsModule,
-    NgSelectModule,
+    // NgSelectModule,
     Ng5SliderModule
   ],
   providers: [

@@ -1,0 +1,340 @@
+<main>
+  <div class="main">
+
+    <div class="lyt-home">
+      <div class="tabs">
+        <ul class="tabs-head">
+          <li class="tab-link pending" [ngClass]="{'active': (activeTab == 0)}">
+            <a href="javascript:void(0);" (click)="tabSwitch(0)">INCOME DETAILS</a>
+          </li>
+          <li class="tab-link" [ngClass]="{'active': (activeTab == 1), 'hide': (!applicantIndividual)}">
+            <a href="javascript:void(0);" (click)="tabSwitch(1)">LOAN AMOUNT</a>
+          </li>
+          <li class="tab-link" [ngClass]="{'active': (activeTab == 2), 'hide': (!applicantIndividual)}">
+            <a href="javascript:void(0);" (click)="tabSwitch(2)">PROPERTY</a>
+          </li>
+          <li class="tab-link" [ngClass]="{'active': (activeTab == 3), 'hide': (!applicantIndividual)}">
+            <a href="javascript:void(0);" (click)="tabSwitch(3)">EXISTING LOANS</a>
+          </li>
+         
+        </ul>
+        <div class="tabs-contents" #tabContents>
+          <div class="tab-content" [ngClass]="{'active': (activeTab == 0)}">
+            <!-- <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(panSlider2)"></a> -->
+            <div class="lyt-tabs">
+
+              <div class="lhs">
+                <div class="swiper-container form-swiper"
+                [swiper]="lhsConfig" 
+                #incomeDetail1="ngxSwiper">
+                  <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                      <div class="title-wrap">
+                        <h4 class="title">Enter applicant's <span class="cm-line-break"></span>income details</h4>
+                        <p class="note">Please enter household income & expenditure of main applicant & co-applicant/s</p>
+                      </div>
+                    </div>
+                    <div class="swiper-slide">
+                      <div class="title-wrap">
+                        <h4 class="title">Do you or any of the <span class="cm-line-break"></span>family members <span
+                            class="cm-line-break"></span> own a puccahouse <span class="cm-line-break"></span>anywhere in India?</h4>
+                        <p class="note">House made with a high quality materials throughout, including a floor, roof and exterior walls, are
+                          called pucca houses</p>
+                      </div>
+                    </div>
+                    <div class="swiper-slide">
+                      <div class="title-wrap">
+                        <h4 class="title">Do you or any of the <span class="cm-line-break"></span>family members <span
+                            class="cm-line-break"></span> own a puccahouse <span class="cm-line-break"></span>anywhere in India?</h4>
+                        <p class="note">House made with a high quality materials throughout, including a floor, roof and exterior walls, are
+                          called pucca houses</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="rhs">
+                <div class="swiper-container form-swiper "
+                  [swiper]="rhsConfig"
+                  (slidePrevTransitionStart)="slidePrevTransitionStart(incomeDetail1)"
+                  (slideNextTransitionStart)="slideNextTransitionStart(incomeDetail1)"
+                  #incomeDetail2="ngxSwiper">
+                  <div class="swiper-wrapper">
+
+                    <div class="swiper-slide">
+                     
+                      <form class="bs-form">
+                        <div class="form-wrap">
+                          <div class="form-group inr">
+                            <input type="text" class="form-control" id="annual-income">
+                            <label for="annual-income">Annual family income</label>
+                            <span class="addon">
+                              <span class="icon icon-inr"></span>
+                            </span>
+                            <span class="in-word"></span>
+                          </div>
+                          <div class="form-group inr">
+                            <input type="text" class="form-control" id="family-income">
+                            <label for="family-income">Annual family income</label>
+                            <span class="addon">
+                              <span class="icon icon-inr"></span>
+                            </span>
+                            <span class="in-word"></span>
+                          </div>
+                        </div>
+                        <div class="btn-wrap">
+                          <button class="btn btn-primary disabled">Next</button>
+                        </div>
+                      </form>
+                    </div>
+
+                    <div class="swiper-slide">
+                      <form class="bs-form">
+                        <div class="form-wrap">
+                          <div class="bs-radio">
+                            <input type="radio" name="pucca-radio" id="yes-pucca">
+                            <label for="yes-pucca"><span>Yes</span></label>
+                          </div>
+                          <div class="bs-radio">
+                            <input type="radio" name="pucca-radio" id="no-pucca">
+                            <label for="no-pucca"><span>No</span></label>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                    
+                    <div class="swiper-slide">
+                    </div>
+
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-content" [ngClass]="{'active': (activeTab == 1)}">
+            <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(incomeDetail1)"></a>
+            <div class="lyt-tabs">
+              <div class="lhs">
+                <div class="title-wrap">
+                  <h4 class="title">Enter desired loan <span class="cm-line-break"></span>amount & purpose</h4>
+                  <p class="note">Enter the property details for which loan is being sought for</p>
+                </div>
+              </div>
+              <div class="rhs">
+                <form class="bs-form" id="personal-form">
+                  <div class="form-wrap">
+                    <div class="form-group inr">
+                      <input type="text" class="form-control" id="amt-require">
+                      <label for="amt-require">Amount required (in lakhs)</label>
+                      <span class="addon">
+                        <span class="icon icon-inr"></span>
+                      </span>
+                      <span class="in-word"></span>
+                    </div>
+                    <div class="form-group">
+                      <span class="control-title">Loan purpose</span>
+                      <select class="js-select" name="loan-purpose">
+                        <option value="o1">Purchase of land</option>
+                        <option value="o2">option2</option>
+                        <option value="o3">option3</option>
+                        <option value="o4">option4</option>
+                      </select>
+                    </div>
+                    <div class="form-group typ-range">
+                      <span class="control-title">Loan tenure (in years)</span>
+                      <input type="text" class="form-control" id="no-yrs">
+                      <span class="yr-text">Years</span>
+                      <div id="year-range" class="range-slider"></div>
+                    </div>
+                  </div>
+                  <div class="btn-wrap">
+                    <button class="btn btn-primary disabled">Next</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="tab-content" [ngClass]="{'active': (activeTab == 2)}">
+            <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
+
+            <div class="lyt-tabs">
+              <div class="lhs">
+                <div class="swiper-container form-swiper" [swiper]="lhsConfig" #property1="ngxSwiper">
+                  <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                      <div class="title-wrap">
+                        <h4 class="title">Have you identified <span class="cm-line-break"></span>the property?</h4>
+                        <p class="note">Enter the property details for which loan is being sought for</p>
+                      </div>
+                    </div>
+                    <div class="swiper-slide">
+                      <div class="title-wrap">
+                        <h4 class="title">Enter the <span class="cm-line-break"></span>property address</h4>
+                        <p class="note">Enter the property details for which loan is being sought for</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="rhs">
+                <div class="swiper-container form-swiper" [swiper]="rhsConfig"
+                  (slidePrevTransitionStart)="slidePrevTransitionStart(property1)"
+                  (slideNextTransitionStart)="slideNextTransitionStart(property1)" #property2="ngxSwiper">
+                  <div class="swiper-wrapper">
+                   
+                    <div class="swiper-slide">
+                      <form class="bs-form">
+                        <div class="form-wrap">
+                          <div class="bs-radio">
+                            <input type="radio" name="property-radio" id="yes-property">
+                            <label for="yes-property"><span>Yes</span></label>
+                          </div>
+                          <div class="bs-radio">
+                            <input type="radio" name="property-radio" id="no-property">
+                            <label for="no-property"><span>No</span></label>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                    <div class="swiper-slide">
+                      <form class="bs-form">
+                        <div class="form-wrap">
+                          <div class="form-group">
+                            <input type="text" class="form-control" id="proprty-pin">
+                            <label for="proprty-pin">Property pincode</label>
+                          </div>
+                          <div class="form-group">
+                            <input type="text" class="form-control" id="pro-add-line1">
+                            <label for="pro-add-line1">Property address line1</label>
+                          </div>
+                          <div class="form-group">
+                            <input type="text" class="form-control" id="pro-add-line2">
+                            <label for="pro-add-line2">Property address line2</label>
+                          </div>
+                          <div class="form-group">
+                            <input type="text" class="form-control" id="pro-city2">
+                            <label for="pro-city">City/State</label>
+                          </div>
+                        </div>
+                        <div class="btn-wrap">
+                          <button class="btn btn-primary disabled">Next</button>
+                        </div>
+                      </form>
+                    </div>
+                    
+
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+
+
+          <div class="tab-content" [ngClass]="{'active': (activeTab == 3)}">
+            <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
+            <div class="lyt-tabs">
+              <div class="lhs">
+                <div class="swiper-container form-swiper " [swiper]="lhsConfig" #existingLoan1="ngxSwiper">
+                  <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                      <div class="title-wrap">
+                        <h4 class="title">Select existing<span class="cm-line-break"></span>loan provider</h4>
+                        <p class="note">Enter existing loan & EMI details for applicant & co-applicant both</p>
+                      </div>
+                    </div>
+                    <div class="swiper-slide">
+                      <div class="title-wrap">
+                        <h4 class="title">Enter total number <span class="cm-line-break"></span>of live loans</h4>
+                        <p class="note">For applicant & all co-applicants together</p>
+                      </div>
+                    </div>
+                    <div class="swiper-slide">
+                      <div class="title-wrap">
+                        <h4 class="title">Enter total existing <span class="cm-line-break"></span>monthly EMI</h4>
+                        <p class="note">For applicant & all co-applicants together</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="rhs">
+                <div class="swiper-container form-swiper" [swiper]="rhsConfig"
+                  (slidePrevTransitionStart)="slidePrevTransitionStart(existingLoan1)"
+                  (slideNextTransitionStart)="slideNextTransitionStart(existingLoan1)" #existingLoan2="ngxSwiper">
+                  <div class="swiper-wrapper">
+
+                    <div class="swiper-slide">
+                      <form class="bs-form">
+                        <div class="form-wrap">
+                          <div class="form-group">
+                            <span class="control-title">Loan provider</span>
+                            <select name="loan-provider" class="js-select">
+                              <option value="">Loan provider</option>
+                              <option value="">SBI home loan</option>
+                              <option value="">option1</option>
+                              <option value="">option2</option>
+                              <option value="">option3</option>
+                            </select>
+                          </div>
+                        </div>
+                
+                        <div class="btn-wrap">
+                          <button class="btn btn-primary disabled">next</button>
+                        </div>
+                      </form>
+                    </div>
+
+                    <div class="swiper-slide">
+                      <form class="bs-form">
+                        <div class="form-wrap">
+                          <div class="form-group">
+                            <div class="range-slider typ-number"></div>
+                          </div>
+                        </div>
+                        <div class="btn-wrap">
+                          <button class="btn btn-primary disabled">Next</button>
+                        </div>
+                      </form>
+                    </div>
+
+                    <div class="swiper-slide">
+                      <form class="bs-form">
+                        <div class="form-wrap">
+                          <div class="form-group inr">
+                            <input type="text" class="form-control" id="monthly-emi">
+                            <label for="monthly-emi">Monthly EMI</label>
+                            <span class="addon">
+                              <span class="icon icon-inr"></span>
+                            </span>
+                            <span class="in-word"></span>
+                          </div>
+                        </div>
+                        <div class="btn-wrap">
+                          <button class="btn btn-primary disabled">Next</button>
+                        </div>
+                      </form>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="cm-autoSave"><span class="cm-bold">Autosaved</span> <span>at 09:26 AM</span></span>
+</main>
+
+<div class="overlay"></div>

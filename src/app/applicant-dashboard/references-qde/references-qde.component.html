@@ -1,0 +1,375 @@
+<main>
+  <div class="main">
+
+    <div class="lyt-home">
+      <div class="tabs">
+        <ul class="tabs-head">
+          <li class="tab-link pending" [ngClass]="{'active': (activeTab == 0)}">
+            <a href="javascript:void(0);" (click)="tabSwitch(0)">REFERENCES 1</a>
+          </li>
+          <li class="tab-link" [ngClass]="{'active': (activeTab == 1), 'hide': (!applicantIndividual)}">
+            <a href="javascript:void(0);" (click)="tabSwitch(1)">REFERENCES 2</a>
+          </li>
+
+        </ul>
+        <div class="tabs-contents" #tabContents>
+          <div class="tab-content" [ngClass]="{'active': (activeTab == 0)}">
+            <!-- <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(panSlider2)"></a> -->
+            <div class="lyt-tabs">
+
+              <div class="lhs">
+                <div class="swiper-container form-swiper " 
+                [swiper]="lhsConfig" 
+                #reference1="ngxSwiper">
+                  <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                      <div class="title-wrap">
+                        <h4 class="title">Relationship with <span class="cm-line-break"></span>the applicant</h4>
+                        <p class="note">References are collected for regulatory purpose & must be indivduals other than applicant or
+                          co-applicant/s</p>
+                      </div>
+                    </div>
+                    <div class="swiper-slide">
+                      <div class="title-wrap">
+                        <h4 class="title">Enter Reference 1's <span class="cm-line-break"></span>personal details</h4>
+                        <p class="note">References are collected for regulatory purpose & must be indivduals other than applicant or
+                          co-applicant/s</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="rhs">
+                <div class="swiper-container form-swiper"
+                [swiper]="rhsConfig"
+                  (slidePrevTransitionStart)="slidePrevTransitionStart(reference1)"
+                  (slideNextTransitionStart)="slideNextTransitionStart(reference1)"
+                  #reference2="ngxSwiper">
+                  <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                      <form class="bs-form">
+                        <div class="form-wrap">
+                          <div class="form-group">
+                            <span class="control-title">Select</span>
+                            <select name="relation" class="js-select">
+                              <option value="">Father</option>
+                              <option value="">Mother</option>
+                              <option value="">Spouse</option>
+                              <option value="">Friend</option>
+                              <option value="">Other</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="btn-wrap">
+                          <button class="btn btn-primary disabled">Next</button>
+                        </div>
+                      </form>
+                    </div>
+                    <div class="swiper-slide">
+                      <form class="bs-form">
+                        <div class="form-wrap">
+                          <div class="form-group">
+                            <span class="control-title">Title</span>
+                            <select name="relation" class="js-select">
+                              <option value="">Mr</option>
+                              <option value="">Mrs</option>
+                              <option value="">Dr</option>
+                            </select>
+                          </div>
+                          <div class="form-group">
+                            <input type="text" class="form-control" id="ref1-name">
+                            <label for="ref1-name">Full name</label>
+                          </div>
+                          <div class="form-group">
+                            <input type="text" class="form-control" id="ref1-mobile">
+                            <label for="ref1-mobile">Mobile number</label>
+                          </div>
+                          <div class="form-group">
+                            <input type="text" class="form-control" id="ref1-add1">
+                            <label for="ref1-add1">Address line1</label>
+                          </div>
+                          <div class="form-group">
+                            <input type="text" class="form-control" id="ref1-add2">
+                            <label for="ref1-add2">Address line2</label>
+                          </div>
+                        </div>
+                        <div class="btn-wrap">
+                          <button class="btn btn-primary disabled">Next</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-content" [ngClass]="{'active': (activeTab == 1)}">
+            <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(incomeDetail1)"></a>
+            <div class="lyt-tabs">
+              <div class="lhs">
+              <div class="swiper-container form-swiper">
+                <div class="swiper-wrapper">
+                  <div class="swiper-slide">
+                    <div class="title-wrap">
+                      <h4 class="title">Relationship with <span class="cm-line-break"></span>the applicant</h4>
+                      <p class="note">References are collected for regulatory purpose & must be indivduals other than applicant or
+                        co-applicant/s</p>
+                    </div>
+                  </div>
+                  <div class="swiper-slide">
+                    <div class="title-wrap">
+                      <h4 class="title">Enter Reference 2's <span class="cm-line-break"></span>personal details</h4>
+                      <p class="note">References are collected for regulatory purpose & must be indivduals other than applicant or
+                        co-applicant/s</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              </div>
+              <div class="rhs">
+                <div class="swiper-container form-swiper"
+                [swiper]="rhsConfig"
+                  (slidePrevTransitionStart)="slidePrevTransitionStart(reference1)"
+                  (slideNextTransitionStart)="slideNextTransitionStart(reference1)"
+                  #reference2="ngxSwiper">
+                <div class="swiper-wrapper">
+                  <div class="swiper-slide">
+                    <form class="bs-form">
+                      <div class="form-wrap">
+                        <div class="form-group">
+                          <span class="control-title">Select</span>
+                          <select name="relation" class="js-select">
+                            <option value="">Father</option>
+                            <option value="">Mother</option>
+                            <option value="">Spouse</option>
+                            <option value="">Friend</option>
+                            <option value="">Other</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="btn-wrap">
+                        <button class="btn btn-primary disabled">Next</button>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="swiper-slide">
+                    <form class="bs-form">
+                      <div class="form-wrap">
+                        <div class="form-group">
+                          <span class="control-title">Title</span>
+                          <select name="relation" class="js-select">
+                            <option value="">Mr</option>
+                            <option value="">Mrs</option>
+                            <option value="">Dr</option>
+                          </select>
+                        </div>
+                        <div class="form-group">
+                          <input type="text" class="form-control" id="ref1-name">
+                          <label for="ref1-name">Full name</label>
+                        </div>
+                        <div class="form-group">
+                          <input type="text" class="form-control" id="ref1-mobile">
+                          <label for="ref1-mobile">Mobile number</label>
+                        </div>
+                        <div class="form-group">
+                          <input type="text" class="form-control" id="ref1-add1">
+                          <label for="ref1-add1">Address line1</label>
+                        </div>
+                        <div class="form-group">
+                          <input type="text" class="form-control" id="ref1-add2">
+                          <label for="ref1-add2">Address line2</label>
+                        </div>
+                      </div>
+                      <div class="btn-wrap">
+                        <button class="btn btn-primary disabled">Next</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="tab-content" [ngClass]="{'active': (activeTab == 2)}">
+            <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
+
+            <div class="lyt-tabs">
+              <div class="lhs">
+                <div class="swiper-container form-swiper" [swiper]="lhsConfig" #property1="ngxSwiper">
+                  <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                      <div class="title-wrap">
+                        <h4 class="title">Have you identified <span class="cm-line-break"></span>the property?</h4>
+                        <p class="note">Enter the property details for which loan is being sought for</p>
+                      </div>
+                    </div>
+                    <div class="swiper-slide">
+                      <div class="title-wrap">
+                        <h4 class="title">Enter the <span class="cm-line-break"></span>property address</h4>
+                        <p class="note">Enter the property details for which loan is being sought for</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="rhs">
+                <div class="swiper-container form-swiper" [swiper]="rhsConfig"
+                  (slidePrevTransitionStart)="slidePrevTransitionStart(property1)"
+                  (slideNextTransitionStart)="slideNextTransitionStart(property1)" #property2="ngxSwiper">
+                  <div class="swiper-wrapper">
+
+                    <div class="swiper-slide">
+                      <form class="bs-form">
+                        <div class="form-wrap">
+                          <div class="bs-radio">
+                            <input type="radio" name="property-radio" id="yes-property">
+                            <label for="yes-property"><span>Yes</span></label>
+                          </div>
+                          <div class="bs-radio">
+                            <input type="radio" name="property-radio" id="no-property">
+                            <label for="no-property"><span>No</span></label>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                    <div class="swiper-slide">
+                      <form class="bs-form">
+                        <div class="form-wrap">
+                          <div class="form-group">
+                            <input type="text" class="form-control" id="proprty-pin">
+                            <label for="proprty-pin">Property pincode</label>
+                          </div>
+                          <div class="form-group">
+                            <input type="text" class="form-control" id="pro-add-line1">
+                            <label for="pro-add-line1">Property address line1</label>
+                          </div>
+                          <div class="form-group">
+                            <input type="text" class="form-control" id="pro-add-line2">
+                            <label for="pro-add-line2">Property address line2</label>
+                          </div>
+                          <div class="form-group">
+                            <input type="text" class="form-control" id="pro-city2">
+                            <label for="pro-city">City/State</label>
+                          </div>
+                        </div>
+                        <div class="btn-wrap">
+                          <button class="btn btn-primary disabled">Next</button>
+                        </div>
+                      </form>
+                    </div>
+
+
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+
+
+          <div class="tab-content" [ngClass]="{'active': (activeTab == 3)}">
+            <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
+            <div class="lyt-tabs">
+              <div class="lhs">
+                <div class="swiper-container form-swiper " [swiper]="lhsConfig" #existingLoan1="ngxSwiper">
+                  <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                      <div class="title-wrap">
+                        <h4 class="title">Select existing<span class="cm-line-break"></span>loan provider</h4>
+                        <p class="note">Enter existing loan & EMI details for applicant & co-applicant both</p>
+                      </div>
+                    </div>
+                    <div class="swiper-slide">
+                      <div class="title-wrap">
+                        <h4 class="title">Enter total number <span class="cm-line-break"></span>of live loans</h4>
+                        <p class="note">For applicant & all co-applicants together</p>
+                      </div>
+                    </div>
+                    <div class="swiper-slide">
+                      <div class="title-wrap">
+                        <h4 class="title">Enter total existing <span class="cm-line-break"></span>monthly EMI</h4>
+                        <p class="note">For applicant & all co-applicants together</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="rhs">
+                <div class="swiper-container form-swiper" [swiper]="rhsConfig"
+                  (slidePrevTransitionStart)="slidePrevTransitionStart(existingLoan1)"
+                  (slideNextTransitionStart)="slideNextTransitionStart(existingLoan1)" #existingLoan2="ngxSwiper">
+                  <div class="swiper-wrapper">
+
+                    <div class="swiper-slide">
+                      <form class="bs-form">
+                        <div class="form-wrap">
+                          <div class="form-group">
+                            <span class="control-title">Loan provider</span>
+                            <select name="loan-provider" class="js-select">
+                              <option value="">Loan provider</option>
+                              <option value="">SBI home loan</option>
+                              <option value="">option1</option>
+                              <option value="">option2</option>
+                              <option value="">option3</option>
+                            </select>
+                          </div>
+                        </div>
+
+                        <div class="btn-wrap">
+                          <button class="btn btn-primary disabled">next</button>
+                        </div>
+                      </form>
+                    </div>
+
+                    <div class="swiper-slide">
+                      <form class="bs-form">
+                        <div class="form-wrap">
+                          <div class="form-group">
+                            <div class="range-slider typ-number"></div>
+                          </div>
+                        </div>
+                        <div class="btn-wrap">
+                          <button class="btn btn-primary disabled">Next</button>
+                        </div>
+                      </form>
+                    </div>
+
+                    <div class="swiper-slide">
+                      <form class="bs-form">
+                        <div class="form-wrap">
+                          <div class="form-group inr">
+                            <input type="text" class="form-control" id="monthly-emi">
+                            <label for="monthly-emi">Monthly EMI</label>
+                            <span class="addon">
+                              <span class="icon icon-inr"></span>
+                            </span>
+                            <span class="in-word"></span>
+                          </div>
+                        </div>
+                        <div class="btn-wrap">
+                          <button class="btn btn-primary disabled">Next</button>
+                        </div>
+                      </form>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="cm-autoSave"><span class="cm-bold">Autosaved</span> <span>at 09:26 AM</span></span>
+</main>
+
+<div class="overlay"></div>
