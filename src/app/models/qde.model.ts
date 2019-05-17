@@ -1,5 +1,5 @@
 export default interface Qde {
-    application ?: Application;
+    application : Application;
 }
 
 export interface Application {
@@ -15,7 +15,8 @@ export interface Application {
 
 export interface Applicant {
     applicantId ?: string;
-    isMainApplicant : boolean; /* Individual / Non-individual: true/false */
+    isMainApplicant : boolean; /* Applicant / Co-Applicant: true/false */
+    isIndividual ?: boolean; /* Individual / Non-individual: true/false */
     partnerRelationship ?: string;
     maritalStatus ?: MaritalStatus;
     familyDetails ?: FamilyDetail;
@@ -31,7 +32,7 @@ export interface Applicant {
     registeredAddress ?: RegisteredAddress;
     corporateAddress ?: CorporateAddress;
     revenueDetails ?: RevenueDetail;
-    documents : Array<Document>;
+    documents ?: Array<Document>;
 }
 
 export interface MaritalStatus {
@@ -65,7 +66,7 @@ export interface Occupation {
 
 export interface Pan {
     panNumber : string;
-    panImage : string;
+    panImage ?: string;
 }
 
 export interface PersonalDetail {

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Renderer2, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
     
 import * as Swiper from 'swiper/dist/js/swiper.js';
 // import { Select2Component } from 'ng2-select2';
@@ -7,12 +7,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Options } from 'ng5-slider';
 import { NgForm } from '@angular/forms';
 
+import Qde from 'src/app/models/qde.model';
+import { QdeHttpService } from 'src/app/services/qde-http.service';
+
 @Component({
   selector: 'app-applicant-qde',
   templateUrl: './applicant-qde.component.html',
   styleUrls: ['./applicant-qde.component.css']
 })
-export class ApplicantQdeComponent implements OnInit, AfterViewInit {
+export class ApplicantQdeComponent implements OnInit {
   
   value: number = 0;
 
@@ -86,12 +89,37 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
                         'revenueAddr'
   ];
 
+  applicantIndex: number;
+
+  private qde: Qde = {
+    application: {
+      ocsNumber: "",
+      applicants: [
+        {
+          isMainApplicant: true
+        }
+      ]
+    }
+  };
+
   constructor(private renderer: Renderer2,
               private route: ActivatedRoute,
-              private router: Router) { }
-
+              private router: Router,
+              private qdeHttp: QdeHttpService) {
+    
+  }
+  
   ngOnInit() {
-    // this.renderer.addClass(this.select2.selector.nativeElement, 'js-select');
+      // this.renderer.addClass(this.select2.selector.nativeElement, 'js-select');
+      
+    // Create New Entry
+    this.applicantIndex = 0;
+    // Write code to get data(LOV) and assign applicantIndex if its new or to update.
+    console.log("Applicant Code: ", this.applicantIndex);
+
+    // Assign true as it is Applicant (In future if qde variable is not in parent component then remove below line)
+    this.qde.application.applicants[this.applicantIndex].isMainApplicant = true;
+
 
     this.route.fragment.subscribe((fragment) => {
       let localFragment = fragment;
@@ -106,16 +134,7 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
       }
       
     });
-
-
-
-    
   }
-
-  ngAfterViewInit() {
-
-  }
-
 
   valuechange(newValue) {
     console.log(newValue);
@@ -131,6 +150,7 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
     if (form && !form.valid) {
       return;
     }
+
     // Create ngModel of radio button in future
     swiperInstance.nextSlide();
   }
@@ -140,6 +160,7 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
    * @param swiperInstance LHS Swiper Instance
    */
   slideNextTransitionStart(swiperInstance: Swiper) {
+    console.log(swiperInstance.getIndex());
     swiperInstance.nextSlide();
   }
 
@@ -203,6 +224,24 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
   addRemoveResidenceNumberField() {
     this.isAlternateResidenceNumber = !this.isAlternateResidenceNumber;
   }
-
+  
   private temp;
+
+  //-------------------------------------------------------------
+  // PAN
+  //-------------------------------------------------------------
+
+  submitPanNumber(form: NgForm) {
+    this.qde.application.applicants[this.applicantIndex].pan = {
+      panNumber: form.value
+    };
+
+    this.qdeHttp.createOrUpdatePanDetails(this.qde).subscribe((response) => {
+      console.log("response ", response);
+    }, (error) => {
+      console.log('error ', error);
+    });   
+  }
+
+  //-------------------------------------------------------------
 }

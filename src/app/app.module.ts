@@ -46,6 +46,9 @@ import { CoApplicantQdeComponent } from './applicant-dashboard/co-applicant-qde/
 import { LoanQdeComponent } from './applicant-dashboard/loan-qde/loan-qde.component';
 import { ReferencesQdeComponent } from './applicant-dashboard/references-qde/references-qde.component';
 
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import AuthInterceptor from './services/auth.interceptor';
+
 // Routes are temporarily in app.module.ts
 const appRoutes: Routes = [
   { path: '', component: ApplicantDashboardComponent, children: [
@@ -97,13 +100,19 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     RouterModule.forRoot(appRoutes),
     SwiperModule,
     FormsModule,
-    // NgSelectModule,
-    Ng5SliderModule
+    NgSelectModule,
+    Ng5SliderModule,
+    HttpClientModule
   ],
   providers: [
     {
       provide: SWIPER_CONFIG,
       useValue: DEFAULT_SWIPER_CONFIG
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
     }
   ],
   bootstrap: [AppComponent]
