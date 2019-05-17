@@ -69,7 +69,7 @@
                                   </div>
                                   <div class="swiper-slide">
                                       <div class="title-wrap">
-                                          <h4 class="title">Enter applicant's  <span class="cm-line-break"></span>PAN details</h4>
+                                          <h4 class="title">Upload applicant's  <span class="cm-line-break"></span>PAN details</h4>
                                       </div>
                                   </div>
                               </div>
@@ -88,15 +88,19 @@
                                           <div class="form-wrap">
                                               <div class="bs-radio">
                                                   <input  type="radio"
-                                                          name="applicant-type"
+                                                          name="isIndividual"
                                                           id="individual"
+                                                          [value]="true"
+                                                          ([ngModel])="qde.application.applicants[applicantIndex].isIndividual"
                                                           (change)="goToNextSlide(panSlider2)"  />
                                                   <label for="individual"><span>Individual</span></label>
                                               </div>
                                               <div class="bs-radio">
                                                   <input  type="radio"
-                                                          name="applicant-type"
+                                                          name="isIndividual"
                                                           id="non-individual"
+                                                          [value]="false"
+                                                          ([ngModel])="qde.application.applicants[applicantIndex].isIndividual"
                                                           (change)="tabSwitch(9)" />
                                                   <label for="non-individual"><span>Non-Individual</span></label>
                                               </div>
@@ -104,7 +108,7 @@
                                       </form>
                                   </div>
                                   <div class="swiper-slide">
-                                      <form class="bs-form" id="pan-form" #f="ngForm">
+                                      <form class="bs-form" id="pan-form" #panNumberForm="ngForm" (ngSubmit)="submitPanNumber(panNumberForm)">
                                           <div class="form-wrap">
                                               <div class="form-group last">
                                                   <input  type="text"
@@ -117,7 +121,7 @@
                                                           name="pan"
                                                           #pan="ngModel"
                                                           required>
-                                                  <label for="pan-inpt">Enter PAN numbers</label>
+                                                  <label for="pan-inpt" *ngIf="pan.value == ''">Enter PAN numbers</label>
                                                   <div *ngIf="pan.touched || pan.invalid" class="invalid-feedback">
                                                       <div *ngIf="pan.errors?.required">*PAN number is required</div>
                                                       <div *ngIf="pan.errors?.pattern ? true : false">*PAN not valid</div>
@@ -127,7 +131,11 @@
                                               </div>
                                           </div>
                                           <div class="btn-wrap">
-                                              <button class="btn btn-primary disabled" (click)="goToNextSlide(panSlider2, f)">Next</button>
+                                                <button class="btn btn-primary"
+                                                        [ngClass]="{'disabled': !panNumberForm.valid}"
+                                                        [disabled]="!panNumberForm.valid"
+                                                        (click)="goToNextSlide(panSlider2, f)">Next
+                                                </button>
                                           </div>
 
                                       </form>
@@ -224,7 +232,7 @@
                                                   <input type="text" class="form-control" ngModel name="lastName" #lastName="ngModel" id="lname" required>
                                                   <label for="lname">Last name</label>
                                                   <div *ngIf="lastName.touched || lastName.invalid" class="invalid-feedback">
-                                                    <div *ngIf="lastname.errors?.required">*LastName is required</div>
+                                                    <div *ngIf="lastName.errors?.required">*LastName is required</div>
                                                   </div>
                                                 </div>
                                             </div>
