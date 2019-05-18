@@ -233,7 +233,7 @@ export class ApplicantQdeComponent implements OnInit {
 
   submitPanNumber(form: NgForm) {
     this.qde.application.applicants[this.applicantIndex].pan = {
-      panNumber: form.value
+      panNumber: form.value.pan
     };
 
     this.qdeHttp.createOrUpdatePanDetails(this.qde).subscribe((response) => {

@@ -1,38 +1,50 @@
 import { Injectable } from '@angular/core';
 import Qde from '../models/qde.model';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import RequestEntity, { RequestBody } from '../models/request-entity.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class QdeHttpService {
 
   qdeRequestEntity: RequestEntity = {
-    processId : '',
-    ProcessVariables : {
-
-      request: {
-        application: {
-          ocsNumber: ''
-        } 
-      }
-
+    processId: "0e5efe06762811e982270242ac110003",
+    ProcessVariables: {
+      request: ""
     },
-    workflowId : '',
-    projectId : ""
+    workflowId: "0e40a79e762811e982270242ac110003",
+    projectId: "ff8e364e6fce11e98754782bcb8f3845"
   };
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   /**
    * Create or update PAN Details
    */
   createOrUpdatePanDetails(qde: Qde) {
-    this.qdeRequestEntity.ProcessVariables.request = qde;
+    this.qdeRequestEntity.ProcessVariables.request = JSON.stringify(qde);
 
-    return this.http.post('/api/dude', {"processVariables" : JSON.stringify(this.qdeRequestEntity)}, {
-      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
-    });
+    console.log(">>", this.qdeRequestEntity);
+
+    const body = new HttpParams().set(
+      "processVariables",
+      JSON.stringify(this.qdeRequestEntity)
+    );
+
+    return this.http.post(
+      "/appiyo/d/workflows/0e40a79e762811e982270242ac110003/execute",
+      body.toString(),
+      {
+        headers: new HttpHeaders().set(
+          "Content-Type",
+          "application/x-www-form-urlencoded"
+        ),
+        params: new HttpParams().set(
+          "projectId",
+          "ff8e364e6fce11e98754782bcb8f3845"
+        )
+      }
+    );
   }
 }

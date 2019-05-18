@@ -8,5 +8,5 @@ export default class RequestEntity {
 }
 
 export class RequestBody {
-    request : Qde;
+    request : string;
 }
