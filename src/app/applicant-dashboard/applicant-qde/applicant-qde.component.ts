@@ -218,6 +218,7 @@ export class ApplicantQdeComponent implements OnInit {
     autoplay: false,
     speed: 900,
     effect: "slide",
+    noSwipingClass: '',
   };
 
   private activeTab: number = 0;
