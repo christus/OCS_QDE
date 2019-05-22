@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import Qde from '../models/qde.model';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import RequestEntity from '../models/request-entity.model';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: "root"
@@ -91,5 +92,46 @@ export class QdeHttpService {
       .set('password', data.password);
 
     return this.http.post('/appiyo/account/login', body, options);
+  }
+
+  getLeads() {
+    const processId = environment.api.dashboard.processId;
+    const workflowId = environment.api.dashboard.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: {},
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = new HttpParams().set(
+      'processVariables',
+      JSON.stringify(requestEntity)
+    );
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Access-Control-Allow-Origin': '*'
+    });
+    const options = { headers: headers };
+  
+    let uri = '/appiyo/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.http.put(
+      uri,
+      body,
+      options
+    );
+  }
+
+  isLoggednIn() {
+    let loggedIn = false;
+    if (localStorage.getItem('token')) {
+      loggedIn = true;
+    }
+
+    return loggedIn;
+
   }
 }

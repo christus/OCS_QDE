@@ -3,7 +3,14 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  projectId: '3209f7ea7ba811e982270242ac110002',
+  api: {
+    'dashboard': {
+      'workflowId': '050f5c82789a11e982270242ac110002',
+      'processId': '05282424789a11e982270242ac110002'
+    }
+  }
 };
 
 /*

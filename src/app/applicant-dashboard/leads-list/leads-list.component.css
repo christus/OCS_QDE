@@ -6,3 +6,28 @@
     top: 50px;
     right:50px;
 }
+
+table{
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+th, td {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+table {
+  display: block;
+  overflow: auto;
+  height: 100%;
+  width: 100%;
+  table-layout: fixed ;
+}
+table td {
+  width: 25%;
+}
