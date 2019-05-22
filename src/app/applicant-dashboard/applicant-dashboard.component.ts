@@ -7,9 +7,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ApplicantDashboardComponent implements OnInit {
 
-  // temporary variable
-  showDashboard: boolean = false;
-
   constructor() { }
 
   ngOnInit() {

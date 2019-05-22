@@ -2,11 +2,7 @@ import Qde from "./qde.model";
 
 export default class RequestEntity {
     processId : string;
-    ProcessVariables : RequestBody;
+    ProcessVariables : any;
     workflowId : string;
     projectId : string;
-}
-
-export class RequestBody {
-    request : string;
 }
