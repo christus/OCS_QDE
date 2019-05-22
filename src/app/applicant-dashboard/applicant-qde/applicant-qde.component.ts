@@ -15,7 +15,146 @@ import { QdeHttpService } from 'src/app/services/qde-http.service';
   templateUrl: './applicant-qde.component.html',
   styleUrls: ['./applicant-qde.component.css']
 })
-export class ApplicantQdeComponent implements OnInit {
+export class ApplicantQdeComponent implements OnInit, AfterViewInit {
+
+  errors = {
+
+    pan: {
+      required: "PAN number is required",
+      length: "PAN number must be at least 10 characters",
+      invalid: "PAN number is not valid"
+    },
+
+    personalDetails: {
+      firstName: {
+        required: "First Name is required",
+        invalid: "First Name is not valid"
+      },
+      middleName: {
+        invalid: "Middle Name is not valid"
+      },
+      lastName: {
+        required: "Last Name is required",
+        invalid: "Last Name is not valid"
+      }
+    },
+
+    contactDetails: {
+      preferedEmail: {
+        required: "Preferred Email Id is required",
+        invalid: "Preferred Email Id is not valid"
+      },
+      alternateEmail: {
+        invalid: "Alternate Email Id is not valid"
+      },
+      prefferedMobile: {
+        required: "Preferred Mobile Number is required",
+        invalid: "Preferred Mobile Number is not valid"
+      },
+      alternateMobile: {
+        invalid: "Alternate Mobile Number is not valid"
+      }
+    },
+
+    commAddress: {
+      address1: {
+        required: "Address Line 1 is required",
+        invalid: "Address Line 1 is not valid"
+      },
+      address2: {
+        required: "Address Line 2 is required",
+        invalid: "Address Line 2 is not valid"
+      },
+      pinCode: {
+        required: "Pincode is required",
+        invalid: "Pincode is not valid"
+      },
+      stateOrCity: {
+        required: "State Name / City Name is required",
+        invalid: "State Name / City Name is not valid"
+      }
+    },
+
+    maritialStatus: {
+      spouseName: {
+        required: "Spouse Name is required",
+        invalid: "Spouse Name is not valid"
+      },
+      salaryAmount: {
+        required: "Salary Amount is required",
+        invalid: "Salary Amount is not valid"
+      }
+    },
+
+    familyDetails: {
+
+    },
+
+    other: {
+
+    },
+
+    occupationDetails : {
+      companyDetails: {
+        required: "Company Name is required",
+        invalid: "Company Name is not valid"
+      },
+      currentExp: {
+        required: "Current Experience is required",
+        invalid: "Current Experience is not valid"
+      },
+      totalExp: {
+        required: "Total Experience is required",
+        invalid: "Total Experience is not valid"
+      }
+    },
+
+    officialCorrespondence: {
+      address1: {
+        required: "Office address line1 is required",
+        invalid: "Office address line1 is not valid"
+      },
+      address2: {
+        required: "Office address line2 is required",
+        invalid: "Office address line2 is not valid"
+      },
+      pinCode: {
+        required: "Pincode is required",
+        invalid: "Pincode is not valid"
+      },
+      landMark: {
+        invalid: "Land mark is not valid"
+      },
+      stateOrCity: {
+        required: "State Name / City Name is required",
+        invalid: "State Name / City Name is not valid"
+      }
+    },
+
+    organizationDetails: {
+      orgName: {
+        required: "Organization Name is required",
+        invalid: "Organization Name is not valid"
+      }
+    },
+    registeredAddress: {
+      address : {
+        required: "Registered Address is required",
+        invalid: "Registered Address is not valid"
+      },
+      landMark: {
+        invalid: "Land mark is not valid"
+      },pinCode: {
+        required: "Pincode is required",
+        invalid: "Pincode is not valid"
+      },stateOrCity: {
+        required: "State Name / City Name is required",
+        invalid: "State Name / City Name is not valid"
+      }
+    }
+ 
+  };
+
   
   value: number = 0;
 
