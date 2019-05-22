@@ -6,7 +6,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { SwiperModule } from 'ngx-swiper-wrapper';
 import { SWIPER_CONFIG } from 'ngx-swiper-wrapper';
 import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
-// import { Select2Module } from 'ng2-select2';
 
 import { AppComponent } from './app.component';
 
@@ -54,8 +53,8 @@ import { ListOfValuesResolverService } from './services/list-of-values-resolver.
 // Routes are temporarily in app.module.ts
 const appRoutes: Routes = [
   { path: '', component: ApplicantDashboardComponent, children: [
-    { path: '', redirectTo: 'applicant', pathMatch: 'full' }, // This line will be replaced with signin page
-
+    { path: '', redirectTo: 'login', pathMatch: 'full' },
+    { path: 'login', component: LoginComponent}, // This line will be replaced with signin page
     { path: 'applicant',
       component: ApplicantQdeComponent,
       resolve: {

@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 /* You can add global styles to this file, and also import other style files */
-
+/* @import '~bootstrap/dist/css/bootstrap.min.css'; */
 @import '~swiper/dist/css/swiper.min.css';
 @import "~@ng-select/ng-select/themes/default.theme.css";
 
@@ -4111,7 +4111,8 @@ img {
 	padding: 1.41vw 4.69vw 0 0;
 	max-height: 32.81vw;
 	overflow-y: auto;
-	padding-left: 21px
+	padding-left: 21px;
+	overflow-x: hidden !important
 }
 
 .bs-form .form-wrap .btn-wrap {
@@ -5498,4 +5499,14 @@ img {
 		.bs-form .form-group {
 			width: 35.55vw;
 		}
+
+	}
+	.title option { 
+		overflow-y: scroll;
+		height: 100px;
+	}
+	.title option:hover{
+		color: #999 !important;
+		background:  #f58220 !important;
+		background-color:  #f58220 !important;
 	}

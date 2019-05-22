@@ -77,4 +77,19 @@ export class QdeHttpService {
     );
   }
 
+  authenticate(data: any) {
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Access-Control-Allow-Origin': '*'
+    });
+
+    const options = { headers: headers };
+
+    const body = new HttpParams()
+      .set('email', data.email)
+      .set('password', data.password);
+
+    return this.http.post('/appiyo/account/login', body, options);
+  }
 }

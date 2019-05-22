@@ -13,16 +13,16 @@
       <form class="bs-form">
           <div class="form-wrap">
               <div class="form-group">
-                  <input type="text" class="form-control" id="emp-id">
-                  <label for="emp-id">Employee ID</label>
+                  <input type="text" [(ngModel)]="userName" class="form-control" name="userName" id="emp-id" placeholder="Employee ID">
+                  <!-- <label for="emp-id">Employee ID</label> -->
               </div>
               <div class="form-group last">
-                  <input type="password" class="form-control" id="password">
-                  <label for="password">Password</label>
+                  <input type="password" [(ngModel)]="password" class="form-control" name="password" id="password" placeholder="Password">
+                  <!-- <label for="password" >Password</label> -->
               </div>
           </div>
           <div class="btn-wrap">
-              <button class="btn btn-primary disabled">LOGIN</button>
+              <button class="btn btn-primary disabled" (click)="login()">LOGIN</button>
           </div>
       </form>
   </div>
