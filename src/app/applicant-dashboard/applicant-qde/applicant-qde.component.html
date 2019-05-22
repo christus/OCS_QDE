@@ -230,7 +230,7 @@
                                                         #firstName="ngModel" 
                                                         required 
                                                         pattern="^[A-Za-z]+$" />
-                                                  <label for="name">First name</label>
+                                                  <label for="name" *ngIf="firstName.value == ''">First name</label>
                                                   <div *ngIf="(firstName.touched || firstName.dirty) && firstName.invalid" class="invalid-feedback">
                                                       <div *ngIf="firstName.errors?.required">{{errors.personalDetails.firstName.required}}</div>
                                                       <div *ngIf="firstName.errors?.pattern">{{errors.personalDetails.firstName.invalid}}</div>
@@ -244,7 +244,7 @@
                                                         ngModel
                                                         pattern="^[A-Za-z]*$"
                                                         #middleName="ngModel">
-                                                  <label for="middleName">Middle name</label>
+                                                  <label for="middleName" *ngIf="middleName.value == ''">Middle name</label>
 
                                                   <span class="optional">Optional</span>
                                                     <div *ngIf="(middleName.touched || middleName.dirty) && middleName.invalid" class="invalid-feedback">
@@ -253,12 +253,14 @@
                                                 </div>
                                                 <div class="form-group">
 
-                                                  <input type="text" class="form-control" ngModel name="lastName" 
+                                                  <input type="text" class="form-control" 
+                                                        ngModel 
+                                                        name="lastName" 
                                                         #lastName="ngModel" 
                                                         id="lastName"
                                                         pattern="^[A-Za-z]+$"
                                                         required />
-                                                  <label for="lastName">Last name</label>
+                                                  <label for="lastName" *ngIf="lastName.value == '' ">Last name</label>
                                                   <div *ngIf="(lastName.touched || lastName.dirty) && lastName.invalid" class="invalid-feedback">
                                                     <div *ngIf="lastName.errors?.required">{{errors.personalDetails.lastName.required}}</div>
                                                     <div *ngIf="lastName.errors?.pattern">{{errors.personalDetails.lastName.invalid}}</div>
@@ -445,7 +447,7 @@
                                             email
                                             required />
 
-                                      <label for="pref-email">Preferred email ID</label>
+                                      <label for="pref-email" *ngIf="preferEmailId.value == ''">Preferred email ID</label>
                                       <span class="alternate-data">
                                           <a  href="javascript:void(0);"
                                               class="alter-btn"
@@ -468,7 +470,7 @@
                                             #alternateEmailId="ngModel"
                                             email />
 
-                                      <label for="alter-email">Alternate email ID</label>
+                                      <label for="alter-email" *ngIf="alternateEmailId.value == ''">Alternate email ID</label>
                                       <span class="alternate-data">
                                         <a  href="javascript:void(0);"
                                             class="alter-btn"
@@ -490,7 +492,7 @@
                                         pattern="^[0-9]*$" 
                                         required />
 
-                                      <label for="mob-no">Mobile number</label>
+                                      <label for="mob-no" *ngIf="mobileNumber.value == ''">Mobile number</label>
                                       <span class="optional">10 digit</span>
                                       <a href="#" class="sent-otp modal-init" data-target="sent-otp-modal"><span class="text">sent OTP</span><span class="icon icon-tick"></span></a>
                                       <span class="alternate-data">
@@ -515,7 +517,7 @@
                                         #altMobileNo="ngModel"
                                         pattern="^[0-9]*$" />
 
-                                      <label for="alter-mob">Alternate mobile no</label>
+                                      <label for="alter-mob" *ngIf="altMobileNo.value == ''">Alternate mobile no</label>
                                       <span class="optional">10 digit</span>
                                       <a href="#" class="sent-otp modal-init" data-target="sent-otp-modal"><span class="text">sent OTP</span><span class="icon icon-tick"></span></a>
                                       <span class="alternate-data">
@@ -580,7 +582,10 @@
                                   </div>
                               </div>
                               <div class="btn-wrap">
-                                  <button class="btn btn-primary disabled" (click)="tabSwitch(3)">Next</button>
+                                  <button class="btn btn-primary"
+                                  [ngClass]="{'disabled': !contactForm.valid}"
+                                  [disabled]="!contactForm.valid" 
+                                  (click)="tabSwitch(3)">Next</button>
                               </div>
                           </form>
                       </div>
@@ -628,7 +633,7 @@
                                       </div>
 
 
-                                    <label for="address1">Address line 1</label>
+                                    <label for="address1" *ngIf="address1.value == ''">Address line 1</label>
                                 </div>
 
 
@@ -641,7 +646,7 @@
                                       #address2="ngModel"
                                       required>
 
-                                    <label for="address2">Address line 2</label>
+                                    <label for="address2" *ngIf="address2.value == ''">Address line 2</label>
                                     <div *ngIf="(address2.touched || address2.dirty) && address2.invalid" class="invalid-feedback">
                                       <div *ngIf="address2.errors?.required">{{errors.commAddress.address2.required}}</div>
                                       <div *ngIf="address2.errors?.pattern">{{errors.commAddress.address2.invalid}}</div>
@@ -652,31 +657,31 @@
 
                                     <input type="number" class="form-control" id="pincode" required
                                       ngModel
-                                      #pinCode="ngModel" 
+                                      #commPinCode="ngModel" 
                                       name="pinCode"
                                       maxlength="6"
                                       pattern="^[0-9]+$">
-                                    <label for="pinCode">Pincode</label>
+                                    <label for="pincode" *ngIf="commPinCode.value == ''">Pincode</label>
 
-                                    <div *ngIf="(pinCode.touched || pinCode.dirty) && pinCode.invalid" class="invalid-feedback">
-                                        <div *ngIf="pinCode.errors?.required">{{errors.commAddress.pinCode.required}}</div>
-                                        <div *ngIf="pinCode.errors?.pattern">{{errors.commAddress.pinCode.invalid}}</div>
+                                    <div *ngIf="(commPinCode.touched || commPinCode.dirty) && commPinCode.invalid" class="invalid-feedback">
+                                        <div *ngIf="commPinCode.errors?.required">{{errors.commAddress.pinCode.required}}</div>
+                                        <div *ngIf="commPinCode.errors?.pattern">{{errors.commAddress.pinCode.invalid}}</div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <input type="text" class="form-control" id="cityState"
                                       required
                                       ngModel
-                                      #cityState="ngModel" 
+                                      #commCityState="ngModel" 
                                       name="cityState"
                                       pattern="^[0-9A-Za-z,_#]+$">
 
 
-                                    <label for="cityState">City/State</label>
+                                    <label for="cityState" *ngIf="commCityState.value == ''">City/State</label>
 
-                                    <div *ngIf="(cityState.touched || cityState.dirty) && cityState.invalid" class="invalid-feedback">
-                                        <div *ngIf="cityState.errors?.required">{{errors.commAddress.stateOrCity.required}}</div>
-                                        <div *ngIf="cityState.errors?.pattern">{{errors.commAddress.stateOrCity.invalid}}</div>
+                                    <div *ngIf="(commCityState.touched || commCityState.dirty) && commCityState.invalid" class="invalid-feedback">
+                                        <div *ngIf="commCityState.errors?.required">{{errors.commAddress.stateOrCity.required}}</div>
+                                        <div *ngIf="commCityState.errors?.pattern">{{errors.commAddress.stateOrCity.invalid}}</div>
                                     </div>
                                 </div>
                                 <div class="bs-checkbox typ-withForm">
@@ -694,7 +699,10 @@
                                 </div>
                             </div>
                             <div class="btn-wrap">
-                                <button type="button" class="btn btn-primary disabled" (click)="tabSwitch(4)">Next</button>
+                                <button type="button" class="btn btn-primary" 
+                                [ngClass]="{'disabled': !communicationForm.valid}"
+                                [disabled]="!communicationForm.valid" 
+                                (click)="tabSwitch(4)">Next</button>
                             </div>
                         </form>
                     </div>
@@ -1095,7 +1103,7 @@
                                      name="companyName"
                                      #companyName="ngModel" id="companyName" />
 
-                                    <label for="companyName" (click)="alert(1)" >Company name</label>
+                                    <label for="companyName" (click)="alert(1)" *ngIf="companyName.value == ''">Company name</label>
 
 
                                     <div *ngIf="(companyName.touched || companyName.dirty) && companyName.invalid" class="invalid-feedback">
@@ -1116,7 +1124,7 @@
                                     <span class="yr-text">Years</span>
                                     <div class="range-slider"></div>
 
-                                    <div *ngIf="(currentExperienceYear.touched || currentExperienceYear.dirty) && currentExperienceYear.invalid" class="invalid-feedback">
+                                    <div *ngIf="currentExperienceYear.touched  && currentExperienceYear.invalid" class="invalid-feedback">
                                       <div *ngIf="currentExperienceYear.errors?.required">Experience in current employment/business is required</div>
                                     </div>
 
@@ -1171,14 +1179,15 @@
                                 <div class="form-group">
 
                                     <input type="text" class="form-control"
+                                      id="ofcAddOne"
                                       ngModel
                                       pattern="^[0-9A-Za-z,_#\s]+$"
                                       name="ofcA1"
                                       #ofcA1="ngModel"
                                       required>
-                                    <label for="">Office address line1</label>
+                                    <label for="ofcAddOne" *ngIf="ofcA1.value == ''">Office address line1</label>
 
-                                    <div *ngIf="(ofcA1.touched || ofcA1.dirty) && ofcA1.invalid" class="invalid-feedback">
+                                    <div *ngIf="(ofcA1.touched && ofcA1.dirty) && ofcA1.invalid" class="invalid-feedback">
                                       <div *ngIf="ofcA1.errors?.required">{{errors.officialCorrespondence.address1.required}}</div>
                                       <div *ngIf="ofcA1.errors?.pattern">{{errors.officialCorrespondence.address1.invalid}}</div>
                                     </div>
@@ -1187,14 +1196,15 @@
 
                                 <div class="form-group">
                                     <input type="text" class="form-control"
+                                      id="ofcAddTwo"
                                       ngModel
                                       pattern="^[0-9A-Za-z,_#\s]+$"
                                       name="ofcA2"
                                       #ofcA2="ngModel"
                                       required
                                       >
-                                    <label for="">Office address line2</label>
-                                    <div *ngIf="ofcA2.touched || ofcA2.invalid" class="invalid-feedback">
+                                    <label for="ofcAddTwo" *ngIf="ofcA2.value == ''">Office address line2</label>
+                                    <div *ngIf="ofcA2.touched && ofcA2.invalid" class="invalid-feedback">
                                         <div *ngIf="ofcA2.errors?.required">{{errors.officialCorrespondence.address2.required}}</div>
                                         <div *ngIf="ofcA2.errors?.pattern">{{errors.officialCorrespondence.address2.invalid}}</div>
                                     </div>
@@ -1202,28 +1212,30 @@
 
                                 <div class="form-group typ-optional">
                                     <input type="text" class="form-control"
+                                      id="offLandmark"
                                       ngModel
                                       name="landMark"
                                       pattern="^[0-9A-Za-z,_#]*$" 
                                       #landMark="ngModel">
-                                    <label for="">Landmark</label>
+                                    <label for="offLandmark" *ngIf="landMark.value == ''">Landmark</label>
                                     <span class="optional">optional</span>
 
-                                    <div *ngIf="landMark.touched || landMark.invalid" class="invalid-feedback">
+                                    <div *ngIf="landMark.touched && landMark.invalid" class="invalid-feedback">
                                         <div *ngIf="landMark.errors?.pattern">{{errors.officialCorrespondence.address2.invalid}}</div>
                                     </div>
                                 </div>
                                 <div class="form-group typ-optional">
-                                    <input type="text" class="form-control" 
+                                    <input type="text" class="form-control"
+                                      id="offPincode"
                                       required
                                       ngModel
                                       #pinCode="ngModel" 
                                       name="pinCode"
                                       maxlength="6"
                                       pattern="^[0-9]+$">
-                                    <label for="">Pincode</label>
+                                    <label for="offPincode" *ngIf="pinCode.value == ''">Pincode</label>
 
-                                    <div *ngIf="pinCode.touched || pinCode.invalid" class="invalid-feedback">
+                                    <div *ngIf="pinCode.touched && pinCode.invalid" class="invalid-feedback">
                                         <div *ngIf="pinCode.errors?.required">{{errors.officialCorrespondence.pinCode.required}}</div>
                                         <div *ngIf="pinCode.errors?.pattern">{{errors.officialCorrespondence.pinCode.invalid}}</div>
                                     </div>
@@ -1231,32 +1243,61 @@
                                 </div>
                                 <div class="form-group typ-optional">
                                     <input type="text" class="form-control"
+                                      id="offCityState"
                                       required
                                       ngModel
-                                      #cityState="ngModel" 
+                                      #offCityState="ngModel" 
                                       name="cityState"
                                       pattern="^[0-9A-Za-z,_#]+$">
-                                    <label for="">City/State</label>
+                                    <label for="offCityState" *ngIf="offCityState.value == ''">City/State</label>
 
-                                    <div *ngIf="cityState.touched || cityState.invalid" class="invalid-feedback">
-                                        <div *ngIf="cityState.errors?.required">{{errors.officialCorrespondence.stateOrCity.required}}</div>
-                                        <div *ngIf="cityState.errors?.pattern">{{errors.officialCorrespondence.stateOrCity.invalid}}</div>
+                                    <div *ngIf="offCityState.touched && offCityState.invalid" class="invalid-feedback">
+                                        <div *ngIf="offCityState.errors?.required">{{errors.officialCorrespondence.stateOrCity.required}}</div>
+                                        <div *ngIf="offCityState.errors?.pattern">{{errors.officialCorrespondence.stateOrCity.invalid}}</div>
                                     </div>
                                 </div>
                                 <div class="residence-no">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="std03">
-                                        <label for="std03">STD</label>
+                                        <input type="number" class="form-control" id="std03"
+                                          required
+                                          ngModel
+                                          #stdCode = "ngModel"
+                                          name="stdCode">
+                                        <label for="std03" *ngIf="stdCode.value == ''">STD</label>
+                                        <div *ngIf="stdCode.touched && stdCode.invalid" class="invalid-feedback">
+                                            <div *ngIf="stdCode.errors?.required">{{errors.officialCorrespondence.stdCode.required}}</div>
+                                        </div>
                                     </div>
                                     <span class="seperator">-</span>
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="res-no03" data-validation-attr="residenceno">
-                                        <label for="res-no03">Office number</label>
+                                        <input type="text" class="form-control" id="res-no03" data-validation-attr="residenceno"
+                                          required
+                                          #offStdNumber="ngModel"
+                                          name="offStdNumber"
+                                          ngModel/>
+                                        <label for="res-no03" *ngIf="offStdNumber.value == ''">Office number</label>
+
+
+
+                                        <div *ngIf="offStdNumber.touched && offStdNumber.invalid" class="invalid-feedback">
+                                            <div *ngIf="offStdNumber.errors?.required">{{errors.officialCorrespondence.phoneNumber.required}}</div>
+                                            <div *ngIf="offStdNumber.errors?.pattern">{{errors.officialCorrespondence.phoneNumber.invalid}}</div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group typ-optional">
-                                    <input type="text" class="form-control" id="off-email">
-                                    <label for="off-email">Office email ID</label>
+                                    <input type="email" class="form-control" id="off-email"
+                                      required
+                                      ngModel
+                                      email
+                                      #officeEmail = "ngModel"
+                                      name="officeEmail">
+                                    <label for="off-email" *ngIf="officeEmail.value == ''">Office email ID</label>
+
+                                    <div *ngIf="officeEmail.touched && officeEmail.invalid" class="invalid-feedback">
+                                        <div *ngIf="officeEmail.errors?.required">{{errors.officialCorrespondence.email.required}}</div>
+                                        <div *ngIf="officeEmail.errors?.email">{{errors.officialCorrespondence.email.invalid}}</div>
+                                    </div>
                                 </div>
 
                             </div>
@@ -1288,7 +1329,7 @@
                                       #orgName="ngModel"
                                       name="orgName"
                                       required>
-                                    <label for="org-name">Name of Organization</label>
+                                    <label for="org-name" *ngIf="orgName.value == ''">Name of Organization</label>
 
                                     <div *ngIf="(orgName.touched || orgName.dirty) && orgName.invalid">
                                         <div *ngIf="orgName.errors?.required">{{errors.organizationDetails.orgName.required}}</div>
@@ -1383,7 +1424,7 @@
                                       name="regAdd"
                                       #regAdd="ngModel"
                                       required>
-                                    <label for="reg-add">Registered Address</label>
+                                    <label for="reg-add" *ngIf="regAdd.value == ''">Registered Address</label>
 
                                     <div *ngIf="(regAdd.touched || regAdd.dirty) && regAdd.invalid" class="invalid-feedback">
                                       <div *ngIf="regAdd.errors?.required">{{errors.registeredAddress.address.required}}</div>
@@ -1451,8 +1492,8 @@
                                     <label for="corp-add">Corporate Address</label>
 
                                     <div *ngIf="(corpAddress.touched || corpAddress.dirty) && corpAddress.invalid" class="invalid-feedback">
-                                      <div *ngIf="corpAddress.errors?.required">{{errors.corpAddress.address.required}}</div>
-                                      <div *ngIf="corpAddress.errors?.pattern">{{errors.corpAddress.address.invalid}}</div>
+                                      <div *ngIf="corpAddress.errors?.required">{{errors.corporateAddress.address.required}}</div>
+                                      <div *ngIf="corpAddress.errors?.pattern">{{errors.corporateAddress.address.invalid}}</div>
                                     </div>
                                 </div>
                                 <div class="form-group typ-optional">
@@ -1461,12 +1502,33 @@
                                     <span class="optional">optional</span>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="pincode01">
+                                    <input type="text" class="form-control" id="pincode01" 
+                                      ngModel
+                                      pattern="^[0-9A-Za-z,_#\s]+$"
+                                      name="corpPincode"
+                                      #corpPincode="ngModel"
+                                      required>
                                     <label for="pincode01">Pincode</label>
+
+                                    <div *ngIf="(corpPincode.touched || corpPincode.dirty) && corpPincode.invalid" class="invalid-feedback">
+                                        <div *ngIf="corpPincode.errors?.required">{{errors.corporateAddress.pinCode.required}}</div>
+                                        <div *ngIf="corpPincode.errors?.pattern">{{errors.corporateAddress.pinCode.invalid}}</div>
+                                    </div>
+
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="city-state01">
+                                    <input type="text" class="form-control" id="city-state01" 
+                                      required
+                                      ngModel
+                                      #corpCityState="ngModel" 
+                                      name="corpCityState"
+                                      pattern="^[0-9A-Za-z,_#]+$">
                                     <label for="city-state01">City/State</label>
+
+                                    <div *ngIf="(corpCityState.touched || corpCityState.dirty) && corpCityState.invalid" class="invalid-feedback">
+                                        <div *ngIf="corpCityState.errors?.required">{{errors.corporateAddress.stateOrCity.required}}</div>
+                                        <div *ngIf="corpCityState.errors?.pattern">{{errors.corporateAddress.stateOrCity.invalid}}</div>
+                                    </div>
                                 </div>
                                 <div class="residence-no">
                                     <div class="form-group">
