@@ -32,24 +32,24 @@ export interface Applicant {
     registeredAddress ?: RegisteredAddress;
     corporateAddress ?: CorporateAddress;
     revenueDetails ?: RevenueDetail;
-    documents ?: Array<Document>;
+    documents ?: Array<any>;
 }
 
 export interface MaritalStatus {
-    status : string;
-    spouseTitle : string;
-    firstName : string;
-    earning : boolean;
-    amount : number;
+    status ?: string;
+    spouseTitle ?: string;
+    firstName ?: string;
+    earning ?: boolean;
+    amount ?: number;
 }
 
 export interface FamilyDetail {
-    numberOfDependents : number;
-    fatherTitle : string;
-    fatherName : string;
-    motherTitle : string;
-    motherName : string;
-    motherMaidenName : string;
+    numberOfDependents ?: number;
+    fatherTitle ?: string;
+    fatherName ?: string;
+    motherTitle ?: string;
+    motherName ?: string;
+    motherMaidenName ?: string;
 }
 
 export interface Other {
@@ -60,7 +60,7 @@ export interface Other {
 export interface Occupation {
     occupationType : string;
     companyName : string;
-    numberOfYearsInCurrentComany : number;
+    numberOfYearsInCurrentCompany : number;
     totalWorkExperiance : number;
 }
 
@@ -70,14 +70,14 @@ export interface Pan {
 }
 
 export interface PersonalDetail {
-    title : string;
-    firstName : string;
-    middleName : string;
-    lastName : string;
-    gender : string;
-    qualification : string;
-    dob : string;
-    birthPlace : string;
+    title ?: string;
+    firstName ?: string;
+    middleName ?: string;
+    lastName ?: string;
+    gender ?: string;
+    qualification ?: string;
+    dob ?: string;
+    birthPlace ?: string;
 }
 
 export interface ContactDetail {
@@ -96,7 +96,7 @@ export interface Address {
     pincode : string;
     city : string;
     state : string;
-    numberOfYearsInCurrentResidenc : string;
+    numberOfYearsInCurrentResidence : string;
     permanentAddress ?: boolean;
 }
 

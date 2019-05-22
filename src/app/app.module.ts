@@ -48,15 +48,29 @@ import { ReferencesQdeComponent } from './applicant-dashboard/references-qde/ref
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import AuthInterceptor from './services/auth.interceptor';
+import { QdeResolver } from './services/qde-resolver.service';
+import { ListOfValuesResolverService } from './services/list-of-values-resolver.service';
 
 // Routes are temporarily in app.module.ts
 const appRoutes: Routes = [
   { path: '', component: ApplicantDashboardComponent, children: [
-    { path: '', redirectTo: 'applicant' ,pathMatch: 'full'},
-    { path: 'applicant', component: ApplicantQdeComponent },
+    { path: '', redirectTo: 'applicant', pathMatch: 'full' }, // This line will be replaced with signin page
+
+    { path: 'applicant',
+      component: ApplicantQdeComponent,
+      resolve: {
+        listOfValues : ListOfValuesResolverService
+      }
+    },
+    { path: 'applicant/:applicantId',
+      component: ApplicantQdeComponent,
+      resolve: {
+        listOfValues: QdeResolver
+      }
+    },
     { path: 'leads', component: LeadsListComponent },
     { path: 'co-applicant', component: CoApplicantQdeComponent },
-    { path: 'loan', component: LoanQdeComponent},
+    { path: 'loan', component: LoanQdeComponent },
     { path: 'references', component: ReferencesQdeComponent }
   ] }
 ];
@@ -105,6 +119,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     HttpClientModule
   ],
   providers: [
+    QdeResolver,
+    ListOfValuesResolverService,
     {
       provide: SWIPER_CONFIG,
       useValue: DEFAULT_SWIPER_CONFIG

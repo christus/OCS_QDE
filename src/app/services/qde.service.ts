@@ -1,34 +1,38 @@
-import { Injectable, EventEmitter } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Injectable } from '@angular/core';
 import Qde from '../models/qde.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class QdeService {
+  
+  private qde: Qde;
+  leads: Array<Qde>;
 
-  private dataSource = new Subject<Qde>();
-
-  // Observable Stream
-  data$ = this.dataSource.asObservable();
-
-  constructor() { }
-
-  changeData(data: Qde) {
-    this.dataSource.next(data);
+  constructor() {
+    // Initialize Qde
+    this.qde = {
+      "application": {
+        "ocsNumber": "",
+        "applicants": [
+          {
+            "applicantId": "",
+            "isMainApplicant": false,
+          },
+          {
+            "applicantId": "",
+            "isMainApplicant": false,
+          }
+        ]
+      }
+    };
   }
 
-  // private data: Qde;
-  // private data$: EventEmitter<Qde> = new EventEmitter<Qde>();
+  getQde(): Qde {
+    return this.qde; 
+  }
 
-  // getQde() {
-  //   return this.data;
-  // }
-
-  // changeQde(data: Qde) {
-  //   this.data = data;
-  //   this.data$.emit(data);
-  // }
-
-  
+  setOde(qde: Qde): void {
+    this.qde = qde;
+  }
 }

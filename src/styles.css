@@ -3792,7 +3792,7 @@ img {
 	position: relative;
 	margin-bottom: 5.08vw;
 	max-width: 35.55vw;
-	text-align: left
+	text-align: left;
 }
 
 .bs-form .form-group.last {
@@ -5492,4 +5492,10 @@ img {
 
   .hide {
 	  display: none;
-  }
+	}
+	
+	@media screen and (min-width: 1024px) {
+		.bs-form .form-group {
+			width: 35.55vw;
+		}
+	}

@@ -9,13 +9,14 @@ import { NgForm } from '@angular/forms';
 
 import Qde from 'src/app/models/qde.model';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
+import { QdeService } from 'src/app/services/qde.service';
 
 @Component({
   selector: 'app-applicant-qde',
   templateUrl: './applicant-qde.component.html',
   styleUrls: ['./applicant-qde.component.css']
 })
-export class ApplicantQdeComponent implements OnInit, AfterViewInit {
+export class ApplicantQdeComponent implements OnInit {
 
   errors = {
 
@@ -156,7 +157,7 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
   };
 
   
-  value: number = 0;
+  value: Array<number> = [0,0,0];
 
   minValue: number = 1;
   options: Options = {
@@ -230,27 +231,31 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
 
   applicantIndex: number;
 
-  private qde: Qde = {
-    application: {
-      ocsNumber: "",
-      applicants: [
-        {
-          isMainApplicant: true
-        }
-      ]
-    }
-  };
+  private qde: Qde;
 
   constructor(private renderer: Renderer2,
               private route: ActivatedRoute,
               private router: Router,
-              private qdeHttp: QdeHttpService) {
-    
+              private qdeHttp: QdeHttpService,
+              private qdeService: QdeService) {
   }
   
   ngOnInit() {
-      // this.renderer.addClass(this.select2.selector.nativeElement, 'js-select');
+
+    if(this.route.snapshot.data.listOfValues != null && this.route.snapshot.data.listOfValues != undefined) {
+      // Initialize all UI Values here
+    }
+    
+    // Check Whether there is qde data to be filled or else Initialize Qde
+    this.route.params.subscribe((params) => {
       
+      // Make an http request to get the required qde data and set using setQde
+      if(params.applicantId != undefined && params.applicantId != null) {
+        // setQde(JSON.parse(response.ProcessVariables.response));
+      } else {
+        this.qde = this.qdeService.getQde();
+      }
+    });
     // Create New Entry
     this.applicantIndex = 0;
     // Write code to get data(LOV) and assign applicantIndex if its new or to update.
@@ -258,7 +263,6 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
 
     // Assign true as it is Applicant (In future if qde variable is not in parent component then remove below line)
     this.qde.application.applicants[this.applicantIndex].isMainApplicant = true;
-
 
     this.route.fragment.subscribe((fragment) => {
       let localFragment = fragment;
@@ -270,25 +274,24 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
       // Replace Fragments in url
       if(this.fragments.includes(localFragment)) {
         this.tabSwitch(this.fragments.indexOf(localFragment));
-      }
-      
+      } 
     });
   }
 
-  valuechange(newValue) {
+  valuechange(newValue, valueIndex) {
     console.log(newValue);
-    this.value  = newValue;
+    this.value[valueIndex] = newValue;
   }
 
   /**
    * Use to sync between lhs and rhs sliders
    * @param swiperInstance RHS Swiper Instance
    */
-  goToNextSlide(swiperInstance: Swiper, form?: NgForm) {
+  goToNextSlide(swiperInstance: Swiper) {
 
-    if (form && !form.valid) {
-      return;
-    }
+    // if (form && !form.valid) {
+    //   return;
+    // }
 
     // Create ngModel of radio button in future
     swiperInstance.nextSlide();
@@ -363,24 +366,430 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
   addRemoveResidenceNumberField() {
     this.isAlternateResidenceNumber = !this.isAlternateResidenceNumber;
   }
-  
-  private temp;
 
   //-------------------------------------------------------------
   // PAN
   //-------------------------------------------------------------
+  submitPanNumber(form: NgForm, swiperInstance ?: Swiper) {
 
-  submitPanNumber(form: NgForm) {
+    event.preventDefault();
+
+    if (form && !form.valid) {
+      return;
+    }
+
     this.qde.application.applicants[this.applicantIndex].pan = {
       panNumber: form.value.pan
     };
 
     this.qdeHttp.createOrUpdatePanDetails(this.qde).subscribe((response) => {
-      console.log("response ", response);
+      // If successful
+      if(response['ErrorCode'] == '0') {
+        this.goToNextSlide(swiperInstance);
+      } else {
+        // Throw Invalid Pan Error
+      }
     }, (error) => {
       console.log('error ', error);
+      // Throw Request Failure Error
     });   
+  }
+  //-------------------------------------------------------------
+  
+
+  //-------------------------------------------------------------
+  // Personal Details
+  //-------------------------------------------------------------
+  submitNameDetails(form: NgForm, swiperInstance ?: Swiper) {
+
+    event.preventDefault();
+
+    if (form && !form.valid) {
+      return;
+    }
+
+    this.qde.application.applicants[this.applicantIndex].personalDetails = {
+      title : form.value.title,
+      firstName : form.value.firstName,
+      middleName : form.value.middleName,
+      lastName : form.value.lastName
+    };
+
+    console.log(this.qde.application.applicants[this.applicantIndex]);
+    this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+      // If successful
+      if(response['ErrorCode'] == '0') {
+        this.goToNextSlide(swiperInstance);
+      } else {
+        // Throw Invalid Pan Error
+      }
+    }, (error) => {
+      console.log("response : ", error);
+    });
+    
+  }
+
+  submitGenderDetails(form: NgForm, swiperInstance ?: Swiper) {
+    event.preventDefault();
+
+    if (form && !form.valid) {
+      return;
+    }
+
+    this.qde.application.applicants[this.applicantIndex].personalDetails.gender = form.value.gender;
+
+    console.log(this.qde.application.applicants[this.applicantIndex]);
+
+    this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+      // If successful
+      if(response['ErrorCode'] == '0') {
+        this.goToNextSlide(swiperInstance);
+      } else {
+        // Throw Invalid Pan Error
+      }
+    }, (error) => {
+      console.log("response : ", error);
+    });
+    
   }
 
   //-------------------------------------------------------------
+
+  submitQualificationDetails(form: NgForm, swiperInstance ?: Swiper) {
+    event.preventDefault();
+
+    if (form && !form.valid) {
+      return;
+    }
+
+    this.qde.application.applicants[this.applicantIndex].personalDetails.qualification = form.value.qualification;
+
+    console.log(this.qde.application.applicants[this.applicantIndex]);
+
+    this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+      // If successful
+      if(response['ErrorCode'] == '0') {
+        this.goToNextSlide(swiperInstance);
+      } else {
+        // Throw Invalid Pan Error
+      }
+    }, (error) => {
+      console.log("response : ", error);
+    });
+    
+  }
+
+  submitDobDetails(form: NgForm, swiperInstance ?: Swiper) {
+    event.preventDefault();
+
+    if (form && !form.valid) {
+      return;
+    }
+
+    this.qde.application.applicants[this.applicantIndex].personalDetails.dob = form.value.day+'-'+form.value.month+'-'+form.value.year;
+    this.qde.application.applicants[this.applicantIndex].personalDetails.birthPlace = form.value.birthPlace;
+
+    console.log(this.qde.application.applicants[this.applicantIndex]);
+
+    this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+      // If successful
+      if(response['ErrorCode'] == '0') {
+        this.tabSwitch(2);
+      } else {
+        // Throw Invalid Pan Error
+      }
+    }, (error) => {
+      console.log("response : ", error);
+    });
+    
+  }
+  //-------------------------------------------------------------
+
+
+  //-------------------------------------------------------------
+  // Contact Details
+  //-------------------------------------------------------------
+  submitContactDetails(form: NgForm) {
+
+    event.preventDefault();
+
+    if (form && !form.valid) {
+      return;
+    }
+
+    this.qde.application.applicants[this.applicantIndex].contactDetails = {
+      preferredEmailId: form.value.preferredEmailId,
+      alternateEmailId : form.value.alternateEmailId,
+      mobileNumber: form.value.mobileNumber,
+      alternateMobileNumber: form.value.alternateMobileNumber,
+      residenceNumber: form.value.residenceNumber1+'-'+form.value.residenceNumber2,
+      alternateResidenceNumber: form.value.alternateResidenceNumber1+'-'+form.value.alternateResidenceNumber2
+    };
+
+    console.log(this.qde.application.applicants[this.applicantIndex]);
+    this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+      // If successful
+      if(response['ErrorCode'] == '0') {
+        this.tabSwitch(3);
+      } else {
+        // Throw Invalid Pan Error
+      }
+    }, (error) => {
+      console.log("response : ", error);
+    });
+
+  }
+  //-------------------------------------------------------------
+
+  //-------------------------------------------------------------
+  // Communication Details
+  //-------------------------------------------------------------
+  submitCommunicationAddressDetails(form: NgForm) {
+
+    event.preventDefault();
+
+    if (form && !form.valid) {
+      return;
+    }
+
+    this.qde.application.applicants[this.applicantIndex].contactDetails = {
+      preferredEmailId: form.value.preferredEmailId,
+      alternateEmailId : form.value.alternateEmailId,
+      mobileNumber: form.value.mobileNumber,
+      alternateMobileNumber: form.value.alternateMobileNumber,
+      residenceNumber: form.value.residenceNumber1+'-'+form.value.residenceNumber2,
+      alternateResidenceNumber: form.value.alternateResidenceNumber1+'-'+form.value.alternateResidenceNumber2
+    };
+
+    console.log(this.qde.application.applicants[this.applicantIndex]);
+    this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+      // If successful
+      if(response['ErrorCode'] == '0') {
+        this.tabSwitch(3);
+      } else {
+        // Throw Invalid Pan Error
+      }
+    }, (error) => {
+      console.log("response : ", error);
+    });
+
+  }
+  //-------------------------------------------------------------
+
+
+  //-------------------------------------------------------------
+  // Marital Status
+  //-------------------------------------------------------------
+  submitMaritalStatus(form: NgForm, swiperInstance ?: Swiper) {
+
+    if (form && !form.valid) {
+      return;
+    }
+
+    this.qde.application.applicants[this.applicantIndex].maritalStatus = {
+      status : form.value.maritalStatus
+    };
+
+    console.log(this.qde.application.applicants[this.applicantIndex].maritalStatus);
+    this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+      // If successful
+      if(response['ErrorCode'] == '0') {
+        this.goToNextSlide(swiperInstance);
+      } else {
+        // Throw Invalid Pan Error
+      }
+    }, (error) => {
+      console.log("response : ", error);
+    });
+
+  }
+
+  submitSpouseName(form: NgForm, swiperInstance ?: Swiper) {
+
+    if (form && !form.valid) {
+      return;
+    }
+
+    this.qde.application.applicants[this.applicantIndex].maritalStatus.spouseTitle = form.value.spouseTitle;
+    this.qde.application.applicants[this.applicantIndex].maritalStatus.firstName = form.value.firstName;
+
+    console.log(this.qde.application.applicants[this.applicantIndex].maritalStatus);
+    this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+      // If successful
+      if(response['ErrorCode'] == '0') {
+        this.goToNextSlide(swiperInstance);
+      } else {
+        // Throw Invalid Pan Error
+      }
+    }, (error) => {
+      console.log("response : ", error);
+    });
+
+  }
+
+
+  submitSpouseEarning(form: NgForm, swiperInstance ?: Swiper) {
+
+    if (form && !form.valid) {
+      return;
+    }
+
+    this.qde.application.applicants[this.applicantIndex].maritalStatus.earning = form.value.earning;
+
+    console.log(this.qde.application.applicants[this.applicantIndex].maritalStatus);
+    this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+      // If successful
+      if(response['ErrorCode'] == '0') {
+        this.goToNextSlide(swiperInstance);
+      } else {
+        // Throw Invalid Pan Error
+      }
+    }, (error) => {
+      console.log("response : ", error);
+    });
+
+  }
+
+  submitSpouseEarningAmt(form: NgForm, swiperInstance ?: Swiper) {
+
+    if (form && !form.valid) {
+      return;
+    }
+
+    // Amount should be number
+    if(isNaN(parseInt(form.value.amount))) {
+      return;
+    }
+
+    this.qde.application.applicants[this.applicantIndex].maritalStatus.amount = form.value.amount;
+
+    console.log(this.qde.application.applicants[this.applicantIndex].maritalStatus);
+
+    this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+      // If successful
+      if(response['ErrorCode'] == '0') {
+        this.tabSwitch(5);
+      } else {
+        // Throw Invalid Pan Error
+      }
+    }, (error) => {
+      console.log("response : ", error);
+    });
+
+  }
+
+  //-------------------------------------------------------------
+
+
+  //-------------------------------------------------------------
+  // Family Details
+  //-------------------------------------------------------------
+  submitFamilyForm1(form: NgForm, swiperInstance ?: Swiper) {
+
+    if (form && !form.valid) {
+      return;
+    }
+
+    this.qde.application.applicants[this.applicantIndex].familyDetails = {
+      numberOfDependents : form.value.numberOfDependents
+    };
+
+    console.log(this.qde.application.applicants[this.applicantIndex].familyDetails);
+
+    this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+      // If successful
+      if(response['ErrorCode'] == '0') {
+        this.goToNextSlide(swiperInstance);
+      } else {
+        // Throw Invalid Pan Error
+      }
+    }, (error) => {
+      console.log("response : ", error);
+    });
+
+  }
+
+  submitFamilyForm2(form: NgForm, swiperInstance ?: Swiper) {
+
+    if (form && !form.valid) {
+      return;
+    }
+
+    this.qde.application.applicants[this.applicantIndex].familyDetails.fatherTitle = form.value.fatherTitle;
+    this.qde.application.applicants[this.applicantIndex].familyDetails.fatherName = form.value.fatherName;
+    this.qde.application.applicants[this.applicantIndex].familyDetails.motherTitle = form.value.motherTitle;
+    this.qde.application.applicants[this.applicantIndex].familyDetails.motherName = form.value.motherName;
+    this.qde.application.applicants[this.applicantIndex].familyDetails.motherMaidenName = form.value.motherMaidenName;
+
+    console.log(this.qde.application.applicants[this.applicantIndex].familyDetails);
+
+    this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+      // If successful
+      if(response['ErrorCode'] == '0') {
+        this.tabSwitch(6);
+      } else {
+        // Throw Invalid Pan Error
+      }
+    }, (error) => {
+      console.log("response : ", error);
+    });
+
+  }
+  //-------------------------------------------------------------
+
+
+  //-------------------------------------------------------------
+  // Other Details
+  //-------------------------------------------------------------
+  submitOtherForm(form: NgForm) {
+
+    if (form && !form.valid) {
+      return;
+    }
+
+    // this.qde.application.applicants[this.applicantIndex].familyDetails.fatherTitle = form.value.fatherTitle;
+
+    // console.log(this.qde.application.applicants[this.applicantIndex].familyDetails);
+
+    this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+      // If successful
+      if(response['ErrorCode'] == '0') {
+        this.tabSwitch(6);
+      } else {
+        // Throw Invalid Pan Error
+      }
+    }, (error) => {
+      console.log("response : ", error);
+    });
+
+  }
+
+
+  //-------------------------------------------------------------
+
+
+  //-------------------------------------------------------------
+  // Occupation Details
+  //-------------------------------------------------------------
+  submitOccupationDetails(form: NgForm) {
+    if (form && !form.valid) {
+      return;
+    }
+
+    // this.qde.application.applicants[this.applicantIndex].familyDetails.fatherTitle = form.value.fatherTitle;
+
+    // console.log(this.qde.application.applicants[this.applicantIndex].familyDetails);
+
+    this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+      // If successful
+      if(response['ErrorCode'] == '0') {
+        this.tabSwitch(6);
+      } else {
+        // Throw Invalid Pan Error
+      }
+    }, (error) => {
+      console.log("response : ", error);
+    });
+
+  }
 }
