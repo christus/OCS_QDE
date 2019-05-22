@@ -52,10 +52,11 @@ import { ListOfValuesResolverService } from './services/list-of-values-resolver.
 
 // Routes are temporarily in app.module.ts
 const appRoutes: Routes = [
-  { path: '', component: ApplicantDashboardComponent, children: [
-    { path: '', redirectTo: 'login', pathMatch: 'full' },
-    { path: 'login', component: LoginComponent}, // This line will be replaced with signin page
-    { path: 'applicant',
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent}, // This line will be replaced with signin page
+  { path: 'leads', component: LeadsListComponent },
+  { path: 'applicant', component: ApplicantDashboardComponent, children: [
+    { path: '',
       component: ApplicantQdeComponent,
       resolve: {
         listOfValues : ListOfValuesResolverService
@@ -67,7 +68,6 @@ const appRoutes: Routes = [
         listOfValues: QdeResolver
       }
     },
-    { path: 'leads', component: LeadsListComponent },
     { path: 'co-applicant', component: CoApplicantQdeComponent },
     { path: 'loan', component: LoanQdeComponent },
     { path: 'references', component: ReferencesQdeComponent }
