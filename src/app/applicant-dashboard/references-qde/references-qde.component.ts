@@ -8,6 +8,14 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { Options } from "ng5-slider";
 import { NgForm } from "@angular/forms";
 
+
+import Qde from 'src/app/models/qde.model';
+import { QdeHttpService } from 'src/app/services/qde-http.service';
+import { QdeService } from 'src/app/services/qde.service';
+
+
+
+
 @Component({
   selector: "app-references-qde",
   templateUrl: "./references-qde.component.html",
@@ -46,7 +54,8 @@ export class ReferencesQdeComponent implements OnInit {
     // onlyExternal: true,
     autoplay: false,
     speed: 900,
-    effect: "slide"
+    effect: "slide",
+    noSwipingClass: "",
   };
 
   private activeTab: number = 0;
@@ -66,20 +75,42 @@ export class ReferencesQdeComponent implements OnInit {
 
   private fragments = ["reference1", "reference2"];
 
+  private qde: Qde;
+
+  applicantIndex: number;
+
+
   constructor(
     private renderer: Renderer2,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private qdeHttp: QdeHttpService,
+    private qdeService: QdeService
   ) {}
 
   ngOnInit() {
     // this.renderer.addClass(this.select2.selector.nativeElement, 'js-select');
 
+    if(this.route.snapshot.data.listOfValues != null && this.route.snapshot.data.listOfValues != undefined) {
+      // Initialize all UI Values here
+    }
+    
+    // Check Whether there is qde data to be filled or else Initialize Qde
+    this.route.params.subscribe((params) => {
+      
+      // Make an http request to get the required qde data and set using setQde
+      if(params.applicantId != undefined && params.applicantId != null) {
+        // setQde(JSON.parse(response.ProcessVariables.response));
+      } else {
+        this.qde = this.qdeService.getQde();
+      }
+    });
+
     this.route.fragment.subscribe(fragment => {
       let localFragment = fragment;
 
       if (fragment == null) {
-        localFragment = "income";
+        localFragment = "reference1";
       }
 
       // Replace Fragments in url
@@ -170,6 +201,67 @@ export class ReferencesQdeComponent implements OnInit {
 
   addRemoveResidenceNumberField() {
     this.isAlternateResidenceNumber = !this.isAlternateResidenceNumber;
+  }
+
+  submitRelationWithApplicant(form: NgForm, swiperInstance ?: Swiper) {
+    if (form && !form.valid) {
+      return;
+    }
+
+    this.qde.application.references.referenceOne.relationShip = form.value.relationShip;
+
+    console.log(this.qde.application.references.referenceOne.relationShip);
+
+
+    this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+      // If successful
+      if(response["ProcessVariables"]["status"]) {
+        console.log(this.qde.application.references.referenceOne.relationShip);
+        this.goToNextSlide(swiperInstance);
+      } else {
+        // Throw Invalid Pan Error
+      }
+    }, (error) => {
+      console.log("response : ", error);
+    });
+
+    
+    console.log("submitted");
+  }
+
+
+  submitReferenceDetail(form: NgForm, swiperInstance ?: Swiper) {
+
+    if (form && !form.valid) {
+      return;
+    }
+
+    this.qde.application.references.referenceOne = {
+      title : form.value.title,
+      fullName : form.value.fullName,
+      mobileNumber : form.value.mobileNumber,
+      addressLineOne : form.value.addressLineOne,
+      addressLineTwo: form.value.addressLineTwo
+    };
+
+    console.log(this.qde.application.references.referenceOne.relationShip);
+
+
+    this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+      // If successful
+      if(response["ProcessVariables"]["status"]) {
+        console.log(this.qde.application.references.referenceOne.relationShip);
+        this.tabSwitch(1);
+      } else {
+        // Throw Invalid Pan Error
+      }
+    }, (error) => {
+      console.log("response : ", error);
+    });
+
+    
+    console.log("submitted");
+
   }
 
   private temp;

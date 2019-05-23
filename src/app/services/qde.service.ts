@@ -23,7 +23,25 @@ export class QdeService {
             "applicantId": "",
             "isMainApplicant": false,
           }
-        ]
+        ],
+        "references": {
+          "referenceOne": {
+            "relationShip": "",
+            "title": "",
+            "fullName": "",
+            "mobileNumber": "",
+            "addressLineOne": "",
+            "addressLineTwo": ""
+          },
+          "referenceTwo": {
+            "relationShip": "",
+            "title": "",
+            "fullName": "",
+            "mobileNumber": "",
+            "addressLineOne": "",
+            "addressLineTwo": ""
+          }
+        }
       }
     };
   }

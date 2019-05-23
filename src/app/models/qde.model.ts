@@ -179,7 +179,7 @@ export interface Reference {
 }
 
 export interface ReferenceDetail {
-    relationShip : string;
+    relationShip? : string;
     title : string;
     fullName : string;
     mobileNumber : string;

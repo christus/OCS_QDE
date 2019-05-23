@@ -44,59 +44,78 @@
                 [swiper]="rhsConfig"
                   (slidePrevTransitionStart)="slidePrevTransitionStart(reference1)"
                   (slideNextTransitionStart)="slideNextTransitionStart(reference1)"
-                  #reference2="ngxSwiper">
+                  #reference1="ngxSwiper">
                   <div class="swiper-wrapper">
                     <div class="swiper-slide">
-                      <form class="bs-form">
+
+                      <form class="bs-form"
+                      #refRelationship="ngForm"
+                      (ngSubmit)="submitRelationWithApplicant(refRelationship, reference1)">
                         <div class="form-wrap">
                           <div class="form-group">
                             <span class="control-title">Select</span>
-                            <select name="relation" class="js-select">
-                              <option value="">Father</option>
-                              <option value="">Mother</option>
-                              <option value="">Spouse</option>
-                              <option value="">Friend</option>
-                              <option value="">Other</option>
+                            <select name="relation" ngModel name="relationShip" class="js-select">
+                              <option value="1">Father</option>
+                              <option value="2">Mother</option>
+                              <option value="3">Spouse</option>
+                              <option value="4">Friend</option>
+                              <option value="5">Other</option>
                             </select>
                           </div>
                         </div>
                         <div class="btn-wrap">
-                          <button class="btn btn-primary disabled">Next</button>
+                          <button class="btn btn-primary disabled"
+                          type="submit"
+                          >Next</button>
                         </div>
                       </form>
+
+
                     </div>
                     <div class="swiper-slide">
-                      <form class="bs-form">
+
+
+                      <form class="bs-form"
+                      #ref1Detail="ngForm" 
+                      (ngSubmit)="submitReferenceDetail(ref1Detail, reference2)">
                         <div class="form-wrap">
                           <div class="form-group">
                             <span class="control-title">Title</span>
                             <select name="relation" class="js-select">
-                              <option value="">Mr</option>
-                              <option value="">Mrs</option>
-                              <option value="">Dr</option>
+                              <option value="1">Mr</option>
+                              <option value="2">Mrs</option>
+                              <option value="3">Dr</option>
                             </select>
                           </div>
                           <div class="form-group">
-                            <input type="text" class="form-control" id="ref1-name">
-                            <label for="ref1-name">Full name</label>
+                            <input type="text" class="form-control"
+                            id="name"
+                            ngModel
+                            name="fullName" 
+                            id="ref1-name"
+                            #fullName="ngModel" >
+                            <label for="ref1-name" >Full name</label>
                           </div>
                           <div class="form-group">
-                            <input type="text" class="form-control" id="ref1-mobile">
+                            <input type="text" class="form-control" id="ref1-mobile"  name="mobileNumber"  ngModel #mobileNumber="ngModel">
                             <label for="ref1-mobile">Mobile number</label>
                           </div>
                           <div class="form-group">
-                            <input type="text" class="form-control" id="ref1-add1">
+                            <input type="text" class="form-control" id="ref1-add1"  name="addressLineOne" ngModel #addressLineOne="ngModel">
                             <label for="ref1-add1">Address line1</label>
                           </div>
                           <div class="form-group">
-                            <input type="text" class="form-control" id="ref1-add2">
+                            <input type="text" class="form-control" id="ref1-add2" name="addressLineTwo" ngModel #addressLineTwo="ngModel">
                             <label for="ref1-add2">Address line2</label>
                           </div>
                         </div>
                         <div class="btn-wrap">
-                          <button class="btn btn-primary disabled">Next</button>
+                          <button type="submit" class="btn btn-primary disabled">Next</button>
                         </div>
                       </form>
+
+
+
                     </div>
                   </div>
                 </div>
@@ -135,7 +154,11 @@
                   #reference2="ngxSwiper">
                 <div class="swiper-wrapper">
                   <div class="swiper-slide">
-                    <form class="bs-form">
+
+
+                    <form class="bs-form"
+                      #refRelationship="ngForm"
+                      (ngSubmit)="submitRelationWithApplicant(refRelationship, reference2)">
                       <div class="form-wrap">
                         <div class="form-group">
                           <span class="control-title">Select</span>
@@ -149,42 +172,55 @@
                         </div>
                       </div>
                       <div class="btn-wrap">
-                        <button class="btn btn-primary disabled">Next</button>
+                        <button type="submit" class="btn btn-primary disabled">Next</button>
                       </div>
                     </form>
+
+
                   </div>
                   <div class="swiper-slide">
-                    <form class="bs-form">
-                      <div class="form-wrap">
-                        <div class="form-group">
-                          <span class="control-title">Title</span>
-                          <select name="relation" class="js-select">
-                            <option value="">Mr</option>
-                            <option value="">Mrs</option>
-                            <option value="">Dr</option>
-                          </select>
+
+
+                    <form class="bs-form"
+                      #ref1Detail="ngForm" 
+                      (ngSubmit)="submitReferenceDetail(ref1Detail, reference2)">
+                        <div class="form-wrap">
+                          <div class="form-group">
+                            <span class="control-title">Title</span>
+                            <select name="relation" class="js-select">
+                              <option value="1">Mr</option>
+                              <option value="2">Mrs</option>
+                              <option value="3">Dr</option>
+                            </select>
+                          </div>
+                          <div class="form-group">
+                            <input type="text" class="form-control"
+                            id="name"
+                            ngModel
+                            name="fullName" 
+                            id="ref2-name"
+                            #fullName="ngModel" >
+                            <label for="ref2-name" >Full name</label>
+                          </div>
+                          <div class="form-group">
+                            <input type="text" class="form-control" id="ref2-mobile"  name="mobileNumber"  ngModel #mobileNumber="ngModel">
+                            <label for="ref2-mobile">Mobile number</label>
+                          </div>
+                          <div class="form-group">
+                            <input type="text" class="form-control" id="ref2-add1"  name="addressLineOne" ngModel #addressLineOne="ngModel">
+                            <label for="ref2-add1">Address line1</label>
+                          </div>
+                          <div class="form-group">
+                            <input type="text" class="form-control" id="ref2-add2" name="addressLineTwo" ngModel #addressLineTwo="ngModel">
+                            <label for="ref2-add2">Address line2</label>
+                          </div>
                         </div>
-                        <div class="form-group">
-                          <input type="text" class="form-control" id="ref1-name">
-                          <label for="ref1-name">Full name</label>
+                        <div class="btn-wrap">
+                          <button type="submit" class="btn btn-primary disabled">Next</button>
                         </div>
-                        <div class="form-group">
-                          <input type="text" class="form-control" id="ref1-mobile">
-                          <label for="ref1-mobile">Mobile number</label>
-                        </div>
-                        <div class="form-group">
-                          <input type="text" class="form-control" id="ref1-add1">
-                          <label for="ref1-add1">Address line1</label>
-                        </div>
-                        <div class="form-group">
-                          <input type="text" class="form-control" id="ref1-add2">
-                          <label for="ref1-add2">Address line2</label>
-                        </div>
-                      </div>
-                      <div class="btn-wrap">
-                        <button class="btn btn-primary disabled">Next</button>
-                      </div>
                     </form>
+
+
                   </div>
                 </div>
                 </div>
