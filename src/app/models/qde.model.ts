@@ -61,7 +61,7 @@ export interface Occupation {
     occupationType : string;
     companyName : string;
     numberOfYearsInCurrentCompany : number;
-    totalWorkExperiance : number;
+    totalWorkExperience : number;
 }
 
 export interface Pan {
