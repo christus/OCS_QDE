@@ -125,7 +125,7 @@ export interface RegisteredAddress {
 }
 
 export interface CorporateAddress {
-    coporateAddress : string;
+    corporateAddress : string;
     landMark : string;
     pincode : number,
     city : string;
