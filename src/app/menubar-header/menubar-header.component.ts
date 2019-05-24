@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { CommonDataService } from '../services/common-data.service';
 
 @Component({
   selector: 'app-menubar-header',
@@ -6,8 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./menubar-header.component.css']
 })
 export class MenubarHeaderComponent implements OnInit {
+  
+  isMenuBarShown: boolean;
 
-  constructor() { }
+  constructor(private commonDataService: CommonDataService) {
+    this.commonDataService.isMenuBarShown.subscribe((value) => {
+      this.isMenuBarShown = value;
+    });
+  }
 
   ngOnInit() {
   }
