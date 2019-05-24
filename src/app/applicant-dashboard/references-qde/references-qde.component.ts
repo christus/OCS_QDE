@@ -203,7 +203,7 @@ export class ReferencesQdeComponent implements OnInit {
     this.isAlternateResidenceNumber = !this.isAlternateResidenceNumber;
   }
 
-  submitRelationWithApplicant(form: NgForm, swiperInstance ?: Swiper) {
+  submitRelationWithApplicant1(form: NgForm, swiperInstance ?: Swiper) {
     if (form && !form.valid) {
       return;
     }
@@ -230,13 +230,74 @@ export class ReferencesQdeComponent implements OnInit {
   }
 
 
-  submitReferenceDetail(form: NgForm, swiperInstance ?: Swiper) {
+  submitReference1Detail(form: NgForm, swiperInstance ?: Swiper) {
 
     if (form && !form.valid) {
       return;
     }
 
     this.qde.application.references.referenceOne = {
+      title : form.value.title,
+      fullName : form.value.fullName,
+      mobileNumber : form.value.mobileNumber,
+      addressLineOne : form.value.addressLineOne,
+      addressLineTwo: form.value.addressLineTwo
+    };
+
+    console.log(this.qde.application.references.referenceOne.relationShip);
+
+
+    this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+      // If successful
+      if(response["ProcessVariables"]["status"]) {
+        console.log(this.qde.application.references.referenceOne.relationShip);
+        this.tabSwitch(1);
+      } else {
+        // Throw Invalid Pan Error
+      }
+    }, (error) => {
+      console.log("response : ", error);
+    });
+
+    
+    console.log("submitted");
+
+  }
+
+  submitRelationWithApplicant2(form: NgForm, swiperInstance ?: Swiper) {
+    if (form && !form.valid) {
+      return;
+    }
+
+    this.qde.application.references.referenceTwo.relationShip = form.value.relationShip;
+
+    console.log(this.qde.application.references.referenceOne.relationShip);
+
+
+    this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+      // If successful
+      if(response["ProcessVariables"]["status"]) {
+        console.log(this.qde.application.references.referenceOne.relationShip);
+        this.goToNextSlide(swiperInstance);
+      } else {
+        // Throw Invalid Pan Error
+      }
+    }, (error) => {
+      console.log("response : ", error);
+    });
+
+    
+    console.log("submitted");
+  }
+
+
+  submitReference2Detail(form: NgForm, swiperInstance ?: Swiper) {
+
+    if (form && !form.valid) {
+      return;
+    }
+
+    this.qde.application.references.referenceTwo = {
       title : form.value.title,
       fullName : form.value.fullName,
       mobileNumber : form.value.mobileNumber,
