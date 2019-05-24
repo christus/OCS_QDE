@@ -141,7 +141,6 @@ export class ApplicantQdeComponent implements OnInit {
         invalid: "Office Email Id is not valid"
       }
     },
-
     organizationDetails: {
       orgName: {
         required: "Organization Name is required",
@@ -181,11 +180,9 @@ export class ApplicantQdeComponent implements OnInit {
     revenueDetails: {
 
     }
- 
   };
 
-  
-  value: Array<number> = [0,0,0];
+  value: Array<number> = [0,0,0,0];
 
   minValue: number = 1;
   options: Options = {
@@ -240,8 +237,7 @@ export class ApplicantQdeComponent implements OnInit {
   private isAlternateMobileNumber: boolean = false;
   private isAlternateResidenceNumber: boolean = false;
   
-  private applicantIndividual:boolean = true;
-  
+  private applicantIndividual: boolean = true;
 
   private fragments = [ 'pan',
                         'personal',
@@ -256,7 +252,7 @@ export class ApplicantQdeComponent implements OnInit {
                         'regAddress',
                         'corpAddr',
                         'revenueAddr'
-  ];
+                      ];
 
   applicantIndex: number;
 
@@ -285,6 +281,7 @@ export class ApplicantQdeComponent implements OnInit {
         this.qde = this.qdeService.getQde();
       }
     });
+
     // Create New Entry
     this.applicantIndex = 0;
     // Write code to get data(LOV) and assign applicantIndex if its new or to update.
@@ -530,7 +527,6 @@ export class ApplicantQdeComponent implements OnInit {
     }, (error) => {
       console.log("response : ", error);
     });
-    
   }
   //-------------------------------------------------------------
 
@@ -581,16 +577,19 @@ export class ApplicantQdeComponent implements OnInit {
       return;
     }
 
-    this.qde.application.applicants[this.applicantIndex].contactDetails = {
-      preferredEmailId: form.value.preferredEmailId,
-      alternateEmailId : form.value.alternateEmailId,
-      mobileNumber: form.value.mobileNumber,
-      alternateMobileNumber: form.value.alternateMobileNumber,
-      residenceNumber: form.value.residenceNumber1+'-'+form.value.residenceNumber2,
-      alternateResidenceNumber: form.value.alternateResidenceNumber1+'-'+form.value.alternateResidenceNumber2
+    this.qde.application.applicants[this.applicantIndex].communicationAddress = {
+      residentialStatus : form.value.residentialStatus,
+      addressLineOne : form.value.addressLineOne,
+      addressLineTwo : form.value.addressLineTwo,
+      pincode : form.value.pincode,
+      city : form.value.cityState.split('/')[0],
+      state : form.value.cityState.split('/')[1],
+      numberOfYearsInCurrentResidence : form.value.numberOfYearsInCurrentResidence,
+      permanentAddress : form.value.permanentAddress
     };
 
-    console.log(this.qde.application.applicants[this.applicantIndex]);
+    console.log(this.qde.application.applicants[this.applicantIndex].communicationAddress);
+
     this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
@@ -792,8 +791,6 @@ export class ApplicantQdeComponent implements OnInit {
     });
 
   }
-
-
   //-------------------------------------------------------------
 
 
@@ -805,9 +802,50 @@ export class ApplicantQdeComponent implements OnInit {
       return;
     }
 
-    // this.qde.application.applicants[this.applicantIndex].familyDetails.fatherTitle = form.value.fatherTitle;
+    this.qde.application.applicants[this.applicantIndex].occupation = {
+      occupationType: form.value.occupationType,
+      companyName : form.value.companyName,
+      numberOfYearsInCurrentCompany : form.value.numberOfYearsInCurrentCompany,
+      totalWorkExperience : form.value.totalWorkExperience
+    };
 
-    // console.log(this.qde.application.applicants[this.applicantIndex].familyDetails);
+    console.log(this.qde.application.applicants[this.applicantIndex].occupation);
+
+    this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+      // If successful
+      if(response["ProcessVariables"]["status"]) {
+        this.tabSwitch(6);
+      } else {
+        // Throw Invalid Pan Error
+      }
+    }, (error) => {
+      console.log("response : ", error);
+    });
+
+  }
+
+ //-------------------------------------------------------------
+
+
+  //-------------------------------------------------------------
+  // Official Correspondence
+  //-------------------------------------------------------------
+  submitOfficialCorrespondence(form: NgForm) {
+    if (form && !form.valid) {
+      return;
+    }
+
+    this.qde.application.applicants[this.applicantIndex].officialCorrespondence = {
+      addressLineOne : form.value.ofcA1,
+      addressLineTwo : form.value.ofcA2,
+      landMark : form.value.landMark,
+      pincode : form.value.pinCode,
+      city : form.value.cityState,
+      officeNumber : form.value.stdCode + '-'+ form.value.offStdNumber,
+      officeEmailId : form.value.officeEmail
+    }
+
+    console.log(this.qde.application.applicants[this.applicantIndex].officialCorrespondence);
 
     this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
       // If successful

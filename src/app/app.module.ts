@@ -47,10 +47,8 @@ import { ReferencesQdeComponent } from './applicant-dashboard/references-qde/ref
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import AuthInterceptor from './services/auth.interceptor';
-import { QdeResolver } from './services/qde-resolver.service';
 import { ListOfValuesResolverService } from './services/list-of-values-resolver.service';
 
-// Routes are temporarily in app.module.ts
 const appRoutes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent}, // This line will be replaced with signin page
@@ -65,7 +63,7 @@ const appRoutes: Routes = [
     { path: 'applicant/:applicantId',
       component: ApplicantQdeComponent,
       resolve: {
-        listOfValues: QdeResolver
+        listOfValues: ListOfValuesResolverService
       }
     },
     { path: 'co-applicant', component: CoApplicantQdeComponent },
@@ -118,7 +116,6 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     HttpClientModule
   ],
   providers: [
-    QdeResolver,
     ListOfValuesResolverService,
     {
       provide: SWIPER_CONFIG,

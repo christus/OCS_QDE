@@ -611,7 +611,9 @@
                             <div class="form-wrap">
                                 <div class="form-group">
                                     <span class="control-title">Residential status</span>
-                                    <select ngModel name="residentialStatus">
+                                    <select ngModel
+                                            name="residentialStatus"
+                                            required>
                                         <option value="1">Owned</option>
                                         <option value="2">Rented</option>
                                         <option value="3">Company provided</option>
@@ -619,7 +621,6 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-
                                     <input type="text" class="form-control" id="address1"
                                       ngModel
                                       pattern="^[0-9A-Za-z,_#\s]+$"
@@ -627,18 +628,17 @@
                                       #address1="ngModel"
                                       required />
 
-                                      <div *ngIf="(address1.touched || address1.dirty) && address1.invalid" class="invalid-feedback">
+                                      <label for="address1">Address line 1</label>
+                                    <div *ngIf="(address1.touched || address1.dirty) && address1.invalid" class="invalid-feedback">
                                         <div *ngIf="address1.errors?.required">{{errors.commAddress.address1.required}}</div>
                                         <div *ngIf="address1.errors?.pattern">{{errors.commAddress.address1.invalid}}</div>
                                       </div>
 
-
                                     <label for="address1" *ngIf="address1.value == ''">Address line 1</label>
+
                                 </div>
 
-
                                 <div class="form-group">
-
                                     <input type="text" class="form-control" id="address2"
                                       ngModel
                                       pattern="^[0-9A-Za-z,_#\s]+$"
@@ -654,13 +654,12 @@
                                 </div>
 
                                 <div class="form-group">
-
                                     <input type="number" class="form-control" id="pincode" required
                                       ngModel
                                       #commPinCode="ngModel" 
                                       name="pinCode"
                                       maxlength="6"
-                                      pattern="^[0-9]+$">
+                                      pattern="^[0-9]+$" />
                                     <label for="pincode" *ngIf="commPinCode.value == ''">Pincode</label>
 
                                     <div *ngIf="(commPinCode.touched || commPinCode.dirty) && commPinCode.invalid" class="invalid-feedback">
@@ -674,10 +673,10 @@
                                       ngModel
                                       #commCityState="ngModel" 
                                       name="cityState"
-                                      pattern="^[0-9A-Za-z,_#]+$">
-
+                                      pattern="^[0-9A-Za-z,_#]+$" />
 
                                     <label for="cityState" *ngIf="commCityState.value == ''">City/State</label>
+
 
                                     <div *ngIf="(commCityState.touched || commCityState.dirty) && commCityState.invalid" class="invalid-feedback">
                                         <div *ngIf="commCityState.errors?.required">{{errors.commAddress.stateOrCity.required}}</div>
@@ -693,9 +692,13 @@
                                     <input type="number"
                                             name="numberOfYearsInCurrentResidence"
                                             class="form-control"
-                                            [ngModel]="value[0]"
-                                            (ngModelChange)="valuechange($event, 0)" />
-                                    <ng5-slider [(value)]="value[0]" [options]="options"></ng5-slider>
+                                            [ngModel]="value[3]"
+                                            min=0
+                                            max=90
+                                            #numberOfYearsInCurrentResidence="ngModel"
+                                            (ngModelChange)="valuechange($event, 3)"
+                                            required />
+                                    <ng5-slider [(value)]="value[3]" [options]="options"></ng5-slider>
                                 </div>
                             </div>
                             <div class="btn-wrap">
@@ -939,13 +942,14 @@
                                         <div class="form-wrap">
                                             <div class="form-group typ-range">
                                                 <span class="control-title">Enter number of dependents</span>
-                                                <input  type="text"
-                                                        ngModel
+                                                <input type="number"
                                                         name="numberOfDependents"
+                                                        min=0
+                                                        max=90
                                                         class="form-control"
-                                                        id="no-yrs">
-                                                <span class="yr-text">Years</span>
-                                                <div id="year-range" class="range-slider"></div>
+                                                        [ngModel]="value[1]"
+                                                        (ngModelChange)="valuechange($event, 1)" />
+                                                <ng5-slider [(value)]="value[1]" [options]="options"></ng5-slider>
                                             </div>
                                         </div>
                                         <div class="btn-wrap">
@@ -1085,7 +1089,7 @@
                             <div class="form-wrap">
                                 <div class="form-group">
                                     <span class="control-title">Occupation type</span>
-                                    <select ngModel name="occupation" required>
+                                    <select ngModel name="occupationType" required>
                                         <option value="1">Salaried</option>
                                         <option value="2">Self Employed Professional</option>
                                         <option value="3">Self Employed Non Professional</option>
@@ -1095,16 +1099,15 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-
                                     <input type="text" class="form-control"
-                                     required 
-                                     ngModel
-                                     pattern="^[A-Za-z\s]+$"
-                                     name="companyName"
-                                     #companyName="ngModel" id="companyName" />
+                                            required 
+                                            ngModel
+                                            pattern="^[A-Za-z\s]+$"
+                                            name="companyName"
+                                            #companyName="ngModel"
+                                            id="companyName" />
 
                                     <label for="companyName" (click)="alert(1)" *ngIf="companyName.value == ''">Company name</label>
-
 
                                     <div *ngIf="(companyName.touched || companyName.dirty) && companyName.invalid" class="invalid-feedback">
                                       <div *ngIf="companyName.errors?.required">Company Name is required</div>
@@ -1114,31 +1117,37 @@
                                 </div>
                                 <div class="form-group typ-range">
                                     <span class="control-title">Years in current employment/bussiness</span>
-                                    <input type="text" class="form-control" id="no-yrs"
-                                      required 
-                                      ngModel
-                                      min=0
-                                      max=90
-                                      name="currentExperienceYear"
-                                      #currentExperienceYear="ngModel">
-                                    <span class="yr-text">Years</span>
-                                    <div class="range-slider"></div>
+                                    <input type="number"
+                                    name="numberOfYearsInCurrentCompany"
+                                    id="no-yrs"
+                                    class="form-control"
+                                    [ngModel]="value[2]"
+                                    min=0
+                                    max=90
+                                    #numberOfYearsInCurrentCompany="ngModel"
+                                    (ngModelChange)="valuechange($event, 2)"
+                                    required />
 
-                                    <div *ngIf="currentExperienceYear.touched  && currentExperienceYear.invalid" class="invalid-feedback">
-                                      <div *ngIf="currentExperienceYear.errors?.required">Experience in current employment/business is required</div>
+                                    <ng5-slider [(value)]="value[2]" [options]="options"></ng5-slider>
+
+                                    <div *ngIf="numberOfYearsInCurrentCompany.touched && numberOfYearsInCurrentCompany.invalid" class="invalid-feedback">
+                                      <div *ngIf="numberOfYearsInCurrentCompany.errors?.required">Experience in current employment/business is required</div>
                                     </div>
 
                                 </div>
                                 <div class="form-group typ-range">
                                     <span class="control-title">Total Work Experience</span>
-                                    <input type="text" class="form-control" id="no-yrs" 
-                                      required 
-                                      ngModel
-                                      pattern="^[A-Za-z\s]+$"
-                                      name="totalExperienceYear"
-                                      #totalExperienceYear="ngModel" >
-                                    <span class="yr-text">Years</span>
-                                    <div class="range-slider"></div>
+                                    <input type="number"
+                                            name="totalExperienceYear"
+                                            class="form-control"
+                                            [ngModel]="value[3]"
+                                            min=0
+                                            max=90
+                                            #totalExperienceYear="ngModel"
+                                            (ngModelChange)="valuechange($event, 3)"
+                                            required />
+
+                                    <ng5-slider [(value)]="value[3]" [options]="options"></ng5-slider>
 
                                     <div *ngIf="(totalExperienceYear.touched || totalExperienceYear.dirty) && totalExperienceYear.invalid" class="invalid-feedback">
                                       <div *ngIf="totalExperienceYear.errors?.required">Total work experience is required</div>
@@ -1174,7 +1183,9 @@
                         </div>
                     </div>
                     <div class="rhs">
-                        <form class="bs-form">
+                        <form   class="bs-form"
+                                #officialCorrespondenceForm
+                                (ngSubmit)="submitOfficialCorrespondence(officialCorrespondenceForm)">
                             <div class="form-wrap">
                                 <div class="form-group">
 
@@ -1276,8 +1287,6 @@
                                           name="offStdNumber"
                                           ngModel/>
                                         <label for="res-no03" *ngIf="offStdNumber.value == ''">Office number</label>
-
-
 
                                         <div *ngIf="offStdNumber.touched && offStdNumber.invalid" class="invalid-feedback">
                                             <div *ngIf="offStdNumber.errors?.required">{{errors.officialCorrespondence.phoneNumber.required}}</div>
