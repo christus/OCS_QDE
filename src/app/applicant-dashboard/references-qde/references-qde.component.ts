@@ -37,6 +37,57 @@ export class ReferencesQdeComponent implements OnInit {
     }
   };
 
+
+  errors = {
+      references: {
+        referenceOne: {
+          fullName: {
+            required: "Full Name is required",
+            invalid: "Full Name is not valid"
+          },
+          mobileNumber: {
+           required: "Mobile number is required",
+           invalid: "Mobile number is not valid"
+          },
+          addressLineOne: {
+           required: "Address line One is required",
+           invalid: "Address line One is not valid"
+          },
+          addressLineTwo: {
+            required: "Address line Two is required",
+            invalid: "Address line Two is not valid"
+          }
+        },
+
+       referenceTwo: {
+         fullName: {
+           required: "Full Name is required",
+           invalid: "Full Name is not valid"
+         },
+         mobileNumber: {
+          required: "Mobile number is required",
+          invalid: "Mobile number is not valid"
+         },
+         addressLineOne: {
+          required: "Address line One is required",
+          invalid: "Address line One is not valid"
+         },
+         addressLineTwo: {
+           required: "Address line Two is required",
+           invalid: "Address line Two is not valid"
+         }
+       }
+
+        
+     }
+  };
+
+  regexPattern = {
+    moblieNumber: "/^\d{10}$/",
+    name: "/^[a-zA-Z ]*$/",
+    address : "^[0-9A-Za-z, _#\s]+$"
+  };
+
   private lhsConfig = {
     noSwiping: true,
     noSwipingClass: "",

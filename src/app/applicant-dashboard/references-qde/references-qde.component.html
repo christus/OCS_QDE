@@ -55,7 +55,7 @@
                         <div class="form-wrap">
                           <div class="form-group">
                             <span class="control-title">Select</span>
-                            <select ngModel name="relationShip" class="js-select">
+                            <select ngModel name="relationShip" class="js-select" required>
                               <option value="1">Father</option>
                               <option value="2">Mother</option>
                               <option value="3">Spouse</option>
@@ -82,7 +82,7 @@
                         <div class="form-wrap">
                           <div class="form-group">
                             <span class="control-title">Title</span>
-                            <select name="title" ngModel class="js-select">
+                            <select name="title" ngModel class="js-select" required>
                               <option value="1">Mr</option>
                               <option value="2">Mrs</option>
                               <option value="3">Dr</option>
@@ -90,7 +90,6 @@
                           </div>
                           <div class="form-group">
                             <input type="text" class="form-control"
-                            id="name"
                             ngModel
                             name="fullName" 
                             id="ref1-name"
@@ -164,7 +163,7 @@
                       <div class="form-wrap">
                         <div class="form-group">
                           <span class="control-title">Select</span>
-                          <select ngModel name="relationShip" class="js-select">
+                          <select ngModel name="relationShip" class="js-select" required>
                             <option value="1">Father</option>
                             <option value="2">Mother</option>
                             <option value="3">Spouse</option>
@@ -189,7 +188,7 @@
                         <div class="form-wrap">
                           <div class="form-group">
                             <span class="control-title">Title</span>
-                            <select name="title" ngModel class="js-select">
+                            <select name="title" ngModel class="js-select" required>
                               <option value="1">Mr</option>
                               <option value="2">Mrs</option>
                               <option value="3">Dr</option>
@@ -197,7 +196,6 @@
                           </div>
                           <div class="form-group">
                             <input type="text" class="form-control"
-                            id="name"
                             ngModel
                             name="fullName" 
                             id="ref2-name"
@@ -205,15 +203,24 @@
                             <label for="ref2-name" >Full name</label>
                           </div>
                           <div class="form-group">
-                            <input type="text" class="form-control" id="ref2-mobile"  name="mobileNumber"  ngModel #mobileNumber="ngModel">
+                            <input type="text" class="form-control" id="ref2-mobile" 
+                             name="mobileNumber"  
+                             ngModel 
+                             #mobileNumber="ngModel">
                             <label for="ref2-mobile">Mobile number</label>
                           </div>
                           <div class="form-group">
-                            <input type="text" class="form-control" id="ref2-add1"  name="addressLineOne" ngModel #addressLineOne="ngModel">
+                            <input type="text" class="form-control" id="ref2-add1"
+                              name="addressLineOne"
+                              ngModel
+                              #addressLineOne="ngModel">
                             <label for="ref2-add1">Address line1</label>
                           </div>
                           <div class="form-group">
-                            <input type="text" class="form-control" id="ref2-add2" name="addressLineTwo" ngModel #addressLineTwo="ngModel">
+                            <input type="text" class="form-control" id="ref2-add2"
+                             name="addressLineTwo" 
+                             ngModel 
+                             #addressLineTwo="ngModel">
                             <label for="ref2-add2">Address line2</label>
                           </div>
                         </div>

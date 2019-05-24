@@ -213,7 +213,7 @@
                                             <div class="form-wrap">
                                                 <div class="form-group">
                                                     <span class="control-title">Title</span>
-                                                    <select ngModel name="title">
+                                                    <select ngModel name="title" required>
                                                         <option value="1">Mr</option>
                                                         <option value="2">Ms</option>
                                                         <option value="3">Mrs</option>
@@ -314,7 +314,7 @@
                                             <div class="form-wrap">
                                                 <div class="form-group">
                                                     <span class="control-title">Qualification</span>
-                                                    <select ngModel name="qualification">
+                                                    <select ngModel name="qualification" required>
                                                         <option value="1">Below SSC</option>
                                                         <option value="2">SSC</option>
                                                         <option value="3">Under Graduate</option>
@@ -331,7 +331,10 @@
                                                 </div>
                                             </div>
                                             <div class="btn-wrap">
-                                              <button type="submit" class="btn btn-primary">Next</button>
+                                              <button type="submit" 
+                                              class="btn btn-primary"
+                                              [ngClass]="{'disabled': !qualificationForm.valid}"
+                                              [disabled]="!qualificationForm.valid">Next</button>
                                             </div>
                                         </form>
                                     </div>
@@ -534,10 +537,14 @@
                                       <div class="form-group">
                                           <input    type="text"
                                                     ngModel
+                                                    #residenceStdCode = "ngModel"
                                                     name="residenceNumber1"
                                                     class="form-control"
                                                     id="std">
-                                          <label for="std">STD</label>
+                                          <label for="std" *ngIf="residenceStdCode.value == ''">STD</label>
+                                          <div *ngIf="(residenceStdCode.touched || residenceStdCode.dirty) && residenceStdCode.invalid" class="invalid-feedback">
+                                            <div *ngIf="residenceStdCode.errors?.pattern">{{errors.contactDetails.stdCode.invalid}}</div>
+                                          </div>
                                       </div>
                                       <span class="seperator">-</span>
                                       <div class="form-group">
@@ -545,9 +552,14 @@
                                                     class="form-control"
                                                     id="res-no"
                                                     ngModel
+                                                    pattern="^[0-9]"
+                                                    #residenceNumber = "ngModel"
                                                     name="residenceNumber2"
                                                     data-validation-attr="residenceno" />
-                                          <label for="res-no">Residence number</label>
+                                          <label for="res-no" *ngIf="residenceNumber.value == ''">Residence number</label>
+                                          <div *ngIf="(residenceNumber.touched || residenceNumber.dirty) && residenceNumber.invalid" class="invalid-feedback">
+                                            <div *ngIf="residenceNumber.errors?.pattern">{{errors.contactDetails.number.invalid}}</div>
+                                          </div>
                                       </div>
                                       <span class="alternate-data">
                                         <a  href="javascript:void(0);"
@@ -621,6 +633,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
+
                                     <input type="text" class="form-control" id="address1"
                                       ngModel
                                       pattern="^[0-9A-Za-z,_#\s]+$"
@@ -628,8 +641,7 @@
                                       #address1="ngModel"
                                       required />
 
-                                      <label for="address1">Address line 1</label>
-                                    <div *ngIf="(address1.touched || address1.dirty) && address1.invalid" class="invalid-feedback">
+                                      <div *ngIf="(address1.touched || address1.dirty) && address1.invalid" class="invalid-feedback">
                                         <div *ngIf="address1.errors?.required">{{errors.commAddress.address1.required}}</div>
                                         <div *ngIf="address1.errors?.pattern">{{errors.commAddress.address1.invalid}}</div>
                                       </div>
@@ -765,7 +777,7 @@
                                           <div class="form-wrap">
                                               <div class="form-group">
                                                   <span class="control-title">Marital Status</span>
-                                                  <select ngModel name="maritalStatus">
+                                                  <select ngModel name="maritalStatus" required>
                                                       <option value="1">Single</option>
                                                       <option value="2">Married</option>
                                                       <option value="3">Divorced</option>
@@ -789,7 +801,7 @@
                                           <div class="form-wrap">
                                               <div class="form-group">
                                                   <span class="control-title">Title</span>
-                                                  <select ngModel name="spouseTitle">
+                                                  <select ngModel name="spouseTitle" required>
                                                       <option value="1">Mr</option>
                                                       <option value="2">Ms</option>
                                                       <option value="3">Mrs</option>
@@ -966,7 +978,7 @@
                                         <div class="form-wrap">
                                             <div class="form-group">
                                                 <span class="control-title">Title</span>
-                                                <select ngModel name="fatherTitle">
+                                                <select ngModel name="fatherTitle" required>
                                                     <option value="1">Mr</option>
                                                     <option value="2">Ms</option>
                                                     <option value="3">Mrs</option>
@@ -974,12 +986,21 @@
                                                 </select>
                                             </div>
                                             <div class="form-group">
-                                                <input type="text" ngModel name="fatherName" class="form-control" id="father-name">
-                                                <label for="father-name">Father's name</label>
+                                                <input type="text"  class="form-control" id="father-name"
+                                                required
+                                                ngModel
+                                                #fatherName="ngModel"
+                                                name="fatherName"
+                                                pattern="^[A-Za-z\s]+$">
+                                                <label for="father-name" *ngIf="fatherName.value==''">Father's name</label>
+                                                <div *ngIf="fatherName.touched && fatherName.invalid" class="invalid-feedback">
+                                                    <div *ngIf="fatherName.errors?.required">{{errors.familyDetails.fatherName.required}}</div>
+                                                    <div *ngIf="fatherName.errors?.pattern">{{errors.familyDetails.fatherName.invalid}}</div>
+                                                </div>
                                             </div>
                                             <div class="form-group">
                                                 <span class="control-title">Title</span>
-                                                <select ngModel name="motherTitle">
+                                                <select ngModel name="motherTitle" required>
                                                     <option value="1">Mr</option>
                                                     <option value="2">Ms</option>
                                                     <option value="3">Mrs</option>
@@ -987,12 +1008,30 @@
                                                 </select>
                                             </div>
                                             <div class="form-group">
-                                                <input type="text" ngModel name="motherName" class="form-control" id="mother-name">
-                                                <label for="mother-name">Mother's name</label>
+                                                <input type="text"  class="form-control" id="mother-name"
+                                                required
+                                                ngModel
+                                                #motherName="ngModel"
+                                                name="motherName"
+                                                pattern="^[A-Za-z\s]+$">
+                                                <label for="mother-name" *ngIf="motherName.value == ''">Mother's name</label>
+                                                <div *ngIf="motherName.touched && motherName.invalid" class="invalid-feedback">
+                                                    <div *ngIf="motherName.errors?.required">{{errors.familyDetails.motherName.required}}</div>
+                                                    <div *ngIf="motherName.errors?.pattern">{{errors.familyDetails.motherName.invalid}}</div>
+                                                </div>
                                             </div>
                                             <div class="form-group">
-                                                <input type="text" ngModel class="form-control" name="motherMaidenName" id="maiden-name">
-                                                <label for="maiden-name">Mother's maiden name</label>
+                                                <input type="text" class="form-control" id="maiden-name"
+                                                required
+                                                ngModel
+                                                #motherMaiden="ngModel"
+                                                name="motherMaidenName"
+                                                pattern="^[A-Za-z\s]+$">
+                                                <label for="maiden-name" *ngIf="motherMaiden.value==''">Mother's maiden name</label>
+                                                <div *ngIf="motherMaiden.touched && motherMaiden.invalid" class="invalid-feedback">
+                                                    <div *ngIf="motherMaiden.errors?.required">{{errors.familyDetails.motherMaiden.required}}</div>
+                                                    <div *ngIf="motherMaiden.errors?.pattern">{{errors.familyDetails.motherMaiden.invalid}}</div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="btn-wrap">
@@ -1033,7 +1072,7 @@
                             <div class="form-wrap">
                                 <div class="form-group">
                                     <span class="control-title">Religion</span>
-                                    <select class="typ-religion" ngModel name="religion" #religionSelect="ngModel">
+                                    <select class="typ-religion" ngModel name="religion" #religionSelect="ngModel" required>
                                         <option value="1">Hindu</option>
                                         <option value="2">Muslim</option>
                                         <option value="3">Sikh</option>
@@ -1048,7 +1087,7 @@
                                 </div>
                                 <div class="form-group">
                                     <span class="control-title">Category</span>
-                                    <select ngModel name="category">
+                                    <select ngModel name="category" required>
                                         <option value="General">General</option>
                                         <option value="SC">SC</option>
                                         <option value="CS">CS</option>
@@ -1107,7 +1146,7 @@
                                             #companyName="ngModel"
                                             id="companyName" />
 
-                                    <label for="companyName" (click)="alert(1)" *ngIf="companyName.value == ''">Company name</label>
+                                    <label for="companyName" *ngIf="companyName.value == ''">Company name</label>
 
                                     <div *ngIf="(companyName.touched || companyName.dirty) && companyName.invalid" class="invalid-feedback">
                                       <div *ngIf="companyName.errors?.required">Company Name is required</div>
@@ -1198,7 +1237,7 @@
                                       required>
                                     <label for="ofcAddOne" *ngIf="ofcA1.value == ''">Office address line1</label>
 
-                                    <div *ngIf="(ofcA1.touched && ofcA1.dirty) && ofcA1.invalid" class="invalid-feedback">
+                                    <div *ngIf="ofcA1.touched  && ofcA1.invalid" class="invalid-feedback">
                                       <div *ngIf="ofcA1.errors?.required">{{errors.officialCorrespondence.address1.required}}</div>
                                       <div *ngIf="ofcA1.errors?.pattern">{{errors.officialCorrespondence.address1.invalid}}</div>
                                     </div>
@@ -1312,7 +1351,10 @@
                             </div>
 
                             <div class="btn-wrap">
-                                <button type="button" class="btn btn-primary disabled" (click)="goToNextSlide(offCorrespondence, ofcA1)">Next</button>
+                                <button type="button" class="btn btn-primary" 
+                                [ngClass]="{'disabled': !officialCorrespondenceForm.valid}"
+                                [disabled]="!officialCorrespondenceForm.valid"
+                                (click)="goToNextSlide(offCorrespondence, ofcA1)">Next</button>
                             </div>
                         </form>
                     </div>
@@ -1500,7 +1542,7 @@
                                       required>
                                     <label for="corp-add">Corporate Address</label>
 
-                                    <div *ngIf="(corpAddress.touched || corpAddress.dirty) && corpAddress.invalid" class="invalid-feedback">
+                                    <div *ngIf="corpAddress.touched  && corpAddress.invalid" class="invalid-feedback">
                                       <div *ngIf="corpAddress.errors?.required">{{errors.corporateAddress.address.required}}</div>
                                       <div *ngIf="corpAddress.errors?.pattern">{{errors.corporateAddress.address.invalid}}</div>
                                     </div>
@@ -1519,7 +1561,7 @@
                                       required>
                                     <label for="pincode01">Pincode</label>
 
-                                    <div *ngIf="(corpPincode.touched || corpPincode.dirty) && corpPincode.invalid" class="invalid-feedback">
+                                    <div *ngIf="corpPincode.touched  && corpPincode.invalid" class="invalid-feedback">
                                         <div *ngIf="corpPincode.errors?.required">{{errors.corporateAddress.pinCode.required}}</div>
                                         <div *ngIf="corpPincode.errors?.pattern">{{errors.corporateAddress.pinCode.invalid}}</div>
                                     </div>
@@ -1534,25 +1576,34 @@
                                       pattern="^[0-9A-Za-z,_#]+$">
                                     <label for="city-state01">City/State</label>
 
-                                    <div *ngIf="(corpCityState.touched || corpCityState.dirty) && corpCityState.invalid" class="invalid-feedback">
+                                    <div *ngIf="corpCityState.touched  && corpCityState.invalid" class="invalid-feedback">
                                         <div *ngIf="corpCityState.errors?.required">{{errors.corporateAddress.stateOrCity.required}}</div>
                                         <div *ngIf="corpCityState.errors?.pattern">{{errors.corporateAddress.stateOrCity.invalid}}</div>
                                     </div>
                                 </div>
                                 <div class="residence-no">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="std">
-                                        <label for="std">STD</label>
+                                        <input type="text" class="form-control" id="caStd">
+                                        <label for="caStd">STD</label>
                                     </div>
                                     <span class="seperator">-</span>
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="res-no" data-validation-attr="residenceno">
-                                        <label for="res-no">Residence number</label>
+                                        <input type="text" class="form-control" id="ca-res-no" data-validation-attr="residenceno">
+                                        <label for="ca-res-no">Residence number</label>
                                     </div>
                                 </div>
                                 <div class="form-group last">
-                                    <input type="text" class="form-control" id="ofc-email">
-                                    <label for="ofc-email">Office email ID</label>
+                                    <input type="text" class="form-control" id="ofc-email"
+                                    required
+                                    ngModel
+                                    name="ofcEmail"
+                                    #ofcEmail="ngModel"
+                                    pattern="^[a-zA-Z0-9_.+-]+@[0-9a-zA -Z-]+.[a-zA-Z0-9]+.[a-z]+$">
+                                    <label for="ofc-email" *ngIf="ofcEmail.value==''">Office email ID</label>
+                                    <div *ngIf="ofcEmail.touched && ofcEmail.invalid" class="invalid-feedback">
+                                        <div *ngIf="ofcEmail.errors?.required">{{errors.corporateAddress.ofcEmail.required}}</div>
+                                        <div *ngIf="ofcEmail.errors?.pattern">{{errors.corporateAddress.ofcEmail.invalid}}</div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="btn-wrap">
@@ -1576,24 +1627,51 @@
                         <form class="bs-form">
                             <div class="form-wrap">
                                 <div class="form-group inr">
-                                    <input type="text" class="form-control" id="revenue">
-                                    <label for="revenue">Revenue</label>
+                                    <input type="text" class="form-control" id="revenue"
+                                    ngModel
+                                    #revenue="ngModel"
+                                    name="revenue"
+                                    pattern="^[1-9]\d{0,17}(\.\d{0,4})?$"
+                                    required>
+                                    <label for="revenue" *ngIf="revenue.value==''">Revenue</label>
+                                    <div *ngIf="revenue.touched && revenue.invalid" class="invalid-feedback">
+                                        <div *ngIf="revenue.errors?.required">{{errors.revenueDetails.revenue.required}}</div>
+                                        <div *ngIf="revenue.errors?.pattern">{{errors.revenueDetails.revenue.invalid}}</div>
+                                    </div>
                                     <span class="addon">
                                         <span class="icon icon-inr"></span>
                                     </span>
                                     <span class="in-word"></span>
                                 </div>
                                 <div class="form-group inr">
-                                    <input type="text" class="form-control" id="net-income">
-                                    <label for="net-income">Annual Net Income</label>
+                                    <input type="text" class="form-control" id="net-income"
+                                    required
+                                    ngModel
+                                    #annualNetincome="ngModel"
+                                    name="annualNetincome"
+                                    pattern="^[1-9]\d{0,17}(\.\d{0,4})?$">
+                                    <label for="net-income" *ngIf="annualNetincome.value==''">Annual Net Income</label>
+                                    <div *ngIf="annualNetincome.touched && annualNetincome.invalid" class="invalid-feedback">
+                                        <div *ngIf="annualNetincome.errors?.required">{{errors.revenueDetails.annualNetincome.required}}</div>
+                                        <div *ngIf="annualNetincome.errors?.pattern">{{errors.revenueDetails.annualNetincome.invalid}}</div>
+                                    </div>
                                     <span class="addon">
                                         <span class="icon icon-inr"></span>
                                     </span>
                                     <span class="in-word"></span>
                                 </div>
                                 <div class="form-group inr last">
-                                    <input type="text" class="form-control" id="gross-turnover">
-                                    <label for="gross-turnover">Gross Turnover</label>
+                                    <input type="text" class="form-control" id="gross-turnover" 
+                                    required
+                                    ngModel
+                                    #grossTurnover="ngModel"
+                                    name="grossTurnover"
+                                    pattern="^[1-9]\d{0,17}(\.\d{0,4})?$">
+                                    <label for="gross-turnover" *ngIf="grossTurnover.value==''">Gross Turnover</label>
+                                    <div *ngIf="grossTurnover.touched && grossTurnover.invalid" class="invalid-feedback">
+                                        <div *ngIf="grossTurnover.errors?.required">{{errors.revenueDetails.grossTurnover.required}}</div>
+                                        <div *ngIf="grossTurnover.errors?.pattern">{{errors.revenueDetails.grossTurnover.invalid}}</div>
+                                    </div>
                                     <span class="addon">
                                         <span class="icon icon-inr"></span>
                                     </span>

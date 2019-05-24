@@ -24,6 +24,71 @@ export class LoanQdeComponent implements OnInit {
   value: Array<number> = [0,0,0];
 
   isPropertyIdentified:boolean = false;
+  errors = {
+     loanDetails: {
+       incomeDetails: {
+         annualFamilyIncome: {
+           required: "Annual Family Income is required",
+           invalid: "Annual Family Income is not valid"
+         },
+         coAppAnnualFamilyIncome: {
+           required: "Co-Applicant Annual Family Income is required",
+           invalid: "Co-Applicant Annual Family Income is not valid"
+         }
+       },
+
+       loanAmount: {
+         amount: {
+           required: "Loan Amount is required",
+           invalid: "Loan Amount is not valid"
+         },
+         tenure: {
+           required: "Loan Tenure is required",
+           invalid: "Loan Tenure is not valid"
+         }
+       },
+
+        property: {
+          pinCode: {
+            required: "Property Pincode is required",
+            invalid: "Property Pincode is not valid"
+         },
+          addressLineOne: {
+            required: "Property Address line 1 is required",
+            invalid: "Property Address line 1 is not valid"
+          },
+          addressLineTwo: {
+            required: "Property Address line 2 is required",
+            invalid: "Annual Family Income is not valid"
+          },
+          cityOrState: {
+            required: "Annual Family Income is required",
+            invalid: "Annual Family Income is not valid"
+          }
+        },
+
+       existingLoans: {
+           monthlyEmi: {
+             required: "Monthly EMI is required",
+             invalid: "Monthly EMI is not valid"
+           }
+       },
+     }
+  };
+
+  regexPattern = {
+    email: "/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/",
+    moblieNumber: "/^\d{10}$/",
+    name: "/^[a-zA-Z ]*$/",
+    address : "^[0-9A-Za-z, _#\s]+$",
+    annualFamilyIncome: "^[0-9]{1,18}$",
+    tenure: "^[0-9]{1,2}$",
+    pinCode: "^[0-9]{6,6}$",
+    cityOrState : "^[0-9A-Za-z, _#\s]+$",
+    monthlyEmi: "^[0-9]{1,10}$"
+  };
+
+  value: number = 0;
 
   minValue: number = 1;
   options: Options = {

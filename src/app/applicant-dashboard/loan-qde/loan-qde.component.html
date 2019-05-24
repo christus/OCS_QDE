@@ -36,16 +36,28 @@
                 (ngSubmit)="submitLoanAmount(loanAmount)">
                   <div class="form-wrap">
                     <div class="form-group inr">
-                      <input type="text" name="amountRequired" class="form-control" ngModel id="amt-require">
+                      <input type="text" class="form-control" id="amt-require"
+                        required
+                        ngModel
+                        #loanAmount = "ngModel"
+                        name="amountRequired"
+                        pattern='{{regexPattern.annualFamilyIncome}}'>
+
                       <label for="amt-require">Amount required (in lakhs)</label>
                       <span class="addon">
                         <span class="icon icon-inr"></span>
                       </span>
                       <span class="in-word"></span>
+
+                      <div *ngIf="(loanAmount.touched || loanAmount.dirty) && loanAmount.invalid" class="invalid-feedback">
+                        <div *ngIf="loanAmount.errors?.required">{{errors.loanDetails.loanAmount.amount.required}}</div>
+                        <div *ngIf="loanAmount.errors?.pattern">{{errors.loanDetails.loanAmount.amount.invalid}}</div>
+                      </div>
+
                     </div>
                     <div class="form-group">
                       <span class="control-title">Loan purpose</span>
-                      <select class="js-select" ngModel name="loanPurpose">
+                      <select class="js-select" ngModel name="loanPurpose" required>
                         <option value="1">Purchase of land</option>
                         <option value="2">option2</option>
                         <option value="3">option3</option>
@@ -53,20 +65,31 @@
                       </select>
                     </div>
                     <div class="form-group typ-range">
-                        <span class="control-title">Loan tenure (in years)</span>
-                        <input type="text" 
+                      <span class="control-title">Loan tenure (in years)</span>
+                      <input type="number" 
+						class="form-control" id="no-yrs"
+                        required
+                        ngModel
+                        #loanTenure = "ngModel"
                         name="loanTenure"
-                        class="form-control"
-                        type="number"
-                        [ngModel]="value[0]"
-                        (ngModelChange)="valuechange($event, 0)">
-                        <span class="yr-text">Years</span>
-                        <ng5-slider [(value)]="value[0]" [options]="options"></ng5-slider>
+						[ngModel]="value[0]"
+                        (ngModelChange)="valuechange($event, 0)"
+                        pattern='{{regexPattern.tenure}}'>
+
+                      <span class="yr-text">Years</span>
+                      <ng5-slider [(value)]="value[0]" [options]="options"></ng5-slider>
+
+                      <div *ngIf="(loanTenure.touched || loanTenure.dirty) && loanTenure.invalid" class="invalid-feedback">
+                        <div *ngIf="loanTenure.errors?.required">{{errors.loanDetails.loanAmount.tenure.required}}</div>
+                        <div *ngIf="loanTenure.errors?.pattern">{{errors.loanDetails.loanAmount.tenure.invalid}}</div>
+                      </div>
                     </div>
                   </div>
                   <div class="btn-wrap">
-                    <button class="btn btn-primary disabled"
-                    type="submit">Next</button>
+                    <button class="btn btn-primary disabled">Next</button>
+<!--                     <button class="btn btn-primary"
+                    [ngClass]="{'disabled': !formName.valid}"
+                    [disabled]="!formName.valid">Next</button> -->
                   </div>
                 </form>
               </div>
@@ -151,24 +174,75 @@
                       <form class="bs-form">
                         <div class="form-wrap">
                           <div class="form-group">
-                            <input type="text" class="form-control" id="proprty-pin">
+                            <input type="text" class="form-control" id="proprty-pin"
+                            required
+                            ngModel
+                            #propertyPincode = "ngModel"
+                            name="propertyPincode"
+                            pattern='{{regexPattern.pinCode}}'>
+
                             <label for="proprty-pin">Property pincode</label>
+
+                            <div *ngIf="(propertyPincode.touched || propertyPincode.dirty) && propertyPincode.invalid" class="invalid-feedback">
+                              <div *ngIf="propertyPincode.errors?.required">{{errors.loanDetails.property.pinCode.required}}</div>
+                              <div *ngIf="propertyPincode.errors?.pattern">{{errors.loanDetails.property.pinCode.invalid}}</div>
+                            </div>
+
                           </div>
                           <div class="form-group">
-                            <input type="text" class="form-control" id="pro-add-line1">
+                            <input type="text" class="form-control" id="pro-add-line1"
+                              required
+                              ngModel
+                              #addressLineOne = "ngModel"
+                              name="addressLineOne"
+                              pattern='{{regexPattern.address}}'>
+
                             <label for="pro-add-line1">Property address line1</label>
+
+
+                            <div *ngIf="(addressLineOne.touched || addressLineOne.dirty) && addressLineOne.invalid" class="invalid-feedback">
+                              <div *ngIf="addressLineOne.errors?.required">{{errors.loanDetails.property.addressLineOne.required}}</div>
+                              <div *ngIf="addressLineOne.errors?.pattern">{{errors.loanDetails.property.addressLineOne.invalid}}</div>
+                            </div>
                           </div>
+
                           <div class="form-group">
-                            <input type="text" class="form-control" id="pro-add-line2">
+                            <input type="text" class="form-control" id="pro-add-line2"
+                              required
+                              ngModel
+                              #addressLineTwo = "ngModel"
+                              name="addressLineTwo"
+                              pattern='{{regexPattern.address}}'>
+
                             <label for="pro-add-line2">Property address line2</label>
+
+
+                            <div *ngIf="(addressLineTwo.touched || addressLineTwo.dirty) && addressLineTwo.invalid" class="invalid-feedback">
+                              <div *ngIf="addressLineTwo.errors?.required">{{errors.loanDetails.property.addressLineTwo.required}}</div>
+                              <div *ngIf="addressLineTwo.errors?.pattern">{{errors.loanDetails.property.addressLineTwo.invalid}}</div>
+                            </div>
                           </div>
                           <div class="form-group">
-                            <input type="text" class="form-control" id="pro-city2">
-                            <label for="pro-city">City/State</label>
+                            <input type="text" class="form-control" id="pro-city2"
+                              required
+                              ngModel
+                              #cityOrState = "ngModel"
+                              name="cityOrState"
+                              pattern='{{regexPattern.cityOrState}}'>
+                            <label for="pro-city2">City/State</label>
+
+
+                            <div *ngIf="(cityOrState.touched || cityOrState.dirty) && cityOrState.invalid" class="invalid-feedback">
+                              <div *ngIf="cityOrState.errors?.required">{{errors.loanDetails.property.cityOrState.required}}</div>
+                              <div *ngIf="cityOrState.errors?.pattern">{{errors.loanDetails.property.cityOrState.invalid}}</div>
+                            </div>
                           </div>
                         </div>
                         <div class="btn-wrap">
                           <button class="btn btn-primary disabled">Next</button>
+<!--                           <button class="btn btn-primary"
+                          [ngClass]="{'disabled': !formName.valid}"
+                          [disabled]="!formName.valid">Next</button> -->
                         </div>
                       </form>
                     </div>
@@ -223,7 +297,7 @@
                         <div class="form-wrap">
                           <div class="form-group">
                             <span class="control-title">Loan provider</span>
-                            <select ngModel name="loanProvider" class="js-select">
+                            <select ngModel name="loanProvider" class="js-select" required>
                               <option value="1">Loan provider</option>
                               <option value="2">SBI home loan</option>
                               <option value="3">option1</option>
@@ -269,8 +343,20 @@
                       (ngSubmit)="submitMonthlyEmi(monthlyEmi, existingLoan2)">
                         <div class="form-wrap">
                           <div class="form-group inr">
-                            <input type="text" class="form-control" ngModel name="monthlyEmi" id="monthly-emi">
+                            <input type="text" class="form-control" id="monthly-emi"
+                              required
+                              ngModel
+                              #monthlyEmi = "ngModel"
+                              name="monthlyEmi"
+                              pattern='{{regexPattern.monthlyEmi}}'>
+                              
                             <label for="monthly-emi">Monthly EMI</label>
+
+                            <div *ngIf="(monthlyEmi.touched || monthlyEmi.dirty) && monthlyEmi.invalid" class="invalid-feedback">
+                              <div *ngIf="monthlyEmi.errors?.required">{{errors.loanDetails.existingLoans.monthlyEmi.required}}</div>
+                              <div *ngIf="monthlyEmi.errors?.pattern">{{errors.loanDetails.existingLoans.monthlyEmi.invalid}}</div>
+                            </div>
+
                             <span class="addon">
                               <span class="icon icon-inr"></span>
                             </span>
@@ -279,6 +365,9 @@
                         </div>
                         <div class="btn-wrap">
                           <button type="submit" class="btn btn-primary disabled">Next</button>
+<!--                           <button class="btn btn-primary"
+                          [ngClass]="{'disabled': !formName.valid}"
+                          [disabled]="!formName.valid">Next</button> -->
                         </div>
                       </form>
                     </div>

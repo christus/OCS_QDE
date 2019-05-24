@@ -54,6 +54,10 @@ export class ApplicantQdeComponent implements OnInit {
       },
       alternateMobile: {
         invalid: "Alternate Mobile Number is not valid"
+      },
+      stdCode: {
+        required: "Std Code is required",
+        invalid: "Std Code is not valid"
       }
     },
 
@@ -88,7 +92,18 @@ export class ApplicantQdeComponent implements OnInit {
     },
 
     familyDetails: {
-
+      fatherName:{
+        required:"Father's Name is required",
+        invalid: "Father's Name is not valid"
+      },
+      motherName:{
+        required:"Mother's Name is required",
+        invalid: "Mother's Name is not valid"
+      },
+      motherMaiden:{
+        required:"Mother's Maiden Name is required",
+        invalid: "Mother's Maiden Name is not valid"
+      }
     },
 
     other: {
@@ -175,10 +190,26 @@ export class ApplicantQdeComponent implements OnInit {
       },stateOrCity: {
         required: "State Name / City Name is required",
         invalid: "State Name / City Name is not valid"
+      },
+
+      ofcEmail:{
+        required:"Office Email is required",
+        invalid:"Office Email is not valid"
       }
     },
     revenueDetails: {
-
+      revenue:{
+        required: "revenue is required",
+        invalid: "revenue is not valid"
+      },
+      annualNetincome:{
+        required:"Annual Net Income is required",
+        invalid:" Annual Net Income is not valid"
+      },
+      grossTurnover:{
+        required: "Gross Turnover is required",
+        invalid: "Gross Turnover is not valid"
+      }
     }
   };
 
