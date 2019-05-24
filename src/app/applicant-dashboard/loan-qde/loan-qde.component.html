@@ -4,116 +4,22 @@
     <div class="lyt-home">
       <div class="tabs">
         <ul class="tabs-head">
-          <li class="tab-link pending" [ngClass]="{'active': (activeTab == 0)}">
+          <!-- <li class="tab-link pending" [ngClass]="{'active': (activeTab == 0)}">
             <a href="javascript:void(0);" (click)="tabSwitch(0)">INCOME DETAILS</a>
+          </li> -->
+          <li class="tab-link" [ngClass]="{'active': (activeTab == 0), 'hide': (!applicantIndividual)}">
+            <a href="javascript:void(0);" (click)="tabSwitch(0)">LOAN AMOUNT</a>
           </li>
           <li class="tab-link" [ngClass]="{'active': (activeTab == 1), 'hide': (!applicantIndividual)}">
-            <a href="javascript:void(0);" (click)="tabSwitch(1)">LOAN AMOUNT</a>
+            <a href="javascript:void(0);" (click)="tabSwitch(1)">PROPERTY</a>
           </li>
           <li class="tab-link" [ngClass]="{'active': (activeTab == 2), 'hide': (!applicantIndividual)}">
-            <a href="javascript:void(0);" (click)="tabSwitch(2)">PROPERTY</a>
-          </li>
-          <li class="tab-link" [ngClass]="{'active': (activeTab == 3), 'hide': (!applicantIndividual)}">
-            <a href="javascript:void(0);" (click)="tabSwitch(3)">EXISTING LOANS</a>
+            <a href="javascript:void(0);" (click)="tabSwitch(2)">EXISTING LOANS</a>
           </li>
          
         </ul>
         <div class="tabs-contents" #tabContents>
           <div class="tab-content" [ngClass]="{'active': (activeTab == 0)}">
-            <!-- <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(panSlider2)"></a> -->
-            <div class="lyt-tabs">
-
-              <div class="lhs">
-                <div class="swiper-container form-swiper"
-                [swiper]="lhsConfig" 
-                #incomeDetail1="ngxSwiper">
-                  <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                      <div class="title-wrap">
-                        <h4 class="title">Enter applicant's <span class="cm-line-break"></span>income details</h4>
-                        <p class="note">Please enter household income & expenditure of main applicant & co-applicant/s</p>
-                      </div>
-                    </div>
-                    <div class="swiper-slide">
-                      <div class="title-wrap">
-                        <h4 class="title">Do you or any of the <span class="cm-line-break"></span>family members <span
-                            class="cm-line-break"></span> own a puccahouse <span class="cm-line-break"></span>anywhere in India?</h4>
-                        <p class="note">House made with a high quality materials throughout, including a floor, roof and exterior walls, are
-                          called pucca houses</p>
-                      </div>
-                    </div>
-                    <div class="swiper-slide">
-                      <div class="title-wrap">
-                        <h4 class="title">Do you or any of the <span class="cm-line-break"></span>family members <span
-                            class="cm-line-break"></span> own a puccahouse <span class="cm-line-break"></span>anywhere in India?</h4>
-                        <p class="note">House made with a high quality materials throughout, including a floor, roof and exterior walls, are
-                          called pucca houses</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="rhs">
-                <div class="swiper-container form-swiper "
-                  [swiper]="rhsConfig"
-                  (slidePrevTransitionStart)="slidePrevTransitionStart(incomeDetail1)"
-                  (slideNextTransitionStart)="slideNextTransitionStart(incomeDetail1)"
-                  #incomeDetail2="ngxSwiper">
-                  <div class="swiper-wrapper">
-
-                    <div class="swiper-slide">
-                     
-                      <form class="bs-form">
-                        <div class="form-wrap">
-                          <div class="form-group inr">
-                            <input type="text" class="form-control" id="annual-income">
-                            <label for="annual-income">Annual family income</label>
-                            <span class="addon">
-                              <span class="icon icon-inr"></span>
-                            </span>
-                            <span class="in-word"></span>
-                          </div>
-                          <div class="form-group inr">
-                            <input type="text" class="form-control" id="family-income">
-                            <label for="family-income">Annual family income</label>
-                            <span class="addon">
-                              <span class="icon icon-inr"></span>
-                            </span>
-                            <span class="in-word"></span>
-                          </div>
-                        </div>
-                        <div class="btn-wrap">
-                          <button class="btn btn-primary disabled">Next</button>
-                        </div>
-                      </form>
-                    </div>
-
-                    <div class="swiper-slide">
-                      <form class="bs-form">
-                        <div class="form-wrap">
-                          <div class="bs-radio">
-                            <input type="radio" name="pucca-radio" id="yes-pucca">
-                            <label for="yes-pucca"><span>Yes</span></label>
-                          </div>
-                          <div class="bs-radio">
-                            <input type="radio" name="pucca-radio" id="no-pucca">
-                            <label for="no-pucca"><span>No</span></label>
-                          </div>
-                        </div>
-                      </form>
-                    </div>
-                    
-                    <div class="swiper-slide">
-                    </div>
-
-
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="tab-content" [ngClass]="{'active': (activeTab == 1)}">
             <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(incomeDetail1)"></a>
             <div class="lyt-tabs">
               <div class="lhs">
@@ -123,10 +29,14 @@
                 </div>
               </div>
               <div class="rhs">
-                <form class="bs-form" id="personal-form">
+
+
+                <form class="bs-form" id="personal-form"
+                #loanAmount="ngForm"
+                (ngSubmit)="submitLoanAmount(loanAmount)">
                   <div class="form-wrap">
                     <div class="form-group inr">
-                      <input type="text" class="form-control" id="amt-require">
+                      <input type="text" name="amountRequired" class="form-control" ngModel id="amt-require">
                       <label for="amt-require">Amount required (in lakhs)</label>
                       <span class="addon">
                         <span class="icon icon-inr"></span>
@@ -135,22 +45,28 @@
                     </div>
                     <div class="form-group">
                       <span class="control-title">Loan purpose</span>
-                      <select class="js-select" name="loan-purpose">
-                        <option value="o1">Purchase of land</option>
-                        <option value="o2">option2</option>
-                        <option value="o3">option3</option>
-                        <option value="o4">option4</option>
+                      <select class="js-select" ngModel name="loanPurpose">
+                        <option value="1">Purchase of land</option>
+                        <option value="2">option2</option>
+                        <option value="3">option3</option>
+                        <option value="4">option4</option>
                       </select>
                     </div>
                     <div class="form-group typ-range">
-                      <span class="control-title">Loan tenure (in years)</span>
-                      <input type="text" class="form-control" id="no-yrs">
-                      <span class="yr-text">Years</span>
-                      <div id="year-range" class="range-slider"></div>
+                        <span class="control-title">Loan tenure (in years)</span>
+                        <input type="text" 
+                        name="loanTenure"
+                        class="form-control"
+                        type="number"
+                        [ngModel]="value[0]"
+                        (ngModelChange)="valuechange($event, 0)">
+                        <span class="yr-text">Years</span>
+                        <ng5-slider [(value)]="value[0]" [options]="options"></ng5-slider>
                     </div>
                   </div>
                   <div class="btn-wrap">
-                    <button class="btn btn-primary disabled">Next</button>
+                    <button class="btn btn-primary disabled"
+                    type="submit">Next</button>
                   </div>
                 </form>
               </div>
@@ -158,7 +74,7 @@
 
           </div>
 
-          <div class="tab-content" [ngClass]="{'active': (activeTab == 2)}">
+          <div class="tab-content" [ngClass]="{'active': (activeTab == 1)}">
             <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
 
             <div class="lyt-tabs">
@@ -190,16 +106,47 @@
                       <form class="bs-form">
                         <div class="form-wrap">
                           <div class="bs-radio">
-                            <input type="radio" name="property-radio" id="yes-property">
+                            <input type="radio" name="propertyIdentified" id="yes-property" [value]="true"  (change)="setPropertyIdentified($event, property2)" >
                             <label for="yes-property"><span>Yes</span></label>
                           </div>
                           <div class="bs-radio">
-                            <input type="radio" name="property-radio" id="no-property">
+                            <input type="radio" name="propertyIdentified" id="no-property" [value]="false" (change)="setPropertyIdentified($event, property2)">
                             <label for="no-property"><span>No</span></label>
                           </div>
                         </div>
                       </form>
                     </div>
+                    <div class="swiper-slide">
+                      <form class="bs-form"
+                      #propertyType="ngForm"
+                      (ngSubmit)="updatePropertyType(propertyType, property2)">
+                          <div class="form-wrap">
+                              <div class="form-group">
+                                  <span class="control-title">Property type</span>
+                                  <select ngModel name="propertyType" class="js-select">
+                                      <option value="1">Builder</option>
+                                      <option value="2">Self Construction</option>
+                                      <option value="3">resale</option>
+                                      <option value="4">plot</option>
+                                      <option value="5">row house</option>
+                                      <option value="6">bunglow</option>
+                                      <option value="7">flat</option>
+                                  </select>
+                              </div>
+                              <div class="form-group">
+                                  <input ngModel type="text" class="form-control" id="pro-add-line1" name="propertyClss">
+                                  <label for="pro-add-line1">Property CLSS area</label>
+                              </div>
+                              <div class="form-group">
+                                  <input ngModel type="text" class="form-control" id="pro-add-line2" name="propertyArea">
+                                  <label for="pro-add-line2">Property area in sq. fts.</label>
+                              </div>
+                          </div>
+                          <div class="btn-wrap">
+                              <button type="submit" class="btn btn-primary disabled">Next</button>
+                          </div>
+                      </form>
+                  </div>
                     <div class="swiper-slide">
                       <form class="bs-form">
                         <div class="form-wrap">
@@ -237,7 +184,7 @@
 
 
 
-          <div class="tab-content" [ngClass]="{'active': (activeTab == 3)}">
+          <div class="tab-content" [ngClass]="{'active': (activeTab == 2)}">
             <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
             <div class="lyt-tabs">
               <div class="lhs">
@@ -271,44 +218,58 @@
                   <div class="swiper-wrapper">
 
                     <div class="swiper-slide">
-                      <form class="bs-form">
+                      <form class="bs-form" #loanProvider="ngForm"
+                      (ngSubmit)="submitExistingLoanProvider(loanProvider, existingLoan2)">
                         <div class="form-wrap">
                           <div class="form-group">
                             <span class="control-title">Loan provider</span>
-                            <select name="loan-provider" class="js-select">
-                              <option value="">Loan provider</option>
-                              <option value="">SBI home loan</option>
-                              <option value="">option1</option>
-                              <option value="">option2</option>
-                              <option value="">option3</option>
+                            <select ngModel name="loanProvider" class="js-select">
+                              <option value="1">Loan provider</option>
+                              <option value="2">SBI home loan</option>
+                              <option value="3">option1</option>
+                              <option value="4">option2</option>
+                              <option value="5">option3</option>
                             </select>
                           </div>
                         </div>
                 
                         <div class="btn-wrap">
-                          <button class="btn btn-primary disabled">next</button>
+                          <button type="submit" class="btn btn-primary disabled">next</button>
                         </div>
                       </form>
                     </div>
 
                     <div class="swiper-slide">
-                      <form class="bs-form">
+                      <form class="bs-form" #liveLoans="ngForm" 
+                      (ngSubmit)="submitLiveLoans(liveLoans, existingLoan2)">
                         <div class="form-wrap">
                           <div class="form-group">
-                            <div class="range-slider typ-number"></div>
+                            <div class="form-group typ-range">
+                                <!-- <span class="control-title">Number of years in current residence</span>
+                                <input type="number"
+                                        name="numberOfYearsInCurrentResidence"
+                                        class="form-control"
+                                        [ngModel]="value[0]"
+                                        (ngModelChange)="valuechange($event, 0)" /> -->
+                                <ng5-slider [(value)]="value[0]" ngModel name="liveLoans" [options]="options"></ng5-slider>
+                            </div>
                           </div>
                         </div>
+
+                        
                         <div class="btn-wrap">
-                          <button class="btn btn-primary disabled">Next</button>
+                          <button type="submit" class="btn btn-primary disabled">Next</button>
                         </div>
                       </form>
                     </div>
 
                     <div class="swiper-slide">
-                      <form class="bs-form">
+                      <form class="bs-form"
+                      #monthlyEmi="ngForm"
+                      (ngSubmit)="submitMonthlyEmi(monthlyEmi, existingLoan2)">
                         <div class="form-wrap">
                           <div class="form-group inr">
-                            <input type="text" class="form-control" id="monthly-emi">
+                            <input type="text" class="form-control" ngModel name="monthlyEmi" id="monthly-emi">
                             <label for="monthly-emi">Monthly EMI</label>
                             <span class="addon">
                               <span class="icon icon-inr"></span>
@@ -317,7 +278,7 @@
                           </div>
                         </div>
                         <div class="btn-wrap">
-                          <button class="btn btn-primary disabled">Next</button>
+                          <button type="submit" class="btn btn-primary disabled">Next</button>
                         </div>
                       </form>
                     </div>

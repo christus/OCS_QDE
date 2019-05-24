@@ -24,6 +24,9 @@ export class QdeService {
             "isMainApplicant": false,
           }
         ],
+        "loanDetails": {
+       
+        },
         "references": {
           "referenceOne": {
             "relationShip": "",

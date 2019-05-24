@@ -143,6 +143,7 @@ export interface RevenueDetail {
 export interface LoanDetail {
     incomeDetails ?: IncomeDetail;
     loanAmount ?: LoanAmount;
+    propertyType ?: PropertyType;
     property ?: Property;
     existingLoans ?: ExistingLoan;
 }
@@ -167,10 +168,17 @@ export interface Property {
     state : string;
 }
 
+export interface PropertyType {
+    propertyIdentifed? : boolean;
+    propertyType: number;
+    propertyClss: string;
+    propertyArea: string;
+}
+
 export interface ExistingLoan {
-    loanProvider : string;
-    numberOfYears : number;
-    monthlyEmi : number;
+    loanProvider? : string;
+    liveLoan? : number;
+    monthlyEmi? : number;
 }
 
 export interface Reference {

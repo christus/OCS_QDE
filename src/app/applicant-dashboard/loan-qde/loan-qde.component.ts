@@ -9,13 +9,21 @@ import { Options } from "ng5-slider";
 import { NgForm } from "@angular/forms";
 
 
+import Qde from 'src/app/models/qde.model';
+import { QdeHttpService } from 'src/app/services/qde-http.service';
+import { QdeService } from 'src/app/services/qde.service';
+
+
+
 @Component({
   selector: "app-loan-qde",
   templateUrl: "./loan-qde.component.html",
   styleUrls: ["./loan-qde.component.css"]
 })
 export class LoanQdeComponent implements OnInit {
-  value: number = 0;
+  value: Array<number> = [0,0,0];
+
+  isPropertyIdentified:boolean = false;
 
   minValue: number = 1;
   options: Options = {
@@ -26,13 +34,13 @@ export class LoanQdeComponent implements OnInit {
     // showSelectionBar: true,
     showTicks: true,
     getLegend: (sliderVal: number): string => {
-      return sliderVal + "<b>y</b>";
+      return  sliderVal + '';
     }
   };
 
   private lhsConfig = {
     noSwiping: true,
-    noSwipingClass: "",
+    noSwipingClass: '',
     onlyExternal: true,
     autoplay: false,
     speed: 900,
@@ -47,7 +55,8 @@ export class LoanQdeComponent implements OnInit {
     // onlyExternal: true,
     autoplay: false,
     speed: 900,
-    effect: "slide"
+    effect: "slide",
+    noSwipingClass: '',
   };
 
   private activeTab: number = 0;
@@ -69,22 +78,43 @@ export class LoanQdeComponent implements OnInit {
 
   private applicantIndividual: boolean = true;
 
-  private fragments = ["income", "loan", "property", "existingLoan"];
+  private fragments = ["loan", "property", "existingLoan"];
+
+  private qde: Qde;
+
+  
 
   constructor(
     private renderer: Renderer2,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private qdeHttp: QdeHttpService,
+    private qdeService: QdeService
   ) {}
 
   ngOnInit() {
     // this.renderer.addClass(this.select2.selector.nativeElement, 'js-select');
 
+    if(this.route.snapshot.data.listOfValues != null && this.route.snapshot.data.listOfValues != undefined) {
+      // Initialize all UI Values here
+    }
+    
+    // Check Whether there is qde data to be filled or else Initialize Qde
+    this.route.params.subscribe((params) => {
+      
+      // Make an http request to get the required qde data and set using setQde
+      if(params.applicantId != undefined && params.applicantId != null) {
+        // setQde(JSON.parse(response.ProcessVariables.response));
+      } else {
+        this.qde = this.qdeService.getQde();
+      }
+    });
+
     this.route.fragment.subscribe(fragment => {
       let localFragment = fragment;
 
       if (fragment == null) {
-        localFragment = "income";
+        localFragment = "loan";
       }
 
       // Replace Fragments in url
@@ -96,10 +126,7 @@ export class LoanQdeComponent implements OnInit {
 
   ngAfterViewInit() {}
 
-  valuechange(newValue) {
-    console.log(newValue);
-    this.value = newValue;
-  }
+  
 
   /**
    * Use to sync between lhs and rhs sliders
@@ -176,6 +203,150 @@ export class LoanQdeComponent implements OnInit {
   addRemoveResidenceNumberField() {
     this.isAlternateResidenceNumber = !this.isAlternateResidenceNumber;
   }
+
+  valuechange(newValue, valueIndex) {
+    console.log(newValue);
+    this.value[valueIndex] = newValue;
+  }
+
+
+  submitLoanAmount(form: NgForm) {
+    if (form && !form.valid) {
+      return;
+    }
+
+    this.qde.application.loanDetails.loanAmount = {
+      amountRequired: form.value.amountRequired,
+      loanPurpose: form.value.loanPurpose,
+      loanTenure: form.value.loanTenure
+    }
+
+    this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+      // If successful
+      if(response["ProcessVariables"]["status"]) {
+        console.log(this.qde.application.references.referenceOne.relationShip);
+        this.tabSwitch(1);
+      } else {
+        // Throw Invalid Pan Error
+      }
+    }, (error) => {
+      console.log("response : ", error);
+    });
+
+    console.log("Submitted Amount"+ this.qde.application.loanDetails.loanAmount);
+  }
+
+  setPropertyIdentified(evt, swiperInstance ?: Swiper) {
+    console.log(evt.currentTarget.value);
+    this.isPropertyIdentified = (evt.currentTarget.value == "true"? true:false);
+
+    this.goToNextSlide(swiperInstance);
+  }
+
+
+  updatePropertyType(form: NgForm, swiperInstance ?: Swiper) {
+    if (form && !form.valid) {
+      return;
+    }
+
+    this.qde.application.loanDetails.propertyType = {
+
+      propertyIdentifed : this.isPropertyIdentified,
+      propertyType: form.value.propertyType,
+      propertyClss: form.value.propertyClss,
+      propertyArea: form.value.propertyArea,
+    }
+
+
+    this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+      // If successful
+      if(response["ProcessVariables"]["status"]) {
+        console.log(this.qde.application.loanDetails.propertyType);
+        this.tabSwitch(2);
+      } else {
+        // Throw Invalid Pan Error
+      }
+    }, (error) => {
+      console.log("response : ", error);
+    });
+
+  }
+
+
+  submitExistingLoanProvider(form: NgForm, swiperInstance ?: Swiper) {
+
+    if (form && !form.valid) {
+      return;
+    }
+
+    this.qde.application.loanDetails.existingLoans = {
+      loanProvider: form.value.loanProvider,
+      // liveLoan: form.value.numberOfYears,
+      // monthlyEmi: form.value.monthlyEmi
+    }
+
+    this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+      // If successful
+      if(response["ProcessVariables"]["status"]) {
+        console.log(this.qde.application.loanDetails.propertyType);
+        this.goToNextSlide(swiperInstance);
+      } else {
+        // Throw Invalid Pan Error
+      }
+    }, (error) => {
+      console.log("response : ", error);
+    });
+  }
+
+
+  submitLiveLoans (form: NgForm, swiperInstance ?: Swiper) {
+    if (form && !form.valid) {
+      return;
+    }
+
+    this.qde.application.loanDetails.existingLoans = {
+      liveLoan: form.value.liveLoans,
+      // numberOfYears: form.value.numberOfYears,
+      // monthlyEmi: form.value.monthlyEmi
+    }
+
+    this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+      // If successful
+      if(response["ProcessVariables"]["status"]) {
+        console.log(this.qde.application.loanDetails.propertyType);
+        this.goToNextSlide(swiperInstance);
+      } else {
+        // Throw Invalid Pan Error
+      }
+    }, (error) => {
+      console.log("response : ", error);
+    });
+
+  }
+
+
+  submitMonthlyEmi(form: NgForm, swiperInstance ?: Swiper) {
+    if (form && !form.valid) {
+      return;
+    }
+
+    this.qde.application.loanDetails.existingLoans = {
+      monthlyEmi: form.value.monthlyEmi
+    }
+
+    this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+      // If successful
+      if(response["ProcessVariables"]["status"]) {
+        console.log(this.qde.application.loanDetails.propertyType);
+        // this.goToNextSlide(swiperInstance);
+      } else {
+        // Throw Invalid Pan Error
+      }
+    }, (error) => {
+      console.log("response : ", error);
+    });
+  }
+
 
   private temp;
 }
