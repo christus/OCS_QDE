@@ -15,17 +15,17 @@
 </div>
 </div>
 <ul class="main-nav">
-<li class="active">
+<li routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
     <a routerLink="/applicant">Applicant Details</a>
 </li>
-<li>
-    <a routerLink="/applicant/co-applicant">Co-Applicant Details</a>
+<li routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+    <a routerLink="/co-applicant">Co-Applicant Details</a>
 </li>
-<li>
-    <a routerLink="/applicant/loan">Loan Details</a>
+<li routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+    <a routerLink="/loan">Loan Details</a>
 </li>
-<li>
-    <a routerLink="/applicant/references">References</a>
+<li routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+    <a routerLink="/references">References</a>
 </li>
 <li>
     <a href="javascript:void(0);">Document Uploads</a>

@@ -54,22 +54,49 @@ const appRoutes: Routes = [
   { path: 'login', component: LoginComponent}, // This line will be replaced with signin page
   { path: 'leads', component: LeadsListComponent },
   { path: 'applicant', component: ApplicantDashboardComponent, children: [
-    { path: '',
+    {
+      path: '',
       component: ApplicantQdeComponent,
       resolve: {
         listOfValues : ListOfValuesResolverService
       }
     },
-    { path: 'applicant/:applicantId',
+    {
+      path: 'applicant/:applicantId',
       component: ApplicantQdeComponent,
       resolve: {
         listOfValues: ListOfValuesResolverService
       }
+    }
+  ] },
+  {
+    path: 'co-applicant', component: ApplicantDashboardComponent, children: [
+    {
+      path: '',
+      component: ApplicantQdeComponent,
+      resolve: {
+        listOfValues : ListOfValuesResolverService
+      }
     },
-    { path: 'co-applicant', component: CoApplicantQdeComponent },
-    { path: 'loan', component: LoanQdeComponent },
-    { path: 'references', component: ReferencesQdeComponent }
-  ] }
+    {
+      path: ':applicantId',
+      component: ApplicantQdeComponent,
+      resolve: {
+        listOfValues: ListOfValuesResolverService
+      }
+    }
+  ] },
+  {
+    path: 'loan',
+    component: ApplicantDashboardComponent,
+    resolve: {
+      listOfValues: ListOfValuesResolverService
+    }
+  },
+  {
+    path: 'references',
+    component: ReferencesQdeComponent
+  }
 ];
  
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
