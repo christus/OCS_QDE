@@ -446,12 +446,16 @@ export class ApplicantQdeComponent implements OnInit {
     this.qdeHttp.createOrUpdatePanDetails(this.qde).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
+        let result = this.parseJson(response["ProcessVariables"]["response"]);
+        this.qde.application.ocsNumber = result["application"]["ocsNumber"];
+        this.qde.application.applicants[this.applicantIndex].applicantId = result["application"]["applicationId"];
         this.goToNextSlide(swiperInstance);
       } else {
         // Throw Invalid Pan Error
       }
     }, (error) => {
       console.log('error ', error);
+      alert("error"+error);
       // Throw Request Failure Error
     });   
   }
@@ -663,7 +667,7 @@ export class ApplicantQdeComponent implements OnInit {
       }
     }, (error) => {
       console.log("response : ", error);
-      this.goToNextSlide(swiperInstance);
+      //this.goToNextSlide(swiperInstance);
     });
 
   }
@@ -687,7 +691,7 @@ export class ApplicantQdeComponent implements OnInit {
       }
     }, (error) => {
       console.log("response : ", error);
-      this.goToNextSlide(swiperInstance);
+     // alert("error"+error.);
     });
 
   }
@@ -711,6 +715,7 @@ export class ApplicantQdeComponent implements OnInit {
       }
     }, (error) => {
       console.log("response : ", error);
+      alert("error"+error);
     });
 
   }
@@ -820,12 +825,13 @@ export class ApplicantQdeComponent implements OnInit {
     this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
-        this.tabSwitch(6);
+        this.tabSwitch(7);
       } else {
         // Throw Invalid Pan Error
       }
     }, (error) => {
       console.log("response : ", error);
+      alert("error"+error);
     });
 
   }
@@ -852,7 +858,7 @@ export class ApplicantQdeComponent implements OnInit {
     this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
-        this.tabSwitch(6);
+        this.tabSwitch(8);
       } else {
         // Throw Invalid Pan Error
       }
@@ -887,7 +893,7 @@ export class ApplicantQdeComponent implements OnInit {
     this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
-        this.tabSwitch(6);
+        //this.tabSwitch(6);
       } else {
         // Throw Invalid Pan Error
       }
@@ -1016,5 +1022,11 @@ export class ApplicantQdeComponent implements OnInit {
     }, (error) => {
       console.log("response : ", error);
     });
+  }
+
+
+  parseJson(response):JSON {
+    let result = JSON.parse(response);
+    return result;
   }
 }

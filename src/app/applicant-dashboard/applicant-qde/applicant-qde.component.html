@@ -1545,7 +1545,8 @@
                         </div>
                     </div>
                     <div class="rhs">
-                        <form class="bs-form">
+                        <form class="bs-form"
+                        #corporateAddressForm="ngForm" (ngSubmit)="submitCorporateAddress(corporateAddressForm)" >
                             <div class="form-wrap">
                                 <div class="form-group">
                                     <input type="text" class="form-control" id="corp-add" 
@@ -1623,7 +1624,8 @@
                                 </div>
                             </div>
                             <div class="btn-wrap">
-                                <button class="btn btn-primary disabled">Next</button>
+                                <button type="submit" class="btn btn-primary "  [ngClass]="{'disabled': !corporateAddressForm.valid}"
+                                [disabled]="!corporateAddressForm.valid">Next</button>
                             </div>
                         </form>
                     </div>
@@ -1640,7 +1642,7 @@
                         </div>
                     </div>
                     <div class="rhs">
-                        <form class="bs-form" #corporateAddressForm="ngForm" (ngSubmit)="submitCorporateAddress(corporateAddressForm)">
+                        <form class="bs-form" #revenueForm="ngForm" (ngSubmit)="submitRevenueDetails(revenueForm)">
                             <div class="form-wrap">
                                 <div class="form-group inr">
                                     <input type="text" class="form-control" id="revenue"
