@@ -854,8 +854,7 @@ export class ApplicantQdeComponent implements OnInit {
     });
 
   }
-
- //-------------------------------------------------------------
+  //-------------------------------------------------------------
 
 
   //-------------------------------------------------------------
@@ -874,7 +873,7 @@ export class ApplicantQdeComponent implements OnInit {
       city : form.value.cityState,
       officeNumber : form.value.stdCode + '-'+ form.value.offStdNumber,
       officeEmailId : form.value.officeEmail
-    }
+    };
 
     console.log(this.qde.application.applicants[this.applicantIndex].officialCorrespondence);
 
@@ -888,6 +887,127 @@ export class ApplicantQdeComponent implements OnInit {
     }, (error) => {
       console.log("response : ", error);
     });
+  }
+  //-------------------------------------------------------------
 
+
+  //-------------------------------------------------------------
+  // Organization Correspondence
+  //-------------------------------------------------------------
+  submitOrganizationDetails(form: NgForm) {
+    if (form && !form.valid) {
+      return;
+    }
+
+    this.qde.application.applicants[this.applicantIndex].organizationDetails = {
+      nameOfOrganization: form.value.orgName,
+      dateOfIncorporation: form.value.day+'-'+form.value.month+'-'+form.value.year,
+      constitution: form.value.constitution
+    };
+
+    console.log(this.qde.application.applicants[this.applicantIndex].organizationDetails);
+
+    this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+      // If successful
+      if(response["ProcessVariables"]["status"]) {
+        this.tabSwitch(6);
+      } else {
+        // Throw Invalid Pan Error
+      }
+    }, (error) => {
+      console.log("response : ", error);
+    });
+  }
+
+
+  //-------------------------------------------------------------
+  // Registered Address
+  //-------------------------------------------------------------
+  submitRegisteredAddress(form: NgForm) {
+    if (form && !form.valid) {
+      return;
+    }
+
+    this.qde.application.applicants[this.applicantIndex].registeredAddress = {
+      registeredAddress : form.value.regAdd,
+      landMark : form.value.landmark,
+      pincode : form.value.pincode,
+      city : form.value.cityState.split('/')[0],
+      state : form.value.cityState.split('/')[1],
+    };
+
+    console.log(this.qde.application.applicants[this.applicantIndex].registeredAddress);
+
+    this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+      // If successfull
+      if(response["ProcessVariables"]["status"]) {
+        this.tabSwitch(6);
+      } else {
+        // Throw Invalid Pan Error
+      }
+    }, (error) => {
+      console.log("response : ", error);
+    });
+  }
+
+  //-------------------------------------------------------------
+  // Corporate Address
+  //-------------------------------------------------------------
+  submitCorporateAddress(form: NgForm) {
+    if (form && !form.valid) {
+      return;
+    }
+
+    this.qde.application.applicants[this.applicantIndex].corporateAddress = {
+      corporateAddress : form.value.corpAddress,
+      landMark : form.value.landmark,
+      pincode : form.value.pincode,
+      city : form.value.corpCityState.split("/")[0],
+      state : form.value.coporateAddress.split("/")[1],
+      stdNumber : form.value.stdNumber+"-"+form.value.phoneNumber,
+      officeEmailId : form.value.officeEmailId
+    };
+
+    console.log(this.qde.application.applicants[this.applicantIndex].corporateAddress);
+
+    this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+      // If successfull
+      if(response["ProcessVariables"]["status"]) {
+        this.tabSwitch(6);
+      } else {
+        // Throw Invalid Pan Error
+      }
+    }, (error) => {
+      console.log("response : ", error);
+    });
+  }
+
+
+  //-------------------------------------------------------------
+  // Revenue Details
+  //-------------------------------------------------------------
+  submitRevenueDetails(form: NgForm) {
+    if (form && !form.valid) {
+      return;
+    }
+
+    this.qde.application.applicants[this.applicantIndex].revenueDetails = {
+      revenue : parseInt(form.value.revenue),
+      annualNetIncome : parseInt(form.value.annualNetIncome),
+      grossTurnOver : parseInt(form.value.grossTurnOver)
+    };
+
+    console.log(this.qde.application.applicants[this.applicantIndex].revenueDetails);
+
+    this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+      // If successfull
+      if(response["ProcessVariables"]["status"]) {
+        this.tabSwitch(6);
+      } else {
+        // Throw Invalid Pan Error
+      }
+    }, (error) => {
+      console.log("response : ", error);
+    });
   }
 }
