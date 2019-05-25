@@ -1227,7 +1227,6 @@
                                 (ngSubmit)="submitOfficialCorrespondence(officialCorrespondenceForm)">
                             <div class="form-wrap">
                                 <div class="form-group">
-
                                     <input type="text" class="form-control"
                                       id="ofcAddOne"
                                       ngModel
@@ -1241,7 +1240,6 @@
                                       <div *ngIf="ofcA1.errors?.required">{{errors.officialCorrespondence.address1.required}}</div>
                                       <div *ngIf="ofcA1.errors?.pattern">{{errors.officialCorrespondence.address1.invalid}}</div>
                                     </div>
-
                                 </div>
 
                                 <div class="form-group">
@@ -1371,7 +1369,9 @@
                         </div>
                     </div>
                     <div class="rhs">
-                        <form class="bs-form">
+                        <form   class="bs-form"
+                                #organizationForm="ngForm"
+                                (ngSubmit)="submitOrganizationDetails(organizationForm)">
                             <div class="form-wrap">
                                 <div class="form-group">
                                     <input type="text" class="form-control" id="org-name" 
@@ -1389,7 +1389,7 @@
                                 </div>
                                 <div class="form-group typ-select">
                                     <span class="control-title">Date of Incorporation</span>
-                                    <select class="js-select" name="a">
+                                    <select ngModel name="day" required>
                                             <option class="select">DD</option>
                                             <option>01</option>
                                             <option>02</option>
@@ -1408,7 +1408,7 @@
                                             <option>16</option>
                                             <option>17</option>
                                         </select>
-                                    <select class="js-select" name="b">
+                                    <select ngModel name="month" required>
                                             <option class="select">MM</option>
                                             <option>01</option>
                                             <option>02</option>
@@ -1422,7 +1422,7 @@
                                             <option>11</option>
                                             <option>12</option>
                                         </select>
-                                    <select class="js-select" name="c">
+                                    <select ngModel name="year" required>
                                             <option class="select">YY</option>
                                             <option>2001</option>
                                             <option>2002</option>
@@ -1439,8 +1439,8 @@
                                 </div>
                                 <div class="form-group last">
                                     <span class="control-title">Constitution</span>
-                                    <select class="js-select" name="state" required>
-                                        <option value="">Partnership</option>
+                                    <select ngModel name="constitution" required>
+                                        <option value="Partnership">Partnership</option>
                                         <option value="Ms">Proprietership</option>
                                         <option value="Mrs">option3</option>
                                         <option value="Dr">option4</option>
@@ -1466,7 +1466,7 @@
 
                     </div>
                     <div class="rhs">
-                        <form class="bs-form">
+                        <form class="bs-form" #registeredAddressForm="ngForm" (ngSubmit)="submitRegisteredAddress(registeredAddressForm)">
                             <div class="form-wrap">
                                 <div class="form-group">
                                     <input type="text" class="form-control" id="reg-add"
@@ -1483,17 +1483,20 @@
                                     </div>
                                 </div>
                                 <div class="form-group typ-optional">
-                                    <input type="text" class="form-control" id="landmark">
+                                    <input type="text" class="form-control" name="landmark" ngModel id="landmark">
                                     <label for="landmark">Landmark</label>
                                     <span class="optional">optional</span>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="regPinCode" required
-                                      ngModel
-                                      #regPinCode="ngModel" 
-                                      name="regPinCode"
-                                      maxlength="6"
-                                      pattern="^[0-9]+$">
+                                    <input  type="text"
+                                            class="form-control"
+                                            id="regPinCode"
+                                            required
+                                            ngModel
+                                            #regPinCode="ngModel" 
+                                            name="pincode"
+                                            maxlength="6"
+                                            pattern="^[0-9]+$">
                                     <label for="regPinCode">Pincode</label>
                                     <div *ngIf="(regPinCode.touched || regPinCode.dirty) && regPinCode.invalid" class="invalid-feedback">
                                         <div *ngIf="regPinCode.errors?.required">{{errors.registeredAddress.pinCode.required}}</div>
@@ -1548,7 +1551,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group typ-optional">
-                                    <input type="text" class="form-control" id="landmark01">
+                                    <input type="text" ngModel name="landmark" class="form-control" id="landmark01">
                                     <label for="landmark01">Landmark</label>
                                     <span class="optional">optional</span>
                                 </div>
@@ -1556,7 +1559,7 @@
                                     <input type="text" class="form-control" id="pincode01" 
                                       ngModel
                                       pattern="^[0-9A-Za-z,_#\s]+$"
-                                      name="corpPincode"
+                                      name="pincode"
                                       #corpPincode="ngModel"
                                       required>
                                     <label for="pincode01">Pincode</label>
@@ -1583,12 +1586,13 @@
                                 </div>
                                 <div class="residence-no">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="caStd">
+
+                                        <input type="text" ngModel name="stdNumber" class="form-control" id="caStd">
                                         <label for="caStd">STD</label>
                                     </div>
                                     <span class="seperator">-</span>
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="ca-res-no" data-validation-attr="residenceno">
+                                        <input type="text" class="form-control" ngModel name="phoneNumber" id="ca-res-no" data-validation-attr="residenceno">
                                         <label for="ca-res-no">Residence number</label>
                                     </div>
                                 </div>
@@ -1596,7 +1600,7 @@
                                     <input type="text" class="form-control" id="ofc-email"
                                     required
                                     ngModel
-                                    name="ofcEmail"
+                                    name="officeEmailId"
                                     #ofcEmail="ngModel"
                                     pattern="^[a-zA-Z0-9_.+-]+@[0-9a-zA -Z-]+.[a-zA-Z0-9]+.[a-z]+$">
                                     <label for="ofc-email" *ngIf="ofcEmail.value==''">Office email ID</label>
@@ -1604,6 +1608,7 @@
                                         <div *ngIf="ofcEmail.errors?.required">{{errors.corporateAddress.ofcEmail.required}}</div>
                                         <div *ngIf="ofcEmail.errors?.pattern">{{errors.corporateAddress.ofcEmail.invalid}}</div>
                                     </div>
+
                                 </div>
                             </div>
                             <div class="btn-wrap">
@@ -1624,7 +1629,7 @@
                         </div>
                     </div>
                     <div class="rhs">
-                        <form class="bs-form">
+                        <form class="bs-form" #corporateAddressForm="ngForm" (ngSubmit)="submitCorporateAddress(corporateAddressForm)">
                             <div class="form-wrap">
                                 <div class="form-group inr">
                                     <input type="text" class="form-control" id="revenue"
@@ -1638,6 +1643,7 @@
                                         <div *ngIf="revenue.errors?.required">{{errors.revenueDetails.revenue.required}}</div>
                                         <div *ngIf="revenue.errors?.pattern">{{errors.revenueDetails.revenue.invalid}}</div>
                                     </div>
+
                                     <span class="addon">
                                         <span class="icon icon-inr"></span>
                                     </span>
@@ -1648,13 +1654,14 @@
                                     required
                                     ngModel
                                     #annualNetincome="ngModel"
-                                    name="annualNetincome"
+                                    name="annualNetIncome"
                                     pattern="^[1-9]\d{0,17}(\.\d{0,4})?$">
                                     <label for="net-income" *ngIf="annualNetincome.value==''">Annual Net Income</label>
                                     <div *ngIf="annualNetincome.touched && annualNetincome.invalid" class="invalid-feedback">
                                         <div *ngIf="annualNetincome.errors?.required">{{errors.revenueDetails.annualNetincome.required}}</div>
                                         <div *ngIf="annualNetincome.errors?.pattern">{{errors.revenueDetails.annualNetincome.invalid}}</div>
                                     </div>
+
                                     <span class="addon">
                                         <span class="icon icon-inr"></span>
                                     </span>
@@ -1665,13 +1672,14 @@
                                     required
                                     ngModel
                                     #grossTurnover="ngModel"
-                                    name="grossTurnover"
+                                    name="grossTurnOver"
                                     pattern="^[1-9]\d{0,17}(\.\d{0,4})?$">
                                     <label for="gross-turnover" *ngIf="grossTurnover.value==''">Gross Turnover</label>
                                     <div *ngIf="grossTurnover.touched && grossTurnover.invalid" class="invalid-feedback">
                                         <div *ngIf="grossTurnover.errors?.required">{{errors.revenueDetails.grossTurnover.required}}</div>
                                         <div *ngIf="grossTurnover.errors?.pattern">{{errors.revenueDetails.grossTurnover.invalid}}</div>
                                     </div>
+
                                     <span class="addon">
                                         <span class="icon icon-inr"></span>
                                     </span>

@@ -88,7 +88,7 @@ export class LoanQdeComponent implements OnInit {
     monthlyEmi: "^[0-9]{1,10}$"
   };
 
-  value: number = 0;
+  // value: number = 0;
 
   minValue: number = 1;
   options: Options = {
