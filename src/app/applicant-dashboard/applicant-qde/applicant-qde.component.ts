@@ -976,7 +976,7 @@ export class ApplicantQdeComponent implements OnInit {
       landMark : form.value.landmark,
       pincode : form.value.pincode,
       city : form.value.corpCityState.split("/")[0],
-      state : form.value.coporateAddress.split("/")[1],
+      state : form.value.corpCityState.split("/")[1],
       stdNumber : form.value.stdNumber+"-"+form.value.phoneNumber,
       officeEmailId : form.value.officeEmailId
     };

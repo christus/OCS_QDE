@@ -1517,7 +1517,7 @@
                                       ngModel
                                       #cityState="ngModel" 
                                       name="cityState"
-                                      pattern="^[0-9A-Za-z,_#]+$">
+                                      pattern="^[0-9A-Za-z,_#/]+$">
                                     <label for="city-state">City/State</label>
 
                                     <div *ngIf="(cityState.touched || cityState.dirty) && cityState.invalid" class="invalid-feedback">
@@ -1545,8 +1545,7 @@
                         </div>
                     </div>
                     <div class="rhs">
-                        <form class="bs-form"
-                        #corporateAddressForm="ngForm" (ngSubmit)="submitCorporateAddress(corporateAddressForm)" >
+                        <form class="bs-form"   #corporateAddressForm="ngForm" (ngSubmit)="submitCorporateAddress(corporateAddressForm)" >
                             <div class="form-wrap">
                                 <div class="form-group">
                                     <input type="text" class="form-control" id="corp-add" 
@@ -1588,7 +1587,7 @@
                                       ngModel
                                       #corpCityState="ngModel" 
                                       name="corpCityState"
-                                      pattern="^[0-9A-Za-z,_#]+$">
+                                      pattern="^[0-9A-Za-z,_#/]+$">
                                     <label for="city-state01">City/State</label>
 
                                     <div *ngIf="corpCityState.touched  && corpCityState.invalid" class="invalid-feedback">
@@ -1700,7 +1699,8 @@
                                 </div>
                             </div>
                             <div class="btn-wrap">
-                                <button type="submit" class="btn btn-primary disabled">Next</button>
+                                <button type="submit" class="btn btn-primary" [ngClass]="{'disabled': !revenueForm.valid}"
+                                [disabled]="!revenueForm.valid">Next</button>
                             </div>
                         </form>
                     </div>
