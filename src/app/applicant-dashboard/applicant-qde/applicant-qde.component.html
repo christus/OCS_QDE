@@ -536,13 +536,17 @@
                                   <div class="residence-no">
                                       <div class="form-group">
                                           <input    type="text"
+                                                    required
                                                     ngModel
+                                                    pattern="^[0-9]*$"
                                                     #residenceStdCode = "ngModel"
                                                     name="residenceNumber1"
                                                     class="form-control"
                                                     id="std">
                                           <label for="std" *ngIf="residenceStdCode.value == ''">STD</label>
-                                          <div *ngIf="(residenceStdCode.touched || residenceStdCode.dirty) && residenceStdCode.invalid" class="invalid-feedback">
+                                          <div *ngIf="residenceStdCode.touched && residenceStdCode.invalid" class="invalid-feedback">
+                                            <div *ngIf="residenceStdCode.errors?.required">{{errors.contactDetails.stdCode.required}}</div>
+                                            
                                             <div *ngIf="residenceStdCode.errors?.pattern">{{errors.contactDetails.stdCode.invalid}}</div>
                                           </div>
                                       </div>
@@ -552,13 +556,15 @@
                                                     class="form-control"
                                                     id="res-no"
                                                     ngModel
-                                                    pattern="^[0-9]"
+                                                    pattern="^[0-9]*$"
                                                     #residenceNumber = "ngModel"
                                                     name="residenceNumber2"
-                                                    data-validation-attr="residenceno" />
+                                                    data-validation-attr="residenceno"
+                                                    required />
                                           <label for="res-no" *ngIf="residenceNumber.value == ''">Residence number</label>
-                                          <div *ngIf="(residenceNumber.touched || residenceNumber.dirty) && residenceNumber.invalid" class="invalid-feedback">
-                                            <div *ngIf="residenceNumber.errors?.pattern">{{errors.contactDetails.number.invalid}}</div>
+                                          <div *ngIf="residenceNumber.touched  && residenceNumber.invalid" class="invalid-feedback">
+                                            <div *ngIf="residenceNumber.errors?.pattern">{{errors.contactDetails.residenceNumber.invalid}}</div>
+                                            <div *ngIf="residenceNumber.errors?.required">{{errors.contactDetails.residenceNumber.required}}</div>
                                           </div>
                                       </div>
                                       <span class="alternate-data">
@@ -1123,7 +1129,7 @@
                     </div>
                     <div class="rhs">
                         <form   class="bs-form"
-                                #occupationForm
+                                #occupationForm="ngForm"
                                 (ngSubmit)="submitOccupationDetails(occupationForm)">
                             <div class="form-wrap">
                                 <div class="form-group">
@@ -1223,7 +1229,7 @@
                     </div>
                     <div class="rhs">
                         <form   class="bs-form"
-                                #officialCorrespondenceForm
+                                #officialCorrespondenceForm="ngForm"
                                 (ngSubmit)="submitOfficialCorrespondence(officialCorrespondenceForm)">
                             <div class="form-wrap">
                                 <div class="form-group">
@@ -1448,7 +1454,9 @@
                                 </div>
                             </div>
                             <div class="btn-wrap">
-                                <button class="btn btn-primary disabled" >Next</button>
+                                <button class="btn btn-primary"
+                                [ngClass]="{'disabled': !organizationForm.valid}"
+                                [disabled]="!organizationForm.valid" >Next</button>
                             </div>
                         </form>
                     </div>
@@ -1519,7 +1527,10 @@
                                 </div>
                             </div>
                             <div class="btn-wrap">
-                                <button class="btn btn-primary disabled">Next</button>
+                                <button class="btn btn-primary"
+                                [ngClass]="{'disabled': !organizationForm.valid}"
+                                [disabled]="!organizationForm.valid" >Next</button>
+
                             </div>
                         </form>
                     </div>

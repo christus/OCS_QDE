@@ -58,6 +58,10 @@ export class ApplicantQdeComponent implements OnInit {
       stdCode: {
         required: "Std Code is required",
         invalid: "Std Code is not valid"
+      },
+      residenceNumber: {
+        required: "Residence number is required",
+        invalid: "Residence number is not valid"
       }
     },
 
@@ -659,6 +663,7 @@ export class ApplicantQdeComponent implements OnInit {
       }
     }, (error) => {
       console.log("response : ", error);
+      this.goToNextSlide(swiperInstance);
     });
 
   }
@@ -682,6 +687,7 @@ export class ApplicantQdeComponent implements OnInit {
       }
     }, (error) => {
       console.log("response : ", error);
+      this.goToNextSlide(swiperInstance);
     });
 
   }
@@ -733,6 +739,7 @@ export class ApplicantQdeComponent implements OnInit {
       }
     }, (error) => {
       console.log("response : ", error);
+      this.tabSwitch(5);
     });
 
   }
@@ -910,7 +917,7 @@ export class ApplicantQdeComponent implements OnInit {
     this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
-        this.tabSwitch(6);
+        this.tabSwitch(10);
       } else {
         // Throw Invalid Pan Error
       }
@@ -941,7 +948,7 @@ export class ApplicantQdeComponent implements OnInit {
     this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
       // If successfull
       if(response["ProcessVariables"]["status"]) {
-        this.tabSwitch(6);
+        this.tabSwitch(11);
       } else {
         // Throw Invalid Pan Error
       }
@@ -973,7 +980,7 @@ export class ApplicantQdeComponent implements OnInit {
     this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
       // If successfull
       if(response["ProcessVariables"]["status"]) {
-        this.tabSwitch(6);
+        this.tabSwitch(12);
       } else {
         // Throw Invalid Pan Error
       }
@@ -1002,7 +1009,7 @@ export class ApplicantQdeComponent implements OnInit {
     this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
       // If successfull
       if(response["ProcessVariables"]["status"]) {
-        this.tabSwitch(6);
+        this.tabSwitch(13);
       } else {
         // Throw Invalid Pan Error
       }
