@@ -40,6 +40,8 @@ import { ReferencesQdeComponent } from './applicant-dashboard/references-qde/ref
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import AuthInterceptor from './services/auth.interceptor';
 import { ListOfValuesResolverService } from './services/list-of-values-resolver.service';
+import { ViewFormComponent } from './applicant-dashboard/view-form/view-form.component';
+import { DocumentUploadComponent } from './applicant-dashboard/document-upload/document-upload.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -123,6 +125,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     CoApplicantQdeComponent,
     LoanQdeComponent,
     ReferencesQdeComponent,
+    ViewFormComponent,
+    DocumentUploadComponent,
 
   ],
   imports: [
