@@ -103,6 +103,8 @@ export class ViewFormComponent implements OnInit {
     }
   };
 
+  private religions: Array<any>;
+
   constructor(private route: ActivatedRoute,
               private router: Router,
               private qdeHttp: QdeHttpService,
@@ -114,6 +116,9 @@ export class ViewFormComponent implements OnInit {
   ngOnInit() {
       // this.renderer.addClass(this.select2.selector.nativeElement, 'js-select');
       
+    console.log(">>", JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs).LOVS);
+    this.religions = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs).LOVS[0].religion;
+
     // Create New Entry
     this.applicantIndex = 0;
     // Write code to get data(LOV) and assign applicantIndex if its new or to update.

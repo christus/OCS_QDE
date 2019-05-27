@@ -90,7 +90,21 @@ const appRoutes: Routes = [
   {
     path: 'references',
     component: ReferencesQdeComponent
-  }
+  },
+  {
+    path: 'document-upload',
+    component: DocumentUploadComponent,
+    resolve: {
+      listOfValues: ListOfValuesResolverService
+    }
+  },
+  {
+    path: 'view-form',
+    component: ViewFormComponent,
+    resolve: {
+      listOfValues: ListOfValuesResolverService
+    }
+  },
 ];
  
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
