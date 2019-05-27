@@ -326,7 +326,7 @@ export class CoApplicantQdeComponent implements OnInit {
       console.log("Applicant Code: ", this.applicantIndex);
   
       // Assign true as it is Applicant (In future if qde variable is not in parent component then remove below line)
-      this.qde.application.applicants[this.applicantIndex].isMainApplicant = true;
+      this.qde.application.applicants[this.applicantIndex].isMainApplicant = false;
   
       this.route.fragment.subscribe((fragment) => {
         let localFragment = fragment;

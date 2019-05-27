@@ -80,7 +80,7 @@ const appRoutes: Routes = [
   ] },
   {
     path: 'loan',
-    component: ApplicantDashboardComponent,
+    component: LoanQdeComponent,
     resolve: {
       listOfValues: ListOfValuesResolverService
     }
