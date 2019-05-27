@@ -622,7 +622,7 @@ export class ApplicantQdeComponent implements OnInit {
       residentialStatus : form.value.residentialStatus,
       addressLineOne : form.value.addressLineOne,
       addressLineTwo : form.value.addressLineTwo,
-      pincode : form.value.pinCode,
+      zipcode : form.value.pinCode,
       city : form.value.cityState.split('/')[0],
       state : form.value.cityState.split('/')[1],
       numberOfYearsInCurrentResidence : form.value.numberOfYearsInCurrentResidence,
@@ -634,7 +634,7 @@ export class ApplicantQdeComponent implements OnInit {
     this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
-        this.tabSwitch(3);
+        this.tabSwitch(4);
       } else {
         // Throw Invalid Pan Error
       }
@@ -889,7 +889,7 @@ export class ApplicantQdeComponent implements OnInit {
       addressLineOne : form.value.ofcA1,
       addressLineTwo : form.value.ofcA2,
       landMark : form.value.landMark,
-      pincode : form.value.pinCode,
+      zipcode : form.value.pinCode,
       city : form.value.cityState,
       officeNumber : form.value.stdCode + '-'+ form.value.offStdNumber,
       officeEmailId : form.value.officeEmail
@@ -954,7 +954,7 @@ export class ApplicantQdeComponent implements OnInit {
     this.qde.application.applicants[this.applicantIndex].registeredAddress = {
       registeredAddress : form.value.regAdd,
       landMark : form.value.landmark,
-      pincode : form.value.pincode,
+      zipcode : form.value.pincode,
       city : form.value.cityState.split('/')[0],
       state : form.value.cityState.split('/')[1],
     };
@@ -984,7 +984,7 @@ export class ApplicantQdeComponent implements OnInit {
     this.qde.application.applicants[this.applicantIndex].corporateAddress = {
       corporateAddress : form.value.corpAddress,
       landMark : form.value.landmark,
-      pincode : form.value.pincode,
+      zipcode : form.value.pincode,
       city : form.value.corpCityState.split("/")[0],
       state : form.value.corpCityState.split("/")[1],
       stdNumber : form.value.stdNumber+"-"+form.value.phoneNumber,

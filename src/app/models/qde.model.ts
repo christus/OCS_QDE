@@ -93,7 +93,7 @@ export interface Address {
     residentialStatus : string;
     addressLineOne : string;
     addressLineTwo : string;
-    pincode : string;
+    zipcode : string;
     city : string;
     state : string;
     numberOfYearsInCurrentResidence : string;
@@ -104,7 +104,7 @@ export interface OfficialCorrespondence {
     addressLineOne : string;
     addressLineTwo : string;
     landMark : string;
-    pincode : string;
+    zipcode : string;
     city : string;
     officeNumber : string;
     officeEmailId : string;
@@ -119,7 +119,7 @@ export interface OrganizationDetail {
 export interface RegisteredAddress {
     registeredAddress : string;
     landMark : string;
-    pincode : number,
+    zipcode : number,
     city : string;
     state : string;
 }
@@ -127,7 +127,7 @@ export interface RegisteredAddress {
 export interface CorporateAddress {
     corporateAddress : string;
     landMark : string;
-    pincode : number,
+    zipcode : number,
     city : string;
     state : string;
     stdNumber : string;
