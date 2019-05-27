@@ -19,14 +19,6 @@ import { MenubarHeaderComponent } from './menubar-header/menubar-header.componen
 
 import { UserLoginComponent } from './Login/user-login/user-login.component';
 
-// Co-Applicant Details
-// import { CoAppOrgDetailsComponent } from './Co-ApplicantDetails/co-app-org-details/co-app-org-details.component';
-// import { CoAppCorpAddrComponent } from './Co-ApplicantDetails/co-app-corp-addr/co-app-corp-addr.component';
-// import { CoAppRevenueDetailsComponent } from './Co-ApplicantDetails/co-app-revenue-details/co-app-revenue-details.component';
-// import { CoAppDashboardComponent } from './Co-ApplicantDetails/co-app-dashboard/co-app-dashboard.component';
-// import { CoAppInitialPageComponent } from './Co-ApplicantDetails/co-app-initial-page/co-app-initial-page.component';
-// import { CoAppRegAddrComponent } from './Co-ApplicantDetails/co-app-reg-addr/co-app-reg-addr.component';
-
 import { IncomeDetailsComponent } from './LoanDetails/income-details/income-details.component';
 import { LoanAmountComponent } from './LoanDetails/loan-amount/loan-amount.component';
 import { PropertyDetailsComponent } from './LoanDetails/property-details/property-details.component';
@@ -73,14 +65,14 @@ const appRoutes: Routes = [
     path: 'co-applicant', component: ApplicantDashboardComponent, children: [
     {
       path: '',
-      component: ApplicantQdeComponent,
+      component: CoApplicantQdeComponent,
       resolve: {
         listOfValues : ListOfValuesResolverService
       }
     },
     {
       path: ':applicantId',
-      component: ApplicantQdeComponent,
+      component: CoApplicantQdeComponent,
       resolve: {
         listOfValues: ListOfValuesResolverService
       }
