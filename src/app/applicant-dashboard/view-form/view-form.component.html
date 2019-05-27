@@ -1,25 +1,28 @@
+<app-menubar-header></app-menubar-header>
 <main>
   <div class="main">
       <div class="lyt-sidebar tabs">
           <ul class="sidebar tabs-head main-nav" >
-              <li class="active tab-link" data-target="applicant-tab">
+              <li class="tab-link" data-target="applicant-tab" [ngClass]="{'active': activeTab == 0}">
                   <a href="javascript:void(0);" (click)="tabSwitch(0)">Applicant Details</a>
                   <span class="complete-sign"><span class="icon icon-tick"></span></span>
               </li>
-              <li class="completed tab-link" data-target="coapplicant-tab">
+              <!-- <li class="completed tab-link" data-target="coapplicant-tab" [ngClass]="{'active': activeTab == 1}"> -->
+                <li class="tab-link" data-target="coapplicant-tab" [ngClass]="{'active': activeTab == 1}">
                   <a href="javascript:void(0);" (click)="tabSwitch(1)">Co-Applicant Details</a>
                   <span class="complete-sign"><span class="icon icon-tick"></span></span>
               </li>
-              <li class="tab-link" data-target="loan-tab">
+              <li class="tab-link" data-target="loan-tab" [ngClass]="{'active': activeTab == 2}">
                   <a href="javascript:void(0);" (click)="tabSwitch(2)">Loan Details</a>
                   <span class="complete-sign"><span class="icon icon-tick"></span></span>
               </li>
-              <li class="incomplete tab-link" data-target="reference-tab">
+              <!-- <li class="incomplete tab-link" data-target="reference-tab" [ngClass]="{'active': activeTab == 3}"> -->
+                <li class="tab-link" data-target="reference-tab" [ngClass]="{'active': activeTab == 3}">
                   <a href="javascript:void(0);" (click)="tabSwitch(3)">References</a>
                   <span class="incomplete-count">3</span>
                   <span class="complete-sign"><span class="icon icon-tick"></span></span>
               </li>
-              <li class="tab-link" data-target="doc-tab">
+              <li class="tab-link" data-target="doc-tab" [ngClass]="{'active': activeTab == 4}">
                   <a href="javascript:void(0);" (click)="tabSwitch(4)">Document Uploads</a>
                   <span class="complete-sign"><span class="icon icon-tick"></span></span>
               </li>
@@ -432,10 +435,7 @@
                                   <div class="form-group">
                                       <span class="control-title">Religion</span>
                                       <select class="js-select" name="religion">
-                                          <option>Hindu</option>
-                                          <option>Muslim</option>                                            
-                                          <option>Sikh</option>                                            
-                                          <option>Other</option>                                            
+                                          <option *ngFor="let rel of religions" [value]="rel.value">{{rel.key}}</option>
                                       </select>
                                   </div>
                               </div>
