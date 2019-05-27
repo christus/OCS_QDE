@@ -562,7 +562,7 @@ export class CoApplicantQdeComponent implements OnInit {
       this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
-          this.tabSwitch(2);
+          this.tabSwitch(3);
         } else {
           // Throw Invalid Pan Error
         }
@@ -597,7 +597,7 @@ export class CoApplicantQdeComponent implements OnInit {
       this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
-          this.tabSwitch(3);
+          this.tabSwitch(4);
         } else {
           // Throw Invalid Pan Error
         }
@@ -623,7 +623,7 @@ export class CoApplicantQdeComponent implements OnInit {
         residentialStatus : form.value.residentialStatus,
         addressLineOne : form.value.addressLineOne,
         addressLineTwo : form.value.addressLineTwo,
-        pincode : form.value.pincode,
+        zipcode : form.value.pincode,
         city : form.value.cityState.split('/')[0],
         state : form.value.cityState.split('/')[1],
         numberOfYearsInCurrentResidence : form.value.numberOfYearsInCurrentResidence,
@@ -635,7 +635,7 @@ export class CoApplicantQdeComponent implements OnInit {
       this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
-          this.tabSwitch(3);
+          this.tabSwitch(5);
         } else {
           // Throw Invalid Pan Error
         }
@@ -741,13 +741,12 @@ export class CoApplicantQdeComponent implements OnInit {
       this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
-          this.tabSwitch(5);
+          this.tabSwitch(6);
         } else {
           // Throw Invalid Pan Error
         }
       }, (error) => {
         console.log("response : ", error);
-        this.tabSwitch(5);
       });
   
     }
@@ -800,7 +799,7 @@ export class CoApplicantQdeComponent implements OnInit {
       this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
-          this.tabSwitch(6);
+          this.tabSwitch(7);
         } else {
           // Throw Invalid Pan Error
         }
@@ -828,7 +827,7 @@ export class CoApplicantQdeComponent implements OnInit {
       this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
-          this.tabSwitch(7);
+          this.tabSwitch(8);
         } else {
           // Throw Invalid Pan Error
         }
@@ -861,7 +860,7 @@ export class CoApplicantQdeComponent implements OnInit {
       this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
-          this.tabSwitch(8);
+          this.tabSwitch(9);
         } else {
           // Throw Invalid Pan Error
         }
@@ -885,7 +884,7 @@ export class CoApplicantQdeComponent implements OnInit {
         addressLineOne : form.value.ofcA1,
         addressLineTwo : form.value.ofcA2,
         landMark : form.value.landMark,
-        pincode : form.value.pinCode,
+        zipcode : form.value.pinCode,
         city : form.value.cityState,
         officeNumber : form.value.stdCode + '-'+ form.value.offStdNumber,
         officeEmailId : form.value.officeEmail
@@ -947,7 +946,7 @@ export class CoApplicantQdeComponent implements OnInit {
       this.qde.application.applicants[this.applicantIndex].registeredAddress = {
         registeredAddress : form.value.regAdd,
         landMark : form.value.landmark,
-        pincode : form.value.pincode,
+        zipcode : form.value.pincode,
         city : form.value.cityState.split('/')[0],
         state : form.value.cityState.split('/')[1],
       };
@@ -977,7 +976,7 @@ export class CoApplicantQdeComponent implements OnInit {
       this.qde.application.applicants[this.applicantIndex].corporateAddress = {
         corporateAddress : form.value.corpAddress,
         landMark : form.value.landmark,
-        pincode : form.value.pincode,
+        zipcode : form.value.pincode,
         city : form.value.corpCityState.split("/")[0],
         state : form.value.corpCityState.split("/")[1],
         stdNumber : form.value.stdNumber+"-"+form.value.phoneNumber,

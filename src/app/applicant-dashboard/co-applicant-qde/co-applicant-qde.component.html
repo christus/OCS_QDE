@@ -521,12 +521,12 @@
                                                       <div class="form-group">
                                                           <span class="control-title">Birth place</span>
                                                           <select ngModel class="js-select" name="birthPlace" required>
-                                                              <option>Pune</option>
-                                                              <option>Kolkota</option>
-                                                              <option>Mumbai</option>
-                                                              <option>Delhi</option>
-                                                              <option>Madras</option>
-                                                              <option>Madhya Pradesh</option>
+                                                              <option value="1">Pune</option>
+                                                              <option  value="2">Kolkota</option>
+                                                              <option  value="3">Mumbai</option>
+                                                              <option  value="4">Delhi</option>
+                                                              <option  value="5">Madras</option>
+                                                              <option  value="6">Madhya Pradesh</option>
                                                           </select>
                                                       </div>
                                                   </div>
@@ -728,9 +728,10 @@
                                     </div>
                                     <div class="btn-wrap">
                                         <button class="btn btn-primary"
+                                        type="submit"
                                         [ngClass]="{'disabled': !contactForm.valid}"
                                         [disabled]="!contactForm.valid" 
-                                        (click)="tabSwitch(4)">Next</button>
+                                        >Next</button>
                                     </div>
                                 </form>
                             </div>
@@ -847,7 +848,7 @@
                                       </div>
                                   </div>
                                   <div class="btn-wrap">
-                                      <button type="button" class="btn btn-primary" 
+                                      <button type="submit" class="btn btn-primary" 
                                       [ngClass]="{'disabled': !communicationForm.valid}"
                                       [disabled]="!communicationForm.valid" 
                                       (click)="tabSwitch(5)">Next</button>
@@ -1482,10 +1483,10 @@
                                   </div>
       
                                   <div class="btn-wrap">
-                                      <button type="button" class="btn btn-primary" 
+                                      <button type="submit" class="btn btn-primary" 
                                       [ngClass]="{'disabled': !officialCorrespondenceForm.valid}"
                                       [disabled]="!officialCorrespondenceForm.valid"
-                                      (click)="goToNextSlide(offCorrespondence, ofcA1)">Next</button>
+                                     >Next</button>
                                   </div>
                               </form>
                           </div>
