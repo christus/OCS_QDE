@@ -451,7 +451,7 @@ export class CoApplicantQdeComponent implements OnInit {
         if(response["ProcessVariables"]["status"]) {
           let result = this.parseJson(response["ProcessVariables"]["response"]);
           this.qde.application.ocsNumber = result["application"]["ocsNumber"];
-          this.qde.application.applicants[this.applicantIndex].applicantId = result["application"]["applicationId"];
+          this.qde.application.applicants[this.applicantIndex].applicantId = result["application"]["applicants"][0]["applicantId"];;
           this.goToNextSlide(swiperInstance);
         } else {
           // Throw Invalid Pan Error

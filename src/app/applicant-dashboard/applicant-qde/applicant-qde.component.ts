@@ -1,3 +1,4 @@
+import { Other } from './../../models/qde.model';
 import { Component, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
     
 import * as Swiper from 'swiper/dist/js/swiper.js';
@@ -448,7 +449,8 @@ export class ApplicantQdeComponent implements OnInit {
       if(response["ProcessVariables"]["status"]) {
         let result = this.parseJson(response["ProcessVariables"]["response"]);
         this.qde.application.ocsNumber = result["application"]["ocsNumber"];
-        this.qde.application.applicants[this.applicantIndex].applicantId = result["application"]["applicationId"];
+        this.qde.application.applicants[this.applicantIndex].applicantId =  result["application"]["applicants"][0]["applicantId"];
+        
         this.goToNextSlide(swiperInstance);
       } else {
         // Throw Invalid Pan Error
@@ -582,7 +584,7 @@ export class ApplicantQdeComponent implements OnInit {
     }
 
     this.qde.application.applicants[this.applicantIndex].contactDetails = {
-      preferredEmailId: form.value.preferredEmailId,
+      preferredEmailId: form.value.preferEmailId,
       alternateEmailId : form.value.alternateEmailId,
       mobileNumber: form.value.mobileNumber,
       alternateMobileNumber: form.value.alternateMobileNumber,
@@ -610,7 +612,7 @@ export class ApplicantQdeComponent implements OnInit {
   //-------------------------------------------------------------
   submitCommunicationAddressDetails(form: NgForm) {
 
-    event.preventDefault();
+  //  event.preventDefault();
 
     if (form && !form.valid) {
       return;
@@ -620,7 +622,7 @@ export class ApplicantQdeComponent implements OnInit {
       residentialStatus : form.value.residentialStatus,
       addressLineOne : form.value.addressLineOne,
       addressLineTwo : form.value.addressLineTwo,
-      pincode : form.value.pincode,
+      pincode : form.value.pinCode,
       city : form.value.cityState.split('/')[0],
       state : form.value.cityState.split('/')[1],
       numberOfYearsInCurrentResidence : form.value.numberOfYearsInCurrentResidence,
@@ -818,6 +820,11 @@ export class ApplicantQdeComponent implements OnInit {
       return;
     }
 
+    this.qde.application.applicants[this.applicantIndex].other = {
+      religion : form.value.religion,
+      category: form.value.category
+    };
+
     // this.qde.application.applicants[this.applicantIndex].familyDetails.fatherTitle = form.value.fatherTitle;
 
     // console.log(this.qde.application.applicants[this.applicantIndex].familyDetails);
@@ -850,7 +857,7 @@ export class ApplicantQdeComponent implements OnInit {
       occupationType: form.value.occupationType,
       companyName : form.value.companyName,
       numberOfYearsInCurrentCompany : form.value.numberOfYearsInCurrentCompany,
-      totalWorkExperience : form.value.totalWorkExperience
+      totalWorkExperience : form.value.totalExperienceYear
     };
 
     console.log(this.qde.application.applicants[this.applicantIndex].occupation);

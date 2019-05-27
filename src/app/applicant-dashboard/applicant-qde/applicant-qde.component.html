@@ -394,12 +394,12 @@
                                                 <div class="form-group">
                                                     <span class="control-title">Birth place</span>
                                                     <select ngModel class="js-select" name="birthPlace" required>
-                                                        <option>Pune</option>
-                                                        <option>Kolkota</option>
-                                                        <option>Mumbai</option>
-                                                        <option>Delhi</option>
-                                                        <option>Madras</option>
-                                                        <option>Madhya Pradesh</option>
+                                                        <option value="1">Pune</option>
+                                                        <option  value="2">Kolkota</option>
+                                                        <option  value="3">Mumbai</option>
+                                                        <option value="4">Delhi</option>
+                                                        <option value="5">Madras</option>
+                                                        <option value="6">Madhya Pradesh</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -624,6 +624,7 @@
                     </div>
                     <div class="rhs">
                         <form   class="bs-form"
+                            id="communication-form"
                                 #communicationForm="ngForm"
                                 (ngSubmit)="submitCommunicationAddressDetails(communicationForm)">
                             <div class="form-wrap">
@@ -674,8 +675,8 @@
                                 <div class="form-group">
                                     <input type="number" class="form-control" id="pincode" required
                                       ngModel
-                                      #commPinCode="ngModel" 
                                       name="pinCode"
+                                      #commPinCode="ngModel" 
                                       maxlength="6"
                                       pattern="^[0-9]+$" />
                                     <label for="pincode" *ngIf="commPinCode.value == ''">Pincode</label>
@@ -689,8 +690,8 @@
                                     <input type="text" class="form-control" id="cityState"
                                       required
                                       ngModel
-                                      #commCityState="ngModel" 
                                       name="cityState"
+                                      #commCityState="ngModel" 
                                       pattern="^[0-9A-Za-z,_#]+$" />
 
                                     <label for="cityState" *ngIf="commCityState.value == ''">City/State</label>
@@ -720,10 +721,10 @@
                                 </div>
                             </div>
                             <div class="btn-wrap">
-                                <button type="button" class="btn btn-primary" 
+                                <button type="submit" class="btn btn-primary" 
                                 [ngClass]="{'disabled': !communicationForm.valid}"
                                 [disabled]="!communicationForm.valid" 
-                                (click)="tabSwitch(4)">Next</button>
+                                >Next</button>
                             </div>
                         </form>
                     </div>
@@ -1355,10 +1356,10 @@
                             </div>
 
                             <div class="btn-wrap">
-                                <button type="button" class="btn btn-primary" 
+                                <button type="submit" class="btn btn-primary" 
                                 [ngClass]="{'disabled': !officialCorrespondenceForm.valid}"
                                 [disabled]="!officialCorrespondenceForm.valid"
-                                (click)="goToNextSlide(offCorrespondence, ofcA1)">Next</button>
+                                >Next</button>
                             </div>
                         </form>
                     </div>
