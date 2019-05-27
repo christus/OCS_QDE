@@ -1,0 +1,494 @@
+<main>
+  <div class="main">
+      <div class="lyt-home">
+          <div class="tabs">
+              <ul class="tabs-head" [ngClass]="{'visibilityHidden': (activeTab == 0)}">
+                <li class="tab-link pending" [ngClass]="{'active': (activeTab == 1), 'hide': (!applicantIndividual)}">
+                  <a href="javascript:void(0);" (click)="tabSwitch(1)">Aadhar Card</a>
+                </li>
+                <li class="tab-link" [ngClass]="{'active': (activeTab == 2), 'hide': (!applicantIndividual)}">
+                  <a href="javascript:void(0);" (click)="tabSwitch(2)">Address Proof</a>
+                </li>
+                <li class="tab-link" [ngClass]="{'active': (activeTab == 3), 'hide': (!applicantIndividual)}">
+                  <a href="javascript:void(0);" (click)="tabSwitch(3)">Income Proof</a>
+                </li>
+                <li class="tab-link" [ngClass]="{'active': (activeTab == 4), 'hide': (!applicantIndividual)}">
+                  <a href="javascript:void(0);" (click)="tabSwitch(4)">Banking</a>
+                </li>
+                <li class="tab-link" [ngClass]="{'active': (activeTab == 5), 'hide': (!applicantIndividual)}">
+                  <a href="javascript:void(0);" (click)="tabSwitch(5)">Collateral</a>
+                </li>
+                <li class="tab-link" [ngClass]="{'active': (activeTab == 6), 'hide': (!applicantIndividual)}">
+                  <a href="javascript:void(0);" (click)="tabSwitch(6)">Customer Photo</a>
+                </li>
+              </ul>
+          
+              <!-- Upload Documents -->
+
+              <div class="tabs-contents" #tabContents>
+                <div class="tab-content" [ngClass]="{'active': (activeTab == 0)}">
+                    <!-- <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(panSlider2)"></a> -->
+                    <div class="lyt-tabs">
+                        <div class="lhs">
+                            <div  class="swiper-container form-swiper"
+                                  [swiper]="lhsConfig"
+                                  #panSlider1="ngxSwiper">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                        <div class="title-wrap">
+                                            <h4 class="title">Upload<span class="cm-line-break">Documents</span></h4>
+                                        </div>
+                                    </div>
+                                  </div>
+                                </div>
+                            </div>
+                            <div class="rhs">
+                                <div  class="swiper-container form-swiper"
+                                      [swiper]="rhsConfig"
+                                      (slidePrevTransitionStart)="slidePrevTransitionStart(panSlider1)"
+                                      (slideNextTransitionStart)="slideNextTransitionStart(panSlider1)"
+                                      #panSlider2="ngxSwiper">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide">
+                                            <form class="bs-form">
+                                                <div class="form-wrap">
+                                                    <div class="bs-radio">
+                                                        <input  type="radio"
+                                                                [value]="true"
+                                                                (change)="tabSwitch(1)"  />
+                                                        <label for="individual"><span>Applicant</span></label>
+                                                    </div>
+                                                    <div class="bs-radio">
+                                                        <input  type="radio"
+                                                                [value]="false"
+                                                                (change)="tabSwitch(7)" />
+                                                        <label for="non-individual"><span>Co-Applicant</span></label>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+
+              <!-- Aadhar Card -->
+
+                  <div class="tab-content" [ngClass]="{'active': (activeTab == 1)}">
+                    <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(aadharSlider2)"></a>
+                    <div class="lyt-tabs">
+                        <div class="lhs">
+                            <div  class="swiper-container form-swiper"
+                                  [swiper]="lhsConfig"
+                                  #aadharSlider1="ngxSwiper">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                        <div class="title-wrap">
+                                            <h4 class="title">Upload<span class="cm-line-break"></span>Aadhar Card</h4>
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <div class="title-wrap">
+                                            <h4 class="title">Verify<span class="cm-line-break"></span>Aadhar Card</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="rhs">
+                            <div  class="swiper-container form-swiper"
+                                  [swiper]="rhsConfig"
+                                  (slidePrevTransitionStart)="slidePrevTransitionStart(aadharSlider1)"
+                                  (slideNextTransitionStart)="slideNextTransitionStart(aadharSlider1)"
+                                  #aadharSlider2="ngxSwiper">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                        <form class="bs-form">
+                                            <div class="form-wrap">
+                                                <div class="bs-file">
+                                                    <input type="file" class="form-control" id="file">
+                                                    <label for="file"><span>Click photo of Aadhar card</span></label>
+                                                </div>
+                                            </div>
+                                            <div class="no-aadhar">
+                                                <span class="text">Don't have an Aadhaar card?</span>
+                                                <a href="#" class="upload-another-doc">Upload a different document <span class="icon icon-arrow"></span></a>
+                                            </div>
+                                            <div class="btn-wrap">
+                                                <button class="btn btn-primary"
+                                                (click)="goToNextSlide(aadharSlider2, f)">Next</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <form class="bs-form">
+                                            <div class="form-wrap">
+                                                <div class="bs-radio">
+                                                    <input  type="radio"
+                                                            [value]="true"
+                                                           />
+                                                    <label for="individual"><span>Get OTP</span></label>
+                                                </div>
+                                                <div class="bs-radio">
+                                                    <input  type="radio" 
+                                                            [value]="true"
+                                                            (change)="tabSwitch()" />
+                                                    <label for="non-individual"><span>Biometric Scan</span></label>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <!-- <div class="overlay"></div>
+                                        <div class="bs-modal" [ngClass]="{'active': (activeTab == 7)}">
+                                            <a href="#" class="modal-close"><span class="icon icon-close"></span></a>
+                                            <div class="modal-body">
+                                                <div class="verify-block">
+                                                    <img src="assets/images/biomatric.png" alt="">
+                                                    <h5 class="verification-text">Verify fingerprint to continue</h5>
+                                                    <span class="or">or</span>
+                                                    <div class="btn-wrap">
+                                                        <button class="btn btn-border">get otp</button>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="bs-modal" id="biomatric-success-modal">
+                                            <a href="#" class="modal-close"><span class="icon icon-close"></span></a>
+                                            <div class="modal-body">
+                                                <div class="verify-block">
+                                                    <img src="assets/images/biomatric-success.png" alt="">
+                                                    <h5 class="verification-text">Fingerprint verified successfully</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                 -->
+                              
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+
+                  <!-- Address Proof -->
+
+                  <div class="tab-content" [ngClass]="{'active': (activeTab == 2)}">
+                      <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(addressSlider2)"></a>
+                      <div class="lyt-tabs">
+                          <div class="lhs">
+                              <div  class="swiper-container form-swiper"
+                                    [swiper]="lhsConfig"
+                                    #adressSlider1="ngxSwiper">
+                                  <div class="swiper-wrapper">
+                                      <div class="swiper-slide">
+                                          <div class="title-wrap">
+                                              <h4 class="title">Address<span class="cm-line-break"></span>Proof</h4>
+                                          </div>
+                                      </div>
+                                      <div class="swiper-slide">
+                                          <div class="title-wrap">
+                                              <h4 class="title">Upload<span class="cm-line-break">Address Proof</span></h4>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="rhs">
+                              <div  class="swiper-container form-swiper"
+                              [swiper]="rhsConfig"
+                              (slidePrevTransitionStart)="slidePrevTransitionStart(addressSlider1)"
+                              (slideNextTransitionStart)="slideNextTransitionStart(addressSlider1)"
+                              #addressSlider2="ngxSwiper">
+                                <div class="swiper-wrapper">
+                                  <div class="swiper-slide">
+                                    <form class="bs-form">
+                                        <div class="form-wrap">
+                                            <div class="form-group">
+                                                <span class="control-title">Select a Document Type</span>
+                                                <ng-select>
+                                                    <ng-option value="o1">Driving License</ng-option>
+                                                    <ng-option value="o2">Ration Card</ng-option>
+                                                    <ng-option value="o3">Passport</ng-option>
+                                                    <ng-option value="o4">Electricity Bill</ng-option>
+                                                </ng-select>
+                                            </div>
+                                        </div>
+                                        <div class="btn-wrap">
+                                            <button class="btn btn-primary"
+                                            (click)="goToNextSlide(addressSlider2, f)">Next</button>
+                                        </div>
+                                    </form>
+                                  </div>
+                                  <div class="swiper-slide">
+                                      <form class="bs-form">
+                                          <div class="form-wrap">
+                                              <div class="bs-file">
+                                                  <input type="file" class="form-control" id="file">
+                                                  <label for="file"><span>Click photo of Address Proof</span></label>
+                                              </div>
+                                          </div>
+                                          <div class="btn-wrap">
+                                              <button type="button" class="btn btn-primary" (click)="tabSwitch(3)">Next</button>
+                                          </div>
+                                      </form>
+                                  </div>
+
+                                </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+                  <!-- Income Proof -->
+
+                  <div class="tab-content" [ngClass]="{'active': (activeTab == 3)}">
+                      <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(incomeSlider2)"></a>
+                      <div class="lyt-tabs">
+                          <div class="lhs">
+                              <div  class="swiper-container form-swiper"
+                                    [swiper]="lhsConfig"
+                                    #incomeSlider1="ngxSwiper">
+                                  <div class="swiper-wrapper">
+                                      <div class="swiper-slide">
+                                          <div class="title-wrap">
+                                              <h4 class="title">Income<span class="cm-line-break"></span>Proof</h4>
+                                          </div>
+                                      </div>
+                                      <div class="swiper-slide">
+                                          <div class="title-wrap">
+                                              <h4 class="title">Upload<span class="cm-line-break">Income Proof</span></h4>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="rhs">
+                              <div  class="swiper-container form-swiper"
+                              [swiper]="rhsConfig"
+                              (slidePrevTransitionStart)="slidePrevTransitionStart(incomeSlider1)"
+                              (slideNextTransitionStart)="slideNextTransitionStart(incomeSlider1)"
+                              #incomeSlider2="ngxSwiper">
+                                <div class="swiper-wrapper">
+                                  <div class="swiper-slide">
+                                    <form class="bs-form">
+                                        <div class="form-wrap">
+                                            <div class="form-group">
+                                                <span class="control-title">Select a Document Type</span>
+                                                <ng-select name="state" [searchable]="false">
+                                                    <ng-option value="o1">Salary Slip</ng-option>
+                                                    <ng-option value="o2">Form 16</ng-option>
+                                                    <ng-option value="o3">Appointment Letter</ng-option>
+                                                    <ng-option value="o4">Bank Statement of Salary Account</ng-option>
+                                                </ng-select>
+                                            </div>
+                                        </div>
+                                        <div class="btn-wrap">
+                                            <button class="btn btn-primary"
+                                            (click)="goToNextSlide(incomeSlider2, f)">Next</button>
+                                        </div>
+                                    </form>
+                                  </div>
+                                  <div class="swiper-slide">
+                                      <form class="bs-form">
+                                          <div class="form-wrap">
+                                              <div class="bs-file">
+                                                  <input type="file" class="form-control" id="file">
+                                                  <label for="file"><span>Click photo of Income Proof</span></label>
+                                              </div>
+                                          </div>
+                                          <div class="btn-wrap">
+                                              <button type="button" class="btn btn-primary" (click)="tabSwitch(4)">Next</button>
+                                          </div>
+                                      </form>
+                                  </div>
+                                </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+
+                  <!-- Banking -->
+
+                  <div class="tab-content" [ngClass]="{'active': (activeTab == 4)}">
+                      <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(bankingSlider2)"></a>
+                      <div class="lyt-tabs">
+                          <div class="lhs">
+                              <div  class="swiper-container form-swiper"
+                                    [swiper]="lhsConfig"
+                                    #bankingSlider1="ngxSwiper">
+                                  <div class="swiper-wrapper">
+                                      <div class="swiper-slide">
+                                          <div class="title-wrap">
+                                              <h4 class="title">Banking<span class="cm-line-break"></span>Proof</h4>
+                                          </div>
+                                      </div>
+                                      <div class="swiper-slide">
+                                          <div class="title-wrap">
+                                              <h4 class="title">Upload<span class="cm-line-break">Banking Proof</span></h4>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="rhs">
+                              <div  class="swiper-container form-swiper"
+                              [swiper]="rhsConfig"
+                              (slidePrevTransitionStart)="slidePrevTransitionStart(bankingSlider1)"
+                              (slideNextTransitionStart)="slideNextTransitionStart(bankingSlider1)"
+                              #bankingSlider2="ngxSwiper">
+                                <div class="swiper-wrapper">
+                                  <div class="swiper-slide">
+                                    <form class="bs-form">
+                                        <div class="form-wrap">
+                                            <div class="form-group">
+                                                <span class="control-title">Select a Document Type</span>
+                                                <ng-select name="state" [searchable]="false">
+                                                    <ng-option value="o1">Salary Slip</ng-option>
+                                                    <ng-option value="o2">Form 16</ng-option>
+                                                    <ng-option value="o3">Appointment Letter</ng-option>
+                                                    <ng-option value="o4">Bank Statement of Salary Account</ng-option>
+                                                </ng-select>
+                                            </div>
+                                        </div>
+                                        <div class="btn-wrap">
+                                            <button class="btn btn-primary"
+                                            (click)="goToNextSlide(bankingSlider2, f)">Next</button>
+                                        </div>
+                                    </form>
+                                  </div>
+                                  <div class="swiper-slide">
+                                      <form class="bs-form">
+                                          <div class="form-wrap">
+                                              <div class="bs-file">
+                                                  <input type="file" class="form-control" id="file">
+                                                  <label for="file"><span>Click photo of Banking Proof</span></label>
+                                              </div>
+                                          </div>
+                                          <div class="btn-wrap">
+                                              <button type="button" class="btn btn-primary" (click)="tabSwitch(5)">Next</button>
+                                          </div>
+                                      </form>
+                                  </div>
+                                </div>
+                              </div>
+                          </div>
+
+                      </div>
+                  </div>
+
+
+                  <!-- Collateral -->
+
+                  <div class="tab-content" [ngClass]="{'active': (activeTab == 5)}">
+                      <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(collateralSlider2)"></a>
+                      <div class="lyt-tabs">
+                          <div class="lhs">
+                              <div  class="swiper-container form-swiper"
+                                    [swiper]="lhsConfig"
+                                    #collateralSlider1="ngxSwiper">
+                                  <div class="swiper-wrapper">
+                                      <div class="swiper-slide">
+                                          <div class="title-wrap">
+                                              <h4 class="title">Collateral<span class="cm-line-break"></span>Details</h4>
+                                          </div>
+                                      </div>
+                                      <div class="swiper-slide">
+                                          <div class="title-wrap">
+                                              <h4 class="title">Upload Photo<span class="cm-line-break">of Collateral</span></h4>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="rhs">
+                              <div  class="swiper-container form-swiper"
+                              [swiper]="rhsConfig"
+                              (slidePrevTransitionStart)="slidePrevTransitionStart(collateralSlider1)"
+                              (slideNextTransitionStart)="slideNextTransitionStart(collateralSlider1)"
+                              #collateralSlider2="ngxSwiper">
+                                <div class="swiper-wrapper">
+                                  <div class="swiper-slide">
+                                    <form class="bs-form">
+                                        <div class="form-wrap">
+                                            <div class="form-group">
+                                                <span class="control-title">Select a Document Type</span>
+                                                <ng-select name="state" [searchable]="false">
+                                                    <ng-option value="o1">Property Papers</ng-option>
+                                                    <ng-option value="o2">Gold Assests</ng-option>
+                                                </ng-select>
+                                            </div>
+                                        </div>
+                                        <div class="btn-wrap">
+                                            <button class="btn btn-primary"
+                                            (click)="goToNextSlide(collateralSlider2, f)">Next</button>
+                                        </div>
+                                    </form>
+                                  </div>
+                                  <div class="swiper-slide">
+                                      <form class="bs-form">
+                                          <div class="form-wrap">
+                                              <div class="bs-file">
+                                                  <input type="file" class="form-control" id="file">
+                                                  <label for="file"><span>Click photo of Collateral</span></label>
+                                              </div>
+                                          </div>
+                                          <div class="btn-wrap">
+                                              <button type="button" class="btn btn-primary" (click)="tabSwitch(6)">Next</button>
+                                          </div>
+                                      </form>
+                                  </div>
+                                </div>
+                              </div>
+                          </div>
+
+                      </div>
+                  </div>
+
+                  <!-- Customer Photo -->
+
+                  <div class="tab-content" [ngClass]="{'active': (activeTab == 6)}">
+                      <a href="javascript:void(0);" class="back-btn"></a>
+                      <div class="lyt-tabs">
+                          <div class="lhs">
+                              <div  class="swiper-container form-swiper"
+                                    [swiper]="lhsConfig"
+                                    #panSlider1="ngxSwiper"></div>
+                                  <div class="swiper-wrapper">
+                                      <div class="swiper-slide">
+                                          <div class="title-wrap">
+                                              <h4 class="title">Upload<span class="cm-line-break"></span>Photo</h4>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          <div class="rhs">
+                              <div  class="swiper-container form-swiper"
+                              [swiper]="rhsConfig">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                        <form class="bs-form">
+                                            <div class="form-wrap">
+                                                <div class="bs-file">
+                                                    <input type="file" class="form-control" id="file">
+                                                    <label for="file"><span>Click photo of Customer</span></label>
+                                                </div>
+                                            </div>
+                                            <div class="btn-wrap">
+                                                <button type="button" class="btn btn-primary">Next</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                              </div>
+                          </div>
+                      </div>
+                      </div>
+                  </div>
+
+          </div>
+      </div>
+  </div>
+</main>
+
