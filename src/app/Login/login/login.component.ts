@@ -1,24 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: "app-login",
+  templateUrl: "./login.component.html",
+  styleUrls: ["./login.component.css"]
 })
-
 export class LoginComponent implements OnInit {
-  userName = '';
-  password = '';
+  userName = "";
+  password = "";
 
-  constructor(private router: Router, private qdeService: QdeHttpService) {
-   
+  constructor(
+    private router: Router,
+    private qdeService: QdeHttpService,
+    private utilService: UtilService
+  ) {
+    
   }
 
   ngOnInit() {}
-
-
 
   login() {
     const data = {
@@ -28,9 +30,8 @@ export class LoginComponent implements OnInit {
     this.qdeService.authenticate(data).subscribe(
       res => {
         console.log(res);
-        localStorage.setItem('token', res["token"] ? res["token"] : "");
-        this.router.navigate(['/leads']);
-       
+        localStorage.setItem("token", res["token"] ? res["token"] : "");
+        this.router.navigate(["/leads"]);
       },
       error => {
         console.log(error);

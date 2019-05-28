@@ -9,6 +9,10 @@ export const environment = {
     'dashboard': {
       'workflowId': '050f5c82789a11e982270242ac110002',
       'processId': '05282424789a11e982270242ac110002'
+    },
+    'lov': {
+      'workflowId': '5f28d48c808311e982270242ac110002',
+      'processId': '6569b6d6762911e982270242ac110003'
     }
   }
 };

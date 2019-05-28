@@ -42,28 +42,43 @@ import AuthInterceptor from './services/auth.interceptor';
 import { ListOfValuesResolverService } from './services/list-of-values-resolver.service';
 import { ViewFormComponent } from './applicant-dashboard/view-form/view-form.component';
 import { DocumentUploadComponent } from './applicant-dashboard/document-upload/document-upload.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { AuthGuard } from './guards/auth.guard';
+import { ConfirmDeactivateGuard } from './guards/candeactivate.guard';
+import { UtilService } from './services/util.service';
+
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent}, // This line will be replaced with signin page
-  { path: 'leads', component: LeadsListComponent },
-  { path: 'applicant', component: ApplicantDashboardComponent, children: [
-    {
-      path: '',
-      component: ApplicantQdeComponent,
-      resolve: {
-        listOfValues : ListOfValuesResolverService
-      }
-    },
-    {
-      path: 'applicant/:applicantId',
-      component: ApplicantQdeComponent,
-      resolve: {
-        listOfValues: ListOfValuesResolverService
-      }
-    }
-  ] },
+  { path: "", redirectTo: "login", pathMatch: "full" },
+  { path: "login", component: LoginComponent },
   {
+    path: "leads",
+    component: LeadsListComponent,
+    canActivate: [AuthGuard],
+    canDeactivate: [ConfirmDeactivateGuard]
+  },
+  {
+    path: "applicant",
+    component: ApplicantDashboardComponent,
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: "",
+        component: ApplicantQdeComponent,
+        resolve: {
+          listOfValues: ListOfValuesResolverService
+        }
+      },
+      {
+        path: "applicant/:applicantId",
+        component: ApplicantQdeComponent,
+        resolve: {
+          listOfValues: ListOfValuesResolverService
+        }
+      }
+    ]
+  },
+{
     path: 'co-applicant', component: ApplicantDashboardComponent, children: [
     {
       path: '',
@@ -105,6 +120,7 @@ const appRoutes: Routes = [
       listOfValues: ListOfValuesResolverService
     }
   },
+  { path: "**", component: PageNotFoundComponent }
 ];
  
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
@@ -141,7 +157,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     ReferencesQdeComponent,
     ViewFormComponent,
     DocumentUploadComponent,
-
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -166,4 +182,4 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

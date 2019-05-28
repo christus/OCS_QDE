@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
+import { UtilService } from 'src/app/services/util.service';
 
 export interface UserDetails {
   "amountEligible": number,
@@ -18,13 +19,16 @@ export class LeadsListComponent implements OnInit {
 
   userDetails: Array<UserDetails>;
 
-  constructor(private service: QdeHttpService) {
+  constructor(private service: QdeHttpService, private utilService: UtilService) {
     service.getLeads().subscribe(
       res => {
         console.log(res);
 
-        if (res['ErrorCode'] == 0) {
+        if (res['Error'] && res['Error'] == 0) {
           this.userDetails = res['ProcessVariables'].userDetails || [];
+        } else if (res['login_required'] && res['login_required'] === true) {
+          utilService.clearCredentials();
+          alert(res['message']);
         } else {
           alert(res['ErrorMessage']);
         }
@@ -33,6 +37,14 @@ export class LeadsListComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  isloggedIn() {
+    return this.utilService.isLoggedIn();
+  }
+
+  clearCredentials() {
+    return this.utilService.clearCredentials();
   }
 
   ngOnInit() {}
