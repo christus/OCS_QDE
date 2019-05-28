@@ -106,8 +106,11 @@ const appRoutes: Routes = [
     }
   },
   {
-    path: "references",
-    component: ReferencesQdeComponent
+    path: 'references',
+    component: ReferencesQdeComponent,
+    resolve: {
+      listOfValues: ListOfValuesResolverService
+    }
   },
   {
     path: "document-upload",

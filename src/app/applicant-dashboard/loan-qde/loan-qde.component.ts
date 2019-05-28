@@ -147,7 +147,17 @@ export class LoanQdeComponent implements OnInit {
 
   private qde: Qde;
 
-  
+  private religions: Array<any>;
+  private qualifications: Array<any>;
+  private occupations: Array<any>;
+  private residences: Array<any>;
+  private titles: Array<any>;
+  private maritals: Array<any>;
+  private relationships: Array<any>;
+  private loanpurposes: Array<any>;
+  private categories: Array<any>;
+  private genders: Array<any>;
+  private constitutions: Array<any>;
 
   constructor(
     private renderer: Renderer2,
@@ -160,6 +170,10 @@ export class LoanQdeComponent implements OnInit {
   ngOnInit() {
     // this.renderer.addClass(this.select2.selector.nativeElement, 'js-select');
 
+    console.log(">>", JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs).LOVS);
+    this.loanpurposes = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs).LOVS[7].loan_purpose;
+
+    
     if(this.route.snapshot.data.listOfValues != null && this.route.snapshot.data.listOfValues != undefined) {
       // Initialize all UI Values here
     }

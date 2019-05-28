@@ -59,10 +59,7 @@
                     <div class="form-group">
                       <span class="control-title">Loan purpose</span>
                       <select class="js-select" ngModel name="loanPurpose" required>
-                        <option value="1">Purchase of land</option>
-                        <option value="2">option2</option>
-                        <option value="3">option3</option>
-                        <option value="4">option4</option>
+                        <option *ngFor="let lp of loanpurposes" [value]="lp.value">{{lp.key}}</option>
                       </select>
                     </div>
                     <div class="form-group typ-range">
