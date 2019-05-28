@@ -3,3 +3,6 @@
     z-index: 11;
     position: relative;
 }
+.logout {
+    cursor: pointer;
+}
