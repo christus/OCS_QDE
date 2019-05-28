@@ -83,8 +83,8 @@ export class ReferencesQdeComponent implements OnInit {
   };
 
   regexPattern = {
-    moblieNumber: "/^\d{10}$/",
-    name: "/^[a-zA-Z ]*$/",
+    mobileNumber: "^[0-9]*$",
+    name: "[a-zA-Z ]*",
     address : "^[0-9A-Za-z, _#\s]+$"
   };
 

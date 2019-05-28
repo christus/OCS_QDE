@@ -66,9 +66,10 @@
                           </div>
                         </div>
                         <div class="btn-wrap">
-                          <button class="btn btn-primary disabled"
-                          type="submit"
-                          >Next</button>
+                          <button class="btn btn-primary" 
+                            type="submit"
+                            [ngClass]="{'disabled': !refRelationship1.valid}"
+                            [disabled]="!refRelationship1.valid">Next</button>
                         </div>
                       </form>
 
@@ -95,8 +96,9 @@
                             ngModel
                             name="fullName" 
                             id="ref1-name"
+                            pattern="{{regexPattern.name}}"
                             #refOneFullName="ngModel" >
-                            <label for="ref1-name" *ngIf="fullName.value == ''">Full name</label>
+                            <label for="ref1-name" *ngIf="refOneFullName.value == ''">Full name</label>
 
                             <div *ngIf="refOneFullName.touched && refOneFullName.invalid" class="invalid-feedback">
                               <div *ngIf="refOneFullName.errors?.required">{{errors.references.referenceOne.fullName.required}}</div>
@@ -109,10 +111,11 @@
                             <input type="text" class="form-control"
                             required 
                             id="ref1-mobile"  
-                            name="mobileNumber"  
+                            name="mobileNumber"
+                            pattern="{{regexPattern.mobileNumber}}"  
                             ngModel 
                             #refOneMobileNumber="ngModel">
-                            <label for="ref1-mobile">Mobile number</label>
+                            <label for="ref1-mobile" *ngIf="refOneMobileNumber.value == ''">Mobile number</label>
 
                             <div *ngIf="refOneMobileNumber.touched && refOneMobileNumber.invalid" class="invalid-feedback">
                               <div *ngIf="refOneMobileNumber.errors?.required">{{errors.references.referenceOne.mobileNumber.required}}</div>
@@ -125,9 +128,10 @@
                             <input type="text" class="form-control" id="ref1-add1"  
                             required
                             name="addressLineOne" 
-                            ngModel 
+                            ngModel
+                            pattern="{{regexPattern.address}}" 
                             #refOneAddressLineOne="ngModel">
-                            <label for="ref1-add1">Address line1</label>
+                            <label for="ref1-add1" *ngIf="refOneAddressLineOne.value == ''">Address line1</label>
 
                             <div *ngIf="refOneAddressLineOne.touched && refOneAddressLineOne.invalid" class="invalid-feedback">
                               <div *ngIf="refOneAddressLineOne.errors?.required">{{errors.references.referenceOne.addressLineOne.required}}</div>
@@ -139,20 +143,23 @@
                             <input type="text" class="form-control" id="ref1-add2" 
                             required
                             name="addressLineTwo" 
-                            ngModel 
-                            #addressLineTwo="ngModel">
-                            <label for="ref1-add2">Address line2</label>
+                            ngModel
+                            pattern="{{regexPattern.address}}" 
+                            #refOneAddressLineTwo="ngModel">
+                            <label for="ref1-add2" *ngIf="refOneAddressLineTwo.value == ''">Address line2</label>
 
 
-                            <div *ngIf="addressLineTwo.touched && addressLineTwo.invalid" class="invalid-feedback">
-                              <div *ngIf="addressLineTwo.errors?.required">{{errors.references.referenceOne.addressLineTwo.required}}</div>
-                              <div *ngIf="addressLineTwo.errors?.pattern">{{errors.references.referenceTwo.addressLineTwo.invalid}}</div>
+                            <div *ngIf="refOneAddressLineTwo.touched && refOneAddressLineTwo.invalid" class="invalid-feedback">
+                              <div *ngIf="refOneAddressLineTwo.errors?.required">{{errors.references.referenceOne.addressLineTwo.required}}</div>
+                              <div *ngIf="refOneAddressLineTwo.errors?.pattern">{{errors.references.referenceTwo.addressLineTwo.invalid}}</div>
                             </div>
 
                           </div>
                         </div>
                         <div class="btn-wrap">
-                          <button type="submit" class="btn btn-primary disabled">Next</button>
+                          <button type="submit" class="btn btn-primary"
+                          [ngClass]="{'disabled': !ref1Detail.valid}"
+                          [disabled]="!ref1Detail.valid">Next</button>
                         </div>
                       </form>
 
@@ -215,7 +222,9 @@
                         </div>
                       </div>
                       <div class="btn-wrap">
-                        <button type="submit" class="btn btn-primary disabled">Next</button>
+                        <button type="submit" class="btn btn-primary"
+                          [ngClass]="{'disabled': !ref2Relationship.valid}"
+                          [disabled]="!ref2Relationship.valid">Next</button>
                       </div>
                     </form>
 
@@ -241,33 +250,64 @@
                             ngModel
                             name="fullName" 
                             id="ref2-name"
-                            #fullName="ngModel" >
-                            <label for="ref2-name" >Full name</label>
+                            #refTwoFullName="ngModel"
+                            pattern="{{regexPattern.name}}"
+                            required>
+                            <label for="ref2-name" *ngIf="refTwoFullName.value == ''">Full name</label>
+                            <div *ngIf="refTwoFullName.touched && refTwoFullName.invalid" class="invalid-feedback">
+                                <div *ngIf="refTwoFullName.errors?.required">{{errors.references.referenceOne.fullName.required}}</div>
+                                <div *ngIf="refTwoFullName.errors?.pattern">{{errors.references.referenceOne.fullName.invalid}}</div>
+                            </div>
                           </div>
                           <div class="form-group">
                             <input type="text" class="form-control" id="ref2-mobile" 
                              name="mobileNumber"  
                              ngModel 
-                             #mobileNumber="ngModel">
-                            <label for="ref2-mobile">Mobile number</label>
+                             #refTwoMobileNumber="ngModel"
+                             pattern="{{regexPattern.mobileNumber}}"
+                             required>
+                            <label for="ref2-mobile" *ngIf="refTwoMobileNumber.value == ''">Mobile number</label>
+
+                            <div *ngIf="refTwoMobileNumber.touched && refTwoMobileNumber.invalid" class="invalid-feedback">
+                                <div *ngIf="refTwoMobileNumber.errors?.required">{{errors.references.referenceOne.mobileNumber.required}}</div>
+                                <div *ngIf="refTwoMobileNumber.errors?.pattern">{{errors.references.referenceOne.mobileNumber.invalid}}</div>
+                            </div>
+
                           </div>
                           <div class="form-group">
                             <input type="text" class="form-control" id="ref2-add1"
                               name="addressLineOne"
                               ngModel
-                              #addressLineOne="ngModel">
-                            <label for="ref2-add1">Address line1</label>
+                              #refTwoAddressLineOne="ngModel"
+                              pattern="{{regexPattern.address}}"
+                              required>
+                            <label for="ref2-add1" *ngIf="refTwoMobileNumber.value == ''">Address line1</label>
+
+                            <div *ngIf="refTwoAddressLineOne.touched && refTwoAddressLineOne.invalid" class="invalid-feedback">
+                                <div *ngIf="refTwoAddressLineOne.errors?.required">{{errors.references.referenceOne.addressLineOne.required}}</div>
+                                <div *ngIf="refTwoAddressLineOne.errors?.pattern">{{errors.references.referenceOne.addressLineOne.invalid}}</div>
+                            </div>
                           </div>
+
                           <div class="form-group">
                             <input type="text" class="form-control" id="ref2-add2"
                              name="addressLineTwo" 
                              ngModel 
-                             #addressLineTwo="ngModel">
-                            <label for="ref2-add2">Address line2</label>
+                             #refTwoAddressLineTwo="ngModel"
+                             pattern="{{regexPattern.address}}"
+                             required>
+                            <label for="ref2-add2" *ngIf="refTwoMobileNumber.value == ''">Address line2</label>
+
+                            <div *ngIf="refTwoAddressLineTwo.touched && refTwoAddressLineTwo.invalid" class="invalid-feedback">
+                                <div *ngIf="refTwoAddressLineTwo.errors?.required">{{errors.references.referenceOne.addressLineTwo.required}}</div>
+                                <div *ngIf="refTwoAddressLineTwo.errors?.pattern">{{errors.references.referenceOne.addressLineTwo.invalid}}</div>
+                            </div>
                           </div>
                         </div>
                         <div class="btn-wrap">
-                          <button type="submit" class="btn btn-primary disabled">Next</button>
+                          <button type="submit" class="btn btn-primary" 
+                          [ngClass]="{'disabled': !ref2Detail.valid}"
+                          [disabled]="!ref2Detail.valid">Next</button>
                         </div>
                     </form>
 
