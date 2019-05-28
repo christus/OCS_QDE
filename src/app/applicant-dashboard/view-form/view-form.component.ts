@@ -104,6 +104,16 @@ export class ViewFormComponent implements OnInit {
   };
 
   private religions: Array<any>;
+  private qualifications: Array<any>;
+  private occupations: Array<any>;
+  private residences: Array<any>;
+  private titles: Array<any>;
+  private maritals: Array<any>;
+  private relationships: Array<any>;
+  private loanpurposes: Array<any>;
+  private categories: Array<any>;
+  private genders: Array<any>;
+  private constitutions: Array<any>;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -118,6 +128,16 @@ export class ViewFormComponent implements OnInit {
       
     console.log(">>", JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs).LOVS);
     this.religions = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs).LOVS[0].religion;
+    this.qualifications = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs).LOVS[1].qualification;
+    this.occupations = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs).LOVS[2].occupation;
+    this.residences = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs).LOVS[3].residence_type;
+    this.titles = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs).LOVS[4].applicant_title;
+    this.maritals = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs).LOVS[5].maritial_status;
+    this.relationships = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs).LOVS[6].relationship;
+    this.loanpurposes = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs).LOVS[7].loan_purpose;
+    this.categories = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs).LOVS[8].category;
+    this.genders = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs).LOVS[9].gender;
+    this.constitutions = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs).LOVS[10].constitution;
 
     // Create New Entry
     this.applicantIndex = 0;

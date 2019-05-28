@@ -341,10 +341,7 @@
                                                       <div class="form-group">
                                                           <span class="control-title">Title</span>
                                                           <select ngModel name="title" required>
-                                                              <option value="1">Mr</option>
-                                                              <option value="2">Ms</option>
-                                                              <option value="3">Mrs</option>
-                                                              <option value="4">Dr</option>
+                                                            <option *ngFor="let tit of titles" [value]="tit.value">{{tit.key}}</option>
                                                           </select>
                                                       </div>
                                                       <div class="form-group">
@@ -442,18 +439,7 @@
                                                       <div class="form-group">
                                                           <span class="control-title">Qualification</span>
                                                           <select ngModel name="qualification" required>
-                                                              <option value="1">Below SSC</option>
-                                                              <option value="2">SSC</option>
-                                                              <option value="3">Under Graduate</option>
-                                                              <option value="4">Graduate</option>
-                                                              <option value="5">Post Graduate</option>
-                                                              <option value="6">Professional</option>
-                                                              <option value="7">Below SSC</option>
-                                                              <option value="8">SSC</option>
-                                                              <option value="9">Under Graduate</option>
-                                                              <option value="10">Graduate</option>
-                                                              <option value="11">Post Graduate</option>
-                                                              <option value="12">Professional</option>
+                                                            <option *ngFor="let qual of qualifications" [value]="qual.value">{{qual.key}}</option>
                                                           </select>
                                                       </div>
                                                   </div>
@@ -760,10 +746,7 @@
                                           <select ngModel
                                                   name="residentialStatus"
                                                   required>
-                                              <option value="1">Owned</option>
-                                              <option value="2">Rented</option>
-                                              <option value="3">Company provided</option>
-                                              <option value="4">Other</option>
+                                                  <option *ngFor="let res of residences" [value]="res.value">{{res.key}}</option>
                                           </select>
                                       </div>
                                       <div class="form-group">
@@ -912,10 +895,7 @@
                                                     <div class="form-group">
                                                         <span class="control-title">Marital Status</span>
                                                         <select ngModel name="maritalStatus" required>
-                                                            <option value="1">Single</option>
-                                                            <option value="2">Married</option>
-                                                            <option value="3">Divorced</option>
-                                                            <option value="4">Widowed</option>
+                                                            <option *ngFor="let mar of maritals" [value]="mar.value">{{mar.key}}</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -936,10 +916,7 @@
                                                     <div class="form-group">
                                                         <span class="control-title">Title</span>
                                                         <select ngModel name="spouseTitle" required>
-                                                            <option value="1">Mr</option>
-                                                            <option value="2">Ms</option>
-                                                            <option value="3">Mrs</option>
-                                                            <option value="4">Dr</option>
+                                                            <option *ngFor="let tit of titles" [value]="tit.value">{{tit.key}}</option>
                                                         </select>
                                                     </div>
                                                     <div class="form-group">
@@ -1113,10 +1090,7 @@
                                                   <div class="form-group">
                                                       <span class="control-title">Title</span>
                                                       <select ngModel name="fatherTitle" required>
-                                                          <option value="1">Mr</option>
-                                                          <option value="2">Ms</option>
-                                                          <option value="3">Mrs</option>
-                                                          <option value="4">Dr</option>
+                                                        <option *ngFor="let tit of titles" [value]="tit.value">{{tit.key}}</option>
                                                       </select>
                                                   </div>
                                                   <div class="form-group">
@@ -1135,10 +1109,7 @@
                                                   <div class="form-group">
                                                       <span class="control-title">Title</span>
                                                       <select ngModel name="motherTitle" required>
-                                                          <option value="1">Mr</option>
-                                                          <option value="2">Ms</option>
-                                                          <option value="3">Mrs</option>
-                                                          <option value="4">Dr</option>
+                                                        <option *ngFor="let tit of titles" [value]="tit.value">{{tit.key}}</option>
                                                       </select>
                                                   </div>
                                                   <div class="form-group">
@@ -1207,12 +1178,7 @@
                                       <div class="form-group">
                                           <span class="control-title">Religion</span>
                                           <select class="typ-religion" ngModel name="religion" #religionSelect="ngModel" required>
-                                              <option value="1">Hindu</option>
-                                              <option value="2">Muslim</option>
-                                              <option value="3">Sikh</option>
-                                              <option value="4">christian</option>
-                                              <option value="5">Buddist</option>
-                                              <option value="6">Other(Please Specify)</option>
+                                            <option *ngFor="let rel of religions" [value]="rel.value">{{rel.key}}</option>
                                           </select>
                                       </div>
                                       <div class="form-group" *ngIf="religionSelect.value == '6'" [ngClass]="{'hidden': (religionSelect.value != '6')}">
@@ -1222,11 +1188,7 @@
                                       <div class="form-group">
                                           <span class="control-title">Category</span>
                                           <select ngModel name="category" required>
-                                              <option value="General">General</option>
-                                              <option value="SC">SC</option>
-                                              <option value="CS">CS</option>
-                                              <option value="OBC">OBC</option>
-                                              <option value="MBC">MBC</option>
+                                            <option *ngFor="let catg of categories" [value]="catg.value">{{catg.key}}</option>
                                           </select>
                                       </div>
                                   </div>
@@ -1263,12 +1225,7 @@
                                       <div class="form-group">
                                           <span class="control-title">Occupation type</span>
                                           <select ngModel name="occupationType" required>
-                                              <option value="1">Salaried</option>
-                                              <option value="2">Self Employed Professional</option>
-                                              <option value="3">Self Employed Non Professional</option>
-                                              <option value="4">Homemaker</option>
-                                              <option value="5">Student</option>
-                                              <option value="6">Retired</option>
+                                            <option *ngFor="let occu of occupations" [value]="occu.value">{{occu.key}}</option>
                                           </select>
                                       </div>
                                       <div class="form-group">

@@ -57,11 +57,7 @@
                           <div class="form-group">
                             <span class="control-title">Select</span>
                             <select ngModel name="relationShip" class="js-select" required>
-                              <option value="1">Father</option>
-                              <option value="2">Mother</option>
-                              <option value="3">Spouse</option>
-                              <option value="4">Friend</option>
-                              <option value="5">Other</option>
+                              <option *ngFor="let rela of relationships" [value]="rela.value">{{rela.key}}</option>
                             </select>
                           </div>
                         </div>
@@ -85,9 +81,7 @@
                           <div class="form-group">
                             <span class="control-title">Title</span>
                             <select name="title" ngModel class="js-select" required>
-                              <option value="1">Mr</option>
-                              <option value="2">Mrs</option>
-                              <option value="3">Dr</option>
+                              <option *ngFor="let tit of titles" [value]="tit.value">{{tit.key}}</option>
                             </select>
                           </div>
                           <div class="form-group">
@@ -213,11 +207,7 @@
                         <div class="form-group">
                           <span class="control-title">Select</span>
                           <select ngModel name="relationShip" class="js-select" required>
-                            <option value="1">Father</option>
-                            <option value="2">Mother</option>
-                            <option value="3">Spouse</option>
-                            <option value="4">Friend</option>
-                            <option value="5">Other</option>
+                            <option *ngFor="let rela of relationships" [value]="rela.value">{{rela.key}}</option>
                           </select>
                         </div>
                       </div>
@@ -240,9 +230,7 @@
                           <div class="form-group">
                             <span class="control-title">Title</span>
                             <select name="title" ngModel class="js-select" required>
-                              <option value="1">Mr</option>
-                              <option value="2">Mrs</option>
-                              <option value="3">Dr</option>
+                              <option *ngFor="let tit of titles" [value]="tit.value">{{tit.key}}</option>
                             </select>
                           </div>
                           <div class="form-group">

@@ -3,26 +3,26 @@
   <div class="main">
       <div class="lyt-sidebar tabs">
           <ul class="sidebar tabs-head main-nav" >
-              <li class="tab-link" data-target="applicant-tab" [ngClass]="{'active': activeTab == 0}">
+              <li class="tab-link" [ngClass]="{'active': activeTab == 0}">
                   <a href="javascript:void(0);" (click)="tabSwitch(0)">Applicant Details</a>
                   <span class="complete-sign"><span class="icon icon-tick"></span></span>
               </li>
               <!-- <li class="completed tab-link" data-target="coapplicant-tab" [ngClass]="{'active': activeTab == 1}"> -->
-                <li class="tab-link" data-target="coapplicant-tab" [ngClass]="{'active': activeTab == 1}">
+                <li class="tab-link" [ngClass]="{'active': activeTab == 1}">
                   <a href="javascript:void(0);" (click)="tabSwitch(1)">Co-Applicant Details</a>
                   <span class="complete-sign"><span class="icon icon-tick"></span></span>
               </li>
-              <li class="tab-link" data-target="loan-tab" [ngClass]="{'active': activeTab == 2}">
+              <li class="tab-link" [ngClass]="{'active': activeTab == 2}">
                   <a href="javascript:void(0);" (click)="tabSwitch(2)">Loan Details</a>
                   <span class="complete-sign"><span class="icon icon-tick"></span></span>
               </li>
               <!-- <li class="incomplete tab-link" data-target="reference-tab" [ngClass]="{'active': activeTab == 3}"> -->
-                <li class="tab-link" data-target="reference-tab" [ngClass]="{'active': activeTab == 3}">
+                <li class="tab-link" [ngClass]="{'active': activeTab == 3}">
                   <a href="javascript:void(0);" (click)="tabSwitch(3)">References</a>
-                  <span class="incomplete-count">3</span>
+                  <!-- <span class="incomplete-count">3</span> -->
                   <span class="complete-sign"><span class="icon icon-tick"></span></span>
               </li>
-              <li class="tab-link" data-target="doc-tab" [ngClass]="{'active': activeTab == 4}">
+              <li class="tab-link" [ngClass]="{'active': activeTab == 4}">
                   <a href="javascript:void(0);" (click)="tabSwitch(4)">Document Uploads</a>
                   <span class="complete-sign"><span class="icon icon-tick"></span></span>
               </li>
@@ -54,12 +54,9 @@
                               <div class="col-3">
                                   <div class="form-group">
                                       <span class="control-title">Title</span>
-                                      <select class="js-select" name="state" required>
-                                          <option value="" selected>Mr</option>
-                                          <option value="Ms">Ms</option>
-                                          <option value="Mrs">Mrs</option>
-                                          <option value="Dr">Dr</option>
-                                      </select>
+                                      <select name="applicant title">
+                                        <option *ngFor="let tit of titles" [value]="tit.value">{{tit.key}}</option>
+                                    </select>
                                   </div>
                               </div>
                           </div>
@@ -87,19 +84,15 @@
                           <div class="row">
                               <div class="col-6">
                                   <span class="control-title">Gender</span>
-                                  <select class="js-select" name="state" required>
-                                      <option value="">Male</option>
-                                      <option value="Ms">Female</option>
-                                      <option value="Mrs">Transgender</option>
-                                  </select>
+                                  <select name="gender">
+                                    <option *ngFor="let gend of genders" [value]="gend.value">{{gend.key}}</option>
+                                </select>
                               </div>
                               <div class="col-6">
                                   <span class="control-title">Qualification</span>
-                                  <select class="js-select" name="state" required>
-                                      <option value="" >Graduate</option>
-                                      <option value="Ms">Post Graduate</option>
-                                      <option value="Mrs">MBA</option>
-                                  </select>
+                                  <select name="qualififcation">
+                                    <option *ngFor="let qual of qualifications" [value]="qual.value">{{qual.key}}</option>
+                                </select>
                               </div>
                           </div>
                           <div class="row last">
@@ -246,10 +239,9 @@
                               <div class="col-6">
                                   <div class="form-group">
                                       <span class="control-title">Residential status</span>
-                                      <select class="js-select" name="state">
-                                          <option>Owned</option>
-                                          <option>Rented</option>                                            
-                                      </select>
+                                      <select name="resident type">
+                                        <option *ngFor="let res of residences" [value]="res.value">{{res.key}}</option>
+                                    </select>
                                   </div>
                               </div>
                           </div>
@@ -310,11 +302,9 @@
                               <div class="col-6">
                                   <div class="form-group">
                                       <span class="control-title">Marital status</span>
-                                      <select name="" id="" class="js-select">
-                                          <option value="">Single</option>
-                                          <option value="">Married</option>
-                                          <option value="">Divorcee</option>
-                                      </select>
+                                      <select name="marital status">
+                                        <option *ngFor="let mar of maritals" [value]="mar.value">{{mar.key}}</option>
+                                    </select>
                                   </div>
                               </div>
                           </div>
@@ -324,11 +314,9 @@
                                   <div class="col-3">
                                       <div class="form-group">
                                           <span class="control-title">Title</span>
-                                          <select name="" id="" class="js-select">
-                                              <option value="">Mr</option>
-                                              <option value="">Mrs</option>
-                                              <option value="">Dr</option>
-                                          </select>
+                                          <select name="spouse title">
+                                            <option *ngFor="let tit of titles" [value]="tit.value">{{tit.key}}</option>
+                                        </select>
                                       </div>
                                   </div>
                               </div>
@@ -381,11 +369,9 @@
                               <div class="col-3">
                                   <div class="form-group">
                                       <span class="control-title">Title</span>
-                                      <select class="js-select" name="state">
-                                          <option>Mr</option>
-                                          <option>Mrs</option>                                            
-                                          <option>Dr</option>                                            
-                                      </select>
+                                      <select name="fathers title">
+                                        <option *ngFor="let tit of titles" [value]="tit.value">{{tit.key}}</option>
+                                    </select>
                                   </div>
                               </div>
                           </div>
@@ -401,11 +387,9 @@
                               <div class="col-3">
                                   <div class="form-group">
                                       <span class="control-title">Title</span>
-                                      <select class="js-select" name="state">
-                                          <option>Mr</option>
-                                          <option>Mrs</option>                                            
-                                          <option>Dr</option>                                            
-                                      </select>
+                                      <select name="mothers title">
+                                        <option *ngFor="let tit of titles" [value]="tit.value">{{tit.key}}</option>
+                                    </select>
                                   </div>
                               </div>
                           </div>
@@ -434,7 +418,7 @@
                               <div class="col-6">
                                   <div class="form-group">
                                       <span class="control-title">Religion</span>
-                                      <select class="js-select" name="religion">
+                                      <select name="religion">
                                           <option *ngFor="let rel of religions" [value]="rel.value">{{rel.key}}</option>
                                       </select>
                                   </div>
@@ -450,12 +434,9 @@
                               <div class="col-6">
                                   <div class="form-group">
                                       <span class="control-title">Category</span>
-                                      <select class="js-select" name="religion">
-                                          <option>Open</option>
-                                          <option>SC</option>                                            
-                                          <option>NT</option>                                            
-                                          <option>OBC</option>                                            
-                                      </select>
+                                      <select name="category">
+                                        <option *ngFor="let catg of categories" [value]="catg.value">{{catg.key}}</option>
+                                    </select>
                                   </div>
                               </div>
                           </div>
@@ -468,12 +449,9 @@
                               <div class="col-6">
                                   <div class="form-group">
                                       <span class="control-title">Occupation type</span>
-                                      <select class="js-select" name="religion">
-                                          <option>Salaried</option>
-                                          <option>Muslim</option>                                            
-                                          <option>Sikh</option>                                            
-                                          <option>Other</option>                                            
-                                      </select>
+                                      <select name="occupation">
+                                        <option *ngFor="let occu of occupations" [value]="occu.value">{{occu.key}}</option>
+                                    </select>
                                   </div>
                               </div>
                           </div>
@@ -618,12 +596,9 @@
                                   <div class="col-6">
                                       <div class="form-group">
                                           <span class="control-title">Relationship</span>
-                                          <select class="js-select" name="state" required>
-                                              <option value="" selected>Father</option>
-                                              <option value="Ms">Mother</option>
-                                              <option value="Mrs">Sister</option>
-                                              <option value="Dr">Brother</option>
-                                          </select>
+                                          <select name="relationship">
+                                            <option *ngFor="let rela of relationships" [value]="rela.value">{{rela.key}}</option>
+                                        </select>
                                       </div>
                                   </div>
                               </div>
@@ -698,12 +673,9 @@
                               <div class="col-6">
                                   <div class="form-group">
                                       <span class="control-title">Constitution</span>
-                                      <select class="js-select" name="state" required>
-                                          <option value="" selected>Father</option>
-                                          <option value="Ms">Mother</option>
-                                          <option value="Mrs">Sister</option>
-                                          <option value="Dr">Brother</option>
-                                      </select>
+                                      <select name="constitution">
+                                        <option *ngFor="let consti of constitutions" [value]="consti.value">{{consti.key}}</option>
+                                    </select>
                                   </div>
                               </div>
                           </div>
@@ -862,12 +834,9 @@
                               <div class="col-3">
                                   <div class="form-group">
                                       <span class="control-title">Title</span>
-                                      <select class="js-select" name="state" required>
-                                          <option value="" selected>Mr</option>
-                                          <option value="Ms">Ms</option>
-                                          <option value="Mrs">Mrs</option>
-                                          <option value="Dr">Dr</option>
-                                      </select>
+                                      <select name="applicant title">
+                                        <option *ngFor="let tit of titles" [value]="tit.value">{{tit.key}}</option>
+                                    </select>
                                   </div>
                               </div>
                           </div>
@@ -895,19 +864,15 @@
                           <div class="row">
                               <div class="col-6">
                                   <span class="control-title">Gender</span>
-                                  <select class="js-select" name="state" required>
-                                      <option value="">Male</option>
-                                      <option value="Ms">Female</option>
-                                      <option value="Mrs">Transgender</option>
-                                  </select>
+                                  <select name="gender">
+                                    <option *ngFor="let gend of genders" [value]="gend.value">{{gend.key}}</option>
+                                </select>
                               </div>
                               <div class="col-6">
                                   <span class="control-title">Qualification</span>
-                                  <select class="js-select" name="state" required>
-                                      <option value="" >Graduate</option>
-                                      <option value="Ms">Post Graduate</option>
-                                      <option value="Mrs">MBA</option>
-                                  </select>
+                                  <select name="qualififcation">
+                                    <option *ngFor="let qual of qualifications" [value]="qual.value">{{qual.key}}</option>
+                                </select>
                               </div>
                           </div>
                           <div class="row last">
@@ -1054,10 +1019,9 @@
                               <div class="col-6">
                                   <div class="form-group">
                                       <span class="control-title">Residential status</span>
-                                      <select class="js-select" name="state">
-                                          <option>Owned</option>
-                                          <option>Rented</option>                                            
-                                      </select>
+                                      <select name="resident type">
+                                        <option *ngFor="let res of residences" [value]="res.value">{{res.key}}</option>
+                                    </select>
                                   </div>
                               </div>
                           </div>
@@ -1118,11 +1082,9 @@
                               <div class="col-6">
                                   <div class="form-group">
                                       <span class="control-title">Marital status</span>
-                                      <select name="" id="" class="js-select">
-                                          <option value="">Single</option>
-                                          <option value="">Married</option>
-                                          <option value="">Divorcee</option>
-                                      </select>
+                                      <select name="marital status">
+                                        <option *ngFor="let mar of maritals" [value]="mar.value">{{mar.key}}</option>
+                                    </select>
                                   </div>
                               </div>
                           </div>
@@ -1132,11 +1094,9 @@
                                   <div class="col-3">
                                       <div class="form-group">
                                           <span class="control-title">Title</span>
-                                          <select name="" id="" class="js-select">
-                                              <option value="">Mr</option>
-                                              <option value="">Mrs</option>
-                                              <option value="">Dr</option>
-                                          </select>
+                                          <select name="applicant title">
+                                            <option *ngFor="let tit of titles" [value]="tit.value">{{tit.key}}</option>
+                                        </select>
                                       </div>
                                   </div>
                               </div>
@@ -1189,11 +1149,9 @@
                               <div class="col-3">
                                   <div class="form-group">
                                       <span class="control-title">Title</span>
-                                      <select class="js-select" name="state">
-                                          <option>Mr</option>
-                                          <option>Mrs</option>                                            
-                                          <option>Dr</option>                                            
-                                      </select>
+                                      <select name="applicant title">
+                                        <option *ngFor="let tit of titles" [value]="tit.value">{{tit.key}}</option>
+                                    </select>
                                   </div>
                               </div>
                           </div>
@@ -1209,11 +1167,9 @@
                               <div class="col-3">
                                   <div class="form-group">
                                       <span class="control-title">Title</span>
-                                      <select class="js-select" name="state">
-                                          <option>Mr</option>
-                                          <option>Mrs</option>                                            
-                                          <option>Dr</option>                                            
-                                      </select>
+                                      <select name="applicant title">
+                                        <option *ngFor="let tit of titles" [value]="tit.value">{{tit.key}}</option>
+                                    </select>
                                   </div>
                               </div>
                           </div>
@@ -1242,12 +1198,9 @@
                               <div class="col-6">
                                   <div class="form-group">
                                       <span class="control-title">Religion</span>
-                                      <select class="js-select" name="religion">
-                                          <option>Hindu</option>
-                                          <option>Muslim</option>                                            
-                                          <option>Sikh</option>                                            
-                                          <option>Other</option>                                            
-                                      </select>
+                                      <select name="religion">
+                                        <option *ngFor="let rel of religions" [value]="rel.value">{{rel.key}}</option>
+                                    </select>
                                   </div>
                               </div>
                               <div class="col-6">
@@ -1261,12 +1214,9 @@
                               <div class="col-6">
                                   <div class="form-group">
                                       <span class="control-title">Category</span>
-                                      <select class="js-select" name="religion">
-                                          <option>Open</option>
-                                          <option>SC</option>                                            
-                                          <option>NT</option>                                            
-                                          <option>OBC</option>                                            
-                                      </select>
+                                      <select name="category">
+                                        <option *ngFor="let catg of categories" [value]="catg.value">{{catg.key}}</option>
+                                    </select>
                                   </div>
                               </div>
                           </div>
@@ -1279,12 +1229,9 @@
                               <div class="col-6">
                                   <div class="form-group">
                                       <span class="control-title">Occupation type</span>
-                                      <select class="js-select" name="religion">
-                                          <option>Salaried</option>
-                                          <option>Muslim</option>                                            
-                                          <option>Sikh</option>                                            
-                                          <option>Other</option>                                            
-                                      </select>
+                                      <select name="occupation">
+                                        <option *ngFor="let occu of occupations" [value]="occu.value">{{occu.key}}</option>
+                                    </select>
                                   </div>
                               </div>
                           </div>
@@ -1433,8 +1380,10 @@
                               </div>
                               <div class="col-6">
                                   <div class="form-group filled">
-                                      <input type="text" class="form-control" id="loan-purpose" value="Purchase of property">
-                                      <label for="loan-purpose">Loan purpose</label>
+                                    <span class="control-title">Loan Purpose</span>
+                                    <select name="occupation">
+                                        <option *ngFor="let lp of loanpurposes" [value]="lp.value">{{lp.key}}</option>
+                                    </select>
                                   </div>
                               </div>
                           </div>
@@ -1596,12 +1545,9 @@
                                   <div class="col-12">
                                       <div class="form-group">
                                           <span class="control-title">Relationship with the applicant</span>
-                                          <select class="js-select" name="rel-app" required>
-                                              <option value="" selected>Father</option>
-                                              <option value="Ms">Mother</option>
-                                              <option value="Mrs">Sister</option>
-                                              <option value="Dr">Brother</option>
-                                          </select>
+                                          <select name="relationship">
+                                            <option *ngFor="let rela of relationships" [value]="rela.value">{{rela.key}}</option>
+                                        </select>
                                       </div>
                                   </div>
                               </div>
@@ -1646,12 +1592,9 @@
                                   <div class="col-12">
                                       <div class="form-group">
                                           <span class="control-title">Relationship with the applicant</span>
-                                          <select class="js-select" name="rel-app" required>
-                                              <option value="" selected>Father</option>
-                                              <option value="Ms">Mother</option>
-                                              <option value="Mrs">Sister</option>
-                                              <option value="Dr">Brother</option>
-                                          </select>
+                                          <select name="relationship">
+                                            <option *ngFor="let rela of relationships" [value]="rela.value">{{rela.key}}</option>
+                                        </select>
                                       </div>
                                   </div>
                               </div>

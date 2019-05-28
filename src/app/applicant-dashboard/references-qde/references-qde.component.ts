@@ -130,6 +130,17 @@ export class ReferencesQdeComponent implements OnInit {
 
   applicantIndex: number;
 
+  private religions: Array<any>;
+  private qualifications: Array<any>;
+  private occupations: Array<any>;
+  private residences: Array<any>;
+  private titles: Array<any>;
+  private maritals: Array<any>;
+  private relationships: Array<any>;
+  private loanpurposes: Array<any>;
+  private categories: Array<any>;
+  private genders: Array<any>;
+  private constitutions: Array<any>;
 
   constructor(
     private renderer: Renderer2,
@@ -142,6 +153,10 @@ export class ReferencesQdeComponent implements OnInit {
   ngOnInit() {
     // this.renderer.addClass(this.select2.selector.nativeElement, 'js-select');
 
+    console.log(">>", JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs).LOVS);
+    this.titles = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs).LOVS[4].applicant_title;
+    this.relationships = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs).LOVS[6].relationship;
+  
     if(this.route.snapshot.data.listOfValues != null && this.route.snapshot.data.listOfValues != undefined) {
       // Initialize all UI Values here
     }
