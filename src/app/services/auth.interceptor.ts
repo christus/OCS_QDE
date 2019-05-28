@@ -28,7 +28,6 @@ export default class AuthInterceptor implements HttpInterceptor {
             console.log("Response: " + event.body);
             const response = event.body;
             if (response && response["login_required"]) {
-              alert("Session Expired!");
               this.utilService.clearCredentials();
             }
             return event;

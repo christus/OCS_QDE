@@ -49,7 +49,7 @@ import { UtilService } from './services/util.service';
 
 
 const appRoutes: Routes = [
-  { path: "", redirectTo: "login", pathMatch: "full" },
+  { path: "", redirectTo: "leads", pathMatch: "full" },
   { path: "login", component: LoginComponent },
   {
     path: "leads",
@@ -78,43 +78,46 @@ const appRoutes: Routes = [
       }
     ]
   },
-{
-    path: 'co-applicant', component: ApplicantDashboardComponent, children: [
-    {
-      path: '',
-      component: CoApplicantQdeComponent,
-      resolve: {
-        listOfValues : ListOfValuesResolverService
-      }
-    },
-    {
-      path: ':applicantId',
-      component: CoApplicantQdeComponent,
-      resolve: {
-        listOfValues: ListOfValuesResolverService
-      }
-    }
-  ] },
   {
-    path: 'loan',
+    path: "co-applicant",
+    component: ApplicantDashboardComponent,
+    children: [
+      {
+        path: "",
+        component: CoApplicantQdeComponent,
+        resolve: {
+          listOfValues: ListOfValuesResolverService
+        }
+      },
+      {
+        path: ":applicantId",
+        component: CoApplicantQdeComponent,
+        resolve: {
+          listOfValues: ListOfValuesResolverService
+        }
+      }
+    ]
+  },
+  {
+    path: "loan",
     component: LoanQdeComponent,
     resolve: {
       listOfValues: ListOfValuesResolverService
     }
   },
   {
-    path: 'references',
+    path: "references",
     component: ReferencesQdeComponent
   },
   {
-    path: 'document-upload',
+    path: "document-upload",
     component: DocumentUploadComponent,
     resolve: {
       listOfValues: ListOfValuesResolverService
     }
   },
   {
-    path: 'view-form',
+    path: "view-form",
     component: ViewFormComponent,
     resolve: {
       listOfValues: ListOfValuesResolverService
