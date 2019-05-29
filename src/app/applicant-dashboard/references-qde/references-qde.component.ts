@@ -153,10 +153,11 @@ export class ReferencesQdeComponent implements OnInit {
   ngOnInit() {
     // this.renderer.addClass(this.select2.selector.nativeElement, 'js-select');
 
-    console.log(">>", JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs).LOVS);
-    this.titles = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs).LOVS[4].applicant_title;
-    this.relationships = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs).LOVS[6].relationship;
-  
+    console.log(">>", JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs));
+    var lov = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs);
+    this.titles = lov.LOVS.applicant_title;
+    this.relationships = lov.LOVS.relationship;
+    
     if(this.route.snapshot.data.listOfValues != null && this.route.snapshot.data.listOfValues != undefined) {
       // Initialize all UI Values here
     }
