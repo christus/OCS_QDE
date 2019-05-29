@@ -197,4 +197,74 @@ export class QdeService {
   setOde(qde: Qde): void {
     this.qde = qde;
   }
+
+
+
+  /**
+   * Filter Object with only filled values 
+   */
+  getFilteredJson(qde: Qde) {
+    var a = q.constructor == Object ? Object.entries(q).map(([key, value]) => ({key, value}) ) : q;
+
+    var newObj = {};
+  
+    a.forEach((obj ,index) => {
+      // Filter Empty Values
+      if(obj.value == null || obj.value == undefined || obj.value == NaN) {
+        delete obj.key;
+        return;
+      } else if(obj.value.constructor == String) {
+        if(obj.value == "") {
+         delete obj.key;
+          return;
+        } else {
+          newObj[obj.key] = obj.value;
+          return;
+        }
+      } else if(obj.value.constructor == Boolean) {
+        if(obj.value == null) {
+          delete obj.key;
+          return;
+        } else {
+          newObj[obj.key] = obj.value;
+          return;
+        }
+      }else if(obj.value.constructor == Number) {
+        if(obj.value == null) {
+          delete obj.key;
+          return;
+        } else {
+          newObj[obj.key] = obj.value;
+          return;
+        }
+      } else if(obj.value.constructor == Array) {
+        if(obj.value.length == 0) {
+          delete obj.key;
+          return;
+        } else {
+          let f = obj.value.map((val) => {
+            return this.getFilteredJson(val);
+          });
+          if(f.length == 0) {
+            delete obj.key;
+          } else {
+            newObj[obj.key] = f;
+          }
+        }
+      } else if(obj.value.constructor == Object) {
+        if(Object.keys(obj.value).length == 0) {
+          delete obj.key;
+        } else {
+          let f = this.getFilteredJson(obj.value)
+          if(Object.keys(f).length == 0) {
+            delete obj.key;
+          } else {
+            newObj[obj.key] = f;
+          }
+        }
+      }
+    });
+  
+    return newObj;    
+  }
 }

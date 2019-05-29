@@ -1137,13 +1137,6 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
     }
   }
 
-  /**
-   * Filter Object with only filled values 
-   */
-  getFilterJson(qde: Qde) {
-    
-  }
-
   counter(size): Array<number> {
     return new Array(size);
   }
