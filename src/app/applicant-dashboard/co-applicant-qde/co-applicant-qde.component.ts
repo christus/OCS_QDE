@@ -9,7 +9,7 @@ import { Options } from 'ng5-slider';
 
 import { NgForm } from '@angular/forms';
 
-import Qde from 'src/app/models/qde.model';
+import Qde, { Applicant } from 'src/app/models/qde.model';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
 import { QdeService } from 'src/app/services/qde.service';
 
@@ -296,7 +296,7 @@ export class CoApplicantQdeComponent implements OnInit {
   
     private qde: Qde;
   
-    private religions: Array<any>;
+  private religions: Array<any>;
   private qualifications: Array<any>;
   private occupations: Array<any>;
   private residences: Array<any>;
@@ -307,41 +307,48 @@ export class CoApplicantQdeComponent implements OnInit {
   private categories: Array<any>;
   private genders: Array<any>;
   private constitutions: Array<any>;
+  private coApplicants: Array<Applicant> = [];
 
-    constructor(private renderer: Renderer2,
+  constructor(private renderer: Renderer2,
                 private route: ActivatedRoute,
                 private router: Router,
                 private qdeHttp: QdeHttpService,
                 private qdeService: QdeService) {
+
     }
     
     ngOnInit() {
 
-      console.log(">>", JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs));
-      var lov = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs);
-      this.religions = lov.LOVS.religion;
-      this.qualifications = lov.LOVS.qualification;
-      this.occupations = lov.LOVS.occupation;
-      this.residences = lov.LOVS.residence_type;
-      this.titles = lov.LOVS.applicant_title;
-      this.maritals = lov.LOVS.maritial_status;
-      this.relationships = lov.LOVS.relationship;
-      this.loanpurposes = lov.LOVS.loan_purpose;
-      this.categories = lov.LOVS.category;
-      this.genders = lov.LOVS.gender;
-      this.constitutions = lov.LOVS.constitution;
-
-  
       if(this.route.snapshot.data.listOfValues != null && this.route.snapshot.data.listOfValues != undefined) {
-        // Initialize all UI Values here
+        console.log(">>", JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs));
+        var lov = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs);
+        this.religions = lov.LOVS.religion;
+        this.qualifications = lov.LOVS.qualification;
+        this.occupations = lov.LOVS.occupation;
+        this.residences = lov.LOVS.residence_type;
+        this.titles = lov.LOVS.applicant_title;
+        this.maritals = lov.LOVS.maritial_status;
+        this.relationships = lov.LOVS.relationship;
+        this.loanpurposes = lov.LOVS.loan_purpose;
+        this.categories = lov.LOVS.category;
+        this.genders = lov.LOVS.gender;
+        this.constitutions = lov.LOVS.constitution;
       }
-      
       // Check Whether there is qde data to be filled or else Initialize Qde
       this.route.params.subscribe((params) => {
         
         // Make an http request to get the required qde data and set using setQde
         if(params.applicantId != undefined && params.applicantId != null) {
           // setQde(JSON.parse(response.ProcessVariables.response));
+
+          // This line will be removed
+          this.qde = this.qdeService.getQde();
+          this.coApplicants = this.qdeService
+                                  .getQde()
+                                  .application
+                                  .applicants
+                                  .filter(val => val.isMainApplicant == false);
+          
         } else {
           this.qde = this.qdeService.getQde();
         }

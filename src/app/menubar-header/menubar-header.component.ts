@@ -13,6 +13,7 @@ export class MenubarHeaderComponent implements OnInit {
 
   constructor(private utilService: UtilService, private commonDataService: CommonDataService) {
     this.commonDataService.isMenuBarShown.subscribe((value) => {
+      console.log("value ", value);
       this.isMenuBarShown = value;
     });
   }
