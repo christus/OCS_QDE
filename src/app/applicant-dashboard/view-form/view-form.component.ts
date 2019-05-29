@@ -126,18 +126,19 @@ export class ViewFormComponent implements OnInit {
   ngOnInit() {
       // this.renderer.addClass(this.select2.selector.nativeElement, 'js-select');
       
-    console.log(">>", JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs).LOVS);
-    this.religions = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs).LOVS[0].religion;
-    this.qualifications = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs).LOVS[1].qualification;
-    this.occupations = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs).LOVS[2].occupation;
-    this.residences = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs).LOVS[3].residence_type;
-    this.titles = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs).LOVS[4].applicant_title;
-    this.maritals = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs).LOVS[5].maritial_status;
-    this.relationships = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs).LOVS[6].relationship;
-    this.loanpurposes = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs).LOVS[7].loan_purpose;
-    this.categories = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs).LOVS[8].category;
-    this.genders = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs).LOVS[9].gender;
-    this.constitutions = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs).LOVS[10].constitution;
+    console.log(">>", JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs));
+    var lov = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs);
+    this.religions = lov.LOVS.religion;
+    this.qualifications = lov.LOVS.qualification;
+    this.occupations = lov.LOVS.occupation;
+    this.residences = lov.LOVS.residence_type;
+    this.titles = lov.LOVS.applicant_title;
+    this.maritals = lov.LOVS.maritial_status;
+    this.relationships = lov.LOVS.relationship;
+    this.loanpurposes = lov.LOVS.loan_purpose;
+    this.categories = lov.LOVS.category;
+    this.genders = lov.LOVS.gender;
+    this.constitutions = lov.LOVS.constitution;
 
     // Create New Entry
     this.applicantIndex = 0;
