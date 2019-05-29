@@ -176,8 +176,9 @@ export interface PropertyType {
 }
 
 export interface ExistingLoan {
-    loanProvider? : string;
-    liveLoan? : number;
+    loanProvider ?: string;
+    numberOfYears ?: string;
+    liveLoan ?: number;
     monthlyEmi? : number;
 }
 

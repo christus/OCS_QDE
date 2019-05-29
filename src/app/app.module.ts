@@ -60,7 +60,7 @@ const appRoutes: Routes = [
   {
     path: "applicant",
     component: ApplicantDashboardComponent,
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
     children: [
       {
         path: "",
@@ -70,7 +70,7 @@ const appRoutes: Routes = [
         }
       },
       {
-        path: "applicant/:applicantId",
+        path: ":applicantId",
         component: ApplicantQdeComponent,
         resolve: {
           listOfValues: ListOfValuesResolverService

@@ -1,5 +1,5 @@
 import { Other } from './../../models/qde.model';
-import { Component, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Renderer2, AfterViewInit } from '@angular/core';
     
 import * as Swiper from 'swiper/dist/js/swiper.js';
 // import { Select2Component } from 'ng2-select2';
@@ -17,7 +17,7 @@ import { QdeService } from 'src/app/services/qde.service';
   templateUrl: './applicant-qde.component.html',
   styleUrls: ['./applicant-qde.component.css']
 })
-export class ApplicantQdeComponent implements OnInit {
+export class ApplicantQdeComponent implements OnInit, AfterViewInit {
 
   errors = {
 
@@ -247,27 +247,36 @@ export class ApplicantQdeComponent implements OnInit {
 
   private rhsConfig = {
     // noSwiping: true,
-    // onlyExternal: true,
+    // noSwipingClass: '',
     autoplay: false,
     speed: 900,
-    effect: "slide",
-    noSwipingClass: '',
+    effect: "slide"
   };
 
   private activeTab: number = 0;
+  private dob: {day: string, month: string, year: string} = { day: null, month: null, year: null };
+  private residenceNumber: {stdCode: string, phoneNumber: string} = {stdCode: "", phoneNumber: ""};
+  private alternateResidenceNumber: {stdCode: string, phoneNumber: string} = {stdCode: "", phoneNumber: ""};
+  private addressCityState: string = "";
+  private otherReligion: string = "";
+  private dateOfIncorporation: {day: string, month: string, year: string} = {day: null, month: null, year: null};
+  private registeredAddressCityState: string = "";
+  private corporateAddressCityState: string = "";
+  private corporateAddressStdNumber: {stdCode: string, phoneNumber: string} = {stdCode: "", phoneNumber: ""};
 
   @ViewChild('tabContents') private tabContents: ElementRef;
   // @ViewChild(Select2Component) private select2: Select2Component;
 
   // All Swiper Sliders
-  @ViewChild('panSlider1') private panSlider1: ElementRef;
-  @ViewChild('panSlider2') private panSlider2: ElementRef;
-  @ViewChild('pdSlider1') private pdSlider1: ElementRef;
-  @ViewChild('pdSlider2') private pdSlider2: ElementRef;
-  @ViewChild('maritalSlider1') private maritalSlider1: ElementRef;
-  @ViewChild('maritalSlider2') private maritalSlider2: ElementRef;
-  @ViewChild('familySlider1') private familySlider1: ElementRef;
-  @ViewChild('familySlider2') private familySlider2: ElementRef;
+  // Will be deprecated in next commit if not used
+  // @ViewChild('panSlider1') private panSlider1: ElementRef;
+  // @ViewChild('panSlider2') private panSlider2: ElementRef;
+  // @ViewChild('pdSlider1') private pdSlider1: ElementRef;
+  // @ViewChild('pdSlider2') private pdSlider2: ElementRef;
+  // @ViewChild('maritalSlider1') private maritalSlider1: ElementRef;
+  // @ViewChild('maritalSlider2') private maritalSlider2: ElementRef;
+  // @ViewChild('familySlider1') private familySlider1: ElementRef;
+  // @ViewChild('familySlider2') private familySlider2: ElementRef;
 
   private isAlternateEmailId: boolean = false;
   private isAlternateMobileNumber: boolean = false;
@@ -316,41 +325,44 @@ export class ApplicantQdeComponent implements OnInit {
   ngOnInit() {
 
     console.log(">>", JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs));
-    var lov = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs);
-    this.religions = lov.LOVS.religion;
-    this.qualifications = lov.LOVS.qualification;
-    this.occupations = lov.LOVS.occupation;
-    this.residences = lov.LOVS.residence_type;
-    this.titles = lov.LOVS.applicant_title;
-    this.maritals = lov.LOVS.maritial_status;
-    this.relationships = lov.LOVS.relationship;
-    this.loanpurposes = lov.LOVS.loan_purpose;
-    this.categories = lov.LOVS.category;
-    this.genders = lov.LOVS.gender;
-    this.constitutions = lov.LOVS.constitution;
+    if(this.route.snapshot.data.listOfValues != null && this.route.snapshot.data.listOfValues != undefined) {
+
+      var lov = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs);
+      this.religions = lov.LOVS.religion;
+      this.qualifications = lov.LOVS.qualification;
+      this.occupations = lov.LOVS.occupation;
+      this.residences = lov.LOVS.residence_type;
+      this.titles = lov.LOVS.applicant_title;
+      this.maritals = lov.LOVS.maritial_status;
+      this.relationships = lov.LOVS.relationship;
+      this.loanpurposes = lov.LOVS.loan_purpose;
+      this.categories = lov.LOVS.category;
+      this.genders = lov.LOVS.gender;
+      this.constitutions = lov.LOVS.constitution;
+    }
 
     if(this.route.snapshot.data.listOfValues != null && this.route.snapshot.data.listOfValues != undefined) {
       // Initialize all UI Values here
     }
     
+    console.log("params: ", this.route.snapshot.params);
+
+    // Create New Entry
+    this.applicantIndex = 0;
+
+    // Write code to get data(LOV) and assign applicantIndex if its new or to update.
+    console.log("Applicant Code: ", this.applicantIndex);
+
     // Check Whether there is qde data to be filled or else Initialize Qde
     this.route.params.subscribe((params) => {
       
       // Make an http request to get the required qde data and set using setQde
       if(params.applicantId != undefined && params.applicantId != null) {
-        // setQde(JSON.parse(response.ProcessVariables.response));
-      } else {
-        this.qde = this.qdeService.getQde();
+        // this.qdeHttp.getQdeData(params.applicantId).subscribe(response => { this.qdeService.setQde(repsonse.processvariables.response.qde).catch(e => {console.log(e); }) });
       }
+
+      this.qde = this.qdeService.getQde();
     });
-
-    // Create New Entry
-    this.applicantIndex = 0;
-    // Write code to get data(LOV) and assign applicantIndex if its new or to update.
-    console.log("Applicant Code: ", this.applicantIndex);
-
-    // Assign true as it is Applicant (In future if qde variable is not in parent component then remove below line)
-    this.qde.application.applicants[this.applicantIndex].isMainApplicant = true;
 
     this.route.fragment.subscribe((fragment) => {
       let localFragment = fragment;
@@ -362,8 +374,59 @@ export class ApplicantQdeComponent implements OnInit {
       // Replace Fragments in url
       if(this.fragments.includes(localFragment)) {
         this.tabSwitch(this.fragments.indexOf(localFragment));
-      } 
+      }
     });
+
+
+    // Some Initialization for HTML
+    this.qde.application.applicants[this.applicantIndex].isMainApplicant = true;
+    if( this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split("-")[0] == "" ||
+        this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split("-")[0] == undefined) {
+      this.dob.day = this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split("-")[0];
+    }
+
+    if( this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split("-")[1] == "" ||
+        this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split("-")[1] == undefined) {
+      this.dob.month = this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split("-")[1];
+    }
+
+    if( this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split("-")[2] == "" ||
+        this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split("-")[2] == undefined) {
+      this.dob.year = this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split("-")[2];
+    }
+
+    this.residenceNumber.stdCode = this.qde.application.applicants[this.applicantIndex].contactDetails.residenceNumber != "" ? this.qde.application.applicants[this.applicantIndex].contactDetails.residenceNumber.split("-")[0] : "";
+    this.residenceNumber.phoneNumber = this.qde.application.applicants[this.applicantIndex].contactDetails.residenceNumber != "" ? this.qde.application.applicants[this.applicantIndex].contactDetails.residenceNumber.split("-")[1] : "";
+
+    this.alternateResidenceNumber.stdCode = this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber != "" ? this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber.split("-")[0] : "";
+    this.alternateResidenceNumber.phoneNumber = this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber != "" ? this.qde.application.applicants[this.applicantIndex].contactDetails.residenceNumber.split("-")[1] : "";
+    this.addressCityState = this.qde.application.applicants[this.applicantIndex].communicationAddress.city + '/'+ this.qde.application.applicants[this.applicantIndex].communicationAddress.state;
+
+    this.otherReligion = this.qde.application.applicants[this.applicantIndex].other.religion == '6' ? this.qde.application.applicants[this.applicantIndex].other.religion : '';
+
+    if( this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[0] == "" ||
+        this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[0] == undefined) {
+      this.dateOfIncorporation.day = this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[0];
+    }
+
+    if( this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[1] == "" ||
+        this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[1] == undefined) {
+      this.dateOfIncorporation.month = this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[1];
+    }
+
+    if( this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[2] == "" ||
+        this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[2] == undefined) {
+      this.dateOfIncorporation.year = this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[2];
+    }
+
+    this.registeredAddressCityState = this.qde.application.applicants[this.applicantIndex].registeredAddress.city +'-'+ this.qde.application.applicants[this.applicantIndex].registeredAddress.state;
+    this.corporateAddressCityState = this.qde.application.applicants[this.applicantIndex].corporateAddress.city +'-'+ this.qde.application.applicants[this.applicantIndex].corporateAddress.state;
+    this.corporateAddressStdNumber.stdCode = this.qde.application.applicants[this.applicantIndex].corporateAddress.stdNumber != "" ? this.qde.application.applicants[this.applicantIndex].corporateAddress.stdNumber.split("-")[0] : "";
+    this.corporateAddressStdNumber.phoneNumber = this.qde.application.applicants[this.applicantIndex].corporateAddress.stdNumber != "" ? this.qde.application.applicants[this.applicantIndex].corporateAddress.stdNumber.split("-")[1] : "";
+  }
+
+  ngAfterViewInit() {
+
   }
 
   valuechange(newValue, valueIndex) {
@@ -1064,5 +1127,24 @@ export class ApplicantQdeComponent implements OnInit {
   parseJson(response):JSON {
     let result = JSON.parse(response);
     return result;
+  }
+
+  changeIsIndividual(value, swiperInstance ?: Swiper) {
+    if(value) {
+      this.goToNextSlide(swiperInstance);
+    } else {
+      this.tabSwitch(9);
+    }
+  }
+
+  /**
+   * Filter Object with only filled values 
+   */
+  getFilterJson(qde: Qde) {
+    
+  }
+
+  counter(size): Array<number> {
+    return new Array(size);
   }
 }
