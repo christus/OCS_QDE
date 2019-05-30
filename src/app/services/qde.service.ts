@@ -203,8 +203,8 @@ export class QdeService {
   /**
    * Filter Object with only filled values 
    */
-  getFilteredJson(qde: Qde) {
-    var a = q.constructor == Object ? Object.entries(q).map(([key, value]) => ({key, value}) ) : q;
+  getFilteredJson(arg) {
+    var a = arg.constructor == Object ? Object.entries(arg).map(([key, value]) => ({key, value}) ) : arg;
 
     var newObj = {};
   
