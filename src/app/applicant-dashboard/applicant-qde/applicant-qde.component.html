@@ -222,6 +222,10 @@
                                                                 [selected]="tit.value == qde.application.applicants[applicantIndex].personalDetails.title"
                                                                 [value]="tit.value">{{tit.key}}</option>
                                                     </select>
+
+                                                    <div class="form-group">
+                                                        <kendo-dropdownlist class="form-control" [data]="titles" [value]="selectedOption"></kendo-dropdownlist>
+                                                    </div>
                                                 </div>
                                                 <div class="form-group">
 

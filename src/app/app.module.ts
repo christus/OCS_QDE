@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgModule, Component } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { DropDownsModule } from "@progress/kendo-angular-dropdowns";
 
 // Plugins
 import { SwiperModule } from 'ngx-swiper-wrapper';
@@ -60,7 +62,7 @@ const appRoutes: Routes = [
   {
     path: "applicant",
     component: ApplicantDashboardComponent,
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     children: [
       {
         path: "",
@@ -167,12 +169,14 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     RouterModule.forRoot(appRoutes),
     SwiperModule,
     FormsModule,
     NgSelectModule,
     Ng5SliderModule,
-    HttpClientModule
+    HttpClientModule,
+    DropDownsModule
   ],
   providers: [
     ListOfValuesResolverService,

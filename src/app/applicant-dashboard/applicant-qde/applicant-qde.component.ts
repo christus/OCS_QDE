@@ -314,6 +314,7 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
   private categories: Array<any>;
   private genders: Array<any>;
   private constitutions: Array<any>;
+  private selectedOption: string;
   
   constructor(private renderer: Renderer2,
               private route: ActivatedRoute,
@@ -332,7 +333,8 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
       this.qualifications = lov.LOVS.qualification;
       this.occupations = lov.LOVS.occupation;
       this.residences = lov.LOVS.residence_type;
-      this.titles = lov.LOVS.applicant_title;
+      this.titles = lov.LOVS.applicant_title || ["Mr", "Mrs", "Ms", "Dr"]; // Hardcoded test value need to be removed
+      this.selectedOption = this.titles[0];
       this.maritals = lov.LOVS.maritial_status;
       this.relationships = lov.LOVS.relationship;
       this.loanpurposes = lov.LOVS.loan_purpose;
