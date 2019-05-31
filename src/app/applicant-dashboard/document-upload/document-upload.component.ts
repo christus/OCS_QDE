@@ -75,7 +75,7 @@ export class DocumentUploadComponent implements OnInit {
 
   private applicantIndividual: boolean = true;
 
-  private fragments = ["aadhar1", "aadhar2", "address1", "address2", "income1", "income2", "banking1", "banking2", "collateral1", "collateral2", "photo"];
+  private fragments = ["aadhar1", "aadhar2", "address", "income", "banking", "collateral", "photo"];
 
   constructor(
     private renderer: Renderer2,

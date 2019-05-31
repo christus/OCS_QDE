@@ -278,6 +278,8 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
   // @ViewChild('familySlider1') private familySlider1: ElementRef;
   // @ViewChild('familySlider2') private familySlider2: ElementRef;
 
+
+
   private isAlternateEmailId: boolean = false;
   private isAlternateMobileNumber: boolean = false;
   private isAlternateResidenceNumber: boolean = false;
@@ -296,7 +298,9 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
                         'organization',
                         'regAddress',
                         'corpAddr',
-                        'revenueAddr'
+                        'revenueAddr',
+                        'income1',
+                        'income2'
                       ];
 
   applicantIndex: number;
@@ -1141,5 +1145,13 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
 
   counter(size): Array<number> {
     return new Array(size);
+  }
+
+  incomeDetailsYesNo(value, swiperInstance ?: Swiper) {
+    if(value == false) {
+      swiperInstance.setIndex(3);
+    } else {
+      this.goToNextSlide(swiperInstance);
+    }
   }
 }

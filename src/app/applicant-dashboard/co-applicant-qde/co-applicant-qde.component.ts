@@ -269,6 +269,8 @@ export class CoApplicantQdeComponent implements OnInit {
     @ViewChild('maritalSlider2') private maritalSlider2: ElementRef;
     @ViewChild('familySlider1') private familySlider1: ElementRef;
     @ViewChild('familySlider2') private familySlider2: ElementRef;
+    @ViewChild('incomeSlider1') private incomeSlider1: ElementRef;
+    @ViewChild('incomeSlider2') private incomeSlider2: ElementRef;
   
     private isAlternateEmailId: boolean = false;
     private isAlternateMobileNumber: boolean = false;
@@ -289,7 +291,9 @@ export class CoApplicantQdeComponent implements OnInit {
                           'organization',
                           'regAddress',
                           'corpAddr',
-                          'revenueAddr'
+                          'revenueAddr',
+                          'income1',
+                          'income2'
                         ];
   
     applicantIndex: number;
@@ -1064,6 +1068,14 @@ export class CoApplicantQdeComponent implements OnInit {
     parseJson(response):JSON {
       let result = JSON.parse(response);
       return result;
+    }
+
+    incomeDetailsYesNo(value, swiperInstance ?: Swiper) {
+      if(value == false) {
+        swiperInstance.setIndex(3);
+      } else {
+        this.goToNextSlide(swiperInstance);
+      }
     }
   }
   
