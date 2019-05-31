@@ -57,6 +57,12 @@
 
                     </div>
                     <div class="form-group">
+                        <span class="control-title">Type of loan</span>
+                        <select class="js-select" ngModel name="loanPurpose" required>
+                          <option>Home</option>
+                        </select>
+                      </div>
+                    <div class="form-group">
                       <span class="control-title">Loan purpose</span>
                       <select class="js-select" ngModel name="loanPurpose" required>
                         <option *ngFor="let lp of loanpurposes" [value]="lp.value">{{lp.key}}</option>

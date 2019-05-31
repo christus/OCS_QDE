@@ -46,6 +46,12 @@
                 <li class="tab-link hide" [ngClass]="{'active': (activeTab == 13), 'hide': (applicantIndividual)}">
                     <a href="javascript:void(0);" (click)="tabSwitch(13)">REVENUE DETAILS</a>
                 </li>
+                <li class="tab-link hide" [ngClass]="{'active': (activeTab == 14), 'hide': (!applicantIndividual)}">
+                    <a href="javascript:void(0);" (click)="tabSwitch(14)">INCOME DETAILS</a>
+                </li>
+                <li class="tab-link hide" [ngClass]="{'active': (activeTab == 15), 'hide': (applicantIndividual)}">
+                    <a href="javascript:void(0);" (click)="tabSwitch(14)">INCOME DETAILS</a>
+                </li>
             </ul>
               <div class="tabs-contents" #tabContents>
                     <div class="tab-content" [ngClass]="{'active': (activeTab == 0)}">
@@ -1698,6 +1704,277 @@
                           </div>
                       </div>
                   </div>
+
+                  <div class="tab-content" [ngClass]="{'active': (activeTab == 14)}">
+                        <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(incomeSlider2)"></a>
+                        <div class="lyt-tabs">
+                            <div class="lhs">
+                                <div  class="swiper-container form-swiper"
+                                      [swiper]="lhsConfig"
+                                      #incomeSlider1="ngxSwiper">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide">
+                                            <div class="title-wrap">
+                                                <h4 class="title">Enter applicant's<span class="cm-line-break"></span>income details</h4>
+                                                <p class="note">Please enter household income & expenditure of main applicant & co-applicant/s</p>
+                                            </div>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <div class="title-wrap">
+                                                <h4 class="title">Do applicant's <span class="cm-line-break"></span>income considered?</h4>
+                                            </div>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <div class="title-wrap">
+                                                <h4 class="title">Applicant's monthly<span class="cm-line-break"></span>income details</h4>
+                                            </div>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <div class="title-wrap">
+                                                <h4 class="title">Do you or any of the <span class="cm-line-break"></span>family members <span class="cm-line-break"></span> own a puccahouse <span class="cm-line-break"></span>anywhere in India?</h4>
+                                                <p class="note">House made with a high quality materials throughout, including a floor, roof and exterior walls, are called pucca houses</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rhs">
+                                <div  class="swiper-container form-swiper"
+                                [swiper]="rhsConfig"
+                                (slidePrevTransitionStart)="slidePrevTransitionStart(incomeSlider1)"
+                                (slideNextTransitionStart)="slideNextTransitionStart(incomeSlider1)"
+                                #incomeSlider2="ngxSwiper">
+                                  <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                      <form class="bs-form">
+                                          <div class="form-wrap">
+                                              <div class="form-group">
+                                                    <input type="text" class="form-control" />
+                                                  <label>Annual Family Income</label>
+                                              </div>
+                                                <div class="form-group">
+                                                      <input type="text" class="form-control" />
+                                                    <label>Monthly Expenditure</label>
+                                                </div>
+                                            </div>
+                                          <div class="btn-wrap">
+                                              <button class="btn btn-primary"
+                                              (click)="goToNextSlide(incomeSlider2)">Next</button>
+                                          </div>
+                                      </form>
+                                    </div>
+                                    <div class="swiper-slide">
+                                            <form class="bs-form">
+                                                <div class="form-wrap">
+                                                    <div class="bs-radio">
+                                                        <input  type="radio"
+                                                                name="income-consider"
+                                                                id="yes-consider"
+                                                                [value]="true"
+                                                                (change)="incomeDetailsYesNo(true, incomeSlider2)"
+                                                                class="not-usual" />
+                                                        <label for="yes-consider"><span>Yes</span></label>
+                                                    </div>
+                                                    <div class="bs-radio">
+                                                        <input  type="radio"
+                                                                name="income-consider"
+                                                                id="no-consider"
+                                                                class="not-usual"
+                                                                [value]="false"
+                                                                (change)="incomeDetailsYesNo(false, incomeSlider2)" />
+                                                        <label for="no-consider"><span>No</span></label>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="swiper-slide">
+                                                <form class="bs-form" >
+                                                    <div class="form-wrap">
+                                                        <div class="form-group inr">
+                                                            <input type="text" class="form-control" id="app-monthly-income">
+                                                            <label for="app-monthly-income">Monthly income</label>
+                                                            <span class="addon">
+                                                                <span class="icon icon-inr"></span>
+                                                            </span>
+                                                            <span class="in-word"></span>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <span class="control-title">Assessment methodology</span>
+                                                            <select class="js-select" name="assessment">
+                                                                <option value="oc1">Net Salary</option>
+                                                                <option value="oc2">Gross Salary</option>
+                                                                <option value="oc3">Income Plus</option>
+                                                                <option value="oc3">Normal Profit</option>
+                                                                <option value="oc3">GST surplus method</option>
+                                                                <option value="oc3">RTR</option>
+                                                                <option value="oc3">BT+Top up</option>
+                                                                <option value="oc3">Gross Receipt</option>
+                                                                <option value="oc3">Industry Margin</option>
+                                                                <option value="oc3">Assessed Income</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="btn-wrap">
+                                                        <button class="btn btn-primary" (click)="goToNextSlide(incomeSlider2)">Next</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="swiper-slide">
+                                                    <form class="bs-form">
+                                                        <div class="form-wrap">
+                                                            <div class="bs-radio">
+                                                                <input type="radio" name="income-consider" id="yes-consider" class="not-usual">
+                                                                <label for="yes-consider"><span>Yes</span></label>
+                                                            </div>
+                                                            <div class="bs-radio">
+                                                                <input type="radio" name="income-consider" id="no-consider" class="not-usual">
+                                                                <label for="no-consider"><span>No</span></label>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                            </div>
+        
+                                  </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class="tab-content" [ngClass]="{'active': (activeTab == 15)}">
+                            <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(incomeSlider2)"></a>
+                            <div class="lyt-tabs">
+                                <div class="lhs">
+                                    <div  class="swiper-container form-swiper"
+                                          [swiper]="lhsConfig"
+                                          #incomeSlider1="ngxSwiper">
+                                        <div class="swiper-wrapper">
+                                            <div class="swiper-slide">
+                                                <div class="title-wrap">
+                                                    <h4 class="title">Enter applicant's<span class="cm-line-break"></span>income details</h4>
+                                                    <p class="note">Please enter household income & expenditure of main applicant & co-applicant/s</p>
+                                                </div>
+                                            </div>
+                                            <div class="swiper-slide">
+                                                <div class="title-wrap">
+                                                    <h4 class="title">Do applicant's <span class="cm-line-break"></span>income considered?</h4>
+                                                </div>
+                                            </div>
+                                            <div class="swiper-slide">
+                                                <div class="title-wrap">
+                                                    <h4 class="title">Applicant's monthly<span class="cm-line-break"></span>income details</h4>
+                                                </div>
+                                            </div>
+                                            <div class="swiper-slide">
+                                                <div class="title-wrap">
+                                                    <h4 class="title">Do you or any of the <span class="cm-line-break"></span>family members <span class="cm-line-break"></span> own a puccahouse <span class="cm-line-break"></span>anywhere in India?</h4>
+                                                    <p class="note">House made with a high quality materials throughout, including a floor, roof and exterior walls, are called pucca houses</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="rhs">
+                                    <div  class="swiper-container form-swiper"
+                                    [swiper]="rhsConfig"
+                                    (slidePrevTransitionStart)="slidePrevTransitionStart(incomeSlider1)"
+                                    (slideNextTransitionStart)="slideNextTransitionStart(incomeSlider1)"
+                                    #incomeSlider2="ngxSwiper">
+                                      <div class="swiper-wrapper">
+                                        <div class="swiper-slide">
+                                          <form class="bs-form">
+                                              <div class="form-wrap">
+                                                  <div class="form-group">
+                                                        <input type="text" class="form-control" />
+                                                      <label>Annual Family Income</label>
+                                                  </div>
+                                                    <div class="form-group">
+                                                          <input type="text" class="form-control" />
+                                                        <label>Monthly Expenditure</label>
+                                                    </div>
+                                                </div>
+                                              <div class="btn-wrap">
+                                                  <button class="btn btn-primary"
+                                                  (click)="goToNextSlide(incomeSlider2)">Next</button>
+                                              </div>
+                                          </form>
+                                        </div>
+                                        <div class="swiper-slide">
+                                                <form class="bs-form">
+                                                    <div class="form-wrap">
+                                                        <div class="bs-radio">
+                                                            <input  type="radio"
+                                                                    name="income-consider"
+                                                                    id="yes-consider"
+                                                                    [value]="true"
+                                                                    (change)="incomeDetailsYesNo(true, incomeSlider2)"
+                                                                    class="not-usual" />
+                                                            <label for="yes-consider"><span>Yes</span></label>
+                                                        </div>
+                                                        <div class="bs-radio">
+                                                            <input  type="radio"
+                                                                    name="income-consider"
+                                                                    id="no-consider"
+                                                                    class="not-usual"
+                                                                    [value]="false"
+                                                                    (change)="incomeDetailsYesNo(false, incomeSlider2)" />
+                                                            <label for="no-consider"><span>No</span></label>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="swiper-slide">
+                                                    <form class="bs-form" >
+                                                        <div class="form-wrap">
+                                                            <div class="form-group inr">
+                                                                <input type="text" class="form-control" id="app-monthly-income">
+                                                                <label for="app-monthly-income">Monthly income</label>
+                                                                <span class="addon">
+                                                                    <span class="icon icon-inr"></span>
+                                                                </span>
+                                                                <span class="in-word"></span>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <span class="control-title">Assessment methodology</span>
+                                                                <select class="js-select" name="assessment">
+                                                                    <option value="oc1">Net Salary</option>
+                                                                    <option value="oc2">Gross Salary</option>
+                                                                    <option value="oc3">Income Plus</option>
+                                                                    <option value="oc3">Normal Profit</option>
+                                                                    <option value="oc3">GST surplus method</option>
+                                                                    <option value="oc3">RTR</option>
+                                                                    <option value="oc3">BT+Top up</option>
+                                                                    <option value="oc3">Gross Receipt</option>
+                                                                    <option value="oc3">Industry Margin</option>
+                                                                    <option value="oc3">Assessed Income</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="btn-wrap">
+                                                            <button class="btn btn-primary" (click)="goToNextSlide(incomeSlider2)">Next</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="swiper-slide">
+                                                        <form class="bs-form">
+                                                            <div class="form-wrap">
+                                                                <div class="bs-radio">
+                                                                    <input type="radio" name="income-consider" id="yes-consider" class="not-usual">
+                                                                    <label for="yes-consider"><span>Yes</span></label>
+                                                                </div>
+                                                                <div class="bs-radio">
+                                                                    <input type="radio" name="income-consider" id="no-consider" class="not-usual">
+                                                                    <label for="no-consider"><span>No</span></label>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                </div>
+            
+                                      </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                  
 
             </div>
           </div>
