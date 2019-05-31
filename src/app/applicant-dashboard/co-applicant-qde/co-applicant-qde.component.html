@@ -654,6 +654,7 @@
                                       #communicationForm="ngForm"
                                       (ngSubmit)="submitCommunicationAddressDetails(communicationForm)">
                                   <div class="form-wrap">
+                                        <h3 class="sub-heading">Current Address</h3>
                                       <div class="form-group">
                                           <span class="control-title">Residential status</span>
                                           <select ngModel
@@ -729,6 +730,42 @@
                                           <input type="checkbox" ngModel name="permanentAddress" id="permanentAddress">
                                           <label for="permanentAddress"><span>Current Address is Permanent Address</span></label>
                                       </div>
+                                      <div class="permanent-add-wrap">
+                                            <h3 class="sub-heading">Permanent Address</h3>
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" id="per-address1">
+                                                    <label for="per-address1">Address line 1</label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" id="per-address2">
+                                                    <label for="per-address2">Address line 2</label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" id="-per-pincode">
+                                                    <label for="-per-pincode">Pincode</label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" id="per-cityState">
+                                                    <label for="per-cityState">City/State</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group last">
+                                                <span class="control-title">Prefered mailing address</span>
+                                            </div>
+                                            <div class="radio-wrap">
+                                                <div class="bs-radio typ-normal">
+                                                    <input type="radio" name="prefred-add" id="current-add-mail">
+                                                    <label for="current-add-mail">
+                                                            Current Address
+                                                        </label>
+                                                </div>
+                                                <div class="bs-radio typ-normal">
+                                                    <input type="radio" name="prefred-add" id="permanent-add-mail">
+                                                    <label for="permanent-add-mail">
+                                                            Permanent Address
+                                                        </label>
+                                                </div>
+                                            </div>
                                       <div class="form-group typ-range">
                                           <span class="control-title">Number of years in current residence</span>
                                           <input type="number"
