@@ -374,7 +374,7 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
       let localFragment = fragment;
       
       if(fragment == null) {
-        localFragment = 'pan';
+        localFragment = this.fragments[0];
       }
 
       // Replace Fragments in url

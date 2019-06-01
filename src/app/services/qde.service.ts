@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import Qde from '../models/qde.model';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +9,11 @@ export class QdeService {
   
   private qde: Qde;
   leads: Array<Qde>;
+
+
+  private qdeSource$: BehaviorSubject<Qde>;
+  qdeSource: Observable<Qde>;
+  
 
   constructor() {
     // Initialize Qde
@@ -188,6 +194,9 @@ export class QdeService {
         }
       }
     };
+
+    this.qdeSource$ = new BehaviorSubject<Qde>(this.qde);
+    this.qdeSource = this.qdeSource$.asObservable();
   }
 
   getQde(): Qde {
@@ -195,7 +204,7 @@ export class QdeService {
   }
 
   setOde(qde: Qde): void {
-    this.qde = qde;
+    this.qdeSource$.next(qde);
   }
 
 
