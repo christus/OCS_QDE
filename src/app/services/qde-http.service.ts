@@ -10,19 +10,21 @@ import { of } from 'rxjs';
 })
 export class QdeHttpService {
 
+ 
   constructor(private http: HttpClient) {}
 
   /**
    * Create or update PAN Details
    */
-  createOrUpdatePanDetails(qde: Qde) {
+  createOrUpdatePanDetails(qde) {
     const qdeRequestEntity: RequestEntity = {
-      processId: '0e5efe06762811e982270242ac110003',
+      processId: environment.api.save.processId,
       ProcessVariables: {
-        request: JSON.stringify(qde)
+        request: JSON.stringify(qde),
+        userId: localStorage.getItem("userId")
       },
-      workflowId: '0e40a79e762811e982270242ac110003',
-      projectId: 'ff8e364e6fce11e98754782bcb8f3845'
+      workflowId: environment.api.save.workflowId,
+      projectId: environment.projectId
     };
 
     const body = new HttpParams().set(
@@ -31,29 +33,20 @@ export class QdeHttpService {
     );
 
     return this.http.post(
-      '/appiyo/d/workflows/0e40a79e762811e982270242ac110003/execute',
-      body.toString(),
-      {
-        headers: new HttpHeaders().set(
-          'Content-Type',
-          'application/x-www-form-urlencoded'
-        ),
-        params: new HttpParams().set(
-          'projectId',
-          'ff8e364e6fce11e98754782bcb8f3845'
-        )
-      }
+      '/appiyo/d/workflows/'+environment.api.save.workflowId+ '/execute?projectId=' + environment.projectId,
+      body.toString()
     );
   }
 
-  createOrUpdatePersonalDetails(qde: Qde) {
+  createOrUpdatePersonalDetails(qde) {
     const qdeRequestEntity: RequestEntity = {
-      processId: '0e5efe06762811e982270242ac110003',
+      processId: environment.api.save.processId,
       ProcessVariables: {
-        request: JSON.stringify(qde)
+        request: JSON.stringify(qde),
+        userId: localStorage.getItem("userId")
       },
-      workflowId: '0e40a79e762811e982270242ac110003',
-      projectId: 'ff8e364e6fce11e98754782bcb8f3845'
+      workflowId: environment.api.save.workflowId,
+      projectId: environment.projectId
     };
 
     const body = new HttpParams().set(
@@ -62,18 +55,8 @@ export class QdeHttpService {
     );
 
     return this.http.post(
-      '/appiyo/d/workflows/0e40a79e762811e982270242ac110003/execute',
-      body.toString(),
-      {
-        headers: new HttpHeaders().set(
-          'Content-Type',
-          'application/x-www-form-urlencoded'
-        ),
-        params: new HttpParams().set(
-          'projectId',
-          'ff8e364e6fce11e98754782bcb8f3845'
-        )
-      }
+      '/appiyo/d/workflows/'+environment.api.save.workflowId+ '/execute?projectId=' + environment.projectId,
+      body.toString()
     );
   }
 
@@ -93,7 +76,9 @@ export class QdeHttpService {
 
     const requestEntity: RequestEntity = {
       processId: processId,
-      ProcessVariables: {},
+      ProcessVariables: {
+        userId: localStorage.getItem("userId")
+      },
       workflowId: workflowId,
       projectId: projectId
     };
@@ -106,6 +91,91 @@ export class QdeHttpService {
     let uri = '/appiyo/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
     return this.http.put(uri, body);
   }
+
+ 
+
+  getQdeData(applicantId:number) {
+    const processId = environment.api.get.processId;
+    const workflowId = environment.api.get.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: {
+        applicationId: applicantId
+      },
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = new HttpParams().set(
+      'processVariables',
+      JSON.stringify(requestEntity)
+    );
+  
+    let uri = '/appiyo/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.http.put(uri, body.toString());
+  }
+
+  roleLogin() {
+
+    const processId = environment.api.roleLogin.processId;
+    const workflowId = environment.api.roleLogin.workflowId;
+    const projectId = environment.projectId;
+
+    const userName = environment.userName;
+    const password = environment.password;
+
+
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: {
+        userName: userName,
+        password: password
+      },
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = new HttpParams().set(
+      'processVariables',
+      JSON.stringify(requestEntity)
+    );
+  
+    let uri = '/appiyo/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.http.put(uri, body.toString());
+  }
+
+  getCityAndState(zipcode) {
+    const processId = environment.api.cityState.processId;
+    const workflowId = environment.api.cityState.workflowId;
+    const projectId = environment.projectId;
+
+    const userName = environment.userName;
+    const password = environment.password;
+
+
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: {
+        zipcode: zipcode,
+        userId: localStorage.getItem("userId")
+      },
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = new HttpParams().set(
+      'processVariables',
+      JSON.stringify(requestEntity)
+    );
+  
+
+
+    let uri = '/appiyo/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.http.put(uri, body.toString());
+  }
+
 
   dummyGetApi() {
     return of({

@@ -175,7 +175,7 @@ export class LoanQdeComponent implements OnInit {
     this.loanpurposes = lov.LOVS.loan_purpose;
     
     if(this.route.snapshot.data.listOfValues != null && this.route.snapshot.data.listOfValues != undefined) {
-      // Initialize all UI Values here
+      // Initialize all UI Values heres
     }
     
     // Check Whether there is qde data to be filled or else Initialize Qde
@@ -300,7 +300,7 @@ export class LoanQdeComponent implements OnInit {
       loanTenure: form.value.loanTenure
     }
 
-    this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+    this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
         console.log(this.qde.application.references.referenceOne.relationShip);
@@ -337,11 +337,11 @@ export class LoanQdeComponent implements OnInit {
     }
 
 
-    this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+    this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
         console.log(this.qde.application.loanDetails.propertyType);
-        this.tabSwitch(2);
+        this.goToNextSlide(swiperInstance);
       } else {
         // Throw Invalid Pan Error
       }
@@ -364,7 +364,7 @@ export class LoanQdeComponent implements OnInit {
       // monthlyEmi: form.value.monthlyEmi
     }
 
-    this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+    this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
         console.log(this.qde.application.loanDetails.propertyType);
@@ -389,7 +389,7 @@ export class LoanQdeComponent implements OnInit {
       // monthlyEmi: form.value.monthlyEmi
     }
 
-    this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+    this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
         console.log(this.qde.application.loanDetails.propertyType);
@@ -413,7 +413,7 @@ export class LoanQdeComponent implements OnInit {
       monthlyEmi: form.value.monthlyEmi
     }
 
-    this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+    this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
         console.log(this.qde.application.loanDetails.propertyType);

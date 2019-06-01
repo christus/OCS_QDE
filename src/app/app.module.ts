@@ -57,6 +57,10 @@ import { Declaration1Component } from './terms-and-conditions/declaration1/decla
 import { Declaration2Component } from './terms-and-conditions/declaration2/declaration2.component';
 
 
+
+import { ImageUploadModule } from "angular2-image-upload";
+
+
 const appRoutes: Routes = [
   { path: "", redirectTo: "leads", pathMatch: "full" },
   { path: "login", component: LoginComponent },
@@ -225,7 +229,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     NgSelectModule,
     Ng5SliderModule,
     HttpClientModule,
-    DropDownsModule
+    DropDownsModule,
+    ImageUploadModule.forRoot()
   ],
   providers: [
     ListOfValuesResolverService,

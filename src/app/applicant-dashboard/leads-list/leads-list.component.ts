@@ -20,23 +20,35 @@ export class LeadsListComponent implements OnInit {
   userDetails: Array<UserDetails>;
 
   constructor(private service: QdeHttpService, private utilService: UtilService) {
-    service.getLeads().subscribe(
+    service.roleLogin().subscribe(
       res => {
         console.log(res);
+        localStorage.setItem("userId", res["ProcessVariables"]["userId"])
 
-        if (res['Error'] && res['Error'] == 0) {
-          this.userDetails = res['ProcessVariables'].userDetails || [];
-        } else if (res['login_required'] && res['login_required'] === true) {
-          utilService.clearCredentials();
-          alert(res['message']);
-        } else {
-          alert(res['ErrorMessage']);
-        }
+        service.getLeads().subscribe(
+          res => {
+            console.log(res);
+    
+            if (res['Error'] && res['Error'] == 0) {
+              this.userDetails = res['ProcessVariables'].userDetails || [];
+            } else if (res['login_required'] && res['login_required'] === true) {
+              utilService.clearCredentials();
+              alert(res['message']);
+            } else {
+              alert(res['ErrorMessage']);
+            }
+          },
+          error => {
+            console.log(error);
+          }
+        );
+
+        
       },
       error => {
         console.log(error);
       }
-    );
+    )
   }
 
   isloggedIn() {

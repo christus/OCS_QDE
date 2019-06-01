@@ -20,11 +20,11 @@ export class QdeService {
     this.qde = {
 
       "application": {
-        "ocsNumber": "",
+        "ocsNumber": " ",
         "loanAmount": "",
         "tenure": "",
         "appId": "",
-        "propertyIdentified": true,
+        "propertyIdentified": null,
         "applicants": [
           {
             "applicantId": "",
@@ -35,7 +35,7 @@ export class QdeService {
               "status": "",
               "spouseTitle": "",
               "firstName": "",
-              "earning": true,
+              "earning": null,
               "amount": null
             },
             "familyDetails": {
@@ -58,7 +58,9 @@ export class QdeService {
             },
             "pan": {
               "panNumber": "",
-              "panImage": ""
+              "panImage": "",
+              "docType": null,
+              "docNumber": ""
             },
             "personalDetails": {
               "title": "",
@@ -85,8 +87,9 @@ export class QdeService {
               "zipcode" : "",
               "city" : "",
               "state" : "",
+              "cityState": "",
               "numberOfYearsInCurrentResidence" : "",
-              "permanentAddress" : false
+              "permanentAddress" : null
             },
             "permanentAddress": {
               "residentialStatus" : "",
@@ -95,8 +98,9 @@ export class QdeService {
               "zipcode" : "",
               "city" : "",
               "state" : "",
+              "cityState": "",
               "numberOfYearsInCurrentResidence" : "",
-              "permanentAddress" : false
+              "permanentAddress" : null
             },
             "officialCorrespondence": {
               "addressLineOne" : "",
@@ -115,14 +119,14 @@ export class QdeService {
             "registeredAddress": {
               "registeredAddress" : "",
               "landMark" : "",
-              "zipcode" : null,
+              "zipcode" : "",
               "city" : "",
               "state" : ""
             },
             "corporateAddress": {
               "corporateAddress": "",
               "landMark": "",
-              "zipcode": null,
+              "zipcode": "",
               "city": "",
               "state": "",
               "stdNumber": "",
@@ -132,6 +136,13 @@ export class QdeService {
               "revenue": null,
               "annualNetIncome": null,
               "grossTurnOver": null
+            },
+            "incomeDetails": {
+              "annualFamilyIncome" : "",
+              "monthlyExpenditure" : "",
+              "incomeConsider": "",
+              "monthlyIncome": "",
+              "assessmentMethodology": ""
             },
             "documents": [
               {
@@ -152,7 +163,7 @@ export class QdeService {
         "loanDetails": {
           "incomeDetails": {
             "annualFamilyIncome": "",
-            "familMembersOwnHouse": true
+            "familMembersOwnHouse": null
             /*doubt*/
           },
           "loanAmount": {
@@ -161,7 +172,7 @@ export class QdeService {
             "loanTenure": null
           },
           "property": {
-            "propertyIdentifed": false,
+            "propertyIdentifed": null,
             "propertyPincde": null,
             "addressLineOne": "",
             "addressLineTwo": "",
@@ -203,7 +214,7 @@ export class QdeService {
     return this.qde; 
   }
 
-  setOde(qde: Qde): void {
+  setQde(qde: Qde): void {
     this.qdeSource$.next(qde);
   }
 

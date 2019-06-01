@@ -99,7 +99,6 @@
                                                   <input  type="radio"
                                                           name="isIndividual"
                                                           id="individual"
-                                                          [value]="true"
                                                           [(ngModel)]="isIndividual"
                                                           (change)="changeIsIndividual(true, panSlider2)"  />
                                                   <label for="individual"><span>Individual</span></label>
@@ -108,7 +107,6 @@
                                                   <input  type="radio"
                                                           name="isIndividual"
                                                           id="non-individual"
-                                                          [value]="false"
                                                           [(ngModel)]="isIndividual"
                                                           (change)="tabSwitch(10)" />
                                                   <label for="non-individual"><span>Non-Individual</span></label>
@@ -142,14 +140,23 @@
                                               </div>
                                               <div class="form-group">
                                                 <span class="control-title">Document Type</span>
-                                                <select name="title" required>
-                                                 <option>Aadhar</option>
-                                                 <option>DL</option>
+                                                <select name="docType" 
+                                                [(ngModel)]="qde.application.applicants[applicantIndex].pan.docType"
+                                                name="docType" required>
+                                                 <option value="1">Aadhar</option>
+                                                 <option value="2">Driving Lincence</option>
+                                                 <option value="3">Passport</option>
                                                 </select>
                                             </div>
                                             <div class="form-group">
-                                                <input type="text" class="form-control" />
-                                              <label>Document Number</label>
+                                                <input type="text" class="form-control"
+                                                [(ngModel)]="qde.application.applicants[applicantIndex].pan.docNumber"
+                                                id="docNumber"
+                                                name="docNumber"
+                                                #docNumber="ngModel"
+                                                 />
+                                              <label for="docNumber" *ngIf="docNumber.value == ''" >Document Number</label>
+                                              <!-- <image-upload [url]="imageUrl" [headers]="myHeaders"></image-upload> -->
                                           </div>
                                         </div>
                                           <div class="btn-wrap">
@@ -166,6 +173,7 @@
                                       <form class="bs-form">
                                           <div class="form-wrap">
                                               <div class="bs-file">
+                                                    <!-- <image-upload [url]="imageUrl" [headers]="myHeaders"></image-upload> -->
                                                   <input type="file" class="form-control" id="file">
                                                   <label for="file"><span>click photo of PAN card</span></label>
                                               </div>
@@ -710,6 +718,7 @@
                                       name="pinCode"
                                       #commPinCode="ngModel" 
                                       maxlength="6"
+                                      (keyup)="onPinCodeChange($event, 'communicationAddress')" 
                                       pattern="^[0-9]+$" />
                                     <label for="pincode" *ngIf="commPinCode.value == ''">Pincode</label>
 
@@ -719,14 +728,13 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <input  type="text"
-                                            class="form-control"
-                                            id="cityState"
-                                            required
-                                            [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.addressCityState"
-                                            name="cityState"
-                                            #commCityState="ngModel" 
-                                            pattern="^[0-9A-Za-z,_#]+$" />
+
+                                    <input type="text" class="form-control" id="cityState"
+                                      required
+                                      [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.cityState"
+                                      name="cityState"
+                                      #commCityState="ngModel"                       
+                                      pattern="^[0-9A-Za-z,_#]+$" />
 
                                     <label for="cityState" *ngIf="commCityState.value == ''">City/State</label>
 
@@ -740,25 +748,38 @@
                                     <input  type="checkbox"
                                             [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.permanentAddress"
                                             name="permanentAddress"
-                                            id="permanentAddress">
+                                            id="permanentAddress"  >
                                     <label for="permanentAddress"><span>Current Address is Permanent Address</span></label>
                                 </div>
                                 <div class="permanent-add-wrap">
                                     <h1 class="sub-heading" style="text-align: left; margin-bottom: 12px">Permanent Address</h1>
                                         <div class="form-group">
-                                            <input type="text" class="form-control" id="per-address1">
+                                            <input type="text" class="form-control" id="per-address1"
+                                            name="pAddressLineOne"
+                                            #pAddress1="ngModel"
+                                            [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.addressLineOne">
                                             <label for="per-address1">Address line 1</label>
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" class="form-control" id="per-address2">
+                                            <input type="text" class="form-control" id="per-address2"
+                                            name="pAddressLineTwo"
+                                            #pAddress2="ngModel"
+                                            [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.addressLineTwo">
                                             <label for="per-address2">Address line 2</label>
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" class="form-control" id="-per-pincode">
+                                            <input type="text" class="form-control" id="-per-pincode"
+                                            name="pZipcode"
+                                            #pZipcode="ngModel"
+                                            (keyup)="onPinCodeChange($event, 'permanentAddress')" 
+                                            [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.zipcode">
                                             <label for="-per-pincode">Pincode</label>
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" class="form-control" id="per-cityState">
+                                            <input type="text" class="form-control" id="per-cityState"
+                                            name="commCityState"
+                                            #commCityState="ngModel" 
+                                            [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.cityState">
                                             <label for="per-cityState">City/State</label>
                                         </div>
                                     </div>
@@ -767,13 +788,23 @@
                                     </div>
                                     <div class="radio-wrap rounded-radio">
                                         <div class="bs-radio typ-normal">
-                                            <input type="radio" name="prefred-add" id="current-add-mail">
+                                            <input type="radio" 
+                                            [(ngModel)]="qde.application.applicants[applicantIndex].maritalStatus.earning"
+                                            name="prefredMail"
+                                            value="0"
+                                            #prefredMail="ngModel"
+                                            id="current-add-mail">
                                             <label for="current-add-mail">
                                                     Current Address
                                                 </label>
                                         </div>
                                         <div class="bs-radio typ-normal">
-                                            <input type="radio" name="prefred-add" id="permanent-add-mail">
+                                            <input type="radio"
+                                            [(ngModel)]="qde.application.applicants[applicantIndex].maritalStatus.earning"
+                                            name="prefredMail" 
+                                            #prefredMail="ngModel"
+                                            value="1"
+                                            id="permanent-add-mail">
                                             <label for="permanent-add-mail">
                                                     Permanent Address
                                                 </label>
@@ -1062,20 +1093,28 @@
                                     </form>
                                 </div>
                                 <div class="swiper-slide">
-                                    <form   class="bs-form"
-                                            #familyForm2="ngForm"
-                                            (ngSubmit)="submitFamilyForm2(familyForm2, familySlider2)">
+
+                                    <form class="bs-form" 
+                                    #familyForm2="ngForm" 
+                                    (ngSubmit)="submitFamilyForm2(familyForm2, familySlider2)">
                                         <div class="form-wrap">
                                             <div class="form-group">
                                                 <span class="control-title">Title</span>
                                                 <select [(ngModel)]="qde.application.applicants[applicantIndex].familyDetails.fatherTitle"
                                                         name="fatherTitle" required>
                                                     <option *ngFor="let tit of titles"
-                                                            [ngClass]="qde.application.applicants[applicantIndex].familyDetails.fatherTitle == tit.value"
-                                                            [selected]="qde.application.applicants[applicantIndex].familyDetails.fatherTitle == tit.value"
+                                                            [ngClass]="qde.application.applicants[applicantIndex].familyDetails.fatherTitle"
+                                                            [selected]="qde.application.applicants[applicantIndex].familyDetails.fatherTitle"
                                                             [value]="tit.value">{{tit.key}}
                                                     </option>
-                                                </select>
+                                                </select> 
+                                                <!-- <select [(ngModel)]="qde.application.applicants[applicantIndex].familyDetails.fatherTitle"
+                                                        name="fatherTitle" required> -->
+                                                        <!-- <option value="1">Volvo</option>
+                                                        <option value="2">Saab</option>
+                                                        <option value="3">Mercedes</option>
+                                                        <option value="4">Audi</option> -->
+                                               <!-- </select> -->
                                             </div>
                                             <div class="form-group">
                                                 <input  type="text"
@@ -1097,11 +1136,15 @@
                                                 <select [(ngModel)]="qde.application.applicants[applicantIndex].familyDetails.motherTitle"
                                                         name="motherTitle"
                                                         required>
-                                                    <option *ngFor="let tit of titles"
+                                                 <option *ngFor="let tit of titles"
                                                             [ngClass]="{'select' : qde.application.applicants[applicantIndex].familyDetails.motherTitle == tit.value}"
                                                             [selected]="qde.application.applicants[applicantIndex].familyDetails.motherTitle == tit.value"
                                                             [value]="tit.value">{{tit.key}}
-                                                    </option>
+                                                    </option> 
+                                                    <!-- <option value="1">Volvo</option>
+                                                    <option value="2">Saab</option>
+                                                    <option value="3">Mercedes</option>
+                                                    <option value="4">Audi</option> -->
                                                 </select>
                                             </div>
                                             <div class="form-group">
@@ -1384,6 +1427,7 @@
                                       #pinCode="ngModel" 
                                       name="pinCode"
                                       maxlength="6"
+                                      (keyup)="onPinCodeChange($event, 'officialCorrespondence')" 
                                       pattern="^[0-9]+$" />
                                     <label for="offPincode" *ngIf="pinCode.value == ''">Pincode</label>
 
@@ -1465,144 +1509,6 @@
                 </div>
             </div>
 
-            <div class="tab-content" [ngClass]="{'active': (activeTab == 9)}">
-                <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(incomeSlider2)"></a>
-                <div class="lyt-tabs">
-                    <div class="lhs">
-                        <div  class="swiper-container form-swiper"
-                              [swiper]="lhsConfig"
-                              #incomeSlider1="ngxSwiper">
-                            <div class="swiper-wrapper">
-                                <div class="swiper-slide">
-                                    <div class="title-wrap">
-                                        <h4 class="title">Enter applicant's<span class="cm-line-break"></span>income details</h4>
-                                        <p class="note">Please enter household income & expenditure of main applicant & co-applicant/s</p>
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="title-wrap">
-                                        <h4 class="title">Do applicant's <span class="cm-line-break"></span>income considered?</h4>
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="title-wrap">
-                                        <h4 class="title">Applicant's monthly<span class="cm-line-break"></span>income details</h4>
-                                    </div>
-                                </div>
-                                <div class="swiper-slide">
-                                    <div class="title-wrap">
-                                        <h4 class="title">Do you or any of the <span class="cm-line-break"></span>family members <span class="cm-line-break"></span> own a puccahouse <span class="cm-line-break"></span>anywhere in India?</h4>
-                                        <p class="note">House made with a high quality materials throughout, including a floor, roof and exterior walls, are called pucca houses</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="rhs">
-                        <div    class="swiper-container form-swiper"
-                                [swiper]="rhsConfig"
-                                (slidePrevTransitionStart)="slidePrevTransitionStart(incomeSlider1)"
-                                (slideNextTransitionStart)="slideNextTransitionStart(incomeSlider1)"
-                                #incomeSlider2="ngxSwiper">
-                          <div class="swiper-wrapper">
-                            <div class="swiper-slide">
-                              <form class="bs-form">
-                                  <div class="form-wrap">
-                                      <div class="form-group">
-                                          <input type="text" id="ind-afi" class="form-control" />
-                                          <label for="ind-afi">Annual Family Income</label>
-                                      </div>
-                                        <div class="form-group">
-                                              <input type="text" id="ind-me" class="form-control" />
-                                            <label for="ind-me">Monthly Expenditure</label>
-                                        </div>
-                                    </div>
-                                  <div class="btn-wrap">
-                                        <button type="button" 
-                                                class="btn btn-primary"
-                                                (click)="goToNextSlide(incomeSlider2)">
-                                        Next
-                                        </button>
-                                  </div>
-                              </form>
-                            </div>
-                            <div class="swiper-slide">
-                                    <form class="bs-form">
-                                        <div class="form-wrap">
-                                            <div class="bs-radio">
-                                                <input  type="radio"
-                                                        name="income-consider"
-                                                        id="yes-consider"
-                                                        [value]="true"
-                                                        (change)="incomeDetailsYesNo(true, incomeSlider2)"
-                                                        class="not-usual" />
-                                                <label for="yes-consider"><span>Yes</span></label>
-                                            </div>
-                                            <div class="bs-radio">
-                                                <input  type="radio"
-                                                        name="income-consider"
-                                                        id="no-consider"
-                                                        class="not-usual"
-                                                        [value]="false"
-                                                        (change)="incomeDetailsYesNo(false, incomeSlider2)" />
-                                                <label for="no-consider"><span>No</span></label>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="swiper-slide">
-                                        <form class="bs-form" >
-                                            <div class="form-wrap">
-                                                <div class="form-group inr">
-                                                    <input type="text" class="form-control" id="app-monthly-income">
-                                                    <label for="app-monthly-income">Monthly income</label>
-                                                    <span class="addon">
-                                                        <span class="icon icon-inr"></span>
-                                                    </span>
-                                                    <span class="in-word"></span>
-                                                </div>
-                                                <div class="form-group">
-                                                    <span class="control-title">Assessment methodology</span>
-                                                    <select class="js-select" name="assessment">
-                                                        <option value="oc1">Net Salary</option>
-                                                        <option value="oc2">Gross Salary</option>
-                                                        <option value="oc3">Income Plus</option>
-                                                        <option value="oc3">Normal Profit</option>
-                                                        <option value="oc3">GST surplus method</option>
-                                                        <option value="oc3">RTR</option>
-                                                        <option value="oc3">BT+Top up</option>
-                                                        <option value="oc3">Gross Receipt</option>
-                                                        <option value="oc3">Industry Margin</option>
-                                                        <option value="oc3">Assessed Income</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="btn-wrap">
-                                                <button class="btn btn-primary" (click)="goToNextSlide(incomeSlider2)">Next</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="swiper-slide">
-                                            <form class="bs-form">
-                                                <div class="form-wrap">
-                                                    <div class="bs-radio">
-                                                        <input type="radio" name="income-consider" id="yes-consider" class="not-usual">
-                                                        <label for="yes-consider"><span>Yes</span></label>
-                                                    </div>
-                                                    <div class="bs-radio">
-                                                        <input type="radio" name="income-consider" id="no-consider" class="not-usual">
-                                                        <label for="no-consider"><span>No</span></label>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                    </div>
-
-                          </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <div class="tab-content" [ngClass]="{'active': (activeTab == 10)}">
                 <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(panSlider4)"></a>
                 <div class="lyt-tabs">
@@ -1670,7 +1576,7 @@
                     </div>
                 </div>
 
-              </div>
+            </div>
 
             <div class="tab-content" [ngClass]="{'active': (activeTab == 11)}">
                  <a  href="javascript:void(0);" class="back-btn"  (click)="tabSwitch(0)"></a> 
@@ -1793,6 +1699,7 @@
                                             #regPinCode="ngModel" 
                                             name="pincode"
                                             maxlength="6"
+                                            (keyup)="onPinCodeChange($event, 'registeredAddress')" 
                                             pattern="^[0-9]+$" />
                                     <label for="regPinCode">Pincode</label>
                                     <div *ngIf="(regPinCode.touched || regPinCode.dirty) && regPinCode.invalid" class="invalid-feedback">
@@ -1869,6 +1776,7 @@
                                             pattern="^[0-9A-Za-z,_#\s]+$"
                                             name="pincode"
                                             #corpPincode="ngModel"
+                                            (keyup)="onPinCodeChange($event, 'corporateAddress')" 
                                             required />
                                     <label for="pincode01">Pincode</label>
 
@@ -1938,85 +1846,169 @@
                 </div>
             </div>
 
-            <div class="tab-content" [ngClass]="{'active': (activeTab == 14)}">
-                <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
-
+            <div class="tab-content" [ngClass]="{'active': (activeTab == 9)}">
+                <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(incomeSlider2)"></a>
                 <div class="lyt-tabs">
                     <div class="lhs">
-                        <div class="title-wrap">
-                            <h4 class="title">Enter applicant’s <span class="cm-line-break"></span>revenue details</h4>
+                        <div  class="swiper-container form-swiper"
+                              [swiper]="lhsConfig"
+                              #incomeSlider1="ngxSwiper">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <div class="title-wrap">
+                                        <h4 class="title">Enter applicant's<span class="cm-line-break"></span>income details</h4>
+                                        <p class="note">Please enter household income & expenditure of main applicant & co-applicant/s</p>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="title-wrap">
+                                        <h4 class="title">Do applicant's <span class="cm-line-break"></span>income considered?</h4>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="title-wrap">
+                                        <h4 class="title">Applicant's monthly<span class="cm-line-break"></span>income details</h4>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="title-wrap">
+                                        <h4 class="title">Do you or any of the <span class="cm-line-break"></span>family members <span class="cm-line-break"></span> own a puccahouse <span class="cm-line-break"></span>anywhere in India?</h4>
+                                        <p class="note">House made with a high quality materials throughout, including a floor, roof and exterior walls, are called pucca houses</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    
                     <div class="rhs">
-                        <form class="bs-form" #revenueForm="ngForm" (ngSubmit)="submitRevenueDetails(revenueForm)">
-                            <div class="form-wrap">
-                                <div class="form-group inr">
-                                    <input  type="text"
-                                            class="form-control"
-                                            id="revenue"
-                                            [(ngModel)]="qde.application.applicants[applicantIndex].revenueDetails.revenue"
-                                            #revenue="ngModel"
-                                            name="revenue"
-                                            pattern="^[1-9]\d{0,17}(\.\d{0,4})?$"
-                                            required />
-                                    <label for="revenue" *ngIf="revenue.value==''">Revenue</label>
-                                    <div *ngIf="revenue.touched && revenue.invalid" class="invalid-feedback">
-                                        <div *ngIf="revenue.errors?.required">{{errors.revenueDetails.revenue.required}}</div>
-                                        <div *ngIf="revenue.errors?.pattern">{{errors.revenueDetails.revenue.invalid}}</div>
+                        <div    class="swiper-container form-swiper"
+                                [swiper]="rhsConfig"
+                                (slidePrevTransitionStart)="slidePrevTransitionStart(incomeSlider1)"
+                                (slideNextTransitionStart)="slideNextTransitionStart(incomeSlider1)"
+                                #incomeSlider2="ngxSwiper">
+                          <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                              <form class="bs-form"
+                                #applicantIncomeNonIndividual="ngForm" (ngSubmit)="submitIncomeDetails1(applicantIncomeNonIndividual, incomeSlider2)">
+                                  <div class="form-wrap">
+                                      <div class="form-group">
+                                            <input type="text" class="form-control"
+                                            id="annualFamilyIncome"
+                                            [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.annualFamilyIncome"
+                                            #annualFamilyIncome="ngModel"
+                                            name="annualFamilyIncome"
+                                            />
+                                          <label for="annualFamilyIncome" *ngIf="annualFamilyIncome.value==''">Annual Family Income</label>
+                                      </div>
+                                        <div class="form-group">
+                                              <input type="text" class="form-control" 
+                                              id="monthlyExpenditure"
+                                              [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.monthlyExpenditure"
+                                              #monthlyExpenditure="ngModel"
+                                              name="monthlyExpenditure"
+                                              />
+                                            <label for="monthlyExpenditure" *ngIf="monthlyExpenditure.value==''" >Monthly Expenditure</label>
+                                        </div>
                                     </div>
-
-                                    <span class="addon">
-                                        <span class="icon icon-inr"></span>
-                                    </span>
-                                    <span class="in-word"></span>
-                                </div>
-                                <div class="form-group inr">
-                                    <input  type="text"
-                                            class="form-control"
-                                            id="net-income"
-                                            required
-                                            [(ngModel)]="qde.application.applicants[applicantIndex].revenueDetails.annualNetIncome"
-                                            #annualNetincome="ngModel"
-                                            name="annualNetIncome"
-                                            pattern="^[1-9]\d{0,17}(\.\d{0,4})?$" />
-                                    <label for="net-income" *ngIf="annualNetincome.value==''">Annual Net Income</label>
-                                    <div *ngIf="annualNetincome.touched && annualNetincome.invalid" class="invalid-feedback">
-                                        <div *ngIf="annualNetincome.errors?.required">{{errors.revenueDetails.annualNetincome.required}}</div>
-                                        <div *ngIf="annualNetincome.errors?.pattern">{{errors.revenueDetails.annualNetincome.invalid}}</div>
-                                    </div>
-
-                                    <span class="addon">
-                                        <span class="icon icon-inr"></span>
-                                    </span>
-                                    <span class="in-word"></span>
-                                </div>
-                                <div class="form-group inr last">
-                                    <input type="text"
-                                            class="form-control"
-                                            id="gross-turnover" 
-                                            required
-                                            [(ngModel)]="qde.application.applicants[applicantIndex].revenueDetails.grossTurnOver"
-                                            #grossTurnover="ngModel"
-                                            name="grossTurnOver"
-                                            pattern="^[1-9]\d{0,17}(\.\d{0,4})?$" />
-                                    <label for="gross-turnover" *ngIf="grossTurnover.value==''">Gross Turnover</label>
-                                    <div *ngIf="grossTurnover.touched && grossTurnover.invalid" class="invalid-feedback">
-                                        <div *ngIf="grossTurnover.errors?.required">{{errors.revenueDetails.grossTurnover.required}}</div>
-                                        <div *ngIf="grossTurnover.errors?.pattern">{{errors.revenueDetails.grossTurnover.invalid}}</div>
-                                    </div>
-
-                                    <span class="addon">
-                                        <span class="icon icon-inr"></span>
-                                    </span>
-                                    <span class="in-word"></span>
-                                </div>
+                                  <div class="btn-wrap">
+                                        <button 
+                                            type="submit"
+                                            class="btn btn-primary">
+                                             <!-- (click)="goToNextSlide(incomeSlider2)" -->
+                                        Next
+                                        </button>
+                                  </div>
+                              </form>
                             </div>
-                            <div class="btn-wrap">
-                                <button type="submit" class="btn btn-primary" [ngClass]="{'disabled': !revenueForm.valid}"
-                                [disabled]="!revenueForm.valid">Next</button>
-                            </div>
-                        </form>
+                            <div class="swiper-slide">
+                                    <form class="bs-form"
+                                    #applicantIncome2NonIndividual="ngForm" (ngSubmit)="submitIncomeDetails1(applicantIncome2NonIndividual, incomeSlider2)" >
+                                        <div class="form-wrap">
+                                            <div class="bs-radio">
+                                                <input  type="radio"
+                                                        name="income-consider"
+                                                        id="yes-consider"
+                                                        [value]="true"
+                                                        (change)="incomeDetailsYesNo(true, incomeSlider2)"
+                                                        class="not-usual" />
+                                                <label for="yes-consider"><span>Yes</span></label>
+                                            </div>
+                                            <div class="bs-radio">
+                                                <input  type="radio"
+                                                        name="income-consider"
+                                                        id="no-consider"
+                                                        class="not-usual"
+                                                        [value]="false"
+                                                        (change)="incomeDetailsYesNo(false, incomeSlider2)" />
+                                                <label for="no-consider"><span>No</span></label>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="swiper-slide">
+                                        <form class="bs-form" 
+                                        #applicantIncome3NonIndividual="ngForm" (ngSubmit)="submitIncomeDetails2(applicantIncome3NonIndividual, incomeSlider2)">
+                                            <div class="form-wrap">
+                                                <div class="form-group inr">
+                                                    <input type="text" class="form-control" id="app-monthly-income"
+                                                    [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.monthlyIncome"
+                                                    #monthlyIncome="ngModel"
+                                                    name="monthlyIncome">
+                                                    <label for="monthlyIncome" *ngIf="monthlyIncome.value==''">Monthly income</label>
+                                                    <span class="addon">
+                                                        <span class="icon icon-inr"></span>
+                                                    </span>
+                                                    <span class="in-word"></span>
+                                                </div>
+                                                <div class="form-group">
+                                                    <span class="control-title">Assessment methodology</span>
+                                                    <select class="js-select" name="assessment"
+                                                    [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.assessmentMethodology"
+                                                    #assessment="ngModel"
+                                                    name="assessment">
+                                                        <option value="1">Net Salary</option>
+                                                        <option value="2">Gross Salary</option>
+                                                        <option value="3">Income Plus</option>
+                                                        <option value="4">Normal Profit</option>
+                                                        <option value="5">GST surplus method</option>
+                                                        <option value="6">RTR</option>
+                                                        <option value="7">BT+Top up</option>
+                                                        <option value="8">Gross Receipt</option>
+                                                        <option value="9">Industry Margin</option>
+                                                        <option value="10">Assessed Income</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="btn-wrap">
+                                                <button type="submit" class="btn btn-primary">Next</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <form class="bs-form"
+                                            #applicantIncome4="ngForm">
+                                                <div class="form-wrap">
+                                                    <div class="bs-radio">
+                                                        <input type="radio" name="income-consider" id="yes-consider" class="not-usual"
+                                                        [value]="true"
+                                                        (change)="doHoldPuccaHouse(true)">
+                                                        <label for="yes-consider"><span>Yes</span></label>
+                                                    </div>
+                                                    <div class="bs-radio">
+                                                        <input type="radio" name="income-consider" id="no-consider" class="not-usual"
+                                                        [value]="false"
+                                                        (change)="doHoldPuccaHouse(false)">
+                                                        <label for="no-consider"><span>No</span></label>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                    </div>
+
+                          </div>
+                        </div>
                     </div>
+
+
                 </div>
             </div>
 
@@ -2053,35 +2045,51 @@
                                 </div>
                             </div>
                         </div>
+                        
                         <div class="rhs">
-                            <div  class="swiper-container form-swiper"
+
+                            <div class="swiper-container form-swiper"
                                     [swiper]="rhsConfig"
-                                    (slidePrevTransitionStart)="slidePrevTransitionStart(incomeSlider3)"
-                                    (slideNextTransitionStart)="slideNextTransitionStart(incomeSlider3)"
+                                    (slidePrevTransitionStart)="slidePrevTransitionStart(incomeSlider1)"
+                                    (slideNextTransitionStart)="slideNextTransitionStart(incomeSlider1)"
                                     #incomeSlider4="ngxSwiper">
                               <div class="swiper-wrapper">
                                 <div class="swiper-slide">
-                                  <form class="bs-form">
+                                  <form class="bs-form"
+                                    #applicantIncome1="ngForm" (ngSubmit)="submitIncomeDetails1(applicantIncome1, incomeSlider4)">
                                       <div class="form-wrap">
                                           <div class="form-group">
-                                                <input type="text" id="annual-family-income" class="form-control" />
-                                              <label for="annual-family-income">Annual Family Income</label>
+                                                <input type="text" class="form-control"
+                                                id="annualFamilyIncome2"
+                                                [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.annualFamilyIncome"
+                                                #annualFamilyIncome2="ngModel"
+                                                name="annualFamilyIncome"
+                                                />
+                                              <label for="annualFamilyIncome2" *ngIf="annualFamilyIncome2.value==''">Annual Family Income</label>
                                           </div>
                                             <div class="form-group">
-                                                  <input type="text" id="monthly-expenditure" class="form-control" />
-                                                <label for="monthly-expenditure">Monthly Expenditure</label>
+                                                  <input type="text" class="form-control" 
+                                                  id="monthlyExpenditure2"
+                                                  [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.monthlyExpenditure"
+                                                  #monthlyExpenditure2="ngModel"
+                                                  name="monthlyExpenditure"
+                                                  />
+                                                <label for="monthlyExpenditure2" *ngIf="monthlyExpenditure2.value==''" >Monthly Expenditure</label>
                                             </div>
                                         </div>
                                       <div class="btn-wrap">
-                                          <button   type="button"
-                                                    class="btn btn-primary"
-                                                    (click)="goToNextSlide(incomeSlider4)">Next
+                                            <button 
+                                                type="submit"
+                                                class="btn btn-primary">
+                                                 <!-- (click)="goToNextSlide(incomeSlider2)" -->
+                                            Next
                                             </button>
                                       </div>
                                   </form>
                                 </div>
                                 <div class="swiper-slide">
-                                        <form class="bs-form">
+                                        <form class="bs-form"
+                                        #applicantIncome2="ngForm" >
                                             <div class="form-wrap">
                                                 <div class="bs-radio">
                                                     <input  type="radio"
@@ -2105,11 +2113,15 @@
                                         </form>
                                     </div>
                                     <div class="swiper-slide">
-                                            <form class="bs-form" >
+                                            <form class="bs-form" 
+                                            #applicantIncome3="ngForm" (ngSubmit)="submitIncomeDetails2(applicantIncome3, incomeSlider2)">
                                                 <div class="form-wrap">
                                                     <div class="form-group inr">
-                                                        <input type="text" class="form-control" id="app-monthly-income">
-                                                        <label for="app-monthly-income">Monthly income</label>
+                                                        <input type="text" class="form-control" id="app-monthly-income"
+                                                        [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.monthlyIncome"
+                                                        #monthlyIncome="ngModel"
+                                                        name="monthlyIncome">
+                                                        <label for="monthlyIncome" *ngIf="monthlyIncome.value==''">Monthly income</label>
                                                         <span class="addon">
                                                             <span class="icon icon-inr"></span>
                                                         </span>
@@ -2117,34 +2129,42 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <span class="control-title">Assessment methodology</span>
-                                                        <select class="js-select" name="assessment">
-                                                            <option value="oc1">Net Salary</option>
-                                                            <option value="oc2">Gross Salary</option>
-                                                            <option value="oc3">Income Plus</option>
-                                                            <option value="oc3">Normal Profit</option>
-                                                            <option value="oc3">GST surplus method</option>
-                                                            <option value="oc3">RTR</option>
-                                                            <option value="oc3">BT+Top up</option>
-                                                            <option value="oc3">Gross Receipt</option>
-                                                            <option value="oc3">Industry Margin</option>
-                                                            <option value="oc3">Assessed Income</option>
+                                                        <select class="js-select" name="assessment"
+                                                        [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.assessmentMethodology"
+                                                        #assessment="ngModel"
+                                                        name="assessment">
+                                                            <option value="1">Net Salary</option>
+                                                            <option value="2">Gross Salary</option>
+                                                            <option value="3">Income Plus</option>
+                                                            <option value="4">Normal Profit</option>
+                                                            <option value="5">GST surplus method</option>
+                                                            <option value="6">RTR</option>
+                                                            <option value="7">BT+Top up</option>
+                                                            <option value="8">Gross Receipt</option>
+                                                            <option value="9">Industry Margin</option>
+                                                            <option value="10">Assessed Income</option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="btn-wrap">
-                                                    <button class="btn btn-primary" (click)="goToNextSlide(incomeSlider4)">Next</button>
+                                                    <button type="submit" class="btn btn-primary">Next</button>
                                                 </div>
                                             </form>
                                         </div>
                                         <div class="swiper-slide">
-                                                <form class="bs-form">
+                                                <form class="bs-form"
+                                                #applicantIncome4="ngForm">
                                                     <div class="form-wrap">
                                                         <div class="bs-radio">
-                                                            <input type="radio" name="income-consider" id="yes-consider" class="not-usual">
+                                                            <input type="radio" name="income-consider" id="yes-consider" class="not-usual"
+                                                            [value]="true"
+                                                            (change)="doHoldPuccaHouse(true)">
                                                             <label for="yes-consider"><span>Yes</span></label>
                                                         </div>
                                                         <div class="bs-radio">
-                                                            <input type="radio" name="income-consider" id="no-consider" class="not-usual">
+                                                            <input type="radio" name="income-consider" id="no-consider" class="not-usual"
+                                                            [value]="false"
+                                                            (change)="doHoldPuccaHouse(false)">
                                                             <label for="no-consider"><span>No</span></label>
                                                         </div>
                                                     </div>
@@ -2155,7 +2175,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+            </div>
             
 
             </div>

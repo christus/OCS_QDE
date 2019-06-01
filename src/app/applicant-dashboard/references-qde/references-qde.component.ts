@@ -280,7 +280,7 @@ export class ReferencesQdeComponent implements OnInit {
     console.log(this.qde.application.references.referenceOne.relationShip);
 
 
-    this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+    this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
         console.log(this.qde.application.references.referenceOne.relationShip);
@@ -314,7 +314,7 @@ export class ReferencesQdeComponent implements OnInit {
     console.log(this.qde.application.references.referenceOne.relationShip);
 
 
-    this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+    this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
         console.log(this.qde.application.references.referenceOne.relationShip);
@@ -341,7 +341,7 @@ export class ReferencesQdeComponent implements OnInit {
     console.log(this.qde.application.references.referenceOne.relationShip);
 
 
-    this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+    this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
         console.log(this.qde.application.references.referenceOne.relationShip);
@@ -375,7 +375,7 @@ export class ReferencesQdeComponent implements OnInit {
     console.log(this.qde.application.references.referenceOne.relationShip);
 
 
-    this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+    this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
         console.log(this.qde.application.references.referenceOne.relationShip);

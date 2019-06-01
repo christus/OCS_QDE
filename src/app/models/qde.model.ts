@@ -4,6 +4,7 @@ export default interface Qde {
 
 export interface Application {
     ocsNumber : string;
+    applicationId: string;
     loanAmount ?: string;
     tenure ?: string;
     appId ?: string;
@@ -27,11 +28,13 @@ export interface Applicant {
     contactDetails ?: ContactDetail;
     communicationAddress ?: Address;
     permanentAddress ?: Address;
+    residentialAddress ? : Address;
     officialCorrespondence ?: OfficialCorrespondence;
     organizationDetails ?: OrganizationDetail;
     registeredAddress ?: RegisteredAddress;
     corporateAddress ?: CorporateAddress;
     revenueDetails ?: RevenueDetail;
+    incomeDetails ?: IncomeDetail; // New fields added
     documents ?: Array<any>;
 }
 
@@ -65,8 +68,11 @@ export interface Occupation {
 }
 
 export interface Pan {
+    isIndividual ?: boolean; /* Individual / Non-individual: true/false */
     panNumber : string;
     panImage ?: string;
+    docType ?: string; // As of new design
+    docNumber ?: string; // As of new design
 }
 
 export interface PersonalDetail {
@@ -78,6 +84,7 @@ export interface PersonalDetail {
     qualification ?: string;
     dob ?: string;
     birthPlace ?: string;
+    applicantStatus ?: string; // As of new design *Resident/non-resident
 }
 
 export interface ContactDetail {
@@ -90,7 +97,7 @@ export interface ContactDetail {
 }
 
 export interface Address {
-    residentialStatus : string;
+    residentialStatus? : string;
     addressLineOne : string;
     addressLineTwo : string;
     zipcode : string;
@@ -98,6 +105,9 @@ export interface Address {
     state : string;
     numberOfYearsInCurrentResidence : string;
     permanentAddress ?: boolean;
+    cityState? : string;
+    zipCityStateID?: string;
+    preferedMailingAddress?: string; // As of new design
 }
 
 export interface OfficialCorrespondence {
@@ -106,8 +116,11 @@ export interface OfficialCorrespondence {
     landMark : string;
     zipcode : string;
     city : string;
+    state: string;
     officeNumber : string;
     officeEmailId : string;
+    cityState? : string;
+    zipCityStateID?: string;
 }
 
 export interface OrganizationDetail {
@@ -119,19 +132,23 @@ export interface OrganizationDetail {
 export interface RegisteredAddress {
     registeredAddress : string;
     landMark : string;
-    zipcode : number,
+    zipcode : string,
     city : string;
     state : string;
+    cityState? : string;
+    zipCityStateID?: string;
 }
 
 export interface CorporateAddress {
     corporateAddress : string;
     landMark : string;
-    zipcode : number,
+    zipcode : string,
     city : string;
     state : string;
     stdNumber : string;
     officeEmailId : string;
+    cityState? : string;
+    zipCityStateID?: string;
 }
 
 export interface RevenueDetail {
@@ -149,8 +166,12 @@ export interface LoanDetail {
 }
 
 export interface IncomeDetail {
-    annualFamilyIncome : string;
-    familMembersOwnHouse : boolean;
+    annualFamilyIncome? : string;
+    monthlyExpenditure? : string;
+    incomeConsider?: boolean;
+    monthlyIncome?: string;
+    assessmentMethodology?: string;
+    puccaHouse?: boolean; 
 }
 
 export interface LoanAmount {

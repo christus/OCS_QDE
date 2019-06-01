@@ -485,12 +485,13 @@ export class CoApplicantQdeComponent implements OnInit {
         panNumber: form.value.pan
       };
   
-      this.qdeHttp.createOrUpdatePanDetails(this.qde).subscribe((response) => {
+      this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
           let result = this.parseJson(response["ProcessVariables"]["response"]);
           this.qde.application.ocsNumber = result["application"]["ocsNumber"];
-          this.qde.application.applicants[this.applicantIndex].applicantId = result["application"]["applicants"][0]["applicantId"];;
+          this.qde.application.applicationId = result["application"]["applicationId"];
+          this.qde.application.applicants[this.applicantIndex].applicantId =  result["application"]["applicants"][0]["applicantId"];
           this.goToNextSlide(swiperInstance);
         } else {
           // Throw Invalid Pan Error
@@ -523,7 +524,7 @@ export class CoApplicantQdeComponent implements OnInit {
       };
   
       console.log(this.qde.application.applicants[this.applicantIndex]);
-      this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+      this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
           this.goToNextSlide(swiperInstance);
@@ -547,7 +548,7 @@ export class CoApplicantQdeComponent implements OnInit {
   
       console.log(this.qde.application.applicants[this.applicantIndex]);
   
-      this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+      this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
           this.goToNextSlide(swiperInstance);
@@ -573,7 +574,7 @@ export class CoApplicantQdeComponent implements OnInit {
   
       console.log(this.qde.application.applicants[this.applicantIndex]);
   
-      this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+      this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
           this.goToNextSlide(swiperInstance);
@@ -598,7 +599,7 @@ export class CoApplicantQdeComponent implements OnInit {
   
       console.log(this.qde.application.applicants[this.applicantIndex]);
   
-      this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+      this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
           this.tabSwitch(3);
@@ -633,7 +634,7 @@ export class CoApplicantQdeComponent implements OnInit {
       };
   
       console.log(this.qde.application.applicants[this.applicantIndex]);
-      this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+      this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
           this.tabSwitch(4);
@@ -671,7 +672,7 @@ export class CoApplicantQdeComponent implements OnInit {
   
       console.log(this.qde.application.applicants[this.applicantIndex].communicationAddress);
   
-      this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+      this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
           this.tabSwitch(5);
@@ -700,7 +701,7 @@ export class CoApplicantQdeComponent implements OnInit {
       };
   
       console.log(this.qde.application.applicants[this.applicantIndex].maritalStatus);
-      this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+      this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
           this.goToNextSlide(swiperInstance);
@@ -724,7 +725,7 @@ export class CoApplicantQdeComponent implements OnInit {
       this.qde.application.applicants[this.applicantIndex].maritalStatus.firstName = form.value.firstName;
   
       console.log(this.qde.application.applicants[this.applicantIndex].maritalStatus);
-      this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+      this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
           this.goToNextSlide(swiperInstance);
@@ -748,7 +749,7 @@ export class CoApplicantQdeComponent implements OnInit {
       this.qde.application.applicants[this.applicantIndex].maritalStatus.earning = form.value.earning;
   
       console.log(this.qde.application.applicants[this.applicantIndex].maritalStatus);
-      this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+      this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
           this.goToNextSlide(swiperInstance);
@@ -777,7 +778,7 @@ export class CoApplicantQdeComponent implements OnInit {
   
       console.log(this.qde.application.applicants[this.applicantIndex].maritalStatus);
   
-      this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+      this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
           this.tabSwitch(6);
@@ -808,7 +809,7 @@ export class CoApplicantQdeComponent implements OnInit {
   
       console.log(this.qde.application.applicants[this.applicantIndex].familyDetails);
   
-      this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+      this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
           this.goToNextSlide(swiperInstance);
@@ -835,7 +836,7 @@ export class CoApplicantQdeComponent implements OnInit {
   
       console.log(this.qde.application.applicants[this.applicantIndex].familyDetails);
   
-      this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+      this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
           this.tabSwitch(7);
@@ -863,7 +864,7 @@ export class CoApplicantQdeComponent implements OnInit {
   
       // console.log(this.qde.application.applicants[this.applicantIndex].familyDetails);
   
-      this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+      this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
           this.tabSwitch(8);
@@ -896,7 +897,7 @@ export class CoApplicantQdeComponent implements OnInit {
   
       console.log(this.qde.application.applicants[this.applicantIndex].occupation);
   
-      this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+      this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
           this.tabSwitch(9);
@@ -918,20 +919,28 @@ export class CoApplicantQdeComponent implements OnInit {
       if (form && !form.valid) {
         return;
       }
+
+      let zipCityStateID = this.qde.application.applicants[this.applicantIndex].officialCorrespondence.zipCityStateID
+
+      let zipId = zipCityStateID.split(',')[0];
+      let cityId = zipCityStateID.split(',')[1];
+      let stateId = zipCityStateID.split(',')[2];
+
   
       this.qde.application.applicants[this.applicantIndex].officialCorrespondence = {
         addressLineOne : form.value.ofcA1,
         addressLineTwo : form.value.ofcA2,
         landMark : form.value.landMark,
-        zipcode : form.value.pinCode,
-        city : form.value.cityState,
+        zipcode : zipId,
+        city : cityId,
+        state: stateId,
         officeNumber : form.value.stdCode + '-'+ form.value.offStdNumber,
         officeEmailId : form.value.officeEmail
       };
   
       console.log(this.qde.application.applicants[this.applicantIndex].officialCorrespondence);
   
-      this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+      this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
           //this.tabSwitch(6);
@@ -961,7 +970,7 @@ export class CoApplicantQdeComponent implements OnInit {
   
       console.log(this.qde.application.applicants[this.applicantIndex].organizationDetails);
   
-      this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+      this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
           this.tabSwitch(10);
@@ -992,7 +1001,7 @@ export class CoApplicantQdeComponent implements OnInit {
   
       console.log(this.qde.application.applicants[this.applicantIndex].registeredAddress);
   
-      this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+      this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successfull
         if(response["ProcessVariables"]["status"]) {
           this.tabSwitch(11);
@@ -1024,7 +1033,7 @@ export class CoApplicantQdeComponent implements OnInit {
   
       console.log(this.qde.application.applicants[this.applicantIndex].corporateAddress);
   
-      this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+      this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successfull
         if(response["ProcessVariables"]["status"]) {
           this.tabSwitch(12);
@@ -1053,7 +1062,7 @@ export class CoApplicantQdeComponent implements OnInit {
   
       console.log(this.qde.application.applicants[this.applicantIndex].revenueDetails);
   
-      this.qdeHttp.createOrUpdatePersonalDetails(this.qde).subscribe((response) => {
+      this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successfull
         if(response["ProcessVariables"]["status"]) {
           this.tabSwitch(13);

@@ -33,4 +33,12 @@ export class CommonDataService {
     this.isLogoutVisible$.next(isLogoutVisible);
   }
 
+  private panslide$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  panslide = this.panslide$.asObservable();
+  
+  changePanSlide(panslide: boolean) {
+    this.panslide$.next(panslide);
+  }
+
+  
 }
