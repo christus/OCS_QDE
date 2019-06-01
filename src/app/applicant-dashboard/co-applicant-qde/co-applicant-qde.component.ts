@@ -279,7 +279,7 @@ export class CoApplicantQdeComponent implements OnInit {
     private applicantIndividual: boolean = true;
 
     private fragments = [ 'dashboard',
-                          'pan',
+                          'pan1',
                           'personal',
                           'contact',
                           'address',
@@ -288,12 +288,13 @@ export class CoApplicantQdeComponent implements OnInit {
                           'other',
                           'occupation',
                           'correspondence',
+                          'income1',
+                          'pan2',
                           'organization',
                           'regAddress',
                           'corpAddr',
                           'revenueAddr',
-                          'income1',
-                          'income2'
+                          'income2',
                         ];
   
     applicantIndex: number;
@@ -394,7 +395,7 @@ export class CoApplicantQdeComponent implements OnInit {
       // if (form && !form.valid) {
       //   return;
       // }
-  
+
       // Create ngModel of radio button in future
       swiperInstance.nextSlide();
     }
@@ -436,7 +437,7 @@ export class CoApplicantQdeComponent implements OnInit {
     
         this.activeTab = tabIndex;
   
-        if(tabIndex == 10) {
+        if(tabIndex >= 11) {
           this.applicantIndividual = false;
         } else if(tabIndex == 0) {
           this.applicantIndividual = true;

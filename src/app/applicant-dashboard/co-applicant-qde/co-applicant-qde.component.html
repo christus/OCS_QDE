@@ -34,23 +34,26 @@
                 <li class="tab-link" [ngClass]="{'active': (activeTab == 9), 'hide': (!applicantIndividual)}">
                   <a href="javascript:void(0);" (click)="tabSwitch(9)">offical correspondence</a>
                 </li>
-                <li class="tab-link hide" [ngClass]="{'active': (activeTab == 10), 'hide': (applicantIndividual)}">
-                    <a href="javascript:void(0);" (click)="tabSwitch(10)">ORGANIZATION DETAILS</a>
+                <li class="tab-link hide" [ngClass]="{'active': (activeTab == 10), 'hide': (!applicantIndividual)}">
+                    <a href="javascript:void(0);" (click)="tabSwitch(10)">INCOME DETAILS</a>
                 </li>
                 <li class="tab-link hide" [ngClass]="{'active': (activeTab == 11), 'hide': (applicantIndividual)}">
-                    <a href="javascript:void(0);" (click)="tabSwitch(11)">REGISTERED ADDRESS</a>
+                    <a href="javascript:void(0);" (click)="tabSwitch(11)">PAN</a>
                 </li>
                 <li class="tab-link hide" [ngClass]="{'active': (activeTab == 12), 'hide': (applicantIndividual)}">
-                    <a href="javascript:void(0);" (click)="tabSwitch(12)">CORPORATE ADDRESS</a>
+                    <a href="javascript:void(0);" (click)="tabSwitch(12)">ORGANIZATION DETAILS</a>
                 </li>
                 <li class="tab-link hide" [ngClass]="{'active': (activeTab == 13), 'hide': (applicantIndividual)}">
-                    <a href="javascript:void(0);" (click)="tabSwitch(13)">REVENUE DETAILS</a>
+                    <a href="javascript:void(0);" (click)="tabSwitch(13)">REGISTERED ADDRESS</a>
                 </li>
-                <li class="tab-link hide" [ngClass]="{'active': (activeTab == 14), 'hide': (!applicantIndividual)}">
-                    <a href="javascript:void(0);" (click)="tabSwitch(14)">INCOME DETAILS</a>
+                <li class="tab-link hide" [ngClass]="{'active': (activeTab == 14), 'hide': (applicantIndividual)}">
+                    <a href="javascript:void(0);" (click)="tabSwitch(14)">CORPORATE ADDRESS</a>
                 </li>
                 <li class="tab-link hide" [ngClass]="{'active': (activeTab == 15), 'hide': (applicantIndividual)}">
-                    <a href="javascript:void(0);" (click)="tabSwitch(14)">INCOME DETAILS</a>
+                    <a href="javascript:void(0);" (click)="tabSwitch(15)">REVENUE DETAILS</a>
+                </li>
+                <li class="tab-link hide" [ngClass]="{'active': (activeTab == 16), 'hide': (applicantIndividual)}">
+                    <a href="javascript:void(0);" (click)="tabSwitch(16)">INCOME DETAILS</a>
                 </li>
             </ul>
               <div class="tabs-contents" #tabContents>
@@ -58,14 +61,17 @@
                         <!-- <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(panSlider2)"></a> -->
                         <div class="lyt-tabs">
 
-                            <div class="lhs" >
+                            <div class="lhs">
                                 <div class="title-wrap">
                                     <h4 class="title">Co-Applicant<span class="cm-line-break"></span>list</h4>
                                 </div>
                             </div>
                             <div class="rhs">
                                 <div class="right-panel">
-                                    <a routerLink="/co-applicant" fragment="pan" class="btn btn-default view-form create-co-app-btn">Create</a>
+                                    <a  href="javascript:void(0);"
+                                        (click)="tabSwitch(1)"
+                                        class="btn btn-default view-form create-co-app-btn">Create
+                                    </a>
                                 </div>
                                 <form class="bs-form">
                                     <div class="form-wrap">
@@ -104,7 +110,7 @@
                                         </div>
                                         <div class="swiper-slide">
                                             <div class="title-wrap">
-                                                <h4 class="title">Enter applicant's <span class="cm-line-break"></span>PAN details</h4>
+                                                <h4 class="title">Enter applicant's <span class="cm-line-break"></span>PAN & KYC details</h4>
                                             </div>
                                         </div>
                                         <div class="swiper-slide">
@@ -141,7 +147,7 @@
                                                                 id="non-individual"
                                                                 [value]="false"
                                                                 ([ngModel])="qde.application.applicants[applicantIndex].isIndividual"
-                                                                (change)="tabSwitch(10)" />
+                                                                (change)="tabSwitch(11)" />
                                                         <label for="non-individual"><span>Non-Individual</span></label>
                                                     </div>
                                                 </div>
@@ -153,7 +159,7 @@
                                                   #panNumberForm="ngForm"
                                                   (ngSubmit)="submitPanNumber(panNumberForm, panSlider2)">
                                                 <div class="form-wrap">
-                                                    <div class="form-group last">
+                                                    <div class="form-group last" style="margin-bottom: 40px">
                                                         <input  type="text"
                                                                 class="form-control"
                                                                 ngModel
@@ -171,6 +177,17 @@
                                                             <div *ngIf="pan.errors?.minlength || pan.errors?.maxlength">*PAN must be at least {{pan.errors.minlength.requiredLength}} characters</div>
                                                         </div>
                                                     </div>
+                                                    <div class="form-group">
+                                                            <span class="control-title">Document Type</span>
+                                                            <select name="title" required>
+                                                             <option>Aadhar</option>
+                                                             <option>DL</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control" />
+                                                          <label>Document Number</label>
+                                                      </div>
                                                 </div>
                                                 <div class="btn-wrap">
                                                       <button type="submit"
@@ -212,6 +229,11 @@
                                         [swiper]="lhsConfig"
                                         #pdSlider1="ngxSwiper">
                                       <div class="swiper-wrapper">
+                                            <div class="swiper-slide">
+                                                    <div class="title-wrap">
+                                                        <h4 class="title">Enter applicant’s <span class="cm-line-break"></span>status</h4>
+                                                    </div>
+                                            </div>
                                           <div class="swiper-slide">
                                               <div class="title-wrap">
                                                 <h4 class="title">Enter applicant’s <span class="cm-line-break"></span>full name</h4>
@@ -245,7 +267,31 @@
                                         (slideNextTransitionStart)="slideNextTransitionStart(pdSlider1)"
                                         #pdSlider2="ngxSwiper">
                                       <div class="swiper-wrapper">
-                                          <div class="swiper-slide">
+                                            <div class="swiper-slide">
+                                                    <form class="bs-form">
+                                                        <div class="form-wrap">
+                                                            <div class="bs-radio">
+                                                                <input  type="radio"
+                                                                        name="income-consider"
+                                                                        id="yes-consider"
+                                                                        [value]="true"
+                                                                        (change)="goToNextSlide(pdSlider2)"
+                                                                        class="not-usual" />
+                                                                <label for="yes-consider"><span>Resident</span></label>
+                                                            </div>
+                                                            <div class="bs-radio">
+                                                                <input  type="radio"
+                                                                        name="income-consider"
+                                                                        id="no-consider"
+                                                                        class="not-usual"
+                                                                        [value]="false"
+                                                                        (change)="goToNextSlide(pdSlider2)" />
+                                                                <label for="no-consider"><span>Non Resident</span></label>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                    </div>  
+                                        <div class="swiper-slide">
                                               <form   class="bs-form"
                                                       id="personal-form"
                                                       #nameForm="ngForm"
@@ -654,7 +700,7 @@
                                       #communicationForm="ngForm"
                                       (ngSubmit)="submitCommunicationAddressDetails(communicationForm)">
                                   <div class="form-wrap">
-                                        <h3 class="sub-heading">Current Address</h3>
+                                        <h1 class="sub-heading" style="text-align: left; margin-bottom: 12px">Current Address</h1>
                                       <div class="form-group">
                                           <span class="control-title">Residential status</span>
                                           <select ngModel
@@ -731,7 +777,7 @@
                                           <label for="permanentAddress"><span>Current Address is Permanent Address</span></label>
                                       </div>
                                       <div class="permanent-add-wrap">
-                                            <h3 class="sub-heading">Permanent Address</h3>
+                                            <h1 class="sub-heading" style="text-align: left; margin-bottom: 12px">Permanent Address</h1>
                                                 <div class="form-group">
                                                     <input type="text" class="form-control" id="per-address1">
                                                     <label for="per-address1">Address line 1</label>
@@ -752,7 +798,7 @@
                                             <div class="form-group last">
                                                 <span class="control-title">Prefered mailing address</span>
                                             </div>
-                                            <div class="radio-wrap">
+                                            <div class="radio-wrap rounded-radio">
                                                 <div class="bs-radio typ-normal">
                                                     <input type="radio" name="prefred-add" id="current-add-mail">
                                                     <label for="current-add-mail">
@@ -1399,350 +1445,8 @@
                           </div>
                       </div>
                   </div>
-      
-                  <div class="tab-content" [ngClass]="{'active': (activeTab == 10)}">
-                       <a  href="javascript:void(0);" class="back-btn"  (click)="tabSwitch(1)"></a> 
-      
-                      <div class="lyt-tabs">
-                          <div class="lhs">
-                              <div class="title-wrap">
-                                  <h4 class="title">Enter Organization <span class="cm-line-break"></span>details</h4>
-                              </div>
-                          </div>
-                          <div class="rhs">
-                              <form   class="bs-form"
-                                      #organizationForm="ngForm"
-                                      (ngSubmit)="submitOrganizationDetails(organizationForm)">
-                                  <div class="form-wrap">
-                                      <div class="form-group">
-                                          <input type="text" class="form-control" id="org-name" 
-                                            pattern="^[A-Za-z\s]+$"
-                                            ngModel
-                                            #orgName="ngModel"
-                                            name="orgName"
-                                            required>
-                                          <label for="org-name" *ngIf="orgName.value == ''">Name of Organization</label>
-      
-                                          <div *ngIf="(orgName.touched || orgName.dirty) && orgName.invalid">
-                                              <div *ngIf="orgName.errors?.required">{{errors.organizationDetails.orgName.required}}</div>
-                                              <div *ngIf="orgName.errors?.pattern">{{errors.organizationDetails.orgName.invalid}}</div>
-                                          </div>
-                                      </div>
-                                      <div class="form-group typ-select">
-                                          <span class="control-title">Date of Incorporation</span>
-                                          <select ngModel name="day" required>
-                                                  <option class="select">DD</option>
-                                                  <option>01</option>
-                                                  <option>02</option>
-                                                  <option>04</option>
-                                                  <option>05</option>
-                                                  <option>06</option>
-                                                  <option>07</option>
-                                                  <option>08</option>
-                                                  <option>09</option>
-                                                  <option>10</option>
-                                                  <option>11</option>
-                                                  <option>12</option>
-                                                  <option>13</option>
-                                                  <option>14</option>
-                                                  <option>15</option>
-                                                  <option>16</option>
-                                                  <option>17</option>
-                                              </select>
-                                          <select ngModel name="month" required>
-                                                  <option class="select">MM</option>
-                                                  <option>01</option>
-                                                  <option>02</option>
-                                                  <option>04</option>
-                                                  <option>05</option>
-                                                  <option>06</option>
-                                                  <option>07</option>
-                                                  <option>08</option>
-                                                  <option>09</option>
-                                                  <option>10</option>
-                                                  <option>11</option>
-                                                  <option>12</option>
-                                              </select>
-                                          <select ngModel name="year" required>
-                                                  <option class="select">YY</option>
-                                                  <option>2001</option>
-                                                  <option>2002</option>
-                                                  <option>2004</option>
-                                                  <option>2005</option>
-                                                  <option>2006</option>
-                                                  <option>2007</option>
-                                                  <option>2008</option>
-                                                  <option>2009</option>
-                                                  <option>2010</option>
-                                                  <option>2011</option>
-                                                  <option>2012</option>
-                                              </select>
-                                      </div>
-                                      <div class="form-group last">
-                                          <span class="control-title">Constitution</span>
-                                          <select ngModel name="constitution" required>
-                                              <option value="Partnership">Partnership</option>
-                                              <option value="Ms">Proprietership</option>
-                                              <option value="Mrs">option3</option>
-                                              <option value="Dr">option4</option>
-                                          </select>
-                                      </div>
-                                  </div>
-                                  <div class="btn-wrap">
-                                      <button class="btn btn-primary"
-                                      [ngClass]="{'disabled': !organizationForm.valid}"
-                                      [disabled]="!organizationForm.valid" >Next</button>
-                                  </div>
-                              </form>
-                          </div>
-                      </div>
-                  </div>
-      
-      
-                  <div class="tab-content"  [ngClass]="{'active': (activeTab == 11)}">
-                      <a  href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
-                      <div class="lyt-tabs">
-                          <div class="lhs">
-                              <div class="title-wrap">
-                                  <h4 class="title">Enter applicant's <span class="cm-line-break"></span>registered address</h4>
-                              </div>
-      
-                          </div>
-                          <div class="rhs">
-                              <form class="bs-form" #registeredAddressForm="ngForm" (ngSubmit)="submitRegisteredAddress(registeredAddressForm)">
-                                  <div class="form-wrap">
-                                      <div class="form-group">
-                                          <input type="text" class="form-control" id="reg-add"
-                                            ngModel
-                                            pattern="^[0-9A-Za-z,_#\s]+$"
-                                            name="regAdd"
-                                            #regAdd="ngModel"
-                                            required>
-                                          <label for="reg-add" *ngIf="regAdd.value == ''">Registered Address</label>
-      
-                                          <div *ngIf="(regAdd.touched || regAdd.dirty) && regAdd.invalid" class="invalid-feedback">
-                                            <div *ngIf="regAdd.errors?.required">{{errors.registeredAddress.address.required}}</div>
-                                            <div *ngIf="regAdd.errors?.pattern">{{errors.registeredAddress.address.invalid}}</div>
-                                          </div>
-                                      </div>
-                                      <div class="form-group typ-optional">
-                                          <input type="text" class="form-control" name="landmark" ngModel id="landmark">
-                                          <label for="landmark">Landmark</label>
-                                          <span class="optional">optional</span>
-                                      </div>
-                                      <div class="form-group">
-                                          <input  type="text"
-                                                  class="form-control"
-                                                  id="regPinCode"
-                                                  required
-                                                  ngModel
-                                                  #regPinCode="ngModel" 
-                                                  name="pincode"
-                                                  maxlength="6"
-                                                  pattern="^[0-9]+$">
-                                          <label for="regPinCode">Pincode</label>
-                                          <div *ngIf="(regPinCode.touched || regPinCode.dirty) && regPinCode.invalid" class="invalid-feedback">
-                                              <div *ngIf="regPinCode.errors?.required">{{errors.registeredAddress.pinCode.required}}</div>
-                                              <div *ngIf="regPinCode.errors?.pattern">{{errors.registeredAddress.pinCode.invalid}}</div>
-                                          </div>
-                                      </div>
-                                      <div class="form-group last">
-                                          <input type="text" class="form-control" id="city-state"
-                                            required
-                                            ngModel
-                                            #cityState="ngModel" 
-                                            name="cityState"
-                                            pattern="^[0-9A-Za-z,_#/]+$">
-                                          <label for="city-state">City/State</label>
-      
-                                          <div *ngIf="(cityState.touched || cityState.dirty) && cityState.invalid" class="invalid-feedback">
-                                              <div *ngIf="cityState.errors?.required">{{errors.registeredAddress.stateOrCity.required}}</div>
-                                              <div *ngIf="cityState.errors?.pattern">{{errors.registeredAddress.stateOrCity.invalid}}</div>
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <div class="btn-wrap">
-                                      <button class="btn btn-primary"
-                                      [ngClass]="{'disabled': !organizationForm.valid}"
-                                      [disabled]="!organizationForm.valid" >Next</button>
-      
-                                  </div>
-                              </form>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="tab-content" [ngClass]="{'active': (activeTab == 12)}">
-                      <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
-                      <div class="lyt-tabs">
-                          <div class="lhs">
-                              <div class="title-wrap">
-                                  <h4 class="title">Enter applicant's <span class="cm-line-break"></span>corporate address</h4>
-                              </div>
-                          </div>
-                          <div class="rhs">
-                              <form class="bs-form"   #corporateAddressForm="ngForm" (ngSubmit)="submitCorporateAddress(corporateAddressForm)" >
-                                  <div class="form-wrap">
-                                      <div class="form-group">
-                                          <input type="text" class="form-control" id="corp-add" 
-                                            ngModel
-                                            pattern="^[0-9A-Za-z,_#\s]+$"
-                                            name="corpAddress"
-                                            #corpAddress="ngModel"
-                                            required>
-                                          <label for="corp-add">Corporate Address</label>
-      
-                                          <div *ngIf="corpAddress.touched  && corpAddress.invalid" class="invalid-feedback">
-                                            <div *ngIf="corpAddress.errors?.required">{{errors.corporateAddress.address.required}}</div>
-                                            <div *ngIf="corpAddress.errors?.pattern">{{errors.corporateAddress.address.invalid}}</div>
-                                          </div>
-                                      </div>
-                                      <div class="form-group typ-optional">
-                                          <input type="text" ngModel name="landmark" class="form-control" id="landmark01">
-                                          <label for="landmark01">Landmark</label>
-                                          <span class="optional">optional</span>
-                                      </div>
-                                      <div class="form-group">
-                                          <input type="text" class="form-control" id="pincode01" 
-                                            ngModel
-                                            pattern="^[0-9A-Za-z,_#\s]+$"
-                                            name="pincode"
-                                            #corpPincode="ngModel"
-                                            required>
-                                          <label for="pincode01">Pincode</label>
-      
-                                          <div *ngIf="corpPincode.touched  && corpPincode.invalid" class="invalid-feedback">
-                                              <div *ngIf="corpPincode.errors?.required">{{errors.corporateAddress.pinCode.required}}</div>
-                                              <div *ngIf="corpPincode.errors?.pattern">{{errors.corporateAddress.pinCode.invalid}}</div>
-                                          </div>
-      
-                                      </div>
-                                      <div class="form-group">
-                                          <input type="text" class="form-control" id="city-state01" 
-                                            required
-                                            ngModel
-                                            #corpCityState="ngModel" 
-                                            name="corpCityState"
-                                            pattern="^[0-9A-Za-z,_#/]+$">
-                                          <label for="city-state01">City/State</label>
-      
-                                          <div *ngIf="corpCityState.touched  && corpCityState.invalid" class="invalid-feedback">
-                                              <div *ngIf="corpCityState.errors?.required">{{errors.corporateAddress.stateOrCity.required}}</div>
-                                              <div *ngIf="corpCityState.errors?.pattern">{{errors.corporateAddress.stateOrCity.invalid}}</div>
-                                          </div>
-                                      </div>
-                                      <div class="residence-no">
-                                          <div class="form-group">
-      
-                                              <input type="text" ngModel name="stdNumber" class="form-control" id="caStd">
-                                              <label for="caStd">STD</label>
-                                          </div>
-                                          <span class="seperator">-</span>
-                                          <div class="form-group">
-                                              <input type="text" class="form-control" ngModel name="phoneNumber" id="ca-res-no" data-validation-attr="residenceno">
-                                              <label for="ca-res-no">Residence number</label>
-                                          </div>
-                                      </div>
-                                      <div class="form-group last">
-                                          <input type="text" class="form-control" id="ofc-email"
-                                          required
-                                          ngModel
-                                          name="officeEmailId"
-                                          #ofcEmail="ngModel"
-                                          pattern="^[a-zA-Z0-9_.+-]+@[0-9a-zA -Z-]+.[a-zA-Z0-9]+.[a-z]+$">
-                                          <label for="ofc-email" *ngIf="ofcEmail.value==''">Office email ID</label>
-                                          <div *ngIf="ofcEmail.touched && ofcEmail.invalid" class="invalid-feedback">
-                                              <div *ngIf="ofcEmail.errors?.required">{{errors.corporateAddress.ofcEmail.required}}</div>
-                                              <div *ngIf="ofcEmail.errors?.pattern">{{errors.corporateAddress.ofcEmail.invalid}}</div>
-                                          </div>
-      
-                                      </div>
-                                  </div>
-                                  <div class="btn-wrap">
-                                      <button type="submit" class="btn btn-primary "  [ngClass]="{'disabled': !corporateAddressForm.valid}"
-                                      [disabled]="!corporateAddressForm.valid">Next</button>
-                                  </div>
-                              </form>
-                          </div>
-                      </div>
-                  </div>
-      
-                  <div class="tab-content" [ngClass]="{'active': (activeTab == 13)}">
-                      <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
-      
-                      <div class="lyt-tabs">
-                          <div class="lhs">
-                              <div class="title-wrap">
-                                  <h4 class="title">Enter applicant’s <span class="cm-line-break"></span>revenue details</h4>
-                              </div>
-                          </div>
-                          <div class="rhs">
-                              <form class="bs-form" #revenueForm="ngForm" (ngSubmit)="submitRevenueDetails(revenueForm)">
-                                  <div class="form-wrap">
-                                      <div class="form-group inr">
-                                          <input type="text" class="form-control" id="revenue"
-                                          ngModel
-                                          #revenue="ngModel"
-                                          name="revenue"
-                                          pattern="^[1-9]\d{0,17}(\.\d{0,4})?$"
-                                          required>
-                                          <label for="revenue" *ngIf="revenue.value==''">Revenue</label>
-                                          <div *ngIf="revenue.touched && revenue.invalid" class="invalid-feedback">
-                                              <div *ngIf="revenue.errors?.required">{{errors.revenueDetails.revenue.required}}</div>
-                                              <div *ngIf="revenue.errors?.pattern">{{errors.revenueDetails.revenue.invalid}}</div>
-                                          </div>
-      
-                                          <span class="addon">
-                                              <span class="icon icon-inr"></span>
-                                          </span>
-                                          <span class="in-word"></span>
-                                      </div>
-                                      <div class="form-group inr">
-                                          <input type="text" class="form-control" id="net-income"
-                                          required
-                                          ngModel
-                                          #annualNetincome="ngModel"
-                                          name="annualNetIncome"
-                                          pattern="^[1-9]\d{0,17}(\.\d{0,4})?$">
-                                          <label for="net-income" *ngIf="annualNetincome.value==''">Annual Net Income</label>
-                                          <div *ngIf="annualNetincome.touched && annualNetincome.invalid" class="invalid-feedback">
-                                              <div *ngIf="annualNetincome.errors?.required">{{errors.revenueDetails.annualNetincome.required}}</div>
-                                              <div *ngIf="annualNetincome.errors?.pattern">{{errors.revenueDetails.annualNetincome.invalid}}</div>
-                                          </div>
-      
-                                          <span class="addon">
-                                              <span class="icon icon-inr"></span>
-                                          </span>
-                                          <span class="in-word"></span>
-                                      </div>
-                                      <div class="form-group inr last">
-                                          <input type="text" class="form-control" id="gross-turnover" 
-                                          required
-                                          ngModel
-                                          #grossTurnover="ngModel"
-                                          name="grossTurnOver"
-                                          pattern="^[1-9]\d{0,17}(\.\d{0,4})?$">
-                                          <label for="gross-turnover" *ngIf="grossTurnover.value==''">Gross Turnover</label>
-                                          <div *ngIf="grossTurnover.touched && grossTurnover.invalid" class="invalid-feedback">
-                                              <div *ngIf="grossTurnover.errors?.required">{{errors.revenueDetails.grossTurnover.required}}</div>
-                                              <div *ngIf="grossTurnover.errors?.pattern">{{errors.revenueDetails.grossTurnover.invalid}}</div>
-                                          </div>
-      
-                                          <span class="addon">
-                                              <span class="icon icon-inr"></span>
-                                          </span>
-                                          <span class="in-word"></span>
-                                      </div>
-                                  </div>
-                                  <div class="btn-wrap">
-                                      <button type="submit" class="btn btn-primary" [ngClass]="{'disabled': !revenueForm.valid}"
-                                      [disabled]="!revenueForm.valid">Next</button>
-                                  </div>
-                              </form>
-                          </div>
-                      </div>
-                  </div>
 
-                  <div class="tab-content" [ngClass]="{'active': (activeTab == 14)}">
+                  <div class="tab-content" [ngClass]="{'active': (activeTab == 10)}">
                         <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(incomeSlider2)"></a>
                         <div class="lyt-tabs">
                             <div class="lhs">
@@ -1877,140 +1581,554 @@
                         </div>
                     </div>
         
-                    <div class="tab-content" [ngClass]="{'active': (activeTab == 15)}">
-                            <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(incomeSlider2)"></a>
+                    <div class="tab-content" [ngClass]="{'active': (activeTab == 11)}">
+                            <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(panSlider4)"></a>
                             <div class="lyt-tabs">
                                 <div class="lhs">
+            
                                     <div  class="swiper-container form-swiper"
                                           [swiper]="lhsConfig"
-                                          #incomeSlider1="ngxSwiper">
+                                          #panSlider3="ngxSwiper">
                                         <div class="swiper-wrapper">
                                             <div class="swiper-slide">
                                                 <div class="title-wrap">
-                                                    <h4 class="title">Enter applicant's<span class="cm-line-break"></span>income details</h4>
-                                                    <p class="note">Please enter household income & expenditure of main applicant & co-applicant/s</p>
-                                                </div>
-                                            </div>
-                                            <div class="swiper-slide">
-                                                <div class="title-wrap">
-                                                    <h4 class="title">Do applicant's <span class="cm-line-break"></span>income considered?</h4>
-                                                </div>
-                                            </div>
-                                            <div class="swiper-slide">
-                                                <div class="title-wrap">
-                                                    <h4 class="title">Applicant's monthly<span class="cm-line-break"></span>income details</h4>
-                                                </div>
-                                            </div>
-                                            <div class="swiper-slide">
-                                                <div class="title-wrap">
-                                                    <h4 class="title">Do you or any of the <span class="cm-line-break"></span>family members <span class="cm-line-break"></span> own a puccahouse <span class="cm-line-break"></span>anywhere in India?</h4>
-                                                    <p class="note">House made with a high quality materials throughout, including a floor, roof and exterior walls, are called pucca houses</p>
+                                                    <h4 class="title">Enter applicant's <span class="cm-line-break"></span>PAN details</h4>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+            
                                 </div>
                                 <div class="rhs">
                                     <div  class="swiper-container form-swiper"
-                                    [swiper]="rhsConfig"
-                                    (slidePrevTransitionStart)="slidePrevTransitionStart(incomeSlider1)"
-                                    (slideNextTransitionStart)="slideNextTransitionStart(incomeSlider1)"
-                                    #incomeSlider2="ngxSwiper">
-                                      <div class="swiper-wrapper">
-                                        <div class="swiper-slide">
-                                          <form class="bs-form">
-                                              <div class="form-wrap">
-                                                  <div class="form-group">
-                                                        <input type="text" class="form-control" />
-                                                      <label>Annual Family Income</label>
-                                                  </div>
-                                                    <div class="form-group">
-                                                          <input type="text" class="form-control" />
-                                                        <label>Monthly Expenditure</label>
+                                          [swiper]="rhsConfig"
+                                          (slidePrevTransitionStart)="slidePrevTransitionStart(panSlider3)"
+                                          (slideNextTransitionStart)="slideNextTransitionStart(panSlider3)"
+                                          #panSlider4="ngxSwiper">
+                                        <div class="swiper-wrapper">
+                                            <div class="swiper-slide">
+                                                <form class="bs-form"
+                                                     
+                                                      #panNumberForm2="ngForm"
+                                                      (ngSubmit)="submitPanNumber(panNumberForm2, panSlider4)">
+                                                    <div class="form-wrap">
+                                                        <div class="form-group last">
+                                                            <input  type="text"
+                                                                    class="form-control"
+                                                                    ngModel
+                                                                    id="pan-inpt2"
+                                                                    minlength="10"
+                                                                    maxlength="10"
+                                                                    pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}"                                              
+                                                                    name="pan"
+                                                                    #pan2="ngModel"
+                                                                    required />
+                                                            <label for="pan-inpt2" *ngIf="pan2.value == ''">Enter PAN numbers</label>
+                                                            <div *ngIf="pan2.touched && pan2.invalid" class="invalid-feedback">
+                                                                <div *ngIf="pan2.errors?.required">*PAN number is required</div>
+                                                                <div *ngIf="pan2.errors?.pattern ? true : false">*PAN not valid</div>
+                                                                <div *ngIf="pan2.errors?.minlength || pan2.errors?.maxlength">*PAN must be at least {{pan.errors.minlength.requiredLength}} characters</div>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                              <div class="btn-wrap">
-                                                  <button class="btn btn-primary"
-                                                  (click)="goToNextSlide(incomeSlider2)">Next</button>
-                                              </div>
-                                          </form>
+                                                    <div class="btn-wrap">
+                                                          <button type="submit"
+                                                                  class="btn btn-primary"
+                                                                  [ngClass]="{'disabled': !panNumberForm.valid}"
+                                                                  [disabled]="!panNumberForm.valid"
+                                                                  (click)="tabSwitch(12)">Next
+                                                          </button>
+                                                    </div>
+            
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+            
+                                </div>
+                            </div>
+            
+                          </div>
+            
+      
+                  <div class="tab-content" [ngClass]="{'active': (activeTab == 12)}">
+                       <a  href="javascript:void(0);" class="back-btn"  (click)="tabSwitch(1)"></a> 
+      
+                      <div class="lyt-tabs">
+                          <div class="lhs">
+                              <div class="title-wrap">
+                                  <h4 class="title">Enter Organization <span class="cm-line-break"></span>details</h4>
+                              </div>
+                          </div>
+                          <div class="rhs">
+                              <form   class="bs-form"
+                                      #organizationForm="ngForm"
+                                      (ngSubmit)="submitOrganizationDetails(organizationForm)">
+                                  <div class="form-wrap">
+                                      <div class="form-group">
+                                          <input type="text" class="form-control" id="org-name" 
+                                            pattern="^[A-Za-z\s]+$"
+                                            ngModel
+                                            #orgName="ngModel"
+                                            name="orgName"
+                                            required>
+                                          <label for="org-name" *ngIf="orgName.value == ''">Name of Organization</label>
+      
+                                          <div *ngIf="(orgName.touched || orgName.dirty) && orgName.invalid">
+                                              <div *ngIf="orgName.errors?.required">{{errors.organizationDetails.orgName.required}}</div>
+                                              <div *ngIf="orgName.errors?.pattern">{{errors.organizationDetails.orgName.invalid}}</div>
+                                          </div>
+                                      </div>
+                                      <div class="form-group typ-select">
+                                          <span class="control-title">Date of Incorporation</span>
+                                          <select ngModel name="day" required>
+                                                  <option class="select">DD</option>
+                                                  <option>01</option>
+                                                  <option>02</option>
+                                                  <option>04</option>
+                                                  <option>05</option>
+                                                  <option>06</option>
+                                                  <option>07</option>
+                                                  <option>08</option>
+                                                  <option>09</option>
+                                                  <option>10</option>
+                                                  <option>11</option>
+                                                  <option>12</option>
+                                                  <option>13</option>
+                                                  <option>14</option>
+                                                  <option>15</option>
+                                                  <option>16</option>
+                                                  <option>17</option>
+                                              </select>
+                                          <select ngModel name="month" required>
+                                                  <option class="select">MM</option>
+                                                  <option>01</option>
+                                                  <option>02</option>
+                                                  <option>04</option>
+                                                  <option>05</option>
+                                                  <option>06</option>
+                                                  <option>07</option>
+                                                  <option>08</option>
+                                                  <option>09</option>
+                                                  <option>10</option>
+                                                  <option>11</option>
+                                                  <option>12</option>
+                                              </select>
+                                          <select ngModel name="year" required>
+                                                  <option class="select">YY</option>
+                                                  <option>2001</option>
+                                                  <option>2002</option>
+                                                  <option>2004</option>
+                                                  <option>2005</option>
+                                                  <option>2006</option>
+                                                  <option>2007</option>
+                                                  <option>2008</option>
+                                                  <option>2009</option>
+                                                  <option>2010</option>
+                                                  <option>2011</option>
+                                                  <option>2012</option>
+                                              </select>
+                                      </div>
+                                      <div class="form-group last">
+                                          <span class="control-title">Constitution</span>
+                                          <select ngModel name="constitution" required>
+                                              <option value="Partnership">Partnership</option>
+                                              <option value="Ms">Proprietership</option>
+                                              <option value="Mrs">option3</option>
+                                              <option value="Dr">option4</option>
+                                          </select>
+                                      </div>
+                                  </div>
+                                  <div class="btn-wrap">
+                                      <button class="btn btn-primary"
+                                      [ngClass]="{'disabled': !organizationForm.valid}"
+                                      [disabled]="!organizationForm.valid" >Next</button>
+                                  </div>
+                              </form>
+                          </div>
+                      </div>
+                  </div>
+      
+      
+                  <div class="tab-content"  [ngClass]="{'active': (activeTab == 13)}">
+                      <a  href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
+                      <div class="lyt-tabs">
+                          <div class="lhs">
+                              <div class="title-wrap">
+                                  <h4 class="title">Enter applicant's <span class="cm-line-break"></span>registered address</h4>
+                              </div>
+      
+                          </div>
+                          <div class="rhs">
+                              <form class="bs-form" #registeredAddressForm="ngForm" (ngSubmit)="submitRegisteredAddress(registeredAddressForm)">
+                                  <div class="form-wrap">
+                                      <div class="form-group">
+                                          <input type="text" class="form-control" id="reg-add"
+                                            ngModel
+                                            pattern="^[0-9A-Za-z,_#\s]+$"
+                                            name="regAdd"
+                                            #regAdd="ngModel"
+                                            required>
+                                          <label for="reg-add" *ngIf="regAdd.value == ''">Registered Address</label>
+      
+                                          <div *ngIf="(regAdd.touched || regAdd.dirty) && regAdd.invalid" class="invalid-feedback">
+                                            <div *ngIf="regAdd.errors?.required">{{errors.registeredAddress.address.required}}</div>
+                                            <div *ngIf="regAdd.errors?.pattern">{{errors.registeredAddress.address.invalid}}</div>
+                                          </div>
+                                      </div>
+                                      <div class="form-group typ-optional">
+                                          <input type="text" class="form-control" name="landmark" ngModel id="landmark">
+                                          <label for="landmark">Landmark</label>
+                                          <span class="optional">optional</span>
+                                      </div>
+                                      <div class="form-group">
+                                          <input  type="text"
+                                                  class="form-control"
+                                                  id="regPinCode"
+                                                  required
+                                                  ngModel
+                                                  #regPinCode="ngModel" 
+                                                  name="pincode"
+                                                  maxlength="6"
+                                                  pattern="^[0-9]+$">
+                                          <label for="regPinCode">Pincode</label>
+                                          <div *ngIf="(regPinCode.touched || regPinCode.dirty) && regPinCode.invalid" class="invalid-feedback">
+                                              <div *ngIf="regPinCode.errors?.required">{{errors.registeredAddress.pinCode.required}}</div>
+                                              <div *ngIf="regPinCode.errors?.pattern">{{errors.registeredAddress.pinCode.invalid}}</div>
+                                          </div>
+                                      </div>
+                                      <div class="form-group last">
+                                          <input type="text" class="form-control" id="city-state"
+                                            required
+                                            ngModel
+                                            #cityState="ngModel" 
+                                            name="cityState"
+                                            pattern="^[0-9A-Za-z,_#/]+$">
+                                          <label for="city-state">City/State</label>
+      
+                                          <div *ngIf="(cityState.touched || cityState.dirty) && cityState.invalid" class="invalid-feedback">
+                                              <div *ngIf="cityState.errors?.required">{{errors.registeredAddress.stateOrCity.required}}</div>
+                                              <div *ngIf="cityState.errors?.pattern">{{errors.registeredAddress.stateOrCity.invalid}}</div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="btn-wrap">
+                                      <button class="btn btn-primary"
+                                      [ngClass]="{'disabled': !organizationForm.valid}"
+                                      [disabled]="!organizationForm.valid" >Next</button>
+      
+                                  </div>
+                              </form>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="tab-content" [ngClass]="{'active': (activeTab == 14)}">
+                      <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
+                      <div class="lyt-tabs">
+                          <div class="lhs">
+                              <div class="title-wrap">
+                                  <h4 class="title">Enter applicant's <span class="cm-line-break"></span>corporate address</h4>
+                              </div>
+                          </div>
+                          <div class="rhs">
+                              <form class="bs-form"   #corporateAddressForm="ngForm" (ngSubmit)="submitCorporateAddress(corporateAddressForm)" >
+                                  <div class="form-wrap">
+                                      <div class="form-group">
+                                          <input type="text" class="form-control" id="corp-add" 
+                                            ngModel
+                                            pattern="^[0-9A-Za-z,_#\s]+$"
+                                            name="corpAddress"
+                                            #corpAddress="ngModel"
+                                            required>
+                                          <label for="corp-add">Corporate Address</label>
+      
+                                          <div *ngIf="corpAddress.touched  && corpAddress.invalid" class="invalid-feedback">
+                                            <div *ngIf="corpAddress.errors?.required">{{errors.corporateAddress.address.required}}</div>
+                                            <div *ngIf="corpAddress.errors?.pattern">{{errors.corporateAddress.address.invalid}}</div>
+                                          </div>
+                                      </div>
+                                      <div class="form-group typ-optional">
+                                          <input type="text" ngModel name="landmark" class="form-control" id="landmark01">
+                                          <label for="landmark01">Landmark</label>
+                                          <span class="optional">optional</span>
+                                      </div>
+                                      <div class="form-group">
+                                          <input type="text" class="form-control" id="pincode01" 
+                                            ngModel
+                                            pattern="^[0-9A-Za-z,_#\s]+$"
+                                            name="pincode"
+                                            #corpPincode="ngModel"
+                                            required>
+                                          <label for="pincode01">Pincode</label>
+      
+                                          <div *ngIf="corpPincode.touched  && corpPincode.invalid" class="invalid-feedback">
+                                              <div *ngIf="corpPincode.errors?.required">{{errors.corporateAddress.pinCode.required}}</div>
+                                              <div *ngIf="corpPincode.errors?.pattern">{{errors.corporateAddress.pinCode.invalid}}</div>
+                                          </div>
+      
+                                      </div>
+                                      <div class="form-group">
+                                          <input type="text" class="form-control" id="city-state01" 
+                                            required
+                                            ngModel
+                                            #corpCityState="ngModel" 
+                                            name="corpCityState"
+                                            pattern="^[0-9A-Za-z,_#/]+$">
+                                          <label for="city-state01">City/State</label>
+      
+                                          <div *ngIf="corpCityState.touched  && corpCityState.invalid" class="invalid-feedback">
+                                              <div *ngIf="corpCityState.errors?.required">{{errors.corporateAddress.stateOrCity.required}}</div>
+                                              <div *ngIf="corpCityState.errors?.pattern">{{errors.corporateAddress.stateOrCity.invalid}}</div>
+                                          </div>
+                                      </div>
+                                      <div class="residence-no">
+                                          <div class="form-group">
+      
+                                              <input type="text" ngModel name="stdNumber" class="form-control" id="caStd">
+                                              <label for="caStd">STD</label>
+                                          </div>
+                                          <span class="seperator">-</span>
+                                          <div class="form-group">
+                                              <input type="text" class="form-control" ngModel name="phoneNumber" id="ca-res-no" data-validation-attr="residenceno">
+                                              <label for="ca-res-no">Residence number</label>
+                                          </div>
+                                      </div>
+                                      <div class="form-group last">
+                                          <input type="text" class="form-control" id="ofc-email"
+                                          required
+                                          ngModel
+                                          name="officeEmailId"
+                                          #ofcEmail="ngModel"
+                                          pattern="^[a-zA-Z0-9_.+-]+@[0-9a-zA -Z-]+.[a-zA-Z0-9]+.[a-z]+$">
+                                          <label for="ofc-email" *ngIf="ofcEmail.value==''">Office email ID</label>
+                                          <div *ngIf="ofcEmail.touched && ofcEmail.invalid" class="invalid-feedback">
+                                              <div *ngIf="ofcEmail.errors?.required">{{errors.corporateAddress.ofcEmail.required}}</div>
+                                              <div *ngIf="ofcEmail.errors?.pattern">{{errors.corporateAddress.ofcEmail.invalid}}</div>
+                                          </div>
+      
+                                      </div>
+                                  </div>
+                                  <div class="btn-wrap">
+                                      <button type="submit" class="btn btn-primary "  [ngClass]="{'disabled': !corporateAddressForm.valid}"
+                                      [disabled]="!corporateAddressForm.valid">Next</button>
+                                  </div>
+                              </form>
+                          </div>
+                      </div>
+                  </div>
+      
+                  <div class="tab-content" [ngClass]="{'active': (activeTab == 15)}">
+                      <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
+      
+                      <div class="lyt-tabs">
+                          <div class="lhs">
+                              <div class="title-wrap">
+                                  <h4 class="title">Enter applicant’s <span class="cm-line-break"></span>revenue details</h4>
+                              </div>
+                          </div>
+                          <div class="rhs">
+                              <form class="bs-form" #revenueForm="ngForm" (ngSubmit)="submitRevenueDetails(revenueForm)">
+                                  <div class="form-wrap">
+                                      <div class="form-group inr">
+                                          <input type="text" class="form-control" id="revenue"
+                                          ngModel
+                                          #revenue="ngModel"
+                                          name="revenue"
+                                          pattern="^[1-9]\d{0,17}(\.\d{0,4})?$"
+                                          required>
+                                          <label for="revenue" *ngIf="revenue.value==''">Revenue</label>
+                                          <div *ngIf="revenue.touched && revenue.invalid" class="invalid-feedback">
+                                              <div *ngIf="revenue.errors?.required">{{errors.revenueDetails.revenue.required}}</div>
+                                              <div *ngIf="revenue.errors?.pattern">{{errors.revenueDetails.revenue.invalid}}</div>
+                                          </div>
+      
+                                          <span class="addon">
+                                              <span class="icon icon-inr"></span>
+                                          </span>
+                                          <span class="in-word"></span>
+                                      </div>
+                                      <div class="form-group inr">
+                                          <input type="text" class="form-control" id="net-income"
+                                          required
+                                          ngModel
+                                          #annualNetincome="ngModel"
+                                          name="annualNetIncome"
+                                          pattern="^[1-9]\d{0,17}(\.\d{0,4})?$">
+                                          <label for="net-income" *ngIf="annualNetincome.value==''">Annual Net Income</label>
+                                          <div *ngIf="annualNetincome.touched && annualNetincome.invalid" class="invalid-feedback">
+                                              <div *ngIf="annualNetincome.errors?.required">{{errors.revenueDetails.annualNetincome.required}}</div>
+                                              <div *ngIf="annualNetincome.errors?.pattern">{{errors.revenueDetails.annualNetincome.invalid}}</div>
+                                          </div>
+      
+                                          <span class="addon">
+                                              <span class="icon icon-inr"></span>
+                                          </span>
+                                          <span class="in-word"></span>
+                                      </div>
+                                      <div class="form-group inr last">
+                                          <input type="text" class="form-control" id="gross-turnover" 
+                                          required
+                                          ngModel
+                                          #grossTurnover="ngModel"
+                                          name="grossTurnOver"
+                                          pattern="^[1-9]\d{0,17}(\.\d{0,4})?$">
+                                          <label for="gross-turnover" *ngIf="grossTurnover.value==''">Gross Turnover</label>
+                                          <div *ngIf="grossTurnover.touched && grossTurnover.invalid" class="invalid-feedback">
+                                              <div *ngIf="grossTurnover.errors?.required">{{errors.revenueDetails.grossTurnover.required}}</div>
+                                              <div *ngIf="grossTurnover.errors?.pattern">{{errors.revenueDetails.grossTurnover.invalid}}</div>
+                                          </div>
+      
+                                          <span class="addon">
+                                              <span class="icon icon-inr"></span>
+                                          </span>
+                                          <span class="in-word"></span>
+                                      </div>
+                                  </div>
+                                  <div class="btn-wrap">
+                                      <button type="submit" class="btn btn-primary" [ngClass]="{'disabled': !revenueForm.valid}"
+                                      [disabled]="!revenueForm.valid">Next</button>
+                                  </div>
+                              </form>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="tab-content" [ngClass]="{'active': (activeTab == 16)}">
+                        <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(incomeSlider4)"></a>
+                        <div class="lyt-tabs">
+                            <div class="lhs">
+                                <div  class="swiper-container form-swiper"
+                                      [swiper]="lhsConfig"
+                                      #incomeSlider3="ngxSwiper">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide">
+                                            <div class="title-wrap">
+                                                <h4 class="title">Enter applicant's<span class="cm-line-break"></span>income details</h4>
+                                                <p class="note">Please enter household income & expenditure of main applicant & co-applicant/s</p>
+                                            </div>
                                         </div>
                                         <div class="swiper-slide">
-                                                <form class="bs-form">
+                                            <div class="title-wrap">
+                                                <h4 class="title">Do applicant's <span class="cm-line-break"></span>income considered?</h4>
+                                            </div>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <div class="title-wrap">
+                                                <h4 class="title">Applicant's monthly<span class="cm-line-break"></span>income details</h4>
+                                            </div>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <div class="title-wrap">
+                                                <h4 class="title">Do you or any of the <span class="cm-line-break"></span>family members <span class="cm-line-break"></span> own a puccahouse <span class="cm-line-break"></span>anywhere in India?</h4>
+                                                <p class="note">House made with a high quality materials throughout, including a floor, roof and exterior walls, are called pucca houses</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rhs">
+                                <div  class="swiper-container form-swiper"
+                                        [swiper]="rhsConfig"
+                                        (slidePrevTransitionStart)="slidePrevTransitionStart(incomeSlider3)"
+                                        (slideNextTransitionStart)="slideNextTransitionStart(incomeSlider3)"
+                                        #incomeSlider4="ngxSwiper">
+                                  <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                      <form class="bs-form">
+                                          <div class="form-wrap">
+                                              <div class="form-group">
+                                                    <input type="text" id="annual-family-income1" class="form-control" />
+                                                  <label for="annual-family-income1">Annual Family Income</label>
+                                              </div>
+                                                <div class="form-group">
+                                                      <input type="text" id="monthly-expenditure1" class="form-control" />
+                                                    <label for="monthly-expenditure1">Monthly Expenditure</label>
+                                                </div>
+                                            </div>
+                                          <div class="btn-wrap">
+                                              <button   type="button"
+                                                        class="btn btn-primary"
+                                                        (click)="goToNextSlide(incomeSlider4)">Next
+                                                </button>
+                                          </div>
+                                      </form>
+                                    </div>
+                                    <div class="swiper-slide">
+                                            <form class="bs-form">
+                                                <div class="form-wrap">
+                                                    <div class="bs-radio">
+                                                        <input  type="radio"
+                                                                name="income-consider"
+                                                                id="yes-consider1"
+                                                                [value]="true"
+                                                                (change)="incomeDetailsYesNo(true, incomeSlider4)"
+                                                                class="not-usual" />
+                                                        <label for="yes-consider1"><span>Yes</span></label>
+                                                    </div>
+                                                    <div class="bs-radio">
+                                                        <input  type="radio"
+                                                                name="income-consider"
+                                                                id="no-consider1"
+                                                                class="not-usual"
+                                                                [value]="false"
+                                                                (change)="incomeDetailsYesNo(false, incomeSlider4)" />
+                                                        <label for="no-consider1"><span>No</span></label>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="swiper-slide">
+                                                <form class="bs-form" >
                                                     <div class="form-wrap">
-                                                        <div class="bs-radio">
-                                                            <input  type="radio"
-                                                                    name="income-consider"
-                                                                    id="yes-consider"
-                                                                    [value]="true"
-                                                                    (change)="incomeDetailsYesNo(true, incomeSlider2)"
-                                                                    class="not-usual" />
-                                                            <label for="yes-consider"><span>Yes</span></label>
+                                                        <div class="form-group inr">
+                                                            <input type="text" class="form-control" id="app-monthly-income1">
+                                                            <label for="app-monthly-income1">Monthly income</label>
+                                                            <span class="addon">
+                                                                <span class="icon icon-inr"></span>
+                                                            </span>
+                                                            <span class="in-word"></span>
                                                         </div>
-                                                        <div class="bs-radio">
-                                                            <input  type="radio"
-                                                                    name="income-consider"
-                                                                    id="no-consider"
-                                                                    class="not-usual"
-                                                                    [value]="false"
-                                                                    (change)="incomeDetailsYesNo(false, incomeSlider2)" />
-                                                            <label for="no-consider"><span>No</span></label>
+                                                        <div class="form-group">
+                                                            <span class="control-title">Assessment methodology</span>
+                                                            <select class="js-select" name="assessment">
+                                                                <option value="oc1">Net Salary</option>
+                                                                <option value="oc2">Gross Salary</option>
+                                                                <option value="oc3">Income Plus</option>
+                                                                <option value="oc3">Normal Profit</option>
+                                                                <option value="oc3">GST surplus method</option>
+                                                                <option value="oc3">RTR</option>
+                                                                <option value="oc3">BT+Top up</option>
+                                                                <option value="oc3">Gross Receipt</option>
+                                                                <option value="oc3">Industry Margin</option>
+                                                                <option value="oc3">Assessed Income</option>
+                                                            </select>
                                                         </div>
+                                                    </div>
+                                                    <div class="btn-wrap">
+                                                        <button class="btn btn-primary" (click)="goToNextSlide(incomeSlider4)">Next</button>
                                                     </div>
                                                 </form>
                                             </div>
                                             <div class="swiper-slide">
-                                                    <form class="bs-form" >
+                                                    <form class="bs-form">
                                                         <div class="form-wrap">
-                                                            <div class="form-group inr">
-                                                                <input type="text" class="form-control" id="app-monthly-income">
-                                                                <label for="app-monthly-income">Monthly income</label>
-                                                                <span class="addon">
-                                                                    <span class="icon icon-inr"></span>
-                                                                </span>
-                                                                <span class="in-word"></span>
+                                                            <div class="bs-radio">
+                                                                <input type="radio" name="income-consider" id="yes-consider2" class="not-usual">
+                                                                <label for="yes-consider2"><span>Yes</span></label>
                                                             </div>
-                                                            <div class="form-group">
-                                                                <span class="control-title">Assessment methodology</span>
-                                                                <select class="js-select" name="assessment">
-                                                                    <option value="oc1">Net Salary</option>
-                                                                    <option value="oc2">Gross Salary</option>
-                                                                    <option value="oc3">Income Plus</option>
-                                                                    <option value="oc3">Normal Profit</option>
-                                                                    <option value="oc3">GST surplus method</option>
-                                                                    <option value="oc3">RTR</option>
-                                                                    <option value="oc3">BT+Top up</option>
-                                                                    <option value="oc3">Gross Receipt</option>
-                                                                    <option value="oc3">Industry Margin</option>
-                                                                    <option value="oc3">Assessed Income</option>
-                                                                </select>
+                                                            <div class="bs-radio">
+                                                                <input type="radio" name="income-consider" id="no-consider2" class="not-usual">
+                                                                <label for="no-consider2"><span>No</span></label>
                                                             </div>
-                                                        </div>
-                                                        <div class="btn-wrap">
-                                                            <button class="btn btn-primary" (click)="goToNextSlide(incomeSlider2)">Next</button>
                                                         </div>
                                                     </form>
-                                                </div>
-                                                <div class="swiper-slide">
-                                                        <form class="bs-form">
-                                                            <div class="form-wrap">
-                                                                <div class="bs-radio">
-                                                                    <input type="radio" name="income-consider" id="yes-consider" class="not-usual">
-                                                                    <label for="yes-consider"><span>Yes</span></label>
-                                                                </div>
-                                                                <div class="bs-radio">
-                                                                    <input type="radio" name="income-consider" id="no-consider" class="not-usual">
-                                                                    <label for="no-consider"><span>No</span></label>
-                                                                </div>
-                                                            </div>
-                                                        </form>
-                                                </div>
-            
-                                      </div>
-                                    </div>
+                                            </div>
+        
+                                  </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
                   
 
             </div>
