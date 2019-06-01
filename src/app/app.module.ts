@@ -50,6 +50,11 @@ import { ConfirmDeactivateGuard } from './guards/candeactivate.guard';
 import { UtilService } from './services/util.service';
 import { ViewFormCoApplicantComponent } from './applicant-dashboard/view-form/view-form-co-applicant/view-form-co-applicant.component';
 import { FieldFillDirective } from './directives/field-fill.directive';
+import { TermsAndConditionsComponent } from './terms-and-conditions/terms-and-conditions.component';
+import { ProceedToReviewFormComponent } from './terms-and-conditions/proceed-to-review-form/proceed-to-review-form.component';
+import { ReviewApplicationFormComponent } from './terms-and-conditions/review-application-form/review-application-form.component';
+import { Declaration1Component } from './terms-and-conditions/declaration1/declaration1.component';
+import { Declaration2Component } from './terms-and-conditions/declaration2/declaration2.component';
 
 
 const appRoutes: Routes = [
@@ -130,6 +135,41 @@ const appRoutes: Routes = [
       listOfValues: ListOfValuesResolverService
     }
   },
+  {
+    path: "terms-and-conditions",
+    component: TermsAndConditionsComponent,
+    children: [
+      { path: '', redirectTo: "proceed-to-review", pathMatch: "full" },
+      {
+        path: 'proceed-to-review',
+        component: ProceedToReviewFormComponent,
+        resolve: {
+          listOfValues: ListOfValuesResolverService
+        }
+      },
+      {
+        path: 'review-application',
+        component: ReviewApplicationFormComponent,
+        resolve: {
+          listOfValues: ListOfValuesResolverService
+        }
+      },
+      {
+        path: 'declaration1',
+        component: Declaration1Component,
+        resolve: {
+          listOfValues: ListOfValuesResolverService
+        }
+      },
+      {
+        path: 'declaration2',
+        component: Declaration2Component,
+        resolve: {
+          listOfValues: ListOfValuesResolverService
+        }
+      }
+    ]
+  },
   { path: "**", component: PageNotFoundComponent }
 ];
  
@@ -169,7 +209,12 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     DocumentUploadComponent,
     PageNotFoundComponent,
     ViewFormCoApplicantComponent,
-    FieldFillDirective
+    FieldFillDirective,
+    TermsAndConditionsComponent,
+    ProceedToReviewFormComponent,
+    ReviewApplicationFormComponent,
+    Declaration1Component,
+    Declaration2Component,
   ],
   imports: [
     BrowserModule,

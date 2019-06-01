@@ -10,11 +10,20 @@ import { UtilService } from '../services/util.service';
 export class MenubarHeaderComponent implements OnInit {
   
   isMenuBarShown: boolean;
+  isViewFormVisible: boolean;
+  isLogoutVisible: boolean;
 
   constructor(private utilService: UtilService, private commonDataService: CommonDataService) {
     this.commonDataService.isMenuBarShown.subscribe((value) => {
-      console.log("value ", value);
       this.isMenuBarShown = value;
+    });
+
+    this.commonDataService.isViewFormVisible.subscribe((value) => {
+      this.isViewFormVisible = value;
+    });
+
+    this.commonDataService.isLogoutVisible.subscribe((value) => {
+      this.isLogoutVisible = value;
     });
   }
 

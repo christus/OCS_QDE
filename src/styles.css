@@ -5131,7 +5131,8 @@ img {
 
 .tabs .tabs-head .tab-link a {
 	font-family: zurich-bold;
-	font-size: .94vw;
+	/* font-size: .94vw; */
+	font-size: 0.85vw;
 	line-height: 1.88vw;
 	color: #bbb;
 	text-transform: uppercase;

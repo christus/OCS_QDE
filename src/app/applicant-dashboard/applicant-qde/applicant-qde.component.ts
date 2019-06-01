@@ -286,7 +286,7 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
   
   private applicantIndividual: boolean = true;
 
-  private fragments = [ 'pan',
+  private fragments = [ 'pan1',
                         'personal',
                         'contact',
                         'address',
@@ -295,12 +295,13 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
                         'other',
                         'occupation',
                         'correspondence',
+                        'income1',
+                        'pan2',
                         'organization',
                         'regAddress',
                         'corpAddr',
                         'revenueAddr',
-                        'income1',
-                        'income2'
+                        'income2',
                       ];
 
   applicantIndex: number;
@@ -491,7 +492,7 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
   
       this.activeTab = tabIndex;
 
-      if(tabIndex == 9) {
+      if(tabIndex >= 10) {
         this.applicantIndividual = false;
       }else if(tabIndex == 0) {
         this.applicantIndividual = true;
