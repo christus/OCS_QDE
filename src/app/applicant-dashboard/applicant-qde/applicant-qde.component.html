@@ -108,7 +108,7 @@
                                                           name="isIndividual"
                                                           id="non-individual"
                                                           [(ngModel)]="isIndividual"
-                                                          (change)="tabSwitch(10)" />
+                                                          (change)="changeIsIndividual(false, panSlider2)" />
                                                   <label for="non-individual"><span>Non-Individual</span></label>
                                               </div>
                                           </div>
@@ -1590,6 +1590,173 @@
                 </div>
             </div>
 
+
+            <div class="tab-content" [ngClass]="{'active': (activeTab == 9)}">
+                <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(incomeSlider2)"></a>
+                <div class="lyt-tabs">
+                    <div class="lhs">
+                        <div  class="swiper-container form-swiper"
+                              [swiper]="lhsConfig"
+                              #incomeSlider1="ngxSwiper">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <div class="title-wrap">
+                                        <h4 class="title">Enter applicant's<span class="cm-line-break"></span>income details</h4>
+                                        <p class="note">Please enter household income & expenditure of main applicant & co-applicant/s</p>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="title-wrap">
+                                        <h4 class="title">Do applicant's <span class="cm-line-break"></span>income considered?</h4>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="title-wrap">
+                                        <h4 class="title">Applicant's monthly<span class="cm-line-break"></span>income details</h4>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="title-wrap">
+                                        <h4 class="title">Do you or any of the <span class="cm-line-break"></span>family members <span class="cm-line-break"></span> own a puccahouse <span class="cm-line-break"></span>anywhere in India?</h4>
+                                        <p class="note">House made with a high quality materials throughout, including a floor, roof and exterior walls, are called pucca houses</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="rhs">
+                        <div    class="swiper-container form-swiper"
+                                [swiper]="rhsConfig"
+                                (slidePrevTransitionStart)="slidePrevTransitionStart(incomeSlider1)"
+                                (slideNextTransitionStart)="slideNextTransitionStart(incomeSlider1)"
+                                #incomeSlider2="ngxSwiper">
+                          <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                              <form class="bs-form"
+                                #applicantIncomeNonIndividual="ngForm" (ngSubmit)="submitIncomeDetails1(applicantIncomeNonIndividual, incomeSlider2)">
+                                  <div class="form-wrap">
+                                      <div class="form-group">
+                                            <input type="text" class="form-control"
+                                            id="annualFamilyIncome"
+                                            [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.annualFamilyIncome"
+                                            #annualFamilyIncome="ngModel"
+                                            name="annualFamilyIncome"
+                                            />
+                                          <label for="annualFamilyIncome" *ngIf="annualFamilyIncome.value==''">Annual Family Income</label>
+                                      </div>
+                                        <div class="form-group">
+                                              <input type="text" class="form-control" 
+                                              id="monthlyExpenditure"
+                                              [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.monthlyExpenditure"
+                                              #monthlyExpenditure="ngModel"
+                                              name="monthlyExpenditure"
+                                              />
+                                            <label for="monthlyExpenditure" *ngIf="monthlyExpenditure.value==''" >Monthly Expenditure</label>
+                                        </div>
+                                    </div>
+                                  <div class="btn-wrap">
+                                        <button 
+                                            type="submit"
+                                            class="btn btn-primary">
+                                             <!-- (click)="goToNextSlide(incomeSlider2)" -->
+                                        Next
+                                        </button>
+                                  </div>
+                              </form>
+                            </div>
+                            <div class="swiper-slide">
+                                    <form class="bs-form"
+                                    #applicantIncome2NonIndividual="ngForm" (ngSubmit)="submitIncomeDetails1(applicantIncome2NonIndividual, incomeSlider2)" >
+                                        <div class="form-wrap">
+                                            <div class="bs-radio">
+                                                <input  type="radio"
+                                                        name="income-consider"
+                                                        id="yes-consider"
+                                                        [value]="true"
+                                                        (change)="incomeDetailsYesNo(true, incomeSlider2)"
+                                                        class="not-usual" />
+                                                <label for="yes-consider"><span>Yes</span></label>
+                                            </div>
+                                            <div class="bs-radio">
+                                                <input  type="radio"
+                                                        name="income-consider"
+                                                        id="no-consider"
+                                                        class="not-usual"
+                                                        [value]="false"
+                                                        (change)="incomeDetailsYesNo(false, incomeSlider2)" />
+                                                <label for="no-consider"><span>No</span></label>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="swiper-slide">
+                                        <form class="bs-form" 
+                                        #applicantIncome3NonIndividual="ngForm" (ngSubmit)="submitIncomeDetails2(applicantIncome3NonIndividual, incomeSlider2)">
+                                            <div class="form-wrap">
+                                                <div class="form-group inr">
+                                                    <input type="text" class="form-control" id="app-monthly-income"
+                                                    [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.monthlyIncome"
+                                                    #monthlyIncome="ngModel"
+                                                    name="monthlyIncome">
+                                                    <label for="monthlyIncome" *ngIf="monthlyIncome.value==''">Monthly income</label>
+                                                    <span class="addon">
+                                                        <span class="icon icon-inr"></span>
+                                                    </span>
+                                                    <span class="in-word"></span>
+                                                </div>
+                                                <div class="form-group">
+                                                    <span class="control-title">Assessment methodology</span>
+                                                    <select class="js-select" name="assessment"
+                                                    [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.assessmentMethodology"
+                                                    #assessment="ngModel"
+                                                    name="assessment">
+                                                        <option value="1">Net Salary</option>
+                                                        <option value="2">Gross Salary</option>
+                                                        <option value="3">Income Plus</option>
+                                                        <option value="4">Normal Profit</option>
+                                                        <option value="5">GST surplus method</option>
+                                                        <option value="6">RTR</option>
+                                                        <option value="7">BT+Top up</option>
+                                                        <option value="8">Gross Receipt</option>
+                                                        <option value="9">Industry Margin</option>
+                                                        <option value="10">Assessed Income</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="btn-wrap">
+                                                <button type="submit" class="btn btn-primary">Next</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <form class="bs-form"
+                                            #applicantIncome4="ngForm">
+                                                <div class="form-wrap">
+                                                    <div class="bs-radio">
+                                                        <input type="radio" name="income-consider" id="yes-consider" class="not-usual"
+                                                        [value]="true"
+                                                        (change)="doHoldPuccaHouse(true)">
+                                                        <label for="yes-consider"><span>Yes</span></label>
+                                                    </div>
+                                                    <div class="bs-radio">
+                                                        <input type="radio" name="income-consider" id="no-consider" class="not-usual"
+                                                        [value]="false"
+                                                        (change)="doHoldPuccaHouse(false)">
+                                                        <label for="no-consider"><span>No</span></label>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                    </div>
+
+                          </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
             <div class="tab-content" [ngClass]="{'active': (activeTab == 10)}">
                 <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(panSlider4)"></a>
                 <div class="lyt-tabs">
@@ -1619,12 +1786,12 @@
                                     <form class="bs-form"
                                          
                                           #panNumberForm2="ngForm"
-                                          (ngSubmit)="submitPanNumber(panNumberForm2, panSlider4)">
+                                          (ngSubmit)="submitOrgPanNumber(panNumberForm2, panSlider4)">
                                         <div class="form-wrap">
                                             <div class="form-group last">
                                                 <input  type="text"
                                                         class="form-control"
-                                                        ngModel
+                                                        [(ngModel)]="qde.application.applicants[applicantIndex].pan.panNumber"
                                                         id="pan-inpt2"
                                                         minlength="10"
                                                         maxlength="10"
@@ -1643,9 +1810,9 @@
                                         <div class="btn-wrap">
                                               <button type="submit"
                                                       class="btn btn-primary"
-                                                      [ngClass]="{'disabled': !panNumberForm.valid}"
-                                                      [disabled]="!panNumberForm.valid"
-                                                      (click)="tabSwitch(11)">Next
+                                                      [ngClass]="{'disabled': !panNumberForm2.valid}"
+                                                      [disabled]="!panNumberForm2.valid"
+                                                      >Next
                                               </button>
                                         </div>
 
@@ -1930,13 +2097,13 @@
                 </div>
             </div>
 
-            <div class="tab-content" [ngClass]="{'active': (activeTab == 9)}">
-                <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(incomeSlider2)"></a>
+            <div class="tab-content" [ngClass]="{'active': (activeTab == 14)}">
+                <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(incomeSlider4)"></a>
                 <div class="lyt-tabs">
                     <div class="lhs">
                         <div  class="swiper-container form-swiper"
                               [swiper]="lhsConfig"
-                              #incomeSlider1="ngxSwiper">
+                              #incomeSlider3="ngxSwiper">
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide">
                                     <div class="title-wrap">
@@ -1963,57 +2130,40 @@
                             </div>
                         </div>
                     </div>
-                    
                     <div class="rhs">
-                        <div    class="swiper-container form-swiper"
-                                [swiper]="rhsConfig"
-                                (slidePrevTransitionStart)="slidePrevTransitionStart(incomeSlider1)"
-                                (slideNextTransitionStart)="slideNextTransitionStart(incomeSlider1)"
-                                #incomeSlider2="ngxSwiper">
+                        <div  class="swiper-container form-swiper"
+                        [swiper]="rhsConfig"
+                        (slidePrevTransitionStart)="slidePrevTransitionStart(incomeSlider3)"
+                        (slideNextTransitionStart)="slideNextTransitionStart(incomeSlider3)"
+                        #incomeSlider4="ngxSwiper">
                           <div class="swiper-wrapper">
                             <div class="swiper-slide">
-                              <form class="bs-form"
-                                #applicantIncomeNonIndividual="ngForm" (ngSubmit)="submitIncomeDetails1(applicantIncomeNonIndividual, incomeSlider2)">
+                              <form class="bs-form">
                                   <div class="form-wrap">
                                       <div class="form-group">
-                                            <input type="text" class="form-control"
-                                            id="annualFamilyIncome"
-                                            [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.annualFamilyIncome"
-                                            #annualFamilyIncome="ngModel"
-                                            name="annualFamilyIncome"
-                                            />
-                                          <label for="annualFamilyIncome" *ngIf="annualFamilyIncome.value==''">Annual Family Income</label>
+                                            <input type="text" class="form-control" />
+                                          <label>Annual Family Income</label>
                                       </div>
                                         <div class="form-group">
-                                              <input type="text" class="form-control" 
-                                              id="monthlyExpenditure"
-                                              [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.monthlyExpenditure"
-                                              #monthlyExpenditure="ngModel"
-                                              name="monthlyExpenditure"
-                                              />
-                                            <label for="monthlyExpenditure" *ngIf="monthlyExpenditure.value==''" >Monthly Expenditure</label>
+                                              <input type="text" class="form-control" />
+                                            <label>Monthly Expenditure</label>
                                         </div>
                                     </div>
                                   <div class="btn-wrap">
-                                        <button 
-                                            type="submit"
-                                            class="btn btn-primary">
-                                             <!-- (click)="goToNextSlide(incomeSlider2)" -->
-                                        Next
-                                        </button>
+                                      <button class="btn btn-primary"
+                                      (click)="goToNextSlide(incomeSlider4)">Next</button>
                                   </div>
                               </form>
                             </div>
                             <div class="swiper-slide">
-                                    <form class="bs-form"
-                                    #applicantIncome2NonIndividual="ngForm" (ngSubmit)="submitIncomeDetails1(applicantIncome2NonIndividual, incomeSlider2)" >
+                                    <form class="bs-form">
                                         <div class="form-wrap">
                                             <div class="bs-radio">
                                                 <input  type="radio"
                                                         name="income-consider"
                                                         id="yes-consider"
                                                         [value]="true"
-                                                        (change)="incomeDetailsYesNo(true, incomeSlider2)"
+                                                        (change)="incomeDetailsYesNo(true, incomeSlider4)"
                                                         class="not-usual" />
                                                 <label for="yes-consider"><span>Yes</span></label>
                                             </div>
@@ -2023,22 +2173,18 @@
                                                         id="no-consider"
                                                         class="not-usual"
                                                         [value]="false"
-                                                        (change)="incomeDetailsYesNo(false, incomeSlider2)" />
+                                                        (change)="incomeDetailsYesNo(false, incomeSlider4)" />
                                                 <label for="no-consider"><span>No</span></label>
                                             </div>
                                         </div>
                                     </form>
                                 </div>
                                 <div class="swiper-slide">
-                                        <form class="bs-form" 
-                                        #applicantIncome3NonIndividual="ngForm" (ngSubmit)="submitIncomeDetails2(applicantIncome3NonIndividual, incomeSlider2)">
+                                        <form class="bs-form" >
                                             <div class="form-wrap">
                                                 <div class="form-group inr">
-                                                    <input type="text" class="form-control" id="app-monthly-income"
-                                                    [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.monthlyIncome"
-                                                    #monthlyIncome="ngModel"
-                                                    name="monthlyIncome">
-                                                    <label for="monthlyIncome" *ngIf="monthlyIncome.value==''">Monthly income</label>
+                                                    <input type="text" class="form-control" id="app-monthly-income">
+                                                    <label for="app-monthly-income">Monthly income</label>
                                                     <span class="addon">
                                                         <span class="icon icon-inr"></span>
                                                     </span>
@@ -2046,44 +2192,38 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <span class="control-title">Assessment methodology</span>
-                                                    <select class="js-select" name="assessment"
-                                                    [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.assessmentMethodology"
-                                                    #assessment="ngModel"
-                                                    name="assessment">
-                                                        <option value="1">Net Salary</option>
-                                                        <option value="2">Gross Salary</option>
-                                                        <option value="3">Income Plus</option>
-                                                        <option value="4">Normal Profit</option>
-                                                        <option value="5">GST surplus method</option>
-                                                        <option value="6">RTR</option>
-                                                        <option value="7">BT+Top up</option>
-                                                        <option value="8">Gross Receipt</option>
-                                                        <option value="9">Industry Margin</option>
-                                                        <option value="10">Assessed Income</option>
+                                                    <select class="js-select" name="assessment">
+                                                        <option value="oc1">Net Salary</option>
+                                                        <option value="oc2">Gross Salary</option>
+                                                        <option value="oc3">Income Plus</option>
+                                                        <option value="oc3">Normal Profit</option>
+                                                        <option value="oc3">GST surplus method</option>
+                                                        <option value="oc3">RTR</option>
+                                                        <option value="oc3">BT+Top up</option>
+                                                        <option value="oc3">Gross Receipt</option>
+                                                        <option value="oc3">Industry Margin</option>
+                                                        <option value="oc3">Assessed Income</option>
                                                     </select>
 
                                                 </div>
 
                                             </div>
                                             <div class="btn-wrap">
-                                                <button type="submit" class="btn btn-primary">Next</button>
+                                                <button class="btn btn-primary" (click)="goToNextSlide(incomeSlider4)">Next</button>
                                             </div>
                                         </form>
                                     </div>
                                     <div class="swiper-slide">
-                                        <form class="bs-form"
-                                            #applicantIncome4="ngForm">
+                                            <form class="bs-form">
                                                 <div class="form-wrap">
                                                     <div class="bs-radio">
-                                                        <input type="radio" name="income-consider" id="yes-consider" class="not-usual"
-                                                        [value]="true"
-                                                        (change)="doHoldPuccaHouse(true)">
+                                                        <input type="radio"
+                                                         name="income-consider" 
+                                                         id="yes-consider" class="not-usual">
                                                         <label for="yes-consider"><span>Yes</span></label>
                                                     </div>
                                                     <div class="bs-radio">
-                                                        <input type="radio" name="income-consider" id="no-consider" class="not-usual"
-                                                        [value]="false"
-                                                        (change)="doHoldPuccaHouse(false)">
+                                                        <input type="radio" name="income-consider" id="no-consider" class="not-usual">
                                                         <label for="no-consider"><span>No</span></label>
                                                     </div>
                                                 </div>
@@ -2093,10 +2233,10 @@
                           </div>
                         </div>
                     </div>
-
-
                 </div>
             </div>
+
+            
 
             <div class="tab-content" [ngClass]="{'active': (activeTab == 15)}">
                     <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(incomeSlider4)"></a>

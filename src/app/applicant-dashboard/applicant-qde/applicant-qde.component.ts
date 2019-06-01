@@ -286,6 +286,7 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
   // Will be deprecated in next commit if not used
   // @ViewChild('panSlider1') private panSlider1: ElementRef;
   @ViewChild('panSlider2') private panSlider2: Swiper;
+  @ViewChild('panSlider4') private panSlider4: Swiper;
   // @ViewChild('pdSlider1') private pdSlider1: ElementRef;
   // @ViewChild('pdSlider2') private pdSlider2: ElementRef;
   // @ViewChild('maritalSlider1') private maritalSlider1: ElementRef;
@@ -362,6 +363,7 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
   }
   
   private panslide: boolean;
+  private panslide2: boolean;
 
   ngOnInit() {
 
@@ -406,9 +408,12 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
 
     // Check Whether there is qde data to be filled or else Initialize Qde
     this.route.params.subscribe((params) => {
-      
+
       // Make an http request to get the required qde data and set using setQde
       if(params.applicantId != undefined && params.applicantId != null) {
+
+        //individual pan
+
         if(this.panslide == true) {
      
           console.log('Coming', this.panslide);
@@ -425,13 +430,31 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
 
         this.cds.changePanSlide(false);
 
+        // non individual pan
+
+        if(this.panslide2 == true) {
+     
+          console.log('Coming', this.panslide2);
+          this.panSlider4.setIndex(2);
+        }
+
+        if(this.panslide2 == false && this.qde.application.applicants[this.applicantIndex].isIndividual != null){
+          if(this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
+            this.goToNextSlide(this.panSlider4);
+          }else{
+            this.tabSwitch(9);
+          }
+        }
+
+        this.cds.changePanSlide(false);
+
         this.qdeHttp.getQdeData(params.applicantId).subscribe(response => {
            var result = JSON.parse(response["ProcessVariables"]["response"]);
            this.qdeService.setQde(result)
         });
 
       }
-
+     
       this.qde = this.qdeService.getQde();
     });
 
@@ -629,6 +652,52 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
       // Throw Request Failure Error
     });   
   }
+
+
+  //-------------------------------------------------------------
+  // PAN
+  //-------------------------------------------------------------
+
+  submitOrgPanNumber(form: NgForm, swiperInstance ?: Swiper) {
+
+    event.preventDefault();
+
+    if (form && !form.valid) {
+      return;
+    }
+
+    this.qde.application.applicants[this.applicantIndex].pan = {
+      isIndividual: this.isIndividual,
+      panNumber: form.value.pan,
+      docType: form.value.docType,
+      docNumber: form.value.docNumber
+    };
+
+    this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
+      // If successful
+      if(response["ProcessVariables"]["status"]) {
+        let result = this.parseJson(response["ProcessVariables"]["response"]);
+        this.qde.application.ocsNumber = result["application"]["ocsNumber"];
+        this.qde.application.applicationId = result["application"]["applicationId"];
+        this.qde.application.applicants[this.applicantIndex].applicantId =  result["application"]["applicants"][this.applicantIndex]["applicantId"];
+        
+        //this.goToNextSlide(swiperInstance);
+        console.log(":::::", this.qde)
+
+        this.cds.changePanSlide2(true);
+        this.router.navigate(['/applicant/'+this.qde.application.applicationId], {fragment: "organization"});
+        
+      } else {
+        // Throw Invalid Pan Error
+      }
+    }, (error) => {
+      console.log('error ', error);
+      alert("error"+error);
+      // Throw Request Failure Error
+    });   
+  }
+
+  
   //-------------------------------------------------------------
   
 
@@ -1356,7 +1425,7 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
       this.goToNextSlide(swiperInstance);
       this.isIndividual = true;
     } else {
-      this.tabSwitch(9);
+      this.tabSwitch(10);
       this.isIndividual = false;
     }
   }
