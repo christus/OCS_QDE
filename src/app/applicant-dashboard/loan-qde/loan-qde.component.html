@@ -58,15 +58,35 @@
                     </div>
                     <div class="form-group">
                         <span class="control-title">Type of loan</span>
-                        <select class="js-select" ngModel name="loanPurpose" required>
+<!--                         <select class="js-select" ngModel name="loanType" required>
                           <option>Home</option>
-                        </select>
+                        </select> -->
+
+                        <kendo-dropdownlist class="form-control"
+                          [data]="loanTypes" 
+                          textField="key"
+                          valueField="value"
+                          name="loanType"
+                          [(ngModel)]="selectedLoanType"
+                          >
+                        </kendo-dropdownlist>
+
                       </div>
                     <div class="form-group">
                       <span class="control-title">Loan purpose</span>
-                      <select class="js-select" ngModel name="loanPurpose" required>
+<!--                       <select class="js-select" ngModel name="loanPurpose" required>
                         <option *ngFor="let lp of loanpurposes" [value]="lp.value">{{lp.key}}</option>
-                      </select>
+                      </select> -->
+
+                      <kendo-dropdownlist class="form-control"
+                        [data]="loanpurposes" 
+                        textField="key"
+                        valueField="value"
+                        name="loanPurpose"
+                        [(ngModel)]="selectedLoanPurpose"
+                        >
+                      </kendo-dropdownlist>
+
                     </div>
                     <div class="form-group typ-range">
                       <span class="control-title">Loan tenure (in years)</span>

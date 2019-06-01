@@ -4,19 +4,17 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import RequestEntity from '../models/request-entity.model';
 import { environment } from '../../environments/environment';
 import { of } from 'rxjs';
-
 @Injectable({
   providedIn: 'root'
 })
 export class QdeHttpService {
 
- 
   constructor(private http: HttpClient) {}
 
   /**
    * Create or update PAN Details
    */
-  createOrUpdatePanDetails(qde) {
+ createOrUpdatePanDetails(qde) {
     const qdeRequestEntity: RequestEntity = {
       processId: environment.api.save.processId,
       ProcessVariables: {
@@ -38,7 +36,7 @@ export class QdeHttpService {
     );
   }
 
-  createOrUpdatePersonalDetails(qde) {
+createOrUpdatePersonalDetails(qde) {
     const qdeRequestEntity: RequestEntity = {
       processId: environment.api.save.processId,
       ProcessVariables: {
@@ -59,6 +57,7 @@ export class QdeHttpService {
       body.toString()
     );
   }
+
 
   authenticate(data: any) {
 

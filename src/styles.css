@@ -5511,3 +5511,28 @@ img {
 		background:  #f58220 !important;
 		background-color:  #f58220 !important;
 	}
+
+	/**Customization of kendo input**/
+
+	.k-widget.form-control .k-input {
+	    padding: 4px 8px!important;
+	    height: calc(8px + 1.4285714286em)!important;
+	}
+	.k-dropdown-wrap.k-state-default {
+		background: transparent!important;
+		border: none;
+	}
+	.k-i-arrow-60-down::before, .k-i-arrow-s::before, .k-i-sarrow-s::before, .k-i-collapse::before, .k-i-expand-s::before {
+	    content: "\e015";
+	}
+	.k-item {
+		padding: 0 0 0 .78vw!important;
+		font-size: 1.64vw!important;
+		line-height: 3.28vw!important;
+		background: #fff!important;
+		color: #656565!important;
+	}
+	.k-item:hover {
+		background: #f58220!important;
+		color: #fff!important;
+	}

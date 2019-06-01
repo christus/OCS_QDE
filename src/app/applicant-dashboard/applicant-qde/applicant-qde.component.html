@@ -270,15 +270,22 @@
                                             <div class="form-wrap">
                                                 <div class="form-group">
                                                     <span class="control-title">Title</span>
-                                                    <select [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.title" name="title" required>
+    <!--                                                 <select [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.title" name="title" required>
                                                         <option *ngFor="let tit of titles"
                                                                 [ngClass]="{'select': (tit.value == qde.application.applicants[applicantIndex].personalDetails.title)}"
                                                                 [selected]="tit.value == qde.application.applicants[applicantIndex].personalDetails.title"
                                                                 [value]="tit.value">{{tit.key}}</option>
-                                                    </select>
+                                                    </select> -->
 
-                                                    <div class="form-group">
-                                                        <!-- <kendo-dropdownlist class="form-control" [data]="titles" [value]="selectedOption"></kendo-dropdownlist> -->
+                                                    <div class="form-group">   
+                                                        <kendo-dropdownlist class="form-control"
+                                                          [data]="titles" 
+                                                          textField="key"
+                                                          valueField="value"
+                                                          name="title"
+                                                          [(ngModel)]="selectedTitle"
+                                                          >
+                                                        </kendo-dropdownlist>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -377,9 +384,18 @@
                                             <div class="form-wrap">
                                                 <div class="form-group">
                                                     <span class="control-title">Qualification</span>
-                                                    <select [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.qualification" name="qualification" required>
+<!--                                                     <select [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.qualification" name="qualification" required>
                                                         <option *ngFor="let qual of qualifications" [value]="qual.value">{{qual.key}}</option>
-                                                    </select>
+                                                    </select> -->
+
+                                                    <kendo-dropdownlist class="form-control"
+                                                      [data]="qualifications" 
+                                                      textField="key"
+                                                      valueField="value"
+                                                      name="qualification"
+                                                      [(ngModel)]="selectedQualification"
+                                                      >
+                                                    </kendo-dropdownlist>
                                                 </div>
                                             </div>
                                             <div class="btn-wrap">
@@ -666,9 +682,11 @@
                                 <h1 class="sub-heading" style="text-align: left ; margin-bottom: 12px">Current Address</h1>
                                 <div class="form-group">
                                     <span class="control-title">Residential status</span>
-                                    <select [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.residentialStatus"
+
+<!--                                     <select [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.residentialStatus"
                                             name="residentialStatus"
                                             required>
+
                                             <option *ngFor="let res of residences"
                                                     [ngClass]="qde.application.applicants[applicantIndex].communicationAddress.residentialStatus == res"
                                                     [selected]="qde.application.applicants[applicantIndex].communicationAddress.residentialStatus == res"
@@ -676,6 +694,18 @@
                                                 {{res.key}}
                                             </option>
                                     </select>
+                                            <option *ngFor="let res of residences" [value]="res.value">{{res.key}}</option>
+                                    </select> -->
+
+                                    <kendo-dropdownlist class="form-control"
+                                      [data]="residences" 
+                                      textField="key"
+                                      valueField="value"
+                                      name="residentialStatus"
+                                      [(ngModel)]="selectedResidence"
+                                      >
+                                    </kendo-dropdownlist>
+
                                 </div>
                                 <div class="form-group">
 
@@ -889,14 +919,24 @@
                                           <div class="form-wrap">
                                               <div class="form-group">
                                                   <span class="control-title">Marital Status</span>
-                                                  <select   [(ngModel)]="qde.application.applicants[applicantIndex].maritalStatus.status"
+ <!--                                                  <select   [(ngModel)]="qde.application.applicants[applicantIndex].maritalStatus.status"
                                                             name="maritalStatus"
                                                             required>
                                                     <option *ngFor="let mar of maritals"
                                                             [ngClass]="{'select': qde.application.applicants[applicantIndex].maritalStatus.status == mar.key}"
                                                             [selected]="qde.application.applicants[applicantIndex].maritalStatus.status == mar.key"
                                                             [value]="mar.value">{{mar.key}}</option>
-                                                  </select>
+                                                  </select> -->
+
+                                                  <kendo-dropdownlist class="form-control"
+                                                    [data]="maritals" 
+                                                    textField="key"
+                                                    valueField="value"
+                                                    name="maritalStatus"
+                                                    [(ngModel)]="selectedMaritialStatus"
+                                                    >
+                                                  </kendo-dropdownlist>
+
                                               </div>
                                           </div>
                                           <div class="btn-wrap">
@@ -915,7 +955,7 @@
                                           <div class="form-wrap">
                                               <div class="form-group">
                                                   <span class="control-title">Title</span>
-                                                  <select   [(ngModel)]="qde.application.applicants[applicantIndex].maritalStatus.spouseTitle"
+<!--                                                   <select   [(ngModel)]="qde.application.applicants[applicantIndex].maritalStatus.spouseTitle"
                                                             name="spouseTitle"
                                                             required>
                                                     <option *ngFor="let tit of titles"
@@ -923,7 +963,17 @@
                                                             [selected]="qde.application.applicants[applicantIndex].maritalStatus.spouseTitle == tit.value"
                                                             [value]="tit.value">{{tit.key}}
                                                     </option>
-                                                  </select>
+                                                  </select> -->
+
+                                                  <kendo-dropdownlist class="form-control"
+                                                    [data]="titles" 
+                                                    textField="key"
+                                                    valueField="value"
+                                                    name="spouseTitle"
+                                                    [(ngModel)]="selectedSpouseTitle"
+                                                    >
+                                                  </kendo-dropdownlist>
+
                                               </div>
                                               <div class="form-group">
 
@@ -1100,21 +1150,23 @@
                                         <div class="form-wrap">
                                             <div class="form-group">
                                                 <span class="control-title">Title</span>
-                                                <select [(ngModel)]="qde.application.applicants[applicantIndex].familyDetails.fatherTitle"
+  <!--                                               <select [(ngModel)]="qde.application.applicants[applicantIndex].familyDetails.fatherTitle"
                                                         name="fatherTitle" required>
                                                     <option *ngFor="let tit of titles"
                                                             [ngClass]="qde.application.applicants[applicantIndex].familyDetails.fatherTitle"
                                                             [selected]="qde.application.applicants[applicantIndex].familyDetails.fatherTitle"
                                                             [value]="tit.value">{{tit.key}}
                                                     </option>
-                                                </select> 
-                                                <!-- <select [(ngModel)]="qde.application.applicants[applicantIndex].familyDetails.fatherTitle"
-                                                        name="fatherTitle" required> -->
-                                                        <!-- <option value="1">Volvo</option>
-                                                        <option value="2">Saab</option>
-                                                        <option value="3">Mercedes</option>
-                                                        <option value="4">Audi</option> -->
-                                               <!-- </select> -->
+                                                </select> -->
+
+                                                <kendo-dropdownlist class="form-control"
+                                                  [data]="titles" 
+                                                  textField="key"
+                                                  valueField="value"
+                                                  name="fatherTitle"
+                                                  [(ngModel)]="selectedFatherTitle"
+                                                  >
+                                                </kendo-dropdownlist>
                                             </div>
                                             <div class="form-group">
                                                 <input  type="text"
@@ -1214,7 +1266,7 @@
                             <div class="form-wrap">
                                 <div class="form-group">
                                     <span class="control-title">Religion</span>
-                                    <select class="typ-religion"
+  <!--                                   <select class="typ-religion"
                                             [(ngModel)]="qde.application.applicants[applicantIndex].other.religion"
                                             name="religion"
                                             #religionSelect="ngModel"
@@ -1224,15 +1276,25 @@
                                                 [selected]="qde.application.applicants[applicantIndex].other.religion == rel.value"
                                                 [value]="rel.value">{{rel.key}}
                                         </option>
-                                    </select>
+                                    </select> -->
+
+                                    <kendo-dropdownlist class="form-control"
+                                      [data]="religions" 
+                                      textField="key"
+                                      valueField="value"
+                                      name="religion"
+                                      [(ngModel)]="selectedReligions"
+                                      >
+                                    </kendo-dropdownlist>
+
                                 </div>
-                                <div class="form-group" *ngIf="religionSelect.value == '6'" [ngClass]="{'hidden': (religionSelect.value != '6')}">
+                                <div class="form-group" *ngIf="selectedReligions.value == '6'" [ngClass]="{'hidden': (religionSelect.value != '6')}">
                                     <input type="text" class="form-control" [(ngModel)]="otherReligion" name="religionName" id="religion-name">
                                     <label for="religion-name">Specify other religion</label>
                                 </div>
                                 <div class="form-group">
                                     <span class="control-title">Category</span>
-                                    <select [(ngModel)]="qde.application.applicants[applicantIndex].other.category"
+<!--                                     <select [(ngModel)]="qde.application.applicants[applicantIndex].other.category"
                                             name="category"
                                             required>
                                         <option *ngFor="let catg of categories"
@@ -1240,7 +1302,16 @@
                                                 [selected]="qde.application.applicants[applicantIndex].other.category == catg.value"
                                                 [value]="catg.value">{{catg.key}}
                                         </option>
-                                    </select>
+                                    </select> -->
+
+                                    <kendo-dropdownlist class="form-control"
+                                      [data]="categories" 
+                                      textField="key"
+                                      valueField="value"
+                                      name="category"
+                                      [(ngModel)]="selectedCategory"
+                                      >
+                                    </kendo-dropdownlist>
                                 </div>
                             </div>
 
@@ -1275,12 +1346,22 @@
                             <div class="form-wrap">
                                 <div class="form-group">
                                     <span class="control-title">Occupation type</span>
-                                    <select [(ngModel)]="qde.application.applicants[applicantIndex].occupation.occupationType" name="occupationType" required>
+<!--                                     <select [(ngModel)]="qde.application.applicants[applicantIndex].occupation.occupationType" name="occupationType" required>
                                         <option *ngFor="let occu of occupations"
                                                 [ngClass]="{'select': qde.application.applicants[applicantIndex].occupation.occupationType == occu.value}"
                                                 [selected]="qde.application.applicants[applicantIndex].occupation.occupationType == occu.value"
                                                 [value]="occu.value">{{occu.key}}</option>
-                                    </select>
+                                    </select> -->
+
+                                    <kendo-dropdownlist class="form-control"
+                                      [data]="occupations" 
+                                      textField="key"
+                                      valueField="value"
+                                      name="occupationType"
+                                      [(ngModel)]="selectedOccupation"
+                                      >
+                                    </kendo-dropdownlist>
+                                    
                                 </div>
                                 <div class="form-group">
                                     <input type="text" class="form-control"
@@ -1641,6 +1722,9 @@
                                         <option value="Mrs">option3</option>
                                         <option value="Dr">option4</option>
                                     </select>
+
+
+
                                 </div>
                             </div>
                             <div class="btn-wrap">
@@ -1977,7 +2061,9 @@
                                                         <option value="9">Industry Margin</option>
                                                         <option value="10">Assessed Income</option>
                                                     </select>
+
                                                 </div>
+
                                             </div>
                                             <div class="btn-wrap">
                                                 <button type="submit" class="btn btn-primary">Next</button>

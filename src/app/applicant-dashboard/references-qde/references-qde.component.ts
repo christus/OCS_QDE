@@ -14,7 +14,10 @@ import { QdeHttpService } from 'src/app/services/qde-http.service';
 import { QdeService } from 'src/app/services/qde.service';
 
 
-
+interface Item {
+  key: string,
+  value: number
+}
 
 @Component({
   selector: "app-references-qde",
@@ -36,7 +39,6 @@ export class ReferencesQdeComponent implements OnInit {
       return sliderVal + "<b>y</b>";
     }
   };
-
 
   errors = {
       references: {
@@ -130,6 +132,8 @@ export class ReferencesQdeComponent implements OnInit {
 
   applicantIndex: number;
 
+  private selectedOption: Item;
+
   private religions: Array<any>;
   private qualifications: Array<any>;
   private occupations: Array<any>;
@@ -141,6 +145,8 @@ export class ReferencesQdeComponent implements OnInit {
   private categories: Array<any>;
   private genders: Array<any>;
   private constitutions: Array<any>;
+  private selectedReferenceOne: Item;
+  private selectedReferenceTwo: Item;
 
   constructor(
     private renderer: Renderer2,
@@ -157,6 +163,8 @@ export class ReferencesQdeComponent implements OnInit {
     var lov = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs);
     this.titles = lov.LOVS.applicant_title;
     this.relationships = lov.LOVS.relationship;
+    this.selectedReferenceOne = this.relationships[0];
+    this.selectedReferenceTwo = this.relationships[0];
     
     if(this.route.snapshot.data.listOfValues != null && this.route.snapshot.data.listOfValues != undefined) {
       // Initialize all UI Values here
@@ -275,7 +283,7 @@ export class ReferencesQdeComponent implements OnInit {
       return;
     }
 
-    this.qde.application.references.referenceOne.relationShip = form.value.relationShip;
+    this.qde.application.references.referenceOne.relationShip = form.value.relationShip.value;
 
     console.log(this.qde.application.references.referenceOne.relationShip);
 
@@ -336,7 +344,7 @@ export class ReferencesQdeComponent implements OnInit {
       return;
     }
 
-    this.qde.application.references.referenceTwo.relationShip = form.value.relationShip;
+    this.qde.application.references.referenceTwo.relationShip = form.value.relationShip.value;
 
     console.log(this.qde.application.references.referenceOne.relationShip);
 

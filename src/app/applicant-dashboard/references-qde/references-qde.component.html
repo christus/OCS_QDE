@@ -56,9 +56,19 @@
                         <div class="form-wrap">
                           <div class="form-group">
                             <span class="control-title">Select</span>
-                            <select ngModel name="relationShip" class="js-select" required>
+<!--                             <select ngModel name="relationShip" class="js-select" required>
                               <option *ngFor="let rela of relationships" [value]="rela.value">{{rela.key}}</option>
-                            </select>
+                            </select> -->
+
+                            <kendo-dropdownlist class="form-control"
+                              [data]="relationships" 
+                              textField="key"
+                              valueField="value"
+                              name="relationShip"
+                              [(ngModel)]="selectedReferenceOne"
+                              >
+                            </kendo-dropdownlist>
+
                           </div>
                         </div>
                         <div class="btn-wrap">
@@ -206,9 +216,17 @@
                       <div class="form-wrap">
                         <div class="form-group">
                           <span class="control-title">Select</span>
-                          <select ngModel name="relationShip" class="js-select" required>
+<!--                           <select ngModel name="relationShip" class="js-select" required>
                             <option *ngFor="let rela of relationships" [value]="rela.value">{{rela.key}}</option>
-                          </select>
+                          </select> -->
+                          <kendo-dropdownlist class="form-control"
+                            [data]="relationships" 
+                            textField="key"
+                            valueField="value"
+                            name="relationShip"
+                            [(ngModel)]="selectedReferenceTwo"
+                            >
+                          </kendo-dropdownlist>
                         </div>
                       </div>
                       <div class="btn-wrap">

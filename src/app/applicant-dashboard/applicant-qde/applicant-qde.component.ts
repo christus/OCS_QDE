@@ -13,6 +13,11 @@ import { QdeHttpService } from 'src/app/services/qde-http.service';
 import { QdeService } from 'src/app/services/qde.service';
 import { CommonDataService } from '../../services/common-data.service';
 
+interface Item {
+  key: string,
+  value: number
+}
+
 @Component({
   selector: 'app-applicant-qde',
   templateUrl: './applicant-qde.component.html',
@@ -288,8 +293,6 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
   // @ViewChild('familySlider1') private familySlider1: ElementRef;
   // @ViewChild('familySlider2') private familySlider2: ElementRef;
 
-
-
   private isAlternateEmailId: boolean = false;
   private isAlternateMobileNumber: boolean = false;
   private isAlternateResidenceNumber: boolean = false;
@@ -334,7 +337,16 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
   private categories: Array<any>;
   private genders: Array<any>;
   private constitutions: Array<any>;
-  private selectedOption: string;
+  private selectedTitle: Item;
+  private selectedReligions: Item;
+  private selectedMaritialStatus: Item;
+  private selectedCategory: Item;
+  private selectedOccupation: Item;
+  private selectedResidence: Item;
+  private selectedSpouseTitle: Item;
+  private selectedFatherTitle: Item;
+  private selectedQualification: Item;
+
   
   constructor(private renderer: Renderer2,
               private route: ActivatedRoute,
@@ -362,13 +374,22 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
       this.occupations = lov.LOVS.occupation;
       this.residences = lov.LOVS.residence_type;
       this.titles = lov.LOVS.applicant_title || ["Mr", "Mrs", "Ms", "Dr"]; // Hardcoded test value need to be removed
-      this.selectedOption = this.titles[0];
       this.maritals = lov.LOVS.maritial_status;
       this.relationships = lov.LOVS.relationship;
       this.loanpurposes = lov.LOVS.loan_purpose;
       this.categories = lov.LOVS.category;
       this.genders = lov.LOVS.gender;
       this.constitutions = lov.LOVS.constitution;
+
+      this.selectedTitle = this.titles[0];
+      this.selectedReligions = this.religions[0];
+      this.selectedMaritialStatus = this.maritals[0];
+      this.selectedCategory = this.categories[0];
+      this.selectedOccupation = this.occupations[0];
+      this.selectedResidence = this.residences[0];
+      this.selectedSpouseTitle = this.titles[0];
+      this.selectedFatherTitle = this.titles[0];
+      this.selectedQualification = this.qualifications[0];
     }
 
     if(this.route.snapshot.data.listOfValues != null && this.route.snapshot.data.listOfValues != undefined) {
@@ -623,7 +644,7 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
     }
 
     this.qde.application.applicants[this.applicantIndex].personalDetails = {
-      title : form.value.title,
+      title : form.value.title.value,
       firstName : form.value.firstName,
       middleName : form.value.middleName,
       lastName : form.value.lastName
@@ -822,7 +843,7 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
     let pStateId = zipCityStateID.split(',')[2];
 
     this.qde.application.applicants[this.applicantIndex].communicationAddress = {
-      residentialStatus : form.value.residentialStatus,
+      residentialStatus : form.value.residentialStatus.value,
       addressLineOne : form.value.addressLineOne,
       addressLineTwo : form.value.addressLineTwo,
       zipcode : zipId,
@@ -870,7 +891,7 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
     }
 
     this.qde.application.applicants[this.applicantIndex].maritalStatus = {
-      status : form.value.maritalStatus
+      status : form.value.maritalStatus.value
     };
 
     console.log(this.qde.application.applicants[this.applicantIndex].maritalStatus);
@@ -1035,7 +1056,7 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
     }
 
     this.qde.application.applicants[this.applicantIndex].other = {
-      religion : form.value.religion,
+      religion : form.value.religion.value,
       category: form.value.category
     };
 

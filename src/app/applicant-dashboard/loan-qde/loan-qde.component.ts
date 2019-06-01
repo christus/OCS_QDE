@@ -12,7 +12,10 @@ import { NgForm } from "@angular/forms";
 import Qde from 'src/app/models/qde.model';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
 import { QdeService } from 'src/app/services/qde.service';
-
+interface Item {
+  key: string,
+  value: number
+}
 
 
 @Component({
@@ -158,7 +161,11 @@ export class LoanQdeComponent implements OnInit {
   private categories: Array<any>;
   private genders: Array<any>;
   private constitutions: Array<any>;
-
+  private loanTypes: Array<any>;
+  private selectedFatherTitle : Item;
+  private selectedLoanPurpose: Item;
+  private selectedLoanType: Item;
+  
   constructor(
     private renderer: Renderer2,
     private route: ActivatedRoute,
@@ -173,6 +180,16 @@ export class LoanQdeComponent implements OnInit {
     console.log(">>", JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs));
     var lov = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs);
     this.loanpurposes = lov.LOVS.loan_purpose;
+
+    //Hardcoded
+    this.loanTypes = [{
+      key: "Home",
+      value: 1
+    }];
+
+    this.selectedLoanType = this.loanTypes[0];
+    this.selectedLoanPurpose = this.loanpurposes[0];
+    console.log(this.loanpurposes)
     
     if(this.route.snapshot.data.listOfValues != null && this.route.snapshot.data.listOfValues != undefined) {
       // Initialize all UI Values heres
@@ -296,7 +313,7 @@ export class LoanQdeComponent implements OnInit {
 
     this.qde.application.loanDetails.loanAmount = {
       amountRequired: form.value.amountRequired,
-      loanPurpose: form.value.loanPurpose,
+      loanPurpose: form.value.loanPurpose.value,
       loanTenure: form.value.loanTenure
     }
 
