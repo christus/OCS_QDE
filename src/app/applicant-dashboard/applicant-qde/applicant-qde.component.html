@@ -274,18 +274,18 @@
                                                 </div>
                                                 <div class="form-group">
 
-                                                  <input type="text" class="form-control" 
-                                                        [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.lastName" 
-                                                        name="lastName" 
-                                                        #lastName="ngModel" 
-                                                        id="lastName"
-                                                        pattern="^[A-Za-z]+$"
-                                                        required />
-                                                  <label for="lastName" *ngIf="lastName.value == '' ">Last name</label>
+                                                  <input    type="text"
+                                                            class="form-control" 
+                                                            [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.lastName" 
+                                                            name="lastName" 
+                                                            #lastName="ngModel" 
+                                                            id="lastName"
+                                                            pattern="^[A-Za-z]+$"
+                                                            required />
+                                                  <label for="lastName" *ngIf="lastName.value == ''">Last name</label>
                                                   <div *ngIf="(lastName.touched || lastName.dirty) && lastName.invalid" class="invalid-feedback">
                                                     <div *ngIf="lastName.errors?.required">{{errors.personalDetails.lastName.required}}</div>
                                                     <div *ngIf="lastName.errors?.pattern">{{errors.personalDetails.lastName.invalid}}</div>
-
                                                   </div>
                                                 </div>
                                             </div>
@@ -629,17 +629,24 @@
                                     <select [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.residentialStatus"
                                             name="residentialStatus"
                                             required>
-                                            <option *ngFor="let res of residences" [value]="res.value">{{res.key}}</option>
+                                            <option *ngFor="let res of residences"
+                                                    [ngClass]="qde.application.applicants[applicantIndex].communicationAddress.residentialStatus == res"
+                                                    [selected]="qde.application.applicants[applicantIndex].communicationAddress.residentialStatus == res"
+                                                    [value]="res.value">
+                                                {{res.key}}
+                                            </option>
                                     </select>
                                 </div>
                                 <div class="form-group">
 
-                                    <input type="text" class="form-control" id="address1"
-                                      [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.addressLineOne"
-                                      pattern="^[0-9A-Za-z,_#\s]+$"
-                                      name="addressLineOne"
-                                      #address1="ngModel"
-                                      required />
+                                    <input  type="text"
+                                            class="form-control"
+                                            id="address1"
+                                            [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.addressLineOne"
+                                            pattern="^[0-9A-Za-z,_#\s]+$"
+                                            name="addressLineOne"
+                                            #address1="ngModel"
+                                            required />
 
                                       <div *ngIf="(address1.touched || address1.dirty) && address1.invalid" class="invalid-feedback">
                                         <div *ngIf="address1.errors?.required">{{errors.commAddress.address1.required}}</div>
@@ -680,12 +687,14 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="cityState"
-                                      required
-                                      [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.addressCityState"
-                                      name="cityState"
-                                      #commCityState="ngModel" 
-                                      pattern="^[0-9A-Za-z,_#]+$" />
+                                    <input  type="text"
+                                            class="form-control"
+                                            id="cityState"
+                                            required
+                                            [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.addressCityState"
+                                            name="cityState"
+                                            #commCityState="ngModel" 
+                                            pattern="^[0-9A-Za-z,_#]+$" />
 
                                     <label for="cityState" *ngIf="commCityState.value == ''">City/State</label>
 
@@ -755,8 +764,8 @@
                             <div class="btn-wrap">
                                 <button type="submit" class="btn btn-primary" 
                                         [ngClass]="{'disabled': !communicationForm.valid}"
-                                        [disabled]="!communicationForm.valid" 
-                                        >Next
+                                        [disabled]="!communicationForm.valid">
+                                    Next
                                 </button>
                             </div>
                         </form>
@@ -1003,7 +1012,7 @@
                                         <div class="form-wrap">
                                             <div class="form-group typ-range">
                                                 <span class="control-title">Enter number of dependents</span>
-                                                <input type="number"
+                                                <input  type="number"
                                                         name="numberOfDependents"
                                                         min=0
                                                         max=90
@@ -1023,7 +1032,9 @@
                                     </form>
                                 </div>
                                 <div class="swiper-slide">
-                                    <form class="bs-form" #familyForm2="ngForm" (ngSubmit)="submitFamilyForm2(familyForm2, familySlider2)">
+                                    <form   class="bs-form"
+                                            #familyForm2="ngForm"
+                                            (ngSubmit)="submitFamilyForm2(familyForm2, familySlider2)">
                                         <div class="form-wrap">
                                             <div class="form-group">
                                                 <span class="control-title">Title</span>
@@ -1080,11 +1091,11 @@
                                             </div>
                                             <div class="form-group">
                                                 <input type="text" class="form-control" id="maiden-name"
-                                                required
-                                                [(ngModel)]="qde.application.applicants[applicantIndex].familyDetails.motherMaidenName"
-                                                #motherMaiden="ngModel"
-                                                name="motherMaidenName"
-                                                pattern="^[A-Za-z\s]+$">
+                                                        required
+                                                        [(ngModel)]="qde.application.applicants[applicantIndex].familyDetails.motherMaidenName"
+                                                        #motherMaiden="ngModel"
+                                                        name="motherMaidenName"
+                                                        pattern="^[A-Za-z\s]+$" />
                                                 <label for="maiden-name" *ngIf="motherMaiden.value==''">Mother's maiden name</label>
                                                 <div *ngIf="motherMaiden.touched && motherMaiden.invalid" class="invalid-feedback">
                                                     <div *ngIf="motherMaiden.errors?.required">{{errors.familyDetails.motherMaiden.required}}</div>
@@ -1218,15 +1229,15 @@
                                 <div class="form-group typ-range">
                                     <span class="control-title">Years in current employment/bussiness</span>
                                     <input type="number"
-                                    name="numberOfYearsInCurrentCompany"
-                                    id="no-yrs"
-                                    class="form-control"
-                                    [(ngModel)]="qde.application.applicants[applicantIndex].occupation.numberOfYearsInCurrentCompany"
-                                    min=0
-                                    max=90
-                                    #numberOfYearsInCurrentCompany="ngModel"
-                                    (ngModelChange)="valuechange($event, 2)"
-                                    required />
+                                            name="numberOfYearsInCurrentCompany"
+                                            id="no-yrs"
+                                            class="form-control"
+                                            [(ngModel)]="qde.application.applicants[applicantIndex].occupation.numberOfYearsInCurrentCompany"
+                                            min=0
+                                            max=90
+                                            #numberOfYearsInCurrentCompany="ngModel"
+                                            (ngModelChange)="valuechange($event, 2)"
+                                            required />
 
                                     <ng5-slider [(value)]="qde.application.applicants[applicantIndex].occupation.numberOfYearsInCurrentCompany"
                                                 [options]="options">
@@ -1290,13 +1301,14 @@
                                 (ngSubmit)="submitOfficialCorrespondence(officialCorrespondenceForm)">
                             <div class="form-wrap">
                                 <div class="form-group">
-                                    <input type="text" class="form-control"
-                                      id="ofcAddOne"
-                                      [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.addressLineOne"
-                                      pattern="^[0-9A-Za-z,_#\s]+$"
-                                      name="ofcA1"
-                                      #ofcA1="ngModel"
-                                      required />
+                                    <input  type="text"
+                                            class="form-control"
+                                            id="ofcAddOne"
+                                            [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.addressLineOne"
+                                            pattern="^[0-9A-Za-z,_#\s]+$"
+                                            name="ofcA1"
+                                            #ofcA1="ngModel"
+                                            required />
                                     <label for="ofcAddOne" *ngIf="ofcA1.value == ''">Office address line1</label>
 
                                     <div *ngIf="ofcA1.touched  && ofcA1.invalid" class="invalid-feedback">

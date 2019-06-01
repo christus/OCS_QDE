@@ -195,3 +195,15 @@ export interface ReferenceDetail {
     addressLineOne : string;
     addressLineTwo : string;
 }
+
+export interface InCompleteFields {
+    pan: boolean;
+    personalDetails: boolean;
+    contactDetails: boolean;
+    communicationAddress: boolean;
+    maritalStatus: boolean;
+    familyDetails: boolean;
+    other: boolean;
+    occupation: boolean;
+    officialCorrespondence: boolean;
+    incomeDetails: boolean;}
