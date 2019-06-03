@@ -379,6 +379,7 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
                   if( this.fragments.includes(localFragment) &&
                       this.panslide == false &&
                       this.panslide2 == false) {
+                        console.log('this ios coming first');
                     this.tabSwitch(this.fragments.indexOf(localFragment));
                   }
                 });
@@ -436,7 +437,7 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
       // Make an http request to get the required qde data and set using setQde
       if(params.applicantId != undefined && params.applicantId != null) {
 
-        this.qdeHttp.dummyGetApi(params.applicantId).subscribe(response => {
+        this.qdeHttp.getQdeData(params.applicantId).subscribe(response => {
           var result = JSON.parse(response["ProcessVariables"]["response"]);
           console.log("Get ", result);
 
@@ -449,18 +450,19 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
 
           this.applicantIndex = this.qde.application.applicants.findIndex(val => val.isMainApplicant == true);
 
+          console.log('this is coming first');
           // Incoming from create Individual Pan
           if(this.panslide == true && this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
             this.panSlider2.setIndex(2);
           }
           // Incoming from create Non Individual Pan
           else if(this.panslide2 == true && this.qde.application.applicants[this.applicantIndex].isIndividual == false) {
-            this.panSlider4.setIndex(0);
-          } else if(this.panslide2 == false && this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
+            this.tabSwitch(11);
+          } else if(this.panslide == false && this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
             this.tabSwitch(0);
             this.panSlider2.setIndex(1);
           } else if(this.panslide2 == false && this.qde.application.applicants[this.applicantIndex].isIndividual == false) {
-            this.tabSwitch(10);
+            this.tabSwitch(11);
           }
 
           this.cds.changePanSlide(false);
@@ -514,7 +516,7 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
       this.dateOfIncorporation.year = this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[2];
     }
 
-    this.registeredAddressCityState = this.qde.application.applicants[this.applicantIndex].registeredAddress.city +'-'+ this.qde.application.applicants[this.applicantIndex].registeredAddress.state;
+    this.registeredAddressCityState = this.qde.application.applicants[this.applicantIndex].registeredAddress.city +'/'+ this.qde.application.applicants[this.applicantIndex].registeredAddress.state;
     this.corporateAddressCityState = this.qde.application.applicants[this.applicantIndex].corporateAddress.city +'-'+ this.qde.application.applicants[this.applicantIndex].corporateAddress.state;
     this.corporateAddressStdNumber.stdCode = this.qde.application.applicants[this.applicantIndex].corporateAddress.stdNumber != "" ? this.qde.application.applicants[this.applicantIndex].corporateAddress.stdNumber.split("-")[0] : "";
     this.corporateAddressStdNumber.phoneNumber = this.qde.application.applicants[this.applicantIndex].corporateAddress.stdNumber != "" ? this.qde.application.applicants[this.applicantIndex].corporateAddress.stdNumber.split("-")[1] : "";
@@ -683,7 +685,7 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
         console.log(":::::", this.qde)
 
         this.cds.changePanSlide2(true);
-        this.router.navigate(['/applicant/'+this.qde.application.applicationId], {fragment: "pan"});
+        this.router.navigate(['/applicant/'+this.qde.application.applicationId], {fragment: "organization"});
         
       } else {
         // Throw Invalid Pan Error

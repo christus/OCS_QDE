@@ -1837,7 +1837,7 @@
                                                 <div *ngIf="pan2.touched && pan2.invalid" class="invalid-feedback">
                                                     <div *ngIf="pan2.errors?.required">*PAN number is required</div>
                                                     <div *ngIf="pan2.errors?.pattern ? true : false">*PAN not valid</div>
-                                                    <div *ngIf="pan2.errors?.minlength || pan2.errors?.maxlength">*PAN must be at least {{pan.errors.minlength.requiredLength}} characters</div>
+                                                    <!-- <div *ngIf="pan2.errors?.minlength || pan2.errors?.maxlength">*PAN must be at least {{pan.errors.minlength.requiredLength}} characters</div> -->
                                                 </div>
                                             </div>
                                         </div>

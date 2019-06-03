@@ -184,7 +184,18 @@ export class LoanQdeComponent implements OnInit {
     //Hardcoded
     this.loanTypes = [{
       key: "Home",
-      value: 1
+      value: 1,
+    },{
+      key: "Home2",
+      value: 2,
+    }];
+
+    this.loanpurposes = [{
+      key: "Purchase of land",
+      value: 1,
+    },{
+      key: "Option 2",
+      value: 2,
     }];
 
     this.selectedLoanType = this.loanTypes[0];
