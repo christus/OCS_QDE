@@ -113,6 +113,7 @@
                                                       class="form-control"
                                                       id="middle-name"
                                                       name="middleName"
+                                                      fieldFill
                                                       [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.middleName"
                                                       pattern="^[A-Za-z]*$"
                                                       #middleName="ngModel" />
@@ -132,6 +133,7 @@
                                                       name="lastName" 
                                                       #lastName="ngModel"
                                                       pattern="^[A-Za-z]+$"
+                                                      fieldFill
                                                       required />
                                             <label for="last-name">Last name</label>
                                             <div *ngIf="(lastName.touched || lastName.dirty) && lastName.invalid" class="invalid-feedback">
@@ -232,6 +234,7 @@
                                                       name="preferEmailId"
                                                       #preferEmailId="ngModel"
                                                       email
+                                                      fieldFill
                                                       required />
                                             
                                             <label for="prefered-email" *ngIf="preferEmailId.value == ''">Preferred email ID</label>
@@ -247,6 +250,7 @@
                                                       id="alternate-email"
                                                       [(ngModel)]="qde.application.applicants[applicantIndex].contactDetails.alternateEmailId"
                                                       name="alternateEmailId"
+                                                      fieldFill
                                                       #alternateEmailId="ngModel"
                                                       email />
                                             <label for="alternate-email">Alternate email ID</label>
@@ -278,6 +282,7 @@
                                                       maxlength="10" im-insert="true"
                                                       [(ngModel)]="qde.application.applicants[applicantIndex].contactDetails.mobileNumber"
                                                       name="mobileNumber"
+                                                      fieldFill
                                                       #mobileNumber="ngModel"
                                                       pattern="^[0-9]*$" 
                                                       required />
@@ -297,7 +302,9 @@
                                                       class="form-control"
                                                       id="alter-mob"
                                                       data-validation-attr="mobileno01" 
-                                                      maxlength="10" im-insert="true"
+                                                      maxlength="10"
+                                                      im-insert="true"
+                                                      fieldFill
                                                       [(ngModel)]="qde.application.applicants[applicantIndex].contactDetails.alternateMobileNumber"
                                                       name="alternateMobileNumber"
                                                       #altMobileNo="ngModel"
@@ -319,6 +326,7 @@
                                             <div class="form-group">
                                               <input  type="text"
                                                       required
+                                                      fieldFill
                                                       [(ngModel)]="residenceNumber.stdCode"
                                                       pattern="^[0-9]*$"
                                                       #residenceStdCode = "ngModel"
@@ -337,6 +345,7 @@
                                               <input  type="text"
                                                       class="form-control"
                                                       id="res-no"
+                                                      fieldFill
                                                       [(ngModel)]="residenceNumber.phoneNumber"
                                                       pattern="^[0-9]*$"
                                                       #residenceNumber = "ngModel"
@@ -355,6 +364,7 @@
                                               <input    type="text"
                                                         [(ngModel)]="alternateResidenceNumber.stdCode"
                                                         name="alternateResidenceNumber1"
+                                                        fieldFill
                                                         class="form-control"
                                                         id="altrstd">
                                               <label for="altrstd">STD</label>
@@ -365,6 +375,7 @@
                                                         class="form-control"
                                                         [(ngModel)]="alternateResidenceNumber.phoneNumber"
                                                         name="alternateResidenceNumber2"
+                                                        fieldFill
                                                         id="altr-res-no"
                                                         data-validation-attr="residenceno01" />
                                               <label for="altr-res-no">Residence number</label>
@@ -409,6 +420,7 @@
                                               <input  type="text"
                                                   class="form-control"
                                                   id="address1"
+                                                  fieldFill
                                                   [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.addressLineOne"
                                                   pattern="^[0-9A-Za-z,_#\s]+$"
                                                   name="addressLineOne"
@@ -431,6 +443,7 @@
                                           <input  type="text"
                                                   class="form-control"
                                                   id="address2"
+                                                  fieldFill
                                                   [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.addressLineTwo"
                                                   pattern="^[0-9A-Za-z,_#\s]+$"
                                                   name="addressLineTwo"
@@ -451,6 +464,7 @@
                                               <input type="number" class="form-control" id="pincode" required
                                               [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.zipcode"
                                               name="pinCode"
+                                              fieldFill
                                               #commPinCode="ngModel" 
                                               maxlength="6"
                                               pattern="^[0-9]+$" />
@@ -468,6 +482,7 @@
                                                   class="form-control"
                                                   id="cityState"
                                                   required
+                                                  fieldFill
                                                   [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.addressCityState"
                                                   name="cityState"
                                                   #commCityState="ngModel" 
@@ -488,6 +503,7 @@
                                               <input  type="checkbox"
                                                       [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.permanentAddress"
                                                       name="permanentAddress"
+                                                      fieldFill
                                                       id="permanentAddress">
                                               <label for="permanentAddress"><span>Current Address is Permanent Address</span></label>
                                         </div>
@@ -500,6 +516,7 @@
                                             <input    type="number"
                                                       name="numberOfYearsInCurrentResidence"
                                                       class="form-control"
+                                                      fieldFill
                                                       [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.numberOfYearsInCurrentResidence"
                                                       min=0
                                                       max=90
@@ -557,6 +574,7 @@
                                                           #spouseName="ngModel"
                                                           name="firstName"
                                                           pattern="^[A-Za-z\s]+$"
+                                                          fieldFill
                                                           id="spouse-name"
                                                           required />
                                                 <label for="spouse-name">First name</label>
@@ -577,6 +595,7 @@
                                                             [(ngModel)]="qde.application.applicants[applicantIndex].maritalStatus.earning"
                                                             name="earning"
                                                             value="1"
+                                                            fieldFill
                                                             id="earningYes"
                                                             (change)="spouseEarningForm.ngSubmit.emit()" />
                                                   <label for="earningYes"><span>Yes</span></label>
@@ -586,6 +605,7 @@
                                                             [(ngModel)]="qde.application.applicants[applicantIndex].maritalStatus.earning"
                                                             name="earning"
                                                             value="2"
+                                                            fieldFill
                                                             id="earningNo"
                                                             (change)="spouseEarningForm.ngSubmit.emit()" />
                                                   <label for="earningNo"><span>No</span></label>
@@ -600,6 +620,7 @@
                                                   class="form-control"
                                                   id="amount"
                                                   required
+                                                  fieldFill
                                                   [(ngModel)]="qde.application.applicants[applicantIndex].maritalStatus.amount"
                                                   #amount="ngModel"
                                                   name="amount"
@@ -632,6 +653,7 @@
                                                       name="numberOfDependents"
                                                       min=0
                                                       max=90
+                                                      fieldFill
                                                       class="form-control"
                                                       [(ngModel)]="qde.application.applicants[applicantIndex].familyDetails.numberOfDependents"
                                                       (ngModelChange)="valuechange($event, 1)" />
@@ -657,14 +679,15 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group filled">
-                                              <input  type="text"
-                                              class="form-control"
-                                              id="father-name"
-                                              required
-                                              [(ngModel)]="qde.application.applicants[applicantIndex].familyDetails.fatherName"
-                                              #fatherName="ngModel"
-                                              name="fatherName"
-                                              pattern="^[A-Za-z\s]+$" />
+                                              <input    type="text"
+                                                        class="form-control"
+                                                        id="father-name"
+                                                        required
+                                                        [(ngModel)]="qde.application.applicants[applicantIndex].familyDetails.fatherName"
+                                                        #fatherName="ngModel"
+                                                        name="fatherName"
+                                                        fieldFill
+                                                        pattern="^[A-Za-z\s]+$" />
                                           <label for="father-name" *ngIf="fatherName.value==''">Father's name</label>
                                           <div *ngIf="fatherName.touched && fatherName.invalid" class="invalid-feedback">
                                               <div *ngIf="fatherName.errors?.required">{{errors.familyDetails.fatherName.required}}</div>
@@ -693,13 +716,14 @@
                                     <div class="col-12">
                                         <div class="form-group filled">
                                               <input type="text"
-                                              class="form-control"
-                                              id="mother-name"
-                                              required
-                                              [(ngModel)]="qde.application.applicants[applicantIndex].familyDetails.motherName"
-                                              #motherName="ngModel"
-                                              name="motherName"
-                                              pattern="^[A-Za-z\s]+$" />
+                                                    class="form-control"
+                                                    id="mother-name"
+                                                    required
+                                                    [(ngModel)]="qde.application.applicants[applicantIndex].familyDetails.motherName"
+                                                    #motherName="ngModel"
+                                                    fieldFill
+                                                    name="motherName"
+                                                    pattern="^[A-Za-z\s]+$" />
                                               <label for="mother-name" *ngIf="motherName.value == ''">Mother's name</label>
                                               <div *ngIf="motherName.touched && motherName.invalid" class="invalid-feedback">
                                                   <div *ngIf="motherName.errors?.required">{{errors.familyDetails.motherName.required}}</div>
@@ -712,11 +736,12 @@
                                     <div class="col-12">
                                         <div class="form-group">
                                               <input type="text" class="form-control" id="maiden-name"
-                                              required
-                                              [(ngModel)]="qde.application.applicants[applicantIndex].familyDetails.motherMaidenName"
-                                              #motherMaiden="ngModel"
-                                              name="motherMaidenName"
-                                              pattern="^[A-Za-z\s]+$" />
+                                                    required
+                                                    [(ngModel)]="qde.application.applicants[applicantIndex].familyDetails.motherMaidenName"
+                                                    #motherMaiden="ngModel"
+                                                    name="motherMaidenName"
+                                                    fieldFill
+                                                    pattern="^[A-Za-z\s]+$" />
       
                                               <label for="maiden-name" *ngIf="motherMaiden.value==''">Mother's maiden name</label>
                                               <div *ngIf="motherMaiden.touched && motherMaiden.invalid" class="invalid-feedback">
@@ -755,6 +780,7 @@
                                                       class="form-control"
                                                       [(ngModel)]="qde.application.applicants[applicantIndex].other.religion"
                                                       name="religionName"
+                                                      fieldFill
                                                       id="religion-name" />
                                             <label for="religion-name">Specify other religion</label>
                                         </div>
@@ -798,7 +824,8 @@
                                     <div class="col-12">
                                         <div class="form-group filled">
                                               <input type="text" class="form-control"
-                                              required 
+                                              required
+                                              fieldFill
                                               [(ngModel)]="qde.application.applicants[applicantIndex].occupation.companyName"
                                               pattern="^[A-Za-z\s]+$"
                                               name="companyName"
@@ -822,6 +849,7 @@
                                             <input type="number"
                                                   name="numberOfYearsInCurrentCompany"
                                                   id="no-yrs"
+                                                  fieldFill
                                                   class="form-control"
                                                   [(ngModel)]="qde.application.applicants[applicantIndex].occupation.numberOfYearsInCurrentCompany"
                                                   min=0
@@ -848,6 +876,7 @@
                                             <input type="number"
                                             name="totalExperienceYear"
                                             class="form-control"
+                                            fieldFill
                                             [(ngModel)]="qde.application.applicants[applicantIndex].occupation.totalWorkExperience"
                                             min=0
                                             max=90
@@ -876,6 +905,7 @@
                                               <input  type="text"
                                               class="form-control"
                                               id="ofcAddOne"
+                                              fieldFill
                                               [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.addressLineOne"
                                               pattern="^[0-9A-Za-z,_#\s]+$"
                                               name="ofcA1"
@@ -897,6 +927,7 @@
                                               <input  type="text"
                                                       class="form-control"
                                                       id="ofcAddTwo"
+                                                      fieldFill
                                                       [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.addressLineTwo"
                                                       pattern="^[0-9A-Za-z,_#\s]+$"
                                                       name="ofcA2"
@@ -916,6 +947,7 @@
                                               <input  type="text"
                                                       class="form-control"
                                                       id="offLandmark"
+                                                      fieldFill
                                                       [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.landMark"
                                                       name="landMark"
                                                       pattern="^[0-9A-Za-z,_#]*$" 
@@ -933,13 +965,14 @@
                                     <div class="col-6">
                                         <div class="form-group filled">
                                               <input type="text" class="form-control"
-                                              id="offPincode"
-                                              required
-                                              [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.zipcode"
-                                              #pinCode="ngModel" 
-                                              name="pinCode"
-                                              maxlength="6"
-                                              pattern="^[0-9]+$" />
+                                                    id="offPincode"
+                                                    fieldFill
+                                                    required
+                                                    [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.zipcode"
+                                                    #pinCode="ngModel" 
+                                                    name="pinCode"
+                                                    maxlength="6"
+                                                    pattern="^[0-9]+$" />
                                             <label for="offPincode" *ngIf="pinCode.value == ''">Pincode</label>
         
                                             <div *ngIf="pinCode.touched && pinCode.invalid" class="invalid-feedback">
@@ -952,12 +985,13 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                               <input type="text" class="form-control"
-                                              id="offCityState"
-                                              required
-                                              [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.city"
-                                              #offCityState="ngModel"
-                                              name="cityState"
-                                              pattern="^[0-9A-Za-z,_#]+$">
+                                                    id="offCityState"
+                                                    required
+                                                    fieldFill
+                                                    [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.city"
+                                                    #offCityState="ngModel"
+                                                    name="cityState"
+                                                    pattern="^[0-9A-Za-z,_#]+$">
                                             <label for="offCityState" *ngIf="offCityState.value == ''">City/State</label>
         
                                             <div *ngIf="offCityState.touched && offCityState.invalid" class="invalid-feedback">
@@ -973,6 +1007,7 @@
                                             <div class="form-group">
                                                   <input type="number" class="form-control" id="std03"
                                                   required
+                                                  fieldFill
                                                   [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.officeNumber"
                                                   #stdCode = "ngModel"
                                                   name="stdCode" />
@@ -985,6 +1020,7 @@
                                             <div class="form-group">
                                                   <input  type="text" class="form-control" id="res-no03" data-validation-attr="residenceno"
                                                   required
+                                                  fieldFill
                                                   #offStdNumber="ngModel"
                                                   name="offStdNumber"
                                                   [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.officeNumber" />
@@ -1002,12 +1038,15 @@
                                     </div>
                                     <div class="col-6">
                                         <div class="form-group">
-                                              <input type="email" class="form-control" id="off-email"
-                                              required
-                                              [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.officeEmailId"
-                                              email
-                                              #officeEmail = "ngModel"
-                                              name="officeEmail">
+                                              <input type="email"
+                                                    class="form-control"
+                                                    id="off-email"
+                                                    required
+                                                    fieldFill
+                                                    [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.officeEmailId"
+                                                    email
+                                                    #officeEmail = "ngModel"
+                                                    name="officeEmail" />
                                             <label for="off-email" *ngIf="officeEmail.value == ''">Office email ID</label>
         
                                             <div *ngIf="officeEmail.touched && officeEmail.invalid" class="invalid-feedback">
@@ -1101,6 +1140,7 @@
                                                   [(ngModel)]="qde.application.applicants[applicantIndex].organizationDetails.nameOfOrganization"
                                                   #orgName="ngModel"
                                                   name="orgName"
+                                                  fieldFill
                                                   required />
                                           <label for="org-name" *ngIf="orgName.value == ''">Name of Organization</label>
       
