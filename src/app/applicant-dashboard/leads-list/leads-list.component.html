@@ -15,24 +15,175 @@
                 <button [routerLink]="['/applicant']" class="btn btn-primary application">New Applicant</button>
             </div>
 
-            <table style="width:100%">
-                <thead>
-                    <th>FirstName</th>
-                    <th>OCS Number</th>
-                    <th>Eligible Amount</th>
-                    <th>Required Amount</th>
-                </thead>
+
+<!--             <table class="leadFilter">
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        Assigned To
+                    </td>
+                    <td>Location</td>
+                    <td>From</td>
+                    <td>To</td>
+                </tr>
+            </table> -->
+
+
+            <table class="">
                 <tbody>
-                    <tr *ngFor="let detail of userDetails">
-                        <td>{{detail.firstName}}</td>
-                        <td>{{detail.ocsNumber}}</td>
-                        <td>{{detail.amountEligible}}</td>
-                        <td>{{detail.amountRequired}}</td>
+<!--                     <tr class="leadLogin">
+                        <td></td>
+                        <td>
+                            <i></i>
+                            <h1>
+                                Welcome <b>Manpreet Singh</b> DEO <br>
+                                Branch Id: ICICI0000011
+                            </h1>
+                        </td>
+                        <td>
+                            <div class="btn">SIGN OUT</div>
+                        </td>
+                    </tr> -->
+                    <tr class="leadSearch">
+                        <td>
+<!--                             <div class="form-group">
+                                <input  type="text"
+                                        class="form-control"
+                                        id="searchLead"
+                                        name="searchLead"
+                                        required />  
+                                <label for="searchLead">Search</label>
+                            </div> -->
+                            <form action="" class="bs-form">
+                                <div class="form-group">
+
+                                    <input  type="text"
+                                            class="form-control"
+                                            id="address1"
+                                            pattern="^[0-9A-Za-z,_#\s]+$"
+                                            required />
+
+
+                                    <label for="address1">Search</label>
+
+                                </div>
+                            </form>
+
+                        </td>
                     </tr>
+
+<!--                     <tr class="leadFilter">
+                        <td></td>
+                        <td>
+                            Assigned To
+                        </td>
+                        <td>Location</td>
+                        <td>From</td>
+                        <td>To</td>
+                    </tr> -->
+
+                    <tr class="leadList">
+                        <td>
+                            <table *ngFor="let detail of userDetails"> 
+                                <tr>
+                                    <td>
+                                        <a routerLink="/applicant/{{detail.leadId}}">
+                                            <ul>
+                                                <li><span>Name</span><b>{{detail.firstName}}</b></li>
+                                                <li><span>Product</span><b></b></li>
+                                                <li><span>Loan amount</span><b></b></li>
+                                            </ul>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a routerLink="/applicant/{{leadId}}">
+                                            <ul>
+                                                <li><span>Lead ID</span><b></b></li>
+                                                <li><span>Generated date</span><b></b></li>
+                                                <li><span>Assigned date</span><b></b></li>
+                                            </ul>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a routerLink="/applicant/{{leadId}}">
+                                            <ul>
+                                                <li><span>Branch</span><b></b></li>
+                                                <li><span>Pending status</span><b></b></li>
+                                                <li><span>Pending with</span><b></b></li>
+                                            </ul>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+
+
                 </tbody>
 
             </table>
-           
+
+
+<!--             <div 
+              fxLayout="row wrap" 
+              fxLayout.lt-sm="column" 
+              fxLayoutGap="32px" 
+              fxLayoutAlign="flex-start">
+            <ng-container *ngFor="let _ of [1,2,3]">
+              <app-card 
+                fxFlex="0 1 calc(33.3% - 32px)"
+                fxFlex.lt-md="0 1 calc(50% - 32px)"
+                fxFlex.lt-sm="100%"
+              >
+                  <div class="col-sm-4">{{detail.firstName}}</div>
+                  <div class="col-sm-4">{{detail.firstName}}</div>
+                  <div class="col-sm-4">{{detail.firstName}}</div>
+              </app-card>
+            </ng-container>
+            </div> -->
+
+
+
+<!--             <div class="row" *ngFor="let detail of userDeta">
+             
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+               
+                    <div class="box-part text-center">
+                        
+                        <i class="fa fa-instagram fa-3x" aria-hidden="true"></i>
+                        
+                        <div class="title">
+                            <h4>Instagram</h4>
+                        </div>
+                        
+                        <div class="text">
+                            <span>Lorem ipsum dolor sit amet, id quo eruditi eloquentiam. Assum decore te sed. Elitr scripta ocurreret qui ad.</span>
+                        </div>
+                        
+                        <a href="#">Learn More</a>
+                        
+                     </div>
+                </div> 
+        
+            </div> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         </div>
     </div>
 </main>

@@ -3515,7 +3515,8 @@ body:after {
 	background: -webkit-linear-gradient(left, #b02b2f 0, #f6831f 100%);
 	background: -o-linear-gradient(left, #b02b2f 0, #f6831f 100%);
 	background: -ms-linear-gradient(left, #b02b2f 0, #f6831f 100%);
-	background: linear-gradient(to right, #b02b2f 0, #f6831f 100%)
+	background: linear-gradient(to right, #b02b2f 0, #f6831f 100%);
+	background: none;
 }
 
 body.typ-login:after {
@@ -4671,7 +4672,6 @@ img {
 .lyt-login {
 	width: 100%;
 	display: flex;
-	position: absolute;
 	left: 0;
 	right: 0;
 	height: 100%
@@ -4679,12 +4679,13 @@ img {
 
 .lyt-login .lhs {
 	display: inherit;
-	align-items: center;
-	width: 34%;
-	position: relative;
-	background: url(/assets/images/login-bg.jpg) no-repeat center;
-	background-size: cover;
-	padding: 3.91vw 3.91vw 3.91vw 1.95vw
+    align-items: center;
+    width: 34%;
+    position: fixed;
+    background: url(/assets/images/login-bg.jpg) no-repeat center;
+    background-size: cover;
+    padding: 3.91vw 3.91vw 3.91vw 1.95vw;
+    height: 100%;
 }
 
 .lyt-login .lhs .logo {
@@ -4733,7 +4734,8 @@ img {
 	align-items: center;
 	justify-content: center;
 	width: 66%;
-	position: relative
+	position: relative;
+	margin-left: 34%;
 }
 
 .lyt-login .rhs .resend-pin {
