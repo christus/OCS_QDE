@@ -944,6 +944,7 @@ export class CoApplicantQdeComponent implements OnInit {
         // If successful
         if(response["ProcessVariables"]["status"]) {
           //this.tabSwitch(6);
+          this.tabSwitch(10);
         } else {
           // Throw Invalid Pan Error
         }
