@@ -113,6 +113,7 @@ export class QdeService {
               "city" : "",
               "officeNumber" : "",
               "officeEmailId" : "",
+              "officeStd": ""
             },
             "organizationDetails": {
               "nameOfOrganization": "",

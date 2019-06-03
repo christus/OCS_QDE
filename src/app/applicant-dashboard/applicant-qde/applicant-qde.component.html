@@ -1570,7 +1570,7 @@
                                     <div class="form-group">
                                         <input type="number" class="form-control" id="std03"
                                           required
-                                          [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.officeNumber"
+                                          [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.officeStd"
                                           #stdCode = "ngModel"
                                           name="stdCode">
                                         <label for="std03" *ngIf="stdCode.value == ''">STD</label>
@@ -1738,10 +1738,6 @@
                                                     fieldFill
                                                     name="monthlyIncome">
                                                     <label for="monthlyIncome">Monthly income</label>
-                                                    <span class="addon">
-                                                        <span class="icon icon-inr"></span>
-                                                    </span>
-                                                    <span class="in-word"></span>
                                                 </div>
                                                 <div class="form-group">
                                                     <span class="control-title">Assessment methodology</span>

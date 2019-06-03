@@ -782,7 +782,7 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    this.qde.application.applicants[this.applicantIndex].personalDetails.qualification = form.value.qualification;
+    this.qde.application.applicants[this.applicantIndex].personalDetails.qualification = form.value.qualification.value;
 
     console.log(this.qde.application.applicants[this.applicantIndex]);
 
@@ -1000,7 +1000,7 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    this.qde.application.applicants[this.applicantIndex].maritalStatus.spouseTitle = form.value.spouseTitle;
+    this.qde.application.applicants[this.applicantIndex].maritalStatus.spouseTitle = form.value.spouseTitle.value;
     this.qde.application.applicants[this.applicantIndex].maritalStatus.firstName = form.value.firstName;
 
     console.log(this.qde.application.applicants[this.applicantIndex].maritalStatus);
@@ -1108,9 +1108,9 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    this.qde.application.applicants[this.applicantIndex].familyDetails.fatherTitle = form.value.fatherTitle;
+    this.qde.application.applicants[this.applicantIndex].familyDetails.fatherTitle = form.value.fatherTitle.value;
     this.qde.application.applicants[this.applicantIndex].familyDetails.fatherName = form.value.fatherName;
-    this.qde.application.applicants[this.applicantIndex].familyDetails.motherTitle = form.value.motherTitle;
+    this.qde.application.applicants[this.applicantIndex].familyDetails.motherTitle = form.value.motherTitle.value;
     this.qde.application.applicants[this.applicantIndex].familyDetails.motherName = form.value.motherName;
     this.qde.application.applicants[this.applicantIndex].familyDetails.motherMaidenName = form.value.motherMaidenName;
 
@@ -1142,7 +1142,7 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
 
     this.qde.application.applicants[this.applicantIndex].other = {
       religion : form.value.religion.value,
-      category: form.value.category
+      category: form.value.category.value
     };
 
     // this.qde.application.applicants[this.applicantIndex].familyDetails.fatherTitle = form.value.fatherTitle;
@@ -1174,7 +1174,7 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
     }
 
     this.qde.application.applicants[this.applicantIndex].occupation = {
-      occupationType: form.value.occupationType,
+      occupationType: form.value.occupationType.value,
       companyName : form.value.companyName,
       numberOfYearsInCurrentCompany : form.value.numberOfYearsInCurrentCompany,
       totalWorkExperience : form.value.totalExperienceYear
@@ -1219,7 +1219,9 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
       zipcode : zipId,
       city : cityId,
       state: stateId,
-      officeNumber : form.value.stdCode + '-'+ form.value.offStdNumber,
+      officeStd: form.value.stdCode,
+      //officeNumber : form.value.stdCode + '-'+ form.value.offStdNumber,
+      officeNumber :  form.value.offStdNumber,
       officeEmailId : form.value.officeEmail
     };
 
@@ -1228,7 +1230,7 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
-        //this.tabSwitch(6);
+        this.tabSwitch(9);
       } else {
         // Throw Invalid Pan Error
       }

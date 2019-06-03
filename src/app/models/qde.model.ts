@@ -121,6 +121,7 @@ export interface OfficialCorrespondence {
     officeEmailId : string;
     cityState? : string;
     zipCityStateID?: string;
+    officeStd? : string;
 }
 
 export interface OrganizationDetail {
