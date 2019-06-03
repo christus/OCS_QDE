@@ -227,4 +227,5 @@ export interface InCompleteFields {
     other: boolean;
     occupation: boolean;
     officialCorrespondence: boolean;
-    incomeDetails: boolean;}
+    incomeDetails: boolean;
+}

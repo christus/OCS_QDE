@@ -36,7 +36,7 @@ export class QdeService {
               "spouseTitle": "",
               "firstName": "",
               "earning": null,
-              "amount": null
+              "amount": null,
             },
             "familyDetails": {
               "numberOfDependents": null,
@@ -70,7 +70,8 @@ export class QdeService {
               "gender": "",
               "qualification": "",
               "dob": "",
-              "birthPlace": ""
+              "birthPlace": "",
+              "applicantStatus" : ""
             },
             "contactDetails": {
               "preferredEmailId": "",
@@ -89,7 +90,8 @@ export class QdeService {
               "state" : "",
               "cityState": "",
               "numberOfYearsInCurrentResidence" : "",
-              "permanentAddress" : null
+              "permanentAddress" : null,
+              "preferedMailingAddress": ""
             },
             "permanentAddress": {
               "residentialStatus" : "",
@@ -100,7 +102,8 @@ export class QdeService {
               "state" : "",
               "cityState": "",
               "numberOfYearsInCurrentResidence" : "",
-              "permanentAddress" : null
+              "permanentAddress" : null,
+              "preferedMailingAddress": ""
             },
             "officialCorrespondence": {
               "addressLineOne" : "",
@@ -142,7 +145,8 @@ export class QdeService {
               "monthlyExpenditure" : "",
               "incomeConsider": "",
               "monthlyIncome": "",
-              "assessmentMethodology": ""
+              "assessmentMethodology": "",
+              "puccaHouse": ""
             },
             "documents": [
               {

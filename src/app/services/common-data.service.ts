@@ -41,9 +41,9 @@ export class CommonDataService {
   }
 
   private panslide2$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  panslide2 = this.panslide2$.asObservable();
+  public panslide2 = this.panslide2$.asObservable();
   
-  changePanSlide2(panslide2: boolean) {
-    this.panslide2$.next(panslide2);
+  changePanSlide2(val: boolean) {
+    this.panslide2$.next(val);
   }
 }
