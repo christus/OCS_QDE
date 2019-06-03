@@ -94,6 +94,7 @@ const appRoutes: Routes = [
   {
     path: "co-applicant",
     component: ApplicantDashboardComponent,
+    // canActivate: [AuthGuard],
     children: [
       {
         path: "",
