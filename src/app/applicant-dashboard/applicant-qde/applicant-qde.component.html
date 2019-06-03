@@ -1982,7 +1982,7 @@
                                     <input  type="text"
                                             class="form-control"
                                             id="regPinCode"
-                                            required
+                                            
                                             [(ngModel)]="qde.application.applicants[applicantIndex].registeredAddress.zipcode"
                                             #regPinCode="ngModel" 
                                             name="pincode"
@@ -1991,10 +1991,10 @@
                                             (keyup)="onPinCodeChange($event, 'registeredAddress')" 
                                             pattern="^[0-9]+$" />
                                     <label for="regPinCode">Pincode</label>
-                                    <div *ngIf="(regPinCode.touched || regPinCode.dirty) && regPinCode.invalid" class="invalid-feedback">
+                                    <!-- <div *ngIf="(regPinCode.touched || regPinCode.dirty) && regPinCode.invalid" class="invalid-feedback">
                                         <div *ngIf="regPinCode.errors?.required">{{errors.registeredAddress.pinCode.required}}</div>
                                         <div *ngIf="regPinCode.errors?.pattern">{{errors.registeredAddress.pinCode.invalid}}</div>
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <div class="form-group last">
                                     <input type="text" class="form-control" id="city-state"
@@ -2070,7 +2070,7 @@
                                             #corpPincode="ngModel"
                                             (keyup)="onPinCodeChange($event, 'corporateAddress')" 
                                             fieldFill
-                                            required />
+                                            />
                                     <label for="pincode01">Pincode</label>
 
                                     <div *ngIf="corpPincode.touched  && corpPincode.invalid" class="invalid-feedback">

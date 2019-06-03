@@ -1254,8 +1254,8 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
       // If successful
       if(response["ProcessVariables"]["status"]) {
         let result = this.parseJson(response["ProcessVariables"]["response"]);
-        this.qde.application.ocsNumber = result["application"]["ocsNumber"];
-        this.qde.application.applicants[this.applicantIndex].applicantId = result["application"]["applicationId"];
+        // this.qde.application.ocsNumber = result["application"]["ocsNumber"];
+        // this.qde.application.applicants[this.applicantIndex].applicantId = result["application"]["applicationId"];
         this.tabSwitch(12);
       } else {
         // Throw Invalid Pan Error
@@ -1274,11 +1274,16 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    let zipCityStateID = this.qde.application.applicants[this.applicantIndex].registeredAddress.zipCityStateID
+    // let zipCityStateID = this.qde.application.applicants[this.applicantIndex].registeredAddress.zipCityStateID
 
-    let zipId = this.zipCityStateID.split(',')[0];
-    let cityId = this.zipCityStateID.split(',')[1];
-    let stateId = this.zipCityStateID.split(',')[2];
+    // let zipId = this.zipCityStateID.split(',')[0] || "";
+    // let cityId = this.zipCityStateID.split(',')[1] || "";
+    // let stateId = this.zipCityStateID.split(',')[2] || "";
+
+    let zipId = "";
+    let cityId = "";
+    let stateId = "";
+
 
     this.qde.application.applicants[this.applicantIndex].registeredAddress = {
       registeredAddress : form.value.regAdd,
@@ -1293,7 +1298,7 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successfull
       if(response["ProcessVariables"]["status"]) {
-        this.tabSwitch(11);
+        this.tabSwitch(13);
       } else {
         // Throw Invalid Pan Error
       }
@@ -1312,9 +1317,9 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
 
     let zipCityStateID = this.qde.application.applicants[this.applicantIndex].corporateAddress.zipCityStateID
 
-    let zipId = this.zipCityStateID.split(',')[0];
-    let cityId = this.zipCityStateID.split(',')[1];
-    let stateId = this.zipCityStateID.split(',')[2];
+    let zipId = this.zipCityStateID.split(',')[0] || "";
+    let cityId = this.zipCityStateID.split(',')[1] || "";
+    let stateId = this.zipCityStateID.split(',')[2] || "";
 
 
     this.qde.application.applicants[this.applicantIndex].corporateAddress = {
@@ -1323,7 +1328,7 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
       zipcode : zipId,
       city : cityId,
       state : stateId,
-      stdNumber : form.value.stdNumber+"-"+form.value.phoneNumber,
+      stdNumber : form.value.stdNumber+form.value.phoneNumber,
       officeEmailId : form.value.officeEmailId
     };
 
@@ -1332,7 +1337,7 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successfull
       if(response["ProcessVariables"]["status"]) {
-        this.tabSwitch(12);
+        this.tabSwitch(14);
       } else {
         // Throw Invalid Pan Error
       }
@@ -1361,7 +1366,7 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successfull
       if(response["ProcessVariables"]["status"]) {
-        this.tabSwitch(13);
+        this.tabSwitch(15);
       } else {
         // Throw Invalid Pan Error
       }
