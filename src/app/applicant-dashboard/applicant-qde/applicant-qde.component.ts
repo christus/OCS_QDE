@@ -422,51 +422,56 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
           var result = JSON.parse(response["ProcessVariables"]["response"]);
           console.log("Get ", result);
 
-          this.qdeService.setQde(result)
+          this.qdeService.setQde(result);
+
+          if(this.panslide == true) {
+     
+            console.log('Coming', this.panslide);
+            this.panSlider2.setIndex(2);
+          } else if(this.panslide == false) {
+            if(this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
+              this.goToNextSlide(this.panSlider2);
+            } else {
+              this.tabSwitch(11)
+            }
+          }
+  
+          console.log(">>>>>"+ this.qde.application.applicants[this.applicantIndex].isIndividual != null);
+  
+          this.cds.changePanSlide(false);
+  
+          // non individual pan
+  
+          // alert('pandlisde2 '+ this.panslide2);
+          // alert(this.qde.application.applicants[this.applicantIndex].isIndividual)
+          if(this.panslide2 == true) {
+       
+            console.log('Coming', this.panslide2);
+            this.panSlider4.setIndex(2);
+          }
+  
+          if(this.panslide2 == false && this.qde.application.applicants[this.applicantIndex].isIndividual != null){
+            if(this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
+              this.goToNextSlide(this.panSlider4);
+            }else{
+              this.tabSwitch(11);
+            }
+          }
+  
+          this.cds.changePanSlide2(false);
+          
        });
         //individual pan
         // alert(">>"+this.panslide2)
-        if(this.panslide == true) {
-     
-          console.log('Coming', this.panslide);
-          this.panSlider2.setIndex(2);
-        }
-
-        if(this.panslide == false && this.qde.application.applicants[this.applicantIndex].isIndividual != null){
-          if(this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
-            this.goToNextSlide(this.panSlider2);
-          }else{
-            this.tabSwitch(11);
-          }
-        }
-
-        this.cds.changePanSlide(false);
-
-        // non individual pan
-
-        // alert('pandlisde2 '+ this.panslide2);
-        // alert(this.qde.application.applicants[this.applicantIndex].isIndividual)
-        if(this.panslide2 == true) {
-     
-          console.log('Coming', this.panslide2);
-          this.panSlider4.setIndex(2);
-        }
-
-        if(this.panslide2 == false && this.qde.application.applicants[this.applicantIndex].isIndividual != null){
-          if(this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
-            this.goToNextSlide(this.panSlider4);
-          }else{
-            this.tabSwitch(11);
-          }
-        }
-
-        this.cds.changePanSlide2(false);
+        
 // alert(1);
 
 
       }
      
       this.qde = this.qdeService.getQde();
+
+      console.log("QDE" , this.qde);
     });
 
     this.route.fragment.subscribe((fragment) => {
