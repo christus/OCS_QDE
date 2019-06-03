@@ -363,7 +363,26 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
                   this.panslide2 = val;
                 });
 
-                console.log('__________')
+                this.qdeService.qdeSource.subscribe(val => {
+                  this.qde = val;
+                });
+
+
+                this.route.fragment.subscribe((fragment) => {
+                  let localFragment = fragment;
+                  
+                  if(fragment == null) {
+                    localFragment = this.fragments[0];
+                  }
+            
+                  // Replace Fragments in url
+                  if( this.fragments.includes(localFragment) &&
+                      this.panslide == false &&
+                      this.panslide2 == false) {
+                    this.tabSwitch(this.fragments.indexOf(localFragment));
+                  }
+                });
+                console.log('__________');
   }
   
   private panslide: boolean;
@@ -417,74 +436,40 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
       // Make an http request to get the required qde data and set using setQde
       if(params.applicantId != undefined && params.applicantId != null) {
 
-        this.qdeHttp.getQdeData(params.applicantId).subscribe(response => {
-          alert(1);
+        this.qdeHttp.dummyGetApi(params.applicantId).subscribe(response => {
           var result = JSON.parse(response["ProcessVariables"]["response"]);
           console.log("Get ", result);
 
-          this.qdeService.setQde(result);
-
-          if(this.panslide == true) {
-     
-            console.log('Coming', this.panslide);
-            this.panSlider2.setIndex(2);
-          } else if(this.panslide == false) {
-            if(this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
-              this.goToNextSlide(this.panSlider2);
-            } else {
-              this.tabSwitch(11)
-            }
-          }
-  
-          console.log(">>>>>"+ this.qde.application.applicants[this.applicantIndex].isIndividual != null);
-  
-          this.cds.changePanSlide(false);
-  
-          // non individual pan
-  
-          // alert('pandlisde2 '+ this.panslide2);
-          // alert(this.qde.application.applicants[this.applicantIndex].isIndividual)
-          if(this.panslide2 == true) {
-       
-            console.log('Coming', this.panslide2);
-            this.panSlider4.setIndex(2);
-          }
-  
-          if(this.panslide2 == false && this.qde.application.applicants[this.applicantIndex].isIndividual != null){
-            if(this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
-              this.goToNextSlide(this.panSlider4);
-            }else{
-              this.tabSwitch(11);
-            }
-          }
-  
-          this.cds.changePanSlide2(false);
           
+          this.qde.application.applicants[this.applicantIndex].applicantId = result.application.applicants[this.applicantIndex].applicantId;
+          this.qde.application.applicants[this.applicantIndex].pan.panNumber = result.application.applicants[this.applicantIndex].pan.panNumber;
+          this.qde.application.applicants[this.applicantIndex].isIndividual = result.application.applicants[this.applicantIndex].isIndividual;
+          this.qde.application.applicants[this.applicantIndex].isMainApplicant = result.application.applicants[this.applicantIndex].isMainApplicant;
+          this.qdeService.setQde(this.qde);
+
+          this.applicantIndex = this.qde.application.applicants.findIndex(val => val.isMainApplicant == true);
+
+          // Incoming from create Individual Pan
+          if(this.panslide == true && this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
+            this.panSlider2.setIndex(2);
+          }
+          // Incoming from create Non Individual Pan
+          else if(this.panslide2 == true && this.qde.application.applicants[this.applicantIndex].isIndividual == false) {
+            this.panSlider4.setIndex(0);
+          } else if(this.panslide2 == false && this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
+            this.tabSwitch(0);
+            this.panSlider2.setIndex(1);
+          } else if(this.panslide2 == false && this.qde.application.applicants[this.applicantIndex].isIndividual == false) {
+            this.tabSwitch(10);
+          }
+
+          this.cds.changePanSlide(false);
+          this.cds.changePanSlide2(false);
+
        });
-        //individual pan
-        // alert(">>"+this.panslide2)
-        
-// alert(1);
-
-
       }
-     
-      this.qde = this.qdeService.getQde();
 
       console.log("QDE" , this.qde);
-    });
-
-    this.route.fragment.subscribe((fragment) => {
-      let localFragment = fragment;
-      
-      if(fragment == null) {
-        localFragment = this.fragments[0];
-      }
-
-      // Replace Fragments in url
-      if(this.fragments.includes(localFragment)) {
-        this.tabSwitch(this.fragments.indexOf(localFragment));
-      }
     });
 
 
@@ -650,14 +635,11 @@ export class ApplicantQdeComponent implements OnInit, AfterViewInit {
       // If successful
       if(response["ProcessVariables"]["status"]) {
         let result = this.parseJson(response["ProcessVariables"]["response"]);
-        this.qde.application.ocsNumber = result["application"]["ocsNumber"];
-        this.qde.application.applicationId = result["application"]["applicationId"];
-        this.qde.application.applicants[this.applicantIndex].applicantId =  result["application"]["applicants"][0]["applicantId"];
         
         //this.goToNextSlide(swiperInstance);
 
         this.cds.changePanSlide(true);
-        this.router.navigate(['/applicant/'+this.qde.application.applicationId], {fragment: "pan"});
+        this.router.navigate(['/applicant/'+result["application"]["applicants"][this.applicantIndex]["applicantId"]], {fragment: "pan"});
         
       } else {
         // Throw Invalid Pan Error

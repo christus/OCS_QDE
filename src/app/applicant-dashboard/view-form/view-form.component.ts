@@ -351,12 +351,13 @@ export class ViewFormComponent implements OnInit {
       // Make an http request to get the required qde data and set using setQde
       if(params.applicantId != undefined && params.applicantId != null) {
         this.qdeHttp
-            .dummyGetApi()
+            .dummyGetApi(this.qdeService.getFilteredJson(this.qde))
             .subscribe(res => {
+              console.log("RRR ", res['ProcessVariables']);
               if(res['ProcessVariables']['status']) {
                 let response = JSON.parse(res['ProcessVariables']['response']);
                 [response.applicant.applicants] = JSON.parse(response);
-                this.qdeService.setOde(response);
+                this.qdeService.setQde(response);
                 console.log('QDE: ', this.qdeService.getQde());
               }
             }, err => {

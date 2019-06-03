@@ -12,8 +12,7 @@ export class QdeService {
 
 
   private qdeSource$: BehaviorSubject<Qde>;
-  qdeSource: Observable<Qde>;
-  
+  public qdeSource: Observable<Qde>;
 
   constructor() {
     // Initialize Qde
@@ -23,7 +22,7 @@ export class QdeService {
         "ocsNumber": " ",
         "loanAmount": "",
         "tenure": "",
-        "appId": "",
+        "applicationId": "",
         "propertyIdentified": null,
         "applicants": [
           {
@@ -105,15 +104,28 @@ export class QdeService {
               "permanentAddress" : null,
               "preferedMailingAddress": ""
             },
-            "officialCorrespondence": {
+            "residentialAddress": {
+              "residentialStatus" : "",
               "addressLineOne" : "",
               "addressLineTwo" : "",
-              "landMark" : "",
               "zipcode" : "",
               "city" : "",
-              "officeNumber" : "",
-              "officeEmailId" : "",
-              "officeStd": ""
+              "state" : "",
+              "cityState": "",
+              "numberOfYearsInCurrentResidence" : "",
+              "permanentAddress" : null
+            },
+            "officialCorrespondence": {
+              "addressLineOne": "",
+              "addressLineTwo": "",
+              "landMark": "",
+              "zipcode": "",
+              "city": "",
+              "state": "",
+              "officeNumber": "",
+              "officeEmailId": "",
+              "cityState": "",
+              "zipCityStateID": "",
             },
             "organizationDetails": {
               "nameOfOrganization": "",
@@ -144,10 +156,11 @@ export class QdeService {
             "incomeDetails": {
               "annualFamilyIncome" : "",
               "monthlyExpenditure" : "",
-              "incomeConsider": "",
+              "incomeConsider": null,
               "monthlyIncome": "",
               "assessmentMethodology": "",
-              "puccaHouse": ""
+              "puccaHouse": null
+
             },
             "documents": [
               {
@@ -168,8 +181,11 @@ export class QdeService {
         "loanDetails": {
           "incomeDetails": {
             "annualFamilyIncome": "",
-            "familMembersOwnHouse": null
-            /*doubt*/
+            "monthlyExpenditure": "",
+            "incomeConsider": null,
+            "monthlyIncome": "",
+            "assessmentMethodology": "",
+            "puccaHouse": null
           },
           "loanAmount": {
             "amountRequired": null,
