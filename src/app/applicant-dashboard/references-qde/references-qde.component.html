@@ -116,6 +116,7 @@
                             required 
                             id="ref1-mobile"  
                             name="mobileNumber"
+                            maxlength="10"
                             pattern="{{regexPattern.mobileNumber}}"  
                             ngModel 
                             #refOneMobileNumber="ngModel">
@@ -269,6 +270,7 @@
                             <input type="text" class="form-control" id="ref2-mobile" 
                              name="mobileNumber"  
                              ngModel 
+                             maxlength="10"
                              #refTwoMobileNumber="ngModel"
                              pattern="{{regexPattern.mobileNumber}}"
                              required>
@@ -287,7 +289,8 @@
                               #refTwoAddressLineOne="ngModel"
                               pattern="{{regexPattern.address}}"
                               required>
-                            <label for="ref2-add1" *ngIf="refTwoMobileNumber.value == ''">Address line1</label>
+                               
+                            <label for="ref2-add1" *ngIf="refTwoAddressLineOne.value == ''">Address line1</label>
 
                             <div *ngIf="refTwoAddressLineOne.touched && refTwoAddressLineOne.invalid" class="invalid-feedback">
                                 <div *ngIf="refTwoAddressLineOne.errors?.required">{{errors.references.referenceOne.addressLineOne.required}}</div>
@@ -302,7 +305,7 @@
                              #refTwoAddressLineTwo="ngModel"
                              pattern="{{regexPattern.address}}"
                              required>
-                            <label for="ref2-add2" *ngIf="refTwoMobileNumber.value == ''">Address line2</label>
+                            <label for="ref2-add2" *ngIf="refTwoAddressLineTwo.value == ''">Address line2</label>
 
                             <div *ngIf="refTwoAddressLineTwo.touched && refTwoAddressLineTwo.invalid" class="invalid-feedback">
                                 <div *ngIf="refTwoAddressLineTwo.errors?.required">{{errors.references.referenceOne.addressLineTwo.required}}</div>

@@ -52,6 +52,14 @@ export class LoanQdeComponent implements OnInit {
        },
 
         property: {
+          propertyClss:{
+            required:"Property Clss is required",
+            invalid:"Property Clss is not valid"
+          },
+          propertyArea:{
+            required:"Property Area is required",
+            invalid:"Property Area is not valid"
+          },
           pinCode: {
             required: "Property Pincode is required",
             invalid: "Property Pincode is not valid"
@@ -62,11 +70,11 @@ export class LoanQdeComponent implements OnInit {
           },
           addressLineTwo: {
             required: "Property Address line 2 is required",
-            invalid: "Annual Family Income is not valid"
+            invalid: "Property Address line 2 is not valid"
           },
           cityOrState: {
-            required: "Annual Family Income is required",
-            invalid: "Annual Family Income is not valid"
+            required: "City / State is required",
+            invalid: "City / State Income is not valid"
           }
         },
 
@@ -78,18 +86,24 @@ export class LoanQdeComponent implements OnInit {
        },
      }
   };
-
   regexPattern = {
-    email: "/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/",
-    moblieNumber: "/^\d{10}$/",
+    amount: "^[0-9]{0,17}\.[0-9]{1,4}?$",
     name: "/^[a-zA-Z ]*$/",
-    address : "^[0-9A-Za-z, _#\s]+$",
-    annualFamilyIncome: "^[0-9]{1,18}$",
+    pinCode: "^[1-9][0-9]{5}$",
+    address : "^[0-9A-Za-z, _&'#\s]+$",
     tenure: "^[0-9]{1,2}$",
-    pinCode: "^[0-9]{6,6}$",
-    cityOrState : "^[0-9A-Za-z, _#\s]+$",
-    monthlyEmi: "^[0-9]{1,10}$"
-  };
+  }
+  // regexPattern = {
+  //   email: "/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/",
+  //   moblieNumber: "/^[0-9]{10}$/",
+  //   name: "/^[a-zA-Z ]*$/",
+  //   address : "^[0-9A-Za-z, _#\s]+$",
+  //   annualFamilyIncome: "^[0-9]{0,18}$",
+  //   tenure: "^[0-9]{1,2}$",
+  //   pinCode: "^[0-9]{6,6}$",
+  //   cityOrState : "^[0-9A-Za-z, _#\s]+$",
+  //   monthlyEmi: "^[0-9]{1,10}$"
+  // };
 
   // value: number = 0;
 

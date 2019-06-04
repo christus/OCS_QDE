@@ -43,9 +43,9 @@
                         ngModel
                         #amountRequired = "ngModel"
                         name="amountRequired"
-                        pattern='{{regexPattern.annualFamilyIncome}}'>
+                        pattern="{{regexPattern.amount}}">
 
-                      <label for="amt-require">Amount required (in lakhs)</label>
+                      <label for="amt-require" *ngIf="!loanAmount.value">Amount required (in lakhs)</label>
                       <span class="addon">
                         <span class="icon icon-inr"></span>
                       </span>
@@ -182,12 +182,30 @@
                                   </select>
                               </div>
                               <div class="form-group">
-                                  <input ngModel type="text" class="form-control" id="pro-add-line1" name="propertyClss">
-                                  <label for="pro-add-line1">Property CLSS area</label>
-                              </div>
+                                  <input ngModel type="text" class="form-control" id="pro-add-line1" 
+                                  name="propertyClss"
+                                  ngModel
+                                  #propertyClss="ngModel"
+                                  pattern="{{regexPattern.address}}"
+                                  required>
+                                  <label for="pro-add-line1" *ngIf="propertyClss.value==''">Property CLSS area</label>
+                                  <div *ngIf="(propertyClss.touched || propertyClss.dirty) && propertyClss.invalid" class="invalid-feedback">
+                                    <div *ngIf="propertyClss.errors?.required">{{errors.loanDetails.property.propertyClss.required}}</div>
+                                    <div *ngIf="propertyClss.errors?.pattern">{{errors.loanDetails.property.propertyClss.invalid}}</div>
+                                  </div>
+                                </div>
                               <div class="form-group">
-                                  <input ngModel type="text" class="form-control" id="pro-add-line2" name="propertyArea">
-                                  <label for="pro-add-line2">Property area in sq. fts.</label>
+                                  <input ngModel type="text" class="form-control" id="pro-add-line2" 
+                                  name="propertyArea"
+                                  ngModel
+                                  #propertyArea="ngModel"
+                                  pattern="{{regexPattern.address}}"
+                                  required>
+                                  <label for="pro-add-line2" *ngIf="propertyArea.value==''">Property area in sq. fts.</label>
+                                  <div *ngIf="(propertyArea.touched || propertyArea.dirty) && propertyArea.invalid" class="invalid-feedback">
+                                    <div *ngIf="propertyArea.errors?.required">{{errors.loanDetails.property.propertyArea.required}}</div>
+                                    <div *ngIf="propertyArea.errors?.pattern">{{errors.loanDetails.property.propertyArea.invalid}}</div>
+                                  </div>
                               </div>
                           </div>
                           <div class="btn-wrap">
@@ -206,10 +224,12 @@
                             required
                             ngModel
                             #propertyPincode = "ngModel"
+                            minlength="6"
+                            maxlength="6"
                             name="propertyPincode"
                             pattern='{{regexPattern.pinCode}}'>
 
-                            <label for="proprty-pin">Property pincode</label>
+                            <label for="proprty-pin" *ngIf="propertyPincode.value==''">Property pincode</label>
 
                             <div *ngIf="(propertyPincode.touched || propertyPincode.dirty) && propertyPincode.invalid" class="invalid-feedback">
                               <div *ngIf="propertyPincode.errors?.required">{{errors.loanDetails.property.pinCode.required}}</div>
@@ -218,46 +238,46 @@
 
                           </div>
                           <div class="form-group">
-                            <input type="text" class="form-control" id="pro-add-line1"
-                              required
-                              ngModel
-                              #addressLineOne = "ngModel"
-                              name="addressLineOne"
-                              pattern='{{regexPattern.address}}'>
+                            <input type="text" class="form-control"
+                            id="add-line1"
+                            required
+                            ngModel
+                            #proaddressLineOne="ngModel"
+                            name="proaddressLineOne"
+                            pattern='{{regexPattern.address}}'/>
+                      
+                            <label for="add-line1" *ngIf="!proaddressLineOne.value">Property address line1</label>
 
-                            <label for="pro-add-line1">Property address line1</label>
-
-
-                            <div *ngIf="(addressLineOne.touched || addressLineOne.dirty) && addressLineOne.invalid" class="invalid-feedback">
-                              <div *ngIf="addressLineOne.errors?.required">{{errors.loanDetails.property.addressLineOne.required}}</div>
-                              <div *ngIf="addressLineOne.errors?.pattern">{{errors.loanDetails.property.addressLineOne.invalid}}</div>
+                            <div *ngIf="(proaddressLineOne.touched || proaddressLineOne.dirty) && proaddressLineOne.invalid" class="invalid-feedback">
+                              <div *ngIf="proaddressLineOne.errors?.required">{{errors.loanDetails.property.addressLineOne.required}}</div>
+                              <div *ngIf="proaddressLineOne.errors?.pattern">{{errors.loanDetails.property.addressLineOne.invalid}}</div>
                             </div>
                           </div>
 
                           <div class="form-group">
-                            <input type="text" class="form-control" id="pro-add-line2"
+                            <input type="text" class="form-control" id="add-line2"
                               required
                               ngModel
                               #addressLineTwo = "ngModel"
                               name="addressLineTwo"
-                              pattern='{{regexPattern.address}}'>
+                              pattern='{{regexPattern.address}}'/>
 
-                            <label for="pro-add-line2">Property address line2</label>
-
+                            <label for="add-line2" *ngIf="!addressLineTwo.value">Property address line2</label>
 
                             <div *ngIf="(addressLineTwo.touched || addressLineTwo.dirty) && addressLineTwo.invalid" class="invalid-feedback">
                               <div *ngIf="addressLineTwo.errors?.required">{{errors.loanDetails.property.addressLineTwo.required}}</div>
                               <div *ngIf="addressLineTwo.errors?.pattern">{{errors.loanDetails.property.addressLineTwo.invalid}}</div>
                             </div>
                           </div>
+                          
                           <div class="form-group">
                             <input type="text" class="form-control" id="pro-city2"
                               required
                               ngModel
                               #cityOrState = "ngModel"
                               name="cityOrState"
-                              pattern='{{regexPattern.cityOrState}}'>
-                            <label for="pro-city2">City/State</label>
+                              pattern='{{regexPattern.address}}'>
+                            <label for="pro-city2" *ngIf="!cityOrState.value">City/State</label>
 
 
                             <div *ngIf="(cityOrState.touched || cityOrState.dirty) && cityOrState.invalid" class="invalid-feedback">
@@ -378,9 +398,9 @@
                               ngModel
                               #monthlyEmi = "ngModel"
                               name="monthlyEmi"
-                              pattern='{{regexPattern.monthlyEmi}}'>
+                              pattern='{{regexPattern.amount}}'>
                               
-                            <label for="monthly-emi">Monthly EMI</label>
+                            <label for="monthly-emi" *ngIf="monthlyEmi.value==''">Monthly EMI</label>
 
                             <div *ngIf="(monthlyEmi.touched || monthlyEmi.dirty) && monthlyEmi.invalid" class="invalid-feedback">
                               <div *ngIf="monthlyEmi.errors?.required">{{errors.loanDetails.existingLoans.monthlyEmi.required}}</div>

@@ -66,9 +66,15 @@ export class ApplicantQdeComponent implements OnInit {
         required: "Std Code is required",
         invalid: "Std Code is not valid"
       },
+      alternateResidenceNumberStd1:{
+        invalid: "Std code is not valid"
+      },
       residenceNumber: {
         required: "Residence number is required",
         invalid: "Residence number is not valid"
+      },
+      alternateResidenceNumber1:{
+        invalid:"Residence number is not valid"
       }
     },
 
@@ -83,7 +89,8 @@ export class ApplicantQdeComponent implements OnInit {
       },
       pinCode: {
         required: "Pincode is required",
-        invalid: "Pincode is not valid"
+        invalid: "Pincode is not valid",
+        minlength:"Pincode should be 6 digits"
       },
       stateOrCity: {
         required: "State Name / City Name is required",
@@ -147,7 +154,8 @@ export class ApplicantQdeComponent implements OnInit {
       },
       pinCode: {
         required: "Pincode is required",
-        invalid: "Pincode is not valid"
+        invalid: "Pincode is not valid",
+        minlength:"Pincode should be 6 digits"
       },
       landMark: {
         invalid: "Land mark is not valid"
@@ -167,6 +175,19 @@ export class ApplicantQdeComponent implements OnInit {
         invalid: "Office Email Id is not valid"
       }
     },
+    
+    incomeDetails:{
+      familyIncome:{
+        required: "Annual family Income is required",
+      },
+      monthlyExpenditure:{
+        required:"Monthly Expenditure is required"
+      },
+      monthlyIncome:{
+        required:"Monthly Income is required"
+      }
+    },
+
     organizationDetails: {
       orgName: {
         required: "Organization Name is required",
@@ -182,7 +203,8 @@ export class ApplicantQdeComponent implements OnInit {
         invalid: "Land mark is not valid"
       },pinCode: {
         required: "Pincode is required",
-        invalid: "Pincode is not valid"
+        invalid: "Pincode is not valid",
+        minlength:"Pincode should be 6 digits"
       },stateOrCity: {
         required: "State Name / City Name is required",
         invalid: "State Name / City Name is not valid"
@@ -197,10 +219,17 @@ export class ApplicantQdeComponent implements OnInit {
         invalid: "Land mark is not valid"
       },pinCode: {
         required: "Pincode is required",
-        invalid: "Pincode is not valid"
+        invalid: "Pincode is not valid",
+        minlength:"Pincode should be 6 digits"
       },stateOrCity: {
         required: "State Name / City Name is required",
         invalid: "State Name / City Name is not valid"
+      },stdNumber:{
+        required:"Std is required",
+        invalid:"Sted is not valid"
+      },phoneNumber:{
+        required:"Phone number is required",
+        invalid:"Phone number is not valid"
       },
 
       ofcEmail:{
@@ -221,7 +250,21 @@ export class ApplicantQdeComponent implements OnInit {
         required: "Gross Turnover is required",
         invalid: "Gross Turnover is not valid"
       }
+      
     }
+  };
+
+  regexPattern = {
+    mobileNumber: "^[0-9]*$",
+    name: "^[A-Za-z, ]+$",
+    address : "^[0-9A-Za-z, _&'#]+$",
+    // cityState:"^[0-9A-Za-z, &'#]$",
+    pinCode: "^[1-9][0-9]{5}$",
+    pan:"[A-Z]{5}[0-9]{4}[A-Z]{1}",
+    amount:"[0-9]{0,17}.[0-9]{1,4}?$",
+    revenue:"^[1-9][0-9]{0,17}"
+    // revenue:"^[0-9]{0,17}\.[0-9]{1,4}?$"
+   
   };
 
   value: Array<number> = [0,0,0,0];
@@ -533,6 +576,7 @@ export class ApplicantQdeComponent implements OnInit {
        });
       }
 
+
       console.log("QDE" , this.qde);
     });
 
@@ -582,6 +626,7 @@ export class ApplicantQdeComponent implements OnInit {
     this.corporateAddressCityState = this.qde.application.applicants[this.applicantIndex].corporateAddress.city +'-'+ this.qde.application.applicants[this.applicantIndex].corporateAddress.state;
     this.corporateAddressStdNumber.stdCode = this.qde.application.applicants[this.applicantIndex].corporateAddress.stdNumber != "" ? this.qde.application.applicants[this.applicantIndex].corporateAddress.stdNumber.split("-")[0] : "";
     this.corporateAddressStdNumber.phoneNumber = this.qde.application.applicants[this.applicantIndex].corporateAddress.stdNumber != "" ? this.qde.application.applicants[this.applicantIndex].corporateAddress.stdNumber.split("-")[1] : "";
+
   }
 
   valuechange(newValue, valueIndex) {
@@ -637,6 +682,7 @@ export class ApplicantQdeComponent implements OnInit {
     if(tabIndex < this.fragments.length) {
 
       this.router.navigate([], { fragment: this.fragments[tabIndex]});
+
     }
   }
 
@@ -677,6 +723,7 @@ export class ApplicantQdeComponent implements OnInit {
     }
 
     this.qde.application.applicants[this.applicantIndex].pan = {
+   
       panNumber: form.value.pan,
       docType: form.value.docType,
       docNumber: form.value.docNumber
@@ -722,6 +769,7 @@ export class ApplicantQdeComponent implements OnInit {
     }
 
     this.qde.application.applicants[this.applicantIndex].pan = {
+   
       panNumber: form.value.pan,
       docType: form.value.docType,
       docNumber: form.value.docNumber
