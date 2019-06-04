@@ -246,28 +246,30 @@
                                   #pdSlider2="ngxSwiper">
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide">
-                                                    <form class="bs-form">
-                                                        <div class="form-wrap">
-                                                            <div class="bs-radio">
-                                                                <input  type="radio"
-                                                                        name="income-consider"
-                                                                        id="yes-consider"
-                                                                        [value]="true"
-                                                                        (change)="goToNextSlide(pdSlider2)"
-                                                                        class="not-usual" />
-                                                                <label for="yes-consider"><span>Resident</span></label>
-                                                            </div>
-                                                            <div class="bs-radio">
-                                                                <input  type="radio"
-                                                                        name="income-consider"
-                                                                        id="no-consider"
-                                                                        class="not-usual"
-                                                                        [value]="false"
-                                                                        (change)="goToNextSlide(pdSlider2)" />
-                                                                <label for="no-consider"><span>Non Resident</span></label>
-                                                            </div>
-                                                        </div>
-                                                    </form>
+                                        <form class="bs-form">
+                                            <div class="form-wrap">
+                                                <div class="bs-radio">
+                                                    <input  type="radio"
+                                                            name="income-consider"
+                                                            id="yes-consider"
+                                                            [value]="true"
+                                                            [checked]="qde.application.applicants[applicantIndex].personalDetails.applicantStatus == 1"
+                                                            (change)="submitResidentialNon(1, pdSlider2)"
+                                                            class="not-usual" />
+                                                    <label for="yes-consider"><span>Resident</span></label>
+                                                </div>
+                                                <div class="bs-radio">
+                                                    <input  type="radio"
+                                                            name="income-consider"
+                                                            id="no-consider"
+                                                            class="not-usual"
+                                                            [checked]="qde.application.applicants[applicantIndex].personalDetails.applicantStatus == 2"
+                                                            [value]="false"
+                                                            (change)="submitResidentialNon(2, pdSlider2)" />
+                                                    <label for="no-consider"><span>Non Resident</span></label>
+                                                </div>
+                                            </div>
+                                        </form>
                                     </div>
                                     <div class="swiper-slide">
                                         <form   class="bs-form"
@@ -290,8 +292,10 @@
                                                           textField="key"
                                                           valueField="value"
                                                           name="title"
-                                                          [(ngModel)]="selectedTitle"
-                                                          >
+                                                          nick="personalDetails.title"
+                                                          #title
+                                                          (selectionChange)="selectValueChanged($event, title.hostElement)"
+                                                          [(ngModel)]="selectedTitle">
                                                         </kendo-dropdownlist>
                                                     </div>
                                                 </div>
@@ -363,6 +367,7 @@
                                                             name="gender"
                                                             id="male"
                                                             value="1"
+                                                            [checked]="qde.application.applicants[applicantIndex].personalDetails.gender == 1"
                                                             [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.gender"
                                                             (change)="submitGenderDetails(genderForm, pdSlider2)">
                                                     <label for="male"><span>Male</span></label>
@@ -372,6 +377,7 @@
                                                             name="gender"
                                                             id="female"
                                                             value="2"
+                                                            [checked]="qde.application.applicants[applicantIndex].personalDetails.gender == 2"
                                                             [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.gender"
                                                             (change)="submitGenderDetails(genderForm, pdSlider2)">
                                                     <label for="female"><span>Female</span></label>
@@ -381,6 +387,7 @@
                                                             name="maleFemale"
                                                             id="thirdGender"
                                                             value="3"
+                                                            [checked]="qde.application.applicants[applicantIndex].personalDetails.gender == 3"
                                                             [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.gender"
                                                             (change)="submitGenderDetails(genderForm, pdSlider2)">
                                                     <label for="thirdGender"><span>Third Gender</span></label>
@@ -425,10 +432,14 @@
                                                     <span class="control-title">Date of Birth</span>
                                                     <select [(ngModel)]="dob.day" class="js-select" name="day" required>
                                                         <option [ngClass]="{'select': (dob.day == undefined || dob.day == null)}"
-                                                                [selected]="dob.day == undefined || dob.day == null">DD</option>
+                                                                [selected]="dob.day == undefined || dob.day == null">
+                                                            DD
+                                                        </option>
                                                         <option *ngFor="let loop of counter(31);let i=index;"
                                                                 [ngClass]="{'select': (dob.day == i)}"
-                                                                [selected]="dob.day == i">{{i}}</option>
+                                                                [selected]="dob.day == i">
+                                                            {{i}}
+                                                        </option>
                                                     </select>
                                                     <select [(ngModel)]="dob.month" class="js-select" name="month" required>
                                                         <option [ngClass]="{'select': (dob.day == undefined || dob.day == null)}"

@@ -301,8 +301,8 @@ export class ApplicantQdeComponent implements OnInit {
   };
 
   private rhsConfig = {
-    noSwiping: true,
-    noSwipingClass: '',
+    // noSwiping: true,
+    // noSwipingClass: '',
     autoplay: false,
     speed: 900,
     effect: "slide"
@@ -400,37 +400,37 @@ export class ApplicantQdeComponent implements OnInit {
               private qdeHttp: QdeHttpService,
               private qdeService: QdeService,
               private cds:CommonDataService) {
-                this.cds.panslide.subscribe(val => {
-                  this.panslide = val;
-                });
+    this.cds.panslide.subscribe(val => {
+      this.panslide = val;
+    });
 
-                this.cds.panslide2.subscribe(val => {
-                  this.panslide2 = val;
-                });
+    this.cds.panslide2.subscribe(val => {
+      this.panslide2 = val;
+    });
 
-                this.qdeService.qdeSource.subscribe(val => {
-                  this.qde = val;
-                });
+    this.qdeService.qdeSource.subscribe(val => {
+      this.qde = val;
+    });
 
 
-                this.route.fragment.subscribe((fragment) => {
-                  let localFragment = fragment;
-                  
-                  if(fragment == null) {
-                    localFragment = this.fragments[0];
-                  }
+    this.route.fragment.subscribe((fragment) => {
+      let localFragment = fragment;
+      
+      if(fragment == null) {
+        localFragment = this.fragments[0];
+      }
 
-                  // Replace Fragments in url
-                  if( this.fragments.includes(localFragment) &&
-                      this.panslide == false &&
-                      this.panslide2 == false) {
+      // Replace Fragments in url
+      if( this.fragments.includes(localFragment) &&
+          this.panslide == false &&
+          this.panslide2 == false) {
 
-                    this.activeTab = this.fragments.indexOf(localFragment);
+        this.activeTab = this.fragments.indexOf(localFragment);
 
-                    this.applicantIndividual = (this.activeTab >= 10) ? false: true; 
-                  }
-                });
-                console.log('__________');
+        this.applicantIndividual = (this.activeTab >= 10) ? false: true; 
+      }
+    });
+    console.log('__________');
   }
   
   private panslide: boolean;
@@ -466,10 +466,6 @@ export class ApplicantQdeComponent implements OnInit {
       this.selectedQualification = this.qualifications[0];
       this.selectedConstitution = this.constitutions[0];
     }
-
-    if(this.route.snapshot.data.listOfValues != null && this.route.snapshot.data.listOfValues != undefined) {
-      // Initialize all UI Values here
-    }
     
     console.log("params: ", this.route.snapshot.params);
 
@@ -486,77 +482,125 @@ export class ApplicantQdeComponent implements OnInit {
       // Make an http request to get the required qde data and set using setQde
       if(params.applicantId != undefined && params.applicantId != null) {
 
-        this.qdeHttp.getQdeData(params.applicantId).subscribe(response => {
+        // getQdeData
+        this.qdeHttp.dummyGetApi(params.applicantId).subscribe(response => {
           var result = JSON.parse(response["ProcessVariables"]["response"]);
           console.log("Get ", result);
 
           this.applicantIndex = this.qde.application.applicants.findIndex(val => val.isMainApplicant == true);
 
+          
           try {
-          this.qde.application.applicants[this.applicantIndex].applicantId = result.application.applicants[this.applicantIndex].applicantId;
+            if(result.application.applicants[this.applicantIndex].applicantId != null) {
+              this.qde.application.applicants[this.applicantIndex].applicantId = result.application.applicants[this.applicantIndex].applicantId;
+            }
           } catch(e) {}
           try {
-            this.qde.application.applicants[this.applicantIndex].pan = result.application.applicants[this.applicantIndex].pan;
+            if(result.application.applicants[this.applicantIndex].pan != null) {
+              this.qde.application.applicants[this.applicantIndex].pan = result.application.applicants[this.applicantIndex].pan;
+            }
           } catch(e) {}
           try {
-            this.qde.application.applicants[this.applicantIndex].partnerRelationship = result.application.applicants[this.applicantIndex].isMainApplicant;
+            if(result.application.applicants[this.applicantIndex].isMainApplicant != null) {
+              this.qde.application.applicants[this.applicantIndex].partnerRelationship = result.application.applicants[this.applicantIndex].isMainApplicant;
+            }
           } catch(e) {}
           try {
-            this.qde.application.applicants[this.applicantIndex].maritalStatus = result.application.applicants[this.applicantIndex].isMainApplicant;
+            if(result.application.applicants[this.applicantIndex].isMainApplicant != null) {
+              this.qde.application.applicants[this.applicantIndex].maritalStatus = result.application.applicants[this.applicantIndex].isMainApplicant;
+            }
           } catch(e) {}
           try {
-            this.qde.application.applicants[this.applicantIndex].isIndividual = result.application.applicants[this.applicantIndex].isIndividual;
+            if(result.application.applicants[this.applicantIndex].isIndividual != null) {
+              this.qde.application.applicants[this.applicantIndex].isIndividual = result.application.applicants[this.applicantIndex].isIndividual;
+            }
           } catch(e) {}
           try {
-            this.qde.application.applicants[this.applicantIndex].familyDetails = result.application.applicants[this.applicantIndex].familyDetails;
+            if(result.application.applicants[this.applicantIndex].familyDetails != null) {
+              this.qde.application.applicants[this.applicantIndex].familyDetails = result.application.applicants[this.applicantIndex].familyDetails;
+            }
           } catch(e) {}
           try {
-            this.qde.application.applicants[this.applicantIndex].other = result.application.applicants[this.applicantIndex].other;
+            if(result.application.applicants[this.applicantIndex].other != null) {
+              this.qde.application.applicants[this.applicantIndex].other = result.application.applicants[this.applicantIndex].other;
+            }
           } catch(e) {}
           try {
-            this.qde.application.applicants[this.applicantIndex].occupation = result.application.applicants[this.applicantIndex].occupation;
+            if(result.application.applicants[this.applicantIndex].occupation != null) {
+              this.qde.application.applicants[this.applicantIndex].occupation = result.application.applicants[this.applicantIndex].occupation;
+            }
           } catch(e) {}
           try {
-            this.qde.application.applicants[this.applicantIndex].personalDetails = result.application.applicants[this.applicantIndex].personalDetails;
+            if(result.application.applicants[this.applicantIndex].personalDetails != null) {
+              this.qde.application.applicants[this.applicantIndex].personalDetails = result.application.applicants[this.applicantIndex].personalDetails;
+            }
           } catch(e) {}
           try {
-            this.qde.application.applicants[this.applicantIndex].contactDetails = result.application.applicants[this.applicantIndex].contactDetails;
+            if(result.application.applicants[this.applicantIndex].contactDetails != null) {
+              this.qde.application.applicants[this.applicantIndex].contactDetails = result.application.applicants[this.applicantIndex].contactDetails;
+            }
           } catch(e) {}
           try {
-            this.qde.application.applicants[this.applicantIndex].communicationAddress = result.application.applicants[this.applicantIndex].communicationAddress;
+            if(result.application.applicants[this.applicantIndex].communicationAddress != null) {
+              this.qde.application.applicants[this.applicantIndex].communicationAddress = result.application.applicants[this.applicantIndex].communicationAddress;
+            }
           } catch(e) {}
           try {
-            this.qde.application.applicants[this.applicantIndex].permanentAddress = result.application.applicants[this.applicantIndex].permanentAddress;
+            if(result.application.applicants[this.applicantIndex].permanentAddress != null) {
+              this.qde.application.applicants[this.applicantIndex].permanentAddress = result.application.applicants[this.applicantIndex].permanentAddress;
+            }
           } catch(e) {}
           try {
-            this.qde.application.applicants[this.applicantIndex].residentialAddress = result.application.applicants[this.applicantIndex].residentialAddress;
+            if(result.application.applicants[this.applicantIndex].residentialAddress != null) {
+              this.qde.application.applicants[this.applicantIndex].residentialAddress = result.application.applicants[this.applicantIndex].residentialAddress;
+            }
           } catch(e) {}
           try {
-            this.qde.application.applicants[this.applicantIndex].officialCorrespondence = result.application.applicants[this.applicantIndex].officialCorrespondence;
+            if(result.application.applicants[this.applicantIndex].officialCorrespondence != null) {
+              this.qde.application.applicants[this.applicantIndex].officialCorrespondence = result.application.applicants[this.applicantIndex].officialCorrespondence;
+            }
           } catch(e) {}
           try {
-            this.qde.application.applicants[this.applicantIndex].organizationDetails = result.application.applicants[this.applicantIndex].organizationDetails;
+            if(result.application.applicants[this.applicantIndex].organizationDetails != null) {
+              this.qde.application.applicants[this.applicantIndex].organizationDetails = result.application.applicants[this.applicantIndex].organizationDetails;
+            }
           } catch(e) {}
           try {
-            this.qde.application.applicants[this.applicantIndex].registeredAddress = result.application.applicants[this.applicantIndex].registeredAddress;
+            if(result.application.applicants[this.applicantIndex].registeredAddress != null) {
+              this.qde.application.applicants[this.applicantIndex].registeredAddress = result.application.applicants[this.applicantIndex].registeredAddress;
+            }
           } catch(e) {}
           try {
-            this.qde.application.applicants[this.applicantIndex].corporateAddress = result.application.applicants[this.applicantIndex].corporateAddress;
+            if(result.application.applicants[this.applicantIndex].corporateAddress != null) {
+              this.qde.application.applicants[this.applicantIndex].corporateAddress = result.application.applicants[this.applicantIndex].corporateAddress;
+            }
           } catch(e) {}
           try {
-            this.qde.application.applicants[this.applicantIndex].revenueDetails = result.application.applicants[this.applicantIndex].revenueDetails;
+            if(result.application.applicants[this.applicantIndex].revenueDetails != null) {
+              this.qde.application.applicants[this.applicantIndex].revenueDetails = result.application.applicants[this.applicantIndex].revenueDetails;
+            }
           } catch(e) {}
           try {
-            this.qde.application.applicants[this.applicantIndex].incomeDetails = result.application.applicants[this.applicantIndex].incomeDetails;
+            if(result.application.applicants[this.applicantIndex].incomeDetails != null) {
+              this.qde.application.applicants[this.applicantIndex].incomeDetails = result.application.applicants[this.applicantIndex].incomeDetails;
+            }
           } catch(e) {}
           try {
-            this.qde.application.applicants[this.applicantIndex].documents = result.application.applicants[this.applicantIndex].documents;
+            if(result.application.applicants[this.applicantIndex].documents != null) {
+              this.qde.application.applicants[this.applicantIndex].documents = result.application.applicants[this.applicantIndex].documents;
+            }
           } catch(e) {}
           try {
-            this.qde.application.applicants[this.applicantIndex].isMainApplicant = result.application.applicants[this.applicantIndex].isMainApplicant;
+            if(result.application.applicants[this.applicantIndex].isMainApplicant != null) {
+              this.qde.application.applicants[this.applicantIndex].isMainApplicant = result.application.applicants[this.applicantIndex].isMainApplicant;
+            }
           } catch(e) {}
 
           this.qdeService.setQde(this.qde);
+
+          if( ! isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].personalDetails.title)) ) {
+            this.selectedTitle = this.titles[(parseInt(this.qde.application.applicants[this.applicantIndex].personalDetails.title))];
+          }
 
           console.log('this is coming first', this.panslide, this.qde.application.applicants[this.applicantIndex].isIndividual);
           // Incoming from create Individual Pan
@@ -567,11 +611,13 @@ export class ApplicantQdeComponent implements OnInit {
           // Incoming from create Non Individual Pan
           else if(this.panslide2 == true && this.qde.application.applicants[this.applicantIndex].isIndividual == false) {
             this.tabSwitch(11);
-          } else if(this.panslide == false && this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
+          }
+          else if(this.panslide == false && this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
             this.tabSwitch(0);
             this.panSlider2.setIndex(1);
-          } else if(this.panslide2 == false && this.qde.application.applicants[this.applicantIndex].isIndividual == false) {
-            this.tabSwitch(11);
+          }
+          else if(this.panslide2 == false && this.qde.application.applicants[this.applicantIndex].isIndividual == false) {
+            this.tabSwitch(10);
           }
 
           this.cds.changePanSlide(false);
@@ -821,14 +867,29 @@ export class ApplicantQdeComponent implements OnInit {
       return;
     }
 
-    this.qde.application.applicants[this.applicantIndex].personalDetails = {
-      title : form.value.title.value,
-      firstName : form.value.firstName,
-      middleName : form.value.middleName,
-      lastName : form.value.lastName
-    };
+    this.qde.application.applicants[this.applicantIndex].personalDetails.title = form.value.title.value;
+    this.qde.application.applicants[this.applicantIndex].personalDetails.firstName = form.value.firstName;
+    this.qde.application.applicants[this.applicantIndex].personalDetails.middleName = form.value.middleName;
+    this.qde.application.applicants[this.applicantIndex].personalDetails.lastName = form.value.lastName;
 
-    console.log(this.qde.application.applicants[this.applicantIndex]);
+    this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
+      // If successful
+      if(response["ProcessVariables"]["status"]) {
+        this.goToNextSlide(swiperInstance);
+      } else {
+        // Throw Invalid Pan Error
+      }
+    }, (error) => {
+      console.log("response : ", error);
+    });
+    
+  }
+
+  //-------------------------------------------------------------
+  submitResidentialNon(value, swiperInstance ?: Swiper) {
+
+    this.qde.application.applicants[this.applicantIndex].personalDetails.applicantStatus = value;
+
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
@@ -1544,6 +1605,13 @@ export class ApplicantQdeComponent implements OnInit {
     }
   }
 
+  changeResidentialNon(value, swiperInstance ?: Swiper) {
+    this.qde.application.applicants[this.applicantIndex].personalDetails.applicantStatus = value;
+    
+    // Make API Request to save that is submitpersonaldetails
+
+  }
+
   counter(size): Array<number> {
     return new Array(size);
   }
@@ -1591,5 +1659,14 @@ export class ApplicantQdeComponent implements OnInit {
   }
 
 
-  
+  selectValueChanged(event, to) {
+    let whichSelectQde = this.qde.application.applicants[this.applicantIndex];
+    to.getAttribute('nick').split(".").forEach((val, i) => {
+      if(i == (to.getAttribute('nick').split(".").length-1)) {
+        whichSelectQde[val] = event.value;
+        return;
+      }
+      whichSelectQde = whichSelectQde[val]
+    });
+  }  
 }
