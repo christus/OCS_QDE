@@ -11,7 +11,9 @@ import { NgForm } from '@angular/forms';
 import Qde from 'src/app/models/qde.model';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
 import { QdeService } from 'src/app/services/qde.service';
+
 import { CommonDataService } from '../../services/common-data.service';
+import { ItemsList } from '@ng-select/ng-select/ng-select/items-list';
 
 interface Item {
   key: string,
@@ -350,8 +352,10 @@ export class CoApplicantQdeComponent implements OnInit {
   private selectedSpouseTitle: Item;
   private selectedFatherTitle: Item;
   private selectedQualification: Item;
+  private selectedMotherTitle: Item;
+  private selectedConstitution: Item;
 
-  
+
   constructor(private renderer: Renderer2,
               private route: ActivatedRoute,
               private router: Router,
@@ -426,7 +430,7 @@ export class CoApplicantQdeComponent implements OnInit {
     if(this.route.snapshot.data.listOfValues != null && this.route.snapshot.data.listOfValues != undefined) {
       // Initialize all UI Values here
     }
-    
+
     console.log("params: ", this.route.snapshot.params);
 
     // Create New Entry
@@ -549,6 +553,7 @@ export class CoApplicantQdeComponent implements OnInit {
     
           console.log("coApplicants: ", this.coApplicants);
         });
+
       }
 
       console.log("QDE" , this.qde);
@@ -1518,16 +1523,19 @@ export class CoApplicantQdeComponent implements OnInit {
 
   incomeDetailsYesNo(value, swiperInstance ?: Swiper) {
 
-      this.qde.application.applicants[this.applicantIndex].incomeDetails = {
-        incomeConsider : value,
-      };
+      this.qde.application.applicants[this.applicantIndex].incomeDetails.incomeConsider = value;
   
       console.log(this.qde.application.applicants[this.applicantIndex].incomeDetails);
   
       this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successfull
         if(response["ProcessVariables"]["status"]) {
-          this.goToNextSlide(swiperInstance);
+          if(value == true) {
+            this.goToNextSlide(swiperInstance);
+          } else {
+            swiperInstance.setIndex(3);
+          }
+          
         } else {
           // Throw Invalid Pan Error
         }

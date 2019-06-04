@@ -6,7 +6,7 @@
                   <li class="tab-link pending" [ngClass]="{'active': (activeTab == 0), 'hide': (!applicantIndividual)}">
                     <a href="javascript:void(0);" (click)="tabSwitch(0)">Dashboard</a>
                   </li>
-                  <li class="tab-link pending" [ngClass]="{'active': (activeTab == 1), 'hide': (!applicantIndividual)}">
+                  <li class="tab-link" [ngClass]="{'active': (activeTab == 1), 'hide': (!applicantIndividual)}">
                     <a href="javascript:void(0);" (click)="tabSwitch(1)">PAN</a>
                   </li>
                   <li class="tab-link" [ngClass]="{'active': (activeTab == 2), 'hide': (!applicantIndividual)}">
@@ -62,7 +62,7 @@
 
                             <div class="lhs">
                                 <div class="title-wrap">
-                                    <h4 class="title">Co-Applicant<span class="cm-line-break"></span>list</h4>
+                                    <h4 class="title">Co-Applicant's<span class="cm-line-break"></span>list</h4>
                                 </div>
                             </div>
                             <div class="rhs">
@@ -103,7 +103,7 @@
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide">
                                         <div class="title-wrap">
-                                            <h4 class="title">Select <span class="cm-line-break"></span>applicant type</h4>
+                                            <h4 class="title">Select <span class="cm-line-break"></span>Co-Applicant type</h4>
                                             <h5 class="subtitle">Individuals</h5>
                                             <p class="note">Can be any person who is Salaried or Self employed working Professional/ Non-Professional or Non-Salaried Individuals like Students, Retired Individuals, Housewives etc.</p>
                                             <h5 class="subtitle">Non-Individuals</h5>
@@ -112,12 +112,12 @@
                                     </div>
                                     <div class="swiper-slide">
                                         <div class="title-wrap">
-                                            <h4 class="title">Enter applicant's <span class="cm-line-break"></span>PAN & KYC details</h4>
+                                            <h4 class="title">Enter Co-Applicant's <span class="cm-line-break"></span>PAN & KYC details</h4>
                                         </div>
                                     </div>
                                     <div class="swiper-slide">
                                         <div class="title-wrap">
-                                            <h4 class="title">Upload applicant's  <span class="cm-line-break"></span>PAN details</h4>
+                                            <h4 class="title">Upload Co-Applicant's  <span class="cm-line-break"></span>PAN details</h4>
                                         </div>
                                     </div>
                                 </div>
@@ -180,13 +180,17 @@
                                                 </div>
                                                 <div class="form-group">
                                                   <span class="control-title">Document Type</span>
-                                                  <select name="docType" 
+                                                  <!-- <select name="docType" 
                                                   [(ngModel)]="qde.application.applicants[applicantIndex].pan.docType"
                                                   name="docType" required>
                                                    <option value="1">Aadhar</option>
                                                    <option value="2">Driving Lincence</option>
                                                    <option value="3">Passport</option>
-                                                  </select>
+                                                  </select> -->
+                                                  <kendo-dropdownlist name="docType" 
+                                                  [(ngModel)]="qde.application.applicants[applicantIndex].pan.docType"
+                                                  name="docType" required>
+                                                  </kendo-dropdownlist>
                                               </div>
                                               <div class="form-group">
                                                   <input type="text" class="form-control"
@@ -243,29 +247,29 @@
                                   <div class="swiper-wrapper">
                                       <div class="swiper-slide">
                                               <div class="title-wrap">
-                                                  <h4 class="title">Enter applicant’s <span class="cm-line-break"></span>status</h4>
+                                                  <h4 class="title">Enter Co-Applicant's <span class="cm-line-break"></span>status</h4>
                                               </div>
                                       </div>
                                       <div class="swiper-slide">
                                           <div class="title-wrap">
-                                            <h4 class="title">Enter applicant’s <span class="cm-line-break"></span>full name</h4>
+                                            <h4 class="title">Enter Co-Applicant's <span class="cm-line-break"></span>full name</h4>
                                             <p class="note">Kindly enter the basic personal details of the main applicant</p>
                                           </div>
                                       </div>
                                       <div class="swiper-slide">
                                           <div class="title-wrap">
-                                              <h4 class="title">Select applicant’s <span class="cm-line-break"></span>gender</h4>
+                                              <h4 class="title">Select Co-Applicant's <span class="cm-line-break"></span>gender</h4>
                                               <p class="note">Kindly enter the basic personal details of the main applicant</p>
                                           </div>
                                       </div>
                                       <div class="swiper-slide">
                                           <div class="title-wrap">
-                                              <h4 class="title">Select applicant’s <span class="cm-line-break"></span>qualification</h4>
+                                              <h4 class="title">Select Co-Applicant's <span class="cm-line-break"></span>qualification</h4>
                                           </div>
                                       </div>
                                       <div class="swiper-slide">
                                           <div class="title-wrap">
-                                              <h4 class="title">Select applicant’s <span class="cm-line-break">date of birth and</span> <span class="cm-line-break">birth place</span></h4>
+                                              <h4 class="title">Select Co-Applicant's <span class="cm-line-break">date of birth and</span> <span class="cm-line-break">birth place</span></h4>
                                               <p class="note">Kindly enter the basic personal details of the main applicant</p>
                                           </div>
                                       </div>
@@ -522,7 +526,7 @@
                     <div class="lyt-tabs">
                         <div class="lhs">
                             <div class="title-wrap">
-                                <h4 class="title">Enter applicant’s <span class="cm-line-break"></span>contact details</h4>
+                                <h4 class="title">Enter Co-Applicant's <span class="cm-line-break"></span>contact details</h4>
                                 <p class="note">Please capture the primary contact details as these <span class="cm-line-break"></span> will be used for all communication purposes <span class="cm-line-break"></span> between ICICI HFC and main applicant</p>
                             </div>
                         </div>
@@ -722,7 +726,7 @@
                   <div class="lyt-tabs">
                       <div class="lhs">
                           <div class="title-wrap">
-                              <h4 class="title">Enter applicant’s <span class="cm-line-break"></span>address</h4>
+                              <h4 class="title">Enter Co-Applicant's <span class="cm-line-break"></span>address</h4>
                               <p class="note">Please enter primary address of the main <span class="cm-line-break"></span> applicant as this will be used for all officia <span class="cm-line-break"></span> communications.</p>
                           </div>
                       </div>
@@ -942,7 +946,7 @@
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide">
                                         <div class="title-wrap">
-                                            <h4 class="title">Select applicant’s <span class="cm-line-break"></span>marital status</h4>
+                                            <h4 class="title">Select Co-Applicant's <span class="cm-line-break"></span>marital status</h4>
                                             <p class="note">Marital details are required to evaluate
                                                 <span class="cm-line-break">credit-worthiness of the main applicant & for other </span>
                                                 <span class="cm-line-break">regulatory purposes.</span>
@@ -951,7 +955,7 @@
                                     </div>
                                     <div class="swiper-slide">
                                         <div class="title-wrap">
-                                            <h4 class="title">Select applicant’s <span class="cm-line-break"></span>spouse's name</h4>
+                                            <h4 class="title">Select Co-Applicant's <span class="cm-line-break"></span>spouse's name</h4>
                                         </div>
                                     </div>
                                     <div class="swiper-slide">
@@ -961,7 +965,7 @@
                                     </div>
                                     <div class="swiper-slide">
                                         <div class="title-wrap">
-                                            <h4 class="title">Enter annual <span class="cm-line-break">income of applicant's </span><span class="cm-line-break">spouse</span></h4>
+                                            <h4 class="title">Enter annual <span class="cm-line-break">income of Co-Applicant's </span><span class="cm-line-break">spouse</span></h4>
                                         </div>
                                     </div>
                                 </div>
@@ -1154,7 +1158,7 @@
                               <div class="swiper-wrapper">
                                   <div class="swiper-slide">
                                       <div class="title-wrap">
-                                          <h4 class="title">Enter applicant’s <span class="cm-line-break"></span>family details</h4>
+                                          <h4 class="title">Enter Co-Applicant's <span class="cm-line-break"></span>family details</h4>
                                           <p class="note">Family details are required to evaluate
                                               <span class="cm-line-break">credit-worthiness of the main applicant & for </span>
                                               <span class="cm-line-break">other regulatory purposes.</span>
@@ -1163,7 +1167,7 @@
                                   </div>
                                   <div class="swiper-slide">
                                       <div class="title-wrap">
-                                          <h4 class="title">Enter applicant’s <span class="cm-line-break"></span>family details</h4>
+                                          <h4 class="title">Enter Co-Applicant's <span class="cm-line-break"></span>family details</h4>
                                           <p class="note">Family details are required to evaluate
                                               <span class="cm-line-break">credit-worthiness of the main applicant & for </span>
                                               <span class="cm-line-break">other regulatory purposes.</span>
@@ -1251,7 +1255,7 @@
                                               </div>
                                               <div class="form-group">
                                                   <span class="control-title">Title</span>
-                                                  <select [(ngModel)]="qde.application.applicants[applicantIndex].familyDetails.motherTitle"
+                                                  <!-- <select [(ngModel)]="qde.application.applicants[applicantIndex].familyDetails.motherTitle"
                                                           name="motherTitle"
                                                           required>
                                                    <option *ngFor="let tit of titles"
@@ -1259,11 +1263,19 @@
                                                               [selected]="qde.application.applicants[applicantIndex].familyDetails.motherTitle == tit.value"
                                                               [value]="tit.value">{{tit.key}}
                                                       </option> 
-                                                      <!-- <option value="1">Volvo</option>
+                                                      <option value="1">Volvo</option>
                                                       <option value="2">Saab</option>
                                                       <option value="3">Mercedes</option>
-                                                      <option value="4">Audi</option> -->
-                                                  </select>
+                                                      <option value="4">Audi</option>
+                                                  </select> -->
+                                                  <kendo-dropdownlist class="form-control"
+                                                  [data]="titles" 
+                                                  textField="key"
+                                                  valueField="value"
+                                                  name="fatherTitle"
+                                                  [(ngModel)]="selectedMotherTitle"
+                                                  >
+                                                </kendo-dropdownlist>
                                               </div>
                                               <div class="form-group">
                                                   <input type="text"
@@ -1399,7 +1411,7 @@
                   <div class="lyt-tabs">
                       <div class="lhs">
                           <div class="title-wrap">
-                              <h4 class="title">Enter applicant’s <span class="cm-line-break"></span>current occupation <span class="cm-line-break"></span>details</h4>
+                              <h4 class="title">Enter Co-Applicant's <span class="cm-line-break"></span>current occupation <span class="cm-line-break"></span>details</h4>
                               <p class="note">We may need this details for regulatory
                                   <span class="cm-line-break">purposes.</span>
                               </p>
@@ -1510,7 +1522,7 @@
                   <div class="lyt-tabs">
                       <div class="lhs">
                           <div class="title-wrap">
-                              <h4 class="title">Enter applicant’s <span class="cm-line-break"></span>professional contact <span class="cm-line-break"></span>details</h4>
+                              <h4 class="title">Enter Co-Applicant's <span class="cm-line-break"></span>professional contact <span class="cm-line-break"></span>details</h4>
                               <p class="note">In case, main application is currently not work-
                                   <span class="cm-line-break">ing, pleases enter details of the applicant</span>
                               </p>
@@ -1675,18 +1687,18 @@
                               <div class="swiper-wrapper">
                                   <div class="swiper-slide">
                                       <div class="title-wrap">
-                                          <h4 class="title">Enter applicant's<span class="cm-line-break"></span>income details</h4>
+                                          <h4 class="title">Enter Co-Applicant's<span class="cm-line-break"></span>income details</h4>
                                           <p class="note">Please enter household income & expenditure of main applicant & co-applicant/s</p>
                                       </div>
                                   </div>
                                   <div class="swiper-slide">
                                       <div class="title-wrap">
-                                          <h4 class="title">Do applicant's <span class="cm-line-break"></span>income considered?</h4>
+                                          <h4 class="title">Do Co-Applicant's <span class="cm-line-break"></span>income considered?</h4>
                                       </div>
                                   </div>
                                   <div class="swiper-slide">
                                       <div class="title-wrap">
-                                          <h4 class="title">Applicant's monthly<span class="cm-line-break"></span>income details</h4>
+                                          <h4 class="title">Co-Applicant's monthly<span class="cm-line-break"></span>income details</h4>
                                       </div>
                                   </div>
                                   <div class="swiper-slide">
@@ -1734,8 +1746,8 @@
                                     <div class="btn-wrap">
                                           <button 
                                               type="submit"
-                                              class="btn btn-primary">
-                                               <!-- (click)="goToNextSlide(incomeSlider2)" -->
+                                              class="btn btn-primary"
+                                               >
                                           Next
                                           </button>
                                     </div>
@@ -1749,6 +1761,7 @@
                                                   <input  type="radio"
                                                           name="income-consider"
                                                           id="yes-consider"
+                                                          [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.incomeConsider"
                                                           [value]="true"
                                                           (change)="incomeDetailsYesNo(true, incomeSlider2)"
                                                           class="not-usual" />
@@ -1759,6 +1772,7 @@
                                                           name="income-consider"
                                                           id="no-consider"
                                                           class="not-usual"
+                                                          [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.incomeConsider"
                                                           [value]="false"
                                                           (change)="incomeDetailsYesNo(false, incomeSlider2)" />
                                                   <label for="no-consider"><span>No</span></label>
@@ -1780,7 +1794,7 @@
                                                   </div>
                                                   <div class="form-group">
                                                       <span class="control-title">Assessment methodology</span>
-                                                      <select class="js-select" name="assessment"
+                                                      <!-- <select class="js-select" name="assessment"
                                                       [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.assessmentMethodology"
                                                       #assessment="ngModel"
                                                       name="assessment">
@@ -1794,11 +1808,15 @@
                                                           <option value="8">Gross Receipt</option>
                                                           <option value="9">Industry Margin</option>
                                                           <option value="10">Assessed Income</option>
-                                                      </select>
+                                                      </select> -->
+                                                      <kendo-dropdownlist name="assessment" 
+                                                      [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.assessmentMethodology"
+                                                      name="assessment" required>
+                                                      </kendo-dropdownlist>
                                                   </div>
                                               </div>
                                               <div class="btn-wrap">
-                                                  <button type="submit" class="btn btn-primary">Next</button>
+                                                  <button type="submit" class="btn btn-primary" (click)="goToNextSlide(incomeSlider2)">Next</button>
                                               </div>
                                           </form>
                                       </div>
@@ -1841,7 +1859,7 @@
                               <div class="swiper-wrapper">
                                   <div class="swiper-slide">
                                       <div class="title-wrap">
-                                          <h4 class="title">Enter applicant's <span class="cm-line-break"></span>PAN details</h4>
+                                          <h4 class="title">Enter Co-Applicant's <span class="cm-line-break"></span>PAN details</h4>
                                       </div>
                                   </div>
                               </div>
@@ -1955,17 +1973,22 @@
                                   </div>
                                   <div class="form-group last">
                                       <span class="control-title">Constitution</span>
-                                      <select [(ngModel)]="qde.application.applicants[applicantIndex].organizationDetails.constitution"
+                                      <!-- <select [(ngModel)]="qde.application.applicants[applicantIndex].organizationDetails.constitution"
                                               name="constitution"
                                               required>
                                           <option value="Partnership">Partnership</option>
                                           <option value="1">Proprietership</option>
                                           <option value="2">option3</option>
                                           <option value="3">option4</option>
-                                      </select>
-  
-  
-  
+                                      </select> -->
+                                      <kendo-dropdownlist class="form-control"
+                                    [data]="constitution" 
+                                    textField="key"
+                                    valueField="value"
+                                    name="occupationType"
+                                    [(ngModel)]="selectedConstitution"
+                                    >
+                                  </kendo-dropdownlist>  
                                   </div>
                               </div>
                               <div class="btn-wrap">
@@ -1985,7 +2008,7 @@
                   <div class="lyt-tabs">
                       <div class="lhs">
                           <div class="title-wrap">
-                              <h4 class="title">Enter applicant's <span class="cm-line-break"></span>registered address</h4>
+                              <h4 class="title">Enter Co-Applicant's <span class="cm-line-break"></span>registered address</h4>
                           </div>
   
                       </div>
@@ -2066,7 +2089,7 @@
                   <div class="lyt-tabs">
                       <div class="lhs">
                           <div class="title-wrap">
-                              <h4 class="title">Enter applicant's <span class="cm-line-break"></span>corporate address</h4>
+                              <h4 class="title">Enter Co-Applicant's <span class="cm-line-break"></span>corporate address</h4>
                           </div>
                       </div>
                       <div class="rhs">
@@ -2183,143 +2206,80 @@
               </div>
   
               <div class="tab-content" [ngClass]="{'active': (activeTab == 15)}">
-                  <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(incomeSlider4)"></a>
-                  <div class="lyt-tabs">
-                      <div class="lhs">
-                          <div  class="swiper-container form-swiper"
-                                [swiper]="lhsConfig"
-                                #incomeSlider3="ngxSwiper">
-                              <div class="swiper-wrapper">
-                                  <div class="swiper-slide">
-                                      <div class="title-wrap">
-                                          <h4 class="title">Enter applicant's<span class="cm-line-break"></span>income details</h4>
-                                          <p class="note">Please enter household income & expenditure of main applicant & co-applicant/s</p>
-                                      </div>
-                                  </div>
-                                  <div class="swiper-slide">
-                                      <div class="title-wrap">
-                                          <h4 class="title">Do applicant's <span class="cm-line-break"></span>income considered?</h4>
-                                      </div>
-                                  </div>
-                                  <div class="swiper-slide">
-                                      <div class="title-wrap">
-                                          <h4 class="title">Applicant's monthly<span class="cm-line-break"></span>income details</h4>
-                                      </div>
-                                  </div>
-                                  <div class="swiper-slide">
-                                      <div class="title-wrap">
-                                          <h4 class="title">Do you or any of the <span class="cm-line-break"></span>family members <span class="cm-line-break"></span> own a puccahouse <span class="cm-line-break"></span>anywhere in India?</h4>
-                                          <p class="note">House made with a high quality materials throughout, including a floor, roof and exterior walls, are called pucca houses</p>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                      <div class="rhs">
-                          <div  class="swiper-container form-swiper"
-                          [swiper]="rhsConfig"
-                          (slidePrevTransitionStart)="slidePrevTransitionStart(incomeSlider3)"
-                          (slideNextTransitionStart)="slideNextTransitionStart(incomeSlider3)"
-                          #incomeSlider4="ngxSwiper">
-                            <div class="swiper-wrapper">
-                              <div class="swiper-slide">
-                                <form class="bs-form">
-                                    <div class="form-wrap">
-                                        <div class="form-group">
-                                              <input type="text" class="form-control" fieldFill />
-                                            <label>Annual Family Income</label>
-                                        </div>
-                                          <div class="form-group">
-                                                <input type="text" class="form-control" fieldFill />
-                                              <label>Monthly Expenditure</label>
-                                          </div>
-                                      </div>
-                                    <div class="btn-wrap">
-                                        <button class="btn btn-primary"
-                                        (click)="goToNextSlide(incomeSlider4)">Next</button>
+                <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
+
+                <div class="lyt-tabs">
+                    <div class="lhs">
+                        <div class="title-wrap">
+                            <h4 class="title">Enter Co-Applicant's <span class="cm-line-break"></span>revenue details</h4>
+                        </div>
+                    </div>
+                    <div class="rhs">
+                        <form class="bs-form" #revenueForm="ngForm" (ngSubmit)="submitRevenueDetails(revenueForm)">
+                            <div class="form-wrap">
+                                <div class="form-group inr">
+                                    <input type="text" class="form-control" id="revenue"
+                                    ngModel
+                                    #revenue="ngModel"
+                                    name="revenue"
+                                    pattern="^[1-9]\d{0,17}(\.\d{0,4})?$"
+                                    required>
+                                    <label for="revenue" *ngIf="revenue.value==''">Revenue</label>
+                                    <div *ngIf="revenue.touched && revenue.invalid" class="invalid-feedback">
+                                        <div *ngIf="revenue.errors?.required">{{errors.revenueDetails.revenue.required}}</div>
+                                        <div *ngIf="revenue.errors?.pattern">{{errors.revenueDetails.revenue.invalid}}</div>
                                     </div>
-                                </form>
-                              </div>
-                              <div class="swiper-slide">
-                                      <form class="bs-form">
-                                          <div class="form-wrap">
-                                              <div class="bs-radio">
-                                                  <input  type="radio"
-                                                          name="income-consider"
-                                                          id="yes-consider"
-                                                          [value]="true"
-                                                          (change)="incomeDetailsYesNo(true, incomeSlider4)"
-                                                          class="not-usual" />
-                                                  <label for="yes-consider"><span>Yes</span></label>
-                                              </div>
-                                              <div class="bs-radio">
-                                                  <input  type="radio"
-                                                          name="income-consider"
-                                                          id="no-consider"
-                                                          class="not-usual"
-                                                          [value]="false"
-                                                          (change)="incomeDetailsYesNo(false, incomeSlider4)" />
-                                                  <label for="no-consider"><span>No</span></label>
-                                              </div>
-                                          </div>
-                                      </form>
-                                  </div>
-                                  <div class="swiper-slide">
-                                          <form class="bs-form" >
-                                              <div class="form-wrap">
-                                                  <div class="form-group inr">
-                                                      <input type="text" class="form-control" id="app-monthly-income" fieldFill>
-                                                      <label for="app-monthly-income">Monthly income</label>
-                                                      <span class="addon">
-                                                          <span class="icon icon-inr"></span>
-                                                      </span>
-                                                      <span class="in-word"></span>
-                                                  </div>
-                                                  <div class="form-group">
-                                                      <span class="control-title">Assessment methodology</span>
-                                                      <select class="js-select" name="assessment">
-                                                          <option value="1">Net Salary</option>
-                                                          <option value="2">Gross Salary</option>
-                                                          <option value="3">Income Plus</option>
-                                                          <option value="4">Normal Profit</option>
-                                                          <option value="5">GST surplus method</option>
-                                                          <option value="6">RTR</option>
-                                                          <option value="7">BT+Top up</option>
-                                                          <option value="8">Gross Receipt</option>
-                                                          <option value="9">Industry Margin</option>
-                                                          <option value="10">Assessed Income</option>
-                                                      </select>
-  
-                                                  </div>
-  
-                                              </div>
-                                              <div class="btn-wrap">
-                                                  <button class="btn btn-primary" (click)="goToNextSlide(incomeSlider4)">Next</button>
-                                              </div>
-                                          </form>
-                                      </div>
-                                      <div class="swiper-slide">
-                                              <form class="bs-form">
-                                                  <div class="form-wrap">
-                                                      <div class="bs-radio">
-                                                          <input type="radio"
-                                                           name="income-consider" 
-                                                           id="yes-consider" class="not-usual">
-                                                          <label for="yes-consider"><span>Yes</span></label>
-                                                      </div>
-                                                      <div class="bs-radio">
-                                                          <input type="radio" name="income-consider" id="no-consider" class="not-usual">
-                                                          <label for="no-consider"><span>No</span></label>
-                                                      </div>
-                                                  </div>
-                                              </form>
-                                      </div>
-  
+
+                                    <span class="addon">
+                                        <span class="icon icon-inr"></span>
+                                    </span>
+                                    <span class="in-word"></span>
+                                </div>
+                                <div class="form-group inr">
+                                    <input type="text" class="form-control" id="net-income"
+                                    required
+                                    ngModel
+                                    #annualNetincome="ngModel"
+                                    name="annualNetIncome"
+                                    pattern="^[1-9]\d{0,17}(\.\d{0,4})?$">
+                                    <label for="net-income" *ngIf="annualNetincome.value==''">Annual Net Income</label>
+                                    <div *ngIf="annualNetincome.touched && annualNetincome.invalid" class="invalid-feedback">
+                                        <div *ngIf="annualNetincome.errors?.required">{{errors.revenueDetails.annualNetincome.required}}</div>
+                                        <div *ngIf="annualNetincome.errors?.pattern">{{errors.revenueDetails.annualNetincome.invalid}}</div>
+                                    </div>
+
+                                    <span class="addon">
+                                        <span class="icon icon-inr"></span>
+                                    </span>
+                                    <span class="in-word"></span>
+                                </div>
+                                <div class="form-group inr last">
+                                    <input type="text" class="form-control" id="gross-turnover" 
+                                    required
+                                    ngModel
+                                    #grossTurnover="ngModel"
+                                    name="grossTurnOver"
+                                    pattern="^[1-9]\d{0,17}(\.\d{0,4})?$">
+                                    <label for="gross-turnover" *ngIf="grossTurnover.value==''">Gross Turnover</label>
+                                    <div *ngIf="grossTurnover.touched && grossTurnover.invalid" class="invalid-feedback">
+                                        <div *ngIf="grossTurnover.errors?.required">{{errors.revenueDetails.grossTurnover.required}}</div>
+                                        <div *ngIf="grossTurnover.errors?.pattern">{{errors.revenueDetails.grossTurnover.invalid}}</div>
+                                    </div>
+
+                                    <span class="addon">
+                                        <span class="icon icon-inr"></span>
+                                    </span>
+                                    <span class="in-word"></span>
+                                </div>
                             </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
+                            <div class="btn-wrap">
+                                <button type="submit" class="btn btn-primary" [ngClass]="{'disabled': !revenueForm.valid}"
+                                [disabled]="!revenueForm.valid" (click)="tabSwitch(16)">Next</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
   
               
   
@@ -2333,18 +2293,18 @@
                                   <div class="swiper-wrapper">
                                       <div class="swiper-slide">
                                           <div class="title-wrap">
-                                              <h4 class="title">Enter applicant's<span class="cm-line-break"></span>income details</h4>
+                                              <h4 class="title">Enter Co-Applicant's<span class="cm-line-break"></span>income details</h4>
                                               <p class="note">Please enter household income & expenditure of main applicant & co-applicant/s</p>
                                           </div>
                                       </div>
                                       <div class="swiper-slide">
                                           <div class="title-wrap">
-                                              <h4 class="title">Do applicant's <span class="cm-line-break"></span>income considered?</h4>
+                                              <h4 class="title">Do Co-Applicant's <span class="cm-line-break"></span>income considered?</h4>
                                           </div>
                                       </div>
                                       <div class="swiper-slide">
                                           <div class="title-wrap">
-                                              <h4 class="title">Applicant's monthly<span class="cm-line-break"></span>income details</h4>
+                                              <h4 class="title">Co-Applicant's monthly<span class="cm-line-break"></span>income details</h4>
                                           </div>
                                       </div>
                                       <div class="swiper-slide">
@@ -2361,8 +2321,8 @@
   
                               <div class="swiper-container form-swiper"
                                       [swiper]="rhsConfig"
-                                      (slidePrevTransitionStart)="slidePrevTransitionStart(incomeSlider1)"
-                                      (slideNextTransitionStart)="slideNextTransitionStart(incomeSlider1)"
+                                      (slidePrevTransitionStart)="slidePrevTransitionStart(incomeSlider3)"
+                                      (slideNextTransitionStart)="slideNextTransitionStart(incomeSlider3)"
                                       #incomeSlider4="ngxSwiper">
                                 <div class="swiper-wrapper">
                                   <div class="swiper-slide">
@@ -2393,8 +2353,8 @@
                                         <div class="btn-wrap">
                                               <button 
                                                   type="submit"
-                                                  class="btn btn-primary">
-                                                   <!-- (click)="goToNextSlide(incomeSlider2)" -->
+                                                  class="btn btn-primary"
+                                                   >
                                               Next
                                               </button>
                                         </div>
@@ -2408,6 +2368,7 @@
                                                       <input  type="radio"
                                                               name="income-consider"
                                                               id="yes-consider"
+                                                              [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.incomeConsider"
                                                               [value]="true"
                                                               (change)="incomeDetailsYesNo(true, incomeSlider4)"
                                                               class="not-usual" />
@@ -2418,6 +2379,7 @@
                                                               name="income-consider"
                                                               id="no-consider"
                                                               class="not-usual"
+                                                              [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.incomeConsider"
                                                               [value]="false"
                                                               (change)="incomeDetailsYesNo(false, incomeSlider4)" />
                                                       <label for="no-consider"><span>No</span></label>
@@ -2427,7 +2389,7 @@
                                       </div>
                                       <div class="swiper-slide">
                                               <form class="bs-form" 
-                                              #applicantIncome3="ngForm" (ngSubmit)="submitIncomeDetails2(applicantIncome3, incomeSlider2)">
+                                              #applicantIncome3="ngForm" (ngSubmit)="submitIncomeDetails2(applicantIncome3, incomeSlider4)">
                                                   <div class="form-wrap">
                                                       <div class="form-group inr">
                                                           <input type="text" class="form-control" id="app-monthly-income"
@@ -2443,7 +2405,7 @@
                                                       </div>
                                                       <div class="form-group">
                                                           <span class="control-title">Assessment methodology</span>
-                                                          <select class="js-select" name="assessment"
+                                                          <!-- <select class="js-select" name="assessment"
                                                           [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.assessmentMethodology"
                                                           #assessment="ngModel"
                                                           name="assessment">
@@ -2457,11 +2419,15 @@
                                                               <option value="8">Gross Receipt</option>
                                                               <option value="9">Industry Margin</option>
                                                               <option value="10">Assessed Income</option>
-                                                          </select>
+                                                          </select> -->
+                                                          <kendo-dropdownlist name="assessment" 
+                                                          [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.assessmentMethodology"
+                                                          name="assessment1" required>
+                                                          </kendo-dropdownlist>      
                                                       </div>
                                                   </div>
                                                   <div class="btn-wrap">
-                                                      <button type="submit" class="btn btn-primary">Next</button>
+                                                      <button type="submit" class="btn btn-primary" (click)="goToNextSlide(incomeSlider4)">Next</button>
                                                   </div>
                                               </form>
                                           </div>
