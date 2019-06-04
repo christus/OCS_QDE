@@ -427,10 +427,6 @@ export class CoApplicantQdeComponent implements OnInit {
       this.selectedQualification = this.qualifications[0];
     }
 
-    if(this.route.snapshot.data.listOfValues != null && this.route.snapshot.data.listOfValues != undefined) {
-      // Initialize all UI Values here
-    }
-
     console.log("params: ", this.route.snapshot.params);
 
     // Create New Entry
