@@ -389,7 +389,9 @@ export class ApplicantQdeComponent implements OnInit {
   private selectedResidence: Item;
   private selectedSpouseTitle: Item;
   private selectedFatherTitle: Item;
+  private selectedMotherTitle: Item;
   private selectedQualification: Item;
+  private selectedConstitution: Item;
 
   
   constructor(private renderer: Renderer2,
@@ -460,7 +462,9 @@ export class ApplicantQdeComponent implements OnInit {
       this.selectedResidence = this.residences[0];
       this.selectedSpouseTitle = this.titles[0];
       this.selectedFatherTitle = this.titles[0];
+      this.selectedMotherTitle = this.titles[0];
       this.selectedQualification = this.qualifications[0];
+      this.selectedConstitution = this.constitutions[0];
     }
 
     if(this.route.snapshot.data.listOfValues != null && this.route.snapshot.data.listOfValues != undefined) {
@@ -1480,10 +1484,8 @@ export class ApplicantQdeComponent implements OnInit {
       return;
     }
 
-    this.qde.application.applicants[this.applicantIndex].incomeDetails = {
-      annualFamilyIncome : form.value.annualFamilyIncome,
-      monthlyExpenditure : form.value.monthlyExpenditure
-    };
+    this.qde.application.applicants[this.applicantIndex].incomeDetails.annualFamilyIncome = form.value.annualFamilyIncome ? form.value.annualFamilyIncome: "";
+    this.qde.application.applicants[this.applicantIndex].incomeDetails.monthlyExpenditure = form.value.monthlyExpenditure ? form.value.monthlyExpenditure: "";
 
     console.log(this.qde.application.applicants[this.applicantIndex].incomeDetails);
 
@@ -1548,16 +1550,19 @@ export class ApplicantQdeComponent implements OnInit {
 
   incomeDetailsYesNo(value, swiperInstance ?: Swiper) {
 
-      this.qde.application.applicants[this.applicantIndex].incomeDetails = {
-        incomeConsider : value,
-      };
+      this.qde.application.applicants[this.applicantIndex].incomeDetails.incomeConsider = value;
   
       console.log(this.qde.application.applicants[this.applicantIndex].incomeDetails);
   
       this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successfull
         if(response["ProcessVariables"]["status"]) {
-          this.goToNextSlide(swiperInstance);
+          if(value == true) {
+            this.goToNextSlide(swiperInstance);
+          } else {
+            swiperInstance.setIndex(3);
+          }
+          
         } else {
           // Throw Invalid Pan Error
         }

@@ -1,0 +1,75 @@
+.lyt-box {
+    width: 60%;
+    margin: 1.95vw auto 0;
+    box-shadow: 0 0 25px -7px #d6d6d6;
+    display: block;
+    min-height: 78vh;
+    position: relative;
+    padding: 2.34vw;
+}
+.lyt-box .title {
+    text-align: left;
+    font-size: 2.34vw;
+    line-height: 2.34vw;
+    font-family: zurich-bold;
+    margin-bottom: 1.56vw;
+}
+.lyt-box .title .num {
+    font-size: 5.47vw;
+    line-height: 5.47vw;
+    float: left;
+    color: #b02a30;
+    position: relative;
+    top: -.55vw;
+}
+.lyt-box .title .text {
+    overflow: hidden;
+    color: #444;
+}
+.lyt-box .title .text span {
+    display: block;
+}
+.lyt-box .cont p {
+    font-family: zurich-light;
+    font-size: 1.56vw;
+    line-height: 1.72vw;
+    color: #999;
+    text-align: center;
+}
+.lyt-box .cont .btn-wrap {
+    text-align: center;
+}
+.btn.btn-border {
+    border-radius: 3.91vw;
+    color: #f58220;
+    font-family: zurich-bold;
+    font-size: 1.64vw;
+    line-height: 2.81vw;
+    text-transform: uppercase;
+    padding: 0 1.56vw;
+    border: 1px solid #f58220;
+}
+.btn.btn-border.typ2 {
+    border-color: #949494;
+    color: #949494;
+    padding: .47vw 1.56vw;
+}
+body:after {
+    background: none;
+}
+
+main:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: #181515;
+    background: -moz-linear-gradient(left,#b02b2f 0,#f6831f 100%);
+    background: -webkit-gradient(left top,right top,color-stop(0,#b02b2f),color-stop(100%,#f6831f));
+    background: -webkit-linear-gradient(left,#b02b2f 0,#f6831f 100%);
+    background: -o-linear-gradient(left,#b02b2f 0,#f6831f 100%);
+    background: -ms-linear-gradient(left,#b02b2f 0,#f6831f 100%);
+    background: linear-gradient(to right,#b02b2f 0,#f6831f 100%);
+}
