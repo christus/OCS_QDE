@@ -29,6 +29,7 @@
                   <p class="note">Enter the property details for which loan is being sought for</p>
                 </div>
               </div>
+
               <div class="rhs">
 
 
@@ -40,7 +41,7 @@
                       <input type="text" class="form-control" id="amt-require"
                         required
                         ngModel
-                        #loanAmount = "ngModel"
+                        #amountRequired = "ngModel"
                         name="amountRequired"
                         pattern='{{regexPattern.annualFamilyIncome}}'>
 
@@ -50,9 +51,9 @@
                       </span>
                       <span class="in-word"></span>
 
-                      <div *ngIf="(loanAmount.touched || loanAmount.dirty) && loanAmount.invalid" class="invalid-feedback">
-                        <div *ngIf="loanAmount.errors?.required">{{errors.loanDetails.loanAmount.amount.required}}</div>
-                        <div *ngIf="loanAmount.errors?.pattern">{{errors.loanDetails.loanAmount.amount.invalid}}</div>
+                      <div *ngIf="(amountRequired.touched || amountRequired.dirty) && amountRequired.invalid" class="invalid-feedback">
+                        <div *ngIf="amountRequired.errors?.required">{{errors.loanDetails.loanAmount.amount.required}}</div>
+                        <div *ngIf="amountRequired.errors?.pattern">{{errors.loanDetails.loanAmount.amount.invalid}}</div>
                       </div>
 
                     </div>
@@ -110,10 +111,10 @@
                     </div>
                   </div>
                   <div class="btn-wrap">
-                    <button type="submit"  class="btn btn-primary">Next</button>
-<!--                     <button class="btn btn-primary"
-                    [ngClass]="{'disabled': !formName.valid}"
-                    [disabled]="!formName.valid">Next</button> -->
+                    <!-- <button type="submit"  class="btn btn-primary">Next</button> -->
+                    <button class="btn btn-primary"
+                    [ngClass]="{'disabled': !loanAmount.valid}"
+                    [disabled]="!loanAmount.valid">Next</button>
                   </div>
                 </form>
               </div>
@@ -190,12 +191,15 @@
                               </div>
                           </div>
                           <div class="btn-wrap">
-                              <button type="submit" class="btn btn-primary ">Next</button>
+                              <button type="submit" class="btn btn-primary "
+                              [ngClass]="{'disabled': !propertyType.valid}"
+                              [disabled]="!propertyType.valid">Next</button>
                           </div>
                       </form>
                   </div>
                     <div class="swiper-slide">
-                      <form class="bs-form">
+                      <form class="bs-form" #submitProperty="ngForm"
+                      (ngSubmit)="submitPropertyDetail(submitProperty, property2)">
                         <div class="form-wrap">
                           <div class="form-group">
                             <input type="text" class="form-control" id="proprty-pin"
@@ -263,10 +267,10 @@
                           </div>
                         </div>
                         <div class="btn-wrap">
-                          <button class="btn btn-primary">Next</button>
-<!--                           <button class="btn btn-primary"
-                          [ngClass]="{'disabled': !formName.valid}"
-                          [disabled]="!formName.valid">Next</button> -->
+                          <!-- <button class="btn btn-primary">Next</button> -->
+                          <button class="btn btn-primary"
+                          [ngClass]="{'disabled': !submitProperty.valid}"
+                          [disabled]="!submitProperty.valid">Next</button>
                         </div>
                       </form>
                     </div>
@@ -332,7 +336,9 @@
                         </div>
                 
                         <div class="btn-wrap">
-                          <button type="submit" class="btn btn-primary disabled">next</button>
+                          <button type="submit" class="btn btn-primary" 
+                          [ngClass]="{'disabled': !loanProvider.valid}"
+                          [disabled]="!loanProvider.valid">next</button>
                         </div>
                       </form>
                     </div>
@@ -356,15 +362,15 @@
 
                         
                         <div class="btn-wrap">
-                          <button type="submit" class="btn btn-primary disabled">Next</button>
+                          <button type="submit" class="btn btn-primary">Next</button>
                         </div>
                       </form>
                     </div>
 
                     <div class="swiper-slide">
                       <form class="bs-form"
-                      #monthlyEmi="ngForm"
-                      (ngSubmit)="submitMonthlyEmi(monthlyEmi, existingLoan2)">
+                      #monthlyEmiForm="ngForm"
+                      (ngSubmit)="submitMonthlyEmi(monthlyEmiForm, existingLoan2)">
                         <div class="form-wrap">
                           <div class="form-group inr">
                             <input type="text" class="form-control" id="monthly-emi"
@@ -388,10 +394,9 @@
                           </div>
                         </div>
                         <div class="btn-wrap">
-                          <button type="submit" class="btn btn-primary disabled">Next</button>
-<!--                           <button class="btn btn-primary"
-                          [ngClass]="{'disabled': !formName.valid}"
-                          [disabled]="!formName.valid">Next</button> -->
+                          <button class="btn btn-primary"
+                          [ngClass]="{'disabled': !monthlyEmi.valid}"
+                          [disabled]="!monthlyEmi.valid">Next</button>
                         </div>
                       </form>
                     </div>

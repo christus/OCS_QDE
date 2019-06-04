@@ -91,8 +91,8 @@
                                         <a routerLink="/applicant/{{detail.leadId}}">
                                             <ul>
                                                 <li><span>Name</span><b>{{detail.firstName}}</b></li>
-                                                <li><span>Product</span><b></b></li>
-                                                <li><span>Loan amount</span><b></b></li>
+                                                <li><span>Product</span><b>{{detail.product}}</b></li>
+                                                <li><span>Loan amount</span><b>{{detail.loanAmount}}</b></li>
                                             </ul>
                                         </a>
                                     </td>
@@ -100,17 +100,17 @@
                                         <a routerLink="/applicant/{{detail.leadId}}">
                                             <ul>
                                                 <li><span>Lead ID: {{detail.leadId}}</span><b></b></li>
-                                                <li><span>Generated date</span><b></b></li>
-                                                <li><span>Assigned date</span><b></b></li>
+                                                <li><span>Generated date</span><b>{{detail.appliedOn}}</b></li>
+                                                <li><span>Assigned date</span><b>{{detail.assignedDate}}</b></li>
                                             </ul>
                                         </a>
                                     </td>
                                     <td>
                                         <a routerLink="/applicant/{{detail.leadId}}">
                                             <ul>
-                                                <li><span>Branch</span><b></b></li>
-                                                <li><span>Pending status</span><b></b></li>
-                                                <li><span>Pending with</span><b></b></li>
+                                                <li><span>Branch</span><b>{{detail.firstName}}</b></li>
+                                                <li><span>Pending status</span><b>{{detail.pendingStatus}}</b></li>
+                                                <li><span>Pending with</span><b>{{detail.appliedBy}}</b></li>
                                             </ul>
                                         </a>
                                     </td>

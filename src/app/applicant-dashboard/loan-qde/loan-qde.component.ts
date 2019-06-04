@@ -325,7 +325,8 @@ export class LoanQdeComponent implements OnInit {
     this.qde.application.loanDetails.loanAmount = {
       amountRequired: form.value.amountRequired,
       loanPurpose: form.value.loanPurpose.value,
-      loanTenure: form.value.loanTenure
+      loanTenure: form.value.loanTenure,
+      loanType: form.value.loanType.value
     }
 
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
@@ -370,6 +371,35 @@ export class LoanQdeComponent implements OnInit {
       if(response["ProcessVariables"]["status"]) {
         console.log(this.qde.application.loanDetails.propertyType);
         this.goToNextSlide(swiperInstance);
+      } else {
+        // Throw Invalid Pan Error
+      }
+    }, (error) => {
+      console.log("response : ", error);
+    });
+
+  }
+
+  submitPropertyDetail(form: NgForm, swiperInstance ?: Swiper) {
+    if (form && !form.valid) {
+      return;
+    }
+
+    this.qde.application.loanDetails.property = {
+
+      propertyIdentifed : this.isPropertyIdentified,
+      propertyPincde: form.value.propertyPincode,
+      addressLineOne: form.value.addressLineOne,
+      addressLineTwo: form.value.addressLineTwo,
+      city: form.value.cityOrState,
+      state: form.value.cityOrState
+    }
+
+    this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
+      // If successful
+      if(response["ProcessVariables"]["status"]) {
+        console.log(this.qde.application.loanDetails.propertyDetails);
+        this.tabSwitch(2);
       } else {
         // Throw Invalid Pan Error
       }
