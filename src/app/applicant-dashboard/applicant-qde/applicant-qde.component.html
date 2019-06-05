@@ -269,7 +269,7 @@
                                                     <input  type="radio"
                                                             name="income-consider"
                                                             id="yes-consider"
-                                                            [value]="true"
+                                                            [value]="1"
                                                             [checked]="qde.application.applicants[applicantIndex].personalDetails.applicantStatus == 1"
                                                             (change)="changeApplicantStatus(1, pdSlider2)"
                                                             class="not-usual" />
@@ -281,7 +281,7 @@
                                                             id="no-consider"
                                                             class="not-usual"
                                                             [checked]="qde.application.applicants[applicantIndex].personalDetails.applicantStatus == 2"
-                                                            [value]="false"
+                                                            [value]="2"
                                                             (change)="changeApplicantStatus(2, pdSlider2)" />
                                                     <label for="no-consider"><span>Non Resident</span></label>
                                                 </div>
@@ -416,6 +416,7 @@
                                                       (selectionChange)="selectValueChanged($event, qualification.hostElement)"
                                                       [(ngModel)]="selectedQualification">
                                                     </kendo-dropdownlist>
+    
                                                 </div>
                                             </div>
                                             <div class="btn-wrap">
@@ -691,15 +692,15 @@
                                           <input    type="text"
                                                     class="form-control"
                                                     [(ngModel)]="alternateResidenceNumber.phoneNumber"
-                                                    #alternateResidenceNumber1="ngModel"
-                                                    name="alternateResidenceNumber1"
+                                                    #alternateResidenceNumber2="ngModel"
+                                                    name="alternateResidenceNumber2"
                                                     id="altr-res-no"
                                                     maxlength="8" 
                                                     pattern="{{regexPattern.mobileNumber}}"
                                                     data-validation-attr="residenceno01" />
-                                          <label for="altr-res-no" *ngIf="alternateResidenceNumber1.value==''">Residence number</label>
-                                          <div *ngIf="alternateResidenceNumber1.touched  && alternateResidenceNumber1.invalid" class="invalid-feedback">
-                                            <div *ngIf="alternateResidenceNumber1.errors?.pattern">{{errors.contactDetails.alternateResidenceNumber1.invalid}}</div>
+                                          <label for="altr-res-no" *ngIf="alternateResidenceNumber2.value==''">Residence number</label>
+                                          <div *ngIf="alternateResidenceNumber2.touched  && alternateResidenceNumber2.invalid" class="invalid-feedback">
+                                            <div *ngIf="alternateResidenceNumber2.errors?.pattern">{{errors.contactDetails.alternateResidenceNumber2.invalid}}</div>
                                         </div>
                                         </div>
                                       <span class="alternate-data">
@@ -1026,6 +1027,8 @@
                                                     textField="key"
                                                     valueField="value"
                                                     name="maritalStatus"
+                                                    nick="maritalStatus.status"
+                                                    (selectionChange)="selectValueChanged($event, maritalStatus.hostElement)"
                                                     [(ngModel)]="selectedMaritialStatus"
                                                     >
                                                   </kendo-dropdownlist>
@@ -1063,6 +1066,8 @@
                                                     textField="key"
                                                     valueField="value"
                                                     name="spouseTitle"
+                                                    nick="maritalStatus.spouseTitle"
+                                                    (selectionChange)="selectValueChanged($event, maritalStatus.hostElement)"
                                                     [(ngModel)]="selectedSpouseTitle"
                                                     >
                                                   </kendo-dropdownlist>
@@ -1105,18 +1110,18 @@
                                           <div class="form-wrap">
                                               <div class="bs-radio">
                                                   <input    type="radio"
-                                                            [(ngModel)]="qde.application.applicants[applicantIndex].maritalStatus.earning"
+                                                            [value]="true"
+                                                            [checked]="qde.application.applicants[applicantIndex].maritalStatus.earning == true"
                                                             name="earning"
-                                                            value="1"
                                                             id="earningYes"
                                                             (change)="spouseEarningForm.ngSubmit.emit()" />
                                                   <label for="earningYes"><span>Yes</span></label>
                                               </div>
                                               <div class="bs-radio">
                                                   <input    type="radio"
-                                                            [(ngModel)]="qde.application.applicants[applicantIndex].maritalStatus.earning"
+                                                            [value]="false"
+                                                            [checked]="qde.application.applicants[applicantIndex].maritalStatus.earning == false"
                                                             name="earning"
-                                                            value="2"
                                                             id="earningNo"
                                                             (change)="spouseEarningForm.ngSubmit.emit()" />
                                                   <label for="earningNo"><span>No</span></label>
@@ -1259,6 +1264,8 @@
                                                   textField="key"
                                                   valueField="value"
                                                   name="fatherTitle"
+                                                  nick="familyDetails.fatherTitle"
+                                                  (selectionChange)="selectValueChanged($event, familyDetails.hostElement)"
                                                   [(ngModel)]="selectedFatherTitle"
                                                   >
                                                 </kendo-dropdownlist>
@@ -1294,7 +1301,9 @@
                                                 [data]="titles" 
                                                 textField="key"
                                                 valueField="value"
-                                                name="fatherTitle"
+                                                name="motherTitle"
+                                                nick="familyDetails.motherTitle"
+                                                (selectionChange)="selectValueChanged($event, familyDetails.hostElement)"
                                                 [(ngModel)]="selectedMotherTitle"
                                                 >
                                               </kendo-dropdownlist>
@@ -1385,6 +1394,8 @@
                                       textField="key"
                                       valueField="value"
                                       name="religion"
+                                      nick="other.religion"
+                                      (selectionChange)="selectValueChanged($event, other.hostElement)"
                                       [(ngModel)]="selectedReligions"
                                       >
                                     </kendo-dropdownlist>
@@ -1411,6 +1422,8 @@
                                       textField="key"
                                       valueField="value"
                                       name="category"
+                                      nick="other.category"
+                                      (selectionChange)="selectValueChanged($event, other.hostElement)"
                                       [(ngModel)]="selectedCategory"
                                       >
                                     </kendo-dropdownlist>
@@ -1631,7 +1644,7 @@
                                     <input type="text" class="form-control"
                                       id="offCityState"
                                       required
-                                      [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.city"
+                                      [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.cityState"
                                       #offCityState="ngModel"
                                       name="cityState"
                                       fieldFill
@@ -1840,9 +1853,16 @@
                                                     [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.assessmentMethodology"
                                                     #assessment="ngModel"
                                                     name="assessment"> -->
-                                                    <kendo-dropdownlist name="assessment" 
-                                                    [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.assessmentMethodology"
-                                                    name="assessment" required>
+                                                    <kendo-dropdownlist 
+                                                    [data]="assessmentMethodology" 
+                                                    textField="key"
+                                                    valueField="value"
+                                                    name="assessment"
+                                                    nick="incomeDetails.assessmentMethodology"
+                                                    (selectionChange)="selectValueChanged($event, incomeDetails.hostElement)"
+                                                    [(ngModel)]="selectedAssesmentMethodology"
+                                                    required
+                                                    >
                                                     </kendo-dropdownlist>
                                                         <!-- <option value="1">Net Salary</option>
                                                         <option value="2">Gross Salary</option>
@@ -1869,12 +1889,14 @@
                                                     <div class="bs-radio">
                                                         <input type="radio" name="income-consider" id="yes-consider" class="not-usual"
                                                         [value]="true"
+                                                        [checked]="qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == true"
                                                         (change)="doHoldPuccaHouse(true)">
                                                         <label for="yes-consider"><span>Yes</span></label>
                                                     </div>
                                                     <div class="bs-radio">
                                                         <input type="radio" name="income-consider" id="no-consider" class="not-usual"
                                                         [value]="false"
+                                                        [checked]="qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == false"
                                                         (change)="doHoldPuccaHouse(false)">
                                                         <label for="no-consider"><span>No</span></label>
                                                     </div>

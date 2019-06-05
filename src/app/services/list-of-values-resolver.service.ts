@@ -15,7 +15,7 @@ export class ListOfValuesResolverService {
 
     // Set True for Production and testing it with Appiyo APIs
     // And False for Development 
-    if(false) {
+    if(true) {
       const processId = environment.api.lov.processId;
       const workflowId = environment.api.lov.workflowId;
       const projectId = environment.projectId;
