@@ -179,6 +179,7 @@ export interface LoanAmount {
     amountRequired : number;
     loanPurpose : string;
     loanTenure : number;
+    loanType : number;
 }
 
 export interface Property {

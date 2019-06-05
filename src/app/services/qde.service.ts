@@ -189,7 +189,8 @@ export class QdeService {
           "loanAmount": {
             "amountRequired": null,
             "loanPurpose": "",
-            "loanTenure": null
+            "loanTenure": null,
+            "loanType": null
           },
           "property": {
             "propertyIdentifed": null,

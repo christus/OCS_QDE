@@ -412,7 +412,7 @@ export class LoanQdeComponent implements OnInit {
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
-        console.log(this.qde.application.loanDetails.propertyDetails);
+        //console.log(this.qde.application.loanDetails.incomeDetails);
         this.tabSwitch(2);
       } else {
         // Throw Invalid Pan Error
