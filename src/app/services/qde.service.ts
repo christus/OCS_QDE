@@ -28,7 +28,7 @@ export class QdeService {
             "applicantId": "",
             "isMainApplicant": true,
             "isIndividual": null,
-             "partnerRelationship": "",
+            "partnerRelationship": "",
             "maritalStatus": {
               "status": "",
               "spouseTitle": "",
@@ -159,7 +159,6 @@ export class QdeService {
               "monthlyIncome": "",
               "assessmentMethodology": "",
               "puccaHouse": null
-
             },
             "documents": [
               {

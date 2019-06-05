@@ -99,7 +99,7 @@
                                     <td>
                                         <a routerLink="/applicant/{{detail.leadId}}">
                                             <ul>
-                                                <li><span>Lead ID: {{detail.leadId}}</span><b></b></li>
+                                                <li><span>Lead ID: </span><b>{{detail.leadId}}</b></li>
                                                 <li><span>Generated date</span><b>{{detail.appliedOn}}</b></li>
                                                 <li><span>Assigned date</span><b>{{detail.assignedDate}}</b></li>
                                             </ul>
@@ -108,7 +108,8 @@
                                     <td>
                                         <a routerLink="/applicant/{{detail.leadId}}">
                                             <ul>
-                                                <li><span>Branch</span><b>{{detail.firstName}}</b></li>
+
+                                                <li><span>Branch</span><b>{{detail.branch}}</b></li>
                                                 <li><span>Pending status</span><b>{{detail.pendingStatus}}</b></li>
                                                 <li><span>Pending with</span><b>{{detail.appliedBy}}</b></li>
                                             </ul>

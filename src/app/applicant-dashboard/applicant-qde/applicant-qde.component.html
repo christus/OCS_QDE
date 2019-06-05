@@ -149,10 +149,27 @@
                                                     >
                                                   </kendo-dropdownlist> -->
                                                 <span class="control-title">Document Type</span>
-                                                <kendo-dropdownlist name="docType" 
+
+
+                                                <!-- <select name="docType" 
                                                 [(ngModel)]="qde.application.applicants[applicantIndex].pan.docType"
                                                 name="docType" required>
-                                                </kendo-dropdownlist>
+                                                 <option value="1">Aadhar</option>
+                                                 <option value="2">Driving Lincence</option>
+                                                 <option value="3">Passport</option>
+                                                </select> -->
+
+                                                <div class="form-group">   
+                                                    <kendo-dropdownlist class="form-control"
+                                                      [data]="docType" 
+                                                      textField="key"
+                                                      valueField="value"
+                                                      name="docType"
+                                                      [(ngModel)]="selectedDocType"
+                                                      >
+                                                    </kendo-dropdownlist>
+                                                </div>
+
                                             </div>
                                             <div class="form-group">
                                                 <input type="text" class="form-control"
@@ -254,7 +271,7 @@
                                                             id="yes-consider"
                                                             [value]="true"
                                                             [checked]="qde.application.applicants[applicantIndex].personalDetails.applicantStatus == 1"
-                                                            (change)="submitResidentialNon(1, pdSlider2)"
+                                                            (change)="changeApplicantStatus(1, pdSlider2)"
                                                             class="not-usual" />
                                                     <label for="yes-consider"><span>Resident</span></label>
                                                 </div>
@@ -265,11 +282,13 @@
                                                             class="not-usual"
                                                             [checked]="qde.application.applicants[applicantIndex].personalDetails.applicantStatus == 2"
                                                             [value]="false"
-                                                            (change)="submitResidentialNon(2, pdSlider2)" />
+                                                            (change)="changeApplicantStatus(2, pdSlider2)" />
                                                     <label for="no-consider"><span>Non Resident</span></label>
                                                 </div>
                                             </div>
                                         </form>
+
+ 
                                     </div>
                                     <div class="swiper-slide">
                                         <form   class="bs-form"
@@ -362,36 +381,17 @@
                                     <div class="swiper-slide">
                                         <form class="bs-form" #genderForm="ngForm">
                                             <div class="form-wrap">
-                                                <div class="bs-radio">
+                                                <div class="bs-radio" *ngFor="let g of genders">
                                                     <input  type="radio"
                                                             name="gender"
-                                                            id="male"
-                                                            value="1"
-                                                            [checked]="qde.application.applicants[applicantIndex].personalDetails.gender == 1"
+                                                            [id]="g.key"
+                                                            [value]="g.value"
+                                                            [checked]="qde.application.applicants[applicantIndex].personalDetails.gender == g.value"
                                                             [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.gender"
                                                             (change)="submitGenderDetails(genderForm, pdSlider2)">
-                                                    <label for="male"><span>Male</span></label>
+                                                    <label [for]="g.key"><span>{{g.key}}</span></label>
                                                 </div>
-                                                <div class="bs-radio">
-                                                    <input  type="radio"
-                                                            name="gender"
-                                                            id="female"
-                                                            value="2"
-                                                            [checked]="qde.application.applicants[applicantIndex].personalDetails.gender == 2"
-                                                            [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.gender"
-                                                            (change)="submitGenderDetails(genderForm, pdSlider2)">
-                                                    <label for="female"><span>Female</span></label>
-                                                </div>
-                                                <div class="bs-radio">
-                                                    <input  type="radio"
-                                                            name="maleFemale"
-                                                            id="thirdGender"
-                                                            value="3"
-                                                            [checked]="qde.application.applicants[applicantIndex].personalDetails.gender == 3"
-                                                            [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.gender"
-                                                            (change)="submitGenderDetails(genderForm, pdSlider2)">
-                                                    <label for="thirdGender"><span>Third Gender</span></label>
-                                                </div>
+                                                
                                             </div>
                                         </form>
                                     </div>
@@ -2002,19 +2002,21 @@
                                             name="constitution"
                                             required>
                                         <option value="Partnership">Partnership</option>
-                                        <option value="Ms">Proprietership</option>
-                                        <option value="Mrs">option3</option>
-                                        <option value="Dr">option4</option>
+                                        <option value="1">Proprietership</option>
+                                        <option value="2">option3</option>
+                                        <option value="3">option4</option>
                                     </select> -->
-                                  
-                                    <kendo-dropdownlist class="form-control"
-                                    [data]="constitution" 
-                                    textField="key"
-                                    valueField="value"
-                                    name="occupationType"
-                                    [(ngModel)]="selectedConstitution"
-                                    >
-                                  </kendo-dropdownlist>
+
+                                    <div class="form-group">   
+                                        <kendo-dropdownlist class="form-control"
+                                          [data]="constitutions" 
+                                          textField="key"
+                                          valueField="value"
+                                          name="constitution"
+                                          [(ngModel)]="selectedConstitutions"
+                                          >
+                                        </kendo-dropdownlist>
+                                    </div>    
 
                                 </div>
                             </div>

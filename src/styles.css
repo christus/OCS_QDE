@@ -4674,7 +4674,11 @@ img {
 	display: flex;
 	left: 0;
 	right: 0;
-	height: 100%
+	height: 100%;
+}
+
+.lyt-absolute {
+	position: absolute;
 }
 
 .lyt-login .lhs {

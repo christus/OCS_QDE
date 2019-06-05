@@ -347,6 +347,9 @@ export class ApplicantQdeComponent implements OnInit {
   private isIndividual:boolean = false;
 
 
+  private applicantStatus:boolean = false;
+
+
 
   private fragments = [ 'pan1',
                         'personal',
@@ -392,6 +395,10 @@ export class ApplicantQdeComponent implements OnInit {
   private selectedMotherTitle: Item;
   private selectedQualification: Item;
   private selectedConstitution: Item;
+
+  private selectedDocType: Item;
+  private selectedConstitutions: Item;
+  private docType: Array<any>;
 
   
   constructor(private renderer: Renderer2,
@@ -454,6 +461,8 @@ export class ApplicantQdeComponent implements OnInit {
       this.genders = lov.LOVS.gender;
       this.constitutions = lov.LOVS.constitution;
 
+      this.docType = [{"key": "Aadhar", "value": "1"},{"key": "Driving License", "value": "2"},{"key": "passport", "value": "3"}];
+
       this.selectedTitle = this.titles[0];
       this.selectedReligions = this.religions[0];
       this.selectedMaritialStatus = this.maritals[0];
@@ -465,9 +474,14 @@ export class ApplicantQdeComponent implements OnInit {
       this.selectedMotherTitle = this.titles[0];
       this.selectedQualification = this.qualifications[0];
       this.selectedConstitution = this.constitutions[0];
+
+      this.selectedDocType = this.docType[0];
+      this.selectedConstitutions = this.constitutions[0];
     }
+
     
-    console.log("params: ", this.route.snapshot.params);
+    
+    
 
     // Create New Entry
     this.applicantIndex = 0;
@@ -570,6 +584,7 @@ export class ApplicantQdeComponent implements OnInit {
               this.qde.application.applicants[this.applicantIndex].registeredAddress = result.application.applicants[this.applicantIndex].registeredAddress;
             }
           } catch(e) {}
+          
           try {
             if(result.application.applicants[this.applicantIndex].corporateAddress != null) {
               this.qde.application.applicants[this.applicantIndex].corporateAddress = result.application.applicants[this.applicantIndex].corporateAddress;
@@ -775,7 +790,7 @@ export class ApplicantQdeComponent implements OnInit {
     this.qde.application.applicants[this.applicantIndex].pan = {
    
       panNumber: form.value.pan,
-      docType: form.value.docType,
+      docType: form.value.docType.value,
       docNumber: form.value.docNumber
     };
 
@@ -890,6 +905,7 @@ export class ApplicantQdeComponent implements OnInit {
 
     this.qde.application.applicants[this.applicantIndex].personalDetails.applicantStatus = value;
 
+
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
@@ -960,7 +976,7 @@ export class ApplicantQdeComponent implements OnInit {
       return;
     }
 
-    this.qde.application.applicants[this.applicantIndex].personalDetails.dob = form.value.day+'-'+form.value.month+'-'+form.value.year;
+    this.qde.application.applicants[this.applicantIndex].personalDetails.dob = form.value.year+'-'+form.value.month+'-'+form.value.day;
     this.qde.application.applicants[this.applicantIndex].personalDetails.birthPlace = form.value.birthPlace;
 
     console.log(this.qde.application.applicants[this.applicantIndex]);
@@ -1021,9 +1037,18 @@ export class ApplicantQdeComponent implements OnInit {
           console.log(JSON.parse(response["ProcessVariables"]["response"]));
           var result = JSON.parse(response["ProcessVariables"]["response"]);
 
-          this.commCityState = result.city +""+ result.state;
+          this.commCityState = "";
 
-          let zipCityStateID  = result.zipcodeId + "," + result.cityId + "," + result.stateId;
+          if(result.city != null && result.state != null) {
+            this.commCityState = result.city +" "+ result.state;
+          }
+
+          let zipCityStateID = "0,0,0";
+
+          if(result.zipcodeId !=null && result.cityId !=null && result.stateId != null) {
+            zipCityStateID  = result.zipcodeId + "," + result.cityId + "," + result.stateId;
+          }
+
 
           if(screenName == "communicationAddress") {
             this.qde.application.applicants[this.applicantIndex].communicationAddress.cityState = this.commCityState || "";    
@@ -1612,6 +1637,7 @@ export class ApplicantQdeComponent implements OnInit {
 
   }
 
+
   counter(size): Array<number> {
     return new Array(size);
   }
@@ -1669,4 +1695,14 @@ export class ApplicantQdeComponent implements OnInit {
       whichSelectQde = whichSelectQde[val]
     });
   }  
+
+  // changeApplicantStatus(value, swiperInstance ?: Swiper) {
+  //   if(value) {
+  //     this.goToNextSlide(swiperInstance);
+  //     this.applicantStatus = true;
+  //   } else {
+  //     this.goToNextSlide(swiperInstance);
+  //     this.applicantStatus = false;
+  //   }
+  // }
 }

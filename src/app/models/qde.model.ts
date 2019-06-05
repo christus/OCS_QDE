@@ -84,7 +84,7 @@ export interface PersonalDetail {
     qualification ?: string;
     dob ?: string;
     birthPlace ?: string;
-    applicantStatus ?: string; // As of new design *Resident/non-resident
+    applicantStatus ?: boolean; // As of new design *Resident/non-resident
 }
 
 export interface ContactDetail {
