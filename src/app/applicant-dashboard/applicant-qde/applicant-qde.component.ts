@@ -506,7 +506,7 @@ export class ApplicantQdeComponent implements OnInit {
       this.selectedConstitutions = this.constitutions[0];
 
 
-      this.selectedAssesmentMethodology = this.assessmentMethodology[0];
+      //this.selectedAssesmentMethodology = this.assessmentMethodology[0];
     }
 
     // Create New Entry
