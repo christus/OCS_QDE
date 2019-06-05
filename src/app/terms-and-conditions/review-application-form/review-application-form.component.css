@@ -54,22 +54,3 @@
     color: #949494;
     padding: .47vw 1.56vw;
 }
-body:after {
-    background: none;
-}
-
-main:after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: #181515;
-    background: -moz-linear-gradient(left,#b02b2f 0,#f6831f 100%);
-    background: -webkit-gradient(left top,right top,color-stop(0,#b02b2f),color-stop(100%,#f6831f));
-    background: -webkit-linear-gradient(left,#b02b2f 0,#f6831f 100%);
-    background: -o-linear-gradient(left,#b02b2f 0,#f6831f 100%);
-    background: -ms-linear-gradient(left,#b02b2f 0,#f6831f 100%);
-    background: linear-gradient(to right,#b02b2f 0,#f6831f 100%);
-}
