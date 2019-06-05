@@ -473,6 +473,7 @@ export class ApplicantQdeComponent implements OnInit {
       this.selectedFatherTitle = this.titles[0];
       this.selectedMotherTitle = this.titles[0];
       this.selectedQualification = this.qualifications[0];
+      console.log(">>>>>>>", this.qualifications);
       this.selectedConstitution = this.constitutions[0];
 
       this.selectedDocType = this.docType[0];
@@ -615,6 +616,10 @@ export class ApplicantQdeComponent implements OnInit {
 
           if( ! isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].personalDetails.title)) ) {
             this.selectedTitle = this.titles[(parseInt(this.qde.application.applicants[this.applicantIndex].personalDetails.title))];
+          }
+
+          if( ! isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].personalDetails.qualification)) ) {
+            this.selectedQualification = this.qualifications[(parseInt(this.qde.application.applicants[this.applicantIndex].personalDetails.qualification))];
           }
 
           console.log('this is coming first', this.panslide, this.qde.application.applicants[this.applicantIndex].isIndividual);
@@ -1694,7 +1699,7 @@ export class ApplicantQdeComponent implements OnInit {
       }
       whichSelectQde = whichSelectQde[val]
     });
-  }  
+  }
 
   // changeApplicantStatus(value, swiperInstance ?: Swiper) {
   //   if(value) {

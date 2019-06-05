@@ -384,11 +384,11 @@
                                                 <div class="bs-radio" *ngFor="let g of genders">
                                                     <input  type="radio"
                                                             name="gender"
-                                                            [id]="g.key"
-                                                            [value]="g.value"
+                                                            [id]="key"
+                                                            [value]="value"
                                                             [checked]="qde.application.applicants[applicantIndex].personalDetails.gender == g.value"
                                                             [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.gender"
-                                                            (change)="submitGenderDetails(genderForm, pdSlider2)">
+                                                            (change)="submitGenderDetails(genderForm, pdSlider2)" />
                                                     <label [for]="g.key"><span>{{g.key}}</span></label>
                                                 </div>
                                                 
@@ -407,12 +407,14 @@
                                                     </select> -->
 
                                                     <kendo-dropdownlist class="form-control"
-                                                      [data]="qualifications" 
+                                                      [data]="qualifications"
                                                       textField="key"
                                                       valueField="value"
                                                       name="qualification"
-                                                      [(ngModel)]="selectedQualification"
-                                                      >
+                                                      nick="personalDetails.qualification"
+                                                      #qualification
+                                                      (selectionChange)="selectValueChanged($event, qualification.hostElement)"
+                                                      [(ngModel)]="selectedQualification">
                                                     </kendo-dropdownlist>
                                                 </div>
                                             </div>
