@@ -15,7 +15,7 @@ import { CommonDataService } from '../../services/common-data.service';
 
 interface Item {
   key: string,
-  value: number
+  value: number | string
 }
 
 @Component({
@@ -309,7 +309,7 @@ export class ApplicantQdeComponent implements OnInit {
   };
 
   private activeTab: number = 0;
-  private dob: {day: string, month: string, year: string} = { day: null, month: null, year: null };
+  private dob: {day: Item, month: Item, year: Item} = { day: {key: "DD", value: "DD"}, month: {key: "MM", value: "MM"}, year: {key: "YYYY", value: "YYYY"} };
   private residenceNumber: {stdCode: string, phoneNumber: string} = {stdCode: "", phoneNumber: ""};
   private alternateResidenceNumber: {stdCode: string, phoneNumber: string} = {stdCode: "", phoneNumber: ""};
   private addressCityState: string = "";
@@ -345,7 +345,7 @@ export class ApplicantQdeComponent implements OnInit {
 
 
   private isIndividual:boolean = false;
-
+  private YYYY: number = 1900;
 
   private applicantStatus:boolean = false;
 
@@ -384,6 +384,9 @@ export class ApplicantQdeComponent implements OnInit {
   private categories: Array<any>;
   private genders: Array<any>;
   private constitutions: Array<any>;
+  private days: Array<Item>;
+  private months: Array<Item>;
+  private years: Array<Item>;
   private selectedTitle: Item;
   private selectedReligions: Item;
   private selectedMaritialStatus: Item;
@@ -395,6 +398,8 @@ export class ApplicantQdeComponent implements OnInit {
   private selectedMotherTitle: Item;
   private selectedQualification: Item;
   private selectedConstitution: Item;
+
+  
 
   private selectedDocType: Item;
   private selectedConstitutions: Item;
@@ -461,6 +466,26 @@ export class ApplicantQdeComponent implements OnInit {
       this.genders = lov.LOVS.gender;
       this.constitutions = lov.LOVS.constitution;
 
+      // List of Values for Date
+      this.days = Array.from(Array(31).keys()).map((val, index) => {
+        let v = ((index+1) < 10) ? "0"+(index+1) : (index+1)+"";
+        return {key: v, value: v};
+      });
+      this.days.unshift({key: 'DD', value: 'DD'});
+
+      this.months = Array.from(Array(12).keys()).map((val, index) => {
+        let v = ((index+1) < 10) ? "0"+(index+1) : (index+1)+"";
+        return {key: v, value: v};
+      });
+      this.months.unshift({key: 'MM', value: 'MM'});
+
+      this.years = Array.from(Array(100).keys()).map((val, index) => {
+        let v = (this.YYYY+index)+"";
+        return {key: v, value: v};
+      });
+      this.years.unshift({key: 'YYYY', value: 'YYYY'});
+
+
       this.docType = [{"key": "Aadhar", "value": "1"},{"key": "Driving License", "value": "2"},{"key": "passport", "value": "3"}];
 
       this.selectedTitle = this.titles[0];
@@ -473,16 +498,10 @@ export class ApplicantQdeComponent implements OnInit {
       this.selectedFatherTitle = this.titles[0];
       this.selectedMotherTitle = this.titles[0];
       this.selectedQualification = this.qualifications[0];
-      console.log(">>>>>>>", this.qualifications);
       this.selectedConstitution = this.constitutions[0];
-
       this.selectedDocType = this.docType[0];
       this.selectedConstitutions = this.constitutions[0];
     }
-
-    
-    
-    
 
     // Create New Entry
     this.applicantIndex = 0;
@@ -504,7 +523,8 @@ export class ApplicantQdeComponent implements OnInit {
 
           this.applicantIndex = this.qde.application.applicants.findIndex(val => val.isMainApplicant == true);
 
-          
+          // Will be deprected as soon as API is stable
+//--------------------------------------------------------------------
           try {
             if(result.application.applicants[this.applicantIndex].applicantId != null) {
               this.qde.application.applicants[this.applicantIndex].applicantId = result.application.applicants[this.applicantIndex].applicantId;
@@ -611,15 +631,33 @@ export class ApplicantQdeComponent implements OnInit {
               this.qde.application.applicants[this.applicantIndex].isMainApplicant = result.application.applicants[this.applicantIndex].isMainApplicant;
             }
           } catch(e) {}
+//----------------------------------------------------------
 
-          this.qdeService.setQde(this.qde);
+          this.qdeService.setQde(this.qde); // Soon it will be this.qdeService.setQde(result);
 
+          // Personal Details Title
           if( ! isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].personalDetails.title)) ) {
-            this.selectedTitle = this.titles[(parseInt(this.qde.application.applicants[this.applicantIndex].personalDetails.title))];
+            this.selectedTitle = this.titles[(parseInt(this.qde.application.applicants[this.applicantIndex].personalDetails.title))-1];
           }
 
+          // Personal Details Qualification
           if( ! isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].personalDetails.qualification)) ) {
-            this.selectedQualification = this.qualifications[(parseInt(this.qde.application.applicants[this.applicantIndex].personalDetails.qualification))];
+            this.selectedQualification = this.qualifications[(parseInt(this.qde.application.applicants[this.applicantIndex].personalDetails.qualification))-1];
+          }
+
+          // Personal Details Day
+          if( ! isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split('-')[2])) ) {
+            this.dob.day = this.days[parseInt(this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split('-')[2])];
+          }
+
+          // Personal Details Month
+          if( ! isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split('-')[1])) ) {
+            this.dob.month = this.months[parseInt(this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split('-')[1])];
+          }
+
+          // Personal Details Year
+          if( ! isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split('-')[0])) ) {
+            this.dob.year = this.years.find(val => this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split('-')[0] == val.value);
           }
 
           console.log('this is coming first', this.panslide, this.qde.application.applicants[this.applicantIndex].isIndividual);
@@ -653,20 +691,21 @@ export class ApplicantQdeComponent implements OnInit {
 
     // Some Initialization for HTML
     this.qde.application.applicants[this.applicantIndex].isMainApplicant = true;
-    if( this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split("-")[0] == "" ||
-        this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split("-")[0] == undefined) {
-      this.dob.day = this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split("-")[0];
-    }
 
-    if( this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split("-")[1] == "" ||
-        this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split("-")[1] == undefined) {
-      this.dob.month = this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split("-")[1];
-    }
+    // if( this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split("-")[0] == "" ||
+    //     this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split("-")[0] == undefined) {
+    //   this.dob.day = this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split("-")[0];
+    // }
 
-    if( this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split("-")[2] == "" ||
-        this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split("-")[2] == undefined) {
-      this.dob.year = this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split("-")[2];
-    }
+    // if( this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split("-")[1] == "" ||
+    //     this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split("-")[1] == undefined) {
+    //   this.dob.month = this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split("-")[1];
+    // }
+
+    // if( this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split("-")[2] == "" ||
+    //     this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split("-")[2] == undefined) {
+    //   this.dob.year = this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split("-")[2];
+    // }
 
     this.residenceNumber.stdCode = this.qde.application.applicants[this.applicantIndex].contactDetails.residenceNumber != "" ? this.qde.application.applicants[this.applicantIndex].contactDetails.residenceNumber.split("-")[0] : "";
     this.residenceNumber.phoneNumber = this.qde.application.applicants[this.applicantIndex].contactDetails.residenceNumber != "" ? this.qde.application.applicants[this.applicantIndex].contactDetails.residenceNumber.split("-")[1] : "";
@@ -1693,11 +1732,16 @@ export class ApplicantQdeComponent implements OnInit {
   selectValueChanged(event, to) {
     let whichSelectQde = this.qde.application.applicants[this.applicantIndex];
     to.getAttribute('nick').split(".").forEach((val, i) => {
-      if(i == (to.getAttribute('nick').split(".").length-1)) {
-        whichSelectQde[val] = event.value;
+      if(val == 'day' || val == 'month' || val == 'year') {
+        this.dob[val] = event.value;
         return;
+      } else {
+        if(i == (to.getAttribute('nick').split(".").length-1)) {
+          whichSelectQde[val] = event.value;
+          return;
+        }
+        whichSelectQde = whichSelectQde[val]
       }
-      whichSelectQde = whichSelectQde[val]
     });
   }
 

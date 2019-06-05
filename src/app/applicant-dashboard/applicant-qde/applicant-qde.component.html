@@ -432,31 +432,47 @@
                                             <div class="form-wrap">
                                                 <div class="form-group typ-select">
                                                     <span class="control-title">Date of Birth</span>
-                                                    <select [(ngModel)]="dob.day" class="js-select" name="day" required>
-                                                        <option [ngClass]="{'select': (dob.day == undefined || dob.day == null)}"
-                                                                [selected]="dob.day == undefined || dob.day == null">
-                                                            DD
-                                                        </option>
-                                                        <option *ngFor="let loop of counter(31);let i=index;"
-                                                                [ngClass]="{'select': (dob.day == i)}"
-                                                                [selected]="dob.day == i">
-                                                            {{i}}
-                                                        </option>
-                                                    </select>
-                                                    <select [(ngModel)]="dob.month" class="js-select" name="month" required>
-                                                        <option [ngClass]="{'select': (dob.day == undefined || dob.day == null)}"
-                                                                [selected]="dob.month == undefined || dob.month == null">MM</option>
-                                                        <option *ngFor="let loop of counter(12);let i=index;"
-                                                                [ngClass]="{'select': (dob.month == i)}"
-                                                                [selected]="dob.month == i">{{i}}</option>
-                                                    </select>
-                                                    <select [(ngModel)]="dob.year" class="js-select" name="year" required>
-                                                        <option [ngClass]="{'select': (dob.day == undefined || dob.day == null)}"
-                                                                [selected]="dob.year == undefined || dob.year == null">YY</option>
-                                                        <option *ngFor="let loop of counter(100);let i=index;"
-                                                                [ngClass]="{'select': (dob.year == i)}"
-                                                                [selected]="dob.year == i">{{1950+i}}</option>
-                                                    </select>
+
+                                                    <div class="row">
+                                                        <div class="col4">
+                                                            <kendo-dropdownlist class="form-control"
+                                                            [data]="days"
+                                                            textField="key"
+                                                            valueField="value"
+                                                            name="day"
+                                                            nick="date"
+                                                            #qualification
+                                                            (selectionChange)="selectValueChanged($event, qualification.hostElement)"
+                                                            [(ngModel)]="dob.day">
+                                                            </kendo-dropdownlist>
+                                                        </div>
+    
+                                                        <div class="col4">
+                                                            <kendo-dropdownlist class="form-control"
+                                                            [data]="months"
+                                                            textField="key"
+                                                            valueField="value"
+                                                            name="month"
+                                                            nick="date"
+                                                            #qualification
+                                                            (selectionChange)="selectValueChanged($event, qualification.hostElement)"
+                                                            [(ngModel)]="dob.month">
+                                                            </kendo-dropdownlist>
+                                                        </div>
+    
+                                                        <div class="col4">
+                                                            <kendo-dropdownlist class="form-control"
+                                                            [data]="years"
+                                                            textField="key"
+                                                            valueField="value"
+                                                            name="year"
+                                                            nick="date"
+                                                            #qualification
+                                                            (selectionChange)="selectValueChanged($event, qualification.hostElement)"
+                                                            [(ngModel)]="dob.year">
+                                                            </kendo-dropdownlist>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <span class="control-title">Birth place</span>
@@ -1995,7 +2011,7 @@
                                             required>
                                         <option *ngFor="let loop of counter(100);let i=index;"
                                                 [ngClass]="{'select': dateOfIncorporation.year == i}"
-                                                [selected]="dateOfIncorporation.year == i">{{1950+i}}</option>
+                                                [selected]="dateOfIncorporation.year == i">{{YYYY+i}}</option>
                                     </select>
                                 </div>
                                 <div class="form-group last">
