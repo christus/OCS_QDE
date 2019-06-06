@@ -59,6 +59,8 @@ import { Declaration2Component } from './terms-and-conditions/declaration2/decla
 
 
 import { ImageUploadModule } from "angular2-image-upload";
+import { PaymentsComponent } from './payments/payments.component';
+import { OfflinePaymentComponent } from './payments/offline-payment/offline-payment.component';
 
 
 const appRoutes: Routes = [
@@ -175,6 +177,20 @@ const appRoutes: Routes = [
       }
     ]
   },
+  {
+    path: "payments",
+    component: PaymentsComponent,
+    children: [
+      { path: '', redirectTo: "offline-payments", pathMatch: "full" },
+      {
+        path: 'offline-payments',
+        component: OfflinePaymentComponent,
+        resolve: {
+          listOfValues: ListOfValuesResolverService
+        }
+      }
+    ]
+  },
   { path: "**", component: PageNotFoundComponent }
 ];
  
@@ -220,6 +236,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     ReviewApplicationFormComponent,
     Declaration1Component,
     Declaration2Component,
+    PaymentsComponent,
+    OfflinePaymentComponent,
   ],
   imports: [
     BrowserModule,

@@ -10,6 +10,7 @@ import { UtilService } from '../services/util.service';
 export class MenubarHeaderComponent implements OnInit, OnChanges {
   
   isMenuBarShown: boolean;
+  isViewFormNameVisible: boolean;
   isViewFormVisible: boolean;
   isLogoutVisible: boolean;
   applicantId: string;
@@ -17,6 +18,10 @@ export class MenubarHeaderComponent implements OnInit, OnChanges {
   constructor(private utilService: UtilService, private commonDataService: CommonDataService) {
     this.commonDataService.isMenuBarShown.subscribe((value) => {
       this.isMenuBarShown = value;
+    });
+
+    this.commonDataService.isViewFormNameVisible.subscribe((value) => {
+      this.isViewFormNameVisible = value;
     });
 
     this.commonDataService.isViewFormVisible.subscribe((value) => {
