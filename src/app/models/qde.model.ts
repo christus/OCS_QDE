@@ -68,7 +68,6 @@ export interface Occupation {
 }
 
 export interface Pan {
-    isIndividual ?: boolean; /* Individual / Non-individual: true/false */
     panNumber : string;
     panImage ?: string;
     docType ?: string; // As of new design

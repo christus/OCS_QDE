@@ -542,7 +542,7 @@
                                             required />
 
                                       <label for="pref-email">Preferred email ID</label>
-                                      <span class="alternate-data">
+                                      <span class="alternate-data" *ngIf="!isAlternateEmailId">
                                           <a  href="javascript:void(0);"
                                               class="alter-btn"
                                               (click)="addRemoveEmailField()">+ Add
@@ -630,8 +630,7 @@
                                   <div class="residence-no">
                                       <div class="form-group">
                                           <input    type="text"
-                                                    [ngModel]="residenceNumber.stdCode"
-                                                    (ngModelChange)="changeResidenceStd($event)"
+                                                    [(ngModel)]="residenceNumberStdCode"
                                                     pattern="{{regexPattern.mobileNumber}}"
                                                     #residenceStdCode="ngModel"
                                                     maxlength="3"
@@ -652,7 +651,7 @@
                                           <input    type="text"
                                                     class="form-control"
                                                     id="res-no"
-                                                    [(ngModel)]="residenceNumber.phoneNumber"
+                                                    [(ngModel)]="residenceNumberPhoneNumber"
                                                     pattern="{{regexPattern.mobileNumber}}"
                                                     maxlength="8"
                                                     #residenceNumber="ngModel"
@@ -676,7 +675,7 @@
                                   <div class="residence-no" [ngClass]="{'typ-alternative': !isAlternateResidenceNumber}">
                                       <div class="form-group">
                                           <input    type="text"
-                                                    [(ngModel)]="alternateResidenceNumber.stdCode"
+                                                    [(ngModel)]="alternateResidenceNumberStdCode"
                                                     name="alternateResidenceNumberStd1"
                                                     maxlength="3"
                                                     #alternateResidenceNumberStd1="ngModel"
@@ -693,7 +692,7 @@
                                       <div class="form-group">
                                           <input    type="text"
                                                     class="form-control"
-                                                    [(ngModel)]="alternateResidenceNumber.phoneNumber"
+                                                    [(ngModel)]="alternateResidenceNumberPhoneNumber"
                                                     #alternateResidenceNumber2="ngModel"
                                                     name="alternateResidenceNumber2"
                                                     id="altr-res-no"
@@ -746,28 +745,15 @@
                                 <h1 class="sub-heading" style="text-align: left ; margin-bottom: 12px">Current Address</h1>
                                 <div class="form-group">
                                     <span class="control-title">Residential status</span>
-
-<!--                                     <select [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.residentialStatus"
-                                            name="residentialStatus"
-                                            required>
-
-                                            <option *ngFor="let res of residences"
-                                                    [ngClass]="qde.application.applicants[applicantIndex].communicationAddress.residentialStatus == res"
-                                                    [selected]="qde.application.applicants[applicantIndex].communicationAddress.residentialStatus == res"
-                                                    [value]="res.value">
-                                                {{res.key}}
-                                            </option>
-                                    </select>
-                                            <option *ngFor="let res of residences" [value]="res.value">{{res.key}}</option>
-                                    </select> -->
-
                                     <kendo-dropdownlist class="form-control"
                                       [data]="residences" 
                                       textField="key"
                                       valueField="value"
+                                      nick="communicationAddress.residentialStatus"
+                                      #commAddrresidentialStatus
+                                      (selectionChange)="selectValueChanged($event, commAddrresidentialStatus.hostElement)"
                                       name="residentialStatus"
-                                      [(ngModel)]="selectedResidence"
-                                      >
+                                      [(ngModel)]="selectedResidence">
                                     </kendo-dropdownlist>
 
                                 </div>
@@ -831,10 +817,10 @@
                                       name="cityState"
                                       #commCityState="ngModel"
                                       fieldFill                     
-                                      pattern="{{regexPattern.address}}" />
+                                      pattern="{{regexPattern.address}}"
+                                      [readonly]="false" />
 
                                     <label for="cityState">City/State</label>
-
 
                                     <div *ngIf="(commCityState.touched || commCityState.dirty) && commCityState.invalid" class="invalid-feedback">
                                         <div *ngIf="commCityState.errors?.required">{{errors.commAddress.stateOrCity.required}}</div>
@@ -843,11 +829,14 @@
                                 </div>
                                 <div class="bs-checkbox typ-withForm">
                                     <input  type="checkbox"
-                                            [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.permanentAddress"
+                                            [ngModel]="qde.application.applicants[applicantIndex].communicationAddress.permanentAddress"
+                                            (ngModelChange)="makePermanentAddressSame($event)"
+                                            [checked]="qde.application.applicants[applicantIndex].communicationAddress.permanentAddress == true"
                                             name="permanentAddress"
                                             id="permanentAddress">
                                     <label for="permanentAddress"><span>Current Address is Permanent Address</span></label>
                                 </div>
+                                <!-- Permanent Address -->
                                 <div class="permanent-add-wrap">
                                     <h1 class="sub-heading" style="text-align: left; margin-bottom: 12px">Permanent Address</h1>
                                         <div class="form-group">
@@ -857,7 +846,8 @@
                                             [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.addressLineOne"
                                             pattern="{{regexPattern.address}}"
                                             fieldFill
-                                            required>
+                                            required
+                                            [readonly]="qde.application.applicants[applicantIndex].communicationAddress.permanentAddress == true" />
                                             <label for="per-address1" *ngIf="pAddress1.value == ''">Address line 1</label>
                                             <div *ngIf="(pAddress1.touched || pAddress1.dirty) && pAddress1.invalid" class="invalid-feedback">
                                                 <div *ngIf="pAddress1.errors?.required">{{errors.commAddress.address1.required}}</div>
@@ -868,10 +858,11 @@
                                             <input type="text" class="form-control" id="per-address2"
                                             name="pAddressLineTwo"
                                             #pAddress2="ngModel"
-                   			    fieldFill
+                   			                fieldFill
                                             [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.addressLineTwo"
                                             pattern="{{regexPattern.address}}"
-                                            required>
+                                            required
+                                            [readonly]="qde.application.applicants[applicantIndex].communicationAddress.permanentAddress == true" />
                                             <label for="per-address2" *ngIf="pAddress2.value == ''">Address line 2</label>
                                             <div *ngIf="(pAddress2.touched || pAddress2.dirty) && pAddress2.invalid" class="invalid-feedback">
                                                 <div *ngIf="pAddress2.errors?.required">{{errors.commAddress.address2.required}}</div>
@@ -879,17 +870,20 @@
                                               </div>
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" class="form-control" id="-per-pincode"
-                                            name="pZipcode"
-                                            #pZipcode="ngModel"
-                                            fieldFill
-                                            (keyup)="onPinCodeChange($event, 'permanentAddress')" 
-                                            [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.zipcode"
-                                            minlength="6"
-                                            maxlength="6"
-                                            pattern="{{regexPattern.pinCode}}"
-                                            required />
-                                            <label for="-per-pincode" *ngIf="pZipcode.value==''">Pincode</label>
+                                            <input  type="text"
+                                                    class="form-control"
+                                                    id="per-pincode"
+                                                    name="pZipcode"
+                                                    #pZipcode="ngModel"
+                                                    fieldFill
+                                                    (keyup)="onPinCodeChange($event, 'permanentAddress')" 
+                                                    [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.zipcode"
+                                                    minlength="6"
+                                                    maxlength="6"
+                                                    pattern="{{regexPattern.pinCode}}"
+                                                    required
+                                                    [readonly]="qde.application.applicants[applicantIndex].communicationAddress.permanentAddress == true" />
+                                            <label for="per-pincode" *ngIf="pZipcode.value==''">Pincode</label>
                                             <div *ngIf="(pZipcode.touched || pZipcode.dirty) && pZipcode.invalid" class="invalid-feedback">
                                                 <div *ngIf="pZipcode.errors?.required">{{errors.commAddress.pinCode.required}}</div>
                                                 <div *ngIf="pZipcode.errors?.pattern">{{errors.commAddress.pinCode.invalid}}</div>
@@ -897,12 +891,14 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" class="form-control" id="per-cityState"
-                                
-                                            name="commCityState"
-                                            #commCityState="ngModel" 
-                                            fieldFill
-                                            [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.cityState">
+                                            <input type="text"
+                                                    class="form-control"
+                                                    id="per-cityState"
+                                                    name="permanentCityState"
+                                                    #permanentCityState="ngModel" 
+                                                    fieldFill
+                                                    [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.cityState"
+                                                    [readonly]="qde.application.applicants[applicantIndex].communicationAddress.permanentAddress == true" />
                                             <label for="per-cityState">City/State</label>
                                         </div>
                                     </div>
@@ -912,27 +908,27 @@
                                     <div class="radio-wrap rounded-radio">
                                         <div class="bs-radio typ-normal">
                                             <input type="radio" 
-                                            [(ngModel)]="qde.application.applicants[applicantIndex].maritalStatus.earning"
+                                            [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.preferedMailingAddress"
                                             name="prefredMail"
-                                            value="0"
-                                            #prefredMail="ngModel"
+                                            value="1"
                                             fieldFill
-                                            id="current-add-mail">
+                                            [checked]="qde.application.applicants[applicantIndex].communicationAddress.preferedMailingAddress == 1"
+                                            id="current-add-mail" />
                                             <label for="current-add-mail">
-                                                    Current Address
-                                                </label>
+                                                Current Address
+                                            </label>
                                         </div>
                                         <div class="bs-radio typ-normal">
                                             <input type="radio"
-                                            [(ngModel)]="qde.application.applicants[applicantIndex].maritalStatus.earning"
-                                            name="prefredMail" 
-                                            #prefredMail="ngModel"
-                                            value="1"
+                                            [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.preferedMailingAddress"
+                                            name="prefredMail"
+                                            value="2"
                                             fieldFill
+                                            [checked]="qde.application.applicants[applicantIndex].communicationAddress.preferedMailingAddress == 2"
                                             id="permanent-add-mail">
                                             <label for="permanent-add-mail">
-                                                    Permanent Address
-                                                </label>
+                                                Permanent Address
+                                            </label>
                                         </div>
                                     </div>
                                 <div class="form-group typ-range">

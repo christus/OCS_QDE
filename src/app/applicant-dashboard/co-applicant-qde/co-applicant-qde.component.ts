@@ -496,71 +496,7 @@ export class CoApplicantQdeComponent implements OnInit {
           // Index of CoApplicant in QDE
           this.applicantIndex = this.qde.application.applicants.findIndex(val => val.applicantId == params.applicantId);
 
-          try {
-          this.qde.application.applicants[this.applicantIndex].applicantId = result.application.applicants[this.applicantIndex].applicantId;
-          } catch(e) {}
-          try {
-            this.qde.application.applicants[this.applicantIndex].pan = result.application.applicants[this.applicantIndex].pan;
-          } catch(e) {}
-          try {
-            this.qde.application.applicants[this.applicantIndex].partnerRelationship = result.application.applicants[this.applicantIndex].isMainApplicant;
-          } catch(e) {}
-          try {
-            this.qde.application.applicants[this.applicantIndex].maritalStatus = result.application.applicants[this.applicantIndex].isMainApplicant;
-          } catch(e) {}
-          try {
-            this.qde.application.applicants[this.applicantIndex].isIndividual = result.application.applicants[this.applicantIndex].isIndividual;
-          } catch(e) {}
-          try {
-            this.qde.application.applicants[this.applicantIndex].familyDetails = result.application.applicants[this.applicantIndex].familyDetails;
-          } catch(e) {}
-          try {
-            this.qde.application.applicants[this.applicantIndex].other = result.application.applicants[this.applicantIndex].other;
-          } catch(e) {}
-          try {
-            this.qde.application.applicants[this.applicantIndex].occupation = result.application.applicants[this.applicantIndex].occupation;
-          } catch(e) {}
-          try {
-            this.qde.application.applicants[this.applicantIndex].personalDetails = result.application.applicants[this.applicantIndex].personalDetails;
-          } catch(e) {}
-          try {
-            this.qde.application.applicants[this.applicantIndex].contactDetails = result.application.applicants[this.applicantIndex].contactDetails;
-          } catch(e) {}
-          try {
-            this.qde.application.applicants[this.applicantIndex].communicationAddress = result.application.applicants[this.applicantIndex].communicationAddress;
-          } catch(e) {}
-          try {
-            this.qde.application.applicants[this.applicantIndex].permanentAddress = result.application.applicants[this.applicantIndex].permanentAddress;
-          } catch(e) {}
-          try {
-            this.qde.application.applicants[this.applicantIndex].residentialAddress = result.application.applicants[this.applicantIndex].residentialAddress;
-          } catch(e) {}
-          try {
-            this.qde.application.applicants[this.applicantIndex].officialCorrespondence = result.application.applicants[this.applicantIndex].officialCorrespondence;
-          } catch(e) {}
-          try {
-            this.qde.application.applicants[this.applicantIndex].organizationDetails = result.application.applicants[this.applicantIndex].organizationDetails;
-          } catch(e) {}
-          try {
-            this.qde.application.applicants[this.applicantIndex].registeredAddress = result.application.applicants[this.applicantIndex].registeredAddress;
-          } catch(e) {}
-          try {
-            this.qde.application.applicants[this.applicantIndex].corporateAddress = result.application.applicants[this.applicantIndex].corporateAddress;
-          } catch(e) {}
-          try {
-            this.qde.application.applicants[this.applicantIndex].revenueDetails = result.application.applicants[this.applicantIndex].revenueDetails;
-          } catch(e) {}
-          try {
-            this.qde.application.applicants[this.applicantIndex].incomeDetails = result.application.applicants[this.applicantIndex].incomeDetails;
-          } catch(e) {}
-          try {
-            this.qde.application.applicants[this.applicantIndex].documents = result.application.applicants[this.applicantIndex].documents;
-          } catch(e) {}
-          try {
-            this.qde.application.applicants[this.applicantIndex].isMainApplicant = result.application.applicants[this.applicantIndex].isMainApplicant;
-          } catch(e) {}
-
-          this.qdeService.setQde(this.qde);
+          this.qdeService.setQde(result);
 
           console.log('this is coming first', this.panslide, this.qde.application.applicants[this.applicantIndex].isIndividual);
           // Incoming from create Individual Pan
@@ -651,7 +587,6 @@ export class CoApplicantQdeComponent implements OnInit {
   }
 
   valuechange(newValue, valueIndex) {
-    console.log(newValue);
     this.value[valueIndex] = newValue;
   }
 
