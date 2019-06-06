@@ -1,0 +1,191 @@
+<app-menubar-header></app-menubar-header>
+<main>
+  <div class="main">
+      <div class="lyt-home">
+          <div class="tabs">
+              <!-- <ul class="tabs-head" [ngClass]="{'visibilityHidden': (activeTab == 0)}">
+                <li class="tab-link pending" [ngClass]="{'active': (activeTab == 1), 'hide': (!applicantIndividual)}">
+                  <a href="javascript:void(0);" (click)="tabSwitch(1)">Aadhar Card</a>
+                </li>
+                <li class="tab-link" [ngClass]="{'active': (activeTab == 2), 'hide': (!applicantIndividual)}">
+                  <a href="javascript:void(0);" (click)="tabSwitch(2)">Address Proof</a>
+                </li>
+                <li class="tab-link" [ngClass]="{'active': (activeTab == 3), 'hide': (!applicantIndividual)}">
+                  <a href="javascript:void(0);" (click)="tabSwitch(3)">Income Proof</a>
+                </li>
+                <li class="tab-link" [ngClass]="{'active': (activeTab == 4), 'hide': (!applicantIndividual)}">
+                  <a href="javascript:void(0);" (click)="tabSwitch(4)">Banking</a>
+                </li>
+                <li class="tab-link" [ngClass]="{'active': (activeTab == 5), 'hide': (!applicantIndividual)}">
+                  <a href="javascript:void(0);" (click)="tabSwitch(5)">Collateral</a>
+                </li>
+                <li class="tab-link" [ngClass]="{'active': (activeTab == 6), 'hide': (!applicantIndividual)}">
+                  <a href="javascript:void(0);" (click)="tabSwitch(6)">Customer Photo</a>
+                </li>
+              </ul> -->
+          
+              <!-- Upload Documents -->
+
+              <div class="tabs-contents" #tabContents>
+                <div class="tab-content" [ngClass]="{'active': (activeTab == 0)}">
+                    <!-- <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(panSlider2)"></a> -->
+                    <div class="lyt-tabs">
+                        <div class="lhs">
+                            <div  class="swiper-container form-swiper"
+                                  [swiper]="lhsConfig"
+                                  #panSlider1="ngxSwiper">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                        <div class="title-wrap">
+                                            <h4 class="title">Application<span class="cm-line-break">Completed</span></h4>
+                                            <p class="note">Choose a mode of payment to submit this application</p>
+                                        </div>
+                                    </div>
+                                  </div>
+                                </div>
+                            </div>
+                            <div class="rhs">
+                                <div  class="swiper-container form-swiper"
+                                      [swiper]="rhsConfig"
+                                      (slidePrevTransitionStart)="slidePrevTransitionStart(panSlider1)"
+                                      (slideNextTransitionStart)="slideNextTransitionStart(panSlider1)"
+                                      #panSlider2="ngxSwiper">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide">
+                                            <form class="bs-form">
+                                                <div class="form-wrap">
+                                                    <!-- <div class="bs-radio">
+                                                        <input  type="radio"
+                                                                [value]="true"
+                                                                (change)="tabSwitch(1)"  />
+                                                        <label for="individual"><span>Online</span></label>
+                                                    </div> -->
+                                                    <div class="bs-radio">
+                                                      <input type="radio" name="payment-radio" id="online">
+                                                      <label for="online">
+                                                          <div class="inner-sect">
+                                                              <div class="title">Online</div>
+                                                              <p class="desc">A link will be sent to 
+                                                                      the customer’s verified 
+                                                                      mobile number and 
+                                                                      email address. The 
+                                                                      customer can then pay 
+                                                                      online through any 
+                                                                      payment method.</p>
+                                                              </div>
+                                                      </label>
+                                                    </div>
+                                                    <!-- <div class="bs-radio">
+                                                        <input  type="radio"
+                                                                [value]="false"
+                                                                (change)="tabSwitch()" />
+                                                        <label for="non-individual"><span>Offline</span></label>
+                                                    </div> -->
+                                                    <div class="bs-radio">
+                                                      <input type="radio" name="payment-radio" id="online" href="javascript:void(0);" (change)="tabSwitch(1)">
+                                                      <label for="online">
+                                                          <div class="inner-sect">
+                                                            <div class="title">Offline</div>
+                                                            <p class="desc">
+                                                                    Agent will collect a 
+                                                                    cheque and upload a 
+                                                                    photo of it through the 
+                                                                    app. A cheque usually 
+                                                                    takes 2-3 days to clear. 
+                                                            </p>
+                                                          </div>
+                                                      </label>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+
+              <!-- Aadhar Card -->
+
+                  <div class="tab-content" [ngClass]="{'active': (activeTab == 1)}">
+                    <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(aadharSlider2)"></a>
+                    <div class="lyt-tabs">
+                        <div class="lhs">
+                            <div  class="swiper-container form-swiper"
+                                  [swiper]="lhsConfig"
+                                  #aadharSlider1="ngxSwiper">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                        <div class="title-wrap">
+                                            <h4 class="title">Offline<span class="cm-line-break"></span>Payment</h4>
+                                            <p class="note">Enter Cheque Details</p>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="swiper-slide">
+                                        <div class="title-wrap">
+                                            <h4 class="title">Verify<span class="cm-line-break"></span>Aadhar Card</h4>
+                                        </div>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="rhs">
+                            <div  class="swiper-container form-swiper"
+                                  [swiper]="rhsConfig"
+                                  (slidePrevTransitionStart)="slidePrevTransitionStart(aadharSlider1)"
+                                  (slideNextTransitionStart)="slideNextTransitionStart(aadharSlider1)"
+                                  #aadharSlider2="ngxSwiper">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                      <form class="bs-form" id="spouse-form">
+                                        <div class="form-wrap">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" id="Cheque-drawn">
+                                                <label for="Cheque-drawn">Cheque drawn to</label>
+                                            </div>
+                                            <div class="form-group">
+                                                <span class="control-title">Name of the Bank</span>
+                                                <!-- <select class="js-select" name="bankname" aria-placeholder="Name of the bank">                          
+                                                        <option value="SBI">SBI</option>
+                                                        <option value="HDFC">HDFC</option>
+                                                        <option value="Citibank">Citibank</option>
+                                                </select>
+                                               [(ngModel)]="selectedDocType" -->
+                                                <kendo-dropdownlist class="form-control"
+                                                [data]="docType" 
+                                                textField="key"
+                                                valueField="value"
+                                                name="bankname"
+                                                >
+                                              </kendo-dropdownlist>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" id="ifsc-code">
+                                                <label for="ifsc-code">IFSC Code</label>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" id="cheque-number">
+                                                <label for="cheque-number">Cheque number</label>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" id="amount">
+                                                <label for="amount">Amount</label>
+                                            </div>
+                                        </div>
+                                        <div class="btn-wrap">
+                                            <button class="btn btn-primary disabled">Submit</button>
+                                        </div>
+                                    </form>
+                                    </div>                              
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+        </div>
+    </main>

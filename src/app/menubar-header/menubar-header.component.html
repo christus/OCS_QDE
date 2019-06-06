@@ -10,7 +10,7 @@
                 </h1>
             </div>
             <div class="right-panel">
-                <h3 class="for-user" *ngIf="isViewFormVisible">Application for <span class="user-name">Komal Agarwal</span></h3>
+                <h3 class="for-user" *ngIf="isViewFormNameVisible">Application for <span class="user-name">Komal Agarwal</span></h3>
                 <a routerLink="/view-form" *ngIf="isViewFormVisible" class="btn btn-default view-form">View Form</a>
                 <a (click)="logout()" *ngIf="isLogoutVisible" class="btn btn-default logout">Logout</a>
             </div>
@@ -28,6 +28,9 @@
 </li>
 <li routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
     <a routerLink="/references">References</a>
+</li>
+<li routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+    <a routerLink="/payments/offline-payments">Payments</a>
 </li>
 <li routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
     <a routerLink="/document-upload">Document Uploads</a>

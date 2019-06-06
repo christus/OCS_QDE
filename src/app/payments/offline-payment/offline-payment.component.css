@@ -1,0 +1,46 @@
+.bs-radio {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    margin: 0 1.17vw;
+}
+.bs-radio input[type=radio] {
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: 0 0;
+}
+.bs-radio label {
+    display: block;
+    width: 15.63vw;
+    height: 15.63vw;
+    background: 0 0;
+    border: 1px solid #bbb;
+    border-radius: .78vw;
+    text-align: center;
+    font-family: zurich-bold;
+    font-size: 2.11vw;
+    color: #999;
+}
+.bs-radio label .inner-sect {
+    top: 0;
+    bottom: 0;
+    transform: none;
+    text-align: left;
+    padding: 10px;
+}
+.bs-radio label .inner-sect .title {
+    font-size: 2.11vw;
+    margin-bottom: .39vw;
+    font-family: zurich-bold;
+}
+.bs-radio label .inner-sect .desc {
+    font-size: 1.25vw;
+    line-height: 1.56vw;
+    font-family: zurich;
+    margin-top: 10px;
+    text-align: left;
+}
