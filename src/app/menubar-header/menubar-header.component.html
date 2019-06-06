@@ -4,7 +4,7 @@
         <div class="sec-nav">
             <div class="logo">
                 <h1>
-                    <a routerLink="/leads" >
+                    <a routerLink="/leads">
                         <img src="assets/images/logo.svg" alt="logo" class="img-responsive" />
                     </a>
                 </h1>
@@ -15,27 +15,29 @@
                 <a (click)="logout()" *ngIf="isLogoutVisible" class="btn btn-default logout">Logout</a>
             </div>
         </div>
-<ul class="main-nav" *ngIf="isMenuBarShown">
-<li routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
-    <a routerLink="/applicant">Applicant Details</a>
-</li>
-<li routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
-    <a routerLink="/co-applicant">Co-Applicant Details</a>
-</li>
-<li routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
-    <a routerLink="/applicant" *ngIf="applicantId == null">Loan Details</a>
-    <a [routerLink]="['/loan', applicantId]" *ngIf="applicantId != null">Loan Details</a>
-</li>
-<li routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
-    <a routerLink="/references">References</a>
-</li>
-<li routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
-    <a routerLink="/payments/offline-payments">Payments</a>
-</li>
-<li routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
-    <a routerLink="/document-upload">Document Uploads</a>
-</li>
-</ul>
+
+
+        <ul class="main-nav" *ngIf="isMenuBarShown">
+            <li routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+                <a routerLink="/applicant">Applicant Details</a>
+            </li>
+            <li routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+                <a routerLink="/co-applicant">Co-Applicant Details</a>
+            </li>
+            <li routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+                <a routerLink="/applicant" *ngIf="applicantId == null">Loan Details</a>
+                <a [routerLink]="['/loan', applicantId]" *ngIf="applicantId != null">Loan Details</a>
+            </li>
+            <li routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+                <a routerLink="/references">References</a>
+            </li>
+            <li routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+                <a routerLink="/payments/offline-payments">Payments</a>
+            </li>
+            <li routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+                <a routerLink="/document-upload">Document Uploads</a>
+            </li>
+        </ul>
         <!-- header end -->
     </div>
 </header>
