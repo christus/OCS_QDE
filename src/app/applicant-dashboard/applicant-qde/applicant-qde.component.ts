@@ -405,8 +405,6 @@ export class ApplicantQdeComponent implements OnInit {
   private selectedQualification: Item;
   private selectedConstitution: Item;
 
-  
-
   private selectedDocType: Item;
   private selectedConstitutions: Item;
   private docType: Array<any>;
@@ -432,6 +430,7 @@ export class ApplicantQdeComponent implements OnInit {
     });
 
 
+
     this.route.fragment.subscribe((fragment) => {
       let localFragment = fragment;
       
@@ -449,6 +448,7 @@ export class ApplicantQdeComponent implements OnInit {
         this.applicantIndividual = (this.activeTab >= 10) ? false: true; 
       }
     });
+    
     console.log('__________');
   }
   
@@ -523,6 +523,8 @@ export class ApplicantQdeComponent implements OnInit {
     // Check Whether there is qde data to be filled or else Initialize Qde
     this.route.params.subscribe((params) => {
 
+      this.cds.changeApplicantId(params.applicantId);
+
       console.log("params ", params);
       // Make an http request to get the required qde data and set using setQde
       if(params.applicantId != undefined && params.applicantId != null) {
@@ -534,125 +536,7 @@ export class ApplicantQdeComponent implements OnInit {
 
           this.applicantIndex = this.qde.application.applicants.findIndex(val => val.isMainApplicant == true);
 
-          // Will be deprected as soon as API is stable
-//--------------------------------------------------------------------
-          try {
-            if(result.application.applicants[this.applicantIndex].applicantId != null) {
-              this.qde.application.applicants[this.applicantIndex].applicantId = result.application.applicants[this.applicantIndex].applicantId;
-            }
-          } catch(e) {}
-
-          try {
-            if(result.application.ocsNumber != null) {
-              this.qde.application.ocsNumber = result.application.ocsNumber;
-            }
-          } catch(e) {}
-          
-          try {
-            if(result.application.applicants[this.applicantIndex].pan != null) {
-              this.qde.application.applicants[this.applicantIndex].pan = result.application.applicants[this.applicantIndex].pan;
-            }
-          } catch(e) {}
-          // try {
-          //   if(result.application.applicants[this.applicantIndex].isMainApplicant != null) {
-          //     this.qde.application.applicants[this.applicantIndex].partnerRelationship = result.application.applicants[this.applicantIndex].isMainApplicant;
-          //   }
-          // } catch(e) {}
-
-          try {
-            if(result.application.applicants[this.applicantIndex].isMainApplicant != null) {
-              this.qde.application.applicants[this.applicantIndex].maritalStatus = result.application.applicants[this.applicantIndex].maritalStatus;
-            }
-          } catch(e) {}
-          try {
-            if(result.application.applicants[this.applicantIndex].isIndividual != null) {
-              this.qde.application.applicants[this.applicantIndex].isIndividual = result.application.applicants[this.applicantIndex].isIndividual;
-            }
-          } catch(e) {}
-          try {
-            if(result.application.applicants[this.applicantIndex].familyDetails != null) {
-              this.qde.application.applicants[this.applicantIndex].familyDetails = result.application.applicants[this.applicantIndex].familyDetails;
-            }
-          } catch(e) {}
-          try {
-            if(result.application.applicants[this.applicantIndex].other != null) {
-              this.qde.application.applicants[this.applicantIndex].other = result.application.applicants[this.applicantIndex].other;
-            }
-          } catch(e) {}
-          try {
-            if(result.application.applicants[this.applicantIndex].occupation != null) {
-              this.qde.application.applicants[this.applicantIndex].occupation = result.application.applicants[this.applicantIndex].occupation;
-            }
-          } catch(e) {}
-          try {
-            if(result.application.applicants[this.applicantIndex].personalDetails != null) {
-              this.qde.application.applicants[this.applicantIndex].personalDetails = result.application.applicants[this.applicantIndex].personalDetails;
-            }
-          } catch(e) {}
-          try {
-            if(result.application.applicants[this.applicantIndex].contactDetails != null) {
-              this.qde.application.applicants[this.applicantIndex].contactDetails = result.application.applicants[this.applicantIndex].contactDetails;          
-            }
-          } catch(e) {}
-          try {
-            if(result.application.applicants[this.applicantIndex].communicationAddress != null) {
-              this.qde.application.applicants[this.applicantIndex].communicationAddress = result.application.applicants[this.applicantIndex].communicationAddress;
-            }
-          } catch(e) {}
-          try {
-            if(result.application.applicants[this.applicantIndex].permanentAddress != null) {
-              this.qde.application.applicants[this.applicantIndex].permanentAddress = result.application.applicants[this.applicantIndex].permanentAddress;
-            }
-          } catch(e) {}
-          try {
-            if(result.application.applicants[this.applicantIndex].residentialAddress != null) {
-              this.qde.application.applicants[this.applicantIndex].residentialAddress = result.application.applicants[this.applicantIndex].residentialAddress;
-            }
-          } catch(e) {}
-          try {
-            if(result.application.applicants[this.applicantIndex].officialCorrespondence != null) {
-              this.qde.application.applicants[this.applicantIndex].officialCorrespondence = result.application.applicants[this.applicantIndex].officialCorrespondence;
-            }
-          } catch(e) {}
-          try {
-            if(result.application.applicants[this.applicantIndex].organizationDetails != null) {
-              this.qde.application.applicants[this.applicantIndex].organizationDetails = result.application.applicants[this.applicantIndex].organizationDetails;
-            }
-          } catch(e) {}
-          try {
-            if(result.application.applicants[this.applicantIndex].registeredAddress != null) {
-              this.qde.application.applicants[this.applicantIndex].registeredAddress = result.application.applicants[this.applicantIndex].registeredAddress;
-            }
-          } catch(e) {}
-          
-          try {
-            if(result.application.applicants[this.applicantIndex].corporateAddress != null) {
-              this.qde.application.applicants[this.applicantIndex].corporateAddress = result.application.applicants[this.applicantIndex].corporateAddress;
-            }
-          } catch(e) {}
-          try {
-            if(result.application.applicants[this.applicantIndex].revenueDetails != null) {
-              this.qde.application.applicants[this.applicantIndex].revenueDetails = result.application.applicants[this.applicantIndex].revenueDetails;
-            }
-          } catch(e) {}
-          try {
-            if(result.application.applicants[this.applicantIndex].incomeDetails != null) {
-              this.qde.application.applicants[this.applicantIndex].incomeDetails = result.application.applicants[this.applicantIndex].incomeDetails;
-            }
-          } catch(e) {}
-          try {
-            if(result.application.applicants[this.applicantIndex].documents != null) {
-              this.qde.application.applicants[this.applicantIndex].documents = result.application.applicants[this.applicantIndex].documents;
-            }
-          } catch(e) {}
-          try {
-            if(result.application.applicants[this.applicantIndex].isMainApplicant != null) {
-              this.qde.application.applicants[this.applicantIndex].isMainApplicant = result.application.applicants[this.applicantIndex].isMainApplicant;
-            }
-          } catch(e) {}
-//----------------------------------------------------------
-
-          this.qdeService.setQde(this.qde); // Soon it will be this.qdeService.setQde(result);
+          this.qdeService.setQde(result);
 
           // Personal Details Title
           if( ! isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].personalDetails.title)) ) {
@@ -700,7 +584,7 @@ export class ApplicantQdeComponent implements OnInit {
           this.selectedFatherTitle  = this.titles[(parseInt(this.qde.application.applicants[this.applicantIndex].familyDetails.fatherTitle))];
         }
 
-/////Other //////
+/////Other//////
         if( ! isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].other.religion)) ) {
           this.selectedReligions = this.religions[(parseInt(this.qde.application.applicants[this.applicantIndex].other.religion))];
         }
@@ -711,46 +595,42 @@ export class ApplicantQdeComponent implements OnInit {
         }
 
 /////Occupation details///////
-
         if( ! isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].occupation.occupationType)) ) {
           this.selectedOccupation = this.religions[(parseInt(this.qde.application.applicants[this.applicantIndex].occupation.occupationType))];
         }
 
 ///// Assesment methodology /////
-
-
       if( ! isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].incomeDetails.assessmentMethodology)) ) {
         this.selectedAssesmentMethodology = this.religions[(parseInt(this.qde.application.applicants[this.applicantIndex].incomeDetails.assessmentMethodology))];
       }
 
-          console.log('this is coming first', this.panslide, this.qde.application.applicants[this.applicantIndex].isIndividual);
-          // Incoming from create Individual Pan
-          if(this.panslide == true && this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
-            this.panSlider2.setIndex(2);
-            console.log("test", this.panslide2);
-          }
-          // Incoming from create Non Individual Pan
-          else if(this.panslide2 == true && this.qde.application.applicants[this.applicantIndex].isIndividual == false) {
-            this.tabSwitch(11);
-          }
-          else if(this.panslide == false && this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
-            this.tabSwitch(0);
-            this.panSlider2.setIndex(1);
-          }
-          else if(this.panslide2 == false && this.qde.application.applicants[this.applicantIndex].isIndividual == false) {
-            this.tabSwitch(10);
-          }
+        console.log('this is coming first', this.panslide, this.qde.application.applicants[this.applicantIndex].isIndividual);
+        // Incoming from create Individual Pan
+        if(this.panslide == true && this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
+          this.panSlider2.setIndex(2);
+          console.log("test", this.panslide2);
+        }
+        // Incoming from create Non Individual Pan
+        else if(this.panslide2 == true && this.qde.application.applicants[this.applicantIndex].isIndividual == false) {
+          this.tabSwitch(11);
+        }
+        else if(this.panslide == false && this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
+          this.tabSwitch(0);
+          this.panSlider2.setIndex(1);
+        }
+        else if(this.panslide2 == false && this.qde.application.applicants[this.applicantIndex].isIndividual == false) {
+          this.tabSwitch(10);
+        }
 
-          this.cds.changePanSlide(false);
-          this.cds.changePanSlide2(false);
+        this.cds.changePanSlide(false);
+        this.cds.changePanSlide2(false);
 
-       });
-      }
+        this.initializeVariables();
+      });
+    } else {
+      this.initializeVariables();
+    }
 
-
-      console.log("QDE" , this.qde);
-
-      console.log(this.qde.application.applicants[this.applicantIndex].maritalStatus.earning);
     });
 
 
@@ -771,36 +651,6 @@ export class ApplicantQdeComponent implements OnInit {
     //     this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split("-")[2] == undefined) {
     //   this.dob.year = this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split("-")[2];
     // }
-
-    this.residenceNumber.stdCode = this.qde.application.applicants[this.applicantIndex].contactDetails.residenceNumber != "" ? this.qde.application.applicants[this.applicantIndex].contactDetails.residenceNumber.split("-")[0] : "";
-    this.residenceNumber.phoneNumber = this.qde.application.applicants[this.applicantIndex].contactDetails.residenceNumber != "" ? this.qde.application.applicants[this.applicantIndex].contactDetails.residenceNumber.split("-")[1] : "";
-
-    this.alternateResidenceNumber.stdCode = this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber != "" ? this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber.split("-")[0] : "";
-    this.alternateResidenceNumber.phoneNumber = this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber != "" ? this.qde.application.applicants[this.applicantIndex].contactDetails.residenceNumber.split("-")[1] : "";
-    this.addressCityState = this.qde.application.applicants[this.applicantIndex].communicationAddress.city + '/'+ this.qde.application.applicants[this.applicantIndex].communicationAddress.state;
-
-    this.otherReligion = this.qde.application.applicants[this.applicantIndex].other.religion == '6' ? this.qde.application.applicants[this.applicantIndex].other.religion : '';
-
-    if( this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[0] == "" ||
-        this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[0] == undefined) {
-      this.dateOfIncorporation.day = this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[0];
-    }
-
-    if( this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[1] == "" ||
-        this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[1] == undefined) {
-      this.dateOfIncorporation.month = this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[1];
-    }
-
-    if( this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[2] == "" ||
-        this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[2] == undefined) {
-      this.dateOfIncorporation.year = this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[2];
-    }
-
-    this.registeredAddressCityState = this.qde.application.applicants[this.applicantIndex].registeredAddress.city +'/'+ this.qde.application.applicants[this.applicantIndex].registeredAddress.state;
-    this.corporateAddressCityState = this.qde.application.applicants[this.applicantIndex].corporateAddress.city +'-'+ this.qde.application.applicants[this.applicantIndex].corporateAddress.state;
-    this.corporateAddressStdNumber.stdCode = this.qde.application.applicants[this.applicantIndex].corporateAddress.stdNumber != "" ? this.qde.application.applicants[this.applicantIndex].corporateAddress.stdNumber.split("-")[0] : "";
-    this.corporateAddressStdNumber.phoneNumber = this.qde.application.applicants[this.applicantIndex].corporateAddress.stdNumber != "" ? this.qde.application.applicants[this.applicantIndex].corporateAddress.stdNumber.split("-")[1] : "";
-
   }
 
   valuechange(newValue, valueIndex) {
@@ -1818,5 +1668,45 @@ export class ApplicantQdeComponent implements OnInit {
       this.goToNextSlide(swiperInstance);
       this.applicantStatus = "2";
     }
+  }
+
+  initializeVariables() {
+
+    this.residenceNumber.stdCode = this.qde.application.applicants[this.applicantIndex].contactDetails.residenceNumber != "" ? this.qde.application.applicants[this.applicantIndex].contactDetails.residenceNumber.split("-")[0] : "";
+    this.residenceNumber.phoneNumber = this.qde.application.applicants[this.applicantIndex].contactDetails.residenceNumber != "" ? this.qde.application.applicants[this.applicantIndex].contactDetails.residenceNumber.split("-")[1] : "";
+
+    console.log("RN ", this.residenceNumber);
+    this.alternateResidenceNumber.stdCode = this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber != "" ? this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber.split("-")[0] : "";
+    this.alternateResidenceNumber.phoneNumber = this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber != "" ? this.qde.application.applicants[this.applicantIndex].contactDetails.residenceNumber.split("-")[1] : "";
+    this.addressCityState = this.qde.application.applicants[this.applicantIndex].communicationAddress.city + '/'+ this.qde.application.applicants[this.applicantIndex].communicationAddress.state;
+
+    this.otherReligion = this.qde.application.applicants[this.applicantIndex].other.religion == '6' ? this.qde.application.applicants[this.applicantIndex].other.religion : '';
+
+    if( this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[0] == "" ||
+        this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[0] == undefined) {
+      this.dateOfIncorporation.day = this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[0];
+    }
+
+    if( this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[1] == "" ||
+        this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[1] == undefined) {
+      this.dateOfIncorporation.month = this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[1];
+    }
+
+    if( this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[2] == "" ||
+        this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[2] == undefined) {
+      this.dateOfIncorporation.year = this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[2];
+    }
+
+    this.registeredAddressCityState = this.qde.application.applicants[this.applicantIndex].registeredAddress.city +'/'+ this.qde.application.applicants[this.applicantIndex].registeredAddress.state;
+    this.corporateAddressCityState = this.qde.application.applicants[this.applicantIndex].corporateAddress.city +'-'+ this.qde.application.applicants[this.applicantIndex].corporateAddress.state;
+    this.corporateAddressStdNumber.stdCode = this.qde.application.applicants[this.applicantIndex].corporateAddress.stdNumber != "" ? this.qde.application.applicants[this.applicantIndex].corporateAddress.stdNumber.split("-")[0] : "";
+    this.corporateAddressStdNumber.phoneNumber = this.qde.application.applicants[this.applicantIndex].corporateAddress.stdNumber != "" ? this.qde.application.applicants[this.applicantIndex].corporateAddress.stdNumber.split("-")[1] : "";
+
+  }
+
+  changeResidenceStd(event: any) {
+    console.log('event: ', event);
+    this.residenceNumber.stdCode = event;
+    console.log('dd: ', this.residenceNumber.stdCode);
   }
 }

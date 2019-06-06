@@ -46,4 +46,12 @@ export class CommonDataService {
   changePanSlide2(val: boolean) {
     this.panslide2$.next(val);
   }
+
+
+  private applicantId$: BehaviorSubject<string> = new BehaviorSubject<string>(null);
+  public applicantId = this.applicantId$.asObservable();
+  
+  changeApplicantId(val: string) {
+    this.applicantId$.next(val);
+  }
 }

@@ -23,7 +23,8 @@
     <a routerLink="/co-applicant">Co-Applicant Details</a>
 </li>
 <li routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
-    <a routerLink="/loan">Loan Details</a>
+    <a routerLink="/applicant" *ngIf="applicantId == null">Loan Details</a>
+    <a [routerLink]="['/loan', applicantId]" *ngIf="applicantId != null">Loan Details</a>
 </li>
 <li routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
     <a routerLink="/references">References</a>

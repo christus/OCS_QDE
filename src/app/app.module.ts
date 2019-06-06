@@ -113,7 +113,7 @@ const appRoutes: Routes = [
     ]
   },
   {
-    path: "loan",
+    path: "loan/:applicantId",
     component: LoanQdeComponent,
     resolve: {
       listOfValues: ListOfValuesResolverService

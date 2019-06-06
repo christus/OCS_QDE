@@ -179,14 +179,25 @@ export class LoanQdeComponent implements OnInit {
   private selectedFatherTitle : Item;
   private selectedLoanPurpose: Item;
   private selectedLoanType: Item;
-  
+
+  private applicantId: string;
+
   constructor(
     private renderer: Renderer2,
     private route: ActivatedRoute,
     private router: Router,
     private qdeHttp: QdeHttpService,
     private qdeService: QdeService
-  ) {}
+  ) {
+
+    this.route.params.subscribe(params => {
+      if(params.applicantId != null && params.applicantId != undefined) {
+        console.log("APPLICANTID: ", params.applicantId);
+        this.applicantId = params.applicantId;
+      }
+    });
+
+  }
 
   ngOnInit() {
     // this.renderer.addClass(this.select2.selector.nativeElement, 'js-select');

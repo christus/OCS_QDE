@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonDataService } from '../services/common-data.service';
 import { UtilService } from '../services/util.service';
 
@@ -7,11 +7,12 @@ import { UtilService } from '../services/util.service';
   templateUrl: './menubar-header.component.html',
   styleUrls: ['./menubar-header.component.css']
 })
-export class MenubarHeaderComponent implements OnInit {
+export class MenubarHeaderComponent implements OnInit, OnChanges {
   
   isMenuBarShown: boolean;
   isViewFormVisible: boolean;
   isLogoutVisible: boolean;
+  applicantId: string;
 
   constructor(private utilService: UtilService, private commonDataService: CommonDataService) {
     this.commonDataService.isMenuBarShown.subscribe((value) => {
@@ -25,9 +26,19 @@ export class MenubarHeaderComponent implements OnInit {
     this.commonDataService.isLogoutVisible.subscribe((value) => {
       this.isLogoutVisible = value;
     });
+    
+    this.commonDataService.applicantId.subscribe(val => {
+      this.applicantId = val;
+    });
   }
 
   ngOnInit() {
+    
+  }
+
+  ngOnChanges(simple: SimpleChanges) {
+    alert(simple.applicantId.currentValue);
+    console.log("777", simple.applicantId.currentValue);
   }
 
   logout() {

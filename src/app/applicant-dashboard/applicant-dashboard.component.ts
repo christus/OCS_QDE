@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-applicant-dashboard',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ApplicantDashboardComponent implements OnInit {
 
-  constructor() { }
+  private applicantId: string;
+
+  constructor(private route: ActivatedRoute) {
+
+  }
 
   ngOnInit() {
   }
