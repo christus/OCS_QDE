@@ -445,18 +445,20 @@ export class ApplicantQdeComponent implements OnInit {
           this.panslide == false &&
           this.panslide2 == false) {
 
-        if(this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
-          if(localFragment == 'pan1') {
-            this.tabSwitch(0);
-            this.panSlider2.setIndex(1);
-          }
-        } else if(this.qde.application.applicants[this.applicantIndex].isIndividual == false) {
-          this.tabSwitch(10);
-        }
+        // if(this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
+        //   if(localFragment == 'pan1') {
+        //     this.tabSwitch(0);
+        //     this.panSlider2.setIndex(1);
+        //   }
+        // } else if(this.qde.application.applicants[this.applicantIndex].isIndividual == false) {
+        //   if(localFragment == 'pan2') {
+        //     this.tabSwitch(10);
+        //   }
+        // }
 
         this.activeTab = this.fragments.indexOf(localFragment);
-
-        this.applicantIndividual = (this.activeTab >= 10) ? false: true; 
+        this.tabSwitch(this.activeTab);
+        this.applicantIndividual = (this.activeTab >= 10) ? false: true;
       }
     });
     
@@ -541,7 +543,7 @@ export class ApplicantQdeComponent implements OnInit {
       if(params.applicantId != undefined && params.applicantId != null) {
 
         // getQdeData
-        this.qdeHttp.dummyGetApi(params.applicantId).subscribe(response => {
+        this.qdeHttp.getQdeData(params.applicantId).subscribe(response => {
           var result = JSON.parse(response["ProcessVariables"]["response"]);
           console.log("Get ", result);
 
