@@ -639,32 +639,33 @@
                                     <div class="residence-no">
                                         <div class="form-group">
                                             <input    type="text"
-                                                      required
-                                                      [(ngModel)]="residenceNumber.stdCode"
+                                                      [(ngModel)]="residenceNumberStdCode"
                                                       pattern="{{regexPattern.mobileNumber}}"
-                                                      #residenceStdCode = "ngModel"
+                                                      #residenceStdCode="ngModel"
+                                                      maxlength="3"
+                                                      minlength="0"
                                                       name="residenceNumber1"
                                                       class="form-control"
-                                                      maxlength="3"
                                                       fieldFill
-                                                      id="std">
-                                            <label for="std">STD</label>
-                                            <div *ngIf="residenceStdCode.touched && residenceStdCode.invalid" class="invalid-feedback">
-                                              <div *ngIf="residenceStdCode.errors?.required">{{errors.contactDetails.stdCode.required}}</div>
-                                              
-                                              <div *ngIf="residenceStdCode.errors?.pattern">{{errors.contactDetails.stdCode.invalid}}</div>
-                                            </div>
+                                                      required
+                                                      id="std" />
+                                              <label for="std">STD</label>
+                                              <div *ngIf="residenceStdCode.touched && residenceStdCode.invalid" class="invalid-feedback">
+                                                  <div *ngIf="residenceStdCode.errors?.required">{{errors.contactDetails.stdCode.required}}</div>
+                                                  <div *ngIf="residenceStdCode.errors?.pattern">{{errors.contactDetails.stdCode.invalid}}</div>
+                                              </div>
                                         </div>
                                         <span class="seperator">-</span>
                                         <div class="form-group">
                                             <input    type="text"
                                                       class="form-control"
                                                       id="res-no"
-                                                      [(ngModel)]="residenceNumber.phoneNumber"
+                                                      [(ngModel)]="residenceNumberPhoneNumber"
                                                       pattern="{{regexPattern.mobileNumber}}"
                                                       maxlength="8"
-                                                      #residenceNumber = "ngModel"
+                                                      #residenceNumber="ngModel"
                                                       name="residenceNumber2"
+                                                      value="{{residenceNumber.phoneNumber}}"
                                                       data-validation-attr="residenceno"
                                                       fieldFill
                                                       required />
@@ -683,40 +684,39 @@
                                     <div class="residence-no" [ngClass]="{'typ-alternative': !isAlternateResidenceNumber}">
                                         <div class="form-group">
                                             <input    type="text"
-                                                      [(ngModel)]="alternateResidenceNumber.stdCode"
+                                                      [(ngModel)]="alternateResidenceNumberStdCode"
                                                       name="alternateResidenceNumberStd1"
-                                                      class="form-control"
+                                                      maxlength="3"
                                                       #alternateResidenceNumberStd1="ngModel"
                                                       pattern="{{regexPattern.mobileNumber}}"
+                                                      class="form-control"
                                                       fieldFill
-                                                      maxlength="3"
                                                       id="altrstd">
-                                            <label for="altrstd">STD</label>
+                                            <label for="altrstd" *ngIf="alternateResidenceNumberStd1.value==''">STD</label>
                                             <div *ngIf="alternateResidenceNumberStd1.touched  && alternateResidenceNumberStd1.invalid" class="invalid-feedback">
-                                                <div *ngIf="alternateResidenceNumberStd1.errors?.pattern">{{errors.contactDetails.alternateResidenceNumberStd1.invalid}}</div>
-                                            </div>
+                                              <div *ngIf="alternateResidenceNumberStd1.errors?.pattern">{{errors.contactDetails.alternateResidenceNumberStd1.invalid}}</div>
+                                          </div>
                                         </div>
                                         <span class="seperator">-</span>
                                         <div class="form-group">
                                             <input    type="text"
                                                       class="form-control"
-                                                      [(ngModel)]="alternateResidenceNumber.phoneNumber"
-                                                      name="alternateResidenceNumber1"
-                                                      #alternateResidenceNumber1="ngModel"
+                                                      [(ngModel)]="alternateResidenceNumberPhoneNumber"
+                                                      #alternateResidenceNumber2="ngModel"
+                                                      name="alternateResidenceNumber2"
                                                       id="altr-res-no"
-                                                      fieldFill
-                                                      maxlength="8"
+                                                      maxlength="8" 
                                                       pattern="{{regexPattern.mobileNumber}}"
                                                       data-validation-attr="residenceno01" />
-                                            <label for="altr-res-no">Residence number</label>
-                                            <div *ngIf="alternateResidenceNumber1.touched  && alternateResidenceNumber1.invalid" class="invalid-feedback">
-                                                <div *ngIf="alternateResidenceNumber1.errors?.pattern">{{errors.contactDetails.alternateResidenceNumber1.invalid}}</div>
-                                            </div>
-                                        </div>
+                                            <label for="altr-res-no" *ngIf="alternateResidenceNumber2.value==''">Residence number</label>
+                                            <div *ngIf="alternateResidenceNumber2.touched  && alternateResidenceNumber2.invalid" class="invalid-feedback">
+                                              <div *ngIf="alternateResidenceNumber2.errors?.pattern">{{errors.contactDetails.alternateResidenceNumber2.invalid}}</div>
+                                          </div>
+                                          </div>
                                         <span class="alternate-data">
                                           <a href="javascript:void(0);"
                                               class="alter-btn"
-                                              (click)="addRemoveResidenceNumberField()">- Remove</a> alternate residence number
+                                              (click)="addRemoveResidenceNumberField()">- Remove</a> alternate residence no
                                         </span>
                                     </div>
                                 </div>
@@ -724,8 +724,7 @@
                                       <button class="btn btn-primary"
                                               type="submit"
                                               [ngClass]="{'disabled': !contactForm.valid}"
-                                              [disabled]="!contactForm.valid" 
-                                              (click)="tabSwitch(3)">Next
+                                              [disabled]="!contactForm.valid">Next
                                       </button>
                                 </div>
                             </form>
