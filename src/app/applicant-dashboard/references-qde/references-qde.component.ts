@@ -44,39 +44,39 @@ export class ReferencesQdeComponent implements OnInit {
       references: {
         referenceOne: {
           fullName: {
-            required: "Full Name is required",
-            invalid: "Full Name is not valid"
+            required: "First and Last Name is required",
+            invalid: "Name field is incomplete"
           },
           mobileNumber: {
-           required: "Mobile number is required",
-           invalid: "Mobile number is not valid"
+           required: "10 digit mobile number is mandatory",
+           invalid: "Invalid Mobile Number"
           },
           addressLineOne: {
-           required: "Address line One is required",
-           invalid: "Address line One is not valid"
+           required: "Address line One is Mandatory",
+           invalid: "Incomplete address"
           },
           addressLineTwo: {
-            required: "Address line Two is required",
-            invalid: "Address line Two is not valid"
+            required: "Address line Two is mandatory",
+            invalid: "Incomplete address"
           }
         },
 
        referenceTwo: {
          fullName: {
-           required: "Full Name is required",
-           invalid: "Full Name is not valid"
+           required: "First and Last Name is mandatory",
+           invalid: "Name field is incomplete"
          },
          mobileNumber: {
-          required: "Mobile number is required",
-          invalid: "Mobile number is not valid"
+          required: "10 digit mobile number is mandatory",
+          invalid: "Invalid Mobile Number"
          },
          addressLineOne: {
-          required: "Address line One is required",
-          invalid: "Address line One is not valid"
+          required: "Address line One is Mandatory",
+          invalid: "Incomplete address"
          },
          addressLineTwo: {
-           required: "Address line Two is required",
-           invalid: "Address line Two is not valid"
+           required: "Address line Two is mandatory",
+           invalid: "Incomplete address"
          }
        }
 
@@ -87,7 +87,7 @@ export class ReferencesQdeComponent implements OnInit {
   regexPattern = {
     mobileNumber: "^[0-9]*$",
     name: "[a-zA-Z ]*",
-    address : "^[0-9A-Za-z, _&'#\s]+$"
+    address : "^[0-9A-Za-z, _&'/#]+$",
   };
 
   private lhsConfig = {

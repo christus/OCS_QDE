@@ -1663,9 +1663,10 @@
                                           [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.officeStd"
                                           #stdCode = "ngModel"
 					  pattern="{{regexPattern.mobileNumber}}"
-                                         
+                                          maxlength="3" 
+                                          fieldFill
                                           name="stdCode">
-                                        <label for="std03" *ngIf="stdCode.value == ''">STD</label>
+                                        <label for="std03" >STD</label>
                                         <div *ngIf="stdCode.touched && stdCode.invalid" class="invalid-feedback">
                                             <div *ngIf="stdCode.errors?.required">{{errors.officialCorrespondence.stdCode.required}}</div>
                                             <div *ngIf="stdCode.errors?.pattern">{{errors.officialCorrespondence.stdCode.invalid}}</div>
@@ -1840,7 +1841,7 @@
                                                     name="monthlyIncome" 
                          			                fieldFill
                                                     required>
-                                                    <label for="monthlyIncome" *ngIf="!monthlyIncome.value">Monthly income</label>
+                                                    <label for="monthlyIncome" >Monthly income</label>
                                                     <div for="app-monthly-income" *ngIf="monthlyIncome.touched && monthlyIncome.Invalid" class="invalid-feedback">
                                                             <div *ngIf="monthlyIncome.errors?.required">{{errors.incomeDetails.monthlyIncome.required}}</div>
                                                             <div *ngIf="monthlyIncome.errors?.pattern">{{errors.incomeDetails.monthlyIncome.invalid}}</div>
@@ -1950,7 +1951,7 @@
                                                         id="pan-inpt2"
                                                         minlength="10"
                                                         maxlength="10"
-                                                        pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}"                                              
+                                                        pattern="{{regexPattern.pan}}"                                              
                                                         name="pan"
                                                         #pan2="ngModel"
                                                         fieldFill
@@ -2128,10 +2129,10 @@
                                             (keyup)="onPinCodeChange($event, 'registeredAddress')" 
                                             pattern="{{regexPattern.pinCode}}">
                                     <label for="regPinCode">Pincode</label>
-                                    <!-- <div *ngIf="(regPinCode.touched || regPinCode.dirty) && regPinCode.invalid" class="invalid-feedback">
+                                    <div *ngIf="(regPinCode.touched || regPinCode.dirty) && regPinCode.invalid" class="invalid-feedback">
                                         <div *ngIf="regPinCode.errors?.required">{{errors.registeredAddress.pinCode.required}}</div>
                                         <div *ngIf="regPinCode.errors?.pattern">{{errors.registeredAddress.pinCode.invalid}}</div>
-                                    </div> -->
+                                    </div>
                                 </div>
                                 <div class="form-group last">
                                     <input type="text" class="form-control" id="city-state"
@@ -2249,11 +2250,12 @@
                                         name="stdNumber"
 					#stdNumber="ngModel"
                                         pattern="{{regexPattern.mobileNumber}}"
-                                        maxlength="3" fieldFill
+                                        maxlength="3" 
+                                        fieldFill
                                         class="form-control"
                                         id="caStd"
-				         required/>
-					<label for="caStd" *ngIf="stdNumber.value==''">STD</label>
+				        required/>
+					<label for="caStd">STD</label>
                                         <div *ngIf="stdNumber.touched  && stdNumber.invalid" class="invalid-feedback">
                                             <div *ngIf="stdNumber.errors?.required">{{errors.corporateAddress.stdNumber.required}}</div>
                                             <div *ngIf="stdNumber.errors?.pattern">{{errors.corporateAddress.stdNumber.invalid}}</div>
@@ -2282,10 +2284,11 @@
                                     required
                                     [(ngModel)]="qde.application.applicants[applicantIndex].corporateAddress.officeEmailId"
                                     name="officeEmailId" 
-				      fieldFill  email
+                                    fieldFill  
+                                    email
                                     #ofcEmail="ngModel"/>
                                             
-                                    <label for="ofc-email" *ngIf="ofcEmail.value==''">Office email ID</label>
+                                    <label for="ofc-email">Office email ID</label>
                                     <div *ngIf="ofcEmail.touched && ofcEmail.invalid" class="invalid-feedback">
                                         <div *ngIf="ofcEmail.errors?.required">{{errors.corporateAddress.ofcEmail.required}}</div>
                                         <div *ngIf="ofcEmail.errors?.email">{{errors.corporateAddress.ofcEmail.invalid}}</div>
@@ -2320,9 +2323,10 @@
                                     ngModel
                                     #revenue="ngModel"
                                     name="revenue"
-                                    pattern="^[1-9]\d{0,17}(\.\d{0,4})?$"
+                                    fieldFill
+                                    pattern="{{regexPattern.revenue}}"
                                     required />
-                                    <label for="revenue" *ngIf="revenue.value==''">Revenue</label>
+                                    <label for="revenue" >Revenue</label>
                                     <div *ngIf="revenue.touched && revenue.invalid" class="invalid-feedback">
                                         <div *ngIf="revenue.errors?.required">{{errors.revenueDetails.revenue.required}}</div>
                                         <div *ngIf="revenue.errors?.pattern">{{errors.revenueDetails.revenue.invalid}}</div>
@@ -2339,8 +2343,9 @@
                                     ngModel
                                     #annualNetincome="ngModel"
                                     name="annualNetIncome"
-                                    pattern="^[1-9]\d{0,17}(\.\d{0,4})?$">
-                                    <label for="net-income" *ngIf="annualNetincome.value==''">Annual Net Income</label>
+                                    fieldFill
+                                    pattern="{{regexPattern.revenue}}">
+                                    <label for="net-income" >Annual Net Income</label>
                                     <div *ngIf="annualNetincome.touched && annualNetincome.invalid" class="invalid-feedback">
                                         <div *ngIf="annualNetincome.errors?.required">{{errors.revenueDetails.annualNetincome.required}}</div>
                                         <div *ngIf="annualNetincome.errors?.pattern">{{errors.revenueDetails.annualNetincome.invalid}}</div>
@@ -2357,8 +2362,9 @@
                                     ngModel
                                     #grossTurnover="ngModel"
                                     name="grossTurnOver"
-                                    pattern="^[1-9]\d{0,17}(\.\d{0,4})?$">
-                                    <label for="gross-turnover" *ngIf="grossTurnover.value==''">Gross Turnover</label>
+                                    fieldFill
+                                    pattern="{{regexPattern.revenue}}">
+                                    <label for="gross-turnover">Gross Turnover</label>
                                     <div *ngIf="grossTurnover.touched && grossTurnover.invalid" class="invalid-feedback">
                                         <div *ngIf="grossTurnover.errors?.required">{{errors.revenueDetails.grossTurnover.required}}</div>
                                         <div *ngIf="grossTurnover.errors?.pattern">{{errors.revenueDetails.grossTurnover.invalid}}</div>
@@ -2378,6 +2384,7 @@
                     </div>
                 </div>
             </div>
+
             
 
             <div class="tab-content" [ngClass]="{'active': (activeTab == 15)}">
@@ -2429,22 +2436,32 @@
                                           <div class="form-group">
                                                 <input type="text" class="form-control"
                                                 id="annualFamilyIncome2"
+                                                required
                                                 [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.annualFamilyIncome"
                                                 #annualFamilyIncome2="ngModel"
                                                 name="annualFamilyIncome"
                                                 fieldFill
                                                 />
                                               <label for="annualFamilyIncome2">Annual Family Income</label>
+                                              <div *ngIf="annualFamilyIncome2.touched && annualFamilyIncome2.invalid" class="invalid-feedback">
+                                                <div *ngIf="annualFamilyIncome2.errors?.required">{{errors.incomeDetails.familyIncome.required}}</div>
+                                              
+                                            </div>
                                           </div>
                                             <div class="form-group">
                                                   <input type="text" class="form-control" 
                                                   id="monthlyExpenditure2"
+                                                  required
                                                   [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.monthlyExpenditure"
                                                   #monthlyExpenditure2="ngModel"
                                                   name="monthlyExpenditure"
                                                   fieldFill
                                                   />
                                                 <label for="monthlyExpenditure2" >Monthly Expenditure</label>
+                                                <div *ngIf="monthlyExpenditure2.touched && monthlyExpenditure2.invalid" class="invalid-feedback">
+                                                    <div *ngIf="monthlyExpenditure2.errors?.required">{{errors.incomeDetails.monthlyExpenditure.required}}</div>
+                                                  
+                                                </div>
                                             </div>
                                         </div>
                                       <div class="btn-wrap">
@@ -2493,12 +2510,17 @@
                                                         [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.monthlyIncome"
                                                         #monthlyIncome="ngModel"
                                                         fieldFill
+                                                        required
                                                         name="monthlyIncome">
                                                         <label for="monthlyIncome">Monthly income</label>
                                                         <span class="addon">
                                                             <span class="icon icon-inr"></span>
                                                         </span>
                                                         <span class="in-word"></span>
+                                                        <div *ngIf="monthlyIncome.touched && monthlyIncome.invalid" class="invalid-feedback">
+                                                            <div *ngIf="monthlyIncome.errors?.required">{{errors.incomeDetails.monthlyIncome.required}}</div>
+                                                          
+                                                        </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <span class="control-title">Assessment methodology</span>

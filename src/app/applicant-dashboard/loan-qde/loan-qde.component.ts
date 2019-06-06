@@ -42,45 +42,45 @@ export class LoanQdeComponent implements OnInit {
 
        loanAmount: {
          amount: {
-           required: "Loan Amount is required",
-           invalid: "Loan Amount is not valid"
+           required: "Loan Amount is Madatory",
+           invalid: "Invalid Loan Amount"
          },
          tenure: {
-           required: "Loan Tenure is required",
-           invalid: "Loan Tenure is not valid"
+           required: "Loan Tenure is Mandatory",
+           invalid: "Invalid Tenure"
          }
        },
 
         property: {
           propertyClss:{
-            required:"Property Clss is required",
+            required:"Property Clss is Mandatory",
             invalid:"Property Clss is not valid"
           },
           propertyArea:{
-            required:"Property Area is required",
+            required:"Property Area is Mandatory",
             invalid:"Property Area is not valid"
           },
           pinCode: {
-            required: "Property Pincode is required",
+            required: "Property Pincode is Mandatory",
             invalid: "Property Pincode is not valid"
          },
           addressLineOne: {
-            required: "Property Address line 1 is required",
+            required: "Property Address line 1 is Mandatory",
             invalid: "Property Address line 1 is not valid"
           },
           addressLineTwo: {
-            required: "Property Address line 2 is required",
+            required: "Property Address line 2 is Mandatory",
             invalid: "Property Address line 2 is not valid"
           },
           cityOrState: {
-            required: "City / State is required",
+            required: "City / State is Mandatory",
             invalid: "City / State Income is not valid"
           }
         },
 
        existingLoans: {
            monthlyEmi: {
-             required: "Monthly EMI is required",
+             required: "Monthly EMI is mandatory",
              invalid: "Monthly EMI is not valid"
            }
        },
@@ -90,7 +90,7 @@ export class LoanQdeComponent implements OnInit {
     amount: "^[0-9]{0,17}\.[0-9]{1,4}?$",
     name: "/^[a-zA-Z ]*$/",
     pinCode: "^[1-9][0-9]{5}$",
-    address : "^[0-9A-Za-z, _&'#\s]+$",
+    address : "^[0-9A-Za-z, _&'/#]+$",
     tenure: "^[0-9]{1,2}$",
   }
   // regexPattern = {

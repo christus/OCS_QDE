@@ -28,99 +28,99 @@ export class ApplicantQdeComponent implements OnInit {
   errors = {
 
     pan: {
-      required: "PAN number is required",
+      required: "PAN number is mandatory",
       length: "PAN number must be at least 10 characters",
-      invalid: "PAN number is not valid"
+      invalid: "Invalid PAN Number"
     },
 
     personalDetails: {
       firstName: {
-        required: "First Name is required",
-        invalid: "First Name is not valid"
+        required: "First Name is mandatory",
+        invalid: "Number and Special Characters not allowed"
       },
       middleName: {
-        invalid: "Middle Name is not valid"
+        invalid: "Number and Special Characters not allowed"
       },
       lastName: {
-        required: "Last Name is required",
-        invalid: "Last Name is not valid"
+        required: "Last Name is mandatory",
+        invalid: "Number and Special Characters not allowed"
       }
     },
 
     contactDetails: {
       preferedEmail: {
-        required: "Preferred Email Id is required",
-        invalid: "Preferred Email Id is not valid"
+        required: "Email Id is mandatory",
+        invalid: "Invalid Email ID"
       },
       alternateEmail: {
-        invalid: "Alternate Email Id is not valid"
+        invalid: "Invalid Email ID"
       },
       prefferedMobile: {
-        required: "Preferred Mobile Number is required",
-        invalid: "Preferred Mobile Number is not valid"
+        required: "10 digit mobile number is mandatory",
+        invalid: "Invalid mobile number/Alphabets and Special Characters not allowed"
       },
       alternateMobile: {
-        invalid: "Alternate Mobile Number is not valid"
+        invalid: "Invalid mobile number/Alphabets and Special Characters not allowed"
       },
       stdCode: {
-        required: "Std Code is required",
-        invalid: "Std Code is not valid"
+        required: "Std Code is mandatory",
+        invalid: "Invalid STD code"
       },
       alternateResidenceNumberStd1:{
-        invalid: "Std code is not valid"
+        invalid: "Invalid STD code"
       },
       residenceNumber: {
-        required: "Residence number is required",
-        invalid: "Residence number is not valid"
+        required: "Residence number is mandatory",
+        invalid: "Invalid Residence number/Alphabets and Special Characters not allowed"
       },
       alternateResidenceNumber1:{
-        invalid:"Residence number is not valid"
+        invalid:"Invalid Residence number/Alphabets and Special Characters not allowed"
       }
     },
 
     commAddress: {
       address1: {
-        required: "Address Line 1 is required",
-        invalid: "Address Line 1 is not valid"
+        required: "Address Line 1 is mandatory",
+        invalid: "Incomplete address"
       },
       address2: {
-        required: "Address Line 2 is required",
-        invalid: "Address Line 2 is not valid"
+        required: "Address Line 2 is mandatory",
+        invalid: "Incomplete address"
       },
       pinCode: {
-        required: "Pincode is required",
-        invalid: "Pincode is not valid",
-        minlength:"Pincode should be 6 digits"
+        required: "Pincode is mandatory",
+        invalid: "Invalid/Incomplete Pincode",
+       
       },
       stateOrCity: {
-        required: "State Name / City Name is required",
+        required: "State Name / City Name is mandatory",
         invalid: "State Name / City Name is not valid"
       }
     },
 
     maritialStatus: {
       spouseName: {
-        required: "Spouse Name is required",
-        invalid: "Spouse Name is not valid"
+        required: "Spouse Name is mandatory",
+        invalid: "Number and Special Characters not allowed"
       },
       salaryAmount: {
-        required: "Salary Amount is required",
-        invalid: "Salary Amount is not valid"
+        required: "Salary Amount is mandatory",
+        invalid: "Alphabets and and Special Characters not allowed"
       }
     },
 
     familyDetails: {
       fatherName:{
-        required:"Father's Name is required",
-        invalid: "Father's Name is not valid"
+        required: "Father's Name is mandatory",
+        invalid: "Number and Special Characters not allowed"
       },
       motherName:{
-        required:"Mother's Name is required",
-        invalid: "Mother's Name is not valid"
+        required: "Mother's Name is mandatory",
+        invalid: "Number and Special Characters not allowed"
       },
       motherMaiden:{
-        required:"Mother's Maiden Name is required",
-        invalid: "Mother's Maiden Name is not valid"
+        required: "Mother's Maiden Name is mandatory",
+        invalid: "Number and Special Characters not allowed"
       }
     },
 
@@ -130,125 +130,130 @@ export class ApplicantQdeComponent implements OnInit {
 
     occupationDetails : {
       companyDetails: {
-        required: "Company Name is required",
+        required: "Company Name is mandatory",
         invalid: "Company Name is not valid"
       },
       currentExp: {
-        required: "Current Experience is required",
+        required: "Current Experience is mandatory",
         invalid: "Current Experience is not valid"
       },
       totalExp: {
-        required: "Total Experience is required",
+        required: "Total Experience is mandatory",
         invalid: "Total Experience is not valid"
       }
     },
 
     officialCorrespondence: {
       address1: {
-        required: "Office address line1 is required",
-        invalid: "Office address line1 is not valid"
+        required: "Office address line1 is mandatory",
+        invalid: "Incomplete address"
       },
       address2: {
-        required: "Office address line2 is required",
-        invalid: "Office address line2 is not valid"
+        required: "Office address line2 is mandatory",
+        invalid: "Incomplete address"
       },
       pinCode: {
-        required: "Pincode is required",
-        invalid: "Pincode is not valid",
-        minlength:"Pincode should be 6 digits"
+        required: "Pincode is mandatory",
+        invalid: "Invalid/Incomplete Pincode"
       },
       landMark: {
         invalid: "Land mark is not valid"
       },
       stateOrCity: {
-        required: "State Name / City Name is required",
+        required: "State Name / City Name is mandatory",
         invalid: "State Name / City Name is not valid"
       },
       stdCode: {
-        required: "Std Code is required"
+        required: "Std Code is mandatory",
+        invalid: "Invalid Std Code"
       },
       phoneNumber: {
-        required: "Phone Number is required"
+        required: "Phone Number is mandatory",
+        invalid: "Invalid Phone Number"
       },
       email: {
-        required: "Office Email Id is required",
-        invalid: "Office Email Id is not valid"
+        required: "Office Email Id is mandatory",
+        invalid: "Invalid Email Id"
       }
     },
     
     incomeDetails:{
       familyIncome:{
-        required: "Annual family Income is required",
+        required: "Annual family Income is mandatory",
       },
       monthlyExpenditure:{
-        required:"Monthly Expenditure is required"
+        required:"Monthly Expenditure is mandatory"
       },
       monthlyIncome:{
-        required:"Monthly Income is required"
+        required:"Monthly Income is mandatory"
       }
     },
 
     organizationDetails: {
       orgName: {
-        required: "Organization Name is required",
-        invalid: "Organization Name is not valid"
+        required: "Organization Name is mandatory",
+        invalid: "Invalid Organization Name"
       }
     },
     registeredAddress: {
       address : {
-        required: "Registered Address is required",
+        required: "Registered Address is mandatory",
         invalid: "Registered Address is not valid"
       },
       landMark: {
         invalid: "Land mark is not valid"
-      },pinCode: {
-        required: "Pincode is required",
-        invalid: "Pincode is not valid",
-        minlength:"Pincode should be 6 digits"
-      },stateOrCity: {
-        required: "State Name / City Name is required",
+      },
+      pinCode: {
+        required: "Pincode is mandatory",
+        invalid: "Invalid/Incomplete Pincode"
+      },
+      stateOrCity: {
+        required: "State Name / City Name is mandatory",
         invalid: "State Name / City Name is not valid"
       }
     },
     corporateAddress: {
-      address : {
-        required: "Corporate Address is required",
-        invalid: "Corporate Address is not valid"
+      address: {
+        required: "Corporate Address is mandatory",
+        invalid: "Invalid address"
       },
       landMark: {
-        invalid: "Land mark is not valid"
-      },pinCode: {
-        required: "Pincode is required",
-        invalid: "Pincode is not valid",
-        minlength:"Pincode should be 6 digits"
-      },stateOrCity: {
-        required: "State Name / City Name is required",
+        invalid: "Invalid Landmark"
+      },
+      pinCode: {
+        required: "Pincode is mandatory",
+        invalid: "Invalid/Incomplete Pincode"
+      },
+      stateOrCity: {
+        required: "State Name / City Name is mandatory",
         invalid: "State Name / City Name is not valid"
-      },stdNumber:{
-        required:"Std is required",
-        invalid:"Sted is not valid"
-      },phoneNumber:{
-        required:"Phone number is required",
-        invalid:"Phone number is not valid"
+      },
+      stdNumber:{
+        required:"Std Code is mandatory",
+        invalid:"Invalid Std Code"
+      },
+      phoneNumber:{
+        required:"Phone number is mandatory",
+        invalid:"Invalid Phone number"
       },
 
       ofcEmail:{
-        required:"Office Email is required",
-        invalid:"Office Email is not valid"
+        required:"Office Email is mandatory",
+        invalid:"Invalid Email"
       }
     },
     revenueDetails: {
       revenue:{
-        required: "revenue is required",
+        required: "revenue is mandatory",
         invalid: "revenue is not valid"
       },
       annualNetincome:{
-        required:"Annual Net Income is required",
-        invalid:" Annual Net Income is not valid"
+        required:"Annual Net Income is mandatory",
+        invalid:"Invalid Annual Net Income"
       },
       grossTurnover:{
-        required: "Gross Turnover is required",
-        invalid: "Gross Turnover is not valid"
+        required: "Gross Turnover is mandatory",
+        invalid: "Invalid Gross Turnover"
       }
       
     }
@@ -257,7 +262,7 @@ export class ApplicantQdeComponent implements OnInit {
   regexPattern = {
     mobileNumber: "^[0-9]*$",
     name: "^[A-Za-z, ]+$",
-    address : "^[0-9A-Za-z, _&'#]+$",
+    address : "^[0-9A-Za-z, _&'/#]+$",
     // cityState:"^[0-9A-Za-z, &'#]$",
     pinCode: "^[1-9][0-9]{5}$",
     pan:"[A-Z]{5}[0-9]{4}[A-Z]{1}",
