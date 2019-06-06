@@ -384,8 +384,8 @@
                                                 <div class="bs-radio" *ngFor="let g of genders">
                                                     <input  type="radio"
                                                             name="gender"
-                                                            [id]="key"
-                                                            [value]="value"
+                                                            [id]="g.key"
+                                                            [value]="g.value"
                                                             [checked]="qde.application.applicants[applicantIndex].personalDetails.gender == g.value"
                                                             [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.gender"
                                                             (change)="submitGenderDetails(genderForm, pdSlider2)" />
@@ -441,9 +441,9 @@
                                                             textField="key"
                                                             valueField="value"
                                                             name="day"
-                                                            nick="date"
-                                                            #qualification
-                                                            (selectionChange)="selectValueChanged($event, qualification.hostElement)"
+                                                            nick="personalDetails.day"
+                                                            #personalDetails
+                                                            (selectionChange)="selectValueChanged($event, personsalDetails.hostElement)"
                                                             [(ngModel)]="dob.day">
                                                             </kendo-dropdownlist>
                                                         </div>
@@ -454,9 +454,9 @@
                                                             textField="key"
                                                             valueField="value"
                                                             name="month"
-                                                            nick="date"
-                                                            #qualification
-                                                            (selectionChange)="selectValueChanged($event, qualification.hostElement)"
+                                                            nick="personalDetails.month"
+                                                            #personalDetails
+                                                            (selectionChange)="selectValueChanged($event, personalDetails.hostElement)"
                                                             [(ngModel)]="dob.month">
                                                             </kendo-dropdownlist>
                                                         </div>
@@ -467,9 +467,9 @@
                                                             textField="key"
                                                             valueField="value"
                                                             name="year"
-                                                            nick="date"
-                                                            #qualification
-                                                            (selectionChange)="selectValueChanged($event, qualification.hostElement)"
+                                                            nick="personalDetails.year"
+                                                            #personalDetails
+                                                            (selectionChange)="selectValueChanged($event, personalDetails.hostElement)"
                                                             [(ngModel)]="dob.year">
                                                             </kendo-dropdownlist>
                                                         </div>
@@ -491,6 +491,9 @@
                                                         <option value="5">Madras</option>
                                                         <option value="6">Madhya Pradesh</option>
                                                     </select>
+
+                                                    
+
                                                 </div>
                                             </div>
                                             <div class="btn-wrap">
@@ -752,7 +755,10 @@
                                       #commAddrresidentialStatus
                                       (selectionChange)="selectValueChanged($event, commAddrresidentialStatus.hostElement)"
                                       name="residentialStatus"
-                                      [(ngModel)]="selectedResidence">
+                                      nick="communicationAddress.residentialStatus"
+                                      (selectionChange)="selectValueChanged($event, communicationAddress.hostElement)"
+                                      [(ngModel)]="selectedResidence"
+                                      >
                                     </kendo-dropdownlist>
 
                                 </div>
@@ -907,9 +913,9 @@
                                     <div class="radio-wrap rounded-radio">
                                         <div class="bs-radio typ-normal">
                                             <input type="radio" 
-                                            [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.preferedMailingAddress"
                                             name="prefredMail"
-                                            value="1"
+                                            [value]="true"
+                                            [checked]="qde.application.applicants[applicantIndex].communicationAddress.preferedMailingAddress == true"
                                             fieldFill
                                             [checked]="qde.application.applicants[applicantIndex].communicationAddress.preferedMailingAddress == 1"
                                             id="current-add-mail" />
@@ -919,9 +925,9 @@
                                         </div>
                                         <div class="bs-radio typ-normal">
                                             <input type="radio"
-                                            [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.preferedMailingAddress"
-                                            name="prefredMail"
-                                            value="2"
+                                            name="prefredMail" 
+                                            [value]="false"
+                                            [checked]="qde.application.applicants[applicantIndex].communicationAddress.preferedMailingAddress == false"
                                             fieldFill
                                             [checked]="qde.application.applicants[applicantIndex].communicationAddress.preferedMailingAddress == 2"
                                             id="permanent-add-mail">
@@ -2011,7 +2017,7 @@
                                 </div>
                                 <div class="form-group typ-select">
                                     <span class="control-title">Date of Incorporation</span>
-                                    <select [(ngModel)]="dateOfIncorporation.day"
+                                    <!-- <select [(ngModel)]="dateOfIncorporation.day"
                                             name="day"
                                             required>
                                             <option *ngFor="let loop of counter(31);let i=index;"
@@ -2032,7 +2038,48 @@
                                         <option *ngFor="let loop of counter(100);let i=index;"
                                                 [ngClass]="{'select': dateOfIncorporation.year == i}"
                                                 [selected]="dateOfIncorporation.year == i">{{YYYY+i}}</option>
-                                    </select>
+                                    </select> -->
+
+                                    <div class="row">
+                                        <div class="col4">
+                                            <kendo-dropdownlist class="form-control"
+                                            [data]="days"
+                                            textField="key"
+                                            valueField="value"
+                                            name="day"
+                                            nick="dateOfIncorporation.day"
+                                            #dateOfIncorporation
+                                            (selectionChange)="selectValueChanged($event, dateOfIncorporation.hostElement)"
+                                            [(ngModel)]="dob.day">
+                                            </kendo-dropdownlist>
+                                        </div>
+
+                                        <div class="col4">
+                                            <kendo-dropdownlist class="form-control"
+                                            [data]="months"
+                                            textField="key"
+                                            valueField="value"
+                                            name="month"
+                                            nick="dateOfIncorporation.month"
+                                            #dateOfIncorporation
+                                            (selectionChange)="selectValueChanged($event, dateOfIncorporation.hostElement)"
+                                            [(ngModel)]="dob.month">
+                                            </kendo-dropdownlist>
+                                        </div>
+
+                                        <div class="col4">
+                                            <kendo-dropdownlist class="form-control"
+                                            [data]="years"
+                                            textField="key"
+                                            valueField="value"
+                                            name="year"
+                                            nick="dateOfIncorporation.year"
+                                            #dateOfIncorporation
+                                            (selectionChange)="selectValueChanged($event, dateOfIncorporation.hostElement)"
+                                            [(ngModel)]="dob.year">
+                                            </kendo-dropdownlist>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="form-group last">
                                     <span class="control-title">Constitution</span>
@@ -2121,7 +2168,7 @@
                                             #regPinCode="ngModel" 
                                             name="pincode"
                                             fieldFill
-					    minlength="6"
+					                        minlength="6"
                                             maxlength="6"
                                             (keyup)="onPinCodeChange($event, 'registeredAddress')" 
                                             pattern="{{regexPattern.pinCode}}">
@@ -2134,7 +2181,7 @@
                                 <div class="form-group last">
                                     <input type="text" class="form-control" id="city-state"
                                       required
-                                      [(ngModel)]="registeredAddressCityState"
+                                      [(ngModel)]="this.qde.application.applicants[this.applicantIndex].registeredAddress.cityState"
                                       #cityState="ngModel" 
                                       name="cityState"
                                       fieldFill
@@ -2228,7 +2275,7 @@
                                             class="form-control"
                                             id="city-state01" 
                                             required
-                                            [(ngModel)]="corporateAddressCityState"
+                                            [(ngModel)]="this.qde.application.applicants[this.applicantIndex].registeredAddress.cityState"
                                             #corpCityState="ngModel" 
                                             name="corpCityState"
                                             fieldFill
