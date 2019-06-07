@@ -75,7 +75,7 @@
                                 <form class="bs-form">
                                     <div class="form-wrap">
 
-                                        <div class="bs-radio typ-doc" *ngFor="let coApp of coApplicants;let i=index;">
+                                        <div class="bs-radio typ-doc" *ngFor="let coApp of getCoApplicants();let i=index;">
                                             <input  type="radio"
                                                     (change)="selectCoApplicant(coApp.applicantId)"
                                                     name="doc-upload"
@@ -138,7 +138,7 @@
                                                     <input  type="radio"
                                                             name="isIndividual"
                                                             id="individual"
-                                                            [(ngModel)]="qde.application.applicants[applicantIndex].isIndividual"
+                                                            [(ngModel)]="qde.application.applicants[coApplicantIndex].isIndividual"
                                                             (change)="changeIsIndividual(true, panSlider2)"  />
                                                     <label for="individual"><span>Individual</span></label>
                                                 </div>
@@ -146,7 +146,7 @@
                                                     <input  type="radio"
                                                             name="isIndividual"
                                                             id="non-individual"
-                                                            [(ngModel)]="qde.application.applicants[applicantIndex].isIndividual"
+                                                            [(ngModel)]="qde.application.applicants[coApplicantIndex].isIndividual"
                                                             (change)="changeIsIndividual(false, panSlider2)" />
                                                     <label for="non-individual"><span>Non-Individual</span></label>
                                                 </div>
@@ -162,7 +162,7 @@
                                                 <div class="form-group last" style="margin-bottom: 40px">
                                                     <input  type="text"
                                                             class="form-control"
-                                                            [(ngModel)]="qde.application.applicants[applicantIndex].pan.panNumber"
+                                                            [(ngModel)]="qde.application.applicants[coApplicantIndex].pan.panNumber"
                                                             id="pan-inpt"
                                                             minlength="10"
                                                             maxlength="10"
@@ -180,29 +180,26 @@
                                                 </div>
                                                 <div class="form-group">
                                                   <span class="control-title">Document Type</span>
-                                                  <!-- <select name="docType" 
-                                                  [(ngModel)]="qde.application.applicants[applicantIndex].pan.docType"
-                                                  name="docType" required>
-                                                   <option value="1">Aadhar</option>
-                                                   <option value="2">Driving Lincence</option>
-                                                   <option value="3">Passport</option>
-                                                  </select> -->
-                                                  <kendo-dropdownlist name="docType" 
-                                                  [(ngModel)]="qde.application.applicants[applicantIndex].pan.docType"
-                                                  name="docType" required>
-                                                  </kendo-dropdownlist>
+                                                  <kendo-dropdownlist class="form-control"
+                                                  [data]="docType" 
+                                                  textField="key"
+                                                  valueField="value"
+                                                  name="docType"
+                                                  [(ngModel)]="selectedDocType"
+                                                  >
+                                                </kendo-dropdownlist>
                                               </div>
                                               <div class="form-group">
-                                                  <input type="text" class="form-control"
-                                                  [(ngModel)]="qde.application.applicants[applicantIndex].pan.docNumber"
-                                                  id="docNumber"
-                                                  name="docNumber"
-                                                  #docNumber="ngModel"
-                                                  fieldFill
-                                                   />
-                                                <label for="docNumber" >Document Number</label>
-                                                <!-- <image-upload [url]="imageUrl" [headers]="myHeaders"></image-upload> -->
-                                            </div>
+                                                <input type="text" class="form-control"
+                                                [(ngModel)]="qde.application.applicants[coApplicantIndex].pan.docNumber"
+                                                id="docNumber"
+                                                name="docNumber"
+                                                #docNumber="ngModel"
+                                                fieldFill
+                                                 />
+                                                <label for="docNumber" *ngIf="docNumber.value == ''" >Document Number</label>
+                                              <!-- <image-upload [url]="imageUrl" [headers]="myHeaders"></image-upload> -->
+                                                </div>
                                           </div>
                                             <div class="btn-wrap">
                                                   <button type="submit"
@@ -211,7 +208,6 @@
                                                           [disabled]="!panNumberForm.valid">Next
                                                   </button>
                                             </div>
-  
                                         </form>
                                     </div>
                                     <div class="swiper-slide">
@@ -315,10 +311,10 @@
                                               <div class="form-wrap">
                                                   <div class="form-group">
                                                       <span class="control-title">Title</span>
-      <!--                                                 <select [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.title" name="title" required>
+      <!--                                                 <select [(ngModel)]="qde.application.applicants[coApplicantIndex].personalDetails.title" name="title" required>
                                                           <option *ngFor="let tit of titles"
-                                                                  [ngClass]="{'select': (tit.value == qde.application.applicants[applicantIndex].personalDetails.title)}"
-                                                                  [selected]="tit.value == qde.application.applicants[applicantIndex].personalDetails.title"
+                                                                  [ngClass]="{'select': (tit.value == qde.application.applicants[coApplicantIndex].personalDetails.title)}"
+                                                                  [selected]="tit.value == qde.application.applicants[coApplicantIndex].personalDetails.title"
                                                                   [value]="tit.value">{{tit.key}}</option>
                                                       </select> -->
   
@@ -338,7 +334,7 @@
                                                     <input type="text"
                                                           class="form-control"
                                                           id="name"
-                                                          [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.firstName"
+                                                          [(ngModel)]="qde.application.applicants[coApplicantIndex].personalDetails.firstName"
                                                           name="firstName" 
                                                           #firstName="ngModel" 
                                                                                                                   fieldFill 
@@ -355,7 +351,7 @@
                                                           class="form-control"
                                                           id="middleName"
                                                           name="middleName"
-                                                          [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.middleName"
+                                                          [(ngModel)]="qde.application.applicants[coApplicantIndex].personalDetails.middleName"
                                                           pattern="{{regexPattern.name}}"
                                                           fieldFill
                                                           #middleName="ngModel"
@@ -371,7 +367,7 @@
   
                                                     <input    type="text"
                                                               class="form-control" 
-                                                              [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.lastName" 
+                                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].personalDetails.lastName" 
                                                               name="lastName" 
                                                               #lastName="ngModel" 
                                                               id="lastName"
@@ -402,7 +398,7 @@
                                                               name="gender"
                                                               id="male"
                                                               value="1"
-                                                              [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.gender"
+                                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].personalDetails.gender"
                                                               (change)="submitGenderDetails(genderForm, pdSlider2)">
                                                       <label for="male"><span>Male</span></label>
                                                   </div>
@@ -411,7 +407,7 @@
                                                               name="gender"
                                                               id="female"
                                                               value="2"
-                                                              [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.gender"
+                                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].personalDetails.gender"
                                                               (change)="submitGenderDetails(genderForm, pdSlider2)">
                                                       <label for="female"><span>Female</span></label>
                                                   </div>
@@ -420,7 +416,7 @@
                                                               name="maleFemale"
                                                               id="thirdGender"
                                                               value="3"
-                                                              [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.gender"
+                                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].personalDetails.gender"
                                                               (change)="submitGenderDetails(genderForm, pdSlider2)">
                                                       <label for="thirdGender"><span>Third Gender</span></label>
                                                   </div>
@@ -434,7 +430,7 @@
                                               <div class="form-wrap">
                                                   <div class="form-group">
                                                       <span class="control-title">Qualification</span>
-  <!--                                                     <select [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.qualification" name="qualification" required>
+  <!--                                                     <select [(ngModel)]="qde.application.applicants[coApplicantIndex].personalDetails.qualification" name="qualification" required>
                                                           <option *ngFor="let qual of qualifications" [value]="qual.value">{{qual.key}}</option>
                                                       </select> -->
   
@@ -486,13 +482,13 @@
                                                   </div>
                                                   <div class="form-group">
                                                       <span class="control-title">Birth place</span>
-                                                      <select [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.birthPlace"
+                                                      <select [(ngModel)]="qde.application.applicants[coApplicantIndex].personalDetails.birthPlace"
                                                               name="birthPlace"
                                                               required>
                                                           <!-- <option value="1"
                                                                   *ngFor="let c of cities;let i=index;"
-                                                                  [ngClass]="{'select', qde.application.applicants[applicantIndex].personalDetails.birthPlace == i}"
-                                                                  [selected]="qde.application.applicants[applicantIndex].personalDetails.birthPlace == i">Pune</option> -->
+                                                                  [ngClass]="{'select', qde.application.applicants[coApplicantIndex].personalDetails.birthPlace == i}"
+                                                                  [selected]="qde.application.applicants[coApplicantIndex].personalDetails.birthPlace == i">Pune</option> -->
                                                           <option value="1">Pune</option>
                                                           <option value="2">Kolkota</option>
                                                           <option value="3">Mumbai</option>
@@ -543,7 +539,7 @@
                                               class="form-control"
                                               id="pref-email"
                                               data-validation-attr="email"
-                                              [(ngModel)]="qde.application.applicants[applicantIndex].contactDetails.preferredEmailId"
+                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].contactDetails.preferredEmailId"
                                               name="preferEmailId"
                                               #preferEmailId="ngModel"
                                               email
@@ -568,7 +564,7 @@
                                               class="form-control"
                                               id="alter-email"
                                               data-validation-attr="email01"
-                                              [(ngModel)]="qde.application.applicants[applicantIndex].contactDetails.alternateEmailId"
+                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].contactDetails.alternateEmailId"
                                               name="alternateEmailId"
                                               #alternateEmailId="ngModel"
                                               fieldFill
@@ -590,7 +586,7 @@
   
                                         <input type="tel" class="form-control" id="mob-no"
                                           maxlength="10" im-insert="true"
-                                          [(ngModel)]="qde.application.applicants[applicantIndex].contactDetails.mobileNumber"
+                                          [(ngModel)]="qde.application.applicants[coApplicantIndex].contactDetails.mobileNumber"
                                           name="mobileNumber"
                                           #mobileNumber="ngModel"
                                           pattern="{{regexPattern.mobileNumber}}"
@@ -617,7 +613,7 @@
   
                                         <input type="tel" class="form-control" id="alter-mob" data-validation-attr="mobileno01" 
                                           maxlength="10" im-insert="true"
-                                          [(ngModel)]="qde.application.applicants[applicantIndex].contactDetails.alternateMobileNumber"
+                                          [(ngModel)]="qde.application.applicants[coApplicantIndex].contactDetails.alternateMobileNumber"
                                           name="alternateMobileNumber"
                                           #altMobileNo="ngModel"
                                           fieldFill
@@ -754,13 +750,13 @@
                                   <div class="form-group">
                                       <span class="control-title">Residential status</span>
   
-  <!--                                     <select [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.residentialStatus"
+  <!--                                     <select [(ngModel)]="qde.application.applicants[coApplicantIndex].communicationAddress.residentialStatus"
                                               name="residentialStatus"
                                               required>
   
                                               <option *ngFor="let res of residences"
-                                                      [ngClass]="qde.application.applicants[applicantIndex].communicationAddress.residentialStatus == res"
-                                                      [selected]="qde.application.applicants[applicantIndex].communicationAddress.residentialStatus == res"
+                                                      [ngClass]="qde.application.applicants[coApplicantIndex].communicationAddress.residentialStatus == res"
+                                                      [selected]="qde.application.applicants[coApplicantIndex].communicationAddress.residentialStatus == res"
                                                       [value]="res.value">
                                                   {{res.key}}
                                               </option>
@@ -783,7 +779,7 @@
                                       <input  type="text"
                                               class="form-control"
                                               id="address1"
-                                              [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.addressLineOne"
+                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].communicationAddress.addressLineOne"
                                               pattern="{{regexPattern.address}}"
                                               name="addressLineOne"
                                               #address1="ngModel"
@@ -801,7 +797,7 @@
   
                                   <div class="form-group">
                                       <input type="text" class="form-control" id="address2"
-                                        [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.addressLineTwo"
+                                        [(ngModel)]="qde.application.applicants[coApplicantIndex].communicationAddress.addressLineTwo"
                                         pattern="{{regexPattern.address}}"
                                         name="addressLineTwo"
                                         #address2="ngModel"
@@ -817,7 +813,7 @@
   
                                   <div class="form-group">
                                       <input type="number" class="form-control" id="pincode" required
-                                        [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.zipcode"
+                                        [(ngModel)]="qde.application.applicants[coApplicantIndex].communicationAddress.zipcode"
                                         name="pinCode"
                                         #commPinCode="ngModel" 
                                         maxlength="6"
@@ -835,7 +831,7 @@
   
                                       <input type="text" class="form-control" id="cityState"
                                         required
-                                        [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.cityState"
+                                        [(ngModel)]="qde.application.applicants[coApplicantIndex].communicationAddress.cityState"
                                         name="cityState"
                                         #commCityState="ngModel"
                                         fieldFill                     
@@ -851,7 +847,7 @@
                                   </div>
                                   <div class="bs-checkbox typ-withForm">
                                       <input  type="checkbox"
-                                              [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.permanentAddress"
+                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].communicationAddress.permanentAddress"
                                               name="permanentAddress"
                                               id="permanentAddress"  >
                                       <label for="permanentAddress"><span>Current Address is Permanent Address</span></label>
@@ -864,7 +860,7 @@
                                               #pAddress1="ngModel"
                                               pattern="{{regexPattern.address}}"
                                               fieldFill
-                                              [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.addressLineOne"
+                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].permanentAddress.addressLineOne"
                                               required>
                                               <label for="per-address1">Address line 1</label>
                                               <div *ngIf="(pAddress1.touched || pAddress1.dirty) && pAddress1.invalid" class="invalid-feedback">
@@ -878,7 +874,7 @@
                                               #pAddress2="ngModel"
                                               fieldFill
                                               pattern="{{regexPattern.address}}"
-                                              [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.addressLineTwo"
+                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].permanentAddress.addressLineTwo"
                                               required/>
                                               <label for="per-address2">Address line 2</label>
                                               <div *ngIf="(pAddress2.touched || pAddress2.dirty) && pAddress2.invalid" class="invalid-feedback">
@@ -892,7 +888,7 @@
                                               #pZipcode="ngModel"
                                               (keyup)="onPinCodeChange($event, 'permanentAddress')" 
                                               fieldFill
-                                              [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.zipcode"
+                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].permanentAddress.zipcode"
                                               minlength="6"
                                               maxlength="6"
                                               pattern="{{regexPattern.pinCode}}"
@@ -909,7 +905,7 @@
                                               name="commCityState"
                                               #commCityState="ngModel" 
                                               fieldFill
-                                              [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.cityState">
+                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].permanentAddress.cityState">
                                               <label for="per-cityState">City/State</label>
                                           </div>
                                       </div>
@@ -919,7 +915,7 @@
                                       <div class="radio-wrap rounded-radio">
                                           <div class="bs-radio typ-normal">
                                               <input type="radio" 
-                                              [(ngModel)]="qde.application.applicants[applicantIndex].maritalStatus.earning"
+                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].maritalStatus.earning"
                                               name="prefredMail"
                                               value="0"
                                               #prefredMail="ngModel"
@@ -931,7 +927,7 @@
                                           </div>
                                           <div class="bs-radio typ-normal">
                                               <input type="radio"
-                                              [(ngModel)]="qde.application.applicants[applicantIndex].maritalStatus.earning"
+                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].maritalStatus.earning"
                                               name="prefredMail" 
                                               #prefredMail="ngModel"
                                               value="1"
@@ -947,14 +943,14 @@
                                       <input type="number"
                                               name="numberOfYearsInCurrentResidence"
                                               class="form-control"
-                                              [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.numberOfYearsInCurrentResidence"
+                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].communicationAddress.numberOfYearsInCurrentResidence"
                                               min=0
                                               max=90
                                               #numberOfYearsInCurrentResidence="ngModel"
                                               fieldFill
                                               (ngModelChange)="valuechange($event, 3)"
                                               required />
-                                      <ng5-slider [(value)]="qde.application.applicants[applicantIndex].communicationAddress.numberOfYearsInCurrentResidence" [options]="options"></ng5-slider>
+                                      <ng5-slider [(value)]="qde.application.applicants[coApplicantIndex].communicationAddress.numberOfYearsInCurrentResidence" [options]="options"></ng5-slider>
                                   </div>
                               </div>
                               <div class="btn-wrap">
@@ -1022,12 +1018,12 @@
                                             <div class="form-wrap">
                                                 <div class="form-group">
                                                     <span class="control-title">Marital Status</span>
-   <!--                                                  <select   [(ngModel)]="qde.application.applicants[applicantIndex].maritalStatus.status"
+   <!--                                                  <select   [(ngModel)]="qde.application.applicants[coApplicantIndex].maritalStatus.status"
                                                               name="maritalStatus"
                                                               required>
                                                       <option *ngFor="let mar of maritals"
-                                                              [ngClass]="{'select': qde.application.applicants[applicantIndex].maritalStatus.status == mar.key}"
-                                                              [selected]="qde.application.applicants[applicantIndex].maritalStatus.status == mar.key"
+                                                              [ngClass]="{'select': qde.application.applicants[coApplicantIndex].maritalStatus.status == mar.key}"
+                                                              [selected]="qde.application.applicants[coApplicantIndex].maritalStatus.status == mar.key"
                                                               [value]="mar.value">{{mar.key}}</option>
                                                     </select> -->
   
@@ -1058,12 +1054,12 @@
                                             <div class="form-wrap">
                                                 <div class="form-group">
                                                     <span class="control-title">Title</span>
-  <!--                                                   <select   [(ngModel)]="qde.application.applicants[applicantIndex].maritalStatus.spouseTitle"
+  <!--                                                   <select   [(ngModel)]="qde.application.applicants[coApplicantIndex].maritalStatus.spouseTitle"
                                                               name="spouseTitle"
                                                               required>
                                                       <option *ngFor="let tit of titles"
-                                                              [ngClass]="{'select': qde.application.applicants[applicantIndex].maritalStatus.spouseTitle == tit.value}"
-                                                              [selected]="qde.application.applicants[applicantIndex].maritalStatus.spouseTitle == tit.value"
+                                                              [ngClass]="{'select': qde.application.applicants[coApplicantIndex].maritalStatus.spouseTitle == tit.value}"
+                                                              [selected]="qde.application.applicants[coApplicantIndex].maritalStatus.spouseTitle == tit.value"
                                                               [value]="tit.value">{{tit.key}}
                                                       </option>
                                                     </select> -->
@@ -1082,7 +1078,7 @@
   
                                                     <input type="text"
                                                       class="form-control" 
-                                                      [(ngModel)]="qde.application.applicants[applicantIndex].maritalStatus.firstName"
+                                                      [(ngModel)]="qde.application.applicants[coApplicantIndex].maritalStatus.firstName"
                                                       #spouseName="ngModel"
                                                       name="firstName"
                                                       pattern="{{regexPattern.name}}"
@@ -1115,7 +1111,7 @@
                                             <div class="form-wrap">
                                                 <div class="bs-radio">
                                                     <input    type="radio"
-                                                              [(ngModel)]="qde.application.applicants[applicantIndex].maritalStatus.earning"
+                                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].maritalStatus.earning"
                                                               name="earning"
                                                               value="1"
                                                               id="earningYes"
@@ -1124,7 +1120,7 @@
                                                 </div>
                                                 <div class="bs-radio">
                                                     <input    type="radio"
-                                                              [(ngModel)]="qde.application.applicants[applicantIndex].maritalStatus.earning"
+                                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].maritalStatus.earning"
                                                               name="earning"
                                                               value="2"
                                                               id="earningNo"
@@ -1145,7 +1141,7 @@
                                                           class="form-control"
                                                           id="amount"
                                                           required
-                                                          [(ngModel)]="qde.application.applicants[applicantIndex].maritalStatus.amount"
+                                                          [(ngModel)]="qde.application.applicants[coApplicantIndex].maritalStatus.amount"
                                                           #amount="ngModel"
                                                           name="amount"
                                                           fieldFill
@@ -1233,9 +1229,9 @@
                                                           min=0
                                                           max=90
                                                           class="form-control"
-                                                          [(ngModel)]="qde.application.applicants[applicantIndex].familyDetails.numberOfDependents"
+                                                          [(ngModel)]="qde.application.applicants[coApplicantIndex].familyDetails.numberOfDependents"
                                                           (ngModelChange)="valuechange($event, 1)" />
-                                                  <ng5-slider [(value)]="qde.application.applicants[applicantIndex].familyDetails.numberOfDependents" [options]="options"></ng5-slider>
+                                                  <ng5-slider [(value)]="qde.application.applicants[coApplicantIndex].familyDetails.numberOfDependents" [options]="options"></ng5-slider>
                                               </div>
                                           </div>
                                           <div class="btn-wrap">
@@ -1255,11 +1251,11 @@
                                           <div class="form-wrap">
                                               <div class="form-group">
                                                   <span class="control-title">Title</span>
-    <!--                                               <select [(ngModel)]="qde.application.applicants[applicantIndex].familyDetails.fatherTitle"
+    <!--                                               <select [(ngModel)]="qde.application.applicants[coApplicantIndex].familyDetails.fatherTitle"
                                                           name="fatherTitle" required>
                                                       <option *ngFor="let tit of titles"
-                                                              [ngClass]="qde.application.applicants[applicantIndex].familyDetails.fatherTitle"
-                                                              [selected]="qde.application.applicants[applicantIndex].familyDetails.fatherTitle"
+                                                              [ngClass]="qde.application.applicants[coApplicantIndex].familyDetails.fatherTitle"
+                                                              [selected]="qde.application.applicants[coApplicantIndex].familyDetails.fatherTitle"
                                                               [value]="tit.value">{{tit.key}}
                                                       </option>
                                                   </select> -->
@@ -1278,7 +1274,7 @@
                                                           class="form-control"
                                                           id="father-name"
                                                           required
-                                                          [(ngModel)]="qde.application.applicants[applicantIndex].familyDetails.fatherName"
+                                                          [(ngModel)]="qde.application.applicants[coApplicantIndex].familyDetails.fatherName"
                                                           #fatherName="ngModel"
                                                           name="fatherName"
                                                           fieldFill
@@ -1291,12 +1287,12 @@
                                               </div>
                                               <div class="form-group">
                                                   <span class="control-title">Title</span>
-                                                  <!-- <select [(ngModel)]="qde.application.applicants[applicantIndex].familyDetails.motherTitle"
+                                                  <!-- <select [(ngModel)]="qde.application.applicants[coApplicantIndex].familyDetails.motherTitle"
                                                           name="motherTitle"
                                                           required>
                                                    <option *ngFor="let tit of titles"
-                                                              [ngClass]="{'select' : qde.application.applicants[applicantIndex].familyDetails.motherTitle == tit.value}"
-                                                              [selected]="qde.application.applicants[applicantIndex].familyDetails.motherTitle == tit.value"
+                                                              [ngClass]="{'select' : qde.application.applicants[coApplicantIndex].familyDetails.motherTitle == tit.value}"
+                                                              [selected]="qde.application.applicants[coApplicantIndex].familyDetails.motherTitle == tit.value"
                                                               [value]="tit.value">{{tit.key}}
                                                       </option> 
                                                       <option value="1">Volvo</option>
@@ -1318,7 +1314,7 @@
                                                           class="form-control"
                                                           id="mother-name"
                                                           required
-                                                          [(ngModel)]="qde.application.applicants[applicantIndex].familyDetails.motherName"
+                                                          [(ngModel)]="qde.application.applicants[coApplicantIndex].familyDetails.motherName"
                                                           #motherName="ngModel"
                                                           name="motherName"
                                                           fieldFill
@@ -1332,7 +1328,7 @@
                                               <div class="form-group">
                                                   <input type="text" class="form-control" id="maiden-name"
                                                           required
-                                                          [(ngModel)]="qde.application.applicants[applicantIndex].familyDetails.motherMaidenName"
+                                                          [(ngModel)]="qde.application.applicants[coApplicantIndex].familyDetails.motherMaidenName"
                                                           #motherMaiden="ngModel"
                                                           name="motherMaidenName"
                                                           fieldFill
@@ -1383,13 +1379,13 @@
                                   <div class="form-group">
                                       <span class="control-title">Religion</span>
     <!--                                   <select class="typ-religion"
-                                              [(ngModel)]="qde.application.applicants[applicantIndex].other.religion"
+                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].other.religion"
                                               name="religion"
                                               #religionSelect="ngModel"
                                               required>
                                           <option *ngFor="let rel of religions"
-                                                  [ngClass]="{'select': qde.application.applicants[applicantIndex].other.religion == rel.value}"
-                                                  [selected]="qde.application.applicants[applicantIndex].other.religion == rel.value"
+                                                  [ngClass]="{'select': qde.application.applicants[coApplicantIndex].other.religion == rel.value}"
+                                                  [selected]="qde.application.applicants[coApplicantIndex].other.religion == rel.value"
                                                   [value]="rel.value">{{rel.key}}
                                           </option>
                                       </select> -->
@@ -1410,12 +1406,12 @@
                                   </div>
                                   <div class="form-group">
                                       <span class="control-title">Category</span>
-  <!--                                     <select [(ngModel)]="qde.application.applicants[applicantIndex].other.category"
+  <!--                                     <select [(ngModel)]="qde.application.applicants[coApplicantIndex].other.category"
                                               name="category"
                                               required>
                                           <option *ngFor="let catg of categories"
-                                                  [ngClass]="{'select': qde.application.applicants[applicantIndex].other.category == catg.value}"
-                                                  [selected]="qde.application.applicants[applicantIndex].other.category == catg.value"
+                                                  [ngClass]="{'select': qde.application.applicants[coApplicantIndex].other.category == catg.value}"
+                                                  [selected]="qde.application.applicants[coApplicantIndex].other.category == catg.value"
                                                   [value]="catg.value">{{catg.key}}
                                           </option>
                                       </select> -->
@@ -1462,10 +1458,10 @@
                               <div class="form-wrap">
                                   <div class="form-group">
                                       <span class="control-title">Occupation type</span>
-  <!--                                     <select [(ngModel)]="qde.application.applicants[applicantIndex].occupation.occupationType" name="occupationType" required>
+  <!--                                     <select [(ngModel)]="qde.application.applicants[coApplicantIndex].occupation.occupationType" name="occupationType" required>
                                           <option *ngFor="let occu of occupations"
-                                                  [ngClass]="{'select': qde.application.applicants[applicantIndex].occupation.occupationType == occu.value}"
-                                                  [selected]="qde.application.applicants[applicantIndex].occupation.occupationType == occu.value"
+                                                  [ngClass]="{'select': qde.application.applicants[coApplicantIndex].occupation.occupationType == occu.value}"
+                                                  [selected]="qde.application.applicants[coApplicantIndex].occupation.occupationType == occu.value"
                                                   [value]="occu.value">{{occu.key}}</option>
                                       </select> -->
   
@@ -1482,7 +1478,7 @@
                                   <div class="form-group">
                                       <input type="text" class="form-control"
                                               required 
-                                              [(ngModel)]="qde.application.applicants[applicantIndex].occupation.companyName"
+                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].occupation.companyName"
                                               pattern="{{regexPattern.name}}" 
                                               name="companyName"
                                               #companyName="ngModel"
@@ -1503,14 +1499,14 @@
                                               name="numberOfYearsInCurrentCompany"
                                               id="no-yrs"
                                               class="form-control"
-                                              [(ngModel)]="qde.application.applicants[applicantIndex].occupation.numberOfYearsInCurrentCompany"
+                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].occupation.numberOfYearsInCurrentCompany"
                                               min=0
                                               max=90
                                               #numberOfYearsInCurrentCompany="ngModel"
                                               (ngModelChange)="valuechange($event, 2)"
                                               required />
   
-                                      <ng5-slider [(value)]="qde.application.applicants[applicantIndex].occupation.numberOfYearsInCurrentCompany"
+                                      <ng5-slider [(value)]="qde.application.applicants[coApplicantIndex].occupation.numberOfYearsInCurrentCompany"
                                                   [options]="options">
                                       </ng5-slider>
   
@@ -1524,14 +1520,14 @@
                                       <input type="number"
                                               name="totalExperienceYear"
                                               class="form-control"
-                                              [(ngModel)]="qde.application.applicants[applicantIndex].occupation.totalWorkExperience"
+                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].occupation.totalWorkExperience"
                                               min=0
                                               max=90
                                               #totalExperienceYear="ngModel"
                                               (ngModelChange)="valuechange($event, 3)"
                                               required />
   
-                                      <ng5-slider [(value)]="qde.application.applicants[applicantIndex].occupation.totalWorkExperience" [options]="options"></ng5-slider>
+                                      <ng5-slider [(value)]="qde.application.applicants[coApplicantIndex].occupation.totalWorkExperience" [options]="options"></ng5-slider>
   
                                       <div *ngIf="(totalExperienceYear.touched || totalExperienceYear.dirty) && totalExperienceYear.invalid" class="invalid-feedback">
                                         <div *ngIf="totalExperienceYear.errors?.required">Total work experience is required</div>
@@ -1575,7 +1571,7 @@
                                       <input  type="text"
                                               class="form-control"
                                               id="ofcAddOne"
-                                              [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.addressLineOne"
+                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].officialCorrespondence.addressLineOne"
                                               pattern="{{regexPattern.address}}"
                                               name="ofcA1"
                                               #ofcA1="ngModel"
@@ -1592,7 +1588,7 @@
                                   <div class="form-group">
                                       <input type="text" class="form-control"
                                         id="ofcAddTwo"
-                                        [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.addressLineTwo"
+                                        [(ngModel)]="qde.application.applicants[coApplicantIndex].officialCorrespondence.addressLineTwo"
                                         pattern="{{regexPattern.address}}"
                                         name="ofcA2"
                                         #ofcA2="ngModel"
@@ -1608,7 +1604,7 @@
                                   <div class="form-group typ-optional">
                                       <input type="text" class="form-control"
                                         id="offLandmark"
-                                        [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.landMark"
+                                        [(ngModel)]="qde.application.applicants[coApplicantIndex].officialCorrespondence.landMark"
                                         name="landMark"
                                         fieldFill
                                         pattern="{{regexPattern.address}}"
@@ -1624,7 +1620,7 @@
                                       <input type="text" class="form-control"
                                         id="offPincode"
                                         required
-                                        [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.zipcode"
+                                        [(ngModel)]="qde.application.applicants[coApplicantIndex].officialCorrespondence.zipcode"
                                         #pinCode="ngModel" 
                                         name="pinCode"
                                         minlength="6"
@@ -1644,7 +1640,7 @@
                                       <input type="text" class="form-control"
                                         id="offCityState"
                                         required
-                                        [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.city"
+                                        [(ngModel)]="qde.application.applicants[coApplicantIndex].officialCorrespondence.city"
                                         #offCityState="ngModel"
                                         name="cityState"
                                         fieldFill
@@ -1660,7 +1656,7 @@
                                       <div class="form-group">
                                           <input type="number" class="form-control" id="std03"
                                             required
-                                            [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.officeStd"
+                                            [(ngModel)]="qde.application.applicants[coApplicantIndex].officialCorrespondence.officeStd"
                                             #stdCode = "ngModel"
                                             name="stdCode"
                                             maxlength="3"
@@ -1681,7 +1677,7 @@
                                                   fieldFill
                                                   maxlength="8"
                                                   pattern="{{regexPattern.mobileNumber}}"
-                                                  [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.officeNumber" />
+                                                  [(ngModel)]="qde.application.applicants[coApplicantIndex].officialCorrespondence.officeNumber" />
                                           <label  for="res-no03">Office number</label>
   
                                           <div *ngIf="offStdNumber.touched && offStdNumber.invalid" class="invalid-feedback">
@@ -1693,7 +1689,7 @@
                                   <div class="form-group typ-optional">
                                       <input type="email" class="form-control" id="off-email"
                                         required
-                                        [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.officeEmailId"
+                                        [(ngModel)]="qde.application.applicants[coApplicantIndex].officialCorrespondence.officeEmailId"
                                         email
                                         #officeEmail = "ngModel"
                                         fieldFill
@@ -1768,7 +1764,7 @@
                                         <div class="form-group">
                                               <input type="text" class="form-control"
                                               id="annualFamilyIncome"
-                                              [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.annualFamilyIncome"
+                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.annualFamilyIncome"
                                               #annualFamilyIncome="ngModel"
                                               name="annualFamilyIncome"
                                               fieldFill
@@ -1782,7 +1778,7 @@
                                           <div class="form-group">
                                                 <input type="text" class="form-control" 
                                                 id="monthlyExpenditure"
-                                                [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.monthlyExpenditure"
+                                                [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.monthlyExpenditure"
                                                 #monthlyExpenditure="ngModel"
                                                 name="monthlyExpenditure"
                                                 fieldFill
@@ -1812,7 +1808,7 @@
                                                   <input  type="radio"
                                                           name="income-consider"
                                                           id="yes-consider"
-                                                          [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.incomeConsider"
+                                                          [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.incomeConsider"
                                                           [value]="true"
                                                           (change)="incomeDetailsYesNo(true, incomeSlider2)"
                                                           class="not-usual" />
@@ -1823,7 +1819,7 @@
                                                           name="income-consider"
                                                           id="no-consider"
                                                           class="not-usual"
-                                                          [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.incomeConsider"
+                                                          [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.incomeConsider"
                                                           [value]="false"
                                                           (change)="incomeDetailsYesNo(false, incomeSlider2)" />
                                                   <label for="no-consider"><span>No</span></label>
@@ -1837,7 +1833,7 @@
                                               <div class="form-wrap">
                                                   <div class="form-group inr">
                                                       <input type="text" class="form-control" id="app-monthly-income"
-                                                      [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.monthlyIncome"
+                                                      [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.monthlyIncome"
                                                       #monthlyIncome="ngModel"
                                                       fieldFill
                                                       name="monthlyIncome"
@@ -1851,7 +1847,7 @@
                                                   <div class="form-group">
                                                       <span class="control-title">Assessment methodology</span>
                                                       <!-- <select class="js-select" name="assessment"
-                                                      [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.assessmentMethodology"
+                                                      [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.assessmentMethodology"
                                                       #assessment="ngModel"
                                                       name="assessment">
                                                           <option value="1">Net Salary</option>
@@ -1866,7 +1862,7 @@
                                                           <option value="10">Assessed Income</option>
                                                       </select> -->
                                                       <kendo-dropdownlist name="assessment" 
-                                                      [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.assessmentMethodology"
+                                                      [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.assessmentMethodology"
                                                       name="assessment" required>
                                                       </kendo-dropdownlist>
                                                   </div>
@@ -1937,7 +1933,7 @@
                                               <div class="form-group last">
                                                   <input  type="text"
                                                           class="form-control"
-                                                          [(ngModel)]="qde.application.applicants[applicantIndex].pan.panNumber"
+                                                          [(ngModel)]="qde.application.applicants[coApplicantIndex].pan.panNumber"
                                                           id="pan-inpt2"
                                                           minlength="10"
                                                           maxlength="10"
@@ -1952,6 +1948,28 @@
                                                       <div *ngIf="pan2.errors?.pattern ? true : false">*PAN not valid</div>
                                                       <!-- <div *ngIf="pan2.errors?.minlength || pan2.errors?.maxlength">*PAN must be at least {{pan.errors.minlength.requiredLength}} characters</div> -->
                                                   </div>
+                                              </div>
+                                              <div class="form-group">
+                                                <span class="control-title">Document Type</span>
+                                                <kendo-dropdownlist class="form-control"
+                                                [data]="docType" 
+                                                textField="key"
+                                                valueField="value"
+                                                name="docType"
+                                                [(ngModel)]="selectedDocType"
+                                                >
+                                              </kendo-dropdownlist>
+                                            </div>
+                                            <div class="form-group">
+                                              <input type="text" class="form-control"
+                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].pan.docNumber"
+                                              id="docNumber2"
+                                              name="docNumber"
+                                              #docNumber="ngModel"
+                                              fieldFill
+                                               />
+                                              <label for="docNumber2" *ngIf="docNumber.value == ''" >Document Number</label>
+                                            <!-- <image-upload [url]="imageUrl" [headers]="myHeaders"></image-upload> -->
                                               </div>
                                           </div>
                                           <div class="btn-wrap">
@@ -1990,7 +2008,7 @@
                                   <div class="form-group">
                                       <input type="text" class="form-control" id="org-name" 
                                         pattern="{{regexPattern.name}}"
-                                        [(ngModel)]="qde.application.applicants[applicantIndex].organizationDetails.nameOfOrganization"
+                                        [(ngModel)]="qde.application.applicants[coApplicantIndex].organizationDetails.nameOfOrganization"
                                         #orgName="ngModel"
                                         name="orgName"
                                         fieldFill
@@ -2029,7 +2047,7 @@
                                   </div>
                                   <div class="form-group last">
                                       <span class="control-title">Constitution</span>
-                                      <!-- <select [(ngModel)]="qde.application.applicants[applicantIndex].organizationDetails.constitution"
+                                      <!-- <select [(ngModel)]="qde.application.applicants[coApplicantIndex].organizationDetails.constitution"
                                               name="constitution"
                                               required>
                                           <option value="Partnership">Partnership</option>
@@ -2073,7 +2091,7 @@
                               <div class="form-wrap">
                                   <div class="form-group">
                                       <input  type="text" class="form-control" id="reg-add"
-                                              [(ngModel)]="qde.application.applicants[applicantIndex].registeredAddress.registeredAddress"
+                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].registeredAddress.registeredAddress"
                                               pattern="{{regexPattern.address}}"
                                               name="regAdd"
                                               #regAdd="ngModel"
@@ -2092,7 +2110,7 @@
                                               name="landmark"
                                               #landmark01="ngModel"
                                               fieldFill
-                                              [(ngModel)]="qde.application.applicants[applicantIndex].registeredAddress.landMark"
+                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].registeredAddress.landMark"
                                               id="landmark" 
                                               pattern="{{regexPattern.address}}"/>
                                               
@@ -2107,7 +2125,7 @@
                                               class="form-control"
                                               id="regPinCode"
                                               required
-                                              [(ngModel)]="qde.application.applicants[applicantIndex].registeredAddress.zipcode"
+                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].registeredAddress.zipcode"
                                               #regPinCode="ngModel" 
                                               name="pincode"
                                               fieldFill
@@ -2162,7 +2180,7 @@
                               <div class="form-wrap">
                                   <div class="form-group">
                                       <input type="text" class="form-control" id="corp-add" 
-                                        [(ngModel)]="qde.application.applicants[applicantIndex].corporateAddress.corporateAddress"
+                                        [(ngModel)]="qde.application.applicants[coApplicantIndex].corporateAddress.corporateAddress"
                                         pattern="{{regexPattern.address}}"
                                         name="corpAddress"
                                         #corpAddress="ngModel"
@@ -2177,7 +2195,7 @@
                                   </div>
                                   <div class="form-group typ-optional">
                                       <input  type="text"
-                                              [(ngModel)]="qde.application.applicants[applicantIndex].corporateAddress.landMark"
+                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].corporateAddress.landMark"
                                               name="landmark"
                                               #landmark="ngModel"
                                               class="form-control"
@@ -2194,7 +2212,7 @@
                                       <input  type="text"
                                               class="form-control"
                                               id="pincode01" 
-                                              [(ngModel)]="qde.application.applicants[applicantIndex].corporateAddress.zipcode"
+                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].corporateAddress.zipcode"
                                               pattern="{{regexPattern.pinCode}}"
                                               name="pincode"
                                               minlength="6"
@@ -2271,7 +2289,7 @@
                                   <div class="form-group last">
                                       <input type="email" class="form-control" id="ofc-email"
                                               required
-                                              [(ngModel)]="qde.application.applicants[applicantIndex].corporateAddress.officeEmailId"
+                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].corporateAddress.officeEmailId"
                                               name="officeEmailId"
                                               #ofcEmail="ngModel"
                                               fieldFill
@@ -2423,7 +2441,7 @@
                                             <div class="form-group">
                                                   <input type="text" class="form-control"
                                                   id="annualFamilyIncome2"
-                                                  [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.annualFamilyIncome"
+                                                  [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.annualFamilyIncome"
                                                   #annualFamilyIncome2="ngModel"
                                                   name="annualFamilyIncome"
                                                   fieldFill
@@ -2433,7 +2451,7 @@
                                               <div class="form-group">
                                                     <input type="text" class="form-control" 
                                                     id="monthlyExpenditure2"
-                                                    [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.monthlyExpenditure"
+                                                    [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.monthlyExpenditure"
                                                     #monthlyExpenditure2="ngModel"
                                                     name="monthlyExpenditure"
                                                     fieldFill
@@ -2459,7 +2477,7 @@
                                                       <input  type="radio"
                                                               name="income-consider"
                                                               id="yes-consider"
-                                                              [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.incomeConsider"
+                                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.incomeConsider"
                                                               [value]="true"
                                                               (change)="incomeDetailsYesNo(true, incomeSlider4)"
                                                               class="not-usual" />
@@ -2470,7 +2488,7 @@
                                                               name="income-consider"
                                                               id="no-consider"
                                                               class="not-usual"
-                                                              [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.incomeConsider"
+                                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.incomeConsider"
                                                               [value]="false"
                                                               (change)="incomeDetailsYesNo(false, incomeSlider4)" />
                                                       <label for="no-consider"><span>No</span></label>
@@ -2484,7 +2502,7 @@
                                                   <div class="form-wrap">
                                                       <div class="form-group inr">
                                                           <input type="text" class="form-control" id="app-monthly-income"
-                                                          [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.monthlyIncome"
+                                                          [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.monthlyIncome"
                                                           #monthlyIncome="ngModel"
                                                           fieldFill
                                                           name="monthlyIncome"
@@ -2502,7 +2520,7 @@
                                                       <div class="form-group">
                                                           <span class="control-title">Assessment methodology</span>
                                                           <!-- <select class="js-select" name="assessment"
-                                                          [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.assessmentMethodology"
+                                                          [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.assessmentMethodology"
                                                           #assessment="ngModel"
                                                           name="assessment">
                                                               <option value="1">Net Salary</option>
@@ -2517,7 +2535,7 @@
                                                               <option value="10">Assessed Income</option>
                                                           </select> -->
                                                           <kendo-dropdownlist name="assessment" 
-                                                          [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.assessmentMethodology"
+                                                          [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.assessmentMethodology"
                                                           name="assessment1" required>
                                                           </kendo-dropdownlist>      
                                                       </div>

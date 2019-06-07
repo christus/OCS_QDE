@@ -17,6 +17,7 @@ export interface UserDetails {
 
 export class LeadsListComponent implements OnInit {
 
+  // Lead ID === Application ID
   userDetails: Array<UserDetails>;
 
   constructor(private service: QdeHttpService, private utilService: UtilService) {

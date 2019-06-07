@@ -22,11 +22,13 @@
                 <a routerLink="/applicant">Applicant Details</a>
             </li>
             <li routerLinkActive="active">
-                <a routerLink="/co-applicant">Co-Applicant Details</a>
+                <a *ngIf="applicationId == null">Co-Applicant Details</a>
+                <a [routerLink]="['/applicant', applicationId, '/co-applicant']" *ngIf="applicationId != null && coApplicantIndex == null">Co-Applicant Details</a>
+                <a [routerLink]="['/applicant', applicationId, '/co-applicant', coApplicantIndex]" *ngIf="applicationId != null && coApplicantIndex != null">Co-Applicant Details</a>
             </li>
             <li routerLinkActive="active">
-                <a *ngIf="applicantId == null">Loan Details</a>
-                <a [routerLink]="['/loan', applicantId]" *ngIf="applicantId != null">Loan Details</a>
+                <a *ngIf="applicationId == null">Loan Details</a>
+                <a [routerLink]="['/loan', applicationId]" *ngIf="applicationId != null">Loan Details</a>
             </li>
             <li routerLinkActive="active">
                 <a routerLink="/references">References</a>

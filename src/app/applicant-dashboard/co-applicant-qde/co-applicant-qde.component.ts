@@ -14,10 +14,11 @@ import { QdeService } from 'src/app/services/qde.service';
 
 import { CommonDataService } from '../../services/common-data.service';
 import { ItemsList } from '@ng-select/ng-select/ng-select/items-list';
+import { findLocaleData } from '@angular/common/src/i18n/locale_data_api';
 
 interface Item {
   key: string,
-  value: number
+  value: number | string
 }
 
 @Component({
@@ -27,9 +28,8 @@ interface Item {
 })
 export class CoApplicantQdeComponent implements OnInit {
 
-  private coApplicants: Array<Applicant> = [];
 
-  errors = {
+  private errors = {
 
     pan: {
       required: "PAN number is mandatory",
@@ -262,6 +262,7 @@ export class CoApplicantQdeComponent implements OnInit {
       
     }
   };
+
   regexPattern = {
     mobileNumber: "^[0-9]*$",
     name: "^[A-Za-z, ]+$",
@@ -317,9 +318,11 @@ export class CoApplicantQdeComponent implements OnInit {
   };
 
   private activeTab: number = 0;
-  private dob: {day: string, month: string, year: string} = { day: null, month: null, year: null };
-  private residenceNumber: {stdCode: string, phoneNumber: string} = {stdCode: "", phoneNumber: ""};
-  private alternateResidenceNumber: {stdCode: string, phoneNumber: string} = {stdCode: "", phoneNumber: ""};
+  private dob: {day: Item, month: Item, year: Item} = { day: {key: "DD", value: "DD"}, month: {key: "MM", value: "MM"}, year: {key: "YYYY", value: "YYYY"} };
+  private residenceNumberStdCode: string = "";
+  private residenceNumberPhoneNumber: string = "";
+  private alternateResidenceNumberStdCode: string = ""
+  private alternateResidenceNumberPhoneNumber: string = ""
   private addressCityState: string = "";
   private otherReligion: string = "";
   private dateOfIncorporation: {day: string, month: string, year: string} = {day: null, month: null, year: null};
@@ -330,31 +333,19 @@ export class CoApplicantQdeComponent implements OnInit {
   private commCityState:string = "";
   zipCityStateID:string = "";
 
-  @ViewChild('tabContents') private tabContents: ElementRef;
-  // @ViewChild(Select2Component) private select2: Select2Component;
-
-  // All Swiper Sliders
-  // Will be deprecated in next commit if not used
-  // @ViewChild('panSlider1') private panSlider1: ElementRef;
+  // Pan Swiper Sliders
   @ViewChild('panSlider2') private panSlider2: Swiper;
   @ViewChild('panSlider4') private panSlider4: Swiper;
-  // @ViewChild('pdSlider1') private pdSlider1: ElementRef;
-  // @ViewChild('pdSlider2') private pdSlider2: ElementRef;
-  // @ViewChild('maritalSlider1') private maritalSlider1: ElementRef;
-  // @ViewChild('maritalSlider2') private maritalSlider2: ElementRef;
-  // @ViewChild('familySlider1') private familySlider1: ElementRef;
-  // @ViewChild('familySlider2') private familySlider2: ElementRef;
 
   private isAlternateEmailId: boolean = false;
   private isAlternateMobileNumber: boolean = false;
   private isAlternateResidenceNumber: boolean = false;
   
   private applicantIndividual: boolean = true;
+  private YYYY: number = 1900;
 
-
-  private isIndividual:boolean = false;
-
-
+  // For Hide/Show tabs between Indi and Non indi
+  private applicantStatus:string = "" ;
 
   private fragments = [ 'dashboard',
                         'pan1',
@@ -375,10 +366,14 @@ export class CoApplicantQdeComponent implements OnInit {
                         'income2',
                       ];
 
-  applicantIndex: number;
+  private coApplicantIndex: number;
 
+  // Local Copy of Qde
   private qde: Qde;
 
+  //-------------------------------------------------
+  //          Lov Variables
+  //-------------------------------------------------
   private religions: Array<any>;
   private qualifications: Array<any>;
   private occupations: Array<any>;
@@ -390,6 +385,10 @@ export class CoApplicantQdeComponent implements OnInit {
   private categories: Array<any>;
   private genders: Array<any>;
   private constitutions: Array<any>;
+  private days: Array<Item>;
+  private months: Array<Item>;
+  private years: Array<Item>;
+  private assessmentMethodology: Array<any>;
   private selectedTitle: Item;
   private selectedReligions: Item;
   private selectedMaritialStatus: Item;
@@ -398,10 +397,17 @@ export class CoApplicantQdeComponent implements OnInit {
   private selectedResidence: Item;
   private selectedSpouseTitle: Item;
   private selectedFatherTitle: Item;
-  private selectedQualification: Item;
   private selectedMotherTitle: Item;
+  private selectedQualification: Item;
   private selectedConstitution: Item;
+  private selectedDocType: Item;
+  private selectedConstitutions: Item;
+  private docType: Array<any>;
+  private selectedAssesmentMethodology: Array<any>;
 
+  // Used when to whether its coming from create or edit
+  private panslide: boolean;
+  private panslide2: boolean;
 
   constructor(private renderer: Renderer2,
               private route: ActivatedRoute,
@@ -409,41 +415,48 @@ export class CoApplicantQdeComponent implements OnInit {
               private qdeHttp: QdeHttpService,
               private qdeService: QdeService,
               private cds:CommonDataService) {
-                this.cds.panslide.subscribe(val => {
-                  this.panslide = val;
-                });
 
-                this.cds.panslide2.subscribe(val => {
-                  this.panslide2 = val;
-                });
+    this.cds.panslide.subscribe(val => {
+      this.panslide = val;
+    });
 
-                this.qdeService.qdeSource.subscribe(val => {
-                  this.qde = val;
-                });
+    this.cds.panslide2.subscribe(val => {
+      this.panslide2 = val;
+    });
 
+    this.qdeService.qdeSource.subscribe(val => {
+      this.qde = val;
+    });
 
-                this.route.fragment.subscribe((fragment) => {
-                  let localFragment = fragment;
+    this.route.fragment.subscribe((fragment) => {
+      let localFragment = fragment;
 
-                  if(fragment == null) {
-                    localFragment = this.fragments[0];
-                  }
+      if(fragment == null) {
+        localFragment = this.fragments[0];
+      }
 
-                  // Replace Fragments in url
-                  if( this.fragments.includes(localFragment) &&
-                      this.panslide == false &&
-                      this.panslide2 == false) {
+      // Replace Fragments in url
+      if( this.fragments.includes(localFragment) &&
+          this.panslide == false &&
+          this.panslide2 == false) {
 
-                    this.activeTab = this.fragments.indexOf(localFragment);
+        // if(this.qde.application.applicants[this.coApplicantIndex].isIndividual == true) {
+        //   if(localFragment == 'pan1') {
+        //     this.tabSwitch(0);
+        //     this.panSlider2.setIndex(1);
+        //   }
+        // } else if(this.qde.application.applicants[this.coApplicantIndex].isIndividual == false) {
+        //   if(localFragment == 'pan2') {
+        //     this.tabSwitch(10);
+        //   }
+        // }
 
-                    this.applicantIndividual = (this.activeTab >= 11) ? false: true; 
-                  }
-                });
-                console.log('__________');
+        this.activeTab = this.fragments.indexOf(localFragment);
+        this.tabSwitch(this.activeTab);
+        this.applicantIndividual = (this.activeTab >= 10) ? false: true;
+      }
+    });
   }
-  
-  private panslide: boolean;
-  private panslide2: boolean;
 
   ngOnInit() {
 
@@ -462,6 +475,28 @@ export class CoApplicantQdeComponent implements OnInit {
       this.categories = lov.LOVS.category;
       this.genders = lov.LOVS.gender;
       this.constitutions = lov.LOVS.constitution;
+      this.assessmentMethodology = lov.LOVS.assessment_methodology;
+
+      // List of Values for Date
+      this.days = Array.from(Array(31).keys()).map((val, index) => {
+        let v = ((index+1) < 10) ? "0"+(index+1) : (index+1)+"";
+        return {key: v, value: v};
+      });
+      this.days.unshift({key: 'DD', value: 'DD'});
+
+      this.months = Array.from(Array(12).keys()).map((val, index) => {
+        let v = ((index+1) < 10) ? "0"+(index+1) : (index+1)+"";
+        return {key: v, value: v};
+      });
+      this.months.unshift({key: 'MM', value: 'MM'});
+
+      this.years = Array.from(Array(100).keys()).map((val, index) => {
+        let v = (this.YYYY+index)+"";
+        return {key: v, value: v};
+      });
+      this.years.unshift({key: 'YYYY', value: 'YYYY'});
+
+      this.docType = [{"key": "Aadhar", "value": "1"},{"key": "Driving License", "value": "2"},{"key": "passport", "value": "3"}];
 
       this.selectedTitle = this.titles[0];
       this.selectedReligions = this.religions[0];
@@ -471,119 +506,42 @@ export class CoApplicantQdeComponent implements OnInit {
       this.selectedResidence = this.residences[0];
       this.selectedSpouseTitle = this.titles[0];
       this.selectedFatherTitle = this.titles[0];
+      this.selectedMotherTitle = this.titles[0];
       this.selectedQualification = this.qualifications[0];
+      this.selectedConstitution = this.constitutions[0];
+      this.selectedDocType = this.docType[0];
+      this.selectedConstitutions = this.constitutions[0];
+      this.selectedAssesmentMethodology = this.assessmentMethodology[0];
     }
 
     console.log("params: ", this.route.snapshot.params);
 
-    // Create New Entry
-    this.applicantIndex = 0;
+    // Create New Entry as 0 will be Applicant
+    this.coApplicantIndex = 1;
 
-    // Write code to get data(LOV) and assign applicantIndex if its new or to update.
-    console.log("Applicant Code: ", this.applicantIndex);
-
-    // Check Whether there is qde data to be filled or else Initialize Qde
     this.route.params.subscribe((params) => {
 
+      this.cds.changeApplicationId(params.applicationId);
+
       console.log("params ", params);
+
       // Make an http request to get the required qde data and set using setQde
-      if(params.applicantId != undefined && params.applicantId != null && params.applicantId) {
+      if(params.applicationId != null) {
 
-        this.qdeHttp.dummyGetApi(params.applicantId).subscribe(response => {
-          var result = JSON.parse(response["ProcessVariables"]["response"]);
-          console.log("Get ", result);
+        // If not coming from leads dashboard
+        if(this.qdeService.getQde().application.applicationId == "" || this.qdeService.getQde().application.applicationId == null) {
+          this.qdeHttp.getQdeData(params.applicationId).subscribe(response => {
+            var result = JSON.parse(response["ProcessVariables"]["response"]);
+            console.log("Get ", result);
 
-          // Index of CoApplicant in QDE
-          this.applicantIndex = this.qde.application.applicants.findIndex(val => val.applicantId == params.applicantId);
-
-          this.qdeService.setQde(result);
-
-          console.log('this is coming first', this.panslide, this.qde.application.applicants[this.applicantIndex].isIndividual);
-          // Incoming from create Individual Pan
-          if(this.panslide == true && this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
-            this.panSlider2.setIndex(2);
-            console.log("test", this.panslide2);
-          }
-          // Incoming from create Non Individual Pan
-          else if(this.panslide2 == true && this.qde.application.applicants[this.applicantIndex].isIndividual == false) {
-            this.tabSwitch(11);
-          } else if(this.panslide == false && this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
-            this.tabSwitch(0);
-            this.panSlider2.setIndex(1);
-          } else if(this.panslide2 == false && this.qde.application.applicants[this.applicantIndex].isIndividual == false) {
-            this.tabSwitch(11);
-          }
-
-          this.cds.changePanSlide(false);
-          this.cds.changePanSlide2(false);
-
-       });
-      } else {
-        this.qdeHttp.dummyGetApi(params.applicantId).subscribe(response => {
-          var result = JSON.parse(response["ProcessVariables"]["response"]);
-
-//-----------------------------------------
-          // DONT SETQDE HERE BECAUSE API DOESNT GIVE WHOLE DATA
-//-----------------------------------------
-          // Filter CoApplicants Only
-          this.coApplicants = result.application
-                                    .applicants
-                                    .filter(val => val.isMainApplicant == false);
-    
-          console.log("coApplicants: ", this.coApplicants);
-        });
-
+            this.qdeService.setQde(result);
+            this.prefillData(params);
+          });
+        } else {
+          this.prefillData(params);
+        }
       }
-
-      console.log("QDE" , this.qde);
     });
-
-
-    // Some Initialization for HTML
-    // this.qde.application.applicants[this.applicantIndex].isMainApplicant = true;
-    if( this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split("-")[0] == "" ||
-        this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split("-")[0] == undefined) {
-      this.dob.day = this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split("-")[0];
-    }
-
-    if( this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split("-")[1] == "" ||
-        this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split("-")[1] == undefined) {
-      this.dob.month = this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split("-")[1];
-    }
-
-    if( this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split("-")[2] == "" ||
-        this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split("-")[2] == undefined) {
-      this.dob.year = this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split("-")[2];
-    }
-
-    this.residenceNumber.stdCode = this.qde.application.applicants[this.applicantIndex].contactDetails.residenceNumber != "" ? this.qde.application.applicants[this.applicantIndex].contactDetails.residenceNumber.split("-")[0] : "";
-    this.residenceNumber.phoneNumber = this.qde.application.applicants[this.applicantIndex].contactDetails.residenceNumber != "" ? this.qde.application.applicants[this.applicantIndex].contactDetails.residenceNumber.split("-")[1] : "";
-
-    this.alternateResidenceNumber.stdCode = this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber != "" ? this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber.split("-")[0] : "";
-    this.alternateResidenceNumber.phoneNumber = this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber != "" ? this.qde.application.applicants[this.applicantIndex].contactDetails.residenceNumber.split("-")[1] : "";
-    this.addressCityState = this.qde.application.applicants[this.applicantIndex].communicationAddress.city + '/'+ this.qde.application.applicants[this.applicantIndex].communicationAddress.state;
-
-    this.otherReligion = this.qde.application.applicants[this.applicantIndex].other.religion == '6' ? this.qde.application.applicants[this.applicantIndex].other.religion : '';
-
-    if( this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[0] == "" ||
-        this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[0] == undefined) {
-      this.dateOfIncorporation.day = this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[0];
-    }
-
-    if( this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[1] == "" ||
-        this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[1] == undefined) {
-      this.dateOfIncorporation.month = this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[1];
-    }
-
-    if( this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[2] == "" ||
-        this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[2] == undefined) {
-      this.dateOfIncorporation.year = this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[2];
-    }
-
-    this.registeredAddressCityState = this.qde.application.applicants[this.applicantIndex].registeredAddress.city +'/'+ this.qde.application.applicants[this.applicantIndex].registeredAddress.state;
-    this.corporateAddressCityState = this.qde.application.applicants[this.applicantIndex].corporateAddress.city +'-'+ this.qde.application.applicants[this.applicantIndex].corporateAddress.state;
-    this.corporateAddressStdNumber.stdCode = this.qde.application.applicants[this.applicantIndex].corporateAddress.stdNumber != "" ? this.qde.application.applicants[this.applicantIndex].corporateAddress.stdNumber.split("-")[0] : "";
-    this.corporateAddressStdNumber.phoneNumber = this.qde.application.applicants[this.applicantIndex].corporateAddress.stdNumber != "" ? this.qde.application.applicants[this.applicantIndex].corporateAddress.stdNumber.split("-")[1] : "";
   }
 
   valuechange(newValue, valueIndex) {
@@ -677,36 +635,32 @@ export class CoApplicantQdeComponent implements OnInit {
       return;
     }
 
-    this.qde.application.applicants[this.applicantIndex].pan = {
-      panNumber: form.value.pan,
-      docType: form.value.docType,
-      docNumber: form.value.docNumber
-    };
+    console.log(this.qde.application.applicants[this.coApplicantIndex].pan.panNumber);
 
     console.log("Get Filtered JSON: ", this.qdeService.getFilteredJson(this.qde));
-    this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
-      // If successful
-      if(response["ProcessVariables"]["status"]) {
-        let result = this.parseJson(response["ProcessVariables"]["response"]);
+    // this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
+    //   // If successful
+    //   if(response["ProcessVariables"]["status"]) {
+    //     let result = this.parseJson(response["ProcessVariables"]["response"]);
 
-        this.qde.application.ocsNumber = result["application"]["ocsNumber"];
-        this.qde.application.applicationId = result["application"]["applicationId"];
-        this.qde.application.applicants[this.applicantIndex].applicantId =  result["application"]["applicants"][this.applicantIndex]["applicantId"];
+    //     this.qde.application.ocsNumber = result["application"]["ocsNumber"];
+    //     this.qde.application.applicationId = result["application"]["applicationId"];
+    //     this.qde.application.applicants[this.coApplicantIndex].applicantId =  result["application"]["applicants"][this.coApplicantIndex]["applicantId"];
 
         
-        //this.goToNextSlide(swiperInstance);
+    //     //this.goToNextSlide(swiperInstance);
 
-        this.cds.changePanSlide(true);
-        this.router.navigate(['/co-applicant/'+result["application"]["applicationId"]], {fragment: "pan1"});
+    //     this.cds.changePanSlide(true);
+    //     this.router.navigate(['/co-applicant/'+result["application"]["applicationId"]], {fragment: "pan1"});
         
-      } else {
-        // Throw Invalid Pan Error
-      }
-    }, (error) => {
-      console.log('error ', error);
-      alert("error"+error);
-      // Throw Request Failure Error
-    });
+    //   } else {
+    //     // Throw Invalid Pan Error
+    //   }
+    // }, (error) => {
+    //   console.log('error ', error);
+    //   alert("error"+error);
+    //   // Throw Request Failure Error
+    // });
   }
 
 
@@ -722,7 +676,7 @@ export class CoApplicantQdeComponent implements OnInit {
       return;
     }
 
-    this.qde.application.applicants[this.applicantIndex].pan = {
+    this.qde.application.applicants[this.coApplicantIndex].pan = {
       panNumber: form.value.pan,
       docType: form.value.docType,
       docNumber: form.value.docNumber
@@ -734,7 +688,7 @@ export class CoApplicantQdeComponent implements OnInit {
         let result = this.parseJson(response["ProcessVariables"]["response"]);
         this.qde.application.ocsNumber = result["application"]["ocsNumber"];
         this.qde.application.applicationId = result["application"]["applicationId"];
-        this.qde.application.applicants[this.applicantIndex].applicantId =  result["application"]["applicants"][this.applicantIndex]["applicantId"];
+        this.qde.application.applicants[this.coApplicantIndex].applicantId =  result["application"]["applicants"][this.coApplicantIndex]["applicantId"];
         
         // //this.goToNextSlide(swiperInstance);
         // console.log(":::::", this.qde)
@@ -770,14 +724,14 @@ export class CoApplicantQdeComponent implements OnInit {
       return;
     }
 
-    this.qde.application.applicants[this.applicantIndex].personalDetails = {
+    this.qde.application.applicants[this.coApplicantIndex].personalDetails = {
       title : form.value.title.value,
       firstName : form.value.firstName,
       middleName : form.value.middleName,
       lastName : form.value.lastName
     };
 
-    console.log(this.qde.application.applicants[this.applicantIndex]);
+    console.log(this.qde.application.applicants[this.coApplicantIndex]);
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
@@ -798,9 +752,9 @@ export class CoApplicantQdeComponent implements OnInit {
       return;
     }
 
-    this.qde.application.applicants[this.applicantIndex].personalDetails.gender = form.value.gender;
+    this.qde.application.applicants[this.coApplicantIndex].personalDetails.gender = form.value.gender;
 
-    console.log(this.qde.application.applicants[this.applicantIndex]);
+    console.log(this.qde.application.applicants[this.coApplicantIndex]);
 
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
@@ -824,9 +778,9 @@ export class CoApplicantQdeComponent implements OnInit {
       return;
     }
 
-    this.qde.application.applicants[this.applicantIndex].personalDetails.qualification = form.value.qualification.value;
+    this.qde.application.applicants[this.coApplicantIndex].personalDetails.qualification = form.value.qualification.value;
 
-    console.log(this.qde.application.applicants[this.applicantIndex]);
+    console.log(this.qde.application.applicants[this.coApplicantIndex]);
 
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
@@ -848,10 +802,10 @@ export class CoApplicantQdeComponent implements OnInit {
       return;
     }
 
-    this.qde.application.applicants[this.applicantIndex].personalDetails.dob = form.value.day+'-'+form.value.month+'-'+form.value.year;
-    this.qde.application.applicants[this.applicantIndex].personalDetails.birthPlace = form.value.birthPlace;
+    this.qde.application.applicants[this.coApplicantIndex].personalDetails.dob = form.value.day+'-'+form.value.month+'-'+form.value.year;
+    this.qde.application.applicants[this.coApplicantIndex].personalDetails.birthPlace = form.value.birthPlace;
 
-    console.log(this.qde.application.applicants[this.applicantIndex]);
+    console.log(this.qde.application.applicants[this.coApplicantIndex]);
 
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
@@ -878,7 +832,7 @@ export class CoApplicantQdeComponent implements OnInit {
       return;
     }
 
-    this.qde.application.applicants[this.applicantIndex].contactDetails = {
+    this.qde.application.applicants[this.coApplicantIndex].contactDetails = {
       preferredEmailId: form.value.preferEmailId,
       alternateEmailId : form.value.alternateEmailId,
       mobileNumber: form.value.mobileNumber,
@@ -887,7 +841,7 @@ export class CoApplicantQdeComponent implements OnInit {
       alternateResidenceNumber: form.value.alternateResidenceNumber1+'-'+form.value.alternateResidenceNumber2
     };
 
-    console.log(this.qde.application.applicants[this.applicantIndex]);
+    console.log(this.qde.application.applicants[this.coApplicantIndex]);
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
@@ -914,30 +868,30 @@ export class CoApplicantQdeComponent implements OnInit {
           let zipCityStateID  = result.zipcodeId + "," + result.cityId + "," + result.stateId;
 
           if(screenName == "communicationAddress") {
-            this.qde.application.applicants[this.applicantIndex].communicationAddress.cityState = this.commCityState || "";    
-            this.qde.application.applicants[this.applicantIndex].communicationAddress.zipCityStateID = zipCityStateID;
+            this.qde.application.applicants[this.coApplicantIndex].communicationAddress.cityState = this.commCityState || "";    
+            this.qde.application.applicants[this.coApplicantIndex].communicationAddress.zipCityStateID = zipCityStateID;
           }
 
 
           if(screenName == "permanentAddress") {
-            this.qde.application.applicants[this.applicantIndex].permanentAddress.cityState = this.commCityState || "";    
-            this.qde.application.applicants[this.applicantIndex].permanentAddress.zipCityStateID = zipCityStateID;
+            this.qde.application.applicants[this.coApplicantIndex].permanentAddress.cityState = this.commCityState || "";    
+            this.qde.application.applicants[this.coApplicantIndex].permanentAddress.zipCityStateID = zipCityStateID;
           }
 
 
           if(screenName == "officialCorrespondence") {
-            this.qde.application.applicants[this.applicantIndex].officialCorrespondence.cityState = this.commCityState || "";    
-            this.qde.application.applicants[this.applicantIndex].officialCorrespondence.zipCityStateID = zipCityStateID;
+            this.qde.application.applicants[this.coApplicantIndex].officialCorrespondence.cityState = this.commCityState || "";    
+            this.qde.application.applicants[this.coApplicantIndex].officialCorrespondence.zipCityStateID = zipCityStateID;
           }
 
           if(screenName == "registeredAddress") {
-            this.qde.application.applicants[this.applicantIndex].registeredAddress.cityState = this.commCityState || "";    
-            this.qde.application.applicants[this.applicantIndex].registeredAddress.zipCityStateID = zipCityStateID;
+            this.qde.application.applicants[this.coApplicantIndex].registeredAddress.cityState = this.commCityState || "";    
+            this.qde.application.applicants[this.coApplicantIndex].registeredAddress.zipCityStateID = zipCityStateID;
           }
 
           if(screenName == "corporateAddress") {
-            this.qde.application.applicants[this.applicantIndex].corporateAddress.cityState = this.commCityState || "";    
-            this.qde.application.applicants[this.applicantIndex].corporateAddress.zipCityStateID = zipCityStateID;
+            this.qde.application.applicants[this.coApplicantIndex].corporateAddress.cityState = this.commCityState || "";    
+            this.qde.application.applicants[this.coApplicantIndex].corporateAddress.zipCityStateID = zipCityStateID;
           }
           
 
@@ -957,19 +911,19 @@ export class CoApplicantQdeComponent implements OnInit {
       return;
     }
 
-    let zipCityStateID = this.qde.application.applicants[this.applicantIndex].communicationAddress.zipCityStateID
+    let zipCityStateID = this.qde.application.applicants[this.coApplicantIndex].communicationAddress.zipCityStateID
 
     let zipId = zipCityStateID.split(',')[0];
     let cityId = zipCityStateID.split(',')[1];
     let stateId = zipCityStateID.split(',')[2];
 
-    let pZpCityStateID = this.qde.application.applicants[this.applicantIndex].permanentAddress.zipCityStateID
+    let pZpCityStateID = this.qde.application.applicants[this.coApplicantIndex].permanentAddress.zipCityStateID
 
     let pZipId = zipCityStateID.split(',')[0];
     let pCityId = zipCityStateID.split(',')[1];
     let pStateId = zipCityStateID.split(',')[2];
 
-    this.qde.application.applicants[this.applicantIndex].communicationAddress = {
+    this.qde.application.applicants[this.coApplicantIndex].communicationAddress = {
       residentialStatus : form.value.residentialStatus.value,
       addressLineOne : form.value.addressLineOne,
       addressLineTwo : form.value.addressLineTwo,
@@ -982,7 +936,7 @@ export class CoApplicantQdeComponent implements OnInit {
     };
 
 
-    this.qde.application.applicants[this.applicantIndex].permanentAddress = {
+    this.qde.application.applicants[this.coApplicantIndex].permanentAddress = {
       addressLineOne : form.value.pAddressLineOne,
       addressLineTwo : form.value.pAddressLineTwo,
       zipcode : pZipId,
@@ -991,7 +945,7 @@ export class CoApplicantQdeComponent implements OnInit {
       numberOfYearsInCurrentResidence : form.value.numberOfYearsInCurrentResidence
     };
 
-    console.log(this.qde.application.applicants[this.applicantIndex].communicationAddress);
+    console.log(this.qde.application.applicants[this.coApplicantIndex].communicationAddress);
 
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
@@ -1017,11 +971,11 @@ export class CoApplicantQdeComponent implements OnInit {
       return;
     }
 
-    this.qde.application.applicants[this.applicantIndex].maritalStatus = {
+    this.qde.application.applicants[this.coApplicantIndex].maritalStatus = {
       status : form.value.maritalStatus.value
     };
 
-    console.log(this.qde.application.applicants[this.applicantIndex].maritalStatus);
+    console.log(this.qde.application.applicants[this.coApplicantIndex].maritalStatus);
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
@@ -1042,10 +996,10 @@ export class CoApplicantQdeComponent implements OnInit {
       return;
     }
 
-    this.qde.application.applicants[this.applicantIndex].maritalStatus.spouseTitle = form.value.spouseTitle.value;
-    this.qde.application.applicants[this.applicantIndex].maritalStatus.firstName = form.value.firstName;
+    this.qde.application.applicants[this.coApplicantIndex].maritalStatus.spouseTitle = form.value.spouseTitle.value;
+    this.qde.application.applicants[this.coApplicantIndex].maritalStatus.firstName = form.value.firstName;
 
-    console.log(this.qde.application.applicants[this.applicantIndex].maritalStatus);
+    console.log(this.qde.application.applicants[this.coApplicantIndex].maritalStatus);
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
@@ -1067,9 +1021,9 @@ export class CoApplicantQdeComponent implements OnInit {
       return;
     }
 
-    this.qde.application.applicants[this.applicantIndex].maritalStatus.earning = form.value.earning;
+    this.qde.application.applicants[this.coApplicantIndex].maritalStatus.earning = form.value.earning;
 
-    console.log(this.qde.application.applicants[this.applicantIndex].maritalStatus);
+    console.log(this.qde.application.applicants[this.coApplicantIndex].maritalStatus);
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
@@ -1095,9 +1049,9 @@ export class CoApplicantQdeComponent implements OnInit {
       return;
     }
 
-    this.qde.application.applicants[this.applicantIndex].maritalStatus.amount = form.value.amount;
+    this.qde.application.applicants[this.coApplicantIndex].maritalStatus.amount = form.value.amount;
 
-    console.log(this.qde.application.applicants[this.applicantIndex].maritalStatus);
+    console.log(this.qde.application.applicants[this.coApplicantIndex].maritalStatus);
 
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
@@ -1125,11 +1079,11 @@ export class CoApplicantQdeComponent implements OnInit {
       return;
     }
 
-    this.qde.application.applicants[this.applicantIndex].familyDetails = {
+    this.qde.application.applicants[this.coApplicantIndex].familyDetails = {
       numberOfDependents : form.value.numberOfDependents
     };
 
-    console.log(this.qde.application.applicants[this.applicantIndex].familyDetails);
+    console.log(this.qde.application.applicants[this.coApplicantIndex].familyDetails);
 
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
@@ -1150,13 +1104,13 @@ export class CoApplicantQdeComponent implements OnInit {
       return;
     }
 
-    this.qde.application.applicants[this.applicantIndex].familyDetails.fatherTitle = form.value.fatherTitle.value;
-    this.qde.application.applicants[this.applicantIndex].familyDetails.fatherName = form.value.fatherName;
-    this.qde.application.applicants[this.applicantIndex].familyDetails.motherTitle = form.value.motherTitle.value;
-    this.qde.application.applicants[this.applicantIndex].familyDetails.motherName = form.value.motherName;
-    this.qde.application.applicants[this.applicantIndex].familyDetails.motherMaidenName = form.value.motherMaidenName;
+    this.qde.application.applicants[this.coApplicantIndex].familyDetails.fatherTitle = form.value.fatherTitle.value;
+    this.qde.application.applicants[this.coApplicantIndex].familyDetails.fatherName = form.value.fatherName;
+    this.qde.application.applicants[this.coApplicantIndex].familyDetails.motherTitle = form.value.motherTitle.value;
+    this.qde.application.applicants[this.coApplicantIndex].familyDetails.motherName = form.value.motherName;
+    this.qde.application.applicants[this.coApplicantIndex].familyDetails.motherMaidenName = form.value.motherMaidenName;
 
-    console.log(this.qde.application.applicants[this.applicantIndex].familyDetails);
+    console.log(this.qde.application.applicants[this.coApplicantIndex].familyDetails);
 
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
@@ -1182,14 +1136,14 @@ export class CoApplicantQdeComponent implements OnInit {
       return;
     }
 
-    this.qde.application.applicants[this.applicantIndex].other = {
+    this.qde.application.applicants[this.coApplicantIndex].other = {
       religion : form.value.religion.value,
       category: form.value.category.value
     };
 
-    // this.qde.application.applicants[this.applicantIndex].familyDetails.fatherTitle = form.value.fatherTitle;
+    // this.qde.application.applicants[this.coApplicantIndex].familyDetails.fatherTitle = form.value.fatherTitle;
 
-    // console.log(this.qde.application.applicants[this.applicantIndex].familyDetails);
+    // console.log(this.qde.application.applicants[this.coApplicantIndex].familyDetails);
 
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
@@ -1215,14 +1169,14 @@ export class CoApplicantQdeComponent implements OnInit {
       return;
     }
 
-    this.qde.application.applicants[this.applicantIndex].occupation = {
+    this.qde.application.applicants[this.coApplicantIndex].occupation = {
       occupationType: form.value.occupationType.value,
       companyName : form.value.companyName,
       numberOfYearsInCurrentCompany : form.value.numberOfYearsInCurrentCompany,
       totalWorkExperience : form.value.totalExperienceYear
     };
 
-    console.log(this.qde.application.applicants[this.applicantIndex].occupation);
+    console.log(this.qde.application.applicants[this.coApplicantIndex].occupation);
 
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
@@ -1247,14 +1201,14 @@ export class CoApplicantQdeComponent implements OnInit {
       return;
     }
 
-    let zipCityStateID = this.qde.application.applicants[this.applicantIndex].officialCorrespondence.zipCityStateID
+    let zipCityStateID = this.qde.application.applicants[this.coApplicantIndex].officialCorrespondence.zipCityStateID
 
     let zipId = zipCityStateID.split(',')[0];
     let cityId = zipCityStateID.split(',')[1];
     let stateId = zipCityStateID.split(',')[2];
 
 
-    this.qde.application.applicants[this.applicantIndex].officialCorrespondence = {
+    this.qde.application.applicants[this.coApplicantIndex].officialCorrespondence = {
       addressLineOne : form.value.ofcA1,
       addressLineTwo : form.value.ofcA2,
       landMark : form.value.landMark,
@@ -1267,7 +1221,7 @@ export class CoApplicantQdeComponent implements OnInit {
       officeEmailId : form.value.officeEmail
     };
 
-    console.log(this.qde.application.applicants[this.applicantIndex].officialCorrespondence);
+    console.log(this.qde.application.applicants[this.coApplicantIndex].officialCorrespondence);
 
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
@@ -1291,20 +1245,20 @@ export class CoApplicantQdeComponent implements OnInit {
       return;
     }
 
-    this.qde.application.applicants[this.applicantIndex].organizationDetails = {
+    this.qde.application.applicants[this.coApplicantIndex].organizationDetails = {
       nameOfOrganization: form.value.orgName,
       dateOfIncorporation: form.value.year+'-'+form.value.month+'-'+form.value.day,
       constitution: form.value.constitution
     };
 
-    console.log(this.qde.application.applicants[this.applicantIndex].organizationDetails);
+    console.log(this.qde.application.applicants[this.coApplicantIndex].organizationDetails);
 
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
         let result = this.parseJson(response["ProcessVariables"]["response"]);
         // this.qde.application.ocsNumber = result["application"]["ocsNumber"];
-        // this.qde.application.applicants[this.applicantIndex].applicantId = result["application"]["applicationId"];
+        // this.qde.application.applicants[this.coApplicantIndex].applicantId = result["application"]["applicationId"];
         this.tabSwitch(12);
       } else {
         // Throw Invalid Pan Error
@@ -1323,7 +1277,7 @@ export class CoApplicantQdeComponent implements OnInit {
       return;
     }
 
-    // let zipCityStateID = this.qde.application.applicants[this.applicantIndex].registeredAddress.zipCityStateID
+    // let zipCityStateID = this.qde.application.applicants[this.coApplicantIndex].registeredAddress.zipCityStateID
 
     // let zipId = this.zipCityStateID.split(',')[0] || "";
     // let cityId = this.zipCityStateID.split(',')[1] || "";
@@ -1334,7 +1288,7 @@ export class CoApplicantQdeComponent implements OnInit {
     let stateId = "";
 
 
-    this.qde.application.applicants[this.applicantIndex].registeredAddress = {
+    this.qde.application.applicants[this.coApplicantIndex].registeredAddress = {
       registeredAddress : form.value.regAdd,
       landMark : form.value.landmark,
       zipcode : zipId,
@@ -1342,7 +1296,7 @@ export class CoApplicantQdeComponent implements OnInit {
       state : stateId,
     };
 
-    console.log(this.qde.application.applicants[this.applicantIndex].registeredAddress);
+    console.log(this.qde.application.applicants[this.coApplicantIndex].registeredAddress);
 
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successfull
@@ -1364,14 +1318,14 @@ export class CoApplicantQdeComponent implements OnInit {
       return;
     }
 
-    let zipCityStateID = this.qde.application.applicants[this.applicantIndex].corporateAddress.zipCityStateID
+    let zipCityStateID = this.qde.application.applicants[this.coApplicantIndex].corporateAddress.zipCityStateID
 
     let zipId = this.zipCityStateID.split(',')[0] || "";
     let cityId = this.zipCityStateID.split(',')[1] || "";
     let stateId = this.zipCityStateID.split(',')[2] || "";
 
 
-    this.qde.application.applicants[this.applicantIndex].corporateAddress = {
+    this.qde.application.applicants[this.coApplicantIndex].corporateAddress = {
       corporateAddress : form.value.corpAddress,
       landMark : form.value.landmark,
       zipcode : zipId,
@@ -1381,7 +1335,7 @@ export class CoApplicantQdeComponent implements OnInit {
       officeEmailId : form.value.officeEmailId
     };
 
-    console.log(this.qde.application.applicants[this.applicantIndex].corporateAddress);
+    console.log(this.qde.application.applicants[this.coApplicantIndex].corporateAddress);
 
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successfull
@@ -1404,13 +1358,13 @@ export class CoApplicantQdeComponent implements OnInit {
       return;
     }
 
-    this.qde.application.applicants[this.applicantIndex].revenueDetails = {
+    this.qde.application.applicants[this.coApplicantIndex].revenueDetails = {
       revenue : parseInt(form.value.revenue),
       annualNetIncome : parseInt(form.value.annualNetIncome),
       grossTurnOver : parseInt(form.value.grossTurnOver)
     };
 
-    console.log(this.qde.application.applicants[this.applicantIndex].revenueDetails);
+    console.log(this.qde.application.applicants[this.coApplicantIndex].revenueDetails);
 
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successfull
@@ -1433,12 +1387,12 @@ export class CoApplicantQdeComponent implements OnInit {
       return;
     }
 
-    this.qde.application.applicants[this.applicantIndex].incomeDetails = {
+    this.qde.application.applicants[this.coApplicantIndex].incomeDetails = {
       annualFamilyIncome : form.value.annualFamilyIncome,
       monthlyExpenditure : form.value.monthlyExpenditure
     };
 
-    console.log(this.qde.application.applicants[this.applicantIndex].incomeDetails);
+    console.log(this.qde.application.applicants[this.coApplicantIndex].incomeDetails);
 
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successfull
@@ -1459,12 +1413,12 @@ export class CoApplicantQdeComponent implements OnInit {
       return;
     }
 
-    this.qde.application.applicants[this.applicantIndex].incomeDetails = {
+    this.qde.application.applicants[this.coApplicantIndex].incomeDetails = {
       monthlyIncome : form.value.monthlyIncome,
       assessmentMethodology : form.value.assessment
     };
 
-    console.log(this.qde.application.applicants[this.applicantIndex].incomeDetails);
+    console.log(this.qde.application.applicants[this.coApplicantIndex].incomeDetails);
 
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successfull
@@ -1486,12 +1440,13 @@ export class CoApplicantQdeComponent implements OnInit {
   }
 
   changeIsIndividual(value, swiperInstance ?: Swiper) {
+    console.log(this.qde.application.applicants[this.coApplicantIndex].isIndividual);
     if(value) {
       this.goToNextSlide(swiperInstance);
-      this.qde.application.applicants[this.applicantIndex].isIndividual = true;
+      this.qde.application.applicants[this.coApplicantIndex].isIndividual = true;
     } else {
       this.tabSwitch(11);
-      this.qde.application.applicants[this.applicantIndex].isIndividual = false;
+      this.qde.application.applicants[this.coApplicantIndex].isIndividual = false;
     }
   }
 
@@ -1501,9 +1456,9 @@ export class CoApplicantQdeComponent implements OnInit {
 
   incomeDetailsYesNo(value, swiperInstance ?: Swiper) {
 
-      this.qde.application.applicants[this.applicantIndex].incomeDetails.incomeConsider = value;
+      this.qde.application.applicants[this.coApplicantIndex].incomeDetails.incomeConsider = value;
   
-      console.log(this.qde.application.applicants[this.applicantIndex].incomeDetails);
+      console.log(this.qde.application.applicants[this.coApplicantIndex].incomeDetails);
   
       this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successfull
@@ -1523,11 +1478,11 @@ export class CoApplicantQdeComponent implements OnInit {
   }
 
   doHoldPuccaHouse(value) {
-    this.qde.application.applicants[this.applicantIndex].incomeDetails = {
+    this.qde.application.applicants[this.coApplicantIndex].incomeDetails = {
       puccaHouse : value,
     };
 
-    console.log(this.qde.application.applicants[this.applicantIndex].incomeDetails);
+    console.log(this.qde.application.applicants[this.coApplicantIndex].incomeDetails);
 
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successfull
@@ -1544,5 +1499,176 @@ export class CoApplicantQdeComponent implements OnInit {
 
   selectCoApplicant(applicantId) {
     this.router.navigate(['/co-applicant/'+applicantId], {fragment: "pan1"});
-  }  
+  }
+
+
+  initializeVariables() {
+
+    this.residenceNumberStdCode = this.qde.application.applicants[this.coApplicantIndex].contactDetails.residenceNumber != "" ? this.qde.application.applicants[this.coApplicantIndex].contactDetails.residenceNumber.split("-")[0] : "";
+    this.residenceNumberPhoneNumber = this.qde.application.applicants[this.coApplicantIndex].contactDetails.residenceNumber != "" ? this.qde.application.applicants[this.coApplicantIndex].contactDetails.residenceNumber.split("-")[1] : "";
+
+    this.alternateResidenceNumberStdCode = this.qde.application.applicants[this.coApplicantIndex].contactDetails.alternateResidenceNumber != "" ? this.qde.application.applicants[this.coApplicantIndex].contactDetails.alternateResidenceNumber.split("-")[0] : "";
+    this.alternateResidenceNumberPhoneNumber = this.qde.application.applicants[this.coApplicantIndex].contactDetails.alternateResidenceNumber != "" ? this.qde.application.applicants[this.coApplicantIndex].contactDetails.residenceNumber.split("-")[1] : "";
+    this.addressCityState = this.qde.application.applicants[this.coApplicantIndex].communicationAddress.city + '/'+ this.qde.application.applicants[this.coApplicantIndex].communicationAddress.state;
+
+    this.otherReligion = this.qde.application.applicants[this.coApplicantIndex].other.religion == '6' ? this.qde.application.applicants[this.coApplicantIndex].other.religion : '';
+
+    if( this.qde.application.applicants[this.coApplicantIndex].organizationDetails.dateOfIncorporation.split("-")[0] == "" ||
+        this.qde.application.applicants[this.coApplicantIndex].organizationDetails.dateOfIncorporation.split("-")[0] == undefined) {
+      this.dateOfIncorporation.day = this.qde.application.applicants[this.coApplicantIndex].organizationDetails.dateOfIncorporation.split("-")[0];
+    }
+
+    if( this.qde.application.applicants[this.coApplicantIndex].organizationDetails.dateOfIncorporation.split("-")[1] == "" ||
+        this.qde.application.applicants[this.coApplicantIndex].organizationDetails.dateOfIncorporation.split("-")[1] == undefined) {
+      this.dateOfIncorporation.month = this.qde.application.applicants[this.coApplicantIndex].organizationDetails.dateOfIncorporation.split("-")[1];
+    }
+
+    if( this.qde.application.applicants[this.coApplicantIndex].organizationDetails.dateOfIncorporation.split("-")[2] == "" ||
+        this.qde.application.applicants[this.coApplicantIndex].organizationDetails.dateOfIncorporation.split("-")[2] == undefined) {
+      this.dateOfIncorporation.year = this.qde.application.applicants[this.coApplicantIndex].organizationDetails.dateOfIncorporation.split("-")[2];
+    }
+
+    this.registeredAddressCityState = this.qde.application.applicants[this.coApplicantIndex].registeredAddress.city +'/'+ this.qde.application.applicants[this.coApplicantIndex].registeredAddress.state;
+    this.corporateAddressCityState = this.qde.application.applicants[this.coApplicantIndex].corporateAddress.city +'-'+ this.qde.application.applicants[this.coApplicantIndex].corporateAddress.state;
+    this.corporateAddressStdNumber.stdCode = this.qde.application.applicants[this.coApplicantIndex].corporateAddress.stdNumber != "" ? this.qde.application.applicants[this.coApplicantIndex].corporateAddress.stdNumber.split("-")[0] : "";
+    this.corporateAddressStdNumber.phoneNumber = this.qde.application.applicants[this.coApplicantIndex].corporateAddress.stdNumber != "" ? this.qde.application.applicants[this.coApplicantIndex].corporateAddress.stdNumber.split("-")[1] : "";
+
+  }
+
+  makePermanentAddressSame(event: boolean) {
+    this.qde.application.applicants[this.coApplicantIndex].communicationAddress.permanentAddress = event;
+
+    if(event == true) {
+      this.qde.application.applicants[this.coApplicantIndex].permanentAddress.addressLineOne = this.qde.application.applicants[this.coApplicantIndex].communicationAddress.addressLineOne;
+      this.qde.application.applicants[this.coApplicantIndex].permanentAddress.addressLineTwo = this.qde.application.applicants[this.coApplicantIndex].communicationAddress.addressLineTwo;
+      this.qde.application.applicants[this.coApplicantIndex].permanentAddress.zipcode = this.qde.application.applicants[this.coApplicantIndex].communicationAddress.zipcode;
+      // this.qde.application.applicants[this.coApplicantIndex].permanentAddress.cityState = this.qde.application.applicants[this.coApplicantIndex].communicationAddress.cityState;
+    } else {
+      this.qde.application.applicants[this.coApplicantIndex].permanentAddress.addressLineOne = "";
+      this.qde.application.applicants[this.coApplicantIndex].permanentAddress.addressLineTwo = "";
+      this.qde.application.applicants[this.coApplicantIndex].permanentAddress.zipcode = "";
+      // this.qde.application.applicants[this.coApplicantIndex].permanentAddress.cityState = "";
+    }
+  }
+
+  getCoApplicants(): Array<Applicant> {
+    return this.qde.application.applicants.filter(val => val.isMainApplicant == false);
+  }
+
+  prefillData(params) {
+
+    // Set ApplicantIndex
+    this.cds.changeApplicantIndex(this.qde.application.applicants.findIndex(val => val.isMainApplicant == true));
+
+    // Make QDE Data Global Across App
+
+    // This is when co-applicant is being edited
+    if(params.coApplicantIndex != null) {
+      //------------------------------------------------------
+      //    Prefilling values
+      //------------------------------------------------------
+      // Personal Details Title
+      if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].personalDetails.title)) ) {
+        this.selectedTitle = this.titles[(parseInt(this.qde.application.applicants[this.coApplicantIndex].personalDetails.title))-1];
+      }
+
+      // Personal Details Qualification
+      if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].personalDetails.qualification)) ) {
+        this.selectedQualification = this.qualifications[(parseInt(this.qde.application.applicants[this.coApplicantIndex].personalDetails.qualification))-1];
+      }
+
+      // Personal Details Day
+      if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].personalDetails.dob.split('/')[2])) ) {
+        this.dob.day = this.days[parseInt(this.qde.application.applicants[this.coApplicantIndex].personalDetails.dob.split('/')[2])];
+      }
+
+      // Personal Details Month
+      if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].personalDetails.dob.split('/')[1])) ) {
+        this.dob.month = this.months[parseInt(this.qde.application.applicants[this.coApplicantIndex].personalDetails.dob.split('/')[1])];
+      }
+
+      // Personal Details Year
+      if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].personalDetails.dob.split('/')[0])) ) {
+        this.dob.year = this.years.find(val => this.qde.application.applicants[this.coApplicantIndex].personalDetails.dob.split('/')[0] == val.value);
+      }
+
+      // Date of Incorporation
+      if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].organizationDetails.dateOfIncorporation.split('/')[2])) ) {
+        this.dob.day = this.days[parseInt(this.qde.application.applicants[this.coApplicantIndex].organizationDetails.dateOfIncorporation.split('/')[2])];
+      }
+
+      // Incorporation Month
+      if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].organizationDetails.dateOfIncorporation.split('/')[1])) ) {
+        this.dob.month = this.months[parseInt(this.qde.application.applicants[this.coApplicantIndex].organizationDetails.dateOfIncorporation.split('/')[1])];
+      }
+
+      // Incorporation Year
+      if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].organizationDetails.dateOfIncorporation.split('/')[0])) ) {
+        this.dob.year = this.years.find(val => this.qde.application.applicants[this.coApplicantIndex].organizationDetails.dateOfIncorporation.split('/')[0] == val.value);
+      }
+
+      // Communication address
+      if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].communicationAddress.residentialStatus)) ) {
+        this.selectedResidence = this.maritals[(parseInt(this.qde.application.applicants[this.coApplicantIndex].communicationAddress.residentialStatus))];
+      }
+
+      if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].maritalStatus.status)) ) {
+        this.selectedMaritialStatus = this.maritals[(parseInt(this.qde.application.applicants[this.coApplicantIndex].maritalStatus.status))];
+      }
+
+      if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].maritalStatus.spouseTitle)) ) {
+          this.selectedSpouseTitle = this.titles[(parseInt(this.qde.application.applicants[this.coApplicantIndex].maritalStatus.spouseTitle))];
+      }
+
+      if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].familyDetails.motherTitle)) ) {
+        this.selectedMotherTitle = this.titles[(parseInt(this.qde.application.applicants[this.coApplicantIndex].familyDetails.motherTitle))];
+      }
+
+
+      if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].familyDetails.fatherTitle)) ) {
+        this.selectedFatherTitle  = this.titles[(parseInt(this.qde.application.applicants[this.coApplicantIndex].familyDetails.fatherTitle))];
+      }
+
+      // Other
+      if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].other.religion)) ) {
+        this.selectedReligions = this.religions[(parseInt(this.qde.application.applicants[this.coApplicantIndex].other.religion))];
+      }
+
+      // Category
+      if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].other.category)) ) {
+        this.selectedCategory  = this.categories[(parseInt(this.qde.application.applicants[this.coApplicantIndex].other.category))];
+      }
+
+      // Occupation details
+      if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].occupation.occupationType)) ) {
+        this.selectedOccupation = this.religions[(parseInt(this.qde.application.applicants[this.coApplicantIndex].occupation.occupationType))];
+      }
+
+      // Assesment methodology
+      if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].incomeDetails.assessmentMethodology)) ) {
+        this.selectedAssesmentMethodology = this.religions[(parseInt(this.qde.application.applicants[this.coApplicantIndex].incomeDetails.assessmentMethodology))];
+      }
+
+      // Incoming from create in Individual Pan
+      if(this.panslide == true && this.qde.application.applicants[this.coApplicantIndex].isIndividual == true) {
+        this.panSlider2.setIndex(2);
+      }
+      // Incoming from create in Non Individual Pan
+      else if(this.panslide2 == true && this.qde.application.applicants[this.coApplicantIndex].isIndividual == false) {
+        this.tabSwitch(11);
+      }
+
+      // So that route is now in edit mode only
+      this.cds.changePanSlide(false);
+      this.cds.changePanSlide2(false);
+
+      this.initializeVariables();
+    }
+    // This is Co-Applicant Create
+    else {
+      // New CoApplicant Index for New CoApplicant
+      this.coApplicantIndex = this.qde.application.applicants.filter(val => val.isMainApplicant == false).length + 1;
+      this.initializeVariables();
+    }
+  }
 }

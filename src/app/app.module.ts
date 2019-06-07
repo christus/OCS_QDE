@@ -85,7 +85,7 @@ const appRoutes: Routes = [
         }
       },
       {
-        path: ":applicantId",
+        path: ":applicationId",
         component: ApplicantQdeComponent,
         resolve: {
           listOfValues: ListOfValuesResolverService
@@ -94,7 +94,7 @@ const appRoutes: Routes = [
     ]
   },
   {
-    path: "co-applicant",
+    path: "applicant/:applicationId/co-applicant",
     component: ApplicantDashboardComponent,
     canActivate: [AuthGuard],
     children: [
@@ -106,13 +106,14 @@ const appRoutes: Routes = [
         }
       },
       {
-        path: ":applicantId",
+        path: ":coApplicantIndex",
         component: CoApplicantQdeComponent,
         resolve: {
           listOfValues: ListOfValuesResolverService
         }
       }
-    ]
+    ],
+    pathMatch: 'full'
   },
   {
     path: "loan/:applicantId",

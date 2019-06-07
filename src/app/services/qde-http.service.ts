@@ -91,9 +91,8 @@ createOrUpdatePersonalDetails(qde) {
     return this.http.put(uri, body);
   }
 
- 
+  getQdeData(applicationId:number) {
 
-  getQdeData(applicantionId:number) {
     const processId = environment.api.get.processId;
     const workflowId = environment.api.get.workflowId;
     const projectId = environment.projectId;
@@ -101,7 +100,7 @@ createOrUpdatePersonalDetails(qde) {
     const requestEntity: RequestEntity = {
       processId: processId,
       ProcessVariables: {
-        applicationId: applicantionId
+        applicationId: applicationId
       },
       workflowId: workflowId,
       projectId: projectId
@@ -117,14 +116,12 @@ createOrUpdatePersonalDetails(qde) {
   }
 
   roleLogin() {
-
     const processId = environment.api.roleLogin.processId;
     const workflowId = environment.api.roleLogin.workflowId;
     const projectId = environment.projectId;
 
     const userName = environment.userName;
     const password = environment.password;
-
 
     const requestEntity: RequestEntity = {
       processId: processId,
@@ -168,8 +165,6 @@ createOrUpdatePersonalDetails(qde) {
       'processVariables',
       JSON.stringify(requestEntity)
     );
-  
-
 
     let uri = '/appiyo/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
     return this.http.put(uri, body.toString());

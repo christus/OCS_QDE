@@ -25,7 +25,7 @@ interface Item {
 })
 export class ApplicantQdeComponent implements OnInit {
 
-  errors = {
+  private errors = {
 
     pan: {
       required: "PAN number is mandatory",
@@ -536,7 +536,7 @@ export class ApplicantQdeComponent implements OnInit {
     // Check Whether there is qde data to be filled or else Initialize Qde
     this.route.params.subscribe((params) => {
 
-      this.cds.changeApplicantId(params.applicantId);
+      this.cds.changeApplicationId(params.applicantId);
 
       console.log("params ", params);
       // Make an http request to get the required qde data and set using setQde
