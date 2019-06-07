@@ -93,7 +93,7 @@ createOrUpdatePersonalDetails(qde) {
 
  
 
-  getQdeData(applicantId:number) {
+  getQdeData(applicantionId:number) {
     const processId = environment.api.get.processId;
     const workflowId = environment.api.get.workflowId;
     const projectId = environment.projectId;
@@ -101,7 +101,7 @@ createOrUpdatePersonalDetails(qde) {
     const requestEntity: RequestEntity = {
       processId: processId,
       ProcessVariables: {
-        applicationId: applicantId
+        applicationId: applicantionId
       },
       workflowId: workflowId,
       projectId: projectId

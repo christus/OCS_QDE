@@ -1080,11 +1080,11 @@
 
                                                   <input type="text"
                                                     class="form-control" 
-                                                    [(ngModel)]="qde.application.applicants[applicantIndex].maritalStatus.firstName"
-                                                    #spouseName="ngModel"
-                                                    name="firstName"
                                                     pattern="{{regexPattern.name}}"
                                                     id="spouse-name"
+                                                    [(ngModel)]="qde.application.applicants[applicantIndex].maritalStatus.firstName"
+                                                    #spouseName="ngModel"
+                                                    name="spouseName"
                                                     fieldFill
                                                     required>
                                                   <label for="spouse-name">First name</label>
@@ -1814,8 +1814,8 @@
                                                 <input  type="radio"
                                                         name="income-consider"
                                                         id="yes-consider"
-                                                        [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.incomeConsider"
                                                         [value]="true"
+                                                        [checked]="qde.application.applicants[applicantIndex].incomeDetails.incomeConsider == true"
                                                         (change)="incomeDetailsYesNo(true, incomeSlider2)"
                                                         class="not-usual" />
                                                 <label for="yes-consider"><span>Yes</span></label>
@@ -1825,7 +1825,7 @@
                                                         name="income-consider"
                                                         id="no-consider"
                                                         class="not-usual"
-                                                        [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.incomeConsider"
+                                                        [checked]="qde.application.applicants[applicantIndex].incomeDetails.incomeConsider == false"
                                                         [value]="false"
                                                         (change)="incomeDetailsYesNo(false, incomeSlider2)" />
                                                 <label for="no-consider"><span>No</span></label>
@@ -2364,7 +2364,7 @@
                             <div class="form-wrap">
                                 <div class="form-group inr">
                                     <input type="text" class="form-control" id="revenue"
-                                    ngModel
+                                    [(ngModel)]="qde.application.applicants[applicantIndex].revenueDetails.revenue"
                                     #revenue="ngModel"
                                     name="revenue"
                                     fieldFill
@@ -2384,7 +2384,7 @@
                                 <div class="form-group inr">
                                     <input type="text" class="form-control" id="net-income"
                                     required
-                                    ngModel
+                                    [(ngModel)]="qde.application.applicants[applicantIndex].revenueDetails.annualNetIncome"
                                     #annualNetincome="ngModel"
                                     name="annualNetIncome"
                                     fieldFill
@@ -2403,7 +2403,7 @@
                                 <div class="form-group inr last">
                                     <input type="text" class="form-control" id="gross-turnover" 
                                     required
-                                    ngModel
+                                    [(ngModel)]="qde.application.applicants[applicantIndex].revenueDetails.grossTurnOver"
                                     #grossTurnover="ngModel"
                                     name="grossTurnOver"
                                     fieldFill
@@ -2525,9 +2525,9 @@
                                                 <div class="bs-radio">
                                                     <input  type="radio"
                                                             name="income-consider"
-                                                            id="yes-consider"
-                                                            [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.incomeConsider"
+                                                            id="yes-consider"                                                         
                                                             [value]="true"
+                                                            [checked]="qde.application.applicants[applicantIndex].incomeDetails.incomeConsider == true"
                                                             (change)="incomeDetailsYesNo(true, incomeSlider4)"
                                                             class="not-usual" />
                                                     <label for="yes-consider"><span>Yes</span></label>
@@ -2537,8 +2537,8 @@
                                                             name="income-consider"
                                                             id="no-consider"
                                                             class="not-usual"
-                                                            [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.incomeConsider"
                                                             [value]="false"
+                                                            [checked]="qde.application.applicants[applicantIndex].incomeDetails.incomeConsider == false"
                                                             (change)="incomeDetailsYesNo(false, incomeSlider4)" />
                                                     <label for="no-consider"><span>No</span></label>
                                                 </div>
@@ -2556,7 +2556,7 @@
                                                         fieldFill
                                                         required
                                                         name="monthlyIncome">
-                                                        <label for="monthlyIncome">Monthly income</label>
+                                                        <label for="app-monthly-income">Monthly income</label>
                                                         <span class="addon">
                                                             <span class="icon icon-inr"></span>
                                                         </span>
@@ -2583,10 +2583,17 @@
                                                             <option value="9">Industry Margin</option>
                                                             <option value="10">Assessed Income</option>
                                                         </select> -->
-                                                        <kendo-dropdownlist name="assessment1" 
-                                                    [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.assessmentMethodology"
-                                                    name="assessment1" required>
-                                                    </kendo-dropdownlist>
+                                                        <kendo-dropdownlist 
+                                                        [data]="assessmentMethodology" 
+                                                        textField="key"
+                                                        valueField="value"
+                                                        name="assessment"
+                                                        nick="incomeDetails.assessmentMethodology"
+                                                        (selectionChange)="selectValueChanged($event, incomeDetails.hostElement)"
+                                                        [(ngModel)]="selectedAssesmentMethodology"
+                                                        required
+                                                        >
+                                                        </kendo-dropdownlist>
                                                     </div>
                                                 </div>
                                                 <div class="btn-wrap">
