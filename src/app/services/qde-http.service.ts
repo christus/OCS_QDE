@@ -106,6 +106,8 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
+    console.log("GETQDEDATA", requestEntity);
+
     const body = new HttpParams().set(
       'processVariables',
       JSON.stringify(requestEntity)

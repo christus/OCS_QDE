@@ -59,6 +59,7 @@ export class CommonDataService {
   public applicationId = this.applicationId$.asObservable();
   
   changeApplicationId(val: string) {
+    console.log("val ", val);
     this.applicationId$.next(val);
   }
 

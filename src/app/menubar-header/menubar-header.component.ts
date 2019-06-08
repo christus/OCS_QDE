@@ -35,6 +35,7 @@ export class MenubarHeaderComponent implements OnInit {
     
     this.commonDataService.applicationId.subscribe(val => {
       this.applicationId = val;
+      console.log("applicationId: ", this.applicationId);
     });
 
     this.commonDataService.coApplicantIndex.subscribe(val => {

@@ -6,52 +6,52 @@
                   <li class="tab-link pending" [ngClass]="{'active': (activeTab == 0), 'hide': (!applicantIndividual)}">
                     <a href="javascript:void(0);" (click)="tabSwitch(0)">Dashboard</a>
                   </li>
-                  <li class="tab-link" [ngClass]="{'active': (activeTab == 1), 'hide': (!applicantIndividual)}">
+                  <li class="tab-link" [ngClass]="{'active': (activeTab == 1), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
                     <a href="javascript:void(0);" (click)="tabSwitch(1)">PAN</a>
                   </li>
-                  <li class="tab-link" [ngClass]="{'active': (activeTab == 2), 'hide': (!applicantIndividual)}">
+                  <li class="tab-link" [ngClass]="{'active': (activeTab == 2), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
                     <a href="javascript:void(0);" (click)="tabSwitch(2)">personal details</a>
                   </li>
-                  <li class="tab-link" [ngClass]="{'active': (activeTab == 3), 'hide': (!applicantIndividual)}">
+                  <li class="tab-link" [ngClass]="{'active': (activeTab == 3), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
                     <a href="javascript:void(0);" (click)="tabSwitch(3)">contact details</a>
                   </li>
-                  <li class="tab-link" [ngClass]="{'active': (activeTab == 4), 'hide': (!applicantIndividual)}">
+                  <li class="tab-link" [ngClass]="{'active': (activeTab == 4), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
                     <a href="javascript:void(0);" (click)="tabSwitch(4)">communication address</a>
                   </li>
-                  <li class="tab-link" [ngClass]="{'active': (activeTab == 5), 'hide': (!applicantIndividual)}">
+                  <li class="tab-link" [ngClass]="{'active': (activeTab == 5), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
                     <a href="javascript:void(0);" (click)="tabSwitch(5)">marital status</a>
                   </li>
-                  <li class="tab-link" [ngClass]="{'active': (activeTab == 6), 'hide': (!applicantIndividual)}">
+                  <li class="tab-link" [ngClass]="{'active': (activeTab == 6), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
                     <a href="javascript:void(0);" (click)="tabSwitch(6)">family details</a>
                   </li>
-                  <li class="tab-link" [ngClass]="{'active': (activeTab == 7), 'hide': (!applicantIndividual)}">
+                  <li class="tab-link" [ngClass]="{'active': (activeTab == 7), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
                     <a href="javascript:void(0);" (click)="tabSwitch(7)">other</a>
                   </li>
-                  <li class="tab-link" [ngClass]="{'active': (activeTab == 8), 'hide': (!applicantIndividual)}">
+                  <li class="tab-link" [ngClass]="{'active': (activeTab == 8), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
                     <a href="javascript:void(0);" (click)="tabSwitch(8)">occupation details</a>
                   </li>
-                  <li class="tab-link" [ngClass]="{'active': (activeTab == 9), 'hide': (!applicantIndividual)}">
+                  <li class="tab-link" [ngClass]="{'active': (activeTab == 9), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
                     <a href="javascript:void(0);" (click)="tabSwitch(9)">offical correspondence</a>
                   </li>
-                  <li class="tab-link" [ngClass]="{'active': (activeTab == 10), 'hide': (!applicantIndividual)}">
+                  <li class="tab-link" [ngClass]="{'active': (activeTab == 10), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
                       <a href="javascript:void(0);" (click)="tabSwitch(10)">INCOME DETAILS</a>
                   </li>
-                  <li class="tab-link hide" [ngClass]="{'active': (activeTab == 11), 'hide': (applicantIndividual)}">
+                  <li class="tab-link hide" [ngClass]="{'active': (activeTab == 11), 'hide': (applicantIndividual), 'disabled': isTabDisabled}">
                       <a href="javascript:void(0);" (click)="tabSwitch(11)">PAN</a>
                   </li>
-                  <li class="tab-link hide" [ngClass]="{'active': (activeTab == 12), 'hide': (applicantIndividual)}">
+                  <li class="tab-link hide" [ngClass]="{'active': (activeTab == 12), 'hide': (applicantIndividual), 'disabled': isTabDisabled}">
                       <a href="javascript:void(0);" (click)="tabSwitch(12)">ORGANIZATION DETAILS</a>
                   </li>
-                  <li class="tab-link hide" [ngClass]="{'active': (activeTab == 13), 'hide': (applicantIndividual)}">
+                  <li class="tab-link hide" [ngClass]="{'active': (activeTab == 13), 'hide': (applicantIndividual), 'disabled': isTabDisabled}">
                       <a href="javascript:void(0);" (click)="tabSwitch(13)">REGISTERED ADDRESS</a>
                   </li>
-                  <li class="tab-link hide" [ngClass]="{'active': (activeTab == 14), 'hide': (applicantIndividual)}">
+                  <li class="tab-link hide" [ngClass]="{'active': (activeTab == 14), 'hide': (applicantIndividual), 'disabled': isTabDisabled}">
                       <a href="javascript:void(0);" (click)="tabSwitch(14)">CORPORATE ADDRESS</a>
                   </li>
-                  <li class="tab-link hide" [ngClass]="{'active': (activeTab == 15), 'hide': (applicantIndividual)}">
+                  <li class="tab-link hide" [ngClass]="{'active': (activeTab == 15), 'hide': (applicantIndividual), 'disabled': isTabDisabled}">
                       <a href="javascript:void(0);" (click)="tabSwitch(15)">REVENUE DETAILS</a>
                   </li>
-                  <li class="tab-link hide" [ngClass]="{'active': (activeTab == 16), 'hide': (applicantIndividual)}">
+                  <li class="tab-link hide" [ngClass]="{'active': (activeTab == 16), 'hide': (applicantIndividual), 'disabled': isTabDisabled}">
                       <a href="javascript:void(0);" (click)="tabSwitch(16)">INCOME DETAILS</a>
                   </li>
               </ul>
@@ -68,7 +68,7 @@
                             <div class="rhs">
                                 <div class="right-panel">
                                     <a  href="javascript:void(0);"
-                                        (click)="tabSwitch(1)"
+                                        (click)="createCoApplicant()"
                                         class="btn btn-default view-form create-co-app-btn">Create
                                     </a>
                                 </div>
@@ -185,19 +185,17 @@
                                                   textField="key"
                                                   valueField="value"
                                                   name="docType"
-                                                  [(ngModel)]="selectedDocType"
-                                                  >
+                                                  [(ngModel)]="selectedDocType">
                                                 </kendo-dropdownlist>
                                               </div>
                                               <div class="form-group">
                                                 <input type="text" class="form-control"
-                                                [(ngModel)]="qde.application.applicants[coApplicantIndex].pan.docNumber"
-                                                id="docNumber"
-                                                name="docNumber"
-                                                #docNumber="ngModel"
-                                                fieldFill
-                                                 />
-                                                <label for="docNumber" *ngIf="docNumber.value == ''" >Document Number</label>
+                                                        [(ngModel)]="qde.application.applicants[coApplicantIndex].pan.docNumber"
+                                                        id="docNumber"
+                                                        name="docNumber"
+                                                        #docNumber="ngModel"
+                                                        fieldFill />
+                                                <label for="docNumber">Document Number</label>
                                               <!-- <image-upload [url]="imageUrl" [headers]="myHeaders"></image-upload> -->
                                                 </div>
                                           </div>
@@ -1956,8 +1954,7 @@
                                                 textField="key"
                                                 valueField="value"
                                                 name="docType"
-                                                [(ngModel)]="selectedDocType"
-                                                >
+                                                [(ngModel)]="selectedDocType">
                                               </kendo-dropdownlist>
                                             </div>
                                             <div class="form-group">
@@ -1966,8 +1963,7 @@
                                               id="docNumber2"
                                               name="docNumber"
                                               #docNumber="ngModel"
-                                              fieldFill
-                                               />
+                                              fieldFill />
                                               <label for="docNumber2" *ngIf="docNumber.value == ''" >Document Number</label>
                                             <!-- <image-upload [url]="imageUrl" [headers]="myHeaders"></image-upload> -->
                                               </div>
@@ -1976,8 +1972,7 @@
                                                 <button type="submit"
                                                         class="btn btn-primary"
                                                         [ngClass]="{'disabled': !panNumberForm2.valid}"
-                                                        [disabled]="!panNumberForm2.valid"
-                                                        >Next
+                                                        [disabled]="!panNumberForm2.valid">Next
                                                 </button>
                                           </div>
   

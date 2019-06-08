@@ -5547,3 +5547,8 @@ img {
     float: left;
     width: 33.33%;
 }
+
+.disabled {
+	cursor: not-allowed;
+	pointer-events: none;
+}

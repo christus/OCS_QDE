@@ -231,7 +231,7 @@ export class QdeService {
   }
 
   getQde(): Qde {
-    return this.qde; 
+    return this.qde;
   }
 
   setQde(qde: Qde): void {
@@ -250,8 +250,13 @@ export class QdeService {
     var newObj = {};
   
     a.forEach((obj ,index) => {
+
+      // Exception Keys
+      if(obj.key == ['ocsNumber', 'applicationId', 'isMainApplicant']) {
+        return;
+      }
       // Filter Empty Values
-      if(obj.value == null || obj.value == undefined || obj.value == NaN) {
+      else if(obj.value == null || obj.value == undefined || obj.value == NaN) {
         delete obj.key;
         return;
       } else if(obj.value.constructor == String) {
@@ -307,5 +312,165 @@ export class QdeService {
     });
   
     return newObj;    
+  }
+
+  addNewCoApplicant() {
+    this.qde.application.applicants.push({
+      "applicantId": "",
+      "isMainApplicant": false,
+      "isIndividual": null,
+      "partnerRelationship": "",
+      "maritalStatus": {
+        "status": "",
+        "spouseTitle": "",
+        "firstName": "",
+        "earning": null,
+        "amount": null,
+      },
+      "familyDetails": {
+        "numberOfDependents": null,
+        "fatherTitle": "",
+        "fatherName": "",
+        "motherTitle": "",
+        "motherName": "",
+        "motherMaidenName": ""
+      },
+      "other": {
+        "religion": "",
+        "category": ""
+      },
+      "occupation": {
+        "occupationType": "",
+        "companyName": "",
+        "numberOfYearsInCurrentCompany": null,
+        "totalWorkExperience": null
+      },
+      "pan": {
+        "panNumber": "",
+        "panImage": "",
+        "docType": null,
+        "docNumber": ""
+      },
+      "personalDetails": {
+        "title": "",
+        "firstName": "",
+        "middleName": "",
+        "lastName": "",
+        "gender": "",
+        "qualification": "",
+        "dob": "",
+        "birthPlace": "",
+        "applicantStatus" : ""
+      },
+      "contactDetails": {
+        "preferredEmailId": "",
+        "alternateEmailId" : "",
+        "mobileNumber": null,
+        "alternateMobileNumber": null,
+        "residenceNumber": "",
+        "alternateResidenceNumber": ""
+      },
+      "communicationAddress": {
+        "residentialStatus" : "",
+        "addressLineOne" : "",
+        "addressLineTwo" : "",
+        "zipcode" : "",
+        "city" : "",
+        "state" : "",
+        "cityState": "",
+        "numberOfYearsInCurrentResidence" : "",
+        "permanentAddress" : null,
+        "preferedMailingAddress": ""
+      },
+      "permanentAddress": {
+        "residentialStatus" : "",
+        "addressLineOne" : "",
+        "addressLineTwo" : "",
+        "zipcode" : "",
+        "city" : "",
+        "state" : "",
+        "cityState": "",
+        "numberOfYearsInCurrentResidence" : "",
+        "permanentAddress" : null,
+        "preferedMailingAddress": ""
+      },
+      "residentialAddress": {
+        "residentialStatus" : "",
+        "addressLineOne" : "",
+        "addressLineTwo" : "",
+        "zipcode" : "",
+        "city" : "",
+        "state" : "",
+        "cityState": "",
+        "numberOfYearsInCurrentResidence" : "",
+        "permanentAddress" : null
+      },
+      "officialCorrespondence": {
+        "addressLineOne": "",
+        "addressLineTwo": "",
+        "landMark": "",
+        "zipcode": "",
+        "city": "",
+        "state": "",
+        "officeNumber": "",
+        "officeEmailId": "",
+        "cityState": "",
+        "zipCityStateID": "",
+      },
+      "organizationDetails": {
+        "nameOfOrganization": "",
+        "dateOfIncorporation": "",
+        "constitution": ""
+      },
+      "registeredAddress": {
+        "registeredAddress" : "",
+        "landMark" : "",
+        "zipcode" : "",
+        "city" : "",
+        "state" : ""
+      },
+      "corporateAddress": {
+        "corporateAddress": "",
+        "landMark": "",
+        "zipcode": "",
+        "city": "",
+        "state": "",
+        "stdNumber": "",
+        "officeEmailId": ""
+      },
+      "revenueDetails": {
+        "revenue": null,
+        "annualNetIncome": null,
+        "grossTurnOver": null
+      },
+      "incomeDetails": {
+        "annualFamilyIncome" : "",
+        "monthlyExpenditure" : "",
+        "incomeConsider": null,
+        "monthlyIncome": "",
+        "assessmentMethodology": "",
+        "puccaHouse": null
+      },
+      "documents": [
+        {
+          "documentType": "",
+          "documentValue": ""
+        },
+        {
+          "documentType": "",
+          "documentValue": ""
+        },
+        {
+          "documentType": "",
+          "documentValue": ""
+        }
+      ]
+    });
+
+    this.qdeSource$.next(this.qde);
+  }
+
+  resetQde() {
+    this.setQde(this.defaultValue);
   }
 }

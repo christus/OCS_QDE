@@ -28,6 +28,7 @@ interface Item {
 })
 export class CoApplicantQdeComponent implements OnInit {
 
+  private isTabDisabled: boolean = true;
 
   private errors = {
 
@@ -516,8 +517,7 @@ export class CoApplicantQdeComponent implements OnInit {
 
     console.log("params: ", this.route.snapshot.params);
 
-    // Create New Entry as 0 will be Applicant
-    this.coApplicantIndex = 1;
+    
 
     this.route.params.subscribe((params) => {
 
@@ -529,18 +529,16 @@ export class CoApplicantQdeComponent implements OnInit {
       if(params.applicationId != null) {
 
         // If not coming from leads dashboard
-        if(this.qdeService.getQde().application.applicationId == "" || this.qdeService.getQde().application.applicationId == null) {
+        // if(this.qdeService.getQde().application.applicationId == "" || this.qdeService.getQde().application.applicationId == null) {
           this.qdeHttp.getQdeData(params.applicationId).subscribe(response => {
             var result = JSON.parse(response["ProcessVariables"]["response"]);
             console.log("Get ", result);
 
             this.qdeService.setQde(result);
-            this.prefillData(params);
           });
-        } else {
-          this.prefillData(params);
-        }
+        // }
       }
+      this.prefillData(params);
     });
   }
 
@@ -592,6 +590,9 @@ export class CoApplicantQdeComponent implements OnInit {
 
   tabSwitch(tabIndex ?: number) {
 
+    if(tabIndex == 0)
+      this.isTabDisabled = true;
+
     // Check for invalid tabIndex
     if(tabIndex < this.fragments.length) {
       // alert(tabIndex);
@@ -637,30 +638,29 @@ export class CoApplicantQdeComponent implements OnInit {
 
     console.log(this.qde.application.applicants[this.coApplicantIndex].pan.panNumber);
 
+    console.log(this.qde);
     console.log("Get Filtered JSON: ", this.qdeService.getFilteredJson(this.qde));
-    // this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
-    //   // If successful
-    //   if(response["ProcessVariables"]["status"]) {
-    //     let result = this.parseJson(response["ProcessVariables"]["response"]);
+    this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
+      // If successful
+      if(response["ProcessVariables"]["status"]) {
+        let result = this.parseJson(response["ProcessVariables"]["response"]);
 
-    //     this.qde.application.ocsNumber = result["application"]["ocsNumber"];
-    //     this.qde.application.applicationId = result["application"]["applicationId"];
-    //     this.qde.application.applicants[this.coApplicantIndex].applicantId =  result["application"]["applicants"][this.coApplicantIndex]["applicantId"];
+        console.log(result);
+        this.qdeService.setQde(result);
 
+        //this.goToNextSlide(swiperInstance);
+
+        this.cds.changePanSlide(true);
+        this.router.navigate(['/co-applicant/'+result["application"]["applicationId"]], {fragment: "pan1"});
         
-    //     //this.goToNextSlide(swiperInstance);
-
-    //     this.cds.changePanSlide(true);
-    //     this.router.navigate(['/co-applicant/'+result["application"]["applicationId"]], {fragment: "pan1"});
-        
-    //   } else {
-    //     // Throw Invalid Pan Error
-    //   }
-    // }, (error) => {
-    //   console.log('error ', error);
-    //   alert("error"+error);
-    //   // Throw Request Failure Error
-    // });
+      } else {
+        // Throw Invalid Pan Error
+      }
+    }, (error) => {
+      console.log('error ', error);
+      alert("error"+error);
+      // Throw Request Failure Error
+    });
   }
 
 
@@ -669,7 +669,7 @@ export class CoApplicantQdeComponent implements OnInit {
   //-------------------------------------------------------------
 
   submitOrgPanNumber(form: NgForm, swiperInstance ?: Swiper) {
-// alert(1111);
+
     event.preventDefault();
 
     if (form && !form.valid) {
@@ -1563,10 +1563,13 @@ export class CoApplicantQdeComponent implements OnInit {
     // Make QDE Data Global Across App
 
     // This is when co-applicant is being edited
-    if(params.coApplicantIndex != null) {
+    if( params.coApplicantIndex != null && (!isNaN(parseInt(params.coApplicantIndex))) ) {
       //------------------------------------------------------
       //    Prefilling values
       //------------------------------------------------------
+      // Set CoApplicant for Prefilling the fields
+      this.coApplicantIndex = this.qde.application.applicants.indexOf(params.coApplicantIndex);
+
       // Personal Details Title
       if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].personalDetails.title)) ) {
         this.selectedTitle = this.titles[(parseInt(this.qde.application.applicants[this.coApplicantIndex].personalDetails.title))-1];
@@ -1667,8 +1670,20 @@ export class CoApplicantQdeComponent implements OnInit {
     // This is Co-Applicant Create
     else {
       // New CoApplicant Index for New CoApplicant
-      this.coApplicantIndex = this.qde.application.applicants.filter(val => val.isMainApplicant == false).length + 1;
+      this.coApplicantIndex = this.qde.application.applicants.length == 0 ? this.qde.application.applicants.length : this.qde.application.applicants.length - 1;
+      this.qdeService.addNewCoApplicant();
       this.initializeVariables();
     }
+  }
+
+  createCoApplicant() {
+    this.isTabDisabled = false;
+    this.tabSwitch(1);
+  }
+
+  resetQdeForm() {
+    this.resetQdeForm();
+
+    // Reset Kendo and Sliders here
   }
 }

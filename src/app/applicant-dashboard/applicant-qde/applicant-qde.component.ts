@@ -523,7 +523,6 @@ export class ApplicantQdeComponent implements OnInit {
       this.selectedDocType = this.docType[0];
       this.selectedConstitutions = this.constitutions[0];
 
-
       this.selectedAssesmentMethodology = this.assessmentMethodology[0];
     }
 
@@ -1915,4 +1914,6 @@ export class ApplicantQdeComponent implements OnInit {
       // this.qde.application.applicants[this.applicantIndex].permanentAddress.cityState = "";
     }
   }
+
+  
 }
