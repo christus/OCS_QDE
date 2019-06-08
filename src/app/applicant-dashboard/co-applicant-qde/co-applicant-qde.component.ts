@@ -36,10 +36,10 @@ export class CoApplicantQdeComponent implements OnInit {
       length: "PAN number must be at least 10 characters",
       invalid: "Invalid PAN Number"
     },
-
-    documentNumber: {
-      required: "Document Number is mandatory",
-      invalid: "Document Number is invalid"
+    panDocumentNo: {
+      required: "Document number is mandatory",
+      length: "Enter 16 Digits Document number",
+      invalid: "Invalid Document Number"
     },
 
     personalDetails: {
@@ -189,12 +189,15 @@ export class CoApplicantQdeComponent implements OnInit {
     incomeDetails:{
       familyIncome:{
         required: "Annual family Income is mandatory",
+        invalid:"Invalid Family Income / Alphabets and Special characters are not allowed"
       },
       monthlyExpenditure:{
-        required:"Monthly Expenditure is mandatory"
+        required:"Monthly Expenditure is mandatory",
+        invalid:"Invalid Monthly Expenditure / Alphabets and Special characters are not allowed"
       },
       monthlyIncome:{
-        required:"Monthly Income is mandatory"
+        required:"Monthly Income is mandatory",
+        invalid:"Invalid Monthly Income / Alphabets and Special characters are not allowed"
       }
     },
 
@@ -274,9 +277,10 @@ export class CoApplicantQdeComponent implements OnInit {
     // cityState:"^[0-9A-Za-z, &'#]$",
     pinCode: "^[1-9][0-9]{5}$",
     pan:"[A-Z]{5}[0-9]{4}[A-Z]{1}",
-    amount:"[0-9]{0,17}.[0-9]{1,4}?$",
+    amount:"^[\\d]{0,14}([.][0-9]{0,4})?",
     revenue:"^[1-9][0-9]{0,17}",
-    documentNumber : "^([a-zA-Z0-9_-]){16,16}$"
+    docNumber: "^[a-zA-Z0-9]{16}$"
+
     // revenue:"^[0-9]{0,17}\.[0-9]{1,4}?$"
    
   };

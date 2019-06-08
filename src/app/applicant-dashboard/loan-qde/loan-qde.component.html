@@ -43,9 +43,10 @@
                         ngModel
                         #amountRequired = "ngModel"
                         name="amountRequired"
+                        fieldFill
                         pattern="{{regexPattern.amount}}">
 
-                      <label for="amt-require" *ngIf="!amountRequired.value">Amount required (in lakhs)</label>
+                      <label for="amt-require" >Amount required (in lakhs)</label>
                       <span class="addon">
                         <span class="icon icon-inr"></span>
                       </span>
@@ -92,12 +93,12 @@
                     <div class="form-group typ-range">
                       <span class="control-title">Loan tenure (in years)</span>
                       <input type="number" 
-						class="form-control" id="no-yrs"
+					          	class="form-control" id="no-yrs"
                         required
                         ngModel
                         #loanTenure = "ngModel"
                         name="loanTenure"
-						[ngModel]="value[0]"
+					            	[ngModel]="value[0]"
                         (ngModelChange)="valuechange($event, 0)"
                         pattern='{{regexPattern.tenure}}'>
 

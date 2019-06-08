@@ -132,11 +132,11 @@
                                                           #pan="ngModel"
                                                           fieldFill
                                                           required>
-                                                  <label for="pan-inpt" *ngIf="pan.value == ''">Enter PAN in Uppercase</label>
+                                                  <label for="pan-inpt" >Enter PAN in Uppercase</label>
                                                   <div *ngIf="pan.touched && pan.invalid" class="invalid-feedback">
-                                                      <div *ngIf="pan.errors?.required">*PAN number is required</div>
-                                                      <div *ngIf="pan.errors?.pattern ? true : false">*PAN not valid</div>
-                                                      <div *ngIf="pan.errors?.minlength || pan.errors?.maxlength">*PAN must be at least {{pan.errors.minlength.requiredLength}} characters</div>
+                                                      <div *ngIf="pan.errors?.required">{{errors.pan.required}}</div>
+                                                      <div *ngIf="pan.errors?.pattern ? true : false">{{errors.pan.invalid}}</div>
+                                                      <div *ngIf="pan.errors?.minlength || pan.errors?.maxlength">{{errors.pan.length}}</div>
                                                   </div>
                                               </div>
                                               <div class="form-group">
@@ -170,22 +170,23 @@
                                                       >
                                                     </kendo-dropdownlist>
                                                 </div>
+
                                             </div>
                                             <div class="form-group">
                                                 <input type="text" class="form-control"
                                                 [(ngModel)]="qde.application.applicants[applicantIndex].pan.docNumber"
                                                 id="docNumber"
                                                 name="docNumber"
+                                                pattern="{{regexPattern.docNumber}}"
                                                 #docNumber="ngModel"
-                                                pattern="{{regexPattern.documentNumber}}"
+                                                maxlength="16"
                                                 fieldFill
-                                                required
-                                                 />
+                                                required/>
                                               <label for="docNumber">Document Number</label>
 
                                               <div *ngIf="docNumber.touched && docNumber.invalid" class="invalid-feedback">
-                                                  <div *ngIf="docNumber.errors?.required">{{errors.documentNumber.required}}</div>
-                                                  <div *ngIf="docNumber.errors?.pattern ? true : false">{{errors.documentNumber.invalid}}</div>
+                                                <div *ngIf="docNumber.errors?.required">{{errors.panDocumentNo.required}}</div>
+                                                <div *ngIf="docNumber.errors?.pattern">{{errors.panDocumentNo.invalid}}</div>
                                               </div>
                                               <!-- <image-upload [url]="imageUrl" [headers]="myHeaders"></image-upload> -->
                                           </div>
@@ -802,14 +803,15 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <input type="number" class="form-control" id="pincode" required
+                                    <input type="text" class="form-control" id="pincode" required
                                       [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.zipcode"
                                       name="pinCode"
                                       #commPinCode="ngModel" 
                                       maxlength="6"
+                                      fieldFill
                                       (keyup)="onPinCodeChange($event, 'communicationAddress')" 
                                       pattern="{{regexPattern.pinCode}}" />
-                                    <label for="pincode" *ngIf="commPinCode.value == ''">Pincode</label>
+                                    <label for="pincode" >Pincode</label>
 
                                     <div *ngIf="(commPinCode.touched || commPinCode.dirty) && commPinCode.invalid" class="invalid-feedback">
                                         <div *ngIf="commPinCode.errors?.required">{{errors.commAddress.pinCode.required}}</div>
@@ -855,7 +857,7 @@
                                             fieldFill
                                             required
                                             [readonly]="qde.application.applicants[applicantIndex].communicationAddress.permanentAddress == true" />
-                                            <label for="per-address1" *ngIf="pAddress1.value == ''">Address line 1</label>
+                                            <label for="per-address1" >Address line 1</label>
                                             <div *ngIf="(pAddress1.touched || pAddress1.dirty) && pAddress1.invalid" class="invalid-feedback">
                                                 <div *ngIf="pAddress1.errors?.required">{{errors.commAddress.address1.required}}</div>
                                                 <div *ngIf="pAddress1.errors?.pattern">{{errors.commAddress.address1.invalid}}</div>
@@ -870,7 +872,7 @@
                                             pattern="{{regexPattern.address}}"
                                             required
                                             [readonly]="qde.application.applicants[applicantIndex].communicationAddress.permanentAddress == true" />
-                                            <label for="per-address2" *ngIf="pAddress2.value == ''">Address line 2</label>
+                                            <label for="per-address2" >Address line 2</label>
                                             <div *ngIf="(pAddress2.touched || pAddress2.dirty) && pAddress2.invalid" class="invalid-feedback">
                                                 <div *ngIf="pAddress2.errors?.required">{{errors.commAddress.address2.required}}</div>
                                                 <div *ngIf="pAddress2.errors?.pattern">{{errors.commAddress.address2.invalid}}</div>
@@ -890,7 +892,7 @@
                                                     pattern="{{regexPattern.pinCode}}"
                                                     required
                                                     [readonly]="qde.application.applicants[applicantIndex].communicationAddress.permanentAddress == true" />
-                                            <label for="per-pincode" *ngIf="pZipcode.value==''">Pincode</label>
+                                            <label for="per-pincode" >Pincode</label>
                                             <div *ngIf="(pZipcode.touched || pZipcode.dirty) && pZipcode.invalid" class="invalid-feedback">
                                                 <div *ngIf="pZipcode.errors?.required">{{errors.commAddress.pinCode.required}}</div>
                                                 <div *ngIf="pZipcode.errors?.pattern">{{errors.commAddress.pinCode.invalid}}</div>
@@ -940,7 +942,7 @@
                                     </div>
                                 <div class="form-group typ-range">
                                     <span class="control-title">Number of years in current residence</span>
-                                    <input type="number"
+                                    <input type="text"
                                             name="numberOfYearsInCurrentResidence"
                                             class="form-control"
                                             [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.numberOfYearsInCurrentResidence"
@@ -1082,11 +1084,11 @@
 
                                                   <input type="text"
                                                     class="form-control" 
-                                                    pattern="{{regexPattern.name}}"
-                                                    id="spouse-name"
                                                     [(ngModel)]="qde.application.applicants[applicantIndex].maritalStatus.firstName"
                                                     #spouseName="ngModel"
-                                                    name="spouseName"
+                                                    name="firstName"
+                                                    pattern="{{regexPattern.name}}"
+                                                    id="spouse-name"
                                                     fieldFill
                                                     required>
                                                   <label for="spouse-name">First name</label>
@@ -1141,7 +1143,7 @@
                                           <div class="form-wrap">
                                               <div class="form-group inr">
 
-                                                <input type="number"
+                                                <input type="text"
                                                         class="form-control"
                                                         id="amount"
                                                         required
@@ -1503,7 +1505,7 @@
                                 </div>
                                 <div class="form-group typ-range">
                                     <span class="control-title">Years in current employment/bussiness</span>
-                                    <input type="number"
+                                    <input type="text"
                                             name="numberOfYearsInCurrentCompany"
                                             id="no-yrs"
                                             class="form-control"
@@ -1663,7 +1665,7 @@
                                 </div>
                                 <div class="residence-no">
                                     <div class="form-group">
-                                        <input type="number" class="form-control" id="std03"
+                                        <input type="text" class="form-control" id="std03"
                                           required
                                           [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.officeStd"
                                           #stdCode = "ngModel"
@@ -1773,38 +1775,45 @@
                                   <div class="form-wrap">
                                       <div class="form-group">
                                             <input type="text" class="form-control"
-                                            id="annualFamilyIncome"
+                                            id="annual-Family-Income123"
                                             [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.annualFamilyIncome"
-                                            #annualFamilyIncome="ngModel"
+                                            #annualFamilyIncome1="ngModel"
                                             name="annualFamilyIncome"
-					                        fieldFill
+                                            fieldFill
+                                            pattern="{{regexPattern.amount}}"
                                             required/>
-                                          <label for="annualFamilyIncome" >Annual Family Income</label>
-                                          <div for="app-monthly-income" *ngIf="annualFamilyIncome.touched && annualFamilyIncome.Invalid" class="invalid-feedback">
-                                                <div *ngIf="annualFamilyIncome.errors?.required">{{errors.incomeDetails.familyIncome.required}}</div>
-                                                <!-- <div *ngIf="annualFamilyIncome.errors?.pattern">{{errors.incomeDetails.familyIncome.invalid}}</div> -->
+                                          <label for="annual-Family-Income123" >Annual Family Income</label>
+
+                                          <div *ngIf="annualFamilyIncome1.touched && annualFamilyIncome1.invalid" class="invalid-feedback">
+                                                <div *ngIf="annualFamilyIncome1.errors?.required">{{errors.incomeDetails.familyIncome.required}}</div>
+                                                <div *ngIf="annualFamilyIncome1.errors?.pattern">{{errors.incomeDetails.familyIncome.invalid}}</div>
                                             </div> 
                                       </div>
                                         <div class="form-group">
                                               <input type="text" class="form-control" 
-                                              id="monthlyExpenditure"
+                                              id="monthly-Expenditure123"
                                               [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.monthlyExpenditure"
-                                              #monthlyExpenditure="ngModel"
+                                              #monthlyExpenditure1="ngModel"
                                               name="monthlyExpenditure"
+                                              required
+                                              pattern="{{regexPattern.amount}}"
                                               fieldFill
-                                              required/>
-                                            <label for="monthlyExpenditure" >Monthly Expenditure</label>
-                                            <div for="app-monthly-income" *ngIf="monthlyExpenditure.touched && monthlyExpenditure.Invalid" class="invalid-feedback">
-                                                    <div *ngIf="monthlyExpenditure.errors?.required">{{errors.incomeDetails.monthlyExpenditure.required}}</div>
-                                                    <!-- <div *ngIf="monthlyExpenditure.errors?.pattern">{{errors.incomeDetails.monthlyExpenditure.invalid}}</div> -->
+                                              />
+                                            <label for="monthly-Expenditure123">Monthly Expenditure</label>
+                                  
+                                            <div *ngIf="monthlyExpenditure1.touched && monthlyExpenditure1.invalid" class="invalid-feedback">
+                                                    <div *ngIf="monthlyExpenditure1.errors?.required">{{errors.incomeDetails.monthlyExpenditure.required}}</div>
+                                                    <div *ngIf="monthlyExpenditure1.errors?.pattern">{{errors.incomeDetails.monthlyExpenditure.invalid}}</div>
                                                 </div> 
                                         </div>
                                     </div>
                                   <div class="btn-wrap">
                                         <button 
                                             type="submit"
-                                            class="btn btn-primary">
-                                        Next
+                                            class="btn btn-primary"
+                                            [ngClass]="{'disabled': !applicantIncomeNonIndividual.valid}"
+                                            [disabled]="!applicantIncomeNonIndividual.valid">
+                                            Next
                                         </button>
                                   </div>
                               </form>
@@ -1840,17 +1849,25 @@
                                         #applicantIncome3NonIndividual="ngForm" (ngSubmit)="submitIncomeDetails2(applicantIncome3NonIndividual, incomeSlider2)">
                                             <div class="form-wrap">
                                                 <div class="form-group inr">
-                                                    <input type="text" class="form-control" id="app-monthly-income"
+                                                    <input type="text" class="form-control" id="app-monthly-income123"
                                                     [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.monthlyIncome"
-                                                    #monthlyIncome="ngModel"
-                                                    name="monthlyIncome" 
+                                                    #monthlyIncome1="ngModel"
+                                                    name="monthlyIncome"
                          			                fieldFill
-                                                    required>
-                                                    <label for="monthlyIncome" >Monthly income</label>
-                                                    <div for="app-monthly-income" *ngIf="monthlyIncome.touched && monthlyIncome.Invalid" class="invalid-feedback">
-                                                            <div *ngIf="monthlyIncome.errors?.required">{{errors.incomeDetails.monthlyIncome.required}}</div>
-                                                            <div *ngIf="monthlyIncome.errors?.pattern">{{errors.incomeDetails.monthlyIncome.invalid}}</div>
-                                                        </div> 
+                                                    required
+                                                    pattern="{{regexPattern.amount}}"/>
+                                                    
+                                                    <label for="app-monthly-income123">Monthly income</label>
+                                                    <span class="addon">
+                                                        <span class="icon icon-inr"></span>
+                                                      </span>
+                                                      <span class="in-word"></span>
+
+                                                    <div *ngIf="monthlyIncome1.touched && monthlyIncome1.invalid" class="invalid-feedback">
+                                                            
+                                                            <div *ngIf="monthlyIncome1.errors?.required">{{errors.incomeDetails.monthlyIncome.required}}</div>
+                                                            <div *ngIf="monthlyIncome1.errors?.pattern">{{errors.incomeDetails.monthlyIncome.invalid}}</div>
+                                                    </div> 
 
                                                 </div>
                                                 <div class="form-group">
@@ -1884,7 +1901,10 @@
                                                 </div>
                                             </div>
                                             <div class="btn-wrap">
-                                                <button type="submit" class="btn btn-primary" (click)="goToNextSlide(incomeSlider2)">Next</button>
+                                                <button type="submit" class="btn btn-primary" 
+                                                [ngClass]="{'disabled': !applicantIncome3NonIndividual.valid}"
+                                                [disabled]="!applicantIncome3NonIndividual.valid"
+                                                (click)="goToNextSlide(incomeSlider2)">Next</button>
                                             </div>
                                         </form>
                                     </div>
@@ -1963,8 +1983,8 @@
                                                         required />
                                                 <label for="pan-inpt2">Enter PAN numbers</label>
                                                 <div *ngIf="pan2.touched && pan2.invalid" class="invalid-feedback">
-                                                    <div *ngIf="pan2.errors?.required">*PAN number is required</div>
-                                                    <div *ngIf="pan2.errors?.pattern ? true : false">*PAN not valid</div>
+                                                    <div *ngIf="pan2.errors?.required">{{errors.pan.required}}</div>
+                                                    <div *ngIf="pan2.errors?.pattern ? true : false">{{errors.pan.invalid}}</div>
                                                     <!-- <div *ngIf="pan2.errors?.minlength || pan2.errors?.maxlength">*PAN must be at least {{pan.errors.minlength.requiredLength}} characters</div> -->
                                                 </div>
                                             </div>
@@ -2481,39 +2501,44 @@
                                       <div class="form-wrap">
                                           <div class="form-group">
                                                 <input type="text" class="form-control"
-                                                id="annualFamilyIncome2"
+                                                id="annualFamilyIncome1234"
                                                 required
                                                 [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.annualFamilyIncome"
-                                                #annualFamilyIncome2="ngModel"
+                                                #annualFamilyIncome12="ngModel"
+                                                pattern="{{regexPattern.amount}}"
                                                 name="annualFamilyIncome"
                                                 fieldFill
                                                 />
-                                              <label for="annualFamilyIncome2">Annual Family Income</label>
-                                              <div *ngIf="annualFamilyIncome2.touched && annualFamilyIncome2.invalid" class="invalid-feedback">
-                                                <div *ngIf="annualFamilyIncome2.errors?.required">{{errors.incomeDetails.familyIncome.required}}</div>
-                                              
+                                              <label for="annualFamilyIncome1234">Annual Family Income</label>
+                                              <div *ngIf="annualFamilyIncome12.touched && annualFamilyIncome12.invalid" class="invalid-feedback">
+                                                <div *ngIf="annualFamilyIncome12.errors?.required">{{errors.incomeDetails.familyIncome.required}}</div>
+                                                <div *ngIf="annualFamilyIncome12.errors?.pattern">{{errors.incomeDetails.familyIncome.invalid}}</div>
+
                                             </div>
                                           </div>
                                             <div class="form-group">
                                                   <input type="text" class="form-control" 
-                                                  id="monthlyExpenditure2"
+                                                  id="monthlyExpenditure1234"
                                                   required
+                                                  pattern="{{regexPattern.amount}}"
                                                   [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.monthlyExpenditure"
-                                                  #monthlyExpenditure2="ngModel"
+                                                  #monthlyExpenditure12="ngModel"
                                                   name="monthlyExpenditure"
                                                   fieldFill
                                                   />
-                                                <label for="monthlyExpenditure2" >Monthly Expenditure</label>
-                                                <div *ngIf="monthlyExpenditure2.touched && monthlyExpenditure2.invalid" class="invalid-feedback">
-                                                    <div *ngIf="monthlyExpenditure2.errors?.required">{{errors.incomeDetails.monthlyExpenditure.required}}</div>
-                                                  
+                                                <label for="monthlyExpenditure1234" >Monthly Expenditure</label>
+                                                <div *ngIf="monthlyExpenditure12.touched && monthlyExpenditure12.invalid" class="invalid-feedback">
+                                                    <div *ngIf="monthlyExpenditure12.errors?.required">{{errors.incomeDetails.monthlyExpenditure.required}}</div>
+                                                    <div *ngIf="monthlyExpenditure12.errors?.pattern">{{errors.incomeDetails.monthlyExpenditure.invalid}}</div>
                                                 </div>
                                             </div>
                                         </div>
                                       <div class="btn-wrap">
                                             <button 
                                                 type="submit"
-                                                class="btn btn-primary">
+                                                class="btn btn-primary"  
+                                                [ngClass]="{'disabled': !applicantIncome1.valid}"
+                                                [disabled]="!applicantIncome1.valid">
                                                  
                                             Next
                                             </button>
@@ -2552,20 +2577,21 @@
                                             #applicantIncome3="ngForm" (ngSubmit)="submitIncomeDetails2(applicantIncome3, incomeSlider4)">
                                                 <div class="form-wrap">
                                                     <div class="form-group inr">
-                                                        <input type="text" class="form-control" id="app-monthly-income"
+                                                        <input type="text" class="form-control" id="app-monthly-income1234"
                                                         [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.monthlyIncome"
-                                                        #monthlyIncome="ngModel"
+                                                        #monthlyIncome12="ngModel"
                                                         fieldFill
+                                                        pattern="{{regexPattern.amount}}"
                                                         required
                                                         name="monthlyIncome">
-                                                        <label for="monthlyIncome">Monthly income</label>
+                                                        <label for="app-monthly-income1234">Monthly income</label>
                                                         <span class="addon">
                                                             <span class="icon icon-inr"></span>
                                                         </span>
                                                         <span class="in-word"></span>
-                                                        <div *ngIf="monthlyIncome.touched && monthlyIncome.invalid" class="invalid-feedback">
-                                                            <div *ngIf="monthlyIncome.errors?.required">{{errors.incomeDetails.monthlyIncome.required}}</div>
-                                                          
+                                                        <div *ngIf="monthlyIncome12.touched && monthlyIncome12.invalid" class="invalid-feedback">
+                                                            <div *ngIf="monthlyIncome12.errors?.required">{{errors.incomeDetails.monthlyIncome.required}}</div>
+                                                            <div *ngIf="monthlyIncome12.errors?.pattern">{{errors.incomeDetails.monthlyIncome.invalid}}</div>
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
@@ -2599,7 +2625,10 @@
                                                     </div>
                                                 </div>
                                                 <div class="btn-wrap">
-                                                    <button type="submit" class="btn btn-primary" (click)="goToNextSlide(incomeSlider4)">Next</button>
+                                                    <button type="submit" class="btn btn-primary" 
+                                                    (click)="goToNextSlide(incomeSlider4)"
+                                                    [ngClass]="{'disabled': !applicantIncome3.valid}"
+                                                    [disabled]="!applicantIncome3.valid">Next</button>
                                                 </div>
                                             </form>
                                         </div>
