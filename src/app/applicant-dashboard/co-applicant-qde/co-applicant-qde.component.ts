@@ -408,6 +408,7 @@ export class CoApplicantQdeComponent implements OnInit {
   private selectedMotherTitle: Item;
   private selectedConstitution: Item;
   private selectedDocType: Item;
+  private docType: Array<any>;
 
 
   constructor(private renderer: Renderer2,
