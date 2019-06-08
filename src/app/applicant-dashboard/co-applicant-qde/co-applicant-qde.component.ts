@@ -338,7 +338,7 @@ export class CoApplicantQdeComponent implements OnInit {
   private corporateAddressStdNumber: {stdCode: string, phoneNumber: string} = {stdCode: "", phoneNumber: ""};
 
   private commCityState:string = "";
-  zipCityStateID:string = "";
+  // zipCityStateID:string = "";
 
   @ViewChild('tabContents') private tabContents: ElementRef;
   // @ViewChild(Select2Component) private select2: Select2Component;
@@ -929,29 +929,29 @@ export class CoApplicantQdeComponent implements OnInit {
 
           if(screenName == "communicationAddress") {
             this.qde.application.applicants[this.applicantIndex].communicationAddress.cityState = this.commCityState || "";    
-            this.qde.application.applicants[this.applicantIndex].communicationAddress.zipCityStateID = zipCityStateID;
+            //this.qde.application.applicants[this.applicantIndex].communicationAddress.zipCityStateID = zipCityStateID;
           }
 
 
           if(screenName == "permanentAddress") {
             this.qde.application.applicants[this.applicantIndex].permanentAddress.cityState = this.commCityState || "";    
-            this.qde.application.applicants[this.applicantIndex].permanentAddress.zipCityStateID = zipCityStateID;
+            //this.qde.application.applicants[this.applicantIndex].permanentAddress.zipCityStateID = zipCityStateID;
           }
 
 
           if(screenName == "officialCorrespondence") {
             this.qde.application.applicants[this.applicantIndex].officialCorrespondence.cityState = this.commCityState || "";    
-            this.qde.application.applicants[this.applicantIndex].officialCorrespondence.zipCityStateID = zipCityStateID;
+            //this.qde.application.applicants[this.applicantIndex].officialCorrespondence.zipCityStateID = zipCityStateID;
           }
 
           if(screenName == "registeredAddress") {
             this.qde.application.applicants[this.applicantIndex].registeredAddress.cityState = this.commCityState || "";    
-            this.qde.application.applicants[this.applicantIndex].registeredAddress.zipCityStateID = zipCityStateID;
+            //this.qde.application.applicants[this.applicantIndex].registeredAddress.zipCityStateID = zipCityStateID;
           }
 
           if(screenName == "corporateAddress") {
             this.qde.application.applicants[this.applicantIndex].corporateAddress.cityState = this.commCityState || "";    
-            this.qde.application.applicants[this.applicantIndex].corporateAddress.zipCityStateID = zipCityStateID;
+           // this.qde.application.applicants[this.applicantIndex].corporateAddress.zipCityStateID = zipCityStateID;
           }
           
 
@@ -971,39 +971,39 @@ export class CoApplicantQdeComponent implements OnInit {
       return;
     }
 
-    let zipCityStateID = this.qde.application.applicants[this.applicantIndex].communicationAddress.zipCityStateID
+    // let zipCityStateID = this.qde.application.applicants[this.applicantIndex].communicationAddress.zipCityStateID
 
-    let zipId = zipCityStateID.split(',')[0];
-    let cityId = zipCityStateID.split(',')[1];
-    let stateId = zipCityStateID.split(',')[2];
+    // let zipId = zipCityStateID.split(',')[0];
+    // let cityId = zipCityStateID.split(',')[1];
+    // let stateId = zipCityStateID.split(',')[2];
 
-    let pZpCityStateID = this.qde.application.applicants[this.applicantIndex].permanentAddress.zipCityStateID
+    // let pZpCityStateID = this.qde.application.applicants[this.applicantIndex].permanentAddress.zipCityStateID
 
-    let pZipId = zipCityStateID.split(',')[0];
-    let pCityId = zipCityStateID.split(',')[1];
-    let pStateId = zipCityStateID.split(',')[2];
+    // let pZipId = zipCityStateID.split(',')[0];
+    // let pCityId = zipCityStateID.split(',')[1];
+    // let pStateId = zipCityStateID.split(',')[2];
 
-    this.qde.application.applicants[this.applicantIndex].communicationAddress = {
-      residentialStatus : form.value.residentialStatus.value,
-      addressLineOne : form.value.addressLineOne,
-      addressLineTwo : form.value.addressLineTwo,
-      zipcode : zipId,
-      city : cityId,
-      state : stateId,
-      numberOfYearsInCurrentResidence : form.value.numberOfYearsInCurrentResidence,
-      permanentAddress : form.value.permanentAddress,
-      preferedMailingAddress: form.value.prefredMail
-    };
+    // this.qde.application.applicants[this.applicantIndex].communicationAddress = {
+    //   residentialStatus : form.value.residentialStatus.value,
+    //   addressLineOne : form.value.addressLineOne,
+    //   addressLineTwo : form.value.addressLineTwo,
+    //   zipcode : zipId,
+    //   city : cityId,
+    //   state : stateId,
+    //   numberOfYearsInCurrentResidence : form.value.numberOfYearsInCurrentResidence,
+    //   permanentAddress : form.value.permanentAddress,
+    //   preferedMailingAddress: form.value.prefredMail
+    // };
 
 
-    this.qde.application.applicants[this.applicantIndex].permanentAddress = {
-      addressLineOne : form.value.pAddressLineOne,
-      addressLineTwo : form.value.pAddressLineTwo,
-      zipcode : pZipId,
-      city : pCityId,
-      state : pStateId,
-      numberOfYearsInCurrentResidence : form.value.numberOfYearsInCurrentResidence
-    };
+    // this.qde.application.applicants[this.applicantIndex].permanentAddress = {
+    //   addressLineOne : form.value.pAddressLineOne,
+    //   addressLineTwo : form.value.pAddressLineTwo,
+    //   zipcode : pZipId,
+    //   city : pCityId,
+    //   state : pStateId,
+    //   numberOfYearsInCurrentResidence : form.value.numberOfYearsInCurrentResidence
+    // };
 
     console.log(this.qde.application.applicants[this.applicantIndex].communicationAddress);
 
@@ -1261,25 +1261,25 @@ export class CoApplicantQdeComponent implements OnInit {
       return;
     }
 
-    let zipCityStateID = this.qde.application.applicants[this.applicantIndex].officialCorrespondence.zipCityStateID
+    // let zipCityStateID = this.qde.application.applicants[this.applicantIndex].officialCorrespondence.zipCityStateID
 
-    let zipId = zipCityStateID.split(',')[0];
-    let cityId = zipCityStateID.split(',')[1];
-    let stateId = zipCityStateID.split(',')[2];
+    // let zipId = zipCityStateID.split(',')[0];
+    // let cityId = zipCityStateID.split(',')[1];
+    // let stateId = zipCityStateID.split(',')[2];
 
 
-    this.qde.application.applicants[this.applicantIndex].officialCorrespondence = {
-      addressLineOne : form.value.ofcA1,
-      addressLineTwo : form.value.ofcA2,
-      landMark : form.value.landMark,
-      zipcode : zipId,
-      city : cityId,
-      state: stateId,
-      officeStd: form.value.stdCode,
-      //officeNumber : form.value.stdCode + '-'+ form.value.offStdNumber,
-      officeNumber :  form.value.offStdNumber,
-      officeEmailId : form.value.officeEmail
-    };
+    // this.qde.application.applicants[this.applicantIndex].officialCorrespondence = {
+    //   addressLineOne : form.value.ofcA1,
+    //   addressLineTwo : form.value.ofcA2,
+    //   landMark : form.value.landMark,
+    //   zipcode : zipId,
+    //   city : cityId,
+    //   state: stateId,
+    //   officeStd: form.value.stdCode,
+    //   //officeNumber : form.value.stdCode + '-'+ form.value.offStdNumber,
+    //   officeNumber :  form.value.offStdNumber,
+    //   officeEmailId : form.value.officeEmail
+    // };
 
     console.log(this.qde.application.applicants[this.applicantIndex].officialCorrespondence);
 
@@ -1343,18 +1343,18 @@ export class CoApplicantQdeComponent implements OnInit {
     // let cityId = this.zipCityStateID.split(',')[1] || "";
     // let stateId = this.zipCityStateID.split(',')[2] || "";
 
-    let zipId = "";
-    let cityId = "";
-    let stateId = "";
+    // let zipId = "";
+    // let cityId = "";
+    // let stateId = "";
 
 
-    this.qde.application.applicants[this.applicantIndex].registeredAddress = {
-      registeredAddress : form.value.regAdd,
-      landMark : form.value.landmark,
-      zipcode : zipId,
-      city : cityId,
-      state : stateId,
-    };
+    // this.qde.application.applicants[this.applicantIndex].registeredAddress = {
+    //   registeredAddress : form.value.regAdd,
+    //   landMark : form.value.landmark,
+    //   zipcode : zipId,
+    //   city : cityId,
+    //   state : stateId,
+    // };
 
     console.log(this.qde.application.applicants[this.applicantIndex].registeredAddress);
 
@@ -1378,22 +1378,22 @@ export class CoApplicantQdeComponent implements OnInit {
       return;
     }
 
-    let zipCityStateID = this.qde.application.applicants[this.applicantIndex].corporateAddress.zipCityStateID
+    // let zipCityStateID = this.qde.application.applicants[this.applicantIndex].corporateAddress.zipCityStateID
 
-    let zipId = this.zipCityStateID.split(',')[0] || "";
-    let cityId = this.zipCityStateID.split(',')[1] || "";
-    let stateId = this.zipCityStateID.split(',')[2] || "";
+    // let zipId = this.zipCityStateID.split(',')[0] || "";
+    // let cityId = this.zipCityStateID.split(',')[1] || "";
+    // let stateId = this.zipCityStateID.split(',')[2] || "";
 
 
-    this.qde.application.applicants[this.applicantIndex].corporateAddress = {
-      corporateAddress : form.value.corpAddress,
-      landMark : form.value.landmark,
-      zipcode : zipId,
-      city : cityId,
-      state : stateId,
-      stdNumber : form.value.stdNumber+form.value.phoneNumber,
-      officeEmailId : form.value.officeEmailId
-    };
+    // this.qde.application.applicants[this.applicantIndex].corporateAddress = {
+    //   corporateAddress : form.value.corpAddress,
+    //   landMark : form.value.landmark,
+    //   zipcode : zipId,
+    //   city : cityId,
+    //   state : stateId,
+    //   stdNumber : form.value.stdNumber+form.value.phoneNumber,
+    //   officeEmailId : form.value.officeEmailId
+    // };
 
     console.log(this.qde.application.applicants[this.applicantIndex].corporateAddress);
 
