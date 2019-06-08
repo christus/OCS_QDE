@@ -187,20 +187,32 @@
                                                    <option value="2">Driving Lincence</option>
                                                    <option value="3">Passport</option>
                                                   </select> -->
-                                                  <kendo-dropdownlist name="docType" 
-                                                  [(ngModel)]="qde.application.applicants[applicantIndex].pan.docType"
-                                                  name="docType" required>
+                                                  <kendo-dropdownlist name="docType"
+                                                    class="form-control" 
+                                                    [(ngModel)]="qde.application.applicants[applicantIndex].pan.docType"
+                                                    [data]="docType"
+                                                    textField="key"
+                                                    valueField="value"
+                                                    name="docType" required>
                                                   </kendo-dropdownlist>
                                               </div>
                                               <div class="form-group">
-                                                  <input type="text" class="form-control"
-                                                  [(ngModel)]="qde.application.applicants[applicantIndex].pan.docNumber"
-                                                  id="docNumber"
-                                                  name="docNumber"
-                                                  #docNumber="ngModel"
-                                                  fieldFill
-                                                   />
+                                                   <input type="text" class="form-control"
+                                                   [(ngModel)]="qde.application.applicants[applicantIndex].pan.docNumber"
+                                                   id="docNumber"
+                                                   name="docNumber"
+                                                   #docNumber="ngModel"
+                                                   pattern="{{regexPattern.documentNumber}}"
+                                                   fieldFill
+                                                   required
+                                                   maxlength=16
+                                                    />
                                                 <label for="docNumber" >Document Number</label>
+
+                                                <div *ngIf="docNumber.touched && docNumber.invalid" class="invalid-feedback">
+                                                    <div *ngIf="docNumber.errors?.required">{{errors.documentNumber.required}}</div>
+                                                    <div *ngIf="docNumber.errors?.pattern ? true : false">{{errors.documentNumber.invalid}}</div>
+                                                </div>
                                                 <!-- <image-upload [url]="imageUrl" [headers]="myHeaders"></image-upload> -->
                                             </div>
                                           </div>

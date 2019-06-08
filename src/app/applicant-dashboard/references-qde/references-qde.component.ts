@@ -147,6 +147,9 @@ export class ReferencesQdeComponent implements OnInit {
   private constitutions: Array<any>;
   private selectedReferenceOne: Item;
   private selectedReferenceTwo: Item;
+  private selectedReferenceOneTitle: Item;
+  private selectedReferenceTwoTitle: Item;
+
 
   constructor(
     private renderer: Renderer2,
@@ -165,6 +168,8 @@ export class ReferencesQdeComponent implements OnInit {
     this.relationships = lov.LOVS.relationship;
     this.selectedReferenceOne = this.relationships[0];
     this.selectedReferenceTwo = this.relationships[0];
+    this.selectedReferenceOneTitle = this.titles[0];
+    this.selectedReferenceTwoTitle = this.titles[0];
     
     if(this.route.snapshot.data.listOfValues != null && this.route.snapshot.data.listOfValues != undefined) {
       // Initialize all UI Values here
@@ -312,7 +317,7 @@ export class ReferencesQdeComponent implements OnInit {
     }
 
     this.qde.application.references.referenceOne = {
-      title : form.value.title,
+      title : form.value.title.value,
       fullName : form.value.fullName,
       mobileNumber : form.value.mobileNumber,
       addressLineOne : form.value.addressLineOne,
@@ -373,7 +378,7 @@ export class ReferencesQdeComponent implements OnInit {
     }
 
     this.qde.application.references.referenceTwo = {
-      title : form.value.title,
+      title : form.value.title.value,
       fullName : form.value.fullName,
       mobileNumber : form.value.mobileNumber,
       addressLineOne : form.value.addressLineOne,

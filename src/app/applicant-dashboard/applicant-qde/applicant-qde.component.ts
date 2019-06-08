@@ -33,6 +33,11 @@ export class ApplicantQdeComponent implements OnInit {
       invalid: "Invalid PAN Number"
     },
 
+    documentNumber: {
+      required: "Document Number is mandatory",
+      invalid: "Document Number is invalid"
+    },
+
     personalDetails: {
       firstName: {
         required: "First Name is mandatory",
@@ -267,7 +272,8 @@ export class ApplicantQdeComponent implements OnInit {
     pinCode: "^[1-9][0-9]{5}$",
     pan:"[A-Z]{5}[0-9]{4}[A-Z]{1}",
     amount:"[0-9]{0,17}.[0-9]{1,4}?$",
-    revenue:"^[1-9][0-9]{0,17}"
+    revenue:"^[1-9][0-9]{0,17}",
+	documentNumber : "^([a-zA-Z0-9_-]){16,16}$"
     // revenue:"^[0-9]{0,17}\.[0-9]{1,4}?$"
    
   };
@@ -479,6 +485,7 @@ export class ApplicantQdeComponent implements OnInit {
       this.occupations = lov.LOVS.occupation;
       this.residences = lov.LOVS.residence_type;
       this.titles = lov.LOVS.applicant_title || ["Mr", "Mrs", "Ms", "Dr"]; // Hardcoded test value need to be removed
+      this.docType = lov.LOVS.document_type;
       this.maritals = lov.LOVS.maritial_status;
       this.relationships = lov.LOVS.relationship;
       this.loanpurposes = lov.LOVS.loan_purpose;
