@@ -863,6 +863,8 @@
                                       <input  type="checkbox"
                                               [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.permanentAddress"
                                               name="permanentAddress"
+                                              (ngModelChange)="makePermanentAddressSame($event)"
+                                              [checked]="qde.application.applicants[applicantIndex].communicationAddress.permanentAddress == true"
                                               id="permanentAddress"  >
                                       <label for="permanentAddress"><span>Current Address is Permanent Address</span></label>
                                   </div>
@@ -1884,6 +1886,7 @@
                                                           <option value="10">Assessed Income</option>
                                                       </select> -->
                                                       <kendo-dropdownlist name="assessment" 
+                                                      class="form-control"
                                                       [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.assessmentMethodology"
                                                       name="assessment" required>
                                                       </kendo-dropdownlist>
@@ -1964,7 +1967,7 @@
                                                           #pan2="ngModel"
                                                           fieldFill
                                                           required />
-                                                  <label for="pan-inpt2">Enter PAN numbers</label>
+                                                  <label for="pan-inpt2">Enter PAN number</label>
                                                   <div *ngIf="pan2.touched && pan2.invalid" class="invalid-feedback">
                                                       <div *ngIf="pan2.errors?.required">*PAN number is required</div>
                                                       <div *ngIf="pan2.errors?.pattern ? true : false">*PAN not valid</div>

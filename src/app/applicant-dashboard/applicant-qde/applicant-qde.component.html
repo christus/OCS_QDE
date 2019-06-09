@@ -1899,6 +1899,7 @@
                                                     #assessment="ngModel"
                                                     name="assessment"> -->
                                                     <kendo-dropdownlist 
+                                                    class="form-control"
                                                     [data]="assessmentMethodology" 
                                                     textField="key"
                                                     valueField="value"
@@ -2003,7 +2004,7 @@
                                                         #pan2="ngModel"
                                                         fieldFill
                                                         required />
-                                                <label for="pan-inpt2">Enter PAN numbers</label>
+                                                <label for="pan-inpt2">Enter PAN number</label>
                                                 <div *ngIf="pan2.touched && pan2.invalid" class="invalid-feedback">
                                                     <div *ngIf="pan2.errors?.required">{{errors.pan.required}}</div>
                                                     <div *ngIf="pan2.errors?.pattern ? true : false">{{errors.pan.invalid}}</div>

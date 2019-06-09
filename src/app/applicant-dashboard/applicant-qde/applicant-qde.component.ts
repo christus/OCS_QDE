@@ -279,7 +279,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     amount:"^[\\d]{0,14}([.][0-9]{0,4})?",
 
     revenue:"^[1-9][0-9]{0,17}",
-    docNumber: "^[a-zA-Z0-9]{16}$"
+    docNumber: "^[a-zA-Z0-9]{0,16}$"
 
     // revenue:"^[\\d]{0,14}([.][0-9]{0,4})?"
    

@@ -1559,4 +1559,22 @@ export class CoApplicantQdeComponent implements OnInit {
   selectCoApplicant(applicantId) {
     this.router.navigate(['/co-applicant/'+applicantId], {fragment: "pan1"});
   }  
+
+  makePermanentAddressSame(event: boolean) {
+    this.qde.application.applicants[this.applicantIndex].communicationAddress.permanentAddress = event;
+
+    if(event == true) {
+      this.qde.application.applicants[this.applicantIndex].permanentAddress.addressLineOne = this.qde.application.applicants[this.applicantIndex].communicationAddress.addressLineOne;
+      this.qde.application.applicants[this.applicantIndex].permanentAddress.addressLineTwo = this.qde.application.applicants[this.applicantIndex].communicationAddress.addressLineTwo;
+      this.qde.application.applicants[this.applicantIndex].permanentAddress.zipcode = this.qde.application.applicants[this.applicantIndex].communicationAddress.zipcode;
+      this.qde.application.applicants[this.applicantIndex].permanentAddress.cityState = this.qde.application.applicants[this.applicantIndex].communicationAddress.cityState;
+    } else {
+      this.qde.application.applicants[this.applicantIndex].permanentAddress.addressLineOne = "";
+      this.qde.application.applicants[this.applicantIndex].permanentAddress.addressLineTwo = "";
+      this.qde.application.applicants[this.applicantIndex].permanentAddress.zipcode = "";
+      this.qde.application.applicants[this.applicantIndex].permanentAddress.cityState = "";
+    }
+  }
+
+
 }
