@@ -868,7 +868,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       
 
       console.log('this is coming first', this.panslide, this.qde.application.applicants[this.applicantIndex].isIndividual);
-      
+
       // Incoming from create Individual Pan
       if(this.panslide == true && this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
         this.panSlider2.setIndex(2);
@@ -1022,13 +1022,24 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
         this.qde.application.ocsNumber = result["application"]["ocsNumber"];
         this.qde.application.applicationId = result["application"]["applicationId"];
-        this.qde.application.applicants[this.applicantIndex].applicantId =  result["application"]["applicants"][this.applicantIndex]["applicantId"];
+       
+        let applicants = result["application"]["applicants"];
+
+        let isApplicantPresent:boolean = false;
+
+        if(applicants.length > 0) {
+          // isApplicantPresent = applicants[this.applicantIndex].hasOwnProperty('applicantId');
+          this.qde.application.applicants[this.applicantIndex].applicantId =  applicants[this.applicantIndex]["applicantId"];
+        }else {
+          this.tabSwitch(1);
+            return;
+        }          
 
         
         //this.goToNextSlide(swiperInstance);
 
         this.cds.changePanSlide(true);
-        this.router.navigate(['/applicant/'+result["application"]["applicationId"]], {fragment: "pan1"});
+        this.router.navigate(['/applicant/'+this.qde.application.applicationId], {fragment: "pan1"});
         
       } else {
         // Throw Invalid Pan Error

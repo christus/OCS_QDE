@@ -192,7 +192,7 @@
                                               </div>
                                           </div>
                                           <div class="btn-wrap">
-                                              <button class="btn btn-primary disabled" (click)="tabSwitch(1)">Next</button>
+                                              <button class="btn btn-primary" (click)="tabSwitch(1)">Next</button>
                                           </div>
                                       </form>
                                   </div>
@@ -375,7 +375,7 @@
                                                             [value]="g.value"
                                                             [checked]="qde.application.applicants[applicantIndex].personalDetails.gender == g.value"
                                                             [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.gender"
-                                                            (click)="submitGenderDetails(genderForm, pdSlider2)" />
+                                                            (click)="submitGenderDetails(genderForm, pdSlider2)"/>
                                                     <label [for]="g.key"><span>{{g.key}}</span></label>
                                                 </div>
                                                 
