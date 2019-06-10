@@ -542,42 +542,11 @@
                                                           nick="personalDetails.birthPlace"
                                                           #personalDetails
                                                           (selectionChange)="selectValueChanged($event, personalDetails.hostElement)"
-                                                          [(ngModel)]="selectedBirthPlace">
+                                                          [(ngModel)]="qde.application.applicants[coApplicantIndex].personalDetails.birthPlace">
                                                           </kendo-dropdownlist>
 
 
-                                                          <!-- <select [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.birthPlace"
-                                                                  name="birthPlace"
-                                                                  required>
-                                                              <option value="1"
-                                                                      *ngFor="let c of cities;let i=index;"
-                                                                      [ngClass]="{'select', qde.application.applicants[applicantIndex].personalDetails.birthPlace == i}"
-                                                                      [selected]="qde.application.applicants[applicantIndex].personalDetails.birthPlace == i">Pune</option>
-                                                              <option value="1">Pune</option>
-                                                              <option value="2">Kolkota</option>
-                                                              <option value="3">Mumbai</option>
-                                                              <option value="4">Delhi</option>
-                                                              <option value="5">Madras</option>
-                                                              <option value="6">Madhya Pradesh</option>
-                                                          </select> -->
                                                       </div>
-                                                  </div>
-                                                  <div class="form-group">
-                                                      <span class="control-title">Birth place</span>
-                                                      <select [(ngModel)]="qde.application.applicants[coApplicantIndex].personalDetails.birthPlace"
-                                                              name="birthPlace"
-                                                              required>
-                                                          <!-- <option value="1"
-                                                                  *ngFor="let c of cities;let i=index;"
-                                                                  [ngClass]="{'select', qde.application.applicants[coApplicantIndex].personalDetails.birthPlace == i}"
-                                                                  [selected]="qde.application.applicants[coApplicantIndex].personalDetails.birthPlace == i">Pune</option> -->
-                                                          <option value="1">Pune</option>
-                                                          <option value="2">Kolkota</option>
-                                                          <option value="3">Mumbai</option>
-                                                          <option value="4">Delhi</option>
-                                                          <option value="5">Madras</option>
-                                                          <option value="6">Madhya Pradesh</option>
-                                                      </select>
                                                   </div>
                                               </div>
                                               <div class="btn-wrap">
