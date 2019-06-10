@@ -26,7 +26,7 @@ interface Item {
 })
 export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
-  errors = {
+  private errors = {
 
     pan: {
       required: "PAN number is mandatory",
@@ -543,7 +543,6 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       this.selectedConstitutions = this.constitutions[0];
       this.selectedBirthPlace = this.birthPlace[0];
 
-
       this.selectedAssesmentMethodology = this.assessmentMethodology[0];
     }
 
@@ -556,14 +555,14 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     // Check Whether there is qde data to be filled or else Initialize Qde
     this.route.params.subscribe((params) => {
 
-      this.cds.changeApplicantId(params.applicantId);
+      this.cds.changeApplicationId(params.applicationId);
 
       console.log("params ", params);
       // Make an http request to get the required qde data and set using setQde
-      if(params.applicantId != undefined && params.applicantId != null) {
+      if(params.applicationId != undefined && params.applicationId != null) {
 
         // getQdeData
-        this.qdeHttp.getQdeData(params.applicantId).subscribe(response => {
+        this.qdeHttp.getQdeData(params.applicationId).subscribe(response => {
           var result = JSON.parse(response["ProcessVariables"]["response"]);
           console.log("Get ", result);
 
@@ -1656,7 +1655,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
 
   //-------------------------------------------------------------
-  // Organization Correspondence
+  // Organization Details
   //-------------------------------------------------------------
   submitOrganizationDetails(form: NgForm) {
     if (form && !form.valid) {
@@ -1987,7 +1986,6 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       this.qde.application.applicants[this.applicantIndex].permanentAddress.cityState = "";
     }
   }
-
 
   commZipcodeFocusout($event: any ) {
     //call API

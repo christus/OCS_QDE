@@ -1,5 +1,5 @@
 export default interface Qde {
-    application : Application;
+    application ?: Application;
 }
 
 export interface Application {
@@ -56,19 +56,19 @@ export interface FamilyDetail {
 }
 
 export interface Other {
-    religion : string;
-    category: string;
+    religion ?: string;
+    category ?: string;
 }
 
 export interface Occupation {
-    occupationType : string;
-    companyName : string;
-    numberOfYearsInCurrentCompany : number;
-    totalWorkExperience : number;
+    occupationType ?: string;
+    companyName ?: string;
+    numberOfYearsInCurrentCompany ?: number;
+    totalWorkExperience ?: number;
 }
 
 export interface Pan {
-    panNumber : string;
+    panNumber ?: string;
     panImage ?: string;
     docType ?: string; // As of new design
     docNumber ?: string; // As of new design
@@ -87,9 +87,9 @@ export interface PersonalDetail {
 }
 
 export interface ContactDetail {
-    preferredEmailId : string;
+    preferredEmailId ?: string;
     alternateEmailId ?: string;
-    mobileNumber : number;
+    mobileNumber ?: number;
     alternateMobileNumber ?: number;
     residenceNumber : string;
     alternateResidenceNumber ?: string;
@@ -129,9 +129,9 @@ export interface OfficialCorrespondence {
 }
 
 export interface OrganizationDetail {
-    nameOfOrganization: string;
-    dateOfIncorporation: string;
-    constitution: string;
+    nameOfOrganization ?: string;
+    dateOfIncorporation ?: string;
+    constitution ?: string;
 }
 
 export interface RegisteredAddress {
@@ -163,9 +163,9 @@ export interface CorporateAddress {
 }
 
 export interface RevenueDetail {
-    revenue : number;
-    annualNetIncome : number;
-    grossTurnOver : number;
+    revenue ?: number;
+    annualNetIncome ?: number;
+    grossTurnOver ?: number;
 }
 
 export interface LoanDetail {
@@ -177,35 +177,35 @@ export interface LoanDetail {
 }
 
 export interface IncomeDetail {
-    annualFamilyIncome? : string;
-    monthlyExpenditure? : string;
-    incomeConsider?: boolean;
-    monthlyIncome?: string;
-    assessmentMethodology?: string;
-    puccaHouse?: boolean; 
+    annualFamilyIncome ?: string;
+    monthlyExpenditure ?: string;
+    incomeConsider ?: boolean;
+    monthlyIncome ?: string;
+    assessmentMethodology ?: string;
+    puccaHouse ?: boolean; 
 }
 
 export interface LoanAmount {
-    amountRequired : number;
-    loanPurpose : string;
-    loanTenure : number;
-    loanType : number;
+    amountRequired ?: number;
+    loanPurpose ?: string;
+    loanTenure ?: number;
+    loanType ?: number;
 }
 
 export interface Property {
-    propertyIdentifed : boolean;
-    propertyPincde : number;
-    addressLineOne : string;
-    addressLineTwo : string;
-    city : string;
-    state : string;
+    propertyIdentifed ?: boolean;
+    propertyPincde ?: number;
+    addressLineOne ?: string;
+    addressLineTwo ?: string;
+    city ?: string;
+    state ?: string;
 }
 
 export interface PropertyType {
-    propertyIdentifed? : boolean;
-    propertyType: number;
-    propertyClss: string;
-    propertyArea: string;
+    propertyIdentifed ?: boolean;
+    propertyType ?: number;
+    propertyClss ?: string;
+    propertyArea ?: string;
 }
 
 export interface ExistingLoan {
@@ -221,12 +221,12 @@ export interface Reference {
 }
 
 export interface ReferenceDetail {
-    relationShip? : string;
-    title : string;
-    fullName : string;
-    mobileNumber : string;
-    addressLineOne : string;
-    addressLineTwo : string;
+    relationShip ?: string;
+    title ?: string;
+    fullName ?: string;
+    mobileNumber ?: string;
+    addressLineOne ?: string;
+    addressLineTwo ?: string;
 }
 
 export interface InCompleteFields {

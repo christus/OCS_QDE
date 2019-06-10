@@ -55,10 +55,25 @@ export class CommonDataService {
   }
 
 
-  private applicantId$: BehaviorSubject<string> = new BehaviorSubject<string>(null);
-  public applicantId = this.applicantId$.asObservable();
+  private applicationId$: BehaviorSubject<string> = new BehaviorSubject<string>(null);
+  public applicationId = this.applicationId$.asObservable();
+
+  changeApplicationId(val: string) {
+    console.log("val ", val);
+    this.applicationId$.next(val);
+  }
+
+  private coApplicantIndex$: BehaviorSubject<number> = new BehaviorSubject<number>(null);
+  public coApplicantIndex = this.coApplicantIndex$.asObservable();
   
-  changeApplicantId(val: string) {
-    this.applicantId$.next(val);
+  changeCoApplicantIndex(val: number) {
+    this.coApplicantIndex$.next(val);
+  }
+
+  private applicantIndex$: BehaviorSubject<number> = new BehaviorSubject<number>(null);
+  public applicantIndex = this.applicantIndex$.asObservable();
+  
+  changeApplicantIndex(val: number) {
+    this.applicantIndex$.next(val);
   }
 }

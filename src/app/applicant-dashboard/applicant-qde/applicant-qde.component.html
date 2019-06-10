@@ -140,36 +140,17 @@
                                                   </div>
                                               </div>
                                               <div class="form-group">
-                                                    <!-- <kendo-dropdownlist class="form-control"
-                                                    [data]="titles" 
-                                                    textField="key"
-                                                    valueField="value"
-                                                    name="title"
-                                                    [(ngModel)]="selectedTitle"
-                                                    >
-                                                  </kendo-dropdownlist> -->
+
                                                 <span class="control-title">Document Type</span>
 
-
-                                                <!-- <select name="docType" 
-                                                [(ngModel)]="qde.application.applicants[applicantIndex].pan.docType"
-                                                name="docType" required>
-                                                 <option value="1">Aadhar</option>
-                                                 <option value="2">Driving Lincence</option>
-                                                 <option value="3">Passport</option>
-                                                </select> -->
-
-                                                <div class="form-group">   
-                                                    <kendo-dropdownlist class="form-control"
-                                                      [data]="docType" 
-                                                      textField="key"
-                                                      valueField="value"
-                                                      name="docType"
-                                                      [(ngModel)]="selectedDocType"
-													  required
-                                                      >
-                                                    </kendo-dropdownlist>
-                                                </div>
+                                                <kendo-dropdownlist class="form-control"
+                                                    [data]="docType" 
+                                                    textField="key"
+                                                    valueField="value"
+                                                    name="docType"
+                                                    [(ngModel)]="selectedDocType"
+                                                    required>
+                                                </kendo-dropdownlist>
 
                                             </div>
                                             <div class="form-group">
@@ -1988,7 +1969,6 @@
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide">
                                     <form class="bs-form"
-                                         
                                           #panNumberForm2="ngForm"
                                           (ngSubmit)="submitOrgPanNumber(panNumberForm2, panSlider4)">
                                         <div class="form-wrap">
