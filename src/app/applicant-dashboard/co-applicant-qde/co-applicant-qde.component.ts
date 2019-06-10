@@ -1007,7 +1007,7 @@ export class CoApplicantQdeComponent implements OnInit {
         stateId : this.qde.application.applicants[this.coApplicantIndex].communicationAddress.stateId,
         numberOfYearsInCurrentResidence : form.value.numberOfYearsInCurrentResidence,
         permanentAddress : form.value.permanentAddress,
-        preferedMailingAddress: form.value.prefredMail
+        preferredMailingAddress: form.value.prefredMail
       };
   
   

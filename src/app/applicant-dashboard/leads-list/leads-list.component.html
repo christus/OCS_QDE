@@ -102,8 +102,8 @@
                                         <a routerLink="/applicant/{{detail.leadId}}">
                                             <ul>
                                                 <li><span>Lead ID: </span><b>{{detail.leadId}}</b></li>
-                                                <li><span>Generated date</span><b>{{detail.appliedOn}}</b></li>
-                                                <li><span>Assigned date</span><b>{{detail.assignedDate}}</b></li>
+                                                <li><span>Generated date</span><b>{{detail.appliedOn | slice:0:10}}</b></li>
+                                                <li><span>Assigned date</span><b>{{detail.assignedDate }}</b></li>
                                             </ul>
                                         </a>
                                     </td>
