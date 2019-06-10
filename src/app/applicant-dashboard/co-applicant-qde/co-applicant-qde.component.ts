@@ -416,6 +416,8 @@ export class CoApplicantQdeComponent implements OnInit {
   private selectedConstitutions: Item;
   private docType: Array<any>;
   private selectedAssesmentMethodology: Array<any>;
+  private birthPlace: Array<any>;
+  private selectedBirthPlace: Item;
 
   // Used when to whether its coming from create or edit
   private panslide: boolean;
@@ -495,7 +497,9 @@ export class CoApplicantQdeComponent implements OnInit {
       this.genders = lov.LOVS.gender;
       this.constitutions = lov.LOVS.constitution;
       this.assessmentMethodology = lov.LOVS.assessment_methodology;
-
+      this.birthPlace = lov.LOVS.birthplace;
+      //hardcoded
+      this.birthPlace = [{"key": "Chennai", "value": "1"},{"key": "Mumbai", "value": "2"},{"key": "Delhi", "value": "3"}];
       // List of Values for Date
       this.days = Array.from(Array(31).keys()).map((val, index) => {
         let v = ((index+1) < 10) ? "0"+(index+1) : (index+1)+"";
@@ -531,6 +535,7 @@ export class CoApplicantQdeComponent implements OnInit {
       this.selectedDocType = this.docType[0];
       this.selectedConstitutions = this.constitutions[0];
       this.selectedAssesmentMethodology = this.assessmentMethodology[0];
+      this.selectedBirthPlace = this.birthPlace[0];
 
     }
 
