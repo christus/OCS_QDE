@@ -131,7 +131,7 @@
                                                           name="pan"
                                                           #pan="ngModel"
                                                           fieldFill
-                                                          required>
+                                                          required />
                                                   <label for="pan-inpt" >Enter PAN in Uppercase</label>
                                                   <div *ngIf="pan.touched && pan.invalid" class="invalid-feedback">
                                                       <div *ngIf="pan.errors?.required">{{errors.pan.required}}</div>
@@ -2129,8 +2129,7 @@
                                           textField="key"
                                           valueField="value"
                                           name="constitution"
-                                          [(ngModel)]="selectedConstitutions"
-                                          >
+                                          [(ngModel)]="selectedConstitutions">
                                         </kendo-dropdownlist>
                                     </div>    
 
@@ -2323,7 +2322,7 @@
                                 <div class="residence-no">
                                     <div class="form-group">
                                         <input  type="text"
-                                        [(ngModel)]="corporateAddressStdNumber.stdCode"
+                                        [(ngModel)]="corporateAddressStdNumberStdCode"
                                         name="stdNumber"
 					#stdNumber="ngModel"
                                         pattern="{{regexPattern.mobileNumber}}"
@@ -2342,7 +2341,7 @@
                                     <div class="form-group">
                                         <input  type="text"
                                                 class="form-control" id="ca-res-no"
-                                                [(ngModel)]="corporateAddressStdNumber.phoneNumber"
+                                                [(ngModel)]="corporateAddressStdNumberPhoneNumber"
                                                 name="phoneNumber"
 					        #phoneNumber="ngModel"
                                                 pattern="{{regexPattern.mobileNumber}}"

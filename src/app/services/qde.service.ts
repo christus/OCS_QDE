@@ -471,6 +471,214 @@ export class QdeService {
   }
 
   resetQde() {
-    this.setQde(this.defaultValue);
+    this.setQde({
+      "application": {
+        "ocsNumber": " ",
+        "loanAmount": "",
+        "tenure": "",
+        "applicationId": "",
+        "propertyIdentified": null,
+        "applicants": [
+          {
+            "applicantId": "",
+            "isMainApplicant": true,
+            "isIndividual": null,
+            "partnerRelationship": "",
+            "maritalStatus": {
+              "status": "",
+              "spouseTitle": "",
+              "firstName": "",
+              "earning": null,
+              "amount": null,
+            },
+            "familyDetails": {
+              "numberOfDependents": null,
+              "fatherTitle": "",
+              "fatherName": "",
+              "motherTitle": "",
+              "motherName": "",
+              "motherMaidenName": ""
+            },
+            "other": {
+              "religion": "",
+              "category": ""
+            },
+            "occupation": {
+              "occupationType": "",
+              "companyName": "",
+              "numberOfYearsInCurrentCompany": null,
+              "totalWorkExperience": null
+            },
+            "pan": {
+              "panNumber": "",
+              "panImage": "",
+              "docType": null,
+              "docNumber": ""
+            },
+            "personalDetails": {
+              "title": "",
+              "firstName": "",
+              "middleName": "",
+              "lastName": "",
+              "gender": "",
+              "qualification": "",
+              "dob": "",
+              "birthPlace": "",
+              "applicantStatus" : ""
+            },
+            "contactDetails": {
+              "preferredEmailId": "",
+              "alternateEmailId" : "",
+              "mobileNumber": null,
+              "alternateMobileNumber": null,
+              "residenceNumber": "",
+              "alternateResidenceNumber": ""
+            },
+            "communicationAddress": {
+              "residentialStatus" : "",
+              "addressLineOne" : "",
+              "addressLineTwo" : "",
+              "zipcode" : "",
+              "city" : "",
+              "state" : "",
+              "cityState": "",
+              "numberOfYearsInCurrentResidence" : "",
+              "permanentAddress" : null,
+              "preferredMailingAddress": ""
+            },
+            "permanentAddress": {
+              "residentialStatus" : "",
+              "addressLineOne" : "",
+              "addressLineTwo" : "",
+              "zipcode" : "",
+              "city" : "",
+              "state" : "",
+              "cityState": "",
+              "numberOfYearsInCurrentResidence" : "",
+              "permanentAddress" : null,
+              "preferredMailingAddress": ""
+            },
+            "residentialAddress": {
+              "residentialStatus" : "",
+              "addressLineOne" : "",
+              "addressLineTwo" : "",
+              "zipcode" : "",
+              "city" : "",
+              "state" : "",
+              "cityState": "",
+              "numberOfYearsInCurrentResidence" : "",
+              "permanentAddress" : null
+            },
+            "officialCorrespondence": {
+              "addressLineOne": "",
+              "addressLineTwo": "",
+              "landMark": "",
+              "zipcode": "",
+              "city": "",
+              "state": "",
+              "officeNumber": "",
+              "officeEmailId": "",
+              "cityState": "",
+              "zipCityStateID": "",
+            },
+            "organizationDetails": {
+              "nameOfOrganization": "",
+              "dateOfIncorporation": "",
+              "constitution": ""
+            },
+            "registeredAddress": {
+              "registeredAddress" : "",
+              "landMark" : "",
+              "zipcode" : "",
+              "city" : "",
+              "state" : ""
+            },
+            "corporateAddress": {
+              "corporateAddress": "",
+              "landMark": "",
+              "zipcode": "",
+              "city": "",
+              "state": "",
+              "stdNumber": "",
+              "officeEmailId": ""
+            },
+            "revenueDetails": {
+              "revenue": null,
+              "annualNetIncome": null,
+              "grossTurnOver": null
+            },
+            "incomeDetails": {
+              "annualFamilyIncome" : "",
+              "monthlyExpenditure" : "",
+              "incomeConsider": null,
+              "monthlyIncome": "",
+              "assessmentMethodology": "",
+              "puccaHouse": null
+            },
+            "documents": [
+              {
+                "documentType": "",
+                "documentValue": ""
+              },
+              {
+                "documentType": "",
+                "documentValue": ""
+              },
+              {
+                "documentType": "",
+                "documentValue": ""
+              }
+            ]
+          },
+        ],
+        "loanDetails": {
+          "incomeDetails": {
+            "annualFamilyIncome": "",
+            "monthlyExpenditure": "",
+            "incomeConsider": null,
+            "monthlyIncome": "",
+            "assessmentMethodology": "",
+            "puccaHouse": null
+          },
+          "loanAmount": {
+            "amountRequired": null,
+            "loanPurpose": "",
+            "loanTenure": null,
+            "loanType": null
+          },
+          "property": {
+            "propertyIdentifed": null,
+            "propertyPincde": null,
+            "addressLineOne": "",
+            "addressLineTwo": "",
+            "city": "",
+            "state": ""
+          },
+          "existingLoans": {
+            "loanProvider": "",
+            "numberOfYears": null,
+            "monthlyEmi": null
+          }
+        },
+        "references": {
+          "referenceOne": {
+            "relationShip": "",
+            "title": "",
+            "fullName": "",
+            "mobileNumber": "",
+            "addressLineOne": "",
+            "addressLineTwo": ""
+          },
+          "referenceTwo": {
+            "relationShip": "",
+            "title": "",
+            "fullName": "",
+            "mobileNumber": "",
+            "addressLineOne": "",
+            "addressLineTwo": ""
+          }
+        }
+      }
+    });
   }
 }

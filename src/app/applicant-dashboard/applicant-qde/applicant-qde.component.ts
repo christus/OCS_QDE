@@ -438,6 +438,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     });
 
     this.qdeService.qdeSource.subscribe(val => {
+      console.log("VALVE: ", val);
       this.qde = val;
     });
 
@@ -480,6 +481,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
+    // alert(1);
     console.log(">>", JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs));
     if(this.route.snapshot.data.listOfValues != null && this.route.snapshot.data.listOfValues != undefined) {
 
@@ -542,6 +544,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
     // Create New Entry
     this.applicantIndex = 0;
+    this.resetQdeForm();
 
     // Write code to get data(LOV) and assign applicantIndex if its new or to update.
     console.log("Applicant Code: ", this.applicantIndex);
@@ -882,9 +885,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
         this.initializeVariables();
       });
-    } else {
-      this.initializeVariables();
-    }
+      } else {
+        this.resetQdeForm();
+        this.initializeVariables();
+      }
     console.log("last on init", this.qde);
     });
 
@@ -1994,17 +1998,13 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     this.addressCityState = ""
     this.otherReligion = "";
     this.registeredAddressCityState = "";
-    this.corporateAddressCityState = "";
-    this.corporateAddressStdCode = "";
     this.corporateAddressPhoneNumber = "";
     this.dob = { day: {key: "DD", value: "DD"}, month: {key: "MM", value: "MM"}, year: {key: "YYYY", value: "YYYY"} };
     this.dateOfIncorporation = { day: {key: "DD", value: "DD"}, month: {key: "MM", value: "MM"}, year: {key: "YYYY", value: "YYYY"} };
-    this.registeredAddressCityState = "";
     this.corporateAddressCityState = "";
     this.corporateAddressStdCode = "";
     this.corporateAddressPhoneNumber = "";
     this.commCityState = "";
-
     this.selectedTitle = this.titles[0];
     this.selectedReligions = this.religions[0];
     this.selectedMaritialStatus = this.maritals[0];
@@ -2024,6 +2024,4 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.panslideSub.unsubscribe();
   }
-
-
 }

@@ -1648,6 +1648,7 @@ export class CoApplicantQdeComponent implements OnInit {
     // Set ApplicantIndex
     this.cds.changeApplicantIndex(this.qde.application.applicants.findIndex(val => val.isMainApplicant == true));
 
+    this.resetQdeForm();
     // Make QDE Data Global Across App
 
     // This is when co-applicant is being edited
@@ -1772,6 +1773,7 @@ export class CoApplicantQdeComponent implements OnInit {
 
   resetQdeForm() {
     this.qdeService.resetQde();
+    console.log("RESET ", this.qde.application.applicants);
     this.residenceNumberStdCode = "";
     this.residenceNumberPhoneNumber = "";
     this.alternateResidenceNumberStdCode = ""
