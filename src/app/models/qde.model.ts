@@ -160,6 +160,7 @@ export interface CorporateAddress {
     officeEmailId? : string;
     cityState? : string;
     zipCityStateID?: string;
+    officeNumber? : string;
 }
 
 export interface RevenueDetail {
