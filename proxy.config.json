@@ -1,12 +1,12 @@
 {
     "/appiyo/*": {
-        "target": "http://182.156.249.170/",
+        "target": "http://192.168.1.108/",
         "secure": false,
         "logLevel": "debug"
     },
 
     "/account/*": {
-        "target": "http://182.156.249.170/",
+        "target": "http://192.168.1.108/",
         "secure": false,
         "logLevel": "debug"
     }

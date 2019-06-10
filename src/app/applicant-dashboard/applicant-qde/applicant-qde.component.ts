@@ -481,7 +481,6 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    // alert(1);
     console.log(">>", JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs));
     if(this.route.snapshot.data.listOfValues != null && this.route.snapshot.data.listOfValues != undefined) {
 
@@ -544,6 +543,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
     // Create New Entry
     this.applicantIndex = 0;
+    this.resetQdeForm();
+
     this.resetQdeForm();
 
     // Write code to get data(LOV) and assign applicantIndex if its new or to update.
@@ -1958,15 +1959,22 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     this.residenceNumberPhoneNumber = this.qde.application.applicants[this.applicantIndex].contactDetails.residenceNumber != "" ? this.qde.application.applicants[this.applicantIndex].contactDetails.residenceNumber.split("-")[1] : "";
     this.alternateResidenceNumberStdCode = this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber != "" ? this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber.split("-")[0] : "";
     this.alternateResidenceNumberPhoneNumber = this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber != "" ? this.qde.application.applicants[this.applicantIndex].contactDetails.residenceNumber.split("-")[1] : "";
+    
     this.officialNumberStdCode = this.qde.application.applicants[this.applicantIndex].officialCorrespondence.officeNumber != "" ? this.qde.application.applicants[this.applicantIndex].officialCorrespondence.officeNumber.split("-")[0] : "";
     this.officialNumberPhoneNumber = this.qde.application.applicants[this.applicantIndex].officialCorrespondence.officeNumber != "" ? this.qde.application.applicants[this.applicantIndex].officialCorrespondence.officeNumber.split("-")[1] : "";
+    
+
+    this.corporateAddressStdCode = this.qde.application.applicants[this.applicantIndex].corporateAddress.officeNumber != "" ? this.qde.application.applicants[this.applicantIndex].corporateAddress.officeNumber.split("-")[0] : "";
+    this.corporateAddressPhoneNumber = this.qde.application.applicants[this.applicantIndex].corporateAddress.officeNumber != "" ? this.qde.application.applicants[this.applicantIndex].corporateAddress.officeNumber.split("-")[1] : "";
+
+    
     this.addressCityState = this.qde.application.applicants[this.applicantIndex].communicationAddress.city + '/'+ this.qde.application.applicants[this.applicantIndex].communicationAddress.state;
     this.otherReligion = this.qde.application.applicants[this.applicantIndex].other.religion == '6' ? this.qde.application.applicants[this.applicantIndex].other.religion : '';
     this.dateOfIncorporation = { day: {key: "DD", value: "DD"}, month: {key: "MM", value: "MM"}, year: {key: "YYYY", value: "YYYY"} };
     this.registeredAddressCityState = "";
-    this.corporateAddressCityState = "";
-    this.corporateAddressStdCode = "";
-    this.corporateAddressPhoneNumber = "";
+    // this.corporateAddressCityState = "";
+    // this.corporateAddressStdCode = "";
+    // this.corporateAddressPhoneNumber = "";
   }
 
   makePermanentAddressSame(event: boolean) {
@@ -1997,7 +2005,6 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     this.alternateResidenceNumberPhoneNumber = "";
     this.addressCityState = ""
     this.otherReligion = "";
-    this.registeredAddressCityState = "";
     this.corporateAddressPhoneNumber = "";
     this.dob = { day: {key: "DD", value: "DD"}, month: {key: "MM", value: "MM"}, year: {key: "YYYY", value: "YYYY"} };
     this.dateOfIncorporation = { day: {key: "DD", value: "DD"}, month: {key: "MM", value: "MM"}, year: {key: "YYYY", value: "YYYY"} };
