@@ -148,6 +148,8 @@
                                                     textField="key"
                                                     valueField="value"
                                                     name="docType"
+                                                    nick="pan.docType"
+                                                    (selectionChange)="selectValueChanged($event, pan.hostElement)"
                                                     [(ngModel)]="selectedDocType"
                                                     required>
                                                 </kendo-dropdownlist>
@@ -1667,12 +1669,13 @@
                                     <div class="form-group">
                                         <input type="text" class="form-control" id="std03"
                                           required
-                                          [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.officeStd"
+                                          
                                           #stdCode = "ngModel"
 					  pattern="{{regexPattern.mobileNumber}}"
                                           maxlength="3" 
                                           fieldFill
-                                          name="stdCode">
+                                          name="stdCode"
+                                          [(ngModel)]="officialNumberStdCode">
                                         <label for="std03" >STD</label>
                                         <div *ngIf="stdCode.touched && stdCode.invalid" class="invalid-feedback">
                                             <div *ngIf="stdCode.errors?.required">{{errors.officialCorrespondence.stdCode.required}}</div>
@@ -1688,7 +1691,7 @@
                                           maxlength="8"
                                           pattern="{{regexPattern.mobileNumber}}"
                                           name="offStdNumber"
-                                          [(ngModel)]="officialNumberStdCode" />
+                                          [(ngModel)]="officialNumberPhoneNumber" />
 
                                         <label for="res-no03">Office number</label>
 
@@ -2298,7 +2301,7 @@
                                             class="form-control"
                                             id="city-state01" 
                                             required
-                                            [(ngModel)]="this.qde.application.applicants[this.applicantIndex].registeredAddress.cityState"
+                                            [(ngModel)]="this.qde.application.applicants[this.applicantIndex].corporateAddress.cityState"
                                             #corpCityState="ngModel" 
                                             name="corpCityState"
                                             fieldFill

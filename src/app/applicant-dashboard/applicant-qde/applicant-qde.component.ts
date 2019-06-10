@@ -1072,18 +1072,29 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       // If successful
       if(response["ProcessVariables"]["status"]) {
         let result = this.parseJson(response["ProcessVariables"]["response"]);
+       
+
+
         this.qde.application.ocsNumber = result["application"]["ocsNumber"];
         this.qde.application.applicationId = result["application"]["applicationId"];
-        this.qde.application.applicants[this.applicantIndex].applicantId =  result["application"]["applicants"][this.applicantIndex]["applicantId"];
         
-        // //this.goToNextSlide(swiperInstance);
-       console.log(":::::", this.qde)
+        let applicants = result["application"]["applicants"];
+
+        let isApplicantPresent:boolean = false;
+
+        if(applicants.length > 0) {
+          // isApplicantPresent = applicants[this.applicantIndex].hasOwnProperty('applicantId');
+          this.qde.application.applicants[this.applicantIndex].applicantId =  applicants[this.applicantIndex]["applicantId"];
+        }else {
+          this.tabSwitch(11);
+            return;
+        }          
 
         // this.cds.changePanSlide2(true);
         // this.router.navigate(['/applicant/'+this.qde.application.applicationId], {fragment: "organization"});
 
         this.cds.changePanSlide2(true);
-        this.router.navigate(['/applicant/'+result["application"]["applicationId"]], {fragment: "pan2"});
+        this.router.navigate(['/applicant/'+this.qde.application.applicationId], {fragment: "pan2"});
         
       } else {
         // Throw Invalid Pan Error
