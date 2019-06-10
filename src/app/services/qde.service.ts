@@ -252,7 +252,7 @@ export class QdeService {
     a.forEach((obj ,index) => {
 
       // Exception Keys
-      if(obj.key == ['ocsNumber', 'applicationId', 'isMainApplicant']) {
+      if(obj.key in ['ocsNumber', 'applicationId', 'isMainApplicant']) {
         return;
       }
       // Filter Empty Values

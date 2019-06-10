@@ -97,30 +97,35 @@ export interface ContactDetail {
 
 export interface Address {
     residentialStatus? : string;
-    addressLineOne ?: string;
-    addressLineTwo ?: string;
-    zipcode ?: string;
-    city ?: string;
-    state ?: string;
-    numberOfYearsInCurrentResidence ?: string;
+    addressLineOne? : string;
+    addressLineTwo? : string;
+    zipcode? : string;
+    zipcodeId?: string;
+    city? : string;
+    cityId?: string;
+    state? : string;
+    stateId?: string;
+    numberOfYearsInCurrentResidence? : string;
     permanentAddress ?: boolean;
-    cityState ?: string;
-    zipCityStateID ?: string;
-    preferedMailingAddress ?: string; // As of new design
+    cityState? : string;
+    preferedMailingAddress?: string; // As of new design
 }
 
 export interface OfficialCorrespondence {
-    addressLineOne ?: string;
-    addressLineTwo ?: string;
-    landMark ?: string;
-    zipcode ?: string;
-    city ?: string;
-    state?: string;
-    officeNumber ?: string;
-    officeEmailId ?: string;
-    cityState ?: string;
-    zipCityStateID ?: string;
-    officeStd ?: string;
+    addressLineOne? : string;
+    addressLineTwo? : string;
+    landMark? : string;
+    zipcode? : string;
+    zipcodeId?: string;
+    city? : string;
+    cityId?: string;
+    state? : string;
+    stateId?: string;
+    officeNumber? : string;
+    officeEmailId? : string;
+    cityState? : string;
+    zipCityStateID?: string;
+    officeStd? : string;
 }
 
 export interface OrganizationDetail {
@@ -130,25 +135,31 @@ export interface OrganizationDetail {
 }
 
 export interface RegisteredAddress {
-    registeredAddress ?: string;
-    landMark ?: string;
-    zipcode ?: string,
-    city ?: string;
-    state ?: string;
-    cityState ?: string;
-    zipCityStateID ?: string;
+    registeredAddress? : string;
+    landMark? : string;
+    zipcode? : string;
+    zipcodeId?: string;
+    city? : string;
+    cityId?: string;
+    state? : string;
+    stateId?: string;
+    cityState? : string;
+    zipCityStateID?: string;
 }
 
 export interface CorporateAddress {
-    corporateAddress ?: string;
-    landMark ?: string;
-    zipcode ?: string,
-    city ?: string;
-    state ?: string;
-    stdNumber ?: string;
-    officeEmailId ?: string;
-    cityState ?: string;
-    zipCityStateID ?: string;
+    corporateAddress? : string;
+    landMark? : string;
+    zipcode? : string;
+    zipcodeId?: string;
+    city? : string;
+    cityId?: string;
+    state? : string;
+    stateId?: string;
+    stdNumber? : string;
+    officeEmailId? : string;
+    cityState? : string;
+    zipCityStateID?: string;
 }
 
 export interface RevenueDetail {

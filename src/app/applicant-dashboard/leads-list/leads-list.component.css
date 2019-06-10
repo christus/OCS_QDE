@@ -88,3 +88,15 @@ th, td {
 a, a:visited {
   color: #000;
 }
+.btn.btn-default {
+  background: #004a80;
+  border-radius: 3.91vw;
+  color: #fff;
+  font-size: .94vw;
+  line-height: 2.73vw;
+  text-transform: uppercase;
+  padding: 0 1.56vw;
+  float: right;
+  margin: 1vw;
+  text-align: center;
+}

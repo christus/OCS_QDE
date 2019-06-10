@@ -43,7 +43,7 @@ export class LoanQdeComponent implements OnInit {
        loanAmount: {
          amount: {
            required: "Loan Amount is Madatory",
-           invalid: "Invalid Loan Amount"
+           invalid: "Invalid Loan Amount / Alphabets and special characters not allowed"
          },
          tenure: {
            required: "Loan Tenure is Mandatory",
@@ -87,7 +87,7 @@ export class LoanQdeComponent implements OnInit {
      }
   };
   regexPattern = {
-    amount: "^[0-9]{0,17}\.[0-9]{1,4}?$",
+    amount: "^[\\d]{0,14}([.][0-9]{0,4})?",
     name: "/^[a-zA-Z ]*$/",
     pinCode: "^[1-9][0-9]{5}$",
     address : "^[0-9A-Za-z, _&'/#]+$",

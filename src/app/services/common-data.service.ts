@@ -57,7 +57,7 @@ export class CommonDataService {
 
   private applicationId$: BehaviorSubject<string> = new BehaviorSubject<string>(null);
   public applicationId = this.applicationId$.asObservable();
-  
+
   changeApplicationId(val: string) {
     console.log("val ", val);
     this.applicationId$.next(val);
