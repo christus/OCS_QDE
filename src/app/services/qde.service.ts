@@ -82,7 +82,7 @@ export class QdeService {
             "cityState": "",
             "numberOfYearsInCurrentResidence" : "",
             "permanentAddress" : null,
-            "preferedMailingAddress": ""
+            "preferredMailingAddress": ""
           },
           "permanentAddress": {
             "residentialStatus" : "",
@@ -94,7 +94,7 @@ export class QdeService {
             "cityState": "",
             "numberOfYearsInCurrentResidence" : "",
             "permanentAddress" : null,
-            "preferedMailingAddress": ""
+            "preferredMailingAddress": ""
           },
           "residentialAddress": {
             "residentialStatus" : "",
@@ -380,7 +380,7 @@ export class QdeService {
         "cityState": "",
         "numberOfYearsInCurrentResidence" : "",
         "permanentAddress" : null,
-        "preferedMailingAddress": ""
+        "preferredMailingAddress": ""
       },
       "permanentAddress": {
         "residentialStatus" : "",
@@ -392,7 +392,7 @@ export class QdeService {
         "cityState": "",
         "numberOfYearsInCurrentResidence" : "",
         "permanentAddress" : null,
-        "preferedMailingAddress": ""
+        "preferredMailingAddress": ""
       },
       "residentialAddress": {
         "residentialStatus" : "",

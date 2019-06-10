@@ -108,7 +108,7 @@ export interface Address {
     numberOfYearsInCurrentResidence? : string;
     permanentAddress ?: boolean;
     cityState? : string;
-    preferedMailingAddress?: string; // As of new design
+    preferredMailingAddress?: string; // As of new design
 }
 
 export interface OfficialCorrespondence {

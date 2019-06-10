@@ -332,6 +332,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   private residenceNumberPhoneNumber: string = "";
   private alternateResidenceNumberStdCode: string = ""
   private alternateResidenceNumberPhoneNumber: string = ""
+  private officialNumberStdCode: string = ""
+  private officialNumberPhoneNumber: string = ""
   private addressCityState: string = "";
   private otherReligion: string = "";
   private dateOfIncorporation: {day: string, month: string, year: string} = {day: null, month: null, year: null};
@@ -865,16 +867,24 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
       
 
-        console.log('this is coming first', this.panslide, this.qde.application.applicants[this.applicantIndex].isIndividual);
-        // Incoming from create Individual Pan
-        if(this.panslide == true && this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
-          this.panSlider2.setIndex(2);
-          console.log("test", this.panslide2);
-        }
-        // Incoming from create Non Individual Pan
-        else if(this.panslide2 == true && this.qde.application.applicants[this.applicantIndex].isIndividual == false) {
-          this.tabSwitch(11);
-        }
+      console.log('this is coming first', this.panslide, this.qde.application.applicants[this.applicantIndex].isIndividual);
+      
+      // Incoming from create Individual Pan
+      if(this.panslide == true && this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
+        this.panSlider2.setIndex(2);
+        console.log("test", this.panslide2);
+      }
+      // Incoming from create Non Individual Pan
+      else if(this.panslide2 == true && this.qde.application.applicants[this.applicantIndex].isIndividual == false) {
+        this.tabSwitch(11);
+      }
+      else if(this.panslide == false && this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
+        this.tabSwitch(0);
+        this.panSlider2.setIndex(1);
+      }
+      else if(this.panslide2 == false && this.qde.application.applicants[this.applicantIndex].isIndividual == false) {
+        this.tabSwitch(10);
+      }
 
         this.cds.changePanSlide(false);
         this.cds.changePanSlide2(false);
@@ -1349,7 +1359,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     this.qde.application.applicants[this.applicantIndex].communicationAddress.stateId = this.qde.application.applicants[this.applicantIndex].communicationAddress.stateId;
     this.qde.application.applicants[this.applicantIndex].communicationAddress.numberOfYearsInCurrentResidence = form.value.numberOfYearsInCurrentResidence;
     this.qde.application.applicants[this.applicantIndex].communicationAddress.permanentAddress = form.value.permanentAddress;
-    this.qde.application.applicants[this.applicantIndex].communicationAddress.preferedMailingAddress = form.value.prefredMail;
+    this.qde.application.applicants[this.applicantIndex].communicationAddress.preferredMailingAddress = form.value.prefredMail;
 
 
     this.qde.application.applicants[this.applicantIndex].permanentAddress.addressLineOne = form.value.pAddressLineOne;
@@ -1933,6 +1943,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
     this.alternateResidenceNumberStdCode = this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber != "" ? this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber.split("-")[0] : "";
     this.alternateResidenceNumberPhoneNumber = this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber != "" ? this.qde.application.applicants[this.applicantIndex].contactDetails.residenceNumber.split("-")[1] : "";
+    
+    this.officialNumberStdCode = this.qde.application.applicants[this.applicantIndex].officialCorrespondence.officeNumber != "" ? this.qde.application.applicants[this.applicantIndex].officialCorrespondence.officeNumber.split("-")[0] : "";
+    this.officialNumberPhoneNumber = this.qde.application.applicants[this.applicantIndex].officialCorrespondence.officeNumber != "" ? this.qde.application.applicants[this.applicantIndex].officialCorrespondence.officeNumber.split("-")[1] : "";
+
+    
     this.addressCityState = this.qde.application.applicants[this.applicantIndex].communicationAddress.city + '/'+ this.qde.application.applicants[this.applicantIndex].communicationAddress.state;
 
     this.otherReligion = this.qde.application.applicants[this.applicantIndex].other.religion == '6' ? this.qde.application.applicants[this.applicantIndex].other.religion : '';

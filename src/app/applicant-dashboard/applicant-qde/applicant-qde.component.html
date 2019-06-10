@@ -913,13 +913,12 @@
                                     <div class="radio-wrap rounded-radio">
                                         <div class="bs-radio typ-normal">
                                             <input type="radio" 
+                                            id="current-add-mail" 
                                             name="prefredMail"
-                                            #prefredMail="ngModel" 
                                             [value]="true"
                                             [checked]="qde.application.applicants[applicantIndex].communicationAddress.preferedMailingAddress == true"
                                             fieldFill
-                                            [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.preferedMailingAddress"
-                                            id="current-add-mail" />
+                                           />
                                             <label for="current-add-mail">
                                                 Current Address
                                             </label>
@@ -927,12 +926,10 @@
                                         <div class="bs-radio typ-normal">
                                             <input type="radio"
                                             name="prefredMail"
-                                            #prefredMail="ngModel" 
                                             [value]="false"
-                                            [checked]="qde.application.applicants[applicantIndex].communicationAddress.preferedMailingAddress == false"
+                                            [checked]="qde.application.applicants[applicantIndex].communicationAddress.preferredMailingAddress == false"
                                             fieldFill
-                                            [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.preferedMailingAddress"
-                                            id="permanent-add-mail">
+                                            >
                                             <label for="permanent-add-mail">
                                                 Permanent Address
                                             </label>
@@ -1691,7 +1688,7 @@
                                           maxlength="8"
                                           pattern="{{regexPattern.mobileNumber}}"
                                           name="offStdNumber"
-                                          [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.officeNumber" />
+                                          [(ngModel)]="officialNumberStdCode" />
 
                                         <label for="res-no03">Office number</label>
 
