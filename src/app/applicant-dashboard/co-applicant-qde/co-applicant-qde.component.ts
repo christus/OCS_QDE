@@ -337,10 +337,11 @@ export class CoApplicantQdeComponent implements OnInit {
   private alternateResidenceNumberPhoneNumber: string = ""
   private addressCityState: string = "";
   private otherReligion: string = "";
-  private dateOfIncorporation: {day: string, month: string, year: string} = {day: null, month: null, year: null};
+  private dateOfIncorporation: {day: Item, month: Item, year: Item} = { day: {key: "DD", value: "DD"}, month: {key: "MM", value: "MM"}, year: {key: "YYYY", value: "YYYY"} };
   private registeredAddressCityState: string = "";
   private corporateAddressCityState: string = "";
-  private corporateAddressStdNumber: {stdCode: string, phoneNumber: string} = {stdCode: "", phoneNumber: ""};
+  private corporateAddressStdCode = "";
+  private corporateAddressPhoneNumber = "";
 
   private commCityState:string = "";
   // zipCityStateID:string = "";
@@ -555,7 +556,7 @@ export class CoApplicantQdeComponent implements OnInit {
         // If not coming from leads dashboard
         // if(this.qdeService.getQde().application.applicationId == "" || this.qdeService.getQde().application.applicationId == null) {
           this.qdeHttp.getQdeData(params.applicationId).subscribe(response => {
-            console.log("RESPONSE", response);
+            console.log("RESPONSE ", response);
             var result = JSON.parse(response["ProcessVariables"]["response"]);
             console.log("Get ", result);
 
@@ -788,7 +789,8 @@ export class CoApplicantQdeComponent implements OnInit {
     
   }
 
-  submitGenderDetails(form: NgForm, swiperInstance ?: Swiper) {
+  submitGenderDetails(event: Event, form: NgForm, swiperInstance ?: Swiper) {
+    console.log(event);
     event.preventDefault();
 
     if (form && !form.valid) {
@@ -797,12 +799,13 @@ export class CoApplicantQdeComponent implements OnInit {
 
     this.qde.application.applicants[this.coApplicantIndex].personalDetails.gender = form.value.gender;
 
-    console.log(this.qde.application.applicants[this.coApplicantIndex]);
+    console.log("FILT: ",this.qdeService.getFilteredJson(this.qde));
 
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
         this.goToNextSlide(swiperInstance);
+        console.log(response['ProcessVariables']['response']);
       } else {
         // Throw Invalid Pan Error
       }
@@ -1510,7 +1513,7 @@ export class CoApplicantQdeComponent implements OnInit {
 
   changeIsIndividual(value, swiperInstance ?: Swiper) {
     console.log(this.qde.application.applicants[this.coApplicantIndex].isIndividual);
-    if(value) {
+    if(value == 1) {
       this.goToNextSlide(swiperInstance);
       this.qde.application.applicants[this.coApplicantIndex].isIndividual = true;
     } else {
@@ -1613,25 +1616,10 @@ export class CoApplicantQdeComponent implements OnInit {
 
     this.otherReligion = this.qde.application.applicants[this.coApplicantIndex].other.religion == '6' ? this.qde.application.applicants[this.coApplicantIndex].other.religion : '';
 
-    if( this.qde.application.applicants[this.coApplicantIndex].organizationDetails.dateOfIncorporation.split("-")[0] == "" ||
-        this.qde.application.applicants[this.coApplicantIndex].organizationDetails.dateOfIncorporation.split("-")[0] == undefined) {
-      this.dateOfIncorporation.day = this.qde.application.applicants[this.coApplicantIndex].organizationDetails.dateOfIncorporation.split("-")[0];
-    }
-
-    if( this.qde.application.applicants[this.coApplicantIndex].organizationDetails.dateOfIncorporation.split("-")[1] == "" ||
-        this.qde.application.applicants[this.coApplicantIndex].organizationDetails.dateOfIncorporation.split("-")[1] == undefined) {
-      this.dateOfIncorporation.month = this.qde.application.applicants[this.coApplicantIndex].organizationDetails.dateOfIncorporation.split("-")[1];
-    }
-
-    if( this.qde.application.applicants[this.coApplicantIndex].organizationDetails.dateOfIncorporation.split("-")[2] == "" ||
-        this.qde.application.applicants[this.coApplicantIndex].organizationDetails.dateOfIncorporation.split("-")[2] == undefined) {
-      this.dateOfIncorporation.year = this.qde.application.applicants[this.coApplicantIndex].organizationDetails.dateOfIncorporation.split("-")[2];
-    }
-
     this.registeredAddressCityState = this.qde.application.applicants[this.coApplicantIndex].registeredAddress.city +'/'+ this.qde.application.applicants[this.coApplicantIndex].registeredAddress.state;
     this.corporateAddressCityState = this.qde.application.applicants[this.coApplicantIndex].corporateAddress.city +'-'+ this.qde.application.applicants[this.coApplicantIndex].corporateAddress.state;
-    this.corporateAddressStdNumber.stdCode = this.qde.application.applicants[this.coApplicantIndex].corporateAddress.stdNumber != "" ? this.qde.application.applicants[this.coApplicantIndex].corporateAddress.stdNumber.split("-")[0] : "";
-    this.corporateAddressStdNumber.phoneNumber = this.qde.application.applicants[this.coApplicantIndex].corporateAddress.stdNumber != "" ? this.qde.application.applicants[this.coApplicantIndex].corporateAddress.stdNumber.split("-")[1] : "";
+    this.corporateAddressStdCode = this.qde.application.applicants[this.coApplicantIndex].corporateAddress.stdNumber != "" ? this.qde.application.applicants[this.coApplicantIndex].corporateAddress.stdNumber.split("-")[0] : "";
+    this.corporateAddressPhoneNumber = this.qde.application.applicants[this.coApplicantIndex].corporateAddress.stdNumber != "" ? this.qde.application.applicants[this.coApplicantIndex].corporateAddress.stdNumber.split("-")[1] : "";
 
   }
 
@@ -1697,17 +1685,17 @@ export class CoApplicantQdeComponent implements OnInit {
 
       // Date of Incorporation
       if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].organizationDetails.dateOfIncorporation.split('/')[2])) ) {
-        this.dob.day = this.days[parseInt(this.qde.application.applicants[this.coApplicantIndex].organizationDetails.dateOfIncorporation.split('/')[2])];
+        this.dateOfIncorporation.day = this.days[parseInt(this.qde.application.applicants[this.coApplicantIndex].organizationDetails.dateOfIncorporation.split('/')[2])];
       }
 
       // Incorporation Month
       if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].organizationDetails.dateOfIncorporation.split('/')[1])) ) {
-        this.dob.month = this.months[parseInt(this.qde.application.applicants[this.coApplicantIndex].organizationDetails.dateOfIncorporation.split('/')[1])];
+        this.dateOfIncorporation.month = this.months[parseInt(this.qde.application.applicants[this.coApplicantIndex].organizationDetails.dateOfIncorporation.split('/')[1])];
       }
 
       // Incorporation Year
       if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].organizationDetails.dateOfIncorporation.split('/')[0])) ) {
-        this.dob.year = this.years.find(val => this.qde.application.applicants[this.coApplicantIndex].organizationDetails.dateOfIncorporation.split('/')[0] == val.value);
+        this.dateOfIncorporation.year = this.years.find(val => this.qde.application.applicants[this.coApplicantIndex].organizationDetails.dateOfIncorporation.split('/')[0] == val.value);
       }
 
       // Communication address
@@ -1778,13 +1766,44 @@ export class CoApplicantQdeComponent implements OnInit {
 
   createCoApplicant() {
     this.isTabDisabled = false;
+    this.resetQdeForm();
     this.tabSwitch(1);
   }
 
   resetQdeForm() {
-    this.resetQdeForm();
+    this.qdeService.resetQde();
+    this.residenceNumberStdCode = "";
+    this.residenceNumberPhoneNumber = "";
+    this.alternateResidenceNumberStdCode = ""
+    this.alternateResidenceNumberPhoneNumber = "";
+    this.addressCityState = ""
+    this.otherReligion = "";
+    this.registeredAddressCityState = "";
+    this.corporateAddressCityState = "";
+    this.corporateAddressStdCode = "";
+    this.corporateAddressPhoneNumber = "";
+    this.dob = { day: {key: "DD", value: "DD"}, month: {key: "MM", value: "MM"}, year: {key: "YYYY", value: "YYYY"} };
+    this.dateOfIncorporation = { day: {key: "DD", value: "DD"}, month: {key: "MM", value: "MM"}, year: {key: "YYYY", value: "YYYY"} };
+    this.registeredAddressCityState = "";
+    this.corporateAddressCityState = "";
+    this.corporateAddressStdCode = "";
+    this.corporateAddressPhoneNumber = "";
+    this.commCityState = "";
 
-    // Reset Kendo and Sliders here
+    this.selectedTitle = this.titles[0];
+    this.selectedReligions = this.religions[0];
+    this.selectedMaritialStatus = this.maritals[0];
+    this.selectedCategory = this.categories[0];
+    this.selectedOccupation = this.occupations[0];
+    this.selectedResidence = this.residences[0];
+    this.selectedSpouseTitle = this.titles[0];
+    this.selectedFatherTitle = this.titles[0];
+    this.selectedMotherTitle = this.titles[0];
+    this.selectedQualification = this.qualifications[0];
+    this.selectedConstitution = this.constitutions[0];
+    this.selectedDocType = this.docType[0];
+    this.selectedConstitutions = this.constitutions[0];
+    this.selectedAssesmentMethodology = this.assessmentMethodology[0];
   }
 
   commZipcodeFocusout($event: any ) {

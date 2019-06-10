@@ -332,14 +332,15 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   private residenceNumberPhoneNumber: string = "";
   private alternateResidenceNumberStdCode: string = ""
   private alternateResidenceNumberPhoneNumber: string = ""
-  private officialNumberStdCode: string = ""
-  private officialNumberPhoneNumber: string = ""
   private addressCityState: string = "";
   private otherReligion: string = "";
-  private dateOfIncorporation: {day: string, month: string, year: string} = {day: null, month: null, year: null};
+  private officialNumberStdCode: string = "";
+  private officialNumberPhoneNumber: string = "";
+  private dateOfIncorporation: {day: Item, month: Item, year: Item} = { day: {key: "DD", value: "DD"}, month: {key: "MM", value: "MM"}, year: {key: "YYYY", value: "YYYY"} };
   private registeredAddressCityState: string = "";
   private corporateAddressCityState: string = "";
-  private corporateAddressStdNumber: {stdCode: string, phoneNumber: string} = {stdCode: "", phoneNumber: ""};
+  private corporateAddressStdCode = "";
+  private corporateAddressPhoneNumber = "";
 
   private commCityState:string = "";
   // zipCityStateID:string = "";
@@ -349,15 +350,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
   // All Swiper Sliders
   // Will be deprecated in next commit if not used
-  // @ViewChild('panSlider1') private panSlider1: ElementRef;
   @ViewChild('panSlider2') private panSlider2: Swiper;
   @ViewChild('panSlider4') private panSlider4: Swiper;
-  // @ViewChild('pdSlider1') private pdSlider1: ElementRef;
-  // @ViewChild('pdSlider2') private pdSlider2: ElementRef;
-  // @ViewChild('maritalSlider1') private maritalSlider1: ElementRef;
-  // @ViewChild('maritalSlider2') private maritalSlider2: ElementRef;
-  // @ViewChild('familySlider1') private familySlider1: ElementRef;
-  // @ViewChild('familySlider2') private familySlider2: ElementRef;
 
   private isAlternateEmailId: boolean = false;
   private isAlternateMobileNumber: boolean = false;
@@ -365,13 +359,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   
   private applicantIndividual: boolean = true;
 
-
   private isIndividual:boolean = false;
   private YYYY: number = 1900;
 
   private applicantStatus:string = "" ;
-
-
 
   private fragments = [ 'pan1',
                         'personal',
@@ -1959,41 +1950,19 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   }
 
   initializeVariables() {
-
     this.residenceNumberStdCode = this.qde.application.applicants[this.applicantIndex].contactDetails.residenceNumber != "" ? this.qde.application.applicants[this.applicantIndex].contactDetails.residenceNumber.split("-")[0] : "";
     this.residenceNumberPhoneNumber = this.qde.application.applicants[this.applicantIndex].contactDetails.residenceNumber != "" ? this.qde.application.applicants[this.applicantIndex].contactDetails.residenceNumber.split("-")[1] : "";
-
     this.alternateResidenceNumberStdCode = this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber != "" ? this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber.split("-")[0] : "";
     this.alternateResidenceNumberPhoneNumber = this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber != "" ? this.qde.application.applicants[this.applicantIndex].contactDetails.residenceNumber.split("-")[1] : "";
-    
     this.officialNumberStdCode = this.qde.application.applicants[this.applicantIndex].officialCorrespondence.officeNumber != "" ? this.qde.application.applicants[this.applicantIndex].officialCorrespondence.officeNumber.split("-")[0] : "";
     this.officialNumberPhoneNumber = this.qde.application.applicants[this.applicantIndex].officialCorrespondence.officeNumber != "" ? this.qde.application.applicants[this.applicantIndex].officialCorrespondence.officeNumber.split("-")[1] : "";
-
-    
     this.addressCityState = this.qde.application.applicants[this.applicantIndex].communicationAddress.city + '/'+ this.qde.application.applicants[this.applicantIndex].communicationAddress.state;
-
     this.otherReligion = this.qde.application.applicants[this.applicantIndex].other.religion == '6' ? this.qde.application.applicants[this.applicantIndex].other.religion : '';
-
-    if( this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[0] == "" ||
-        this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[0] == undefined) {
-      this.dateOfIncorporation.day = this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[0];
-    }
-
-    if( this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[1] == "" ||
-        this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[1] == undefined) {
-      this.dateOfIncorporation.month = this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[1];
-    }
-
-    if( this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[2] == "" ||
-        this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[2] == undefined) {
-      this.dateOfIncorporation.year = this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[2];
-    }
-
-    this.registeredAddressCityState = this.qde.application.applicants[this.applicantIndex].registeredAddress.city +'/'+ this.qde.application.applicants[this.applicantIndex].registeredAddress.state;
-    this.corporateAddressCityState = this.qde.application.applicants[this.applicantIndex].corporateAddress.city +'-'+ this.qde.application.applicants[this.applicantIndex].corporateAddress.state;
-    this.corporateAddressStdNumber.stdCode = this.qde.application.applicants[this.applicantIndex].corporateAddress.stdNumber != "" ? this.qde.application.applicants[this.applicantIndex].corporateAddress.stdNumber.split("-")[0] : "";
-    this.corporateAddressStdNumber.phoneNumber = this.qde.application.applicants[this.applicantIndex].corporateAddress.stdNumber != "" ? this.qde.application.applicants[this.applicantIndex].corporateAddress.stdNumber.split("-")[1] : "";
-
+    this.dateOfIncorporation = { day: {key: "DD", value: "DD"}, month: {key: "MM", value: "MM"}, year: {key: "YYYY", value: "YYYY"} };
+    this.registeredAddressCityState = "";
+    this.corporateAddressCityState = "";
+    this.corporateAddressStdCode = "";
+    this.corporateAddressPhoneNumber = "";
   }
 
   makePermanentAddressSame(event: boolean) {
@@ -2015,6 +1984,43 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   commZipcodeFocusout($event: any ) {
     //call API
   }
+  
+  resetQdeForm() {
+    this.qdeService.resetQde();
+    this.residenceNumberStdCode = "";
+    this.residenceNumberPhoneNumber = "";
+    this.alternateResidenceNumberStdCode = ""
+    this.alternateResidenceNumberPhoneNumber = "";
+    this.addressCityState = ""
+    this.otherReligion = "";
+    this.registeredAddressCityState = "";
+    this.corporateAddressCityState = "";
+    this.corporateAddressStdCode = "";
+    this.corporateAddressPhoneNumber = "";
+    this.dob = { day: {key: "DD", value: "DD"}, month: {key: "MM", value: "MM"}, year: {key: "YYYY", value: "YYYY"} };
+    this.dateOfIncorporation = { day: {key: "DD", value: "DD"}, month: {key: "MM", value: "MM"}, year: {key: "YYYY", value: "YYYY"} };
+    this.registeredAddressCityState = "";
+    this.corporateAddressCityState = "";
+    this.corporateAddressStdCode = "";
+    this.corporateAddressPhoneNumber = "";
+    this.commCityState = "";
+
+    this.selectedTitle = this.titles[0];
+    this.selectedReligions = this.religions[0];
+    this.selectedMaritialStatus = this.maritals[0];
+    this.selectedCategory = this.categories[0];
+    this.selectedOccupation = this.occupations[0];
+    this.selectedResidence = this.residences[0];
+    this.selectedSpouseTitle = this.titles[0];
+    this.selectedFatherTitle = this.titles[0];
+    this.selectedMotherTitle = this.titles[0];
+    this.selectedQualification = this.qualifications[0];
+    this.selectedConstitution = this.constitutions[0];
+    this.selectedDocType = this.docType[0];
+    this.selectedConstitutions = this.constitutions[0];
+    this.selectedAssesmentMethodology = this.assessmentMethodology[0];
+  }
+
   ngOnDestroy() {
     this.panslideSub.unsubscribe();
   }
