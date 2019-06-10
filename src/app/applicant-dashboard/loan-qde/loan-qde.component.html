@@ -172,15 +172,15 @@
                           <div class="form-wrap">
                               <div class="form-group">
                                   <span class="control-title">Property type</span>
-                                  <select ngModel name="propertyType" class="js-select">
-                                      <option value="1">Builder</option>
-                                      <option value="2">Self Construction</option>
-                                      <option value="3">resale</option>
-                                      <option value="4">plot</option>
-                                      <option value="5">row house</option>
-                                      <option value="6">bunglow</option>
-                                      <option value="7">flat</option>
-                                  </select>
+
+                                  <kendo-dropdownlist class="form-control"
+                                    [data]="propertyTypes" 
+                                    textField="key"
+                                    valueField="value"
+                                    name="propertyType"
+                                    [(ngModel)]="selectedPropertyType"
+                                    >
+                                  </kendo-dropdownlist>
                               </div>
                               <div class="form-group">
                                   <input ngModel type="text" class="form-control" id="pro-add-line1" 
@@ -346,13 +346,24 @@
                         <div class="form-wrap">
                           <div class="form-group">
                             <span class="control-title">Loan provider</span>
-                            <select ngModel name="loanProvider" class="js-select" required>
+
+                            <kendo-dropdownlist class="form-control"
+                              [data]="loanProviders" 
+                              textField="key"
+                              valueField="value"
+                              name="loanProvider"
+                              [(ngModel)]="selectedLoanProvider"
+                              >
+                            </kendo-dropdownlist>
+
+                            <!-- <select ngModel name="loanProvider" class="js-select" required>
                               <option value="1">Loan provider</option>
                               <option value="2">SBI home loan</option>
                               <option value="3">option1</option>
                               <option value="4">option2</option>
                               <option value="5">option3</option>
-                            </select>
+                            </select> -->
+
                           </div>
                         </div>
                 

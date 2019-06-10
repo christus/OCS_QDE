@@ -176,9 +176,13 @@ export class LoanQdeComponent implements OnInit {
   private genders: Array<any>;
   private constitutions: Array<any>;
   private loanTypes: Array<any>;
+  private loanProviders: Array<any>;
+  private propertyTypes: Array<any>;
+  private selectedPropertyType: Item;
   private selectedFatherTitle : Item;
   private selectedLoanPurpose: Item;
   private selectedLoanType: Item;
+  private selectedLoanProvider: Item;
 
   private applicantId: string;
 
@@ -204,27 +208,17 @@ export class LoanQdeComponent implements OnInit {
 
     console.log(">>", JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs));
     var lov = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs);
+
     this.loanpurposes = lov.LOVS.loan_purpose;
-
-    //Hardcoded
-    this.loanTypes = [{
-      key: "Home",
-      value: 1,
-    },{
-      key: "Home2",
-      value: 2,
-    }];
-
-    this.loanpurposes = [{
-      key: "Purchase of land",
-      value: 1,
-    },{
-      key: "Option 2",
-      value: 2,
-    }];
+    this.propertyTypes = lov.LOVS.property_type;
+    this.loanTypes = lov.LOVS.loan_type;
+    this.loanProviders = lov.LOVS.loan_providers;
 
     this.selectedLoanType = this.loanTypes[0];
     this.selectedLoanPurpose = this.loanpurposes[0];
+    this.selectedPropertyType = this.propertyTypes[0];
+    this.selectedLoanProvider = this.loanProviders[0];
+
     console.log(this.loanpurposes)
     
     if(this.route.snapshot.data.listOfValues != null && this.route.snapshot.data.listOfValues != undefined) {
@@ -385,7 +379,7 @@ export class LoanQdeComponent implements OnInit {
     this.qde.application.loanDetails.propertyType = {
 
       propertyIdentifed : this.isPropertyIdentified,
-      propertyType: form.value.propertyType,
+      propertyType: form.value.propertyType.value,
       propertyClss: form.value.propertyClss,
       propertyArea: form.value.propertyArea,
     }
@@ -442,7 +436,7 @@ export class LoanQdeComponent implements OnInit {
     }
 
     this.qde.application.loanDetails.existingLoans = {
-      loanProvider: form.value.loanProvider,
+      loanProvider: form.value.loanProvider.value,
       // liveLoan: form.value.numberOfYears,
       // monthlyEmi: form.value.monthlyEmi
     }
