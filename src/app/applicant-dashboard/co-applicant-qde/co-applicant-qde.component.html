@@ -177,8 +177,8 @@
                                                             required />
                                                     <label for="pan-inpt">Enter PAN number</label>
                                                     <div *ngIf="pan.touched && pan.invalid" class="invalid-feedback">
-                                                        <div *ngIf="pan.errors?.required">*PAN number is required</div>
-                                                        <div *ngIf="pan.errors?.pattern ? true : false">*PAN not valid</div>
+                                                        <!-- <div *ngIf="pan.errors?.required">{{errors.pan.required}}</div> -->
+                                                        <div *ngIf="pan.errors?.pattern ? true : false">{{errors.pan.invalid}}</div>
                                                         <div *ngIf="pan.errors?.minlength || pan.errors?.maxlength">*PAN must be at least {{pan.errors.minlength.requiredLength}} characters</div>
                                                     </div>
                                                 </div>
@@ -195,26 +195,26 @@
                                                     required>
                                                     </kendo-dropdownlist>
 
-                                                </div>
-                                                <div class="form-group">
-                                                    <input type="text" class="form-control"
-                                                    [(ngModel)]="qde.application.applicants[coApplicantIndex].pan.docNumber"
-                                                    id="docNumber"
-                                                    name="docNumber"
-                                                    pattern="{{regexPattern.docNumber}}"
-                                                    #docNumber="ngModel"
-                                                    maxlength="16"
-                                                    fieldFill
-                                                    required/>
-                                                    <label for="docNumber">Document Number</label>
-
-                                                    <div *ngIf="docNumber.touched && docNumber.invalid" class="invalid-feedback">
-                                                        <div *ngIf="docNumber.errors?.required">{{errors.panDocumentNo.required}}</div>
-                                                        <div *ngIf="docNumber.errors?.pattern">{{errors.panDocumentNo.invalid}}</div>
-                                                    </div>
-                                                    <!-- <image-upload [url]="imageUrl" [headers]="myHeaders"></image-upload> -->
-                                                </div>
                                             </div>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control"
+                                                [(ngModel)]="qde.application.applicants[coApplicantIndex].pan.docNumber"
+                                                id="docNumber1"
+                                                name="docNumber"
+                                                pattern="{{regexPattern.docNumber}}"
+                                                #coappdocNumber="ngModel"
+                                                maxlength="16"
+                                                fieldFill
+                                                required/>
+                                              <label for="docNumber1">Document Number</label>
+                                              
+                                              <div *ngIf="coappdocNumber.touched && coappdocNumber.invalid" class="invalid-feedback">
+                                                <!-- <div *ngIf="coappdocNumber.errors?.required">{{errors.panDocumentNo.required}}</div> -->
+                                                <div *ngIf="coappdocNumber.errors?.pattern">{{errors.panDocumentNo.invalid}}</div>
+                                              </div>
+                                              <!-- <image-upload [url]="imageUrl" [headers]="myHeaders"></image-upload> -->
+                                          </div>
+                                          </div>
                                             <div class="btn-wrap">
                                                   <button type="submit"
                                                           class="btn btn-primary"
@@ -356,7 +356,7 @@
                                                           pattern="{{regexPattern.name}}">
                                                           <label for="name">First name</label>
                                                     <div *ngIf="(firstName.touched || firstName.dirty) && firstName.invalid" class="invalid-feedback">
-                                                        <div *ngIf="firstName.errors?.required">{{errors.personalDetails.firstName.required}}</div>
+                                                        <!-- <div *ngIf="firstName.errors?.required">{{errors.personalDetails.firstName.required}}</div> -->
                                                         <div *ngIf="firstName.errors?.pattern">{{errors.personalDetails.firstName.invalid}}</div>
                                                     </div>
                                                   </div>
@@ -390,7 +390,7 @@
                                                               required />
                                                     <label for="lastName" >Last name</label>
                                                     <div *ngIf="(lastName.touched || lastName.dirty) && lastName.invalid" class="invalid-feedback">
-                                                      <div *ngIf="lastName.errors?.required">{{errors.personalDetails.lastName.required}}</div>
+                                                      <!-- <div *ngIf="lastName.errors?.required">{{errors.personalDetails.lastName.required}}</div> -->
                                                       <div *ngIf="lastName.errors?.pattern">{{errors.personalDetails.lastName.invalid}}</div>
                                                     </div>
                                                   </div>
@@ -567,7 +567,7 @@
                                             </a> alternate email id
                                           </span>
                                           <div *ngIf="(preferEmailId.touched || preferEmailId.dirty) && preferEmailId.invalid" class="invalid-feedback">
-                                            <div *ngIf="preferEmailId.errors?.required">{{errors.contactDetails.preferedEmail.required}}</div>
+                                            <!-- <div *ngIf="preferEmailId.errors?.required">{{errors.contactDetails.preferedEmail.required}}</div> -->
                                             <div *ngIf="preferEmailId.errors?.email">{{errors.contactDetails.preferedEmail.invalid}}</div>
                                           </div>
                                     </div>
@@ -616,7 +616,7 @@
                                         </span>
   
                                         <div *ngIf="(mobileNumber.touched || mobileNumber.dirty) && mobileNumber.invalid" class="invalid-feedback">
-                                          <div *ngIf="mobileNumber.errors?.required">{{errors.contactDetails.prefferedMobile.required}}</div>
+                                          <!-- <div *ngIf="mobileNumber.errors?.required">{{errors.contactDetails.prefferedMobile.required}}</div> -->
                                           <div *ngIf="mobileNumber.errors?.pattern">{{errors.contactDetails.prefferedMobile.invalid}}</div>
                                         </div>
                                     </div>
@@ -660,7 +660,7 @@
                                                       id="std" />
                                               <label for="std">STD</label>
                                               <div *ngIf="residenceStdCode.touched && residenceStdCode.invalid" class="invalid-feedback">
-                                                  <div *ngIf="residenceStdCode.errors?.required">{{errors.contactDetails.stdCode.required}}</div>
+                                                  <!-- <div *ngIf="residenceStdCode.errors?.required">{{errors.contactDetails.stdCode.required}}</div> -->
                                                   <div *ngIf="residenceStdCode.errors?.pattern">{{errors.contactDetails.stdCode.invalid}}</div>
                                               </div>
                                         </div>
@@ -680,7 +680,7 @@
                                                       required />
                                             <label for="res-no">Residence number</label>
                                             <div *ngIf="residenceNumber.touched  && residenceNumber.invalid" class="invalid-feedback">
-                                              <div *ngIf="residenceNumber.errors?.pattern">{{errors.contactDetails.residenceNumber.invalid}}</div>
+                                              <!-- <div *ngIf="residenceNumber.errors?.pattern">{{errors.contactDetails.residenceNumber.invalid}}</div> -->
                                               <div *ngIf="residenceNumber.errors?.required">{{errors.contactDetails.residenceNumber.required}}</div>
                                             </div>
                                         </div>
@@ -701,7 +701,7 @@
                                                       class="form-control"
                                                       fieldFill
                                                       id="altrstd">
-                                            <label for="altrstd" *ngIf="alternateResidenceNumberStd1.value==''">STD</label>
+                                            <label for="altrstd" >STD</label>
                                             <div *ngIf="alternateResidenceNumberStd1.touched  && alternateResidenceNumberStd1.invalid" class="invalid-feedback">
                                               <div *ngIf="alternateResidenceNumberStd1.errors?.pattern">{{errors.contactDetails.alternateResidenceNumberStd1.invalid}}</div>
                                           </div>
@@ -717,7 +717,7 @@
                                                       maxlength="8" 
                                                       pattern="{{regexPattern.mobileNumber}}"
                                                       data-validation-attr="residenceno01" />
-                                            <label for="altr-res-no" *ngIf="alternateResidenceNumber2.value==''">Residence number</label>
+                                            <label for="altr-res-no">Residence number</label>
                                             <div *ngIf="alternateResidenceNumber2.touched  && alternateResidenceNumber2.invalid" class="invalid-feedback">
                                               <div *ngIf="alternateResidenceNumber2.errors?.pattern">{{errors.contactDetails.alternateResidenceNumber2.invalid}}</div>
                                           </div>
@@ -773,6 +773,7 @@
   
                                   </div>
                                   <div class="form-group">
+  
                                       <input  type="text"
                                               class="form-control"
                                               id="address1"
@@ -784,7 +785,7 @@
                                               required />
 
                                         <div *ngIf="(address1.touched || address1.dirty) && address1.invalid" class="invalid-feedback">
-                                          <div *ngIf="address1.errors?.required">{{errors.commAddress.address1.required}}</div>
+                                          <!-- <div *ngIf="address1.errors?.required">{{errors.commAddress.address1.required}}</div> -->
                                           <div *ngIf="address1.errors?.pattern">{{errors.commAddress.address1.invalid}}</div>
                                         </div>
 
@@ -803,7 +804,7 @@
   
                                       <label for="address2">Address line 2</label>
                                       <div *ngIf="(address2.touched || address2.dirty) && address2.invalid" class="invalid-feedback">
-                                        <div *ngIf="address2.errors?.required">{{errors.commAddress.address2.required}}</div>
+                                        <!-- <div *ngIf="address2.errors?.required">{{errors.commAddress.address2.required}}</div> -->
                                         <div *ngIf="address2.errors?.pattern">{{errors.commAddress.address2.invalid}}</div>
                                       </div>
                                   </div>
@@ -823,7 +824,7 @@
                                         <label for="pincode">Pincode</label>
 
                                       <div *ngIf="(commPinCode.touched || commPinCode.dirty) && commPinCode.invalid" class="invalid-feedback">
-                                          <div *ngIf="commPinCode.errors?.required">{{errors.commAddress.pinCode.required}}</div>
+                                          <!-- <div *ngIf="commPinCode.errors?.required">{{errors.commAddress.pinCode.required}}</div> -->
                                           <div *ngIf="commPinCode.errors?.pattern">{{errors.commAddress.pinCode.invalid}}</div>
                                       </div>
                                   </div>
@@ -843,7 +844,7 @@
         
   
                                       <div *ngIf="(commCityState.touched || commCityState.dirty) && commCityState.invalid" class="invalid-feedback">
-                                          <div *ngIf="commCityState.errors?.required">{{errors.commAddress.stateOrCity.required}}</div>
+                                          <!-- <div *ngIf="commCityState.errors?.required">{{errors.commAddress.stateOrCity.required}}</div> -->
                                           <div *ngIf="commCityState.errors?.pattern">{{errors.commAddress.stateOrCity.invalid}}</div>
                                       </div>
                                   </div>
@@ -868,7 +869,7 @@
                                               required />
                                               <label for="per-address1">Address line 1</label>
                                               <div *ngIf="(pAddress1.touched || pAddress1.dirty) && pAddress1.invalid" class="invalid-feedback">
-                                                <div *ngIf="pAddress1.errors?.required">{{errors.commAddress.address1.required}}</div>
+                                                <!-- <div *ngIf="pAddress1.errors?.required">{{errors.commAddress.address1.required}}</div> -->
                                                 <div *ngIf="pAddress1.errors?.pattern">{{errors.commAddress.address1.invalid}}</div>
                                               </div>
                                           </div>
@@ -882,7 +883,7 @@
                                               required/>
                                               <label for="per-address2">Address line 2</label>
                                               <div *ngIf="(pAddress2.touched || pAddress2.dirty) && pAddress2.invalid" class="invalid-feedback">
-                                                <div *ngIf="pAddress2.errors?.required">{{errors.commAddress.address2.required}}</div>
+                                                <!-- <div *ngIf="pAddress2.errors?.required">{{errors.commAddress.address2.required}}</div> -->
                                                 <div *ngIf="pAddress2.errors?.pattern">{{errors.commAddress.address2.invalid}}</div>
                                               </div>
                                           </div>
@@ -901,7 +902,7 @@
                                                         required />
                                               <label for="per-pincode">Pincode</label>
                                               <div *ngIf="(pZipcode.touched || pZipcode.dirty) && pZipcode.invalid" class="invalid-feedback">
-                                                <div *ngIf="pZipcode.errors?.required">{{errors.commAddress.pinCode.required}}</div>
+                                                <!-- <div *ngIf="pZipcode.errors?.required">{{errors.commAddress.pinCode.required}}</div> -->
                                                 <div *ngIf="pZipcode.errors?.pattern">{{errors.commAddress.pinCode.invalid}}</div>
                                                 
                                             </div>
@@ -1094,7 +1095,7 @@
                                                     <label for="spouse-name">First name</label>
   
                                                     <div *ngIf="(spouseName.touched || spouseName.dirty) && spouseName.invalid" class="invalid-feedback">
-                                                        <div *ngIf="spouseName.errors?.required">{{errors.maritialStatus.spouseName.required}}</div>
+                                                        <!-- <div *ngIf="spouseName.errors?.required">{{errors.maritialStatus.spouseName.required}}</div> -->
                                                         <div *ngIf="spouseName.errors?.pattern">{{errors.maritialStatus.spouseName.invalid}}</div>
                                                     </div>
   
@@ -1160,7 +1161,7 @@
                                                   <span class="in-word"></span>
   
                                                   <div *ngIf="(amount.touched || amount.dirty) && amount.invalid" class="invalid-feedback">
-                                                      <div *ngIf="amount.errors?.required">{{errors.maritialStatus.salaryAmount.required}}</div>
+                                                      <!-- <div *ngIf="amount.errors?.required">{{errors.maritialStatus.salaryAmount.required}}</div> -->
                                                       <div *ngIf="amount.errors?.pattern">{{errors.maritialStatus.salaryAmount.invalid}}</div>
                                                   </div>
                                                 </div>
@@ -1287,7 +1288,7 @@
                                                           pattern="{{regexPattern.name}}" />
                                                           <label for="father-name">Father's name</label>
                                                   <div *ngIf="fatherName.touched && fatherName.invalid" class="invalid-feedback">
-                                                      <div *ngIf="fatherName.errors?.required">{{errors.familyDetails.fatherName.required}}</div>
+                                                      <!-- <div *ngIf="fatherName.errors?.required">{{errors.familyDetails.fatherName.required}}</div> -->
                                                       <div *ngIf="fatherName.errors?.pattern">{{errors.familyDetails.fatherName.invalid}}</div>
                                                   </div>
                                               </div>
@@ -1327,7 +1328,7 @@
                                                           pattern="{{regexPattern.name}}" />
                                                           <label for="mother-name">Mother's name</label>
                                                   <div *ngIf="motherName.touched && motherName.invalid" class="invalid-feedback">
-                                                      <div *ngIf="motherName.errors?.required">{{errors.familyDetails.motherName.required}}</div>
+                                                      <!-- <div *ngIf="motherName.errors?.required">{{errors.familyDetails.motherName.required}}</div> -->
                                                       <div *ngIf="motherName.errors?.pattern">{{errors.familyDetails.motherName.invalid}}</div>
                                                   </div>
                                               </div>
@@ -1341,7 +1342,7 @@
                                                           pattern="{{regexPattern.name}}" />
                                                           <label for="maiden-name" >Mother's maiden name</label>
                                                   <div *ngIf="motherMaiden.touched && motherMaiden.invalid" class="invalid-feedback">
-                                                      <div *ngIf="motherMaiden.errors?.required">{{errors.familyDetails.motherMaiden.required}}</div>
+                                                      <!-- <div *ngIf="motherMaiden.errors?.required">{{errors.familyDetails.motherMaiden.required}}</div> -->
                                                       <div *ngIf="motherMaiden.errors?.pattern">{{errors.familyDetails.motherMaiden.invalid}}</div>
                                                   </div>
                                               </div>
@@ -1494,8 +1495,8 @@
                                       <label for="companyName" >Company name</label>
   
                                       <div *ngIf="(companyName.touched || companyName.dirty) && companyName.invalid" class="invalid-feedback">
-                                        <div *ngIf="companyName.errors?.required">Company Name is required</div>
-                                        <div *ngIf="companyName.errors?.pattern">Company Name is not valid</div>
+                                        <!-- <div *ngIf="companyName.errors?.required">{{errors.occupationDetails.companyDetails.required}}</div> -->
+                                        <div *ngIf="companyName.errors?.pattern">{{errors.occupationDetails.companyDetails.invalid}}</div>
                                       </div>
   
                                   </div>
@@ -1516,9 +1517,9 @@
                                                   [options]="options">
                                       </ng5-slider>
   
-                                      <div *ngIf="numberOfYearsInCurrentCompany.touched && numberOfYearsInCurrentCompany.invalid" class="invalid-feedback">
-                                        <div *ngIf="numberOfYearsInCurrentCompany.errors?.required">Experience in current employment/business is required</div>
-                                      </div>
+                                      <!-- <div *ngIf="numberOfYearsInCurrentCompany.touched && numberOfYearsInCurrentCompany.invalid" class="invalid-feedback">
+                                        <div *ngIf="numberOfYearsInCurrentCompany.errors?.required">{{errors.occupationDetails.currentExp.required}}</div>
+                                      </div> -->
   
                                   </div>
                                   <div class="form-group typ-range">
@@ -1535,9 +1536,9 @@
   
                                       <ng5-slider [(value)]="qde.application.applicants[coApplicantIndex].occupation.totalWorkExperience" [options]="options"></ng5-slider>
   
-                                      <div *ngIf="(totalExperienceYear.touched || totalExperienceYear.dirty) && totalExperienceYear.invalid" class="invalid-feedback">
-                                        <div *ngIf="totalExperienceYear.errors?.required">Total work experience is required</div>
-                                      </div>
+                                      <!-- <div *ngIf="(totalExperienceYear.touched || totalExperienceYear.dirty) && totalExperienceYear.invalid" class="invalid-feedback">
+                                        <div *ngIf="totalExperienceYear.errors?.required">{{errors.occupationDetails.totalExp.required}}</div>
+                                      </div> -->
   
                                   </div>
                               </div>
@@ -1586,7 +1587,7 @@
                                       <label for="ofcAddOne">Office address line1</label>
   
                                       <div *ngIf="ofcA1.touched  && ofcA1.invalid" class="invalid-feedback">
-                                        <div *ngIf="ofcA1.errors?.required">{{errors.officialCorrespondence.address1.required}}</div>
+                                        <!-- <div *ngIf="ofcA1.errors?.required">{{errors.officialCorrespondence.address1.required}}</div> -->
                                         <div *ngIf="ofcA1.errors?.pattern">{{errors.officialCorrespondence.address1.invalid}}</div>
                                       </div>
                                   </div>
@@ -1602,7 +1603,7 @@
                                         required />
                                       <label for="ofcAddTwo">Office address line2</label>
                                       <div *ngIf="ofcA2.touched && ofcA2.invalid" class="invalid-feedback">
-                                          <div *ngIf="ofcA2.errors?.required">{{errors.officialCorrespondence.address2.required}}</div>
+                                          <!-- <div *ngIf="ofcA2.errors?.required">{{errors.officialCorrespondence.address2.required}}</div> -->
                                           <div *ngIf="ofcA2.errors?.pattern">{{errors.officialCorrespondence.address2.invalid}}</div>
                                       </div>
                                   </div>
@@ -1637,7 +1638,7 @@
                                         <label for="offPincode">Pincode</label>
   
                                       <div *ngIf="pinCode.touched && pinCode.invalid" class="invalid-feedback">
-                                          <div *ngIf="pinCode.errors?.required">{{errors.officialCorrespondence.pinCode.required}}</div>
+                                          <!-- <div *ngIf="pinCode.errors?.required">{{errors.officialCorrespondence.pinCode.required}}</div> -->
                                           <div *ngIf="pinCode.errors?.pattern">{{errors.officialCorrespondence.pinCode.invalid}}</div>
                                       </div>
   
@@ -1654,7 +1655,7 @@
                                         <label for="offCityState">City/State</label>
   
                                       <div *ngIf="offCityState.touched && offCityState.invalid" class="invalid-feedback">
-                                          <div *ngIf="offCityState.errors?.required">{{errors.officialCorrespondence.stateOrCity.required}}</div>
+                                          <!-- <div *ngIf="offCityState.errors?.required">{{errors.officialCorrespondence.stateOrCity.required}}</div> -->
                                           <div *ngIf="offCityState.errors?.pattern">{{errors.officialCorrespondence.stateOrCity.invalid}}</div>
                                       </div>
                                   </div>
@@ -1670,7 +1671,7 @@
                                             fieldFill>
                                           <label for="std03">STD</label>
                                           <div *ngIf="stdCode.touched && stdCode.invalid" class="invalid-feedback">
-                                            <div *ngIf="stdCode.errors?.required">{{errors.officialCorrespondence.stdCode.required}}</div>
+                                            <!-- <div *ngIf="stdCode.errors?.required">{{errors.officialCorrespondence.stdCode.required}}</div> -->
                                             <div *ngIf="stdCode.errors?.pattern">{{errors.officialCorrespondence.stdCode.invalid}}</div>
                                         </div>
                                       </div>
@@ -1687,7 +1688,7 @@
                                           <label  for="res-no03">Office number</label>
   
                                           <div *ngIf="offStdNumber.touched && offStdNumber.invalid" class="invalid-feedback">
-                                              <div *ngIf="offStdNumber.errors?.required">{{errors.officialCorrespondence.phoneNumber.required}}</div>
+                                              <!-- <div *ngIf="offStdNumber.errors?.required">{{errors.officialCorrespondence.phoneNumber.required}}</div> -->
                                               <div *ngIf="offStdNumber.errors?.pattern">{{errors.officialCorrespondence.phoneNumber.invalid}}</div>
                                           </div>
                                       </div>
@@ -1703,7 +1704,7 @@
                                       <label for="off-email">Office email ID</label>
   
                                       <div *ngIf="officeEmail.touched && officeEmail.invalid" class="invalid-feedback">
-                                          <div *ngIf="officeEmail.errors?.required">{{errors.officialCorrespondence.email.required}}</div>
+                                          <!-- <div *ngIf="officeEmail.errors?.required">{{errors.officialCorrespondence.email.required}}</div> -->
                                           <div *ngIf="officeEmail.errors?.email">{{errors.officialCorrespondence.email.invalid}}</div>
                                       </div>
                                   </div>
@@ -1779,7 +1780,7 @@
                                              
                                             <label for="annualFamilyIncome231">Annual Family Income</label>
                                             <div  *ngIf="annualFamilyIncome2.touched && annualFamilyIncome2.invalid" class="invalid-feedback">
-                                                <div *ngIf="annualFamilyIncome2.errors?.required">{{errors.incomeDetails.familyIncome.required}}</div>
+                                                <!-- <div *ngIf="annualFamilyIncome2.errors?.required">{{errors.incomeDetails.familyIncome.required}}</div> -->
                                                 <div *ngIf="annualFamilyIncome2.errors?.pattern">{{errors.incomeDetails.familyIncome.invalid}}</div>
                                             </div> 
                                         </div>
@@ -1794,7 +1795,7 @@
                                                 required/>
                                               <label for="monthlyExpenditure231" >Monthly Expenditure</label>
                                               <div *ngIf="monthlyExpenditure2.touched && monthlyExpenditure2.invalid" class="invalid-feedback">
-                                                <div *ngIf="monthlyExpenditure2.errors?.required">{{errors.incomeDetails.monthlyExpenditure.required}}</div>
+                                                <!-- <div *ngIf="monthlyExpenditure2.errors?.required">{{errors.incomeDetails.monthlyExpenditure.required}}</div> -->
                                                 <div *ngIf="monthlyExpenditure2.errors?.pattern">{{errors.incomeDetails.monthlyExpenditure.invalid}}</div>
                                             </div> 
                                           </div>
@@ -1854,7 +1855,7 @@
                                                           </span>
                                                           <span class="in-word"></span>
                                                       <div *ngIf="monthlyIncome2.touched && monthlyIncome2.invalid" class="invalid-feedback">
-                                                        <div *ngIf="monthlyIncome2.errors?.required">{{errors.incomeDetails.monthlyIncome.required}}</div>
+                                                        <!-- <div *ngIf="monthlyIncome2.errors?.required">{{errors.incomeDetails.monthlyIncome.required}}</div> -->
                                                         <div *ngIf="monthlyIncome2.errors?.pattern">{{errors.incomeDetails.monthlyIncome.invalid}}</div>
                                                     </div> 
                                                   </div>
@@ -1960,8 +1961,8 @@
                                                           required />
                                                   <label for="pan-inpt2">Enter PAN number</label>
                                                   <div *ngIf="pan2.touched && pan2.invalid" class="invalid-feedback">
-                                                      <div *ngIf="pan2.errors?.required">*PAN number is required</div>
-                                                      <div *ngIf="pan2.errors?.pattern ? true : false">*PAN not valid</div>
+                                                      <!-- <div *ngIf="pan2.errors?.required">{{errors.pan.required}}</div> -->
+                                                      <div *ngIf="pan2.errors?.pattern ? true : false">{{errors.pan.invalid}}</div>
                                                       <!-- <div *ngIf="pan2.errors?.minlength || pan2.errors?.maxlength">*PAN must be at least {{pan.errors.minlength.requiredLength}} characters</div> -->
                                                   </div>
                                               </div>
@@ -1976,15 +1977,22 @@
                                                 </kendo-dropdownlist>
                                             </div>
                                             <div class="form-group">
-                                              <input    type="text"
-                                                        class="form-control"
-                                                        [(ngModel)]="qde.application.applicants[coApplicantIndex].pan.docNumber"
-                                                        id="docNumber2"
-                                                        name="docNumber"
-                                                        #docNumber="ngModel"
-                                                        fieldFill />
-                                                <label for="docNumber2" *ngIf="docNumber.value == ''" >Document Number</label>
-                                                <!-- <image-upload [url]="imageUrl" [headers]="myHeaders"></image-upload> -->
+                                              <input type="text" class="form-control"
+                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].pan.docNumber"
+                                              id="docNumber2"
+                                              name="docNumber"
+                                              #coappdocNumberNonIndividual="ngModel"
+                                              fieldFill
+                                              maxlength="16"
+                                              pattern="{{regexPattern.docNumber}}"
+                                              required />
+                                              <label for="docNumber2">Document Number</label>
+                                            <!-- <image-upload [url]="imageUrl" [headers]="myHeaders"></image-upload> -->
+                                            <div *ngIf="coappdocNumberNonIndividual.touched && coappdocNumberNonIndividual.invalid" class="invalid-feedback">
+                                                      <!-- <div *ngIf="pan2.errors?.required">{{errors.panDocumentNo.required}}</div> -->
+                                                      <div *ngIf="coappdocNumberNonIndividual.errors?.pattern ? true : false">{{errors.panDocumentNo.invalid}}</div>
+                                                      <!-- <div *ngIf="coappdocNumberNonIndividual.errors?.minlength || pan2.errors?.maxlength">*PAN must be at least {{pan.errors.minlength.requiredLength}} characters</div> -->
+                                                  </div>
                                               </div>
                                           </div>
                                           <div class="btn-wrap">
@@ -2020,7 +2028,8 @@
                                   (ngSubmit)="submitOrganizationDetails(organizationForm)">
                               <div class="form-wrap">
                                   <div class="form-group">
-                                      <input type="text" class="form-control" id="org-name" 
+                                      <input type="text" class="form-control" 
+                                        id="org-name" 
                                         pattern="{{regexPattern.name}}"
                                         [(ngModel)]="qde.application.applicants[coApplicantIndex].organizationDetails.nameOfOrganization"
                                         #orgName="ngModel"
@@ -2029,8 +2038,8 @@
                                         required />
                                       <label for="org-name">Name of Organization</label>
   
-                                      <div *ngIf="(orgName.touched || orgName.dirty) && orgName.invalid">
-                                          <div *ngIf="orgName.errors?.required">{{errors.organizationDetails.orgName.required}}</div>
+                                      <div *ngIf="(orgName.touched || orgName.dirty) && orgName.invalid" class="invalid-feedback">
+                                          <!-- <div *ngIf="orgName.errors?.required">{{errors.organizationDetails.orgName.required}}</div> -->
                                           <div *ngIf="orgName.errors?.pattern">{{errors.organizationDetails.orgName.invalid}}</div>
                                       </div>
                                   </div>
@@ -2123,7 +2132,7 @@
                                       <label for="reg-add">Registered Address</label>
 
                                       <div *ngIf="(regAdd.touched || regAdd.dirty) && regAdd.invalid" class="invalid-feedback">
-                                        <div *ngIf="regAdd.errors?.required">{{errors.registeredAddress.address.required}}</div>
+                                        <!-- <div *ngIf="regAdd.errors?.required">{{errors.registeredAddress.address.required}}</div> -->
                                         <div *ngIf="regAdd.errors?.pattern">{{errors.registeredAddress.address.invalid}}</div>
                                       </div>
                                   </div>
@@ -2144,23 +2153,23 @@
                                     </div>
                                   </div>
                                   <div class="form-group">
-                                        <input  type="text"
-                                                class="form-control"
-                                                id="regPinCode"
-                                                required
-                                                [(ngModel)]="qde.application.applicants[coApplicantIndex].registeredAddress.zipcode"
-                                                #regPinCode="ngModel" 
-                                                name="pincode"
-                                                fieldFill
-                                                minlength="6"
-                                                maxlength="6"
-                                                (keyup)="onPinCodeChange($event, 'registeredAddress')" 
-                                                pattern="{{regexPattern.pinCode}}" />
-                                        <label for="regPinCode">Pincode</label>
-                                        <div *ngIf="(regPinCode.touched || regPinCode.dirty) && regPinCode.invalid" class="invalid-feedback">
-                                            <div *ngIf="regPinCode.errors?.required">{{errors.registeredAddress.pinCode.required}}</div>
-                                            <div *ngIf="regPinCode.errors?.pattern">{{errors.registeredAddress.pinCode.invalid}}</div>
-                                        </div>
+                                      <input  type="text"
+                                              class="form-control"
+                                              id="regPinCode"
+                                              required
+                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].registeredAddress.zipcode"
+                                              #regPinCode="ngModel" 
+                                              name="pincode"
+                                              fieldFill
+                                              minlength="6"
+                                              maxlength="6"
+                                              (keyup)="onPinCodeChange($event, 'registeredAddress')" 
+                                              pattern="{{regexPattern.pinCode}}">
+                                              <label for="regPinCode">Pincode</label>
+                                      <div *ngIf="(regPinCode.touched || regPinCode.dirty) && regPinCode.invalid" class="invalid-feedback">
+                                          <!-- <div *ngIf="regPinCode.errors?.required">{{errors.registeredAddress.pinCode.required}}</div> -->
+                                          <div *ngIf="regPinCode.errors?.pattern">{{errors.registeredAddress.pinCode.invalid}}</div>
+                                      </div>
                                   </div>
                                   <div class="form-group last">
                                       <input type="text" class="form-control" id="city-state"
@@ -2173,7 +2182,7 @@
                                         <label for="city-state">City/State</label>
   
                                       <div *ngIf="(cityState.touched || cityState.dirty) && cityState.invalid" class="invalid-feedback">
-                                          <div *ngIf="cityState.errors?.required">{{errors.registeredAddress.stateOrCity.required}}</div>
+                                          <!-- <div *ngIf="cityState.errors?.required">{{errors.registeredAddress.stateOrCity.required}}</div> -->
                                           <div *ngIf="cityState.errors?.pattern">{{errors.registeredAddress.stateOrCity.invalid}}</div>
                                       </div>
                                   </div>
@@ -2212,7 +2221,7 @@
                                       <label for="corp-add">Corporate Address</label>
   
                                       <div *ngIf="corpAddress.touched  && corpAddress.invalid" class="invalid-feedback">
-                                        <div *ngIf="corpAddress.errors?.required">{{errors.corporateAddress.address.required}}</div>
+                                        <!-- <div *ngIf="corpAddress.errors?.required">{{errors.corporateAddress.address.required}}</div> -->
                                         <div *ngIf="corpAddress.errors?.pattern">{{errors.corporateAddress.address.invalid}}</div>
                                       </div>
                                   </div>
@@ -2248,7 +2257,7 @@
                                       <label for="pincode01">Pincode</label>
   
                                       <div *ngIf="corpPincode.touched  && corpPincode.invalid" class="invalid-feedback">
-                                          <div *ngIf="corpPincode.errors?.required">{{errors.corporateAddress.pinCode.required}}</div>
+                                          <!-- <div *ngIf="corpPincode.errors?.required">{{errors.corporateAddress.pinCode.required}}</div> -->
                                           <div *ngIf="corpPincode.errors?.pattern">{{errors.corporateAddress.pinCode.invalid}}</div>
                                       </div>
   
@@ -2266,7 +2275,7 @@
                                               <label for="city-state01">City/State</label>
   
                                       <div *ngIf="corpCityState.touched  && corpCityState.invalid" class="invalid-feedback">
-                                          <div *ngIf="corpCityState.errors?.required">{{errors.corporateAddress.stateOrCity.required}}</div>
+                                          <!-- <div *ngIf="corpCityState.errors?.required">{{errors.corporateAddress.stateOrCity.required}}</div> -->
                                           <div *ngIf="corpCityState.errors?.pattern">{{errors.corporateAddress.stateOrCity.invalid}}</div>
                                       </div>
                                   </div>
@@ -2285,7 +2294,7 @@
                                                   required/>
                                           <label for="caStd">STD</label>
                                           <div *ngIf="stdNumber.touched  && stdNumber.invalid" class="invalid-feedback">
-                                            <div *ngIf="stdNumber.errors?.required">{{errors.corporateAddress.stdNumber.required}}</div>
+                                            <!-- <div *ngIf="stdNumber.errors?.required">{{errors.corporateAddress.stdNumber.required}}</div> -->
                                             <div *ngIf="stdNumber.errors?.pattern">{{errors.corporateAddress.stdNumber.invalid}}</div>
                                         </div>
                                       </div>
@@ -2304,7 +2313,7 @@
                                                   required/>
                                           <label for="ca-res-no">Residence number</label>
                                           <div *ngIf="phoneNumber.touched  && phoneNumber.invalid" class="invalid-feedback">
-                                            <div *ngIf="phoneNumber.errors?.required">{{errors.corporateAddress.phoneNumber.required}}</div>
+                                            <!-- <div *ngIf="phoneNumber.errors?.required">{{errors.corporateAddress.phoneNumber.required}}</div> -->
                                             <div *ngIf="phoneNumber.errors?.pattern">{{errors.corporateAddress.phoneNumber.invalid}}</div>
                                         </div>
                                       </div>
@@ -2321,7 +2330,7 @@
                                                 email />                                      
                                     <label for="ofc-email" *ngIf="ofcEmail.value==''">Office email ID</label>
                                       <div *ngIf="ofcEmail.touched && ofcEmail.invalid" class="invalid-feedback">
-                                          <div *ngIf="ofcEmail.errors?.required">{{errors.corporateAddress.ofcEmail.required}}</div>
+                                          <!-- <div *ngIf="ofcEmail.errors?.required">{{errors.corporateAddress.ofcEmail.required}}</div> -->
                                           <div *ngIf="ofcEmail.errors?.email">{{errors.corporateAddress.ofcEmail.invalid}}</div>
                                       </div>
   
@@ -2358,7 +2367,7 @@
                                     required>
                                     <label for="revenue" *ngIf="revenue.value==''">Revenue</label>
                                     <div *ngIf="revenue.touched && revenue.invalid" class="invalid-feedback">
-                                        <div *ngIf="revenue.errors?.required">{{errors.revenueDetails.revenue.required}}</div>
+                                        <!-- <div *ngIf="revenue.errors?.required">{{errors.revenueDetails.revenue.required}}</div> -->
                                         <div *ngIf="revenue.errors?.pattern">{{errors.revenueDetails.revenue.invalid}}</div>
                                     </div>
 
@@ -2377,7 +2386,7 @@
                                     pattern="{{regexPattern.revenue}}">
                                     <label for="net-income" *ngIf="annualNetincome.value==''">Annual Net Income</label>
                                     <div *ngIf="annualNetincome.touched && annualNetincome.invalid" class="invalid-feedback">
-                                        <div *ngIf="annualNetincome.errors?.required">{{errors.revenueDetails.annualNetincome.required}}</div>
+                                        <!-- <div *ngIf="annualNetincome.errors?.required">{{errors.revenueDetails.annualNetincome.required}}</div> -->
                                         <div *ngIf="annualNetincome.errors?.pattern">{{errors.revenueDetails.annualNetincome.invalid}}</div>
                                     </div>
 
@@ -2396,7 +2405,7 @@
                                     pattern="{{regexPattern.revenue}}">
                                     <label for="gross-turnover" *ngIf="grossTurnover.value==''">Gross Turnover</label>
                                     <div *ngIf="grossTurnover.touched && grossTurnover.invalid" class="invalid-feedback">
-                                        <div *ngIf="grossTurnover.errors?.required">{{errors.revenueDetails.grossTurnover.required}}</div>
+                                        <!-- <div *ngIf="grossTurnover.errors?.required">{{errors.revenueDetails.grossTurnover.required}}</div> -->
                                         <div *ngIf="grossTurnover.errors?.pattern">{{errors.revenueDetails.grossTurnover.invalid}}</div>
                                     </div>
 
@@ -2474,7 +2483,7 @@
                                                   required/>
                                                 <label for="annualFamilyIncome2314">Annual Family Income</label>
                                                 <div *ngIf="annualFamilyIncome21.touched && annualFamilyIncome21.invalid" class="invalid-feedback">
-                                                        <div *ngIf="annualFamilyIncome21.errors?.required">{{errors.incomeDetails.familyIncome.required}}</div>
+                                                        <!-- <div *ngIf="annualFamilyIncome21.errors?.required">{{errors.incomeDetails.familyIncome.required}}</div> -->
                                                         <div *ngIf="annualFamilyIncome21.errors?.pattern">{{errors.incomeDetails.familyIncome.invalid}}</div>
                                                     </div> 
                                             </div>
@@ -2489,7 +2498,7 @@
                                                     required/>
                                                   <label for="monthlyExpenditure2314" >Monthly Expenditure</label>
                                                   <div *ngIf="monthlyExpenditure21.touched && monthlyExpenditure21.invalid" class="invalid-feedback">
-                                                        <div *ngIf="monthlyExpenditure21.errors?.required">{{errors.incomeDetails.monthlyExpenditure.required}}</div>
+                                                        <!-- <div *ngIf="monthlyExpenditure21.errors?.required">{{errors.incomeDetails.monthlyExpenditure.required}}</div> -->
                                                         <div *ngIf="monthlyExpenditure21.errors?.pattern">{{errors.incomeDetails.monthlyExpenditure.invalid}}</div>
                                                     </div> 
                                               </div>
@@ -2551,7 +2560,7 @@
                                                           <span class="in-word"></span>
 
                                                           <div *ngIf="monthlyIncome21.touched && monthlyIncome21.invalid" class="invalid-feedback">
-                                                            <div *ngIf="monthlyIncome21.errors?.required">{{errors.incomeDetails.monthlyIncome.required}}</div>
+                                                            <!-- <div *ngIf="monthlyIncome21.errors?.required">{{errors.incomeDetails.monthlyIncome.required}}</div> -->
                                                             <div *ngIf="monthlyIncome21.errors?.pattern">{{errors.incomeDetails.monthlyIncome.invalid}}</div>
 
                                                         </div>
