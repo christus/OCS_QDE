@@ -338,15 +338,15 @@
                                                   </div>
                                                   <div class="form-group">
   
-                                                    <input type="text"
-                                                          class="form-control"
-                                                          id="name"
-                                                          [(ngModel)]="qde.application.applicants[coApplicantIndex].personalDetails.firstName"
-                                                          name="firstName" 
-                                                          #firstName="ngModel" 
-                                                          fieldFill 
-                                                          required
-                                                          pattern="{{regexPattern.name}}">
+                                                    <input  type="text"
+                                                            class="form-control"
+                                                            id="name"
+                                                            [(ngModel)]="qde.application.applicants[coApplicantIndex].personalDetails.firstName"
+                                                            name="firstName" 
+                                                            #firstName="ngModel" 
+                                                            fieldFill 
+                                                            required
+                                                            pattern="{{regexPattern.name}}" />
                                                           <label for="name">First name</label>
                                                     <div *ngIf="(firstName.touched || firstName.dirty) && firstName.invalid" class="invalid-feedback">
                                                         <!-- <div *ngIf="firstName.errors?.required">{{errors.personalDetails.firstName.required}}</div> -->
@@ -361,8 +361,7 @@
                                                           [(ngModel)]="qde.application.applicants[coApplicantIndex].personalDetails.middleName"
                                                           pattern="{{regexPattern.name}}"
                                                           fieldFill
-                                                          #middleName="ngModel"
-                                                          >
+                                                          #middleName="ngModel" />
                                                     <label for="middleName">Middle name</label>
   
                                                     <span class="optional">Optional</span>
@@ -407,7 +406,7 @@
                                                                 [value]="g.value"
                                                                 [checked]="qde.application.applicants[coApplicantIndex].personalDetails.gender == g.value"
                                                                 [(ngModel)]="qde.application.applicants[coApplicantIndex].personalDetails.gender"
-                                                                (change)="submitGenderDetails($event, genderForm, pdSlider2)" />
+                                                                (click)="submitGenderDetails($event, genderForm, pdSlider2)" />
                                                         <label [for]="g.key"><span>{{g.key}}</span></label>
                                                     </div>
                                               </div>
@@ -429,8 +428,7 @@
                                                         textField="key"
                                                         valueField="value"
                                                         name="qualification"
-                                                        [(ngModel)]="selectedQualification"
-                                                        >
+                                                        [(ngModel)]="selectedQualification">
                                                       </kendo-dropdownlist>
                                                   </div>
                                               </div>
@@ -751,12 +749,14 @@
                                   <h1 class="sub-heading" style="text-align: left ; margin-bottom: 12px">Current Address</h1>
                                   <div class="form-group">
                                       <span class="control-title">Residential status</span>
-
                                       <kendo-dropdownlist class="form-control"
                                         [data]="residences" 
                                         textField="key"
                                         valueField="value"
                                         name="residentialStatus"
+                                        nick="personalDetails.residentialStatus"
+                                        #residentialStatus
+                                        (selectionChange)="selectValueChanged($event, residentialStatus.hostElement)"
                                         [(ngModel)]="selectedResidence">
                                       </kendo-dropdownlist>
   
@@ -808,7 +808,7 @@
                                                 #commPinCode="ngModel" 
                                                 maxlength="6"
                                                 fieldFill
-                                                (keyup)="onPinCodeChange($event, 'communicationAddress')" 
+                                                (blur)="onPinCodeChange($event, 'communicationAddress')" 
                                                 pattern="{{regexPattern.pinCode}}" />
                                         <label for="pincode">Pincode</label>
 
@@ -911,27 +911,27 @@
                                       <div class="radio-wrap rounded-radio">
                                           <div class="bs-radio typ-normal">
                                               <input type="radio" 
-                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].maritalStatus.earning"
+                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].communicationAddress.preferredMailingAddress"
                                               name="prefredMail"
-                                              value="0"
-                                              #prefredMail="ngModel"
+                                              value="1"
                                               fieldFill
-                                              id="current-add-mail">
-                                              <label for="current-add-mail">
-                                                      Current Address
-                                                  </label>
+                                              [checked]="qde.application.applicants[coApplicantIndex].communicationAddress.preferredMailingAddress == true"
+                                              id="current-add-mail" />
+                                            <label for="current-add-mail">
+                                                Current Address
+                                            </label>
                                           </div>
                                           <div class="bs-radio typ-normal">
                                               <input type="radio"
-                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].maritalStatus.earning"
-                                              name="prefredMail" 
-                                              #prefredMail="ngModel"
-                                              value="1"
+                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].communicationAddress.preferredMailingAddress"
+                                              name="prefredMail"
+                                              value="2"
                                               fieldFill
-                                              id="permanent-add-mail">
+                                              [checked]="qde.application.applicants[coApplicantIndex].communicationAddress.preferredMailingAddress == false"
+                                              id="permanent-add-mail" />
                                               <label for="permanent-add-mail">
-                                                      Permanent Address
-                                                  </label>
+                                                    Permanent Address
+                                                </label>
                                           </div>
                                       </div>
                                   <div class="form-group typ-range">
@@ -1013,22 +1013,25 @@
                                             <div class="form-wrap">
                                                 <div class="form-group">
                                                     <span class="control-title">Marital Status</span>
-   <!--                                                  <select   [(ngModel)]="qde.application.applicants[coApplicantIndex].maritalStatus.status"
-                                                              name="maritalStatus"
-                                                              required>
-                                                      <option *ngFor="let mar of maritals"
-                                                              [ngClass]="{'select': qde.application.applicants[coApplicantIndex].maritalStatus.status == mar.key}"
-                                                              [selected]="qde.application.applicants[coApplicantIndex].maritalStatus.status == mar.key"
-                                                              [value]="mar.value">{{mar.key}}</option>
-                                                    </select> -->
-  
+
+                                                    <!-- <kendo-dropdownlist class="form-control"
+                                                    [data]="residences" 
+                                                    textField="key"
+                                                    valueField="value"
+                                                    name="residentialStatus"
+                                                    nick="personalDetails.residentialStatus"
+                                                    #residentialStatus
+                                                    (selectionChange)="selectValueChanged($event, residentialStatus.hostElement)"
+                                                    [(ngModel)]="selectedResidence"> -->
                                                     <kendo-dropdownlist class="form-control"
                                                       [data]="maritals" 
                                                       textField="key"
                                                       valueField="value"
                                                       name="maritalStatus"
-                                                      [(ngModel)]="selectedMaritialStatus"
-                                                      >
+                                                      nick="maritalStatus.status"
+                                                      #maritalStatusStatus
+                                                      (selectionChange)="selectValueChanged($event, maritalStatusStatus.hostElement)"
+                                                      [(ngModel)]="selectedMaritialStatus">
                                                     </kendo-dropdownlist>
   
                                                 </div>
@@ -1049,28 +1052,20 @@
                                             <div class="form-wrap">
                                                 <div class="form-group">
                                                     <span class="control-title">Title</span>
-  <!--                                                   <select   [(ngModel)]="qde.application.applicants[coApplicantIndex].maritalStatus.spouseTitle"
-                                                              name="spouseTitle"
-                                                              required>
-                                                      <option *ngFor="let tit of titles"
-                                                              [ngClass]="{'select': qde.application.applicants[coApplicantIndex].maritalStatus.spouseTitle == tit.value}"
-                                                              [selected]="qde.application.applicants[coApplicantIndex].maritalStatus.spouseTitle == tit.value"
-                                                              [value]="tit.value">{{tit.key}}
-                                                      </option>
-                                                    </select> -->
-  
                                                     <kendo-dropdownlist class="form-control"
                                                       [data]="titles" 
                                                       textField="key"
                                                       valueField="value"
                                                       name="spouseTitle"
-                                                      [(ngModel)]="selectedSpouseTitle"
-                                                      >
+                                                      nick="maritalStatus.spouseTitle"
+                                                      #spouseTitle
+                                                      (selectionChange)="selectValueChanged($event, spouseTitle.hostElement)"
+                                                      [(ngModel)]="selectedSpouseTitle">
                                                     </kendo-dropdownlist>
-  
+
                                                 </div>
                                                 <div class="form-group">
-  
+
                                                     <input type="text"
                                                       class="form-control" 
                                                       [(ngModel)]="qde.application.applicants[coApplicantIndex].maritalStatus.firstName"
@@ -1079,9 +1074,9 @@
                                                       pattern="{{regexPattern.name}}"
                                                       id="spouse-name"
                                                       fieldFill
-                                                      required>
+                                                      required />
                                                     <label for="spouse-name">First name</label>
-  
+
                                                     <div *ngIf="(spouseName.touched || spouseName.dirty) && spouseName.invalid" class="invalid-feedback">
                                                         <!-- <div *ngIf="spouseName.errors?.required">{{errors.maritialStatus.spouseName.required}}</div> -->
                                                         <div *ngIf="spouseName.errors?.pattern">{{errors.maritialStatus.spouseName.invalid}}</div>
@@ -1106,20 +1101,20 @@
                                             <div class="form-wrap">
                                                 <div class="bs-radio">
                                                     <input    type="radio"
-                                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].maritalStatus.earning"
                                                               name="earning"
-                                                              value="1"
+                                                              [value]="1"
+                                                              [checked]="qde.application.applicants[coApplicantIndex].maritalStatus.earning == true"
                                                               id="earningYes"
-                                                              (change)="spouseEarningForm.ngSubmit.emit()" />
+                                                              (click)="spouseEarningForm.ngSubmit.emit()" />
                                                     <label for="earningYes"><span>Yes</span></label>
                                                 </div>
                                                 <div class="bs-radio">
                                                     <input    type="radio"
-                                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].maritalStatus.earning"
                                                               name="earning"
-                                                              value="2"
+                                                              [value]="2"
+                                                              [checked]="qde.application.applicants[coApplicantIndex].maritalStatus.earning == false"
                                                               id="earningNo"
-                                                              (change)="spouseEarningForm.ngSubmit.emit()" />
+                                                              (click)="spouseEarningForm.ngSubmit.emit()" />
                                                     <label for="earningNo"><span>No</span></label>
                                                 </div>
                                             </div>
@@ -1245,23 +1240,27 @@
                                       (ngSubmit)="submitFamilyForm2(familyForm2, familySlider2)">
                                           <div class="form-wrap">
                                               <div class="form-group">
-                                                  <span class="control-title">Title</span>
-    <!--                                               <select [(ngModel)]="qde.application.applicants[coApplicantIndex].familyDetails.fatherTitle"
-                                                          name="fatherTitle" required>
-                                                      <option *ngFor="let tit of titles"
-                                                              [ngClass]="qde.application.applicants[coApplicantIndex].familyDetails.fatherTitle"
-                                                              [selected]="qde.application.applicants[coApplicantIndex].familyDetails.fatherTitle"
-                                                              [value]="tit.value">{{tit.key}}
-                                                      </option>
-                                                  </select> -->
-  
+                                                  <span class="control-title">Father's Title</span>
+                                                  <!-- <kendo-dropdownlist class="form-control"
+                                                  [data]="titles" 
+                                                  textField="key"
+                                                  valueField="value"
+                                                  name="spouseTitle"
+                                                  nick="maritalStatus.spouseTitle"
+                                                  #spouseTitle
+                                                  (selectionChange)="selectValueChanged($event, spouseTitle.hostElement)"
+                                                  [(ngModel)]="selectedSpouseTitle">
+                                                </kendo-dropdownlist> -->
+
                                                   <kendo-dropdownlist class="form-control"
                                                     [data]="titles" 
                                                     textField="key"
                                                     valueField="value"
                                                     name="fatherTitle"
-                                                    [(ngModel)]="selectedFatherTitle"
-                                                    >
+                                                    nick="familyDetails.fatherTitle"
+                                                    #fatherTitle
+                                                    (selectionChange)="selectValueChanged($event, fatherTitle.hostElement)"
+                                                    [(ngModel)]="selectedFatherTitle">
                                                   </kendo-dropdownlist>
                                               </div>
                                               <div class="form-group">
@@ -1281,27 +1280,16 @@
                                                   </div>
                                               </div>
                                               <div class="form-group">
-                                                  <span class="control-title">Title</span>
-                                                  <!-- <select [(ngModel)]="qde.application.applicants[coApplicantIndex].familyDetails.motherTitle"
-                                                          name="motherTitle"
-                                                          required>
-                                                   <option *ngFor="let tit of titles"
-                                                              [ngClass]="{'select' : qde.application.applicants[coApplicantIndex].familyDetails.motherTitle == tit.value}"
-                                                              [selected]="qde.application.applicants[coApplicantIndex].familyDetails.motherTitle == tit.value"
-                                                              [value]="tit.value">{{tit.key}}
-                                                      </option> 
-                                                      <option value="1">Volvo</option>
-                                                      <option value="2">Saab</option>
-                                                      <option value="3">Mercedes</option>
-                                                      <option value="4">Audi</option>
-                                                  </select> -->
+                                                  <span class="control-title">Mother's Title</span>
                                                   <kendo-dropdownlist class="form-control"
                                                   [data]="titles" 
                                                   textField="key"
                                                   valueField="value"
-                                                  name="fatherTitle"
-                                                  [(ngModel)]="selectedMotherTitle"
-                                                  >
+                                                  name="motherTitle"
+                                                  nick="familyDetails.motherTitle"
+                                                  #motherTitle
+                                                  (selectionChange)="selectValueChanged($event, motherTitle.hostElement)"
+                                                  [(ngModel)]="selectedMotherTitle">
                                                 </kendo-dropdownlist>
                                               </div>
                                               <div class="form-group">
@@ -1314,20 +1302,22 @@
                                                           name="motherName"
                                                           fieldFill
                                                           pattern="{{regexPattern.name}}" />
-                                                          <label for="mother-name">Mother's name</label>
+                                                        <label for="mother-name">Mother's name</label>
                                                   <div *ngIf="motherName.touched && motherName.invalid" class="invalid-feedback">
                                                       <!-- <div *ngIf="motherName.errors?.required">{{errors.familyDetails.motherName.required}}</div> -->
                                                       <div *ngIf="motherName.errors?.pattern">{{errors.familyDetails.motherName.invalid}}</div>
                                                   </div>
                                               </div>
                                               <div class="form-group">
-                                                  <input type="text" class="form-control" id="maiden-name"
-                                                          required
-                                                          [(ngModel)]="qde.application.applicants[coApplicantIndex].familyDetails.motherMaidenName"
-                                                          #motherMaiden="ngModel"
-                                                          name="motherMaidenName"
-                                                          fieldFill
-                                                          pattern="{{regexPattern.name}}" />
+                                                  <input    type="text"
+                                                            class="form-control"
+                                                            id="maiden-name"
+                                                            required
+                                                            [(ngModel)]="qde.application.applicants[coApplicantIndex].familyDetails.motherMaidenName"
+                                                            #motherMaiden="ngModel"
+                                                            name="motherMaidenName"
+                                                            fieldFill
+                                                            pattern="{{regexPattern.name}}" />
                                                           <label for="maiden-name" >Mother's maiden name</label>
                                                   <div *ngIf="motherMaiden.touched && motherMaiden.invalid" class="invalid-feedback">
                                                       <!-- <div *ngIf="motherMaiden.errors?.required">{{errors.familyDetails.motherMaiden.required}}</div> -->
@@ -1373,51 +1363,43 @@
                               <div class="form-wrap">
                                   <div class="form-group">
                                       <span class="control-title">Religion</span>
-    <!--                                   <select class="typ-religion"
-                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].other.religion"
-                                              name="religion"
-                                              #religionSelect="ngModel"
-                                              required>
-                                          <option *ngFor="let rel of religions"
-                                                  [ngClass]="{'select': qde.application.applicants[coApplicantIndex].other.religion == rel.value}"
-                                                  [selected]="qde.application.applicants[coApplicantIndex].other.religion == rel.value"
-                                                  [value]="rel.value">{{rel.key}}
-                                          </option>
-                                      </select> -->
-  
+                                      <!-- <kendo-dropdownlist class="form-control"
+                                      [data]="titles" 
+                                      textField="key"
+                                      valueField="value"
+                                      name="motherTitle"
+                                      nick="familyDetails.motherTitle"
+                                      #motherTitle
+                                      (selectionChange)="selectValueChanged($event, motherTitle.hostElement)"
+                                      [(ngModel)]="selectedMotherTitle">
+                                    </kendo-dropdownlist> -->
                                       <kendo-dropdownlist class="form-control"
                                         [data]="religions" 
                                         textField="key"
                                         valueField="value"
                                         name="religion"
-                                        [(ngModel)]="selectedReligions"
-                                        >
+                                        nick="other.religion"
+                                        #religion
+                                        (selectionChange)="selectValueChanged($event, religion.hostElement)"
+                                        [(ngModel)]="selectedReligion">
                                       </kendo-dropdownlist>
-  
+
                                   </div>
-                                  <div class="form-group" *ngIf="selectedReligions.value == '6'" [ngClass]="{'hidden': (religionSelect.value != '6')}">
+                                  <div class="form-group" *ngIf="selectedReligion.value == '6'" [ngClass]="{'hidden': (selectedReligion.value != '6')}">
                                       <input type="text" class="form-control" [(ngModel)]="otherReligion" name="religionName" fieldFill id="religion-name">
                                       <label for="religion-name">Specify other religion</label>
                                   </div>
                                   <div class="form-group">
                                       <span class="control-title">Category</span>
-  <!--                                     <select [(ngModel)]="qde.application.applicants[coApplicantIndex].other.category"
-                                              name="category"
-                                              required>
-                                          <option *ngFor="let catg of categories"
-                                                  [ngClass]="{'select': qde.application.applicants[coApplicantIndex].other.category == catg.value}"
-                                                  [selected]="qde.application.applicants[coApplicantIndex].other.category == catg.value"
-                                                  [value]="catg.value">{{catg.key}}
-                                          </option>
-                                      </select> -->
-  
                                       <kendo-dropdownlist class="form-control"
                                         [data]="categories" 
                                         textField="key"
                                         valueField="value"
                                         name="category"
-                                        [(ngModel)]="selectedCategory"
-                                        >
+                                        nick="other.category"
+                                        #category
+                                        (selectionChange)="selectValueChanged($event, category.hostElement)"
+                                        [(ngModel)]="selectedCategory">
                                       </kendo-dropdownlist>
                                   </div>
                               </div>
@@ -1453,22 +1435,17 @@
                               <div class="form-wrap">
                                   <div class="form-group">
                                       <span class="control-title">Occupation type</span>
-  <!--                                     <select [(ngModel)]="qde.application.applicants[coApplicantIndex].occupation.occupationType" name="occupationType" required>
-                                          <option *ngFor="let occu of occupations"
-                                                  [ngClass]="{'select': qde.application.applicants[coApplicantIndex].occupation.occupationType == occu.value}"
-                                                  [selected]="qde.application.applicants[coApplicantIndex].occupation.occupationType == occu.value"
-                                                  [value]="occu.value">{{occu.key}}</option>
-                                      </select> -->
-  
+
                                       <kendo-dropdownlist class="form-control"
                                         [data]="occupations" 
                                         textField="key"
                                         valueField="value"
                                         name="occupationType"
-                                        [(ngModel)]="selectedOccupation"
-                                        >
+                                        nick="occupation.occupationType"
+                                        #occupationType
+                                        (selectionChange)="selectValueChanged($event, occupationType.hostElement)"
+                                        [(ngModel)]="selectedOccupation">
                                       </kendo-dropdownlist>
-                                      
                                   </div>
                                   <div class="form-group">
                                       <input type="text" class="form-control"
@@ -1479,7 +1456,6 @@
                                               #companyName="ngModel"
                                               fieldFill
                                               id="companyName" />
-  
                                       <label for="companyName" >Company name</label>
   
                                       <div *ngIf="(companyName.touched || companyName.dirty) && companyName.invalid" class="invalid-feedback">
@@ -1621,7 +1597,7 @@
                                         minlength="6"
                                         maxlength="6"
                                         fieldFill
-                                        (keyup)="onPinCodeChange($event, 'officialCorrespondence')" 
+                                        (blur)="onPinCodeChange($event, 'officialCorrespondence')" 
                                         pattern="{{regexPattern.pinCode}}"/>
                                         <label for="offPincode">Pincode</label>
   
@@ -1651,12 +1627,12 @@
                                       <div class="form-group">
                                           <input type="text" class="form-control" id="std03"
                                             required
-                                            [(ngModel)]="qde.application.applicants[coApplicantIndex].officialCorrespondence.officeStd"
-                                            #stdCode = "ngModel"
+                                            [(ngModel)]="officialCorrespondenceStdCode"
+                                            #stdCode="ngModel"
                                             name="stdCode"
                                             maxlength="3"
                                             pattern="{{regexPattern.mobileNumber}}"
-                                            fieldFill>
+                                            fieldFill />
                                           <label for="std03">STD</label>
                                           <div *ngIf="stdCode.touched && stdCode.invalid" class="invalid-feedback">
                                             <!-- <div *ngIf="stdCode.errors?.required">{{errors.officialCorrespondence.stdCode.required}}</div> -->
@@ -1672,9 +1648,8 @@
                                                   fieldFill
                                                   maxlength="8"
                                                   pattern="{{regexPattern.mobileNumber}}"
-                                                  [(ngModel)]="qde.application.applicants[coApplicantIndex].officialCorrespondence.officeNumber" />
+                                                  [(ngModel)]="officialCorrespondencePhoneNumber" />
                                           <label  for="res-no03">Office number</label>
-  
                                           <div *ngIf="offStdNumber.touched && offStdNumber.invalid" class="invalid-feedback">
                                               <!-- <div *ngIf="offStdNumber.errors?.required">{{errors.officialCorrespondence.phoneNumber.required}}</div> -->
                                               <div *ngIf="offStdNumber.errors?.pattern">{{errors.officialCorrespondence.phoneNumber.invalid}}</div>
@@ -1688,7 +1663,7 @@
                                         email
                                         #officeEmail = "ngModel"
                                         fieldFill
-                                        name="officeEmail">
+                                        name="officeEmail" />
                                       <label for="off-email">Office email ID</label>
   
                                       <div *ngIf="officeEmail.touched && officeEmail.invalid" class="invalid-feedback">

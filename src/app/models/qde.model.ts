@@ -57,6 +57,7 @@ export interface FamilyDetail {
 
 export interface Other {
     religion ?: string;
+    otherReligion ?: string;
     category ?: string;
 }
 
@@ -108,7 +109,7 @@ export interface Address {
     numberOfYearsInCurrentResidence? : string;
     permanentAddress ?: boolean;
     cityState? : string;
-    preferredMailingAddress?: string; // As of new design
+    preferredMailingAddress?: boolean; // As of new design
 }
 
 export interface OfficialCorrespondence {
