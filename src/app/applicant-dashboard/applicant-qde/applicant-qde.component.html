@@ -1517,7 +1517,7 @@
                                             min=0
                                             max=90
                                             #numberOfYearsInCurrentCompany="ngModel"
-                                            (ngModelChange)="valuechange($event, 2)"
+                                            (ngModelChange)="valuechange($event, 2, occupationForm)"
                                             required />
 
                                     <ng5-slider [(value)]="qde.application.applicants[applicantIndex].occupation.numberOfYearsInCurrentCompany"
@@ -1527,8 +1527,8 @@
                                     <!-- <div *ngIf="numberOfYearsInCurrentCompany.touched && numberOfYearsInCurrentCompany.invalid" class="invalid-feedback">
                                       <div *ngIf="numberOfYearsInCurrentCompany.errors?.required">{{errors.occupationDetails.currentExp.required}}</div>
                                     </div> -->
-                                    <div *ngIf="numberOfYearsInCurrentCompany.touched && expError" class="invalid-feedback">
-                                        <div *ngIf="expError">Experience in current employment/business should not be greater than total experience </div>
+                                    <div *ngIf="expError" class="invalid-feedback">
+                                        <div *ngIf="expError"><br><br>Experience in current employment/business should not be greater than total work experience </div>
                                       </div>
 
                                 </div>
@@ -1541,10 +1541,11 @@
                                             min=0
                                             max=90
                                             #totalExperienceYear="ngModel"
-                                            (ngModelChange)="valuechange($event, 3)"
+                                            (ngModelChange)="valuechange($event, 3, occupationForm)"
                                             required />
 
-                                    <ng5-slider [(value)]="qde.application.applicants[applicantIndex].occupation.totalWorkExperience" [options]="options"></ng5-slider>
+                                    <ng5-slider [(value)]="qde.application.applicants[applicantIndex].occupation.totalWorkExperience" 
+                                    [options]="options" ></ng5-slider>
 
                                     <!-- <div *ngIf="(totalExperienceYear.touched || totalExperienceYear.dirty) && totalExperienceYear.invalid" class="invalid-feedback">
                                       <div *ngIf="totalExperienceYear.errors?.required">{{errors.occupationDetails.totalExp.required}}</div>

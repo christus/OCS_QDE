@@ -25,7 +25,6 @@ interface Item {
   styleUrls: ['./applicant-qde.component.css']
 })
 export class ApplicantQdeComponent implements OnInit, OnDestroy {
-
   errors = {
 
     pan: {
@@ -922,11 +921,21 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     // }
   }
 
-  valuechange(newValue, valueIndex) {
+  valuechange(newValue, valueIndex, form) {
+    
     console.log(newValue);
     this.value[valueIndex] = newValue;
+    const currentExp = form.value.numberOfYearsInCurrentCompany;
+    const totalExp = form.value.totalExperienceYear;
+    if(currentExp > totalExp) {
+      //form.valid = false;
+      this.expError = true;
+      return;
+    }else{
+      this.expError=false;
+    }
   }
-
+ 
   /**
    * Use to sync between lhs and rhs sliders
    * @param swiperInstance RHS Swiper Instance
@@ -1616,12 +1625,22 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   //-------------------------------------------------------------
   // Occupation Details
   //-------------------------------------------------------------
+  private expError =false;
+
   submitOccupationDetails(form: NgForm) {
     if (form && !form.valid) {
       return;
     }
-
-  
+    const currentExp = form.value.numberOfYearsInCurrentCompany;
+    const totalExp = form.value.totalExperienceYear;
+    if(currentExp > totalExp) {
+      //form.valid = false;
+      this.expError = true;
+      return;
+    }else{
+      this.expError=false;
+    }
+    
     this.qde.application.applicants[this.applicantIndex].occupation.occupationType = form.value.occupationType.value;
     this.qde.application.applicants[this.applicantIndex].occupation.companyName = form.value.companyName;
     this.qde.application.applicants[this.applicantIndex].occupation.numberOfYearsInCurrentCompany = form.value.numberOfYearsInCurrentCompany;
