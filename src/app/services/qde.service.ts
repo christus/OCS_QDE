@@ -7,9 +7,9 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class QdeService {
 
-  private qde: Qde;
+  qde: Qde;
   leads: Array<Qde>;
-  private defaultValue: Qde =  {
+  defaultValue: Qde =  {
     "application": {
       "ocsNumber": "",
       "loanAmount": "",
@@ -219,7 +219,7 @@ export class QdeService {
     }
   };
 
-  private qdeSource$: BehaviorSubject<Qde>;
+  qdeSource$: BehaviorSubject<Qde>;
   public qdeSource: Observable<Qde>;
 
   constructor() {

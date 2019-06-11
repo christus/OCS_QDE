@@ -21,12 +21,6 @@ import { MenubarHeaderComponent } from './menubar-header/menubar-header.componen
 
 import { UserLoginComponent } from './Login/user-login/user-login.component';
 
-import { IncomeDetailsComponent } from './LoanDetails/income-details/income-details.component';
-import { LoanAmountComponent } from './LoanDetails/loan-amount/loan-amount.component';
-import { PropertyDetailsComponent } from './LoanDetails/property-details/property-details.component';
-import { ExistingLoansComponent } from './LoanDetails/existing-loans/existing-loans.component';
-import { Reference1Component } from './References/reference1/reference1.component';
-import { Reference2Component } from './References/reference2/reference2.component';
 import { LeadsListComponent } from './applicant-dashboard/leads-list/leads-list.component';
 import { ApplicantQdeComponent } from './applicant-dashboard/applicant-qde/applicant-qde.component';
 
@@ -40,7 +34,7 @@ import { LoanQdeComponent } from './applicant-dashboard/loan-qde/loan-qde.compon
 import { ReferencesQdeComponent } from './applicant-dashboard/references-qde/references-qde.component';
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import AuthInterceptor from './services/auth.interceptor';
+import { AuthInterceptor } from './services/auth.interceptor';
 import { ListOfValuesResolverService } from './services/list-of-values-resolver.service';
 import { ViewFormComponent } from './applicant-dashboard/view-form/view-form.component';
 import { DocumentUploadComponent } from './applicant-dashboard/document-upload/document-upload.component';
@@ -229,12 +223,6 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     // CoAppDashboardComponent,
     // CoAppInitialPageComponent,
     // CoAppRegAddrComponent,
-    IncomeDetailsComponent,
-    LoanAmountComponent,
-    PropertyDetailsComponent,
-    ExistingLoansComponent,
-    Reference1Component,
-    Reference2Component,
     ApplicantDashboardComponent,
     LeadsListComponent,
     ApplicantQdeComponent,

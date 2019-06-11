@@ -20,7 +20,7 @@ export class LeadsListComponent implements OnInit {
   // Lead ID === Application ID
   userDetails: Array<UserDetails>;
 
-  constructor(private service: QdeHttpService, private utilService: UtilService) {
+  constructor(private service: QdeHttpService,private utilService: UtilService) {
     service.roleLogin().subscribe(
       res => {
         console.log(res);

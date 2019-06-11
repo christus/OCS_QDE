@@ -300,7 +300,7 @@
                                                             name="income-consider"
                                                             id="yes-consider1"
                                                             [value]="1"
-                                                            [checked]="qde.application.applicants[coApplicantIndex].personalDetails.applicantStatus == 1"
+                                                            [checked]="qde.application.applicants[coApplicantIndex].personalDetails.applicantStatus == '1'"
                                                             (click)="changeApplicantStatus(1, pdSlider2)"
                                                             class="not-usual" />
                                                     <label for="yes-consider1"><span>Resident</span></label>
@@ -311,7 +311,7 @@
                                                             id="no-consider1"
                                                             class="not-usual"
                                                             [value]="2"
-                                                            [checked]="qde.application.applicants[coApplicantIndex].personalDetails.applicantStatus == 2"
+                                                            [checked]="qde.application.applicants[coApplicantIndex].personalDetails.applicantStatus == '2'"
                                                             (click)="changeApplicantStatus(2, pdSlider2)" />
                                                     <label for="no-consider1"><span>Non Resident</span></label>
                                                 </div>
@@ -2080,7 +2080,7 @@
                                   <div class="form-group last">
                                       <span class="control-title">Constitution</span>
                                         <kendo-dropdownlist   class="form-control"
-                                                            [data]="constitution" 
+                                                            [data]="constitutions" 
                                                             textField="key"
                                                             valueField="value"
                                                             name="occupationType"

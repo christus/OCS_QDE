@@ -439,6 +439,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
               private qdeService: QdeService,
               private cds:CommonDataService) {
 
+
     this.panslideSub = this.cds.panslide.subscribe(val => {
       this.panslide = val;
     });

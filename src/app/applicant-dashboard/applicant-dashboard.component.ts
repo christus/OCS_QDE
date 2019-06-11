@@ -8,9 +8,9 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ApplicantDashboardComponent implements OnInit {
 
-  private applicantId: string;
+  applicantId: string;
 
-  constructor(private route: ActivatedRoute) {
+  constructor(route: ActivatedRoute) {
 
   }
 
