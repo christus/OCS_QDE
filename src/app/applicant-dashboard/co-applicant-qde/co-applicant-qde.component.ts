@@ -1484,10 +1484,14 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.qde.application.applicants[this.coApplicantIndex].incomeDetails.annualFamilyIncome = form.value.annualFamilyIncome ? form.value.annualFamilyIncome: "";
-    this.qde.application.applicants[this.coApplicantIndex].incomeDetails.monthlyExpenditure = form.value.monthlyExpenditure ? form.value.monthlyExpenditure: "";
+    this.qde.application.applicants[this.coApplicantIndex].incomeDetails.annualFamilyIncome = form.value.annualFamilyIncome;
+    this.qde.application.applicants[this.coApplicantIndex].incomeDetails.monthlyExpenditure = form.value.monthlyExpenditure;
+    // this.qde.application.applicants[this.coApplicantIndex].incomeDetails.incomeConsider = form.value.incomeConsider;
+    // this.qde.application.applicants[this.coApplicantIndex].incomeDetails.monthlyIncome = form.value.monthlyIncome;
+    // this.qde.application.applicants[this.coApplicantIndex].incomeDetails.assessmentMethodology = form.value.assessmentMethodology;
+    // this.qde.application.applicants[this.coApplicantIndex].incomeDetails.puccaHouse = form.value.puccaHouse;
 
-    console.log(this.qde.application.applicants[this.coApplicantIndex].incomeDetails);
+    console.log("INCOME DETAILS: ", this.qde.application.applicants[this.coApplicantIndex].incomeDetails);
 
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successfull
@@ -1511,7 +1515,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
     this.qde.application.applicants[this.coApplicantIndex].incomeDetails.monthlyIncome = form.value.monthlyIncome;
     this.qde.application.applicants[this.coApplicantIndex].incomeDetails.assessmentMethodology = form.value.assessment.value;
 
-    console.log(this.qde.application.applicants[this.coApplicantIndex].incomeDetails);
+    console.log("ID: ", this.qde.application.applicants[this.coApplicantIndex].incomeDetails);
 
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successfull
@@ -1555,19 +1559,18 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
 
   incomeDetailsYesNo(value, swiperInstance ?: Swiper) {
 
-    this.qde.application.applicants[this.coApplicantIndex].incomeDetails.incomeConsider = value;
+    this.qde.application.applicants[this.coApplicantIndex].incomeDetails.incomeConsider = (value == 1) ? true : false;
 
-    console.log(this.qde.application.applicants[this.coApplicantIndex].incomeDetails);
+    console.log(">>>", this.qde.application.applicants[this.coApplicantIndex].incomeDetails);
 
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successfull
       if(response["ProcessVariables"]["status"]) {
-        if(value == true) {
+        if(value == 1) {
           this.goToNextSlide(swiperInstance);
         } else {
           swiperInstance.setIndex(3);
         }
-        
       } else {
         // Throw Invalid Pan Error
       }
@@ -1766,8 +1769,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       }
 
       // Assesment methodology
+      console.log("AM: ", this.assessmentMethodology);
       if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].incomeDetails.assessmentMethodology)) ) {
-        this.selectedAssesmentMethodology = this.religions[(parseInt(this.qde.application.applicants[this.coApplicantIndex].incomeDetails.assessmentMethodology))-1];
+        this.selectedAssesmentMethodology = this.assessmentMethodology[(parseInt(this.qde.application.applicants[this.coApplicantIndex].incomeDetails.assessmentMethodology))-1];
       }
 
       // Incoming from create in Individual Pan
@@ -1796,8 +1800,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
 
   // New CoApplicant Index for New CoApplicant
   createCoApplicant() {
-    // this.resetQdeForm();
     this.qdeService.addNewCoApplicant();
+    this.coApplicantIndex++;
     this.initializeVariables();
     this.tabSwitch(1);
   }

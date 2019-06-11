@@ -293,30 +293,30 @@
                                     #pdSlider2="ngxSwiper">
                                   <div class="swiper-wrapper">
                                       <div class="swiper-slide">
-                                                      <form class="bs-form">
-                                                          <div class="form-wrap">
-                                                              <div class="bs-radio">
-                                                                  <input  type="radio"
-                                                                          name="income-consider"
-                                                                          id="yes-consider"
-                                                                          [value]="1"
-                                                                          [checked]="qde.application.applicants[coApplicantIndex].personalDetails.applicantStatus == 1"
-                                                                          (click)="changeApplicantStatus(1, pdSlider2)"
-                                                                          class="not-usual" />
-                                                                  <label for="yes-consider"><span>Resident</span></label>
-                                                              </div>
-                                                              <div class="bs-radio">
-                                                                  <input  type="radio"
-                                                                          name="income-consider"
-                                                                          id="no-consider"
-                                                                          class="not-usual"
-                                                                          [value]="2"
-                                                                          [checked]="qde.application.applicants[coApplicantIndex].personalDetails.applicantStatus == 2"
-                                                                          (click)="changeApplicantStatus(2, pdSlider2)" />
-                                                                  <label for="no-consider"><span>Non Resident</span></label>
-                                                              </div>
-                                                          </div>
-                                                      </form>
+                                        <form class="bs-form">
+                                            <div class="form-wrap">
+                                                <div class="bs-radio">
+                                                    <input  type="radio"
+                                                            name="income-consider"
+                                                            id="yes-consider1"
+                                                            [value]="1"
+                                                            [checked]="qde.application.applicants[coApplicantIndex].personalDetails.applicantStatus == 1"
+                                                            (click)="changeApplicantStatus(1, pdSlider2)"
+                                                            class="not-usual" />
+                                                    <label for="yes-consider1"><span>Resident</span></label>
+                                                </div>
+                                                <div class="bs-radio">
+                                                    <input  type="radio"
+                                                            name="income-consider"
+                                                            id="no-consider1"
+                                                            class="not-usual"
+                                                            [value]="2"
+                                                            [checked]="qde.application.applicants[coApplicantIndex].personalDetails.applicantStatus == 2"
+                                                            (click)="changeApplicantStatus(2, pdSlider2)" />
+                                                    <label for="no-consider1"><span>Non Resident</span></label>
+                                                </div>
+                                            </div>
+                                        </form>
                                       </div>
                                       <div class="swiper-slide">
                                           <form   class="bs-form"
@@ -1661,7 +1661,7 @@
                                         required
                                         [(ngModel)]="qde.application.applicants[coApplicantIndex].officialCorrespondence.officeEmailId"
                                         email
-                                        #officeEmail = "ngModel"
+                                        #officeEmail="ngModel"
                                         fieldFill
                                         name="officeEmail" />
                                       <label for="off-email">Office email ID</label>
@@ -1739,8 +1739,8 @@
                                               name="annualFamilyIncome"
                                               pattern="{{regexPattern.amount}}"
                                               fieldFill
-                                              required/>
-                                             
+                                              required />
+
                                             <label for="annualFamilyIncome231">Annual Family Income</label>
                                             <div  *ngIf="annualFamilyIncome2.touched && annualFamilyIncome2.invalid" class="invalid-feedback">
                                                 <!-- <div *ngIf="annualFamilyIncome2.errors?.required">{{errors.incomeDetails.familyIncome.required}}</div> -->
@@ -1748,14 +1748,15 @@
                                             </div> 
                                         </div>
                                           <div class="form-group">
-                                                <input type="text" class="form-control" 
-                                                id="monthlyExpenditure231"
-                                                [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.monthlyExpenditure"
-                                                #monthlyExpenditure2="ngModel"
-                                                name="monthlyExpenditure"
-                                                pattern="{{regexPattern.amount}}"
-                                                fieldFill
-                                                required/>
+                                                <input  type="text"
+                                                        class="form-control" 
+                                                        id="monthlyExpenditure231"
+                                                        [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.monthlyExpenditure"
+                                                        #monthlyExpenditure2="ngModel"
+                                                        name="monthlyExpenditure"
+                                                        pattern="{{regexPattern.amount}}"
+                                                        fieldFill
+                                                        required />
                                               <label for="monthlyExpenditure231" >Monthly Expenditure</label>
                                               <div *ngIf="monthlyExpenditure2.touched && monthlyExpenditure2.invalid" class="invalid-feedback">
                                                 <!-- <div *ngIf="monthlyExpenditure2.errors?.required">{{errors.incomeDetails.monthlyExpenditure.required}}</div> -->
@@ -1766,57 +1767,57 @@
                                     <div class="btn-wrap">
                                           <button 
                                               type="submit"
-                                              class="btn btn-primary"
-                                               >
-                                          Next
+                                              class="btn btn-primary">Next
                                           </button>
                                     </div>
                                 </form>
                               </div>
                               <div class="swiper-slide">
-                                      <form class="bs-form"
-                                      #applicantIncome2NonIndividual="ngForm" (ngSubmit)="submitIncomeDetails1(applicantIncome2NonIndividual, incomeSlider2)" >
+                                    <form class="bs-form">
                                           <div class="form-wrap">
                                               <div class="bs-radio">
                                                   <input  type="radio"
                                                           name="income-consider"
-                                                          id="yes-consider"
-                                                          [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.incomeConsider"
-                                                          [value]="true"
-                                                          (change)="incomeDetailsYesNo(true, incomeSlider2)"
+                                                          id="yes-consider2"
+                                                          [value]="1"
+                                                          [checked]="qde.application.applicants[coApplicantIndex].incomeDetails.incomeConsider == true"
+                                                          (click)="incomeDetailsYesNo(1, incomeSlider2)"
                                                           class="not-usual" />
-                                                  <label for="yes-consider"><span>Yes</span></label>
+                                                  <label for="yes-consider2"><span>Yes</span></label>
                                               </div>
                                               <div class="bs-radio">
                                                   <input  type="radio"
                                                           name="income-consider"
-                                                          id="no-consider"
+                                                          id="no-consider2"
                                                           class="not-usual"
-                                                          [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.incomeConsider"
-                                                          [value]="false"
-                                                          (change)="incomeDetailsYesNo(false, incomeSlider2)" />
-                                                  <label for="no-consider"><span>No</span></label>
+                                                          [value]="2"
+                                                          [checked]="qde.application.applicants[coApplicantIndex].incomeDetails.incomeConsider == false"
+                                                          (click)="incomeDetailsYesNo(2, incomeSlider2)" />
+                                                  <label for="no-consider2"><span>No</span></label>
                                               </div>
                                           </div>
                                       </form>
                                   </div>
                                   <div class="swiper-slide">
                                           <form class="bs-form" 
-                                          #applicantIncome3NonIndividual="ngForm" (ngSubmit)="submitIncomeDetails2(applicantIncome3NonIndividual, incomeSlider2)">
+                                                #applicantIncome3NonIndividual="ngForm"
+                                                (ngSubmit)="submitIncomeDetails2(applicantIncome3NonIndividual, incomeSlider2)">
                                               <div class="form-wrap">
                                                   <div class="form-group inr">
-                                                      <input type="text" class="form-control" id="app-monthly-income231"
-                                                      [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.monthlyIncome"
-                                                      #monthlyIncome2="ngModel"
-                                                      fieldFill
-                                                      pattern="{{regexPattern.amount}}"
-                                                      name="monthlyIncome"
-                                                      required/>
+                                                      <input    type="text"
+                                                                class="form-control"
+                                                                id="app-monthly-income231"
+                                                                [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.monthlyIncome"
+                                                                #monthlyIncome2="ngModel"
+                                                                fieldFill
+                                                                pattern="{{regexPattern.amount}}"
+                                                                name="monthlyIncome"
+                                                                required />
                                                       <label for="app-monthly-income231">Monthly income</label>
                                                       <span class="addon">
                                                             <span class="icon icon-inr"></span>
                                                           </span>
-                                                          <span class="in-word"></span>
+                                                        <span class="in-word"></span>
                                                       <div *ngIf="monthlyIncome2.touched && monthlyIncome2.invalid" class="invalid-feedback">
                                                         <!-- <div *ngIf="monthlyIncome2.errors?.required">{{errors.incomeDetails.monthlyIncome.required}}</div> -->
                                                         <div *ngIf="monthlyIncome2.errors?.pattern">{{errors.incomeDetails.monthlyIncome.invalid}}</div>
@@ -1824,31 +1825,20 @@
                                                   </div>
                                                   <div class="form-group">
                                                       <span class="control-title">Assessment methodology</span>
-                                                      <!-- <select class="js-select" name="assessment"
-                                                      [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.assessmentMethodology"
-                                                      #assessment="ngModel"
-                                                      name="assessment">
-                                                          <option value="1">Net Salary</option>
-                                                          <option value="2">Gross Salary</option>
-                                                          <option value="3">Income Plus</option>
-                                                          <option value="4">Normal Profit</option>
-                                                          <option value="5">GST surplus method</option>
-                                                          <option value="6">RTR</option>
-                                                          <option value="7">BT+Top up</option>
-                                                          <option value="8">Gross Receipt</option>
-                                                          <option value="9">Industry Margin</option>
-                                                          <option value="10">Assessed Income</option>
-                                                      </select> -->
-                                                      <kendo-dropdownlist name="assessment" 
-                                                      class="form-control"
-                                                      [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.assessmentMethodology"
+                                                      <kendo-dropdownlist class="form-control"
+                                                      [data]="assessmentMethodology"
+                                                      textField="key"
+                                                      valueField="value"
+                                                      [(ngModel)]="selectedAssesmentMethodology"
                                                       name="assessment"
-                                                      required>
+                                                      nick="incomeDetails.assessmentMethodology"
+                                                      #assessment
+                                                      (selectionChange)="selectValueChanged($event, assessment.hostElement)">
                                                       </kendo-dropdownlist>
                                                   </div>
                                               </div>
                                               <div class="btn-wrap">
-                                                  <button type="submit" class="btn btn-primary" (click)="goToNextSlide(incomeSlider2)">Next</button>
+                                                  <button type="submit" class="btn btn-primary">Next</button>
                                               </div>
                                           </form>
                                       </div>
@@ -1857,16 +1847,16 @@
                                               #applicantIncome4="ngForm">
                                                   <div class="form-wrap">
                                                       <div class="bs-radio">
-                                                          <input type="radio" name="income-consider" id="yes-consider" class="not-usual"
+                                                          <input type="radio" name="income-consider" id="yes-consider3" class="not-usual"
                                                           [value]="true"
                                                           (change)="doHoldPuccaHouse(true)">
-                                                          <label for="yes-consider"><span>Yes</span></label>
+                                                          <label for="yes-consider3"><span>Yes</span></label>
                                                       </div>
                                                       <div class="bs-radio">
-                                                          <input type="radio" name="income-consider" id="no-consider" class="not-usual"
+                                                          <input type="radio" name="income-consider" id="no-consider3" class="not-usual"
                                                           [value]="false"
                                                           (change)="doHoldPuccaHouse(false)">
-                                                          <label for="no-consider"><span>No</span></label>
+                                                          <label for="no-consider3"><span>No</span></label>
                                                       </div>
                                                   </div>
                                               </form>
@@ -2480,22 +2470,22 @@
                                                   <div class="bs-radio">
                                                       <input  type="radio"
                                                               name="income-consider"
-                                                              id="yes-consider"
+                                                              id="yes-consider4"
                                                               [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.incomeConsider"
                                                               [value]="true"
                                                               (change)="incomeDetailsYesNo(true, incomeSlider4)"
                                                               class="not-usual" />
-                                                      <label for="yes-consider"><span>Yes</span></label>
+                                                      <label for="yes-consider4"><span>Yes</span></label>
                                                   </div>
                                                   <div class="bs-radio">
                                                       <input  type="radio"
                                                               name="income-consider"
-                                                              id="no-consider"
+                                                              id="no-consider4"
                                                               class="not-usual"
                                                               [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.incomeConsider"
                                                               [value]="false"
                                                               (change)="incomeDetailsYesNo(false, incomeSlider4)" />
-                                                      <label for="no-consider"><span>No</span></label>
+                                                      <label for="no-consider4"><span>No</span></label>
                                                   </div>
                                               </div>
                                           </form>
@@ -2527,21 +2517,7 @@
                                                       </div>
                                                       <div class="form-group">
                                                           <span class="control-title">Assessment methodology</span>
-                                                          <!-- <select class="js-select" name="assessment"
-                                                          [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.assessmentMethodology"
-                                                          #assessment="ngModel"
-                                                          name="assessment">
-                                                              <option value="1">Net Salary</option>
-                                                              <option value="2">Gross Salary</option>
-                                                              <option value="3">Income Plus</option>
-                                                              <option value="4">Normal Profit</option>
-                                                              <option value="5">GST surplus method</option>
-                                                              <option value="6">RTR</option>
-                                                              <option value="7">BT+Top up</option>
-                                                              <option value="8">Gross Receipt</option>
-                                                              <option value="9">Industry Margin</option>
-                                                              <option value="10">Assessed Income</option>
-                                                          </select> -->
+
                                                           <kendo-dropdownlist name="assessment" 
                                                           [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.assessmentMethodology"
                                                           name="assessment1" required>
@@ -2558,16 +2534,16 @@
                                                   #applicantIncome4="ngForm">
                                                       <div class="form-wrap">
                                                           <div class="bs-radio">
-                                                              <input type="radio" name="income-consider" id="yes-consider" class="not-usual"
+                                                              <input type="radio" name="income-consider" id="yes-consider5" class="not-usual"
                                                               [value]="true"
                                                               (change)="doHoldPuccaHouse(true)">
-                                                              <label for="yes-consider"><span>Yes</span></label>
+                                                              <label for="yes-consider5"><span>Yes</span></label>
                                                           </div>
                                                           <div class="bs-radio">
-                                                              <input type="radio" name="income-consider" id="no-consider" class="not-usual"
+                                                              <input type="radio" name="income-consider" id="no-consider5" class="not-usual"
                                                               [value]="false"
                                                               (change)="doHoldPuccaHouse(false)">
-                                                              <label for="no-consider"><span>No</span></label>
+                                                              <label for="no-consider5"><span>No</span></label>
                                                           </div>
                                                       </div>
                                                   </form>
