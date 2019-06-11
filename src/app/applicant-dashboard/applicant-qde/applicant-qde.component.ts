@@ -299,6 +299,17 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       return  sliderVal + '<b>y</b>';
     }
   };
+  familyOptions:Options={
+    floor:0,
+    ceil:6,
+    step: 1,
+    showTicksValues: false,
+    // showSelectionBar: true,
+    showTicks: true,
+    getLegend: (sliderVal: number): string => {
+      return  sliderVal + '<b></b>';
+    }
+  };
 
   imageUrl:string = "appiyo/d/drive/upload/";
 

@@ -282,7 +282,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
     pan:"[A-Z]{5}[0-9]{4}[A-Z]{1}",
     amount:"^[\\d]{0,14}([.][0-9]{0,4})?",
     revenue:"^[1-9][0-9]{0,17}",
-    docNumber: "^[a-zA-Z0-9]{16}$"
+    docNumber: "^[a-zA-Z0-9]{0,16}$"
 
     // revenue:"^[0-9]{0,17}\.[0-9]{1,4}?$"
    
