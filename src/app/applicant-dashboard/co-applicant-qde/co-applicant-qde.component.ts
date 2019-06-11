@@ -382,7 +382,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
                         'income2',
                       ];
 
-  private coApplicantIndex: number = 1;
+  private coApplicantIndex: number = 0;
 
   // Local Copy of Qde
   private qde: Qde;
@@ -453,9 +453,12 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       this.qde = val;
       console.log("latest Qde: ", this.qde);
       console.log(this.qde.application.applicants.length);
-      // this.coApplicantIndex = this.qde.application.applicants.length <= 1 ? 1 : val.application.applicants.length - 1;
-      if(this.qde.application.applicants.length >= 2) {
-        this.isTabDisabled = false;
+      let i = this.qde.application.applicants.length <= 1 ? 1 : this.qde.application.applicants.length - 1;
+      if(this.qde.application.applicants[i]['applicantId'] == "") {
+        this.coApplicantIndex = i;
+        // if(this.qde.application.applicants.length >= 2) {
+          this.isTabDisabled = false;
+        // }
       }
       this.coApplicantsForDashboard = val.application.applicants.filter(v => v.isMainApplicant == false);
     });
@@ -1801,7 +1804,6 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
   // New CoApplicant Index for New CoApplicant
   createCoApplicant() {
     this.qdeService.addNewCoApplicant();
-    this.coApplicantIndex++;
     this.initializeVariables();
     this.tabSwitch(1);
   }
@@ -1820,10 +1822,6 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
     this.corporateAddressPhoneNumber = "";
     this.dob = { day: {key: "DD", value: "DD"}, month: {key: "MM", value: "MM"}, year: {key: "YYYY", value: "YYYY"} };
     this.dateOfIncorporation = { day: {key: "DD", value: "DD"}, month: {key: "MM", value: "MM"}, year: {key: "YYYY", value: "YYYY"} };
-    this.registeredAddressCityState = "";
-    this.corporateAddressCityState = "";
-    this.corporateAddressStdCode = "";
-    this.corporateAddressPhoneNumber = "";
     this.commCityState = "";
 
     this.selectedTitle = this.titles[0];

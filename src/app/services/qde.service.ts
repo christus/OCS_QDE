@@ -467,7 +467,7 @@ export class QdeService {
       ]
     });
 
-    this.setQde(this.qde);
+    this.qdeSource$.next(this.qde);
   }
 
   resetQde() {
