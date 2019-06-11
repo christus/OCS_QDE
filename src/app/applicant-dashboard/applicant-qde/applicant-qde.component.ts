@@ -545,8 +545,6 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     this.applicantIndex = 0;
     this.resetQdeForm();
 
-    this.resetQdeForm();
-
     // Write code to get data(LOV) and assign applicantIndex if its new or to update.
     console.log("Applicant Code: ", this.applicantIndex);
 
@@ -1021,7 +1019,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
        
         let applicants = result["application"]["applicants"];
 
-        let isApplicantPresent:boolean = false;
+        let isApplicantPresent: boolean = false;
 
         if(applicants.length > 0) {
           // isApplicantPresent = applicants[this.applicantIndex].hasOwnProperty('applicantId');
@@ -1031,7 +1029,6 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
             return;
         }          
 
-        
         //this.goToNextSlide(swiperInstance);
 
         this.cds.changePanSlide(true);
@@ -1084,14 +1081,13 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
         }else {
           this.tabSwitch(11);
             return;
-        }          
+        }
 
         // this.cds.changePanSlide2(true);
         // this.router.navigate(['/applicant/'+this.qde.application.applicationId], {fragment: "organization"});
 
         this.cds.changePanSlide2(true);
         this.router.navigate(['/applicant/'+this.qde.application.applicationId], {fragment: "pan2"});
-        
       } else {
         // Throw Invalid Pan Error
       }

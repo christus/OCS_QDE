@@ -90,31 +90,45 @@ const appRoutes: Routes = [
         resolve: {
           listOfValues: ListOfValuesResolverService
         }
-      }
-    ]
-  },
-  {
-    path: "applicant/:applicationId/co-applicant",
-    component: ApplicantDashboardComponent,
-    canActivate: [AuthGuard],
-    children: [
+      },
       {
-        path: "",
+        path: ":applicationId/co-applicant",
         component: CoApplicantQdeComponent,
         resolve: {
           listOfValues: ListOfValuesResolverService
         }
       },
       {
-        path: ":coApplicantIndex",
+        path: ":applicationId/co-applicant/:coApplicantIndex",
         component: CoApplicantQdeComponent,
         resolve: {
           listOfValues: ListOfValuesResolverService
         }
       }
-    ],
-    pathMatch: 'full'
+    ]
   },
+  // {
+  //   path: "applicant/:applicationId/co-applicant",
+  //   component: ApplicantDashboardComponent,
+  //   canActivate: [AuthGuard],
+  //   children: [
+  //     {
+  //       path: "",
+  //       component: CoApplicantQdeComponent,
+  //       resolve: {
+  //         listOfValues: ListOfValuesResolverService
+  //       }
+  //     },
+  //     {
+  //       path: ":coApplicantIndex",
+  //       component: CoApplicantQdeComponent,
+  //       resolve: {
+  //         listOfValues: ListOfValuesResolverService
+  //       }
+  //     }
+  //   ],
+  //   // pathMatch: 'full'
+  // },
   {
     path: "loan/:applicantId",
     component: LoanQdeComponent,

@@ -1,5 +1,5 @@
 import { Other, Applicant } from './../../models/qde.model';
-import { Component, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Renderer2, OnDestroy } from '@angular/core';
     
 import * as Swiper from 'swiper/dist/js/swiper.js';
 // import { Select2Component } from 'ng2-select2';
@@ -27,7 +27,7 @@ interface Item {
   templateUrl: './co-applicant-qde.component.html',
   styleUrls: ['./co-applicant-qde.component.css']
 })
-export class CoApplicantQdeComponent implements OnInit {
+export class CoApplicantQdeComponent implements OnInit, OnDestroy {
 
   private isTabDisabled: boolean = true;
 
@@ -342,6 +342,7 @@ export class CoApplicantQdeComponent implements OnInit {
   private corporateAddressCityState: string = "";
   private corporateAddressStdCode = "";
   private corporateAddressPhoneNumber = "";
+  private coApplicantsForDashboard: Array<Applicant> = [];
 
   private commCityState:string = "";
   // zipCityStateID:string = "";
@@ -379,7 +380,7 @@ export class CoApplicantQdeComponent implements OnInit {
                         'income2',
                       ];
 
-  private coApplicantIndex: number;
+  private coApplicantIndex: number = 1;
 
   // Local Copy of Qde
   private qde: Qde;
@@ -423,6 +424,7 @@ export class CoApplicantQdeComponent implements OnInit {
   // Used when to whether its coming from create or edit
   private panslide: boolean;
   private panslide2: boolean;
+  private applicationId: string;
 
   private panslideSub: Subscription;
   private panslide2Sub: Subscription;
@@ -437,7 +439,7 @@ export class CoApplicantQdeComponent implements OnInit {
               private qdeService: QdeService,
               private cds:CommonDataService) {
 
-    this.cds.panslide.subscribe(val => {
+    this.panslideSub = this.cds.panslide.subscribe(val => {
       this.panslide = val;
     });
 
@@ -447,6 +449,17 @@ export class CoApplicantQdeComponent implements OnInit {
 
     this.qdeService.qdeSource.subscribe(val => {
       this.qde = val;
+      console.log("latest Qde: ", this.qde);
+      console.log(this.qde.application.applicants.length);
+      // this.coApplicantIndex = this.qde.application.applicants.length <= 1 ? 1 : val.application.applicants.length - 1;
+      if(this.qde.application.applicants.length >= 2) {
+        this.isTabDisabled = false;
+      }
+      this.coApplicantsForDashboard = val.application.applicants.filter(v => v.isMainApplicant == false);
+    });
+
+    this.cds.applicationId.subscribe(val => {
+      this.applicationId = val;
     });
 
     this.route.fragment.subscribe((fragment) => {
@@ -520,7 +533,7 @@ export class CoApplicantQdeComponent implements OnInit {
       });
       this.years.unshift({key: 'YYYY', value: 'YYYY'});
 
-      this.docType = [{"key": "Aadhar", "value": "1"},{"key": "Driving License", "value": "2"},{"key": "passport", "value": "3"}];
+      // this.docType = [{"key": "Aadhar", "value": "1"},{"key": "Driving License", "value": "2"},{"key": "passport", "value": "3"}];
 
       this.selectedTitle = this.titles[0];
       this.selectedReligions = this.religions[0];
@@ -537,12 +550,9 @@ export class CoApplicantQdeComponent implements OnInit {
       this.selectedConstitutions = this.constitutions[0];
       this.selectedAssesmentMethodology = this.assessmentMethodology[0];
       this.selectedBirthPlace = this.birthPlace[0];
-
     }
 
     console.log("params: ", this.route.snapshot.params);
-
-    
 
     this.route.params.subscribe((params) => {
 
@@ -561,10 +571,10 @@ export class CoApplicantQdeComponent implements OnInit {
             console.log("Get ", result);
 
             this.qdeService.setQde(result);
+            this.prefillData(params);
           });
         // }
       }
-      this.prefillData(params);
     });
   }
 
@@ -662,25 +672,35 @@ export class CoApplicantQdeComponent implements OnInit {
       return;
     }
 
+
     this.qde.application.applicants[this.coApplicantIndex].pan.panNumber = form.value.pan;
     this.qde.application.applicants[this.coApplicantIndex].pan.docType = form.value.docType.value;
     this.qde.application.applicants[this.coApplicantIndex].pan.docNumber = form.value.docNumber;
 
-    console.log("Get Filtered JSON: ", this.qdeService.getFilteredJson(this.qde));
     this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
         let result = this.parseJson(response["ProcessVariables"]["response"]);
 
+        console.log("GET141414", result);
         this.qde.application.ocsNumber = result["application"]["ocsNumber"];
         this.qde.application.applicationId = result["application"]["applicationId"];
-        this.qde.application.applicants[this.coApplicantIndex].applicantId =  result["application"]["applicants"][this.coApplicantIndex]["applicantId"];
+       
+        // let applicants = result["application"]["applicants"];
 
-        
-        //this.goToNextSlide(swiperInstance);
+        // let isApplicantPresent:boolean = false;
+
+        // if(applicants.length > 0) {
+        //   // isApplicantPresent = applicants[this.applicantIndex].hasOwnProperty('applicantId');
+        //   this.qde.application.applicants[this.coApplicantIndex].applicantId =  applicants[this.coApplicantIndex]["applicantId"];
+        // }else {
+        //   this.tabSwitch(1);
+        //   return;
+        // }   
 
         this.cds.changePanSlide(true);
-        this.router.navigate(['/applicant/'+result["application"]["applicationId"]], {fragment: "pan1"});
+        // Static value for now, replace it in future
+        this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant/'+this.coApplicantIndex], {fragment: "pan1"});
         
       } else {
         // Throw Invalid Pan Error
@@ -698,7 +718,6 @@ export class CoApplicantQdeComponent implements OnInit {
   //-------------------------------------------------------------
 
   submitOrgPanNumber(form: NgForm, swiperInstance ?: Swiper) {
-// alert(1111);
     event.preventDefault();
 
     if (form && !form.valid) {
@@ -1512,7 +1531,6 @@ export class CoApplicantQdeComponent implements OnInit {
   }
 
   changeIsIndividual(value, swiperInstance ?: Swiper) {
-    console.log(this.qde.application.applicants[this.coApplicantIndex].isIndividual);
     if(value == 1) {
       this.goToNextSlide(swiperInstance);
       this.qde.application.applicants[this.coApplicantIndex].isIndividual = true;
@@ -1591,22 +1609,22 @@ export class CoApplicantQdeComponent implements OnInit {
     });
   }
 
-  selectCoApplicant(applicantId) {
-    this.router.navigate(['/co-applicant/'+applicantId], {fragment: "pan1"});
+  selectCoApplicant(applicationId, index) {
+    // Static Value, replace in future
+    console.log(applicationId, index);
+    this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant/'+index], {fragment: "pan1"});
   }
 
   changeApplicantStatus(value, swiperInstance ?: Swiper) {
     if(value == 1) {
-      this.goToNextSlide(swiperInstance);
-      this.applicantStatus = "1";
+      this.qde.application.applicants[this.coApplicantIndex].personalDetails.applicantStatus = "1";
     } else {
-      this.goToNextSlide(swiperInstance);
-      this.applicantStatus = "2";
+      this.qde.application.applicants[this.coApplicantIndex].personalDetails.applicantStatus = "2";
     }
+    this.goToNextSlide(swiperInstance);
   }
 
   initializeVariables() {
-
     this.residenceNumberStdCode = this.qde.application.applicants[this.coApplicantIndex].contactDetails.residenceNumber != "" ? this.qde.application.applicants[this.coApplicantIndex].contactDetails.residenceNumber.split("-")[0] : "";
     this.residenceNumberPhoneNumber = this.qde.application.applicants[this.coApplicantIndex].contactDetails.residenceNumber != "" ? this.qde.application.applicants[this.coApplicantIndex].contactDetails.residenceNumber.split("-")[1] : "";
 
@@ -1639,25 +1657,27 @@ export class CoApplicantQdeComponent implements OnInit {
     }
   }
 
-  getCoApplicants(): Array<Applicant> {
-    return this.qde.application.applicants.filter(val => val.isMainApplicant == false);
-  }
-
   prefillData(params) {
 
     // Set ApplicantIndex
     this.cds.changeApplicantIndex(this.qde.application.applicants.findIndex(val => val.isMainApplicant == true));
 
-    this.resetQdeForm();
+    console.log("prefilldata: ", this.coApplicantIndex);
     // Make QDE Data Global Across App
 
     // This is when co-applicant is being edited
     if( params.coApplicantIndex != null && (!isNaN(parseInt(params.coApplicantIndex))) ) {
+
+      this.coApplicantIndex = params.coApplicantIndex - 1;
       //------------------------------------------------------
       //    Prefilling values
       //------------------------------------------------------
       // Set CoApplicant for Prefilling the fields
-      this.coApplicantIndex = this.qde.application.applicants.indexOf(params.coApplicantIndex);
+      // this.coApplicantIndex = this.qde.application.applicants.indexOf(params.coApplicantIndex);
+
+      // if ( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].pan.docType)) ) {
+      //   this.selectedDocType = this.docType[parseInt(this.qde.application.applicants[this.coApplicantIndex].pan.docType)];
+      // }
 
       // Personal Details Title
       if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].personalDetails.title)) ) {
@@ -1748,6 +1768,12 @@ export class CoApplicantQdeComponent implements OnInit {
       // Incoming from create in Non Individual Pan
       else if(this.panslide2 == true && this.qde.application.applicants[this.coApplicantIndex].isIndividual == false) {
         this.tabSwitch(11);
+      } else if(this.panslide == false && this.qde.application.applicants[this.coApplicantIndex].isIndividual == true) {
+        this.tabSwitch(1);
+        this.panSlider2.setIndex(1);
+      }
+      else if(this.panslide2 == false && this.qde.application.applicants[this.coApplicantIndex].isIndividual == false) {
+        this.tabSwitch(10);
       }
 
       // So that route is now in edit mode only
@@ -1757,23 +1783,18 @@ export class CoApplicantQdeComponent implements OnInit {
       this.initializeVariables();
     }
     // This is Co-Applicant Create
-    else {
-      // New CoApplicant Index for New CoApplicant
-      this.coApplicantIndex = this.qde.application.applicants.length == 0 ? this.qde.application.applicants.length : this.qde.application.applicants.length - 1;
-      this.qdeService.addNewCoApplicant();
-      this.initializeVariables();
-    }
   }
 
+  // New CoApplicant Index for New CoApplicant
   createCoApplicant() {
-    this.isTabDisabled = false;
-    this.resetQdeForm();
+    // this.resetQdeForm();
+    this.qdeService.addNewCoApplicant();
+    this.initializeVariables();
     this.tabSwitch(1);
   }
 
   resetQdeForm() {
     this.qdeService.resetQde();
-    console.log("RESET ", this.qde.application.applicants);
     this.residenceNumberStdCode = "";
     this.residenceNumberPhoneNumber = "";
     this.alternateResidenceNumberStdCode = ""
@@ -1812,4 +1833,7 @@ export class CoApplicantQdeComponent implements OnInit {
     //call API
   }
 
+  ngOnDestroy() {
+    this.panslideSub.unsubscribe();
+  }
 }

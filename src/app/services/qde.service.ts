@@ -11,7 +11,7 @@ export class QdeService {
   leads: Array<Qde>;
   private defaultValue: Qde =  {
     "application": {
-      "ocsNumber": " ",
+      "ocsNumber": "",
       "loanAmount": "",
       "tenure": "",
       "applicationId": "",
@@ -311,7 +311,7 @@ export class QdeService {
       }
     });
   
-    return newObj;    
+    return newObj;
   }
 
   addNewCoApplicant() {
@@ -467,7 +467,7 @@ export class QdeService {
       ]
     });
 
-    this.qdeSource$.next(this.qde);
+    this.setQde(this.qde);
   }
 
   resetQde() {

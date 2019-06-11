@@ -75,11 +75,11 @@
                                 <form class="bs-form">
                                     <div class="form-wrap">
 
-                                        <div class="bs-radio typ-doc" *ngFor="let coApp of getCoApplicants();let i=index;">
+                                        <div class="bs-radio typ-doc" *ngFor="let coApp of coApplicantsForDashboard;let i=index;">
                                             <input  type="radio"
-                                                    (change)="selectCoApplicant(coApp.applicantId)"
+                                                    (change)="selectCoApplicant(applicationId, (i+1))"
                                                     name="doc-upload"
-                                                    [id]="'applicant-radio'+i">
+                                                    [id]="'applicant-radio'+i" />
                                             <label for="applicant-radio">
                                                 <span class="icon icon-close"></span>
                                             </label>
@@ -91,7 +91,6 @@
                             </div>
                         </div>
                     </div>
-        
                   <div class="tab-content" [ngClass]="{'active': (activeTab == 1)}">
                     <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(panSlider2)"></a>
                     <div class="lyt-tabs">
@@ -140,8 +139,7 @@
                                                             id="individual"
                                                             value="1"
                                                             [checked]="qde.application.applicants[coApplicantIndex].isIndividual == true"
-                                                            [(ngModel)]="qde.application.applicants[coApplicantIndex].isIndividual"
-                                                            (change)="changeIsIndividual(1, panSlider2)"  />
+                                                            (click)="changeIsIndividual(1, panSlider2)"  />
                                                     <label for="individual"><span>Individual</span></label>
                                                 </div>
                                                 <div class="bs-radio">
@@ -150,8 +148,7 @@
                                                             id="non-individual"
                                                             value="2"
                                                             [checked]="qde.application.applicants[coApplicantIndex].isIndividual == false"
-                                                            [(ngModel)]="qde.application.applicants[coApplicantIndex].isIndividual"
-                                                            (change)="changeIsIndividual(2, panSlider2)" />
+                                                            (click)="changeIsIndividual(2, panSlider2)" />
                                                     <label for="non-individual"><span>Non-Individual</span></label>
                                                 </div>
                                             </div>
@@ -162,8 +159,8 @@
                                               id="pan-form"
                                               #panNumberForm="ngForm"
                                               (ngSubmit)="submitPanNumber(panNumberForm, panSlider2)">
-                                            <div class="form-wrap">
-                                                <div class="form-group last">
+                                              <div class="form-wrap">
+                                                <div class="form-group last" style="margin-bottom: 40px;">
                                                     <input  type="text"
                                                             class="form-control"
                                                             [(ngModel)]="qde.application.applicants[coApplicantIndex].pan.panNumber"
@@ -175,52 +172,53 @@
                                                             #pan="ngModel"
                                                             fieldFill
                                                             required />
-                                                    <label for="pan-inpt">Enter PAN number</label>
+                                                    <label for="pan-inpt">Enter PAN in Uppercase</label>
                                                     <div *ngIf="pan.touched && pan.invalid" class="invalid-feedback">
-                                                        <div *ngIf="pan.errors?.required">*PAN number is required</div>
-                                                        <div *ngIf="pan.errors?.pattern ? true : false">*PAN not valid</div>
-                                                        <div *ngIf="pan.errors?.minlength || pan.errors?.maxlength">*PAN must be at least {{pan.errors.minlength.requiredLength}} characters</div>
+                                                        <div *ngIf="pan.errors?.required">{{errors.pan.required}}</div>
+                                                        <div *ngIf="pan.errors?.pattern ? true : false">{{errors.pan.invalid}}</div>
+                                                        <div *ngIf="pan.errors?.minlength || pan.errors?.maxlength">{{errors.pan.length}}</div>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
 
-                                                    <span class="control-title">Document Type</span>
+                                                  <span class="control-title">Document Type</span>
 
-                                                    <kendo-dropdownlist class="form-control"
-                                                    [data]="docType" 
-                                                    textField="key"
-                                                    valueField="value"
-                                                    name="docType"
-                                                    [(ngModel)]="selectedDocType"
-                                                    required>
-                                                    </kendo-dropdownlist>
-
+                                                  <kendo-dropdownlist   class="form-control"
+                                                                        [data]="docType" 
+                                                                        textField="key"
+                                                                        valueField="value"
+                                                                        name="docType"
+                                                                        nick="pan.documentType"
+                                                                        (selectionChange)="selectValueChanged($event, pan.hostElement)"
+                                                                        [(ngModel)]="selectedDocType"
+                                                                        required>
+                                                  </kendo-dropdownlist>
+                                              </div>
+                                              <div class="form-group">
+                                                  <input    type="text"
+                                                            class="form-control"
+                                                            [(ngModel)]="qde.application.applicants[coApplicantIndex].pan.docNumber"
+                                                            id="docNumber"
+                                                            name="docNumber"
+                                                            #docNumber="ngModel"
+                                                            maxlength="16"
+                                                            fieldFill
+                                                            required/>
+                                                <label for="docNumber">Document Number</label>
+  
+                                                <div *ngIf="docNumber.touched && docNumber.invalid" class="invalid-feedback">
+                                                  <div *ngIf="docNumber.errors?.required">{{errors.panDocumentNo.required}}</div>
+                                                  <div *ngIf="docNumber.errors?.pattern">{{errors.panDocumentNo.invalid}}</div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <input type="text" class="form-control"
-                                                    [(ngModel)]="qde.application.applicants[coApplicantIndex].pan.docNumber"
-                                                    id="docNumber"
-                                                    name="docNumber"
-                                                    pattern="{{regexPattern.docNumber}}"
-                                                    #docNumber="ngModel"
-                                                    maxlength="16"
-                                                    fieldFill
-                                                    required/>
-                                                    <label for="docNumber">Document Number</label>
-
-                                                    <div *ngIf="docNumber.touched && docNumber.invalid" class="invalid-feedback">
-                                                        <div *ngIf="docNumber.errors?.required">{{errors.panDocumentNo.required}}</div>
-                                                        <div *ngIf="docNumber.errors?.pattern">{{errors.panDocumentNo.invalid}}</div>
-                                                    </div>
-                                                    <!-- <image-upload [url]="imageUrl" [headers]="myHeaders"></image-upload> -->
-                                                </div>
+                                                <!-- <image-upload [url]="imageUrl" [headers]="myHeaders"></image-upload> -->
                                             </div>
+                                                </div>
                                             <div class="btn-wrap">
-                                                  <button type="submit"
-                                                          class="btn btn-primary"
-                                                          [ngClass]="{'disabled': !panNumberForm.valid}"
-                                                          [disabled]="!panNumberForm.valid">Next
-                                                  </button>
+                                                <button type="submit"
+                                                        class="btn btn-primary"
+                                                        [ngClass]="{'disabled': !panNumberForm.valid}"
+                                                        [disabled]="!panNumberForm.valid">Next
+                                                </button>
                                             </div>
                                         </form>
                                     </div>
@@ -300,8 +298,9 @@
                                                                   <input  type="radio"
                                                                           name="income-consider"
                                                                           id="yes-consider"
-                                                                          [value]="true"
-                                                                          (change)="goToNextSlide(pdSlider2)"
+                                                                          [value]="1"
+                                                                          [checked]="qde.application.applicants[coApplicantIndex].personalDetails.applicantStatus == 1"
+                                                                          (click)="changeApplicantStatus(1, pdSlider2)"
                                                                           class="not-usual" />
                                                                   <label for="yes-consider"><span>Resident</span></label>
                                                               </div>
@@ -310,8 +309,9 @@
                                                                           name="income-consider"
                                                                           id="no-consider"
                                                                           class="not-usual"
-                                                                          [value]="false"
-                                                                          (change)="goToNextSlide(pdSlider2)" />
+                                                                          [value]="2"
+                                                                          [checked]="qde.application.applicants[coApplicantIndex].personalDetails.applicantStatus == 2"
+                                                                          (click)="changeApplicantStatus(2, pdSlider2)" />
                                                                   <label for="no-consider"><span>Non Resident</span></label>
                                                               </div>
                                                           </div>
@@ -325,21 +325,13 @@
                                               <div class="form-wrap">
                                                   <div class="form-group">
                                                       <span class="control-title">Title</span>
-      <!--                                                 <select [(ngModel)]="qde.application.applicants[coApplicantIndex].personalDetails.title" name="title" required>
-                                                          <option *ngFor="let tit of titles"
-                                                                  [ngClass]="{'select': (tit.value == qde.application.applicants[coApplicantIndex].personalDetails.title)}"
-                                                                  [selected]="tit.value == qde.application.applicants[coApplicantIndex].personalDetails.title"
-                                                                  [value]="tit.value">{{tit.key}}</option>
-                                                      </select> -->
-  
                                                       <div class="form-group">   
                                                           <kendo-dropdownlist class="form-control"
                                                             [data]="titles" 
                                                             textField="key"
                                                             valueField="value"
                                                             name="title"
-                                                            [(ngModel)]="selectedTitle"
-                                                            >
+                                                            [(ngModel)]="selectedTitle">
                                                           </kendo-dropdownlist>
                                                       </div>
                                                   </div>
@@ -528,8 +520,6 @@
                       </div>
   
                   </div>
-  
-  
   
                   <div class="tab-content" [ngClass]="{'active': (activeTab == 3)}">
                     <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
@@ -739,9 +729,7 @@
                             </form>
                         </div>
                     </div>
-                </div>
-  
-                  
+                </div>         
   
                 <div class="tab-content" [ngClass]="{'active': (activeTab == 4)}">
                   <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
@@ -971,7 +959,6 @@
                     </div>
   
                   </div>
-  
   
                   <div    class="tab-content" [ngClass]="{'active': (activeTab == 5)}">
                     <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(maritalSlider2)"></a>
@@ -2098,8 +2085,7 @@
                       </div>
                   </div>
               </div>
-  
-  
+
               <div class="tab-content"  [ngClass]="{'active': (activeTab == 13)}">
                   <a  href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
                   <div class="lyt-tabs">
@@ -2180,8 +2166,8 @@
                               </div>
                               <div class="btn-wrap">
                                   <button class="btn btn-primary"
-                                  [ngClass]="{'disabled': !organizationForm.valid}"
-                                  [disabled]="!organizationForm.valid" >Next</button>
+                                  [ngClass]="{'disabled': !registeredAddressForm.valid}"
+                                  [disabled]="!registeredAddressForm.valid" >Next</button>
   
                               </div>
                           </form>
@@ -2413,9 +2399,7 @@
                         </form>
                     </div>
                 </div>
-            </div>
-  
-              
+            </div>             
   
               <div class="tab-content" [ngClass]="{'active': (activeTab == 16)}">
                       <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(incomeSlider4)"></a>

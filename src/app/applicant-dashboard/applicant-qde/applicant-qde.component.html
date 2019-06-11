@@ -2316,16 +2316,16 @@
                                 <div class="residence-no">
                                     <div class="form-group">
                                         <input  type="text"
-                                        [(ngModel)]="corporateAddressStdCode"
-                                        name="stdNumber"
-					#corporateAddressStdCode1="ngModel"
-                                        pattern="{{regexPattern.mobileNumber}}"
-                                        maxlength="3" 
-                                        fieldFill
-                                        class="form-control"
-                                        id="caStd"
-				        required/>
-					<label for="caStd">STD</label>
+                                                [(ngModel)]="corporateAddressStdCode"
+                                                name="stdNumber"
+                                                #corporateAddressStdCode1="ngModel"
+                                                pattern="{{regexPattern.mobileNumber}}"
+                                                maxlength="3" 
+                                                fieldFill
+                                                class="form-control"
+                                                id="caStd"
+                                                required/>
+                                        <label for="caStd">STD</label>
                                         <div *ngIf="corporateAddressStdCode1.touched  && corporateAddressStdCode1.invalid" class="invalid-feedback">
                                             <div *ngIf="corporateAddressStdCode1.errors?.required">{{errors.corporateAddress.corporateAddressStdCode1.required}}</div>
                                             <div *ngIf="corporateAddressStdCode1.errors?.pattern">{{errors.corporateAddress.corporateAddressStdCode1.invalid}}</div>
