@@ -134,7 +134,7 @@
                                                 <div class="bs-radio">
                                                     <input  type="radio" 
                                                             [value]="true"
-                                                            (change)="tabSwitch()" />
+                                                            (click)="showSuccessModal = true"/>
                                                     <label for="non-individual"><span>Biometric Scan</span></label>
                                                 </div>
                                             </div>
@@ -491,5 +491,21 @@
           </div>
       </div>
   </div>
+  <div class="overlay" [ngClass]="{'active': showSuccessModal}"></div>
+    <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': showSuccessModal}">
+        <a class="modal-close" (click)="tabSwitch(2)"><span class="icon icon-close"></span></a>
+        <div class="modal-body">
+                <span class="thumb-icon">
+                    <img src="/assets/images/biomatric.png" alt="logo">
+                </span>
+            <h1 class="center">Verify fingerprint to continue</h1>
+            <!-- <p class="desc typ2">You have cleared the provisional eligibility check for the loan amount requested. Kindly note this clearance is based on the information provided and actual sanction amount is subject to further verification and process. We need more time to process your eligibility. </p>
+            <p class="cm-thin">Thank you for your loan application. Our representative will contact you shortly</p> -->
+            <span class="or">or</span>
+            <div class="btn-wrap">
+                <button class="btn btn-border">get otp</button>
+            </div>
+        </div>
+    </div>
 </main>
 

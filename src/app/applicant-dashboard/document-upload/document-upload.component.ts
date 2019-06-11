@@ -16,6 +16,8 @@ import { NgForm } from "@angular/forms";
 })
 export class DocumentUploadComponent implements OnInit {
 
+  private showSuccessModal: boolean = false;
+
   value: number = 0;
 
   minValue: number = 1;

@@ -56,3 +56,7 @@
     letter-spacing: .5px;
     color:red;
 }
+
+.create-co-app-btn {
+    z-index: 11;
+}

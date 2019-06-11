@@ -1,0 +1,124 @@
+.lyt-box {
+    width: 60%;
+    margin: 1.95vw auto 0;
+    box-shadow: 0 0 25px -7px #d6d6d6;
+    display: block;
+    min-height: 78vh;
+    position: relative;
+    padding: 2.34vw;
+}
+.lyt-box .title-desc {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 1.95vw;
+}
+.lyt-box .title-desc .box-title {
+    display: block;
+    margin-bottom: 13px;
+    font-size: 3.75vw;
+    margin-top: 10px;
+    font-family: zurich-bold;
+    color: #444;
+}
+.lyt-box .title-desc .desc {
+    display: block;
+    font-family: zurich;
+    font-size: 1.56vw;
+    line-height: 1.72vw;
+    color: #999;
+}
+.lyt-box .cont {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+.lyt-box .summary-wrap {
+    display: block;
+}
+.lyt-box .summary-wrap .detail-wrap {
+    display: table;
+    margin: 0 auto;
+}
+.lyt-box .summary-wrap .detail-wrap .box {
+    display: block;
+    margin-bottom: 10px;
+}
+.lyt-box .summary-wrap .detail-wrap .box .tag {
+    display: inline-block;
+    width: 97px;
+    vertical-align: middle;
+    font-size: 10px;
+    color: #999;
+    font-family: zurich-light;
+    text-align: left;
+}
+.lyt-box .summary-wrap .detail-wrap.typ2 .box .tag {
+    display: inline-block;
+    width: 97px;
+    vertical-align: middle;
+    font-size: 10px;
+    color: #999;
+    font-family: zurich-light;
+    text-align: left;
+}
+.lyt-box .summary-wrap .detail-wrap .box .content {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 10px;
+    color: #444;
+    font-family: zurich-bold;
+}
+.lyt-box .summary-wrap .para {
+    display: block;
+    text-align: center;
+    font-size: 10px;
+    color: #999;
+    font-family: zurich-light;
+    margin: 5px 0 10px;
+}
+.lyt-box .summary-wrap .detail-wrap.typ2 {
+    display: table;
+    margin: 0 auto;
+}
+.lyt-box .summary-wrap .detail-wrap.typ2 .box {
+    display: block;
+    margin-bottom: 10px;
+}
+.lyt-box .cont .btn-wrap {
+    text-align: center;
+}
+.btn.btn-border.typ2 {
+    border-color: #949494;
+    color: #949494;
+    padding: .47vw 1.56vw;
+}
+.lyt-box .summary-wrap .detail-wrap.typ2 .box.typ-grey:after {
+    content: "";
+    position: absolute;
+    top: 28vw;
+    bottom: 11vw;
+    left: 0px;
+    right: 0px;
+    background: #f2f3f5;
+    z-index: -1;
+}
+.center {
+    text-align: center;
+    margin-top: 11vw
+}
+.bs-modal .modal-body .thumb-icon {
+    width: 120px;
+    height: 120px;
+    position: absolute;
+    top: 1vw;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.bs-modal p {
+    margin-top: 1vw;
+    font-size: 1vw
+}

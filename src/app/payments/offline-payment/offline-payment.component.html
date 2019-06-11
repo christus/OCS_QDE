@@ -54,14 +54,8 @@
                                         <div class="swiper-slide">
                                             <form class="bs-form">
                                                 <div class="form-wrap">
-                                                    <!-- <div class="bs-radio">
-                                                        <input  type="radio"
-                                                                [value]="true"
-                                                                (change)="tabSwitch(1)"  />
-                                                        <label for="individual"><span>Online</span></label>
-                                                    </div> -->
                                                     <div class="bs-radio">
-                                                      <input type="radio" name="payment-radio" id="online">
+                                                      <input type="radio" name="payment-radio" id="online" routerLink="/payments/online-summary">
                                                       <label for="online">
                                                           <div class="inner-sect">
                                                               <div class="title">Online</div>
@@ -75,15 +69,9 @@
                                                               </div>
                                                       </label>
                                                     </div>
-                                                    <!-- <div class="bs-radio">
-                                                        <input  type="radio"
-                                                                [value]="false"
-                                                                (change)="tabSwitch()" />
-                                                        <label for="non-individual"><span>Offline</span></label>
-                                                    </div> -->
                                                     <div class="bs-radio">
-                                                      <input type="radio" name="payment-radio" id="online" href="javascript:void(0);" (change)="tabSwitch(1)">
-                                                      <label for="online">
+                                                      <input type="radio" name="payment-radio" id="offline" (change)="tabSwitch(1)">
+                                                      <label for="offline">
                                                           <div class="inner-sect">
                                                             <div class="title">Offline</div>
                                                             <p class="desc">

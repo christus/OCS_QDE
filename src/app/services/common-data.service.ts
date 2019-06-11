@@ -16,12 +16,12 @@ export class CommonDataService {
     this.isMenuBarShown$.next(isMenuBarShown);
   }
 
-  private isViewFormNameVisible$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  private isViewFormNameShown$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
 
-  isViewFormNameVisible = this.isMenuBarShown$.asObservable();
+  isViewFormNameShown = this.isViewFormNameShown$.asObservable();
 
-  changeViewFormNameVisible(isViewFormNameVisible: boolean) {
-    this.isMenuBarShown$.next(isViewFormNameVisible);
+  changeViewFormNameVisible(isViewFormNameShown: boolean) {
+    this.isViewFormNameShown$.next(isViewFormNameShown);
   }
 
   private isViewFormVisible$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
