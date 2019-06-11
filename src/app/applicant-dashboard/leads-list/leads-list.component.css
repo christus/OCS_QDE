@@ -7,7 +7,9 @@
   z-index: 1;
   right: 50px;
 }
-
+.cur-pointer {
+  cursor: pointer
+}
 table{
   font-family: arial, sans-serif;
   border-collapse: collapse;
@@ -33,7 +35,7 @@ th, td {
   width: 33.33%;
 }
 .leadList table span {
-  width: 50%;
+  /*width: 50%;*/
   display: inline-block;
 }
 .leadList li {
@@ -99,4 +101,26 @@ a, a:visited {
   float: right;
   margin: 1vw;
   text-align: center;
+}
+
+.leadLogin {
+  width: 66%;
+  position: fixed;
+}
+.leadSearch {
+  top: 4.69vw;
+  position: fixed;
+  width: 66%;
+}
+.leadSearch td {
+  width: 100%;
+  display: block;
+}
+.leadLogin,
+.leadSearch {
+  background: #fff;
+}
+.leadList {
+  margin-top: 9.45vw;
+  display: flex;
 }

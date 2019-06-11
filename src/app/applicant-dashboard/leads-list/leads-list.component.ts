@@ -59,6 +59,17 @@ export class LeadsListComponent implements OnInit {
   clearCredentials() {
     return this.utilService.clearCredentials();
   }
+  logout() {
+    this.utilService.logout().subscribe(
+      res => {
+        this.utilService.clearCredentials();
+      },
+      error => {
+        this.utilService.clearCredentials();
+      }
+    );
+  }
+
 
   ngOnInit() {}
 }

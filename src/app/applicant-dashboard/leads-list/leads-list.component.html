@@ -42,22 +42,13 @@
                             </h1> -->
                         </td>
                         <td>
-                            <div class="btn btn-default">LOGOUT</div>
+                            <div class="btn btn-default cur-pointer" (click)="logout()">LOGOUT</div>
                         </td>
                     </tr>
                     <tr class="leadSearch">
-                        <td>
-<!--                             <div class="form-group">
-                                <input  type="text"
-                                        class="form-control"
-                                        id="searchLead"
-                                        name="searchLead"
-                                        required />  
-                                <label for="searchLead">Search</label>
-                            </div> -->
+                        <td colspan="3">
                             <form action="" class="bs-form">
                                 <div class="form-group">
-
 
                                     <input  type="text"
                                             class="form-control"
@@ -65,7 +56,6 @@
                                             pattern="^[0-9A-Za-z,_#\s]+$"
                                             required 
                                             fieldFill/>
-
 
                                     <label for="address1">Search</label>
 
@@ -87,23 +77,28 @@
 
                     <tr class="leadList">
                         <td>
-                            <table *ngFor="let detail of userDetails"> 
+                            <table *ngFor="let detail of userDetails">
+                                <tr>
+                                    <td colspan="3">                                               
+                                        <li><span>Lead ID / OCS Number: </span><b> {{detail.ocsNumber}}</b></li>
+                                    </td>
+                                </tr> 
                                 <tr>
                                     <td>
                                         <a routerLink="/applicant/{{detail.leadId}}">
                                             <ul>
-                                                <li><span>Name</span><b>{{detail.firstName}}</b></li>
-                                                <li><span>Product</span><b>{{detail.product}}</b></li>
-                                                <li><span>Loan amount</span><b>{{detail.loanAmount}}</b></li>
+                                                <li><span>Name :</span><b> {{detail.firstName}}</b></li>
+                                                <li><span>Product :</span><b> {{detail.product}}</b></li>
+                                                <li><span>Loan amount :</span><b> {{detail.loanAmount}}</b></li>
                                             </ul>
                                         </a>
                                     </td>
                                     <td>
                                         <a routerLink="/applicant/{{detail.leadId}}">
                                             <ul>
-                                                <li><span>Lead ID: </span><b>{{detail.leadId}}</b></li>
-                                                <li><span>Generated date</span><b>{{detail.appliedOn | slice:0:10}}</b></li>
-                                                <li><span>Assigned date</span><b>{{detail.assignedDate }}</b></li>
+                                                <li><span>Branch :</span><b> {{detail.branch}}</b></li>
+                                                <li><span>Generated date :</span><b> {{detail.appliedOn | slice:0:10}}</b></li>
+                                                <li><span>Assigned date :</span><b> {{detail.assignedDate }}</b></li>
                                             </ul>
                                         </a>
                                     </td>
@@ -111,9 +106,8 @@
                                         <a routerLink="/applicant/{{detail.leadId}}">
                                             <ul>
 
-                                                <li><span>Branch</span><b>{{detail.branch}}</b></li>
-                                                <li><span>Pending status</span><b>{{detail.pendingStatus}}</b></li>
-                                                <li><span>Pending with</span><b>{{detail.appliedBy}}</b></li>
+                                                <li><span>Pending status :</span><b> {{detail.pendingStatus}}</b></li>
+                                                <li><span>Pending with :</span><b> {{detail.appliedBy}}</b></li>
                                             </ul>
                                         </a>
                                     </td>

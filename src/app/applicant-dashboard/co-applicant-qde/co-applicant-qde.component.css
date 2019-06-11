@@ -1,7 +1,4 @@
 .create-co-app-btn {
-    position: absolute;
-    top: 3vh;
-    left: 0; 
 }
 .rounded-radio .bs-radio label {
     display: block;
@@ -55,4 +52,13 @@
 	font-family: zurich-bold;
     letter-spacing: .5px;
     color:red;
+}
+.create-co-app-btn {
+    color: white;
+    background: #f58220;
+    padding: 5px;
+    position: fixed;
+    bottom: 50%;
+    z-index: 1;
+    right: 50px;
 }
