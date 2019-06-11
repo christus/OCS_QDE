@@ -202,7 +202,6 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
         invalid:"Invalid Monthly Income / Alphabets and Special characters are not allowed"
       }
     },
-
     organizationDetails: {
       orgName: {
         required: "Organization Name is mandatory",
@@ -454,7 +453,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       console.log("latest Qde: ", this.qde);
       console.log(this.qde.application.applicants.length);
       let i = this.qde.application.applicants.length <= 1 ? 1 : this.qde.application.applicants.length - 1;
-      if(this.qde.application.applicants[i]['applicantId'] == "") {
+      if(this.qde.application.applicants.length > i && this.qde.application.applicants[i]['applicantId'] == "") {
         this.coApplicantIndex = i;
         // if(this.qde.application.applicants.length >= 2) {
           this.isTabDisabled = false;
