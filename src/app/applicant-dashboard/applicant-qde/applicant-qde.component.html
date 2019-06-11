@@ -1784,7 +1784,7 @@
                               <form class="bs-form"
                                 #applicantIncomeNonIndividual="ngForm" (ngSubmit)="submitIncomeDetails1(applicantIncomeNonIndividual, incomeSlider2)">
                                   <div class="form-wrap">
-                                      <div class="form-group">
+                                      <div class="form-group inr">
                                             <input type="text" class="form-control"
                                             id="annual-Family-Income123"
                                             [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.annualFamilyIncome"
@@ -1794,13 +1794,17 @@
                                             pattern="{{regexPattern.amount}}"
                                             required/>
                                           <label for="annual-Family-Income123" >Annual Family Income</label>
+                                          <span class="addon">
+                                            <span class="icon icon-inr"></span>
+                                          </span>
+                                          <span class="in-word"></span>
 
                                           <div *ngIf="annualFamilyIncome1.touched && annualFamilyIncome1.invalid" class="invalid-feedback">
                                                 <!-- <div *ngIf="annualFamilyIncome1.errors?.required">{{errors.incomeDetails.familyIncome.required}}</div> -->
                                                 <div *ngIf="annualFamilyIncome1.errors?.pattern">{{errors.incomeDetails.familyIncome.invalid}}</div>
                                             </div> 
                                       </div>
-                                        <div class="form-group">
+                                        <div class="form-group inr">
                                               <input type="text" class="form-control" 
                                               id="monthly-Expenditure123"
                                               [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.monthlyExpenditure"
@@ -1811,7 +1815,11 @@
                                               fieldFill
                                               />
                                             <label for="monthly-Expenditure123">Monthly Expenditure</label>
-                                  
+                                            <span class="addon">
+                                                <span class="icon icon-inr"></span>
+                                              </span>
+                                              <span class="in-word"></span>
+
                                             <div *ngIf="monthlyExpenditure1.touched && monthlyExpenditure1.invalid" class="invalid-feedback">
                                                     <!-- <div *ngIf="monthlyExpenditure1.errors?.required">{{errors.incomeDetails.monthlyExpenditure.required}}</div> -->
                                                     <div *ngIf="monthlyExpenditure1.errors?.pattern">{{errors.incomeDetails.monthlyExpenditure.invalid}}</div>
@@ -1950,7 +1958,7 @@
                                             </div>
                                         </form>
                                     </div>
-                                    <div class="swiper-slide">
+                                    <!-- <div class="swiper-slide">
                                         <form class="bs-form"
                                             #applicantIncome4="ngForm">
                                                 <div class="form-wrap">
@@ -1970,7 +1978,7 @@
                                                     </div>
                                                 </div>
                                             </form>
-                                    </div>
+                                    </div> -->
 
                           </div>
                         </div>
@@ -2273,7 +2281,7 @@
                 <div class="lyt-tabs">
                     <div class="lhs">
                         <div class="title-wrap">
-                            <h4 class="title">Enter applicant's <span class="cm-line-break"></span>corporate address</h4>
+                            <h4 class="title">Enter Applicant's <span class="cm-line-break"></span>corporate address</h4>
                         </div>
                     </div>
                     <div class="rhs">
@@ -2506,13 +2514,15 @@
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide">
                                         <div class="title-wrap">
-                                            <h4 class="title">Enter applicant's<span class="cm-line-break"></span>income details</h4>
+                                            <h4 class="title">Enter Applicant's<span class="cm-line-break"></span>income details</h4>
                                             <p class="note">Please enter household income & expenditure of main applicant & co-applicant/s</p>
+                                            <p class="note">House made with a high quality materials throughout, including a floor, roof and exterior walls, are called pucca houses</p>
+
                                         </div>
                                     </div>
                                     <div class="swiper-slide">
                                         <div class="title-wrap">
-                                            <h4 class="title">Do applicant's <span class="cm-line-break"></span>income considered?</h4>
+                                            <h4 class="title">Do Applicant's <span class="cm-line-break"></span>income considered?</h4>
                                         </div>
                                     </div>
                                     <div class="swiper-slide">
@@ -2542,7 +2552,7 @@
                                   <form class="bs-form"
                                     #applicantIncome1="ngForm" (ngSubmit)="submitIncomeDetails1(applicantIncome1, incomeSlider4)">
                                       <div class="form-wrap">
-                                          <div class="form-group">
+                                          <div class="form-group inr">
                                                 <input type="text" class="form-control"
                                                 id="annualFamilyIncome1234"
                                                 required
@@ -2553,13 +2563,18 @@
                                                 fieldFill
                                                 />
                                               <label for="annualFamilyIncome1234">Annual Family Income</label>
+                                              <span class="addon">
+                                                <span class="icon icon-inr"></span>
+                                              </span>
+                                              <span class="in-word"></span>
+
                                               <div *ngIf="annualFamilyIncome12.touched && annualFamilyIncome12.invalid" class="invalid-feedback">
                                                 <!-- <div *ngIf="annualFamilyIncome12.errors?.required">{{errors.incomeDetails.familyIncome.required}}</div> -->
                                                 <div *ngIf="annualFamilyIncome12.errors?.pattern">{{errors.incomeDetails.familyIncome.invalid}}</div>
 
                                             </div>
                                           </div>
-                                            <div class="form-group">
+                                            <div class="form-group inr">
                                                   <input type="text" class="form-control" 
                                                   id="monthlyExpenditure1234"
                                                   required
@@ -2570,9 +2585,44 @@
                                                   fieldFill
                                                   />
                                                 <label for="monthlyExpenditure1234" >Monthly Expenditure</label>
+                                                <span class="addon">
+                                                    <span class="icon icon-inr"></span>
+                                                  </span>
+                                                  <span class="in-word"></span>
+
                                                 <div *ngIf="monthlyExpenditure12.touched && monthlyExpenditure12.invalid" class="invalid-feedback">
                                                     <!-- <div *ngIf="monthlyExpenditure12.errors?.required">{{errors.incomeDetails.monthlyExpenditure.required}}</div> -->
                                                     <div *ngIf="monthlyExpenditure12.errors?.pattern">{{errors.incomeDetails.monthlyExpenditure.invalid}}</div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group last">
+                                                <span class="control-title">Pucca House</span>
+                                            </div>
+                                            <div class="radio-wrap rounded-radio">
+                                                <div class="bs-radio typ-normal">
+                                                    <input type="radio" 
+                                                    name="prefredMail"
+                                                    #prefredMail="ngModel" 
+                                                    [value]="true"
+                                                    [checked]="qde.application.applicants[applicantIndex].communicationAddress.preferedMailingAddress == true"
+                                                    fieldFill
+                                                    [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.preferedMailingAddress"
+                                                    id="current-add-mail" />
+                                                    <label for="current-add-mail">
+                                                        yes
+                                                    </label>
+                                                </div>
+                                                <div class="bs-radio typ-normal">
+                                                    <input type="radio"
+                                                    name="prefredMail"
+                                                    
+                                                    [value]="false"
+                                                    [checked]="qde.application.applicants[applicantIndex].communicationAddress.preferredMailingAddress == false"
+                                                    fieldFill
+                                                    >
+                                                    <label for="permanent-add-mail">
+                                                        No
+                                                    </label>
                                                 </div>
                                             </div>
                                         </div>
@@ -2676,7 +2726,7 @@
                                                 </div>
                                             </form>
                                         </div>
-                                        <div class="swiper-slide">
+                                        <!-- <div class="swiper-slide">
                                                 <form class="bs-form"
                                                 #applicantIncome4="ngForm">
                                                     <div class="form-wrap">
@@ -2695,7 +2745,7 @@
                                                     </div>
                                                 </form>
                                         </div>
-    
+     -->
                               </div>
                             </div>
                         </div>
