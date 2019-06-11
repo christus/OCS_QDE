@@ -120,7 +120,7 @@ export class LoanQdeComponent implements OnInit {
     }
   };
 
-  private lhsConfig = {
+  lhsConfig = {
     noSwiping: true,
     noSwipingClass: '',
     onlyExternal: true,
@@ -132,7 +132,7 @@ export class LoanQdeComponent implements OnInit {
     }
   };
 
-  private rhsConfig = {
+  rhsConfig = {
     // noSwiping: true,
     // onlyExternal: true,
     autoplay: false,
@@ -141,50 +141,50 @@ export class LoanQdeComponent implements OnInit {
     noSwipingClass: '',
   };
 
-  private activeTab: number = 0;
+  activeTab: number = 0;
 
-  @ViewChild("tabContents") private tabContents: ElementRef;
-  // @ViewChild(Select2Component) private select2: Select2Component;
+  @ViewChild("tabContents") tabContents: ElementRef;
+  // @ViewChild(Select2Component) select2: Select2Component;
 
   // All Swiper Sliders
-  @ViewChild("incomeDetail1") private incomeDetail1: ElementRef;
-  @ViewChild("incomeDetail2") private incomeDetail2: ElementRef;
-  @ViewChild("property1") private property1: ElementRef;
-  @ViewChild("property2") private property2: ElementRef;
-  @ViewChild("existingLoan1") private existingLoan1: ElementRef;
-  @ViewChild("existingLoan2") private existingLoan2: ElementRef;
+  @ViewChild("incomeDetail1") incomeDetail1: ElementRef;
+  @ViewChild("incomeDetail2") incomeDetail2: ElementRef;
+  @ViewChild("property1") property1: ElementRef;
+  @ViewChild("property2") property2: ElementRef;
+  @ViewChild("existingLoan1") existingLoan1: ElementRef;
+  @ViewChild("existingLoan2") existingLoan2: ElementRef;
 
-  private isAlternateEmailId: boolean = false;
-  private isAlternateMobileNumber: boolean = false;
-  private isAlternateResidenceNumber: boolean = false;
+  isAlternateEmailId: boolean = false;
+  isAlternateMobileNumber: boolean = false;
+  isAlternateResidenceNumber: boolean = false;
 
-  private applicantIndividual: boolean = true;
+  applicantIndividual: boolean = true;
 
-  private fragments = ["loan", "property", "existingLoan"];
+  fragments = ["loan", "property", "existingLoan"];
 
-  private qde: Qde;
+  qde: Qde;
 
-  private religions: Array<any>;
-  private qualifications: Array<any>;
-  private occupations: Array<any>;
-  private residences: Array<any>;
-  private titles: Array<any>;
-  private maritals: Array<any>;
-  private relationships: Array<any>;
-  private loanpurposes: Array<any>;
-  private categories: Array<any>;
-  private genders: Array<any>;
-  private constitutions: Array<any>;
-  private loanTypes: Array<any>;
-  private loanProviders: Array<any>;
-  private propertyTypes: Array<any>;
-  private selectedPropertyType: Item;
-  private selectedFatherTitle : Item;
-  private selectedLoanPurpose: Item;
-  private selectedLoanType: Item;
-  private selectedLoanProvider: Item;
+  religions: Array<any>;
+  qualifications: Array<any>;
+  occupations: Array<any>;
+  residences: Array<any>;
+  titles: Array<any>;
+  maritals: Array<any>;
+  relationships: Array<any>;
+  loanpurposes: Array<any>;
+  categories: Array<any>;
+  genders: Array<any>;
+  constitutions: Array<any>;
+  loanTypes: Array<any>;
+  loanProviders: Array<any>;
+  propertyTypes: Array<any>;
+  selectedPropertyType: Item;
+  selectedFatherTitle : Item;
+  selectedLoanPurpose: Item;
+  selectedLoanType: Item;
+  selectedLoanProvider: Item;
 
-  private applicantId: string;
+  applicantId: string;
 
   constructor(
     private renderer: Renderer2,
@@ -504,5 +504,5 @@ export class LoanQdeComponent implements OnInit {
   }
 
 
-  private temp;
+  temp;
 }

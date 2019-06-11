@@ -26,7 +26,7 @@ interface Item {
 })
 export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
-  private errors = {
+  errors = {
 
     pan: {
       required: "PAN number is mandatory",
@@ -317,7 +317,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     'Content-Type': 'multipart/form-data',
   };
 
-  private lhsConfig = {
+  lhsConfig = {
     noSwiping: true,
     noSwipingClass: '',
     onlyExternal: true,
@@ -329,7 +329,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     }
   };
 
-  private rhsConfig = {
+  rhsConfig = {
     noSwiping: true,
     noSwipingClass: '',
     autoplay: false,
@@ -337,45 +337,45 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     effect: "slide"
   };
 
-  private activeTab: number = 0;
-  private dob: {day: Item, month: Item, year: Item} = { day: {key: "DD", value: "DD"}, month: {key: "MM", value: "MM"}, year: {key: "YYYY", value: "YYYY"} };
-  private residenceNumberStdCode: string = "";
-  private residenceNumberPhoneNumber: string = "";
-  private alternateResidenceNumberStdCode: string = ""
-  private alternateResidenceNumberPhoneNumber: string = ""
-  private addressCityState: string = "";
-  private otherReligion: string = "";
-  private officialNumberStdCode: string = "";
-  private officialNumberPhoneNumber: string = "";
-  private dateOfIncorporation: {day: Item, month: Item, year: Item} = { day: {key: "DD", value: "DD"}, month: {key: "MM", value: "MM"}, year: {key: "YYYY", value: "YYYY"} };
-  private registeredAddressCityState: string = "";
-  private corporateAddressCityState: string = "";
-  private corporateAddressStdCode = "";
-  private corporateAddressPhoneNumber = "";
+  activeTab: number = 0;
+  dob: {day: Item, month: Item, year: Item} = { day: {key: "DD", value: "DD"}, month: {key: "MM", value: "MM"}, year: {key: "YYYY", value: "YYYY"} };
+  residenceNumberStdCode: string = "";
+  residenceNumberPhoneNumber: string = "";
+  alternateResidenceNumberStdCode: string = ""
+  alternateResidenceNumberPhoneNumber: string = ""
+  addressCityState: string = "";
+  otherReligion: string = "";
+  officialNumberStdCode: string = "";
+  officialNumberPhoneNumber: string = "";
+  dateOfIncorporation: {day: Item, month: Item, year: Item} = { day: {key: "DD", value: "DD"}, month: {key: "MM", value: "MM"}, year: {key: "YYYY", value: "YYYY"} };
+  registeredAddressCityState: string = "";
+  corporateAddressCityState: string = "";
+  corporateAddressStdCode = "";
+  corporateAddressPhoneNumber = "";
 
-  private commCityState:string = "";
+  commCityState:string = "";
   // zipCityStateID:string = "";
 
-  @ViewChild('tabContents') private tabContents: ElementRef;
-  // @ViewChild(Select2Component) private select2: Select2Component;
+  @ViewChild('tabContents') tabContents: ElementRef;
+  // @ViewChild(Select2Component) select2: Select2Component;
 
   // All Swiper Sliders
   // Will be deprecated in next commit if not used
-  @ViewChild('panSlider2') private panSlider2: Swiper;
-  @ViewChild('panSlider4') private panSlider4: Swiper;
+  @ViewChild('panSlider2') panSlider2: Swiper;
+  @ViewChild('panSlider4') panSlider4: Swiper;
 
-  private isAlternateEmailId: boolean = false;
-  private isAlternateMobileNumber: boolean = false;
-  private isAlternateResidenceNumber: boolean = false;
+  isAlternateEmailId: boolean = false;
+  isAlternateMobileNumber: boolean = false;
+  isAlternateResidenceNumber: boolean = false;
   
-  private applicantIndividual: boolean = true;
+  applicantIndividual: boolean = true;
 
-  private isIndividual:boolean = false;
-  private YYYY: number = 1900;
+  isIndividual:boolean = false;
+  YYYY: number = 1900;
 
-  private applicantStatus:string = "" ;
+  applicantStatus:string = "" ;
 
-  private fragments = [ 'pan1',
+  fragments = [ 'pan1',
                         'personal',
                         'contact',
                         'address',
@@ -395,44 +395,44 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
   applicantIndex: number;
 
-  private qde: Qde;
+  qde: Qde;
 
-  private religions: Array<any>;
-  private qualifications: Array<any>;
-  private occupations: Array<any>;
-  private residences: Array<any>;
-  private titles: Array<any>;
-  private maritals: Array<any>;
-  private relationships: Array<any>;
-  private loanpurposes: Array<any>;
-  private categories: Array<any>;
-  private genders: Array<any>;
-  private constitutions: Array<any>;
-  private days: Array<Item>;
-  private months: Array<Item>;
-  private years: Array<Item>;
-  private assessmentMethodology: Array<any>;
-  private selectedTitle: Item;
-  private selectedReligions: Item;
-  private selectedMaritialStatus: Item;
-  private selectedCategory: Item;
-  private selectedOccupation: Item;
-  private selectedResidence: Item;
-  private selectedSpouseTitle: Item;
-  private selectedFatherTitle: Item;
-  private selectedMotherTitle: Item;
-  private selectedQualification: Item;
-  private selectedConstitution: Item;
+  religions: Array<any>;
+  qualifications: Array<any>;
+  occupations: Array<any>;
+  residences: Array<any>;
+  titles: Array<any>;
+  maritals: Array<any>;
+  relationships: Array<any>;
+  loanpurposes: Array<any>;
+  categories: Array<any>;
+  genders: Array<any>;
+  constitutions: Array<any>;
+  days: Array<Item>;
+  months: Array<Item>;
+  years: Array<Item>;
+  assessmentMethodology: Array<any>;
+  selectedTitle: Item;
+  selectedReligions: Item;
+  selectedMaritialStatus: Item;
+  selectedCategory: Item;
+  selectedOccupation: Item;
+  selectedResidence: Item;
+  selectedSpouseTitle: Item;
+  selectedFatherTitle: Item;
+  selectedMotherTitle: Item;
+  selectedQualification: Item;
+  selectedConstitution: Item;
 
-  private selectedDocType: Item;
-  private selectedConstitutions: Item;
-  private selectedBirthPlace: Item;
+  selectedDocType: Item;
+  selectedConstitutions: Item;
+  selectedBirthPlace: Item;
 
-  private docType: Array<any>;
-  private birthPlace: Array<any>;
-  private selectedAssesmentMethodology: Array<any>;
+  docType: Array<any>;
+  birthPlace: Array<any>;
+  selectedAssesmentMethodology: Array<any>;
 
-  private panslideSub: Subscription;
+  panslideSub: Subscription;
   constructor(private renderer: Renderer2,
               private route: ActivatedRoute,
               private router: Router,
@@ -487,8 +487,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     console.log('__________');
   }
   
-  private panslide: boolean;
-  private panslide2: boolean;
+  panslide: boolean;
+  panslide2: boolean;
 
   ngOnInit() {
 
