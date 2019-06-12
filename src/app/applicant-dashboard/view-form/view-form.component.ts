@@ -20,7 +20,10 @@ import {tap} from 'rxjs/operators';
 })
 export class ViewFormComponent implements OnInit {
 
-  errors: any = {
+
+  private showSuccessModal: boolean = false;
+
+  private errors: any = {
 
     pan: {
       required: "PAN number is required",
@@ -555,5 +558,25 @@ export class ViewFormComponent implements OnInit {
     // Write conditions for All details just like PAN
 
     return isIncomplete;
+  }
+
+  private isEligible: boolean = false;
+  private isNotEligible: boolean = false;
+  private emiAmount: number;
+  private eligibleAmount: number;
+
+  submitDocumentUploadForm(form: NgForm) {
+
+    this.qdeHttp.dummyCIBILAPI().subscribe(res => {
+      console.log("res: ", res['ProcessVariables']['checkEligibility'].toLowerCase);
+      if(res['ProcessVariables']['checkEligibility'].toLowerCase() == 'yes') {
+        this.isEligible = true;
+        this.emiAmount = res['ProcessVariables']['emi'];
+        this.eligibleAmount = res['ProcessVariables']['eligibilityAmount'];
+      }
+      else if(res['ProcessVariables']['checkEligibility'].toLowerCase() == 'no') {
+        this.isNotEligible = true;
+      }
+    });
   }
 }

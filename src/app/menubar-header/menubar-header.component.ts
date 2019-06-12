@@ -15,14 +15,20 @@ export class MenubarHeaderComponent implements OnInit {
   isLogoutVisible: boolean;
   applicationId: string;
   coApplicantIndex: number;
+  // isMenuBarShown: boolean;
+  private isViewFormNameShown: boolean;
+  // isViewFormVisible: boolean;
+  // isLogoutVisible: boolean;
+  // applicantId: string;
+
 
   constructor(private utilService: UtilService, private commonDataService: CommonDataService) {
-    this.commonDataService.isMenuBarShown.subscribe((value) => {
-      this.isMenuBarShown = value;
+    this.commonDataService.isViewFormNameShown.subscribe((value) => {
+      this.isViewFormNameShown = value;
     });
 
-    this.commonDataService.isViewFormNameVisible.subscribe((value) => {
-      this.isViewFormNameVisible = value;
+    this.commonDataService.isMenuBarShown.subscribe((value) => {
+      this.isMenuBarShown = value;
     });
 
     this.commonDataService.isViewFormVisible.subscribe((value) => {

@@ -66,14 +66,23 @@
                               <div class="checkbox-wrap">
                                   <span class="checkgroup-label">a. I/We wish to receive such information through Email alerts</span>
                                   <div class="checkbox-group">
-                                      <input type="checkbox" name="checkgroup1" id="checkbox1" checked>
+                                      <input    type="checkbox"
+                                                name="checkbox1"
+                                                id="checkbox1"
+                                                value="checkbox1"
+                                                #checkbox1
+                                                (change)="changeYesNo($event, [checkbox1, checkbox2])" />
                                       <label for="checkbox1"><span></span>Yes</label>
-
                                   </div>
                                   <div class="checkbox-group">
-                                      <input type="checkbox" name="checkgroup2" id="checkbox2">
+                                      <input    type="checkbox"
+                                                name="checkbox2"
+                                                id="checkbox2"
+                                                value="checkbox2"
+                                                #checkbox2
+                                                checked="true"
+                                                (change)="changeYesNo($event, [checkbox1, checkbox2])" />
                                       <label for="checkbox2"><span></span>No</label>
-
                                   </div>
 
                               </div>
@@ -81,14 +90,21 @@
                               <div class="checkbox-wrap">
                                   <span class="checkgroup-label">b. I/We wish to receive such information through SMS alerts </span>
                                   <div class="checkbox-group">
-                                      <input type="checkbox" name="checkgroup3" id="checkbox3" checked>
-                                      <label for="checkbox3"><span></span>Yes</label>
-
+                                    <input      type="checkbox"
+                                                name="checkbox3"
+                                                id="checkbox3"
+                                                #checkbox3
+                                                (change)="changeYesNo($event, [checkbox3, checkbox4])" />
+                                    <label for="checkbox3"><span></span>Yes</label>
                                   </div>
                                   <div class="checkbox-group">
-                                      <input type="checkbox" name="checkgroup4" id="checkbox4">
+                                    <input      type="checkbox"
+                                                name="checkbox4"
+                                                id="checkbox4"
+                                                checked="true"
+                                                #checkbox4
+                                                (change)="changeYesNo($event, [checkbox3, checkbox4])" />
                                       <label for="checkbox4"><span></span>No</label>
-
                                   </div>
 
                               </div>
@@ -96,12 +112,20 @@
                               <div class="checkbox-wrap">
                                   <span class="checkgroup-label">c. I/We wish to receive such information through Phone call </span>
                                   <div class="checkbox-group">
-                                      <input type="checkbox" name="checkgroup5" id="checkbox5" checked>
-                                      <label for="checkbox5"><span></span>Yes</label>
-
+                                    <input      type="checkbox"
+                                                name="checkbox5"
+                                                id="checkbox5"
+                                                #checkbox5
+                                                (change)="changeYesNo($event, [checkbox5, checkbox6])" />
+                                    <label for="checkbox5"><span></span>Yes</label>
                                   </div>
                                   <div class="checkbox-group">
-                                      <input type="checkbox" name="checkgroup6" id="checkbox6">
+                                    <input      type="checkbox"
+                                                name="checkbox6"
+                                                id="checkbox6"
+                                                checked="true"
+                                                #checkbox6
+                                                (change)="changeYesNo($event, [checkbox5, checkbox6])" />
                                       <label for="checkbox6"><span></span>No</label>
 
                                   </div>
@@ -116,12 +140,20 @@
                               <div class="checkbox-wrap">
 
                                   <div class="checkbox-group">
-                                      <input type="checkbox" name="checkgroup7" id="checkbox7" checked>
-                                      <label for="checkbox7"><span></span>Yes</label>
-
+                                     <input      type="checkbox"
+                                                name="checkbox7"
+                                                id="checkbox7"
+                                                #checkbox7
+                                                (change)="changeYesNo($event, [checkbox7, checkbox8])" />
+                                    <label for="checkbox7"><span></span>Yes</label>
                                   </div>
                                   <div class="checkbox-group">
-                                      <input type="checkbox" name="checkgroup8" id="checkbox8">
+                                    <input      type="checkbox"
+                                                name="checkbox8"
+                                                id="checkbox8"
+                                                checked="true"
+                                                #checkbox8
+                                                (change)="changeYesNo($event, [checkbox7, checkbox8])" />
                                       <label for="checkbox8"><span></span>No</label>
 
                                   </div>
@@ -136,12 +168,20 @@
                               <div class="checkbox-wrap">
                                   <span class="checkgroup-label">Please confirm whether applicable or not:</span>
                                   <div class="checkbox-group">
-                                      <input type="checkbox" name="checkgroup9" id="checkbox9" checked>
-                                      <label for="checkbox9"><span></span>Yes</label>
-
+                                    <input      type="checkbox"
+                                                name="checkbox9"
+                                                id="checkbox9"
+                                                #checkbox9
+                                                (change)="changeYesNo($event, [checkbox9, checkbox10])" />
+                                    <label for="checkbox9"><span></span>Yes</label>
                                   </div>
                                   <div class="checkbox-group">
-                                      <input type="checkbox" name="checkgroup10" id="checkbox10">
+                                    <input      type="checkbox"
+                                                name="checkbox10"
+                                                id="checkbox10"
+                                                checked="true"
+                                                #checkbox10
+                                                (change)="changeYesNo($event, [checkbox9, checkbox10])" />
                                       <label for="checkbox10"><span></span>No</label>
 
                                   </div>
@@ -151,8 +191,12 @@
                               <div class="checkbox-wrap typ2">
 
                                   <div class="checkbox-group">
-                                      <input type="checkbox" name="checkgroup11" id="checkbox11" checked>
-                                      <label for="checkbox11"><span></span>I provide consent to run a CIBIL Check</label>
+                                    <input      type="checkbox"
+                                                name="checkbox11"
+                                                id="checkbox11"
+                                                #checkbox11
+                                                (change)="changeYesNo($event, [checkbox11])" />
+                                     <label for="checkbox11"><span></span>I provide consent to run a CIBIL Check</label>
 
                                   </div>
                                   <!-- <div class="checkbox-group">
@@ -161,8 +205,12 @@
 
                                   </div> -->
                                   <div class="checkbox-group">
-                                      <input type="checkbox" name="checkgroup12" id="checkbox12" checked>
-                                      <label for="checkbox12"><span></span>I understand and agree to all the Terms & Conditions</label>
+                                    <input      type="checkbox"
+                                                name="checkbox12"
+                                                id="checkbox12"
+                                                #checkbox12
+                                                (change)="changeYesNo($event, [checkbox12])" />
+                                     <label for="checkbox12"><span></span>I understand and agree to all the Terms & Conditions</label>
                                   </div>
                               </div>
                           </li>
@@ -170,7 +218,7 @@
                   </div>
               </div>
               <div class="btn-wrap">
-                  <button class="btn btn-border typ2" routerLink="/terms-and-conditions/declaration2">PROCEED TO payment</button>
+                  <button class="btn btn-border typ2" [disabled]="checkbox1.checked!=true || checkbox3.checked!=true || checkbox5.checked!=true || checkbox7.checked!=true || checkbox9.checked!=true || checkbox11.checked!=true || checkbox12.checked!=true" routerLink="/terms-and-conditions/declaration2">PROCEED TO payment</button>
               </div>
           </div>
       </div>

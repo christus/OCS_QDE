@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 
 import { Options } from "ng5-slider";
 import { NgForm } from "@angular/forms";
+import { CommonDataService } from 'src/app/services/common-data.service';
 
 @Component({
   selector: 'app-offline-payment',
@@ -81,8 +82,14 @@ export class OfflinePaymentComponent implements OnInit {
   constructor(
     private renderer: Renderer2,
     private route: ActivatedRoute,
-    private router: Router
-  ) {}
+    private router: Router,
+    private commonDataService: CommonDataService
+  ) {
+    this.commonDataService.changeMenuBarShown(true);
+    this.commonDataService.changeViewFormNameVisible(true);
+    this.commonDataService.changeViewFormVisible(true);
+    this.commonDataService.changeLogoutVisible(true);
+  }
 
   ngOnInit() {
     // this.renderer.addClass(this.select2.selector.nativeElement, 'js-select');
