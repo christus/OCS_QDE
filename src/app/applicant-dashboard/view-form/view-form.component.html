@@ -32,7 +32,9 @@
                   <h2 class="title">Enter applicant details</h2>
 
                     <!-- *ngIf="qde.application.applicants[applicantIndex].isIndividual == true" -->
-                    <form   #applicantIndividualForm="ngForm">
+
+                    <form   #applicantIndividualForm="ngForm"
+                            (ngSubmit)="submitApplicantMainForm(applicantIndividualForm)">
                         <div class="bs-card" [ngClass]="{'incomplete': isIncomplete}">
                             <h3 class="card-title">PAN details</h3>
                             <div class="bs-form">
@@ -1514,241 +1516,277 @@
               <!-- Document Upload -->
               <div class="tab-content" [ngClass]="{'active': (activeTab == 4)}">
                   <h2 class="title">Document upload</h2>
-                  <div class="bs-card">
-                      <h3 class="card-title">Upload Aadhar card</h3>
-                      <form action="" class="bs-form">
-                          <div class="row">
-                              <div class="col-12">
-                                  <!-- <h5 class="subtitle">Is applicant's spouse working?</h5> -->
-                                  <div class="bs-radio typ-doc">
-                                      <input type="radio" name="doc-upload" id="applicant-radio">
-                                      <label for="applicant-radio">
-                                              <span class="icon icon-close"></span>
-                                          </label>
-                                      <span class="desc-text">01 | <span>Applicant</span></span>
-                                  </div>
-                                  <div class="bs-radio typ-doc">
-                                      <input type="radio" name="doc-upload" id="applicant-radio">
-                                      <label for="applicant-radio">
-                                              <span class="icon icon-close"></span>
-                                          </label>
-                                      <span class="desc-text">02 | <span>Co-Applicant</span></span>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="row">
-                              <div class="col-12">
-                                  <h5 class="subtitle">upload photo</h5>
-                                  <div class="bs-file">
-                                      <input type="file" class="form-control" id="file">
-                                      <label for="file"><span>Change photo</span></label>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="row last">
-                              <div class="col-12">
-                                  <h5 class="subtitle">Verify applicant Aadhar</h5>
-                                  <div class="bs-radio typ-sm">
-                                      <input type="radio" name="yesNo" id="yes">
-                                      <label for="yes"><span>Get OTP</span></label>
-                                  </div>
-                                  <div class="bs-radio typ-sm modal-init" data-target="biomatric-modal">
-                                      <input type="radio" name="yesNo" id="no">
-                                      <label for="no"><span>Biometric Scan</span></label>
-                                  </div>
-                              </div>
-                          </div>
-                      </form>
-                  </div>
-                  <div class="bs-card">
-                      <h3 class="card-title">Address proof</h3>
-                      <form action="" class="bs-form">
-                          <div class="row">
-                              <div class="col-12">
-                                  <!-- <h5 class="subtitle">Is applicant's spouse working?</h5> -->
-                                  <div class="bs-radio typ-doc">
-                                      <input type="radio" name="doc-upload" id="applicant-radio">
-                                      <label for="applicant-radio">
-                                                  <span class="icon icon-close"></span>
-                                              </label>
-                                      <span class="desc-text">01 | <span>Applicant</span></span>
-                                  </div>
-                                  <div class="bs-radio typ-doc">
-                                      <input type="radio" name="doc-upload" id="applicant-radio">
-                                      <label for="applicant-radio">
-                                                  <span class="icon icon-close"></span>
-                                              </label>
-                                      <span class="desc-text">02 | <span>Co-Applicant</span></span>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="row">
-                              <div class="col-12">
-                                  <h5 class="subtitle">upload photo</h5>
-                                  <div class="bs-file">
-                                      <input type="file" class="form-control" id="file">
-                                      <label for="file"><span>Change photo</span></label>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="row last">
-                              <div class="col-12">
-                                  <h5 class="subtitle">Verify applicant Aadhar</h5>
-                                  <div class="bs-radio typ-sm">
-                                      <input type="radio" name="yesNo" id="yes">
-                                      <label for="yes"><span>Get OTP</span></label>
-                                  </div>
-                                  <div class="bs-radio typ-sm modal-init" data-target="biomatric-modal">
-                                      <input type="radio" name="yesNo" id="no">
-                                      <label for="no"><span>Biometric Scan</span></label>
-                                  </div>
-                              </div>
-                          </div>
-                      </form>
-                  </div>
-                  <div class="bs-card">
-                      <h3 class="card-title">Income proof</h3>
-                      <form action="" class="bs-form">
-                          <div class="row">
-                              <div class="col-12">
-                                  <!-- <h5 class="subtitle">Is applicant's spouse working?</h5> -->
-                                  <div class="bs-radio typ-doc">
-                                      <input type="radio" name="doc-upload" id="applicant-radio">
-                                      <label for="applicant-radio">
-                                                      <span class="icon icon-close"></span>
-                                                  </label>
-                                      <span class="desc-text">01 | <span>Applicant</span></span>
-                                  </div>
-                                  <div class="bs-radio typ-doc">
-                                      <input type="radio" name="doc-upload" id="applicant-radio">
-                                      <label for="applicant-radio">
-                                                      <span class="icon icon-close"></span>
-                                                  </label>
-                                      <span class="desc-text">02 | <span>Co-Applicant</span></span>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="row">
-                              <div class="col-12">
-                                  <h5 class="subtitle">upload photo</h5>
-                                  <div class="bs-file">
-                                      <input type="file" class="form-control" id="file">
-                                      <label for="file"><span>Change photo</span></label>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="row last">
-                              <div class="col-12">
-                                  <h5 class="subtitle">Verify applicant Aadhar</h5>
-                                  <div class="bs-radio typ-sm">
-                                      <input type="radio" name="yesNo" id="yes">
-                                      <label for="yes"><span>Get OTP</span></label>
-                                  </div>
-                                  <div class="bs-radio typ-sm modal-init" data-target="biomatric-modal">
-                                      <input type="radio" name="yesNo" id="no">
-                                      <label for="no"><span>Biometric Scan</span></label>
-                                  </div>
-                              </div>
-                          </div>
-                      </form>
-                  </div>
-                  <div class="bs-card">
-                      <h3 class="card-title">Banking</h3>
-                      <form action="" class="bs-form">
-                          <div class="row">
-                              <div class="col-12">
-                                  <!-- <h5 class="subtitle">Is applicant's spouse working?</h5> -->
-                                  <div class="bs-radio typ-doc">
-                                      <input type="radio" name="doc-upload" id="applicant-radio">
-                                      <label for="applicant-radio">
-                                                          <span class="icon icon-close"></span>
-                                                      </label>
-                                      <span class="desc-text">01 | <span>Applicant</span></span>
-                                  </div>
-                                  <div class="bs-radio typ-doc">
-                                      <input type="radio" name="doc-upload" id="applicant-radio">
-                                      <label for="applicant-radio">
-                                                          <span class="icon icon-close"></span>
-                                                      </label>
-                                      <span class="desc-text">02 | <span>Co-Applicant</span></span>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="row">
-                              <div class="col-12">
-                                  <h5 class="subtitle">upload photo</h5>
-                                  <div class="bs-file">
-                                      <input type="file" class="form-control" id="file">
-                                      <label for="file"><span>Change photo</span></label>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="row last">
-                              <div class="col-12">
-                                  <h5 class="subtitle">Verify applicant Aadhar</h5>
-                                  <div class="bs-radio typ-sm">
-                                      <input type="radio" name="yesNo" id="yes">
-                                      <label for="yes"><span>Get OTP</span></label>
-                                  </div>
-                                  <div class="bs-radio typ-sm modal-init" data-target="biomatric-modal">
-                                      <input type="radio" name="yesNo" id="no">
-                                      <label for="no"><span>Biometric Scan</span></label>
-                                  </div>
-                              </div>
-                          </div>
-                      </form>
-                  </div>
-                  <div class="bs-card">
-                      <h3 class="card-title">Collateral</h3>
-                      <form action="" class="bs-form">
-                          <div class="row">
-                              <div class="col-12">
-                                  <!-- <h5 class="subtitle">Is applicant's spouse working?</h5> -->
-                                  <div class="bs-radio typ-doc">
-                                      <input type="radio" name="doc-upload" id="applicant-radio">
-                                      <label for="applicant-radio">
-                                                              <span class="icon icon-close"></span>
-                                                          </label>
-                                      <span class="desc-text">01 | <span>Applicant</span></span>
-                                  </div>
-                                  <div class="bs-radio typ-doc">
-                                      <input type="radio" name="doc-upload" id="applicant-radio">
-                                      <label for="applicant-radio">
-                                                              <span class="icon icon-close"></span>
-                                                          </label>
-                                      <span class="desc-text">02 | <span>Co-Applicant</span></span>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="row">
-                              <div class="col-12">
-                                  <h5 class="subtitle">upload photo</h5>
-                                  <div class="bs-file">
-                                      <input type="file" class="form-control" id="file">
-                                      <label for="file"><span>Change photo</span></label>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="row last">
-                              <div class="col-12">
-                                  <h5 class="subtitle">Verify applicant Aadhar</h5>
-                                  <div class="bs-radio typ-sm">
-                                      <input type="radio" name="yesNo" id="yes">
-                                      <label for="yes"><span>Get OTP</span></label>
-                                  </div>
-                                  <div class="bs-radio typ-sm modal-init" data-target="biomatric-modal">
-                                      <input type="radio" name="yesNo" id="no">
-                                      <label for="no"><span>Biometric Scan</span></label>
-                                  </div>
-                              </div>
-                          </div>
-                      </form>
-                  </div>
-                  <div class="btn-wrap">
-                      <button class="btn btn-primary">CONTINUE</button>
-                  </div>
+                  <form action="" class="bs-form" #documentUploadForm="ngForm" (ngSubmit)="submitDocumentUploadForm(documentUploadForm)">
+                    <div class="bs-card">
+                        <h3 class="card-title">Upload Aadhar card</h3>
+                        
+                            <div class="row">
+                                <div class="col-12">
+                                    <!-- <h5 class="subtitle">Is applicant's spouse working?</h5> -->
+                                    <div class="bs-radio typ-doc">
+                                        <input type="radio" name="doc-upload" id="applicant-radio">
+                                        <label for="applicant-radio">
+                                                <span class="icon icon-close"></span>
+                                            </label>
+                                        <span class="desc-text">01 | <span>Applicant</span></span>
+                                    </div>
+                                    <div class="bs-radio typ-doc">
+                                        <input type="radio" name="doc-upload" id="applicant-radio">
+                                        <label for="applicant-radio">
+                                                <span class="icon icon-close"></span>
+                                            </label>
+                                        <span class="desc-text">02 | <span>Co-Applicant</span></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <h5 class="subtitle">upload photo</h5>
+                                    <div class="bs-file">
+                                        <input type="file" class="form-control" id="file">
+                                        <label for="file"><span>Change photo</span></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row last">
+                                <div class="col-12">
+                                    <h5 class="subtitle">Verify applicant Aadhar</h5>
+                                    <div class="bs-radio typ-sm">
+                                        <input type="radio" name="yesNo" id="yes">
+                                        <label for="yes"><span>Get OTP</span></label>
+                                    </div>
+                                    <div class="bs-radio typ-sm modal-init" data-target="biomatric-modal">
+                                        <input type="radio" name="yesNo" id="no">
+                                        <label for="no"><span>Biometric Scan</span></label>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                    </div>
+                    <div class="bs-card">
+                        <h3 class="card-title">Address proof</h3>
+                        
+                            <div class="row">
+                                <div class="col-12">
+                                    <!-- <h5 class="subtitle">Is applicant's spouse working?</h5> -->
+                                    <div class="bs-radio typ-doc">
+                                        <input type="radio" name="doc-upload" id="applicant-radio">
+                                        <label for="applicant-radio">
+                                                    <span class="icon icon-close"></span>
+                                                </label>
+                                        <span class="desc-text">01 | <span>Applicant</span></span>
+                                    </div>
+                                    <div class="bs-radio typ-doc">
+                                        <input type="radio" name="doc-upload" id="applicant-radio">
+                                        <label for="applicant-radio">
+                                                    <span class="icon icon-close"></span>
+                                                </label>
+                                        <span class="desc-text">02 | <span>Co-Applicant</span></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <h5 class="subtitle">upload photo</h5>
+                                    <div class="bs-file">
+                                        <input type="file" class="form-control" id="file">
+                                        <label for="file"><span>Change photo</span></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row last">
+                                <div class="col-12">
+                                    <h5 class="subtitle">Verify applicant Aadhar</h5>
+                                    <div class="bs-radio typ-sm">
+                                        <input type="radio" name="yesNo" id="yes">
+                                        <label for="yes"><span>Get OTP</span></label>
+                                    </div>
+                                    <div class="bs-radio typ-sm modal-init" data-target="biomatric-modal">
+                                        <input type="radio" name="yesNo" id="no">
+                                        <label for="no"><span>Biometric Scan</span></label>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                    </div>
+                    <div class="bs-card">
+                        <h3 class="card-title">Income proof</h3>
+                        
+                            <div class="row">
+                                <div class="col-12">
+                                    <!-- <h5 class="subtitle">Is applicant's spouse working?</h5> -->
+                                    <div class="bs-radio typ-doc">
+                                        <input type="radio" name="doc-upload" id="applicant-radio">
+                                        <label for="applicant-radio">
+                                                        <span class="icon icon-close"></span>
+                                                    </label>
+                                        <span class="desc-text">01 | <span>Applicant</span></span>
+                                    </div>
+                                    <div class="bs-radio typ-doc">
+                                        <input type="radio" name="doc-upload" id="applicant-radio">
+                                        <label for="applicant-radio">
+                                                        <span class="icon icon-close"></span>
+                                                    </label>
+                                        <span class="desc-text">02 | <span>Co-Applicant</span></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <h5 class="subtitle">upload photo</h5>
+                                    <div class="bs-file">
+                                        <input type="file" class="form-control" id="file">
+                                        <label for="file"><span>Change photo</span></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row last">
+                                <div class="col-12">
+                                    <h5 class="subtitle">Verify applicant Aadhar</h5>
+                                    <div class="bs-radio typ-sm">
+                                        <input type="radio" name="yesNo" id="yes">
+                                        <label for="yes"><span>Get OTP</span></label>
+                                    </div>
+                                    <div class="bs-radio typ-sm modal-init" data-target="biomatric-modal">
+                                        <input type="radio" name="yesNo" id="no">
+                                        <label for="no"><span>Biometric Scan</span></label>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                    </div>
+                    <div class="bs-card">
+                        <h3 class="card-title">Banking</h3>
+                        
+                            <div class="row">
+                                <div class="col-12">
+                                    <!-- <h5 class="subtitle">Is applicant's spouse working?</h5> -->
+                                    <div class="bs-radio typ-doc">
+                                        <input type="radio" name="doc-upload" id="applicant-radio">
+                                        <label for="applicant-radio">
+                                                            <span class="icon icon-close"></span>
+                                                        </label>
+                                        <span class="desc-text">01 | <span>Applicant</span></span>
+                                    </div>
+                                    <div class="bs-radio typ-doc">
+                                        <input type="radio" name="doc-upload" id="applicant-radio">
+                                        <label for="applicant-radio">
+                                                            <span class="icon icon-close"></span>
+                                                        </label>
+                                        <span class="desc-text">02 | <span>Co-Applicant</span></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <h5 class="subtitle">upload photo</h5>
+                                    <div class="bs-file">
+                                        <input type="file" class="form-control" id="file">
+                                        <label for="file"><span>Change photo</span></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row last">
+                                <div class="col-12">
+                                    <h5 class="subtitle">Verify applicant Aadhar</h5>
+                                    <div class="bs-radio typ-sm">
+                                        <input type="radio" name="yesNo" id="yes">
+                                        <label for="yes"><span>Get OTP</span></label>
+                                    </div>
+                                    <div class="bs-radio typ-sm modal-init" data-target="biomatric-modal">
+                                        <input type="radio" name="yesNo" id="no">
+                                        <label for="no"><span>Biometric Scan</span></label>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                    </div>
+                    <div class="bs-card">
+                        <h3 class="card-title">Collateral</h3>
+                        
+                            <div class="row">
+                                <div class="col-12">
+                                    <!-- <h5 class="subtitle">Is applicant's spouse working?</h5> -->
+                                    <div class="bs-radio typ-doc">
+                                        <input type="radio" name="doc-upload" id="applicant-radio">
+                                        <label for="applicant-radio">
+                                                                <span class="icon icon-close"></span>
+                                                            </label>
+                                        <span class="desc-text">01 | <span>Applicant</span></span>
+                                    </div>
+                                    <div class="bs-radio typ-doc">
+                                        <input type="radio" name="doc-upload" id="applicant-radio">
+                                        <label for="applicant-radio">
+                                                                <span class="icon icon-close"></span>
+                                                            </label>
+                                        <span class="desc-text">02 | <span>Co-Applicant</span></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <h5 class="subtitle">upload photo</h5>
+                                    <div class="bs-file">
+                                        <input type="file" class="form-control" id="file">
+                                        <label for="file"><span>Change photo</span></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row last">
+                                <div class="col-12">
+                                    <h5 class="subtitle">Verify applicant Aadhar</h5>
+                                    <div class="bs-radio typ-sm">
+                                        <input type="radio" name="yesNo" id="yes">
+                                        <label for="yes"><span>Get OTP</span></label>
+                                    </div>
+                                    <div class="bs-radio typ-sm modal-init" data-target="biomatric-modal">
+                                        <input type="radio" name="yesNo" id="no">
+                                        <label for="no"><span>Biometric Scan</span></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 center">
+                                    <div class="btn-wrap center">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+
+                  </form>
               </div>
           </div>
       </div>
   </div>
+
+    <div class="overlay" [ngClass]="{'active': isEligible}"></div>
+    <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isEligible}">
+        <!-- <a class="modal-close"><span class="icon icon-close"></span></a> -->
+        <div class="modal-body">
+            <h1 class="center">Eligibilty Checked!</h1>
+            <h2 class="center typ2">Your Provisional Eligibility is</h2>
+            <p>
+                <span class="info">
+                    Loan: <span class="cm-bold">₹{{eligibleAmount}}</span>
+                </span>
+                <br>
+                <span class="info">                            
+                    EMI: <span class="cm-bold">₹{{emiAmount}}</span>
+                </span>
+            </p>
+            <p class="desc typ2">You have cleared the provisional eligibility check for the loan amount requested. 
+                Kindly note this clearance is based on the information provided and actual sanction amount is subject 
+                to further verification and process.</p>
+        </div>
+    </div>
+
+    <div class="overlay" [ngClass]="{'active': isNotEligible}"></div>
+    <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isNotEligible}">
+        <div class="modal-body">
+            <h1 class="center">Not Eligible!!!</h1>
+            <p class="desc typ2">You have not cleared the provisional eligibility check for the loan amount requested. 
+                Our Agent will contact you very soon.</p>
+        </div>
+    </div>
 </main>

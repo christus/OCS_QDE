@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, Renderer2 } from '@angular/core';
 
 @Component({
   selector: 'app-declaration1',
@@ -7,9 +7,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class Declaration1Component implements OnInit {
 
-  constructor() { }
+  constructor(private el: ElementRef,
+              private ren: Renderer2) { }
 
   ngOnInit() {
   }
 
+  changeYesNo(event: any, els: Array<HTMLInputElement>) {
+    els.forEach( v => {
+      if(v == event.target) {
+        return;
+      }
+        
+      v.checked = false;
+    });
+  }
 }

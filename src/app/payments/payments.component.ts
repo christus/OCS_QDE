@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonDataService } from '../services/common-data.service';
 
 @Component({
   selector: 'app-payments',
@@ -9,11 +8,7 @@ import { CommonDataService } from '../services/common-data.service';
 export class PaymentsComponent implements OnInit {
 
  
-  constructor(private commonDataService: CommonDataService) {
-    this.commonDataService.changeMenuBarShown(true);
-    this.commonDataService.changeViewFormNameVisible(true);
-    this.commonDataService.changeViewFormVisible(true);
-    this.commonDataService.changeLogoutVisible(true);
+  constructor() {
   }
   
   ngOnInit() {

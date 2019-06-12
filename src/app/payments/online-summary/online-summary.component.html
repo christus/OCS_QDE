@@ -1,0 +1,83 @@
+<app-menubar-header></app-menubar-header>
+<main>
+    <div class="main">
+        <div class="lyt-box">
+
+            <div class="title-desc">
+                <h3 class="box-title">Summary</h3>
+                <p class="desc">ICICI HFC Home Loan Application</p>
+            </div>
+            <div class="cont">
+                <div class="summary-wrap">
+                    <div class="detail-wrap">
+                        <div class="box">
+                            <span class="tag">Name:</span>
+                            <span class="content">Varun Pimple</span>
+                        </div>
+                        <div class="box">
+                            <span class="tag">Application No.:</span>
+                            <span class="content">123456789</span>
+                        </div>
+                        <div class="box">
+                            <span class="tag">PAN No.:</span>
+                            <span class="content">WZRD1234E</span>
+                        </div>
+                    </div>
+                    <p class="para">
+                        Please review your details before payment
+                    </p>
+                    <div class="detail-wrap typ2">
+                        <div class="box">
+                            <span class="tag">Login Fees Payable:</span>
+                            <span class="content">₹10,000</span>
+                        </div>
+                        <!-- <div class="box">
+                            <span class="tag">Gross Amount</span>
+                            <span class="content">₹35,000</span>
+                        </div> -->
+                        <div class="box">
+                            <span class="tag">GST(@18%):</span>
+                            <span class="content">₹1,800</span>
+                        </div>
+                        <div class="box typ-grey">
+                            <span class="tag">Total Amount:</span>
+                            <span class="content">₹11,800</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="btn-wrap">
+                    <button (click)="submitPaymentForm()" class="btn btn-border typ2">PROCEED TO payment</button>
+                </div>
+            </div>
+        </div>
+        <span class="cm-breath"></span>
+    </div>
+
+    <div class="overlay" [ngClass]="{'active': showSuccessModal}"></div>
+    <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': showSuccessModal}">
+        <!-- <a class="modal-close"><span class="icon icon-close"></span></a> -->
+        <div class="modal-body">
+                <span class="thumb-icon">
+                    <img src="/assets/images/thumb.png" alt="logo">
+                </span>
+            <h1 class="center">Payment Successfully Done!</h1>
+            <!-- <p class="desc typ2">You have cleared the provisional eligibility check for the loan amount requested. Kindly note this clearance is based on the information provided and actual sanction amount is subject to further verification and process. We need more time to process your eligibility. </p>
+            <p class="cm-thin">Thank you for your loan application. Our representative will contact you shortly</p> -->
+            <p>The payment has been successfully received!</p>
+        </div>
+    </div>
+
+    <div class="overlay" [ngClass]="{'active': showErrorModal}"></div>
+    <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': showErrorModal}">
+        <!-- <a class="modal-close"><span class="icon icon-close"></span></a> -->
+        <div class="modal-body">
+                <span class="thumb-icon">
+                    <img src="/assets/images/Cancel-512.png" alt="logo">
+                </span>
+            <h1 class="center">Payment Unsuccessful!</h1>
+            <!-- <p class="desc typ2">You have cleared the provisional eligibility check for the loan amount requested. Kindly note this clearance is based on the information provided and actual sanction amount is subject to further verification and process. We need more time to process your eligibility. </p>
+            <p class="cm-thin">Thank you for your loan application. Our representative will contact you shortly</p> -->
+            <!-- <p>The payment has been successfully received!</p> -->
+        </div>
+    </div>
+</main>

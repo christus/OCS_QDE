@@ -10,13 +10,11 @@
                 </h1>
             </div>
             <div class="right-panel">
-                <h3 class="for-user" *ngIf="isViewFormNameVisible">Application for <span class="user-name">Komal Agarwal</span></h3>
+                <h3 class="for-user" *ngIf="isViewFormNameShown">Application for <span class="user-name">Komal Agarwal</span></h3>
                 <a routerLink="/view-form" *ngIf="isViewFormVisible" class="btn btn-default view-form">View Form</a>
                 <a (click)="logout()" *ngIf="isLogoutVisible" class="btn btn-default logout">Logout</a>
             </div>
         </div>
-
-
         <ul class="main-nav" *ngIf="isMenuBarShown">
             <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <a  *ngIf="applicationId == null" routerLink="/applicant">Applicant Details</a>
@@ -35,10 +33,10 @@
                 <a routerLink="/references">References</a>
             </li>
             <li routerLinkActive="active">
-                <a routerLink="/payments/offline-payments">Payments</a>
+                <a routerLink="/document-upload">Document Uploads</a>
             </li>
             <li routerLinkActive="active">
-                <a routerLink="/document-upload">Document Uploads</a>
+                <a routerLink="/payments/offline-payments">Payments</a>
             </li>
         </ul>
         <!-- header end -->

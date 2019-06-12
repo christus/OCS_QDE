@@ -2,3 +2,27 @@
     background: #f3f3f3;
     padding-top: 5.08vw;
 }
+.bs-modal .modal-body .thumb-icon {
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    top: 1vw;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.center {
+    text-align: center;
+}
+.center.typ2{
+    margin-top: 1vw
+}
+.bs-modal p {
+    margin-top: 1vw;
+    font-size: 1vw
+}
+.bs-modal .modal-body {
+    padding: 1vw 0;
+}
+.center {
+    text-align: center;
+}

@@ -1,0 +1,48 @@
+.bs-modal .modal-body .thumb-icon {
+    width: 80px;
+    height: 800px;
+    position: absolute;
+    top: 1vw;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.center[_ngcontent-c2] {
+    font-family: zurich-bold;
+    font-size: 1.88vw;
+    line-height: 3.28vw;
+    color: #444;
+    padding: 1.56vw 0;
+    margin-top: 6vw;
+}
+.bs-modal p {
+    margin-top: 1vw;
+    font-size: 1vw
+}
+.center {
+    text-align: center;
+    margin-top: 6vw
+}
+.bs-modal .btn-wrap {
+    display: block;
+    text-align: center;
+    padding: 0;
+}
+.btn.btn-border {
+    border-radius: 3.91vw;
+    color: #f58220;
+    font-family: zurich-bold;
+    font-size: 1.64vw;
+    line-height: 2.81vw;
+    text-transform: uppercase;
+    padding: 0 1.56vw;
+    border: 1px solid #f58220;
+}
+.bs-modal .modal-body .or {
+    font-size: 1.41vw;
+    line-height: 7.28vw;
+    color: #444;
+    opacity: .5;
+    text-transform: uppercase;
+    margin-left: 13vw;
+    margin-top: 2vw;
+}
