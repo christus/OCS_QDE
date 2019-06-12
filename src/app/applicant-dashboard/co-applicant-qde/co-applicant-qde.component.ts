@@ -30,6 +30,8 @@ interface Item {
 })
 export class CoApplicantQdeComponent implements OnInit, OnDestroy {
 
+  private isTabDisabled: boolean = true;
+
   regexPattern = {
     mobileNumber: "^[0-9]*$",
     name: "^[A-Za-z, ]+$",
@@ -385,6 +387,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
 
   tabSwitch(tabIndex ?: number) {
 
+    if(tabIndex == 1) {
+      this.isTabDisabled = true;
+    }
+
     // Check for invalid tabIndex
     if(tabIndex < this.fragments.length) {
       // alert(tabIndex);
@@ -436,11 +442,11 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
     this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
-        let result = this.parseJson(response["ProcessVariables"]["response"]);
+        // let result = this.parseJson(response["ProcessVariables"]["response"]);
 
-        console.log("GET141414", result);
-        this.qde.application.ocsNumber = result["application"]["ocsNumber"];
-        this.qde.application.applicationId = result["application"]["applicationId"];
+        // console.log("GET141414", result);
+        // this.qde.application.ocsNumber = result["application"]["ocsNumber"];
+        // this.qde.application.applicationId = result["application"]["applicationId"];
        
         // let applicants = result["application"]["applicants"];
 
@@ -457,7 +463,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
         this.cds.changePanSlide(true);
         // Static value for now, replace it in future
         this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant/'+this.coApplicantIndex], {fragment: "pan1"});
-        
+
       } else {
         // Throw Invalid Pan Error
       }
@@ -638,7 +644,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
-        this.tabSwitch(2);
+        this.tabSwitch(3);
       } else {
         // Throw Invalid Pan Error
       }
@@ -673,7 +679,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
-        this.tabSwitch(3);
+        this.tabSwitch(4);
       } else {
         // Throw Invalid Pan Error
       }
@@ -758,7 +764,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
-        this.tabSwitch(4);
+        this.tabSwitch(5);
       } else {
         // Throw Invalid Pan Error
       }
@@ -789,7 +795,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
         if(form.value.maritalStatus.value == "2") {
           this.goToNextSlide(swiperInstance);
         } else {
-          this.tabSwitch(5);
+          this.tabSwitch(6);
         }
       } else {
         // Throw Invalid Pan Error
@@ -866,13 +872,13 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
-        this.tabSwitch(5);
+        this.tabSwitch(7);
       } else {
         // Throw Invalid Pan Error
       }
     }, (error) => {
       console.log("response : ", error);
-      this.tabSwitch(5);
+      this.tabSwitch(7);
     });
 
   }
@@ -923,7 +929,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
-        this.tabSwitch(6);
+        this.tabSwitch(8);
       } else {
         // Throw Invalid Pan Error
       }
@@ -958,7 +964,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
-        this.tabSwitch(7);
+        this.tabSwitch(9);
       } else {
         // Throw Invalid Pan Error
       }
@@ -989,7 +995,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
-        this.tabSwitch(8);
+        this.tabSwitch(10);
       } else {
         // Throw Invalid Pan Error
       }
@@ -1033,7 +1039,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
-        this.tabSwitch(9);
+        this.tabSwitch(11);
       } else {
         // Throw Invalid Pan Error
       }
@@ -1381,6 +1387,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
     if( params.coApplicantIndex != null && (!isNaN(parseInt(params.coApplicantIndex))) ) {
 
       this.coApplicantIndex = params.coApplicantIndex;
+      this.isTabDisabled = false;
       //------------------------------------------------------
       //    Prefilling values
       //------------------------------------------------------
@@ -1519,6 +1526,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
     this.qdeService.addNewCoApplicant();
     this.initializeVariables();
     this.tabSwitch(1);
+    this.isTabDisabled = false;
   }
 
   resetQdeForm() {
