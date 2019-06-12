@@ -950,7 +950,7 @@
                                             max=90
                                             #numberOfYearsInCurrentResidence="ngModel"
                                             fieldFill
-                                            (ngModelChange)="valuechange($event, 3)"
+                                            (ngModelChange)="valuechange($event, 3, communicationForm)"
                                             required />
                                     <ng5-slider [(value)]="qde.application.applicants[applicantIndex].communicationAddress.numberOfYearsInCurrentResidence" [options]="options"></ng5-slider>
                                 </div>
@@ -1238,7 +1238,7 @@
                                                         max=90
                                                         class="form-control"
                                                         [(ngModel)]="qde.application.applicants[applicantIndex].familyDetails.numberOfDependents"
-                                                        (ngModelChange)="valuechange($event, 1)" />
+                                                        (ngModelChange)="valuechange($event, 1, familyForm1)" />
                                                 <ng5-slider [(value)]="qde.application.applicants[applicantIndex].familyDetails.numberOfDependents" [options]="familyOptions"></ng5-slider>
                                             </div>
                                         </div>

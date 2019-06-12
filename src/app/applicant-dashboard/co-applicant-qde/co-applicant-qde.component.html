@@ -1780,9 +1780,9 @@
                                                 name="prefredMail"
                                                 #prefredMail="ngModel" 
                                                 [value]="true"
-                                                [checked]="qde.application.applicants[applicantIndex].communicationAddress.preferredMailingAddress == true"
+                                                [checked]="qde.application.applicants[coApplicantIndex].communicationAddress.preferredMailingAddress == true"
                                                 fieldFill
-                                                [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.preferredMailingAddress"
+                                                [(ngModel)]="qde.application.applicants[coApplicantIndex].communicationAddress.preferredMailingAddress"
                                                 id="current-add-mail" />
                                                 <label for="current-add-mail">
                                                     yes
@@ -1793,7 +1793,7 @@
                                                 name="prefredMail"
                                                 
                                                 [value]="false"
-                                                [checked]="qde.application.applicants[applicantIndex].communicationAddress.preferredMailingAddress == false"
+                                                [checked]="qde.application.applicants[coApplicantIndex].communicationAddress.preferredMailingAddress == false"
                                                 fieldFill
                                                 >
                                                 <label for="permanent-add-mail">
@@ -2507,9 +2507,9 @@
                                                     name="prefredMail"
                                                     #prefredMail="ngModel" 
                                                     [value]="true"
-                                                    [checked]="qde.application.applicants[applicantIndex].communicationAddress.preferredMailingAddress == true"
+                                                    [checked]="qde.application.applicants[coApplicantIndex].communicationAddress.preferredMailingAddress == true"
                                                     fieldFill
-                                                    [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.preferredMailingAddress"
+                                                    [(ngModel)]="qde.application.applicants[coApplicantIndex].communicationAddress.preferredMailingAddress"
                                                     id="current-add-mail" />
                                                     <label for="current-add-mail">
                                                         yes
@@ -2520,7 +2520,7 @@
                                                     name="prefredMail"
                                                     
                                                     [value]="false"
-                                                    [checked]="qde.application.applicants[applicantIndex].communicationAddress.preferredMailingAddress == false"
+                                                    [checked]="qde.application.applicants[coApplicantIndex].communicationAddress.preferredMailingAddress == false"
                                                     fieldFill
                                                     >
                                                     <label for="permanent-add-mail">

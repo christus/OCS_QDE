@@ -1626,7 +1626,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   //-------------------------------------------------------------
   // Occupation Details
   //-------------------------------------------------------------
-  private expError =false;
+  expError =false;
 
   submitOccupationDetails(form: NgForm) {
     if (form && !form.valid) {
