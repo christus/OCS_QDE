@@ -291,13 +291,6 @@
                                             <div class="form-wrap">
                                                 <div class="form-group">
                                                     <span class="control-title">Title</span>
-    <!--                                                 <select [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.title" name="title" required>
-                                                        <option *ngFor="let tit of titles"
-                                                                [ngClass]="{'select': (tit.value == qde.application.applicants[applicantIndex].personalDetails.title)}"
-                                                                [selected]="tit.value == qde.application.applicants[applicantIndex].personalDetails.title"
-                                                                [value]="tit.value">{{tit.key}}</option>
-                                                    </select> -->
-
                                                     <div class="form-group">   
                                                         <kendo-dropdownlist class="form-control"
                                                           [data]="titles" 
@@ -1933,21 +1926,16 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <span class="control-title">Assessment methodology</span>
-                                                    <!-- <select class="js-select" name="assessment"
-                                                    [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.assessmentMethodology"
-                                                    #assessment="ngModel"
-                                                    name="assessment"> -->
-                                                    <kendo-dropdownlist 
-                                                    class="form-control"
-                                                    [data]="assessmentMethodology" 
+                                                    <kendo-dropdownlist [data]="assessmentMethodology" 
                                                     textField="key"
                                                     valueField="value"
                                                     name="assessment"
+                                                    class="form-control"
                                                     nick="incomeDetails.assessmentMethodology"
-                                                    (selectionChange)="selectValueChanged($event, incomeDetails.hostElement)"
+                                                    #assessment1
+                                                    (selectionChange)="selectValueChanged($event, assessment1.hostElement)"
                                                     [(ngModel)]="selectedAssesmentMethodology"
-                                                    required
-                                                    >
+                                                    required>
                                                     </kendo-dropdownlist>
                                                         <!-- <option value="1">Net Salary</option>
                                                         <option value="2">Gross Salary</option>
@@ -2682,13 +2670,15 @@
                                             #applicantIncome3="ngForm" (ngSubmit)="submitIncomeDetails2(applicantIncome3, incomeSlider4)">
                                                 <div class="form-wrap">
                                                     <div class="form-group inr">
-                                                        <input type="text" class="form-control" id="app-monthly-income1234"
-                                                        [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.monthlyIncome"
-                                                        #monthlyIncome12="ngModel"
-                                                        fieldFill
-                                                        pattern="{{regexPattern.amount}}"
-                                                        required
-                                                        name="monthlyIncome">
+                                                        <input  type="text"
+                                                                class="form-control"
+                                                                id="app-monthly-income1234"
+                                                                [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.monthlyIncome"
+                                                                #monthlyIncome12="ngModel"
+                                                                fieldFill
+                                                                pattern="{{regexPattern.amount}}"
+                                                                required
+                                                                name="monthlyIncome" />
                                                         <label for="app-monthly-income1234">Monthly income</label>
                                                         <span class="addon">
                                                             <span class="icon icon-inr"></span>
@@ -2701,41 +2691,26 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <span class="control-title">Assessment methodology</span>
-                                                        <!-- <select class="js-select" name="assessment"
-                                                        [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.assessmentMethodology"
-                                                        #assessment="ngModel"
-                                                        name="assessment">
-                                                            <option value="1">Net Salary</option>
-                                                            <option value="2">Gross Salary</option>
-                                                            <option value="3">Income Plus</option>
-                                                            <option value="4">Normal Profit</option>
-                                                            <option value="5">GST surplus method</option>
-                                                            <option value="6">RTR</option>
-                                                            <option value="7">BT+Top up</option>
-                                                            <option value="8">Gross Receipt</option>
-                                                            <option value="9">Industry Margin</option>
-                                                            <option value="10">Assessed Income</option>
-                                                        </select> -->
-                                                        <kendo-dropdownlist 
-                                                        [data]="assessmentMethodology" 
-                                                        textField="key"
-                                                        valueField="value"
-                                                        name="assessment"
-                                                        class="form-control"
-                                                        nick="incomeDetails.assessmentMethodology"
-                                                        #incomeDetails
-                                                        (selectionChange)="selectValueChanged($event, incomeDetails.hostElement)"
-                                                        [(ngModel)]="selectedAssesmentMethodology"
-                                                        required
-                                                        >
+                                                        <kendo-dropdownlist [data]="assessmentMethodology" 
+                                                                            textField="key"
+                                                                            valueField="value"
+                                                                            name="assessment"
+                                                                            class="form-control"
+                                                                            nick="incomeDetails.assessmentMethodology"
+                                                                            #assessment2
+                                                                            (selectionChange)="selectValueChanged($event, assessment2.hostElement)"
+                                                                            [(ngModel)]="selectedAssesmentMethodology"
+                                                                            required>
                                                         </kendo-dropdownlist>
                                                     </div>
                                                 </div>
                                                 <div class="btn-wrap">
-                                                    <button type="submit" class="btn btn-primary" 
-                                                    (click)="goToNextSlide(incomeSlider4)"
-                                                    [ngClass]="{'disabled': !applicantIncome3.valid}"
-                                                    [disabled]="!applicantIncome3.valid">Next</button>
+                                                    <button type="submit"
+                                                            class="btn btn-primary" 
+                                                            (click)="goToNextSlide(incomeSlider4)"
+                                                            [ngClass]="{'disabled': !applicantIncome3.valid}"
+                                                            [disabled]="!applicantIncome3.valid">Next
+                                                    </button>
                                                 </div>
                                             </form>
                                         </div>
