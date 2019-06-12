@@ -127,6 +127,7 @@
                                                           id="pan-inpt"
                                                           minlength="10"
                                                           maxlength="10"
+                                                          tabindex="1"
                                                           pattern="{{regexPattern.pan}}"                                             
                                                           name="pan"
                                                           #pan="ngModel"
@@ -151,6 +152,7 @@
                                                     nick="pan.docType"
                                                     (selectionChange)="selectValueChanged($event, pan.hostElement)"
                                                     [(ngModel)]="selectedDocType"
+                                                    tabindex="2"
                                                     required>
                                                 </kendo-dropdownlist>
 
@@ -164,6 +166,7 @@
                                                 #docNumber="ngModel"
                                                 maxlength="16"
                                                 fieldFill
+                                                tabindex="3"
                                                 required/>
                                               <label for="docNumber">Document Number</label>
 
@@ -177,6 +180,7 @@
                                           <div class="btn-wrap">
                                                 <button type="submit"
                                                         class="btn btn-primary"
+                                                        tabindex="4"
                                                         [ngClass]="{'disabled': !panNumberForm.valid}"
                                                         [disabled]="!panNumberForm.valid">Next
                                                 </button>
@@ -463,6 +467,9 @@
                                                             </kendo-dropdownlist>
                                                         </div>
                                                     </div>
+                                                    <div *ngIf="ageError" class="invalid-feedback">
+                                                        <div *ngIf="ageError"> Age should not be less than 18 years and greater than 70 years</div>
+                                                      </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <span class="control-title">Birth place</span>
@@ -582,7 +589,8 @@
                                   <div class="form-group typ-mob">
 
                                       <input type="tel" class="form-control" id="mob-no"
-                                        maxlength="10" im-insert="true" minlength="10"
+                                        maxlength="10" im-insert="true" 
+                                        minlength="10"
                                         [(ngModel)]="qde.application.applicants[applicantIndex].contactDetails.mobileNumber"
                                         name="mobileNumber"
                                         #mobileNumber="ngModel"
@@ -1232,7 +1240,7 @@
                                         <div class="form-wrap">
                                             <div class="form-group typ-range">
                                                 <span class="control-title">Enter number of dependents</span>
-                                                <input type="number"
+                                                <input type="text"
                                                         name="numberOfDependents"
                                                         min=0
                                                         max=90
@@ -1697,7 +1705,7 @@
                                         <input type="text" class="form-control" id="res-no03" data-validation-attr="residenceno"
                                           required
                                           #offStdNumber="ngModel"
-	                    				  fieldFill
+					  fieldFill
                                           maxlength="8"
                                           pattern="{{regexPattern.mobileNumber}}"
                                           name="offStdNumber"

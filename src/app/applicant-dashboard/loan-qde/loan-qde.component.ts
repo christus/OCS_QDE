@@ -116,7 +116,7 @@ export class LoanQdeComponent implements OnInit {
     // showSelectionBar: true,
     showTicks: true,
     getLegend: (sliderVal: number): string => {
-      return  sliderVal + '';
+      return  sliderVal + '<b>y</b>';
     }
   };
 

@@ -1221,12 +1221,22 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     });
     
   }
-
+  private ageError=false;
   submitDobDetails(form: NgForm, swiperInstance ?: Swiper) {
     event.preventDefault();
 
     if (form && !form.valid) {
       return;
+    }
+    const dateofbirth = form.value.year.value+'-'+form.value.month.value+'-'+form.value.day.value;
+    const d1:any = new Date(dateofbirth);
+    const d2:any = new Date();
+    var diff = d2 - d1 ;
+    var age = Math.floor(diff/(1000*60*60*24*365.25));
+    if(age >= 70 || age <=18 ){
+      this.ageError = true;
+    }else {
+      this.ageError=false;
     }
 
     this.qde.application.applicants[this.applicantIndex].personalDetails.dob = form.value.year.value+'-'+form.value.month.value+'-'+form.value.day.value;
