@@ -999,6 +999,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     var age = Math.floor(diff/(1000*60*60*24*365.25));
     if(age >= 70 || age <=18 ){
       this.ageError = true;
+      return;
     }else {
       this.ageError=false;
     }

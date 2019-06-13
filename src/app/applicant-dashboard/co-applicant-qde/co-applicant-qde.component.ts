@@ -30,6 +30,8 @@ interface Item {
 })
 export class CoApplicantQdeComponent implements OnInit, OnDestroy {
 
+
+
   readonly errors = errors;
 
   regexPattern = {

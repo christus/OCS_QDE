@@ -208,7 +208,7 @@
                                                 <label for="docNumber">Document Number</label>
 
                                                 <div *ngIf="panDocNumber.touched && panDocNumber.invalid" class="invalid-feedback">
-                                                  <div *ngIf="panDocNumber.errors?.required">{{errors.panDocumentNo.required}}</div>
+                                                  <!-- <div *ngIf="panDocNumber.errors?.required">{{errors.panDocumentNo.required}}</div> -->
                                                   <div *ngIf="panDocNumber.errors?.pattern">{{errors.panDocumentNo.invalid}}</div>
                                                 </div>
                                                 <!-- <image-upload [url]="imageUrl" [headers]="myHeaders"></image-upload> -->
@@ -1772,7 +1772,7 @@
                                                   </div> 
                                             </div>
                                             <div class="form-group last">
-                                              <span class="control-title">Pucca House</span>
+                                              <span class="control-title">Do you or any of the family members own a puccahouse anywhere in India?</span>
                                               </div>
                                           <div class="radio-wrap rounded-radio">
                                               <div class="bs-radio typ-normal">
@@ -2492,7 +2492,7 @@
                                                     </div> 
                                               </div>
                                               <div class="form-group last">
-                                                <span class="control-title">Pucca House</span>
+                                                <span class="control-title">Do you or any of the family members own a puccahouse anywhere in India?</span>
                                                 </div>
                                             <div class="radio-wrap rounded-radio">
                                                 <div class="bs-radio typ-normal">

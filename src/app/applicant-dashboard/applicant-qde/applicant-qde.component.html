@@ -736,7 +736,7 @@
                 <div class="lyt-tabs">
                     <div class="lhs">
                         <div class="title-wrap">
-                            <h4 class="title">Enter applicant’s <span class="cm-line-break"></span>address</h4>
+                            <h4 class="title">Enter Applicant’s <span class="cm-line-break"></span>address</h4>
                             <p class="note">Please enter primary address of the main <span class="cm-line-break"></span> applicant as this will be used for all officia <span class="cm-line-break"></span> communications.</p>
                         </div>
                     </div>
@@ -1831,36 +1831,35 @@
                                                 </div> 
                                         </div>
                                         <div class="form-group last">
-                                            <span class="control-title">Pucca House</span>
+                                            <span class="control-title">Do you or any of the family members own a puccahouse anywhere in India?</span>
                                         </div>
                                         <div class="radio-wrap rounded-radio">
                                             <div class="bs-radio typ-normal">
                                                 <input type="radio" 
-                                                name="prefredMail"
-                                                #prefredMail="ngModel" 
+                                                name="puccaHouse"
                                                 [value]="true"
-                                                [checked]="qde.application.applicants[applicantIndex].communicationAddress.preferredMailingAddress == true"
+                                                [checked]="qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == true"
                                                 fieldFill
-                                                [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.preferredMailingAddress"
-                                                id="current-add-mail" />
-                                                <label for="current-add-mail">
+                                                [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.puccaHouse"
+                                                id="pucchaHouseIdYes2" />
+                                                <label for="pucchaHouseIdYes2">
                                                     yes
                                                 </label>
                                             </div>
                                             <div class="bs-radio typ-normal">
                                                 <input type="radio"
-                                                name="prefredMail"
-                                                
+                                                name="puccaHouse"
+                                                id="pucchaHouseIdNo2"
                                                 [value]="false"
-                                                [checked]="qde.application.applicants[applicantIndex].communicationAddress.preferredMailingAddress == false"
+                                                [checked]="qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == false"
                                                 fieldFill
                                                 >
-                                                <label for="permanent-add-mail">
+                                                <label for="pucchaHouseIdNo2">
                                                     No
                                                 </label>
                                             </div>
-                                        </div>
-                                    </div>
+                                        </div>                   
+                                      </div>
                                   <div class="btn-wrap">
                                         <button 
                                             type="submit"
@@ -2596,31 +2595,30 @@
                                                 </div>
                                             </div>
                                             <div class="form-group last">
-                                                <span class="control-title">Pucca House</span>
+                                                <span class="control-title">Do you or any of the family members own a puccahouse anywhere in India?</span>
                                             </div>
                                             <div class="radio-wrap rounded-radio">
                                                 <div class="bs-radio typ-normal">
                                                     <input type="radio" 
-                                                    name="prefredMail"
-                                                    #prefredMail="ngModel" 
+                                                    name="puccaHouse"
                                                     [value]="true"
-                                                    [checked]="qde.application.applicants[applicantIndex].communicationAddress.preferredMailingAddress == true"
+                                                    [checked]="qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == true"
                                                     fieldFill
-                                                    [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.preferredMailingAddress"
-                                                    id="current-add-mail" />
-                                                    <label for="current-add-mail">
+                                                    [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.puccaHouse"
+                                                    id="pucchaHouseIdYes2" />
+                                                    <label for="pucchaHouseIdYes2">
                                                         yes
                                                     </label>
                                                 </div>
                                                 <div class="bs-radio typ-normal">
                                                     <input type="radio"
-                                                    name="prefredMail"
-                                                    
+                                                    name="puccaHouse"
+                                                    id="pucchaHouseIdNo2"
                                                     [value]="false"
-                                                    [checked]="qde.application.applicants[applicantIndex].communicationAddress.preferredMailingAddress == false"
+                                                    [checked]="qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == false"
                                                     fieldFill
                                                     >
-                                                    <label for="permanent-add-mail">
+                                                    <label for="pucchaHouseIdNo2">
                                                         No
                                                     </label>
                                                 </div>
