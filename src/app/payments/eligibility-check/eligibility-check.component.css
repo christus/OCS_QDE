@@ -1,0 +1,24 @@
+.lyt-home .lhs .lhs-inner-wrap .text {
+    display: block;
+    font-size: 2.81vw;
+    line-height: 3.13vw;
+    color: #444;
+    font-family: zurich-bold;
+}
+.lyt-home .lhs .lhs-inner-wrap {
+    display: block;
+    text-align: center;
+    width: 100%;
+}
+.lyt-home .lhs .lhs-inner-wrap .icon-thumb {
+    width: 9.38vw;
+    height: 9.38vw;
+    background: url("/assets/images/thumb.png") no-repeat;
+    margin-bottom: 1.56vw;
+    display: inline-block;
+    background-size: cover;
+}
+.eligibility-check {
+    font-size: 0.81vw;
+    line-height: 1.13vw;
+}

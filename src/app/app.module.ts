@@ -58,6 +58,7 @@ import { OfflinePaymentComponent } from './payments/offline-payment/offline-paym
 import { OnlineSummaryComponent } from './payments/online-summary/online-summary.component';
 import { GetQdeDataResolverService } from './get-qde-data-resolver.service';
 import { GetCoApplicantsResolverService } from './get-co-applicants-resolver.service';
+import { EligibilityCheckComponent } from './payments/eligibility-check/eligibility-check.component';
 
 const appRoutes: Routes = [
   { path: "", redirectTo: "leads", pathMatch: "full" },
@@ -208,6 +209,13 @@ const appRoutes: Routes = [
         resolve: {
           listOfValues: ListOfValuesResolverService
         }
+      },
+      {
+        path: 'eligibility-check',
+        component: EligibilityCheckComponent,
+        resolve: {
+          listOfValues: ListOfValuesResolverService
+        }
       }
     ]
   },
@@ -253,6 +261,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     PaymentsComponent,
     OfflinePaymentComponent,
     OnlineSummaryComponent,
+    EligibilityCheckComponent,
   ],
   imports: [
     BrowserModule,

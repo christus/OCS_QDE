@@ -61,8 +61,8 @@
 }
 .lyt-box .list-wrap .list .inner-list li {
     list-style-type: decimal;
-    font-size: 7px;
-    line-height: 10px;
+    font-size: 16px;
+    line-height: 22px;
     color: #999;
     font-family: zurich-light;
 }
@@ -88,10 +88,10 @@
 }
 
 .checkbox-wrap label {
-    font-size: 7px;
+    font-size: 14px;
     font-weight: zurich;
     padding-left: 24px;
-    line-height: 10px;
+    line-height: 20px;
     color: #999;
 }
 .checkbox-wrap input[type=checkbox]:not(old):checked+label span {
@@ -181,18 +181,24 @@
     height: 5px;
 }
 
-.checkbox-wrap input[type=checkbox]:not(old)+label span {
+.checkbox-wrap input[type=checkbox]:not(old):checked+label span {
     position: absolute;
-    top: 1px;
-    left: 10px;
-    width: 8px;
-    height: 8px;
-    border: 1px solid #999;
+    top: 4px;
+    left: 0;
+    width: 15px;
+    height: 15px;
+    border: 1px solid #f58220;
     border-radius: 2px;
     color: #ee2b33;
-    background: 0 0
+    background: #f58220;
 }
-
+.checkbox-wrap label {
+    font-size: 14px;
+    font-weight: zurich;
+    padding-left: 24px;
+    line-height: 20px;
+    color: #999;
+}
 .checkbox-wrap.typ2 .checkbox-group {
     display: block;
     overflow: hidden;
@@ -201,4 +207,15 @@
 
 .checkbox-wrap.typ2 .checkbox-group label {
     color: #f58220
+}
+.checkbox-wrap input[type=checkbox]:not(old)+label span {
+    position: absolute;
+    top: 4px;
+    left: 0;
+    width: 15px;
+    height: 15px;
+    border: 1px solid #999;
+    border-radius: 2px;
+    color: #ee2b33;
+    background: 0 0;
 }

@@ -56,13 +56,11 @@
     margin: .78vw 0;
 }
 .lyt-box .cont .bs-desc-listing .list{
-    font-size: 7px;
     list-style-type: decimal;
-    font-size: 7px;
-    line-height: 10px;
+    font-size: 16px;
+    line-height: 22px;
     color: #999;
     font-family: zurich-light;
-    margin-left: 15px;
 }
 .lyt-box .cont .btn-wrap {
     text-align: center;

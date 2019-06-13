@@ -154,6 +154,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
   occupations: Array<any>;
   residences: Array<any>;
   titles: Array<any>;
+  maleTitles: Array<any>;
+  femaleTitles: Array<any>;
   maritals: Array<any>;
   relationships: Array<any>;
   loanpurposes: Array<any>;
@@ -268,7 +270,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       this.qualifications = lov.LOVS.qualification;
       this.occupations = lov.LOVS.occupation;
       this.residences = lov.LOVS.residence_type;
-      this.titles = lov.LOVS.applicant_title || ["Mr", "Mrs", "Ms", "Dr"]; // Hardcoded test value need to be removed
+      this.titles = lov.LOVS.applicant_title; 
+      this.maleTitles = lov.LOVS.male_applicant_title;
+      this.femaleTitles = lov.LOVS.female_applicant_title;
       this.docType = lov.LOVS.document_type;
       this.maritals = lov.LOVS.maritial_status;
       this.relationships = lov.LOVS.relationship;
@@ -308,8 +312,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       this.selectedOccupation = this.occupations[0];
       this.selectedResidence = this.residences[0];
       this.selectedSpouseTitle = this.titles[0];
-      this.selectedFatherTitle = this.titles[0];
-      this.selectedMotherTitle = this.titles[0];
+      this.selectedFatherTitle = this.maleTitles[0];
+      this.selectedMotherTitle = this.femaleTitles[0]
       this.selectedQualification = this.qualifications[0];
       this.selectedConstitution = this.constitutions[0];
       this.selectedDocType = this.docType[0];
@@ -722,7 +726,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
   
           this.qde.application.applicants[this.coApplicantIndex][screenName].city = result.city;
           this.qde.application.applicants[this.coApplicantIndex][screenName].state = result.state;
-          this.qde.application.applicants[this.coApplicantIndex][screenName].cityState = this.commCityState;  
+          this.qde.application.applicants[this.coApplicantIndex][screenName].cityState = this.commCityState || "XXXX YYYY";  
         }
         else if(response['Error'] == '1') {
           alert("Invalid Pin");
@@ -1565,8 +1569,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
     this.selectedOccupation = this.occupations[0];
     this.selectedResidence = this.residences[0];
     this.selectedSpouseTitle = this.titles[0];
-    this.selectedFatherTitle = this.titles[0];
-    this.selectedMotherTitle = this.titles[0];
+    this.selectedFatherTitle = this.maleTitles[0];
+    this.selectedMotherTitle = this.femaleTitles[0]
     this.selectedQualification = this.qualifications[0];
     this.selectedConstitution = this.constitutions[0];
     this.selectedDocType = this.docType[0];
