@@ -6,34 +6,34 @@
                   <li class="tab-link" [ngClass]="{'active': (activeTab == 0), 'hide': (!applicantIndividual), 'pending': false}">
                     <a href="javascript:void(0);" (click)="tabSwitch(0)">Dashboard</a>
                   </li>
-                  <li class="tab-link" [ngClass]="{'active': (activeTab == 1), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
+                  <li class="tab-link" [ngClass]="{'active': (activeTab == 1), 'hide': (!applicantIndividual)}">
                     <a href="javascript:void(0);" (click)="tabSwitch(1)">PAN</a>
                   </li>
-                  <li class="tab-link" [ngClass]="{'active': (activeTab == 2), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
+                  <li class="tab-link" [ngClass]="{'active': (activeTab == 2), 'hide': (!applicantIndividual)}">
                     <a href="javascript:void(0);" (click)="tabSwitch(2)">personal details</a>
                   </li>
-                  <li class="tab-link" [ngClass]="{'active': (activeTab == 3), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
+                  <li class="tab-link" [ngClass]="{'active': (activeTab == 3), 'hide': (!applicantIndividual)}">
                     <a href="javascript:void(0);" (click)="tabSwitch(3)">contact details</a>
                   </li>
-                  <li class="tab-link" [ngClass]="{'active': (activeTab == 4), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
+                  <li class="tab-link" [ngClass]="{'active': (activeTab == 4), 'hide': (!applicantIndividual)}">
                     <a href="javascript:void(0);" (click)="tabSwitch(4)">communication address</a>
                   </li>
-                  <li class="tab-link" [ngClass]="{'active': (activeTab == 5), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
+                  <li class="tab-link" [ngClass]="{'active': (activeTab == 5), 'hide': (!applicantIndividual)}">
                     <a href="javascript:void(0);" (click)="tabSwitch(5)">marital status</a>
                   </li>
-                  <li class="tab-link" [ngClass]="{'active': (activeTab == 6), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
+                  <li class="tab-link" [ngClass]="{'active': (activeTab == 6), 'hide': (!applicantIndividual)}">
                     <a href="javascript:void(0);" (click)="tabSwitch(6)">family details</a>
                   </li>
-                  <li class="tab-link" [ngClass]="{'active': (activeTab == 7), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
+                  <li class="tab-link" [ngClass]="{'active': (activeTab == 7), 'hide': (!applicantIndividual)}">
                     <a href="javascript:void(0);" (click)="tabSwitch(7)">other</a>
                   </li>
-                  <li class="tab-link" [ngClass]="{'active': (activeTab == 8), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
+                  <li class="tab-link" [ngClass]="{'active': (activeTab == 8), 'hide': (!applicantIndividual)}">
                     <a href="javascript:void(0);" (click)="tabSwitch(8)">occupation details</a>
                   </li>
-                  <li class="tab-link" [ngClass]="{'active': (activeTab == 9), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
+                  <li class="tab-link" [ngClass]="{'active': (activeTab == 9), 'hide': (!applicantIndividual)}">
                     <a href="javascript:void(0);" (click)="tabSwitch(9)">offical correspondence</a>
                   </li>
-                  <li class="tab-link" [ngClass]="{'active': (activeTab == 10), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
+                  <li class="tab-link" [ngClass]="{'active': (activeTab == 10), 'hide': (!applicantIndividual)}">
                       <a href="javascript:void(0);" (click)="tabSwitch(10)">INCOME DETAILS</a>
                   </li>
                   <li class="tab-link hide" [ngClass]="{'active': (activeTab == 11), 'hide': (applicantIndividual)}">
@@ -173,10 +173,10 @@
                                                             fieldFill
                                                             required />
                                                     <label for="pan-inpt">Enter PAN in Uppercase</label>
-                                                    <div *ngIf="panNumbertouched && panNumberinvalid" class="invalid-feedback">
-                                                        <!-- <div *ngIf="panNumbererrors?.required">{{errors.panNumberrequired}}</div> -->
-                                                        <div *ngIf="panNumbererrors?.pattern ? true : false">{{errors.pan.invalid}}</div>
-                                                        <div *ngIf="panNumbererrors?.minlength || panNumbererrors?.maxlength">*PAN must be at least {{pan.errors.minlength.requiredLength}} characters</div>
+                                                    <div *ngIf="panNumber.touched && panNumber.invalid" class="invalid-feedback">
+                                                        <!-- <div *ngIf="panNumber.errors?.required">{{errors.panNumber.required}}</div> -->
+                                                        <div *ngIf="panNumber.errors?.pattern ? true : false">{{errors.pan.invalid}}</div>
+                                                        <div *ngIf="panNumber.errors?.minlength || panNumber.errors?.maxlength">*PAN must be at least {{pan.errors.minlength.requiredLength}} characters</div>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">

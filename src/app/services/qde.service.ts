@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import Qde from '../models/qde.model';
+import Qde, { Applicant } from '../models/qde.model';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({

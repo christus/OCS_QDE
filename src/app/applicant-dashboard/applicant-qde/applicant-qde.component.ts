@@ -1606,7 +1606,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   }
 
   changeIsIndividual(value, swiperInstance ?: Swiper) {
-    if(value) {
+    console.log("IS INDIVIDUAL CHANGE: ", value);
+    if(value == 1) {
       this.goToNextSlide(swiperInstance);
       this.qde.application.applicants[this.applicantIndex].isIndividual = true;
     } else {

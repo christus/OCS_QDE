@@ -56,6 +56,8 @@ import { ImageUploadModule } from "angular2-image-upload";
 import { PaymentsComponent } from './payments/payments.component';
 import { OfflinePaymentComponent } from './payments/offline-payment/offline-payment.component';
 import { OnlineSummaryComponent } from './payments/online-summary/online-summary.component';
+import { GetQdeDataResolverService } from './get-qde-data-resolver.service';
+import { GetCoApplicantsResolverService } from './get-co-applicants-resolver.service';
 
 const appRoutes: Routes = [
   { path: "", redirectTo: "leads", pathMatch: "full" },
@@ -89,14 +91,16 @@ const appRoutes: Routes = [
         path: ":applicationId/co-applicant",
         component: CoApplicantQdeComponent,
         resolve: {
-          listOfValues: ListOfValuesResolverService
+          listOfValues: ListOfValuesResolverService,
+          // qde: GetQdeDataResolverService
         }
       },
       {
         path: ":applicationId/co-applicant/:coApplicantIndex",
         component: CoApplicantQdeComponent,
         resolve: {
-          listOfValues: ListOfValuesResolverService
+          listOfValues: ListOfValuesResolverService,
+          // qde: GetQdeDataResolverService
         }
       }
     ]
@@ -264,6 +268,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   ],
   providers: [
     ListOfValuesResolverService,
+    GetQdeDataResolverService,
     {
       provide: SWIPER_CONFIG,
       useValue: DEFAULT_SWIPER_CONFIG
