@@ -9,12 +9,12 @@ import { UtilService } from '../services/util.service';
 })
 export class MenubarHeaderComponent implements OnInit {
   
-  isMenuBarShown: boolean;
-  isViewFormNameVisible: boolean;
-  isViewFormVisible: boolean;
-  isLogoutVisible: boolean;
-  applicationId: string;
-  coApplicantIndex: number;
+  private isMenuBarShown: boolean;
+  private isViewFormNameVisible: boolean;
+  private isViewFormVisible: boolean;
+  private isLogoutVisible: boolean;
+  private applicationId: string;
+  private coApplicantIndex: number; 
   // isMenuBarShown: boolean;
   private isViewFormNameShown: boolean;
   // isViewFormVisible: boolean;

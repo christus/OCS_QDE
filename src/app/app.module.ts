@@ -56,9 +56,12 @@ import { ImageUploadModule } from "angular2-image-upload";
 import { PaymentsComponent } from './payments/payments.component';
 import { OfflinePaymentComponent } from './payments/offline-payment/offline-payment.component';
 import { OnlineSummaryComponent } from './payments/online-summary/online-summary.component';
+<<<<<<< HEAD
+=======
 import { GetQdeDataResolverService } from './get-qde-data-resolver.service';
 import { GetCoApplicantsResolverService } from './get-co-applicants-resolver.service';
 import { EligibilityCheckComponent } from './payments/eligibility-check/eligibility-check.component';
+>>>>>>> master
 
 const appRoutes: Routes = [
   { path: "", redirectTo: "leads", pathMatch: "full" },
@@ -209,6 +212,8 @@ const appRoutes: Routes = [
         resolve: {
           listOfValues: ListOfValuesResolverService
         }
+<<<<<<< HEAD
+=======
       },
       {
         path: 'eligibility-check',
@@ -216,6 +221,7 @@ const appRoutes: Routes = [
         resolve: {
           listOfValues: ListOfValuesResolverService
         }
+>>>>>>> master
       }
     ]
   },
@@ -261,7 +267,10 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     PaymentsComponent,
     OfflinePaymentComponent,
     OnlineSummaryComponent,
+<<<<<<< HEAD
+=======
     EligibilityCheckComponent,
+>>>>>>> master
   ],
   imports: [
     BrowserModule,
