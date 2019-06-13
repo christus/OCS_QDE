@@ -2,11 +2,13 @@ import { Injectable } from '@angular/core';
 import RequestEntity from '../models/request-entity.model';
 import { HttpParams, HttpHeaders, HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { Resolve } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ListOfValuesResolverService {
+export class ListOfValuesResolverService implements Resolve<Observable<any>>{
  
   constructor(private http : HttpClient) { }
 

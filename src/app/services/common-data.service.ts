@@ -8,7 +8,7 @@ export class CommonDataService {
 
   constructor() { }
 
-  private isMenuBarShown$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  isMenuBarShown$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
 
   isMenuBarShown = this.isMenuBarShown$.asObservable();
 
@@ -16,15 +16,24 @@ export class CommonDataService {
     this.isMenuBarShown$.next(isMenuBarShown);
   }
 
+<<<<<<< HEAD
   private isViewFormNameShown$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
 
   isViewFormNameShown = this.isViewFormNameShown$.asObservable();
 
+=======
+  //private isViewFormNameVisible$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+
+  private isViewFormNameShown$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+
+  isViewFormNameShown = this.isViewFormNameShown$.asObservable();
+
+>>>>>>> master
   changeViewFormNameVisible(isViewFormNameShown: boolean) {
     this.isViewFormNameShown$.next(isViewFormNameShown);
   }
 
-  private isViewFormVisible$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  isViewFormVisible$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
 
   isViewFormVisible = this.isViewFormVisible$.asObservable();
 
@@ -32,7 +41,7 @@ export class CommonDataService {
     this.isViewFormVisible$.next(isViewFormVisible);
   }
 
-  private isLogoutVisible$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  isLogoutVisible$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
 
   isLogoutVisible = this.isLogoutVisible$.asObservable();
 
@@ -40,14 +49,14 @@ export class CommonDataService {
     this.isLogoutVisible$.next(isLogoutVisible);
   }
 
-  private panslide$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  panslide$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   panslide = this.panslide$.asObservable();
   
   changePanSlide(panslide: boolean) {
     this.panslide$.next(panslide);
   }
 
-  private panslide2$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  panslide2$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public panslide2 = this.panslide2$.asObservable();
   
   changePanSlide2(val: boolean) {
@@ -55,7 +64,7 @@ export class CommonDataService {
   }
 
 
-  private applicationId$: BehaviorSubject<string> = new BehaviorSubject<string>(null);
+  applicationId$: BehaviorSubject<string> = new BehaviorSubject<string>(null);
   public applicationId = this.applicationId$.asObservable();
 
   changeApplicationId(val: string) {
@@ -63,14 +72,14 @@ export class CommonDataService {
     this.applicationId$.next(val);
   }
 
-  private coApplicantIndex$: BehaviorSubject<number> = new BehaviorSubject<number>(null);
+  coApplicantIndex$: BehaviorSubject<number> = new BehaviorSubject<number>(null);
   public coApplicantIndex = this.coApplicantIndex$.asObservable();
   
   changeCoApplicantIndex(val: number) {
     this.coApplicantIndex$.next(val);
   }
 
-  private applicantIndex$: BehaviorSubject<number> = new BehaviorSubject<number>(null);
+  applicantIndex$: BehaviorSubject<number> = new BehaviorSubject<number>(null);
   public applicantIndex = this.applicantIndex$.asObservable();
   
   changeApplicantIndex(val: number) {

@@ -33,7 +33,7 @@ export class DocumentUploadComponent implements OnInit {
     }
   };
 
-  private lhsConfig = {
+  lhsConfig = {
     noSwiping: true,
     noSwipingClass: "",
     onlyExternal: true,
@@ -45,7 +45,7 @@ export class DocumentUploadComponent implements OnInit {
     }
   };
 
-  private rhsConfig = {
+  rhsConfig = {
     // noSwiping: true,
     // onlyExternal: true,
     autoplay: false,
@@ -53,31 +53,31 @@ export class DocumentUploadComponent implements OnInit {
     effect: "slide"
   };
 
-  private activeTab: number = 0;
+  activeTab: number = 0;
 
-  @ViewChild("tabContents") private tabContents: ElementRef;
-  // @ViewChild(Select2Component) private select2: Select2Component;
+  @ViewChild("tabContents") tabContents: ElementRef;
+  // @ViewChild(Select2Component) select2: Select2Component;
 
   // All Swiper Sliders
-  @ViewChild("aadharSlider1") private aadharSlider1: ElementRef;
-  @ViewChild("aadharSlider2") private aadharSlider2: ElementRef;
-  @ViewChild("addressSlider1") private addressSlider1: ElementRef;
-  @ViewChild("addressSlider2") private addressSlider2: ElementRef;
-  @ViewChild("incomeSlider1") private incomeSlider1: ElementRef;
-  @ViewChild("incomeSlider2") private incomeSlider2: ElementRef;
-  @ViewChild("bankingSlider1") private bankingSlider1: ElementRef;
-  @ViewChild("bankingSlider2") private bankingSlider2: ElementRef;
-  @ViewChild("collateralSlider1") private collateralSlider1: ElementRef;
-  @ViewChild("collateralSlider2") private collateralSlider2: ElementRef;
+  @ViewChild("aadharSlider1") aadharSlider1: ElementRef;
+  @ViewChild("aadharSlider2") aadharSlider2: ElementRef;
+  @ViewChild("addressSlider1") addressSlider1: ElementRef;
+  @ViewChild("addressSlider2") addressSlider2: ElementRef;
+  @ViewChild("incomeSlider1") incomeSlider1: ElementRef;
+  @ViewChild("incomeSlider2") incomeSlider2: ElementRef;
+  @ViewChild("bankingSlider1") bankingSlider1: ElementRef;
+  @ViewChild("bankingSlider2") bankingSlider2: ElementRef;
+  @ViewChild("collateralSlider1") collateralSlider1: ElementRef;
+  @ViewChild("collateralSlider2") collateralSlider2: ElementRef;
 
 
-  private isAlternateEmailId: boolean = false;
-  private isAlternateMobileNumber: boolean = false;
-  private isAlternateResidenceNumber: boolean = false;
+  isAlternateEmailId: boolean = false;
+  isAlternateMobileNumber: boolean = false;
+  isAlternateResidenceNumber: boolean = false;
 
-  private applicantIndividual: boolean = true;
+  applicantIndividual: boolean = true;
 
-  private fragments = ["aadhar1", "aadhar2", "address", "income", "banking", "collateral", "photo"];
+  fragments = ["aadhar1", "aadhar2", "address", "income", "banking", "collateral", "photo"];
 
   constructor(
     private renderer: Renderer2,
@@ -185,5 +185,5 @@ export class DocumentUploadComponent implements OnInit {
     this.isAlternateResidenceNumber = !this.isAlternateResidenceNumber;
   }
 
-  private temp;
+  temp;
 }

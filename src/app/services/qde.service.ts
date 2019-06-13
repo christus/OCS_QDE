@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import Qde from '../models/qde.model';
+import Qde, { Applicant } from '../models/qde.model';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
@@ -7,9 +7,9 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class QdeService {
 
-  private qde: Qde;
+  qde: Qde;
   leads: Array<Qde>;
-  private defaultValue: Qde =  {
+  defaultValue: Qde =  {
     "application": {
       "ocsNumber": "",
       "loanAmount": "",
@@ -219,7 +219,7 @@ export class QdeService {
     }
   };
 
-  private qdeSource$: BehaviorSubject<Qde>;
+  qdeSource$: BehaviorSubject<Qde>;
   public qdeSource: Observable<Qde>;
 
   constructor() {
@@ -467,7 +467,7 @@ export class QdeService {
       ]
     });
 
-    this.setQde(this.qde);
+    this.qdeSource$.next(this.qde);
   }
 
   resetQde() {

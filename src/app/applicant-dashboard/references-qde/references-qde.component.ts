@@ -90,7 +90,7 @@ export class ReferencesQdeComponent implements OnInit {
     address : "^[0-9A-Za-z, _&'/#]+$",
   };
 
-  private lhsConfig = {
+  lhsConfig = {
     noSwiping: true,
     noSwipingClass: "",
     onlyExternal: true,
@@ -102,7 +102,7 @@ export class ReferencesQdeComponent implements OnInit {
     }
   };
 
-  private rhsConfig = {
+  rhsConfig = {
     // noSwiping: true,
     // onlyExternal: true,
     autoplay: false,
@@ -111,44 +111,44 @@ export class ReferencesQdeComponent implements OnInit {
     noSwipingClass: "",
   };
 
-  private activeTab: number = 0;
+  activeTab: number = 0;
 
-  @ViewChild("tabContents") private tabContents: ElementRef;
-  // @ViewChild(Select2Component) private select2: Select2Component;
+  @ViewChild("tabContents") tabContents: ElementRef;
+  // @ViewChild(Select2Component) select2: Select2Component;
 
   // All Swiper Sliders
-  @ViewChild("reference1") private reference1: ElementRef;
-  @ViewChild("reference2") private reference2: ElementRef;
+  @ViewChild("reference1") reference1: ElementRef;
+  @ViewChild("reference2") reference2: ElementRef;
 
-  private isAlternateEmailId: boolean = false;
-  private isAlternateMobileNumber: boolean = false;
-  private isAlternateResidenceNumber: boolean = false;
+  isAlternateEmailId: boolean = false;
+  isAlternateMobileNumber: boolean = false;
+  isAlternateResidenceNumber: boolean = false;
 
-  private applicantIndividual: boolean = true;
+  applicantIndividual: boolean = true;
 
-  private fragments = ["reference1", "reference2"];
+  fragments = ["reference1", "reference2"];
 
-  private qde: Qde;
+  qde: Qde;
 
   applicantIndex: number;
 
-  private selectedOption: Item;
+  selectedOption: Item;
 
-  private religions: Array<any>;
-  private qualifications: Array<any>;
-  private occupations: Array<any>;
-  private residences: Array<any>;
-  private titles: Array<any>;
-  private maritals: Array<any>;
-  private relationships: Array<any>;
-  private loanpurposes: Array<any>;
-  private categories: Array<any>;
-  private genders: Array<any>;
-  private constitutions: Array<any>;
-  private selectedReferenceOne: Item;
-  private selectedReferenceTwo: Item;
-  private selectedReferenceOneTitle: Item;
-  private selectedReferenceTwoTitle: Item;
+  religions: Array<any>;
+  qualifications: Array<any>;
+  occupations: Array<any>;
+  residences: Array<any>;
+  titles: Array<any>;
+  maritals: Array<any>;
+  relationships: Array<any>;
+  loanpurposes: Array<any>;
+  categories: Array<any>;
+  genders: Array<any>;
+  constitutions: Array<any>;
+  selectedReferenceOne: Item;
+  selectedReferenceTwo: Item;
+  selectedReferenceOneTitle: Item;
+  selectedReferenceTwoTitle: Item;
 
 
   constructor(
@@ -405,5 +405,5 @@ export class ReferencesQdeComponent implements OnInit {
 
   }
 
-  private temp;
+  temp;
 }

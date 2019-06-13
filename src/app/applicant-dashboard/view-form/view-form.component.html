@@ -32,6 +32,7 @@
                   <h2 class="title">Enter applicant details</h2>
 
                     <!-- *ngIf="qde.application.applicants[applicantIndex].isIndividual == true" -->
+
                     <form   #applicantIndividualForm="ngForm"
                             (ngSubmit)="submitApplicantMainForm(applicantIndividualForm)">
                         <div class="bs-card" [ngClass]="{'incomplete': isIncomplete}">
@@ -459,7 +460,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-6">
-                                        <div class="form-group" *ngIf="{'filled': commPinCode == ''}">
+                                        <div class="form-group">
                                               <input type="number" class="form-control" id="pincode" required
                                               [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.zipcode"
                                               name="pinCode"
@@ -476,23 +477,22 @@
                                         </div>
                                     </div>
                                     <div class="col-6">
-                                        <div class="form-group" [ngClass]="{'filled': commCityState.value == ''}">
+                                        <div class="form-group">
                                               <input  type="text"
                                                   class="form-control"
                                                   id="cityState"
                                                   required
                                                   fieldFill
-                                                  [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.addressCityState"
                                                   name="cityState"
-                                                  #commCityState="ngModel" 
+                                                
                                                   pattern="^[0-9A-Za-z,_#]+$" />
       
                                           <label for="cityState">City/State</label>
       
-                                          <div *ngIf="(commCityState.touched || commCityState.dirty) && commCityState.invalid" class="invalid-feedback">
+                                          <!-- <div *ngIf="(commCityState.touched || commCityState.dirty) && commCityState.invalid" class="invalid-feedback">
                                               <div *ngIf="commCityState.errors?.required">{{errors.commAddress.stateOrCity.required}}</div>
                                               <div *ngIf="commCityState.errors?.pattern">{{errors.commAddress.stateOrCity.invalid}}</div>
-                                          </div>
+                                          </div> -->
                                         </div>
                                     </div>
                                 </div>
@@ -520,7 +520,7 @@
                                                       min=0
                                                       max=90
                                                       #numberOfYearsInCurrentResidence="ngModel"
-                                                      (ngModelChange)="valuechange($event, 3)"
+                                                      (ngModelChange)="valuechange($event)"
                                                       required />
                                               <ng5-slider [(value)]="qde.application.applicants[applicantIndex].communicationAddress.numberOfYearsInCurrentResidence" [options]="options"></ng5-slider>
                                         </div>
@@ -596,7 +596,7 @@
                                                             value="1"
                                                             fieldFill
                                                             id="earningYes"
-                                                            (change)="spouseEarningForm.ngSubmit.emit()" />
+                                                            />
                                                   <label for="earningYes"><span>Yes</span></label>
                                               </div>
                                               <div class="bs-radio">
@@ -605,8 +605,7 @@
                                                             name="earning"
                                                             value="2"
                                                             fieldFill
-                                                            id="earningNo"
-                                                            (change)="spouseEarningForm.ngSubmit.emit()" />
+                                                            id="earningNo" />
                                                   <label for="earningNo"><span>No</span></label>
                                               </div>
                                         </div>
@@ -655,7 +654,7 @@
                                                       fieldFill
                                                       class="form-control"
                                                       [(ngModel)]="qde.application.applicants[applicantIndex].familyDetails.numberOfDependents"
-                                                      (ngModelChange)="valuechange($event, 1)" />
+                                                      (ngModelChange)="valuechange($event)" />
                                               <ng5-slider [(value)]="qde.application.applicants[applicantIndex].familyDetails.numberOfDependents" [options]="options"></ng5-slider>
                                         </div>
                                     </div>
@@ -854,7 +853,7 @@
                                                   min=0
                                                   max=90
                                                   #numberOfYearsInCurrentCompany="ngModel"
-                                                  (ngModelChange)="valuechange($event, 2)"
+                                                  (ngModelChange)="valuechange($event)"
                                                   required />
       
                                           <ng5-slider [(value)]="qde.application.applicants[applicantIndex].occupation.numberOfYearsInCurrentCompany"
@@ -880,7 +879,7 @@
                                             min=0
                                             max=90
                                             #totalExperienceYear="ngModel"
-                                            (ngModelChange)="valuechange($event, 3)"
+                                            (ngModelChange)="valuechange($event)"
                                             required />
       
                                       <ng5-slider [(value)]="qde.application.applicants[applicantIndex].occupation.totalWorkExperience" [options]="options"></ng5-slider>
@@ -1202,7 +1201,7 @@
               <div class="tab-content" [ngClass]="{'active': (activeTab == 1)}">
                   <h2 class="title">Enter co-applicant details</h2>
 
-                    <app-view-form-co-applicant *ngFor="let coApplicant of coApplicantsIndex;"
+                    <app-view-form-co-applicant
                                                 [isIncomplete]="isIncomplete">
                     </app-view-form-co-applicant>
 

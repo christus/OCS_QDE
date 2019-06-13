@@ -14,7 +14,7 @@ export class MenubarHeaderComponent implements OnInit {
   private isViewFormVisible: boolean;
   private isLogoutVisible: boolean;
   private applicationId: string;
-  private coApplicantIndex: number;
+  private coApplicantIndex: number; 
   // isMenuBarShown: boolean;
   private isViewFormNameShown: boolean;
   // isViewFormVisible: boolean;

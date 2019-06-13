@@ -127,6 +127,7 @@
                                                           id="pan-inpt"
                                                           minlength="10"
                                                           maxlength="10"
+                                                          tabindex="1"
                                                           pattern="{{regexPattern.pan}}"                                             
                                                           name="pan"
                                                           #pan="ngModel"
@@ -151,6 +152,7 @@
                                                     nick="pan.docType"
                                                     (selectionChange)="selectValueChanged($event, pan.hostElement)"
                                                     [(ngModel)]="selectedDocType"
+                                                    tabindex="2"
                                                     required>
                                                 </kendo-dropdownlist>
 
@@ -164,6 +166,7 @@
                                                 #docNumber="ngModel"
                                                 maxlength="16"
                                                 fieldFill
+                                                tabindex="3"
                                                 required/>
                                               <label for="docNumber">Document Number</label>
 
@@ -177,6 +180,7 @@
                                           <div class="btn-wrap">
                                                 <button type="submit"
                                                         class="btn btn-primary"
+                                                        tabindex="4"
                                                         [ngClass]="{'disabled': !panNumberForm.valid}"
                                                         [disabled]="!panNumberForm.valid">Next
                                                 </button>
@@ -261,7 +265,7 @@
                                                             name="income-consider"
                                                             id="yes-consider"
                                                             [value]="1"
-                                                            [checked]="qde.application.applicants[applicantIndex].personalDetails.applicantStatus == 1"
+                                                            [checked]="qde.application.applicants[applicantIndex].personalDetails.applicantStatus == '1'"
                                                             (click)="changeApplicantStatus(1, pdSlider2)"
                                                             class="not-usual" />
                                                     <label for="yes-consider"><span>Resident</span></label>
@@ -271,7 +275,7 @@
                                                             name="income-consider"
                                                             id="no-consider"
                                                             class="not-usual"
-                                                            [checked]="qde.application.applicants[applicantIndex].personalDetails.applicantStatus == 2"
+                                                            [checked]="qde.application.applicants[applicantIndex].personalDetails.applicantStatus == '2'"
                                                             [value]="2"
                                                             (click)="changeApplicantStatus(2, pdSlider2)" />
                                                     <label for="no-consider"><span>Non Resident</span></label>
@@ -287,13 +291,6 @@
                                             <div class="form-wrap">
                                                 <div class="form-group">
                                                     <span class="control-title">Title</span>
-    <!--                                                 <select [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.title" name="title" required>
-                                                        <option *ngFor="let tit of titles"
-                                                                [ngClass]="{'select': (tit.value == qde.application.applicants[applicantIndex].personalDetails.title)}"
-                                                                [selected]="tit.value == qde.application.applicants[applicantIndex].personalDetails.title"
-                                                                [value]="tit.value">{{tit.key}}</option>
-                                                    </select> -->
-
                                                     <div class="form-group">   
                                                         <kendo-dropdownlist class="form-control"
                                                           [data]="titles" 
@@ -432,7 +429,7 @@
                                                             name="day"
                                                             nick="personalDetails.day"
                                                             #personalDetails
-                                                            (selectionChange)="selectValueChanged($event, personsalDetails.hostElement)"
+                                                            (selectionChange)="selectValueChanged($event, personalDetails.hostElement)"
                                                             [(ngModel)]="dob.day">
                                                             </kendo-dropdownlist>
                                                         </div>
@@ -463,6 +460,9 @@
                                                             </kendo-dropdownlist>
                                                         </div>
                                                     </div>
+                                                    <div *ngIf="ageError" class="invalid-feedback">
+                                                        <div *ngIf="ageError"> Age should not be less than 18 years and greater than 70 years</div>
+                                                      </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <span class="control-title">Birth place</span>
@@ -582,7 +582,8 @@
                                   <div class="form-group typ-mob">
 
                                       <input type="tel" class="form-control" id="mob-no"
-                                        maxlength="10" im-insert="true" minlength="10"
+                                        maxlength="10" im-insert="true" 
+                                        minlength="10"
                                         [(ngModel)]="qde.application.applicants[applicantIndex].contactDetails.mobileNumber"
                                         name="mobileNumber"
                                         #mobileNumber="ngModel"
@@ -757,6 +758,7 @@
                                       (selectionChange)="selectValueChanged($event, commAddrresidentialStatus.hostElement)"
                                       name="residentialStatus"
                                       nick="communicationAddress.residentialStatus"
+                                      #communicationAddress
                                       (selectionChange)="selectValueChanged($event, communicationAddress.hostElement)"
                                       [(ngModel)]="selectedResidence"
                                       >
@@ -920,7 +922,7 @@
                                             id="current-add-mail" 
                                             name="prefredMail"
                                             [value]="true"
-                                            [checked]="qde.application.applicants[applicantIndex].communicationAddress.preferedMailingAddress == true"
+                                            [checked]="qde.application.applicants[applicantIndex].communicationAddress.preferredMailingAddress == true"
                                             fieldFill/>
                                             <label for="current-add-mail">
                                                 Current Address
@@ -949,7 +951,7 @@
                                             max=90
                                             #numberOfYearsInCurrentResidence="ngModel"
                                             fieldFill
-                                            (ngModelChange)="valuechange($event, 3)"
+                                            (ngModelChange)="valuechange($event, 3, communicationForm)"
                                             required />
                                     <ng5-slider [(value)]="qde.application.applicants[applicantIndex].communicationAddress.numberOfYearsInCurrentResidence" [options]="options"></ng5-slider>
                                 </div>
@@ -1033,6 +1035,7 @@
                                                     textField="key"
                                                     valueField="value"
                                                     name="maritalStatus"
+                                                    #maritalStatus
                                                     nick="maritalStatus.status"
                                                     (selectionChange)="selectValueChanged($event, maritalStatus.hostElement)"
                                                     [(ngModel)]="selectedMaritialStatus"
@@ -1230,13 +1233,13 @@
                                         <div class="form-wrap">
                                             <div class="form-group typ-range">
                                                 <span class="control-title">Enter number of dependents</span>
-                                                <input type="number"
+                                                <input type="text"
                                                         name="numberOfDependents"
                                                         min=0
                                                         max=90
                                                         class="form-control"
                                                         [(ngModel)]="qde.application.applicants[applicantIndex].familyDetails.numberOfDependents"
-                                                        (ngModelChange)="valuechange($event, 1)" />
+                                                        (ngModelChange)="valuechange($event, 1, familyForm1)" />
                                                 <ng5-slider [(value)]="qde.application.applicants[applicantIndex].familyDetails.numberOfDependents" [options]="familyOptions"></ng5-slider>
                                             </div>
                                         </div>
@@ -1267,7 +1270,7 @@
                                                 </select> -->
 
                                                 <kendo-dropdownlist class="form-control"
-                                                  [data]="titles" 
+                                                  [data]="maleTitles" 
                                                   textField="key"
                                                   valueField="value"
                                                   name="fatherTitle"
@@ -1308,7 +1311,7 @@
                                                     </option> 
                                                 </select> -->
                                                 <kendo-dropdownlist class="form-control"
-                                                [data]="titles" 
+                                                [data]="femaleTitles" 
                                                 textField="key"
                                                 valueField="value"
                                                 name="motherTitle"
@@ -1405,6 +1408,7 @@
                                       textField="key"
                                       valueField="value"
                                       name="religion"
+                                      #other
                                       nick="other.religion"
                                       (selectionChange)="selectValueChanged($event, other.hostElement)"
                                       [(ngModel)]="selectedReligions"
@@ -1517,7 +1521,7 @@
                                             min=0
                                             max=90
                                             #numberOfYearsInCurrentCompany="ngModel"
-                                            (ngModelChange)="valuechange($event, 2)"
+                                            (ngModelChange)="valuechange($event, 2, occupationForm)"
                                             required />
 
                                     <ng5-slider [(value)]="qde.application.applicants[applicantIndex].occupation.numberOfYearsInCurrentCompany"
@@ -1527,8 +1531,8 @@
                                     <!-- <div *ngIf="numberOfYearsInCurrentCompany.touched && numberOfYearsInCurrentCompany.invalid" class="invalid-feedback">
                                       <div *ngIf="numberOfYearsInCurrentCompany.errors?.required">{{errors.occupationDetails.currentExp.required}}</div>
                                     </div> -->
-                                    <div *ngIf="numberOfYearsInCurrentCompany.touched && expError" class="invalid-feedback">
-                                        <div *ngIf="expError">Experience in current employment/business should not be greater than total experience </div>
+                                    <div *ngIf="expError" class="invalid-feedback">
+                                        <div *ngIf="expError"><br><br>Experience in current employment/business should not be greater than total work experience </div>
                                       </div>
 
                                 </div>
@@ -1541,10 +1545,11 @@
                                             min=0
                                             max=90
                                             #totalExperienceYear="ngModel"
-                                            (ngModelChange)="valuechange($event, 3)"
+                                            (ngModelChange)="valuechange($event, 3, occupationForm)"
                                             required />
 
-                                    <ng5-slider [(value)]="qde.application.applicants[applicantIndex].occupation.totalWorkExperience" [options]="options"></ng5-slider>
+                                    <ng5-slider [(value)]="qde.application.applicants[applicantIndex].occupation.totalWorkExperience" 
+                                    [options]="options" ></ng5-slider>
 
                                     <!-- <div *ngIf="(totalExperienceYear.touched || totalExperienceYear.dirty) && totalExperienceYear.invalid" class="invalid-feedback">
                                       <div *ngIf="totalExperienceYear.errors?.required">{{errors.occupationDetails.totalExp.required}}</div>
@@ -1784,7 +1789,7 @@
                               <form class="bs-form"
                                 #applicantIncomeNonIndividual="ngForm" (ngSubmit)="submitIncomeDetails1(applicantIncomeNonIndividual, incomeSlider2)">
                                   <div class="form-wrap">
-                                      <div class="form-group">
+                                      <div class="form-group inr">
                                             <input type="text" class="form-control"
                                             id="annual-Family-Income123"
                                             [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.annualFamilyIncome"
@@ -1794,13 +1799,17 @@
                                             pattern="{{regexPattern.amount}}"
                                             required/>
                                           <label for="annual-Family-Income123" >Annual Family Income</label>
+                                          <span class="addon">
+                                            <span class="icon icon-inr"></span>
+                                          </span>
+                                          <span class="in-word"></span>
 
                                           <div *ngIf="annualFamilyIncome1.touched && annualFamilyIncome1.invalid" class="invalid-feedback">
                                                 <!-- <div *ngIf="annualFamilyIncome1.errors?.required">{{errors.incomeDetails.familyIncome.required}}</div> -->
                                                 <div *ngIf="annualFamilyIncome1.errors?.pattern">{{errors.incomeDetails.familyIncome.invalid}}</div>
                                             </div> 
                                       </div>
-                                        <div class="form-group">
+                                        <div class="form-group inr">
                                               <input type="text" class="form-control" 
                                               id="monthly-Expenditure123"
                                               [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.monthlyExpenditure"
@@ -1811,7 +1820,11 @@
                                               fieldFill
                                               />
                                             <label for="monthly-Expenditure123">Monthly Expenditure</label>
-                                  
+                                            <span class="addon">
+                                                <span class="icon icon-inr"></span>
+                                              </span>
+                                              <span class="in-word"></span>
+
                                             <div *ngIf="monthlyExpenditure1.touched && monthlyExpenditure1.invalid" class="invalid-feedback">
                                                     <!-- <div *ngIf="monthlyExpenditure1.errors?.required">{{errors.incomeDetails.monthlyExpenditure.required}}</div> -->
                                                     <div *ngIf="monthlyExpenditure1.errors?.pattern">{{errors.incomeDetails.monthlyExpenditure.invalid}}</div>
@@ -1826,9 +1839,9 @@
                                                 name="prefredMail"
                                                 #prefredMail="ngModel" 
                                                 [value]="true"
-                                                [checked]="qde.application.applicants[applicantIndex].communicationAddress.preferedMailingAddress == true"
+                                                [checked]="qde.application.applicants[applicantIndex].communicationAddress.preferredMailingAddress == true"
                                                 fieldFill
-                                                [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.preferedMailingAddress"
+                                                [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.preferredMailingAddress"
                                                 id="current-add-mail" />
                                                 <label for="current-add-mail">
                                                     yes
@@ -1913,21 +1926,16 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <span class="control-title">Assessment methodology</span>
-                                                    <!-- <select class="js-select" name="assessment"
-                                                    [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.assessmentMethodology"
-                                                    #assessment="ngModel"
-                                                    name="assessment"> -->
-                                                    <kendo-dropdownlist 
-                                                    class="form-control"
-                                                    [data]="assessmentMethodology" 
+                                                    <kendo-dropdownlist [data]="assessmentMethodology" 
                                                     textField="key"
                                                     valueField="value"
                                                     name="assessment"
+                                                    class="form-control"
                                                     nick="incomeDetails.assessmentMethodology"
-                                                    (selectionChange)="selectValueChanged($event, incomeDetails.hostElement)"
+                                                    #assessment1
+                                                    (selectionChange)="selectValueChanged($event, assessment1.hostElement)"
                                                     [(ngModel)]="selectedAssesmentMethodology"
-                                                    required
-                                                    >
+                                                    required>
                                                     </kendo-dropdownlist>
                                                         <!-- <option value="1">Net Salary</option>
                                                         <option value="2">Gross Salary</option>
@@ -1950,7 +1958,7 @@
                                             </div>
                                         </form>
                                     </div>
-                                    <div class="swiper-slide">
+                                    <!-- <div class="swiper-slide">
                                         <form class="bs-form"
                                             #applicantIncome4="ngForm">
                                                 <div class="form-wrap">
@@ -1970,7 +1978,7 @@
                                                     </div>
                                                 </div>
                                             </form>
-                                    </div>
+                                    </div> -->
 
                           </div>
                         </div>
@@ -2273,7 +2281,7 @@
                 <div class="lyt-tabs">
                     <div class="lhs">
                         <div class="title-wrap">
-                            <h4 class="title">Enter applicant's <span class="cm-line-break"></span>corporate address</h4>
+                            <h4 class="title">Enter Applicant's <span class="cm-line-break"></span>corporate address</h4>
                         </div>
                     </div>
                     <div class="rhs">
@@ -2506,13 +2514,15 @@
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide">
                                         <div class="title-wrap">
-                                            <h4 class="title">Enter applicant's<span class="cm-line-break"></span>income details</h4>
+                                            <h4 class="title">Enter Applicant's<span class="cm-line-break"></span>income details</h4>
                                             <p class="note">Please enter household income & expenditure of main applicant & co-applicant/s</p>
+                                            <p class="note">House made with a high quality materials throughout, including a floor, roof and exterior walls, are called pucca houses</p>
+
                                         </div>
                                     </div>
                                     <div class="swiper-slide">
                                         <div class="title-wrap">
-                                            <h4 class="title">Do applicant's <span class="cm-line-break"></span>income considered?</h4>
+                                            <h4 class="title">Do Applicant's <span class="cm-line-break"></span>income considered?</h4>
                                         </div>
                                     </div>
                                     <div class="swiper-slide">
@@ -2542,7 +2552,7 @@
                                   <form class="bs-form"
                                     #applicantIncome1="ngForm" (ngSubmit)="submitIncomeDetails1(applicantIncome1, incomeSlider4)">
                                       <div class="form-wrap">
-                                          <div class="form-group">
+                                          <div class="form-group inr">
                                                 <input type="text" class="form-control"
                                                 id="annualFamilyIncome1234"
                                                 required
@@ -2553,13 +2563,18 @@
                                                 fieldFill
                                                 />
                                               <label for="annualFamilyIncome1234">Annual Family Income</label>
+                                              <span class="addon">
+                                                <span class="icon icon-inr"></span>
+                                              </span>
+                                              <span class="in-word"></span>
+
                                               <div *ngIf="annualFamilyIncome12.touched && annualFamilyIncome12.invalid" class="invalid-feedback">
                                                 <!-- <div *ngIf="annualFamilyIncome12.errors?.required">{{errors.incomeDetails.familyIncome.required}}</div> -->
                                                 <div *ngIf="annualFamilyIncome12.errors?.pattern">{{errors.incomeDetails.familyIncome.invalid}}</div>
 
                                             </div>
                                           </div>
-                                            <div class="form-group">
+                                            <div class="form-group inr">
                                                   <input type="text" class="form-control" 
                                                   id="monthlyExpenditure1234"
                                                   required
@@ -2570,9 +2585,44 @@
                                                   fieldFill
                                                   />
                                                 <label for="monthlyExpenditure1234" >Monthly Expenditure</label>
+                                                <span class="addon">
+                                                    <span class="icon icon-inr"></span>
+                                                  </span>
+                                                  <span class="in-word"></span>
+
                                                 <div *ngIf="monthlyExpenditure12.touched && monthlyExpenditure12.invalid" class="invalid-feedback">
                                                     <!-- <div *ngIf="monthlyExpenditure12.errors?.required">{{errors.incomeDetails.monthlyExpenditure.required}}</div> -->
                                                     <div *ngIf="monthlyExpenditure12.errors?.pattern">{{errors.incomeDetails.monthlyExpenditure.invalid}}</div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group last">
+                                                <span class="control-title">Pucca House</span>
+                                            </div>
+                                            <div class="radio-wrap rounded-radio">
+                                                <div class="bs-radio typ-normal">
+                                                    <input type="radio" 
+                                                    name="prefredMail"
+                                                    #prefredMail="ngModel" 
+                                                    [value]="true"
+                                                    [checked]="qde.application.applicants[applicantIndex].communicationAddress.preferredMailingAddress == true"
+                                                    fieldFill
+                                                    [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.preferredMailingAddress"
+                                                    id="current-add-mail" />
+                                                    <label for="current-add-mail">
+                                                        yes
+                                                    </label>
+                                                </div>
+                                                <div class="bs-radio typ-normal">
+                                                    <input type="radio"
+                                                    name="prefredMail"
+                                                    
+                                                    [value]="false"
+                                                    [checked]="qde.application.applicants[applicantIndex].communicationAddress.preferredMailingAddress == false"
+                                                    fieldFill
+                                                    >
+                                                    <label for="permanent-add-mail">
+                                                        No
+                                                    </label>
                                                 </div>
                                             </div>
                                         </div>
@@ -2620,13 +2670,15 @@
                                             #applicantIncome3="ngForm" (ngSubmit)="submitIncomeDetails2(applicantIncome3, incomeSlider4)">
                                                 <div class="form-wrap">
                                                     <div class="form-group inr">
-                                                        <input type="text" class="form-control" id="app-monthly-income1234"
-                                                        [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.monthlyIncome"
-                                                        #monthlyIncome12="ngModel"
-                                                        fieldFill
-                                                        pattern="{{regexPattern.amount}}"
-                                                        required
-                                                        name="monthlyIncome">
+                                                        <input  type="text"
+                                                                class="form-control"
+                                                                id="app-monthly-income1234"
+                                                                [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.monthlyIncome"
+                                                                #monthlyIncome12="ngModel"
+                                                                fieldFill
+                                                                pattern="{{regexPattern.amount}}"
+                                                                required
+                                                                name="monthlyIncome" />
                                                         <label for="app-monthly-income1234">Monthly income</label>
                                                         <span class="addon">
                                                             <span class="icon icon-inr"></span>
@@ -2639,44 +2691,30 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <span class="control-title">Assessment methodology</span>
-                                                        <!-- <select class="js-select" name="assessment"
-                                                        [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.assessmentMethodology"
-                                                        #assessment="ngModel"
-                                                        name="assessment">
-                                                            <option value="1">Net Salary</option>
-                                                            <option value="2">Gross Salary</option>
-                                                            <option value="3">Income Plus</option>
-                                                            <option value="4">Normal Profit</option>
-                                                            <option value="5">GST surplus method</option>
-                                                            <option value="6">RTR</option>
-                                                            <option value="7">BT+Top up</option>
-                                                            <option value="8">Gross Receipt</option>
-                                                            <option value="9">Industry Margin</option>
-                                                            <option value="10">Assessed Income</option>
-                                                        </select> -->
-                                                        <kendo-dropdownlist 
-                                                        [data]="assessmentMethodology" 
-                                                        textField="key"
-                                                        valueField="value"
-                                                        name="assessment"
-                                                        class="form-control"
-                                                        nick="incomeDetails.assessmentMethodology"
-                                                        (selectionChange)="selectValueChanged($event, incomeDetails.hostElement)"
-                                                        [(ngModel)]="selectedAssesmentMethodology"
-                                                        required
-                                                        >
+                                                        <kendo-dropdownlist [data]="assessmentMethodology" 
+                                                                            textField="key"
+                                                                            valueField="value"
+                                                                            name="assessment"
+                                                                            class="form-control"
+                                                                            nick="incomeDetails.assessmentMethodology"
+                                                                            #assessment2
+                                                                            (selectionChange)="selectValueChanged($event, assessment2.hostElement)"
+                                                                            [(ngModel)]="selectedAssesmentMethodology"
+                                                                            required>
                                                         </kendo-dropdownlist>
                                                     </div>
                                                 </div>
                                                 <div class="btn-wrap">
-                                                    <button type="submit" class="btn btn-primary" 
-                                                    (click)="goToNextSlide(incomeSlider4)"
-                                                    [ngClass]="{'disabled': !applicantIncome3.valid}"
-                                                    [disabled]="!applicantIncome3.valid">Next</button>
+                                                    <button type="submit"
+                                                            class="btn btn-primary" 
+                                                            (click)="goToNextSlide(incomeSlider4)"
+                                                            [ngClass]="{'disabled': !applicantIncome3.valid}"
+                                                            [disabled]="!applicantIncome3.valid">Next
+                                                    </button>
                                                 </div>
                                             </form>
                                         </div>
-                                        <div class="swiper-slide">
+                                        <!-- <div class="swiper-slide">
                                                 <form class="bs-form"
                                                 #applicantIncome4="ngForm">
                                                     <div class="form-wrap">
@@ -2695,7 +2733,7 @@
                                                     </div>
                                                 </form>
                                         </div>
-    
+     -->
                               </div>
                             </div>
                         </div>

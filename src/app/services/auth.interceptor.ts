@@ -4,7 +4,7 @@ import { map } from "rxjs/operators";
 import { UtilService } from './util.service';
 import { Inject } from '@angular/core';
 
-export default class AuthInterceptor implements HttpInterceptor {
+export class AuthInterceptor implements HttpInterceptor {
 
   constructor(@Inject(UtilService) private utilService) { }
 

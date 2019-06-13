@@ -21,12 +21,6 @@ import { MenubarHeaderComponent } from './menubar-header/menubar-header.componen
 
 import { UserLoginComponent } from './Login/user-login/user-login.component';
 
-import { IncomeDetailsComponent } from './LoanDetails/income-details/income-details.component';
-import { LoanAmountComponent } from './LoanDetails/loan-amount/loan-amount.component';
-import { PropertyDetailsComponent } from './LoanDetails/property-details/property-details.component';
-import { ExistingLoansComponent } from './LoanDetails/existing-loans/existing-loans.component';
-import { Reference1Component } from './References/reference1/reference1.component';
-import { Reference2Component } from './References/reference2/reference2.component';
 import { LeadsListComponent } from './applicant-dashboard/leads-list/leads-list.component';
 import { ApplicantQdeComponent } from './applicant-dashboard/applicant-qde/applicant-qde.component';
 
@@ -40,7 +34,7 @@ import { LoanQdeComponent } from './applicant-dashboard/loan-qde/loan-qde.compon
 import { ReferencesQdeComponent } from './applicant-dashboard/references-qde/references-qde.component';
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import AuthInterceptor from './services/auth.interceptor';
+import { AuthInterceptor } from './services/auth.interceptor';
 import { ListOfValuesResolverService } from './services/list-of-values-resolver.service';
 import { ViewFormComponent } from './applicant-dashboard/view-form/view-form.component';
 import { DocumentUploadComponent } from './applicant-dashboard/document-upload/document-upload.component';
@@ -62,6 +56,12 @@ import { ImageUploadModule } from "angular2-image-upload";
 import { PaymentsComponent } from './payments/payments.component';
 import { OfflinePaymentComponent } from './payments/offline-payment/offline-payment.component';
 import { OnlineSummaryComponent } from './payments/online-summary/online-summary.component';
+<<<<<<< HEAD
+=======
+import { GetQdeDataResolverService } from './get-qde-data-resolver.service';
+import { GetCoApplicantsResolverService } from './get-co-applicants-resolver.service';
+import { EligibilityCheckComponent } from './payments/eligibility-check/eligibility-check.component';
+>>>>>>> master
 
 const appRoutes: Routes = [
   { path: "", redirectTo: "leads", pathMatch: "full" },
@@ -95,14 +95,16 @@ const appRoutes: Routes = [
         path: ":applicationId/co-applicant",
         component: CoApplicantQdeComponent,
         resolve: {
-          listOfValues: ListOfValuesResolverService
+          listOfValues: ListOfValuesResolverService,
+          // qde: GetQdeDataResolverService
         }
       },
       {
         path: ":applicationId/co-applicant/:coApplicantIndex",
         component: CoApplicantQdeComponent,
         resolve: {
-          listOfValues: ListOfValuesResolverService
+          listOfValues: ListOfValuesResolverService,
+          // qde: GetQdeDataResolverService
         }
       }
     ]
@@ -210,6 +212,16 @@ const appRoutes: Routes = [
         resolve: {
           listOfValues: ListOfValuesResolverService
         }
+<<<<<<< HEAD
+=======
+      },
+      {
+        path: 'eligibility-check',
+        component: EligibilityCheckComponent,
+        resolve: {
+          listOfValues: ListOfValuesResolverService
+        }
+>>>>>>> master
       }
     ]
   },
@@ -236,12 +248,6 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     // CoAppDashboardComponent,
     // CoAppInitialPageComponent,
     // CoAppRegAddrComponent,
-    IncomeDetailsComponent,
-    LoanAmountComponent,
-    PropertyDetailsComponent,
-    ExistingLoansComponent,
-    Reference1Component,
-    Reference2Component,
     ApplicantDashboardComponent,
     LeadsListComponent,
     ApplicantQdeComponent,
@@ -261,6 +267,10 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     PaymentsComponent,
     OfflinePaymentComponent,
     OnlineSummaryComponent,
+<<<<<<< HEAD
+=======
+    EligibilityCheckComponent,
+>>>>>>> master
   ],
   imports: [
     BrowserModule,
@@ -276,6 +286,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   ],
   providers: [
     ListOfValuesResolverService,
+    GetQdeDataResolverService,
     {
       provide: SWIPER_CONFIG,
       useValue: DEFAULT_SWIPER_CONFIG

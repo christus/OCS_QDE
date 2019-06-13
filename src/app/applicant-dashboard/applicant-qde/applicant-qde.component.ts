@@ -13,6 +13,7 @@ import { QdeHttpService } from 'src/app/services/qde-http.service';
 import { QdeService } from 'src/app/services/qde.service';
 import { CommonDataService } from '../../services/common-data.service';
 import { Subscription } from 'rxjs';
+import { errors } from '../../services/errors';
 
 interface Item {
   key: string,
@@ -25,248 +26,6 @@ interface Item {
   styleUrls: ['./applicant-qde.component.css']
 })
 export class ApplicantQdeComponent implements OnInit, OnDestroy {
-
-  private errors = {
-
-    pan: {
-      required: "PAN number is mandatory",
-      length: "PAN number must be at least 10 characters",
-      invalid: "Invalid PAN Number"
-    },
-    panDocumentNo: {
-      required: "Document number is mandatory",
-      length: "Enter 16 Digits Document number",
-      invalid: "Invalid Document Number"
-    },
-
-    personalDetails: {
-      firstName: {
-        required: "First Name is mandatory",
-        invalid: "Number and Special Characters not allowed"
-      },
-      middleName: {
-        invalid: "Number and Special Characters not allowed"
-      },
-      lastName: {
-        required: "Last Name is mandatory",
-        invalid: "Number and Special Characters not allowed"
-      }
-    },
-
-    contactDetails: {
-      preferedEmail: {
-        required: "Email Id is mandatory",
-        invalid: "Invalid Email ID"
-      },
-      alternateEmail: {
-        invalid: "Invalid Email ID"
-      },
-      prefferedMobile: {
-        required: "10 digit mobile number is mandatory",
-        invalid: "Invalid mobile number/Alphabets and Special Characters not allowed"
-      },
-      alternateMobile: {
-        invalid: "Invalid mobile number/Alphabets and Special Characters not allowed"
-      },
-      stdCode: {
-        required: "Std Code is mandatory",
-        invalid: "Invalid STD code"
-      },
-      alternateResidenceNumberStd1:{
-        invalid: "Invalid STD code"
-      },
-      residenceNumber: {
-        required: "Residence number is mandatory",
-        invalid: "Invalid Residence number/Alphabets and Special Characters not allowed"
-      },
-      alternateResidenceNumber1:{
-        invalid:"Invalid Residence number/Alphabets and Special Characters not allowed"
-      }
-    },
-
-    commAddress: {
-      address1: {
-        required: "Address Line 1 is mandatory",
-        invalid: "Incomplete address"
-      },
-      address2: {
-        required: "Address Line 2 is mandatory",
-        invalid: "Incomplete address"
-      },
-      pinCode: {
-        required: "Pincode is mandatory",
-        invalid: "Invalid/Incomplete Pincode",
-       
-      },
-      stateOrCity: {
-        required: "State Name / City Name is mandatory",
-        invalid: "State Name / City Name is not valid"
-      }
-    },
-
-    maritialStatus: {
-      spouseName: {
-        required: "Spouse Name is mandatory",
-        invalid: "Number and Special Characters not allowed"
-      },
-      salaryAmount: {
-        required: "Salary Amount is mandatory",
-        invalid: "Alphabets and and Special Characters not allowed"
-      }
-    },
-
-    familyDetails: {
-      fatherName:{
-        required: "Father's Name is mandatory",
-        invalid: "Number and Special Characters not allowed"
-      },
-      motherName:{
-        required: "Mother's Name is mandatory",
-        invalid: "Number and Special Characters not allowed"
-      },
-      motherMaiden:{
-        required: "Mother's Maiden Name is mandatory",
-        invalid: "Number and Special Characters not allowed"
-      }
-    },
-
-    other: {
-
-    },
-
-    occupationDetails : {
-      companyDetails: {
-        required: "Company Name is mandatory",
-        invalid: "Company Name is not valid"
-      },
-      currentExp: {
-        required: "Current Experience is mandatory",
-        invalid: "Current Experience is not valid"
-      },
-      totalExp: {
-        required: "Total Experience is mandatory",
-        invalid: "Total Experience is not valid"
-      }
-    },
-
-    officialCorrespondence: {
-      address1: {
-        required: "Office address line1 is mandatory",
-        invalid: "Incomplete address"
-      },
-      address2: {
-        required: "Office address line2 is mandatory",
-        invalid: "Incomplete address"
-      },
-      pinCode: {
-        required: "Pincode is mandatory",
-        invalid: "Invalid/Incomplete Pincode"
-      },
-      landMark: {
-        invalid: "Land mark is not valid"
-      },
-      stateOrCity: {
-        required: "State Name / City Name is mandatory",
-        invalid: "State Name / City Name is not valid"
-      },
-      stdCode: {
-        required: "Std Code is mandatory",
-        invalid: "Invalid Std Code"
-      },
-      phoneNumber: {
-        required: "Phone Number is mandatory",
-        invalid: "Invalid Phone Number"
-      },
-      email: {
-        required: "Office Email Id is mandatory",
-        invalid: "Invalid Email Id"
-      }
-    },
-    
-    incomeDetails:{
-      familyIncome:{
-        required: "Annual family Income is mandatory",
-        invalid:"Invalid Family Income / Alphabets and Special characters are not allowed"
-      },
-      monthlyExpenditure:{
-        required:"Monthly Expenditure is mandatory",
-        invalid:"Invalid Monthly Expenditure / Alphabets and Special characters are not allowed"
-      },
-      monthlyIncome:{
-        required:"Monthly Income is mandatory",
-        invalid:"Invalid Monthly Income / Alphabets and Special characters are not allowed"
-
-      }
-    },
-
-    organizationDetails: {
-      orgName: {
-        required: "Organization Name is mandatory",
-        invalid: "Invalid Organization Name"
-      }
-    },
-    registeredAddress: {
-      address : {
-        required: "Registered Address is mandatory",
-        invalid: "Registered Address is not valid"
-      },
-      landMark: {
-        invalid: "Land mark is not valid"
-      },
-      pinCode: {
-        required: "Pincode is mandatory",
-        invalid: "Invalid/Incomplete Pincode"
-      },
-      stateOrCity: {
-        required: "State Name / City Name is mandatory",
-        invalid: "State Name / City Name is not valid"
-      }
-    },
-    corporateAddress: {
-      address: {
-        required: "Corporate Address is mandatory",
-        invalid: "Invalid address"
-      },
-      landMark: {
-        invalid: "Invalid Landmark"
-      },
-      pinCode: {
-        required: "Pincode is mandatory",
-        invalid: "Invalid/Incomplete Pincode"
-      },
-      stateOrCity: {
-        required: "State Name / City Name is mandatory",
-        invalid: "State Name / City Name is not valid"
-      },
-      stdNumber:{
-        required:"Std Code is mandatory",
-        invalid:"Invalid Std Code"
-      },
-      phoneNumber:{
-        required:"Phone number is mandatory",
-        invalid:"Invalid Phone number"
-      },
-
-      ofcEmail:{
-        required:"Office Email is mandatory",
-        invalid:"Invalid Email"
-      }
-    },
-    revenueDetails: {
-      revenue:{
-        required: "revenue is mandatory",
-        invalid: "revenue is not valid"
-      },
-      annualNetincome:{
-        required:"Annual Net Income is mandatory",
-        invalid:"Invalid Annual Net Income"
-      },
-      grossTurnover:{
-        required: "Gross Turnover is mandatory",
-        invalid: "Invalid Gross Turnover"
-      }
-     }
-  };
 
   regexPattern = {
     mobileNumber: "^[0-9]*$",
@@ -317,7 +76,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     'Content-Type': 'multipart/form-data',
   };
 
-  private lhsConfig = {
+  lhsConfig = {
     noSwiping: true,
     noSwipingClass: '',
     onlyExternal: true,
@@ -329,7 +88,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     }
   };
 
-  private rhsConfig = {
+  rhsConfig = {
     noSwiping: true,
     noSwipingClass: '',
     autoplay: false,
@@ -337,45 +96,45 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     effect: "slide"
   };
 
-  private activeTab: number = 0;
-  private dob: {day: Item, month: Item, year: Item} = { day: {key: "DD", value: "DD"}, month: {key: "MM", value: "MM"}, year: {key: "YYYY", value: "YYYY"} };
-  private residenceNumberStdCode: string = "";
-  private residenceNumberPhoneNumber: string = "";
-  private alternateResidenceNumberStdCode: string = ""
-  private alternateResidenceNumberPhoneNumber: string = ""
-  private addressCityState: string = "";
-  private otherReligion: string = "";
-  private officialNumberStdCode: string = "";
-  private officialNumberPhoneNumber: string = "";
-  private dateOfIncorporation: {day: Item, month: Item, year: Item} = { day: {key: "DD", value: "DD"}, month: {key: "MM", value: "MM"}, year: {key: "YYYY", value: "YYYY"} };
-  private registeredAddressCityState: string = "";
-  private corporateAddressCityState: string = "";
-  private corporateAddressStdCode = "";
-  private corporateAddressPhoneNumber = "";
+  activeTab: number = 0;
+  dob: {day: Item, month: Item, year: Item} = { day: {key: "DD", value: "DD"}, month: {key: "MM", value: "MM"}, year: {key: "YYYY", value: "YYYY"} };
+  residenceNumberStdCode: string = "";
+  residenceNumberPhoneNumber: string = "";
+  alternateResidenceNumberStdCode: string = ""
+  alternateResidenceNumberPhoneNumber: string = ""
+  addressCityState: string = "";
+  otherReligion: string = "";
+  officialNumberStdCode: string = "";
+  officialNumberPhoneNumber: string = "";
+  dateOfIncorporation: {day: Item, month: Item, year: Item} = { day: {key: "DD", value: "DD"}, month: {key: "MM", value: "MM"}, year: {key: "YYYY", value: "YYYY"} };
+  registeredAddressCityState: string = "";
+  corporateAddressCityState: string = "";
+  corporateAddressStdCode = "";
+  corporateAddressPhoneNumber = "";
 
-  private commCityState:string = "";
+  commCityState:string = "";
   // zipCityStateID:string = "";
 
-  @ViewChild('tabContents') private tabContents: ElementRef;
-  // @ViewChild(Select2Component) private select2: Select2Component;
+  @ViewChild('tabContents') tabContents: ElementRef;
+  // @ViewChild(Select2Component) select2: Select2Component;
 
   // All Swiper Sliders
   // Will be deprecated in next commit if not used
-  @ViewChild('panSlider2') private panSlider2: Swiper;
-  @ViewChild('panSlider4') private panSlider4: Swiper;
+  @ViewChild('panSlider2') panSlider2: Swiper;
+  @ViewChild('panSlider4') panSlider4: Swiper;
 
-  private isAlternateEmailId: boolean = false;
-  private isAlternateMobileNumber: boolean = false;
-  private isAlternateResidenceNumber: boolean = false;
+  isAlternateEmailId: boolean = false;
+  isAlternateMobileNumber: boolean = false;
+  isAlternateResidenceNumber: boolean = false;
   
-  private applicantIndividual: boolean = true;
+  applicantIndividual: boolean = true;
 
-  private isIndividual:boolean = false;
-  private YYYY: number = 1900;
+  isIndividual:boolean = false;
+  YYYY: number = 1900;
 
-  private applicantStatus:string = "" ;
+  applicantStatus:string = "" ;
 
-  private fragments = [ 'pan1',
+  fragments = [ 'pan1',
                         'personal',
                         'contact',
                         'address',
@@ -395,50 +154,53 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
   applicantIndex: number;
 
-  private qde: Qde;
+  qde: Qde;
 
-  private religions: Array<any>;
-  private qualifications: Array<any>;
-  private occupations: Array<any>;
-  private residences: Array<any>;
-  private titles: Array<any>;
-  private maritals: Array<any>;
-  private relationships: Array<any>;
-  private loanpurposes: Array<any>;
-  private categories: Array<any>;
-  private genders: Array<any>;
-  private constitutions: Array<any>;
-  private days: Array<Item>;
-  private months: Array<Item>;
-  private years: Array<Item>;
-  private assessmentMethodology: Array<any>;
-  private selectedTitle: Item;
-  private selectedReligions: Item;
-  private selectedMaritialStatus: Item;
-  private selectedCategory: Item;
-  private selectedOccupation: Item;
-  private selectedResidence: Item;
-  private selectedSpouseTitle: Item;
-  private selectedFatherTitle: Item;
-  private selectedMotherTitle: Item;
-  private selectedQualification: Item;
-  private selectedConstitution: Item;
+  religions: Array<any>;
+  qualifications: Array<any>;
+  occupations: Array<any>;
+  residences: Array<any>;
+  titles: Array<any>;
+  maleTitles: Array<any>;
+  femaleTitles: Array<any>;
+  maritals: Array<any>;
+  relationships: Array<any>;
+  loanpurposes: Array<any>;
+  categories: Array<any>;
+  genders: Array<any>;
+  constitutions: Array<any>;
+  days: Array<Item>;
+  months: Array<Item>;
+  years: Array<Item>;
+  assessmentMethodology: Array<any>;
+  selectedTitle: Item;
+  selectedReligions: Item;
+  selectedMaritialStatus: Item;
+  selectedCategory: Item;
+  selectedOccupation: Item;
+  selectedResidence: Item;
+  selectedSpouseTitle: Item;
+  selectedFatherTitle: Item;
+  selectedMotherTitle: Item;
+  selectedQualification: Item;
+  selectedConstitution: Item;
 
-  private selectedDocType: Item;
-  private selectedConstitutions: Item;
-  private selectedBirthPlace: Item;
+  selectedDocType: Item;
+  selectedConstitutions: Item;
+  selectedBirthPlace: Item;
 
-  private docType: Array<any>;
-  private birthPlace: Array<any>;
-  private selectedAssesmentMethodology: Array<any>;
+  docType: Array<any>;
+  birthPlace: Array<any>;
+  selectedAssesmentMethodology: Array<any>;
 
-  private panslideSub: Subscription;
+  panslideSub: Subscription;
   constructor(private renderer: Renderer2,
               private route: ActivatedRoute,
               private router: Router,
               private qdeHttp: QdeHttpService,
               private qdeService: QdeService,
               private cds:CommonDataService) {
+
 
     this.panslideSub = this.cds.panslide.subscribe(val => {
       this.panslide = val;
@@ -487,8 +249,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     console.log('__________');
   }
   
-  private panslide: boolean;
-  private panslide2: boolean;
+  panslide: boolean;
+  panslide2: boolean;
 
   ngOnInit() {
 
@@ -500,7 +262,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       this.qualifications = lov.LOVS.qualification;
       this.occupations = lov.LOVS.occupation;
       this.residences = lov.LOVS.residence_type;
-      this.titles = lov.LOVS.applicant_title || ["Mr", "Mrs", "Ms", "Dr"]; // Hardcoded test value need to be removed
+      this.titles = lov.LOVS.applicant_title; 
+      this.maleTitles = lov.LOVS.male_applicant_title;
+      this.femaleTitles = lov.LOVS.female_applicant_title;
       this.docType = lov.LOVS.document_type;
       this.maritals = lov.LOVS.maritial_status;
       this.relationships = lov.LOVS.relationship;
@@ -540,8 +304,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       this.selectedOccupation = this.occupations[0];
       this.selectedResidence = this.residences[0];
       this.selectedSpouseTitle = this.titles[0];
-      this.selectedFatherTitle = this.titles[0];
-      this.selectedMotherTitle = this.titles[0];
+      this.selectedFatherTitle = this.maleTitles[0];
+      this.selectedMotherTitle = this.femaleTitles[0];
       this.selectedQualification = this.qualifications[0];
       this.selectedConstitution = this.constitutions[0];
       this.selectedDocType = this.docType[0];
@@ -922,11 +686,21 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     // }
   }
 
-  valuechange(newValue, valueIndex) {
+  valuechange(newValue, valueIndex, form) {
+    
     console.log(newValue);
     this.value[valueIndex] = newValue;
+    const currentExp = form.value.numberOfYearsInCurrentCompany;
+    const totalExp = form.value.totalExperienceYear;
+    if(currentExp > totalExp) {
+      //form.valid = false;
+      this.expError = true;
+      return;
+    }else{
+      this.expError=false;
+    }
   }
-
+ 
   /**
    * Use to sync between lhs and rhs sliders
    * @param swiperInstance RHS Swiper Instance
@@ -1211,12 +985,22 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     });
     
   }
-
+  private ageError=false;
   submitDobDetails(form: NgForm, swiperInstance ?: Swiper) {
     event.preventDefault();
 
     if (form && !form.valid) {
       return;
+    }
+    const dateofbirth = form.value.year.value+'-'+form.value.month.value+'-'+form.value.day.value;
+    const d1:any = new Date(dateofbirth);
+    const d2:any = new Date();
+    var diff = d2 - d1 ;
+    var age = Math.floor(diff/(1000*60*60*24*365.25));
+    if(age >= 70 || age <=18 ){
+      this.ageError = true;
+    }else {
+      this.ageError=false;
     }
 
     this.qde.application.applicants[this.applicantIndex].personalDetails.dob = form.value.year.value+'-'+form.value.month.value+'-'+form.value.day.value;
@@ -1273,90 +1057,35 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   }
 
   onPinCodeChange(event, screenName) {
-      console.log(event.target.value);
-       let zipCode= event.target.value
-       this.qdeHttp.getCityAndState(zipCode).subscribe((response) => {
-          console.log(JSON.parse(response["ProcessVariables"]["response"]));
+    console.log(event.target.value);
+     let zipCode= event.target.value
+     this.qdeHttp.getCityAndState(zipCode).subscribe((response) => {
+
+        if(response['Error'] == '0') {
           var result = JSON.parse(response["ProcessVariables"]["response"]);
 
           this.commCityState = "";
-
+  
           if(result.city != null && result.state != null && result.city != "" && result.state != "") {
             this.commCityState = result.city +" "+ result.state;
           }else {
-            alert("Pin code not available / enter proper pincode")
+            alert("Pin code not available / enter proper pincode");
           }
-     
 
-          if(screenName == "communicationAddress") {
-
-            this.qde.application.applicants[this.applicantIndex].communicationAddress.zipcodeId = result.zipcodeId;
-            this.qde.application.applicants[this.applicantIndex].communicationAddress.stateId = result.stateId;
-            this.qde.application.applicants[this.applicantIndex].communicationAddress.cityId = result.cityId;
-
-            this.qde.application.applicants[this.applicantIndex].communicationAddress.city = result.city;
-            this.qde.application.applicants[this.applicantIndex].communicationAddress.state = result.state;
-            this.qde.application.applicants[this.applicantIndex].communicationAddress.cityState = this.commCityState;
+          this.qde.application.applicants[this.applicantIndex][screenName].zipcodeId = result.zipcodeId;
+          this.qde.application.applicants[this.applicantIndex][screenName].stateId = result.stateId;
+          this.qde.application.applicants[this.applicantIndex][screenName].cityId = result.cityId;
   
   
-          }
+          this.qde.application.applicants[this.applicantIndex][screenName].city = result.city;
+          this.qde.application.applicants[this.applicantIndex][screenName].state = result.state;
+          this.qde.application.applicants[this.applicantIndex][screenName].cityState = this.commCityState || "XXXX YYYY";  
+        }
+        else if(response['Error'] == '1') {
+          alert("Invalid Pin");
+        }
 
-
-          if(screenName == "permanentAddress") {
-
-            this.qde.application.applicants[this.applicantIndex].permanentAddress.zipcodeId = result.zipcodeId;
-            this.qde.application.applicants[this.applicantIndex].permanentAddress.stateId = result.stateId;
-            this.qde.application.applicants[this.applicantIndex].permanentAddress.cityId = result.cityId;
-
-            this.qde.application.applicants[this.applicantIndex].permanentAddress.city = result.city;
-            this.qde.application.applicants[this.applicantIndex].permanentAddress.state = result.state;
-            this.qde.application.applicants[this.applicantIndex].permanentAddress.cityState = this.commCityState;
-  
-
-          }
-
-
-          if(screenName == "officialCorrespondence") {
-
-            this.qde.application.applicants[this.applicantIndex].officialCorrespondence.zipcodeId = result.zipcodeId;
-            this.qde.application.applicants[this.applicantIndex].officialCorrespondence.stateId = result.stateId;
-            this.qde.application.applicants[this.applicantIndex].officialCorrespondence.cityId = result.cityId;
-
-            this.qde.application.applicants[this.applicantIndex].officialCorrespondence.city = result.city;
-            this.qde.application.applicants[this.applicantIndex].officialCorrespondence.state = result.state;
-            this.qde.application.applicants[this.applicantIndex].officialCorrespondence.cityState = this.commCityState;
-
-          }
-
-          if(screenName == "registeredAddress") {
-
-            this.qde.application.applicants[this.applicantIndex].registeredAddress.zipcodeId = result.zipcodeId;
-            this.qde.application.applicants[this.applicantIndex].registeredAddress.stateId = result.stateId;
-            this.qde.application.applicants[this.applicantIndex].registeredAddress.cityId = result.cityId;
-
-            this.qde.application.applicants[this.applicantIndex].registeredAddress.city = result.city;
-            this.qde.application.applicants[this.applicantIndex].registeredAddress.state = result.state;
-            this.qde.application.applicants[this.applicantIndex].registeredAddress.cityState = this.commCityState;
-
-
-          }
-
-          if(screenName == "corporateAddress") {
-
-            this.qde.application.applicants[this.applicantIndex].corporateAddress.zipcodeId = result.zipcodeId;
-            this.qde.application.applicants[this.applicantIndex].corporateAddress.stateId = result.stateId;
-            this.qde.application.applicants[this.applicantIndex].corporateAddress.cityId = result.cityId;
-
-
-            this.qde.application.applicants[this.applicantIndex].corporateAddress.city = result.city;
-            this.qde.application.applicants[this.applicantIndex].corporateAddress.state = result.state;
-            this.qde.application.applicants[this.applicantIndex].corporateAddress.cityState = this.commCityState;
-
-
-          }
-          
-
-       })
+     });
   }
   //-------------------------------------------------------------
 
@@ -1616,12 +1345,22 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   //-------------------------------------------------------------
   // Occupation Details
   //-------------------------------------------------------------
+  expError =false;
+
   submitOccupationDetails(form: NgForm) {
     if (form && !form.valid) {
       return;
     }
-
-  
+    const currentExp = form.value.numberOfYearsInCurrentCompany;
+    const totalExp = form.value.totalExperienceYear;
+    if(currentExp > totalExp) {
+      //form.valid = false;
+      this.expError = true;
+      return;
+    }else{
+      this.expError=false;
+    }
+    
     this.qde.application.applicants[this.applicantIndex].occupation.occupationType = form.value.occupationType.value;
     this.qde.application.applicants[this.applicantIndex].occupation.companyName = form.value.companyName;
     this.qde.application.applicants[this.applicantIndex].occupation.numberOfYearsInCurrentCompany = form.value.numberOfYearsInCurrentCompany;
@@ -1871,7 +1610,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   }
 
   changeIsIndividual(value, swiperInstance ?: Swiper) {
-    if(value) {
+    console.log("IS INDIVIDUAL CHANGE: ", value);
+    if(value == 1) {
       this.goToNextSlide(swiperInstance);
       this.qde.application.applicants[this.applicantIndex].isIndividual = true;
     } else {
@@ -2026,8 +1766,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     this.selectedOccupation = this.occupations[0];
     this.selectedResidence = this.residences[0];
     this.selectedSpouseTitle = this.titles[0];
-    this.selectedFatherTitle = this.titles[0];
-    this.selectedMotherTitle = this.titles[0];
+    this.selectedFatherTitle = this.maleTitles[0];
+    this.selectedMotherTitle = this.femaleTitles[0];
     this.selectedQualification = this.qualifications[0];
     this.selectedConstitution = this.constitutions[0];
     this.selectedDocType = this.docType[0];

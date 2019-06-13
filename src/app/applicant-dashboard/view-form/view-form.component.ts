@@ -20,6 +20,7 @@ import {tap} from 'rxjs/operators';
 })
 export class ViewFormComponent implements OnInit {
 
+
   private showSuccessModal: boolean = false;
 
   private errors: any = {
@@ -223,9 +224,9 @@ export class ViewFormComponent implements OnInit {
 
   value: number = 0;
 
-  private isAlternateEmailId: boolean = false;
-  private isAlternateMobileNumber: boolean = false;
-  private isAlternateResidenceNumber: boolean = false;
+  isAlternateEmailId: boolean = false;
+  isAlternateMobileNumber: boolean = false;
+  isAlternateResidenceNumber: boolean = false;
 
   minValue: number = 1;
   options: Options = {
@@ -240,7 +241,7 @@ export class ViewFormComponent implements OnInit {
     }
   };
 
-  private lhsConfig = {
+  lhsConfig = {
     noSwiping: true,
     noSwipingClass: '',
     onlyExternal: true,
@@ -252,7 +253,7 @@ export class ViewFormComponent implements OnInit {
     }
   };
 
-  private rhsConfig = {
+  rhsConfig = {
     // noSwiping: true,
     // onlyExternal: true,
     autoplay: false,
@@ -260,49 +261,49 @@ export class ViewFormComponent implements OnInit {
     effect: "slide",
   };
 
-  private activeTab: number = 0;
+  activeTab: number = 0;
 
-  private dob: {day: string, month: string, year: string} = { day: null, month: null, year: null };
-  private residenceNumber: {stdCode: string, phoneNumber: string} = {stdCode: "", phoneNumber: ""};
-  private alternateResidenceNumber: {stdCode: string, phoneNumber: string} = {stdCode: "", phoneNumber: ""};
-  private addressCityState: string = "";
-  private otherReligion: string = "";
-  private dateOfIncorporation: {day: string, month: string, year: string} = {day: null, month: null, year: null};
-  private registeredAddressCityState: string = "";
-  private corporateAddressCityState: string = "";
-  private corporateAddressStdNumber: {stdCode: string, phoneNumber: string} = {stdCode: "", phoneNumber: ""};
+  dob: {day: string, month: string, year: string} = { day: null, month: null, year: null };
+  residenceNumber: {stdCode: string, phoneNumber: string} = {stdCode: "", phoneNumber: ""};
+  alternateResidenceNumber: {stdCode: string, phoneNumber: string} = {stdCode: "", phoneNumber: ""};
+  addressCityState: string = "";
+  otherReligion: string = "";
+  dateOfIncorporation: {day: string, month: string, year: string} = {day: null, month: null, year: null};
+  registeredAddressCityState: string = "";
+  corporateAddressCityState: string = "";
+  corporateAddressStdNumber: {stdCode: string, phoneNumber: string} = {stdCode: "", phoneNumber: ""};
 
 
-  @ViewChild('tabContents') private tabContents: ElementRef;
+  @ViewChild('tabContents') tabContents: ElementRef;
 
-  private applicantIndividual:boolean = true;
+  applicantIndividual:boolean = true;
   
 
-  private fragments = [ 'applicant',
+  fragments = [ 'applicant',
                         'co-applicant',
                         'loan-details',
                         'references',
                         'document-uploads'
   ];
 
-  private applicantIndex: number;
-  private coApplicantIndexes: Array<number>;
+  applicantIndex: number;
+  coApplicantIndexes: Array<number>;
 
-  private qde: Qde;
+  qde: Qde;
 
-  private religions: Array<any>;
-  private qualifications: Array<any>;
-  private occupations: Array<any>;
-  private residences: Array<any>;
-  private titles: Array<any>;
-  private maritals: Array<any>;
-  private relationships: Array<any>;
-  private loanpurposes: Array<any>;
-  private categories: Array<any>;
-  private genders: Array<any>;
-  private constitutions: Array<any>;
+  religions: Array<any>;
+  qualifications: Array<any>;
+  occupations: Array<any>;
+  residences: Array<any>;
+  titles: Array<any>;
+  maritals: Array<any>;
+  relationships: Array<any>;
+  loanpurposes: Array<any>;
+  categories: Array<any>;
+  genders: Array<any>;
+  constitutions: Array<any>;
 
-  private isIncomplete: Array<InCompleteFields> = [];
+  isIncomplete: Array<InCompleteFields> = [];
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -528,7 +529,7 @@ export class ViewFormComponent implements OnInit {
     this.isAlternateResidenceNumber = !this.isAlternateResidenceNumber;
   }
   
-  private temp;
+  temp;
 
   counter(size): Array<number> {
     return new Array(size);
@@ -570,8 +571,9 @@ export class ViewFormComponent implements OnInit {
       console.log("res: ", res['ProcessVariables']['checkEligibility'].toLowerCase);
       if(res['ProcessVariables']['checkEligibility'].toLowerCase() == 'yes') {
         this.isEligible = true;
-        this.emiAmount = res['ProcessVariables']['emi'];
-        this.eligibleAmount = res['ProcessVariables']['eligibilityAmount'];
+
+        this.emiAmount = parseInt(res['ProcessVariables']['emi']);
+        this.eligibleAmount = parseInt(res['ProcessVariables']['eligibilityAmount']);
       }
       else if(res['ProcessVariables']['checkEligibility'].toLowerCase() == 'no') {
         this.isNotEligible = true;
