@@ -31,8 +31,7 @@ interface Item {
 export class CoApplicantQdeComponent implements OnInit, OnDestroy {
 
   readonly errors = errors;
-
-  private isTabDisabled: boolean = true;
+  isTabDisabled: boolean = true;
 
   regexPattern = {
     mobileNumber: "^[0-9]*$",
