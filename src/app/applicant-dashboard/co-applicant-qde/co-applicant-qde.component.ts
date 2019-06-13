@@ -1,5 +1,5 @@
 import { Other, Applicant } from './../../models/qde.model';
-import { Component, OnInit, ViewChild, ElementRef, Renderer2, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Renderer2, OnDestroy, Inject } from '@angular/core';
     
 import * as Swiper from 'swiper/dist/js/swiper.js';
 // import { Select2Component } from 'ng2-select2';
@@ -29,6 +29,8 @@ interface Item {
   styleUrls: ['./co-applicant-qde.component.css']
 })
 export class CoApplicantQdeComponent implements OnInit, OnDestroy {
+
+  readonly errors = errors;
 
   private isTabDisabled: boolean = true;
 

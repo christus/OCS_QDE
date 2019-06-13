@@ -1,4 +1,4 @@
-export const errors = {
+export const errors: any = {
 
   pan: {
     required: "PAN number is mandatory",
