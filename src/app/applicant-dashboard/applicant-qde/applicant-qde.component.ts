@@ -1676,12 +1676,13 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     });
   }
 
-
   selectValueChanged(event, to) {
-    let whichSelectQde = this.qde.application.applicants[this.applicantIndex];
+    let whichSelectQde = this.qde.application.applicants[this.coApplicantIndex];
+    let nick = to.getAttribute('nick').split(".");
     to.getAttribute('nick').split(".").forEach((val, i) => {
       if(val == 'day' || val == 'month' || val == 'year') {
-        this.dob[val] = event.value;
+        this[(nick[i-1])][val].value = event.value;
+        console.log(this[(nick[i-1])][val]);
         return;
       } else {
         if(i == (to.getAttribute('nick').split(".").length-1)) {

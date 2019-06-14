@@ -428,8 +428,8 @@
                                                             valueField="value"
                                                             name="day"
                                                             nick="personalDetails.day"
-                                                            #personalDetails
-                                                            (selectionChange)="selectValueChanged($event, personalDetails.hostElement)"
+                                                            #personalDetailsDay
+                                                            (selectionChange)="selectValueChanged($event, personalDetailsDay.hostElement)"
                                                             [(ngModel)]="dob.day">
                                                             </kendo-dropdownlist>
                                                         </div>
@@ -441,8 +441,8 @@
                                                             valueField="value"
                                                             name="month"
                                                             nick="personalDetails.month"
-                                                            #personalDetails
-                                                            (selectionChange)="selectValueChanged($event, personalDetails.hostElement)"
+                                                            #personalDetailsMonth
+                                                            (selectionChange)="selectValueChanged($event, personalDetailsMonth.hostElement)"
                                                             [(ngModel)]="dob.month">
                                                             </kendo-dropdownlist>
                                                         </div>
@@ -454,8 +454,8 @@
                                                             valueField="value"
                                                             name="year"
                                                             nick="personalDetails.year"
-                                                            #personalDetails
-                                                            (selectionChange)="selectValueChanged($event, personalDetails.hostElement)"
+                                                            #personalDetailsYear
+                                                            (selectionChange)="selectValueChanged($event, personalDetailsYear.hostElement)"
                                                             [(ngModel)]="dob.year">
                                                             </kendo-dropdownlist>
                                                         </div>
@@ -466,40 +466,24 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <span class="control-title">Birth place</span>
-                                                    
+
                                                     <kendo-dropdownlist class="form-control"
                                                     [data]="birthPlace"
                                                     textField="key"
                                                     valueField="value"
                                                     name="birthPlace"
                                                     nick="personalDetails.birthPlace"
-                                                    #personalDetails
-                                                    (selectionChange)="selectValueChanged($event, personalDetails.hostElement)"
+                                                    #personalDetailsBirthPlace
+                                                    (selectionChange)="selectValueChanged($event, personalDetailsBirthPlace.hostElement)"
                                                     [(ngModel)]="selectedBirthPlace">
                                                     </kendo-dropdownlist>
-
-
-                                                    <!-- <select [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.birthPlace"
-                                                            name="birthPlace"
-                                                            required>
-                                                        <option value="1"
-                                                                *ngFor="let c of cities;let i=index;"
-                                                                [ngClass]="{'select', qde.application.applicants[applicantIndex].personalDetails.birthPlace == i}"
-                                                                [selected]="qde.application.applicants[applicantIndex].personalDetails.birthPlace == i">Pune</option>
-                                                        <option value="1">Pune</option>
-                                                        <option value="2">Kolkota</option>
-                                                        <option value="3">Mumbai</option>
-                                                        <option value="4">Delhi</option>
-                                                        <option value="5">Madras</option>
-                                                        <option value="6">Madhya Pradesh</option>
-                                                    </select> -->
                                                 </div>
                                             </div>
                                             <div class="btn-wrap">
                                                 <button type="submit"
                                                         class="btn btn-primary"
-                                                        [ngClass]="{'disabled': !dobForm.valid}"
-                                                        [disabled]="!dobForm.valid">Next
+                                                        [ngClass]="{'disabled': (dob.day.value == 'DD' || dob.month.value == 'MM' || dob.year.value == 'YYYY')}"
+                                                        [disabled]="(dob.day.value == 'DD' || dob.month.value == 'MM' || dob.year.value == 'YYYY')">Next
                                                 </button>
                                             </div>
                                         </form>
