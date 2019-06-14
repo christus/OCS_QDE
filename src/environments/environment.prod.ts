@@ -26,6 +26,10 @@ export const environment = {
     "cityState": {
       'workflowId': '4ab7cb9a723511e982270242ac110003',
       'processId': '4b3c780e723511e982270242ac110003'
+    },
+    "birthPlace": {
+      'workflowId': '4ab7cb9a723511e982270242ac110003',
+      'processId': 'af88d3c2724211e982270242ac110003'
     }
   },
   userName: "icici@icici.com",

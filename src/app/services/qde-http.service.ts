@@ -302,12 +302,7 @@ createOrUpdatePersonalDetails(qde) {
       });
     //  }
   }
-
-<<<<<<< HEAD
-  dummyCIBILAPI(ocsReferenceNumber) {
-=======
   dummyCIBILAPI() {
->>>>>>> master
     return of({
       "Error" : "0",
       "ErrorCode" : "",
@@ -424,13 +419,8 @@ createOrUpdatePersonalDetails(qde) {
       "referenceNumber": "",
       "requestType": "",
       "ocsReferenceNumber": "ocs00000000000000000037",
-<<<<<<< HEAD
-      //"checkEligibility": "yes",
-      "checkEligibility": "no",
-=======
       "checkEligibility": "yes",
       //"checkEligibility": "no",
->>>>>>> master
       "eligibilityAmount": "55000",
       "emi": "15000",
       "cibilScore": "",

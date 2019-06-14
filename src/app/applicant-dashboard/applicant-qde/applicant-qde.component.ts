@@ -255,6 +255,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
     console.log(">>", JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs));
+    console.log(">>>---", JSON.parse(this.route.snapshot.data.birthPlaceValues['ProcessVariables']['response']));
     if(this.route.snapshot.data.listOfValues != null && this.route.snapshot.data.listOfValues != undefined) {
 
       var lov = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs);
@@ -273,7 +274,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       this.genders = lov.LOVS.gender;
       this.constitutions = lov.LOVS.constitution;
       this.assessmentMethodology = lov.LOVS.assessment_methodology;
-      this.birthPlace = lov.LOVS.birthplace;
+      this.birthPlace = JSON.parse(this.route.snapshot.data.birthPlaceValues['ProcessVariables']['response']).city;
 
       // List of Values for Date
       this.days = Array.from(Array(31).keys()).map((val, index) => {
@@ -295,7 +296,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       this.years.unshift({key: 'YYYY', value: 'YYYY'});
 
 
-      this.birthPlace = [{"key": "Chennai", "value": "1"},{"key": "Mumbai", "value": "2"},{"key": "Delhi", "value": "3"}];
+//      this.birthPlace = [{"key": "Chennai", "value": "1"},{"key": "Mumbai", "value": "2"},{"key": "Delhi", "value": "3"}];
 
       this.selectedTitle = this.titles[0];
       this.selectedReligions = this.religions[0];

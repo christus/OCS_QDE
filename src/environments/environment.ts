@@ -38,6 +38,10 @@ export const environment = {
     'cibil': {
       'workflowId': '7b222bb4837d11e982270242ac110002',
       'processId': '7b2ecfd6837d11e982270242ac110002'
+    },
+    "birthPlace": {
+      'workflowId': '4ab7cb9a723511e982270242ac110003',
+      'processId': 'af88d3c2724211e982270242ac110003'
     }
   },
   userName: "icici@icici.com",
