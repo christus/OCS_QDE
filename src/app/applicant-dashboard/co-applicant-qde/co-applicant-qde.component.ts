@@ -283,9 +283,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       this.genders = lov.LOVS.gender;
       this.constitutions = lov.LOVS.constitution;
       this.assessmentMethodology = lov.LOVS.assessment_methodology;
-      this.birthPlace = lov.LOVS.birthplace;
+      this.birthPlace = JSON.parse(this.route.snapshot.data.birthPlaceValues['ProcessVariables']['response']).city;
       //hardcoded
-      this.birthPlace = [{"key": "Chennai", "value": "1"},{"key": "Mumbai", "value": "2"},{"key": "Delhi", "value": "3"}];
+      //this.birthPlace = [{"key": "Chennai", "value": "1"},{"key": "Mumbai", "value": "2"},{"key": "Delhi", "value": "3"}];
       // List of Values for Date
       this.days = Array.from(Array(31).keys()).map((val, index) => {
         let v = ((index+1) < 10) ? "0"+(index+1) : (index+1)+"";
