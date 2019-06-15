@@ -27,6 +27,8 @@ interface Item {
 })
 export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
+  readonly errors = errors;
+
   regexPattern = {
     mobileNumber: "^[0-9]*$",
     name: "^[A-Za-z, ]+$",
@@ -825,7 +827,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       }
     }, (error) => {
       console.log('error ', error);
-      alert("error"+error);
+      // alert("error"+error);
       // Throw Request Failure Error
     });
   }
@@ -836,7 +838,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   //-------------------------------------------------------------
 
   submitOrgPanNumber(form: NgForm, swiperInstance ?: Swiper) {
-// alert(1111);
+  // alert(1111);
     event.preventDefault();
 
     if (form && !form.valid) {
@@ -879,7 +881,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       }
     }, (error) => {
       console.log('error ', error);
-      alert("error"+error);
+      // alert("error"+error);
       // Throw Request Failure Error
     });   
   }
@@ -1071,7 +1073,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
           if(result.city != null && result.state != null && result.city != "" && result.state != "") {
             this.commCityState = result.city +" "+ result.state;
           }else {
-            alert("Pin code not available / enter proper pincode");
+            // alert("Pin code not available / enter proper pincode");
           }
 
           this.qde.application.applicants[this.applicantIndex][screenName].zipcodeId = result.zipcodeId;
@@ -1084,7 +1086,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
           this.qde.application.applicants[this.applicantIndex][screenName].cityState = this.commCityState || "XXXX YYYY";  
         }
         else if(response['Error'] == '1') {
-          alert("Invalid Pin");
+          // alert("Invalid Pin");
         }
 
      });
@@ -1218,7 +1220,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       }
     }, (error) => {
       console.log("response : ", error);
-      alert("error"+error);
+      // alert("error"+error);
     });
 
   }
@@ -1337,7 +1339,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       }
     }, (error) => {
       console.log("response : ", error);
-      alert("error"+error);
+      // alert("error"+error);
     });
 
   }
@@ -1646,7 +1648,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
           if(value == true) {
             this.goToNextSlide(swiperInstance);
           } else {
-            swiperInstance.setIndex(3);
+            //swiperInstance.setIndex(3);
           }
           
         } else {
@@ -1676,8 +1678,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     });
   }
 
+
   selectValueChanged(event, to) {
-    let whichSelectQde = this.qde.application.applicants[this.coApplicantIndex];
+    let whichSelectQde = this.qde.application.applicants[this.applicantIndex];
     let nick = to.getAttribute('nick').split(".");
     to.getAttribute('nick').split(".").forEach((val, i) => {
       if(val == 'day' || val == 'month' || val == 'year') {

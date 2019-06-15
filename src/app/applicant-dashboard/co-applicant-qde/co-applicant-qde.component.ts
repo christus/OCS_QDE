@@ -63,6 +63,18 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       return  sliderVal + '<b>y</b>';
     }
   };
+  
+  familyOptions: Options = {
+    floor: 0,
+    ceil: 6,
+    step: 1,
+    showTicksValues: false,
+    // showSelectionBar: true,
+    showTicks: true,
+    getLegend: (sliderVal: number): string => {
+      return  sliderVal + '';
+    }
+  };  
 
   imageUrl:string = "appiyo/d/drive/upload/";
 
@@ -485,7 +497,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       }
     }, (error) => {
       console.log('error ', error);
-      alert("error"+error);
+      // alert("error"+error);
       // Throw Request Failure Error
     });
   }
@@ -534,7 +546,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       }
     }, (error) => {
       console.log('error ', error);
-      alert("error"+error);
+      // alert("error"+error);
       // Throw Request Failure Error
     });   
   }
@@ -644,12 +656,23 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
     });
     
   }
-
+  private ageError=false;
   submitDobDetails(form: NgForm, swiperInstance ?: Swiper) {
     event.preventDefault();
 
     if (form && !form.valid) {
       return;
+    }
+    const dateofbirth = form.value.year.value+'-'+form.value.month.value+'-'+form.value.day.value;
+    const d1:any = new Date(dateofbirth);
+    const d2:any = new Date();
+    var diff = d2 - d1 ;
+    var age = Math.floor(diff/(1000*60*60*24*365.25));
+    if(age >= 70 || age <=18 ){
+      this.ageError = true;
+      return;
+    }else {
+      this.ageError=false;
     }
 
     this.qde.application.applicants[this.coApplicantIndex].personalDetails.dob = form.value.year.value+'-'+form.value.month.value+'-'+form.value.day.value;
@@ -718,7 +741,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
           if(result.city != null && result.state != null && result.city != "" && result.state != "") {
             this.commCityState = result.city +" "+ result.state;
           }else {
-            alert("Pin code not available / enter proper pincode");
+            // alert("Pin code not available / enter proper pincode");
           }
 
           this.qde.application.applicants[this.coApplicantIndex][screenName].zipcodeId = result.zipcodeId;
@@ -731,7 +754,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
           this.qde.application.applicants[this.coApplicantIndex][screenName].cityState = this.commCityState || "XXXX YYYY";  
         }
         else if(response['Error'] == '1') {
-          alert("Invalid Pin");
+          // alert("Invalid Pin");
         }
 
      });
@@ -865,7 +888,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       }
     }, (error) => {
       console.log("response : ", error);
-      alert("error"+error);
+      // alert("error"+error);
     });
 
   }
@@ -986,7 +1009,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       }
     }, (error) => {
       console.log("response : ", error);
-      alert("error"+error);
+      // alert("error"+error);
     });
 
   }
@@ -996,10 +1019,21 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
   //-------------------------------------------------------------
   // Occupation Details
   //-------------------------------------------------------------
+  private expError = false;
   submitOccupationDetails(form: NgForm) {
     if (form && !form.valid) {
       return;
     }
+    const currentExp = form.value.numberOfYearsInCurrentCompany;
+    const totalExp = form.value.totalExperienceYear;
+    if(currentExp > totalExp) {
+      //form.valid = false;
+      this.expError = true;
+      return;
+    }else{
+      this.expError=false;
+    }
+    
 
     this.qde.application.applicants[this.coApplicantIndex].occupation.occupationType = form.value.occupationType.value;
     this.qde.application.applicants[this.coApplicantIndex].occupation.companyName = form.value.companyName;
@@ -1011,7 +1045,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
-        this.tabSwitch(10);
+        this.tabSwitch(9);
       } else {
         // Throw Invalid Pan Error
       }
@@ -1264,7 +1298,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
   }
 
   changeIsIndividual(value, swiperInstance ?: Swiper) {
-    alert(value);
+    // alert(value);
     if(value == 1) {
       console.log("VALUE1: ", value);
       this.goToNextSlide(swiperInstance);
@@ -1514,7 +1548,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
 
       // Incoming from create in Individual Pan
       if(this.panslide == true && this.qde.application.applicants[this.coApplicantIndex].isIndividual == true) {
-        alert(this.panslide);
+        // alert(this.panslide);
         // this.panSlider2.setIndex(2);
         this.tabSwitch(2);
       }

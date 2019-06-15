@@ -171,6 +171,7 @@
                                                             name="pan"
                                                             #panNumber="ngModel"
                                                             fieldFill
+                                                            spellcheck="false"
                                                             required />
                                                     <label for="pan-inpt">Enter PAN in Uppercase</label>
                                                     <div *ngIf="panNumber.touched && panNumber.invalid" class="invalid-feedback">
@@ -202,8 +203,10 @@
                                                             id="docNumber"
                                                             name="docNumber"
                                                             #panDocNumber="ngModel"
+                                                            pattern="{{regexPattern.docNumber}}"
                                                             maxlength="16"
-                                                            fieldFill
+                                                            fieldFill 
+                                                            spellcheck="false"
                                                             required/>
                                                 <label for="docNumber">Document Number</label>
 
@@ -346,6 +349,7 @@
                                                             name="firstName" 
                                                             #firstName="ngModel" 
                                                             fieldFill 
+                                                            spellcheck="false"
                                                             required
                                                             pattern="{{regexPattern.name}}" />
                                                           <label for="name">First name</label>
@@ -362,6 +366,7 @@
                                                           [(ngModel)]="qde.application.applicants[coApplicantIndex].personalDetails.middleName"
                                                           pattern="{{regexPattern.name}}"
                                                           fieldFill
+                                                          spellcheck="false"
                                                           #middleName="ngModel" />
                                                     <label for="middleName">Middle name</label>
   
@@ -379,6 +384,7 @@
                                                               #lastName="ngModel" 
                                                               id="lastName"
                                                               fieldFill
+                                                              spellcheck="false"
                                                               pattern="{{regexPattern.name}}"
                                                               required />
                                                     <label for="lastName" >Last name</label>
@@ -488,6 +494,9 @@
                                                             </kendo-dropdownlist>
                                                         </div>
                                                     </div>
+                                                    <div *ngIf="ageError" class="invalid-feedback">
+                                                        <div *ngIf="ageError"> Age should not be less than 18 years and greater than 70 years</div>
+                                                      </div>
                                                   </div>
                                                   <div class="form-group">
                                                       <span class="control-title">Birth place</span>
@@ -546,6 +555,7 @@
                                               name="preferEmailId"
                                               #preferEmailId="ngModel"
                                               email
+                                              spellcheck="false"
                                               fieldFill
                                               required />
   
@@ -571,6 +581,7 @@
                                               name="alternateEmailId"
                                               #alternateEmailId="ngModel"
                                               fieldFill
+                                              spellcheck="false"
                                               email />
   
                                         <label for="alter-email">Alternate email ID</label>
@@ -594,6 +605,7 @@
                                           #mobileNumber="ngModel"
                                           pattern="{{regexPattern.mobileNumber}}"
                                           fieldFill
+                                          spellcheck="false"
                                           required />
   
                                         <label for="mob-no">Mobile number</label>
@@ -620,6 +632,7 @@
                                           name="alternateMobileNumber"
                                           #altMobileNo="ngModel"
                                           fieldFill
+                                          spellcheck="false"
                                           pattern="{{regexPattern.mobileNumber}}"/>
   
                                         <label for="alter-mob">Alternate mobile no</label>
@@ -646,6 +659,7 @@
                                                       name="residenceNumber1"
                                                       class="form-control"
                                                       fieldFill
+                                                      spellcheck="false"
                                                       required
                                                       id="std" />
                                               <label for="std">STD</label>
@@ -667,11 +681,12 @@
                                                       value="{{residenceNumber.phoneNumber}}"
                                                       data-validation-attr="residenceno"
                                                       fieldFill
+                                                      spellcheck="false"
                                                       required />
                                             <label for="res-no">Residence number</label>
                                             <div *ngIf="residenceNumber.touched  && residenceNumber.invalid" class="invalid-feedback">
-                                              <!-- <div *ngIf="residenceNumber.errors?.pattern">{{errors.contactDetails.residenceNumber.invalid}}</div> -->
-                                              <div *ngIf="residenceNumber.errors?.required">{{errors.contactDetails.residenceNumber.required}}</div>
+                                              <div *ngIf="residenceNumber.errors?.pattern">{{errors.contactDetails.residenceNumber.invalid}}</div>
+                                              <!-- <div *ngIf="residenceNumber.errors?.required">{{errors.contactDetails.residenceNumber.required}}</div> -->
                                             </div>
                                         </div>
                                         <span class="alternate-data">
@@ -690,6 +705,7 @@
                                                       pattern="{{regexPattern.mobileNumber}}"
                                                       class="form-control"
                                                       fieldFill
+                                                      spellcheck="false"
                                                       id="altrstd">
                                             <label for="altrstd" >STD</label>
                                             <div *ngIf="alternateResidenceNumberStd1.touched  && alternateResidenceNumberStd1.invalid" class="invalid-feedback">
@@ -705,6 +721,7 @@
                                                       name="alternateResidenceNumber2"
                                                       id="altr-res-no"
                                                       maxlength="8" 
+                                                      spellcheck="false"
                                                       pattern="{{regexPattern.mobileNumber}}"
                                                       data-validation-attr="residenceno01" />
                                             <label for="altr-res-no">Residence number</label>
@@ -772,6 +789,7 @@
                                               name="addressLineOne"
                                               #address1="ngModel"
                                               fieldFill
+                                              spellcheck="false"
                                               required />
 
                                         <div *ngIf="(address1.touched || address1.dirty) && address1.invalid" class="invalid-feedback">
@@ -790,6 +808,7 @@
                                         name="addressLineTwo"
                                         #address2="ngModel"
                                         fieldFill
+                                        spellcheck="false"
                                         required/>
   
                                       <label for="address2">Address line 2</label>
@@ -809,6 +828,7 @@
                                                 #commPinCode="ngModel" 
                                                 maxlength="6"
                                                 fieldFill
+                                                spellcheck="false"
                                                 (blur)="onPinCodeChange($event, 'communicationAddress')" 
                                                 pattern="{{regexPattern.pinCode}}" />
                                         <label for="pincode">Pincode</label>
@@ -827,7 +847,8 @@
                                                 [(ngModel)]="qde.application.applicants[coApplicantIndex].communicationAddress.cityState"
                                                 name="cityState"
                                                 #commCityState="ngModel"
-                                                fieldFill                     
+                                                fieldFill   
+                                                spellcheck="false"                  
                                                 pattern="{{regexPattern.address}}" />
                                             
                                             <label for="cityState">City/State</label>
@@ -855,6 +876,7 @@
                                               #pAddress1="ngModel"
                                               pattern="{{regexPattern.address}}"
                                               fieldFill
+                                              spellcheck="false"
                                               [(ngModel)]="qde.application.applicants[coApplicantIndex].permanentAddress.addressLineOne"
                                               required />
                                               <label for="per-address1">Address line 1</label>
@@ -869,6 +891,7 @@
                                               #pAddress2="ngModel"
                                               fieldFill
                                               pattern="{{regexPattern.address}}"
+                                              spellcheck="false"
                                               [(ngModel)]="qde.application.applicants[coApplicantIndex].permanentAddress.addressLineTwo"
                                               required/>
                                               <label for="per-address2">Address line 2</label>
@@ -885,6 +908,7 @@
                                                         #pZipcode="ngModel"
                                                         (blur)="onPinCodeChange($event, 'permanentAddress')" 
                                                         fieldFill
+                                                        spellcheck="false"
                                                         [(ngModel)]="qde.application.applicants[coApplicantIndex].permanentAddress.zipcode"
                                                         minlength="6"
                                                         maxlength="6"
@@ -898,10 +922,12 @@
                                             </div>
                                           </div>
                                           <div class="form-group">
-                                              <input type="text" class="form-control" id="per-cityState"
+                                              <input type="text" class="form-control" 
+                                              id="per-cityState"
                                               name="commCityState"
-                                              #commCityState="ngModel" 
+                                              #commCitystate="ngModel" 
                                               fieldFill
+                                              spellcheck="false"
                                               [(ngModel)]="qde.application.applicants[coApplicantIndex].permanentAddress.cityState">
                                               <label for="per-cityState">City/State</label>
                                           </div>
@@ -937,12 +963,13 @@
                                       </div>
                                   <div class="form-group typ-range">
                                       <span class="control-title">Number of years in current residence</span>
-                                      <input type="number"
+                                      <input type="text"
                                               name="numberOfYearsInCurrentResidence"
                                               class="form-control"
                                               [(ngModel)]="qde.application.applicants[coApplicantIndex].communicationAddress.numberOfYearsInCurrentResidence"
                                               min=0
                                               max=90
+                                              spellcheck="false"
                                               #numberOfYearsInCurrentResidence="ngModel"
                                               fieldFill
                                               (ngModelChange)="valuechange($event, 3)"
@@ -1075,6 +1102,7 @@
                                                       pattern="{{regexPattern.name}}"
                                                       id="spouse-name"
                                                       fieldFill
+                                                      spellcheck="false"
                                                       required />
                                                     <label for="spouse-name">First name</label>
 
@@ -1136,6 +1164,7 @@
                                                           #amount="ngModel"
                                                           name="amount"
                                                           fieldFill
+                                                          spellcheck="false"
                                                           pattern="{{regexPattern.amount}}" />
   
                                                   <label for="amount">Amount (in lakhs)</label>
@@ -1215,14 +1244,15 @@
                                           <div class="form-wrap">
                                               <div class="form-group typ-range">
                                                   <span class="control-title">Enter number of dependents</span>
-                                                  <input  type="number"
+                                                  <input  type="text"
                                                           name="numberOfDependents"
                                                           min=0
                                                           max=90
                                                           class="form-control"
+                                                          spellcheck="false"
                                                           [(ngModel)]="qde.application.applicants[coApplicantIndex].familyDetails.numberOfDependents"
                                                           (ngModelChange)="valuechange($event, 1)" />
-                                                  <ng5-slider [(value)]="qde.application.applicants[coApplicantIndex].familyDetails.numberOfDependents" [options]="options"></ng5-slider>
+                                                  <ng5-slider [(value)]="qde.application.applicants[coApplicantIndex].familyDetails.numberOfDependents" [options]="familyOptions"></ng5-slider>
                                               </div>
                                           </div>
                                           <div class="btn-wrap">
@@ -1273,6 +1303,7 @@
                                                           #fatherName="ngModel"
                                                           name="fatherName"
                                                           fieldFill
+                                                          spellcheck="false"
                                                           pattern="{{regexPattern.name}}" />
                                                           <label for="father-name">Father's name</label>
                                                   <div *ngIf="fatherName.touched && fatherName.invalid" class="invalid-feedback">
@@ -1302,6 +1333,7 @@
                                                           #motherName="ngModel"
                                                           name="motherName"
                                                           fieldFill
+                                                          spellcheck="false"
                                                           pattern="{{regexPattern.name}}" />
                                                         <label for="mother-name">Mother's name</label>
                                                   <div *ngIf="motherName.touched && motherName.invalid" class="invalid-feedback">
@@ -1318,6 +1350,7 @@
                                                             #motherMaiden="ngModel"
                                                             name="motherMaidenName"
                                                             fieldFill
+                                                            spellcheck="false"
                                                             pattern="{{regexPattern.name}}" />
                                                           <label for="maiden-name" >Mother's maiden name</label>
                                                   <div *ngIf="motherMaiden.touched && motherMaiden.invalid" class="invalid-feedback">
@@ -1456,6 +1489,7 @@
                                               name="companyName"
                                               #companyName="ngModel"
                                               fieldFill
+                                              spellcheck="false"
                                               id="companyName" />
                                       <label for="companyName" >Company name</label>
   
@@ -1467,13 +1501,14 @@
                                   </div>
                                   <div class="form-group typ-range">
                                       <span class="control-title">Years in current employment/bussiness</span>
-                                      <input type="number"
+                                      <input type="text"
                                               name="numberOfYearsInCurrentCompany"
                                               id="no-yrs"
                                               class="form-control"
                                               [(ngModel)]="qde.application.applicants[coApplicantIndex].occupation.numberOfYearsInCurrentCompany"
                                               min=0
                                               max=90
+                                              spellcheck="false"
                                               #numberOfYearsInCurrentCompany="ngModel"
                                               (ngModelChange)="valuechange($event, 2)"
                                               required />
@@ -1485,17 +1520,21 @@
                                       <!-- <div *ngIf="numberOfYearsInCurrentCompany.touched && numberOfYearsInCurrentCompany.invalid" class="invalid-feedback">
                                         <div *ngIf="numberOfYearsInCurrentCompany.errors?.required">{{errors.occupationDetails.currentExp.required}}</div>
                                       </div> -->
+                                      <div *ngIf="expError" class="invalid-feedback">
+                                        <div *ngIf="expError"><br><br>Experience in current employment/business should not be greater than total work experience </div>
+                                      </div>
   
                                   </div>
                                   <div class="form-group typ-range">
                                       <span class="control-title">Total Work Experience</span>
-                                      <input type="number"
+                                      <input type="text"
                                               name="totalExperienceYear"
                                               class="form-control"
                                               [(ngModel)]="qde.application.applicants[coApplicantIndex].occupation.totalWorkExperience"
                                               min=0
                                               max=90
                                               #totalExperienceYear="ngModel"
+                                              spellcheck="false"
                                               (ngModelChange)="valuechange($event, 3)"
                                               required />
   
@@ -1548,6 +1587,7 @@
                                               name="ofcA1"
                                               #ofcA1="ngModel"
                                               fieldFill
+                                              spellcheck="false"
                                               required />
                                       <label for="ofcAddOne">Office address line1</label>
   
@@ -1563,6 +1603,7 @@
                                         [(ngModel)]="qde.application.applicants[coApplicantIndex].officialCorrespondence.addressLineTwo"
                                         pattern="{{regexPattern.address}}"
                                         name="ofcA2"
+                                        spellcheck="false"
                                         #ofcA2="ngModel"
                                         fieldFill
                                         required />
@@ -1579,6 +1620,7 @@
                                         [(ngModel)]="qde.application.applicants[coApplicantIndex].officialCorrespondence.landMark"
                                         name="landMark"
                                         fieldFill
+                                        spellcheck="false"
                                         pattern="{{regexPattern.address}}"
                                         #landMark="ngModel" />
                                       <label for="offLandmark">Landmark</label>
@@ -1598,6 +1640,7 @@
                                             name="pinCode"
                                             minlength="6"
                                             maxlength="6"
+                                            spellcheck="false"
                                             fieldFill
                                             (blur)="onPinCodeChange($event, 'officialCorrespondence')" 
                                             pattern="{{regexPattern.pinCode}}"/>
@@ -1617,6 +1660,7 @@
                                         #offCityState="ngModel"
                                         name="cityState"
                                         fieldFill
+                                        spellcheck="false"
                                         pattern="{{regexPattern.address}}">
                                         <label for="offCityState">City/State</label>
   
@@ -1633,6 +1677,7 @@
                                             #stdCode="ngModel"
                                             name="stdCode"
                                             maxlength="3"
+                                            spellcheck="false"
                                             pattern="{{regexPattern.mobileNumber}}"
                                             fieldFill />
                                           <label for="std03">STD</label>
@@ -1649,6 +1694,7 @@
                                                   name="offStdNumber"
                                                   fieldFill
                                                   maxlength="8"
+                                                  spellcheck="false"
                                                   pattern="{{regexPattern.mobileNumber}}"
                                                   [(ngModel)]="officialCorrespondencePhoneNumber" />
                                           <label  for="res-no03">Office number</label>
@@ -1665,6 +1711,7 @@
                                         email
                                         #officeEmail="ngModel"
                                         fieldFill
+                                        spellcheck="false"
                                         name="officeEmail" />
                                       <label for="off-email">Office email ID</label>
   
@@ -1740,6 +1787,7 @@
                                                 #annualFamilyIncome1="ngModel"
                                                 name="annualFamilyIncome"
                                                 fieldFill
+                                                spellcheck="false"
                                                 pattern="{{regexPattern.amount}}"
                                                 required/>
                                               <label for="annualFamilyIncome1">Annual Family Income</label>
@@ -1759,6 +1807,7 @@
                                                   #monthlyExpenditure1="ngModel"
                                                   pattern="{{regexPattern.amount}}"
                                                   name="monthlyExpenditure"
+                                                  spellcheck="false"
                                                   fieldFill
                                                   required/>
                                                 <label for="monthlyExpenditure1">Monthly Expenditure</label>
@@ -1784,7 +1833,7 @@
                                                   [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.puccaHouse"
                                                   id="pucchaHouseIdYes1" />
                                                   <label for="pucchaHouseIdYes1">
-                                                      yes
+                                                      Yes
                                                   </label>
                                               </div>
                                               <div class="bs-radio typ-normal">
@@ -1847,6 +1896,7 @@
                                                         [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.monthlyIncome"
                                                         #monthlyIncome1="ngModel"
                                                         fieldFill
+                                                        spellcheck="false"
                                                         pattern="{{regexPattern.amount}}"
                                                         name="monthlyIncome"
                                                         required/>
@@ -1928,6 +1978,7 @@
                                                           name="pan"
                                                           #panNumber2="ngModel"
                                                           fieldFill
+                                                          spellcheck="false"
                                                           required />
                                                   <label for="pan-inpt2">Enter PAN number</label>
                                                   <div *ngIf="panNumber2.touched && panNumber2.invalid" class="invalid-feedback">
@@ -1958,6 +2009,7 @@
                                                     name="docNumber"
                                                     #coappdocNumberNonIndividual="ngModel"
                                                     fieldFill
+                                                    spellcheck="false"
                                                     maxlength="16"
                                                     pattern="{{regexPattern.docNumber}}"
                                                     required />
@@ -2011,6 +2063,7 @@
                                             #orgName="ngModel"
                                             name="orgName"
                                             fieldFill
+                                            spellcheck="false"
                                             required />
                                     <label for="org-name">Name of Organization</label>
 
@@ -2108,6 +2161,7 @@
                                                 name="regAdd"
                                                 #regAdd="ngModel"
                                                 fieldFill
+                                                spellcheck="false"
                                                 required />
                                       <label for="reg-add">Registered Address</label>
 
@@ -2122,6 +2176,7 @@
                                               name="landmark"
                                               #landmark01="ngModel"
                                               fieldFill
+                                              spellcheck="false"
                                               [(ngModel)]="qde.application.applicants[coApplicantIndex].registeredAddress.landMark"
                                               id="landmark" 
                                               pattern="{{regexPattern.address}}" />
@@ -2143,6 +2198,7 @@
                                                 minlength="6"
                                                 maxlength="6"
                                                 fieldFill
+                                                spellcheck="false"
                                                 (blur)="onPinCodeChange($event, 'registeredAddress')"
                                                 pattern="{{regexPattern.pinCode}}" />
                                           <label for="regoffPincode">Pincode</label>
@@ -2160,6 +2216,7 @@
                                           #regAddrCityState="ngModel"
                                           name="cityState"
                                           fieldFill
+                                          spellcheck="false"
                                           pattern="{{regexPattern.address}}">
                                           <label for="regAddrCityState">City/State</label>
 
@@ -2201,6 +2258,7 @@
                                                 name="corpAddress"
                                                 #corpAddress="ngModel"
                                                 fieldFill
+                                                spellcheck="false"
                                                 required />
                                       <label for="corp-add">Corporate Address</label>
   
@@ -2216,6 +2274,7 @@
                                               #landmark="ngModel"
                                               class="form-control"
                                               fieldFill
+                                              spellcheck="false"
                                               pattern="{{regexPattern.address}}"
                                               id="landmark01" />
                                       <label for="landmark01">Landmark</label>
@@ -2234,6 +2293,7 @@
                                               minlength="6"
                                               maxlength="6"
                                               required
+                                              spellcheck="false"
                                               #corpPincode="ngModel"
                                               (blur)="onPinCodeChange($event, 'corporateAddress')" 
                                               fieldFill />
@@ -2254,6 +2314,7 @@
                                               #corpCityState="ngModel" 
                                               name="corpCityState"
                                               fieldFill
+                                              spellcheck="false"
                                               pattern="{{regexPattern.address}}" />
                                         <label for="city-state01">City/State</label>
   
@@ -2270,6 +2331,7 @@
                                                   class="form-control"
                                                   #stdNumber="ngModel"
                                                   fieldFill
+                                                  spellcheck="false"
                                                   maxlength="3"
                                                   required
                                                   id="caStd"
@@ -2289,6 +2351,7 @@
                                                   name="phoneNumber"
                                                   id="ca-res-no"
                                                   fieldFill
+                                                  spellcheck="false"
                                                   #phoneNumber="ngModel"
                                                   pattern="{{regexPattern.mobileNumber}}"
                                                    maxlength="8" 
@@ -2310,6 +2373,7 @@
                                                 name="officeEmailId"
                                                 #ofcEmail="ngModel"
                                                 fieldFill
+                                                spellcheck="false"
                                                 email />                                      
                                     <label for="ofc-email" *ngIf="ofcEmail.value==''">Office email ID</label>
                                       <div *ngIf="ofcEmail.touched && ofcEmail.invalid" class="invalid-feedback">
@@ -2346,6 +2410,7 @@
                                     #revenue="ngModel"
                                     name="revenue"
                                     fieldFill
+                                    spellcheck="false"
                                     pattern="{{regexPattern.revenue}}"
                                     required />
                                     <label for="revenue">Revenue</label>
@@ -2364,6 +2429,7 @@
                                     required
                                     [(ngModel)]="qde.application.applicants[coApplicantIndex].revenueDetails.annualNetIncome"
                                     fieldFill
+                                    spellcheck="false"
                                     #annualNetincome="ngModel"
                                     name="annualNetIncome"
                                     pattern="{{regexPattern.revenue}}" />
@@ -2384,6 +2450,7 @@
                                     [(ngModel)]="qde.application.applicants[coApplicantIndex].revenueDetails.grossTurnOver"
                                     #grossTurnover="ngModel"
                                     fieldFill
+                                    spellcheck="false"
                                     name="grossTurnOver"
                                     pattern="{{regexPattern.revenue}}" />
                                     <label for="gross-turnover">Gross Turnover</label>
@@ -2460,6 +2527,7 @@
                                                   #annualFamilyIncome2="ngModel"
                                                   name="annualFamilyIncome"
                                                   fieldFill
+                                                  spellcheck="false"
                                                   pattern="{{regexPattern.amount}}"
                                                   required/>
                                                 <label for="annualFamilyIncome2">Annual Family Income</label>
@@ -2480,6 +2548,7 @@
                                                     pattern="{{regexPattern.amount}}"
                                                     name="monthlyExpenditure"
                                                     fieldFill
+                                                    spellcheck="false"
                                                     required/>
                                                   <label for="monthlyExpenditure2" >Monthly Expenditure</label>
                                                   <span class="addon">
@@ -2504,7 +2573,7 @@
                                                     [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.puccaHouse"
                                                     id="pucchaHouseIdYes2" />
                                                     <label for="pucchaHouseIdYes2">
-                                                        yes
+                                                        Yes
                                                     </label>
                                                 </div>
                                                 <div class="bs-radio typ-normal">
@@ -2567,6 +2636,7 @@
                                                           [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.monthlyIncome"
                                                           #monthlyIncome2="ngModel"
                                                           fieldFill
+                                                          spellcheck="false"
                                                           pattern="{{regexPattern.amount}}"
                                                           name="monthlyIncome"
                                                           required/>
