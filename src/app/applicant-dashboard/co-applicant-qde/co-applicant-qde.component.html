@@ -4,36 +4,36 @@
             <div class="tabs">
                 <ul class="tabs-head">
                   <li class="tab-link" [ngClass]="{'active': (activeTab == 0), 'hide': (!applicantIndividual), 'pending': false}">
-                    <a href="javascript:void(0);" (click)="tabSwitch(0)">Dashboard</a>
+                    <a [routerLink]="['/applicant', applicationId, 'co-applicant']" fragment="dashboard">Dashboard</a>
                   </li>
-                  <li class="tab-link" [ngClass]="{'active': (activeTab == 1), 'hide': (!applicantIndividual)}">
+                  <li class="tab-link" [ngClass]="{'active': (activeTab == 1), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
                     <a href="javascript:void(0);" (click)="tabSwitch(1)">PAN</a>
                   </li>
-                  <li class="tab-link" [ngClass]="{'active': (activeTab == 2), 'hide': (!applicantIndividual)}">
+                  <li class="tab-link" [ngClass]="{'active': (activeTab == 2), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
                     <a href="javascript:void(0);" (click)="tabSwitch(2)">personal details</a>
                   </li>
-                  <li class="tab-link" [ngClass]="{'active': (activeTab == 3), 'hide': (!applicantIndividual)}">
+                  <li class="tab-link" [ngClass]="{'active': (activeTab == 3), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
                     <a href="javascript:void(0);" (click)="tabSwitch(3)">contact details</a>
                   </li>
-                  <li class="tab-link" [ngClass]="{'active': (activeTab == 4), 'hide': (!applicantIndividual)}">
+                  <li class="tab-link" [ngClass]="{'active': (activeTab == 4), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
                     <a href="javascript:void(0);" (click)="tabSwitch(4)">communication address</a>
                   </li>
-                  <li class="tab-link" [ngClass]="{'active': (activeTab == 5), 'hide': (!applicantIndividual)}">
+                  <li class="tab-link" [ngClass]="{'active': (activeTab == 5), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
                     <a href="javascript:void(0);" (click)="tabSwitch(5)">marital status</a>
                   </li>
-                  <li class="tab-link" [ngClass]="{'active': (activeTab == 6), 'hide': (!applicantIndividual)}">
+                  <li class="tab-link" [ngClass]="{'active': (activeTab == 6), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
                     <a href="javascript:void(0);" (click)="tabSwitch(6)">family details</a>
                   </li>
-                  <li class="tab-link" [ngClass]="{'active': (activeTab == 7), 'hide': (!applicantIndividual)}">
+                  <li class="tab-link" [ngClass]="{'active': (activeTab == 7), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
                     <a href="javascript:void(0);" (click)="tabSwitch(7)">other</a>
                   </li>
-                  <li class="tab-link" [ngClass]="{'active': (activeTab == 8), 'hide': (!applicantIndividual)}">
+                  <li class="tab-link" [ngClass]="{'active': (activeTab == 8), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
                     <a href="javascript:void(0);" (click)="tabSwitch(8)">occupation details</a>
                   </li>
-                  <li class="tab-link" [ngClass]="{'active': (activeTab == 9), 'hide': (!applicantIndividual)}">
+                  <li class="tab-link" [ngClass]="{'active': (activeTab == 9), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
                     <a href="javascript:void(0);" (click)="tabSwitch(9)">offical correspondence</a>
                   </li>
-                  <li class="tab-link" [ngClass]="{'active': (activeTab == 10), 'hide': (!applicantIndividual)}">
+                  <li class="tab-link" [ngClass]="{'active': (activeTab == 10), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
                       <a href="javascript:void(0);" (click)="tabSwitch(10)">INCOME DETAILS</a>
                   </li>
                   <li class="tab-link hide" [ngClass]="{'active': (activeTab == 11), 'hide': (applicantIndividual)}">
@@ -73,7 +73,7 @@
                                     </button>
                                 </div>
                                 <form class="bs-form">
-                                    <div class="form-wrap">
+                                    <div class="form-wrap" *ngIf="coApplicantsForDashboard.length > 0">
 
                                         <div class="bs-radio typ-doc" *ngFor="let coApp of coApplicantsForDashboard;let i=index;">
                                             <input  type="radio"
@@ -131,7 +131,7 @@
                                   #panSlider2="ngxSwiper">
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide">
-                                        <form class="bs-form" #isIndividualForm="ngForm">
+                                        <form class="bs-form" *ngIf="!isTabDisabled" #isIndividualForm="ngForm">
                                             <div class="form-wrap">
                                                 <div class="bs-radio">
                                                     <input  type="radio"
@@ -155,7 +155,7 @@
                                         </form>
                                     </div>
                                     <div class="swiper-slide">
-                                        <form class="bs-form"
+                                        <form class="bs-form" *ngIf="!isTabDisabled"
                                               id="pan-form"
                                               #panNumberForm="ngForm"
                                               (ngSubmit)="submitPanNumber(panNumberForm, panSlider2)">
@@ -177,7 +177,7 @@
                                                     <div *ngIf="panNumber.touched && panNumber.invalid" class="invalid-feedback">
                                                         <!-- <div *ngIf="panNumber.errors?.required">{{errors.panNumber.required}}</div> -->
                                                         <div *ngIf="panNumber.errors?.pattern ? true : false">{{errors.pan.invalid}}</div>
-                                                        <div *ngIf="panNumber.errors?.minlength || panNumber.errors?.maxlength">*PAN must be at least {{pan.errors.minlength.requiredLength}} characters</div>
+                                                        <div *ngIf="panNumber.errors?.minlength || panNumber.errors?.maxlength">*PAN must be at least {{errors.pan.length}} characters</div>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -228,7 +228,7 @@
                                         </form>
                                     </div>
                                     <div class="swiper-slide">
-                                        <form class="bs-form">
+                                        <form class="bs-form" *ngIf="!isTabDisabled">
                                             <div class="form-wrap">
                                                 <div class="bs-file">
                                                       <!-- <image-upload [url]="imageUrl" [headers]="myHeaders"></image-upload> -->
@@ -297,7 +297,7 @@
                                     #pdSlider2="ngxSwiper">
                                   <div class="swiper-wrapper">
                                       <div class="swiper-slide">
-                                        <form class="bs-form">
+                                        <form class="bs-form" *ngIf="!isTabDisabled">
                                             <div class="form-wrap">
                                                 <div class="bs-radio">
                                                     <input  type="radio"
@@ -323,7 +323,7 @@
                                         </form>
                                       </div>
                                       <div class="swiper-slide">
-                                          <form   class="bs-form"
+                                          <form   class="bs-form" *ngIf="!isTabDisabled"
                                                   id="personal-form"
                                                   #nameForm="ngForm"
                                                   (ngSubmit)="submitNameDetails(nameForm, pdSlider2)">
@@ -404,7 +404,7 @@
                                           </form>
                                       </div>
                                       <div class="swiper-slide">
-                                          <form class="bs-form" #genderForm="ngForm">
+                                          <form class="bs-form" *ngIf="!isTabDisabled" #genderForm="ngForm">
                                               <div class="form-wrap">
                                                     <div class="bs-radio" *ngFor="let g of genders">
                                                         <input  type="radio"
@@ -412,28 +412,26 @@
                                                                 [id]="g.key"
                                                                 [value]="g.value"
                                                                 [checked]="qde.application.applicants[coApplicantIndex].personalDetails.gender == g.value"
-                                                                [(ngModel)]="qde.application.applicants[coApplicantIndex].personalDetails.gender"
-                                                                (click)="submitGenderDetails($event, genderForm, pdSlider2)" />
+                                                                (click)="submitGenderDetails(g.value, pdSlider2)" />
                                                         <label [for]="g.key"><span>{{g.key}}</span></label>
                                                     </div>
                                               </div>
                                           </form>
                                       </div>
                                       <div class="swiper-slide">
-                                          <form   class="bs-form"
+                                          <form   class="bs-form" *ngIf="!isTabDisabled"
                                                   #qualificationForm="ngForm"
                                                   (ngSubmit)="submitQualificationDetails(qualificationForm, pdSlider2)">
                                               <div class="form-wrap">
                                                   <div class="form-group">
                                                       <span class="control-title">Qualification</span>
-  <!--                                                     <select [(ngModel)]="qde.application.applicants[coApplicantIndex].personalDetails.qualification" name="qualification" required>
-                                                          <option *ngFor="let qual of qualifications" [value]="qual.value">{{qual.key}}</option>
-                                                      </select> -->
-  
                                                       <kendo-dropdownlist class="form-control"
                                                         [data]="qualifications" 
                                                         textField="key"
                                                         valueField="value"
+                                                        #qualification
+                                                        nick="personalDetails.qualification"
+                                                        (selectionChange)="selectValueChanged($event, qualification.hostElement)"
                                                         name="qualification"
                                                         [(ngModel)]="selectedQualification">
                                                       </kendo-dropdownlist>
@@ -449,7 +447,7 @@
                                           </form>
                                       </div>
                                       <div class="swiper-slide">
-                                          <form class="bs-form" #dobForm="ngForm" (ngSubmit)="submitDobDetails(dobForm, pdSlider2)">
+                                          <form class="bs-form" *ngIf="!isTabDisabled" #dobForm="ngForm" (ngSubmit)="submitDobDetails(dobForm, pdSlider2)">
                                               <div class="form-wrap">
                                                   <div class="form-group typ-select">
                                                       <span class="control-title">Date of Birth</span>
@@ -540,7 +538,7 @@
                             </div>
                         </div>
                         <div class="rhs">
-                            <form class="bs-form"
+                            <form class="bs-form" *ngIf="!isTabDisabled"
                                   id="contact-form"
                                   #contactForm="ngForm"
                                   (ngSubmit)="submitContactDetails(contactForm)">
@@ -759,7 +757,7 @@
                           </div>
                       </div>
                       <div class="rhs">
-                          <form   class="bs-form"
+                          <form   class="bs-form" *ngIf="!isTabDisabled"
                               id="communication-form"
                                   #communicationForm="ngForm"
                                   (ngSubmit)="submitCommunicationAddressDetails(communicationForm)">
@@ -1035,22 +1033,13 @@
                                   #maritalSlider2="ngxSwiper">
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide">
-                                        <form class="bs-form"
+                                        <form class="bs-form" *ngIf="!isTabDisabled"
                                               #maritalStatusForm="ngForm"
                                               (ngSubmit)="submitMaritalStatus(maritalStatusForm, maritalSlider2)">
                                             <div class="form-wrap">
                                                 <div class="form-group">
                                                     <span class="control-title">Marital Status</span>
 
-                                                    <!-- <kendo-dropdownlist class="form-control"
-                                                    [data]="residences" 
-                                                    textField="key"
-                                                    valueField="value"
-                                                    name="residentialStatus"
-                                                    nick="personalDetails.residentialStatus"
-                                                    #residentialStatus
-                                                    (selectionChange)="selectValueChanged($event, residentialStatus.hostElement)"
-                                                    [(ngModel)]="selectedResidence"> -->
                                                     <kendo-dropdownlist class="form-control"
                                                       [data]="maritals" 
                                                       textField="key"
@@ -1066,29 +1055,27 @@
                                             </div>
                                             <div class="btn-wrap">
                                               <button type="submit"
-                                                      class="btn btn-primary"
-                                                      [ngClass]="{'disabled': !maritalStatusForm.valid}"
-                                                      [disabled]="!maritalStatusForm.valid">Next
+                                                      class="btn btn-primary">Next
                                               </button>
                                             </div>
                                         </form>
                                     </div>
                                     <div class="swiper-slide">
-                                        <form class="bs-form"
+                                        <form class="bs-form" *ngIf="!isTabDisabled"
                                               #spouseForm="ngForm"
                                               (ngSubmit)="submitSpouseName(spouseForm, maritalSlider2)">
                                             <div class="form-wrap">
                                                 <div class="form-group">
                                                     <span class="control-title">Title</span>
                                                     <kendo-dropdownlist class="form-control"
-                                                      [data]="titles" 
-                                                      textField="key"
-                                                      valueField="value"
-                                                      name="spouseTitle"
-                                                      nick="maritalStatus.spouseTitle"
-                                                      #spouseTitle
-                                                      (selectionChange)="selectValueChanged($event, spouseTitle.hostElement)"
-                                                      [(ngModel)]="selectedSpouseTitle">
+                                                                        [data]="titles" 
+                                                                        textField="key"
+                                                                        valueField="value"
+                                                                        name="spouseTitle"
+                                                                        nick="maritalStatus.spouseTitle"
+                                                                        #spouseTitle
+                                                                        (selectionChange)="selectValueChanged($event, spouseTitle.hostElement)"
+                                                                        [(ngModel)]="selectedSpouseTitle">
                                                     </kendo-dropdownlist>
 
                                                 </div>
@@ -1124,9 +1111,7 @@
                                         </form>
                                     </div>
                                     <div class="swiper-slide">
-                                        <form class="bs-form"
-                                              #spouseEarningForm="ngForm"
-                                              (ngSubmit)="submitSpouseEarning(spouseEarningForm, maritalSlider2)">
+                                        <form class="bs-form" *ngIf="!isTabDisabled">
                                             <div class="form-wrap">
                                                 <div class="bs-radio">
                                                     <input    type="radio"
@@ -1134,7 +1119,7 @@
                                                               [value]="1"
                                                               [checked]="qde.application.applicants[coApplicantIndex].maritalStatus.earning == true"
                                                               id="earningYes"
-                                                              (click)="spouseEarningForm.ngSubmit.emit()" />
+                                                              (click)="submitSpouseEarning(1, maritalSlider2)" />
                                                     <label for="earningYes"><span>Yes</span></label>
                                                 </div>
                                                 <div class="bs-radio">
@@ -1143,14 +1128,14 @@
                                                               [value]="2"
                                                               [checked]="qde.application.applicants[coApplicantIndex].maritalStatus.earning == false"
                                                               id="earningNo"
-                                                              (click)="spouseEarningForm.ngSubmit.emit()" />
+                                                              (click)="submitSpouseEarning(2, maritalSlider2)" />
                                                     <label for="earningNo"><span>No</span></label>
                                                 </div>
                                             </div>
                                         </form>
                                     </div>
                                     <div class="swiper-slide">
-                                        <form class="bs-form"
+                                        <form class="bs-form" *ngIf="!isTabDisabled"
                                               #spouseEarningAmtForm="ngForm"
                                               (ngSubmit)="submitSpouseEarningAmt(spouseEarningAmtForm, maritalSlider2)">
                                             <div class="form-wrap">
@@ -1238,7 +1223,7 @@
                                 #familySlider2="ngxSwiper">
                               <div class="swiper-wrapper">
                                   <div class="swiper-slide">
-                                      <form   class="bs-form"
+                                      <form   class="bs-form" *ngIf="!isTabDisabled"
                                               #familyForm1="ngForm"
                                               (ngSubmit)="submitFamilyForm1(familyForm1, familySlider2)">
                                           <div class="form-wrap">
@@ -1266,22 +1251,12 @@
                                   </div>
                                   <div class="swiper-slide">
   
-                                      <form class="bs-form" 
+                                      <form class="bs-form" *ngIf="!isTabDisabled" 
                                       #familyForm2="ngForm" 
                                       (ngSubmit)="submitFamilyForm2(familyForm2, familySlider2)">
                                           <div class="form-wrap">
                                               <div class="form-group">
                                                   <span class="control-title">Father's Title</span>
-                                                  <!-- <kendo-dropdownlist class="form-control"
-                                                  [data]="titles" 
-                                                  textField="key"
-                                                  valueField="value"
-                                                  name="spouseTitle"
-                                                  nick="maritalStatus.spouseTitle"
-                                                  #spouseTitle
-                                                  (selectionChange)="selectValueChanged($event, spouseTitle.hostElement)"
-                                                  [(ngModel)]="selectedSpouseTitle">
-                                                </kendo-dropdownlist> -->
 
                                                   <kendo-dropdownlist class="form-control"
                                                     [data]="titles" 
@@ -1391,22 +1366,12 @@
                           </div>
                       </div>
                       <div class="rhs">
-                          <form   class="bs-form"
+                          <form   class="bs-form" *ngIf="!isTabDisabled"
                                   #otherForm="ngForm"
                                   (ngSubmit)="submitOtherForm(otherForm)">
                               <div class="form-wrap">
                                   <div class="form-group">
                                       <span class="control-title">Religion</span>
-                                      <!-- <kendo-dropdownlist class="form-control"
-                                      [data]="titles" 
-                                      textField="key"
-                                      valueField="value"
-                                      name="motherTitle"
-                                      nick="familyDetails.motherTitle"
-                                      #motherTitle
-                                      (selectionChange)="selectValueChanged($event, motherTitle.hostElement)"
-                                      [(ngModel)]="selectedMotherTitle">
-                                    </kendo-dropdownlist> -->
                                       <kendo-dropdownlist class="form-control"
                                         [data]="religions" 
                                         textField="key"
@@ -1417,7 +1382,6 @@
                                         (selectionChange)="selectValueChanged($event, religion.hostElement)"
                                         [(ngModel)]="selectedReligion">
                                       </kendo-dropdownlist>
-
                                   </div>
                                   <div class="form-group" *ngIf="selectedReligion.value == '6'" [ngClass]="{'hidden': (selectedReligion.value != '6')}">
                                       <input type="text" class="form-control" [(ngModel)]="otherReligion" name="religionName" fieldFill id="religion-name">
@@ -1463,7 +1427,7 @@
                           </div>
                       </div>
                       <div class="rhs">
-                          <form   class="bs-form"
+                          <form   class="bs-form" *ngIf="!isTabDisabled"
                                   #occupationForm="ngForm"
                                   (ngSubmit)="submitOccupationDetails(occupationForm)">
                               <div class="form-wrap">
@@ -1481,11 +1445,11 @@
                                         [(ngModel)]="selectedOccupation">
                                       </kendo-dropdownlist>
                                   </div>
-                                  <div class="form-group">
+                                  <div class="form-group" *ngIf="selectedOccupation.value != '9' && selectedOccupation.value != '10'">
                                       <input type="text" class="form-control"
                                               required 
                                               [(ngModel)]="qde.application.applicants[coApplicantIndex].occupation.companyName"
-                                              pattern="{{regexPattern.name}}" 
+                                              pattern="{{regexPattern.name}}"
                                               name="companyName"
                                               #companyName="ngModel"
                                               fieldFill
@@ -1499,7 +1463,7 @@
                                       </div>
   
                                   </div>
-                                  <div class="form-group typ-range">
+                                  <div class="form-group typ-range"  *ngIf="selectedOccupation.value != '9' && selectedOccupation.value != '10'">
                                       <span class="control-title">Years in current employment/bussiness</span>
                                       <input type="text"
                                               name="numberOfYearsInCurrentCompany"
@@ -1525,7 +1489,7 @@
                                       </div>
   
                                   </div>
-                                  <div class="form-group typ-range">
+                                  <div class="form-group typ-range" *ngIf="selectedOccupation.value != '9' && selectedOccupation.value != '10'">
                                       <span class="control-title">Total Work Experience</span>
                                       <input type="text"
                                               name="totalExperienceYear"
@@ -1574,7 +1538,7 @@
                           </div>
                       </div>
                       <div class="rhs">
-                          <form   class="bs-form"
+                          <form   class="bs-form" *ngIf="!isTabDisabled"
                                   #officialCorrespondenceForm="ngForm"
                                   (ngSubmit)="submitOfficialCorrespondence(officialCorrespondenceForm)">
                               <div class="form-wrap">
@@ -1777,7 +1741,7 @@
                                     #incomeSlider2="ngxSwiper">
                               <div class="swiper-wrapper">
                                 <div class="swiper-slide">
-                                  <form class="bs-form"
+                                  <form class="bs-form" *ngIf="!isTabDisabled"
                                     #incomeDetailsForm1="ngForm" (ngSubmit)="submitIncomeDetails1(incomeDetailsForm1, incomeSlider2)">
                                       <div class="form-wrap">
                                           <div class="form-group inr">
@@ -1800,7 +1764,7 @@
                                                       <div *ngIf="annualFamilyIncome1.errors?.pattern">{{errors.incomeDetails.familyIncome.invalid}}</div>
                                                   </div> 
                                           </div>
-                                            <div class="form-group inr" >
+                                            <div class="form-group inr">
                                                   <input type="text" class="form-control" 
                                                   id="monthlyExpenditure1"
                                                   [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.monthlyExpenditure"
@@ -1823,49 +1787,52 @@
                                             <div class="form-group last">
                                               <span class="control-title">Do you or any of the family members own a puccahouse anywhere in India?</span>
                                               </div>
-                                          <div class="radio-wrap rounded-radio">
-                                              <div class="bs-radio typ-normal">
-                                                  <input type="radio" 
-                                                  name="puccaHouse"
-                                                  [value]="true"
-                                                  [checked]="qde.application.applicants[coApplicantIndex].incomeDetails.puccaHouse == true"
-                                                  fieldFill
-                                                  [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.puccaHouse"
-                                                  id="pucchaHouseIdYes1" />
-                                                  <label for="pucchaHouseIdYes1">
-                                                      Yes
-                                                  </label>
-                                              </div>
-                                              <div class="bs-radio typ-normal">
-                                                  <input type="radio"
-                                                  name="puccaHouse"
-                                                  [value]="false"
-                                                  id="pucchaHouseIdNo1"
-                                                  [checked]="qde.application.applicants[coApplicantIndex].incomeDetails.puccaHouse == false"
-                                                  fieldFill />
-                                                  <label for="pucchaHouseIdNo1">
-                                                      No
-                                                  </label>
-                                              </div>
-                                          </div>
+
+                                              <div class="radio-wrap rounded-radio">
+                                                    <div class="bs-radio typ-normal">
+                                                        <input  type="radio" 
+                                                                name="puccaHouse"
+                                                                [value]="1"
+                                                                [checked]="qde.application.applicants[coApplicantIndex].incomeDetails.puccaHouse == true"
+                                                                (click)="selectPuccaHouse(1)"
+                                                                fieldFill
+                                                                id="pucchaHouseIdYes1" />
+                                                        <label for="pucchaHouseIdYes1">
+                                                            yes
+                                                        </label>
+                                                    </div>
+                                                    <div class="bs-radio typ-normal">
+                                                        <input  type="radio"
+                                                                name="puccaHouse"
+                                                                [value]="2"
+                                                                id="pucchaHouseIdNo1"
+                                                                [checked]="qde.application.applicants[coApplicantIndex].incomeDetails.puccaHouse == false"
+                                                                (click)="selectPuccaHouse(2)"
+                                                                fieldFill />
+                                                        <label for="pucchaHouseIdNo1">
+                                                            No
+                                                        </label>
+                                                    </div>
+                                                </div>
                                         </div>
                                       <div class="btn-wrap">
                                             <button 
                                                 type="submit"
-                                                class="btn btn-primary">
+                                                class="btn btn-primary"
+                                                [ngClass]="{'disabled': (incomeDetailsForm1.invalid || !([1,2].includes(isPuccaHouse)))}"
+                                                [disabled]="incomeDetailsForm1.invalid || !([1,2].includes(isPuccaHouse))">
                                             Next
                                             </button>
                                       </div>
                                   </form>
                                 </div>
                                 <div class="swiper-slide">
-                                    <form class="bs-form">
+                                    <form class="bs-form" *ngIf="!isTabDisabled">
                                         <div class="form-wrap">
                                             <div class="bs-radio">
                                                 <input  type="radio"
                                                         name="income-consider"
                                                         id="incomeConsiderYes1"
-                                                        [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.incomeConsider"
                                                         [value]="1"
                                                         [checked]="qde.application.applicants[coApplicantIndex].incomeDetails.incomeConsider == true"
                                                         (click)="incomeDetailsYesNo(1, incomeSlider2)"
@@ -1877,7 +1844,6 @@
                                                         name="income-consider"
                                                         id="incomeConsiderNo1"
                                                         class="not-usual"
-                                                        [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.incomeConsider"
                                                         [checked]="qde.application.applicants[coApplicantIndex].incomeDetails.incomeConsider == false"
                                                         [value]="2"
                                                         (click)="incomeDetailsYesNo(2, incomeSlider2)" />
@@ -1887,7 +1853,7 @@
                                         </form>
                                     </div>
                                     <div class="swiper-slide">
-                                            <form class="bs-form" 
+                                            <form class="bs-form" *ngIf="!isTabDisabled" 
                                             #incomeDetailsForm2="ngForm" (ngSubmit)="submitIncomeDetails2(incomeDetailsForm2, incomeSlider4)">
                                                 <div class="form-wrap">
                                                     <div class="form-group inr">
@@ -1963,7 +1929,7 @@
                                 #panSlider4="ngxSwiper">
                               <div class="swiper-wrapper">
                                   <div class="swiper-slide">
-                                      <form class="bs-form"
+                                      <form class="bs-form" *ngIf="!isTabDisabled"
                                             #panNumberForm2="ngForm"
                                             (ngSubmit)="submitOrgPanNumber(panNumberForm2, panSlider4)">
                                           <div class="form-wrap">
@@ -2050,7 +2016,7 @@
                           </div>
                       </div>
                       <div class="rhs">
-                          <form   class="bs-form"
+                          <form   class="bs-form" *ngIf="!isTabDisabled"
                                   #organizationForm="ngForm"
                                   (ngSubmit)="submitOrganizationDetails(organizationForm)">
                                 <div class="form-wrap">
@@ -2150,7 +2116,7 @@
   
                       </div>
                       <div class="rhs">
-                          <form class="bs-form" #registeredAddressForm="ngForm" (ngSubmit)="submitRegisteredAddress(registeredAddressForm)">
+                          <form class="bs-form" *ngIf="!isTabDisabled" #registeredAddressForm="ngForm" (ngSubmit)="submitRegisteredAddress(registeredAddressForm)">
                               <div class="form-wrap">
                                   <div class="form-group">
                                       <input    type="text"
@@ -2245,7 +2211,7 @@
                           </div>
                       </div>
                       <div class="rhs">
-                          <form   class="bs-form"
+                          <form   class="bs-form" *ngIf="!isTabDisabled"
                                   #corporateAddressForm="ngForm"
                                   (ngSubmit)="submitCorporateAddress(corporateAddressForm)" >
                               <div class="form-wrap">
@@ -2402,7 +2368,7 @@
                         </div>
                     </div>
                     <div class="rhs">
-                        <form class="bs-form" #revenueForm="ngForm" (ngSubmit)="submitRevenueDetails(revenueForm)">
+                        <form class="bs-form" *ngIf="!isTabDisabled" #revenueForm="ngForm" (ngSubmit)="submitRevenueDetails(revenueForm)">
                             <div class="form-wrap">
                                 <div class="form-group inr">
                                     <input type="text" class="form-control" id="revenue"
@@ -2517,7 +2483,7 @@
                                       #incomeSlider4="ngxSwiper">
                                 <div class="swiper-wrapper">
                                   <div class="swiper-slide">
-                                    <form class="bs-form"
+                                    <form class="bs-form" *ngIf="!isTabDisabled"
                                       #incomeDetailsForm3="ngForm" (ngSubmit)="submitIncomeDetails1(incomeDetailsForm3, incomeSlider4)">
                                         <div class="form-wrap">
                                             <div class="form-group inr">
@@ -2563,71 +2529,72 @@
                                               <div class="form-group last">
                                                 <span class="control-title">Do you or any of the family members own a puccahouse anywhere in India?</span>
                                                 </div>
-                                            <div class="radio-wrap rounded-radio">
-                                                <div class="bs-radio typ-normal">
-                                                    <input type="radio" 
-                                                    name="puccaHouse"
-                                                    [value]="true"
-                                                    [checked]="qde.application.applicants[coApplicantIndex].incomeDetails.puccaHouse == true"
-                                                    fieldFill
-                                                    [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.puccaHouse"
-                                                    id="pucchaHouseIdYes2" />
-                                                    <label for="pucchaHouseIdYes2">
-                                                        Yes
-                                                    </label>
+
+                                                <div class="radio-wrap rounded-radio">
+                                                    <div class="bs-radio typ-normal">
+                                                        <input  type="radio" 
+                                                                name="puccaHouse"
+                                                                [value]="1"
+                                                                [checked]="qde.application.applicants[coApplicantIndex].incomeDetails.puccaHouse == true"
+                                                                (click)="selectPuccaHouse(1)"
+                                                                fieldFill
+                                                                id="pucchaHouseIdYes2" />
+                                                        <label for="pucchaHouseIdYes2">
+                                                            yes
+                                                        </label>
+                                                    </div>
+                                                    <div class="bs-radio typ-normal">
+                                                        <input  type="radio"
+                                                                name="puccaHouse"
+                                                                [value]="2"
+                                                                id="pucchaHouseIdNo2"
+                                                                [checked]="qde.application.applicants[coApplicantIndex].incomeDetails.puccaHouse == false"
+                                                                (click)="selectPuccaHouse(2)"
+                                                                fieldFill />
+                                                        <label for="pucchaHouseIdNo2">
+                                                            No
+                                                        </label>
+                                                    </div>
                                                 </div>
-                                                <div class="bs-radio typ-normal">
-                                                    <input type="radio"
-                                                    name="puccaHouse"
-                                                    [value]="false"
-                                                    id="pucchaHouseIdNo2"
-                                                    [checked]="qde.application.applicants[coApplicantIndex].incomeDetails.puccaHouse == false"
-                                                    fieldFill />
-                                                    <label for="pucchaHouseIdNo2">
-                                                        No
-                                                    </label>
-                                                </div>
-                                            </div>
                                           </div>
                                         <div class="btn-wrap">
-                                              <button 
-                                                  type="submit"
-                                                  class="btn btn-primary">
+                                              <button   type="submit"
+                                                        class="btn btn-primary"
+                                                        [ngClass]="{'disabled': (incomeDetailsForm3.invalid || qde.application.applicants[coApplicantIndex].incomeDetails.puccaHouse == null)}"
+                                                        [disabled]="incomeDetailsForm3.invalid || qde.application.applicants[coApplicantIndex].incomeDetails.puccaHouse == null">
                                               Next
                                               </button>
                                         </div>
                                     </form>
                                   </div>
                                   <div class="swiper-slide">
-                                          <form class="bs-form">
-                                              <div class="form-wrap">
-                                                  <div class="bs-radio">
-                                                      <input  type="radio"
-                                                              name="income-consider"
-                                                              id="incomeConsiderYes2"
-                                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.incomeConsider"
-                                                              [value]="1"
-                                                              [checked]="qde.application.applicants[coApplicantIndex].incomeDetails.incomeConsider == true"
-                                                              (click)="incomeDetailsYesNo(1, incomeSlider4)"
-                                                              class="not-usual" />
-                                                      <label for="incomeConsiderYes2"><span>Yes</span></label>
-                                                  </div>
-                                                  <div class="bs-radio">
-                                                      <input  type="radio"
-                                                              name="income-consider"
-                                                              id="incomeConsiderNo2"
-                                                              class="not-usual"
-                                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.incomeConsider"
-                                                              [checked]="qde.application.applicants[coApplicantIndex].incomeDetails.incomeConsider == false"
-                                                              [value]="2"
-                                                              (click)="incomeDetailsYesNo(2, incomeSlider4)" />
-                                                      <label for="incomeConsiderNo2"><span>No</span></label>
-                                                  </div>
-                                              </div>
+                                        <form class="bs-form" *ngIf="!isTabDisabled">
+                                            <div class="form-wrap">
+                                                <div class="bs-radio">
+                                                    <input  type="radio"
+                                                            name="income-consider"
+                                                            id="incomeConsiderYes2"
+                                                            [value]="1"
+                                                            [checked]="qde.application.applicants[coApplicantIndex].incomeDetails.incomeConsider == true"
+                                                            (click)="incomeDetailsYesNo(1, incomeSlider4)"
+                                                            class="not-usual" />
+                                                    <label for="incomeConsiderYes2"><span>Yes</span></label>
+                                                </div>
+                                                <div class="bs-radio">
+                                                    <input  type="radio"
+                                                            name="income-consider"
+                                                            id="incomeConsiderNo2"
+                                                            class="not-usual"
+                                                            [checked]="qde.application.applicants[coApplicantIndex].incomeDetails.incomeConsider == false"
+                                                            [value]="2"
+                                                            (click)="incomeDetailsYesNo(2, incomeSlider4)" />
+                                                    <label for="incomeConsiderNo2"><span>No</span></label>
+                                                </div>
+                                            </div>
                                           </form>
                                       </div>
                                       <div class="swiper-slide">
-                                              <form class="bs-form" 
+                                              <form class="bs-form" *ngIf="!isTabDisabled" 
                                               #incomeDetailsForm4="ngForm" (ngSubmit)="submitIncomeDetails2(incomeDetailsForm4, incomeSlider4)">
                                                   <div class="form-wrap">
                                                       <div class="form-group inr">
