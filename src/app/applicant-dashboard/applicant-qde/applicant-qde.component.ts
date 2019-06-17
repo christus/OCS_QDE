@@ -734,7 +734,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     }
 
     this.qde.application.applicants[this.applicantIndex].pan.panNumber = form.value.pan;
-    this.qde.application.applicants[this.applicantIndex].pan.docType = form.value.docType.value;
+    this.qde.application.applicants[this.applicantIndex].pan.docType = form.value.panDocType.value;
     this.qde.application.applicants[this.applicantIndex].pan.docNumber = form.value.docNumber;
 
     this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
@@ -1376,15 +1376,15 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     // let stateId = zipCityStateID.split(',')[2] || "";
 
 
-    this.qde.application.applicants[this.applicantIndex].corporateAddress = {
-      corporateAddress : form.value.corpAddress,
-      landMark : form.value.landmark,
-      zipcodeId : this.qde.application.applicants[this.applicantIndex].corporateAddress.zipcodeId,
-      cityId : this.qde.application.applicants[this.applicantIndex].corporateAddress.cityId,
-      stateId : this.qde.application.applicants[this.applicantIndex].corporateAddress.stateId,
-      stdNumber : form.value.stdNumber+"-"+form.value.phoneNumber,
-      officeEmailId : form.value.officeEmailId
-    };
+    this.qde.application.applicants[this.applicantIndex].corporateAddress.corporateAddress =  form.value.corpAddress;
+    this.qde.application.applicants[this.applicantIndex].corporateAddress.landMark = form.value.landmark;
+    this.qde.application.applicants[this.applicantIndex].corporateAddress.zipcodeId = this.qde.application.applicants[this.applicantIndex].corporateAddress.zipcodeId;
+    this.qde.application.applicants[this.applicantIndex].corporateAddress.cityId =  this.qde.application.applicants[this.applicantIndex].corporateAddress.cityId;
+    this.qde.application.applicants[this.applicantIndex].corporateAddress.stateId = this.qde.application.applicants[this.applicantIndex].corporateAddress.stateId;
+
+    this.qde.application.applicants[this.applicantIndex].corporateAddress.stdNumber = form.value.stdNumber+"-"+form.value.phoneNumber;
+    this.qde.application.applicants[this.applicantIndex].corporateAddress.officeEmailId = form.value.officeEmailId;
+
 
     console.log(this.qde.application.applicants[this.applicantIndex].corporateAddress);
 
