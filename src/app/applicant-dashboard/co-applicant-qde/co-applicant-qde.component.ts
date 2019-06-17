@@ -488,7 +488,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
           // isApplicantPresent = applicants[this.applicantIndex].hasOwnProperty('applicantId');
           // this.qde.application.applicants[this.coApplicantIndex].applicantId =  applicants[this.coApplicantIndex]["applicantId"];
           this.cds.changePanSlide(true);
-          this.router.navigate(['/applicant/'+this.qde.application.applicationId]);
+          this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant']);
         } else {
           // this.cds.changePanSlide(true);
           this.tabSwitch(2);
@@ -532,7 +532,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
           // isApplicantPresent = applicants[this.applicantIndex].hasOwnProperty('applicantId');
           // this.qde.application.applicants[this.coApplicantIndex].applicantId =  applicants[this.coApplicantIndex]["applicantId"];
           this.cds.changePanSlide2(true);
-          this.router.navigate(['/applicant/'+this.qde.application.applicationId]);
+          this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant']);
         }else {
           this.cds.changePanSlide2(true);
           // this.tabSwitch(2);
@@ -775,7 +775,6 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
     this.qde.application.applicants[this.coApplicantIndex].communicationAddress.stateId = this.qde.application.applicants[this.coApplicantIndex].communicationAddress.stateId+"";
     this.qde.application.applicants[this.coApplicantIndex].communicationAddress.numberOfYearsInCurrentResidence = form.value.numberOfYearsInCurrentResidence+"";
     this.qde.application.applicants[this.coApplicantIndex].communicationAddress.permanentAddress = form.value.permanentAddress;
-    this.qde.application.applicants[this.coApplicantIndex].communicationAddress.preferedMailingAddress = form.value.prefredMail == 1 ? true : false;
 
 
     this.qde.application.applicants[this.coApplicantIndex].permanentAddress.addressLineOne = form.value.pAddressLineOne;
@@ -942,9 +941,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.qde.application.applicants[this.coApplicantIndex].familyDetails.fatherTitle = form.value.fatherTitle;
+    this.qde.application.applicants[this.coApplicantIndex].familyDetails.fatherTitle = form.value.fatherTitle.value;
     this.qde.application.applicants[this.coApplicantIndex].familyDetails.fatherName = form.value.fatherName;
-    this.qde.application.applicants[this.coApplicantIndex].familyDetails.motherTitle = form.value.motherTitle;
+    this.qde.application.applicants[this.coApplicantIndex].familyDetails.motherTitle = form.value.motherTitle.value;
     this.qde.application.applicants[this.coApplicantIndex].familyDetails.motherName = form.value.motherName;
     this.qde.application.applicants[this.coApplicantIndex].familyDetails.motherMaidenName = form.value.motherMaidenName;
 
@@ -953,7 +952,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
-        this.tabSwitch(8);
+        this.tabSwitch(7);
       } else {
         // Throw Invalid Pan Error
       }
@@ -1139,14 +1138,11 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
     // let stateId = zipCityStateID.split(',')[2] || "";
 
 
-
-    this.qde.application.applicants[this.coApplicantIndex].registeredAddress = {
-      registeredAddress : form.value.regAdd,
-      landMark : form.value.landmark,
-      zipcodeId : this.qde.application.applicants[this.coApplicantIndex].registeredAddress.zipcodeId,
-      cityId : this.qde.application.applicants[this.coApplicantIndex].registeredAddress.cityId,
-      stateId : this.qde.application.applicants[this.coApplicantIndex].registeredAddress.stateId,
-    };
+    this.qde.application.applicants[this.coApplicantIndex].registeredAddress.registeredAddress = form.value.regAdd;
+    this.qde.application.applicants[this.coApplicantIndex].registeredAddress.landMark = form.value.landmark;
+    this.qde.application.applicants[this.coApplicantIndex].registeredAddress.zipcodeId = this.qde.application.applicants[this.coApplicantIndex].registeredAddress.zipcodeId;
+    this.qde.application.applicants[this.coApplicantIndex].registeredAddress.cityId = this.qde.application.applicants[this.coApplicantIndex].registeredAddress.cityId;
+    this.qde.application.applicants[this.coApplicantIndex].registeredAddress.stateId = this.qde.application.applicants[this.coApplicantIndex].registeredAddress.stateId;
 
     console.log(this.qde.application.applicants[this.coApplicantIndex].registeredAddress);
 
@@ -1177,15 +1173,13 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
     // let stateId = zipCityStateID.split(',')[2] || "";
 
 
-    this.qde.application.applicants[this.coApplicantIndex].corporateAddress = {
-      corporateAddress : form.value.corpAddress,
-      landMark : form.value.landmark,
-      zipcodeId : this.qde.application.applicants[this.coApplicantIndex].corporateAddress.zipcodeId,
-      cityId : this.qde.application.applicants[this.coApplicantIndex].corporateAddress.cityId,
-      stateId : this.qde.application.applicants[this.coApplicantIndex].corporateAddress.stateId,
-      stdNumber : form.value.stdNumber+"-"+form.value.phoneNumber,
-      officeEmailId : form.value.officeEmailId
-    };
+    this.qde.application.applicants[this.coApplicantIndex].corporateAddress.corporateAddress = form.value.corpAddress;
+    this.qde.application.applicants[this.coApplicantIndex].corporateAddress.landMark = form.value.landmark;
+    this.qde.application.applicants[this.coApplicantIndex].corporateAddress.zipcodeId = this.qde.application.applicants[this.coApplicantIndex].corporateAddress.zipcodeId;
+    this.qde.application.applicants[this.coApplicantIndex].corporateAddress.cityId = this.qde.application.applicants[this.coApplicantIndex].corporateAddress.cityId;
+    this.qde.application.applicants[this.coApplicantIndex].corporateAddress.stateId = this.qde.application.applicants[this.coApplicantIndex].corporateAddress.stateId;
+    this.qde.application.applicants[this.coApplicantIndex].corporateAddress.stdNumber = form.value.stdNumber+"-"+form.value.phoneNumber;
+    this.qde.application.applicants[this.coApplicantIndex].corporateAddress.officeEmailId = form.value.officeEmailId;
 
     console.log(this.qde.application.applicants[this.coApplicantIndex].corporateAddress);
 
@@ -1514,11 +1508,11 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       }
 
       if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].familyDetails.fatherTitle)) ) {
-        this.selectedFatherTitle  = this.maleTitles[(parseInt(this.qde.application.applicants[this.coApplicantIndex].familyDetails.fatherTitle))-1];
+        this.selectedFatherTitle  = this.titles[(parseInt(this.qde.application.applicants[this.coApplicantIndex].familyDetails.fatherTitle))-1];
       }
 
       if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].familyDetails.motherTitle)) ) {
-        this.selectedMotherTitle = this.femaleTitles[(parseInt(this.qde.application.applicants[this.coApplicantIndex].familyDetails.motherTitle))-1];
+        this.selectedMotherTitle = this.titles[(parseInt(this.qde.application.applicants[this.coApplicantIndex].familyDetails.motherTitle))-1];
       }
 
       // Other
@@ -1613,6 +1607,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
 
   selectPuccaHouse(value) {
     this.qde.application.applicants[this.coApplicantIndex].incomeDetails.puccaHouse = (value == 1) ? true: false;
+  }
+
+  selectPreferedMailingAddress(value) {
+    this.qde.application.applicants[this.coApplicantIndex].communicationAddress.preferedMailingAddress = (value == 1) ? true: false;
   }
 
   ngOnDestroy() {

@@ -842,7 +842,7 @@
                                                 class="form-control"
                                                 id="cityState"
                                                 required
-                                                [(ngModel)]="qde.application.applicants[coApplicantIndex].communicationAddress.cityState"
+                                                [(ngModel)]="qde.application.applicants[coApplicantIndex].communicationAddress.city"
                                                 name="cityState"
                                                 #commCityState="ngModel"
                                                 fieldFill   
@@ -859,8 +859,8 @@
                                   </div>
                                   <div class="bs-checkbox typ-withForm">
                                       <input  type="checkbox"
-                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].communicationAddress.permanentAddress"
                                               name="permanentAddress"
+                                              [ngModel]="qde.application.applicants[coApplicantIndex].communicationAddress.permanentAddress"
                                               (ngModelChange)="makePermanentAddressSame($event)"
                                               [checked]="qde.application.applicants[coApplicantIndex].communicationAddress.permanentAddress == true"
                                               id="permanentAddress" />
@@ -926,7 +926,7 @@
                                               #commCitystate="ngModel" 
                                               fieldFill
                                               spellcheck="false"
-                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].permanentAddress.cityState">
+                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].permanentAddress.city">
                                               <label for="per-cityState">City/State</label>
                                           </div>
                                       </div>
@@ -935,23 +935,25 @@
                                       </div>
                                       <div class="radio-wrap rounded-radio">
                                           <div class="bs-radio typ-normal">
-                                              <input type="radio" 
-                                              name="prefredMail"
-                                              value="1"
-                                              fieldFill
-                                              [checked]="qde.application.applicants[coApplicantIndex].communicationAddress.preferredMailingAddress == true"
-                                              id="current-add-mail" />
+                                              <input    type="radio" 
+                                                        [value]="1"
+                                                        name="preferedMailingAddress"
+                                                        fieldFill
+                                                        [checked]="qde.application.applicants[coApplicantIndex].communicationAddress.preferedMailingAddress == true"
+                                                        (click)="selectPreferedMailingAddress(1)"
+                                                        id="current-add-mail" />
                                             <label for="current-add-mail">
                                                 Current Address
                                             </label>
                                           </div>
                                           <div class="bs-radio typ-normal">
-                                              <input type="radio"
-                                              name="prefredMail"
-                                              value="2"
-                                              fieldFill
-                                              [checked]="qde.application.applicants[coApplicantIndex].communicationAddress.preferredMailingAddress == false"
-                                              id="permanent-add-mail" />
+                                              <input    type="radio"
+                                                        [value]="2"
+                                                        name="preferedMailingAddress"
+                                                        fieldFill
+                                                        [checked]="qde.application.applicants[coApplicantIndex].communicationAddress.preferedMailingAddress == false"
+                                                        (click)="selectPreferedMailingAddress(2)"
+                                                        id="permanent-add-mail" />
                                               <label for="permanent-add-mail">
                                                     Permanent Address
                                                 </label>
@@ -1817,8 +1819,8 @@
                                             <button 
                                                 type="submit"
                                                 class="btn btn-primary"
-                                                [ngClass]="{'disabled': (incomeDetailsForm1.invalid || !([1,2].includes(isPuccaHouse)))}"
-                                                [disabled]="incomeDetailsForm1.invalid || !([1,2].includes(isPuccaHouse))">
+                                                [ngClass]="{'disabled': (incomeDetailsForm1.invalid || qde.application.applicants[coApplicantIndex].incomeDetails.puccaHouse == null)}"
+                                                [disabled]="incomeDetailsForm1.invalid || qde.application.applicants[coApplicantIndex].incomeDetails.puccaHouse == null">
                                             Next
                                             </button>
                                       </div>
