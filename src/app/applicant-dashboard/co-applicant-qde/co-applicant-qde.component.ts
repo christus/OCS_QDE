@@ -484,11 +484,11 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
 
         // let isApplicantPresent:boolean = false;
 
-        if((result["application"]["applicants"]).length > 2) {
+        if((result["application"]["applicants"]).length > 0) {
           // isApplicantPresent = applicants[this.applicantIndex].hasOwnProperty('applicantId');
           // this.qde.application.applicants[this.coApplicantIndex].applicantId =  applicants[this.coApplicantIndex]["applicantId"];
           this.cds.changePanSlide(true);
-          this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant']);
+          this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant/'+result['application']['applicants'][0]['applicantId']], {fragment: 'personal'});
         } else {
           // this.cds.changePanSlide(true);
           this.tabSwitch(2);
@@ -532,10 +532,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
           // isApplicantPresent = applicants[this.applicantIndex].hasOwnProperty('applicantId');
           // this.qde.application.applicants[this.coApplicantIndex].applicantId =  applicants[this.coApplicantIndex]["applicantId"];
           this.cds.changePanSlide2(true);
-          this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant']);
+          this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant/'+result['application']['applicants'][0]['applicantId']]);
         }else {
-          this.cds.changePanSlide2(true);
-          // this.tabSwitch(2);
+          // this.cds.changePanSlide2(true);
+          this.tabSwitch(12);
           return;
         }
       } else {
@@ -1538,8 +1538,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
 
       // Incoming from create in Individual Pan
       if(this.panslide == true && this.qde.application.applicants[this.coApplicantIndex].isIndividual == true) {
+        console.log('COAPPLICANTINDEX: ', this.coApplicantIndex);
         // this.panSlider2.setIndex(2);
-        this.tabSwitch(1);
+        this.tabSwitch(2);
       }
       // Incoming from create in Non Individual Pan
       else if(this.panslide2 == true && this.qde.application.applicants[this.coApplicantIndex].isIndividual == false) {
