@@ -139,6 +139,19 @@ export class LoanQdeComponent implements OnInit {
     noSwipingClass: '',
   };
 
+
+  liveLoanOption:Options={
+    floor:0,
+    ceil:6,
+    step: 1,
+    showTicksValues: false,
+    // showSelectionBar: true,
+    showTicks: true,
+    getLegend: (sliderVal: number): string => {
+      return  sliderVal + '<b></b>';
+    }
+  };
+
   activeTab: number = 0;
 
   @ViewChild("tabContents") tabContents: ElementRef;
