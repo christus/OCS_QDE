@@ -148,14 +148,15 @@
     
                                                       <span class="control-title">Document Type</span>
     
-                                                      <kendo-dropdownlist   class="form-control"
+                                                      <kendo-dropdownlist  
+                                                                     class="form-control"
                                                                             [data]="docType" 
                                                                             textField="key"
                                                                             valueField="value"
-                                                                            name="docType"
-                                                                            nick="pan.documentType"
-                                                                            #panDocType
-                                                                            (selectionChange)="selectValueChanged($event, panDocType.hostElement)"
+                                                                            name="docTypeindividual"
+                                                                            nick="pan.docType"
+                                                                            #docTypeindividual
+                                                                            (selectionChange)="selectValueChanged($event, docType.hostElement)"
                                                                             [(ngModel)]="selectedDocType"
                                                                             required>
                                                       </kendo-dropdownlist>
@@ -164,7 +165,7 @@
                                                       <input spellcheck="false"
                                                               type="text"
                                                                 class="form-control"
-                                                                [(ngModel)]="qde.application.applicants[applicantIndex].pan.docNumber"
+                                                                [(ngModel)]="qde.application.applicants[applicantIndex].pan.docName"
                                                                 id="docNumber"
                                                                 name="docNumber"
                                                                 #panDocNumber="ngModel"
@@ -302,6 +303,9 @@
                                                                 textField="key"
                                                                 valueField="value"
                                                                 name="title"
+                                                                nick="personalDetails.title"
+                                                                #title
+                                                                (selectionChange)="selectValueChanged($event, title.hostElement)"
                                                                 [(ngModel)]="selectedTitle">
                                                               </kendo-dropdownlist>
                                                           </div>
@@ -1930,8 +1934,8 @@
                                                         [data]="docType" 
                                                         textField="key"
                                                         valueField="value"
-                                                        name="docType"
-                                                        nick="pan.documentType"
+                                                        name="panDocType"
+                                                        nick="pan.docType"
                                                         #panDocType
                                                         (selectionChange)="selectValueChanged($event, panDocType.hostElement)"
                                                         [(ngModel)]="selectedDocType"
@@ -1942,7 +1946,7 @@
                                                   <input spellcheck="false"
                                                         type="text"
                                                         class="form-control"
-                                                        [(ngModel)]="qde.application.applicants[applicantIndex].pan.docNumber"
+                                                        [(ngModel)]="qde.application.applicants[applicantIndex].pan.docName"
                                                         id="docNumber2"
                                                         name="docNumber"
                                                         #coappdocNumberNonIndividual="ngModel"
