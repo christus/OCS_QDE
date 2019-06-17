@@ -87,7 +87,7 @@
                                     <td>
                                         <a routerLink="/applicant/{{detail.leadId}}">
                                             <ul>
-                                                <li><span>Name :</span><b> {{detail.firstName}}</b></li>
+                                                <li><span>Name :</span><b>{{detail.companyName || detail.firstName}}</b></li>
                                                 <li><span>Product :</span><b> {{detail.product}}</b></li>
                                                 <li><span>Loan amount :</span><b> {{detail.loanAmount}}</b></li>
                                             </ul>
