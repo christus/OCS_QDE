@@ -485,9 +485,9 @@
                                                   <div class="btn-wrap">
                                                       <button type="submit"
                                                               class="btn btn-primary"
-                                                              [ngClass]="{'disabled': !dobForm.valid}"
-                                                              [disabled]="!dobForm.valid">Next
-                                                      </button>
+                                                              [ngClass]="{'disabled': (dob.day.value == 'DD' || dob.month.value == 'MM' || dob.year.value == 'YYYY')}"
+                                                              [disabled]="(dob.day.value == 'DD' || dob.month.value == 'MM' || dob.year.value == 'YYYY')">Next
+                                                          </button>
                                                   </div>
                                               </form>
                                           </div>
