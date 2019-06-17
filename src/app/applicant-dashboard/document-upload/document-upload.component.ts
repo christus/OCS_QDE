@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 
 import { Options } from "ng5-slider";
 import { NgForm } from "@angular/forms";
+import { QdeHttpService } from 'src/app/services/qde-http.service';
 
 
 
@@ -82,7 +83,8 @@ export class DocumentUploadComponent implements OnInit {
   constructor(
     private renderer: Renderer2,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private qdeHttp: QdeHttpService,
   ) {}
 
   ngOnInit() {
@@ -183,6 +185,57 @@ export class DocumentUploadComponent implements OnInit {
 
   addRemoveResidenceNumberField() {
     this.isAlternateResidenceNumber = !this.isAlternateResidenceNumber;
+  }
+
+  fileToUpload: File = null;
+
+  handleIdProof(files: FileList) {
+    // if (form && !form.valid) {
+    //   return;
+    // }
+
+    this.fileToUpload = files.item(0);
+    console.log("FILE UPLOAD: " + this.fileToUpload);
+
+    this.update(this.fileToUpload);
+  }
+
+  handleAddressProof(files: FileList) {
+    this.fileToUpload = files.item(0);
+  }
+
+  handleIncomeProof(files: FileList) {
+    this.fileToUpload = files.item(0);
+  }
+
+  handleBankingProof(files: FileList) {
+    this.fileToUpload = files.item(0);
+  }
+
+  handleCollateralProof(files: FileList) {
+    this.fileToUpload = files.item(0);
+  }
+
+  handleCustomerPhoto(files: FileList) {
+    this.fileToUpload = files.item(0);
+  }
+
+  update(file: File) {
+
+    this.qdeHttp.uploadToAppiyoDrive(this.fileToUpload).subscribe(
+      response => {
+        if (response["Error"] === "0" && response["ProcessVariables"]["status"]) {
+          console.log(response);
+          //this.tabSwitch(1);
+        } else {
+          //alert("Response: " + response["ErrorMessage"]);
+        }
+      },
+      error => {
+        //alert(error["ErrorMessage"]);
+        console.log("Error : ", error);
+      }
+    );
   }
 
   temp;

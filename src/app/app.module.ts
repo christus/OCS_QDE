@@ -135,21 +135,21 @@ const appRoutes: Routes = [
   //   // pathMatch: 'full'
   // },
   {
-    path: "loan/:applicantId",
+    path: "loan/:applicationId",
     component: LoanQdeComponent,
     resolve: {
       listOfValues: ListOfValuesResolverService
     }
   },
   {
-    path: 'references',
+    path: "references/:applicationId",
     component: ReferencesQdeComponent,
     resolve: {
       listOfValues: ListOfValuesResolverService
     }
   },
   {
-    path: "document-upload",
+    path: "document-uploads/:applicationId",
     component: DocumentUploadComponent,
     resolve: {
       listOfValues: ListOfValuesResolverService

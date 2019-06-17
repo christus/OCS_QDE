@@ -42,10 +42,16 @@ export const environment = {
     "birthPlace": {
       'workflowId': '4ab7cb9a723511e982270242ac110003',
       'processId': 'af88d3c2724211e982270242ac110003'
+    },
+    "upload": {
+      'workflowId': '7b222bb4837d11e982270242ac110002',
+      'processId': '7b2ecfd6837d11e982270242ac110002'
     }
   },
   userName: "icici@icici.com",
-  password: "icici@123"
+  password: "icici@123",
+  host: "http://192.168.1.108",
+  appiyoDrive: "/appiyo/d/drive/upload/"
 
 };
 

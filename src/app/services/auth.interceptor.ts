@@ -10,13 +10,15 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
       // Token will be set from cookie, if not present then dont add this header
+
+      if (!req.headers.has('Content-Type')) {
+        req = req.clone({ headers: req.headers.set('Content-Type', 'application/x-www-form-urlencoded') });
+      }
+
       const authReq = req.clone({
         headers: req.headers.append(
           'authentication-token',
           localStorage.getItem('token') ? localStorage.getItem('token') : ''
-        ).append(
-          'Content-Type',
-          'application/x-www-form-urlencoded'
         )
       });
 

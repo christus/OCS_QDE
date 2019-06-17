@@ -55,7 +55,7 @@
                       (ngSubmit)="submitRelationWithApplicant1(refRelationship1, reference1)">
                         <div class="form-wrap">
                           <div class="form-group">
-                            <span class="control-title">Select</span>
+                            <span class="control-title">Relationship</span>
 <!--                             <select ngModel name="relationShip" class="js-select" required>
                               <option *ngFor="let rela of relationships" [value]="rela.value">{{rela.key}}</option>
                             </select> -->
@@ -65,8 +65,8 @@
                               textField="key"
                               valueField="value"
                               name="relationShip"
-                              [(ngModel)]="selectedReferenceOne"
-                              >
+                              [valuePrimitive]="true"
+                              [(ngModel)]="selectedReferenceOne">
                             </kendo-dropdownlist>
 
                           </div>
@@ -90,20 +90,18 @@
                         <div class="form-wrap">
                           <div class="form-group">
                             <span class="control-title">Title</span>
+                            <kendo-dropdownlist 
+                              class="form-control" 
+                              [data]="titles" 
+                              textField="key" 
+                              valueField="value" 
+                              name="titles"
+                              [valuePrimitive]="true" 
+                              [(ngModel)]="selectedTiltle1">
+                            </kendo-dropdownlist>
                             <!-- <select name="title" ngModel class="js-select" required>
                               <option *ngFor="let tit of titles" [value]="tit.value">{{tit.key}}</option>
                             </select> -->
-
-
-                            <kendo-dropdownlist class="form-control"
-                              [data]="titles" 
-                              textField="key"
-                              valueField="value"
-                              name="title"
-                              [(ngModel)]="selectedReferenceTwoTitle"
-                              >
-                            </kendo-dropdownlist>
-
                           </div>
                           <div class="form-group">
                             <input type="text" class="form-control"
@@ -112,7 +110,8 @@
                             name="fullName" 
                             id="ref1-name"
                             pattern="{{regexPattern.name}}"
-                            #refOneFullName="ngModel" >
+                            #refOneFullName="ngModel" 
+                            [(ngModel)]="selectedName1">
                             <label for="ref1-name" *ngIf="refOneFullName.value == ''">Full name</label>
 
                             <div *ngIf="refOneFullName.touched && refOneFullName.invalid" class="invalid-feedback">
@@ -130,7 +129,8 @@
                             maxlength="10"
                             pattern="{{regexPattern.mobileNumber}}"  
                             ngModel 
-                            #refOneMobileNumber="ngModel">
+                            #refOneMobileNumber="ngModel"
+                            [(ngModel)]="selectedMobile1">
                             <label for="ref1-mobile" *ngIf="refOneMobileNumber.value == ''">Mobile number</label>
 
                             <div *ngIf="refOneMobileNumber.touched && refOneMobileNumber.invalid" class="invalid-feedback">
@@ -146,7 +146,8 @@
                             name="addressLineOne" 
                             ngModel
                             pattern="{{regexPattern.address}}" 
-                            #refOneAddressLineOne="ngModel">
+                            #refOneAddressLineOne="ngModel"
+                            [(ngModel)]="selectedAddressLineOne1">
                             <label for="ref1-add1" *ngIf="refOneAddressLineOne.value == ''">Address line1</label>
 
                             <div *ngIf="refOneAddressLineOne.touched && refOneAddressLineOne.invalid" class="invalid-feedback">
@@ -161,7 +162,8 @@
                             name="addressLineTwo" 
                             ngModel
                             pattern="{{regexPattern.address}}" 
-                            #refOneAddressLineTwo="ngModel">
+                            #refOneAddressLineTwo="ngModel"
+                            [(ngModel)]="selectedAddressLineTwo1">
                             <label for="ref1-add2" *ngIf="refOneAddressLineTwo.value == ''">Address line2</label>
 
 
@@ -189,7 +191,7 @@
           </div>
 
           <div class="tab-content" [ngClass]="{'active': (activeTab == 1)}">
-            <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
+            <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(incomeDetail1)"></a>
             <div class="lyt-tabs">
               <div class="lhs">
               <div class="swiper-container form-swiper">
@@ -227,17 +229,18 @@
                       (ngSubmit)="submitRelationWithApplicant2(ref2Relationship, reference2)">
                       <div class="form-wrap">
                         <div class="form-group">
-                          <span class="control-title">Select</span>
+                          <span class="control-title">Relationship</span>
 <!--                           <select ngModel name="relationShip" class="js-select" required>
                             <option *ngFor="let rela of relationships" [value]="rela.value">{{rela.key}}</option>
                           </select> -->
-                          <kendo-dropdownlist class="form-control"
+                          <kendo-dropdownlist 
+                            class="form-control"
                             [data]="relationships" 
                             textField="key"
                             valueField="value"
                             name="relationShip"
-                            [(ngModel)]="selectedReferenceTwo"
-                            >
+                            [valuePrimitive]="true"
+                            [(ngModel)]="selectedReferenceTwo">
                           </kendo-dropdownlist>
                         </div>
                       </div>
@@ -259,21 +262,19 @@
                         <div class="form-wrap">
                           <div class="form-group">
                             <span class="control-title">Title</span>
-                            <!-- <select name="title" ngModel class="js-select" required>
+                              <kendo-dropdownlist 
+                                class="form-control" 
+                                [data]="titles" 
+                                textField="key" 
+                                valueField="value" 
+                                name="titles"
+                                [valuePrimitive]="true" 
+                                [(ngModel)]="selectedTiltle2">
+                              </kendo-dropdownlist>
+                           <!--  <select name="title" ngModel class="js-select" required>
                               <option *ngFor="let tit of titles" [value]="tit.value">{{tit.key}}</option>
                             </select> -->
-                            
-                              <kendo-dropdownlist class="form-control"
-                              [data]="titles" 
-                              textField="key"
-                              valueField="value"
-                              name="title"
-                              [(ngModel)]="selectedReferenceTwoTitle"
-                              >
-                            </kendo-dropdownlist>
                           </div>
-
-
                           <div class="form-group">
                             <input type="text" class="form-control"
                             ngModel
@@ -281,7 +282,8 @@
                             id="ref2-name"
                             #refTwoFullName="ngModel"
                             pattern="{{regexPattern.name}}"
-                            required>
+                            required
+                            [(ngModel)]="selectedName2">
                             <label for="ref2-name" *ngIf="refTwoFullName.value == ''">Full name</label>
                             <div *ngIf="refTwoFullName.touched && refTwoFullName.invalid" class="invalid-feedback">
                                 <div *ngIf="refTwoFullName.errors?.required">{{errors.references.referenceOne.fullName.required}}</div>
@@ -290,12 +292,13 @@
                           </div>
                           <div class="form-group">
                             <input type="text" class="form-control" id="ref2-mobile" 
-                             name="mobileNumber"  
-                             ngModel 
-                             maxlength="10"
-                             #refTwoMobileNumber="ngModel"
-                             pattern="{{regexPattern.mobileNumber}}"
-                             required>
+                            name="mobileNumber"  
+                            ngModel 
+                            maxlength="10"
+                            #refTwoMobileNumber="ngModel"
+                            pattern="{{regexPattern.mobileNumber}}"
+                            required
+                            [(ngModel)]="selectedMobile2">
                             <label for="ref2-mobile" *ngIf="refTwoMobileNumber.value == ''">Mobile number</label>
 
                             <div *ngIf="refTwoMobileNumber.touched && refTwoMobileNumber.invalid" class="invalid-feedback">
@@ -310,7 +313,8 @@
                               ngModel
                               #refTwoAddressLineOne="ngModel"
                               pattern="{{regexPattern.address}}"
-                              required>
+                              required
+                              [(ngModel)]="selectedAddressLineOne2">
                                
                             <label for="ref2-add1" *ngIf="refTwoAddressLineOne.value == ''">Address line1</label>
 
@@ -326,7 +330,8 @@
                              ngModel 
                              #refTwoAddressLineTwo="ngModel"
                              pattern="{{regexPattern.address}}"
-                             required>
+                             required
+                             [(ngModel)]="selectedAddressLineTwo2">
                             <label for="ref2-add2" *ngIf="refTwoAddressLineTwo.value == ''">Address line2</label>
 
                             <div *ngIf="refTwoAddressLineTwo.touched && refTwoAddressLineTwo.invalid" class="invalid-feedback">

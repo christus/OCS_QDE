@@ -26,14 +26,16 @@
                 <a [routerLink]="['/applicant', applicationId, '/co-applicant', coApplicantIndex]" *ngIf="applicationId != null && coApplicantIndex != null">Co-Applicant Details</a>
             </li>
             <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                <a *ngIf="applicationId == null">Loan Details</a>
+                <a *ngIf="applicationId == null" routerLink="/loan">Loan Details</a>
                 <a [routerLink]="['/loan', applicationId]" *ngIf="applicationId != null">Loan Details</a>
             </li>
-            <li routerLinkActive="active">
-                <a routerLink="/references">References</a>
+            <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <a *ngIf="applicationId == null" routerLink="/references">References</a>
+                <a [routerLink]="['/references', applicationId]" *ngIf="applicationId != null">References</a>
             </li>
-            <li routerLinkActive="active">
-                <a routerLink="/document-upload">Document Uploads</a>
+            <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <a *ngIf="applicationId == null" routerLink="/document-uploads">Document Uploads</a>
+                <a [routerLink]="['/document-uploads', applicationId]" *ngIf="applicationId != null">Document Uploads</a>
             </li>
             <li routerLinkActive="active">
                 <a routerLink="/payments/offline-payments">Payments</a>

@@ -9,211 +9,222 @@ export class QdeService {
 
   qde: Qde;
   leads: Array<Qde>;
-  defaultValue: Qde =  {
-    "application": {
-      "ocsNumber": "",
-      "loanAmount": "",
-      "tenure": "",
-      "applicationId": "",
-      "propertyIdentified": null,
-      "applicants": [
+  defaultValue: Qde = {
+    application: {
+      ocsNumber: "",
+      loanAmount: "",
+      tenure: "",
+      applicationId: "",
+      propertyIdentified: null,
+      applicants: [
         {
-          "applicantId": "",
-          "isMainApplicant": true,
-          "isIndividual": null,
-          "partnerRelationship": "",
-          "maritalStatus": {
-            "status": "",
-            "spouseTitle": "",
-            "firstName": "",
-            "earning": null,
-            "amount": null,
+          applicantId: "",
+          isMainApplicant: true,
+          isIndividual: null,
+          partnerRelationship: "",
+          maritalStatus: {
+            status: "",
+            spouseTitle: "",
+            firstName: "",
+            earning: null,
+            amount: null
           },
-          "familyDetails": {
-            "numberOfDependents": null,
-            "fatherTitle": "",
-            "fatherName": "",
-            "motherTitle": "",
-            "motherName": "",
-            "motherMaidenName": ""
+          familyDetails: {
+            numberOfDependents: null,
+            fatherTitle: "",
+            fatherName: "",
+            motherTitle: "",
+            motherName: "",
+            motherMaidenName: ""
           },
-          "other": {
-            "religion": "",
-            "category": ""
+          other: {
+            religion: "",
+            category: ""
           },
-          "occupation": {
-            "occupationType": "",
-            "companyName": "",
-            "numberOfYearsInCurrentCompany": null,
-            "totalWorkExperience": null
+          occupation: {
+            occupationType: "",
+            companyName: "",
+            numberOfYearsInCurrentCompany: null,
+            totalWorkExperience: null
           },
-          "pan": {
-            "panNumber": "",
-            "panImage": "",
-            "docType": null,
-            "docNumber": ""
+          pan: {
+            panNumber: "",
+            panImage: "",
+            docType: null,
+            docNumber: ""
           },
-          "personalDetails": {
-            "title": "",
-            "firstName": "",
-            "middleName": "",
-            "lastName": "",
-            "gender": "",
-            "qualification": "",
-            "dob": "",
-            "birthPlace": "",
-            "applicantStatus" : ""
+          personalDetails: {
+            title: "",
+            firstName: "",
+            middleName: "",
+            lastName: "",
+            gender: "",
+            qualification: "",
+            dob: "",
+            birthPlace: "",
+            applicantStatus: ""
           },
-          "contactDetails": {
-            "preferredEmailId": "",
-            "alternateEmailId" : "",
-            "mobileNumber": null,
-            "alternateMobileNumber": null,
-            "residenceNumber": "",
-            "alternateResidenceNumber": ""
+          contactDetails: {
+            preferredEmailId: "",
+            alternateEmailId: "",
+            mobileNumber: null,
+            alternateMobileNumber: null,
+            residenceNumber: "",
+            alternateResidenceNumber: ""
           },
-          "communicationAddress": {
-            "residentialStatus" : "",
-            "addressLineOne" : "",
-            "addressLineTwo" : "",
-            "zipcode" : "",
-            "city" : "",
-            "state" : "",
-            "cityState": "",
-            "numberOfYearsInCurrentResidence" : "",
-            "permanentAddress" : null,
-            "preferredMailingAddress": null
+          communicationAddress: {
+            residentialStatus: "",
+            addressLineOne: "",
+            addressLineTwo: "",
+            zipcode: "",
+            city: "",
+            state: "",
+            cityState: "",
+            numberOfYearsInCurrentResidence: "",
+            permanentAddress: null,
+            preferredMailingAddress: null
           },
-          "permanentAddress": {
-            "residentialStatus" : "",
-            "addressLineOne" : "",
-            "addressLineTwo" : "",
-            "zipcode" : "",
-            "city" : "",
-            "state" : "",
-            "cityState": "",
-            "numberOfYearsInCurrentResidence" : "",
-            "permanentAddress" : null,
-            "preferredMailingAddress": null
+          permanentAddress: {
+            residentialStatus: "",
+            addressLineOne: "",
+            addressLineTwo: "",
+            zipcode: "",
+            city: "",
+            state: "",
+            cityState: "",
+            numberOfYearsInCurrentResidence: "",
+            permanentAddress: null,
+            preferredMailingAddress: null
           },
-          "residentialAddress": {
-            "residentialStatus" : "",
-            "addressLineOne" : "",
-            "addressLineTwo" : "",
-            "zipcode" : "",
-            "city" : "",
-            "state" : "",
-            "cityState": "",
-            "numberOfYearsInCurrentResidence" : "",
-            "permanentAddress" : null
+          residentialAddress: {
+            residentialStatus: "",
+            addressLineOne: "",
+            addressLineTwo: "",
+            zipcode: "",
+            city: "",
+            state: "",
+            cityState: "",
+            numberOfYearsInCurrentResidence: "",
+            permanentAddress: null
           },
-          "officialCorrespondence": {
-            "addressLineOne": "",
-            "addressLineTwo": "",
-            "landMark": "",
-            "zipcode": "",
-            "city": "",
-            "state": "",
-            "officeNumber": "",
-            "officeEmailId": "",
-            "cityState": "",
-            "zipCityStateID": "",
+          officialCorrespondence: {
+            addressLineOne: "",
+            addressLineTwo: "",
+            landMark: "",
+            zipcode: "",
+            city: "",
+            state: "",
+            officeNumber: "",
+            officeEmailId: "",
+            cityState: "",
+            zipCityStateID: ""
           },
-          "organizationDetails": {
-            "nameOfOrganization": "",
-            "dateOfIncorporation": "",
-            "constitution": ""
+          organizationDetails: {
+            nameOfOrganization: "",
+            dateOfIncorporation: "",
+            constitution: ""
           },
-          "registeredAddress": {
-            "registeredAddress" : "",
-            "landMark" : "",
-            "zipcode" : "",
-            "city" : "",
-            "state" : ""
+          registeredAddress: {
+            registeredAddress: "",
+            landMark: "",
+            zipcode: "",
+            city: "",
+            state: ""
           },
-          "corporateAddress": {
-            "corporateAddress": "",
-            "landMark": "",
-            "zipcode": "",
-            "city": "",
-            "state": "",
-            "stdNumber": "",
-            "officeEmailId": ""
+          corporateAddress: {
+            corporateAddress: "",
+            landMark: "",
+            zipcode: "",
+            city: "",
+            state: "",
+            stdNumber: "",
+            officeEmailId: ""
           },
-          "revenueDetails": {
-            "revenue": null,
-            "annualNetIncome": null,
-            "grossTurnOver": null
+          revenueDetails: {
+            revenue: null,
+            annualNetIncome: null,
+            grossTurnOver: null
           },
-          "incomeDetails": {
-            "annualFamilyIncome" : "",
-            "monthlyExpenditure" : "",
-            "incomeConsider": null,
-            "monthlyIncome": "",
-            "assessmentMethodology": "",
-            "puccaHouse": null
+          incomeDetails: {
+            annualFamilyIncome: "",
+            monthlyExpenditure: "",
+            incomeConsider: null,
+            monthlyIncome: "",
+            assessmentMethodology: "",
+            puccaHouse: null
           },
-          "documents": [
+          documents: [
             {
-              "documentType": "",
-              "documentValue": ""
+              documentType: "",
+              documentValue: ""
             },
             {
-              "documentType": "",
-              "documentValue": ""
+              documentType: "",
+              documentValue: ""
             },
             {
-              "documentType": "",
-              "documentValue": ""
+              documentType: "",
+              documentValue: ""
             }
           ]
-        },
+        }
       ],
-      "loanDetails": {
-        "incomeDetails": {
-          "annualFamilyIncome": "",
-          "monthlyExpenditure": "",
-          "incomeConsider": null,
-          "monthlyIncome": "",
-          "assessmentMethodology": "",
-          "puccaHouse": null
+      loanDetails: {
+        incomeDetails: {
+          annualFamilyIncome: "",
+          monthlyExpenditure: "",
+          incomeConsider: null,
+          monthlyIncome: "",
+          assessmentMethodology: "",
+          puccaHouse: null
         },
-        "loanAmount": {
-          "amountRequired": null,
-          "loanPurpose": "",
-          "loanTenure": null,
-          "loanType": null
+        loanAmount: {
+          amountRequired: null,
+          loanPurpose: "",
+          loanTenure: null,
+          loanType: null
         },
-        "property": {
-          "propertyIdentifed": null,
-          "propertyPincde": null,
-          "addressLineOne": "",
-          "addressLineTwo": "",
-          "city": "",
-          "state": ""
+        property: {
+          zipcode: null,
+          zipcodeId: null,
+          addressLineOne: "",
+          addressLineTwo: "",
+          cityId: null,
+          city: "",
+          stateId: null,
+          state: ""
         },
-        "existingLoans": {
-          "loanProvider": "",
-          "numberOfYears": null,
-          "monthlyEmi": null
+        propertyType: {
+          propertyIdentified: true,
+          propertyType: "",
+          propertyClss: "",
+          propertyArea: null
+        },
+        existingLoans: {
+          loanProvider: "",
+          liveLoan: null,
+          numberOfYears: null,
+          monthlyEmi: null
         }
       },
-      "references": {
-        "referenceOne": {
-          "relationShip": "",
-          "title": "",
-          "fullName": "",
-          "mobileNumber": "",
-          "addressLineOne": "",
-          "addressLineTwo": ""
+      references: {
+        referenceOne: {
+          referenceId: null,
+          relationShip: "",
+          title: "",
+          fullName: "",
+          mobileNumber: "",
+          addressLineOne: "",
+          addressLineTwo: ""
         },
-        "referenceTwo": {
-          "relationShip": "",
-          "title": "",
-          "fullName": "",
-          "mobileNumber": "",
-          "addressLineOne": "",
-          "addressLineTwo": ""
+        referenceTwo: {
+          referenceId: null,
+          relationShip: "",
+          title: "",
+          fullName: "",
+          mobileNumber: "",
+          addressLineOne: "",
+          addressLineTwo: ""
         }
       }
     }
@@ -316,153 +327,153 @@ export class QdeService {
 
   addNewCoApplicant() {
     this.qde.application.applicants.push({
-      "applicantId": "",
-      "isMainApplicant": false,
-      "isIndividual": null,
-      "partnerRelationship": "",
-      "maritalStatus": {
-        "status": "",
-        "spouseTitle": "",
-        "firstName": "",
-        "earning": null,
-        "amount": null,
+      applicantId: "",
+      isMainApplicant: false,
+      isIndividual: null,
+      partnerRelationship: "",
+      maritalStatus: {
+        status: "",
+        spouseTitle: "",
+        firstName: "",
+        earning: null,
+        amount: null
       },
-      "familyDetails": {
-        "numberOfDependents": null,
-        "fatherTitle": "",
-        "fatherName": "",
-        "motherTitle": "",
-        "motherName": "",
-        "motherMaidenName": ""
+      familyDetails: {
+        numberOfDependents: null,
+        fatherTitle: "",
+        fatherName: "",
+        motherTitle: "",
+        motherName: "",
+        motherMaidenName: ""
       },
-      "other": {
-        "religion": "",
-        "category": ""
+      other: {
+        religion: "",
+        category: ""
       },
-      "occupation": {
-        "occupationType": "",
-        "companyName": "",
-        "numberOfYearsInCurrentCompany": null,
-        "totalWorkExperience": null
+      occupation: {
+        occupationType: "",
+        companyName: "",
+        numberOfYearsInCurrentCompany: null,
+        totalWorkExperience: null
       },
-      "pan": {
-        "panNumber": "",
-        "panImage": "",
-        "docType": null,
-        "docNumber": ""
+      pan: {
+        panNumber: "",
+        panImage: "",
+        docType: null,
+        docNumber: ""
       },
-      "personalDetails": {
-        "title": "",
-        "firstName": "",
-        "middleName": "",
-        "lastName": "",
-        "gender": "",
-        "qualification": "",
-        "dob": "",
-        "birthPlace": "",
-        "applicantStatus" : ""
+      personalDetails: {
+        title: "",
+        firstName: "",
+        middleName: "",
+        lastName: "",
+        gender: "",
+        qualification: "",
+        dob: "",
+        birthPlace: "",
+        applicantStatus: ""
       },
-      "contactDetails": {
-        "preferredEmailId": "",
-        "alternateEmailId" : "",
-        "mobileNumber": null,
-        "alternateMobileNumber": null,
-        "residenceNumber": "",
-        "alternateResidenceNumber": ""
+      contactDetails: {
+        preferredEmailId: "",
+        alternateEmailId: "",
+        mobileNumber: null,
+        alternateMobileNumber: null,
+        residenceNumber: "",
+        alternateResidenceNumber: ""
       },
-      "communicationAddress": {
-        "residentialStatus" : "",
-        "addressLineOne" : "",
-        "addressLineTwo" : "",
-        "zipcode" : "",
-        "city" : "",
-        "state" : "",
-        "cityState": "",
-        "numberOfYearsInCurrentResidence" : "",
-        "permanentAddress" : null,
-        "preferredMailingAddress": null
+      communicationAddress: {
+        residentialStatus: "",
+        addressLineOne: "",
+        addressLineTwo: "",
+        zipcode: "",
+        city: "",
+        state: "",
+        cityState: "",
+        numberOfYearsInCurrentResidence: "",
+        permanentAddress: null,
+        preferredMailingAddress: null
       },
-      "permanentAddress": {
-        "residentialStatus" : "",
-        "addressLineOne" : "",
-        "addressLineTwo" : "",
-        "zipcode" : "",
-        "city" : "",
-        "state" : "",
-        "cityState": "",
-        "numberOfYearsInCurrentResidence" : "",
-        "permanentAddress" : null,
-        "preferredMailingAddress": null
+      permanentAddress: {
+        residentialStatus: "",
+        addressLineOne: "",
+        addressLineTwo: "",
+        zipcode: "",
+        city: "",
+        state: "",
+        cityState: "",
+        numberOfYearsInCurrentResidence: "",
+        permanentAddress: null,
+        preferredMailingAddress: null
       },
-      "residentialAddress": {
-        "residentialStatus" : "",
-        "addressLineOne" : "",
-        "addressLineTwo" : "",
-        "zipcode" : "",
-        "city" : "",
-        "state" : "",
-        "cityState": "",
-        "numberOfYearsInCurrentResidence" : "",
-        "permanentAddress" : null
+      residentialAddress: {
+        residentialStatus: "",
+        addressLineOne: "",
+        addressLineTwo: "",
+        zipcode: "",
+        city: "",
+        state: "",
+        cityState: "",
+        numberOfYearsInCurrentResidence: "",
+        permanentAddress: null
       },
-      "officialCorrespondence": {
-        "addressLineOne": "",
-        "addressLineTwo": "",
-        "landMark": "",
-        "zipcode": "",
-        "city": "",
-        "state": "",
-        "officeNumber": "",
-        "officeEmailId": "",
-        "cityState": "",
-        "zipCityStateID": "",
+      officialCorrespondence: {
+        addressLineOne: "",
+        addressLineTwo: "",
+        landMark: "",
+        zipcode: "",
+        city: "",
+        state: "",
+        officeNumber: "",
+        officeEmailId: "",
+        cityState: "",
+        zipCityStateID: ""
       },
-      "organizationDetails": {
-        "nameOfOrganization": "",
-        "dateOfIncorporation": "",
-        "constitution": ""
+      organizationDetails: {
+        nameOfOrganization: "",
+        dateOfIncorporation: "",
+        constitution: ""
       },
-      "registeredAddress": {
-        "registeredAddress" : "",
-        "landMark" : "",
-        "zipcode" : "",
-        "city" : "",
-        "state" : ""
+      registeredAddress: {
+        registeredAddress: "",
+        landMark: "",
+        zipcode: "",
+        city: "",
+        state: ""
       },
-      "corporateAddress": {
-        "corporateAddress": "",
-        "landMark": "",
-        "zipcode": "",
-        "city": "",
-        "state": "",
-        "stdNumber": "",
-        "officeEmailId": ""
+      corporateAddress: {
+        corporateAddress: "",
+        landMark: "",
+        zipcode: "",
+        city: "",
+        state: "",
+        stdNumber: "",
+        officeEmailId: ""
       },
-      "revenueDetails": {
-        "revenue": null,
-        "annualNetIncome": null,
-        "grossTurnOver": null
+      revenueDetails: {
+        revenue: null,
+        annualNetIncome: null,
+        grossTurnOver: null
       },
-      "incomeDetails": {
-        "annualFamilyIncome" : "",
-        "monthlyExpenditure" : "",
-        "incomeConsider": null,
-        "monthlyIncome": "",
-        "assessmentMethodology": "",
-        "puccaHouse": null
+      incomeDetails: {
+        annualFamilyIncome: "",
+        monthlyExpenditure: "",
+        incomeConsider: null,
+        monthlyIncome: "",
+        assessmentMethodology: "",
+        puccaHouse: null
       },
-      "documents": [
+      documents: [
         {
-          "documentType": "",
-          "documentValue": ""
+          documentType: "",
+          documentValue: ""
         },
         {
-          "documentType": "",
-          "documentValue": ""
+          documentType: "",
+          documentValue: ""
         },
         {
-          "documentType": "",
-          "documentValue": ""
+          documentType: "",
+          documentValue: ""
         }
       ]
     });
@@ -472,210 +483,221 @@ export class QdeService {
 
   resetQde() {
     this.setQde({
-      "application": {
-        "ocsNumber": " ",
-        "loanAmount": "",
-        "tenure": "",
-        "applicationId": "",
-        "propertyIdentified": null,
-        "applicants": [
+      application: {
+        ocsNumber: " ",
+        loanAmount: "",
+        tenure: "",
+        applicationId: "",
+        propertyIdentified: null,
+        applicants: [
           {
-            "applicantId": "",
-            "isMainApplicant": true,
-            "isIndividual": null,
-            "partnerRelationship": "",
-            "maritalStatus": {
-              "status": "",
-              "spouseTitle": "",
-              "firstName": "",
-              "earning": null,
-              "amount": null,
+            applicantId: "",
+            isMainApplicant: true,
+            isIndividual: null,
+            partnerRelationship: "",
+            maritalStatus: {
+              status: "",
+              spouseTitle: "",
+              firstName: "",
+              earning: null,
+              amount: null
             },
-            "familyDetails": {
-              "numberOfDependents": null,
-              "fatherTitle": "",
-              "fatherName": "",
-              "motherTitle": "",
-              "motherName": "",
-              "motherMaidenName": ""
+            familyDetails: {
+              numberOfDependents: null,
+              fatherTitle: "",
+              fatherName: "",
+              motherTitle: "",
+              motherName: "",
+              motherMaidenName: ""
             },
-            "other": {
-              "religion": "",
-              "category": ""
+            other: {
+              religion: "",
+              category: ""
             },
-            "occupation": {
-              "occupationType": "",
-              "companyName": "",
-              "numberOfYearsInCurrentCompany": null,
-              "totalWorkExperience": null
+            occupation: {
+              occupationType: "",
+              companyName: "",
+              numberOfYearsInCurrentCompany: null,
+              totalWorkExperience: null
             },
-            "pan": {
-              "panNumber": "",
-              "panImage": "",
-              "docType": null,
-              "docNumber": ""
+            pan: {
+              panNumber: "",
+              panImage: "",
+              docType: null,
+              docNumber: ""
             },
-            "personalDetails": {
-              "title": "",
-              "firstName": "",
-              "middleName": "",
-              "lastName": "",
-              "gender": "",
-              "qualification": "",
-              "dob": "",
-              "birthPlace": "",
-              "applicantStatus" : ""
+            personalDetails: {
+              title: "",
+              firstName: "",
+              middleName: "",
+              lastName: "",
+              gender: "",
+              qualification: "",
+              dob: "",
+              birthPlace: "",
+              applicantStatus: ""
             },
-            "contactDetails": {
-              "preferredEmailId": "",
-              "alternateEmailId" : "",
-              "mobileNumber": null,
-              "alternateMobileNumber": null,
-              "residenceNumber": "",
-              "alternateResidenceNumber": ""
+            contactDetails: {
+              preferredEmailId: "",
+              alternateEmailId: "",
+              mobileNumber: null,
+              alternateMobileNumber: null,
+              residenceNumber: "",
+              alternateResidenceNumber: ""
             },
-            "communicationAddress": {
-              "residentialStatus" : "",
-              "addressLineOne" : "",
-              "addressLineTwo" : "",
-              "zipcode" : "",
-              "city" : "",
-              "state" : "",
-              "cityState": "",
-              "numberOfYearsInCurrentResidence" : "",
-              "permanentAddress" : null,
-              "preferredMailingAddress": null
+            communicationAddress: {
+              residentialStatus: "",
+              addressLineOne: "",
+              addressLineTwo: "",
+              zipcode: "",
+              city: "",
+              state: "",
+              cityState: "",
+              numberOfYearsInCurrentResidence: "",
+              permanentAddress: null,
+              preferredMailingAddress: null
             },
-            "permanentAddress": {
-              "residentialStatus" : "",
-              "addressLineOne" : "",
-              "addressLineTwo" : "",
-              "zipcode" : "",
-              "city" : "",
-              "state" : "",
-              "cityState": "",
-              "numberOfYearsInCurrentResidence" : "",
-              "permanentAddress" : null,
-              "preferredMailingAddress": null
+            permanentAddress: {
+              residentialStatus: "",
+              addressLineOne: "",
+              addressLineTwo: "",
+              zipcode: "",
+              city: "",
+              state: "",
+              cityState: "",
+              numberOfYearsInCurrentResidence: "",
+              permanentAddress: null,
+              preferredMailingAddress: null
             },
-            "residentialAddress": {
-              "residentialStatus" : "",
-              "addressLineOne" : "",
-              "addressLineTwo" : "",
-              "zipcode" : "",
-              "city" : "",
-              "state" : "",
-              "cityState": "",
-              "numberOfYearsInCurrentResidence" : "",
-              "permanentAddress" : null
+            residentialAddress: {
+              residentialStatus: "",
+              addressLineOne: "",
+              addressLineTwo: "",
+              zipcode: "",
+              city: "",
+              state: "",
+              cityState: "",
+              numberOfYearsInCurrentResidence: "",
+              permanentAddress: null
             },
-            "officialCorrespondence": {
-              "addressLineOne": "",
-              "addressLineTwo": "",
-              "landMark": "",
-              "zipcode": "",
-              "city": "",
-              "state": "",
-              "officeNumber": "",
-              "officeEmailId": "",
-              "cityState": "",
-              "zipCityStateID": "",
+            officialCorrespondence: {
+              addressLineOne: "",
+              addressLineTwo: "",
+              landMark: "",
+              zipcode: "",
+              city: "",
+              state: "",
+              officeNumber: "",
+              officeEmailId: "",
+              cityState: "",
+              zipCityStateID: ""
             },
-            "organizationDetails": {
-              "nameOfOrganization": "",
-              "dateOfIncorporation": "",
-              "constitution": ""
+            organizationDetails: {
+              nameOfOrganization: "",
+              dateOfIncorporation: "",
+              constitution: ""
             },
-            "registeredAddress": {
-              "registeredAddress" : "",
-              "landMark" : "",
-              "zipcode" : "",
-              "city" : "",
-              "state" : ""
+            registeredAddress: {
+              registeredAddress: "",
+              landMark: "",
+              zipcode: "",
+              city: "",
+              state: ""
             },
-            "corporateAddress": {
-              "corporateAddress": "",
-              "landMark": "",
-              "zipcode": "",
-              "city": "",
-              "state": "",
-              "stdNumber": "",
-              "officeEmailId": ""
+            corporateAddress: {
+              corporateAddress: "",
+              landMark: "",
+              zipcode: "",
+              city: "",
+              state: "",
+              stdNumber: "",
+              officeEmailId: ""
             },
-            "revenueDetails": {
-              "revenue": null,
-              "annualNetIncome": null,
-              "grossTurnOver": null
+            revenueDetails: {
+              revenue: null,
+              annualNetIncome: null,
+              grossTurnOver: null
             },
-            "incomeDetails": {
-              "annualFamilyIncome" : "",
-              "monthlyExpenditure" : "",
-              "incomeConsider": null,
-              "monthlyIncome": "",
-              "assessmentMethodology": "",
-              "puccaHouse": null
+            incomeDetails: {
+              annualFamilyIncome: "",
+              monthlyExpenditure: "",
+              incomeConsider: null,
+              monthlyIncome: "",
+              assessmentMethodology: "",
+              puccaHouse: null
             },
-            "documents": [
+            documents: [
               {
-                "documentType": "",
-                "documentValue": ""
+                documentType: "",
+                documentValue: ""
               },
               {
-                "documentType": "",
-                "documentValue": ""
+                documentType: "",
+                documentValue: ""
               },
               {
-                "documentType": "",
-                "documentValue": ""
+                documentType: "",
+                documentValue: ""
               }
             ]
-          },
+          }
         ],
-        "loanDetails": {
-          "incomeDetails": {
-            "annualFamilyIncome": "",
-            "monthlyExpenditure": "",
-            "incomeConsider": null,
-            "monthlyIncome": "",
-            "assessmentMethodology": "",
-            "puccaHouse": null
+        loanDetails: {
+          incomeDetails: {
+            annualFamilyIncome: "",
+            monthlyExpenditure: "",
+            incomeConsider: null,
+            monthlyIncome: "",
+            assessmentMethodology: "",
+            puccaHouse: null
           },
-          "loanAmount": {
-            "amountRequired": null,
-            "loanPurpose": "",
-            "loanTenure": null,
-            "loanType": null
+          loanAmount: {
+            amountRequired: null,
+            loanPurpose: "",
+            loanTenure: null,
+            loanType: null
           },
-          "property": {
-            "propertyIdentifed": null,
-            "propertyPincde": null,
-            "addressLineOne": "",
-            "addressLineTwo": "",
-            "city": "",
-            "state": ""
+          property: {
+            zipcode: null,
+            zipcodeId: null,
+            addressLineOne: "",
+            addressLineTwo: "",
+            cityId: null,
+            city: "",
+            stateId: null,
+            state: ""
           },
-          "existingLoans": {
-            "loanProvider": "",
-            "numberOfYears": null,
-            "monthlyEmi": null
+          propertyType: {
+            propertyIdentified: true,
+            propertyType: "",
+            propertyClss: "",
+            propertyArea: null
+          },
+          existingLoans: {
+            loanProvider: "",
+            liveLoan: null,
+            numberOfYears: null,
+            monthlyEmi: null
           }
         },
-        "references": {
-          "referenceOne": {
-            "relationShip": "",
-            "title": "",
-            "fullName": "",
-            "mobileNumber": "",
-            "addressLineOne": "",
-            "addressLineTwo": ""
+        references: {
+          referenceOne: {
+            referenceId: null,
+            relationShip: "",
+            title: "",
+            fullName: "",
+            mobileNumber: "",
+            addressLineOne: "",
+            addressLineTwo: ""
           },
-          "referenceTwo": {
-            "relationShip": "",
-            "title": "",
-            "fullName": "",
-            "mobileNumber": "",
-            "addressLineOne": "",
-            "addressLineTwo": ""
+          referenceTwo: {
+            referenceId: null,
+            relationShip: "",
+            title: "",
+            fullName: "",
+            mobileNumber: "",
+            addressLineOne: "",
+            addressLineTwo: ""
           }
         }
       }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({providedIn: "root"})
 export class UtilService {
@@ -23,7 +24,8 @@ export class UtilService {
     });
 
     const options = { headers: headers };
-    return this.http.get('/appiyo/account/logout', options);
+    let uri = environment.host + "/appiyo/account/logout";
+    return this.http.get(uri, options);
   }
 
   clearCredentials() {

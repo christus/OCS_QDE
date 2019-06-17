@@ -31,8 +31,9 @@ export class BirthPlaceResolverService implements Resolve<Observable<any>>{
       JSON.stringify(qdeRequestEntity)
     );
 
+    let uri = environment.host + "/appiyo/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
     return this.http.post(
-      "/appiyo/d/workflows/" + workflowId + "/execute?projectId=" + projectId,
+      uri,
       body.toString()
     );
   }

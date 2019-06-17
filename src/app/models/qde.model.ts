@@ -195,26 +195,28 @@ export interface LoanAmount {
 }
 
 export interface Property {
-    propertyIdentifed ?: boolean;
-    propertyPincde ?: number;
-    addressLineOne ?: string;
-    addressLineTwo ?: string;
-    city ?: string;
-    state ?: string;
+    zipcodeId: number;
+    zipcode?: number;
+    addressLineOne: string;
+    addressLineTwo: string;
+    cityId: number;
+    city?: string;
+    stateId: number;
+    state?: string;
 }
 
 export interface PropertyType {
-    propertyIdentifed ?: boolean;
-    propertyType ?: number;
-    propertyClss ?: string;
-    propertyArea ?: string;
+    propertyIdentified?: boolean;
+    propertyType: string;
+    propertyClss: string;
+    propertyArea: number;
 }
 
 export interface ExistingLoan {
-    loanProvider ?: string;
-    numberOfYears ?: string;
-    liveLoan ?: number;
-    monthlyEmi? : number;
+  loanProvider?: string;
+  numberOfYears?: string;
+  liveLoan?: number;
+  monthlyEmi?: number;
 }
 
 export interface Reference {
@@ -223,6 +225,7 @@ export interface Reference {
 }
 
 export interface ReferenceDetail {
+    referenceId?: number;
     relationShip ?: string;
     title ?: string;
     fullName ?: string;
