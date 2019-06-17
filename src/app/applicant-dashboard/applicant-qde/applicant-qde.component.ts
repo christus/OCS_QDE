@@ -875,6 +875,24 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       return;
     }
 
+
+
+
+    const dateofbirth = form.value.year.value+'-'+form.value.month.value+'-'+form.value.day.value;
+    const d1:any = new Date(dateofbirth);
+    const d2:any = new Date();
+    var diff = d2 - d1 ;
+    var age = Math.floor(diff/(1000*60*60*24*365.25));
+    if(age >= 70 || age <=18 ){
+      this.ageError = true;
+      return;
+    }else {
+      this.ageError=false;
+    }
+
+
+
+
     this.qde.application.applicants[this.applicantIndex].personalDetails.dob = form.value.year.value+'-'+form.value.month.value+'-'+form.value.day.value;
     this.qde.application.applicants[this.applicantIndex].personalDetails.birthPlace = form.value.birthPlace.value;
 
@@ -1221,6 +1239,21 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     if (form && !form.valid) {
       return;
     }
+
+
+
+  const currentExp = form.value.numberOfYearsInCurrentCompany;
+  const totalExp = form.value.totalExperienceYear;
+  if(currentExp > totalExp) {
+    //form.valid = false;
+    this.expError = true;
+    return;
+  }else{
+    this.expError=false;
+  }
+
+
+
 
     this.qde.application.applicants[this.applicantIndex].occupation.occupationType = this.selectedOccupation.value.toString();
     if(this.selectedOccupation.value.toString() != '9' && this.selectedOccupation.value.toString() != '10') {
@@ -1607,12 +1640,25 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       this.qde.application.applicants[this.applicantIndex].permanentAddress.addressLineOne = this.qde.application.applicants[this.applicantIndex].communicationAddress.addressLineOne;
       this.qde.application.applicants[this.applicantIndex].permanentAddress.addressLineTwo = this.qde.application.applicants[this.applicantIndex].communicationAddress.addressLineTwo;
       this.qde.application.applicants[this.applicantIndex].permanentAddress.zipcode = this.qde.application.applicants[this.applicantIndex].communicationAddress.zipcode;
+   
+      this.qde.application.applicants[this.applicantIndex].permanentAddress.city = this.qde.application.applicants[this.applicantIndex].communicationAddress.city;
+      this.qde.application.applicants[this.applicantIndex].permanentAddress.state = this.qde.application.applicants[this.applicantIndex].communicationAddress.state;
       this.qde.application.applicants[this.applicantIndex].permanentAddress.cityState = this.qde.application.applicants[this.applicantIndex].communicationAddress.cityState;
+      this.qde.application.applicants[this.applicantIndex].permanentAddress.zipcodeId = this.qde.application.applicants[this.applicantIndex].communicationAddress.zipcodeId;
+      this.qde.application.applicants[this.applicantIndex].permanentAddress.stateId = this.qde.application.applicants[this.applicantIndex].communicationAddress.stateId;
+      this.qde.application.applicants[this.applicantIndex].permanentAddress.cityId = this.qde.application.applicants[this.applicantIndex].communicationAddress.cityId;
+
+   
     } else {
       this.qde.application.applicants[this.applicantIndex].permanentAddress.addressLineOne = "";
       this.qde.application.applicants[this.applicantIndex].permanentAddress.addressLineTwo = "";
       this.qde.application.applicants[this.applicantIndex].permanentAddress.zipcode = "";
       this.qde.application.applicants[this.applicantIndex].permanentAddress.cityState = "";
+      this.qde.application.applicants[this.applicantIndex].permanentAddress.stateId = "";
+      this.qde.application.applicants[this.applicantIndex].permanentAddress.zipcodeId = "";
+      this.qde.application.applicants[this.applicantIndex].permanentAddress.city = "";
+      this.qde.application.applicants[this.applicantIndex].permanentAddress.cityId = "";
+      this.qde.application.applicants[this.applicantIndex].permanentAddress.state = "";
     }
   }
 

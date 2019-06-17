@@ -463,6 +463,10 @@
                                                                 </kendo-dropdownlist>
                                                             </div>
                                                         </div>
+                                                        <div *ngIf="ageError" class="invalid-feedback">
+                                                            <div *ngIf="ageError"> Age should not be less than 18 years and greater than 70 years</div>
+                                                        </div>
+                                                      
                                                       </div>
                                                       <div class="form-group">
                                                           <span class="control-title">Birth place</span>
@@ -1479,6 +1483,12 @@
                                           <!-- <div *ngIf="(totalExperienceYear.touched || totalExperienceYear.dirty) && totalExperienceYear.invalid" class="invalid-feedback">
                                             <div *ngIf="totalExperienceYear.errors?.required">{{errors.occupationDetails.totalExp.required}}</div>
                                           </div> -->
+
+                                          <div *ngIf="expError" class="invalid-feedback">
+                                            <div *ngIf="expError"><br><br>Experience in current employment/business should not be greater than total work experience </div>
+                                          </div>
+                                         
+                                         
       
                                       </div>
                                   </div>
