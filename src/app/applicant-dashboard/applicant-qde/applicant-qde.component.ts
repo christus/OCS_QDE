@@ -342,7 +342,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
             this.qdeService.setQde(result);
             console.log(result);
-                  // Personal Details Title
+      // Personal Details Title
       if( ! isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].personalDetails.title)) ) {
         this.selectedTitle = this.titles[(parseInt(this.qde.application.applicants[this.applicantIndex].personalDetails.title))-1];
       }
@@ -411,13 +411,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
           this.selectedSpouseTitle = this.titles[(parseInt(this.qde.application.applicants[this.applicantIndex].maritalStatus.spouseTitle))-1];
       }
 
-      if( ! isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].familyDetails.motherTitle)) ) {
-        this.selectedMotherTitle = this.titles[(parseInt(this.qde.application.applicants[this.applicantIndex].familyDetails.motherTitle))-1];
+      if( ! isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].familyDetails.fatherTitle)) ) {
+        this.selectedFatherTitle  = this.maleTitles[(parseInt(this.qde.application.applicants[this.applicantIndex].familyDetails.fatherTitle))-1];
       }
 
-
-      if( ! isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].familyDetails.fatherTitle)) ) {
-        this.selectedFatherTitle  = this.titles[(parseInt(this.qde.application.applicants[this.applicantIndex].familyDetails.fatherTitle))-1];
+      if( ! isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].familyDetails.motherTitle)) ) {
+        this.selectedMotherTitle = this.femaleTitles[(parseInt(this.qde.application.applicants[this.applicantIndex].familyDetails.motherTitle))-1];
       }
 
       // Other
@@ -579,6 +578,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     this.qde.application.applicants[this.applicantIndex].pan.docType = form.value.docType.value;
     this.qde.application.applicants[this.applicantIndex].pan.docNumber = form.value.docNumber;
 
+    console.log("PAN: ", this.qde.application);
+    console.log("FILTERED PAN: ", this.qdeService.getFilteredJson(this.qde.application));
     this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
@@ -596,7 +597,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
           // isApplicantPresent = applicants[this.applicantIndex].hasOwnProperty('applicantId');
           // this.qde.application.applicants[this.coApplicantIndex].applicantId =  applicants[this.coApplicantIndex]["applicantId"];
           this.cds.changePanSlide(true);
-          this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant'], {fragment: "pan1"});
+          this.router.navigate(['/applicant/'+this.qde.application.applicationId], {fragment: "pan1"});
         }else {
           this.cds.changePanSlide(true);
           this.tabSwitch(2);
@@ -655,7 +656,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
         // }   
 
         this.cds.changePanSlide2(true);
-        this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant/'], {fragment: "pan2"});
+        this.router.navigate(['/applicant/'+this.qde.application.applicationId], {fragment: "pan2"});
       } else {
         // Throw Invalid Pan Error
       }

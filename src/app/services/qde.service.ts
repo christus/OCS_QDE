@@ -11,7 +11,7 @@ export class QdeService {
   leads: Array<Qde>;
   defaultValue: Qde = {
     application: {
-      ocsNumber: "",
+      ocsNumber: " ",
       loanAmount: "",
       tenure: "",
       applicationId: "",
@@ -262,21 +262,20 @@ export class QdeService {
   
     a.forEach((obj ,index) => {
 
-      console.log("FINDING: ", ['ocsNumber', 'applicationId', 'isMainApplicant'].includes(obj.key));
-      // Exception Keys
       // Filter Empty Values
       if(obj.value == null || obj.value == undefined || obj.value == NaN) {
         delete obj.key;
         return;
       } else if(obj.value.constructor == String) {
         if(obj.value == "") {
+          console.log("ocsNumber ", ['ocsNumber', 'applicationId'].includes(obj.key));
           if(['ocsNumber', 'applicationId'].includes(obj.key)) {
             return;
           } else {
             delete obj.key;
             return;
           }
-         
+         console.log('----')
         } else {
           newObj[obj.key] = obj.value;
           return;
@@ -487,7 +486,7 @@ export class QdeService {
   resetQde() {
     this.setQde({
       "application": {
-        "ocsNumber": "",
+        "ocsNumber": " ",
         "loanAmount": "",
         "tenure": "",
         "applicationId": "",
