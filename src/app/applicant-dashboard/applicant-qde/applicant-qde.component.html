@@ -1770,7 +1770,7 @@
                                                                     fieldFill
                                                                     id="pucchaHouseIdYes1" />
                                                             <label for="pucchaHouseIdYes1">
-                                                                yes
+                                                                Yes
                                                             </label>
                                                         </div>
                                                         <div class="bs-radio typ-normal">
@@ -1792,8 +1792,8 @@
                                                 <button 
                                                     type="submit"
                                                     class="btn btn-primary"
-                                                    [ngClass]="{'disabled': (incomeDetailsForm1.invalid || !([1,2].includes(isPuccaHouse)))}"
-                                                    [disabled]="incomeDetailsForm1.invalid || !([1,2].includes(isPuccaHouse))">
+                                                    [ngClass]="{'disabled': !incomeDetailsForm1.valid }"
+                                                    [disabled]="!incomeDetailsForm1.valid ">
                                                 Next
                                                 </button>
                                           </div>
@@ -2515,7 +2515,7 @@
                                                                     fieldFill
                                                                     id="pucchaHouseIdYes2" />
                                                             <label for="pucchaHouseIdYes2">
-                                                                yes
+                                                                Yes
                                                             </label>
                                                         </div>
                                                         <div class="bs-radio typ-normal">
@@ -2537,8 +2537,8 @@
                                                 <button 
                                                     type="submit"
                                                     class="btn btn-primary"
-                                                    [ngClass]="{'disabled': (incomeDetailsForm1.invalid )}"
-                                                    [disabled]="incomeDetailsForm1.invalid ">
+                                                    [ngClass]="{'disabled': !incomeDetailsForm1.valid }"
+                                                    [disabled]="!incomeDetailsForm1.valid ">
                                                 Next
                                             </button>
                                             </div>
