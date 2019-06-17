@@ -578,37 +578,31 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     this.qde.application.applicants[this.applicantIndex].pan.docType = form.value.docType.value;
     this.qde.application.applicants[this.applicantIndex].pan.docNumber = form.value.docNumber;
 
-    console.log("PAN: ", this.qde.application);
-    console.log("FILTERED PAN: ", this.qdeService.getFilteredJson(this.qde.application));
     this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
-      if(response["ProcessVariables"]["status"]) {
+      if(response["ProcessVariables"]["status"] == true) {
         let result = this.parseJson(response["ProcessVariables"]["response"]);
 
         console.log("GET141414", result);
         // this.qde.application.ocsNumber = result["application"]["ocsNumber"];
         // this.qde.application.applicationId = result["application"]["applicationId"];
        
-        let applicants = result["application"]["applicants"];
+        this.qde.application.applicationId = result['application']['applicationId'];
 
         // let isApplicantPresent:boolean = false;
 
-        if(applicants.length > 0) {
+        if((result["application"]["applicants"]).length > 0) {
           // isApplicantPresent = applicants[this.applicantIndex].hasOwnProperty('applicantId');
           // this.qde.application.applicants[this.coApplicantIndex].applicantId =  applicants[this.coApplicantIndex]["applicantId"];
           this.cds.changePanSlide(true);
-          this.router.navigate(['/applicant/'+this.qde.application.applicationId], {fragment: "pan1"});
+          this.router.navigate(['/applicant/'+this.qde.application.applicationId]);
         }else {
           this.cds.changePanSlide(true);
-          this.tabSwitch(2);
+          // this.tabSwitch(2);
           return;
-        }   
-
-        
-        // Static value for now, replace it in future
-        
-
+        }
       } else {
+        console.log('pan error');
         // Throw Invalid Pan Error
       }
     }, (error) => {
@@ -639,24 +633,20 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       if(response["ProcessVariables"]["status"]) {
         let result = this.parseJson(response["ProcessVariables"]["response"]);
 
-        // console.log("GET141414", result);
-        // this.qde.application.ocsNumber = result["application"]["ocsNumber"];
-        // this.qde.application.applicationId = result["application"]["applicationId"];
-       
-        // let applicants = result["application"]["applicants"];
+        this.qde.application.applicationId = result['application']['applicationId'];
 
         // let isApplicantPresent:boolean = false;
 
-        // if(applicants.length > 0) {
-        //   // isApplicantPresent = applicants[this.applicantIndex].hasOwnProperty('applicantId');
-        //   this.qde.application.applicants[this.coApplicantIndex].applicantId =  applicants[this.coApplicantIndex]["applicantId"];
-        // }else {
-        //   this.tabSwitch(1);
-        //   return;
-        // }   
-
-        this.cds.changePanSlide2(true);
-        this.router.navigate(['/applicant/'+this.qde.application.applicationId], {fragment: "pan2"});
+        if((result["application"]["applicants"]).length > 0) {
+          // isApplicantPresent = applicants[this.applicantIndex].hasOwnProperty('applicantId');
+          // this.qde.application.applicants[this.coApplicantIndex].applicantId =  applicants[this.coApplicantIndex]["applicantId"];
+          this.cds.changePanSlide2(true);
+          this.router.navigate(['/applicant/'+this.qde.application.applicationId]);
+        }else {
+          this.cds.changePanSlide2(true);
+          // this.tabSwitch(2);
+          return;
+        }
       } else {
         // Throw Invalid Pan Error
       }

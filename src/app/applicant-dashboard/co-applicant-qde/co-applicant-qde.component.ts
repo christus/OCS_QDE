@@ -480,25 +480,20 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
         // this.qde.application.ocsNumber = result["application"]["ocsNumber"];
         // this.qde.application.applicationId = result["application"]["applicationId"];
        
-        let applicants = result["application"]["applicants"];
+        this.qde.application.applicationId = result['application']['applicationId'];
 
         // let isApplicantPresent:boolean = false;
 
-        if(applicants.length > 0) {
+        if((result["application"]["applicants"]).length > 0) {
           // isApplicantPresent = applicants[this.applicantIndex].hasOwnProperty('applicantId');
           // this.qde.application.applicants[this.coApplicantIndex].applicantId =  applicants[this.coApplicantIndex]["applicantId"];
           this.cds.changePanSlide(true);
-          this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant/'+this.coApplicantIndex], {fragment: "pan1"});
+          this.router.navigate(['/applicant/'+this.qde.application.applicationId]);
         }else {
-          this.cds.changePanSlide(true)
-          this.tabSwitch(1);
+          this.cds.changePanSlide(true);
+          // this.tabSwitch(2);
           return;
-        }   
-
-        
-        // Static value for now, replace it in future
-        
-
+        }
       } else {
         // Throw Invalid Pan Error
       }
@@ -530,24 +525,20 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       if(response["ProcessVariables"]["status"]) {
         let result = this.parseJson(response["ProcessVariables"]["response"]);
 
-        // console.log("GET141414", result);
-        // this.qde.application.ocsNumber = result["application"]["ocsNumber"];
-        // this.qde.application.applicationId = result["application"]["applicationId"];
-       
-        // let applicants = result["application"]["applicants"];
+        this.qde.application.applicationId = result['application']['applicationId'];
 
         // let isApplicantPresent:boolean = false;
 
-        // if(applicants.length > 0) {
-        //   // isApplicantPresent = applicants[this.applicantIndex].hasOwnProperty('applicantId');
-        //   this.qde.application.applicants[this.coApplicantIndex].applicantId =  applicants[this.coApplicantIndex]["applicantId"];
-        // }else {
-        //   this.tabSwitch(1);
-        //   return;
-        // }   
-
-        this.cds.changePanSlide2(true);
-        this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant/'+this.coApplicantIndex], {fragment: "pan2"});
+        if((result["application"]["applicants"]).length > 0) {
+          // isApplicantPresent = applicants[this.applicantIndex].hasOwnProperty('applicantId');
+          // this.qde.application.applicants[this.coApplicantIndex].applicantId =  applicants[this.coApplicantIndex]["applicantId"];
+          this.cds.changePanSlide2(true);
+          this.router.navigate(['/applicant/'+this.qde.application.applicationId]);
+        }else {
+          this.cds.changePanSlide2(true);
+          // this.tabSwitch(2);
+          return;
+        }
       } else {
         // Throw Invalid Pan Error
       }
@@ -1559,14 +1550,14 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       // Incoming from create in Individual Pan
       if(this.panslide == true && this.qde.application.applicants[this.coApplicantIndex].isIndividual == true) {
         // this.panSlider2.setIndex(2);
-        this.tabSwitch(2);
+        this.tabSwitch(1);
       }
       // Incoming from create in Non Individual Pan
       else if(this.panslide2 == true && this.qde.application.applicants[this.coApplicantIndex].isIndividual == false) {
         this.tabSwitch(12);
         this.panSlider4.setIndex(1);
       } else if(this.panslide == false && this.qde.application.applicants[this.coApplicantIndex].isIndividual == true) {
-        this.tabSwitch(1);
+        this.tabSwitch(0);
         // this.panSlider2.setIndex(2);
       }
       else if(this.panslide2 == false && this.qde.application.applicants[this.coApplicantIndex].isIndividual == false) {

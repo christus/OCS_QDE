@@ -11,7 +11,7 @@ export class QdeService {
   leads: Array<Qde>;
   defaultValue: Qde = {
     application: {
-      ocsNumber: " ",
+      ocsNumber: "",
       loanAmount: "",
       tenure: "",
       applicationId: "",
@@ -263,63 +263,65 @@ export class QdeService {
     a.forEach((obj ,index) => {
 
       // Filter Empty Values
-      if(['ocsNumber', 'applicationId', 'isMainApplicant'].includes(obj.key)) {
-        return;
-      } else if(obj.value == null || obj.value == undefined || obj.value == NaN) {
-        delete obj.key;
-        return;
-      } else if(obj.value.constructor == String) {
-        if(obj.value == "") {
+      if(obj.key == 'ocsNumber' || obj.key == 'isMainApplicant' || obj.key == 'applicationId') {
+        newObj[obj.key] = obj.value;
+      } else {
+        if(obj.value == null || obj.value == undefined || obj.value == NaN) {
+          delete obj.key;
+          return;
+        } else if(obj.value.constructor == String) {
+          if(obj.value == "") {
+              delete obj.key;
+              return;
+          } else {
+            newObj[obj.key] = obj.value;
+            return;
+          }
+        } else if(obj.value.constructor == Boolean) {
+          if(obj.value == null) {
             delete obj.key;
             return;
-        } else {
-          newObj[obj.key] = obj.value;
-          return;
-        }
-      } else if(obj.value.constructor == Boolean) {
-        if(obj.value == null) {
-          delete obj.key;
-          return;
-        } else {
-          newObj[obj.key] = obj.value;
-          return;
-        }
-      }else if(obj.value.constructor == Number) {
-        if(obj.value == null) {
-          delete obj.key;
-          return;
-        } else {
-          newObj[obj.key] = obj.value;
-          return;
-        }
-      } else if(obj.value.constructor == Array) {
-        if(obj.value.length == 0) {
-          delete obj.key;
-          return;
-        } else {
-          let f = obj.value.map((val) => {
-            return this.getFilteredJson(val);
-          });
-          if(f.length == 0) {
-            delete obj.key;
           } else {
-            newObj[obj.key] = f;
+            newObj[obj.key] = obj.value;
+            return;
           }
-        }
-      } else if(obj.value.constructor == Object) {
-        if(Object.keys(obj.value).length == 0) {
-          delete obj.key;
-        } else {
-          let f = this.getFilteredJson(obj.value)
-          if(Object.keys(f).length == 0) {
+        }else if(obj.value.constructor == Number) {
+          if(obj.value == null) {
+            delete obj.key;
+            return;
+          } else {
+            newObj[obj.key] = obj.value;
+            return;
+          }
+        } else if(obj.value.constructor == Array) {
+          if(obj.value.length == 0) {
+            delete obj.key;
+            return;
+          } else {
+            let f = obj.value.map((val) => {
+              return this.getFilteredJson(val);
+            });
+            if(f.length == 0) {
+              delete obj.key;
+            } else {
+              newObj[obj.key] = f;
+            }
+          }
+        } else if(obj.value.constructor == Object) {
+          if(Object.keys(obj.value).length == 0) {
             delete obj.key;
           } else {
-            newObj[obj.key] = f;
+            let f = this.getFilteredJson(obj.value)
+            if(Object.keys(f).length == 0) {
+              delete obj.key;
+            } else {
+              newObj[obj.key] = f;
+            }
           }
         }
       }
     });
-  
+
     return newObj;
   }
 
