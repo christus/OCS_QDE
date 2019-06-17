@@ -876,7 +876,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       stateId : this.qde.application.applicants[this.applicantIndex].communicationAddress.stateId,
       numberOfYearsInCurrentResidence : form.value.numberOfYearsInCurrentResidence,
       permanentAddress : form.value.permanentAddress,
-      preferredMailingAddress: (form.value.prefredMail == 1) ? true: false
+      preferedMailingAddress: (form.value.prefredMail == 1) ? true: false
     };
 
 

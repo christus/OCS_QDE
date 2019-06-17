@@ -484,15 +484,14 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
 
         // let isApplicantPresent:boolean = false;
 
-        if((result["application"]["applicants"]).length > 0) {
+        if((result["application"]["applicants"]).length > 2) {
           // isApplicantPresent = applicants[this.applicantIndex].hasOwnProperty('applicantId');
           // this.qde.application.applicants[this.coApplicantIndex].applicantId =  applicants[this.coApplicantIndex]["applicantId"];
           this.cds.changePanSlide(true);
           this.router.navigate(['/applicant/'+this.qde.application.applicationId]);
-        }else {
-          this.cds.changePanSlide(true);
-          // this.tabSwitch(2);
-          return;
+        } else {
+          // this.cds.changePanSlide(true);
+          this.tabSwitch(2);
         }
       } else {
         // Throw Invalid Pan Error
@@ -768,28 +767,24 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
     console.log("Comm Addr ", this.qde.application.applicants[this.coApplicantIndex].communicationAddress);
 
 
-    this.qde.application.applicants[this.coApplicantIndex].communicationAddress = {
-      residentialStatus : form.value.residentialStatus,
-      addressLineOne : form.value.addressLineOne,
-      addressLineTwo : form.value.addressLineTwo,
-      zipcodeId : this.qde.application.applicants[this.coApplicantIndex].communicationAddress.zipcodeId,
-      cityId : this.qde.application.applicants[this.coApplicantIndex].communicationAddress.cityId,
-      stateId : this.qde.application.applicants[this.coApplicantIndex].communicationAddress.stateId,
-      numberOfYearsInCurrentResidence : form.value.numberOfYearsInCurrentResidence,
-      permanentAddress : form.value.permanentAddress,
-      preferredMailingAddress: (form.value.prefredMail == 1) ? true: false
-    };
+    this.qde.application.applicants[this.coApplicantIndex].communicationAddress.residentialStatus = form.value.residentialStatus.value+"";
+    this.qde.application.applicants[this.coApplicantIndex].communicationAddress.addressLineOne = form.value.addressLineOne+"";
+    this.qde.application.applicants[this.coApplicantIndex].communicationAddress.addressLineTwo = form.value.addressLineTwo+"";
+    this.qde.application.applicants[this.coApplicantIndex].communicationAddress.zipcodeId = this.qde.application.applicants[this.coApplicantIndex].communicationAddress.zipcodeId+"";
+    this.qde.application.applicants[this.coApplicantIndex].communicationAddress.cityId = this.qde.application.applicants[this.coApplicantIndex].communicationAddress.cityId+"";
+    this.qde.application.applicants[this.coApplicantIndex].communicationAddress.stateId = this.qde.application.applicants[this.coApplicantIndex].communicationAddress.stateId+"";
+    this.qde.application.applicants[this.coApplicantIndex].communicationAddress.numberOfYearsInCurrentResidence = form.value.numberOfYearsInCurrentResidence+"";
+    this.qde.application.applicants[this.coApplicantIndex].communicationAddress.permanentAddress = form.value.permanentAddress;
+    this.qde.application.applicants[this.coApplicantIndex].communicationAddress.preferedMailingAddress = form.value.prefredMail == 1 ? true : false;
 
 
-    this.qde.application.applicants[this.coApplicantIndex].permanentAddress = {
-      addressLineOne : form.value.pAddressLineOne,
-      addressLineTwo : form.value.pAddressLineTwo,
-      zipcodeId : this.qde.application.applicants[this.coApplicantIndex].permanentAddress.zipcodeId,
-      cityId : this.qde.application.applicants[this.coApplicantIndex].permanentAddress.cityId,
-      stateId : this.qde.application.applicants[this.coApplicantIndex].permanentAddress.stateId,
-      numberOfYearsInCurrentResidence : form.value.numberOfYearsInCurrentResidence
-    };
-
+    this.qde.application.applicants[this.coApplicantIndex].permanentAddress.addressLineOne = form.value.pAddressLineOne;
+    this.qde.application.applicants[this.coApplicantIndex].permanentAddress.addressLineTwo = form.value.pAddressLineTwo;
+    this.qde.application.applicants[this.coApplicantIndex].permanentAddress.zipcodeId = this.qde.application.applicants[this.coApplicantIndex].permanentAddress.zipcodeId;
+    this.qde.application.applicants[this.coApplicantIndex].permanentAddress.cityId = this.qde.application.applicants[this.coApplicantIndex].permanentAddress.cityId;
+    this.qde.application.applicants[this.coApplicantIndex].permanentAddress.stateId = this.qde.application.applicants[this.coApplicantIndex].permanentAddress.stateId;
+    this.qde.application.applicants[this.coApplicantIndex].permanentAddress.numberOfYearsInCurrentResidence = form.value.numberOfYearsInCurrentResidence;
+    
     console.log(this.qde.application.applicants[this.coApplicantIndex].communicationAddress);
 
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
@@ -1360,12 +1355,12 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
   //   });
   // }
 
-  selectValueChanged(event, to) {
+  selectValueChanged(event, to, key) {
     let whichSelectQde = this.qde.application.applicants[this.coApplicantIndex];
     let nick = to.getAttribute('nick').split(".");
     to.getAttribute('nick').split(".").forEach((val, i) => {
       if(val == 'day' || val == 'month' || val == 'year') {
-        this[(nick[i-1])][val].value = event.value;
+        this[key][val].value = event.value;
         return;
       } else {
         if(i == (to.getAttribute('nick').split(".").length-1)) {
@@ -1557,7 +1552,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
         this.tabSwitch(12);
         this.panSlider4.setIndex(1);
       } else if(this.panslide == false && this.qde.application.applicants[this.coApplicantIndex].isIndividual == true) {
-        this.tabSwitch(0);
+        this.tabSwitch(1);
         // this.panSlider2.setIndex(2);
       }
       else if(this.panslide2 == false && this.qde.application.applicants[this.coApplicantIndex].isIndividual == false) {
