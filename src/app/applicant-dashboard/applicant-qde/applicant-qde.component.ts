@@ -328,6 +328,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
       console.log("params ", params);
 
+      this.resetQdeForm();
+
       // Make an http request to get the required qde data and set using setQde
       if(params.applicationId != null) {
 
@@ -597,7 +599,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
           this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant'], {fragment: "pan1"});
         }else {
           this.cds.changePanSlide(true);
-          this.tabSwitch(1);
+          this.tabSwitch(2);
           return;
         }   
 

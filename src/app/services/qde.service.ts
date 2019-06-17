@@ -262,24 +262,27 @@ export class QdeService {
   
     a.forEach((obj ,index) => {
 
+      console.log("FINDING: ", ['ocsNumber', 'applicationId', 'isMainApplicant'].includes(obj.key));
       // Exception Keys
-      if(obj.key in ['ocsNumber', 'applicationId', 'isMainApplicant']) {
-        return;
-      }
       // Filter Empty Values
-      else if(obj.value == null || obj.value == undefined || obj.value == NaN) {
+      if(obj.value == null || obj.value == undefined || obj.value == NaN) {
         delete obj.key;
         return;
       } else if(obj.value.constructor == String) {
         if(obj.value == "") {
-         delete obj.key;
-          return;
+          if(['ocsNumber', 'applicationId'].includes(obj.key)) {
+            return;
+          } else {
+            delete obj.key;
+            return;
+          }
+         
         } else {
           newObj[obj.key] = obj.value;
           return;
         }
       } else if(obj.value.constructor == Boolean) {
-        if(obj.value == null) {
+        if(obj.value == null && !(['isMainApplicant'].includes(obj.key)) ) {
           delete obj.key;
           return;
         } else {
@@ -483,13 +486,13 @@ export class QdeService {
 
   resetQde() {
     this.setQde({
-      application: {
-        ocsNumber: " ",
-        loanAmount: "",
-        tenure: "",
-        applicationId: "",
-        propertyIdentified: null,
-        applicants: [
+      "application": {
+        "ocsNumber": "",
+        "loanAmount": "",
+        "tenure": "",
+        "applicationId": "",
+        "propertyIdentified": null,
+        "applicants": [
           {
             applicantId: "",
             isMainApplicant: true,
