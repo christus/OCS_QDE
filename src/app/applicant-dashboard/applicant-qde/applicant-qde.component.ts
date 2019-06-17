@@ -442,19 +442,19 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
       // Incoming from create in Individual Pan
       if(this.panslide == true && this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
-        // this.panSlider2.setIndex(2);
-        this.tabSwitch(2);
+         this.panSlider2.setIndex(2);
+        //this.tabSwitch(2);
       }
       // Incoming from create in Non Individual Pan
       else if(this.panslide2 == true && this.qde.application.applicants[this.applicantIndex].isIndividual == false) {
-        this.tabSwitch(12);
-        this.panSlider4.setIndex(1);
+        this.tabSwitch(11);
+        //this.panSlider4.setIndex(1);
       } else if(this.panslide == false && this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
-        this.tabSwitch(1);
+        this.tabSwitch(0);
         // this.panSlider2.setIndex(2);
       }
       else if(this.panslide2 == false && this.qde.application.applicants[this.applicantIndex].isIndividual == false) {
-        this.tabSwitch(11);
+        this.tabSwitch(10);
         // Enable it when upload file is enabled
         // this.panSlider4.setIndex(1);
       }
@@ -597,9 +597,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
           this.cds.changePanSlide(true);
           this.router.navigate(['/applicant/'+this.qde.application.applicationId]);
         }else {
-          this.cds.changePanSlide(true);
-          // this.tabSwitch(2);
+          this.tabSwitch(1);
           return;
+        //  this.panSlider2.setIndex(2);
+        //   return;
         }
       } else {
         console.log('pan error');
@@ -643,8 +644,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
           this.cds.changePanSlide2(true);
           this.router.navigate(['/applicant/'+this.qde.application.applicationId]);
         }else {
-          this.cds.changePanSlide2(true);
-          // this.tabSwitch(2);
+          this.tabSwitch(11);
           return;
         }
       } else {
@@ -775,7 +775,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
-        this.tabSwitch(3);
+        this.tabSwitch(2);
       } else {
         // Throw Invalid Pan Error
       }
@@ -810,7 +810,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
-        this.tabSwitch(4);
+        this.tabSwitch(3);
       } else {
         // Throw Invalid Pan Error
       }
@@ -894,7 +894,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
-        this.tabSwitch(5);
+        this.tabSwitch(4);
       } else {
         // Throw Invalid Pan Error
       }
@@ -927,7 +927,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
         if(form.value.maritalStatus.value == "2") {
           this.goToNextSlide(swiperInstance);
         } else {
-          this.tabSwitch(6);
+          this.tabSwitch(5);
         }
       } else {
         // Throw Invalid Pan Error
@@ -1002,13 +1002,13 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
-        this.tabSwitch(6);
+        this.tabSwitch(5);
       } else {
         // Throw Invalid Pan Error
       }
     }, (error) => {
       console.log("response : ", error);
-      // this.tabSwitch(7);
+        this.tabSwitch(5);
     });
 
   }
@@ -1059,7 +1059,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
-        this.tabSwitch(8);
+        this.tabSwitch(6);
       } else {
         // Throw Invalid Pan Error
       }
@@ -1095,7 +1095,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
-        this.tabSwitch(8);
+        this.tabSwitch(7);
       } else {
         // Throw Invalid Pan Error
       }
@@ -1136,7 +1136,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
-        this.tabSwitch(9);
+        this.tabSwitch(8);
       } else {
         // Throw Invalid Pan Error
       }
@@ -1180,7 +1180,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
-        this.tabSwitch(10);
+        this.tabSwitch(9);
       } else {
         // Throw Invalid Pan Error
       }
@@ -1212,7 +1212,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
         let result = this.parseJson(response["ProcessVariables"]["response"]);
         // this.qde.application.ocsNumber = result["application"]["ocsNumber"];
         // this.qde.application.applicants[this.applicantIndex].applicantId = result["application"]["applicationId"];
-        this.tabSwitch(13);
+        this.tabSwitch(12);
       } else {
         // Throw Invalid Pan Error
       }
@@ -1251,7 +1251,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successfull
       if(response["ProcessVariables"]["status"]) {
-        this.tabSwitch(14);
+        this.tabSwitch(13);
       } else {
         // Throw Invalid Pan Error
       }
@@ -1291,7 +1291,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successfull
       if(response["ProcessVariables"]["status"]) {
-        this.tabSwitch(15);
+        this.tabSwitch(14);
       } else {
         // Throw Invalid Pan Error
       }
