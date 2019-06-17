@@ -230,6 +230,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       console.log("latest Qde: ", this.qde);
       console.log(this.qde.application.applicants.length);
       let i = this.qde.application.applicants.length <= 1 ? 1 : this.qde.application.applicants.length - 1;
+      console.log(i);
       // this.isTabDisabled = this.qde.application.applicants.filter(v => v.isMainApplicant == false).length > 0 ? true: false;
       if(this.qde.application.applicants.length > i && this.qde.application.applicants[i]['applicantId'] == "") {
         this.coApplicantIndex = i;
@@ -488,7 +489,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
           // isApplicantPresent = applicants[this.applicantIndex].hasOwnProperty('applicantId');
           // this.qde.application.applicants[this.coApplicantIndex].applicantId =  applicants[this.coApplicantIndex]["applicantId"];
           this.cds.changePanSlide(true);
-          this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant/'+result['application']['applicants'][0]['applicantId']], {fragment: 'personal'});
+          this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant/'+this.coApplicantIndex], {fragment: 'personal'});
         } else {
           // this.cds.changePanSlide(true);
           this.tabSwitch(2);
@@ -532,7 +533,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
           // isApplicantPresent = applicants[this.applicantIndex].hasOwnProperty('applicantId');
           // this.qde.application.applicants[this.coApplicantIndex].applicantId =  applicants[this.coApplicantIndex]["applicantId"];
           this.cds.changePanSlide2(true);
-          this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant/'+result['application']['applicants'][0]['applicantId']]);
+          this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant/'+this.coApplicantIndex]);
         }else {
           // this.cds.changePanSlide2(true);
           this.tabSwitch(12);
