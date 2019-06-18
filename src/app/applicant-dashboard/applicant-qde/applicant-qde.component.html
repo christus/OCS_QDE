@@ -908,11 +908,9 @@
                                           <div class="radio-wrap rounded-radio">
                                               <div class="bs-radio typ-normal">
                                                  <input spellcheck="false"
-
-                                                        type="radio" 
-                                                  [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.preferedMailingAddress"
+                                                   type="radio" 
                                                   name="prefredMail"
-                                                  value="1"
+                                                  [value]="1"
                                                   fieldFill
                                                   [checked]="qde.application.applicants[applicantIndex].communicationAddress.preferedMailingAddress == true"
                                                   id="current-add-mail" />
@@ -922,14 +920,12 @@
                                               </div>
                                               <div class="bs-radio typ-normal">
                                                   <input spellcheck="false"
-                                                        type="radio"
-                                                  [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.preferedMailingAddress"
-
-                                                  name="prefredMail"
-                                                  value="2"
-                                                  fieldFill
-                                                  [checked]="qde.application.applicants[applicantIndex].communicationAddress.preferedMailingAddress == false"
-                                                  id="permanent-add-mail" />
+                                                     type="radio"
+                                                    name="prefredMail"
+                                                    [value]="2"
+                                                    fieldFill
+                                                    [checked]="qde.application.applicants[applicantIndex].communicationAddress.preferedMailingAddress == false"
+                                                    id="permanent-add-mail" />
                                                   <label for="permanent-add-mail">
                                                         Permanent Address
                                                     </label>

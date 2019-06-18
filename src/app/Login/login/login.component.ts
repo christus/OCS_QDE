@@ -27,8 +27,8 @@ export class LoginComponent implements OnInit {
 
   login() {
     const data = {
-      email: this.userName,
-      password: this.password
+      email: this.userName.trim(),
+      password: this.password.trim()
     };
     this.qdeService.authenticate(data).subscribe(
       res => {
