@@ -79,4 +79,14 @@ export class CommonDataService {
   changeApplicantIndex(val: number) {
     this.applicantIndex$.next(val);
   }
+
+
+  loginData$: BehaviorSubject<any> = new BehaviorSubject<any>({});
+  public loginData = this.loginData$.asObservable();
+
+
+  setLogindata(data: object) {
+   this.loginData$.next(data)
+  }
+
 }

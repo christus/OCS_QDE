@@ -4,12 +4,28 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import RequestEntity from '../models/request-entity.model';
 import { environment } from '../../environments/environment';
 import { of } from 'rxjs';
+
+import {CommonDataService} from 'src/app/services/common-data.service';
+
 @Injectable({
   providedIn: 'root'
 })
 export class QdeHttpService {
 
-  constructor(private http: HttpClient) {}
+  userName:string = "";
+  password:string = "";
+
+
+  constructor(private http: HttpClient,
+  private commonDataService: CommonDataService) {
+
+    this.commonDataService.loginData.subscribe(result => {
+      console.log("login: ", result);
+       this.userName = result.email;
+       this.password = result.password;
+    });
+
+  }
 
   /**
    * Create or update PAN Details
@@ -125,8 +141,8 @@ createOrUpdatePersonalDetails(qde) {
     const workflowId = environment.api.roleLogin.workflowId;
     const projectId = environment.projectId;
 
-    const userName = environment.userName;
-    const password = environment.password;
+    const userName = this.userName;
+    const password = this.password;
 
     const requestEntity: RequestEntity = {
       processId: processId,
@@ -142,9 +158,9 @@ createOrUpdatePersonalDetails(qde) {
       'processVariables',
       JSON.stringify(requestEntity)
     );
-  
+
     let uri = environment.host + '/appiyo/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.put(uri, body.toString());
+        return this.http.put(uri, body.toString());
   }
 
   getCityAndState(zipcode) {

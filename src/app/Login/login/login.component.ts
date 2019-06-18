@@ -3,6 +3,8 @@ import { QdeHttpService } from 'src/app/services/qde-http.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UtilService } from 'src/app/services/util.service';
 
+import {CommonDataService} from 'src/app/services/common-data.service'
+
 @Component({
   selector: "app-login",
   templateUrl: "./login.component.html",
@@ -15,7 +17,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private router: Router,
     private qdeService: QdeHttpService,
-    private utilService: UtilService
+    private utilService: UtilService,
+    private commonDataService: CommonDataService
   ) {
     
   }
@@ -30,6 +33,7 @@ export class LoginComponent implements OnInit {
     this.qdeService.authenticate(data).subscribe(
       res => {
         console.log(res);
+        this.commonDataService.setLogindata(data);
         localStorage.setItem("token", res["token"] ? res["token"] : "");
         this.router.navigate(["/leads"]);
       },
