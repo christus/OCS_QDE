@@ -73,6 +73,8 @@ export interface Pan {
     panImage ?: string;
     docType ?: string; // As of new design
     docNumber ?: string; // As of new design
+    isValid  ?: boolean;
+    errorMessage ?: string;
 }
 
 export interface PersonalDetail {

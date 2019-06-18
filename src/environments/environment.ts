@@ -47,6 +47,10 @@ export const environment = {
       'workflowId': '7b222bb4837d11e982270242ac110002',
       'processId': '7b2ecfd6837d11e982270242ac110002'
     },
+    "checkPan": {
+      'workflowId': '7b222bb4837d11e982270242ac110002',
+      'processId': '7b2ecfd6837d11e982270242ac110002'
+    },
     "sendOTP": {
       'workflowId': 'b0b6796a7d5b11e982270242ac110002',
       'processId': 'b0cf09267d5b11e982270242ac110002'

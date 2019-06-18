@@ -144,6 +144,7 @@
                                                         <div *ngIf="panNumber.errors?.pattern ? true : false">{{errors.pan.invalid}}</div>
                                                         <div *ngIf="panNumber.errors?.minlength || panNumber.errors?.maxlength">*PAN must be at least {{errors.pan.length}} characters</div>
                                                     </div>
+                                                    <div *ngIf="!qde.application.applicants[applicantIndex].pan.isValid" class="invalid-feedback">{{qde.application.applicants[applicantIndex].pan.errorMessage}}</div>
                                                 </div>
                                                 <div class="form-group">
 
@@ -1960,6 +1961,7 @@
                                                       <div *ngIf="panNumber2.errors?.pattern ? true : false">{{errors.pan.invalid}}</div>
                                                       <!-- <div *ngIf="panNumber2.errors?.minlength || panNumber2.errors?.maxlength">*PAN must be at least {{pan.errors.minlength.requiredLength}} characters</div> -->
                                                   </div>
+                                                  <div *ngIf="!qde.application.applicants[applicantIndex].pan.isValid" class="invalid-feedback">{{qde.application.applicants[applicantIndex].pan.errorMessage}}</div>
                                               </div>
                                               <div class="form-group">
                                                 <span class="control-title">Document Type</span>

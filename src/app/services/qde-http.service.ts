@@ -76,6 +76,28 @@ createOrUpdatePersonalDetails(qde) {
     );
   }
 
+  checkPanValid(pan) {
+    const qdeRequestEntity: RequestEntity = {
+      processId: environment.api.checkPan.processId,
+      ProcessVariables: {
+        actualPanNumber: JSON.stringify(pan.actualPanNumber),
+        userId: localStorage.getItem("userId")
+      },
+      workflowId: environment.api.checkPan.workflowId,
+      projectId: environment.projectId
+    };
+
+    const body = new HttpParams().set(
+      'processVariables',
+      JSON.stringify(qdeRequestEntity)
+    );
+
+    let uri = environment.host + '/appiyo/d/workflows/' + environment.api.save.workflowId + '/execute?projectId=' + environment.projectId;
+    return this.http.post(
+      uri,
+      body.toString()
+    );
+  }
 
   authenticate(data: any) {
 

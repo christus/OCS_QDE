@@ -674,6 +674,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
  //-------------------------------------------------------------
   // PAN
   //-------------------------------------------------------------
+
+  
   submitPanNumber(form: NgForm, swiperInstance ?: Swiper) {
 
     event.preventDefault();
@@ -687,39 +689,53 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     this.qde.application.applicants[this.applicantIndex].pan.docType = form.value.docTypeindividual.value;
     this.qde.application.applicants[this.applicantIndex].pan.docNumber = form.value.docNumber;
 
-    this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
-      // If successful
-      if(response["ProcessVariables"]["status"] == true) {
-        let result = this.parseJson(response["ProcessVariables"]["response"]);
+    this.qdeHttp.checkPanValid(this.qdeService.getFilteredJson({actualPanNumber: form.value.pan})).subscribe((response) => {
 
-        console.log("GET141414", result);
-        // this.qde.application.ocsNumber = result["application"]["ocsNumber"];
-        // this.qde.application.applicationId = result["application"]["applicationId"];
-       
-        this.qde.application.applicationId = result['application']['applicationId'];
+      response["ProcessVariables"]["status"] = true;
 
-        // let isApplicantPresent:boolean = false;
+      if(response["ProcessVariables"]["status"]) { // Boolean to check from nsdl website whether pan is valid or not 
 
-        if((result["application"]["applicants"]).length > 0) {
-          // isApplicantPresent = applicants[this.applicantIndex].hasOwnProperty('applicantId');
-          // this.qde.application.applicants[this.coApplicantIndex].applicantId =  applicants[this.coApplicantIndex]["applicantId"];
-          this.cds.changePanSlide(true);
-          this.router.navigate(['/applicant/'+this.qde.application.applicationId]);
-        }else {
-          this.tabSwitch(1);
-          return;
-        //  this.panSlider2.setIndex(2);
-        //   return;
-        }
+        this.qde.application.applicants[this.applicantIndex].pan.isValid = true;
+        this.qde.application.applicants[this.applicantIndex].pan.errorMessage = "Error in pan Details";
+
+        this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
+          // If successful
+          if(response["ProcessVariables"]["status"] == true) {
+            let result = this.parseJson(response["ProcessVariables"]["response"]);
+            // this.qde.application.ocsNumber = result["application"]["ocsNumber"];
+            // this.qde.application.applicationId = result["application"]["applicationId"];
+           
+            this.qde.application.applicationId = result['application']['applicationId'];
+    
+            // let isApplicantPresent:boolean = false;
+    
+            if((result["application"]["applicants"]).length > 0) {
+              // isApplicantPresent = applicants[this.applicantIndex].hasOwnProperty('applicantId');
+              // this.qde.application.applicants[this.coApplicantIndex].applicantId =  applicants[this.coApplicantIndex]["applicantId"];
+              this.cds.changePanSlide(true);
+              this.router.navigate(['/applicant/'+this.qde.application.applicationId]);
+            }else {
+              this.tabSwitch(1);
+              return;
+            //  this.panSlider2.setIndex(2);
+            //   return;
+            }
+          } else {
+            console.log('pan error');
+            // Throw Invalid Pan Error
+          }
+        }, (error) => {
+          console.log('error ', error);
+          // alert("error"+error);
+          // Throw Request Failure Error
+        });
       } else {
-        console.log('pan error');
-        // Throw Invalid Pan Error
+        this.qde.application.applicants[this.applicantIndex].pan.isValid = false;
+        this.qde.application.applicants[this.applicantIndex].pan.errorMessage = "Error in pan Details";
       }
-    }, (error) => {
-      console.log('error ', error);
-      // alert("error"+error);
-      // Throw Request Failure Error
     });
+
+
   }
 
 
@@ -738,32 +754,47 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     this.qde.application.applicants[this.applicantIndex].pan.docType = form.value.panDocType.value;
     this.qde.application.applicants[this.applicantIndex].pan.docNumber = form.value.docNumber;
 
-    this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
-      // If successfull
-      if(response["ProcessVariables"]["status"]) {
-        let result = this.parseJson(response["ProcessVariables"]["response"]);
+    this.qdeHttp.checkPanValid(this.qdeService.getFilteredJson({actualPanNumber: form.value.pan})).subscribe((response) => {
 
-        this.qde.application.applicationId = result['application']['applicationId'];
+      response["ProcessVariables"]["status"] = true;
 
-        // let isApplicantPresent:boolean = false;
+    if(response["ProcessVariables"]["status"]) { // Boolean to check from nsdl website whether pan is valid or not */
 
-        if((result["application"]["applicants"]).length > 0) {
-          // isApplicantPresent = applicants[this.applicantIndex].hasOwnProperty('applicantId');
-          // this.qde.application.applicants[this.coApplicantIndex].applicantId =  applicants[this.coApplicantIndex]["applicantId"];
-          this.cds.changePanSlide2(true);
-          this.router.navigate(['/applicant/'+this.qde.application.applicationId]);
-        }else {
-          this.tabSwitch(11);
-          return;
+      this.qde.application.applicants[this.applicantIndex].pan.isValid = true;
+      this.qde.application.applicants[this.applicantIndex].pan.errorMessage = "";
+
+      this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
+        // If successfull
+        if(response["ProcessVariables"]["status"]) {
+
+          let result = this.parseJson(response["ProcessVariables"]["response"]);
+
+          this.qde.application.applicationId = result['application']['applicationId'];
+
+          // let isApplicantPresent:boolean = false;
+
+          if((result["application"]["applicants"]).length > 0) {
+            // isApplicantPresent = applicants[this.applicantIndex].hasOwnProperty('applicantId');
+            // this.qde.application.applicants[this.coApplicantIndex].applicantId =  applicants[this.coApplicantIndex]["applicantId"];
+            this.cds.changePanSlide2(true);
+            this.router.navigate(['/applicant/'+this.qde.application.applicationId]);
+          }else {
+            this.tabSwitch(11);
+            return;
+          }
+        } else {
+          // Throw Invalid Pan Error
         }
-      } else {
-        // Throw Invalid Pan Error
+      }, (error) => {
+        console.log('error ', error);
+        // alert("error"+error);
+        // Throw Request Failure Error
+      });
+    } else {
+        this.qde.application.applicants[this.applicantIndex].pan.isValid = false;
+        this.qde.application.applicants[this.applicantIndex].pan.errorMessage = "Error in pan Details";
       }
-    }, (error) => {
-      console.log('error ', error);
-      // alert("error"+error);
-      // Throw Request Failure Error
-    });   
+    });  
   }
 
   

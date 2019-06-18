@@ -34,6 +34,10 @@ export const environment = {
     "upload": {
       'workflowId': '7b222bb4837d11e982270242ac110002',
       'processId': '7b2ecfd6837d11e982270242ac110002'
+    },
+    "checkPan": {
+      'workflowId': '7b222bb4837d11e982270242ac110002',
+      'processId': '7b2ecfd6837d11e982270242ac110002'
     }
   },
   userName: "icici@icici.com",
