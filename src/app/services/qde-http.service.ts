@@ -144,6 +144,12 @@ createOrUpdatePersonalDetails(qde) {
     const userName = this.userName;
     const password = this.password;
 
+    this.commonDataService.loginData.subscribe(result => {
+      console.log("login: ", result);
+       this.userName = result.email;
+       this.password = result.password;
+    });
+
     const requestEntity: RequestEntity = {
       processId: processId,
       ProcessVariables: {

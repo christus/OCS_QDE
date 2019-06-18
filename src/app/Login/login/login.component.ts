@@ -35,7 +35,21 @@ export class LoginComponent implements OnInit {
         console.log(res);
         this.commonDataService.setLogindata(data);
         localStorage.setItem("token", res["token"] ? res["token"] : "");
+        this.roleLogin();
         this.router.navigate(["/leads"]);
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
+
+  roleLogin() {
+    this.qdeService.roleLogin().subscribe(
+      res => {
+        console.log(res);
+        localStorage.setItem("userId", res["ProcessVariables"]["userId"])
       },
       error => {
         console.log(error);
