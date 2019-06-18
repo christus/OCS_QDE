@@ -252,7 +252,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       if(fragment == null) {
         localFragment = this.fragments[0];
       }
-      console.log('FRAGMENTS................................')
+      console.log('FRAGMENTS................................', fragment);
       // if(localFragment == 'pan1') {
       //   this.isTabDisabled = true;
       // }
@@ -489,7 +489,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
           // isApplicantPresent = applicants[this.applicantIndex].hasOwnProperty('applicantId');
           // this.qde.application.applicants[this.coApplicantIndex].applicantId =  applicants[this.coApplicantIndex]["applicantId"];
           this.cds.changePanSlide(true);
-          this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant/'+this.coApplicantIndex], {fragment: 'personal'});
+          this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant/'+this.coApplicantIndex]);
         } else {
           // this.cds.changePanSlide(true);
           this.tabSwitch(2);
@@ -537,7 +537,6 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
         }else {
           // this.cds.changePanSlide2(true);
           this.tabSwitch(12);
-          return;
         }
       } else {
         // Throw Invalid Pan Error
