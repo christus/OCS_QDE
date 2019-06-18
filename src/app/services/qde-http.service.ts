@@ -469,6 +469,113 @@ createOrUpdatePersonalDetails(qde) {
     "projectId": "ff8e364e6fce11e98754782bcb8f3845"
   });
   }
+
+  sendOTPAPI() {
+    const processId = environment.api.sendOTP.processId;
+    const workflowId = environment.api.sendOTP.workflowId;
+    const projectId = environment.projectId;
+
+    const userName = environment.userName;
+    const password = environment.password;
+
+
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: {
+      },
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = new HttpParams().set(
+      'processVariables',
+      JSON.stringify(requestEntity)
+    );
+
+    let uri = '/appiyo/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.http.put(uri, body.toString());
+  }
+
+  validateOTPAPI() {
+    const processId = environment.api.validateOTP.processId;
+    const workflowId = environment.api.validateOTP.workflowId;
+    const projectId = environment.projectId;
+
+    const userName = environment.userName;
+    const password = environment.password;
+
+
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: {
+      },
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = new HttpParams().set(
+      'processVariables',
+      JSON.stringify(requestEntity)
+    );
+
+    let uri = '/appiyo/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.http.put(uri, body.toString());
+  }
+
+  viewFormSmsApi(applicationId: string) {
+    const processId = environment.api.veiwFormSms.processId;
+    const workflowId = environment.api.veiwFormSms.workflowId;
+    const projectId = environment.projectId;
+
+    const userName = environment.userName;
+    const password = environment.password;
+
+
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: {
+        applicationId: applicationId
+      },
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = new HttpParams().set(
+      'processVariables',
+      JSON.stringify(requestEntity)
+    );
+
+    let uri = '/appiyo/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.http.put(uri, body.toString());
+  }
+
+  setStatusApi(applicationId: string, status: string) {
+    const processId = environment.api.status.processId;
+    const workflowId = environment.api.status.workflowId;
+    const projectId = environment.projectId;
+
+    const userName = environment.userName;
+    const password = environment.password;
+
+
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: {
+        status: status,
+        applicationId: applicationId
+      },
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = new HttpParams().set(
+      'processVariables',
+      JSON.stringify(requestEntity)
+    );
+
+    let uri = '/appiyo/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.http.put(uri, body.toString());
+  }
 }
 
 

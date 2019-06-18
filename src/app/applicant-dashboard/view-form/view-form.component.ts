@@ -304,6 +304,7 @@ export class ViewFormComponent implements OnInit {
   constitutions: Array<any>;
 
   isIncomplete: Array<InCompleteFields> = [];
+  applicationId: string;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -325,6 +326,10 @@ export class ViewFormComponent implements OnInit {
 
         this.isIncomplete.push(this.checkIncompleteFields(el.applicantId));
       })
+    });
+
+    this.commonDataService.applicationId.subscribe(val => {
+      this.applicationId = val;
     });
 
     console.log('Applicant Index: ', this.applicantIndex);
@@ -352,7 +357,8 @@ export class ViewFormComponent implements OnInit {
     this.route.params.subscribe((params) => {
       
       // Make an http request to get the required qde data and set using setQde
-      if(params.applicantId != undefined && params.applicantId != null) {
+      if(params.applicationId != undefined && params.applicationId != null) {
+        this.commonDataService.changeApplicationId(params.applicationId);
         this.qdeHttp
             .dummyGetApi(this.qdeService.getFilteredJson(this.qde))
             .subscribe(res => {
@@ -560,24 +566,35 @@ export class ViewFormComponent implements OnInit {
     return isIncomplete;
   }
 
-  private isEligible: boolean = false;
-  private isNotEligible: boolean = false;
-  private emiAmount: number;
-  private eligibleAmount: number;
+  // private isEligible: boolean = false;
+  // private isNotEligible: boolean = false;
+  // private emiAmount: number;
+  // private eligibleAmount: number;
 
-  submitDocumentUploadForm(form: NgForm) {
+  // submitDocumentUploadForm(form: NgForm) {
 
-    this.qdeHttp.dummyCIBILAPI().subscribe(res => {
-      console.log("res: ", res['ProcessVariables']['checkEligibility'].toLowerCase);
-      if(res['ProcessVariables']['checkEligibility'].toLowerCase() == 'yes') {
-        this.isEligible = true;
+  //   this.qdeHttp.dummyCIBILAPI().subscribe(res => {
+  //     console.log("res: ", res['ProcessVariables']['checkEligibility'].toLowerCase);
+  //     if(res['ProcessVariables']['checkEligibility'].toLowerCase() == 'yes') {
+  //       this.isEligible = true;
 
-        this.emiAmount = parseInt(res['ProcessVariables']['emi']);
-        this.eligibleAmount = parseInt(res['ProcessVariables']['eligibilityAmount']);
-      }
-      else if(res['ProcessVariables']['checkEligibility'].toLowerCase() == 'no') {
-        this.isNotEligible = true;
-      }
-    });
+  //       this.emiAmount = parseInt(res['ProcessVariables']['emi']);
+  //       this.eligibleAmount = parseInt(res['ProcessVariables']['eligibilityAmount']);
+  //     }
+  //     else if(res['ProcessVariables']['checkEligibility'].toLowerCase() == 'no') {
+  //       this.isNotEligible = true;
+  //     }
+  //   });
+  // }
+
+  sendSMS(form: NgForm) {
+
+      // this.qdeHttp.viewFormSmsApi(this.applicationId).subscribe((response)=>{
+      //   let sms = response["ProcessVariables"];
+      //   this.qde.application.applicationId = sms["applicationId"];
+      //     console.log("Response", response)
+      // })
+      this.qdeHttp.viewFormSmsApi(this.applicationId).subscribe(res => {}, err => {});
+
   }
 }
