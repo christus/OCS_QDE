@@ -1,9 +1,9 @@
-import { Qde } from 'src/app/models/qde.model';
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonDataService } from '../services/common-data.service';
 import { UtilService } from '../services/util.service';
 import { QdeService } from '../services/qde.service';
 
+import Qde  from 'src/app/models/qde.model';
 
 @Component({
   selector: 'app-menubar-header',
