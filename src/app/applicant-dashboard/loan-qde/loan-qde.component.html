@@ -53,7 +53,7 @@
                       <span class="in-word"></span>
 
                       <div *ngIf="(amountRequired.touched || amountRequired.dirty) && amountRequired.invalid" class="invalid-feedback">
-                        <div *ngIf="amountRequired.errors?.required">{{errors.loanDetails.loanAmount.amount.required}}</div>
+                        <!-- <div *ngIf="amountRequired.errors?.required">{{errors.loanDetails.loanAmount.amount.required}}</div> -->
                         <div *ngIf="amountRequired.errors?.pattern">{{errors.loanDetails.loanAmount.amount.invalid}}</div>
                       </div>
 
@@ -99,7 +99,7 @@
                       <ng5-slider [(value)]="qde?.application.tenure" [options]="options"></ng5-slider>
 
                       <div *ngIf="(loanTenure.touched || loanTenure.dirty) && loanTenure.invalid" class="invalid-feedback">
-                        <div *ngIf="loanTenure.errors?.required">{{errors.loanDetails.loanAmount.tenure.required}}</div>
+                        <!-- <div *ngIf="loanTenure.errors?.required">{{errors.loanDetails.loanAmount.tenure.required}}</div> -->
                         <div *ngIf="loanTenure.errors?.pattern">{{errors.loanDetails.loanAmount.tenure.invalid}}</div>
                       </div>
                     </div>
@@ -189,7 +189,7 @@
                                   required>
                                   <label for="pro-add-line1">Property CLSS area</label>
                                   <div *ngIf="(propertyClss.touched || propertyClss.dirty) && propertyClss.invalid" class="invalid-feedback">
-                                    <div *ngIf="propertyClss.errors?.required">{{errors.loanDetails.property.propertyClss.required}}</div>
+                                    <!-- <div *ngIf="propertyClss.errors?.required">{{errors.loanDetails.property.propertyClss.required}}</div> -->
                                     <div *ngIf="propertyClss.errors?.pattern">{{errors.loanDetails.property.propertyClss.invalid}}</div>
                                   </div>
                                 </div>
@@ -204,7 +204,7 @@
                                   required/>
                                   <label for="pro-add-line2">Property area in sq. fts.</label>
                                   <div *ngIf="(propertyArea.touched || propertyArea.dirty) && propertyArea.invalid" class="invalid-feedback">
-                                    <div *ngIf="propertyArea.errors?.required">{{errors.loanDetails.property.propertyArea.required}}</div>
+                                    <!-- <div *ngIf="propertyArea.errors?.required">{{errors.loanDetails.property.propertyArea.required}}</div> -->
                                     <div *ngIf="propertyArea.errors?.pattern">{{errors.loanDetails.property.propertyArea.invalid}}</div>
                                   </div>
                               </div>
@@ -236,7 +236,7 @@
                             <label for="proprty-pin">Property pincode</label>
 
                             <div *ngIf="(propertyPincode.touched || propertyPincode.dirty) && propertyPincode.invalid" class="invalid-feedback">
-                              <div *ngIf="propertyPincode.errors?.required">{{errors.loanDetails.property.pinCode.required}}</div>
+                              <!-- <div *ngIf="propertyPincode.errors?.required">{{errors.loanDetails.property.pinCode.required}}</div> -->
                               <div *ngIf="propertyPincode.errors?.pattern">{{errors.loanDetails.property.pinCode.invalid}}</div>
                             </div>
 
@@ -255,7 +255,7 @@
                             <label for="add-line1">Property address line1</label>
 
                             <div *ngIf="(proaddressLineOne.touched || proaddressLineOne.dirty) && proaddressLineOne.invalid" class="invalid-feedback">
-                              <div *ngIf="proaddressLineOne.errors?.required">{{errors.loanDetails.property.addressLineOne.required}}</div>
+                              <!-- <div *ngIf="proaddressLineOne.errors?.required">{{errors.loanDetails.property.addressLineOne.required}}</div> -->
                               <div *ngIf="proaddressLineOne.errors?.pattern">{{errors.loanDetails.property.addressLineOne.invalid}}</div>
                             </div>
                           </div>
@@ -273,7 +273,7 @@
                             <label for="add-line2">Property address line2</label>
 
                             <div *ngIf="(addressLineTwo.touched || addressLineTwo.dirty) && addressLineTwo.invalid" class="invalid-feedback">
-                              <div *ngIf="addressLineTwo.errors?.required">{{errors.loanDetails.property.addressLineTwo.required}}</div>
+                              <!-- <div *ngIf="addressLineTwo.errors?.required">{{errors.loanDetails.property.addressLineTwo.required}}</div> -->
                               <div *ngIf="addressLineTwo.errors?.pattern">{{errors.loanDetails.property.addressLineTwo.invalid}}</div>
                             </div>
                           </div>
@@ -292,7 +292,7 @@
 
 
                             <div *ngIf="(cityOrState.touched || cityOrState.dirty) && cityOrState.invalid" class="invalid-feedback">
-                              <div *ngIf="cityOrState.errors?.required">{{errors.loanDetails.property.cityOrState.required}}</div>
+                              <!-- <div *ngIf="cityOrState.errors?.required">{{errors.loanDetails.property.cityOrState.required}}</div> -->
                               <div *ngIf="cityOrState.errors?.pattern">{{errors.loanDetails.property.cityOrState.invalid}}</div>
                             </div>
                           </div>
@@ -418,7 +418,7 @@
                             <label for="monthly-emi">Monthly EMI</label>
 
                             <div *ngIf="(monthlyEmi.touched || monthlyEmi.dirty) && monthlyEmi.invalid" class="invalid-feedback">
-                              <div *ngIf="monthlyEmi.errors?.required">{{errors.loanDetails.existingLoans.monthlyEmi.required}}</div>
+                              <!-- <div *ngIf="monthlyEmi.errors?.required">{{errors.loanDetails.existingLoans.monthlyEmi.required}}</div> -->
                               <div *ngIf="monthlyEmi.errors?.pattern">{{errors.loanDetails.existingLoans.monthlyEmi.invalid}}</div>
                             </div>
 

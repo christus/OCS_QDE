@@ -598,6 +598,7 @@
   
                                         <input type="tel" class="form-control" id="mob-no"
                                           maxlength="10" im-insert="true"
+                                          minlength="10"
                                           [(ngModel)]="qde.application.applicants[coApplicantIndex].contactDetails.mobileNumber"
                                           name="mobileNumber"
                                           #mobileNumber="ngModel"
@@ -618,6 +619,7 @@
                                         <div *ngIf="(mobileNumber.touched || mobileNumber.dirty) && mobileNumber.invalid" class="invalid-feedback">
                                           <!-- <div *ngIf="mobileNumber.errors?.required">{{errors.contactDetails.prefferedMobile.required}}</div> -->
                                           <div *ngIf="mobileNumber.errors?.pattern">{{errors.contactDetails.prefferedMobile.invalid}}</div>
+                                          <div *ngIf="mobileNumber.errors?.minlength">{{errors.contactDetails.prefferedMobile.minlength}}</div>
                                         </div>
                                     </div>
   
@@ -626,6 +628,7 @@
   
                                         <input type="tel" class="form-control" id="alter-mob" data-validation-attr="mobileno01" 
                                           maxlength="10" im-insert="true"
+                                          minlength="10"
                                           [(ngModel)]="qde.application.applicants[coApplicantIndex].contactDetails.alternateMobileNumber"
                                           name="alternateMobileNumber"
                                           #altMobileNo="ngModel"
@@ -643,6 +646,7 @@
                                         </span>
                                         <div *ngIf="(altMobileNo.touched || altMobileNo.dirty) && altMobileNo.invalid" class="invalid-feedback">
                                           <div *ngIf="altMobileNo.errors?.pattern">{{errors.contactDetails.alternateMobile.invalid}}</div>
+                                          <div *ngIf="altMobileNo.errors?.minlength">{{errors.contactDetails.alternateMobile.minlength}}</div>
                                         </div>
                                     </div>
   
