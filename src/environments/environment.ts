@@ -46,6 +46,22 @@ export const environment = {
     "upload": {
       'workflowId': '7b222bb4837d11e982270242ac110002',
       'processId': '7b2ecfd6837d11e982270242ac110002'
+    },
+    "sendOTP": {
+      'workflowId': 'b0b6796a7d5b11e982270242ac110002',
+      'processId': 'b0cf09267d5b11e982270242ac110002'
+    },
+    "validateOTP": {
+      'workflowId': 'b0b6796a7d5b11e982270242ac110002',
+      'processId': '9b47e2808e6811e982270242ac110002'
+    },
+    "veiwFormSms": {
+      'workflowId': '2a2343ba8f5811e982270242ac110002',
+      'processId': '2a3bee068f5811e982270242ac110002'
+    },
+    "status": {
+      'workflowId': '1d41cd0a8c4311e982270242ac110002',
+      'processId': '1d5a18748c4311e982270242ac110002'
     }
   },
   userName: "icici@icici.com",

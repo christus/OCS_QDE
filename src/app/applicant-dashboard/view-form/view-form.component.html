@@ -1516,7 +1516,7 @@
               <!-- Document Upload -->
               <div class="tab-content" [ngClass]="{'active': (activeTab == 4)}">
                   <h2 class="title">Document upload</h2>
-                  <form action="" class="bs-form" #documentUploadForm="ngForm" (ngSubmit)="submitDocumentUploadForm(documentUploadForm)">
+                  <form action="" class="bs-form" #documentUploadForm="ngForm" (ngSubmit)="sendSMS(documentUploadForm)">
                     <div class="bs-card">
                         <h3 class="card-title">Upload Aadhar card</h3>
                         
@@ -1760,9 +1760,9 @@
       </div>
   </div>
 
-    <div class="overlay" [ngClass]="{'active': isEligible}"></div>
+    <!-- <div class="overlay" [ngClass]="{'active': isEligible}"></div>
     <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isEligible}">
-        <!-- <a class="modal-close"><span class="icon icon-close"></span></a> -->
+        <a class="modal-close"><span class="icon icon-close"></span></a>
         <div class="modal-body">
             <h1 class="center">Eligibilty Checked!</h1>
             <h2 class="center typ2">Your Provisional Eligibility is</h2>
@@ -1788,5 +1788,5 @@
             <p class="desc typ2">You have not cleared the provisional eligibility check for the loan amount requested. 
                 Our Agent will contact you very soon.</p>
         </div>
-    </div>
+    </div> -->
 </main>

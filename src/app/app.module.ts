@@ -156,7 +156,7 @@ const appRoutes: Routes = [
     }
   },
   {
-    path: "view-form/:applicantId",
+    path: "view-form/:applicationId",
     component: ViewFormComponent,
     resolve: {
       listOfValues: ListOfValuesResolverService
@@ -168,28 +168,28 @@ const appRoutes: Routes = [
     children: [
       { path: '', redirectTo: "proceed-to-review", pathMatch: "full" },
       {
-        path: 'proceed-to-review',
+        path: 'proceed-to-review/:applicationId/:applicantId',
         component: ProceedToReviewFormComponent,
         resolve: {
           listOfValues: ListOfValuesResolverService
         }
       },
       {
-        path: 'review-application',
+        path: 'review-application/:applicationId/:applicantId',
         component: ReviewApplicationFormComponent,
         resolve: {
           listOfValues: ListOfValuesResolverService
         }
       },
       {
-        path: 'declaration1',
+        path: 'declaration1/:applicationId/:applicantId',
         component: Declaration1Component,
         resolve: {
           listOfValues: ListOfValuesResolverService
         }
       },
       {
-        path: 'declaration2',
+        path: 'declaration2/:applicationId/:applicantId',
         component: Declaration2Component,
         resolve: {
           listOfValues: ListOfValuesResolverService

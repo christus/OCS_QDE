@@ -608,7 +608,7 @@
   
                                         <label for="mob-no">Mobile number</label>
                                         <span class="optional">10 digit</span>
-                                        <a href="javascript:void(0);" class="sent-otp modal-init" data-target="sent-otp-modal"><span class="text">sent OTP</span><span class="icon icon-tick"></span></a>
+                                        <a href="javascript:void(0);" class="sent-otp modal-init" data-target="sent-otp-modal"><span class="text" (click)="submitOTP()">Send OTP</span><span class="icon icon-tick"></span></a>
                                         <span class="alternate-data">
                                           <a  href="javascript:void(0);"
                                               class="alter-btn"
@@ -635,7 +635,7 @@
   
                                         <label for="alter-mob">Alternate mobile no</label>
                                         <span class="optional">10 digit</span>
-                                        <a href="#" class="sent-otp modal-init" data-target="sent-otp-modal"><span class="text">sent OTP</span><span class="icon icon-tick"></span></a>
+                                        <a href="#" class="sent-otp modal-init" data-target="sent-otp-modal"><span class="text" (click)="submitOTP()">Send OTP</span><span class="icon icon-tick"></span></a>
                                         <span class="alternate-data">
                                           <a  href="javascript:void(0);"
                                               class="alter-btn"
@@ -744,7 +744,28 @@
                             </form>
                         </div>
                     </div>
-                </div>         
+                </div> 
+                
+                <div class="overlay" [ngClass]="{'active': inOTP}"></div>
+                <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': inOTP}">
+                    <a class="modal-close" href="javascript:void(0);" (click)="onBackOTP()"><span class="icon icon-close"></span></a>
+                    <div class="modal-body">
+                        <h1 class="center">Verify OTP to continue</h1>
+                        <!-- <p class="desc typ2">You have cleared the provisional eligibility check for the loan amount requested. Kindly note this clearance is based on the information provided and actual sanction amount is subject to further verification and process. We need more time to process your eligibility. </p>
+                        <p class="cm-thin">Thank you for your loan application. Our representative will contact you shortly</p> -->
+                        <form class="bs-form" id="spouse-form">
+                            <div class="form-wrap1">
+                                <div class="form-group">
+                                        <input type="text" class="form-control" id="otp" fieldFill>
+                                        <label for="otp">OTP</label>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="btn-wrap">
+                            <button class="btn btn-border">Verify</button>
+                        </div>   
+                    </div>
+                </div>
   
                 <div class="tab-content" [ngClass]="{'active': (activeTab == 4)}">
                   <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
@@ -1259,7 +1280,7 @@
                                                   <span class="control-title">Father's Title</span>
 
                                                   <kendo-dropdownlist class="form-control"
-                                                    [data]="titles" 
+                                                    [data]="maleTitles" 
                                                     textField="key"
                                                     valueField="value"
                                                     name="fatherTitle"
@@ -1289,7 +1310,7 @@
                                               <div class="form-group">
                                                   <span class="control-title">Mother's Title</span>
                                                   <kendo-dropdownlist class="form-control"
-                                                  [data]="titles" 
+                                                  [data]="femaleTitles" 
                                                   textField="key"
                                                   valueField="value"
                                                   name="motherTitle"
@@ -1846,8 +1867,7 @@
                                                         id="incomeConsiderNo1"
                                                         class="not-usual"
                                                         [checked]="qde.application.applicants[coApplicantIndex].incomeDetails.incomeConsider == false"
-                                                        [value]="2"
-                                                        (click)="incomeDetailsYesNo(2, incomeSlider2)" />
+                                                        [value]="2" />
                                                 <label for="incomeConsiderNo1"><span>No</span></label>
                                             </div>
                                         </div>
@@ -2569,29 +2589,30 @@
                                     </form>
                                   </div>
                                   <div class="swiper-slide">
-                                        <form class="bs-form" *ngIf="!isTabDisabled">
-                                            <div class="form-wrap">
-                                                <div class="bs-radio">
-                                                    <input  type="radio"
-                                                            name="income-consider"
-                                                            id="incomeConsiderYes2"
-                                                            [value]="1"
-                                                            [checked]="qde.application.applicants[coApplicantIndex].incomeDetails.incomeConsider == true"
-                                                            (click)="incomeDetailsYesNo(1, incomeSlider4)"
-                                                            class="not-usual" />
-                                                    <label for="incomeConsiderYes2"><span>Yes</span></label>
-                                                </div>
-                                                <div class="bs-radio">
-                                                    <input  type="radio"
-                                                            name="income-consider"
-                                                            id="incomeConsiderNo2"
-                                                            class="not-usual"
-                                                            [checked]="qde.application.applicants[coApplicantIndex].incomeDetails.incomeConsider == false"
-                                                            [value]="2"
-                                                            (click)="incomeDetailsYesNo(2, incomeSlider4)" />
-                                                    <label for="incomeConsiderNo2"><span>No</span></label>
-                                                </div>
-                                            </div>
+                                          <form class="bs-form">
+                                              <div class="form-wrap">
+                                                  <div class="bs-radio">
+                                                      <input  type="radio"
+                                                              name="income-consider"
+                                                              id="incomeConsiderYes2"
+                                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.incomeConsider"
+                                                              [value]="1"
+                                                              [checked]="qde.application.applicants[coApplicantIndex].incomeDetails.incomeConsider == true"
+                                                              (click)="incomeDetailsYesNo(1, incomeSlider4)"
+                                                              class="not-usual" />
+                                                      <label for="incomeConsiderYes2"><span>Yes</span></label>
+                                                  </div>
+                                                  <div class="bs-radio">
+                                                      <input  type="radio"
+                                                              name="income-consider"
+                                                              id="incomeConsiderNo2"
+                                                              class="not-usual"
+                                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.incomeConsider"
+                                                              [checked]="qde.application.applicants[coApplicantIndex].incomeDetails.incomeConsider == false"
+                                                              [value]="2"/>
+                                                      <label for="incomeConsiderNo2"><span>No</span></label>
+                                                  </div>
+                                              </div>
                                           </form>
                                       </div>
                                       <div class="swiper-slide">

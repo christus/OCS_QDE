@@ -1604,6 +1604,43 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     });
   }
 
+  private inOTP: boolean = false;
+  private backOTP: boolean = false;
+
+  submitOTP() {
+    console.log("Towards OTP")
+    this.qdeHttp.sendOTPAPI().subscribe(res => {
+      this.inOTP = true;
+      // if(res['ProcessVariables']['isPaymentSuccessful'] == true) {
+      //   this.showSuccessModal = true;
+      //   this.emiAmount = res['ProcessVariables']['emi'];
+      //   this.eligibleAmount = res['ProcessVariables']['eligibilityAmount'];
+      // }
+      // else if(res['ProcessVariables']['isPaymentSuccessful'] == false) {
+      //   this.showErrorModal = true;
+      // }
+     });
+  }
+
+  onBackOTP() {
+    console.log("Back button pressed")
+    this.backOTP = true;
+  }
+
+  validateOTP(form: NgForm) {
+    console.log("Payment gateway")
+    this.qdeHttp.validateOTPAPI().subscribe(res => {
+      // if(res['ProcessVariables']['isPaymentSuccessful'] == true) {
+      //   this.showSuccessModal = true;
+      //   this.emiAmount = res['ProcessVariables']['emi'];
+      //   this.eligibleAmount = res['ProcessVariables']['eligibilityAmount'];
+      // }
+      // else if(res['ProcessVariables']['isPaymentSuccessful'] == false) {
+      //   this.showErrorModal = true;
+     // }
+     });
+  }
+
   changeApplicantStatus(value, swiperInstance ?: Swiper) {
     if(value == 1) {
       this.qde.application.applicants[this.applicantIndex].personalDetails.applicantStatus = "1";
