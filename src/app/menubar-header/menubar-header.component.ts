@@ -61,10 +61,14 @@ export class MenubarHeaderComponent implements OnInit {
 
     // this.applicantName = this.qde.application.applicants[0].personalDetails.firstName;
     // console.log("this.applicantName", this.applicantName);
-    
+ 
     this.qdeService.qdeSource.subscribe(v =>{
       this.qde = v;
-      console.log("this.applicantName", this.qde);
+      console.log("this.applicantName", this.qde.application.applicants[0].personalDetails.firstName);
+      this.applicantName = "";
+      if(this.qde.application.applicants[0].personalDetails.firstName != "") {
+        this.applicantName = "Application for "+this.qde.application.applicants[0].personalDetails.firstName +" "+ this.qde.application.applicants[0].personalDetails.lastName;
+      }
     });
     
   }
