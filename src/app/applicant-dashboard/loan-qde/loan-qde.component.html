@@ -91,12 +91,12 @@
                         ngModel
                         #loanTenure = "ngModel"
                         name="loanTenure"
-			[(ngModel)]="qde?.application.tenure"
+			                [(ngModel)]="qde?.application.tenure"
                         (ngModelChange)="valuechange($event, 0)"
                         pattern='{{regexPattern.tenure}}'>
 
                       <span class="yr-text">Years</span>
-                      <ng5-slider [(value)]="value[0]" [options]="options"></ng5-slider>
+                      <ng5-slider [(value)]="qde?.application.tenure" [options]="options"></ng5-slider>
 
                       <div *ngIf="(loanTenure.touched || loanTenure.dirty) && loanTenure.invalid" class="invalid-feedback">
                         <div *ngIf="loanTenure.errors?.required">{{errors.loanDetails.loanAmount.tenure.required}}</div>
