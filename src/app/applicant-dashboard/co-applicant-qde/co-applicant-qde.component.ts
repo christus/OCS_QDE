@@ -129,7 +129,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
   isAlternateResidenceNumber: boolean = false;
   
   applicantIndividual: boolean = true;
-  YYYY: number = 1900;
+  YYYY: number = new Date().getFullYear();
 
   // For Hide/Show tabs between Indi and Non indi
   applicantStatus:string = "" ;
@@ -317,7 +317,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       this.months.unshift({key: 'MM', value: 'MM'});
 
       this.years = Array.from(Array(100).keys()).map((val, index) => {
-        let v = (this.YYYY+index)+"";
+        let v = (this.YYYY - index)+"";
         return {key: v, value: v};
       });
       this.years.unshift({key: 'YYYY', value: 'YYYY'});
@@ -770,7 +770,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
   
           this.qde.application.applicants[this.coApplicantIndex][screenName].city = result.city;
           this.qde.application.applicants[this.coApplicantIndex][screenName].state = result.state;
-          this.qde.application.applicants[this.coApplicantIndex][screenName].cityState = this.commCityState || "XXXX YYYY";  
+          this.qde.application.applicants[this.coApplicantIndex][screenName].cityState = this.commCityState || "XXXX YYYY";
+          console.log('city: ', result.city);
         }
         else if(response['Error'] == '1') {
           // alert("Invalid Pin");
@@ -801,16 +802,15 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
     this.qde.application.applicants[this.coApplicantIndex].communicationAddress.zipcodeId = this.qde.application.applicants[this.coApplicantIndex].communicationAddress.zipcodeId+"";
     this.qde.application.applicants[this.coApplicantIndex].communicationAddress.cityId = this.qde.application.applicants[this.coApplicantIndex].communicationAddress.cityId+"";
     this.qde.application.applicants[this.coApplicantIndex].communicationAddress.stateId = this.qde.application.applicants[this.coApplicantIndex].communicationAddress.stateId+"";
-    this.qde.application.applicants[this.coApplicantIndex].communicationAddress.numberOfYearsInCurrentResidence = form.value.numberOfYearsInCurrentResidence+"";
     this.qde.application.applicants[this.coApplicantIndex].communicationAddress.permanentAddress = form.value.permanentAddress;
 
 
-    this.qde.application.applicants[this.coApplicantIndex].permanentAddress.addressLineOne = form.value.pAddressLineOne;
-    this.qde.application.applicants[this.coApplicantIndex].permanentAddress.addressLineTwo = form.value.pAddressLineTwo;
-    this.qde.application.applicants[this.coApplicantIndex].permanentAddress.zipcodeId = this.qde.application.applicants[this.coApplicantIndex].permanentAddress.zipcodeId;
-    this.qde.application.applicants[this.coApplicantIndex].permanentAddress.cityId = this.qde.application.applicants[this.coApplicantIndex].permanentAddress.cityId;
-    this.qde.application.applicants[this.coApplicantIndex].permanentAddress.stateId = this.qde.application.applicants[this.coApplicantIndex].permanentAddress.stateId;
-    this.qde.application.applicants[this.coApplicantIndex].permanentAddress.numberOfYearsInCurrentResidence = form.value.numberOfYearsInCurrentResidence;
+    this.qde.application.applicants[this.coApplicantIndex].permanentAddress.addressLineOne = form.value.pAddressLineOne+"";
+    this.qde.application.applicants[this.coApplicantIndex].permanentAddress.addressLineTwo = form.value.pAddressLineTwo+"";
+    this.qde.application.applicants[this.coApplicantIndex].permanentAddress.zipcodeId = this.qde.application.applicants[this.coApplicantIndex].permanentAddress.zipcodeId+"";
+    this.qde.application.applicants[this.coApplicantIndex].permanentAddress.cityId = this.qde.application.applicants[this.coApplicantIndex].permanentAddress.cityId+"";
+    this.qde.application.applicants[this.coApplicantIndex].permanentAddress.stateId = this.qde.application.applicants[this.coApplicantIndex].permanentAddress.stateId+"";
+    this.qde.application.applicants[this.coApplicantIndex].permanentAddress.numberOfYearsInCurrentResidence = form.value.numberOfYearsInCurrentResidence+"";
     
     console.log(this.qde.application.applicants[this.coApplicantIndex].communicationAddress);
 
@@ -1395,8 +1395,6 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
   }
 
   selectCoApplicant(applicationId, index) {
-    // Static Value, replace in future
-    console.log(applicationId, index);
     this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant/'+index], {fragment: "pan1"});
   }
 
@@ -1414,7 +1412,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
     this.residenceNumberPhoneNumber = this.qde.application.applicants[this.coApplicantIndex].contactDetails.residenceNumber != "" ? this.qde.application.applicants[this.coApplicantIndex].contactDetails.residenceNumber.split("-")[1] : "";
 
     this.alternateResidenceNumberStdCode = this.qde.application.applicants[this.coApplicantIndex].contactDetails.alternateResidenceNumber != "" ? this.qde.application.applicants[this.coApplicantIndex].contactDetails.alternateResidenceNumber.split("-")[0] : "";
-    this.alternateResidenceNumberPhoneNumber = this.qde.application.applicants[this.coApplicantIndex].contactDetails.alternateResidenceNumber != "" ? this.qde.application.applicants[this.coApplicantIndex].contactDetails.residenceNumber.split("-")[1] : "";
+    this.alternateResidenceNumberPhoneNumber = this.qde.application.applicants[this.coApplicantIndex].contactDetails.alternateResidenceNumber != "" ? this.qde.application.applicants[this.coApplicantIndex].contactDetails.alternateResidenceNumber.split("-")[1] : "";
     this.addressCityState = this.qde.application.applicants[this.coApplicantIndex].communicationAddress.city + '/'+ this.qde.application.applicants[this.coApplicantIndex].communicationAddress.state;
 
     this.otherReligion = this.qde.application.applicants[this.coApplicantIndex].other.religion == '6' ? this.qde.application.applicants[this.coApplicantIndex].other.religion : '';
@@ -1425,6 +1423,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
     this.corporateAddressPhoneNumber = this.qde.application.applicants[this.coApplicantIndex].corporateAddress.stdNumber != "" ? this.qde.application.applicants[this.coApplicantIndex].corporateAddress.stdNumber.split("-")[1] : "";
     this.officialCorrespondenceStdCode = this.qde.application.applicants[this.coApplicantIndex].officialCorrespondence.officeNumber != "" ? this.qde.application.applicants[this.coApplicantIndex].officialCorrespondence.officeNumber.split("-")[0] : "";
     this.officialCorrespondencePhoneNumber = this.qde.application.applicants[this.coApplicantIndex].officialCorrespondence.officeNumber != "" ? this.qde.application.applicants[this.coApplicantIndex].officialCorrespondence.officeNumber.split("-")[1] : "";
+
+    this.isAlternateEmailId = this.qde.application.applicants[this.coApplicantIndex].contactDetails.alternateEmailId != "" ? true : false;
+    this.isAlternateMobileNumber = this.qde.application.applicants[this.coApplicantIndex].contactDetails.alternateMobileNumber != null ? true : false;
+    this.isAlternateResidenceNumber = this.qde.application.applicants[this.coApplicantIndex].contactDetails.alternateResidenceNumber != "" ? true : false;
   }
 
   makePermanentAddressSame(event: boolean) {
@@ -1434,12 +1436,20 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       this.qde.application.applicants[this.coApplicantIndex].permanentAddress.addressLineOne = this.qde.application.applicants[this.coApplicantIndex].communicationAddress.addressLineOne;
       this.qde.application.applicants[this.coApplicantIndex].permanentAddress.addressLineTwo = this.qde.application.applicants[this.coApplicantIndex].communicationAddress.addressLineTwo;
       this.qde.application.applicants[this.coApplicantIndex].permanentAddress.zipcode = this.qde.application.applicants[this.coApplicantIndex].communicationAddress.zipcode;
-      this.qde.application.applicants[this.coApplicantIndex].permanentAddress.cityState = this.qde.application.applicants[this.coApplicantIndex].communicationAddress.cityState;
+      this.qde.application.applicants[this.coApplicantIndex].permanentAddress.city = this.qde.application.applicants[this.coApplicantIndex].communicationAddress.city;
+      this.qde.application.applicants[this.coApplicantIndex].permanentAddress.state = this.qde.application.applicants[this.coApplicantIndex].communicationAddress.state;
+      this.qde.application.applicants[this.coApplicantIndex].permanentAddress.zipcodeId = this.qde.application.applicants[this.coApplicantIndex].communicationAddress.zipcodeId;
+      this.qde.application.applicants[this.coApplicantIndex].permanentAddress.cityId = this.qde.application.applicants[this.coApplicantIndex].communicationAddress.cityId;
+      this.qde.application.applicants[this.coApplicantIndex].permanentAddress.stateId = this.qde.application.applicants[this.coApplicantIndex].communicationAddress.stateId;
     } else {
       this.qde.application.applicants[this.coApplicantIndex].permanentAddress.addressLineOne = "";
       this.qde.application.applicants[this.coApplicantIndex].permanentAddress.addressLineTwo = "";
       this.qde.application.applicants[this.coApplicantIndex].permanentAddress.zipcode = "";
-      this.qde.application.applicants[this.coApplicantIndex].permanentAddress.cityState = "";
+      this.qde.application.applicants[this.coApplicantIndex].permanentAddress.city = "";
+      this.qde.application.applicants[this.coApplicantIndex].permanentAddress.state = "";
+      this.qde.application.applicants[this.coApplicantIndex].permanentAddress.zipcodeId = "";
+      this.qde.application.applicants[this.coApplicantIndex].permanentAddress.cityId = "";
+      this.qde.application.applicants[this.coApplicantIndex].permanentAddress.stateId = "";
     }
   }
 
@@ -1639,7 +1649,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
   }
 
   selectPreferedMailingAddress(value) {
-    this.qde.application.applicants[this.coApplicantIndex].communicationAddress.preferedMailingAddress = (value == 1) ? true: false;
+    this.qde.application.applicants[this.coApplicantIndex].permanentAddress.preferedMailingAddress = (value == 1) ? true: false;
   }
 
   ngOnDestroy() {

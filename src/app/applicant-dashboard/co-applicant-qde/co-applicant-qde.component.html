@@ -559,7 +559,7 @@
                                               required />
   
                                         <label for="pref-email">Preferred email ID</label>
-                                        <span class="alternate-data">
+                                        <span class="alternate-data" *ngIf="!isAlternateEmailId">
                                             <a  href="javascript:void(0);"
                                                 class="alter-btn"
                                                 (click)="addRemoveEmailField()">+ Add
@@ -570,8 +570,7 @@
                                             <div *ngIf="preferEmailId.errors?.email">{{errors.contactDetails.preferedEmail.invalid}}</div>
                                           </div>
                                     </div>
-                                    <div class="form-group transOpacity500ms fadeOut" [ngClass]="{'typ-alternative': !isAlternateEmailId, 'fadeIn': isAlternateEmailId}">
-  
+                                    <div class="form-group" [ngClass]="{'typ-alternative': !isAlternateEmailId}">
                                         <input type="text"
                                               class="form-control"
                                               id="alter-email"
@@ -596,7 +595,6 @@
                                     </div>
   
                                     <div class="form-group typ-mob">
-  
                                         <input type="tel" class="form-control" id="mob-no"
                                           maxlength="10" im-insert="true"
                                           minlength="10"
@@ -610,8 +608,10 @@
   
                                         <label for="mob-no">Mobile number</label>
                                         <span class="optional">10 digit</span>
+
                                         <a href="javascript:void(0);" class="sent-otp modal-init" data-target="sent-otp-modal"><span class="text" (click)="submitOTP()">Send OTP</span><span class="icon icon-tick"></span></a>
-                                        <span class="alternate-data">
+                                        <span class="alternate-data" *ngIf="!isAlternateMobileNumber">
+
                                           <a  href="javascript:void(0);"
                                               class="alter-btn"
                                               (click)="addRemoveMobileNumberField()">+ Add</a> alternate Mobile number
@@ -692,7 +692,7 @@
                                               <!-- <div *ngIf="residenceNumber.errors?.required">{{errors.contactDetails.residenceNumber.required}}</div> -->
                                             </div>
                                         </div>
-                                        <span class="alternate-data">
+                                        <span class="alternate-data" *ngIf="!isAlternateResidenceNumber">
                                           <a  href="javascript:void(0);"
                                               class="alter-btn"
                                               (click)="addRemoveResidenceNumberField()">+ Add</a> alternate residence number
@@ -723,6 +723,7 @@
                                                       #alternateResidenceNumber2="ngModel"
                                                       name="alternateResidenceNumber2"
                                                       id="altr-res-no"
+                                                      fieldFill
                                                       maxlength="8" 
                                                       spellcheck="false"
                                                       pattern="{{regexPattern.mobileNumber}}"
@@ -961,11 +962,11 @@
                                       </div>
                                       <div class="radio-wrap rounded-radio">
                                           <div class="bs-radio typ-normal">
+                                              {{qde.application.applicants[coApplicantIndex].permanentAddress.preferedMailingAddress}}
                                               <input    type="radio" 
                                                         [value]="1"
                                                         name="preferedMailingAddress"
-                                                        fieldFill
-                                                        [checked]="qde.application.applicants[coApplicantIndex].communicationAddress.preferedMailingAddress == true"
+                                                        [checked]="qde.application.applicants[coApplicantIndex].permanentAddress.preferedMailingAddress == 'true'"
                                                         (click)="selectPreferedMailingAddress(1)"
                                                         id="current-add-mail" />
                                             <label for="current-add-mail">
@@ -976,8 +977,7 @@
                                               <input    type="radio"
                                                         [value]="2"
                                                         name="preferedMailingAddress"
-                                                        fieldFill
-                                                        [checked]="qde.application.applicants[coApplicantIndex].communicationAddress.preferedMailingAddress == false"
+                                                        [checked]="qde.application.applicants[coApplicantIndex].permanentAddress.preferedMailingAddress == 'false'"
                                                         (click)="selectPreferedMailingAddress(2)"
                                                         id="permanent-add-mail" />
                                               <label for="permanent-add-mail">

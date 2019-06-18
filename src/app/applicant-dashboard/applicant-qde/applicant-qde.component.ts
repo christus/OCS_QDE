@@ -136,7 +136,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   applicantIndividual: boolean = true;
 
   isIndividual:boolean = false;
-  YYYY: number = 1900;
+  YYYY: number = new Date().getFullYear();
 
   applicantStatus: string = "";
 
@@ -296,7 +296,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       this.months.unshift({key: 'MM', value: 'MM'});
 
       this.years = Array.from(Array(100).keys()).map((val, index) => {
-        let v = (this.YYYY+index)+"";
+        let v = (this.YYYY - index)+"";
         return {key: v, value: v};
       });
       this.years.unshift({key: 'YYYY', value: 'YYYY'});
@@ -729,6 +729,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
           // alert("error"+error);
           // Throw Request Failure Error
         });
+
       } else {
         this.qde.application.applicants[this.applicantIndex].pan.isValid = false;
         this.qde.application.applicants[this.applicantIndex].pan.errorMessage = "Error in pan Details";
@@ -1692,7 +1693,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     this.residenceNumberPhoneNumber = this.qde.application.applicants[this.applicantIndex].contactDetails.residenceNumber != "" ? this.qde.application.applicants[this.applicantIndex].contactDetails.residenceNumber.split("-")[1] : "";
 
     this.alternateResidenceNumberStdCode = this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber != "" ? this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber.split("-")[0] : "";
-    this.alternateResidenceNumberPhoneNumber = this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber != "" ? this.qde.application.applicants[this.applicantIndex].contactDetails.residenceNumber.split("-")[1] : "";
+    this.alternateResidenceNumberPhoneNumber = this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber != "" ? this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber.split("-")[1] : "";
     this.addressCityState = this.qde.application.applicants[this.applicantIndex].communicationAddress.city + '/'+ this.qde.application.applicants[this.applicantIndex].communicationAddress.state;
 
     this.otherReligion = this.qde.application.applicants[this.applicantIndex].other.religion == '6' ? this.qde.application.applicants[this.applicantIndex].other.religion : '';
@@ -1703,6 +1704,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     this.corporateAddressPhoneNumber = this.qde.application.applicants[this.applicantIndex].corporateAddress.stdNumber != "" ? this.qde.application.applicants[this.applicantIndex].corporateAddress.stdNumber.split("-")[1] : "";
     this.officialCorrespondenceStdCode = this.qde.application.applicants[this.applicantIndex].officialCorrespondence.officeNumber != "" ? this.qde.application.applicants[this.applicantIndex].officialCorrespondence.officeNumber.split("-")[0] : "";
     this.officialCorrespondencePhoneNumber = this.qde.application.applicants[this.applicantIndex].officialCorrespondence.officeNumber != "" ? this.qde.application.applicants[this.applicantIndex].officialCorrespondence.officeNumber.split("-")[1] : "";
+
+    this.isAlternateEmailId = this.qde.application.applicants[this.applicantIndex].contactDetails.alternateEmailId != "" ? true : false;
+    this.isAlternateMobileNumber = this.qde.application.applicants[this.applicantIndex].contactDetails.alternateMobileNumber != null ? true : false;
+    this.isAlternateResidenceNumber = this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber != "" ? true : false;
   }
 
   makePermanentAddressSame(event: boolean) {
