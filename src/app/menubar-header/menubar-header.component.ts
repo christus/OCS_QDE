@@ -1,6 +1,9 @@
+import { Qde } from 'src/app/models/qde.model';
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonDataService } from '../services/common-data.service';
 import { UtilService } from '../services/util.service';
+import { QdeService } from '../services/qde.service';
+
 
 @Component({
   selector: 'app-menubar-header',
@@ -21,8 +24,14 @@ export class MenubarHeaderComponent implements OnInit {
   // isLogoutVisible: boolean;
   // applicantId: string;
 
+  public applicantName: string;
 
-  constructor(private utilService: UtilService, private commonDataService: CommonDataService) {
+  qde:Qde;
+
+
+
+  constructor(private utilService: UtilService, private commonDataService: CommonDataService,
+  private qdeService:QdeService) {
     this.commonDataService.isViewFormNameShown.subscribe((value) => {
       this.isViewFormNameShown = value;
     });
@@ -47,10 +56,26 @@ export class MenubarHeaderComponent implements OnInit {
     this.commonDataService.coApplicantIndex.subscribe(val => {
       this.coApplicantIndex = val;
     });
+
+    // this.qde = qdeService.getQde();
+
+    // this.applicantName = this.qde.application.applicants[0].personalDetails.firstName;
+    // console.log("this.applicantName", this.applicantName);
+    
+    this.qdeService.qdeSource.subscribe(v =>{
+      this.qde = v;
+      console.log("this.applicantName", this.qde);
+    });
+    
   }
 
   ngOnInit() {
     
+  }
+
+  setApplicantName(qde) {
+    this.applicantName = this.qde.application.applicants[0].personalDetails.firstName;
+    console.log("this.applicantName", this.applicantName);
   }
 
   logout() {

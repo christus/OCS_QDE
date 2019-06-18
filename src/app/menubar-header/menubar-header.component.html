@@ -10,7 +10,7 @@
                 </h1>
             </div>
             <div class="right-panel">
-                <h3 class="for-user" *ngIf="isViewFormNameShown">Application for <span class="user-name">Komal Agarwal</span></h3>
+                <h3 class="for-user" *ngIf="isViewFormNameShown">Application for <span class="user-name">{{qde.application.applicants[0].personalDetails.firstName}} {{qde.application.applicants[0].personalDetails.lastName}}</span></h3>
                 <a routerLink="/view-form" *ngIf="isViewFormVisible" class="btn btn-default view-form">View Form</a>
                 <a (click)="logout()" *ngIf="isLogoutVisible" class="btn btn-default logout">Logout</a>
             </div>

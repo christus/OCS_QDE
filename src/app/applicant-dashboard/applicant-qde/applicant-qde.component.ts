@@ -14,6 +14,7 @@ import { QdeService } from 'src/app/services/qde.service';
 import { CommonDataService } from '../../services/common-data.service';
 import { Subscription } from 'rxjs';
 import { errors } from '../../services/errors';
+import { MenubarHeaderComponent } from '../../menubar-header/menubar-header.component';
 
 interface Item {
   key: string,
@@ -787,6 +788,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
     console.log("*", this.qde);
     console.log("**", this.qdeService.getFilteredJson(this.qde));
+
+    this.qdeService.setQde(this.qde);
+
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
@@ -931,7 +935,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber = form.value.alternateResidenceNumberStd1+'-'+form.value.alternateResidenceNumber2;
 
 
-
+    
     console.log("CONTACT DETAILS", this.qde.application.applicants[this.applicantIndex]);
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
@@ -1608,7 +1612,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   private backOTP: boolean = false;
 
   submitOTP() {
-    console.log("Towards OTP")
+    console.log("Towards OTP");
     this.qdeHttp.sendOTPAPI().subscribe(res => {
       this.inOTP = true;
       // if(res['ProcessVariables']['isPaymentSuccessful'] == true) {
