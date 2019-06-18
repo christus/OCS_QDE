@@ -1446,7 +1446,8 @@
                                       </kendo-dropdownlist>
                                   </div>
                                   <div class="form-group" *ngIf="selectedOccupation.value != '9' && selectedOccupation.value != '10'">
-                                      <input type="text" class="form-control"
+                                      <input type="text"
+                                            class="form-control"
                                               required 
                                               [(ngModel)]="qde.application.applicants[coApplicantIndex].occupation.companyName"
                                               pattern="{{regexPattern.name}}"
@@ -2049,7 +2050,7 @@
                                             name="day"
                                             nick="organizationDetails.day"
                                             #doiDay
-                                            (selectionChange)="selectValueChanged($event, doiDay.hostElement)"
+                                            (selectionChange)="selectValueChanged($event, doiDay.hostElement, 'organizationDetails')"
                                             [(ngModel)]="organizationDetails.day">
                                             </kendo-dropdownlist>
                                         </div>
@@ -2062,7 +2063,7 @@
                                             name="month"
                                             nick="organizationDetails.month"
                                             #doiMonth
-                                            (selectionChange)="selectValueChanged($event, doiMonth.hostElement)"
+                                            (selectionChange)="selectValueChanged($event, doiMonth.hostElement, 'organizationDetails')"
                                             [(ngModel)]="organizationDetails.month">
                                             </kendo-dropdownlist>
                                         </div>
@@ -2075,7 +2076,7 @@
                                             name="year"
                                             nick="organizationDetails.year"
                                             #doiYear
-                                            (selectionChange)="selectValueChanged($event, doiYear.hostElement)"
+                                            (selectionChange)="selectValueChanged($event, doiYear.hostElement, 'organizationDetails')"
                                             [(ngModel)]="organizationDetails.year">
                                             </kendo-dropdownlist>
                                         </div>
