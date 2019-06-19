@@ -3,14 +3,91 @@
   <div class="main">
     <div class="lyt-home">
 
-              <div class="tabs-contents" #tabContents>
-                <div class="tab-content" [ngClass]="{'active': (activeTab == 0)}">
+        <div class="tabs-contents" #tabContents>
+            <div class="tab-content" [ngClass]="{'active': (activeTab == 0)}">
+                <!-- <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(panSlider2)"></a> -->
+                <div class="lyt-tabs">
+                    <div class="lhs">
+                        <div  class="swiper-container form-swiper"
+                            [swiper]="lhsConfig"
+                            #eligibleSlider1="ngxSwiper">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <div class="title-wrap">
+                                        <div class="lhs-inner-wrap">
+                                            <span class="icon-thumb"></span>
+                                            <span class="text">
+                                                    Payment 
+                                                    <span class="cm-line-break">Successful!</span>
+                                            </span>
+                                            <p class="note">Please choose eligibility check Process</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="rhs">
+                            <div  class="swiper-container form-swiper"
+                                [swiper]="rhsConfig"
+                                (slidePrevTransitionStart)="slidePrevTransitionStart(eligibleSlider1)"
+                                (slideNextTransitionStart)="slideNextTransitionStart(eligibleSlider1)"
+                                #eligibleSlider2="ngxSwiper">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                        <form class="bs-form">
+                                            <div class="form-wrap">
+                                                <div class="bs-radio">
+                                                <input type="radio" name="payment-radio" id="accept" (change)="tabSwitch(1)" (click)="submitDocumentUploadForm()">
+                                                <label for="accept">
+                                                    <div class="inner-sect">
+                                                        <div><span>Accept</span></div>
+                                                        <!-- <p class="desc">A link will be sent to 
+                                                                the customer’s verified 
+                                                                mobile number and 
+                                                                email address. The 
+                                                                customer can then pay 
+                                                                online through any 
+                                                                payment method.</p> -->
+                                                        </div>
+                                                </label>
+                                                </div>
+                                                <div class="bs-radio">
+                                                <input type="radio" name="payment-radio" id="reject">
+                                                <label for="reject">
+                                                    <div class="inner-sect">
+                                                        <div><span>Reject</span></div>
+                                                        <!-- <p class="desc">
+                                                                Agent will collect a 
+                                                                cheque and upload a 
+                                                                photo of it through the 
+                                                                app. A cheque usually 
+                                                                takes 2-3 days to clear. 
+                                                        </p> -->
+                                                    </div>
+                                                </label>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+
+
+
+
+
+              
+                <div class="tab-content" [ngClass]="{'active': (activeTab == 1)}">
                     <!-- <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(panSlider2)"></a> -->
                     <div class="lyt-tabs">
                         <div class="lhs">
                             <div  class="swiper-container form-swiper"
                                   [swiper]="lhsConfig"
-                                  #eligibleSlider1="ngxSwiper">
+                                  #eligibleSlider3="ngxSwiper">
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide">
                                         <div class="title-wrap">
@@ -20,91 +97,73 @@
                                                         Payment 
                                                         <span class="cm-line-break">Successful!</span>
                                                 </span>
-                                                <p class="note">Please choose eligibility check Process</p>
+                                                <p class="note">Amount for which you are Eligible is</p>
                                             </div>
                                         </div>
                                     </div>
                                   </div>
                                 </div>
                             </div>
-                            <div class="rhs" style="display:none">
-                                <div  class="swiper-container form-swiper"
-                                      [swiper]="rhsConfig"
-                                      (slidePrevTransitionStart)="slidePrevTransitionStart(eligibleSlider1)"
-                                      (slideNextTransitionStart)="slideNextTransitionStart(eligibleSlider1)"
-                                      #eligibleSlider2="ngxSwiper">
-                                    <div class="swiper-wrapper">
-                                        <div class="swiper-slide">
-                                            <form class="bs-form">
-                                                <div class="form-wrap">
-
-												  	<form class="bs-form">
-												      	<div class="form-wrap">
-												          	<div class="bs-radio">
-												              	<input  type="radio"
-												                    name="isEligible"
-												                    id="eligible">
-												              	<label for="eligible"><span>ACCEPT</span></label>
-												          </div>
-												          <div class="bs-radio">
-												              	<input  type="radio"
-												                    name="isEligible"
-												                    id="non-eligible">
-												            <label for="non-eligible"><span>NOT ACCEPT</span></label>
-												          </div>
-												      </div>
-												  </form>
-
-                                                </div>
-                                            </form>
+                            <div class="rhs">
+                                    <div  class="swiper-container form-swiper"
+                                        [swiper]="rhsConfig"
+                                        (slidePrevTransitionStart)="slidePrevTransitionStart(eligibleSlider3)"
+                                        (slideNextTransitionStart)="slideNextTransitionStart(eligibleSlider3)"
+                                        #eligibleSlider4="ngxSwiper">
+                                        <div class="swiper-wrapper">
+                                            <div class="swiper-slide">
+                                                <form class="bs-form">
+                                                    <div class="form-wrap">
+                                                            <p class="para">
+                                                                    <span class="cm-bold">KOMAL AGRAWAL</span> is eligible for a loan with
+                                                                    <span class="cm-bold">ICICI HOME FINANCE!</span>
+        
+                                                                </p>
+                                                                <p class="para">
+                                                                    The customer has cleared the provisional eligibility check for the loan amount requested.
+                                                                </p>
+                                                                <div class="desc">
+                                                                    <p>Kindly note this clearance is based on the information provided and actual sanction amount is subject to further verification and process.</p>
+        
+                                                                </div>
+                                                                <div class="info-data-wrap">
+                                                                    <span class="tag">Provisional Eligibility Information</span>
+                                                                    <div class="info-wrap">
+                                                                        <span class="info">
+                                                                                Loan Amount: <span class="cm-bold">₹{{eligibleAmount}}</span>
+                                                                        </span>
+                                                                        <span class="info">
+                                                                                
+                                                                                Tenure: <span class="cm-bold">15 years</span>
+                                                                        </span>
+                                                                        <span class="info">
+                                                                                Rate of Interest: <span class="cm-bold">8.99%</span>
+                                                                        </span>
+                                                                        <span class="info">
+                                                                                Easy Monthly Installment: <span class="cm-bold">₹{{emiAmount}}</span>
+                                                                        </span>
+                                                                        <span class="info">
+                                                                                Sanction Conditions: <span class="cm-bold"> Lorem Ipsum</span>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                    </div>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-
                             <div class="rhs eligibility-check">
                                                     <div class="rhs-inner-wrap">
-                                                        <p class="para">
-                                                            <span class="cm-bold">KOMAL AGRAWAL</span> is eligible for a loan with
-                                                            <span class="cm-bold">ICICI HOME FINANCE!</span>
-
-                                                        </p>
-                                                        <p class="para">
-                                                            The customer has cleared the provisional eligibility check for the loan amount requested.
-                                                        </p>
-                                                        <div class="desc">
-                                                            <p>Kindly note this clearance is based on the information provided and actual sanction amount is subject to further verification and process.</p>
-
-                                                        </div>
-                                                        <div class="info-data-wrap">
-                                                            <span class="tag">Provisional Eligibility Information</span>
-                                                            <div class="info-wrap">
-                                                                <span class="info">
-                                                                        Loan Amount: <span class="cm-bold">₹25,00,000</span>
-                                                                </span>
-                                                                <span class="info">
-                                                                        
-                                                                        Tenure: <span class="cm-bold">15 years</span>
-                                                                </span>
-                                                                <span class="info">
-                                                                        Rate of Interest: <span class="cm-bold">8.99%</span>
-                                                                </span>
-                                                                <span class="info">
-                                                                        Easy Monthly Installment: <span class="cm-bold">₹35,000</span>
-                                                                </span>
-                                                                <span class="info">
-                                                                        Sanction Conditions: <span class="cm-bold"> Lorem Ipsum</span>
-                                                                </span>
-                                                            </div>
-                                                        </div>
+                                                        
                                                     </div>
-                                                    <div class="btn">YES</div>
-                                                    <div class="btn">NO</div>
-                                                </div>
+                                                    <br>
+                                                    <div class="btn btn-default yes">YES</div>
+                                                    <div class="btn btn-default no">NO</div>
+                                            </div>
                     </div>
                 </div>
-
-                </div>
-    </div>
+            </div>
+       </div>
     </div>
 </main>

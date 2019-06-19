@@ -238,5 +238,24 @@ export class DocumentUploadComponent implements OnInit {
     );
   }
 
-  temp;
+   private isEligible: boolean = false;
+  private isNotEligible: boolean = false;
+  private emiAmount: number;
+  private eligibleAmount: number;
+
+  submitDocumentUploadForm(form: NgForm) {
+
+    this.qdeHttp.dummyCIBILAPI().subscribe(res => {
+      console.log("res: ", res['ProcessVariables']['checkEligibility'].toLowerCase);
+      if(res['ProcessVariables']['checkEligibility'].toLowerCase() == 'yes') {
+        this.isEligible = true;
+
+        this.emiAmount = parseInt(res['ProcessVariables']['emi']);
+        this.eligibleAmount = parseInt(res['ProcessVariables']['eligibilityAmount']);
+      }
+      else if(res['ProcessVariables']['checkEligibility'].toLowerCase() == 'no') {
+        this.isNotEligible = true;
+      }
+    });
+  }
 }
