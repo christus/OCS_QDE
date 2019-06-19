@@ -70,7 +70,8 @@ export const environment = {
   },
   userName: "icici@icici.com",
   password: "icici@123",
-  host: "http://192.168.1.108",
+  // host: "http://192.168.1.108",
+  host: "",
   appiyoDrive: "/appiyo/d/drive/upload/"
 
 };

@@ -108,8 +108,8 @@ export class LoanQdeComponent implements OnInit {
   minValue: number = 1;
   options: Options = {
     floor: 0,
-    ceil: 6,
-    step: 1,
+    ceil: 30,
+    step: 5,
     showTicksValues: false,
     // showSelectionBar: true,
     showTicks: true,

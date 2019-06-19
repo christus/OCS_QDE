@@ -54,8 +54,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   minValue: number = 1;
   options: Options = {
     floor: 0,
-    ceil: 6,
-    step: 1,
+    ceil: 50,
+    step: 10,
     showTicksValues: false,
     // showSelectionBar: true,
     showTicks: true,
@@ -1279,6 +1279,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     if (form && !form.valid) {
       return;
     }
+    
   // const currentExp = form.value.numberOfYearsInCurrentCompany;
   // const totalExp = form.value.totalExperienceYear;
   // if(currentExp > totalExp) {
