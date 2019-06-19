@@ -17,7 +17,7 @@ import { QdeHttpService } from 'src/app/services/qde-http.service';
 })
 export class DocumentUploadComponent implements OnInit {
 
-  private showSuccessModal: boolean = false;
+  showSuccessModal: boolean = false;
 
   value: number = 0;
 
@@ -238,10 +238,10 @@ export class DocumentUploadComponent implements OnInit {
     );
   }
 
-   private isEligible: boolean = false;
-  private isNotEligible: boolean = false;
-  private emiAmount: number;
-  private eligibleAmount: number;
+   isEligible: boolean = false;
+  isNotEligible: boolean = false;
+  emiAmount: number;
+  eligibleAmount: number;
 
   submitDocumentUploadForm(form: NgForm) {
 

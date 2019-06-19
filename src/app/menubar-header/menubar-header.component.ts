@@ -12,14 +12,14 @@ import Qde  from 'src/app/models/qde.model';
 })
 export class MenubarHeaderComponent implements OnInit {
   
-  private isMenuBarShown: boolean;
-  private isViewFormNameVisible: boolean;
-  private isViewFormVisible: boolean;
-  private isLogoutVisible: boolean;
-  private applicationId: string;
-  private coApplicantIndex: number; 
+  isMenuBarShown: boolean;
+  isViewFormNameVisible: boolean;
+  isViewFormVisible: boolean;
+  isLogoutVisible: boolean;
+  applicationId: string;
+  coApplicantIndex: number; 
   // isMenuBarShown: boolean;
-  private isViewFormNameShown: boolean;
+  isViewFormNameShown: boolean;
   // isViewFormVisible: boolean;
   // isLogoutVisible: boolean;
   // applicantId: string;

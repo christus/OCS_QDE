@@ -61,6 +61,13 @@ import { GetCoApplicantsResolverService } from './get-co-applicants-resolver.ser
 import { EligibilityCheckComponent } from './payments/eligibility-check/eligibility-check.component';
 import { BirthPlaceResolverService } from './services/birth-place-resolver.service';
 
+import { Camera } from '@ionic-native/camera/ngx';
+import { File } from '@ionic-native/file/ngx';
+import { DeviceDetectorModule } from 'ngx-device-detector';
+
+
+
+
 
 const appRoutes: Routes = [
   { path: "", redirectTo: "leads", pathMatch: "full" },
@@ -279,7 +286,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     Ng5SliderModule,
     HttpClientModule,
     DropDownsModule,
-    ImageUploadModule.forRoot()
+    ImageUploadModule.forRoot(),
+    DeviceDetectorModule.forRoot()
   ],
   providers: [
     ListOfValuesResolverService,
@@ -293,7 +301,9 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
-    }
+    },
+    Camera,
+    File
   ],
   bootstrap: [AppComponent]
 })

@@ -33,8 +33,7 @@
 
                     <!-- *ngIf="qde.application.applicants[applicantIndex].isIndividual == true" -->
 
-                    <form   #applicantIndividualForm="ngForm"
-                            (ngSubmit)="submitApplicantMainForm(applicantIndividualForm)">
+                    <form   #applicantIndividualForm="ngForm">
                         <div class="bs-card" [ngClass]="{'incomplete': isIncomplete}">
                             <h3 class="card-title">PAN details</h3>
                             <div class="bs-form">

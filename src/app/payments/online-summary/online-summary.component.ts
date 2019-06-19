@@ -20,10 +20,10 @@ export class OnlineSummaryComponent implements OnInit {
   ngOnInit() {
   }
 
-private showSuccessModal: boolean = false;
-private showErrorModal: boolean = false;
-private emiAmount: number;
-private eligibleAmount: number;
+showSuccessModal: boolean = false;
+showErrorModal: boolean = false;
+emiAmount: number;
+eligibleAmount: number;
 
 submitPaymentForm(form: NgForm) {
   console.log("Payment gateway")

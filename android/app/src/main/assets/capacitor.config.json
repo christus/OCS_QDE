@@ -1,0 +1,7 @@
+{
+  "appId": "com.icici.hfc",
+  "appName": "ICICI HFC",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www"
+}

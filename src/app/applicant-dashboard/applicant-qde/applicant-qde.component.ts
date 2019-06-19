@@ -16,6 +16,13 @@ import { Subscription } from 'rxjs';
 import { errors } from '../../services/errors';
 import { MenubarHeaderComponent } from '../../menubar-header/menubar-header.component';
 
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { File } from '@ionic-native/file/ngx';
+import { DeviceDetectorService } from 'ngx-device-detector';
+
+
+
+
 interface Item {
   key: string,
   value: number | string
@@ -31,6 +38,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   readonly errors = errors;
 
   regexPatternForDocType: Array<string> = ['[A-Z]{5}[0-9]{4}[A-Z]{1}','^[a-zA-Z0-9]{0,16}$','^[A-Z0-9]{19}$','[A-Z]{2}[0-9]{13}','[0-9]{12}','^[a-zA-Z0-9]{0,16}$'];
+
+  panImage:String;
+
+  isTabDisabled:boolean;
+  docName:boolean;
 
   regexPattern = {
     mobileNumber: "^[0-9]*$",
@@ -207,9 +219,13 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
               private router: Router,
               private qdeHttp: QdeHttpService,
               private qdeService: QdeService,
-              private cds:CommonDataService) {
+              private cds:CommonDataService,
+              private camera: Camera,
+              private file: File,
+              private deviceService: DeviceDetectorService) {
 
-
+    const isMobile = this.deviceService.isMobile();
+            
     this.panslideSub = this.cds.panslide.subscribe(val => {
       this.panslide = val;
     });
@@ -719,6 +735,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
               this.cds.changePanSlide(true);
               this.router.navigate(['/applicant/'+this.qde.application.applicationId]);
             }else {
+              this.cds.changePanSlide(true);
+              this.panSlider2.setIndex(2);
               this.tabSwitch(1);
               return;
             //  this.panSlider2.setIndex(2);
@@ -906,7 +924,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   }
 
 
-  private ageError=false;
+  ageError=false;
 
   submitDobDetails(form: NgForm, swiperInstance ?: Swiper) {
     event.preventDefault();
@@ -1642,8 +1660,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     });
   }
 
-  private inOTP: boolean = false;
-  private backOTP: boolean = false;
+  inOTP: boolean = false;
+  backOTP: boolean = false;
 
   submitOTP() {
     console.log("Towards OTP");
@@ -1789,5 +1807,36 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.panslideSub.unsubscribe();
+  }
+
+  openCamera() {
+    this.takePicture();
+  }
+
+
+  async takePicture() {
+
+    const options: CameraOptions = {
+      quality: 50,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      sourceType: this.camera.PictureSourceType.CAMERA,
+      allowEdit: true,
+      encodingType: this.camera.EncodingType.JPEG,
+      targetWidth: 100,
+      targetHeight: 100,
+      saveToPhotoAlbum: false,
+	    correctOrientation:true
+    }
+    
+    this.camera.getPicture(options).then((imageData) => {
+      // imageData is either a base64 encoded string or a file URI
+      // If it's base64 (DATA_URL):
+      
+      this.panImage = (<any>window).Ionic.WebView.convertFileSrc(imageData);
+
+      
+     }, (err) => {
+      // Handle error
+     });
   }
 }

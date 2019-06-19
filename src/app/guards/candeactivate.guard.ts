@@ -6,7 +6,6 @@ import { LeadsListComponent } from '../applicant-dashboard/leads-list/leads-list
   providedIn: 'root'
 })
 
-@Injectable()
 export class ConfirmDeactivateGuard implements CanDeactivate<LeadsListComponent> {
 
   canDeactivate(

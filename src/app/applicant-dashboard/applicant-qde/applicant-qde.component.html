@@ -158,7 +158,6 @@
                                                                         name="docTypeindividual"
                                                                         nick="pan.docType"
                                                                         #docTypeindividual
-                                                                        (selectionChange)="selectValueChanged($event, docType.hostElement)"
                                                                         [(ngModel)]="selectedDocType"
                                                                         required>
                                                   </kendo-dropdownlist>
@@ -197,11 +196,15 @@
                                     <div class="swiper-slide">
                                         <form class="bs-form" >
                                             <div class="form-wrap">
-                                                <div class="bs-file">
+                                                <div *ngIf="panImage" class="bs-file">
                                                       <!-- <image-upload [url]="imageUrl" [headers]="myHeaders"></image-upload> -->
+                                                      <img [src]="panImage" />
+                                                </div>
+                                                <div *ngIf="!panImage" class="bs-file">
                                                     <input spellcheck="false"
-                                                            type="file" class="form-control" id="file">
+                                                    type="file" class="form-control" id="file">
                                                     <label for="file"><span>click photo of PAN card</span></label>
+                                                    <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera()">open camera</button>
                                                 </div>
                                             </div>
                                             <div class="btn-wrap">
@@ -971,7 +974,7 @@
                                               max=90
                                               #numberOfYearsInCurrentResidence="ngModel"
                                               fieldFill
-                                              (ngModelChange)="valuechange($event, 3)"
+                                              (ngModelChange)="valuechange($event, 3, communicationForm)"
                                               required />
                                       <ng5-slider [(value)]="qde.application.applicants[applicantIndex].communicationAddress.numberOfYearsInCurrentResidence" [options]="options"></ng5-slider>
                                   </div>
@@ -1239,7 +1242,7 @@
                                                           max=90
                                                           class="form-control"
                                                           [(ngModel)]="qde.application.applicants[applicantIndex].familyDetails.numberOfDependents"
-                                                          (ngModelChange)="valuechange($event, 1)" />
+                                                          (ngModelChange)="valuechange($event, 1, familyForm1)" />
                                                   <ng5-slider [(value)]="qde.application.applicants[applicantIndex].familyDetails.numberOfDependents" [options]="familyOptions"></ng5-slider>
                                               </div>
                                           </div>
@@ -1807,7 +1810,6 @@
                                                                 name="puccaHouse"
                                                                 [value]="1"
                                                                 [checked]="qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == true"
-                                                                (click)="selectPuccaHouse(1)"
                                                                 fieldFill
                                                                 id="pucchaHouseIdYes1" />
                                                         <label for="pucchaHouseIdYes1">
@@ -1821,7 +1823,6 @@
                                                                 [value]="2"
                                                                 id="pucchaHouseIdNo1"
                                                                 [checked]="qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == false"
-                                                                (click)="selectPuccaHouse(2)"
                                                                 fieldFill />
                                                         <label for="pucchaHouseIdNo1">
                                                             No
@@ -2553,8 +2554,7 @@
                                                                 type="radio" 
                                                                 name="puccaHouse"
                                                                 [value]="1"
-                                                                [checked]="qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == true"
-                                                                (click)="selectPuccaHouse(1)"
+                                                                [checked]="qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == true"                         
                                                                 fieldFill
                                                                 id="pucchaHouseIdYes2" />
                                                         <label for="pucchaHouseIdYes2">
@@ -2568,7 +2568,6 @@
                                                                 [value]="2"
                                                                 id="pucchaHouseIdNo2"
                                                                 [checked]="qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == false"
-                                                                (click)="selectPuccaHouse(2)"
                                                                 fieldFill />
                                                         <label for="pucchaHouseIdNo2">
                                                             No

@@ -1660,8 +1660,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
     this.panslideSub.unsubscribe();
   }
 
-  private inOTP: boolean = false;
-  private backOTP: boolean = false;
+  inOTP: boolean = false;
+  backOTP: boolean = false;
 
   submitOTP() {
     console.log("Towards OTP")
