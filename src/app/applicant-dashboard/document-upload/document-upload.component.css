@@ -1,10 +1,8 @@
-.bs-modal .modal-body .thumb-icon {
-    width: 80px;
-    height: 800px;
-    position: absolute;
-    top: 1vw;
-    left: 50%;
-    transform: translateX(-50%);
+.bs-modal .modal-body {
+    padding: 0.91vw 0;
+}
+.bs-modal[_ngcontent-c1] .modal-body[_ngcontent-c1] {
+    top: 0vw;
 }
 .center[_ngcontent-c2] {
     font-family: zurich-bold;
@@ -20,7 +18,7 @@
 }
 .center {
     text-align: center;
-    margin-top: 6vw
+    margin-top: 0vw
 }
 .bs-modal .btn-wrap {
     display: block;
@@ -45,4 +43,12 @@
     text-transform: uppercase;
     margin-left: 13vw;
     margin-top: 2vw;
+}
+.bs-modal.active {
+    z-index: 12;
+    opacity: 1;
+    -webkit-transform: scale(1) translateY(-50%);
+    transform: scale(1) translateY(-50%);
+    width: 32vw;
+    height: 30vw;
 }

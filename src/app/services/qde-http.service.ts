@@ -481,7 +481,7 @@ createOrUpdatePersonalDetails(qde) {
       "ocsReferenceNumber": "ocs00000000000000000037",
       "checkEligibility": "yes",
       //"checkEligibility": "no",
-      "eligibilityAmount": "55000",
+      "eligibilityAmount": "50000",
       "emi": "15000",
       "cibilScore": "",
       "cibilFlagCheck": "",
