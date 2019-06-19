@@ -1666,7 +1666,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   }
 
 
-  private inOTP: boolean = false;
+  inOTP: boolean = false;
 
   submitOTP() {
     console.log("Towards OTP");

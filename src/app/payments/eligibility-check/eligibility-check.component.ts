@@ -192,9 +192,9 @@ export class EligibilityCheckComponent implements OnInit {
   }
 
 
-  private emiAmount: number;
-  private eligibleAmount: number;
-  private firstname: number;
+  emiAmount: number;
+  eligibleAmount: number;
+  firstname: number;
 
   submitDocumentUploadForm() {
 
