@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { CommonDataService } from 'src/app/services/common-data.service';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
 import { NgForm } from '@angular/forms';
+import Qde from 'src/app/models/qde.model';
+import { ActivatedRoute, Router } from '@angular/router';
+import { QdeService } from 'src/app/services/qde.service';
 
 @Component({
   selector: 'app-online-summary',
@@ -10,11 +13,21 @@ import { NgForm } from '@angular/forms';
 })
 export class OnlineSummaryComponent implements OnInit {
 
-  constructor(private commonDataService: CommonDataService, private qdeHttp: QdeHttpService) {
+  qde: Qde;
+  applicationId: string;
+  applicationStatus: string = "8";
+  constructor(
+              private route: ActivatedRoute,
+              private router: Router,
+              private qdeHttp: QdeHttpService,
+              private commonDataService: CommonDataService,
+              private qdeService: QdeService
+  ) { 
     this.commonDataService.changeMenuBarShown(false);
-    this.commonDataService.changeViewFormNameVisible(true);
-    this.commonDataService.changeViewFormVisible(false);
-    this.commonDataService.changeLogoutVisible(false);
+
+    this.route.params.subscribe(v => {
+      this.applicationId = v.applicationId;
+    });
   }
 
   ngOnInit() {

@@ -487,7 +487,7 @@
                               [swiper]="rhsConfig">
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide">
-                                        <form class="bs-form" #custPhotoUploadForm="ngForm" (ngSubmit)="submitDocumentUploadForm(custPhotoUploadForm)">
+                                        <form class="bs-form">
                                             <div class="form-wrap">
                                                 <div class="bs-file">
                                                     <input type="file" class="form-control" id="file">
@@ -510,47 +510,6 @@
       </div>
   </div>
 
-  <div class="overlay" [ngClass]="{'active': isEligible}"></div>
-    <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isEligible}">
-        <a class="modal-close"><span class="icon icon-close"></span></a>
-        <div class="modal-body">
-            <h1 class="center">Eligibilty Checked!</h1>
-            <h2 class="center typ2">Your Provisional Eligibility is</h2>
-            <p>
-                    <span class="info">
-                            Loan Amount: <span class="cm-bold">₹{{eligibleAmount}}</span>
-                    </span>
-                    <br>
-                    <span class="info">
-                            
-                            Tenure: <span class="cm-bold">15 years</span>
-                    </span>
-                    <br>
-                    <span class="info">
-                            Rate of Interest: <span class="cm-bold">8.99%</span>
-                    </span>
-                    <br>
-                    <span class="info">
-                            Easy Monthly Installment: <span class="cm-bold">₹{{emiAmount}}</span>
-                    </span>
-                    <br>
-                    <!-- <span class="info">
-                            Sanction Conditions: <span class="cm-bold"> Lorem Ipsum</span>
-                    </span> -->
-            </p>
-            <p class="desc typ2">You have cleared the provisional eligibility check for the loan amount requested. 
-                Kindly note this clearance is based on the information provided and actual sanction amount is subject 
-                to further verification and process.</p>
-        </div>
-    </div>
 
-    <div class="overlay" [ngClass]="{'active': isNotEligible}"></div>
-    <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isNotEligible}">
-        <div class="modal-body">
-            <h1 class="center">Not Eligible!!!</h1>
-            <p class="desc typ2">You have not cleared the provisional eligibility check for the loan amount requested. 
-                Our Agent will contact you very soon.</p>
-        </div>
-    </div>
 </main>
 

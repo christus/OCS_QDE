@@ -1660,8 +1660,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     });
   }
 
-  inOTP: boolean = false;
-  backOTP: boolean = false;
+
+  private inOTP: boolean = false;
 
   submitOTP() {
     console.log("Towards OTP");
@@ -1680,7 +1680,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
   onBackOTP() {
     console.log("Back button pressed")
-    this.backOTP = true;
+    this.inOTP = false; 
   }
 
   validateOTP(form: NgForm) {

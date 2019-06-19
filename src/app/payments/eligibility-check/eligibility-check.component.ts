@@ -74,6 +74,8 @@ export class EligibilityCheckComponent implements OnInit {
   applicantIndividual: boolean = true;
 
   docType: Array<any>;
+  ocsNumber: string;
+  applicationId: string;
 
 
   fragments = ["eligibility1", "eligibility2"];
@@ -84,12 +86,21 @@ export class EligibilityCheckComponent implements OnInit {
     private router: Router,
     private commonDataService: CommonDataService,
     private qdeHttp: QdeHttpService,
-    private qdeService: QdeService
-  ) {
+    private qdeService: QdeService) {
+
     this.commonDataService.changeMenuBarShown(true);
     this.commonDataService.changeViewFormNameVisible(true);
     this.commonDataService.changeViewFormVisible(true);
     this.commonDataService.changeLogoutVisible(true);
+
+      console.log("this.route: ", this.route);
+      this.qdeService.setQde(JSON.parse(this.route.snapshot.data['qde']['ProcessVariables']['response']));
+      this.qdeService.qdeSource.subscribe(value => {
+        this.applicationId = value.application.applicationId;
+        this.ocsNumber = value.application.ocsNumber;
+      });
+      console.log(this.route.snapshot.data);
+      // this.applicationId
   }
 
   ngOnInit() {
@@ -180,13 +191,17 @@ export class EligibilityCheckComponent implements OnInit {
     }
   }
 
-  emiAmount: number;
-  eligibleAmount: number;
+
+  private emiAmount: number;
+  private eligibleAmount: number;
+  private firstname: number;
 
   submitDocumentUploadForm() {
 
-    this.qdeHttp.dummyCIBILAPI().subscribe(res => {
-      console.log("res: ", res['ProcessVariables']['checkEligibility'].toLowerCase);
+    this.qdeHttp.cibilDetails(this.ocsNumber).subscribe(res => {
+      console.log("res: ", res['ProcessVariables'].toLowerCase);
+      console.log(this.firstname)
+        this.firstname = res['ProcessVariables']['firstName'];
         this.emiAmount = parseInt(res['ProcessVariables']['emi']);
         this.eligibleAmount = parseInt(res['ProcessVariables']['eligibilityAmount']);
     });

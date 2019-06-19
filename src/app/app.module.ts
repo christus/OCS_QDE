@@ -178,28 +178,32 @@ const appRoutes: Routes = [
         path: 'proceed-to-review/:applicationId/:applicantId',
         component: ProceedToReviewFormComponent,
         resolve: {
-          listOfValues: ListOfValuesResolverService
+          listOfValues: ListOfValuesResolverService,
+          qde: GetQdeDataResolverService
         }
       },
       {
         path: 'review-application/:applicationId/:applicantId',
         component: ReviewApplicationFormComponent,
         resolve: {
-          listOfValues: ListOfValuesResolverService
+          listOfValues: ListOfValuesResolverService,
+          qde: GetQdeDataResolverService
         }
       },
       {
         path: 'declaration1/:applicationId/:applicantId',
         component: Declaration1Component,
         resolve: {
-          listOfValues: ListOfValuesResolverService
+          listOfValues: ListOfValuesResolverService,
+          qde: GetQdeDataResolverService
         }
       },
       {
         path: 'declaration2/:applicationId/:applicantId',
         component: Declaration2Component,
         resolve: {
-          listOfValues: ListOfValuesResolverService
+          listOfValues: ListOfValuesResolverService,
+          qde: GetQdeDataResolverService
         }
       }
     ]
@@ -210,24 +214,27 @@ const appRoutes: Routes = [
     children: [
       { path: '', redirectTo: "offline-payments", pathMatch: "full" },
       {
-        path: 'offline-payments',
+        path: 'offline-payments/:applicationId',
         component: OfflinePaymentComponent,
         resolve: {
-          listOfValues: ListOfValuesResolverService
+          listOfValues: ListOfValuesResolverService,
+          qde: GetQdeDataResolverService
         }
       },
       {
-        path: 'online-summary',
+        path: 'online-summary/:applicationId',
         component: OnlineSummaryComponent,
         resolve: {
-          listOfValues: ListOfValuesResolverService
+          listOfValues: ListOfValuesResolverService,
+          qde: GetQdeDataResolverService
         }
       },
       {
-        path: 'eligibility-check',
+        path: 'eligibility-check/:applicationId',
         component: EligibilityCheckComponent,
         resolve: {
-          listOfValues: ListOfValuesResolverService
+          listOfValues: ListOfValuesResolverService,
+          qde: GetQdeDataResolverService
         }
       }
     ]
