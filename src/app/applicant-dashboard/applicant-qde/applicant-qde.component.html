@@ -167,10 +167,11 @@
                                                   <input spellcheck="false"
                                                           type="text"
                                                             class="form-control"
-                                                            [(ngModel)]="qde.application.applicants[applicantIndex].pan.docName"
+                                                            [(ngModel)]="qde.application.applicants[applicantIndex].pan.docNumber"
                                                             id="docNumber"
                                                             name="docNumber"
                                                             #panDocNumber="ngModel"
+                                                            pattern="{{regexPatternForDocType[selectedDocType.value - 1]}}"
                                                             maxlength="16"
                                                             fieldFill
                                                             required/>
@@ -753,7 +754,7 @@
                       <div class="lhs">
                           <div class="title-wrap">
                               <h4 class="title">Enter Applicant’s <span class="cm-line-break"></span>address</h4>
-                              <p class="note">Please enter primary address of the main <span class="cm-line-break"></span> applicant as this will be used for all officia <span class="cm-line-break"></span> communications.</p>
+                              <p class="note">Please enter primary address of the main <span class="cm-line-break"></span> applicant as this will be used for all official <span class="cm-line-break"></span> communications.</p>
                           </div>
                       </div>
                       <div class="rhs">
@@ -1481,7 +1482,8 @@
                                               required />
   
                                       <ng5-slider [(value)]="qde.application.applicants[applicantIndex].occupation.numberOfYearsInCurrentCompany"
-                                                  [options]="options">
+                                      (valueChange)="checkOccupationDetailsYears($event)"
+                                      [options]="options" >
                                       </ng5-slider>
   
                                       <!-- <div *ngIf="numberOfYearsInCurrentCompany.touched && numberOfYearsInCurrentCompany.invalid" class="invalid-feedback">
@@ -1502,15 +1504,18 @@
                                               (ngModelChange)="valuechange($event, 3)"
                                               required />
   
-                                      <ng5-slider [(value)]="qde.application.applicants[applicantIndex].occupation.totalWorkExperience" [options]="options"></ng5-slider>
+                                      <ng5-slider [(value)]="qde.application.applicants[applicantIndex].occupation.totalWorkExperience" 
+                                      (valueChange)="checkOccupationDetailsYears($event)"
+                                      [options]="options"></ng5-slider>
   
                                       <!-- <div *ngIf="(totalExperienceYear.touched || totalExperienceYear.dirty) && totalExperienceYear.invalid" class="invalid-feedback">
                                         <div *ngIf="totalExperienceYear.errors?.required">{{errors.occupationDetails.totalExp.required}}</div>
                                       </div> -->
 
-                                      <div *ngIf="expError" class="invalid-feedback">
-                                        <div *ngIf="expError"><br><br>Experience in current employment/business should not be greater than total work experience </div>
-                                      </div>
+                                      <div class="invalid-feedback">
+                                        <div *ngIf="expError == false"></div>
+                                      <div *ngIf="expError == true"><br><br>Experience in current employment/business should not be greater than total work experience </div>
+                                    </div>
                                      
                                      
   
@@ -1519,8 +1524,8 @@
   
                               <div class="btn-wrap">
                                   <button type="submit"
-                                          [ngClass]="{'disabled': !occupationForm.valid}"
-                                          [disabled]="!occupationForm.valid"
+                                          [ngClass]="{'disabled': !occupationForm.valid || expError}"
+                                          [disabled]="(!occupationForm.valid || expError)" 
                                           class="btn btn-primary">
                                       Next
                                   </button>
@@ -1981,13 +1986,13 @@
                                               <input spellcheck="false"
                                                     type="text"
                                                     class="form-control"
-                                                    [(ngModel)]="qde.application.applicants[applicantIndex].pan.docName"
+                                                    [(ngModel)]="qde.application.applicants[applicantIndex].pan.docNumber"
                                                     id="docNumber2"
                                                     name="docNumber"
                                                     #coappdocNumberNonIndividual="ngModel"
                                                     fieldFill
                                                     maxlength="16"
-                                                    pattern="{{regexPattern.docNumber}}"
+                                                    pattern="{{regexPatternForDocType[selectedDocType - 1]}}"
                                                     required />
                                                     <label for="docNumber2">Document Number</label>
                                             <!-- <image-upload [url]="imageUrl" [headers]="myHeaders"></image-upload> -->

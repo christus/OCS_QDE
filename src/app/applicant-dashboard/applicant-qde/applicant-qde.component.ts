@@ -30,6 +30,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
   readonly errors = errors;
 
+  regexPatternForDocType: Array<string> = ['[A-Z]{5}[0-9]{4}[A-Z]{1}','^[a-zA-Z0-9]{0,16}$','^[A-Z0-9]{19}$','[A-Z]{2}[0-9]{13}','[0-9]{12}','^[a-zA-Z0-9]{0,16}$'];
+
   regexPattern = {
     mobileNumber: "^[0-9]*$",
     name: "^[A-Za-z, ]+$",
@@ -271,7 +273,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       this.titles = lov.LOVS.applicant_title; 
       this.maleTitles = lov.LOVS.male_applicant_title;
       this.femaleTitles = lov.LOVS.female_applicant_title;
-      this.docType = lov.LOVS.document_type;
+      // this.docType = lov.LOVS.document_type;
+      // Hardcoded values as per requirement
+      this.docType = [{key: "CKYC Kin", value:"1"},{key: "Passport Number", value:"2"},{key: "Voter Id", value:"3"},{key: "Driving License", value:"4"},{key: "Aadhaar No (Token No)", value:"5"},{key: "NREGA Job Card", value:"6"}]
       this.maritals = lov.LOVS.maritial_status;
       this.relationships = lov.LOVS.relationship;
       this.loanpurposes = lov.LOVS.loan_purpose;
@@ -583,15 +587,15 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     
     console.log(newValue);
     this.value[valueIndex] = newValue;
-    const currentExp = form.value.numberOfYearsInCurrentCompany;
-    const totalExp = form.value.totalExperienceYear;
-    if(currentExp > totalExp) {
-      //form.valid = false;
-      this.expError = true;
-      return;
-    }else{
-      this.expError=false;
-    }
+    // const currentExp = form.value.numberOfYearsInCurrentCompany;
+    // const totalExp = form.value.totalExperienceYear;
+    // if(currentExp > totalExp) {
+    //   //form.valid = false;
+    //   this.expError = true;
+    //   return;
+    // }else{
+    //   this.expError=false;
+    // }
   }
  
   /**
@@ -1269,24 +1273,21 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   //-------------------------------------------------------------
   // Occupation Details
   //-------------------------------------------------------------
-  expError =false;
+
 
   submitOccupationDetails(form: NgForm) {
     if (form && !form.valid) {
       return;
     }
-
-
-
-  const currentExp = form.value.numberOfYearsInCurrentCompany;
-  const totalExp = form.value.totalExperienceYear;
-  if(currentExp > totalExp) {
-    //form.valid = false;
-    this.expError = true;
-    return;
-  }else{
-    this.expError=false;
-  }
+  // const currentExp = form.value.numberOfYearsInCurrentCompany;
+  // const totalExp = form.value.totalExperienceYear;
+  // if(currentExp > totalExp) {
+  //   //form.valid = false;
+  //   this.expError = true;
+  //   return;
+  // }else{
+  //   this.expError=false;
+  // }
 
 
 
@@ -1772,6 +1773,17 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     this.selectedConstitution = this.constitutions[0];
     this.selectedDocType = this.docType[0];
     this.selectedAssesmentMethodology = this.assessmentMethodology[0];
+  }
+
+  expError =false;
+  checkOccupationDetailsYears(event: any) {
+
+    if(this.qde.application.applicants[this.applicantIndex].occupation.numberOfYearsInCurrentCompany <= this.qde.application.applicants[this.applicantIndex].occupation.totalWorkExperience) {
+      // Next button should be enabled
+      this.expError = false;
+    } else {
+      this.expError = true;
+    }
   }
 
   ngOnDestroy() {
