@@ -1579,6 +1579,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     return result;
   }
 
+  parseInteger(value:any):number {
+    return parseInt(value);
+  }
+
+
   changeIsIndividual(value, swiperInstance ?: Swiper) {
     console.log("IS INDIVIDUAL CHANGE: ", value);
     if(value == 1) {
