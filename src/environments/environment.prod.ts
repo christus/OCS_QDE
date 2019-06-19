@@ -27,6 +27,14 @@ export const environment = {
       'workflowId': '4ab7cb9a723511e982270242ac110003',
       'processId': '4b3c780e723511e982270242ac110003'
     },
+    'payGate': {
+      'workflowId': '7b222bb4837d11e982270242ac110002',
+      'processId': '7b35abc6837d11e982270242ac110002'
+    },
+    'cibil': {
+      'workflowId': '43b3853e86c411e982270242ac110002',
+      'processId': '43d2719286c411e982270242ac110002'
+    },
     "birthPlace": {
       'workflowId': '4ab7cb9a723511e982270242ac110003',
       'processId': 'af88d3c2724211e982270242ac110003'
@@ -38,6 +46,22 @@ export const environment = {
     "checkPan": {
       'workflowId': '7b222bb4837d11e982270242ac110002',
       'processId': '7b2ecfd6837d11e982270242ac110002'
+    },
+    "sendOTP": {
+      'workflowId': 'b0b6796a7d5b11e982270242ac110002',
+      'processId': 'b0cf09267d5b11e982270242ac110002'
+    },
+    "validateOTP": {
+      'workflowId': 'b0b6796a7d5b11e982270242ac110002',
+      'processId': '9b47e2808e6811e982270242ac110002'
+    },
+    "veiwFormSms": {
+      'workflowId': '2a2343ba8f5811e982270242ac110002',
+      'processId': '2a3bee068f5811e982270242ac110002'
+    },
+    "status": {
+      'workflowId': '1d41cd0a8c4311e982270242ac110002',
+      'processId': '1d5a18748c4311e982270242ac110002'
     }
   },
   userName: "icici@icici.com",

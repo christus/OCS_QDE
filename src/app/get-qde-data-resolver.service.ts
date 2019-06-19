@@ -8,19 +8,12 @@ import Qde from './models/qde.model';
 @Injectable({
   providedIn: 'root'
 })
-export class GetQdeDataResolverService implements Resolve<Qde> {
+export class GetQdeDataResolverService implements Resolve<Observable<any>> {
 
   constructor(private qdeHttp: QdeHttpService, private qdeService: QdeService) { }
 
-  resolve(route: ActivatedRouteSnapshot): Qde {
-    let qdeData: Qde;
-    this.qdeHttp.getQdeData(route.params['applicationId']).subscribe(response => {
-      console.log("RESPONSE ", response);
-      let result = JSON.parse(response["ProcessVariables"]["response"]);
-      
-      qdeData = result;
-    });
+  resolve(route: ActivatedRouteSnapshot): Observable<any> {
 
-    return qdeData;
+    return this.qdeHttp.getQdeData(route.params['applicationId']);
   }
 }

@@ -47,7 +47,7 @@
                 </div>
                 <div class="btn-wrap">
                     <!-- <button (click)="submitPaymentForm()" class="btn btn-border typ2">PROCEED TO payment</button> -->
-                    <a routerLink="/payments/offline-payments"><button  class="btn btn-border typ2">PROCEED TO payment</button></a>
+                    <a [routerLink]="['/payments/offline-payments', applicationId]"><button  class="btn btn-border typ2">PROCEED TO payment</button></a>
                 </div>
             </div>
         </div>

@@ -14,7 +14,7 @@ export class Declaration2Component implements OnInit {
 
   qde: Qde;
   applicationId: string;
-  status: string = "8";
+  applicationStatus: string = "8";
   constructor(
               private route: ActivatedRoute,
               private router: Router,
@@ -43,6 +43,6 @@ export class Declaration2Component implements OnInit {
   // }
 
   acceptBtn() {
-    this.qdeHttp.setStatusApi(this.applicationId, this.status).subscribe(res => {}, err => {});
+    this.qdeHttp.setStatusApi(this.applicationId, this.applicationStatus).subscribe(res => {}, err => {});
   }
 }

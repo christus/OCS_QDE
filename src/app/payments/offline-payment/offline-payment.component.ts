@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { Options } from "ng5-slider";
 import { NgForm } from "@angular/forms";
 import { CommonDataService } from 'src/app/services/common-data.service';
+import { QdeService } from 'src/app/services/qde.service';
 
 @Component({
   selector: 'app-offline-payment',
@@ -75,6 +76,8 @@ export class OfflinePaymentComponent implements OnInit {
   applicantIndividual: boolean = true;
 
   docType: Array<any>;
+  ocsNumber: string;
+  applicationId: string;
 
 
   fragments = ["offlinepayment1", "offlinepayment2"];
@@ -83,12 +86,21 @@ export class OfflinePaymentComponent implements OnInit {
     private renderer: Renderer2,
     private route: ActivatedRoute,
     private router: Router,
-    private commonDataService: CommonDataService
+    private commonDataService: CommonDataService,
+    private qdeService: QdeService
   ) {
     this.commonDataService.changeMenuBarShown(true);
     this.commonDataService.changeViewFormNameVisible(true);
     this.commonDataService.changeViewFormVisible(true);
     this.commonDataService.changeLogoutVisible(true);
+
+    console.log("this.route: ", this.route);
+    this.qdeService.setQde(JSON.parse(this.route.snapshot.data['qde']['ProcessVariables']['response']));
+    this.qdeService.qdeSource.subscribe(value => {
+      this.applicationId = value.application.applicationId;
+      this.ocsNumber = value.application.ocsNumber;
+    });
+    console.log(this.route.snapshot.data);
   }
 
   ngOnInit() {
