@@ -49,7 +49,8 @@ export class LoginComponent implements OnInit {
     this.qdeService.roleLogin().subscribe(
       res => {
         console.log(res);
-        localStorage.setItem("userId", res["ProcessVariables"]["userId"])
+        localStorage.setItem("userId", res["ProcessVariables"]["userId"]);
+        this.router.navigate(["/leads"]);
       },
       error => {
         console.log(error);
