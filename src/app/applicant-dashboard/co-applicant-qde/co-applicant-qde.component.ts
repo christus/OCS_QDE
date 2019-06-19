@@ -1586,7 +1586,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
         this.panSlider4.setIndex(1);
       } else if(this.panslide == false && this.qde.application.applicants[this.coApplicantIndex].isIndividual == true) {
         this.tabSwitch(1);
-        // this.panSlider2.setIndex(2);
+        this.panSlider2.setIndex(1);
       }
       else if(this.panslide2 == false && this.qde.application.applicants[this.coApplicantIndex].isIndividual == false) {
         this.tabSwitch(11);
