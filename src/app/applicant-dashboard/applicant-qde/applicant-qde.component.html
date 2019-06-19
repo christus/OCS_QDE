@@ -1757,7 +1757,7 @@
                                       <div class="form-wrap">
                                           <div class="form-group inr">
                                                 <input spellcheck="false"
-                                                        type="text" class="form-control"
+                                                type="text" class="form-control"
                                                 id="annualFamilyIncome1"
                                                 [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.annualFamilyIncome"
                                                 #annualFamilyIncome1="ngModel"
@@ -1765,11 +1765,12 @@
                                                 fieldFill
                                                 pattern="{{regexPattern.amount}}"
                                                 required/>
-                                              <label for="annualFamilyIncome1">Annual Family Income</label>
+                                              <label for="annualFamilyIncome1">Annual Family Income <span class="lakhs">(in lakhs)</span></label>
                                               <span class="addon">
                                                   <span class="icon icon-inr"></span>
                                                 </span>
                                                 <span class="in-word"></span>
+                                                
                                               <div *ngIf="annualFamilyIncome1.touched && annualFamilyIncome1.invalid" class="invalid-feedback">
                                                       <!-- <div *ngIf="annualFamilyIncome1.errors?.required">{{errors.incomeDetails.familyIncome.required}}</div> -->
                                                       <div *ngIf="annualFamilyIncome1.errors?.pattern">{{errors.incomeDetails.familyIncome.invalid}}</div>
@@ -1991,8 +1992,7 @@
                                                     name="docNumber"
                                                     #coappdocNumberNonIndividual="ngModel"
                                                     fieldFill
-                                                    maxlength="16"
-                                                    pattern="{{regexPatternForDocType[selectedDocType - 1]}}"
+                                                    pattern="{{regexPatternForDocType[selectedDocType.value - 1]}}"
                                                     required />
                                                     <label for="docNumber2">Document Number</label>
                                             <!-- <image-upload [url]="imageUrl" [headers]="myHeaders"></image-upload> -->
@@ -2511,11 +2511,12 @@
                                                   fieldFill
                                                   pattern="{{regexPattern.amount}}"
                                                   required/>
-                                                <label for="annualFamilyIncome2">Annual Family Income</label>
+                                                <label for="annualFamilyIncome2">Annual Family Income <span class="lakhs">(in lakhs)</span></label>
                                                 <span class="addon">
                                                     <span class="icon icon-inr"></span>
                                                   </span>
                                                   <span class="in-word"></span>
+                                                 
                                                 <div *ngIf="annualFamilyIncome2.touched && annualFamilyIncome2.invalid" class="invalid-feedback">
                                                     <!-- <div *ngIf="annualFamilyIncome2.errors?.required">{{errors.incomeDetails.familyIncome.required}}</div> -->
                                                     <div *ngIf="annualFamilyIncome2.errors?.pattern">{{errors.incomeDetails.familyIncome.invalid}}</div>

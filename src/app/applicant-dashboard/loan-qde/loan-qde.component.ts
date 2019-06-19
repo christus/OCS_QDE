@@ -124,7 +124,7 @@ export class LoanQdeComponent implements OnInit {
     onlyExternal: true,
     autoplay: false,
     speed: 900,
-    effect: "fade",
+    effect: "fade",    
     fadeEffect: {
       crossFade: true
     }

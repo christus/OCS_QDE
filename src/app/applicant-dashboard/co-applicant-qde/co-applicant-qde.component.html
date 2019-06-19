@@ -204,8 +204,7 @@
                                                             id="docNumber"
                                                             name="docNumber"
                                                             #panDocNumber="ngModel"
-                                                            pattern="{{regexPattern.docNumber}}"
-                                                            maxlength="16"
+                                                            pattern="{{regexPatternForDocType[selectedDocType.value - 1]}}"
                                                             fieldFill 
                                                             spellcheck="false"
                                                             required/>
@@ -1780,7 +1779,7 @@
                                                 spellcheck="false"
                                                 pattern="{{regexPattern.amount}}"
                                                 required/>
-                                              <label for="annualFamilyIncome1">Annual Family Income</label>
+                                              <label for="annualFamilyIncome1">Annual Family Income <span class="lakhs">(in lakhs)</span> </label>
                                               <span class="addon">
                                                   <span class="icon icon-inr"></span>
                                                 </span>
@@ -2002,8 +2001,7 @@
                                                     #coappdocNumberNonIndividual="ngModel"
                                                     fieldFill
                                                     spellcheck="false"
-                                                    maxlength="16"
-                                                    pattern="{{regexPattern.docNumber}}"
+                                                    pattern="{{regexPatternForDocType[selectedDocType.value - 1]}}"
                                                     required />
                                                     <label for="docNumber2">Document Number</label>
                                             <!-- <image-upload [url]="imageUrl" [headers]="myHeaders"></image-upload> -->
@@ -2522,7 +2520,7 @@
                                                   spellcheck="false"
                                                   pattern="{{regexPattern.amount}}"
                                                   required/>
-                                                <label for="annualFamilyIncome2">Annual Family Income</label>
+                                                <label for="annualFamilyIncome2">Annual Family Income <span class="lakhs">(in lakhs)</span></label>
                                                 <span class="addon">
                                                     <span class="icon icon-inr"></span>
                                                   </span>

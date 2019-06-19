@@ -32,6 +32,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
 
   readonly errors = errors;
 
+  regexPatternForDocType: Array<string> = ['[A-Z]{5}[0-9]{4}[A-Z]{1}','^[a-zA-Z0-9]{0,16}$','^[A-Z0-9]{19}$','[A-Z]{2}[0-9]{13}','[0-9]{12}','^[a-zA-Z0-9]{0,16}$'];
+
   regexPattern = {
     mobileNumber: "^[0-9]*$",
     name: "^[A-Za-z, ]+$",
@@ -52,8 +54,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
   minValue: number = 1;
   options: Options = {
     floor: 0,
-    ceil: 6,
-    step: 1,
+    ceil: 50,
+    step: 10,
     showTicksValues: false,
     // showSelectionBar: true,
     showTicks: true,
@@ -292,7 +294,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       this.titles = lov.LOVS.applicant_title; 
       this.maleTitles = lov.LOVS.male_applicant_title;
       this.femaleTitles = lov.LOVS.female_applicant_title;
-      this.docType = lov.LOVS.document_type;
+      // this.docType = lov.LOVS.document_type;
+      // Hardcoded values as per requirement
+      this.docType = [{key: "CKYC Kin", value:"1"},{key: "Passport Number", value:"2"},{key: "Voter Id", value:"3"},{key: "Driving License", value:"4"},{key: "Aadhaar No (Token No)", value:"5"},{key: "NREGA Job Card", value:"6"}]
       this.maritals = lov.LOVS.maritial_status;
       this.relationships = lov.LOVS.relationship;
       this.loanpurposes = lov.LOVS.loan_purpose;
