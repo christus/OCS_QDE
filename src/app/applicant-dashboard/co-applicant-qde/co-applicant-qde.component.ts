@@ -32,7 +32,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
 
   readonly errors = errors;
 
-  regexPatternForDocType: Array<string> = ['[A-Z]{5}[0-9]{4}[A-Z]{1}','^[a-zA-Z0-9]{0,16}$','^[A-Z0-9]{19}$','[A-Z]{2}[0-9]{13}','[0-9]{12}','^[a-zA-Z0-9]{0,16}$'];
+  regexPatternForDocType: Array<string> = ['[A-Z]{1}[0-9]{7}','^[A-Z]{2}[0-9]{13}$','^[A-Z]{3}[0-9]{7}$','[2-9]{1}[0-9]{11}','[0-9]{18}','[0-9]{14}','[0-9]{16}'];
+
+  maxlength:Array<string> = ['8','15','10','12','18','14','16'];
 
   regexPattern = {
     mobileNumber: "^[0-9]*$",
@@ -296,7 +298,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       this.femaleTitles = lov.LOVS.female_applicant_title;
       // this.docType = lov.LOVS.document_type;
       // Hardcoded values as per requirement
-      this.docType = [{key: "CKYC Kin", value:"1"},{key: "Passport Number", value:"2"},{key: "Voter Id", value:"3"},{key: "Driving License", value:"4"},{key: "Aadhaar No (Token No)", value:"5"},{key: "NREGA Job Card", value:"6"}]
+      this.docType = [{key: "Passport", value:"1"},{key: "Driving License", value:"2"},{key: "Voter's Identity Card", value:"3"},{key: "Aadhaar Card", value:"4"},{key: "NREGA Job Card", value:"5"},{key: "CKYC KIN", value:"6"},{key: "Aadhaar Token", value:"7"}]
       this.maritals = lov.LOVS.maritial_status;
       this.relationships = lov.LOVS.relationship;
       this.loanpurposes = lov.LOVS.loan_purpose;
@@ -476,14 +478,14 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
     this.qde.application.applicants[this.coApplicantIndex].pan.docType = form.value.docType.value;
     this.qde.application.applicants[this.coApplicantIndex].pan.docNumber = form.value.docNumber;
 
-    this.qdeHttp.checkPanValid(this.qdeService.getFilteredJson({actualPanNumber: form.value.pan})).subscribe((response) => {
+    // this.qdeHttp.checkPanValid(this.qdeService.getFilteredJson({actualPanNumber: form.value.pan})).subscribe((response) => {
 
-      response["ProcessVariables"]["status"] = true;
+    //   response["ProcessVariables"]["status"] = true;
 
-      if(response["ProcessVariables"]["status"]) { // Boolean to check from nsdl website whether pan is valid or not 
+    //   if(response["ProcessVariables"]["status"]) { // Boolean to check from nsdl website whether pan is valid or not 
 
-        this.qde.application.applicants[this.coApplicantIndex].pan.isValid = true;
-        this.qde.application.applicants[this.coApplicantIndex].pan.errorMessage = "Error in pan Details";
+    //     this.qde.application.applicants[this.coApplicantIndex].pan.isValid = true;
+    //     this.qde.application.applicants[this.coApplicantIndex].pan.errorMessage = "Error in pan Details";
 
         this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
@@ -524,11 +526,11 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
           // alert("error"+error);
           // Throw Request Failure Error
         });
-    } else {
-        this.qde.application.applicants[this.coApplicantIndex].pan.isValid = false;
-        this.qde.application.applicants[this.coApplicantIndex].pan.errorMessage = "Error in pan Details";
-      }
-    });
+    // } else {
+    //     this.qde.application.applicants[this.coApplicantIndex].pan.isValid = false;
+    //     this.qde.application.applicants[this.coApplicantIndex].pan.errorMessage = "Error in pan Details";
+    //   }
+    // });
   }
 
 
@@ -547,14 +549,14 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
     this.qde.application.applicants[this.coApplicantIndex].pan.docType = form.value.docType.value;
     this.qde.application.applicants[this.coApplicantIndex].pan.docNumber = form.value.docNumber;
 
-    this.qdeHttp.checkPanValid(this.qdeService.getFilteredJson({actualPanNumber: form.value.pan})).subscribe((response) => {
+    // this.qdeHttp.checkPanValid(this.qdeService.getFilteredJson({actualPanNumber: form.value.pan})).subscribe((response) => {
 
-      response["ProcessVariables"]["status"] = true;
+    //   response["ProcessVariables"]["status"] = true;
 
-      if(response["ProcessVariables"]["status"]) { // Boolean to check from nsdl website whether pan is valid or not */
+    //   if(response["ProcessVariables"]["status"]) { // Boolean to check from nsdl website whether pan is valid or not */
 
-          this.qde.application.applicants[this.coApplicantIndex].pan.isValid = true;
-          this.qde.application.applicants[this.coApplicantIndex].pan.errorMessage = "";
+    //       this.qde.application.applicants[this.coApplicantIndex].pan.isValid = true;
+    //       this.qde.application.applicants[this.coApplicantIndex].pan.errorMessage = "";
 
           this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
             // If successfull
@@ -588,11 +590,11 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
             // alert("error"+error);
             // Throw Request Failure Error
           }); 
-        } else {
-          this.qde.application.applicants[this.coApplicantIndex].pan.isValid = false;
-          this.qde.application.applicants[this.coApplicantIndex].pan.errorMessage = "Error in pan Details";
-        }
-    });  
+    //     } else {
+    //       this.qde.application.applicants[this.coApplicantIndex].pan.isValid = false;
+    //       this.qde.application.applicants[this.coApplicantIndex].pan.errorMessage = "Error in pan Details";
+    //     }
+    // });  
   }
 
   
@@ -1331,7 +1333,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
     let result = JSON.parse(response);
     return result;
   }
-
+  
+  parseInteger(value:any):number {
+    return parseInt(value);
+  }
   changeIsIndividual(value, swiperInstance ?: Swiper) {
     if(value == 1) {
       console.log("VALUE1: ", value);

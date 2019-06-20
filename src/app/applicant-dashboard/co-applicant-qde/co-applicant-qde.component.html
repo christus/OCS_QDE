@@ -204,7 +204,8 @@
                                                             id="docNumber"
                                                             name="docNumber"
                                                             #panDocNumber="ngModel"
-                                                            pattern="{{regexPatternForDocType[selectedDocType.value - 1]}}"
+                                                            pattern="{{regexPatternForDocType[parseInteger(selectedDocType.value) - 1]}}"
+                                                            maxlength="{{maxlength[selectedDocType.value - 1]}}"
                                                             fieldFill 
                                                             spellcheck="false"
                                                             required/>
@@ -2002,7 +2003,8 @@
                                                     #coappdocNumberNonIndividual="ngModel"
                                                     fieldFill
                                                     spellcheck="false"
-                                                    pattern="{{regexPatternForDocType[selectedDocType.value - 1]}}"
+                                                    pattern="{{regexPatternForDocType[parseInteger(selectedDocType.value) - 1]}}"
+                                                    maxlength="{{maxlength[selectedDocType.value - 1]}}"
                                                     required />
                                                     <label for="docNumber2">Document Number</label>
                                             <!-- <image-upload [url]="imageUrl" [headers]="myHeaders"></image-upload> -->

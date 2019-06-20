@@ -80,7 +80,7 @@
                             <table *ngFor="let detail of userDetails">
                                 <tr>
                                     <td colspan="3">                                               
-                                        <li><span>Lead ID / OCS Number: </span><b> {{detail.ocsNumber}}</b></li>
+                                        <li><span>Lead ID / OCS Number: </span><b> {{detail.ocsNumber | uppercase}}</b></li>
                                     </td>
                                 </tr> 
                                 <tr>
