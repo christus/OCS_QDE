@@ -82,6 +82,7 @@ export class DocumentUploadComponent implements OnInit {
   applicantIndividual: boolean = true;
 
   applicationId: number;
+  applicationIdAsString: string;
   mainApplicantId: string;
   currentApplicantId: string;
   isMainApplicant: boolean;
@@ -115,7 +116,14 @@ export class DocumentUploadComponent implements OnInit {
     private router: Router,
     private qdeHttp: QdeHttpService,
     private qdeService: QdeService
-  ) {}
+  ) {
+
+      this.isMainApplicant = false;
+      if (this.route.url["value"][1].path === "applicant") {
+        this.isMainApplicant = true;
+      }
+      this.tabSwitch(1);
+  }
 
   ngOnInit() {
     // this.renderer.addClass(this.select2.selector.nativeElement, 'js-select');
@@ -165,10 +173,14 @@ export class DocumentUploadComponent implements OnInit {
     this.route.params.subscribe(params => {
       // Make an http request to get the required qde data and set using setQde
       this.applicationId = params.applicationId;
+      this.currentApplicantId = params.applicantId || null;
       if (this.applicationId) {
         this.qdeHttp.getQdeData(this.applicationId).subscribe(response => {
           this.qde = JSON.parse(response["ProcessVariables"]["response"]);
-
+          this.applicationIdAsString = this.applicationId.toString();
+          if (this.applicationId) {
+            this.applicationId = parseInt(this.qde.application.applicationId);
+          }
           const applicants = this.qde.application.applicants;
           for (const applicant of applicants) {
             if (applicant["isMainApplicant"]) {
@@ -269,7 +281,6 @@ export class DocumentUploadComponent implements OnInit {
     this.isAlternateResidenceNumber = !this.isAlternateResidenceNumber;
   }
 
-  //fileToUpload: File = null;
 
   handleIdProof(files: FileList) {
     // if (form && !form.valid) {
@@ -290,7 +301,7 @@ export class DocumentUploadComponent implements OnInit {
       const documentCategory = this.findDocumentCategory("ID Proof");
 
       const documentInfo = {
-        applicationId: this.applicationId,
+        applicationId: this.applicationIdAsString,
         applicantId: applicantId,
         documentImageId: documentId,
         documentType: this.selectedIdProof,
@@ -319,7 +330,7 @@ export class DocumentUploadComponent implements OnInit {
       const documentCategory = this.findDocumentCategory("Address Proof");
 
       const documentInfo = {
-        applicationId: this.applicationId,
+        applicationId: this.applicationIdAsString,
         applicantId: applicantId,
         documentImageId: documentId,
         documentType: this.selectedAddressProof,
@@ -349,7 +360,7 @@ export class DocumentUploadComponent implements OnInit {
       const documentCategory = this.findDocumentCategory("Income Document");
 
       const documentInfo = {
-        applicationId: this.applicationId,
+        applicationId: this.applicationIdAsString,
         applicantId: applicantId,
         documentImageId: documentId,
         documentType: this.selectedIncomeProof,
@@ -379,7 +390,7 @@ export class DocumentUploadComponent implements OnInit {
       const documentCategory = this.findDocumentCategory("Banking");
 
       const documentInfo = {
-        applicationId: this.applicationId,
+        applicationId: this.applicationIdAsString,
         applicantId: applicantId,
         documentImageId: documentId,
         documentType: this.selectedBankProof,
@@ -409,7 +420,7 @@ export class DocumentUploadComponent implements OnInit {
       const documentCategory = this.findDocumentCategory("Collateral");
 
       const documentInfo = {
-        applicationId: this.applicationId,
+        applicationId: this.applicationIdAsString,
         applicantId: applicantId,
         documentImageId: documentId,
         documentType: this.selectedCollateralProof,
@@ -439,7 +450,7 @@ export class DocumentUploadComponent implements OnInit {
       const documentCategory = this.findDocumentCategory("Photo");
 
       const documentInfo = {
-        applicationId: this.applicationId,
+        applicationId: this.applicationIdAsString,
         applicantId: applicantId,
         documentImageId: documentId,
         documentType: "",
@@ -499,12 +510,13 @@ export class DocumentUploadComponent implements OnInit {
     return documentCategory;
   }
 
-  onSelectApplicant(tabIndex?: number, applicantId?: string, isMainApplicant?: boolean) {
-
-    this.currentApplicantId = applicantId;
+  onSelectApplicant(tabIndex?: number, isMainApplicant?: boolean) {
     this.isMainApplicant = isMainApplicant;
-
     this.tabSwitch(tabIndex);
+  }
+
+  ngOnDestroy(): void {
+    
   }
 
   temp;

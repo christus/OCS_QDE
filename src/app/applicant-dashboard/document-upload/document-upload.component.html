@@ -56,16 +56,14 @@
                                         <div class="swiper-slide">
                                             <form class="bs-form">
                                                 <div class="form-wrap">
-                                                    <div class="bs-radio">
-                                                        <input  type="radio"
-                                                                [value]="true"
-                                                                (click)="onSelectApplicant(1, mainApplicantId, true)"/>
+                                                    <div class="bs-radio" >
+                                                        <input  type="radio" [value]="true" [routerLink]="['/document-uploads', applicationId, 'applicant', currentApplicantId]" />
                                                         <label for="individual"><span>Applicant</span></label>
                                                     </div>
 
                                                    <!--  <div class="form-wrap" *ngIf="coApplicants.length > 0"> -->
                                                     <div class="bs-radio typ-doc" *ngFor="let coApp of coApplicants; let i=index;">
-                                                        <input type="radio" (click)="onSelectApplicant(1, coApp.applicantId, false)" name="doc-upload"/>
+                                                        <input type="radio" [routerLink]="['/document-uploads', applicationId, 'co-applicant', coApp.applicantId]" name="doc-upload"/>
                                                         <label for="applicant-radio">
                                                             <span class="desc-text">{{i+1}} <span>Co-Applicant</span></span>
                                                             <!-- <span class="icon icon-close"></span> -->

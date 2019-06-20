@@ -156,11 +156,23 @@ const appRoutes: Routes = [
     }
   },
   {
-    path: "document-uploads/:applicationId",
-    component: DocumentUploadComponent,
-    resolve: {
-      listOfValues: ListOfValuesResolverService
-    }
+    path: "document-uploads",
+    children: [
+      {
+        path: ":applicationId/applicant/:applicantId",
+        component: DocumentUploadComponent,
+        resolve: {
+          listOfValues: ListOfValuesResolverService
+        }
+      },
+      {
+        path: ":applicationId/co-applicant/:applicantId",
+        component: DocumentUploadComponent,
+        resolve: {
+          listOfValues: ListOfValuesResolverService
+        }
+      }
+    ]
   },
   {
     path: "view-form/:applicationId",
@@ -281,7 +293,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     PaymentsComponent,
     OfflinePaymentComponent,
     OnlineSummaryComponent,
-    EligibilityCheckComponent,
+    EligibilityCheckComponent
   ],
   imports: [
     BrowserModule,

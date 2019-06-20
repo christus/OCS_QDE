@@ -34,8 +34,8 @@
                 <a [routerLink]="['/references', applicationId]" *ngIf="applicationId != null">References</a>
             </li>
             <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                <a *ngIf="applicationId == null" routerLink="/document-uploads">Document Uploads</a>
-                <a [routerLink]="['/document-uploads', applicationId]" *ngIf="applicationId != null">Document Uploads</a>
+                <a *ngIf="applicationId == null">Document Uploads</a>
+                <a [routerLink]="['/document-uploads', applicationId, 'applicant', applicantId]" *ngIf="applicationId != null  && applicantId != null">Document Uploads</a>
             </li>
             <li routerLinkActive="active">
                 <a *ngIf="applicationId == null" routerLink="/payments/offline-payments">Payments</a>

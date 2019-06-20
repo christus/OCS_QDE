@@ -17,7 +17,8 @@ export class MenubarHeaderComponent implements OnInit {
   isViewFormVisible: boolean;
   isLogoutVisible: boolean;
   applicationId: string;
-  coApplicantIndex: number; 
+  coApplicantIndex: number;
+  applicantId: string;
   // isMenuBarShown: boolean;
   isViewFormNameShown: boolean;
   // isViewFormVisible: boolean;
@@ -64,6 +65,16 @@ export class MenubarHeaderComponent implements OnInit {
  
     this.qdeService.qdeSource.subscribe(v => {
       this.qde = v;
+
+      // Find an applicant
+      const applicants = this.qde.application.applicants;
+      for (const applicant of applicants) {
+        if (applicant["isMainApplicant"]) {
+          this.applicantId = applicant["applicantId"];
+          break;
+        }
+      }
+
       // console.log("this.applicantName", this.qde.application.applicants[0].personalDetails.firstName);
       
       let index = v.application.applicants.findIndex(val => val.isMainApplicant == true);
