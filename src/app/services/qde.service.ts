@@ -232,6 +232,7 @@ export class QdeService {
 
   qdeSource$: BehaviorSubject<Qde>;
   public qdeSource: Observable<Qde>;
+  setStatusApi: any;
 
   constructor() {
     // Initialize Qde

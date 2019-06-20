@@ -17,7 +17,7 @@ import { ItemsList } from '@ng-select/ng-select/ng-select/items-list';
 import { findLocaleData } from '@angular/common/src/i18n/locale_data_api';
 import { Subscription } from 'rxjs';
 import { errors } from '../../services/errors';
-
+import { environment } from 'src/environments/environment.prod';
 interface Item {
   key: string,
   value: number | string
@@ -501,8 +501,17 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
           if((result["application"]["applicants"]).length > 0) {
             // isApplicantPresent = applicants[this.applicantIndex].hasOwnProperty('applicantId');
             // this.qde.application.applicants[this.coApplicantIndex].applicantId =  applicants[this.coApplicantIndex]["applicantId"];
-            this.cds.changePanSlide(true);
-            this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant/'+this.coApplicantIndex]);
+            // this.cds.changePanSlide(true);
+            // this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant/'+this.coApplicantIndex]);
+
+            let applicationId = result['application']['applicationId'];
+            this.qdeHttp.setStatusApi( applicationId, environment.status.QDECREATED).subscribe((response) => {
+              if(response["ProcessVariables"]["status"] == true) { 
+                this.cds.changePanSlide(true);
+                this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant/'+this.coApplicantIndex]);
+              }
+            });
+
           } else {
             // this.cds.changePanSlide(true);
             this.tabSwitch(2);
@@ -559,8 +568,14 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
               if((result["application"]["applicants"]).length > 0) {
                 // isApplicantPresent = applicants[this.applicantIndex].hasOwnProperty('applicantId');
                 // this.qde.application.applicants[this.coApplicantIndex].applicantId =  applicants[this.coApplicantIndex]["applicantId"];
-                this.cds.changePanSlide2(true);
-                this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant/'+this.coApplicantIndex]);
+                let applicationId = result['application']['applicationId'];
+                this.qdeHttp.setStatusApi( applicationId, environment.status.QDECREATED).subscribe((response) => {
+                  if(response["ProcessVariables"]["status"] == true) { 
+                    this.cds.changePanSlide2(true);
+                    this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant/'+this.coApplicantIndex]);
+                  }
+                });
+
               }else {
                 // this.cds.changePanSlide2(true);
                 this.tabSwitch(12);

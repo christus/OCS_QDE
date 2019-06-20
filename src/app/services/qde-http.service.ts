@@ -604,8 +604,8 @@ createOrUpdatePersonalDetails(qde) {
     const requestEntity: RequestEntity = {
       processId: processId,
       ProcessVariables: {
-        status: status,
-        applicationId: applicationId
+        applicationStatus: status,
+        applicationId: "" + applicationId
       },
       workflowId: workflowId,
       projectId: projectId
@@ -616,7 +616,7 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     );
 
-    let uri = '/appiyo/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    let uri = environment.host + '/appiyo/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
     return this.http.put(uri, body.toString());
   }
 }

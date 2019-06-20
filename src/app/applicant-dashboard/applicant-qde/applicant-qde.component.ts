@@ -15,6 +15,7 @@ import { CommonDataService } from '../../services/common-data.service';
 import { Subscription } from 'rxjs';
 import { errors } from '../../services/errors';
 import { MenubarHeaderComponent } from '../../menubar-header/menubar-header.component';
+import { environment } from 'src/environments/environment.prod';
 
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { File } from '@ionic-native/file/ngx';
@@ -732,8 +733,14 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
             if((result["application"]["applicants"]).length > 0) {
               // isApplicantPresent = applicants[this.applicantIndex].hasOwnProperty('applicantId');
               // this.qde.application.applicants[this.coApplicantIndex].applicantId =  applicants[this.coApplicantIndex]["applicantId"];
-              this.cds.changePanSlide(true);
-              this.router.navigate(['/applicant/'+this.qde.application.applicationId]);
+              let applicationId = result['application']['applicationId'];
+              this.qdeHttp.setStatusApi( applicationId, environment.status.QDECREATED).subscribe((response) => {
+                if(response["ProcessVariables"]["status"] == true) { 
+                  this.cds.changePanSlide(true);
+                  this.router.navigate(['/applicant/'+this.qde.application.applicationId]);
+                }
+              });
+
             }else {
               this.cds.changePanSlide(true);
               this.panSlider2.setIndex(2);
@@ -742,6 +749,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
             //  this.panSlider2.setIndex(2);
             //   return;
             }
+
+
           } else {
             console.log('pan error');
             // Throw Invalid Pan Error
@@ -799,8 +808,14 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
           if((result["application"]["applicants"]).length > 0) {
             // isApplicantPresent = applicants[this.applicantIndex].hasOwnProperty('applicantId');
             // this.qde.application.applicants[this.coApplicantIndex].applicantId =  applicants[this.coApplicantIndex]["applicantId"];
-            this.cds.changePanSlide2(true);
-            this.router.navigate(['/applicant/'+this.qde.application.applicationId]);
+            let applicationId = result['application']['applicationId'];
+            this.qdeHttp.setStatusApi( applicationId, environment.status.QDECREATED).subscribe((response) => {
+              if(response["ProcessVariables"]["status"] == true) { 
+                this.cds.changePanSlide2(true);
+                this.router.navigate(['/applicant/'+this.qde.application.applicationId]);
+              }
+            });
+
           }else {
             this.tabSwitch(11);
             return;

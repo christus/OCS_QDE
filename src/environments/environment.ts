@@ -4,6 +4,9 @@
 
 export const environment = {
   production: false,
+  status: {
+    QDECREATED: "1"
+  },
   projectId: '3209f7ea7ba811e982270242ac110002',
  //projectId: 'ff8e364e6fce11e98754782bcb8f3845',
   api: {

@@ -2,6 +2,9 @@ export const environment = {
   production: true,
   projectId: '3209f7ea7ba811e982270242ac110002',
  //projectId: 'ff8e364e6fce11e98754782bcb8f3845',
+  status: {
+    QDECREATED: "1"
+  },
   api: {
     'dashboard': {
       'workflowId': '050f5c82789a11e982270242ac110002',
