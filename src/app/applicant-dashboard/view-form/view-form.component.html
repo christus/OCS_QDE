@@ -33,6 +33,10 @@
 
                     <!-- *ngIf="qde.application.applicants[applicantIndex].isIndividual == true" -->
 
+                    <div class="btn-wrap edit-btn-wrap">
+                        <button [routerLink]="['/applicant', applicationId]" class="btn btn-primary">Edit</button>
+                    </div>
+
                     <form   #applicantIndividualForm="ngForm">
                         <div class="bs-card" [ngClass]="{'incomplete': isIncomplete}">
                             <h3 class="card-title">PAN details</h3>
@@ -1183,9 +1187,9 @@
               <div class="tab-content" [ngClass]="{'active': (activeTab == 1)}">
                   <h2 class="title">Enter co-applicant details</h2>
 
-                    <app-view-form-co-applicant
+                    <!-- <app-view-form-co-applicant
                                                 [isIncomplete]="isIncomplete">
-                    </app-view-form-co-applicant>
+                    </app-view-form-co-applicant> -->
 
                   <div class="btn-wrap">
                       <button class="btn btn-primary">Submit</button>

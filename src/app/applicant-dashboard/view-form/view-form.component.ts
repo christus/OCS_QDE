@@ -161,7 +161,10 @@ export class ViewFormComponent implements OnInit {
       this.qde = val;
 
       console.log('QDE: ', this.qde);
+      
       this.commonDataService.changeApplicationId(this.qde.application.applicationId);
+
+      this.applicationId = this.qde.application.applicationId;
 
       this.applicantIndex = this.qde.application.applicants.find(val => val.isMainApplicant==true) != undefined ? this.qde.application.applicants.findIndex(val => val.isMainApplicant == true): 0;
       console.log(this.applicantIndex);

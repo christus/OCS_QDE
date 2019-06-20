@@ -26,3 +26,11 @@
 .center {
     text-align: center;
 }
+
+.edit-btn-wrap {
+    position: fixed;
+    top: 4vw;
+    right: 4vw;
+    text-align: right;
+    z-index: 1;
+}
