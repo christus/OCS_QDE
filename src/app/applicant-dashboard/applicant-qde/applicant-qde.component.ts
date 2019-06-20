@@ -15,11 +15,14 @@ import { CommonDataService } from '../../services/common-data.service';
 import { Subscription } from 'rxjs';
 import { errors } from '../../services/errors';
 import { MenubarHeaderComponent } from '../../menubar-header/menubar-header.component';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { DeviceDetectorService } from 'ngx-device-detector';
+
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+
 
 
 
@@ -35,6 +38,9 @@ interface Item {
   styleUrls: ['./applicant-qde.component.css']
 })
 export class ApplicantQdeComponent implements OnInit, OnDestroy {
+
+  isMobile:any;
+
 
   readonly errors = errors;
 
@@ -225,9 +231,13 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
               private cds:CommonDataService,
               private camera: Camera,
               private file: File,
-              private deviceService: DeviceDetectorService) {
+              private deviceService: DeviceDetectorService,
+              private transfer: FileTransfer, 
+              ) {
 
-    const isMobile = this.deviceService.isMobile();
+    this.isMobile = this.deviceService.isMobile() ;
+
+    console.log("isMobile", this.isMobile);
             
     this.panslideSub = this.cds.panslide.subscribe(val => {
       this.panslide = val;
@@ -1841,7 +1851,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       destinationType: this.camera.DestinationType.FILE_URI,
       sourceType: this.camera.PictureSourceType.CAMERA,
       allowEdit: true,
-      encodingType: this.camera.EncodingType.JPEG,
+      encodingType: this.camera.EncodingType.PNG,
       targetWidth: 100,
       targetHeight: 100,
       saveToPhotoAlbum: false,
@@ -1851,12 +1861,40 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     this.camera.getPicture(options).then((imageData) => {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64 (DATA_URL):
-      
+      console.log("imageData", imageData)
       this.panImage = (<any>window).Ionic.WebView.convertFileSrc(imageData);
 
-      
+      this.uploadFile(imageData);
+
      }, (err) => {
       // Handle error
      });
+  }
+
+  uploadFile(imageURI) {
+    
+    const fileTransfer: FileTransferObject = this.transfer.create();
+
+    console.log("fileTransfer", fileTransfer);
+  
+    let options: FileUploadOptions = {
+      fileKey: 'file',
+      fileName: 'ionicfile'+new Date().getTime() + ".jpg",
+      chunkedMode: false,
+      headers: {
+        "X-Requested-With":"XMLHttpRequest",
+        'authentication-token':
+        localStorage.getItem('token') ? localStorage.getItem('token') : ''
+      }
+    }
+
+    console.log("FileUploadOptions", fileTransfer);
+  
+    fileTransfer.upload(imageURI, encodeURI(environment.host + environment.appiyoDrive) , options)
+      .then((data) => {
+      console.log(" Uploaded Successfully", data);
+    }, (err) => {
+      console.log(err);
+    });
   }
 }

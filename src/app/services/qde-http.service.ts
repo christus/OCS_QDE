@@ -7,6 +7,9 @@ import { of } from 'rxjs';
 
 import {CommonDataService} from 'src/app/services/common-data.service';
 
+
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -754,6 +757,20 @@ createOrUpdatePersonalDetails(qde) {
     let uri = environment.host + '/appiyo/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
     return this.http.put(uri, body.toString());
   }
+
+
+  uploadImage(formData) {
+    let uri = environment.host + environment.appiyoDrive;
+
+    let headers = {
+      headers: new HttpHeaders({})
+    };
+
+    return this.http.post(uri, formData, headers);
+  }
+
+
+
 }
 
 

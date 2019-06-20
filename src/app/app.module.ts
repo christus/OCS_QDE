@@ -64,8 +64,7 @@ import { BirthPlaceResolverService } from './services/birth-place-resolver.servi
 import { Camera } from '@ionic-native/camera/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { DeviceDetectorModule } from 'ngx-device-detector';
-
-
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 
 
 
@@ -322,7 +321,9 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
       multi: true
     },
     Camera,
-    File
+    File,
+    FileTransfer,
+    FileTransferObject
   ],
   bootstrap: [AppComponent]
 })
