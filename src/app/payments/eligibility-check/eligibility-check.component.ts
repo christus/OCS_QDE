@@ -76,6 +76,8 @@ export class EligibilityCheckComponent implements OnInit {
   docType: Array<any>;
   ocsNumber: string;
   applicationId: string;
+  applicationStatusYes: string = "25";
+  applicationStatusNo: string = "30";
 
 
   fragments = ["eligibility1", "eligibility2"];
@@ -196,7 +198,7 @@ export class EligibilityCheckComponent implements OnInit {
   eligibleAmount: number;
   firstname: number;
 
-  submitDocumentUploadForm() {
+  submitEligibility() {
 
     this.qdeHttp.cibilDetails(this.ocsNumber).subscribe(res => {
       console.log("res: ", res['ProcessVariables'].toLowerCase);
@@ -205,5 +207,13 @@ export class EligibilityCheckComponent implements OnInit {
         this.emiAmount = parseInt(res['ProcessVariables']['emi']);
         this.eligibleAmount = parseInt(res['ProcessVariables']['eligibilityAmount']);
     });
+  }
+
+  statusYes(){
+    this.qdeHttp.setStatusApi(this.applicationId, this.applicationStatusYes).subscribe(res => {}, err => {});
+  }
+
+  statusNo(){
+    this.qdeHttp.setStatusApi(this.applicationId, this.applicationStatusNo).subscribe(res => {}, err => {});
   }
 }

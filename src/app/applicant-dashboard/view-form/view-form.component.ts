@@ -597,4 +597,9 @@ export class ViewFormComponent implements OnInit {
       this.qdeHttp.viewFormSmsApi(this.applicationId).subscribe(res => {}, err => {});
 
   }
+  applicationStatus: string = "10";
+
+  qdeSubmit(){
+    this.qdeHttp.setStatusApi(this.applicationId, this.applicationStatus).subscribe(res => {}, err => {}); 
+  }
 }

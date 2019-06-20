@@ -462,6 +462,9 @@ export class ReferencesQdeComponent implements OnInit {
     console.log("submitted");
   }
 
+  applicationId: string;
+  applicationStatus: string = "10";
+
   submitReference2Detail(form: NgForm, swiperInstance?: Swiper) {
     if (form && !form.valid) {
       return;
@@ -502,6 +505,7 @@ export class ReferencesQdeComponent implements OnInit {
       );
 
     console.log("submitted");
+    //this.qdeHttp.setStatusApi(this.applicationId, this.applicationStatus).subscribe(res => {}, err => {});
   }
 
   temp;

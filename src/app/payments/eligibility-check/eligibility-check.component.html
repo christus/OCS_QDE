@@ -17,7 +17,7 @@
                                           <div class="title-wrap">
                                                 <img class="thumb" src="/assets/images/thumb.png" alt="logo">
                                             <h4 class="title">Payment<span class="cm-line-break">Successful!</span></h4>
-                                            <p class="note">Please choose eligibility check Process</p>
+                                            <p class="note">Click Proceed button to check your Eligibility</p>
                                           </div>
                                       </div>
                                     </div>
@@ -34,21 +34,21 @@
                                               <form class="bs-form">
                                                   <div class="form-wrap">
                                                       <div class="bs-radio">
-                                                        <input type="radio" name="payment-radio" id="online" (change)="tabSwitch(1)" (click)="submitDocumentUploadForm()">
-                                                        <label for="online">
+                                                        <input type="radio" name="payment-radio" id="proceed" (change)="tabSwitch(1)" (click)="submitEligibility()">
+                                                        <label for="proceed">
                                                             <div class="inner-sect">
-                                                                    <div><span>Accept</span></div>
+                                                                    <div><span>Proceed</span></div>
                                                                 </div>
                                                         </label>
                                                       </div>
-                                                      <div class="bs-radio">
+                                                      <!-- <div class="bs-radio">
                                                         <input type="radio" name="payment-radio" id="offline">
                                                         <label for="offline">
                                                             <div class="inner-sect">
                                                                     <div><span>Reject</span></div>
                                                             </div>
                                                         </label>
-                                                      </div>
+                                                      </div> -->
                                                   </div>
                                               </form>
                                           </div>
@@ -70,9 +70,9 @@
                                   <div class="swiper-wrapper">
                                       <div class="swiper-slide">
                                           <div class="title-wrap">
-                                                <img class="thumb" src="/assets/images/thumb.png" alt="logo">
-                                                <h4 class="title">Payment<span class="cm-line-break">Successful!</span></h4>
-                                                <p class="note">Your Eligibility is:</p>
+                                                <!-- <img class="thumb" src="/assets/images/thumb.png" alt="logo"> -->
+                                                <h4 class="title">Your<span class="cm-line-break">Eligibility is:</span></h4>
+                                                <p class="note">Click <b>Yes</b> or <b>No</b> to accept or reject your eligibilty:</p>
                                           </div>
                                       </div>
                                       <!-- <div class="swiper-slide">
@@ -93,11 +93,11 @@
                                       <div class="swiper-slide">
                                         <form class="bs-form" id="spouse-form">
                                           <div class="form-wrap">
-                                                <p class="para">
+                                                <!-- <p class="para">
                                                         <span class="cm-bold">{{firstname}}</span> is eligible for a loan with
                                                         <span class="cm-bold">ICICI HOME FINANCE!</span>
 
-                                                    </p>
+                                                    </p> -->
                                                     <p class="para">
                                                         The customer has cleared the provisional eligibility check for the loan amount requested.
                                                     </p>
@@ -118,17 +118,18 @@
                                                         </div>
                                                     </div>
                                           </div>
-                                    
+                                          <div class="rhs eligibility-check">
+                                                <div class="btn btn-default yes" (click)="statusYes()">YES</div>
+                                                <div class="btn btn-default no" (click)="statusNo()">NO</div>
+                                         </div>
                                       </form>
+                                
                                       </div>                              
                                   </div>
                               </div>
                           </div>
-                          <!-- <div class="rhs eligibility-check">
-                    
-                                <div class="btn btn-default yes">YES</div>
-                                <div class="btn btn-default no">NO</div>
-                        </div> -->
+                          <br>
+                          
                       </div>
                     </div>
                   </div>

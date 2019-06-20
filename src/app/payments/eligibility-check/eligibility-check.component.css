@@ -75,8 +75,22 @@
     top: 50%;
     -webkit-transform: translateY(-50%);
     transform: translateY(-50%);
-    margin-left: 5vw;
+    margin-left: 4.5vw;
 }
 .thumb {
     margin-left: 18vw
+}
+.btn.btn-default {
+    background: #004a80;
+    border-radius: 3.91vw;
+    color: #fff;
+    font-size: .94vw;
+    line-height: 2.73vw;
+    text-transform: uppercase;
+    padding: 0 1.56vw;
+    display: inline-block;
+}
+.lyt-home .rhs.eligibility-check{
+    margin-top: 3vw;
+    margin-left: 8vw;
 }
