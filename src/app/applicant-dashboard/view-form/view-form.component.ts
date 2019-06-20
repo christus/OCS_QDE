@@ -7,11 +7,17 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Options } from 'ng5-slider';
 import { NgForm } from '@angular/forms';
 
-import Qde, { InCompleteFields } from 'src/app/models/qde.model';
+import Qde, { InCompleteFields, Applicant } from 'src/app/models/qde.model';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
 import { CommonDataService } from 'src/app/services/common-data.service';
 import { QdeService } from 'src/app/services/qde.service';
-import {tap} from 'rxjs/operators';
+import { errors } from '../../services/errors';
+import { forEach } from '@angular/router/src/utils/collection';
+
+interface Item {
+  key: string,
+  value: number | string
+}
 
 @Component({
   selector: 'app-view-form',
@@ -20,213 +26,15 @@ import {tap} from 'rxjs/operators';
 })
 export class ViewFormComponent implements OnInit {
 
+  readonly errors = errors;
 
   private showSuccessModal: boolean = false;
 
-  private errors: any = {
-
-    pan: {
-      required: "PAN number is required",
-      length: "PAN number must be at least 10 characters",
-      invalid: "PAN number is not valid"
-    },
-
-    personalDetails: {
-      firstName: {
-        required: "First Name is required",
-        invalid: "First Name is not valid"
-      },
-      middleName: {
-        invalid: "Middle Name is not valid"
-      },
-      lastName: {
-        required: "Last Name is required",
-        invalid: "Last Name is not valid"
-      }
-    },
-
-    contactDetails: {
-      preferedEmail: {
-        required: "Preferred Email Id is required",
-        invalid: "Preferred Email Id is not valid"
-      },
-      alternateEmail: {
-        invalid: "Alternate Email Id is not valid"
-      },
-      prefferedMobile: {
-        required: "Preferred Mobile Number is required",
-        invalid: "Preferred Mobile Number is not valid"
-      },
-      alternateMobile: {
-        invalid: "Alternate Mobile Number is not valid"
-      },
-      stdCode: {
-        required: "Std Code is required",
-        invalid: "Std Code is not valid"
-      },
-      residenceNumber: {
-        required: "Residence number is required",
-        invalid: "Residence number is not valid"
-      }
-    },
-
-    commAddress: {
-      address1: {
-        required: "Address Line 1 is required",
-        invalid: "Address Line 1 is not valid"
-      },
-      address2: {
-        required: "Address Line 2 is required",
-        invalid: "Address Line 2 is not valid"
-      },
-      pinCode: {
-        required: "Pincode is required",
-        invalid: "Pincode is not valid"
-      },
-      stateOrCity: {
-        required: "State Name / City Name is required",
-        invalid: "State Name / City Name is not valid"
-      }
-    },
-
-    maritialStatus: {
-      spouseName: {
-        required: "Spouse Name is required",
-        invalid: "Spouse Name is not valid"
-      },
-      salaryAmount: {
-        required: "Salary Amount is required",
-        invalid: "Salary Amount is not valid"
-      }
-    },
-
-    familyDetails: {
-      fatherName:{
-        required:"Father's Name is required",
-        invalid: "Father's Name is not valid"
-      },
-      motherName:{
-        required:"Mother's Name is required",
-        invalid: "Mother's Name is not valid"
-      },
-      motherMaiden:{
-        required:"Mother's Maiden Name is required",
-        invalid: "Mother's Maiden Name is not valid"
-      }
-    },
-
-    other: {
-
-    },
-
-    occupationDetails : {
-      companyDetails: {
-        required: "Company Name is required",
-        invalid: "Company Name is not valid"
-      },
-      currentExp: {
-        required: "Current Experience is required",
-        invalid: "Current Experience is not valid"
-      },
-      totalExp: {
-        required: "Total Experience is required",
-        invalid: "Total Experience is not valid"
-      }
-    },
-
-    officialCorrespondence: {
-      address1: {
-        required: "Office address line1 is required",
-        invalid: "Office address line1 is not valid"
-      },
-      address2: {
-        required: "Office address line2 is required",
-        invalid: "Office address line2 is not valid"
-      },
-      pinCode: {
-        required: "Pincode is required",
-        invalid: "Pincode is not valid"
-      },
-      landMark: {
-        invalid: "Land mark is not valid"
-      },
-      stateOrCity: {
-        required: "State Name / City Name is required",
-        invalid: "State Name / City Name is not valid"
-      },
-      stdCode: {
-        required: "Std Code is required"
-      },
-      phoneNumber: {
-        required: "Phone Number is required"
-      },
-      email: {
-        required: "Office Email Id is required",
-        invalid: "Office Email Id is not valid"
-      }
-    },
-    organizationDetails: {
-      orgName: {
-        required: "Organization Name is required",
-        invalid: "Organization Name is not valid"
-      }
-    },
-    registeredAddress: {
-      address : {
-        required: "Registered Address is required",
-        invalid: "Registered Address is not valid"
-      },
-      landMark: {
-        invalid: "Land mark is not valid"
-      },pinCode: {
-        required: "Pincode is required",
-        invalid: "Pincode is not valid"
-      },stateOrCity: {
-        required: "State Name / City Name is required",
-        invalid: "State Name / City Name is not valid"
-      }
-    },
-    corporateAddress: {
-      address : {
-        required: "Corporate Address is required",
-        invalid: "Corporate Address is not valid"
-      },
-      landMark: {
-        invalid: "Land mark is not valid"
-      },pinCode: {
-        required: "Pincode is required",
-        invalid: "Pincode is not valid"
-      },stateOrCity: {
-        required: "State Name / City Name is required",
-        invalid: "State Name / City Name is not valid"
-      },
-
-      ofcEmail:{
-        required:"Office Email is required",
-        invalid:"Office Email is not valid"
-      }
-    },
-    revenueDetails: {
-      revenue:{
-        required: "revenue is required",
-        invalid: "revenue is not valid"
-      },
-      annualNetincome:{
-        required:"Annual Net Income is required",
-        invalid:" Annual Net Income is not valid"
-      },
-      grossTurnover:{
-        required: "Gross Turnover is required",
-        invalid: "Gross Turnover is not valid"
-      }
-    }
-  };
-
   value: number = 0;
 
-  isAlternateEmailId: boolean = false;
-  isAlternateMobileNumber: boolean = false;
-  isAlternateResidenceNumber: boolean = false;
+  isAlternateEmailId: Array<boolean> = [];
+  isAlternateMobileNumber: Array<boolean> = [];
+  isAlternateResidenceNumber: Array<boolean> = [];
 
   minValue: number = 1;
   options: Options = {
@@ -262,17 +70,59 @@ export class ViewFormComponent implements OnInit {
   };
 
   activeTab: number = 0;
+  dob: Array<{day: Item, month: Item, year: Item}> = [];
+  residenceNumberStdCode: Array<string> = [];
+  residenceNumberPhoneNumber: Array<string> = [];
+  alternateResidenceNumberStdCode: Array<string> = [];
+  alternateResidenceNumberPhoneNumber: Array<string> = [];
+  addressCityState: Array<string> = [];
+  otherReligion: Array<string> = [];
+  organizationDetails: Array<{day: Item, month: Item, year: Item}> = [];
+  registeredAddressCityState: Array<string> = [];
+  corporateAddressCityState: Array<string> = [];
+  corporateAddressStdCode: Array<string> = [];
+  corporateAddressPhoneNumber: Array<string> = [];
+  coApplicantsForDashboard: Array<Applicant> = [];
+  officialCorrespondenceStdCode: Array<string> = [];
+  officialCorrespondencePhoneNumber: Array<string> = [];
 
-  dob: {day: string, month: string, year: string} = { day: null, month: null, year: null };
-  residenceNumber: {stdCode: string, phoneNumber: string} = {stdCode: "", phoneNumber: ""};
-  alternateResidenceNumber: {stdCode: string, phoneNumber: string} = {stdCode: "", phoneNumber: ""};
-  addressCityState: string = "";
-  otherReligion: string = "";
-  dateOfIncorporation: {day: string, month: string, year: string} = {day: null, month: null, year: null};
-  registeredAddressCityState: string = "";
-  corporateAddressCityState: string = "";
-  corporateAddressStdNumber: {stdCode: string, phoneNumber: string} = {stdCode: "", phoneNumber: ""};
+  //-------------------------------------------------
+  //          Lov Variables
+  //-------------------------------------------------
+  religions: Array<any>;
+  qualifications: Array<any>;
+  occupations: Array<any>;
+  residences: Array<any>;
+  titles: Array<any>;
+  maleTitles: Array<any>;
+  femaleTitles: Array<any>;
+  maritals: Array<any>;
+  relationships: Array<any>;
+  loanpurposes: Array<any>;
+  categories: Array<any>;
+  genders: Array<any>;
+  constitutions: Array<any>;
+  days: Array<Item>;
+  months: Array<Item>;
+  years: Array<Item>;
+  assessmentMethodology: Array<any>;
+  selectedTitle: Array<Item> = [];
+  selectedReligion: Array<Item> = [];
+  selectedMaritialStatus: Array<Item> = [];
+  selectedCategory: Array<Item> = [];
+  selectedOccupation: Array<Item> = [];
+  selectedResidence: Array<Item> = [];
+  selectedSpouseTitle: Array<Item> = [];
+  selectedFatherTitle: Array<Item> = [];
+  selectedMotherTitle: Array<Item> = [];
+  selectedQualification: Array<Item> = [];
+  selectedConstitution: Array<Item> = [];
+  selectedDocType: Array<Item> = [];
 
+  docType: Array<any> = [];
+  selectedAssesmentMethodology: Array<Item> = [];
+  birthPlace: Array<any> = [];
+  selectedBirthPlace: Array<Item> = [];
 
   @ViewChild('tabContents') tabContents: ElementRef;
 
@@ -280,28 +130,17 @@ export class ViewFormComponent implements OnInit {
   
 
   fragments = [ 'applicant',
-                        'co-applicant',
-                        'loan-details',
-                        'references',
-                        'document-uploads'
+                'co-applicant',
+                'loan-details',
+                'references',
+                'document-uploads'
   ];
 
   applicantIndex: number;
   coApplicantIndexes: Array<number>;
 
   qde: Qde;
-
-  religions: Array<any>;
-  qualifications: Array<any>;
-  occupations: Array<any>;
-  residences: Array<any>;
-  titles: Array<any>;
-  maritals: Array<any>;
-  relationships: Array<any>;
-  loanpurposes: Array<any>;
-  categories: Array<any>;
-  genders: Array<any>;
-  constitutions: Array<any>;
+  YYYY: number = new Date().getFullYear();
 
   isIncomplete: Array<InCompleteFields> = [];
   applicationId: string;
@@ -311,12 +150,21 @@ export class ViewFormComponent implements OnInit {
               private qdeHttp: QdeHttpService,
               private commonDataService: CommonDataService,
               private qdeService: QdeService) {
+
+    this.qdeService.setQde(JSON.parse(this.route.snapshot.data['qde']['ProcessVariables']['response']));
+
     this.commonDataService.changeMenuBarShown(false);
+    this.commonDataService.changeViewFormVisible(false);
+    this.commonDataService.changeLogoutVisible(true);
 
     this.qdeService.qdeSource.subscribe(val => {
       this.qde = val;
 
-      this.applicantIndex = val.application.applicants.findIndex(val => val.isMainApplicant == true);
+      console.log('QDE: ', this.qde);
+      this.commonDataService.changeApplicationId(this.qde.application.applicationId);
+
+      this.applicantIndex = this.qde.application.applicants.find(val => val.isMainApplicant==true) != undefined ? this.qde.application.applicants.findIndex(val => val.isMainApplicant == true): 0;
+      console.log(this.applicantIndex);
 
       val.application.applicants.forEach((el, index) => {
 
@@ -325,70 +173,66 @@ export class ViewFormComponent implements OnInit {
         }
 
         this.isIncomplete.push(this.checkIncompleteFields(el.applicantId));
-      })
+      });
     });
 
-    this.commonDataService.applicationId.subscribe(val => {
-      this.applicationId = val;
-    });
+    if(this.route.snapshot.data.listOfValues != null && this.route.snapshot.data.listOfValues != undefined) {
+
+      var lov = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs);
+
+      this.religions = lov.LOVS.religion;
+      this.qualifications = lov.LOVS.qualification;
+      this.occupations = lov.LOVS.occupation;
+      this.residences = lov.LOVS.residence_type;
+      this.titles = lov.LOVS.applicant_title;
+      this.maleTitles = lov.LOVS.male_applicant_title;
+      this.femaleTitles = lov.LOVS.female_applicant_title;
+      // this.docType = lov.LOVS.document_type;
+      // Hardcoded values as per requirement
+      this.docType = [{key: "CKYC Kin", value:"1"},{key: "Passport Number", value:"2"},{key: "Voter Id", value:"3"},{key: "Driving License", value:"4"},{key: "Aadhaar No (Token No)", value:"5"},{key: "NREGA Job Card", value:"6"}]
+      this.maritals = lov.LOVS.maritial_status;
+      this.relationships = lov.LOVS.relationship;
+      this.loanpurposes = lov.LOVS.loan_purpose;
+      this.categories = lov.LOVS.category;
+      this.genders = lov.LOVS.gender;
+      this.constitutions = lov.LOVS.constitution;
+      this.assessmentMethodology = lov.LOVS.assessment_methodology;
+      this.birthPlace = JSON.parse(this.route.snapshot.data.birthPlaceValues['ProcessVariables']['response']).city;
+      //hardcoded
+      //this.birthPlace = [{"key": "Chennai", "value": "1"},{"key": "Mumbai", "value": "2"},{"key": "Delhi", "value": "3"}];
+      // List of Values for Date
+      this.days = Array.from(Array(31).keys()).map((val, index) => {
+        let v = ((index+1) < 10) ? "0"+(index+1) : (index+1)+"";
+        return {key: v, value: v};
+      });
+      this.days.unshift({key: 'DD', value: 'DD'});
+
+      this.months = Array.from(Array(12).keys()).map((val, index) => {
+        let v = ((index+1) < 10) ? "0"+(index+1) : (index+1)+"";
+        return {key: v, value: v};
+      });
+      this.months.unshift({key: 'MM', value: 'MM'});
+
+      this.years = Array.from(Array(100).keys()).map((val, index) => {
+        let v = (this.YYYY - index)+"";
+        return {key: v, value: v};
+      });
+      this.years.unshift({key: 'YYYY', value: 'YYYY'});
+
+      // this.docType = [{"key": "Aadhar", "value": "1"},{"key": "Driving License", "value": "2"},{"key": "passport", "value": "3"}];
+    }
 
     console.log('Applicant Index: ', this.applicantIndex);
     console.log('Co-Applicant Indexes: ', this.coApplicantIndexes);
     console.log('IsIncomplete: ', this.isIncomplete);
+
+    this.prefillData();
   }
   
   ngOnInit() {
-      // this.renderer.addClass(this.select2.selector.nativeElement, 'js-select');
-      
-    console.log(">>", JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs));
-    var lov = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs);
-    this.religions = lov.LOVS.religion;
-    this.qualifications = lov.LOVS.qualification;
-    this.occupations = lov.LOVS.occupation;
-    this.residences = lov.LOVS.residence_type;
-    this.titles = lov.LOVS.applicant_title;
-    this.maritals = lov.LOVS.maritial_status;
-    this.relationships = lov.LOVS.relationship;
-    this.loanpurposes = lov.LOVS.loan_purpose;
-    this.categories = lov.LOVS.category;
-    this.genders = lov.LOVS.gender;
-    this.constitutions = lov.LOVS.constitution;
-
-    this.route.params.subscribe((params) => {
-      
-      // Make an http request to get the required qde data and set using setQde
-      if(params.applicationId != undefined && params.applicationId != null) {
-        this.commonDataService.changeApplicationId(params.applicationId);
-        this.qdeHttp
-            .dummyGetApi(this.qdeService.getFilteredJson(this.qde))
-            .subscribe(res => {
-              console.log("RRR ", res['ProcessVariables']);
-              if(res['ProcessVariables']['status']) {
-                let response = JSON.parse(res['ProcessVariables']['response']);
-                [response.applicant.applicants] = JSON.parse(response);
-                this.qdeService.setQde(response);
-                console.log('QDE: ', this.qdeService.getQde());
-              }
-            }, err => {
-              console.log("Error : ", err);
-            });
-      }
-
-      this.qde = this.qdeService.getQde();
-      console.log("QDE:::: ",this.qde);
-    });
-
-    // Create New Entry
-    this.applicantIndex = this.qde.application.applicants.find(val => val.isMainApplicant==true) != undefined ? this.qde.application.applicants.findIndex(val => val.isMainApplicant == true): 0;
-    // Write code to get data(LOV) and assign applicantIndex if its new or to update.
-
-    console.log("Applicant Code: ", this.applicantIndex);
-
-    // Assign true as it is Applicant (In future if qde variable is not in parent component then remove below line)
-    this.qde.application.applicants[this.applicantIndex].isMainApplicant = true;
 
     this.route.fragment.subscribe((fragment) => {
-      let localFragment = fragment; 
+      let localFragment = fragment;
       if( fragment == null || (!this.fragments.includes(fragment)) ) {
         localFragment = this.fragments[0];
       } else {
@@ -399,51 +243,6 @@ export class ViewFormComponent implements OnInit {
     });
 
 
-    // Some Initialization for HTML
-    this.qde.application.applicants[this.applicantIndex].isMainApplicant = true;
-    if( this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split("-")[0] == "" ||
-        this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split("-")[0] == undefined) {
-      this.dob.day = this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split("-")[0];
-    }
-
-    if( this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split("-")[1] == "" ||
-        this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split("-")[1] == undefined) {
-      this.dob.month = this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split("-")[1];
-    }
-
-    if( this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split("-")[2] == "" ||
-        this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split("-")[2] == undefined) {
-      this.dob.year = this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split("-")[2];
-    }
-
-    this.residenceNumber.stdCode = this.qde.application.applicants[this.applicantIndex].contactDetails.residenceNumber != "" ? this.qde.application.applicants[this.applicantIndex].contactDetails.residenceNumber.split("-")[0] : "";
-    this.residenceNumber.phoneNumber = this.qde.application.applicants[this.applicantIndex].contactDetails.residenceNumber != "" ? this.qde.application.applicants[this.applicantIndex].contactDetails.residenceNumber.split("-")[1] : "";
-
-    this.alternateResidenceNumber.stdCode = this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber != "" ? this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber.split("-")[0] : "";
-    this.alternateResidenceNumber.phoneNumber = this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber != "" ? this.qde.application.applicants[this.applicantIndex].contactDetails.residenceNumber.split("-")[1] : "";
-    this.addressCityState = this.qde.application.applicants[this.applicantIndex].communicationAddress.city + '/'+ this.qde.application.applicants[this.applicantIndex].communicationAddress.state;
-
-    this.otherReligion = this.qde.application.applicants[this.applicantIndex].other.religion == '6' ? this.qde.application.applicants[this.applicantIndex].other.religion : '';
-
-    if( this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[0] == "" ||
-        this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[0] == undefined) {
-      this.dateOfIncorporation.day = this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[0];
-    }
-
-    if( this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[1] == "" ||
-        this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[1] == undefined) {
-      this.dateOfIncorporation.month = this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[1];
-    }
-
-    if( this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[2] == "" ||
-        this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[2] == undefined) {
-      this.dateOfIncorporation.year = this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split("-")[2];
-    }
-
-    this.registeredAddressCityState = this.qde.application.applicants[this.applicantIndex].registeredAddress.city +'-'+ this.qde.application.applicants[this.applicantIndex].registeredAddress.state;
-    this.corporateAddressCityState = this.qde.application.applicants[this.applicantIndex].corporateAddress.city +'-'+ this.qde.application.applicants[this.applicantIndex].corporateAddress.state;
-    this.corporateAddressStdNumber.stdCode = this.qde.application.applicants[this.applicantIndex].corporateAddress.stdNumber != "" ? this.qde.application.applicants[this.applicantIndex].corporateAddress.stdNumber.split("-")[0] : "";
-    this.corporateAddressStdNumber.phoneNumber = this.qde.application.applicants[this.applicantIndex].corporateAddress.stdNumber != "" ? this.qde.application.applicants[this.applicantIndex].corporateAddress.stdNumber.split("-")[1] : "";
   }
 
   valuechange(newValue) {
@@ -523,20 +322,6 @@ export class ViewFormComponent implements OnInit {
   //   }
   // }
 
-  addRemoveEmailField() {
-    this.isAlternateEmailId = !this.isAlternateEmailId;
-  }
-
-  addRemoveMobileNumberField() {
-    this.isAlternateMobileNumber = !this.isAlternateMobileNumber;
-  }
-
-  addRemoveResidenceNumberField() {
-    this.isAlternateResidenceNumber = !this.isAlternateResidenceNumber;
-  }
-  
-  temp;
-
   counter(size): Array<number> {
     return new Array(size);
   }
@@ -597,9 +382,162 @@ export class ViewFormComponent implements OnInit {
       this.qdeHttp.viewFormSmsApi(this.applicationId).subscribe(res => {}, err => {});
 
   }
-  applicationStatus: string = "10";
 
-  qdeSubmit(){
-    this.qdeHttp.setStatusApi(this.applicationId, this.applicationStatus).subscribe(res => {}, err => {}); 
+  prefillData() {
+
+    // Make QDE Data Global Across App
+
+    // This is when co-applicant is being edited
+    this.qde.application.applicants.forEach((eachApplicant, i) => {
+
+      //------------------------------------------------------
+      //    Prefilling values
+      //------------------------------------------------------
+      // Set CoApplicant for Prefilling the fields
+      // this.coApplicantIndex = this.qde.application.applicants.indexOf(params.coApplicantIndex);
+
+      // if ( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].pan.docType)) ) {
+      //   this.selectedDocType = this.docType[parseInt(this.qde.application.applicants[this.coApplicantIndex].pan.docType)];
+      // }
+
+      console.log("titles: ", this.titles);
+      this.selectedTitle.push(this.titles[0]);
+      this.selectedReligion.push(this.religions[0]);
+      this.selectedMaritialStatus.push(this.maritals[0]);
+      this.selectedCategory.push(this.categories[0]);
+      this.selectedOccupation.push(this.occupations[0]);
+      this.selectedResidence.push(this.residences[0]);
+      this.selectedSpouseTitle.push(this.titles[0]);
+      this.selectedFatherTitle.push(this.maleTitles[0]);
+      this.selectedMotherTitle.push(this.femaleTitles[0]);
+      this.selectedQualification.push(this.qualifications[0]);
+      this.selectedConstitution.push(this.constitutions[0]);
+      this.selectedDocType.push(this.docType[0]);
+      this.selectedAssesmentMethodology.push(this.assessmentMethodology[0]);
+      this.selectedBirthPlace.push(this.birthPlace[0]);
+
+      // Personal Details Title
+      if( ! isNaN(parseInt(eachApplicant.personalDetails.title)) ) {
+        this.selectedTitle.push(this.titles[(parseInt(eachApplicant.personalDetails.title))-1]);
+      }
+
+      // Personal Details Qualification (different because qualification isnt sending sequential value like 1,2,3)
+      if( ! isNaN(parseInt(eachApplicant.personalDetails.qualification)) ) {
+        console.log('eachApplicant.personalDetails.qualification: ', eachApplicant.personalDetails.qualification);
+        // this.selectedQualification = this.qualifications[(parseInt(eachApplicant.personalDetails.qualification))-1];
+        this.selectedQualification = this.qualifications.find(e => e.value == eachApplicant.personalDetails.qualification);
+        console.log('selectedQualification: ', this.selectedQualification);
+      }
+
+      // Personal Details Day
+      let eachDob: {day: Item, month: Item, year: Item};
+      if( ! isNaN(parseInt(eachApplicant.personalDetails.dob.split('/')[2])) ) {
+        eachDob.day = this.days[parseInt(eachApplicant.personalDetails.dob.split('/')[2])];
+      }
+
+      // Personal Details Month
+      if( ! isNaN(parseInt(eachApplicant.personalDetails.dob.split('/')[1])) ) {
+        eachDob.month = this.months[parseInt(eachApplicant.personalDetails.dob.split('/')[1])];
+      }
+
+      // Personal Details Birthplace
+      if( ! isNaN(parseInt(eachApplicant.personalDetails.birthPlace)) ) {
+        this.selectedBirthPlace = this.birthPlace[parseInt(eachApplicant.personalDetails.birthPlace) - 1];
+      }
+
+      // Personal Details Year
+      if( ! isNaN(parseInt(eachApplicant.personalDetails.dob.split('/')[0])) ) {
+        eachDob.year = this.years.find(val => eachApplicant.personalDetails.dob.split('/')[0] == val.value);
+      }
+      this.dob.push(eachDob);
+
+      let eachDateOfIncorporation: {day: Item, month: Item, year: Item};
+      // Date of Incorporation Day
+      if( ! isNaN(parseInt(eachApplicant.organizationDetails.dateOfIncorporation.split('/')[2])) ) {
+        eachDateOfIncorporation.day = this.days[parseInt(eachApplicant.organizationDetails.dateOfIncorporation.split('/')[2])];
+      }
+
+      // Date of Incorporation Month
+      if( ! isNaN(parseInt(eachApplicant.organizationDetails.dateOfIncorporation.split('/')[1])) ) {
+        eachDateOfIncorporation.month = this.months[parseInt(eachApplicant.organizationDetails.dateOfIncorporation.split('/')[1])];
+      }
+
+      // Date of Incorporation Year
+      if( ! isNaN(parseInt(eachApplicant.organizationDetails.dateOfIncorporation.split('/')[0])) ) {
+        eachDateOfIncorporation.year = this.years.find(val => eachApplicant.organizationDetails.dateOfIncorporation.split('/')[0] == val.value);
+      }
+
+      this.organizationDetails.push(eachDateOfIncorporation);
+
+      // Constitution
+      if( ! isNaN(parseInt(eachApplicant.organizationDetails.constitution)) ) {
+        this.selectedConstitution.push(this.constitutions[(parseInt(eachApplicant.organizationDetails.constitution))-1]);
+      }
+      
+      // Communication address
+      if( ! isNaN(parseInt(eachApplicant.communicationAddress.residentialStatus)) ) {
+        this.selectedResidence.push(this.maritals[(parseInt(eachApplicant.communicationAddress.residentialStatus)) - 1]);
+      }
+
+      if( ! isNaN(parseInt(eachApplicant.maritalStatus.status)) ) {
+        this.selectedMaritialStatus.push(this.maritals[(parseInt(eachApplicant.maritalStatus.status))-1]);
+      }
+
+      if( ! isNaN(parseInt(eachApplicant.maritalStatus.spouseTitle)) ) {
+          this.selectedSpouseTitle.push(this.titles[(parseInt(eachApplicant.maritalStatus.spouseTitle))-1]);
+      }
+
+      if( ! isNaN(parseInt(eachApplicant.familyDetails.fatherTitle)) ) {
+        this.selectedFatherTitle .push(this.titles[(parseInt(eachApplicant.familyDetails.fatherTitle))-1]);
+      }
+
+      if( ! isNaN(parseInt(eachApplicant.familyDetails.motherTitle)) ) {
+        this.selectedMotherTitle.push(this.titles[(parseInt(eachApplicant.familyDetails.motherTitle))-1]);
+      }
+
+      // Other
+      if( ! isNaN(parseInt(eachApplicant.other.religion)) ) {
+        this.selectedReligion.push(this.religions[(parseInt(eachApplicant.other.religion))-1]);
+      }
+
+      // Category
+      if( ! isNaN(parseInt(eachApplicant.other.category)) ) {
+        this.selectedCategory .push(this.categories[(parseInt(eachApplicant.other.category))-1]);
+      }
+
+      // Occupation details
+      if( ! isNaN(parseInt(eachApplicant.occupation.occupationType)) ) {
+        this.selectedOccupation.push(this.occupations.find(e => e.value == eachApplicant.occupation.occupationType));
+      }
+
+      // Assesment methodology
+      if( ! isNaN(parseInt(eachApplicant.incomeDetails.assessmentMethodology)) ) {
+        this.selectedAssesmentMethodology.push(this.assessmentMethodology[(parseInt(eachApplicant.incomeDetails.assessmentMethodology))-1]);
+      }
+
+      this.initializeVariables(eachApplicant);
+    });
+  }
+
+  initializeVariables(eachApplicant) {
+    this.residenceNumberStdCode.push(eachApplicant.contactDetails.residenceNumber != "" ? eachApplicant.contactDetails.residenceNumber.split("-")[0] : "");
+    this.residenceNumberPhoneNumber.push(eachApplicant.contactDetails.residenceNumber != "" ? eachApplicant.contactDetails.residenceNumber.split("-")[1] : "");
+
+    this.alternateResidenceNumberStdCode.push(eachApplicant.contactDetails.alternateResidenceNumber != "" ? eachApplicant.contactDetails.alternateResidenceNumber.split("-")[0] : "");
+    this.alternateResidenceNumberPhoneNumber.push(eachApplicant.contactDetails.alternateResidenceNumber != "" ? eachApplicant.contactDetails.alternateResidenceNumber.split("-")[1] : "");
+    this.addressCityState.push(eachApplicant.communicationAddress.city + '/'+ eachApplicant.communicationAddress.state);
+
+    this.otherReligion.push(eachApplicant.other.religion == '6' ? eachApplicant.other.religion : '');
+
+    this.registeredAddressCityState.push(eachApplicant.registeredAddress.city +'/'+ eachApplicant.registeredAddress.state);
+    this.corporateAddressCityState.push(eachApplicant.corporateAddress.city +'-'+ eachApplicant.corporateAddress.state);
+    this.corporateAddressStdCode.push(eachApplicant.corporateAddress.stdNumber != "" ? eachApplicant.corporateAddress.stdNumber.split("-")[0] : "");
+    this.corporateAddressPhoneNumber.push(eachApplicant.corporateAddress.stdNumber != "" ? eachApplicant.corporateAddress.stdNumber.split("-")[1] : "");
+    this.officialCorrespondenceStdCode.push(eachApplicant.officialCorrespondence.officeNumber != "" ? eachApplicant.officialCorrespondence.officeNumber.split("-")[0] : "");
+    this.officialCorrespondencePhoneNumber.push(eachApplicant.officialCorrespondence.officeNumber != "" ? eachApplicant.officialCorrespondence.officeNumber.split("-")[1] : "");
+
+    this.isAlternateEmailId.push(eachApplicant.contactDetails.alternateEmailId != "" ? true : false);
+    this.isAlternateMobileNumber.push(eachApplicant.contactDetails.alternateMobileNumber != null ? true : false);
+    this.isAlternateResidenceNumber.push(eachApplicant.contactDetails.alternateResidenceNumber != "" ? true : false);
   }
 }

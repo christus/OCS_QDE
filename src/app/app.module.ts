@@ -42,7 +42,6 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { AuthGuard } from './guards/auth.guard';
 import { ConfirmDeactivateGuard } from './guards/candeactivate.guard';
 import { UtilService } from './services/util.service';
-import { ViewFormCoApplicantComponent } from './applicant-dashboard/view-form/view-form-co-applicant/view-form-co-applicant.component';
 import { FieldFillDirective } from './directives/field-fill.directive';
 import { TermsAndConditionsComponent } from './terms-and-conditions/terms-and-conditions.component';
 import { ProceedToReviewFormComponent } from './terms-and-conditions/proceed-to-review-form/proceed-to-review-form.component';
@@ -177,7 +176,9 @@ const appRoutes: Routes = [
     path: "view-form/:applicationId",
     component: ViewFormComponent,
     resolve: {
-      listOfValues: ListOfValuesResolverService
+      listOfValues: ListOfValuesResolverService,
+      qde: GetQdeDataResolverService,
+      birthPlaceValues: BirthPlaceResolverService
     }
   },
   {
@@ -282,7 +283,6 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     ViewFormComponent,
     DocumentUploadComponent,
     PageNotFoundComponent,
-    ViewFormCoApplicantComponent,
     FieldFillDirective,
     TermsAndConditionsComponent,
     ProceedToReviewFormComponent,

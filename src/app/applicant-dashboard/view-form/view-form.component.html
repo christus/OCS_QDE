@@ -40,29 +40,20 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="form-group last">
-                                            <input  type="text"
-                                                        class="form-control"
-                                                        [(ngModel)]="qde.application.applicants[applicantIndex].pan.panNumber"
-                                                        id="pan-inpt"
-                                                        minlength="10"
-                                                        maxlength="10"
-                                                        pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}"                                              
-                                                        name="pan"
-                                                        #pan="ngModel"
-                                                        required
-                                                        fieldFill
-                                                        tabIndex="0" />
-                                            <label for="pan-inpt" *ngIf="pan.value == ''">Enter PAN number</label>
-                                            <div *ngIf="pan.touched && pan.invalid" class="invalid-feedback">
-                                                <div *ngIf="pan.errors?.required">*PAN number is required</div>
-                                                <div *ngIf="pan.errors?.pattern ? true : false">*PAN not valid</div>
-                                                <div *ngIf="pan.errors?.minlength || pan.errors?.maxlength">*PAN must be at least {{pan.errors.minlength.requiredLength}} characters</div>
-                                            </div>
+
+                                            <input  readonly="true"
+                                                    type="text"
+                                                    class="form-control"
+                                                    fieldFill
+                                                    [ngModel]="qde.application.applicants[applicantIndex].pan.panNumber"
+                                                    id="pan-inpt"
+                                                    name="pan" />
+                                            <label for="pan-inpt">Enter PAN number</label>
                                         </div>
                                     </div>
                                     <div class="col-6 seperator">
                                         <div class="bs-file">
-                                            <input type="file" class="form-control" id="file">
+                                            <input readonly="true"  type="file" class="form-control" id="file">
                                             <label for="file"><span>Change photo</span></label>
                                         </div>
                                     </div>
@@ -76,21 +67,20 @@
                                     <div class="col-3">
                                         <div class="form-group">
                                             <span class="control-title">Title</span>
-                                            <select [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.title" name="title" required>
-                                              <option [ngClass]="{'select': (tit.value == qde.application.applicants[applicantIndex].personalDetails.title)}"
-                                                      [selected]="tit.value == qde.application.applicants[applicantIndex].personalDetails.title"
-                                                      *ngFor="let tit of titles"
-                                                      [value]="tit.value">
-                                                  {{tit.key}}
-                                              </option>
-                                          </select>
+                                            <kendo-dropdownlist class="form-control"
+                                                            [data]="titles" 
+                                                            textField="key"
+                                                            valueField="value"
+                                                            name="title"
+                                                            [(ngModel)]="selectedTitle[applicantIndex]">
+                                            </kendo-dropdownlist>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-4">
                                         <div class="form-group">
-                                            <input    type="text"
+                                            <input readonly="true"     type="text"
                                                       class="form-control"
                                                       [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.firstName"
                                                       name="firstName"
@@ -100,15 +90,11 @@
                                                       pattern="^[A-Za-z]+$" 
                                                       id="first-name" />
                                               <label for="first-name">First name</label>
-                                              <div *ngIf="(firstName.touched || firstName.dirty) && firstName.invalid" class="invalid-feedback">
-                                                  <div *ngIf="firstName.errors?.required">{{errors.personalDetails.firstName.required}}</div>
-                                                  <div *ngIf="firstName.errors?.pattern">{{errors.personalDetails.firstName.invalid}}</div>
-                                              </div>
                                         </div>
                                     </div>
                                     <div class="col-4">
                                         <div class="form-group typ-optional" [ngClass]="{'filled': middleName.value != ''}">
-                                            <input    type="text"
+                                            <input readonly="true"     type="text"
                                                       class="form-control"
                                                       id="middle-name"
                                                       name="middleName"
@@ -118,14 +104,11 @@
                                                       #middleName="ngModel" />
                                             <label for="middle-name">Middle name</label>
                                             <span class="optional">Optional</span>
-                                            <div *ngIf="(middleName.touched || middleName.dirty) && middleName.invalid" class="invalid-feedback">
-                                              <div *ngIf="middleName.errors?.pattern">{{errors.personalDetails.middleName.invalid}}</div>
-                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-4">
                                         <div class="form-group" [ngClass]="{'filled': lastName.value != ''}">
-                                            <input    type="text"
+                                            <input readonly="true"     type="text"
                                                       class="form-control"
                                                       id="last-name"
                                                       [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.lastName" 
@@ -226,7 +209,7 @@
                                     </div>
                                     <div class="col-6">
                                         <div class="form-group filled">
-                                            <input    type="email"
+                                            <input readonly="true"     type="email"
                                                       class="form-control"
                                                       id="prefered-email"
                                                       [(ngModel)]="qde.application.applicants[applicantIndex].contactDetails.preferredEmailId"
@@ -244,7 +227,7 @@
                                               </div>
                                         </div>
                                         <div class="form-group" [ngClass]="{'typ-alternative': !isAlternateEmailId}">
-                                            <input    type="text"
+                                            <input readonly="true"     type="text"
                                                       class="form-control"
                                                       id="alternate-email"
                                                       [(ngModel)]="qde.application.applicants[applicantIndex].contactDetails.alternateEmailId"
@@ -277,7 +260,7 @@
                                     <div class="col-6">
                                         <div class="form-group" [ngClass]="{'filled': mobileNumber.value == ''}">
                                             
-                                            <input    type="tel" class="form-control" id="mob-no"
+                                            <input readonly="true"     type="tel" class="form-control" id="mob-no"
                                                       maxlength="10" im-insert="true"
                                                       [(ngModel)]="qde.application.applicants[applicantIndex].contactDetails.mobileNumber"
                                                       name="mobileNumber"
@@ -297,7 +280,7 @@
                                         </div>
                                         <div class="form-group" [ngClass]="{'typ-alternative': !isAlternateMobileNumber}">
       
-                                            <input    type="tel"
+                                            <input readonly="true"     type="tel"
                                                       class="form-control"
                                                       id="alter-mob"
                                                       data-validation-attr="mobileno01" 
@@ -323,7 +306,7 @@
                                         </div>
                                         <div class="residence-no">
                                             <div class="form-group">
-                                              <input  type="text"
+                                              <input readonly="true"   type="text"
                                                       required
                                                       fieldFill
                                                       [(ngModel)]="residenceNumber.stdCode"
@@ -341,7 +324,7 @@
                                             </div>
                                             <span class="seperator">-</span>
                                             <div class="form-group">
-                                              <input  type="text"
+                                              <input readonly="true"   type="text"
                                                       class="form-control"
                                                       id="res-no"
                                                       fieldFill
@@ -360,7 +343,7 @@
                                         </div>
                                         <div class="residence-no" [ngClass]="{'typ-alternative': !isAlternateResidenceNumber}">
                                           <div class="form-group">
-                                              <input    type="text"
+                                              <input readonly="true"     type="text"
                                                         [(ngModel)]="alternateResidenceNumber.stdCode"
                                                         name="alternateResidenceNumber1"
                                                         fieldFill
@@ -370,7 +353,7 @@
                                           </div>
                                           <span class="seperator">-</span>
                                           <div class="form-group">
-                                              <input    type="text"
+                                              <input readonly="true"     type="text"
                                                         class="form-control"
                                                         [(ngModel)]="alternateResidenceNumber.phoneNumber"
                                                         name="alternateResidenceNumber2"
@@ -416,7 +399,7 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group">
-                                              <input  type="text"
+                                              <input readonly="true"   type="text"
                                                   class="form-control"
                                                   id="address1"
                                                   fieldFill
@@ -439,7 +422,7 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group">
-                                          <input  type="text"
+                                          <input readonly="true"   type="text"
                                                   class="form-control"
                                                   id="address2"
                                                   fieldFill
@@ -460,7 +443,7 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="form-group">
-                                              <input type="number" class="form-control" id="pincode" required
+                                              <input readonly="true"  type="number" class="form-control" id="pincode" required
                                               [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.zipcode"
                                               name="pinCode"
                                               fieldFill
@@ -477,7 +460,7 @@
                                     </div>
                                     <div class="col-6">
                                         <div class="form-group">
-                                              <input  type="text"
+                                              <input readonly="true"   type="text"
                                                   class="form-control"
                                                   id="cityState"
                                                   required
@@ -498,7 +481,7 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="bs-checkbox">
-                                              <input  type="checkbox"
+                                              <input readonly="true"   type="checkbox"
                                                       [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.permanentAddress"
                                                       name="permanentAddress"
                                                       fieldFill
@@ -511,7 +494,7 @@
                                     <div class="col-12">
                                         <div class="form-group typ-range">
                                             <span class="subtitle">Number of years in current residence</span>
-                                            <input    type="number"
+                                            <input readonly="true"     type="number"
                                                       name="numberOfYearsInCurrentResidence"
                                                       class="form-control"
                                                       fieldFill
@@ -566,7 +549,7 @@
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="form-group">
-                                                  <input  type="text"
+                                                  <input readonly="true"   type="text"
                                                           class="form-control" 
                                                           [(ngModel)]="qde.application.applicants[applicantIndex].maritalStatus.firstName"
                                                           #spouseName="ngModel"
@@ -589,7 +572,7 @@
       
                                             <h5 class="subtitle">Is applicant's spouse working?</h5>
                                             <div class="bs-radio">
-                                                  <input    type="radio"
+                                                  <input readonly="true"     type="radio"
                                                             [(ngModel)]="qde.application.applicants[applicantIndex].maritalStatus.earning"
                                                             name="earning"
                                                             value="1"
@@ -599,7 +582,7 @@
                                                   <label for="earningYes"><span>Yes</span></label>
                                               </div>
                                               <div class="bs-radio">
-                                                  <input    type="radio"
+                                                  <input readonly="true"     type="radio"
                                                             [(ngModel)]="qde.application.applicants[applicantIndex].maritalStatus.earning"
                                                             name="earning"
                                                             value="2"
@@ -613,7 +596,7 @@
                                         <div class="col-6">
                                             <h5 class="subtitle">Enter annual income of spouse</h5>
                                             <div class="form-group inr">
-                                                  <input type="text"
+                                                  <input readonly="true"  type="text"
                                                   class="form-control"
                                                   id="amount"
                                                   required
@@ -646,7 +629,7 @@
                                     <div class="col-12">
                                         <div class="form-group typ-range">
                                             <span class="subtitle">Number of years in current residence</span>
-                                            <input    type="number"
+                                            <input readonly="true"     type="number"
                                                       name="numberOfDependents"
                                                       min=0
                                                       max=90
@@ -676,7 +659,7 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group filled">
-                                              <input    type="text"
+                                              <input readonly="true"     type="text"
                                                         class="form-control"
                                                         id="father-name"
                                                         required
@@ -712,7 +695,7 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group filled">
-                                              <input type="text"
+                                              <input readonly="true"  type="text"
                                                     class="form-control"
                                                     id="mother-name"
                                                     required
@@ -732,7 +715,7 @@
                                 <div class="row last">
                                     <div class="col-12">
                                         <div class="form-group">
-                                              <input type="text" class="form-control" id="maiden-name"
+                                              <input readonly="true"  type="text" class="form-control" id="maiden-name"
                                                     required
                                                     [(ngModel)]="qde.application.applicants[applicantIndex].familyDetails.motherMaidenName"
                                                     #motherMaiden="ngModel"
@@ -773,7 +756,7 @@
                                     </div>
                                     <div class="col-6">
                                         <div class="form-group" *ngIf="religionSelect.value == '6'" [ngClass]="{'hidden': (religionSelect.value != '6')}">
-                                            <input    type="text"
+                                            <input readonly="true"     type="text"
                                                       class="form-control"
                                                       [(ngModel)]="qde.application.applicants[applicantIndex].other.religion"
                                                       name="religionName"
@@ -820,7 +803,7 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group filled">
-                                              <input type="text" class="form-control"
+                                              <input readonly="true"  type="text" class="form-control"
                                               required
                                               fieldFill
                                               [(ngModel)]="qde.application.applicants[applicantIndex].occupation.companyName"
@@ -843,7 +826,7 @@
                                     <div class="col-12">
                                         <div class="form-group typ-range">
                                             <span class="subtitle">Years in current employment/business</span>
-                                            <input type="number"
+                                            <input readonly="true"  type="number"
                                                   name="numberOfYearsInCurrentCompany"
                                                   id="no-yrs"
                                                   fieldFill
@@ -870,7 +853,7 @@
                                     <div class="col-12">
                                         <div class="form-group typ-range">
                                             <span class="subtitle">Total work experince</span>
-                                            <input type="number"
+                                            <input readonly="true"  type="number"
                                             name="totalExperienceYear"
                                             class="form-control"
                                             fieldFill
@@ -899,7 +882,7 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group">
-                                              <input  type="text"
+                                              <input readonly="true"   type="text"
                                               class="form-control"
                                               id="ofcAddOne"
                                               fieldFill
@@ -921,7 +904,7 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group">
-                                              <input  type="text"
+                                              <input readonly="true"   type="text"
                                                       class="form-control"
                                                       id="ofcAddTwo"
                                                       fieldFill
@@ -941,7 +924,7 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group">
-                                              <input  type="text"
+                                              <input readonly="true"   type="text"
                                                       class="form-control"
                                                       id="offLandmark"
                                                       fieldFill
@@ -961,7 +944,7 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="form-group filled">
-                                              <input type="text" class="form-control"
+                                              <input readonly="true"  type="text" class="form-control"
                                                     id="offPincode"
                                                     fieldFill
                                                     required
@@ -981,7 +964,7 @@
                                     </div>
                                     <div class="col-6">
                                         <div class="form-group">
-                                              <input type="text" class="form-control"
+                                              <input readonly="true"  type="text" class="form-control"
                                                     id="offCityState"
                                                     required
                                                     fieldFill
@@ -1002,7 +985,7 @@
                                     <div class="col-6">
                                         <div class="residence-no">
                                             <div class="form-group">
-                                                  <input type="number" class="form-control" id="std03"
+                                                  <input readonly="true"  type="number" class="form-control" id="std03"
                                                   required
                                                   fieldFill
                                                   [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.officeNumber"
@@ -1015,7 +998,7 @@
                                             </div>
                                             <span class="seperator">-</span>
                                             <div class="form-group">
-                                                  <input  type="text" class="form-control" id="res-no03" data-validation-attr="residenceno"
+                                                  <input readonly="true"   type="text" class="form-control" id="res-no03" data-validation-attr="residenceno"
                                                   required
                                                   fieldFill
                                                   #offStdNumber="ngModel"
@@ -1035,7 +1018,7 @@
                                     </div>
                                     <div class="col-6">
                                         <div class="form-group">
-                                              <input type="email"
+                                              <input readonly="true"  type="email"
                                                     class="form-control"
                                                     id="off-email"
                                                     required
@@ -1062,7 +1045,7 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group inr filled">
-                                            <input type="text" class="form-control" id="annual-in" value="12,45,604">
+                                            <input readonly="true"  type="text" class="form-control" id="annual-in" value="12,45,604">
                                             <label for="annual-in">Annual family income</label>
                                             <span class="addon">
                                                     <span class="icon icon-inr"></span>
@@ -1074,7 +1057,7 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group inr filled">
-                                            <input type="text" class="form-control" id="monthly-exp" value="5,39,367">
+                                            <input readonly="true"  type="text" class="form-control" id="monthly-exp" value="5,39,367">
                                             <label for="monthly-exp">Monthly expenditure</label>
                                             <span class="addon">
                                                     <span class="icon icon-inr"></span>
@@ -1086,7 +1069,7 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group inr filled">
-                                            <input type="text" class="form-control" id="monthly-exp" value="5,39,367">
+                                            <input readonly="true"  type="text" class="form-control" id="monthly-exp" value="5,39,367">
                                             <label for="monthly-exp">Monthly Income</label>
                                             <span class="addon">
                                                     <span class="icon icon-inr"></span>
@@ -1132,7 +1115,7 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="form-group">
-                                          <input type="text" class="form-control" id="org-name" 
+                                          <input readonly="true"  type="text" class="form-control" id="org-name" 
                                                   pattern="^[A-Za-z\s]+$"
                                                   [(ngModel)]="qde.application.applicants[applicantIndex].organizationDetails.nameOfOrganization"
                                                   #orgName="ngModel"
@@ -1218,7 +1201,7 @@
                           <div class="row">
                               <div class="col-6">
                                   <div class="form-group inr filled">
-                                      <input type="text" class="form-control" id="annual-in" value="12,45,604">
+                                      <input readonly="true"  type="text" class="form-control" id="annual-in" value="12,45,604">
                                       <label for="annual-in">Annual family income</label>
                                       <span class="addon">
                                               <span class="icon icon-inr"></span>
@@ -1228,7 +1211,7 @@
                               </div>
                               <div class="col-6">
                                   <div class="form-group inr filled">
-                                      <input type="text" class="form-control" id="monthly-exp" value="5,39,367">
+                                      <input readonly="true"  type="text" class="form-control" id="monthly-exp" value="5,39,367">
                                       <label for="monthly-exp">Monthly expenditure</label>
                                       <span class="addon">
                                               <span class="icon icon-inr"></span>
@@ -1245,7 +1228,7 @@
                           <div class="row">
                               <div class="col-6">
                                   <div class="form-group inr filled">
-                                      <input type="text" class="form-control" id="amt-rqur" value="15,39,367">
+                                      <input readonly="true"  type="text" class="form-control" id="amt-rqur" value="15,39,367">
                                       <label for="amt-rqur">Amount required (in lakhs)</label>
                                       <span class="addon">
                                           <span class="icon icon-inr"></span>
@@ -1266,7 +1249,7 @@
                               <div class="col-12">
                                   <div class="form-group typ-range">
                                       <span class="subtitle">Number of years in current residence</span>
-                                      <input type="text" class="form-control" id="no-yrs">
+                                      <input readonly="true"  type="text" class="form-control" id="no-yrs">
                                       <span class="yr-text">Years</span>
                                       <div id="year-range" class="range-slider"></div>
                                   </div>
@@ -1281,11 +1264,11 @@
                               <div class="col-12">
                                   <h5 class="subtitle">Have you identified property?</h5>
                                   <div class="bs-radio">
-                                      <input type="radio" name="pro-id" id="pro-yes">
+                                      <input readonly="true"  type="radio" name="pro-id" id="pro-yes">
                                       <label for="pro-yes"><span>Yes</span></label>
                                   </div>
                                   <div class="bs-radio">
-                                      <input type="radio" name="pro-id" id="pro-no">
+                                      <input readonly="true"  type="radio" name="pro-id" id="pro-no">
                                       <label for="pro-no"><span>No</span></label>
                                   </div>
                               </div>
@@ -1295,7 +1278,7 @@
                               <div class="row">
                                   <div class="col-12">
                                       <div class="form-group">
-                                          <input type="text" class="form-control" id="prop-add1">
+                                          <input readonly="true"  type="text" class="form-control" id="prop-add1">
                                           <label for="prop-add1">Property address 1</label>
                                       </div>
                                   </div>
@@ -1303,7 +1286,7 @@
                               <div class="row">
                                   <div class="col-12">
                                       <div class="form-group">
-                                          <input type="text" class="form-control" id="prop-add2">
+                                          <input readonly="true"  type="text" class="form-control" id="prop-add2">
                                           <label for="prop-add2">Property address 2</label>
                                       </div>
                                   </div>
@@ -1311,13 +1294,13 @@
                               <div class="row">
                                   <div class="col-6">
                                       <div class="form-group filled">
-                                          <input type="text" class="form-control" id="prop-pin" value="400012">
+                                          <input readonly="true"  type="text" class="form-control" id="prop-pin" value="400012">
                                           <label for="prop-pin">Property pincode</label>
                                       </div>
                                   </div>
                                   <div class="col-6">
                                       <div class="form-group">
-                                          <input type="text" class="form-control" id="prop-city">
+                                          <input readonly="true"  type="text" class="form-control" id="prop-city">
                                           <label for="prop-city">Property City/State</label>
                                       </div>
                                   </div>
@@ -1332,7 +1315,7 @@
                               <div class="col-12">
                                   <div class="form-group typ-range">
                                       <span class="subtitle">Existing live loans</span>
-                                      <input type="text" class="form-control" id="no-yrs">
+                                      <input readonly="true"  type="text" class="form-control" id="no-yrs">
                                       <span class="yr-text">Loans</span>
                                       <div id="year-range" class="range-slider typ-number"></div>
                                   </div>
@@ -1360,7 +1343,7 @@
                               <div class="col-12">
                                   <div class="form-group typ-range">
                                       <span class="subtitle">Existing live loans</span>
-                                      <input type="text" class="form-control" id="no-yrs">
+                                      <input readonly="true"  type="text" class="form-control" id="no-yrs">
                                       <span class="yr-text">Loans</span>
                                       <div id="year-range" class="range-slider typ-number"></div>
                                   </div>
@@ -1383,7 +1366,7 @@
                               <div class="row">
                                   <div class="col-6">
                                       <div class="form-group inr filled">
-                                          <input type="text" class="form-control" id="ex-loan-amt" value="12,45,604">
+                                          <input readonly="true"  type="text" class="form-control" id="ex-loan-amt" value="12,45,604">
                                           <label for="ex-loan-amt">Existing loan amount</label>
                                           <span class="addon">
                                               <span class="icon icon-inr"></span>
@@ -1393,7 +1376,7 @@
                                   </div>
                                   <div class="col-6">
                                       <div class="form-group inr filled">
-                                          <input type="text" class="form-control" id="ex-emi" value="12,45,604">
+                                          <input readonly="true"  type="text" class="form-control" id="ex-emi" value="12,45,604">
                                           <label for="ex-emi">Existing monthly EMI</label>
                                           <span class="addon">
                                               <span class="icon icon-inr"></span>
@@ -1430,13 +1413,13 @@
                               <div class="row">
                                   <div class="col-6">
                                       <div class="form-group">
-                                          <input type="text" class="form-control" id="ref1-name">
+                                          <input readonly="true"  type="text" class="form-control" id="ref1-name">
                                           <label for="ref1-name">Name</label>
                                       </div>
                                   </div>
                                   <div class="col-6">
                                       <div class="form-group">
-                                          <input type="text" class="form-control" id="ref1-mob">
+                                          <input readonly="true"  type="text" class="form-control" id="ref1-mob">
                                           <label for="ref1-mob">Mobile</label>
                                       </div>
                                   </div>
@@ -1444,7 +1427,7 @@
                               <div class="row">
                                   <div class="col-12">
                                       <div class="form-group">
-                                          <input type="text" class="form-control" id="ref1-add1">
+                                          <input readonly="true"  type="text" class="form-control" id="ref1-add1">
                                           <label for="ref1-add1">Address line 1</label>
                                       </div>
                                   </div>
@@ -1452,7 +1435,7 @@
                               <div class="row">
                                   <div class="col-12">
                                       <div class="form-group">
-                                          <input type="text" class="form-control" id="ref1-add2">
+                                          <input readonly="true"  type="text" class="form-control" id="ref1-add2">
                                           <label for="ref1-add2">Address line 2</label>
                                       </div>
                                   </div>
@@ -1477,13 +1460,13 @@
                               <div class="row">
                                   <div class="col-6">
                                       <div class="form-group">
-                                          <input type="text" class="form-control" id="ref2-name">
+                                          <input readonly="true"  type="text" class="form-control" id="ref2-name">
                                           <label for="ref2-name">Name</label>
                                       </div>
                                   </div>
                                   <div class="col-6">
                                       <div class="form-group">
-                                          <input type="text" class="form-control" id="ref2-mob">
+                                          <input readonly="true"  type="text" class="form-control" id="ref2-mob">
                                           <label for="ref2-mob">Mobile</label>
                                       </div>
                                   </div>
@@ -1491,7 +1474,7 @@
                               <div class="row">
                                   <div class="col-12">
                                       <div class="form-group">
-                                          <input type="text" class="form-control" id="ref2-add1">
+                                          <input readonly="true"  type="text" class="form-control" id="ref2-add1">
                                           <label for="ref2-add1">Address line 1</label>
                                       </div>
                                   </div>
@@ -1499,7 +1482,7 @@
                               <div class="row">
                                   <div class="col-12">
                                       <div class="form-group">
-                                          <input type="text" class="form-control" id="ref2-add2">
+                                          <input readonly="true"  type="text" class="form-control" id="ref2-add2">
                                           <label for="ref2-add2">Address line 2</label>
                                       </div>
                                   </div>
@@ -1523,14 +1506,14 @@
                                 <div class="col-12">
                                     <!-- <h5 class="subtitle">Is applicant's spouse working?</h5> -->
                                     <div class="bs-radio typ-doc">
-                                        <input type="radio" name="doc-upload" id="applicant-radio">
+                                        <input readonly="true"  type="radio" name="doc-upload" id="applicant-radio">
                                         <label for="applicant-radio">
                                                 <span class="icon icon-close"></span>
                                             </label>
                                         <span class="desc-text">01 | <span>Applicant</span></span>
                                     </div>
                                     <div class="bs-radio typ-doc">
-                                        <input type="radio" name="doc-upload" id="applicant-radio">
+                                        <input readonly="true"  type="radio" name="doc-upload" id="applicant-radio">
                                         <label for="applicant-radio">
                                                 <span class="icon icon-close"></span>
                                             </label>
@@ -1542,7 +1525,7 @@
                                 <div class="col-12">
                                     <h5 class="subtitle">upload photo</h5>
                                     <div class="bs-file">
-                                        <input type="file" class="form-control" id="file">
+                                        <input readonly="true"  type="file" class="form-control" id="file">
                                         <label for="file"><span>Change photo</span></label>
                                     </div>
                                 </div>
@@ -1551,11 +1534,11 @@
                                 <div class="col-12">
                                     <h5 class="subtitle">Verify applicant Aadhar</h5>
                                     <div class="bs-radio typ-sm">
-                                        <input type="radio" name="yesNo" id="yes">
+                                        <input readonly="true"  type="radio" name="yesNo" id="yes">
                                         <label for="yes"><span>Get OTP</span></label>
                                     </div>
                                     <div class="bs-radio typ-sm modal-init" data-target="biomatric-modal">
-                                        <input type="radio" name="yesNo" id="no">
+                                        <input readonly="true"  type="radio" name="yesNo" id="no">
                                         <label for="no"><span>Biometric Scan</span></label>
                                     </div>
                                 </div>
@@ -1569,14 +1552,14 @@
                                 <div class="col-12">
                                     <!-- <h5 class="subtitle">Is applicant's spouse working?</h5> -->
                                     <div class="bs-radio typ-doc">
-                                        <input type="radio" name="doc-upload" id="applicant-radio">
+                                        <input readonly="true"  type="radio" name="doc-upload" id="applicant-radio">
                                         <label for="applicant-radio">
                                                     <span class="icon icon-close"></span>
                                                 </label>
                                         <span class="desc-text">01 | <span>Applicant</span></span>
                                     </div>
                                     <div class="bs-radio typ-doc">
-                                        <input type="radio" name="doc-upload" id="applicant-radio">
+                                        <input readonly="true"  type="radio" name="doc-upload" id="applicant-radio">
                                         <label for="applicant-radio">
                                                     <span class="icon icon-close"></span>
                                                 </label>
@@ -1588,7 +1571,7 @@
                                 <div class="col-12">
                                     <h5 class="subtitle">upload photo</h5>
                                     <div class="bs-file">
-                                        <input type="file" class="form-control" id="file">
+                                        <input readonly="true"  type="file" class="form-control" id="file">
                                         <label for="file"><span>Change photo</span></label>
                                     </div>
                                 </div>
@@ -1597,11 +1580,11 @@
                                 <div class="col-12">
                                     <h5 class="subtitle">Verify applicant Aadhar</h5>
                                     <div class="bs-radio typ-sm">
-                                        <input type="radio" name="yesNo" id="yes">
+                                        <input readonly="true"  type="radio" name="yesNo" id="yes">
                                         <label for="yes"><span>Get OTP</span></label>
                                     </div>
                                     <div class="bs-radio typ-sm modal-init" data-target="biomatric-modal">
-                                        <input type="radio" name="yesNo" id="no">
+                                        <input readonly="true"  type="radio" name="yesNo" id="no">
                                         <label for="no"><span>Biometric Scan</span></label>
                                     </div>
                                 </div>
@@ -1615,14 +1598,14 @@
                                 <div class="col-12">
                                     <!-- <h5 class="subtitle">Is applicant's spouse working?</h5> -->
                                     <div class="bs-radio typ-doc">
-                                        <input type="radio" name="doc-upload" id="applicant-radio">
+                                        <input readonly="true"  type="radio" name="doc-upload" id="applicant-radio">
                                         <label for="applicant-radio">
                                                         <span class="icon icon-close"></span>
                                                     </label>
                                         <span class="desc-text">01 | <span>Applicant</span></span>
                                     </div>
                                     <div class="bs-radio typ-doc">
-                                        <input type="radio" name="doc-upload" id="applicant-radio">
+                                        <input readonly="true"  type="radio" name="doc-upload" id="applicant-radio">
                                         <label for="applicant-radio">
                                                         <span class="icon icon-close"></span>
                                                     </label>
@@ -1634,7 +1617,7 @@
                                 <div class="col-12">
                                     <h5 class="subtitle">upload photo</h5>
                                     <div class="bs-file">
-                                        <input type="file" class="form-control" id="file">
+                                        <input readonly="true"  type="file" class="form-control" id="file">
                                         <label for="file"><span>Change photo</span></label>
                                     </div>
                                 </div>
@@ -1643,11 +1626,11 @@
                                 <div class="col-12">
                                     <h5 class="subtitle">Verify applicant Aadhar</h5>
                                     <div class="bs-radio typ-sm">
-                                        <input type="radio" name="yesNo" id="yes">
+                                        <input readonly="true"  type="radio" name="yesNo" id="yes">
                                         <label for="yes"><span>Get OTP</span></label>
                                     </div>
                                     <div class="bs-radio typ-sm modal-init" data-target="biomatric-modal">
-                                        <input type="radio" name="yesNo" id="no">
+                                        <input readonly="true"  type="radio" name="yesNo" id="no">
                                         <label for="no"><span>Biometric Scan</span></label>
                                     </div>
                                 </div>
@@ -1661,14 +1644,14 @@
                                 <div class="col-12">
                                     <!-- <h5 class="subtitle">Is applicant's spouse working?</h5> -->
                                     <div class="bs-radio typ-doc">
-                                        <input type="radio" name="doc-upload" id="applicant-radio">
+                                        <input readonly="true"  type="radio" name="doc-upload" id="applicant-radio">
                                         <label for="applicant-radio">
                                                             <span class="icon icon-close"></span>
                                                         </label>
                                         <span class="desc-text">01 | <span>Applicant</span></span>
                                     </div>
                                     <div class="bs-radio typ-doc">
-                                        <input type="radio" name="doc-upload" id="applicant-radio">
+                                        <input readonly="true"  type="radio" name="doc-upload" id="applicant-radio">
                                         <label for="applicant-radio">
                                                             <span class="icon icon-close"></span>
                                                         </label>
@@ -1680,7 +1663,7 @@
                                 <div class="col-12">
                                     <h5 class="subtitle">upload photo</h5>
                                     <div class="bs-file">
-                                        <input type="file" class="form-control" id="file">
+                                        <input readonly="true"  type="file" class="form-control" id="file">
                                         <label for="file"><span>Change photo</span></label>
                                     </div>
                                 </div>
@@ -1689,11 +1672,11 @@
                                 <div class="col-12">
                                     <h5 class="subtitle">Verify applicant Aadhar</h5>
                                     <div class="bs-radio typ-sm">
-                                        <input type="radio" name="yesNo" id="yes">
+                                        <input readonly="true"  type="radio" name="yesNo" id="yes">
                                         <label for="yes"><span>Get OTP</span></label>
                                     </div>
                                     <div class="bs-radio typ-sm modal-init" data-target="biomatric-modal">
-                                        <input type="radio" name="yesNo" id="no">
+                                        <input readonly="true"  type="radio" name="yesNo" id="no">
                                         <label for="no"><span>Biometric Scan</span></label>
                                     </div>
                                 </div>
@@ -1707,14 +1690,14 @@
                                 <div class="col-12">
                                     <!-- <h5 class="subtitle">Is applicant's spouse working?</h5> -->
                                     <div class="bs-radio typ-doc">
-                                        <input type="radio" name="doc-upload" id="applicant-radio">
+                                        <input readonly="true"  type="radio" name="doc-upload" id="applicant-radio">
                                         <label for="applicant-radio">
                                                                 <span class="icon icon-close"></span>
                                                             </label>
                                         <span class="desc-text">01 | <span>Applicant</span></span>
                                     </div>
                                     <div class="bs-radio typ-doc">
-                                        <input type="radio" name="doc-upload" id="applicant-radio">
+                                        <input readonly="true"  type="radio" name="doc-upload" id="applicant-radio">
                                         <label for="applicant-radio">
                                                                 <span class="icon icon-close"></span>
                                                             </label>
@@ -1726,7 +1709,7 @@
                                 <div class="col-12">
                                     <h5 class="subtitle">upload photo</h5>
                                     <div class="bs-file">
-                                        <input type="file" class="form-control" id="file">
+                                        <input readonly="true"  type="file" class="form-control" id="file">
                                         <label for="file"><span>Change photo</span></label>
                                     </div>
                                 </div>
@@ -1735,11 +1718,11 @@
                                 <div class="col-12">
                                     <h5 class="subtitle">Verify applicant Aadhar</h5>
                                     <div class="bs-radio typ-sm">
-                                        <input type="radio" name="yesNo" id="yes">
+                                        <input readonly="true"  type="radio" name="yesNo" id="yes">
                                         <label for="yes"><span>Get OTP</span></label>
                                     </div>
                                     <div class="bs-radio typ-sm modal-init" data-target="biomatric-modal">
-                                        <input type="radio" name="yesNo" id="no">
+                                        <input readonly="true"  type="radio" name="yesNo" id="no">
                                         <label for="no"><span>Biometric Scan</span></label>
                                     </div>
                                 </div>

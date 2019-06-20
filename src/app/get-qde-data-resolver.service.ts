@@ -5,9 +5,7 @@ import { QdeHttpService } from './services/qde-http.service';
 import { QdeService } from './services/qde.service';
 import Qde from './models/qde.model';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class GetQdeDataResolverService implements Resolve<Observable<any>> {
 
   constructor(private qdeHttp: QdeHttpService, private qdeService: QdeService) { }

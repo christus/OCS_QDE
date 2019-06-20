@@ -5,9 +5,7 @@ import { environment } from 'src/environments/environment';
 import { Resolve } from '@angular/router';
 import { Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ListOfValuesResolverService implements Resolve<Observable<any>>{
  
   constructor(private http : HttpClient) { }
