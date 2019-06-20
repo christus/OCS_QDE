@@ -272,7 +272,6 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       }
     });
     
-    console.log('__________');
   }
   
   panslide: boolean;
@@ -794,7 +793,6 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
       this.qde.application.applicants[this.applicantIndex].pan.isValid = true;
       this.qde.application.applicants[this.applicantIndex].pan.errorMessage = "";
-
       this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successfull
         if(response["ProcessVariables"]["status"]) {

@@ -14,7 +14,7 @@ export class Declaration2Component implements OnInit {
 
   qde: Qde;
   applicationId: string;
-  applicationStatus: string = "8";
+  applicationStatus: string = "15";
   constructor(
               private route: ActivatedRoute,
               private router: Router,

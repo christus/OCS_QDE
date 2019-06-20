@@ -8,6 +8,7 @@ import { Options } from "ng5-slider";
 import { NgForm } from "@angular/forms";
 import { CommonDataService } from 'src/app/services/common-data.service';
 import { QdeService } from 'src/app/services/qde.service';
+import { QdeHttpService } from 'src/app/services/qde-http.service';
 
 @Component({
   selector: 'app-offline-payment',
@@ -87,7 +88,8 @@ export class OfflinePaymentComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private commonDataService: CommonDataService,
-    private qdeService: QdeService
+    private qdeService: QdeService,
+    private qdeHttp: QdeHttpService,
   ) {
     this.commonDataService.changeMenuBarShown(true);
     this.commonDataService.changeViewFormNameVisible(true);
@@ -203,6 +205,10 @@ export class OfflinePaymentComponent implements OnInit {
     this.isAlternateResidenceNumber = !this.isAlternateResidenceNumber;
   }
 
-  temp;
+  applicationStatus: string = "20";
+  offline(){
+    this.qdeHttp.setStatusApi(this.applicationId, this.applicationStatus).subscribe(res => {}, err => {});
+  }
+
 
 }

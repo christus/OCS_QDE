@@ -196,6 +196,11 @@ export class DocumentUploadComponent implements OnInit {
         this.qde = this.qdeService.getQde();
       }
     });
+    this.qdeService.setQde(JSON.parse(this.route.snapshot.data['qde']['ProcessVariables']['response']));
+      this.qdeService.qdeSource.subscribe(value => {
+        this.applicationIdStr = value.application.applicationId;
+       
+      });
   }
 
   ngAfterViewInit() {}
@@ -519,5 +524,10 @@ export class DocumentUploadComponent implements OnInit {
     
   }
 
-  temp;
+  applicationIdStr: string;
+  applicationStatus: string = "35";
+
+  docStatus(){
+    this.qdeHttp.setStatusApi(this.applicationIdStr, this.applicationStatus).subscribe(res => {}, err => {}); 
+  }
 }
