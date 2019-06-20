@@ -7,6 +7,9 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { Options } from "ng5-slider";
 import { NgForm } from "@angular/forms";
 import { QdeHttpService } from 'src/app/services/qde-http.service';
+import { callbackify } from 'util';
+import { QdeService } from 'src/app/services/qde.service';
+import Qde from 'src/app/models/qde.model';
 
 
 
@@ -78,17 +81,73 @@ export class DocumentUploadComponent implements OnInit {
 
   applicantIndividual: boolean = true;
 
-  fragments = ["aadhar1", "aadhar2", "address", "income", "banking", "collateral", "photo"];
+  applicationId: number;
+  mainApplicantId: string;
+  currentApplicantId: string;
+  isMainApplicant: boolean;
+  coApplicants: Array<any> = [];
+
+  selectedIdProof: string;
+  selectedAddressProof: string;
+  selectedIncomeProof: string;
+  selectedBankProof: string;
+  selectedCollateralProof: string;
+
+  documentType: any;
+  documentCategory: any;
+  collateralType: any;
+
+  qde: Qde;
+
+  fragments = [
+    "aadhar1",
+    "aadhar2",
+    "address",
+    "income",
+    "banking",
+    "collateral",
+    "photo"
+  ];
 
   constructor(
     private renderer: Renderer2,
     private route: ActivatedRoute,
     private router: Router,
     private qdeHttp: QdeHttpService,
+    private qdeService: QdeService
   ) {}
 
   ngOnInit() {
     // this.renderer.addClass(this.select2.selector.nativeElement, 'js-select');
+
+    if (this.route.snapshot.data.listOfValues) {
+      const lov = JSON.parse(
+        this.route.snapshot.data.listOfValues["ProcessVariables"].lovs
+      );
+      
+      this.documentType = lov.LOVS.document_type;
+      this.documentCategory = lov.LOVS.document_category;
+      this.collateralType = lov.LOVS.collateral_type || [
+        {
+          key: "Property Papers",
+          value: "1"
+        },
+        {
+          key: "Gold Assets",
+          value: "2"
+        }
+      ];
+    }
+
+    // Check Whether there is qde data to be filled or else Initialize Qde
+    this.route.params.subscribe(params => {
+      // Make an http request to get the required qde data and set using setQde
+      if (params.applicationId) {
+        // setQde(JSON.parse(response.ProcessVariables.response));
+      } else {
+        this.qde = this.qdeService.getQde();
+      }
+    });
 
     this.route.fragment.subscribe(fragment => {
       let localFragment = fragment;
@@ -100,6 +159,29 @@ export class DocumentUploadComponent implements OnInit {
       // Replace Fragments in url
       if (this.fragments.includes(localFragment)) {
         this.tabSwitch(this.fragments.indexOf(localFragment));
+      }
+    });
+
+    this.route.params.subscribe(params => {
+      // Make an http request to get the required qde data and set using setQde
+      this.applicationId = params.applicationId;
+      if (this.applicationId) {
+        this.qdeHttp.getQdeData(this.applicationId).subscribe(response => {
+          this.qde = JSON.parse(response["ProcessVariables"]["response"]);
+
+          const applicants = this.qde.application.applicants;
+          for (const applicant of applicants) {
+            if (applicant["isMainApplicant"]) {
+              this.mainApplicantId = applicant["applicantId"];
+            } else {
+              this.coApplicants.push(applicant);
+            }
+          }
+
+          this.qdeService.setQde(this.qde);
+        });
+      } else {
+        this.qde = this.qdeService.getQde();
       }
     });
   }
@@ -155,9 +237,9 @@ export class DocumentUploadComponent implements OnInit {
 
       this.activeTab = tabIndex;
 
-      if (tabIndex == 9) {
+      if (tabIndex === 9) {
         this.applicantIndividual = false;
-      } else if (tabIndex == 0) {
+      } else if (tabIndex === 0) {
         this.applicantIndividual = true;
       }
     }
@@ -187,76 +269,243 @@ export class DocumentUploadComponent implements OnInit {
     this.isAlternateResidenceNumber = !this.isAlternateResidenceNumber;
   }
 
-  fileToUpload: File = null;
+  //fileToUpload: File = null;
 
   handleIdProof(files: FileList) {
     // if (form && !form.valid) {
     //   return;
     // }
 
-    this.fileToUpload = files.item(0);
-    console.log("FILE UPLOAD: " + this.fileToUpload);
+    const applicantId = this.currentApplicantId.toString();
+    
+    let file = files.item(0);
+    let modifiedFile = Object.defineProperty(file, "name", {
+      writable: true,
+      value: file["name"]
+    });
+    modifiedFile["name"] = this.applicationId + "-" + applicantId + "-" + new Date().getTime() + "-" + modifiedFile["name"];
 
-    this.update(this.fileToUpload);
+    const callback = (info: JSON) => {
+      const documentId = info["id"];
+      const documentCategory = this.findDocumentCategory("ID Proof");
+
+      const documentInfo = {
+        applicationId: this.applicationId,
+        applicantId: applicantId,
+        documentImageId: documentId,
+        documentType: this.selectedIdProof,
+        documentCategory: documentCategory
+      };
+
+      this.uploadToOmni(documentInfo, 2);
+    };
+
+    this.uploadToMongo(modifiedFile, callback);
   }
 
   handleAddressProof(files: FileList) {
-    this.fileToUpload = files.item(0);
+    const applicantId = this.currentApplicantId.toString();
+
+    let file = files.item(0);
+
+    let modifiedFile = Object.defineProperty(file, "name", {
+      writable: true,
+      value: file["name"]
+    });
+    modifiedFile["name"] = this.applicationId + "-" + applicantId + "-" + new Date().getTime() + "-" + modifiedFile["name"];
+
+    const callback = (info: JSON) => {
+      const documentId = info["id"];
+      const documentCategory = this.findDocumentCategory("Address Proof");
+
+      const documentInfo = {
+        applicationId: this.applicationId,
+        applicantId: applicantId,
+        documentImageId: documentId,
+        documentType: this.selectedAddressProof,
+        documentCategory: documentCategory
+      };
+
+      this.uploadToOmni(documentInfo, 3);
+    };
+
+    this.uploadToMongo(modifiedFile, callback);
   }
 
   handleIncomeProof(files: FileList) {
-    this.fileToUpload = files.item(0);
+
+    const applicantId = this.currentApplicantId.toString();
+
+    let file = files.item(0);
+
+    let modifiedFile = Object.defineProperty(file, "name", {
+      writable: true,
+      value: file["name"]
+    });
+    modifiedFile["name"] = this.applicationId + "-" + applicantId + "-" + new Date().getTime() + "-" + modifiedFile["name"];
+
+    const callback = (info: JSON) => {
+      const documentId = info["id"];
+      const documentCategory = this.findDocumentCategory("Income Document");
+
+      const documentInfo = {
+        applicationId: this.applicationId,
+        applicantId: applicantId,
+        documentImageId: documentId,
+        documentType: this.selectedIncomeProof,
+        documentCategory: documentCategory
+      };
+
+      this.uploadToOmni(documentInfo, 4);
+    };
+
+    this.uploadToMongo(modifiedFile, callback);
   }
 
   handleBankingProof(files: FileList) {
-    this.fileToUpload = files.item(0);
+
+    const applicantId = this.currentApplicantId.toString();
+
+    let file = files.item(0);
+
+    let modifiedFile = Object.defineProperty(file, "name", {
+      writable: true,
+      value: file["name"]
+    });
+    modifiedFile["name"] = this.applicationId + "-" + applicantId + "-" + new Date().getTime() + "-" + modifiedFile["name"];
+
+    const callback = (info: JSON) => {
+      const documentId = info["id"];
+      const documentCategory = this.findDocumentCategory("Banking");
+
+      const documentInfo = {
+        applicationId: this.applicationId,
+        applicantId: applicantId,
+        documentImageId: documentId,
+        documentType: this.selectedBankProof,
+        documentCategory: documentCategory
+      };
+
+      this.uploadToOmni(documentInfo, 5);
+    };
+
+    this.uploadToMongo(modifiedFile, callback);
   }
 
   handleCollateralProof(files: FileList) {
-    this.fileToUpload = files.item(0);
+
+    const applicantId = this.currentApplicantId.toString();
+
+    let file = files.item(0);
+
+    let modifiedFile = Object.defineProperty(file, "name", {
+      writable: true,
+      value: file["name"]
+    });
+    modifiedFile["name"] = this.applicationId + "-" + applicantId + "-" + new Date().getTime() + "-" + modifiedFile["name"];
+
+    const callback = (info: JSON) => {
+      const documentId = info["id"];
+      const documentCategory = this.findDocumentCategory("Collateral");
+
+      const documentInfo = {
+        applicationId: this.applicationId,
+        applicantId: applicantId,
+        documentImageId: documentId,
+        documentType: this.selectedCollateralProof,
+        documentCategory: documentCategory
+      };
+
+      this.uploadToOmni(documentInfo, 6);
+    };
+
+    this.uploadToMongo(modifiedFile, callback);
   }
 
   handleCustomerPhoto(files: FileList) {
-    this.fileToUpload = files.item(0);
+
+    const applicantId = this.currentApplicantId.toString();
+
+    let file = files.item(0);
+
+    let modifiedFile = Object.defineProperty(file, "name", {
+      writable: true,
+      value: file["name"]
+    });
+    modifiedFile["name"] = this.applicationId + "-" + applicantId + "-" + new Date().getTime() + "-" + modifiedFile["name"];
+
+    const callback = (info: JSON) => {
+      const documentId = info["id"];
+      const documentCategory = this.findDocumentCategory("Photo");
+
+      const documentInfo = {
+        applicationId: this.applicationId,
+        applicantId: applicantId,
+        documentImageId: documentId,
+        documentType: "",
+        documentCategory: documentCategory
+      };
+
+      this.uploadToOmni(documentInfo, 7);
+    };
+
+    this.uploadToMongo(modifiedFile, callback);
   }
 
-  update(file: File) {
-
-    this.qdeHttp.uploadToAppiyoDrive(this.fileToUpload).subscribe(
+  uploadToMongo(file: File, callback: any) {
+    this.qdeHttp.uploadToAppiyoDrive(file).subscribe(
       response => {
-        if (response["Error"] === "0" && response["ProcessVariables"]["status"]) {
+        if (response["ok"]) {
           console.log(response);
-          //this.tabSwitch(1);
+          callback(response["info"]);
         } else {
-          //alert("Response: " + response["ErrorMessage"]);
+          console.log(response["ErrorMessage"]);
         }
       },
       error => {
-        //alert(error["ErrorMessage"]);
         console.log("Error : ", error);
       }
     );
   }
 
-  //  isEligible: boolean = false;
-  // isNotEligible: boolean = false;
-  // emiAmount: number;
-  // eligibleAmount: number;
+  uploadToOmni(documentInfo: any, tabIndex: number) {
+    this.qdeHttp.uploadToOmni(documentInfo).subscribe(
+      response => {
+        if (response["Error"] === "0" && response["ProcessVariables"]["status"]) {
+          this.tabSwitch(tabIndex); // Need to be enabled for tab switch
+        } else {
+          if (response["ErrorMessage"]){
+            console.log("Response: " + response["ErrorMessage"]);
+          } else if (response["ProcessVariables"]["errorMessage"]) {
+            console.log("Response: " + response["ProcessVariables"]["errorMessage"]);
+          }
+        }
+      },
+      error => {
+        console.log("Error : ", error);
+      }
+    );
+  }
 
-  // submitDocumentUploadForm(form: NgForm) {
+  findDocumentCategory(type: string) {
+    let documentCategory: string;
+    for (const category of this.documentCategory) {
+      if (category.key === type) {
+        documentCategory = category.value;
+        break;
+      }
+    }
 
-  //   this.qdeHttp.dummyCIBILAPI().subscribe(res => {
-  //     console.log("res: ", res['ProcessVariables']['checkEligibility'].toLowerCase);
-  //     if(res['ProcessVariables']['checkEligibility'].toLowerCase() == 'yes') {
-  //       this.isEligible = true;
+    return documentCategory;
+  }
 
-  //       this.emiAmount = parseInt(res['ProcessVariables']['emi']);
-  //       this.eligibleAmount = parseInt(res['ProcessVariables']['eligibilityAmount']);
-  //     }
-  //     else if(res['ProcessVariables']['checkEligibility'].toLowerCase() == 'no') {
-  //       this.isNotEligible = true;
-  //     }
-  //   });
-  // }
+  onSelectApplicant(tabIndex?: number, applicantId?: string, isMainApplicant?: boolean) {
 
+    this.currentApplicantId = applicantId;
+    this.isMainApplicant = isMainApplicant;
+
+    this.tabSwitch(tabIndex);
+  }
+
+  temp;
 }

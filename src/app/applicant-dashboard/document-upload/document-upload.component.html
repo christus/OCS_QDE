@@ -4,6 +4,9 @@
       <div class="lyt-home">
           <div class="tabs">
               <ul class="tabs-head" [ngClass]="{'visibilityHidden': (activeTab == 0)}">
+                <li class="tab-link pending" [ngClass]="{'active': (activeTab == 0), 'hide': (!applicantIndividual)}">
+                    <a href="javascript:void(0);" (click)="tabSwitch(0)">Dashboard</a>
+                </li>
                 <li class="tab-link pending" [ngClass]="{'active': (activeTab == 1), 'hide': (!applicantIndividual)}">
                   <a href="javascript:void(0);" (click)="tabSwitch(1)">Id Proof</a>
                 </li>
@@ -56,15 +59,28 @@
                                                     <div class="bs-radio">
                                                         <input  type="radio"
                                                                 [value]="true"
-                                                                (change)="tabSwitch(1)"  />
+                                                                (click)="onSelectApplicant(1, mainApplicantId, true)"/>
                                                         <label for="individual"><span>Applicant</span></label>
                                                     </div>
-                                                    <div class="bs-radio">
+
+                                                   <!--  <div class="form-wrap" *ngIf="coApplicants.length > 0"> -->
+                                                    <div class="bs-radio typ-doc" *ngFor="let coApp of coApplicants; let i=index;">
+                                                        <input type="radio" (click)="onSelectApplicant(1, coApp.applicantId, false)" name="doc-upload"/>
+                                                        <label for="applicant-radio">
+                                                            <span class="desc-text">{{i+1}} <span>Co-Applicant</span></span>
+                                                            <!-- <span class="icon icon-close"></span> -->
+                                                        </label>
+                                                        <!--  <span class="desc-text">{{i+1}} | <span>Co-Applicant</span></span> -->
+                                                    </div>
+                                                    
+                                                    <!-- </div> -->
+
+                                                   <!--  <div class="bs-radio">
                                                         <input  type="radio"
                                                                 [value]="false"
                                                                 (change)="tabSwitch(7)" />
                                                         <label for="non-individual"><span>Co-Applicant</span></label>
-                                                    </div>
+                                                    </div> -->
                                                 </div>
                                             </form>
                                         </div>
@@ -109,16 +125,24 @@
                                             <div class="form-wrap">
                                                 <div class="form-group">
                                                     <span class="control-title">Select a Document Type</span>
-                                                    <ng-select>
+                                                    <kendo-dropdownlist class="form-control" 
+                                                        name="id-proof" 
+                                                        [data]="documentType" 
+                                                        textField="key"
+                                                        valueField="value" 
+                                                        [valuePrimitive]="true" 
+                                                        [(ngModel)]="selectedIdProof">
+                                                    </kendo-dropdownlist>
+                                                    <!-- <ng-select>
                                                         <ng-option value="o1">Driving License</ng-option>
                                                         <ng-option value="o2">Ration Card</ng-option>
                                                         <ng-option value="o3">Passport</ng-option>
                                                         <ng-option value="o4">Electricity Bill</ng-option>
-                                                    </ng-select>
+                                                    </ng-select> -->
                                                 </div>
                                             </div>
                                             <div class="btn-wrap">
-                                                <button class="btn btn-primary" (click)="goToNextSlide(aadharSlider2)">Next</button>
+                                                <button class="btn btn-primary" (click)="goToNextSlide(aadharSlider2, f)">Next</button>
                                             </div>
                                         </form>
                                     </div>
@@ -126,8 +150,9 @@
                                         <form class="bs-form">
                                             <div class="form-wrap">
                                                 <div class="bs-file">
-                                                    <input type="file" class="form-control" id="file" (change)="handleIdProof($event.target.files)">
-                                                    <label for="file"><span>Click photo of Aadhar card</span></label>
+                                                    <input type="file" class="form-control" (change)="handleIdProof($event.target.files)" >
+<!--                                                <button type="submit" [disabled]="formGroup.invalid || formGroup.prestine">Submit</button>
+ -->                                                <label for="file"><span>Click photo of Aadhar card</span></label>
                                                 </div>
                                             </div>
                                             <div class="no-aadhar">
@@ -140,7 +165,7 @@
                                             </div>
                                         </form>
                                     </div>
-                                    <div class="swiper-slide">
+                                   <!--  <div class="swiper-slide">
                                         <form class="bs-form">
                                             <div class="form-wrap">
                                                 <div class="bs-radio">
@@ -157,7 +182,7 @@
                                                 </div>
                                             </div>
                                         </form>
-                                    </div>
+                                    </div> -->
                                     <!-- <div class="overlay"></div>
                                         <div class="bs-modal" [ngClass]="{'active': (activeTab == 7)}">
                                             <a href="#" class="modal-close"><span class="icon icon-close"></span></a>
@@ -198,7 +223,7 @@
                           <div class="lhs">
                               <div  class="swiper-container form-swiper"
                                     [swiper]="lhsConfig"
-                                    #adressSlider1="ngxSwiper">
+                                    #addressSlider1="ngxSwiper">
                                   <div class="swiper-wrapper">
                                       <div class="swiper-slide">
                                           <div class="title-wrap">
@@ -225,12 +250,20 @@
                                         <div class="form-wrap">
                                             <div class="form-group">
                                                 <span class="control-title">Select a Document Type</span>
-                                                <ng-select>
+                                               <!--  <ng-select>
                                                     <ng-option value="o1">Driving License</ng-option>
                                                     <ng-option value="o2">Ration Card</ng-option>
                                                     <ng-option value="o3">Passport</ng-option>
                                                     <ng-option value="o4">Electricity Bill</ng-option>
-                                                </ng-select>
+                                                </ng-select> -->
+                                                <kendo-dropdownlist class="form-control" 
+                                                    name="address-proof" 
+                                                    [data]="documentType" 
+                                                    textField="key" 
+                                                    valueField="value"
+                                                    [valuePrimitive]="true" 
+                                                    [(ngModel)]="selectedAddressProof">
+                                                </kendo-dropdownlist>
                                             </div>
                                         </div>
                                         <div class="btn-wrap">
@@ -243,7 +276,7 @@
                                       <form class="bs-form">
                                           <div class="form-wrap">
                                               <div class="bs-file">
-                                                  <input type="file" class="form-control" id="file">
+                                                  <input type="file" class="form-control" (change)="handleAddressProof($event.target.files)" >
                                                   <label for="file"><span>Click photo of Address Proof</span></label>
                                               </div>
                                           </div>
@@ -294,12 +327,20 @@
                                         <div class="form-wrap">
                                             <div class="form-group">
                                                 <span class="control-title">Select a Document Type</span>
-                                                <ng-select name="state" [searchable]="false">
+                                                <kendo-dropdownlist class="form-control" 
+                                                    name="income-proof" 
+                                                    [data]="documentType" 
+                                                    textField="key" 
+                                                    valueField="value"
+                                                    [valuePrimitive]="true" 
+                                                    [(ngModel)]="selectedIncomeProof">
+                                                </kendo-dropdownlist>
+                                               <!--  <ng-select name="state" [searchable]="false">
                                                     <ng-option value="o1">Salary Slip</ng-option>
                                                     <ng-option value="o2">Form 16</ng-option>
                                                     <ng-option value="o3">Appointment Letter</ng-option>
                                                     <ng-option value="o4">Bank Statement of Salary Account</ng-option>
-                                                </ng-select>
+                                                </ng-select> -->
                                             </div>
                                         </div>
                                         <div class="btn-wrap">
@@ -312,7 +353,7 @@
                                       <form class="bs-form">
                                           <div class="form-wrap">
                                               <div class="bs-file">
-                                                  <input type="file" class="form-control" id="file">
+                                                  <input type="file" class="form-control" (change)="handleIncomeProof($event.target.files)" >
                                                   <label for="file"><span>Click photo of Income Proof</span></label>
                                               </div>
                                           </div>
@@ -363,12 +404,20 @@
                                         <div class="form-wrap">
                                             <div class="form-group">
                                                 <span class="control-title">Select a Document Type</span>
-                                                <ng-select name="state" [searchable]="false">
+                                                <kendo-dropdownlist class="form-control" 
+                                                    name="banking-proof" 
+                                                    [data]="documentType" 
+                                                    textField="key" 
+                                                    valueField="value"
+                                                    [valuePrimitive]="true" 
+                                                    [(ngModel)]="selectedBankProof">
+                                                </kendo-dropdownlist>
+                                                <!-- <ng-select name="state" [searchable]="false">
                                                     <ng-option value="o1">Salary Slip</ng-option>
                                                     <ng-option value="o2">Form 16</ng-option>
                                                     <ng-option value="o3">Appointment Letter</ng-option>
                                                     <ng-option value="o4">Bank Statement of Salary Account</ng-option>
-                                                </ng-select>
+                                                </ng-select> -->
                                             </div>
                                         </div>
                                         <div class="btn-wrap">
@@ -381,7 +430,7 @@
                                       <form class="bs-form">
                                           <div class="form-wrap">
                                               <div class="bs-file">
-                                                  <input type="file" class="form-control" id="file">
+                                                  <input type="file" class="form-control" (change)="handleBankingProof($event.target.files)" >
                                                   <label for="file"><span>Click photo of Banking Proof</span></label>
                                               </div>
                                           </div>
@@ -433,10 +482,18 @@
                                         <div class="form-wrap">
                                             <div class="form-group">
                                                 <span class="control-title">Select a Document Type</span>
-                                                <ng-select name="state" [searchable]="false">
+                                                <kendo-dropdownlist class="form-control" 
+                                                    name="collateral-proof" 
+                                                    [data]="collateralType" 
+                                                    textField="key" 
+                                                    valueField="value"
+                                                    [valuePrimitive]="true" 
+                                                    [(ngModel)]="selectedCollateralProof">
+                                                </kendo-dropdownlist>
+                                                <!-- <ng-select name="state" [searchable]="false">
                                                     <ng-option value="o1">Property Papers</ng-option>
                                                     <ng-option value="o2">Gold Assests</ng-option>
-                                                </ng-select>
+                                                </ng-select> -->
                                             </div>
                                         </div>
                                         <div class="btn-wrap">
@@ -449,7 +506,7 @@
                                       <form class="bs-form">
                                           <div class="form-wrap">
                                               <div class="bs-file">
-                                                  <input type="file" class="form-control" id="file">
+                                                  <input type="file" class="form-control" (change)="handleCollateralProof($event.target.files)" >
                                                   <label for="file"><span>Click photo of Collateral</span></label>
                                               </div>
                                           </div>
@@ -490,7 +547,7 @@
                                         <form class="bs-form">
                                             <div class="form-wrap">
                                                 <div class="bs-file">
-                                                    <input type="file" class="form-control" id="file">
+                                                    <input type="file" class="form-control" (change)="handleCustomerPhoto($event.target.files)" >
                                                     <label for="file"><span>Click photo of Customer</span></label>
                                                 </div>
                                             </div>

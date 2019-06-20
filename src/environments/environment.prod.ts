@@ -40,8 +40,8 @@ export const environment = {
       'processId': 'af88d3c2724211e982270242ac110003'
     },
     "upload": {
-      'workflowId': '7b222bb4837d11e982270242ac110002',
-      'processId': '7b2ecfd6837d11e982270242ac110002'
+      'workflowId': 'd9e7a808926f11e982270242ac110002',
+      'processId': 'da00178a926f11e982270242ac110002'
     },
     "checkPan": {
       'workflowId': '7b222bb4837d11e982270242ac110002',

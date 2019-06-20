@@ -239,22 +239,14 @@ export class LoanQdeComponent implements OnInit {
   ngOnInit() {
     // this.renderer.addClass(this.select2.selector.nativeElement, 'js-select');
 
-    console.log(">>", JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs));
-    var lov = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs);
+    if(this.route.snapshot.data.listOfValues) {
+      const lov = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs);
 
-    this.loanpurposes = lov.LOVS.loan_purpose;
-    this.loanType = lov.LOVS.loan_type;
-    this.propertyTypes = lov.LOVS.property_type;
+      this.loanpurposes = lov.LOVS.loan_purpose;
+      this.loanType = lov.LOVS.loan_type;
+      this.propertyTypes = lov.LOVS.property_type;
 
-    this.loanProviderList = lov.LOVS.loan_provider || [
-      { key: "SBI home loan", value: "1" },
-      { key: "ICICI home loan", value: "2" }
-    ];
-
-    console.log(this.loanpurposes)
-    
-    if(this.route.snapshot.data.listOfValues != null && this.route.snapshot.data.listOfValues != undefined) {
-      // Initialize all UI Values heres
+      this.loanProviderList = lov.LOVS.loan_providers;
     }
     
     // Check Whether there is qde data to be filled or else Initialize Qde

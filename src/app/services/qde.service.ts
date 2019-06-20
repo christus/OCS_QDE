@@ -483,13 +483,13 @@ export class QdeService {
 
   resetQde() {
     this.setQde({
-      "application": {
-        "ocsNumber": "",
-        "loanAmount": "",
-        "tenure": "",
-        "applicationId": "",
-        "propertyIdentified": null,
-        "applicants": [
+      application: {
+        ocsNumber: "",
+        loanAmount: "",
+        tenure: "",
+        applicationId: "",
+        propertyIdentified: null,
+        applicants: [
           {
             applicantId: "",
             isMainApplicant: true,

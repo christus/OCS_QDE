@@ -188,7 +188,7 @@ createOrUpdatePersonalDetails(qde) {
     );
 
     let uri = environment.host + '/appiyo/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-        return this.http.put(uri, body.toString());
+    return this.http.put(uri, body.toString());
   }
 
   getCityAndState(zipcode) {
@@ -224,13 +224,34 @@ createOrUpdatePersonalDetails(qde) {
     let uri = environment.host + environment.appiyoDrive;
 
     let headers = {
-      headers: new HttpHeaders({ "Content-Type": "multipart/form-data" })
+      headers: new HttpHeaders({})
     };
 
     const formData: FormData = new FormData();
     formData.append('files[]', fileToUpload, fileToUpload.name);
 
     return this.http.post(uri, formData, headers);
+  }
+
+  uploadToOmni(documentInfo: any) {
+    const processId = environment.api.upload.processId;
+    const workflowId = environment.api.upload.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      ProcessVariables: documentInfo,
+      processId: processId,
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = new HttpParams().set(
+      "processVariables",
+      JSON.stringify(requestEntity)
+    );
+
+    let uri = environment.host + '/appiyo/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.http.put(uri, body.toString());
   }
 
   dummyGetApi(qde) {
@@ -362,135 +383,135 @@ createOrUpdatePersonalDetails(qde) {
       });
     //  }
   }
-  // dummyCIBILAPI() {
-  //   return of({
-  //     "Error" : "0",
-  //     "ErrorCode" : "",
-  //     "ErrorMessage" : "",
-  //     "ProcessId" : "7b2ecfd6837d11e982270242ac110002",
-  //   //  "ProcessInstanceId" : "57ec6dd688f411e982270242ac110002",
-  //     "ProcessName" : "Payment Gateway",
-  //     "ProcessVariables": {
-  //     "requestBodyPayload": "<soapenv:Envelope \\ \txmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" \\ \txmlns:tem=\"http://tempuri.org/\" \\ \txmlns:net=\"http://schemas.datacontract.org/2004/07/Nettpositive.BureauOne.BusinessObjects\" \\ \txmlns:arr=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\"> \\ \t<soapenv:Header/> \\ \t<soapenv:Body> \\ \t\t<tem:ProcessRequest> \\ \t\t\t<!--Optional:--> \\ \t\t\t<tem:request> \\ \t\t\t\t<net:AddrLine1>ICICI BANK LTDCHANDIVALI</net:AddrLine1> \\ \t\t\t\t<net:DOB>1999-01-02</net:DOB> \\ \t\t\t\t<net:First_Name>SHITAL</net:First_Name> \\ \t\t\t\t<net:Future_Field10>1014</net:Future_Field10> \\ \t\t\t\t<net:Last_Name>CHANDRAKANTBHAI DESAI</net:Last_Name> \\ \t\t\t\t<net:LosIndicator>LOS</net:LosIndicator> \\ \t\t\t\t<net:OverrideCoolingPeriod>false</net:OverrideCoolingPeriod> \\ \t\t\t\t<net:ProcessId></net:ProcessId> \\ \t\t\t\t<!--Optional:--> \\ \t\t\t\t<net:Product_Code></net:Product_Code> \\ \t\t\t</tem:request> \\ \t\t</tem:ProcessRequest> \\ \t</soapenv:Body> \\ </soapenv:Envelope>",
-  //     "Content_Type": "",
-  //     "cibilURL": "http://172.16.63.50:97/BureauOneService.svc?wsdl",
-  //     "cibilResponse": "",
-  //     "addressLine1": "",
-  //     "firstName": "",
-  //     "lastName": "",
-  //     "dateOfBirth": "",
-  //     "futureField10": "",
-  //     "overrideCoolingPeriod": "",
-  //     "procCode": "",
-  //     "LOSIndicator": "",
-  //     "productId": "",
-  //     "productCode": "",
-  //     "apiType": "CIBIL",
-  //     "bureauCategoryId": "",
-  //     "LOSApplicationNumber": "",
-  //     "bureauProductList": "",
-  //     "field10": "",
-  //     "inquiryPurpose": "",
-  //     "errorCode": "",
-  //     "errorMessage": "",
-  //     "requestId": "0",
-  //     "insertQuery": "",
-  //     "dbErrorCode": "",
-  //     "dbErrorMessage": "",
-  //     "dbResponse": "",
-  //     "updateQuery": "",
-  //     "transactionAmount": "",
-  //     "durationOfAgreement": "",
-  //     "middleName": "",
-  //     "gender": "",
-  //     "maritalStatus": "",
-  //     "street": "",
-  //     "locality1": "",
-  //     "locality2": "",
-  //     "city": "",
-  //     "state": "",
-  //     "postal": "",
-  //     "addressType": "",
-  //     "panId": "",
-  //     "passportId": "",
-  //     "voterId": "",
-  //     "driversLicense": "",
-  //     "rationCard": "",
-  //     "nationalIdCard": "",
-  //     "homePhone": "",
-  //     "mobilePhone": "",
-  //     "field9": "",
-  //     "accountNumber": "",
-  //     "field6": "",
-  //     "field7": "",
-  //     "field8": "",
-  //     "createdOn": "",
-  //     "updatedOn": "",
-  //     "callType": "",
-  //     "batchNumber": "",
-  //     "status": "",
-  //     "serialNumber": "",
-  //     "isOverrideRule": "",
-  //     "processControlId": "",
-  //     "isBureauIterator": "",
-  //     "createdBy": "",
-  //     "updatedBy": "",
-  //     "branchId": "",
-  //     "kendraCentreId": "",
-  //     "consumerName4": "",
-  //     "consumerName5": "",
-  //     "additionalName1": "",
-  //     "additionalName2": "",
-  //     "additionalNameType1": "",
-  //     "additionalNameType2": "",
-  //     "additionalId": "",
-  //     "additionalId2": "",
-  //     "field1": "",
-  //     "field2": "",
-  //     "field3": "",
-  //     "field4": "",
-  //     "field5": "",
-  //     "addressLine2": "",
-  //     "street2": "",
-  //     "locality21": "",
-  //     "locality22": "",
-  //     "city2": "",
-  //     "state2": "",
-  //     "postal2": "",
-  //     "addressType2": "",
-  //     "addressLine3": "",
-  //     "street3": "",
-  //     "locality31": "",
-  //     "locality32": "",
-  //     "city3": "",
-  //     "state3": "",
-  //     "postal3": "",
-  //     "addressType3": "",
-  //     "bureauCategoryAlias": "",
-  //     "bureauId": "",
-  //     "commSearchCriteria": "",
-  //     "dbSave": "",
-  //     "isBureauPinging": "",
-  //     "isEnquiryCreated": "",
-  //     "isOverrideCoolingPeriodChk": "",
-  //     "maxBureauCap": "",
-  //     "priority": "",
-  //     "rangeForExistingRequest": "",
-  //     "referenceNumber": "",
-  //     "requestType": "",
-  //     "ocsReferenceNumber": "ocs00000000000000000037",
-  //     "checkEligibility": "yes",
-  //     //"checkEligibility": "no",
-  //     "eligibilityAmount": "50000",
-  //     "emi": "15000",
-  //     "cibilScore": "",
-  //     "cibilFlagCheck": "",
-  //     "errorResponse": ""
-  //   },
-  //   "workflowId": "7b222bb4837d11e982270242ac110002",
-  //   "projectId": "ff8e364e6fce11e98754782bcb8f3845"
-  // });
-  // }
+  dummyCIBILAPI() {
+    return of({
+      "Error" : "0",
+      "ErrorCode" : "",
+      "ErrorMessage" : "",
+      "ProcessId" : "7b2ecfd6837d11e982270242ac110002",
+    //  "ProcessInstanceId" : "57ec6dd688f411e982270242ac110002",
+      "ProcessName" : "Payment Gateway",
+      "ProcessVariables": {
+      "requestBodyPayload": "<soapenv:Envelope \\ \txmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" \\ \txmlns:tem=\"http://tempuri.org/\" \\ \txmlns:net=\"http://schemas.datacontract.org/2004/07/Nettpositive.BureauOne.BusinessObjects\" \\ \txmlns:arr=\"http://schemas.microsoft.com/2003/10/Serialization/Arrays\"> \\ \t<soapenv:Header/> \\ \t<soapenv:Body> \\ \t\t<tem:ProcessRequest> \\ \t\t\t<!--Optional:--> \\ \t\t\t<tem:request> \\ \t\t\t\t<net:AddrLine1>ICICI BANK LTDCHANDIVALI</net:AddrLine1> \\ \t\t\t\t<net:DOB>1999-01-02</net:DOB> \\ \t\t\t\t<net:First_Name>SHITAL</net:First_Name> \\ \t\t\t\t<net:Future_Field10>1014</net:Future_Field10> \\ \t\t\t\t<net:Last_Name>CHANDRAKANTBHAI DESAI</net:Last_Name> \\ \t\t\t\t<net:LosIndicator>LOS</net:LosIndicator> \\ \t\t\t\t<net:OverrideCoolingPeriod>false</net:OverrideCoolingPeriod> \\ \t\t\t\t<net:ProcessId></net:ProcessId> \\ \t\t\t\t<!--Optional:--> \\ \t\t\t\t<net:Product_Code></net:Product_Code> \\ \t\t\t</tem:request> \\ \t\t</tem:ProcessRequest> \\ \t</soapenv:Body> \\ </soapenv:Envelope>",
+      "Content_Type": "",
+      "cibilURL": "http://172.16.63.50:97/BureauOneService.svc?wsdl",
+      "cibilResponse": "",
+      "addressLine1": "",
+      "firstName": "",
+      "lastName": "",
+      "dateOfBirth": "",
+      "futureField10": "",
+      "overrideCoolingPeriod": "",
+      "procCode": "",
+      "LOSIndicator": "",
+      "productId": "",
+      "productCode": "",
+      "apiType": "CIBIL",
+      "bureauCategoryId": "",
+      "LOSApplicationNumber": "",
+      "bureauProductList": "",
+      "field10": "",
+      "inquiryPurpose": "",
+      "errorCode": "",
+      "errorMessage": "",
+      "requestId": "0",
+      "insertQuery": "",
+      "dbErrorCode": "",
+      "dbErrorMessage": "",
+      "dbResponse": "",
+      "updateQuery": "",
+      "transactionAmount": "",
+      "durationOfAgreement": "",
+      "middleName": "",
+      "gender": "",
+      "maritalStatus": "",
+      "street": "",
+      "locality1": "",
+      "locality2": "",
+      "city": "",
+      "state": "",
+      "postal": "",
+      "addressType": "",
+      "panId": "",
+      "passportId": "",
+      "voterId": "",
+      "driversLicense": "",
+      "rationCard": "",
+      "nationalIdCard": "",
+      "homePhone": "",
+      "mobilePhone": "",
+      "field9": "",
+      "accountNumber": "",
+      "field6": "",
+      "field7": "",
+      "field8": "",
+      "createdOn": "",
+      "updatedOn": "",
+      "callType": "",
+      "batchNumber": "",
+      "status": "",
+      "serialNumber": "",
+      "isOverrideRule": "",
+      "processControlId": "",
+      "isBureauIterator": "",
+      "createdBy": "",
+      "updatedBy": "",
+      "branchId": "",
+      "kendraCentreId": "",
+      "consumerName4": "",
+      "consumerName5": "",
+      "additionalName1": "",
+      "additionalName2": "",
+      "additionalNameType1": "",
+      "additionalNameType2": "",
+      "additionalId": "",
+      "additionalId2": "",
+      "field1": "",
+      "field2": "",
+      "field3": "",
+      "field4": "",
+      "field5": "",
+      "addressLine2": "",
+      "street2": "",
+      "locality21": "",
+      "locality22": "",
+      "city2": "",
+      "state2": "",
+      "postal2": "",
+      "addressType2": "",
+      "addressLine3": "",
+      "street3": "",
+      "locality31": "",
+      "locality32": "",
+      "city3": "",
+      "state3": "",
+      "postal3": "",
+      "addressType3": "",
+      "bureauCategoryAlias": "",
+      "bureauId": "",
+      "commSearchCriteria": "",
+      "dbSave": "",
+      "isBureauPinging": "",
+      "isEnquiryCreated": "",
+      "isOverrideCoolingPeriodChk": "",
+      "maxBureauCap": "",
+      "priority": "",
+      "rangeForExistingRequest": "",
+      "referenceNumber": "",
+      "requestType": "",
+      "ocsReferenceNumber": "ocs00000000000000000037",
+      "checkEligibility": "yes",
+      //"checkEligibility": "no",
+      "eligibilityAmount": "50000",
+      "emi": "15000",
+      "cibilScore": "",
+      "cibilFlagCheck": "",
+      "errorResponse": ""
+    },
+    "workflowId": "7b222bb4837d11e982270242ac110002",
+    "projectId": "ff8e364e6fce11e98754782bcb8f3845"
+  });
+  }
 
   sendOTPAPI() {
     const processId = environment.api.sendOTP.processId;
@@ -571,7 +592,7 @@ createOrUpdatePersonalDetails(qde) {
     return this.http.put(uri, body.toString());
   }
 
-  setStatusApi(applicationId: string, applicationStatus: string) {
+  setStatusApi(applicationId: string, status: string) {
     const processId = environment.api.status.processId;
     const workflowId = environment.api.status.workflowId;
     const projectId = environment.projectId;
@@ -583,7 +604,7 @@ createOrUpdatePersonalDetails(qde) {
     const requestEntity: RequestEntity = {
       processId: processId,
       ProcessVariables: {
-        applicationStatus: applicationStatus,
+        status: status,
         applicationId: applicationId
       },
       workflowId: workflowId,

@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { map } from "rxjs/operators";
 import { UtilService } from './util.service';
 import { Inject } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 export class AuthInterceptor implements HttpInterceptor {
 
@@ -11,7 +12,8 @@ export class AuthInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
       // Token will be set from cookie, if not present then dont add this header
 
-      if (!req.headers.has('Content-Type')) {
+      let uri = environment.host + environment.appiyoDrive;
+      if (!req.headers.has('Content-Type') && req.url !== uri) {
         req = req.clone({ headers: req.headers.set('Content-Type', 'application/x-www-form-urlencoded') });
       }
 
