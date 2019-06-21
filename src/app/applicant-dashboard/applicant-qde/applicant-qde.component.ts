@@ -223,6 +223,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   selectedAssesmentMethodology: Array<any>;
 
   panslideSub: Subscription;
+
   constructor(private renderer: Renderer2,
               private route: ActivatedRoute,
               private router: Router,
@@ -237,7 +238,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
     this.isMobile = this.deviceService.isMobile() ;
 
-    console.log("isMobile", this.isMobile);
+
+    this.cds.changeMenuBarShown(true);
+    this.cds.changeViewFormVisible(true);
+    this.cds.changeLogoutVisible(true);
+
+    const isMobile = this.deviceService.isMobile();
             
     this.panslideSub = this.cds.panslide.subscribe(val => {
       this.panslide = val;

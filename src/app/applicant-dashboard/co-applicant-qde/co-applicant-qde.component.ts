@@ -219,7 +219,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
               private qdeHttp: QdeHttpService,
               private qdeService: QdeService,
               private cds: CommonDataService) {
-
+    this.cds.changeMenuBarShown(true);
+    this.cds.changeViewFormVisible(true);
+    this.cds.changeLogoutVisible(true);
     // console.log("QDE:::: ", route.data['qde']);
     this.panslideSub = this.cds.panslide.subscribe(val => {
       this.panslide = val;
@@ -507,7 +509,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
             // this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant/'+this.coApplicantIndex]);
 
             let applicationId = result['application']['applicationId'];
-            this.qdeHttp.setStatusApi( applicationId, environment.status.QDECREATED).subscribe((response) => {
+            this.qdeHttp.setStatusApi( applicationId, environment['status']['QDECREATED']).subscribe((response) => {
               if(response["ProcessVariables"]["status"] == true) { 
                 this.cds.changePanSlide(true);
                 this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant/'+this.coApplicantIndex]);

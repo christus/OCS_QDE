@@ -797,7 +797,7 @@
                                         textField="key"
                                         valueField="value"
                                         name="residentialStatus"
-                                        nick="personalDetails.residentialStatus"
+                                        nick="communicationAddress.residentialStatus"
                                         #residentialStatus
                                         (selectionChange)="selectValueChanged($event, residentialStatus.hostElement)"
                                         [(ngModel)]="selectedResidence">
@@ -834,7 +834,7 @@
                                         #address2="ngModel"
                                         fieldFill
                                         spellcheck="false"
-                                        required/>
+                                        required />
   
                                       <label for="address2">Address line 2</label>
                                       <div *ngIf="(address2.touched || address2.dirty) && address2.invalid" class="invalid-feedback">
