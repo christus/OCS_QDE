@@ -29,7 +29,7 @@
                     <a href="javascript:void(0);" (click)="tabSwitch(7)">occupation details</a>
                   </li>
                   <li class="tab-link" [ngClass]="{'active': (activeTab == 8), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
-                    <a href="javascript:void(0);" (click)="tabSwitch(8)">offical correspondence</a>
+                    <a href="javascript:void(0);" (click)="tabSwitch(8)">official correspondence</a>
                   </li>
                   <li class="tab-link" [ngClass]="{'active': (activeTab == 9), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
                       <a href="javascript:void(0);" (click)="tabSwitch(9)">INCOME DETAILS</a>
@@ -142,7 +142,7 @@
                                                     <div *ngIf="panNumber.touched && panNumber.invalid" class="invalid-feedback">
                                                         <!-- <div *ngIf="panNumber.errors?.required">{{errors.panNumber.required}}</div> -->
                                                         <div *ngIf="panNumber.errors?.pattern ? true : false">{{errors.pan.invalid}}</div>
-                                                        <div *ngIf="panNumber.errors?.minlength || panNumber.errors?.maxlength">*PAN must be at least {{errors.pan.length}} characters</div>
+                                                        <div *ngIf="panNumber.errors?.minlength || panNumber.errors?.maxlength">{{errors.pan.length}}</div>
                                                     </div>
                                                     <div *ngIf="!qde.application.applicants[applicantIndex].pan.isValid" class="invalid-feedback">{{qde.application.applicants[applicantIndex].pan.errorMessage}}</div>
                                                 </div>
@@ -172,7 +172,6 @@
                                                             #panDocNumber="ngModel"
                                                             pattern="{{regexPatternForDocType[parseInteger(selectedDocType.value) - 1]}}"
                                                             maxlength="{{maxlength[selectedDocType.value - 1]}}"
-                                                            
                                                             fieldFill
                                                             required/>
                                                 <label for="docNumber">Document Number</label>
