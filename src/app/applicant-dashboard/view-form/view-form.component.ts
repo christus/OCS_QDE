@@ -116,6 +116,7 @@ export class ViewFormComponent implements OnInit {
   selectedFatherTitle: Array<Item> = [];
   selectedMotherTitle: Array<Item> = [];
   selectedQualification: Array<Item> = [];
+  selectedGender: Array<Item> = [];
   selectedConstitution: Array<Item> = [];
   selectedDocType: Array<Item> = [];
 
@@ -137,7 +138,7 @@ export class ViewFormComponent implements OnInit {
   ];
 
   applicantIndex: number;
-  coApplicantIndexes: Array<number>;
+  coApplicantIndexes: Array<number> = [];
 
   qde: Qde;
   YYYY: number = new Date().getFullYear();
@@ -178,7 +179,7 @@ export class ViewFormComponent implements OnInit {
         this.isIncomplete.push(this.checkIncompleteFields(el.applicantId));
       });
     });
-
+    console.log(">>", JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs));
     if(this.route.snapshot.data.listOfValues != null && this.route.snapshot.data.listOfValues != undefined) {
 
       var lov = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs);
@@ -216,7 +217,7 @@ export class ViewFormComponent implements OnInit {
       });
       this.months.unshift({key: 'MM', value: 'MM'});
 
-      this.years = Array.from(Array(100).keys()).map((val, index) => {
+      this.years = Array.from(Array(120).keys()).map((val, index) => {
         let v = (this.YYYY - index)+"";
         return {key: v, value: v};
       });
@@ -413,7 +414,9 @@ export class ViewFormComponent implements OnInit {
       this.selectedSpouseTitle.push(this.titles[0]);
       this.selectedFatherTitle.push(this.maleTitles[0]);
       this.selectedMotherTitle.push(this.femaleTitles[0]);
+      console.log(".selectedQualification: ", this.selectedQualification);
       this.selectedQualification.push(this.qualifications[0]);
+      this.selectedGender.push(this.genders[0]);
       this.selectedConstitution.push(this.constitutions[0]);
       this.selectedDocType.push(this.docType[0]);
       this.selectedAssesmentMethodology.push(this.assessmentMethodology[0]);
@@ -424,37 +427,31 @@ export class ViewFormComponent implements OnInit {
         this.selectedTitle.push(this.titles[(parseInt(eachApplicant.personalDetails.title))-1]);
       }
 
-      // Personal Details Qualification (different because qualification isnt sending sequential value like 1,2,3)
-      if( ! isNaN(parseInt(eachApplicant.personalDetails.qualification)) ) {
-        console.log('eachApplicant.personalDetails.qualification: ', eachApplicant.personalDetails.qualification);
-        // this.selectedQualification = this.qualifications[(parseInt(eachApplicant.personalDetails.qualification))-1];
-        this.selectedQualification = this.qualifications.find(e => e.value == eachApplicant.personalDetails.qualification);
-        console.log('selectedQualification: ', this.selectedQualification);
-      }
-
       // Personal Details Day
-      let eachDob: {day: Item, month: Item, year: Item};
+      let eachDob: {day: Item, month: Item, year: Item} = {day:{key:'DD',value:'DD'},month:{key:'MM',value:'MM'},year:{key:'YYYY',value:'YYYY'}};
       if( ! isNaN(parseInt(eachApplicant.personalDetails.dob.split('/')[2])) ) {
         eachDob.day = this.days[parseInt(eachApplicant.personalDetails.dob.split('/')[2])];
       }
+      
 
       // Personal Details Month
       if( ! isNaN(parseInt(eachApplicant.personalDetails.dob.split('/')[1])) ) {
         eachDob.month = this.months[parseInt(eachApplicant.personalDetails.dob.split('/')[1])];
       }
+      
+       // Personal Details Year
+       if( ! isNaN(parseInt(eachApplicant.personalDetails.dob.split('/')[0])) ) {
+        eachDob.year = this.years.find(val => eachApplicant.personalDetails.dob.split('/')[0] == val.value);
+      }
 
       // Personal Details Birthplace
       if( ! isNaN(parseInt(eachApplicant.personalDetails.birthPlace)) ) {
-        this.selectedBirthPlace = this.birthPlace[parseInt(eachApplicant.personalDetails.birthPlace) - 1];
+        this.selectedBirthPlace.push(this.birthPlace[parseInt(eachApplicant.personalDetails.birthPlace) - 1]);
       }
-
-      // Personal Details Year
-      if( ! isNaN(parseInt(eachApplicant.personalDetails.dob.split('/')[0])) ) {
-        eachDob.year = this.years.find(val => eachApplicant.personalDetails.dob.split('/')[0] == val.value);
-      }
+      
       this.dob.push(eachDob);
 
-      let eachDateOfIncorporation: {day: Item, month: Item, year: Item};
+      let eachDateOfIncorporation: {day: Item, month: Item, year: Item} = {day:{key:'DD',value:'DD'},month:{key:'MM',value:'MM'},year:{key:'YYYY',value:'YYYY'}};
       // Date of Incorporation Day
       if( ! isNaN(parseInt(eachApplicant.organizationDetails.dateOfIncorporation.split('/')[2])) ) {
         eachDateOfIncorporation.day = this.days[parseInt(eachApplicant.organizationDetails.dateOfIncorporation.split('/')[2])];
@@ -471,6 +468,13 @@ export class ViewFormComponent implements OnInit {
       }
 
       this.organizationDetails.push(eachDateOfIncorporation);
+
+      // Personal Details Qualification (different because qualification isnt sending sequential value like 1,2,3)
+      if( ! isNaN(parseInt(eachApplicant.personalDetails.qualification)) ) {
+        
+        // this.selectedQualification = this.qualifications[(parseInt(eachApplicant.personalDetails.qualification))-1];
+        this.selectedQualification.push(this.qualifications.find(e => e.value == eachApplicant.personalDetails.qualification));
+      }
 
       // Constitution
       if( ! isNaN(parseInt(eachApplicant.organizationDetails.constitution)) ) {
