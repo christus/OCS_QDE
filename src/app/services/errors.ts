@@ -10,7 +10,6 @@ export const errors: any = {
     length: "Enter 16 Digits Document number",
     invalid: "Invalid Document Number"
   },
-
   personalDetails: {
     firstName: {
       required: "First Name is mandatory",
