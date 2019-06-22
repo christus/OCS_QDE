@@ -763,9 +763,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
               });
 
             }else {
-              this.cds.changePanSlide(true);
-              this.panSlider2.setIndex(2);
-              // this.tabSwitch(1);
+            //  this.cds.changePanSlide(true);
+             this.panSlider2.setIndex(2);
+             // this.tabSwitch(1);
               // return;
             //  this.panSlider2.setIndex(2);
             //   return;
