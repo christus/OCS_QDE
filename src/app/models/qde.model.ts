@@ -75,6 +75,7 @@ export interface Pan {
     docNumber ?: string; // As of new design
     isValid  ?: boolean;
     errorMessage ?: string;
+    imageId? : string;
 }
 
 export interface PersonalDetail {

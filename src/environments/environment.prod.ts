@@ -69,5 +69,6 @@ export const environment = {
   },
   userName: "icici@icici.com",
   password: "icici@123",
-  appiyoDrive: "appiyo/d/drive/upload/"
+  appiyoDrive: "appiyo/d/drive/upload/",
+  host: ""
 };

@@ -127,6 +127,7 @@
                             required 
                             id="ref1-mobile"  
                             name="mobileNumber"
+                            minlength="10"
                             maxlength="10"
                             pattern="{{regexPattern.mobileNumber}}"  
                             ngModel
@@ -137,7 +138,8 @@
 
                             <div *ngIf="refOneMobileNumber.touched && refOneMobileNumber.invalid" class="invalid-feedback">
                               <div *ngIf="refOneMobileNumber.errors?.required">{{errors.references.referenceOne.mobileNumber.required}}</div>
-                              <div *ngIf="refOneMobileNumber.errors?.pattern">{{errors.references.referenceTwo.mobileNumber.invalid}}</div>
+                              <div *ngIf="refOneMobileNumber.errors?.pattern">{{errors.references.referenceOne.mobileNumber.invalid}}</div>
+                              <div *ngIf="mobileNumber.errors?.minlength">{{errors.contactDetails.referenceOne.minlength}}</div> 
                             </div>
 
                           </div>
@@ -299,6 +301,7 @@
                             <input type="text" class="form-control" id="ref2-mobile" 
                             name="mobileNumber"  
                             ngModel 
+                            minlength="10"
                             maxlength="10"
                             #refTwoMobileNumber="ngModel"
                             pattern="{{regexPattern.mobileNumber}}"
@@ -310,7 +313,8 @@
                             <div *ngIf="refTwoMobileNumber.touched && refTwoMobileNumber.invalid" class="invalid-feedback">
                                 <div *ngIf="refTwoMobileNumber.errors?.required">{{errors.references.referenceOne.mobileNumber.required}}</div>
                                 <div *ngIf="refTwoMobileNumber.errors?.pattern">{{errors.references.referenceOne.mobileNumber.invalid}}</div>
-                            </div>
+                                <div *ngIf="mobileNumber.errors?.minlength">{{errors.contactDetails.referenceOne.minlength}}</div> 
+                              </div>
 
                           </div>
                           <div class="form-group">

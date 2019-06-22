@@ -209,6 +209,7 @@ export class LoanQdeComponent implements OnInit {
   city: string;
   stateId: number;
   state: string;
+  cityState:string;
 
   selectedLoanProvider: string;
   loanProviderList: Array<any>;
@@ -514,6 +515,10 @@ export class LoanQdeComponent implements OnInit {
 
         this.city = result.city;
         this.state = result.state;
+
+        if(result.city != null && result.state != null && result.city != "" && result.state != "") {
+          this.cityState = result.city +" "+ result.state;
+        }
       } else {
         alert("Pin code not available / enter proper pincode")
       }

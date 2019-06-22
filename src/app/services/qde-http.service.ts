@@ -6,6 +6,9 @@ import { environment } from '../../environments/environment';
 import { of } from 'rxjs';
 
 import {CommonDataService} from 'src/app/services/common-data.service';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 
 
 
@@ -20,7 +23,10 @@ export class QdeHttpService {
 
 
   constructor(private http: HttpClient,
-  private commonDataService: CommonDataService) {
+  private commonDataService: CommonDataService,
+  private camera: Camera,
+  private transfer: FileTransfer
+) {
 
     this.commonDataService.loginData.subscribe(result => {
       console.log("login: ", result);
@@ -758,16 +764,48 @@ createOrUpdatePersonalDetails(qde) {
     return this.http.put(uri, body.toString());
   }
 
+  async takePicture() {
 
-  uploadImage(formData) {
-    let uri = environment.host + environment.appiyoDrive;
-
-    let headers = {
-      headers: new HttpHeaders({})
-    };
-
-    return this.http.post(uri, formData, headers);
+    const options: CameraOptions = {
+      quality: 50,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      sourceType: this.camera.PictureSourceType.CAMERA,
+      allowEdit: true,
+      encodingType: this.camera.EncodingType.PNG,
+      targetWidth: 100,
+      targetHeight: 100,
+      saveToPhotoAlbum: false,
+	    correctOrientation:true
+    }
+    
+    return this.camera.getPicture(options);
   }
+
+  uploadFile(fileName, imageURI) {
+    
+    const fileTransfer: FileTransferObject = this.transfer.create();
+
+    console.log("fileTransfer", fileTransfer);
+  
+    let options: FileUploadOptions = {
+      fileKey: 'file',
+      fileName: fileName,
+      chunkedMode: false,
+      headers: {
+        "X-Requested-With":"XMLHttpRequest",
+        'authentication-token':
+        localStorage.getItem('token') ? localStorage.getItem('token') : ''
+      }
+    }
+
+    console.log("FileUploadOptions", fileTransfer);
+  
+    return fileTransfer.upload(imageURI, encodeURI(environment.host + environment.appiyoDrive) , options)
+  
+  }
+
+  
+
 
 
 

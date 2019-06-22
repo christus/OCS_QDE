@@ -477,7 +477,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
 
 
     this.qde.application.applicants[this.coApplicantIndex].pan.panNumber = form.value.pan;
-    this.qde.application.applicants[this.coApplicantIndex].pan.docType = form.value.docType.value;
+    this.qde.application.applicants[this.coApplicantIndex].pan.docType = form.value.docTypeindividual.value;
     this.qde.application.applicants[this.coApplicantIndex].pan.docNumber = form.value.docNumber;
 
     // this.qdeHttp.checkPanValid(this.qdeService.getFilteredJson({actualPanNumber: form.value.pan})).subscribe((response) => {
@@ -1501,6 +1501,12 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       // if ( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].pan.docType)) ) {
       //   this.selectedDocType = this.docType[parseInt(this.qde.application.applicants[this.coApplicantIndex].pan.docType)];
       // }
+
+      // Document Type
+      if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].pan.docType)) ) {
+        this.selectedDocType = this.docType[(parseInt(this.qde.application.applicants[this.coApplicantIndex].pan.docType))-1];
+      } 
+
 
       // Personal Details Title
       if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].personalDetails.title)) ) {

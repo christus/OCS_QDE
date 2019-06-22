@@ -185,16 +185,15 @@
 
                                                   <span class="control-title">Document Type</span>
 
-                                                  <kendo-dropdownlist   class="form-control"
+                                                  <kendo-dropdownlist  class="form-control"
                                                                         [data]="docType" 
                                                                         textField="key"
                                                                         valueField="value"
-                                                                        name="docType"
-                                                                        nick="pan.documentType"
-                                                                        #panDocType
-                                                                        (selectionChange)="selectValueChanged($event, panDocType.hostElement)"
-                                                                        [(ngModel)]="selectedDocType"
-                                                                        required>
+                                                                        name="docTypeindividual"
+                                                                        nick="pan.docType"
+                                                                        #docTypeindividual
+                                                                        (selectionChange)="selectValueChanged($event, docTypeindividual.hostElement)"
+                                                                        [(ngModel)]="selectedDocType">
                                                   </kendo-dropdownlist>
                                               </div>
                                               <div class="form-group">
@@ -869,7 +868,7 @@
                                                 class="form-control"
                                                 id="cityState"
                                                 required
-                                                [(ngModel)]="qde.application.applicants[coApplicantIndex].communicationAddress.city"
+                                                [(ngModel)]="qde.application.applicants[coApplicantIndex].communicationAddress.cityState"
                                                 name="cityState"
                                                 #commCityState="ngModel"
                                                 fieldFill   
@@ -953,7 +952,7 @@
                                               #commCitystate="ngModel" 
                                               fieldFill
                                               spellcheck="false"
-                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].permanentAddress.city">
+                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].permanentAddress.cityState">
                                               <label for="per-cityState">City/State</label>
                                           </div>
                                       </div>
@@ -1646,7 +1645,7 @@
                                       <input type="text" class="form-control"
                                         id="offCityState"
                                         required
-                                        [(ngModel)]="qde.application.applicants[coApplicantIndex].officialCorrespondence.city"
+                                        [(ngModel)]="qde.application.applicants[coApplicantIndex].officialCorrespondence.cityState"
                                         #offCityState="ngModel"
                                         name="cityState"
                                         fieldFill
@@ -2205,7 +2204,7 @@
                                         <input type="text" class="form-control"
                                           id="regAddrCityState"
                                           required
-                                          [(ngModel)]="qde.application.applicants[coApplicantIndex].registeredAddress.city"
+                                          [(ngModel)]="qde.application.applicants[coApplicantIndex].registeredAddress.cityState"
                                           #regAddrCityState="ngModel"
                                           name="cityState"
                                           fieldFill
@@ -2303,7 +2302,7 @@
                                               class="form-control"
                                               id="city-state01" 
                                               required
-                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].corporateAddress.city"
+                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].corporateAddress.cityState"
                                               #corpCityState="ngModel" 
                                               name="corpCityState"
                                               fieldFill

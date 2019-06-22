@@ -17,11 +17,9 @@ import { errors } from '../../services/errors';
 import { MenubarHeaderComponent } from '../../menubar-header/menubar-header.component';
 import { environment } from 'src/environments/environment';
 
-import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { DeviceDetectorService } from 'ngx-device-detector';
 
-import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 
 
 
@@ -41,6 +39,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
   isMobile:any;
 
+  capacitor= {
+    DEBUG: false
+  };
 
   readonly errors = errors;
 
@@ -49,6 +50,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   maxlength:Array<string> = ['8','15','10','12','18','14','16'];
 
   panImage:String;
+
+  imageURI:String;
 
   isTabDisabled:boolean;
   docName:boolean;
@@ -230,10 +233,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
               private qdeHttp: QdeHttpService,
               private qdeService: QdeService,
               private cds:CommonDataService,
-              private camera: Camera,
               private file: File,
-              private deviceService: DeviceDetectorService,
-              private transfer: FileTransfer, 
+              private deviceService: DeviceDetectorService
               ) {
 
     this.isMobile = this.deviceService.isMobile() ;
@@ -487,7 +488,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
             } catch(e) {}
 
 
-
+      // Document Type
+      if( ! isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].pan.docType)) ) {
+        this.selectedDocType = this.docType[(parseInt(this.qde.application.applicants[this.applicantIndex].pan.docType))-1];
+      } 
 
       // Personal Details Title
       if( ! isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].personalDetails.title)) ) {
@@ -761,8 +765,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
             }else {
               this.cds.changePanSlide(true);
               this.panSlider2.setIndex(2);
-              this.tabSwitch(1);
-              return;
+              // this.tabSwitch(1);
+              // return;
             //  this.panSlider2.setIndex(2);
             //   return;
             }
@@ -1846,61 +1850,50 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   }
 
   openCamera() {
-    this.takePicture();
-  }
 
+    this.qdeHttp.takePicture().then((imageURI) => {
 
-  async takePicture() {
+      console.log("imageData", imageURI);
 
-    const options: CameraOptions = {
-      quality: 50,
-      destinationType: this.camera.DestinationType.FILE_URI,
-      sourceType: this.camera.PictureSourceType.CAMERA,
-      allowEdit: true,
-      encodingType: this.camera.EncodingType.PNG,
-      targetWidth: 100,
-      targetHeight: 100,
-      saveToPhotoAlbum: false,
-	    correctOrientation:true
-    }
-    
-    this.camera.getPicture(options).then((imageData) => {
-      // imageData is either a base64 encoded string or a file URI
-      // If it's base64 (DATA_URL):
-      console.log("imageData", imageData)
-      this.panImage = (<any>window).Ionic.WebView.convertFileSrc(imageData);
-
-      this.uploadFile(imageData);
-
+      this.imageURI = imageURI;
+      //this.panImage = imageURI;
+      this.panImage = (<any>window).Ionic.WebView.convertFileSrc(imageURI);
      }, (err) => {
       // Handle error
      });
   }
 
-  uploadFile(imageURI) {
-    
-    const fileTransfer: FileTransferObject = this.transfer.create();
 
-    console.log("fileTransfer", fileTransfer);
-  
-    let options: FileUploadOptions = {
-      fileKey: 'file',
-      fileName: 'ionicfile'+new Date().getTime() + ".jpg",
-      chunkedMode: false,
-      headers: {
-        "X-Requested-With":"XMLHttpRequest",
-        'authentication-token':
-        localStorage.getItem('token') ? localStorage.getItem('token') : ''
+
+  sendPanImage(image){
+
+    let fileName = this.qde.application.applicationId + "-" + this.qde.application.applicants[this.applicantIndex].applicantId + "-" + new Date().getTime()
+
+    this.qdeHttp.uploadFile(fileName, image).then((data) => {
+      
+      if(data["responseCode"] == 200) {
+
+        var result = JSON.parse(data["response"]);
+
+        var imageId = result.info.id;
+
+        console.log("imageId",imageId);
+
+        this.qde.application.applicants[this.applicantIndex].pan.imageId = imageId;
+
+        this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
+          // If successful
+          if(response["ProcessVariables"]["status"] == true) {
+            alert("Switch to tab 1");
+            this.tabSwitch(1);
+          }
+        });
+      } else {
+        // Throw Invalid Pan Error
+        alert(JSON.parse(data["response"]));
       }
-    }
-
-    console.log("FileUploadOptions", fileTransfer);
-  
-    fileTransfer.upload(imageURI, encodeURI(environment.host + environment.appiyoDrive) , options)
-      .then((data) => {
-      console.log(" Uploaded Successfully", data);
-    }, (err) => {
-      console.log(err);
     });
   }
+
+
 }

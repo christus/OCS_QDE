@@ -49,7 +49,8 @@ export class ReferencesQdeComponent implements OnInit {
           },
           mobileNumber: {
            required: "10 digit mobile number is mandatory",
-           invalid: "Invalid Mobile Number"
+           invalid: "Invalid Mobile Number",
+           minlength: "Mobile number must be 10 digits"
           },
           addressLineOne: {
            required: "Address line One is Mandatory",
@@ -68,7 +69,8 @@ export class ReferencesQdeComponent implements OnInit {
          },
          mobileNumber: {
           required: "10 digit mobile number is mandatory",
-          invalid: "Invalid Mobile Number"
+          invalid: "Invalid Mobile Number",
+          minlength: "Mobile number must be 10 digits"
          },
          addressLineOne: {
           required: "Address line One is Mandatory",

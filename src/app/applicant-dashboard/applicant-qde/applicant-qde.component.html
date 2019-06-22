@@ -147,19 +147,16 @@
                                                     <div *ngIf="!qde.application.applicants[applicantIndex].pan.isValid" class="invalid-feedback">{{qde.application.applicants[applicantIndex].pan.errorMessage}}</div>
                                                 </div>
                                                 <div class="form-group">
-
                                                   <span class="control-title">Document Type</span>
-
-                                                  <kendo-dropdownlist  
-                                                                 class="form-control"
+                                                  <kendo-dropdownlist  class="form-control"
                                                                         [data]="docType" 
                                                                         textField="key"
                                                                         valueField="value"
                                                                         name="docTypeindividual"
                                                                         nick="pan.docType"
                                                                         #docTypeindividual
-                                                                        [(ngModel)]="selectedDocType"
-                                                                        required>
+                                                                        (selectionChange)="selectValueChanged($event, docTypeindividual.hostElement)"
+                                                                        [(ngModel)]="selectedDocType">
                                                   </kendo-dropdownlist>
                                               </div>
                                               <div class="form-group">
@@ -171,8 +168,8 @@
                                                             name="docNumber"
                                                             #panDocNumber="ngModel"
                                                             pattern="{{regexPatternForDocType[parseInteger(selectedDocType.value) - 1]}}"
-                                                            maxlength="{{maxlength[selectedDocType.value - 1]}}"
-                                                            fieldFill
+                                                            maxlength="{{maxlength[parseInteger(selectedDocType.value) - 1]}}"                                             
+                                                           fieldFill
                                                             required/>
                                                 <label for="docNumber">Document Number</label>
 
@@ -199,6 +196,7 @@
                                                 <div *ngIf="panImage" class="bs-file">
                                                       <!-- <image-upload [url]="imageUrl" [headers]="myHeaders"></image-upload> -->
                                                       <img [src]="panImage" />
+                                                      <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera()">Retake</button>
                                                 </div>
                                                 <div *ngIf="!panImage" class="bs-file">
                                                     <input spellcheck="false"
@@ -208,7 +206,8 @@
                                                 </div>
                                             </div>
                                             <div class="btn-wrap">
-                                                <button class="btn btn-primary" (click)="tabSwitch(1)">Next</button>
+                                                <button  *ngIf="isMobile" class="btn btn-primary" (click)="sendPanImage(imageURI)">Next</button>
+                                                <button  *ngIf="!isMobile" class="btn btn-primary" (click)="tabSwitch(1)">Next</button>
                                             </div>
                                         </form>
                                     </div>
@@ -701,7 +700,8 @@
                                                       #alternateResidenceNumber2="ngModel"
                                                       name="alternateResidenceNumber2"
                                                       id="altr-res-no"
-                                                      maxlength="8" 
+                                                      maxlength="8"
+                                                      fieldFill
                                                       pattern="{{regexPattern.mobileNumber}}"
                                                       data-validation-attr="residenceno01" />
                                             <label for="altr-res-no">Residence number</label>
@@ -774,7 +774,7 @@
                                         textField="key"
                                         valueField="value"
                                         name="residentialStatus"
-                                        nick="personalDetails.residentialStatus"
+                                        nick="communicationAddress.residentialStatus"
                                         #residentialStatus
                                         (selectionChange)="selectValueChanged($event, residentialStatus.hostElement)"
                                         [(ngModel)]="selectedResidence">
@@ -1995,7 +1995,7 @@
                                                     #coappdocNumberNonIndividual="ngModel"
                                                     fieldFill
                                                     pattern="{{regexPatternForDocType[parseInteger(selectedDocType.value) - 1]}}"
-                                                    maxlength="{{maxlength[selectedDocType.value - 1]}}"
+                                                    maxlength="{{maxlength[parseInteger(selectedDocType.value) - 1]}}"
                                                     required />
                                                     <label for="docNumber2">Document Number</label>
                                             <!-- <image-upload [url]="imageUrl" [headers]="myHeaders"></image-upload> -->
