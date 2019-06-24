@@ -45,8 +45,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
   readonly errors = errors;
 
-  regexPatternForDocType: Array<string> = ['[A-Z]{1}[0-9]{7}','^[A-Z]{2}[0-9]{13}$','^[A-Z]{3}[0-9]{7}$','[2-9]{1}[0-9]{11}','[0-9]{18}','[0-9]{14}','[0-9]{16}'];
-
+  // regexPatternForDocType: Array<string> = ['[A-Z]{1}[0-9]{7}','^[A-Z]{2}[0-9]{13}$','^[A-Z]{3}[0-9]{7}$','[2-9]{1}[0-9]{11}','[0-9]{18}','[0-9]{14}','[0-9]{16}'];
+  
+  regexPatternForDocType:Array<any>=[{pattern:'[A-Z]{1}[0-9]{7}',hint:"V1234567"},{pattern:'^[A-Z]{2}[0-9]{13}$',hint:"AN01/2010/0051926"},{pattern:'^[A-Z]{3}[0-9]{7}$',hint:"LWN5672084"},{pattern:'[2-9]{1}[0-9]{11}',hint:"12 digit number, with first digit not 0 or 1"},{pattern:'[0-9]{18}',hint:"	18 digit number"},{pattern:'[0-9]{14}',hint:"	14 digit number"},{pattern:'[0-9]{16}',hint:"	16 digit number"}]
+  
   maxlength:Array<string> = ['8','15','10','12','18','14','16'];
 
   panImage:String;
@@ -64,10 +66,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     pinCode: "^[1-9][0-9]{5}$",
     pan:"[A-Z]{5}[0-9]{4}[A-Z]{1}",
     // amount:"[0-9]{0,17}\.[0-9]{1,4}?$",
-    amount:"^[\\d]{0,14}([.][0-9]{0,4})?",
-
-    revenue:"^[1-9][0-9]{0,17}",
-    docNumber: "^[a-zA-Z0-9]{0,16}$"
+    amount:"^[\\d]{0,10}([.][0-9]{0,4})?",
+    email:"^\\w+([\.-]?\\w+)*@\\w+([\.-]?\\w+)*(\\.\\w{2,10})+$",
+    revenue:"^[\\d]{0,10}([.][0-9]{0,4})?",
+    
 
     // revenue:"^[\\d]{0,14}([.][0-9]{0,4})?"
    
@@ -625,15 +627,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     
     console.log(newValue);
     this.value[valueIndex] = newValue;
-    // const currentExp = form.value.numberOfYearsInCurrentCompany;
-    // const totalExp = form.value.totalExperienceYear;
-    // if(currentExp > totalExp) {
-    //   //form.valid = false;
-    //   this.expError = true;
-    //   return;
-    // }else{
-    //   this.expError=false;
-    // }
+  
   }
  
   /**
@@ -1812,6 +1806,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     //call API
   }
   
+
+
   resetQdeForm() {
     this.qdeService.resetQde();
     this.residenceNumberStdCode = "";

@@ -203,12 +203,13 @@
                                                             id="docNumber"
                                                             name="docNumber"
                                                             #panDocNumber="ngModel"
-                                                            pattern="{{regexPatternForDocType[parseInteger(selectedDocType.value) - 1]}}"
+                                                            pattern="{{regexPatternForDocType[parseInteger(selectedDocType.value) - 1].pattern}}"
                                                             maxlength="{{maxlength[selectedDocType.value - 1]}}"
                                                             fieldFill 
                                                             spellcheck="false"
                                                             required/>
                                                 <label for="docNumber">Document Number</label>
+                                                <span style="color:green">{{regexPatternForDocType[parseInteger(selectedDocType.value) - 1].hint}}</span>
 
                                                 <div *ngIf="panDocNumber.touched && panDocNumber.invalid" class="invalid-feedback">
                                                   <!-- <div *ngIf="panDocNumber.errors?.required">{{errors.panDocumentNo.required}}</div> -->
@@ -545,14 +546,14 @@
                                 <div class="form-wrap">
                                     <div class="form-group" [ngClass]="{'prefer': isAlternateEmailId}">
   
-                                        <input type="email"
+                                        <input type="text"
                                               class="form-control"
                                               id="pref-email"
                                               data-validation-attr="email"
                                               [(ngModel)]="qde.application.applicants[coApplicantIndex].contactDetails.preferredEmailId"
                                               name="preferEmailId"
                                               #preferEmailId="ngModel"
-                                              email
+                                              pattern="{{regexPattern.email}}"
                                               spellcheck="false"
                                               fieldFill
                                               required />
@@ -566,7 +567,7 @@
                                           </span>
                                           <div *ngIf="(preferEmailId.touched || preferEmailId.dirty) && preferEmailId.invalid" class="invalid-feedback">
                                             <!-- <div *ngIf="preferEmailId.errors?.required">{{errors.contactDetails.preferedEmail.required}}</div> -->
-                                            <div *ngIf="preferEmailId.errors?.email">{{errors.contactDetails.preferedEmail.invalid}}</div>
+                                            <div *ngIf="preferEmailId.errors?.pattern">{{errors.contactDetails.preferedEmail.invalid}}</div>
                                           </div>
                                     </div>
                                     <div class="form-group" [ngClass]="{'typ-alternative': !isAlternateEmailId}">
@@ -579,7 +580,7 @@
                                               #alternateEmailId="ngModel"
                                               fieldFill
                                               spellcheck="false"
-                                              email />
+                                              pattern="{{regexPattern.email}}" />
   
                                         <label for="alter-email">Alternate email ID</label>
                                         <span class="alternate-data">
@@ -589,7 +590,7 @@
                                         </span>
   
                                         <div *ngIf="(alternateEmailId.touched || alternateEmailId.dirty) && alternateEmailId.invalid" class="invalid-feedback">
-                                          <div *ngIf="alternateEmailId.errors?.email">{{errors.contactDetails.alternateEmail.invalid}}</div>
+                                          <div *ngIf="alternateEmailId.errors?.pattern">{{errors.contactDetails.alternateEmail.invalid}}</div>
                                         </div>
                                     </div>
   
@@ -1694,10 +1695,10 @@
                                       </div>
                                   </div>
                                   <div class="form-group typ-optional">
-                                      <input type="email" class="form-control" id="off-email"
+                                      <input type="text" class="form-control" id="off-email"
                                         required
                                         [(ngModel)]="qde.application.applicants[coApplicantIndex].officialCorrespondence.officeEmailId"
-                                        email
+                                        pattern="{{regexPattern.email}}"
                                         #officeEmail="ngModel"
                                         fieldFill
                                         spellcheck="false"
@@ -1706,7 +1707,7 @@
   
                                       <div *ngIf="officeEmail.touched && officeEmail.invalid" class="invalid-feedback">
                                           <!-- <div *ngIf="officeEmail.errors?.required">{{errors.officialCorrespondence.email.required}}</div> -->
-                                          <div *ngIf="officeEmail.errors?.email">{{errors.officialCorrespondence.email.invalid}}</div>
+                                          <div *ngIf="officeEmail.errors?.pattern">{{errors.officialCorrespondence.email.invalid}}</div>
                                       </div>
                                   </div>
   
@@ -2002,10 +2003,12 @@
                                                     #coappdocNumberNonIndividual="ngModel"
                                                     fieldFill
                                                     spellcheck="false"
-                                                    pattern="{{regexPatternForDocType[parseInteger(selectedDocType.value) - 1]}}"
+                                                    pattern="{{regexPatternForDocType[parseInteger(selectedDocType.value) - 1].pattern}}"
                                                     maxlength="{{maxlength[selectedDocType.value - 1]}}"
                                                     required />
                                                     <label for="docNumber2">Document Number</label>
+                                                    <span style="color:green">{{regexPatternForDocType[parseInteger(selectedDocType.value) - 1].hint}}</span>
+
                                             <!-- <image-upload [url]="imageUrl" [headers]="myHeaders"></image-upload> -->
                                                     <div *ngIf="coappdocNumberNonIndividual.touched && coappdocNumberNonIndividual.invalid" class="invalid-feedback">
                                                       <!-- <div *ngIf="pan2.errors?.required">{{errors.panDocumentNo.required}}</div> -->
@@ -2357,7 +2360,7 @@
                                       </div>
                                   </div>
                                   <div class="form-group last">
-                                      <input    type="email"
+                                      <input    type="text"
                                                 class="form-control"
                                                 id="ofc-email"
                                                 required
@@ -2365,12 +2368,13 @@
                                                 name="officeEmailId"
                                                 #ofcEmail="ngModel"
                                                 fieldFill
+                                                pattern="{{regexPattern.email}}"
                                                 spellcheck="false"
-                                                email />                                      
+                                                 />                                      
                                     <label for="ofc-email" *ngIf="ofcEmail.value==''">Office email ID</label>
                                       <div *ngIf="ofcEmail.touched && ofcEmail.invalid" class="invalid-feedback">
                                           <!-- <div *ngIf="ofcEmail.errors?.required">{{errors.corporateAddress.ofcEmail.required}}</div> -->
-                                          <div *ngIf="ofcEmail.errors?.email">{{errors.corporateAddress.ofcEmail.invalid}}</div>
+                                          <div *ngIf="ofcEmail.errors?.pattern">{{errors.corporateAddress.ofcEmail.invalid}}</div>
                                       </div>
   
                                   </div>
