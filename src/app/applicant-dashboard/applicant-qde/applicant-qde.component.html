@@ -474,17 +474,18 @@
                                                   
                                                   </div>
                                                   <div class="form-group">
-                                                      <span class="control-title">Birth place</span>
-                                                      <kendo-dropdownlist class="form-control"
-                                                            [data]="birthPlace"
-                                                            textField="key"
-                                                            valueField="value"
-                                                            name="birthPlace"
-                                                            nick="personalDetails.birthPlace"
-                                                            #personalDetails
-                                                            (selectionChange)="selectValueChanged($event, personalDetails.hostElement)"
-                                                            [(ngModel)]="selectedBirthPlace">
-                                                            </kendo-dropdownlist>
+                                                      <label class="control-title">Birth place</label>
+                                                   
+
+                                                        <input spellcheck="false"
+                                                          type="text"
+                                                          class="form-control"
+                                                          id="birthPlace"
+                                                          name="birthPlace"
+                                                          [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.birthPlace"
+                                                          pattern="{{regexPattern.name}}"
+                                                          fieldFill
+                                                          #birthPlace="ngModel" />
                                                   </div>
                                               </div>
                                               <div class="btn-wrap">

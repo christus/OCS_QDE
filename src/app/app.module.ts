@@ -65,7 +65,7 @@ import { File } from '@ionic-native/file/ngx';
 import { DeviceDetectorModule } from 'ngx-device-detector';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 
-import { NgxUiLoaderModule } from  'ngx-ui-loader';
+import { NgxUiLoaderModule, NgxUiLoaderRouterModule } from  'ngx-ui-loader';
 
 
 

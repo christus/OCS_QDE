@@ -320,7 +320,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       this.genders = lov.LOVS.gender;
       this.constitutions = lov.LOVS.constitution;
       this.assessmentMethodology = lov.LOVS.assessment_methodology;
-      this.birthPlace = JSON.parse(this.route.snapshot.data.birthPlaceValues['ProcessVariables']['response']).city;
+      this.birthPlace = [{}];
       //hardcoded
       //this.birthPlace = [{"key": "Chennai", "value": "1"},{"key": "Mumbai", "value": "2"},{"key": "Delhi", "value": "3"}];
       // List of Values for Date
@@ -1005,7 +1005,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
 
     this.qde.application.applicants[this.applicantIndex].personalDetails.dob = form.value.year.value+'-'+form.value.month.value+'-'+form.value.day.value;
-    this.qde.application.applicants[this.applicantIndex].personalDetails.birthPlace = form.value.birthPlace.value;
+    this.qde.application.applicants[this.applicantIndex].personalDetails.birthPlace = form.value.birthPlace;
 
     console.log(this.qde.application.applicants[this.applicantIndex]);
 
