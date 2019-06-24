@@ -65,6 +65,10 @@ import { File } from '@ionic-native/file/ngx';
 import { DeviceDetectorModule } from 'ngx-device-detector';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 
+import { NgxUiLoaderModule } from  'ngx-ui-loader';
+import { ViewFormApplicantComponent } from './view-form-applicant/view-form-applicant.component';
+
+
 
 
 const appRoutes: Routes = [
@@ -191,6 +195,7 @@ const appRoutes: Routes = [
         component: ProceedToReviewFormComponent,
         resolve: {
           listOfValues: ListOfValuesResolverService,
+          birthPlaceValues: BirthPlaceResolverService,
           qde: GetQdeDataResolverService
         }
       },
@@ -199,6 +204,7 @@ const appRoutes: Routes = [
         component: ReviewApplicationFormComponent,
         resolve: {
           listOfValues: ListOfValuesResolverService,
+          birthPlaceValues: BirthPlaceResolverService,
           qde: GetQdeDataResolverService
         }
       },
@@ -207,6 +213,7 @@ const appRoutes: Routes = [
         component: Declaration1Component,
         resolve: {
           listOfValues: ListOfValuesResolverService,
+          birthPlaceValues: BirthPlaceResolverService,
           qde: GetQdeDataResolverService
         }
       },
@@ -215,6 +222,7 @@ const appRoutes: Routes = [
         component: Declaration2Component,
         resolve: {
           listOfValues: ListOfValuesResolverService,
+          birthPlaceValues: BirthPlaceResolverService,
           qde: GetQdeDataResolverService
         }
       }
@@ -292,7 +300,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     PaymentsComponent,
     OfflinePaymentComponent,
     OnlineSummaryComponent,
-    EligibilityCheckComponent
+    EligibilityCheckComponent,
+    ViewFormApplicantComponent
   ],
   imports: [
     BrowserModule,
