@@ -388,8 +388,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
             try {
               if(result.application.applicants[this.applicantIndex].communicationAddress != null) {
-                
-                this.commCityState = result.application.applicants[this.applicantIndex].communicationAddress.city + " "+ result.application.applicants[this.applicantIndex].communicationAddress.state;
+                this.commCityState = "";
+                if(result.application.applicants[this.applicantIndex].communicationAddress.city) {
+                  this.commCityState = result.application.applicants[this.applicantIndex].communicationAddress.city + " "+ result.application.applicants[this.applicantIndex].communicationAddress.state;
+                }
                 this.qde.application.applicants[this.applicantIndex].communicationAddress.city = result.application.applicants[this.applicantIndex].communicationAddress.city;
                 this.qde.application.applicants[this.applicantIndex].communicationAddress.state = result.application.applicants[this.applicantIndex].communicationAddress.state;
                 this.qde.application.applicants[this.applicantIndex].communicationAddress.cityState = this.commCityState;
@@ -400,8 +402,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
             } catch(e) {}
             try {
               if(result.application.applicants[this.applicantIndex].permanentAddress != null) {
-  
-                this.commCityState = result.application.applicants[this.applicantIndex].permanentAddress.city + " "+ result.application.applicants[this.applicantIndex].permanentAddress.state;
+                this.commCityState = "";
+                if(result.application.applicants[this.applicantIndex].permanentAddress.city) {
+                  this.commCityState = result.application.applicants[this.applicantIndex].permanentAddress.city + " "+ result.application.applicants[this.applicantIndex].permanentAddress.state;
+                }
+
                 this.qde.application.applicants[this.applicantIndex].permanentAddress.city = result.application.applicants[this.applicantIndex].permanentAddress.city;
                 this.qde.application.applicants[this.applicantIndex].permanentAddress.state = result.application.applicants[this.applicantIndex].permanentAddress.state;
                 this.qde.application.applicants[this.applicantIndex].permanentAddress.cityState = this.commCityState;
@@ -414,9 +419,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
             } catch(e) {}
             try {
               if(result.application.applicants[this.applicantIndex].residentialAddress != null) {
+                this.commCityState = "";
+                if(result.application.applicants[this.applicantIndex].residentialAddress.city) {
+                  this.commCityState = result.application.applicants[this.applicantIndex].residentialAddress.city + " "+ result.application.applicants[this.applicantIndex].residentialAddress.state;
+                }
   
-  
-                this.commCityState = result.application.applicants[this.applicantIndex].residentialAddress.city + " "+ result.application.applicants[this.applicantIndex].residentialAddress.state;
                 this.qde.application.applicants[this.applicantIndex].residentialAddress.city = result.application.applicants[this.applicantIndex].residentialAddress.city;
                 this.qde.application.applicants[this.applicantIndex].residentialAddress.state = result.application.applicants[this.applicantIndex].residentialAddress.state;
                 this.qde.application.applicants[this.applicantIndex].residentialAddress.cityState = this.commCityState;
@@ -428,8 +435,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
             } catch(e) {}
             try {
               if(result.application.applicants[this.applicantIndex].officialCorrespondence != null) {
-  
-                this.commCityState = result.application.applicants[this.applicantIndex].officialCorrespondence.city + " "+ result.application.applicants[this.applicantIndex].officialCorrespondence.state;
+                this.commCityState = "";
+                if(result.application.applicants[this.applicantIndex].officialCorrespondence.city) {
+                  this.commCityState = result.application.applicants[this.applicantIndex].officialCorrespondence.city + " "+ result.application.applicants[this.applicantIndex].officialCorrespondence.state;
+                }
                 this.qde.application.applicants[this.applicantIndex].officialCorrespondence.city = result.application.applicants[this.applicantIndex].officialCorrespondence.city;
                 this.qde.application.applicants[this.applicantIndex].officialCorrespondence.state = result.application.applicants[this.applicantIndex].officialCorrespondence.state;
                 this.qde.application.applicants[this.applicantIndex].officialCorrespondence.cityState = this.commCityState;
@@ -445,8 +454,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
             } catch(e) {}
             try {
               if(result.application.applicants[this.applicantIndex].registeredAddress != null) {
+                this.commCityState = "";
+                if(result.application.applicants[this.applicantIndex].registeredAddress.city) {
+                  this.commCityState = result.application.applicants[this.applicantIndex].registeredAddress.city + " "+ result.application.applicants[this.applicantIndex].registeredAddress.state;
+                }
   
-                this.commCityState = result.application.applicants[this.applicantIndex].registeredAddress.city + " "+ result.application.applicants[this.applicantIndex].registeredAddress.state;
                 this.qde.application.applicants[this.applicantIndex].registeredAddress.city = result.application.applicants[this.applicantIndex].registeredAddress.city;
                 this.qde.application.applicants[this.applicantIndex].registeredAddress.state = result.application.applicants[this.applicantIndex].registeredAddress.state;
                 this.qde.application.applicants[this.applicantIndex].registeredAddress.cityState = this.commCityState;
@@ -458,8 +470,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
             
             try {
               if(result.application.applicants[this.applicantIndex].corporateAddress != null) {
+                this.commCityState = "";
+                if(result.application.applicants[this.applicantIndex].corporateAddress.city) {
+                  this.commCityState = result.application.applicants[this.applicantIndex].corporateAddress.city + " "+ result.application.applicants[this.applicantIndex].corporateAddress.state;
+                }
   
-                this.commCityState = result.application.applicants[this.applicantIndex].corporateAddress.city + " "+ result.application.applicants[this.applicantIndex].corporateAddress.state;
                 this.qde.application.applicants[this.applicantIndex].corporateAddress.city = result.application.applicants[this.applicantIndex].corporateAddress.city;
                 this.qde.application.applicants[this.applicantIndex].corporateAddress.state = result.application.applicants[this.applicantIndex].corporateAddress.state;
                 this.qde.application.applicants[this.applicantIndex].corporateAddress.cityState = this.commCityState;
