@@ -731,14 +731,18 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     this.qde.application.applicants[this.applicantIndex].pan.docType = form.value.docTypeindividual.value;
     this.qde.application.applicants[this.applicantIndex].pan.docNumber = form.value.docNumber;
 
-    // this.qdeHttp.checkPanValid(this.qdeService.getFilteredJson({actualPanNumber: form.value.pan})).subscribe((response) => {
+    /*this.qdeHttp.checkPanValid(this.qdeService.getFilteredJson({actualPanNumber: form.value.pan})).subscribe((response) => {
 
-    //   response["ProcessVariables"]["status"] = true;
+      response["ProcessVariables"]["status"] = true;
 
-    //   if(response["ProcessVariables"]["status"]) { // Boolean to check from nsdl website whether pan is valid or not 
+      if(response["ProcessVariables"]["status"]) { // Boolean to check from nsdl website whether pan is valid or not 
+        
+        this.qde.application.applicants[this.applicantIndex].pan.isValid = true;
+        this.qde.application.applicants[this.applicantIndex].pan.errorMessage = "Error in pan Details";
 
-    //     this.qde.application.applicants[this.applicantIndex].pan.isValid = true;
-    //     this.qde.application.applicants[this.applicantIndex].pan.errorMessage = "Error in pan Details";
+        let processVariables = response["ProcessVariables"];
+        this.qde.application.applicants[this.applicantIndex].personalDetails.firstName = processVariables["firstName"];
+        this.qde.application.applicants[this.applicantIndex].personalDetails.lastName = processVariables["lastName"];*/
 
         this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
           // If successful
@@ -782,11 +786,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
           // Throw Request Failure Error
         });
 
-    //   } else {
-    //     this.qde.application.applicants[this.applicantIndex].pan.isValid = false;
-    //     this.qde.application.applicants[this.applicantIndex].pan.errorMessage = "Error in pan Details";
-    //   }
-    // });
+      /*} else {
+        this.qde.application.applicants[this.applicantIndex].pan.isValid = false;
+        this.qde.application.applicants[this.applicantIndex].pan.errorMessage = "Error in pan Details";
+      }
+    });*/
 
 
   }
@@ -807,14 +811,19 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     this.qde.application.applicants[this.applicantIndex].pan.docType = form.value.panDocType.value;
     this.qde.application.applicants[this.applicantIndex].pan.docNumber = form.value.docNumber;
 
-    // this.qdeHttp.checkPanValid(this.qdeService.getFilteredJson({actualPanNumber: form.value.pan})).subscribe((response) => {
+    /*this.qdeHttp.checkPanValid(this.qdeService.getFilteredJson({actualPanNumber: form.value.pan})).subscribe((response) => {
 
-    //   response["ProcessVariables"]["status"] = true;
+    response["ProcessVariables"]["status"] = true;
 
-    // if(response["ProcessVariables"]["status"]) { // Boolean to check from nsdl website whether pan is valid or not */
+    if(response["ProcessVariables"]["status"]) { // Boolean to check from nsdl website whether pan is valid or not 
 
-    //   this.qde.application.applicants[this.applicantIndex].pan.isValid = true;
-    //   this.qde.application.applicants[this.applicantIndex].pan.errorMessage = "";
+      this.qde.application.applicants[this.applicantIndex].pan.isValid = true;
+      this.qde.application.applicants[this.applicantIndex].pan.errorMessage = "";
+
+      let processVariables = response["ProcessVariables"];//need to check its needed for non individual
+      this.qde.application.applicants[this.applicantIndex].personalDetails.firstName = processVariables["firstName"];
+      this.qde.application.applicants[this.applicantIndex].personalDetails.lastName = processVariables["lastName"];*/
+
       this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successfull
         if(response["ProcessVariables"]["status"]) {
@@ -848,11 +857,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
         // alert("error"+error);
         // Throw Request Failure Error
       });
-    // } else {
-    //     this.qde.application.applicants[this.applicantIndex].pan.isValid = false;
-    //     this.qde.application.applicants[this.applicantIndex].pan.errorMessage = "Error in pan Details";
-    //   }
-    // });  
+    /*} else {
+        this.qde.application.applicants[this.applicantIndex].pan.isValid = false;
+        this.qde.application.applicants[this.applicantIndex].pan.errorMessage = "Error in pan Details";
+      }
+    });*/  
   }
 
   

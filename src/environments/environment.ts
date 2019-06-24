@@ -75,8 +75,7 @@ export const environment = {
   password: "icici@123",
   //host: "http://182.156.249.170",
   appiyoDrive: "/appiyo/d/drive/upload/",
-  host: "http://192.168.1.108",
-  //host:""
+  host: "http://192.168.1.108"
 
 };
 
