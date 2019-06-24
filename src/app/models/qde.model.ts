@@ -14,6 +14,15 @@ export interface Application {
     references ?: Reference;
 }
 
+export interface Document {
+  documentType: string;
+  documentImageId: string;
+  documentCategory: string;
+  documentName: string;
+  documentSize: number;
+
+}
+
 export interface Applicant {
     applicantId ?: string;
     isMainApplicant : boolean; /* Applicant / Co-Applicant: true/false */
