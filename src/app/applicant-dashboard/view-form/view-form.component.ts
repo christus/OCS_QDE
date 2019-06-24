@@ -176,7 +176,19 @@ export class ViewFormComponent implements OnInit {
           this.coApplicantIndexes.push(index);
         }
 
-        this.isIncomplete.push(this.checkIncompleteFields(el.applicantId));
+        // this.isIncomplete.push(this.checkIncompleteFields(el.applicantId));
+        this.isIncomplete.push({
+          pan: false,
+          personalDetails: false,
+          contactDetails: false,
+          communicationAddress: false,
+          maritalStatus: false,
+          familyDetails: false,
+          other: false,
+          occupation: false,
+          officialCorrespondence: false,
+          incomeDetails: false
+        });
       });
     });
     console.log(">>", JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs));
@@ -202,6 +214,7 @@ export class ViewFormComponent implements OnInit {
       this.constitutions = lov.LOVS.constitution;
       this.assessmentMethodology = lov.LOVS.assessment_methodology;
       this.birthPlace = JSON.parse(this.route.snapshot.data.birthPlaceValues['ProcessVariables']['response']).city;
+      console.log("birthPlace: ", this.birthPlace);
       //hardcoded
       //this.birthPlace = [{"key": "Chennai", "value": "1"},{"key": "Mumbai", "value": "2"},{"key": "Delhi", "value": "3"}];
       // List of Values for Date
@@ -444,11 +457,16 @@ export class ViewFormComponent implements OnInit {
         eachDob.year = this.years.find(val => eachApplicant.personalDetails.dob.split('/')[0] == val.value);
       }
 
+       // Personal Details Year
+      if( ! isNaN(parseInt(eachApplicant.personalDetails.dob.split('/')[0])) ) {
+        eachDob.year = this.years.find(val => eachApplicant.personalDetails.dob.split('/')[0] == val.value);
+      }
+
       // Personal Details Birthplace
       if( ! isNaN(parseInt(eachApplicant.personalDetails.birthPlace)) ) {
-        this.selectedBirthPlace.push(this.birthPlace[parseInt(eachApplicant.personalDetails.birthPlace) - 1]);
+        this.selectedBirthPlace[i] = this.birthPlace.find(v => v.value == eachApplicant.personalDetails.birthPlace);
       }
-      
+
       this.dob.push(eachDob);
 
       let eachDateOfIncorporation: {day: Item, month: Item, year: Item} = {day:{key:'DD',value:'DD'},month:{key:'MM',value:'MM'},year:{key:'YYYY',value:'YYYY'}};
@@ -471,55 +489,54 @@ export class ViewFormComponent implements OnInit {
 
       // Personal Details Qualification (different because qualification isnt sending sequential value like 1,2,3)
       if( ! isNaN(parseInt(eachApplicant.personalDetails.qualification)) ) {
-        
-        // this.selectedQualification = this.qualifications[(parseInt(eachApplicant.personalDetails.qualification))-1];
-        this.selectedQualification.push(this.qualifications.find(e => e.value == eachApplicant.personalDetails.qualification));
+        this.selectedQualification[i] = (this.qualifications.find(e => e.value == eachApplicant.personalDetails.qualification));
       }
 
       // Constitution
       if( ! isNaN(parseInt(eachApplicant.organizationDetails.constitution)) ) {
-        this.selectedConstitution.push(this.constitutions[(parseInt(eachApplicant.organizationDetails.constitution))-1]);
+        this.selectedConstitution[i] = (this.constitutions[(parseInt(eachApplicant.organizationDetails.constitution))-1]);
       }
       
       // Communication address
       if( ! isNaN(parseInt(eachApplicant.communicationAddress.residentialStatus)) ) {
-        this.selectedResidence.push(this.maritals[(parseInt(eachApplicant.communicationAddress.residentialStatus)) - 1]);
+        this.selectedResidence[i] = (this.residences[(parseInt(eachApplicant.communicationAddress.residentialStatus)) - 1]);
       }
 
       if( ! isNaN(parseInt(eachApplicant.maritalStatus.status)) ) {
-        this.selectedMaritialStatus.push(this.maritals[(parseInt(eachApplicant.maritalStatus.status))-1]);
+        this.selectedMaritialStatus[i] = (this.maritals[(parseInt(eachApplicant.maritalStatus.status))-1]);
       }
 
       if( ! isNaN(parseInt(eachApplicant.maritalStatus.spouseTitle)) ) {
-          this.selectedSpouseTitle.push(this.titles[(parseInt(eachApplicant.maritalStatus.spouseTitle))-1]);
+          this.selectedSpouseTitle[i] = (this.titles[(parseInt(eachApplicant.maritalStatus.spouseTitle))-1]);
       }
 
       if( ! isNaN(parseInt(eachApplicant.familyDetails.fatherTitle)) ) {
-        this.selectedFatherTitle .push(this.titles[(parseInt(eachApplicant.familyDetails.fatherTitle))-1]);
+        this.selectedFatherTitle [i] = (this.titles[(parseInt(eachApplicant.familyDetails.fatherTitle))-1]);
       }
 
       if( ! isNaN(parseInt(eachApplicant.familyDetails.motherTitle)) ) {
-        this.selectedMotherTitle.push(this.titles[(parseInt(eachApplicant.familyDetails.motherTitle))-1]);
+        this.selectedMotherTitle[i] = (this.titles[(parseInt(eachApplicant.familyDetails.motherTitle))-1]);
       }
 
       // Other
       if( ! isNaN(parseInt(eachApplicant.other.religion)) ) {
-        this.selectedReligion.push(this.religions[(parseInt(eachApplicant.other.religion))-1]);
+        this.selectedReligion[i] = (this.religions[(parseInt(eachApplicant.other.religion))-1]);
       }
 
       // Category
       if( ! isNaN(parseInt(eachApplicant.other.category)) ) {
-        this.selectedCategory .push(this.categories[(parseInt(eachApplicant.other.category))-1]);
+        this.selectedCategory [i] = (this.categories[(parseInt(eachApplicant.other.category))-1]);
       }
 
       // Occupation details
       if( ! isNaN(parseInt(eachApplicant.occupation.occupationType)) ) {
-        this.selectedOccupation.push(this.occupations.find(e => e.value == eachApplicant.occupation.occupationType));
+        this.selectedOccupation[i] = (this.occupations.find(e => e.value == eachApplicant.occupation.occupationType));
       }
 
       // Assesment methodology
+      console.log("assessmentMethodology: ", this.assessmentMethodology[(parseInt(eachApplicant.incomeDetails.assessmentMethodology))-1]);
       if( ! isNaN(parseInt(eachApplicant.incomeDetails.assessmentMethodology)) ) {
-        this.selectedAssesmentMethodology.push(this.assessmentMethodology[(parseInt(eachApplicant.incomeDetails.assessmentMethodology))-1]);
+        this.selectedAssesmentMethodology[i] = (this.assessmentMethodology[(parseInt(eachApplicant.incomeDetails.assessmentMethodology))-1]);
       }
 
       this.initializeVariables(eachApplicant);
@@ -548,6 +565,8 @@ export class ViewFormComponent implements OnInit {
     this.isAlternateResidenceNumber.push(eachApplicant.contactDetails.alternateResidenceNumber != "" ? true : false);
   }
 
-
+  qdeSubmit() {
+    
+  }
 
 }

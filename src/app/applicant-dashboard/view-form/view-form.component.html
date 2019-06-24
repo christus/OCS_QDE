@@ -2,7 +2,7 @@
 <main class="grey-bg">
   <div class="main">
       <div class="lyt-sidebar tabs">
-          <ul class="sidebar tabs-head main-nav" >
+          <ul class="sidebar tabs-head main-nav">
               <li class="tab-link" [ngClass]="{'active': activeTab == 0}">
                   <a href="javascript:void(0);" (click)="tabSwitch(0)">Applicant Details</a>
                   <span class="complete-sign"><span class="icon icon-tick"></span></span>
@@ -38,1017 +38,134 @@
                     </div>
 
                     <form   #applicantIndividualForm="ngForm">
-                        <div class="bs-card" [ngClass]="{'incomplete': isIncomplete}">
-                            <h3 class="card-title">PAN details</h3>
-                            <div class="bs-form">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group last">
-
-                                            <input  readonly="true"
-                                                    type="text"
-                                                    class="form-control"
-                                                    fieldFill
-                                                    [ngModel]="qde.application.applicants[applicantIndex].pan.panNumber"
-                                                    id="pan-inpt"
-                                                    name="pan" />
-                                            <label for="pan-inpt">Enter PAN number</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 seperator">
-                                        <div class="bs-file">
-                                            <input readonly="true"  type="file" class="form-control" id="file">
-                                            <label for="file"><span>Change photo</span></label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <app-view-form-applicant
+                        [showEdit]="true"
+                        [isCoApplicant]="false"
+                        [qde]="qde"
+                        [applicantIndex]="applicantIndex"
+                        [dob]="dob[applicantIndex]"
+                        [residenceNumberStdCode]="residenceNumberStdCode[applicantIndex]"
+                        [residenceNumberPhoneNumber]="residenceNumberPhoneNumber[applicantIndex]"
+                        [alternateResidenceNumberStdCode]="alternateResidenceNumberStdCode[applicantIndex]"
+                        [alternateResidenceNumberPhoneNumber]="alternateResidenceNumberPhoneNumber[applicantIndex]"
+                        [addressCityState]="addressCityState[applicantIndex]"
+                        [otherReligion]="otherReligion[applicantIndex]"
+                        [organizationDetails]="organizationDetails[applicantIndex]"
+                        [registeredAddressCityState]="registeredAddressCityState[applicantIndex]"
+                        [corporateAddressCityState]="corporateAddressCityState[applicantIndex]"
+                        [corporateAddressStdCode]="corporateAddressStdCode[applicantIndex]"
+                        [corporateAddressPhoneNumber]="corporateAddressPhoneNumber[applicantIndex]"
+                        [coApplicantsForDashboard]="coApplicantsForDashboard[applicantIndex]"
+                        [officialCorrespondenceStdCode]="officialCorrespondenceStdCode[applicantIndex]"
+                        [officialCorrespondencePhoneNumber]="officialCorrespondencePhoneNumber[applicantIndex]"
+                        [religions]="religions"
+                        [qualifications]="qualifications"
+                        [occupations]="occupations"
+                        [residences]="residences"
+                        [titles]="titles"
+                        [maleTitles]="maleTitles"
+                        [femaleTitles]="femaleTitles"
+                        [maritals]="maritals"
+                        [relationships]="relationships"
+                        [loanpurposes]="loanpurposes"
+                        [categories]="categories"
+                        [genders]="genders"
+                        [constitutions]="constitutions"
+                        [days]="days"
+                        [months]="months"
+                        [years]="years"
+                        [assessmentMethodology]="assessmentMethodology"
+                        [selectedTitle]="selectedTitle[applicantIndex]"
+                        [selectedReligion]="selectedReligion[applicantIndex]"
+                        [selectedMaritialStatus]="selectedMaritialStatus[applicantIndex]"
+                        [selectedCategory]="selectedCategory[applicantIndex]"
+                        [selectedOccupation]="selectedOccupation[applicantIndex]"
+                        [selectedResidence]="selectedResidence[applicantIndex]"
+                        [selectedSpouseTitle]="selectedSpouseTitle[applicantIndex]"
+                        [selectedFatherTitle]="selectedFatherTitle[applicantIndex]"
+                        [selectedMotherTitle]="selectedMotherTitle[applicantIndex]"
+                        [selectedQualification]="selectedQualification[applicantIndex]"
+                        [selectedGender]="selectedGender[applicantIndex]"
+                        [selectedConstitution]="selectedConstitution[applicantIndex]"
+                        [selectedDocType]="selectedDocType[applicantIndex]"
+                        [docType]="docType"
+                        [selectedAssesmentMethodology]="selectedAssesmentMethodology[applicantIndex]"
+                        [birthPlace]="birthPlace"
+                        [selectedBirthPlace]="selectedBirthPlace[applicantIndex]"
+                        [isIncomplete]="isIncomplete">
+                    </app-view-form-applicant>
+                        <div class="btn-wrap">
+                            <button type="submit" class="btn btn-primary" (click)="tabSwitch(1)">Continue</button>
                         </div>
-                        <div class="bs-card" [ngClass]="{'incomplete': isIncomplete}">
-                            <h3 class="card-title">Personal details</h3>
-                            <div class="bs-form">
-                                <div class="row">
-                                    <div class="col-3">
-                                        <div class="form-group">
-                                            <span class="control-title">Title</span>
-                                            <kendo-dropdownlist class="form-control"
-                                                            [data]="titles" 
-                                                            textField="key"
-                                                            valueField="value"
-                                                            name="title"
-                                                            [(ngModel)]="selectedTitle[applicantIndex]">
-                                            </kendo-dropdownlist>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-4">
-                                        <div class="form-group">
-                                            <input readonly="true"     type="text"
-                                                      class="form-control"
-                                                      [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.firstName"
-                                                      name="firstName"
-                                                      #firstName="ngModel" 
-                                                      required
-                                                      fieldFill
-                                                      pattern="^[A-Za-z]+$" 
-                                                      id="first-name" />
-                                              <label for="first-name">First name</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-4">
-                                        <div class="form-group typ-optional" [ngClass]="{'filled': middleName.value != ''}">
-                                            <input readonly="true"     type="text"
-                                                      class="form-control"
-                                                      id="middle-name"
-                                                      name="middleName"
-                                                      fieldFill
-                                                      [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.middleName"
-                                                      pattern="^[A-Za-z]*$"
-                                                      #middleName="ngModel" />
-                                            <label for="middle-name">Middle name</label>
-                                            <span class="optional">Optional</span>
-                                        </div>
-                                    </div>
-                                    <div class="col-4">
-                                        <div class="form-group" [ngClass]="{'filled': lastName.value != ''}">
-                                            <input readonly="true"     type="text"
-                                                      class="form-control"
-                                                      id="last-name"
-                                                      [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.lastName" 
-                                                      name="lastName" 
-                                                      #lastName="ngModel"
-                                                      pattern="^[A-Za-z]+$"
-                                                      fieldFill
-                                                      required />
-                                            <label for="last-name">Last name</label>
-                                           
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <span class="control-title">Gender</span>
-                                        <kendo-dropdownlist class="form-control"
-                                                        [data]="genders" 
-                                                        textField="key"
-                                                        valueField="value"
-                                                        name="gender"
-                                                        [(ngModel)]="selectedGender[applicantIndex]">
-                                        </kendo-dropdownlist>
-                                    </div>
-                                    <div class="col-6">
-                                        <span class="control-title">Qualification</span>
-                                        <kendo-dropdownlist class="form-control"
-                                                        [data]="qualifications" 
-                                                        textField="key"
-                                                        valueField="value"
-                                                        name="qualification"
-                                                        [(ngModel)]="selectedQualification[applicantIndex]">
-                                        </kendo-dropdownlist>
-                                        <!-- <select   name="qualification"
-                                                  [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.qualification">
-                                          <option *ngFor="let qual of qualifications"
-                                                  [ngClass]="{'select': qde.application.applicants[applicantIndex].personalDetails.qualification == qual}"
-                                                  [selected]="qde.application.applicants[applicantIndex].personalDetails.qualification == qual"
-                                                  [value]="qual.value">
-                                              {{qual.key}}
-                                          </option>
-                                      </select> -->
-                                    </div>
-                                </div>
-                                <div class="row last">
-                                    <div class="col-6">
-                                        <div class="form-group typ-select">
-                                            <span class="control-title">Date of Birth</span>
-                                            <kendo-dropdownlist class="form-control"
-                                                            [data]="days"
-                                                            textField="key"
-                                                            valueField="value"
-                                                            name="day"
-                                                            [(ngModel)]="dob[applicantIndex].day">
-                                            </kendo-dropdownlist>
-                                            <kendo-dropdownlist class="form-control"
-                                                            [data]="months"
-                                                            textField="key"
-                                                            valueField="value"
-                                                            name="month"
-                                                            [(ngModel)]="dob[applicantIndex].month">
-                                            </kendo-dropdownlist>
-                                            <kendo-dropdownlist class="form-control"
-                                                            [data]="years"
-                                                            textField="key"
-                                                            valueField="value"
-                                                            name="year"
-                                                            [(ngModel)]="dob[applicantIndex].year">
-                                            </kendo-dropdownlist>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <span class="control-title">Birth place</span>
-                                            <kendo-dropdownlist class="form-control"
-                                                            [data]="birthPlace"
-                                                            textField="key"
-                                                            valueField="value"
-                                                            name="birthPlace"
-                                                            [(ngModel)]="selectedBirthPlace[applicantIndex]">
-                                            </kendo-dropdownlist>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="bs-card" [ngClass]="{'incomplete': isIncomplete}">
-                            <h3 class="card-title">Contact details</h3>
-                            <div class="bs-form">
-                                <div class="row">
-                                    <div class="col-3">
-                                        <label class="just-label">Email ID</label>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group filled">
-                                            <input readonly="true"     type="email"
-                                                      class="form-control"
-                                                      id="prefered-email"
-                                                      [(ngModel)]="qde.application.applicants[applicantIndex].contactDetails.preferredEmailId"
-                                                      name="preferEmailId"
-                                                      #preferEmailId="ngModel"
-                                                      email
-                                                      fieldFill
-                                                      required />
-                                            
-                                            <label for="prefered-email" >Preferred email ID</label>
-      
-                                            
-                                        </div>
-                                        <div class="form-group" [ngClass]="{'typ-alternative': !isAlternateEmailId}">
-                                            <input readonly="true"     type="text"
-                                                      class="form-control"
-                                                      id="alternate-email"
-                                                      [(ngModel)]="qde.application.applicants[applicantIndex].contactDetails.alternateEmailId"
-                                                      name="alternateEmailId"
-                                                      fieldFill
-                                                      #alternateEmailId="ngModel"
-                                                      email />
-                                            <label for="alternate-email">Alternate email ID</label>
-                                            <span class="alternate-data">
-                                              <a  href="javascript:void(0);"
-                                                  class="alter-btn">- Remove</a> alternate email id
-                                            </span>
-      
-                                            
-                                        </div>
-                                    </div>
-                                    <div class="col-3">
-                                        <div class="form-group">
-                                            <span class="alternate-data" ><a href="javascript:void(0);"  class="alter-btn">+ Add</a> alternate email id</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row last">
-                                    <div class="col-3">
-                                        <label class="just-label">Contact Number</label>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group" [ngClass]="{'filled': mobileNumber.value == ''}">
-                                            
-                                            <input readonly="true"     type="tel" class="form-control" id="mob-no"
-                                                      maxlength="10" im-insert="true"
-                                                      [(ngModel)]="qde.application.applicants[applicantIndex].contactDetails.mobileNumber"
-                                                      name="mobileNumber"
-                                                      fieldFill
-                                                      #mobileNumber="ngModel"
-                                                      pattern="^[0-9]*$" 
-                                                      required />
-      
-                                            <label for="mob-no">Mobile number</label>
-                                            <span class="optional">10 digit</span>
-                                            <a href="javascript:void(0);" class="sent-otp modal-init" data-target="sent-otp-modal"><span class="text">sent OTP</span><span class="icon icon-tick"></span></a>
-      
-                                            
-                                        </div>
-                                        <div class="form-group" [ngClass]="{'typ-alternative': !isAlternateMobileNumber}">
-      
-                                            <input readonly="true"     type="tel"
-                                                      class="form-control"
-                                                      id="alter-mob"
-                                                      data-validation-attr="mobileno01" 
-                                                      maxlength="10"
-                                                      im-insert="true"
-                                                      fieldFill
-                                                      [(ngModel)]="qde.application.applicants[applicantIndex].contactDetails.alternateMobileNumber"
-                                                      name="alternateMobileNumber"
-                                                      #altMobileNo="ngModel"
-                                                      pattern="^[0-9]*$" />
-      
-                                            <label for="alter-mob" *ngIf="altMobileNo.value == ''">Alternate mobile no</label>
-                                            <span class="optional">10 digit</span>
-                                            <a href="javascript:void(0);" class="sent-otp modal-init" data-target="sent-otp-modal"><span class="text">sent OTP</span><span class="icon icon-tick"></span></a>
-                                            <span class="alternate-data">
-                                              <a  href="javascript:void(0);"
-                                                  class="alter-btn">- Remove</a> alternate email id
-                                            </span>
-                                            
-                                        </div>
-                                        <div class="residence-no">
-                                            <div class="form-group">
-                                              <input readonly="true"   type="text"
-                                                      required
-                                                      fieldFill
-                                                      [(ngModel)]="residenceNumberStdCode[applicantIndex]"
-                                                      pattern="^[0-9]*$"
-                                                      #residenceStdCode = "ngModel"
-                                                      name="residenceNumber1"
-                                                      class="form-control"
-                                                      id="std" />
-                                          <label for="std">STD</label>
-                                        
-                                            </div>
-                                            <span class="seperator">-</span>
-                                            <div class="form-group">
-                                              <input readonly="true"   type="text"
-                                                      class="form-control"
-                                                      id="res-no"
-                                                      fieldFill
-                                                      [(ngModel)]="residenceNumberPhoneNumber[applicantIndex]"
-                                                      pattern="^[0-9]*$"
-                                                      #residenceNumber = "ngModel"
-                                                      name="residenceNumber2"
-                                                      data-validation-attr="residenceno"
-                                                      required />
-                                                <label for="res-no" >Residence number</label>
-                                                
-                                            </div>
-                                        </div>
-                                        <div class="residence-no" [ngClass]="{'typ-alternative': !isAlternateResidenceNumber}">
-                                          <div class="form-group">
-                                              <input readonly="true"     type="text"
-                                                        [(ngModel)]="alternateResidenceNumberStdCode[applicantIndex]"
-                                                        name="alternateResidenceNumber1"
-                                                        fieldFill
-                                                        class="form-control"
-                                                        id="altrstd">
-                                              <label for="altrstd">STD</label>
-                                          </div>
-                                          <span class="seperator">-</span>
-                                          <div class="form-group">
-                                              <input readonly="true"     type="text"
-                                                        class="form-control"
-                                                        [(ngModel)]="alternateResidenceNumberPhoneNumber[applicantIndex]"
-                                                        name="alternateResidenceNumber2"
-                                                        fieldFill
-                                                        id="altr-res-no"
-                                                        data-validation-attr="residenceno01" />
-                                              <label for="altr-res-no">Residence number</label>
-                                          </div>
-                                          <span class="alternate-data">
-                                            <a href="javascript:void(0);"
-                                                class="alter-btn">- Remove</a> alternate email id
-                                          </span>
-                                        </div>
-                                    </div>
-                                    <div class="col-3">
-                                        <div class="form-group">
-                                            <span class="alternate-data"><a href="javascript:void(0);" class="alter-btn">+ Add</a> alternate mobile no</span>
-                                            <span class="alternate-data"><a href="javascript:void(0);" class="alter-btn">+ Add</a> alternate phone number</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="bs-card" [ngClass]="{'incomplete': isIncomplete}">
-                            <h3 class="card-title">Communication details</h3>
-                            <div class="bs-form">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <span class="control-title">Residential status</span>
-                                            <kendo-dropdownlist class="form-control"
-                                                            [data]="residences" 
-                                                            textField="key"
-                                                            valueField="value"
-                                                            name="residentialStatus"
-                                                            [(ngModel)]="selectedResidence[applicantIndex]">
-                                            </kendo-dropdownlist>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="form-group">
-                                              <input readonly="true"   type="text"
-                                                  class="form-control"
-                                                  id="address1"
-                                                  fieldFill
-                                                  [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.addressLineOne"
-                                                  pattern="^[0-9A-Za-z,_#\s]+$"
-                                                  name="addressLineOne"
-                                                  #address1="ngModel"
-                                                  required />
-      
-                                            
-      
-                                          <label for="address1">Address line 1</label>
-      
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="form-group">
-                                          <input readonly="true"   type="text"
-                                                  class="form-control"
-                                                  id="address2"
-                                                  fieldFill
-                                                  [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.addressLineTwo"
-                                                  pattern="^[0-9A-Za-z,_#\s]+$"
-                                                  name="addressLineTwo"
-                                                  #address2="ngModel"
-                                                  required>
-        
-                                            <label for="address2" >Address line 2</label>
-                                            
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                              <input readonly="true"  type="number" class="form-control" id="pincode" required
-                                              [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.zipcode"
-                                              name="pinCode"
-                                              fieldFill
-                                              #commPinCode="ngModel" 
-                                              maxlength="6"
-                                              pattern="^[0-9]+$" />
-                                            <label for="pincode">Pincode</label>
-        
-                                           
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                              <input readonly="true"   type="text"
-                                                  class="form-control"
-                                                  id="cityState"
-                                                  required
-                                                  fieldFill
-                                                  name="cityState"
-                                                  [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.city"
-                                                  pattern="^[0-9A-Za-z,_#]+$" />
-      
-                                          <label for="cityState">City/State</label>
-      
-                                         
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="bs-checkbox">
-                                              <input readonly="true"   type="checkbox"
-                                                      [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.permanentAddress"
-                                                      name="permanentAddress"
-                                                      fieldFill
-                                                      id="permanentAddress">
-                                              <label for="permanentAddress"><span>Current Address is Permanent Address</span></label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="form-group typ-range">
-                                            <span class="subtitle">Number of years in current residence</span>
-                                            <input readonly="true"     type="number"
-                                                      name="numberOfYearsInCurrentResidence"
-                                                      class="form-control"
-                                                      fieldFill
-                                                      [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.numberOfYearsInCurrentResidence"
-                                                      min=0
-                                                      max=90
-                                                      #numberOfYearsInCurrentResidence="ngModel"
-                                                      (ngModelChange)="valuechange($event)"
-                                                      required />
-                                              
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="bs-card" [ngClass]="{'incomplete': isIncomplete}">
-                            <h3 class="card-title">Marital Status</h3>
-                            <div class="bs-form">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <span class="control-title">Marital status</span>
-                                            <kendo-dropdownlist class="form-control"
-                                                            [data]="maritals" 
-                                                            textField="key"
-                                                            valueField="value"
-                                                            name="maritalStatus"
-                                                            [(ngModel)]="selectedMaritialStatus[applicantIndex]">
-                                          </kendo-dropdownlist>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="inner-card">
-                                    <h4 class="inner-title">Enter spouse details</h4>
-                                    <div class="row">
-                                        <div class="col-3">
-                                            <div class="form-group">
-                                                <span class="control-title">Title</span>
-                                                <kendo-dropdownlist class="form-control"
-                                                            [data]="titles" 
-                                                            textField="key"
-                                                            valueField="value"
-                                                            name="spouseTitle"
-                                                            [(ngModel)]="selectedSpouseTitle[applicantIndex]">
-                                                </kendo-dropdownlist>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="form-group">
-                                                  <input readonly="true"   type="text"
-                                                          class="form-control" 
-                                                          [(ngModel)]="qde.application.applicants[applicantIndex].maritalStatus.firstName"
-                                                          #spouseName="ngModel"
-                                                          name="firstName"
-                                                          pattern="^[A-Za-z\s]+$"
-                                                          fieldFill
-                                                          id="spouse-name"
-                                                          required />
-                                                <label for="spouse-name">First name</label>
-      
-                                                <div *ngIf="(spouseName.touched || spouseName.dirty) && spouseName.invalid" class="invalid-feedback">
-                                                    <div *ngIf="spouseName.errors?.required">{{errors.maritialStatus.spouseName.required}}</div>
-                                                    <div *ngIf="spouseName.errors?.pattern">{{errors.maritialStatus.spouseName.invalid}}</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-12">
-      
-                                            <h5 class="subtitle">Is applicant's spouse working?</h5>
-                                            <div class="bs-radio">
-                                                  <input readonly="true"     type="radio"
-                                                            [(ngModel)]="qde.application.applicants[applicantIndex].maritalStatus.earning"
-                                                            name="earning"
-                                                            value="1"
-                                                            fieldFill
-                                                            id="earningYes"
-                                                            />
-                                                  <label for="earningYes"><span>Yes</span></label>
-                                              </div>
-                                              <div class="bs-radio">
-                                                  <input readonly="true"     type="radio"
-                                                            [(ngModel)]="qde.application.applicants[applicantIndex].maritalStatus.earning"
-                                                            name="earning"
-                                                            value="2"
-                                                            fieldFill
-                                                            id="earningNo" />
-                                                  <label for="earningNo"><span>No</span></label>
-                                              </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <h5 class="subtitle">Enter annual income of spouse</h5>
-                                            <div class="form-group inr">
-                                                  <input readonly="true"  type="text"
-                                                  class="form-control"
-                                                  id="amount"
-                                                  required
-                                                  fieldFill
-                                                  [(ngModel)]="qde.application.applicants[applicantIndex].maritalStatus.amount"
-                                                  #amount="ngModel"
-                                                  name="amount"
-                                                  pattern="^-?\d*(\.\d+)?$" />
-      
-                                                  <label for="amount">Amount (in lakhs)</label>
-                                                  <span class="addon">
-                                                    <span class="icon icon-inr"></span>
-                                                  </span>
-                                                  <span class="in-word"></span>
-      
-                                                  <div *ngIf="(amount.touched || amount.dirty) && amount.invalid" class="invalid-feedback">
-                                                      <div *ngIf="amount.errors?.required">{{errors.maritialStatus.salaryAmount.required}}</div>
-                                                      <div *ngIf="amount.errors?.pattern">{{errors.maritialStatus.salaryAmount.invalid}}</div>
-                                                  </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="bs-card" [ngClass]="{'incomplete': isIncomplete}">
-                            <h3 class="card-title">Family details</h3>
-                            <div class="bs-form">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="form-group typ-range">
-                                            <span class="subtitle">Number of years in current residence</span>
-                                            <input readonly="true"     type="number"
-                                                      name="numberOfDependents"
-                                                      min=0
-                                                      max=90
-                                                      fieldFill
-                                                      class="form-control"
-                                                      [(ngModel)]="qde.application.applicants[applicantIndex].familyDetails.numberOfDependents"
-                                                      (ngModelChange)="valuechange($event)" />
-                                              <!-- <ng5-slider [(value)]="qde.application.applicants[applicantIndex].familyDetails.numberOfDependents" [options]="options"></ng5-slider> -->
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-3">
-                                        <div class="form-group">
-                                            <span class="control-title">Father's Title</span>
-                                            <kendo-dropdownlist class="form-control"
-                                                    [data]="maleTitles" 
-                                                    textField="key"
-                                                    valueField="value"
-                                                    name="fatherTitle"
-                                                    [(ngModel)]="selectedFatherTitle[applicantIndex]">
-                                            </kendo-dropdownlist>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="form-group filled">
-                                              <input readonly="true"     type="text"
-                                                        class="form-control"
-                                                        id="father-name"
-                                                        required
-                                                        [(ngModel)]="qde.application.applicants[applicantIndex].familyDetails.fatherName"
-                                                        #fatherName="ngModel"
-                                                        name="fatherName"
-                                                        fieldFill
-                                                        pattern="^[A-Za-z\s]+$" />
-                                          <label for="father-name" *ngIf="fatherName.value==''">Father's name</label>
-                                          <div *ngIf="fatherName.touched && fatherName.invalid" class="invalid-feedback">
-                                              <div *ngIf="fatherName.errors?.required">{{errors.familyDetails.fatherName.required}}</div>
-                                              <div *ngIf="fatherName.errors?.pattern">{{errors.familyDetails.fatherName.invalid}}</div>
-                                          </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-3">
-                                        <div class="form-group">
-                                            <span class="control-title">Mother's Title</span>
-                                            <kendo-dropdownlist class="form-control"
-                                                  [data]="femaleTitles" 
-                                                  textField="key"
-                                                  valueField="value"
-                                                  name="motherTitle"
-                                                  [(ngModel)]="selectedMotherTitle[applicantIndex]">
-                                                </kendo-dropdownlist>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="form-group filled">
-                                              <input readonly="true"  type="text"
-                                                    class="form-control"
-                                                    id="mother-name"
-                                                    required
-                                                    [(ngModel)]="qde.application.applicants[applicantIndex].familyDetails.motherName"
-                                                    #motherName="ngModel"
-                                                    fieldFill
-                                                    name="motherName"
-                                                    pattern="^[A-Za-z\s]+$" />
-                                              <label for="mother-name" *ngIf="motherName.value == ''">Mother's name</label>
-                                              <div *ngIf="motherName.touched && motherName.invalid" class="invalid-feedback">
-                                                  <div *ngIf="motherName.errors?.required">{{errors.familyDetails.motherName.required}}</div>
-                                                  <div *ngIf="motherName.errors?.pattern">{{errors.familyDetails.motherName.invalid}}</div>
-                                              </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row last">
-                                    <div class="col-12">
-                                        <div class="form-group">
-                                              <input readonly="true"  type="text" class="form-control" id="maiden-name"
-                                                    required
-                                                    [(ngModel)]="qde.application.applicants[applicantIndex].familyDetails.motherMaidenName"
-                                                    #motherMaiden="ngModel"
-                                                    name="motherMaidenName"
-                                                    fieldFill
-                                                    pattern="^[A-Za-z\s]+$" />
-      
-                                              <label for="maiden-name" *ngIf="motherMaiden.value==''">Mother's maiden name</label>
-                                              <div *ngIf="motherMaiden.touched && motherMaiden.invalid" class="invalid-feedback">
-                                                  <div *ngIf="motherMaiden.errors?.required">{{errors.familyDetails.motherMaiden.required}}</div>
-                                                  <div *ngIf="motherMaiden.errors?.pattern">{{errors.familyDetails.motherMaiden.invalid}}</div>
-                                              </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="bs-card" [ngClass]="{'incomplete': isIncomplete}">
-                            <h3 class="card-title">Other</h3>
-                            <div class="bs-form">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <span class="control-title">Religion</span>
-                                            <kendo-dropdownlist class="form-control"
-                                                [data]="religions" 
-                                                textField="key"
-                                                valueField="value"
-                                                name="religion"
-                                                [(ngModel)]="selectedReligion[applicantIndex]">
-                                            </kendo-dropdownlist>
-                                        </div>
-
-                                    </div>
-                                    <!-- <div class="col-6">
-                                        <div class="form-group" [ngClass]="{'hidden': (religionSelect.value != '6')}">
-                                            <input readonly="true"     type="text"
-                                                      class="form-control"
-                                                      [(ngModel)]="qde.application.applicants[applicantIndex].other.religion"
-                                                      name="religionName"
-                                                      fieldFill
-                                                      id="religion-name" />
-                                            <label for="religion-name">Specify other religion</label>
-                                        </div>
-                                    </div> -->
-                                </div>
-                                <div class="row last">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <span class="control-title">Category</span>
-                                            <kendo-dropdownlist class="form-control"
-                                                [data]="categories" 
-                                                textField="key"
-                                                valueField="value"
-                                                name="category"
-                                                [(ngModel)]="selectedCategory[applicantIndex]">
-                                            </kendo-dropdownlist>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="bs-card" [ngClass]="{'incomplete': isIncomplete}">
-                            <h3 class="card-title">Occupation</h3>
-                            <div class="bs-form">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <span class="control-title">Occupation type</span>
-                                            <kendo-dropdownlist class="form-control"
-                                                [data]="occupations" 
-                                                textField="key"
-                                                valueField="value"
-                                                name="occupationType"
-                                                [(ngModel)]="selectedOccupation[applicantIndex]">
-                                            </kendo-dropdownlist>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="form-group filled">
-                                              <input readonly="true"  type="text" class="form-control"
-                                              required
-                                              fieldFill
-                                              [(ngModel)]="qde.application.applicants[applicantIndex].occupation.companyName"
-                                              pattern="^[A-Za-z\s]+$"
-                                              name="companyName"
-                                              #companyName="ngModel"
-                                              id="companyName" />
-      
-                                      <label for="companyName" *ngIf="companyName.value == ''">Company name</label>
-      
-                                      <div *ngIf="(companyName.touched || companyName.dirty) && companyName.invalid" class="invalid-feedback">
-                                        <div *ngIf="companyName.errors?.required">Company Name is required</div>
-                                        <div *ngIf="companyName.errors?.pattern">Company Name is not valid</div>
-                                      </div>
-      
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="form-group typ-range">
-                                            <span class="subtitle">Years in current employment/business</span>
-                                            <input readonly="true"  type="number"
-                                                  name="numberOfYearsInCurrentCompany"
-                                                  id="no-yrs"
-                                                  fieldFill
-                                                  class="form-control"
-                                                  [(ngModel)]="qde.application.applicants[applicantIndex].occupation.numberOfYearsInCurrentCompany"
-                                                  min=0
-                                                  max=90
-                                                  #numberOfYearsInCurrentCompany="ngModel"
-                                                  (ngModelChange)="valuechange($event)"
-                                                  required />
-      
-                                          <!-- <ng5-slider [(value)]="qde.application.applicants[applicantIndex].occupation.numberOfYearsInCurrentCompany"
-                                                      [options]="options">
-                                          </ng5-slider> -->
-      
-                        
-      
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="form-group typ-range">
-                                            <span class="subtitle">Total work experience</span>
-                                            <input readonly="true"  type="number"
-                                            name="totalExperienceYear"
-                                            class="form-control"
-                                            fieldFill
-                                            [(ngModel)]="qde.application.applicants[applicantIndex].occupation.totalWorkExperience"
-                                            min=0
-                                            max=90
-                                            #totalExperienceYear="ngModel"
-                                            (ngModelChange)="valuechange($event)"
-                                            required />
-      
-                                      <!-- <ng5-slider [(value)]="qde.application.applicants[applicantIndex].occupation.totalWorkExperience" [options]="options"></ng5-slider> -->
-      
-      
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                       
-                        <div class="bs-card" [ngClass]="{'incomplete': isIncomplete}">
-                            <h3 class="card-title">Offical correspondance</h3>
-                            <div class="bs-form">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="form-group">
-                                              <input readonly="true"   type="text"
-                                              class="form-control"
-                                              id="ofcAddOne"
-                                              fieldFill
-                                              [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.addressLineOne"
-                                              pattern="^[0-9A-Za-z,_#\s]+$"
-                                              name="ofcA1"
-                                              #ofcA1="ngModel"
-                                              required />
-      
-                                          <label for="ofcAddOne" *ngIf="ofcA1.value == ''">Office address line1</label>
-      
-                                          <div *ngIf="ofcA1.touched  && ofcA1.invalid" class="invalid-feedback">
-                                          <div *ngIf="ofcA1.errors?.required">{{errors.officialCorrespondence.address1.required}}</div>
-                                          <div *ngIf="ofcA1.errors?.pattern">{{errors.officialCorrespondence.address1.invalid}}</div>
-                                          </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="form-group">
-                                              <input readonly="true"   type="text"
-                                                      class="form-control"
-                                                      id="ofcAddTwo"
-                                                      fieldFill
-                                                      [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.addressLineTwo"
-                                                      pattern="^[0-9A-Za-z,_#\s]+$"
-                                                      name="ofcA2"
-                                                      #ofcA2="ngModel"
-                                                      required />
-                                            <label for="ofcAddTwo" *ngIf="ofcA2.value == ''">Office address line2</label>
-                                            <div *ngIf="ofcA2.touched && ofcA2.invalid" class="invalid-feedback">
-                                                <div *ngIf="ofcA2.errors?.required">{{errors.officialCorrespondence.address2.required}}</div>
-                                                <div *ngIf="ofcA2.errors?.pattern">{{errors.officialCorrespondence.address2.invalid}}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="form-group">
-                                              <input readonly="true"   type="text"
-                                                      class="form-control"
-                                                      id="offLandmark"
-                                                      fieldFill
-                                                      [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.landMark"
-                                                      name="landMark"
-                                                      pattern="^[0-9A-Za-z,_#]*$" 
-                                                      #landMark="ngModel" />
-                                            <label for="offLandmark" *ngIf="landMark.value == ''">Landmark</label>
-                                            <span class="optional">optional</span>
-        
-                                            <div *ngIf="landMark.touched && landMark.invalid" class="invalid-feedback">
-                                                <div *ngIf="landMark.errors?.pattern">{{errors.officialCorrespondence.address2.invalid}}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group filled">
-                                              <input readonly="true"  type="text" class="form-control"
-                                                    id="offPincode"
-                                                    fieldFill
-                                                    required
-                                                    [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.zipcode"
-                                                    #pinCode="ngModel" 
-                                                    name="pinCode"
-                                                    maxlength="6"
-                                                    pattern="^[0-9]+$" />
-                                            <label for="offPincode" *ngIf="pinCode.value == ''">Pincode</label>
-        
-                                            <div *ngIf="pinCode.touched && pinCode.invalid" class="invalid-feedback">
-                                                <div *ngIf="pinCode.errors?.required">{{errors.officialCorrespondence.pinCode.required}}</div>
-                                                <div *ngIf="pinCode.errors?.pattern">{{errors.officialCorrespondence.pinCode.invalid}}</div>
-                                            </div>
-        
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                              <input readonly="true"  type="text" class="form-control"
-                                                    id="offCityState"
-                                                    required
-                                                    fieldFill
-                                                    [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.city"
-                                                    #offCityState="ngModel"
-                                                    name="cityState"
-                                                    pattern="^[0-9A-Za-z,_#]+$">
-                                            <label for="offCityState" >City/State</label>
-        
-                                        
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="residence-no">
-                                            <div class="form-group">
-                                                  <input readonly="true"  type="number" class="form-control" id="std03"
-                                                  required
-                                                  fieldFill
-                                                  [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.officeNumber"
-                                                  #stdCode = "ngModel"
-                                                  name="stdCode" />
-                                                  <label for="std03">STD</label>
-                                                
-                                            </div>
-                                            <span class="seperator">-</span>
-                                            <div class="form-group">
-                                                  <input readonly="true"   type="text" class="form-control" id="res-no03" data-validation-attr="residenceno"
-                                                  required
-                                                  fieldFill
-                                                  #offStdNumber="ngModel"
-                                                  name="offStdNumber"
-                                                  [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.officeNumber" />
-      
-                                                  <label  for="res-no03"
-                                                          >Office number
-                                                  </label>
-      
-                                                  
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                              <input readonly="true"  type="email"
-                                                    class="form-control"
-                                                    id="off-email"
-                                                    required
-                                                    fieldFill
-                                                    [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.officeEmailId"
-                                                    email
-                                                    #officeEmail = "ngModel"
-                                                    name="officeEmail" />
-                                            <label for="off-email">Office email ID</label>
-        
-                                            
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-      
-                        <div class="bs-card" [ngClass]="{'incomplete': isIncomplete}">
-                            <h3 class="card-title">Income details</h3>
-                            <div class="bs-form">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="form-group inr filled">
-                                            <input type="text" class="form-control"
-                                                id="annualFamilyIncome1"
-                                                [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.annualFamilyIncome"
-                                                #annualFamilyIncome1="ngModel"
-                                                name="annualFamilyIncome"
-                                                fieldFill
-                                                required/>
-                                              <label for="annualFamilyIncome1">Annual Family Income <span class="lakhs">(in lakhs)</span> </label>
-                                              <span class="addon">
-                                                  <span class="icon icon-inr"></span>
-                                                </span>
-                                                <span class="in-word"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="form-group inr">
-                                            <input type="text" class="form-control" 
-                                                        id="monthlyIncome1"
-                                                        [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.monthlyIncome"
-                                                        #monthlyIncome1="ngModel"
-                                                        fieldFill
-                                                        name="monthlyIncome"
-                                                        required/>
-                                                        <label for="monthlyIncome1">Monthly income</label>
-                                                        <span class="addon">
-                                                            <span class="icon icon-inr"></span>
-                                                        </span>
-                                                        <span class="in-word"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="form-group">
-                                            <span class="control-title">Assessment Methodology</span>
-                                            <kendo-dropdownlist class="form-control"
-                                                [data]="assessmentMethodology" 
-                                                textField="key"
-                                                valueField="value"
-                                                name="assessmentMethodology"
-                                                [(ngModel)]="selectedAssesmentMethodology[applicantIndex]">
-                                            </kendo-dropdownlist>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                      
-                      <div class="btn-wrap">
-                          <button type="submit" class="btn btn-primary" (click)="tabSwitch(1)">Continue</button>
-                      </div>
                     </form>
 
-                 
               </div>
 
               <!-- Co-Applicant -->
               <div class="tab-content" [ngClass]="{'active': (activeTab == 1)}">
                   <h2 class="title">Enter co-applicant details</h2>
 
-                    <!-- <app-view-form-co-applicant
-                                                [isIncomplete]="isIncomplete">
-                    </app-view-form-co-applicant> -->
+                  <form   #coApplicantIndividualForm="ngForm">
+
+                  <app-view-form-applicant
+                  *ngFor="let c of coApplicantIndexes"
+                  [applicationId]="applicationId"
+                  [showEdit]="true"
+                  [isCoApplicant]="true"
+                  [qde]="qde"
+                  [applicantIndex]="c"
+                  [dob]="dob[c]"
+                  [residenceNumberStdCode]="residenceNumberStdCode[c]"
+                  [residenceNumberPhoneNumber]="residenceNumberPhoneNumber[c]"
+                  [alternateResidenceNumberStdCode]="alternateResidenceNumberStdCode[c]"
+                  [alternateResidenceNumberPhoneNumber]="alternateResidenceNumberPhoneNumber[c]"
+                  [addressCityState]="addressCityState[c]"
+                  [otherReligion]="otherReligion[c]"
+                  [organizationDetails]="organizationDetails[c]"
+                  [registeredAddressCityState]="registeredAddressCityState[c]"
+                  [corporateAddressCityState]="corporateAddressCityState[c]"
+                  [corporateAddressStdCode]="corporateAddressStdCode[c]"
+                  [corporateAddressPhoneNumber]="corporateAddressPhoneNumber[c]"
+                  [coApplicantsForDashboard]="coApplicantsForDashboard[c]"
+                  [officialCorrespondenceStdCode]="officialCorrespondenceStdCode[c]"
+                  [officialCorrespondencePhoneNumber]="officialCorrespondencePhoneNumber[c]"
+                  [religions]="religions"
+                  [qualifications]="qualifications"
+                  [occupations]="occupations"
+                  [residences]="residences"
+                  [titles]="titles"
+                  [maleTitles]="maleTitles"
+                  [femaleTitles]="femaleTitles"
+                  [maritals]="maritals"
+                  [relationships]="relationships"
+                  [loanpurposes]="loanpurposes"
+                  [categories]="categories"
+                  [genders]="genders"
+                  [constitutions]="constitutions"
+                  [days]="days"
+                  [months]="months"
+                  [years]="years"
+                  [assessmentMethodology]="assessmentMethodology"
+                  [selectedTitle]="selectedTitle[c]"
+                  [selectedReligion]="selectedReligion[c]"
+                  [selectedMaritialStatus]="selectedMaritialStatus[c]"
+                  [selectedCategory]="selectedCategory[c]"
+                  [selectedOccupation]="selectedOccupation[c]"
+                  [selectedResidence]="selectedResidence[c]"
+                  [selectedSpouseTitle]="selectedSpouseTitle[c]"
+                  [selectedFatherTitle]="selectedFatherTitle[c]"
+                  [selectedMotherTitle]="selectedMotherTitle[c]"
+                  [selectedQualification]="selectedQualification[c]"
+                  [selectedGender]="selectedGender[c]"
+                  [selectedConstitution]="selectedConstitution[c]"
+                  [selectedDocType]="selectedDocType[c]"
+                  [docType]="docType"
+                  [selectedAssesmentMethodology]="selectedAssesmentMethodology[c]"
+                  [birthPlace]="birthPlace"
+                  [selectedBirthPlace]="selectedBirthPlace[c]"
+                  [isIncomplete]="isIncomplete">
+                </app-view-form-applicant>
+                </form>
 
                   <div class="btn-wrap">
                       <button class="btn btn-primary">Submit</button>
