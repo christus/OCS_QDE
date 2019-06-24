@@ -2126,8 +2126,8 @@
                             </div>
                               <div class="btn-wrap">
                                   <button class="btn btn-primary"
-                                          [ngClass]="{'disabled': !organizationForm.valid}"
-                                          [disabled]="!organizationForm.valid">Next
+                                          [ngClass]="{'disabled': (!organizationForm.valid || organizationDetails.day.value == 'DD' || organizationDetails.month.value == 'MM' || organizationDetails.year.value == 'YYYY')}"
+                                          [disabled]="(!organizationForm.valid || organizationDetails.day.value == 'DD' || organizationDetails.month.value == 'MM' || organizationDetails.year.value == 'YYYY')">Next
                                   </button>
                               </div>
                           </form>

@@ -1626,6 +1626,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
   }
 
+  // selectPuccaHouse(value) {
+  //   this.qde.application.applicants[this.applicantIndex].incomeDetails.puccaHouse = (value == 1) ? true: false;
+  // }
 
   parseJson(response):JSON {
     let result = JSON.parse(response);
@@ -1681,24 +1684,24 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     });
   }
 
-  doHoldPuccaHouse(value) {
-    this.qde.application.applicants[this.applicantIndex].incomeDetails = {
-      puccaHouse : value,
-    };
+  // doHoldPuccaHouse(value) {
+  //   this.qde.application.applicants[this.applicantIndex].incomeDetails = {
+  //     puccaHouse : value,
+  //   };
 
-    console.log(this.qde.application.applicants[this.applicantIndex].incomeDetails);
+  //   console.log(this.qde.application.applicants[this.applicantIndex].incomeDetails);
 
-    this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
-      // If successfull
-      if(response["ProcessVariables"]["status"]) {
-        console.log(response);
-      } else {
-        // Throw Invalid Pan Error
-      }
-    }, (error) => {
-      console.log("response : ", error);
-    });
-  }
+  //   this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
+  //     // If successfull
+  //     if(response["ProcessVariables"]["status"]) {
+  //       console.log(response);
+  //     } else {
+  //       // Throw Invalid Pan Error
+  //     }
+  //   }, (error) => {
+  //     console.log("response : ", error);
+  //   });
+  // }
 
 
   selectValueChanged(event, to) {
