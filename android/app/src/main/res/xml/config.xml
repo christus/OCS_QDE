@@ -7,6 +7,11 @@
   </feature>
 
 
+  <feature name="Exit">
+    <param name="android-package" value="im.ckk.cordova.exit.Exit"/>
+  </feature>
+
+
   <feature name="File">
     <param name="android-package" value="org.apache.cordova.file.FileUtils"/>
     <param name="onload" value="true"/>

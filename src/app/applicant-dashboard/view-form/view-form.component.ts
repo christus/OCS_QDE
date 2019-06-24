@@ -547,4 +547,7 @@ export class ViewFormComponent implements OnInit {
     this.isAlternateMobileNumber.push(eachApplicant.contactDetails.alternateMobileNumber != null ? true : false);
     this.isAlternateResidenceNumber.push(eachApplicant.contactDetails.alternateResidenceNumber != "" ? true : false);
   }
+
+
+
 }
