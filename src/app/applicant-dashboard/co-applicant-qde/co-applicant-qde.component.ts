@@ -885,8 +885,6 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
           this.qde.application.applicants[this.coApplicantIndex][screenName].zipcodeId = result.zipcodeId;
           this.qde.application.applicants[this.coApplicantIndex][screenName].stateId = result.stateId;
           this.qde.application.applicants[this.coApplicantIndex][screenName].cityId = result.cityId;
-  
-  
           this.qde.application.applicants[this.coApplicantIndex][screenName].city = result.city;
           this.qde.application.applicants[this.coApplicantIndex][screenName].state = result.state;
           this.qde.application.applicants[this.coApplicantIndex][screenName].cityState = this.commCityState || "XXXX YYYY";
@@ -1662,7 +1660,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       
       // Communication address
       if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].communicationAddress.residentialStatus)) ) {
-        this.selectedResidence = this.maritals[(parseInt(this.qde.application.applicants[this.coApplicantIndex].communicationAddress.residentialStatus)) - 1];
+        this.selectedResidence = this.residences[(parseInt(this.qde.application.applicants[this.coApplicantIndex].communicationAddress.residentialStatus)) - 1];
       }
 
       if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].maritalStatus.status)) ) {
