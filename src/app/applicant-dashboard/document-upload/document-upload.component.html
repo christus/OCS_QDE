@@ -57,28 +57,17 @@
                                             <form class="bs-form">
                                                 <div class="form-wrap">
                                                     <div class="bs-radio" >
-                                                        <input  type="radio" [value]="true" [routerLink]="['/document-uploads', applicationId, 'applicant', currentApplicantId]" />
+                                                        <input  type="radio" [value]="true" [routerLink]="['/document-uploads', applicationId, 'applicant', mainApplicantId]" />
                                                         <label for="individual"><span>Applicant</span></label>
                                                     </div>
 
-                                                   <!--  <div class="form-wrap" *ngIf="coApplicants.length > 0"> -->
                                                     <div class="bs-radio typ-doc" *ngFor="let coApp of coApplicants; let i=index;">
                                                         <input type="radio" [routerLink]="['/document-uploads', applicationId, 'co-applicant', coApp.applicantId]" name="doc-upload"/>
                                                         <label for="applicant-radio">
                                                             <span class="desc-text">{{i+1}} <span>Co-Applicant</span></span>
                                                             <!-- <span class="icon icon-close"></span> -->
                                                         </label>
-                                                        <!--  <span class="desc-text">{{i+1}} | <span>Co-Applicant</span></span> -->
                                                     </div>
-                                                    
-                                                    <!-- </div> -->
-
-                                                   <!--  <div class="bs-radio">
-                                                        <input  type="radio"
-                                                                [value]="false"
-                                                                (change)="tabSwitch(7)" />
-                                                        <label for="non-individual"><span>Co-Applicant</span></label>
-                                                    </div> -->
                                                 </div>
                                             </form>
                                         </div>
@@ -131,12 +120,6 @@
                                                         [valuePrimitive]="true" 
                                                         [(ngModel)]="selectedIdProof">
                                                     </kendo-dropdownlist>
-                                                    <!-- <ng-select>
-                                                        <ng-option value="o1">Driving License</ng-option>
-                                                        <ng-option value="o2">Ration Card</ng-option>
-                                                        <ng-option value="o3">Passport</ng-option>
-                                                        <ng-option value="o4">Electricity Bill</ng-option>
-                                                    </ng-select> -->
                                                 </div>
                                             </div>
                                             <div class="btn-wrap">
@@ -148,9 +131,21 @@
                                         <form class="bs-form">
                                             <div class="form-wrap">
                                                 <div class="bs-file">
-                                                    <input type="file" class="form-control" (change)="handleIdProof($event.target.files)" >
-<!--                                                <button type="submit" [disabled]="formGroup.invalid || formGroup.prestine">Submit</button>
- -->                                                <label for="file"><span>Click photo of Aadhar card</span></label>
+                                                    <input type="file" class="form-control" (change)="setIdProof($event.target.files)" >
+                                                    <label for="file"><span>Click photo of Id proof</span></label>
+                                                </div>
+
+                                                <div *ngIf="idProofFileName">
+                                                    <div>
+                                                        <span>{{idProofFileName}} </span>
+                                                        <span ng-switch-when="true">({{idProofFileSize}})</span>
+                                                    </div>
+                                                    <div ng-show="progressVisible">
+                                                        <div class="percent">{{progress}}%</div>
+                                                        <div class="progress-bar">
+                                                            <div class="uploaded" ng-style="{'width': progress+'%'}"></div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="no-aadhar">
@@ -158,8 +153,7 @@
                                                 <a href="#" class="upload-another-doc">Upload a different document <span class="icon icon-arrow"></span></a>
                                             </div>
                                             <div class="btn-wrap">
-                                                <button class="btn btn-primary"
-                                                (click)="goToNextSlide(aadharSlider2)">Next</button>
+                                                <button class="btn btn-primary" (click)="handleIdProof(aadharSlider2)">Next</button>
                                             </div>
                                         </form>
                                     </div>
@@ -248,12 +242,6 @@
                                         <div class="form-wrap">
                                             <div class="form-group">
                                                 <span class="control-title">Select a Document Type</span>
-                                               <!--  <ng-select>
-                                                    <ng-option value="o1">Driving License</ng-option>
-                                                    <ng-option value="o2">Ration Card</ng-option>
-                                                    <ng-option value="o3">Passport</ng-option>
-                                                    <ng-option value="o4">Electricity Bill</ng-option>
-                                                </ng-select> -->
                                                 <kendo-dropdownlist class="form-control" 
                                                     name="address-proof" 
                                                     [data]="documentType" 
@@ -274,12 +262,25 @@
                                       <form class="bs-form">
                                           <div class="form-wrap">
                                               <div class="bs-file">
-                                                  <input type="file" class="form-control" (change)="handleAddressProof($event.target.files)" >
+                                                  <input type="file" class="form-control" (change)="setAddressProof($event.target.files)" >
                                                   <label for="file"><span>Click photo of Address Proof</span></label>
                                               </div>
+
+                                                <div *ngIf="addressProofFileName">
+                                                    <div>
+                                                        <span>{{addressProofFileName}} </span>
+                                                        <span ng-switch-when="true">({{addressProofFileSize}})</span>
+                                                    </div>
+                                                    <div ng-show="progressVisible">
+                                                        <div class="percent">{{progress}}%</div>
+                                                        <div class="progress-bar">
+                                                            <div class="uploaded" ng-style="{'width': progress+'%'}"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                           </div>
                                           <div class="btn-wrap">
-                                              <button type="button" class="btn btn-primary" (click)="tabSwitch(3)">Next</button>
+                                              <button type="button" class="btn btn-primary" (click)="handleAddressProof(addressSlider2)">Next</button>
                                           </div>
                                       </form>
                                   </div>
@@ -333,12 +334,6 @@
                                                     [valuePrimitive]="true" 
                                                     [(ngModel)]="selectedIncomeProof">
                                                 </kendo-dropdownlist>
-                                               <!--  <ng-select name="state" [searchable]="false">
-                                                    <ng-option value="o1">Salary Slip</ng-option>
-                                                    <ng-option value="o2">Form 16</ng-option>
-                                                    <ng-option value="o3">Appointment Letter</ng-option>
-                                                    <ng-option value="o4">Bank Statement of Salary Account</ng-option>
-                                                </ng-select> -->
                                             </div>
                                         </div>
                                         <div class="btn-wrap">
@@ -351,12 +346,25 @@
                                       <form class="bs-form">
                                           <div class="form-wrap">
                                               <div class="bs-file">
-                                                  <input type="file" class="form-control" (change)="handleIncomeProof($event.target.files)" >
+                                                  <input type="file" class="form-control" (change)="setIncomeProof($event.target.files)" >
                                                   <label for="file"><span>Click photo of Income Proof</span></label>
                                               </div>
+
+                                            <div *ngIf="incomeProofFileName">
+                                                <div>
+                                                    <span>{{incomeProofFileName}} </span>
+                                                    <span ng-switch-when="true">({{incomeProofFileSize}})</span>
+                                                </div>
+                                                <div ng-show="progressVisible">
+                                                    <div class="percent">{{progress}}%</div>
+                                                    <div class="progress-bar">
+                                                        <div class="uploaded" ng-style="{'width': progress+'%'}"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                           </div>
                                           <div class="btn-wrap">
-                                              <button type="button" class="btn btn-primary" (click)="tabSwitch(4)">Next</button>
+                                              <button type="button" class="btn btn-primary" (click)="handleIncomeProof(incomeSlider2)">Next</button>
                                           </div>
                                       </form>
                                   </div>
@@ -410,12 +418,6 @@
                                                     [valuePrimitive]="true" 
                                                     [(ngModel)]="selectedBankProof">
                                                 </kendo-dropdownlist>
-                                                <!-- <ng-select name="state" [searchable]="false">
-                                                    <ng-option value="o1">Salary Slip</ng-option>
-                                                    <ng-option value="o2">Form 16</ng-option>
-                                                    <ng-option value="o3">Appointment Letter</ng-option>
-                                                    <ng-option value="o4">Bank Statement of Salary Account</ng-option>
-                                                </ng-select> -->
                                             </div>
                                         </div>
                                         <div class="btn-wrap">
@@ -428,12 +430,26 @@
                                       <form class="bs-form">
                                           <div class="form-wrap">
                                               <div class="bs-file">
-                                                  <input type="file" class="form-control" (change)="handleBankingProof($event.target.files)" >
+                                                  <input type="file" class="form-control" (change)="setBankingProof($event.target.files)" >
                                                   <label for="file"><span>Click photo of Banking Proof</span></label>
                                               </div>
+
+                                            <div *ngIf="bankProofFileName">
+                                                <div>
+                                                    <span>{{bankProofFileName}} </span>
+                                                    <span ng-switch-when="true">({{bankProofFileSize}})</span>
+                                                </div>
+                                                <div ng-show="progressVisible">
+                                                    <div class="percent">{{progress}}%</div>
+                                                    <div class="progress-bar">
+                                                        <div class="uploaded" ng-style="{'width': progress+'%'}"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                           </div>
                                           <div class="btn-wrap">
-                                              <button type="button" class="btn btn-primary" (click)="tabSwitch(5)">Next</button>
+                                              <button type="button" class="btn btn-primary" (click)="handleBankingProof(bankingSlider2)">Next</button>
                                           </div>
                                       </form>
                                   </div>
@@ -488,10 +504,6 @@
                                                     [valuePrimitive]="true" 
                                                     [(ngModel)]="selectedCollateralProof">
                                                 </kendo-dropdownlist>
-                                                <!-- <ng-select name="state" [searchable]="false">
-                                                    <ng-option value="o1">Property Papers</ng-option>
-                                                    <ng-option value="o2">Gold Assests</ng-option>
-                                                </ng-select> -->
                                             </div>
                                         </div>
                                         <div class="btn-wrap">
@@ -500,16 +512,28 @@
                                         </div>
                                     </form>
                                   </div>
-                                  <div class="swiper-slide">
+                                  <div class="swiper-slide">cm
                                       <form class="bs-form">
                                           <div class="form-wrap">
                                               <div class="bs-file">
-                                                  <input type="file" class="form-control" (change)="handleCollateralProof($event.target.files)" >
+                                                  <input type="file" class="form-control" (change)="setCollateralProof($event.target.files)" >
                                                   <label for="file"><span>Click photo of Collateral</span></label>
                                               </div>
+                                                <div *ngIf="collateralProofFileName">
+                                                    <div>
+                                                        <span>{{collateralProofFileName}} </span>
+                                                        <span ng-switch-when="true">({{collateralProofFileSize}})</span>
+                                                    </div>
+                                                    <div ng-show="progressVisible">
+                                                        <div class="percent">{{progress}}%</div>
+                                                        <div class="progress-bar">
+                                                            <div class="uploaded" ng-style="{'width': progress+'%'}"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                           </div>
                                           <div class="btn-wrap">
-                                              <button type="button" class="btn btn-primary" (click)="tabSwitch(6)">Next</button>
+                                              <button type="button" class="btn btn-primary" (click)="handleCollateralProof(collateralSlider2)">Next</button>
                                           </div>
                                       </form>
                                   </div>
@@ -545,12 +569,24 @@
                                         <form class="bs-form">
                                             <div class="form-wrap">
                                                 <div class="bs-file">
-                                                    <input type="file" class="form-control" (change)="handleCustomerPhoto($event.target.files)" >
+                                                    <input type="file" class="form-control" (change)="setCustomerPhoto($event.target.files)" >
                                                     <label for="file"><span>Click photo of Customer</span></label>
+                                                </div>
+                                                <div *ngIf="photoProofFileName">
+                                                    <div>
+                                                        <span>{{photoProofFileName}} </span>
+                                                        <span ng-switch-when="true">({{photoProofFileSize}})</span>
+                                                    </div>
+                                                    <div ng-show="progressVisible">
+                                                        <div class="percent">{{progress}}%</div>
+                                                        <div class="progress-bar">
+                                                            <div class="uploaded" ng-style="{'width': progress+'%'}"></div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="btn-wrap">
-                                                <button type="submit" class="btn btn-primary" (click)="docStatus()">Submit</button>
+                                                <button type="button" (click)="handleCustomerPhoto()" class="btn btn-primary">Submit</button>
                                             </div>
                                         </form>
                                     </div>

@@ -156,15 +156,24 @@ export class QdeService {
           documents: [
             {
               documentType: "",
-              documentValue: ""
+              documentImageId: "",
+              documentCategory: "",
+              documentName: "",
+              documentSize: null
             },
             {
               documentType: "",
-              documentValue: ""
+              documentImageId: "",
+              documentCategory: "",
+              documentName: "",
+              documentSize: null
             },
             {
               documentType: "",
-              documentValue: ""
+              documentImageId: "",
+              documentCategory: "",
+              documentName: "",
+              documentSize: null
             }
           ]
         }
@@ -466,15 +475,17 @@ export class QdeService {
       documents: [
         {
           documentType: "",
-          documentValue: ""
+          documentCategory: "",
+          documentImageId: "",
+          documentName: "",
+          documentSize: null
         },
         {
           documentType: "",
-          documentValue: ""
-        },
-        {
-          documentType: "",
-          documentValue: ""
+          documentCategory: "",
+          documentImageId: "",
+          documentName: "",
+          documentSize: null
         }
       ]
     });
@@ -630,15 +641,24 @@ export class QdeService {
             documents: [
               {
                 documentType: "",
-                documentValue: ""
+                documentImageId: "",
+                documentCategory: "",
+                documentName: "",
+                documentSize: null
               },
               {
                 documentType: "",
-                documentValue: ""
+                documentImageId: "",
+                documentCategory: "",
+                documentName: "",
+                documentSize: null
               },
               {
                 documentType: "",
-                documentValue: ""
+                documentImageId: "",
+                documentCategory: "",
+                documentName: "",
+                documentSize: null
               }
             ]
           }
