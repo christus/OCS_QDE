@@ -2075,7 +2075,8 @@
                                             nick="organizationDetails.day"
                                             #doiDay
                                             (selectionChange)="selectValueChanged($event, doiDay.hostElement)"
-                                            [(ngModel)]="organizationDetails.day">
+                                            [(ngModel)]="organizationDetails.day"
+                                            required>
                                             </kendo-dropdownlist>
                                         </div>
 
@@ -2088,7 +2089,8 @@
                                             nick="organizationDetails.month"
                                             #doiMonth
                                             (selectionChange)="selectValueChanged($event, doiMonth.hostElement)"
-                                            [(ngModel)]="organizationDetails.month">
+                                            [(ngModel)]="organizationDetails.month"
+                                            required>
                                             </kendo-dropdownlist>
                                         </div>
 
@@ -2101,7 +2103,8 @@
                                             nick="organizationDetails.year"
                                             #doiYear
                                             (selectionChange)="selectValueChanged($event, doiYear.hostElement)"
-                                            [(ngModel)]="organizationDetails.year">
+                                            [(ngModel)]="organizationDetails.year"
+                                            required>
                                             </kendo-dropdownlist>
                                         </div>
                                     </div>
@@ -2122,8 +2125,8 @@
                             </div>
                               <div class="btn-wrap">
                                   <button class="btn btn-primary"
-                                          [ngClass]="{'disabled': !organizationForm.valid}"
-                                          [disabled]="!organizationForm.valid">Next
+                                          [ngClass]="{'disabled': (!organizationForm.valid || organizationDetails.day.value == 'DD' || organizationDetails.month.value == 'MM' || organizationDetails.year.value == 'YYYY')}"
+                                          [disabled]="(!organizationForm.valid || organizationDetails.day.value == 'DD' || organizationDetails.month.value == 'MM' || organizationDetails.year.value == 'YYYY')">Next
                                   </button>
                               </div>
                           </form>
