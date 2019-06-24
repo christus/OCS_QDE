@@ -65,6 +65,9 @@ import { File } from '@ionic-native/file/ngx';
 import { DeviceDetectorModule } from 'ngx-device-detector';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 
+import { NgxUiLoaderModule } from  'ngx-ui-loader';
+
+
 
 
 const appRoutes: Routes = [
@@ -305,7 +308,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     HttpClientModule,
     DropDownsModule,
     ImageUploadModule.forRoot(),
-    DeviceDetectorModule.forRoot()
+    DeviceDetectorModule.forRoot(),
+    NgxUiLoaderModule
   ],
   providers: [
     ListOfValuesResolverService,

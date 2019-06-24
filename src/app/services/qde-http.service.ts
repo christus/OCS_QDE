@@ -12,7 +12,6 @@ import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-nati
 
 
 
-
 @Injectable({
   providedIn: 'root'
 })

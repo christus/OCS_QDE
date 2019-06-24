@@ -5,12 +5,18 @@ import { UtilService } from './util.service';
 import { Inject } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
+import { NgxUiLoaderService } from 'ngx-ui-loader'; // Import NgxUiLoaderService
+
+
 export class AuthInterceptor implements HttpInterceptor {
 
-  constructor(@Inject(UtilService) private utilService) { }
+  constructor(@Inject(UtilService) private utilService,
+  private ngxService: NgxUiLoaderService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
       // Token will be set from cookie, if not present then dont add this header
+
+      this.ngxService.start(); // start foreground spinner of the master loader with 'default' taskId
 
       let uri = environment.host + environment.appiyoDrive;
       if (!req.headers.has('Content-Type') && req.url !== uri) {
@@ -28,6 +34,8 @@ export class AuthInterceptor implements HttpInterceptor {
       map(
         (event: HttpEvent<any>) => {
           if (event instanceof HttpResponse) {
+
+            this.ngxService.stop(); // stop foreground spinner of the master loader with 'default' taskId
 
             console.log("Response: " + event.body);
             const response = event.body;
