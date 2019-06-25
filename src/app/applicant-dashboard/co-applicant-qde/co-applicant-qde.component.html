@@ -3,7 +3,7 @@
         <div class="lyt-home">
             <div class="tabs">
                 <ul class="tabs-head">
-                  <li class="tab-link" [ngClass]="{'active': (activeTab == 0), 'hide': (!applicantIndividual), 'pending': false}">
+                  <li class="tab-link" [ngClass]="{'active': (activeTab == 0), 'pending': false}">
                     <a [routerLink]="['/applicant', applicationId, 'co-applicant']" fragment="dashboard">Dashboard</a>
                   </li>
                   <li class="tab-link" [ngClass]="{'active': (activeTab == 1), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
@@ -1031,7 +1031,7 @@
                                       </div>
                                   <div class="form-group typ-range">
                                       <span class="control-title">Number of years in current residence</span>
-                                      <input type="text"
+                                      <input type="number"
                                               name="numberOfYearsInCurrentResidence"
                                               class="form-control"
                                               [(ngModel)]="qde.application.applicants[coApplicantIndex].communicationAddress.numberOfYearsInCurrentResidence"
@@ -1041,7 +1041,6 @@
                                               spellcheck="false"
                                               #numberOfYearsInCurrentResidence="ngModel"
                                               fieldFill
-                                              (ngModelChange)="valuechange($event, 3)"
                                               required />
                                       <ng5-slider tabindex="14" [(value)]="qde.application.applicants[coApplicantIndex].communicationAddress.numberOfYearsInCurrentResidence" [options]="options"></ng5-slider>
                                   </div>
@@ -1306,15 +1305,15 @@
                                           <div class="form-wrap">
                                               <div class="form-group typ-range">
                                                   <span class="control-title">Enter number of dependents</span>
-                                                  <input  type="text"
+                                                  <input  type="number"
                                                           name="numberOfDependents"
                                                           tabindex="1"
                                                           min=0
-                                                          max=90
+                                                          max=2
+                                                          pattern="[0-9]"
                                                           class="form-control"
                                                           spellcheck="false"
-                                                          [(ngModel)]="qde.application.applicants[coApplicantIndex].familyDetails.numberOfDependents"
-                                                          (ngModelChange)="valuechange($event, 1)" />
+                                                          [(ngModel)]="qde.application.applicants[coApplicantIndex].familyDetails.numberOfDependents" />
                                                   <ng5-slider [(value)]="qde.application.applicants[coApplicantIndex].familyDetails.numberOfDependents" [options]="familyOptions"></ng5-slider>
                                               </div>
                                           </div>
@@ -1553,7 +1552,7 @@
                                   </div>
                                   <div class="form-group typ-range"  *ngIf="selectedOccupation.value != '9' && selectedOccupation.value != '10'">
                                       <span class="control-title">Years in current employment/bussiness</span>
-                                      <input type="text"
+                                      <input type="number"
                                               name="numberOfYearsInCurrentCompany"
                                               id="no-yrs"
                                               tabindex="3"
@@ -1563,7 +1562,6 @@
                                               max=90
                                               spellcheck="false"
                                               #numberOfYearsInCurrentCompany="ngModel"
-                                              (ngModelChange)="valuechange($event, 2)"
                                               required />
   
                                       <ng5-slider tabindex="4" [(value)]="qde.application.applicants[coApplicantIndex].occupation.numberOfYearsInCurrentCompany"
@@ -1580,7 +1578,7 @@
                                   </div>
                                   <div class="form-group typ-range" *ngIf="selectedOccupation.value != '9' && selectedOccupation.value != '10'">
                                       <span class="control-title">Total Work Experience</span>
-                                      <input type="text"
+                                      <input type="number"
                                               name="totalExperienceYear"
                                               class="form-control"
                                               tabindex="5"
@@ -1589,7 +1587,6 @@
                                               max=90
                                               #totalExperienceYear="ngModel"
                                               spellcheck="false"
-                                              (ngModelChange)="valuechange($event, 3)"
                                               required />
   
                                       <ng5-slider tabindex="6" [(value)]="qde.application.applicants[coApplicantIndex].occupation.totalWorkExperience" [options]="options"></ng5-slider>

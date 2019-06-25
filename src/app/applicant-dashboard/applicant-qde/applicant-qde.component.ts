@@ -75,8 +75,6 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
    
   };
 
-  value: Array<number> = [0,0,0,0];
-
   minValue: number = 1;
   options: Options = {
     floor: 0,
@@ -628,13 +626,6 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
         // }
       }
     });
-  }
-
-  valuechange(newValue, valueIndex, form) {
-    
-    console.log(newValue);
-    this.value[valueIndex] = newValue;
-  
   }
  
   /**
@@ -1192,7 +1183,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
-        this.goToNextSlide(swiperInstance);
+        if(value == 1) {
+          this.goToNextSlide(swiperInstance);
+        } else {
+          this.tabSwitch(5);
+        }
       } else {
         // Throw Invalid Pan Error
       }
@@ -1658,8 +1653,6 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       if(response["ProcessVariables"]["status"]) {
         if(value == 1) {
           this.goToNextSlide(swiperInstance);
-        } else {
-          swiperInstance.setIndex(3);
         }
       } else {
         // Throw Invalid Pan Error
