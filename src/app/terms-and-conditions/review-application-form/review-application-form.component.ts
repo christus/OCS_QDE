@@ -91,7 +91,7 @@ export class ReviewApplicationFormComponent implements OnInit {
     this.qdeService.qdeSource.subscribe(val => {
       this.qde = val;
 
-      this.applicantIndex = val.application.applicants.findIndex(v => v.isMainApplicant == true);
+      this.applicantIndex = val.application.applicants.findIndex(v => v.isMainApplicant == true) == -1 ? 0 : val.application.applicants.findIndex(v => v.isMainApplicant == true);
       val.application.applicants.forEach((el, index) => {
   
         if(el.isMainApplicant == false) {
@@ -170,6 +170,8 @@ export class ReviewApplicationFormComponent implements OnInit {
 
       // this.docType = [{"key": "Aadhar", "value": "1"},{"key": "Driving License", "value": "2"},{"key": "passport", "value": "3"}];
     }
+
+    this.prefillData();
   }
 
   ngOnInit() {
@@ -232,13 +234,12 @@ export class ReviewApplicationFormComponent implements OnInit {
         eachDob.year = this.years.find(val => eachApplicant.personalDetails.dob.split('/')[0] == val.value);
       }
 
+      this.dob.push(eachDob);
+      
       // Personal Details Birthplace
       if( ! isNaN(parseInt(eachApplicant.personalDetails.birthPlace)) ) {
         this.selectedBirthPlace[i] = this.birthPlace.find(v => v.value == eachApplicant.personalDetails.birthPlace);
       }
-      
-      this.dob.push(eachDob);
-
       let eachDateOfIncorporation: {day: Item, month: Item, year: Item} = {day:{key:'DD',value:'DD'},month:{key:'MM',value:'MM'},year:{key:'YYYY',value:'YYYY'}};
       // Date of Incorporation Day
       if( ! isNaN(parseInt(eachApplicant.organizationDetails.dateOfIncorporation.split('/')[2])) ) {
