@@ -1,9 +1,10 @@
 export const errors: any = {
 
   pan: {
-    required: "PAN number is mandatory",
-    length: "PAN number must be at least 10 characters",
-    invalid: "Invalid PAN Number"
+    required: "PAN is mandatory",
+    length: "PAN must be at least 10 characters",
+    invalid: "Invalid PAN",
+    after3Attemps: "Please check and enter your correct PAN"
   },
   panDocumentNo: {
     required: "Document number is mandatory",

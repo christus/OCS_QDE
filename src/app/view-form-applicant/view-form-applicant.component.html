@@ -144,15 +144,16 @@
                   </div>
               </div>
               <div class="col-6">
-                  <div class="form-group">
-                      <span class="control-title">Birth place</span>
-                      <kendo-dropdownlist class="form-control"
-                                      [data]="birthPlace"
-                                      textField="key"
-                                      valueField="value"
-                                      name="birthPlace"
-                                      [(ngModel)]="selectedBirthPlace">
-                      </kendo-dropdownlist>
+                <div class="form-group">                                                 
+                    <label for="birthPlace">Birth place</label>
+                        <input spellcheck="false"
+                          type="text"
+                          class="form-control"
+                          id="birthPlace"
+                          name="birthPlace"
+                          [(ngModel)]="qde.application.applicants[coApplicantIndex].personalDetails.birthPlace"
+                          fieldFill />
+
                   </div>
               </div>
           </div>
