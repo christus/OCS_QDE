@@ -94,7 +94,6 @@
 			                [(ngModel)]="qde?.application.tenure"
                         (ngModelChange)="valuechange($event, 0)"
                         pattern='{{regexPattern.tenure}}'>
-
                       <span class="yr-text">Years</span>
                       <ng5-slider [(value)]="qde?.application.tenure" [options]="options"></ng5-slider>
 
@@ -326,7 +325,7 @@
                     <div class="swiper-slide">
                       <div class="title-wrap">
                         <h4 class="title">Select existing<span class="cm-line-break"></span>loan provider</h4>
-                        <p class="note">Enter existing loan & EMI details for applicant & co-applicant both</p>
+                        <p class="note">Enter existing loan & EMI details for both applicant & co-applicant</p>
                       </div>
                     </div>
                     <div class="swiper-slide">
@@ -431,7 +430,7 @@
                         <div class="btn-wrap">
                           <button class="btn btn-primary"
                           [ngClass]="{'disabled': !monthlyEmi.valid}"
-                          [disabled]="!monthlyEmi.valid">Next</button>
+                          [disabled]="!monthlyEmi.valid">Save</button>
                         </div>
                       </form>
                     </div>

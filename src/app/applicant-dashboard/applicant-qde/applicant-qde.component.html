@@ -1021,7 +1021,6 @@
                                               max=90
                                               #numberOfYearsInCurrentResidence="ngModel"
                                               fieldFill
-                                              (ngModelChange)="valuechange($event, 3, communicationForm)"
                                               required />
                                       <ng5-slider tabindex="14" [(value)]="qde.application.applicants[applicantIndex].communicationAddress.numberOfYearsInCurrentResidence" [options]="options"></ng5-slider>
                                   </div>
@@ -1165,7 +1164,7 @@
                                         </form>
                                     </div>
                                     <div class="swiper-slide">
-                                        <form class="bs-form" >
+                                        <form class="bs-form">
                                             <div class="form-wrap">
                                                 <div class="bs-radio">
                                                     <input spellcheck="false"
@@ -1296,8 +1295,7 @@
                                                           tabindex="1"
                                                           max=90
                                                           class="form-control"
-                                                          [(ngModel)]="qde.application.applicants[applicantIndex].familyDetails.numberOfDependents"
-                                                          (ngModelChange)="valuechange($event, 1, familyForm1)" />
+                                                          [(ngModel)]="qde.application.applicants[applicantIndex].familyDetails.numberOfDependents" />
                                                   <ng5-slider [(value)]="qde.application.applicants[applicantIndex].familyDetails.numberOfDependents" [options]="familyOptions"></ng5-slider>
                                               </div>
                                           </div>
@@ -1546,7 +1544,6 @@
                                               min=0
                                               max=90
                                               #numberOfYearsInCurrentCompany="ngModel"
-                                              (ngModelChange)="valuechange($event, 2)"
                                               required />
   
                                       <ng5-slider tabindex="4" [(value)]="qde.application.applicants[applicantIndex].occupation.numberOfYearsInCurrentCompany"
@@ -1570,7 +1567,6 @@
                                               min=0
                                               max=90
                                               #totalExperienceYear="ngModel"
-                                              (ngModelChange)="valuechange($event, 3)"
                                               required />
   
                                       <ng5-slider tabindex="6" [(value)]="qde.application.applicants[applicantIndex].occupation.totalWorkExperience" 
@@ -1843,6 +1839,7 @@
                                                 name="annualFamilyIncome"
                                                 tabindex="1"
                                                 fieldFill
+                                                maxlength="10"
                                                 pattern="{{regexPattern.amount}}"
                                                 required/>
                                               <label for="annualFamilyIncome1">Annual Family Income <span class="lakhs">(in lakhs)</span></label>
@@ -1865,6 +1862,7 @@
                                                   pattern="{{regexPattern.amount}}"
                                                   name="monthlyExpenditure"
                                                   tabindex="2"
+                                                  maxlength="10"
                                                   fieldFill
                                                   required/>
                                                 <label for="monthlyExpenditure1">Monthly Expenditure</label>
@@ -1964,6 +1962,7 @@
                                                         [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.monthlyIncome"
                                                         #monthlyIncome1="ngModel"
                                                         fieldFill
+                                                        maxlength="10"
                                                         pattern="{{regexPattern.amount}}"
                                                         name="monthlyIncome"
                                                         required/>
@@ -2626,6 +2625,7 @@
                                                   id="annualFamilyIncome2"
                                                   [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.annualFamilyIncome"
                                                   #annualFamilyIncome2="ngModel"
+                                                  maxlength="10"
                                                   name="annualFamilyIncome"
                                                   tabindex="1"
                                                   fieldFill
@@ -2650,6 +2650,7 @@
                                                     #monthlyExpenditure2="ngModel"
                                                     pattern="{{regexPattern.amount}}"
                                                     name="monthlyExpenditure"
+                                                    maxlength="10"
                                                     fieldFill
                                                     tabindex="2"
                                                     required/>
@@ -2743,6 +2744,7 @@
                                                           <input spellcheck="false"
                                                                 type="text" class="form-control" 
                                                           id="monthlyIncome2"
+                                                          maxlength="10"
                                                           [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.monthlyIncome"
                                                           #monthlyIncome2="ngModel"
                                                           fieldFill

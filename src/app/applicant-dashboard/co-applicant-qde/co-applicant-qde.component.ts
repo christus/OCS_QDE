@@ -54,8 +54,6 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
    
   };
 
-  value: Array<number> = [0,0,0,0];
-
   minValue: number = 1;
   options: Options = {
     floor: 0,
@@ -460,10 +458,6 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
         // }
       }
     });
-  }
-
-  valuechange(newValue, valueIndex) {
-    this.value[valueIndex] = newValue;
   }
 
   /**
@@ -1010,7 +1004,11 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
     this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
-        this.goToNextSlide(swiperInstance);
+        if(value == 1) {
+          this.goToNextSlide(swiperInstance);
+        } else {
+          this.tabSwitch(6);
+        }
       } else {
         // Throw Invalid Pan Error
       }
@@ -1466,8 +1464,6 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       if(response["ProcessVariables"]["status"]) {
         if(value == 1) {
           this.goToNextSlide(swiperInstance);
-        } else {
-          swiperInstance.setIndex(3);
         }
       } else {
         // Throw Invalid Pan Error
@@ -1812,5 +1808,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       //   this.showErrorModal = true;
      // }
      });
+  }
+
+  allowOnlyNumbers() {
+    console.log(this.qde.application.applicants[this.coApplicantIndex].familyDetails.numberOfDependents);
   }
 }
