@@ -798,6 +798,8 @@ createOrUpdatePersonalDetails(qde) {
     }
 
     console.log("FileUploadOptions", fileTransfer);
+
+    console.log("environment", environment.host);
   
     return fileTransfer.upload(imageURI, encodeURI(environment.host + environment.appiyoDrive) , options)
   

@@ -11,6 +11,9 @@ import { callbackify } from 'util';
 import { QdeService } from 'src/app/services/qde.service';
 import Qde from 'src/app/models/qde.model';
 
+import { DeviceDetectorService } from 'ngx-device-detector';
+
+
 
 
 @Component({
@@ -19,6 +22,13 @@ import Qde from 'src/app/models/qde.model';
   styleUrls: ["./document-upload.component.css"]
 })
 export class DocumentUploadComponent implements OnInit {
+
+  isMobile:boolean;
+  
+  cameraImage: string;
+
+  imageURI: string;
+
   showSuccessModal: boolean = false;
 
   value: number = 0;
@@ -49,8 +59,8 @@ export class DocumentUploadComponent implements OnInit {
   };
 
   rhsConfig = {
-    // noSwiping: true,
-    // onlyExternal: true,
+    noSwiping: true,
+    noSwipingClass: '',
     autoplay: false,
     speed: 900,
     effect: "slide"
@@ -141,8 +151,10 @@ export class DocumentUploadComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private qdeHttp: QdeHttpService,
-    private qdeService: QdeService
-  ) {
+    private deviceService: DeviceDetectorService,
+    private qdeService: QdeService) {
+
+
     this.isMainApplicant = false;
     if (this.route.url["value"][1].path === "applicant") {
       this.isMainApplicant = true;
@@ -151,6 +163,11 @@ export class DocumentUploadComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.isMobile = this.deviceService.isMobile() ;
+
+    console.log("isMovile onInit", this.isMobile);
+
     // this.renderer.addClass(this.select2.selector.nativeElement, 'js-select');
 
     if (this.route.snapshot.data.listOfValues) {
@@ -297,7 +314,9 @@ export class DocumentUploadComponent implements OnInit {
     });
   }
 
-  ngAfterViewInit() {}
+  ngAfterViewInit() {
+
+  }
 
   valuechange(newValue) {
     console.log(newValue);
@@ -380,21 +399,42 @@ export class DocumentUploadComponent implements OnInit {
     this.isAlternateResidenceNumber = !this.isAlternateResidenceNumber;
   }
 
-  setIdProof(files: FileList) {
+  setIdProof(files: any) {
+
+    console.log("setIdProof files", files);
+
+    if(this.isMobile) {
+      this.idProofDoc = files
+      this.idProofFileName = (<any>window).Ionic.WebView.convertFileSrc(this.idProofDoc);
+      this.idProofFileSize = "";
+      return;
+    }
+    
     this.idProofDoc = files.item(0);
     this.idProofFileName = this.idProofDoc["name"];
-
     this.idProofFileSize = this.getFileSize(this.idProofDoc["size"]);
+    
   }
 
   handleIdProof(slider) {
     const tabIndex = 2;
+
     if (!this.idProofDoc) {
       this.goToNextSlide(slider);
       this.tabSwitch(tabIndex);
       return;
     }
 
+    console.log("handleIdProof isMobile", this.isMobile);
+    
+    if(this.isMobile) {
+      const documentCategory = this.findDocumentCategory("ID Proof");
+
+      this.sendImgProof(this.idProofDoc, tabIndex, slider, documentCategory, this.selectedIdProof);
+      return;
+    }
+
+    
     const applicantId = this.currentApplicantId.toString();
     //this.progress = this.idProofDoc["progress"];
 
@@ -422,7 +462,54 @@ export class DocumentUploadComponent implements OnInit {
     this.uploadToMongo(modifiedFile, callback);
   }
 
-  setAddressProof(files: FileList) {
+
+  sendImgProof(image, tabIndex, slider, documentCategory, docType){
+
+    const applicantId = this.currentApplicantId.toString();
+
+    let fileName = this.qde.application.applicationId + "-" + applicantId + "-" + new Date().getTime()
+
+    this.qdeHttp.uploadFile(fileName, image).then((data) => {
+      
+      if(data["responseCode"] == 200) {
+
+        var result = JSON.parse(data["response"]);
+
+        var imageId = result.info.id;
+
+        console.log("imageId",imageId);
+
+
+        const documentId = imageId;
+  
+        const documentInfo = {
+          applicationId: this.applicationIdAsString,
+          applicantId: applicantId,
+          documentImageId: documentId,
+          documentType: docType,
+          documentCategory: documentCategory
+        };
+
+        this.uploadToOmni(documentInfo, tabIndex, slider);
+
+      } else {
+        // Throw Invalid Pan Error
+        alert(JSON.parse(data["response"]));
+      }
+    });
+  }
+
+  setAddressProof(files: any) {
+
+
+    if(this.isMobile) {
+      this.addressProofDoc = files
+      this.addressProofFileName = (<any>window).Ionic.WebView.convertFileSrc(this.addressProofDoc);
+      this.addressProofFileSize = "";
+      return;
+    }
+
+
     this.addressProofDoc = files.item(0);
     this.addressProofFileName = this.addressProofDoc["name"];
 
@@ -435,6 +522,13 @@ export class DocumentUploadComponent implements OnInit {
     if (!this.addressProofDoc) {
       this.goToNextSlide(slider);
       this.tabSwitch(tabIndex);
+      return;
+    }
+
+    if(this.isMobile) {
+      const documentCategory = this.findDocumentCategory("Address Proof");
+
+      this.sendImgProof(this.addressProofDoc, tabIndex, slider, documentCategory, this.selectedAddressProof);
       return;
     }
 
@@ -464,7 +558,16 @@ export class DocumentUploadComponent implements OnInit {
     this.uploadToMongo(modifiedFile, callback);
   }
 
-  setIncomeProof(files: FileList) {
+  setIncomeProof(files: any) {
+
+    if(this.isMobile) {
+      this.incomeProofDoc = files
+      this.incomeProofFileName = (<any>window).Ionic.WebView.convertFileSrc(this.incomeProofDoc);
+      this.incomeProofFileSize = "";
+      return;
+    }
+
+
     this.incomeProofDoc = files.item(0);
     this.incomeProofFileName = this.incomeProofDoc["name"];
 
@@ -479,6 +582,14 @@ export class DocumentUploadComponent implements OnInit {
       this.tabSwitch(tabIndex);
       return;
     }
+
+    if(this.isMobile) {
+      const documentCategory = this.findDocumentCategory("Income Document");
+
+      this.sendImgProof(this.incomeProofDoc, tabIndex, slider, documentCategory, this.selectedIncomeProof);
+      return;
+    }
+
 
     const applicantId = this.currentApplicantId.toString();
 
@@ -513,7 +624,16 @@ export class DocumentUploadComponent implements OnInit {
     this.uploadToMongo(modifiedFile, callback);
   }
 
-  setBankingProof(files: FileList) {
+  setBankingProof(files: any) {
+
+    if(this.isMobile) {
+      this.bankingProofDoc = files
+      this.bankProofFileName = (<any>window).Ionic.WebView.convertFileSrc(this.bankingProofDoc);
+      this.bankProofFileSize = "";
+      return;
+    }
+
+
     this.bankingProofDoc = files.item(0);
     this.bankProofFileName = this.bankingProofDoc["name"];
 
@@ -526,6 +646,12 @@ export class DocumentUploadComponent implements OnInit {
     if (!this.bankingProofDoc) {
       this.goToNextSlide(slider);
       this.tabSwitch(tabIndex);
+      return;
+    }
+
+    if(this.isMobile) {
+      const documentCategory = this.findDocumentCategory("Banking");
+      this.sendImgProof(this.bankingProofDoc, tabIndex, slider, documentCategory, this.selectedBankProof);
       return;
     }
 
@@ -562,7 +688,16 @@ export class DocumentUploadComponent implements OnInit {
     this.uploadToMongo(modifiedFile, callback);
   }
 
-  setCollateralProof(files: FileList) {
+  setCollateralProof(files: any) {
+
+    if(this.isMobile) {
+      this.collateralProofDoc = files
+      this.collateralProofFileName = (<any>window).Ionic.WebView.convertFileSrc(this.collateralProofDoc);
+      this.collateralProofFileSize = "";
+      return;
+    }
+
+    
     this.collateralProofDoc = files.item(0);
     this.collateralProofFileName = this.collateralProofDoc["name"];
 
@@ -575,6 +710,13 @@ export class DocumentUploadComponent implements OnInit {
     if (!this.collateralProofDoc) {
       this.goToNextSlide(slider);
       this.tabSwitch(tabIndex);
+      return;
+    }
+
+    if(this.isMobile) {
+      const documentCategory = this.findDocumentCategory("Collateral");
+
+      this.sendImgProof(this.collateralProofDoc, tabIndex, slider, documentCategory, this.selectedCollateralProof);
       return;
     }
 
@@ -611,7 +753,16 @@ export class DocumentUploadComponent implements OnInit {
     this.uploadToMongo(modifiedFile, callback);
   }
 
-  setCustomerPhoto(files: FileList) {
+  setCustomerPhoto(files: any) {
+
+    if(this.isMobile) {
+      this.photoProofDoc = files
+      this.photoProofFileName = (<any>window).Ionic.WebView.convertFileSrc(this.photoProofDoc);
+      this.photoProofFileSize = "";
+      return;
+    }
+
+
     this.photoProofDoc = files.item(0);
     this.photoProofFileName = this.photoProofDoc["name"];
 
@@ -621,6 +772,13 @@ export class DocumentUploadComponent implements OnInit {
   handleCustomerPhoto(slider) {
     if (!this.photoProofDoc) {
       this.goToNextSlide(slider);
+      return;
+    }
+
+    if(this.isMobile) {
+      const documentCategory = this.findDocumentCategory("Photo");
+
+      this.sendImgProof(this.photoProofDoc, 0 ,slider, documentCategory, "");
       return;
     }
 
@@ -682,6 +840,7 @@ export class DocumentUploadComponent implements OnInit {
           response["ProcessVariables"]["status"]
         ) {
           alert("Uploaded Successfully!");
+          this.cameraImage = "";
           if (slider) {
             this.goToNextSlide(slider);
           }
@@ -738,6 +897,24 @@ export class DocumentUploadComponent implements OnInit {
 
     return fileSize;
   }
+
+
+  openCamera(screen) {
+
+    let screenName = screen;
+    console.log("screenName", screenName);
+    this.qdeHttp.takePicture().then((imageURI) => {
+      console.log("imageData", imageURI + screenName);
+      this[screenName](imageURI);
+      this.cameraImage = (<any>window).Ionic.WebView.convertFileSrc(imageURI);
+     }, (err) => {
+      // Handle error
+     });
+  }
+
+ 
+
+
   ngOnDestroy(): void {}
 
   temp;

@@ -130,9 +130,17 @@
                                     <div class="swiper-slide">
                                         <form class="bs-form">
                                             <div class="form-wrap">
-                                                <div class="bs-file">
+                                                
+                                                <div *ngIf="isMobile && idProofFileName" class="bs-file">
+                                                    <!-- <image-upload [url]="imageUrl" [headers]="myHeaders"></image-upload> -->
+                                                    <img [src]="idProofFileName" />
+                                                    <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setIdProof')">Retake</button>
+                                                </div>
+                                                
+                                                <div *ngIf="!idProofFileName" class="bs-file">
                                                     <input type="file" class="form-control" (change)="setIdProof($event.target.files)" >
                                                     <label for="file"><span>Click photo of Id proof</span></label>
+                                                    <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setIdProof')">open camera</button>
                                                 </div>
 
                                                 <div *ngIf="idProofFileName">
@@ -260,12 +268,16 @@
                                   </div>
                                   <div class="swiper-slide">
                                       <form class="bs-form">
-                                          <div class="form-wrap">
-                                              <div class="bs-file">
-                                                  <input type="file" class="form-control" (change)="setAddressProof($event.target.files)" >
-                                                  <label for="file"><span>Click photo of Address Proof</span></label>
-                                              </div>
-
+                                           <div class="form-wrap">
+                                                <div *ngIf="isMobile && addressProofFileName" class="bs-file" >
+                                                    <img [src]="addressProofFileName" />
+                                                    <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setAddressProof')">Retake</button>
+                                                </div>
+                                                <div *ngIf="!addressProofFileName" class="bs-file">
+                                                    <input type="file" class="form-control" (change)="setAddressProof($event.target.files)" >
+                                                    <label for="file"><span>Click photo of Address Proof</span></label>
+                                                    <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setAddressProof')">open camera</button>
+                                                </div>
                                                 <div *ngIf="addressProofFileName">
                                                     <div>
                                                         <span>{{addressProofFileName}} </span>
@@ -345,11 +357,14 @@
                                   <div class="swiper-slide">
                                       <form class="bs-form">
                                           <div class="form-wrap">
-                                              <div class="bs-file">
+                                              <div *ngIf="isMobile && incomeProofFileName" class="bs-file">
+                                                <img [src]="incomeProofFileName" />
+                                                    <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setIncomeProof')">Retake</button>
+                                                </div>
+                                                <div *ngIf="!incomeProofFileName" class="bs-file">
                                                   <input type="file" class="form-control" (change)="setIncomeProof($event.target.files)" >
-                                                  <label for="file"><span>Click photo of Income Proof</span></label>
-                                              </div>
-
+                                                  <label for="file"><span>Click photo of Id proof</span></label>
+                                                  <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setIncomeProof')">open camera</button>                                              </div>
                                             <div *ngIf="incomeProofFileName">
                                                 <div>
                                                     <span>{{incomeProofFileName}} </span>
@@ -429,9 +444,15 @@
                                   <div class="swiper-slide">
                                       <form class="bs-form">
                                           <div class="form-wrap">
-                                              <div class="bs-file">
+                                                <div *ngIf="isMobile && bankProofFileName" class="bs-file">
+
+                                                    <img [src]="bankProofFileName" />
+                                                    <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setBankingProof')">Retake</button>
+                                                </div>
+                                                <div *ngIf="!bankProofFileName" class="bs-file">
                                                   <input type="file" class="form-control" (change)="setBankingProof($event.target.files)" >
                                                   <label for="file"><span>Click photo of Banking Proof</span></label>
+                                                  <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setBankingProof')">open camera</button>
                                               </div>
 
                                             <div *ngIf="bankProofFileName">
@@ -515,10 +536,16 @@
                                   <div class="swiper-slide">cm
                                       <form class="bs-form">
                                           <div class="form-wrap">
-                                              <div class="bs-file">
+                                                <div *ngIf="isMobile && collateralProofFileName" class="bs-file">
+                                                    <!-- <image-upload [url]="imageUrl" [headers]="myHeaders"></image-upload> -->
+                                                    <img [src]="collateralProofFileName" />
+                                                    <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setCollateralProof')">Retake</button>
+                                                </div>
+                                                <div *ngIf="!collateralProofFileName" class="bs-file">
                                                   <input type="file" class="form-control" (change)="setCollateralProof($event.target.files)" >
                                                   <label for="file"><span>Click photo of Collateral</span></label>
-                                              </div>
+                                                  <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setCollateralProof')">open camera</button>
+                                                </div>
                                                 <div *ngIf="collateralProofFileName">
                                                     <div>
                                                         <span>{{collateralProofFileName}} </span>
@@ -568,9 +595,14 @@
                                     <div class="swiper-slide">
                                         <form class="bs-form">
                                             <div class="form-wrap">
-                                                <div class="bs-file">
+                                                <div *ngIf="isMobile && photoProofFileName" class="bs-file">
+                                                    <img [src]="photoProofFileName" />
+                                                    <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setCustomerPhoto')">Retake</button>
+                                                </div>
+                                                <div *ngIf="!photoProofFileName" class="bs-file">
                                                     <input type="file" class="form-control" (change)="setCustomerPhoto($event.target.files)" >
                                                     <label for="file"><span>Click photo of Customer</span></label>
+                                                    <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setCustomerPhoto')">open camera</button>
                                                 </div>
                                                 <div *ngIf="photoProofFileName">
                                                     <div>
