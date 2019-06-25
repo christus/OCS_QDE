@@ -1,5 +1,5 @@
 <div class="btn-wrap edit-btn-wrap" *ngIf="showEdit">
-    <button [routerLink]="['/applicant', applicationId, '/co-applicant', qde.application.applicants[applicantIndex].applicantId]" class="btn btn-default edit">Edit</button>
+    <button [routerLink]="['/applicant', qde.application.applicants[applicantIndex].applicantId]" class="btn btn-default edit">Edit</button>
 </div>
 <!-- Individual -->
   <div class="bs-card" [ngClass]="{'incomplete': isIncomplete.pan}">
@@ -900,6 +900,24 @@
                   </div>
               </div>
           </div>
+          <div class="row">
+                <div class="col-12">
+                    <div class="form-group inr">
+                            <input type="text" class="form-control" 
+                            id="monthlyExpenditure2"
+                            [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.monthlyExpenditure"
+                            #monthlyExpenditure2="ngModel"
+                            name="monthlyExpenditure"
+                            fieldFill
+                            required/>
+                          <label for="monthlyExpenditure2" >Monthly Expenditure</label>
+                                    <span class="addon">
+                                        <span class="icon icon-inr"></span>
+                                    </span>
+                                    <span class="in-word"></span>
+                    </div>
+                </div>
+            </div>
           <div class="row">
               <div class="col-12">
                   <div class="form-group inr">

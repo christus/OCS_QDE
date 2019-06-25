@@ -30,6 +30,8 @@ export class ViewFormComponent implements OnInit {
 
   private showSuccessModal: boolean = false;
 
+  public applicantName: string;
+
   value: number = 0;
 
   isAlternateEmailId: Array<boolean> = [];
@@ -98,10 +100,18 @@ export class ViewFormComponent implements OnInit {
   femaleTitles: Array<any>;
   maritals: Array<any>;
   relationships: Array<any>;
-  loanpurposes: Array<any>;
   categories: Array<any>;
   genders: Array<any>;
   constitutions: Array<any>;
+
+  loanProviders: Array<any>;
+  loanType: Array<any>;
+  loanpurposes: Array<any>;
+  propertyTypes: Array<any>;
+  loanProviderList: Array<any>;
+  liveLoan = 0;
+  monthlyEmiValue: number;
+
   days: Array<Item>;
   months: Array<Item>;
   years: Array<Item>;
@@ -119,6 +129,24 @@ export class ViewFormComponent implements OnInit {
   selectedGender: Array<Item> = [];
   selectedConstitution: Array<Item> = [];
   selectedDocType: Array<Item> = [];
+  
+  selectedLoanProvider: Array<Item> = [];
+  selectedLoanPurpose: Array<Item> = [];
+  selectedLoanType: Array<Item> = [];
+  selectedPropertyType: Array<Item> = [];
+  isPropertyIdentified = false;
+  propertyClssValue: string;
+  propertyAreaValue: number;
+  propertyPincodeValue: number;
+  propertyPincodeId: number;
+  addressLineOneValue: string;
+  addressLineTwoValue: string;
+  cityId: number;
+  city: string;
+  stateId: number;
+  state: string;
+  cityState:string;
+  
 
   docType: Array<any> = [];
   selectedAssesmentMethodology: Array<Item> = [];
@@ -143,6 +171,7 @@ export class ViewFormComponent implements OnInit {
 
   isIncomplete: Array<InCompleteFields> = [];
   applicationId: string;
+  applicantId: string;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -165,6 +194,30 @@ export class ViewFormComponent implements OnInit {
 
       this.applicationId = this.qde.application.applicationId;
 
+      this.qdeService.qdeSource.subscribe(v => {
+        this.qde = v;
+  
+        // Find an applicant
+        const applicants = this.qde.application.applicants;
+        for (const applicant of applicants) {
+          if (applicant["isMainApplicant"]) {
+            this.applicantId = applicant["applicantId"];
+            break;
+          }
+        }
+  
+        // console.log("this.applicantName", this.qde.application.applicants[0].personalDetails.firstName);
+        
+        let index = v.application.applicants.findIndex(val => val.isMainApplicant == true);
+        
+        if(index == -1) {
+          this.applicantName = "";
+        } else {
+          if(this.qde.application.applicants[0].personalDetails.firstName != "") {
+            this.applicantName = "Application for "+this.qde.application.applicants[index].personalDetails.firstName +" "+ this.qde.application.applicants[index].personalDetails.lastName;
+          }
+        }
+      });
       this.applicantIndex = this.qde.application.applicants.find(val => val.isMainApplicant==true) != undefined ? this.qde.application.applicants.findIndex(val => val.isMainApplicant == true): 0;
       console.log(this.applicantIndex);
 
@@ -244,6 +297,16 @@ export class ViewFormComponent implements OnInit {
   
   ngOnInit() {
 
+    if(this.route.snapshot.data.listOfValues) {
+      const lov = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs);
+
+      this.loanpurposes = lov.LOVS.loan_purpose;
+      this.loanType = lov.LOVS.loan_type;
+      this.propertyTypes = lov.LOVS.property_type;
+
+      this.loanProviderList = lov.LOVS.loan_providers;
+    }
+
     this.route.fragment.subscribe((fragment) => {
       let localFragment = fragment;
       if( fragment == null || (!this.fragments.includes(fragment)) ) {
@@ -255,9 +318,83 @@ export class ViewFormComponent implements OnInit {
       
     });
 
+    this.route.params.subscribe(params => {
 
+      // Make an http request to get the required qde data and set using setQde
+      const applicationId = params.applicationId;
+      if (applicationId) {
+        this.qdeHttp.getQdeData(applicationId).subscribe(response => {
+          let result = JSON.parse(response["ProcessVariables"]["response"]);
+
+          // All hardcoded value need to removed
+          this.selectedLoanType =
+            result.application.loanDetails.loanAmount.loanType ||
+            this.loanType[0].value;
+          this.selectedLoanPurpose =
+            result.application.loanDetails.loanAmount.loanPurpose ||
+            this.loanpurposes[0].value;
+
+          if (!result.application.loanDetails.propertyType) {
+            result.application.loanDetails.propertyType = {}; //This line need to be removed
+          }
+
+          this.selectedPropertyType =
+            result.application.loanDetails.propertyType.propertyType ||
+            this.propertyTypes[0].value;
+
+          this.isPropertyIdentified =
+            result.application.loanDetails.propertyType.propertyIdentified ||
+            false;
+
+          this.propertyClssValue =
+            result.application.loanDetails.propertyType.propertyClss || "";
+
+          this.propertyAreaValue =
+            result.application.loanDetails.propertyType.propertyArea || 0;
+
+          if (!result.application.loanDetails.property) {
+            result.application.loanDetails.property = {}; //This line need to be removed
+          }
+          this.propertyPincodeValue =
+            result.application.loanDetails.property.zipcode || "";
+
+          this.addressLineOneValue =
+            result.application.loanDetails.property.addressLineOne || "";
+
+          this.addressLineTwoValue =
+            result.application.loanDetails.property.addressLineTwo || "";
+
+          this.city = result.application.loanDetails.property.city || "";
+
+          // if (!result.application.loanDetails.existingLoans) {
+          //   result.application.loanDetails.existingLoans = {}; //This line need to be removed
+          // }
+          this.selectedLoanProvider =
+            result.application.loanDetails.existingLoans.loanProvider ||
+            this.loanProviderList[0].value;
+
+          this.liveLoan =
+            result.application.loanDetails.existingLoans.liveLoan || 0;
+
+          this.monthlyEmiValue =
+            result.application.loanDetails.existingLoans.monthlyEmi || "";
+
+          this.qde = result;
+          this.qde.application.applicationId = applicationId;
+
+          this.qdeService.setQde(this.qde);
+          //this.valuechange(this.qde.application.tenure, 0);
+        });
+      } else {
+        this.qde = this.qdeService.getQde();
+      }
+    });
   }
 
+  setApplicantName(qde) {
+    this.applicantName = this.qde.application.applicants[0].personalDetails.firstName;
+    console.log("this.applicantName", this.applicantName);
+  }
   valuechange(newValue) {
     console.log(newValue);
     this.value  = newValue;
@@ -557,6 +694,35 @@ export class ViewFormComponent implements OnInit {
 
   qdeSubmit() {
     
+  }
+
+  onPinCodeChange(event) {
+    console.log(event.target.value);
+    let zipCode = event.target.value
+    this.qdeHttp.getCityAndState(zipCode).subscribe((response) => {
+     // console.log(JSON.parse(response["ProcessVariables"]["response"]));
+      var result = JSON.parse(response["ProcessVariables"]["response"]);
+
+      if (result.city && result.state) {
+
+        this.qde.application.loanDetails.property.zipcodeId = result.zipcodeId;
+        this.qde.application.loanDetails.property.stateId = result.stateId;
+        this.qde.application.loanDetails.property.cityId = result.cityId;
+
+        this.qde.application.loanDetails.property.city = result.city;
+        this.qde.application.loanDetails.property.state = result.state;
+        this.qde.application.loanDetails.property.zipcode = zipCode;
+
+        this.city = result.city;
+        this.state = result.state;
+
+        if(result.city != null && result.state != null && result.city != "" && result.state != "") {
+          this.cityState = result.city +" "+ result.state;
+        }
+      } else {
+        alert("Pin code not available / enter proper pincode")
+      }
+    });
   }
 
 }
