@@ -75,8 +75,6 @@ export class ReviewApplicationFormComponent implements OnInit {
 
   docType: Array<any> = [];
   selectedAssesmentMethodology: Array<Item> = [];
-  birthPlace: Array<any> = [];
-  selectedBirthPlace: Array<Item> = [];
 
   applicantIndex: number;
   coApplicantIndexes: Array<number> = [];
@@ -145,8 +143,6 @@ export class ReviewApplicationFormComponent implements OnInit {
       this.genders = lov.LOVS.gender;
       this.constitutions = lov.LOVS.constitution;
       this.assessmentMethodology = lov.LOVS.assessment_methodology;
-      this.birthPlace = JSON.parse(this.route.snapshot.data.birthPlaceValues['ProcessVariables']['response']).city;
-      console.log("birthPlace: ", this.birthPlace);
       //hardcoded
       //this.birthPlace = [{"key": "Chennai", "value": "1"},{"key": "Mumbai", "value": "2"},{"key": "Delhi", "value": "3"}];
       // List of Values for Date
@@ -210,7 +206,6 @@ export class ReviewApplicationFormComponent implements OnInit {
       this.selectedConstitution.push(this.constitutions[0]);
       this.selectedDocType.push(this.docType[0]);
       this.selectedAssesmentMethodology.push(this.assessmentMethodology[0]);
-      this.selectedBirthPlace.push(this.birthPlace[0]);
 
       // Personal Details Title
       if( ! isNaN(parseInt(eachApplicant.personalDetails.title)) ) {
@@ -235,11 +230,7 @@ export class ReviewApplicationFormComponent implements OnInit {
       }
 
       this.dob.push(eachDob);
-      
-      // Personal Details Birthplace
-      if( ! isNaN(parseInt(eachApplicant.personalDetails.birthPlace)) ) {
-        this.selectedBirthPlace[i] = this.birthPlace.find(v => v.value == eachApplicant.personalDetails.birthPlace);
-      }
+
       let eachDateOfIncorporation: {day: Item, month: Item, year: Item} = {day:{key:'DD',value:'DD'},month:{key:'MM',value:'MM'},year:{key:'YYYY',value:'YYYY'}};
       // Date of Incorporation Day
       if( ! isNaN(parseInt(eachApplicant.organizationDetails.dateOfIncorporation.split('/')[2])) ) {

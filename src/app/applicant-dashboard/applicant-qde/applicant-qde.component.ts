@@ -221,13 +221,13 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
   selectedDocType: Item;
   selectedConstitutions: Item;
-  selectedBirthPlace: Item;
 
   docType: Array<any>;
-  birthPlace: Array<any>;
   selectedAssesmentMethodology: Array<any>;
 
   panslideSub: Subscription;
+
+  panErrorCount: number = 0;
 
   constructor(private renderer: Renderer2,
               private route: ActivatedRoute,
@@ -320,7 +320,6 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       this.genders = lov.LOVS.gender;
       this.constitutions = lov.LOVS.constitution;
       this.assessmentMethodology = lov.LOVS.assessment_methodology;
-      this.birthPlace = [{}];
       //hardcoded
       //this.birthPlace = [{"key": "Chennai", "value": "1"},{"key": "Mumbai", "value": "2"},{"key": "Delhi", "value": "3"}];
       // List of Values for Date
@@ -357,7 +356,6 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       this.selectedConstitution = this.constitutions[0];
       this.selectedDocType = this.docType[0];
       this.selectedAssesmentMethodology = this.assessmentMethodology[0];
-      this.selectedBirthPlace = this.birthPlace[0];
     }
 
     console.log("params: ", this.route.snapshot.params);
@@ -532,12 +530,6 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       if( ! isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split('/')[1])) ) {
         this.dob.month = this.months[parseInt(this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split('/')[1])];
       }
-
-      // Personal Details Birthplace
-      if( ! isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].personalDetails.birthPlace)) ) {
-        this.selectedBirthPlace = this.birthPlace[parseInt(this.qde.application.applicants[this.applicantIndex].personalDetails.birthPlace) - 1];
-      }
-      
 
       // Personal Details Year
       if( ! isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split('/')[0])) ) {
@@ -786,11 +778,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
 
           } else {
-            console.log('pan error');
+            this.panErrorCount++;
             // Throw Invalid Pan Error
           }
         }, (error) => {
-          console.log('error ', error);
           // alert("error"+error);
           // Throw Request Failure Error
         });
@@ -859,6 +850,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
             return;
           }
         } else {
+          this.panErrorCount++;
           // Throw Invalid Pan Error
         }
       }, (error) => {
@@ -986,9 +978,6 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       return;
     }
 
-
-
-
     const dateofbirth = form.value.year.value+'-'+form.value.month.value+'-'+form.value.day.value;
     const d1:any = new Date(dateofbirth);
     const d2:any = new Date();
@@ -1000,9 +989,6 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     }else {
       this.ageError=false;
     }
-
-
-
 
     this.qde.application.applicants[this.applicantIndex].personalDetails.dob = form.value.year.value+'-'+form.value.month.value+'-'+form.value.day.value;
     this.qde.application.applicants[this.applicantIndex].personalDetails.birthPlace = form.value.birthPlace;
@@ -1626,9 +1612,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
   }
 
-  // selectPuccaHouse(value) {
-  //   this.qde.application.applicants[this.applicantIndex].incomeDetails.puccaHouse = (value == 1) ? true: false;
-  // }
+  selectPuccaHouse(value) {
+    this.qde.application.applicants[this.applicantIndex].incomeDetails.puccaHouse = (value == 1) ? true: false;
+  }
 
   parseJson(response):JSON {
     let result = JSON.parse(response);
@@ -1917,6 +1903,4 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       }
     });
   }
-
-
 }

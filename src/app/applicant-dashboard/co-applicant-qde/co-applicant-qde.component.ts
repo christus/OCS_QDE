@@ -31,6 +31,7 @@ interface Item {
 export class CoApplicantQdeComponent implements OnInit, OnDestroy {
 
   readonly errors = errors;
+  panErrorCount: number = 0;
 
   // regexPatternForDocType: Array<string> = ['[A-Z]{1}[0-9]{7}','^[A-Z]{2}[0-9]{13}$','^[A-Z]{3}[0-9]{7}$','[2-9]{1}[0-9]{11}','[0-9]{18}','[0-9]{14}','[0-9]{16}'];
 
@@ -199,8 +200,6 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
 
   docType: Array<any>;
   selectedAssesmentMethodology: Array<any>;
-  birthPlace: Array<any>;
-  selectedBirthPlace: Item;
 
   // Used when to whether its coming from create or edit
   panslide: boolean;
@@ -310,7 +309,6 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       this.genders = lov.LOVS.gender;
       this.constitutions = lov.LOVS.constitution;
       this.assessmentMethodology = lov.LOVS.assessment_methodology;
-      this.birthPlace = JSON.parse(this.route.snapshot.data.birthPlaceValues['ProcessVariables']['response']).city;
       //hardcoded
       //this.birthPlace = [{"key": "Chennai", "value": "1"},{"key": "Mumbai", "value": "2"},{"key": "Delhi", "value": "3"}];
       // List of Values for Date
@@ -347,7 +345,6 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       this.selectedConstitution = this.constitutions[0];
       this.selectedDocType = this.docType[0];
       this.selectedAssesmentMethodology = this.assessmentMethodology[0];
-      this.selectedBirthPlace = this.birthPlace[0];
     }
 
     console.log("params: ", this.route.snapshot.params);
@@ -613,6 +610,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
             this.tabSwitch(2);
           }
         } else {
+          this.panErrorCount++;
           // Throw Invalid Pan Error
           }
         }, (error) => {
@@ -681,6 +679,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
                 this.tabSwitch(12);
               }
             } else {
+              this.panErrorCount++;
               // Throw Invalid Pan Error
             }
           }, (error) => {
@@ -814,7 +813,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
     }
 
     this.qde.application.applicants[this.coApplicantIndex].personalDetails.dob = form.value.year.value+'-'+form.value.month.value+'-'+form.value.day.value;
-    this.qde.application.applicants[this.coApplicantIndex].personalDetails.birthPlace = form.value.birthPlace.value;
+    this.qde.application.applicants[this.coApplicantIndex].personalDetails.birthPlace = form.value.birthPlace;
 
     console.log(this.qde.application.applicants[this.coApplicantIndex]);
 
@@ -1623,13 +1622,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       // Personal Details Month
       if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].personalDetails.dob.split('/')[1])) ) {
         this.dob.month = this.months[parseInt(this.qde.application.applicants[this.coApplicantIndex].personalDetails.dob.split('/')[1])];
-      }
-
-      // Personal Details Birthplace
-      if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].personalDetails.birthPlace)) ) {
-        this.selectedBirthPlace = this.birthPlace[parseInt(this.qde.application.applicants[this.coApplicantIndex].personalDetails.birthPlace) - 1];
-      }
-      
+      }      
 
       // Personal Details Year
       if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].personalDetails.dob.split('/')[0])) ) {

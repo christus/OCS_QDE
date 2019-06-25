@@ -86,24 +86,21 @@ const appRoutes: Routes = [
         path: "",
         component: ApplicantQdeComponent,
         resolve: {
-          listOfValues: ListOfValuesResolverService,
-          birthPlaceValues: BirthPlaceResolverService
+          listOfValues: ListOfValuesResolverService
         }
       },
       {
         path: ":applicationId",
         component: ApplicantQdeComponent,
         resolve: {
-          listOfValues: ListOfValuesResolverService,
-          birthPlaceValues: BirthPlaceResolverService
+          listOfValues: ListOfValuesResolverService
         }
       },
       {
         path: ":applicationId/co-applicant",
         component: CoApplicantQdeComponent,
         resolve: {
-          listOfValues: ListOfValuesResolverService,
-          birthPlaceValues: BirthPlaceResolverService,
+          listOfValues: ListOfValuesResolverService
           // qde: GetQdeDataResolverService
         }
       },
@@ -111,9 +108,8 @@ const appRoutes: Routes = [
         path: ":applicationId/co-applicant/:coApplicantIndex",
         component: CoApplicantQdeComponent,
         resolve: {
-          listOfValues: ListOfValuesResolverService,
+          listOfValues: ListOfValuesResolverService
           // qde: GetQdeDataResolverService,
-          birthPlaceValues: BirthPlaceResolverService
         }
       }
     ]
@@ -179,7 +175,6 @@ const appRoutes: Routes = [
     resolve: {
       listOfValues: ListOfValuesResolverService,
       qde: GetQdeDataResolverService,
-      birthPlaceValues: BirthPlaceResolverService
     }
   },
   {
@@ -192,7 +187,6 @@ const appRoutes: Routes = [
         component: ProceedToReviewFormComponent,
         resolve: {
           listOfValues: ListOfValuesResolverService,
-          birthPlaceValues: BirthPlaceResolverService,
           qde: GetQdeDataResolverService
         }
       },
@@ -201,7 +195,6 @@ const appRoutes: Routes = [
         component: ReviewApplicationFormComponent,
         resolve: {
           listOfValues: ListOfValuesResolverService,
-          birthPlaceValues: BirthPlaceResolverService,
           qde: GetQdeDataResolverService
         }
       },
@@ -210,7 +203,6 @@ const appRoutes: Routes = [
         component: Declaration1Component,
         resolve: {
           listOfValues: ListOfValuesResolverService,
-          birthPlaceValues: BirthPlaceResolverService,
           qde: GetQdeDataResolverService
         }
       },
@@ -219,7 +211,6 @@ const appRoutes: Routes = [
         component: Declaration2Component,
         resolve: {
           listOfValues: ListOfValuesResolverService,
-          birthPlaceValues: BirthPlaceResolverService,
           qde: GetQdeDataResolverService
         }
       }
@@ -316,7 +307,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   ],
   providers: [
     ListOfValuesResolverService,
-    BirthPlaceResolverService,
+    // BirthPlaceResolverService,
     GetQdeDataResolverService,
     {
       provide: SWIPER_CONFIG,
