@@ -971,6 +971,7 @@
                                               #commCityState="ngModel"
                                               tabindex="10"
                                               fieldFill
+                                              readonly
                                               [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.cityState">
                                               <label for="per-cityState">City/State</label>
                                           </div>
@@ -986,6 +987,7 @@
                                               [value]="1"
                                               tabindex="11"
                                               fieldFill
+                                              [(ngModel)]="isPreferred"
                                               [checked]="qde.application.applicants[applicantIndex].communicationAddress.preferedMailingAddress == true"
                                               id="current-add-mail" />
                                             <label for="current-add-mail">
@@ -999,6 +1001,7 @@
                                                 [value]="2"
                                                 tabindex="12"
                                                 fieldFill
+                                                [(ngModel)]="isPreferred"
                                                 [checked]="qde.application.applicants[applicantIndex].communicationAddress.preferedMailingAddress == false"
                                                 id="permanent-add-mail" />
                                               <label for="permanent-add-mail">
@@ -1702,6 +1705,7 @@
                                             type="text" class="form-control"
                                         id="offCityState"
                                         required
+                                        readonly
                                         [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.cityState"
                                         #offCityState="ngModel"
                                         name="cityState"
@@ -2299,6 +2303,7 @@
                                           #regAddrCityState="ngModel"
                                           name="cityState"
                                           fieldFill
+                                          readonly
                                           pattern="{{regexPattern.address}}">
                                           <label for="regAddrCityState">City/State</label>
 
@@ -2401,6 +2406,7 @@
                                               #corpCityState="ngModel" 
                                               name="corpCityState"
                                               fieldFill
+                                              readonly
                                               pattern="{{regexPattern.address}}" />
                                         <label for="city-state01">City/State</label>
   
@@ -2662,8 +2668,7 @@
                                                 </div>
                                                 <div class="radio-wrap rounded-radio">
                                                     <div class="bs-radio typ-normal">
-                                                        <input spellcheck="false"
-                                                                type="radio" 
+                                                        <input  type="radio" 
                                                                 name="puccaHouse"
                                                                 [value]="1"
                                                                 [checked]="qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == true"                         
@@ -2676,8 +2681,7 @@
                                                         </label>
                                                     </div>
                                                     <div class="bs-radio typ-normal">
-                                                        <input spellcheck="false"
-                                                                type="radio"
+                                                        <input type="radio"
                                                                 name="puccaHouse"
                                                                 [value]="2"
                                                                 tabindex="4"
@@ -2695,8 +2699,8 @@
                                             <button 
                                                 type="submit"
                                                 class="btn btn-primary"
-                                                [ngClass]="{'disabled': !incomeDetailsForm1.valid }"
-                                                [disabled]="!incomeDetailsForm1.valid ">
+                                                [ngClass]="{'disabled': !incomeDetailsForm3.valid }"
+                                                [disabled]="!incomeDetailsForm3.valid ">
                                             Next
                                         </button>
                                         </div>

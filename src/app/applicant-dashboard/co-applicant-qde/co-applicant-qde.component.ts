@@ -1560,6 +1560,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       this.qde.application.applicants[this.coApplicantIndex].permanentAddress.zipcodeId = this.qde.application.applicants[this.coApplicantIndex].communicationAddress.zipcodeId;
       this.qde.application.applicants[this.coApplicantIndex].permanentAddress.cityId = this.qde.application.applicants[this.coApplicantIndex].communicationAddress.cityId;
       this.qde.application.applicants[this.coApplicantIndex].permanentAddress.stateId = this.qde.application.applicants[this.coApplicantIndex].communicationAddress.stateId;
+      this.qde.application.applicants[this.coApplicantIndex].permanentAddress.cityState = this.qde.application.applicants[this.coApplicantIndex].communicationAddress.cityState;
+ 
     } else {
       this.qde.application.applicants[this.coApplicantIndex].permanentAddress.addressLineOne = "";
       this.qde.application.applicants[this.coApplicantIndex].permanentAddress.addressLineTwo = "";

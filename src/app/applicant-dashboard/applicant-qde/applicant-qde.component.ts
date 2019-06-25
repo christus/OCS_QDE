@@ -1571,7 +1571,6 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     // this.qde.application.applicants[this.applicantIndex].incomeDetails.incomeConsider = form.value.incomeConsider;
     // this.qde.application.applicants[this.applicantIndex].incomeDetails.monthlyIncome = form.value.monthlyIncome;
     // this.qde.application.applicants[this.applicantIndex].incomeDetails.assessmentMethodology = form.value.assessmentMethodology;
-    // this.qde.application.applicants[this.applicantIndex].incomeDetails.puccaHouse = form.value.puccaHouse;
 
     console.log("INCOME DETAILS: ", this.qde.application.applicants[this.applicantIndex].incomeDetails);
 
