@@ -90,8 +90,6 @@
                         [selectedDocType]="selectedDocType[applicantIndex]"
                         [docType]="docType"
                         [selectedAssesmentMethodology]="selectedAssesmentMethodology[applicantIndex]"
-                        [birthPlace]="birthPlace"
-                        [selectedBirthPlace]="selectedBirthPlace[applicantIndex]"
                         [isIncomplete]="isIncomplete">
                     </app-view-form-applicant>
                         <div class="btn-wrap">
@@ -163,8 +161,6 @@
                   [selectedDocType]="selectedDocType[c]"
                   [docType]="docType"
                   [selectedAssesmentMethodology]="selectedAssesmentMethodology[c]"
-                  [birthPlace]="birthPlace"
-                  [selectedBirthPlace]="selectedBirthPlace[c]"
                   [isIncomplete]="isIncomplete">
                 </app-view-form-applicant>
                 </form>
@@ -204,7 +200,7 @@
                               <div class="col-12">
                                   <div class="form-group filled">
                                     <span class="control-title">Type of Loan</span>
-                                    <kendo-dropdownlist 
+                                   <kendo-dropdownlist 
                                         class="form-control"
                                         name="loanType"
                                         [data]="loanType" 
