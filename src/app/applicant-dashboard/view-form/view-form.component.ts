@@ -383,7 +383,7 @@ export class ViewFormComponent implements OnInit {
           this.qde.application.applicationId = applicationId;
 
           this.qdeService.setQde(this.qde);
-          //this.valuechange(this.qde.application.tenure, 0);
+          this.valuechange(this.qde.application.tenure, 0);
         });
       } else {
         this.qde = this.qdeService.getQde();
@@ -395,9 +395,9 @@ export class ViewFormComponent implements OnInit {
     this.applicantName = this.qde.application.applicants[0].personalDetails.firstName;
     console.log("this.applicantName", this.applicantName);
   }
-  valuechange(newValue) {
+  valuechange(newValue, valueIndex) {
     console.log(newValue);
-    this.value  = newValue;
+    this.value[valueIndex]  = newValue;
   }
 
   /**
