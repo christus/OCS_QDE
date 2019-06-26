@@ -649,10 +649,6 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     swiperInstance.nextSlide();
   }
 
-  setIndex(event, slider1: Swiper) {
-    slider1.setIndex(event);
-  }
-
   
   /**
    * Use to sync between lhs and rhs sliders

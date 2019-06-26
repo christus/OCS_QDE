@@ -479,14 +479,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
    * @param swiperInstance LHS Swiper Instance
    */
   slideNextTransitionStart(swiperInstance: Swiper) {
-    console.log(swiperInstance.getIndex());
+
     swiperInstance.nextSlide();
   }
-  
-  setIndex(event, slider1: Swiper) {
-    slider1.setIndex(event);
-  }
-  
+
   /**
    * Use to sync between lhs and rhs sliders
    * @param swiperInstance RHS Swiper Instance
