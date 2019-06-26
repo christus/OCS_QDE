@@ -126,8 +126,7 @@
                         <div class="rhs">
                             <div  class="swiper-container form-swiper"
                                   [swiper]="rhsConfig"
-                                  (slidePrevTransitionStart)="slidePrevTransitionStart(panSlider1)"
-                                  (slideNextTransitionStart)="slideNextTransitionStart(panSlider1)"
+                                  (indexChange)="setIndex($event, panSlider1)"
                                   #panSlider2="ngxSwiper">
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide">
@@ -297,8 +296,7 @@
                           <div class="rhs">
                               <div  class="swiper-container form-swiper"
                                     [swiper]="rhsConfig"
-                                    (slidePrevTransitionStart)="slidePrevTransitionStart(pdSlider1)"
-                                    (slideNextTransitionStart)="slideNextTransitionStart(pdSlider1)"
+                                    (indexChange)="setIndex($event, pdSlider1)"
                                     #pdSlider2="ngxSwiper">
                                   <div class="swiper-wrapper">
                                       <div class="swiper-slide">
@@ -1100,8 +1098,7 @@
                         <div class="rhs">
                             <div  class="swiper-container form-swiper"
                                   [swiper]="rhsConfig"
-                                  (slidePrevTransitionStart)="slidePrevTransitionStart(maritalSlider1)"
-                                  (slideNextTransitionStart)="slideNextTransitionStart(maritalSlider1)"
+                                  (indexChange)="setIndex($event, maritalSlider1)"
                                   #maritalSlider2="ngxSwiper">
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide">
@@ -1296,8 +1293,7 @@
                       <div class="rhs">
                           <div  class="swiper-container form-swiper"
                                 [swiper]="rhsConfig"
-                                (slidePrevTransitionStart)="slidePrevTransitionStart(familySlider1)"
-                                (slideNextTransitionStart)="slideNextTransitionStart(familySlider1)"
+                                (indexChange)="setIndex($event, familySlider1)"
                                 #familySlider2="ngxSwiper">
                               <div class="swiper-wrapper">
                                   <div class="swiper-slide">
@@ -1835,8 +1831,7 @@
 
                             <div class="swiper-container form-swiper"
                                     [swiper]="rhsConfig"
-                                    (slidePrevTransitionStart)="slidePrevTransitionStart(incomeSlider1)"
-                                    (slideNextTransitionStart)="slideNextTransitionStart(incomeSlider1)"
+                                    (indexChange)="setIndex($event, incomeSlider1)"
                                     #incomeSlider2="ngxSwiper">
                               <div class="swiper-wrapper">
                                 <div class="swiper-slide">
@@ -2030,8 +2025,7 @@
                       <div class="rhs">
                           <div  class="swiper-container form-swiper"
                                 [swiper]="rhsConfig"
-                                (slidePrevTransitionStart)="slidePrevTransitionStart(panSlider3)"
-                                (slideNextTransitionStart)="slideNextTransitionStart(panSlider3)"
+                                (indexChange)="setIndex($event, panSlider3)"
                                 #panSlider4="ngxSwiper">
                               <div class="swiper-wrapper">
                                   <div class="swiper-slide">
@@ -2613,8 +2607,7 @@
   
                               <div class="swiper-container form-swiper"
                                       [swiper]="rhsConfig"
-                                      (slidePrevTransitionStart)="slidePrevTransitionStart(incomeSlider3)"
-                                      (slideNextTransitionStart)="slideNextTransitionStart(incomeSlider3)"
+                                      (indexChange)="setIndex($event, incomeSlider3)"
                                       #incomeSlider4="ngxSwiper">
                                 <div class="swiper-wrapper">
                                   <div class="swiper-slide">

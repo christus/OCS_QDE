@@ -108,8 +108,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   lhsConfig = {
     noSwiping: true,
     noSwipingClass: '',
-    onlyExternal: true,
-    autoplay: false,
+    // onlyExternal: true,
     speed: 900,
     effect: "fade",
     fadeEffect: {
@@ -120,7 +119,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   rhsConfig = {
     noSwiping: true,
     noSwipingClass: '',
-    autoplay: false,
+    autoplayStopOnLast: false,
     speed: 900,
     effect: "slide"
   };
@@ -647,8 +646,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
    * @param swiperInstance LHS Swiper Instance
    */
   slideNextTransitionStart(swiperInstance: Swiper) {
-    console.log(swiperInstance.getIndex());
     swiperInstance.nextSlide();
+  }
+
+  setIndex(event, slider1: Swiper) {
+    slider1.setIndex(event);
   }
 
   

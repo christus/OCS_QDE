@@ -482,7 +482,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
     console.log(swiperInstance.getIndex());
     swiperInstance.nextSlide();
   }
-
+  
+  setIndex(event, slider1: Swiper) {
+    slider1.setIndex(event);
+  }
   
   /**
    * Use to sync between lhs and rhs sliders
