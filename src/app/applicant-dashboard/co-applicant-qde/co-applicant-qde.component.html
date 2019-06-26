@@ -6,34 +6,34 @@
                   <li class="tab-link" [ngClass]="{'active': (activeTab == 0), 'pending': false}">
                     <a [routerLink]="['/applicant', applicationId, 'co-applicant']" fragment="dashboard">Dashboard</a>
                   </li>
-                  <li class="tab-link" [ngClass]="{'active': (activeTab == 1), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
+                  <li class="tab-link" *ngIf="!isTabDisabled" [ngClass]="{'active': (activeTab == 1), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
                     <a href="javascript:void(0);" (click)="tabSwitch(1)">PAN</a>
                   </li>
-                  <li class="tab-link" [ngClass]="{'active': (activeTab == 2), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
+                  <li class="tab-link" *ngIf="!isTabDisabled" [ngClass]="{'active': (activeTab == 2), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
                     <a href="javascript:void(0);" (click)="tabSwitch(2)">personal details</a>
                   </li>
-                  <li class="tab-link" [ngClass]="{'active': (activeTab == 3), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
+                  <li class="tab-link" *ngIf="!isTabDisabled" [ngClass]="{'active': (activeTab == 3), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
                     <a href="javascript:void(0);" (click)="tabSwitch(3)">contact details</a>
                   </li>
-                  <li class="tab-link" [ngClass]="{'active': (activeTab == 4), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
+                  <li class="tab-link" *ngIf="!isTabDisabled" [ngClass]="{'active': (activeTab == 4), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
                     <a href="javascript:void(0);" (click)="tabSwitch(4)">communication address</a>
                   </li>
-                  <li class="tab-link" [ngClass]="{'active': (activeTab == 5), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
+                  <li class="tab-link" *ngIf="!isTabDisabled" [ngClass]="{'active': (activeTab == 5), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
                     <a href="javascript:void(0);" (click)="tabSwitch(5)">marital status</a>
                   </li>
-                  <li class="tab-link" [ngClass]="{'active': (activeTab == 6), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
+                  <li class="tab-link" *ngIf="!isTabDisabled" [ngClass]="{'active': (activeTab == 6), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
                     <a href="javascript:void(0);" (click)="tabSwitch(6)">family details</a>
                   </li>
-                  <li class="tab-link" [ngClass]="{'active': (activeTab == 7), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
+                  <li class="tab-link" *ngIf="!isTabDisabled" [ngClass]="{'active': (activeTab == 7), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
                     <a href="javascript:void(0);" (click)="tabSwitch(7)">other</a>
                   </li>
-                  <li class="tab-link" [ngClass]="{'active': (activeTab == 8), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
+                  <li class="tab-link" *ngIf="!isTabDisabled" [ngClass]="{'active': (activeTab == 8), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
                     <a href="javascript:void(0);" (click)="tabSwitch(8)">occupation details</a>
                   </li>
-                  <li class="tab-link" [ngClass]="{'active': (activeTab == 9), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
+                  <li class="tab-link" *ngIf="!isTabDisabled" [ngClass]="{'active': (activeTab == 9), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
                     <a href="javascript:void(0);" (click)="tabSwitch(9)">official correspondence</a>
                   </li>
-                  <li class="tab-link" [ngClass]="{'active': (activeTab == 10), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
+                  <li class="tab-link" *ngIf="!isTabDisabled" [ngClass]="{'active': (activeTab == 10), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
                       <a href="javascript:void(0);" (click)="tabSwitch(10)">INCOME DETAILS</a>
                   </li>
                   <li class="tab-link hide" [ngClass]="{'active': (activeTab == 11), 'hide': (applicantIndividual)}">
