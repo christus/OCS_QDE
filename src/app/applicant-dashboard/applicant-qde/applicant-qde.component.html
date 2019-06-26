@@ -103,7 +103,7 @@
                                                             value="1"
                                                             [checked]="qde.application.applicants[applicantIndex].isIndividual == true"
                                                             (click)="changeIsIndividual(1, panSlider2)" />
-                                                    <label for="individual"><span>Individual</span></label>
+                                                    <label for="individual" tabindex="1"><span>Individual</span></label>
                                                 </div>
                                                 <div class="bs-radio">
                                                     <input spellcheck="false"
@@ -113,7 +113,7 @@
                                                             value="2"
                                                             [checked]="qde.application.applicants[applicantIndex].isIndividual == false"
                                                             (click)="changeIsIndividual(2, panSlider2)" />
-                                                    <label for="non-individual"><span>Non-Individual</span></label>
+                                                    <label for="non-individual" tabindex="2"><span>Non-Individual</span></label>
                                                 </div>
                                             </div>
                                         </form>
@@ -130,7 +130,6 @@
                                                             class="form-control"
                                                             [(ngModel)]="qde.application.applicants[applicantIndex].pan.panNumber"
                                                             id="pan-inpt"
-                                                            tabindex="1"
                                                             minlength="10"
                                                             maxlength="10"
                                                             pattern="{{regexPattern.pan}}"                                             
@@ -138,7 +137,7 @@
                                                             #panNumber="ngModel"
                                                             fieldFill
                                                             required />
-                                                    <label for="pan-inpt">Enter PAN in Uppercase</label>
+                                                    <label for="pan-inpt" tabindex="1">Enter PAN in Uppercase</label>
                                                     <div *ngIf="panNumber.touched && panNumber.invalid && panErrorCount < 3" class="invalid-feedback">
                                                         <!-- <div *ngIf="panNumber.errors?.required">{{errors.panNumber.required}}</div> -->
                                                         <div *ngIf="panNumber.errors?.pattern ? true : false">{{errors.pan.invalid}}</div>
@@ -151,7 +150,7 @@
                                                   <kendo-dropdownlist  class="form-control"
                                                                         [data]="docType" 
                                                                         textField="key"
-                                                                        tabindex="2"
+                                                                        tabindex="0"
                                                                         valueField="value"
                                                                         name="docTypeindividual"
                                                                         nick="pan.docType"
@@ -167,13 +166,13 @@
                                                             [(ngModel)]="qde.application.applicants[applicantIndex].pan.docNumber"
                                                             id="docNumber"
                                                             name="docNumber"
-                                                            tabindex="3"
+                                                            
                                                             #panDocNumber="ngModel"
                                                             pattern="{{regexPatternForDocType[parseInteger(selectedDocType.value) - 1].pattern}}"
                                                             maxlength="{{maxlength[parseInteger(selectedDocType.value) - 1]}}"                                             
                                                             fieldFill
-                                                            required/>
-                                                <label for="docNumber">Document Number</label>
+                                                            required />
+                                                <label for="docNumber" tabindex="3">Document Number</label>
                                                 <span style="color:green">{{regexPatternForDocType[parseInteger(selectedDocType.value) - 1].hint}}</span>
                                                 <div *ngIf="panDocNumber.touched && panDocNumber.invalid" class="invalid-feedback">
                                                   <!-- <div *ngIf="panDocNumber.errors?.required">{{errors.panDocumentNo.required}}</div> -->
@@ -202,9 +201,8 @@
                                                 </div>
                                                 <div *ngIf="!panImage" class="bs-file">
                                                     <input spellcheck="false"
-                                                    tabindex="1"
                                                     type="file" class="form-control" id="file">
-                                                    <label for="file"><span>click photo of PAN card</span></label>
+                                                    <label tabindex="5" for="file"><span>click photo of PAN card</span></label>
                                                     <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera()">open camera</button>
                                                 </div>
                                             </div>
@@ -276,25 +274,23 @@
                                                     <input spellcheck="false"
                                                             type="radio"
                                                             name="income-consider"
-                                                            tabindex="1"
                                                             id="yes-consider1"
                                                             [value]="1"
                                                             [checked]="qde.application.applicants[applicantIndex].personalDetails.applicantStatus == '1'"
                                                             (click)="changeApplicantStatus(1, pdSlider2)"
                                                             class="not-usual" />
-                                                    <label for="yes-consider1"><span>Resident</span></label>
+                                                    <label for="yes-consider1" tabindex="1"><span>Resident</span></label>
                                                 </div>
                                                 <div class="bs-radio">
                                                     <input spellcheck="false"
                                                             type="radio"
-                                                            tabindex="2"
                                                             name="income-consider"
                                                             id="no-consider1"
                                                             class="not-usual"
                                                             [value]="2"
                                                             [checked]="qde.application.applicants[applicantIndex].personalDetails.applicantStatus == '2'"
                                                             (click)="changeApplicantStatus(2, pdSlider2)" />
-                                                    <label for="no-consider1"><span>Non Resident</span></label>
+                                                    <label for="no-consider1" tabindex="2"><span>Non Resident</span></label>
                                                 </div>
                                             </div>
                                         </form>
@@ -314,7 +310,7 @@
                                                             valueField="value"
                                                             name="title"
                                                             nick="personalDetails.title"
-                                                            tabindex="1"
+                                                            tabindex="0"
                                                             #title
                                                             (selectionChange)="selectValueChanged($event, title.hostElement)"
                                                             [(ngModel)]="selectedTitle">
@@ -329,12 +325,11 @@
                                                             id="name"
                                                             [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.firstName"
                                                             name="firstName"
-                                                            tabindex="2"
                                                             #firstName="ngModel"
                                                             fieldFill 
                                                             required
                                                             pattern="{{regexPattern.name}}" />
-                                                          <label for="name">First name</label>
+                                                          <label for="name" tabindex="1">First name</label>
                                                     <div *ngIf="(firstName.touched || firstName.dirty) && firstName.invalid" class="invalid-feedback">
                                                         <!-- <div *ngIf="firstName.errors?.required">{{errors.personalDetails.firstName.required}}</div> -->
                                                         <div *ngIf="firstName.errors?.pattern">{{errors.personalDetails.firstName.invalid}}</div>
@@ -346,12 +341,11 @@
                                                           class="form-control"
                                                           id="middleName"
                                                           name="middleName"
-                                                          tabindex="3"
                                                           [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.middleName"
                                                           pattern="{{regexPattern.name}}"
                                                           fieldFill
                                                           #middleName="ngModel" />
-                                                    <label for="middleName">Middle name</label>
+                                                    <label for="middleName" tabindex="2">Middle name</label>
   
                                                     <span class="optional">Optional</span>
                                                       <div *ngIf="(middleName.touched || middleName.dirty) && middleName.invalid" class="invalid-feedback">
@@ -366,12 +360,11 @@
                                                               [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.lastName" 
                                                               name="lastName" 
                                                               #lastName="ngModel"
-                                                              tabindex="4"
                                                               id="lastName"
                                                               fieldFill
                                                               pattern="{{regexPattern.name}}"
                                                               required />
-                                                    <label for="lastName" >Last name</label>
+                                                    <label for="lastName" tabindex="3">Last name</label>
                                                     <div *ngIf="(lastName.touched || lastName.dirty) && lastName.invalid" class="invalid-feedback">
                                                       <!-- <div *ngIf="lastName.errors?.required">{{errors.personalDetails.lastName.required}}</div> -->
                                                       <div *ngIf="lastName.errors?.pattern">{{errors.personalDetails.lastName.invalid}}</div>
@@ -415,7 +408,7 @@
                                                         [data]="qualifications" 
                                                         textField="key"
                                                         valueField="value"
-                                                        tabindex="1"
+                                                        tabindex="0"
                                                         #qualification
                                                         nick="personalDetails.qualification"
                                                         (selectionChange)="selectValueChanged($event, qualification.hostElement)"
@@ -447,7 +440,7 @@
                                                             valueField="value"
                                                             name="day"
                                                             nick="personalDetails.day"
-                                                            tabindex="1"
+                                                            tabindex="0"
                                                             #dobDay
                                                             (selectionChange)="selectValueChanged($event, dobDay.hostElement)"
                                                             [(ngModel)]="dob.day">
@@ -460,7 +453,7 @@
                                                             textField="key"
                                                             valueField="value"
                                                             name="month"
-                                                            tabindex="2"
+                                                            tabindex="0"
                                                             nick="personalDetails.month"
                                                             #dobMonth
                                                             (selectionChange)="selectValueChanged($event, dobMonth.hostElement)"
@@ -474,7 +467,7 @@
                                                             textField="key"
                                                             valueField="value"
                                                             name="year"
-                                                            tabindex="3"
+                                                            tabindex="0"
                                                             nick="personalDetails.year"
                                                             #dobYear
                                                             (selectionChange)="selectValueChanged($event, dobYear.hostElement)"
@@ -488,13 +481,13 @@
                                                   
                                                   </div>
                                                   <div class="form-group">                                                 
+                                                    <label for="birthPlace" tabindex="1">Birth place</label>
 
                                                         <input spellcheck="false"
                                                           type="text"
                                                           class="form-control"
                                                           id="birthPlace"
                                                           name="birthPlace"
-                                                          tabindex="4"
                                                           [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.birthPlace"
                                                           pattern="{{regexPattern.name}}"
                                                           fieldFill
@@ -546,7 +539,6 @@
                                               type="text"
                                               class="form-control"
                                               id="pref-email"
-                                                tabindex="1"
                                               data-validation-attr="email"
                                               [(ngModel)]="qde.application.applicants[applicantIndex].contactDetails.preferredEmailId"
                                               name="preferEmailId"
@@ -555,7 +547,7 @@
                                               fieldFill
                                               required />
   
-                                        <label for="pref-email">Preferred email ID</label>
+                                        <label for="pref-email" tabindex="1">Preferred email ID</label>
                                         <span class="alternate-data">
                                             <a  href="javascript:void(0);"
                                                 class="alter-btn"
@@ -575,14 +567,13 @@
                                               class="form-control"
                                               id="alter-email"
                                               data-validation-attr="email01"
-                                              tabindex="3"
                                               pattern="{{regexPattern.email}}"
                                               [(ngModel)]="qde.application.applicants[applicantIndex].contactDetails.alternateEmailId"
                                               name="alternateEmailId"
                                               #alternateEmailId="ngModel"
                                               fieldFill />
   
-                                        <label for="alter-email">Alternate email ID</label>
+                                        <label for="alter-email" tabindex="3">Alternate email ID</label>
                                         <span class="alternate-data">
                                           <a  href="javascript:void(0);"
                                               class="alter-btn"
@@ -603,13 +594,12 @@
                                           maxlength="10" im-insert="true"
                                           [(ngModel)]="qde.application.applicants[applicantIndex].contactDetails.mobileNumber"
                                           name="mobileNumber"
-                                          tabindex="5"
                                           #mobileNumber="ngModel"
                                           pattern="{{regexPattern.mobileNumber}}"
                                           fieldFill
                                           required />
   
-                                        <label for="mob-no">Mobile number</label>
+                                        <label for="mob-no" tabindex="5">Mobile number</label>
                                         <span class="optional">10 digit</span>
                                         <a href="javascript:void(0);" class="sent-otp modal-init" data-target="sent-otp-modal"><span class="text" (click)="submitOTP()">Send OTP</span><span class="icon icon-tick"></span></a>
                                         <span class="alternate-data">
@@ -635,12 +625,11 @@
                                           maxlength="10" im-insert="true"
                                           [(ngModel)]="qde.application.applicants[applicantIndex].contactDetails.alternateMobileNumber"
                                           name="alternateMobileNumber"
-                                          tabindex="7"
                                           #altMobileNo="ngModel"
                                           fieldFill
                                           pattern="{{regexPattern.mobileNumber}}"/>
   
-                                        <label for="alter-mob">Alternate mobile no</label>
+                                        <label for="alter-mob" tabindex="7">Alternate mobile no</label>
                                         <span class="optional">10 digit</span>
                                         <a href="javascript:void(0);" class="sent-otp modal-init" data-target="sent-otp-modal"><span class="text" (click)="submitOTP()">Send OTP</span><span class="icon icon-tick"></span></a>
                                         <span class="alternate-data">
@@ -665,12 +654,11 @@
                                                       maxlength="3"
                                                       minlength="0"
                                                       name="residenceNumber1"
-                                                      tabindex="9"
                                                       class="form-control"
                                                       fieldFill
                                                       required
                                                       id="std" />
-                                              <label for="std">STD</label>
+                                              <label for="std" tabindex="9">STD</label>
                                               <div *ngIf="residenceStdCode.touched && residenceStdCode.invalid" class="invalid-feedback">
                                                   <!-- <div *ngIf="residenceStdCode.errors?.required">{{errors.contactDetails.stdCode.required}}</div> -->
                                                   <div *ngIf="residenceStdCode.errors?.pattern">{{errors.contactDetails.stdCode.invalid}}</div>
@@ -685,14 +673,13 @@
                                                       [(ngModel)]="residenceNumberPhoneNumber"
                                                       pattern="{{regexPattern.mobileNumber}}"
                                                       maxlength="8"
-                                                      tabindex="10"
                                                       #residenceNumber="ngModel"
                                                       name="residenceNumber2"
                                                       value="{{residenceNumber.phoneNumber}}"
                                                       data-validation-attr="residenceno"
                                                       fieldFill
                                                       required />
-                                            <label for="res-no">Residence number</label>
+                                            <label for="res-no" tabindex="10">Residence number</label>
                                             <div *ngIf="residenceNumber.touched  && residenceNumber.invalid" class="invalid-feedback">
                                               <div *ngIf="residenceNumber.errors?.pattern">{{errors.contactDetails.residenceNumber.invalid}}</div>
                                               <!-- <div *ngIf="residenceNumber.errors?.required">{{errors.contactDetails.residenceNumber.required}}</div> -->
@@ -712,13 +699,12 @@
                                                       [(ngModel)]="alternateResidenceNumberStdCode"
                                                       name="alternateResidenceNumberStd1"
                                                       maxlength="3"
-                                                      tabindex="12"
                                                       #alternateResidenceNumberStd1="ngModel"
                                                       pattern="{{regexPattern.mobileNumber}}"
                                                       class="form-control"
                                                       fieldFill
                                                       id="altrstd">
-                                            <label for="altrstd" >STD</label>
+                                            <label for="altrstd" tabindex="12">STD</label>
                                             <div *ngIf="alternateResidenceNumberStd1.touched  && alternateResidenceNumberStd1.invalid" class="invalid-feedback">
                                               <div *ngIf="alternateResidenceNumberStd1.errors?.pattern">{{errors.contactDetails.alternateResidenceNumberStd1.invalid}}</div>
                                           </div>
@@ -734,11 +720,10 @@
                                                       id="altr-res-no"
                                                       value="{{residenceNumber.phoneNumber}}"
                                                       maxlength="8"
-                                                      tabindex="13"
                                                       fieldFill
                                                       pattern="{{regexPattern.mobileNumber}}"
                                                       data-validation-attr="residenceno01" />
-                                            <label for="altr-res-no">Residence number</label>
+                                            <label for="altr-res-no" tabindex="13">Residence number</label>
                                             <div *ngIf="alternateResidenceNumber2.touched  && alternateResidenceNumber2.invalid" class="invalid-feedback">
                                               <div *ngIf="alternateResidenceNumber2.errors?.pattern">{{errors.contactDetails.alternateResidenceNumber1.invalid}}</div>
                                           </div>
@@ -773,8 +758,8 @@
                         <form class="bs-form" id="spouse-form">
                             <div class="form-wrap1">
                                 <div class="form-group">
-                                        <input type="text" class="form-control" id="otp" fieldFill>
-                                        <label for="otp">OTP</label>
+                                    <input type="text" class="form-control" id="otp" fieldFill>
+                                    <label for="otp">OTP</label>
                                 </div>
                             </div>
                         </form>
@@ -807,7 +792,7 @@
                                       <kendo-dropdownlist class="form-control"
                                         [data]="residences" 
                                         textField="key"
-                                        tabindex="1"
+                                        tabindex="0"
                                         valueField="value"
                                         name="residentialStatus"
                                         nick="communicationAddress.residentialStatus"
@@ -823,7 +808,6 @@
                                             type="text"
                                               class="form-control"
                                               id="address1"
-                                              tabindex="2"
                                               [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.addressLineOne"
                                               pattern="{{regexPattern.address}}"
                                               name="addressLineOne"
@@ -836,7 +820,7 @@
                                           <div *ngIf="address1.errors?.pattern">{{errors.commAddress.address1.invalid}}</div>
                                         </div>
 
-                                      <label for="address1">Address line 1</label>
+                                      <label for="address1" tabindex="1">Address line 1</label>
   
                                   </div>
   
@@ -846,12 +830,11 @@
                                         [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.addressLineTwo"
                                         pattern="{{regexPattern.address}}"
                                         name="addressLineTwo"
-                                        tabindex="3"
                                         #address2="ngModel"
                                         fieldFill
                                         required/>
   
-                                      <label for="address2">Address line 2</label>
+                                      <label for="address2" tabindex="2">Address line 2</label>
                                       <div *ngIf="(address2.touched || address2.dirty) && address2.invalid" class="invalid-feedback">
                                         <!-- <div *ngIf="address2.errors?.required">{{errors.commAddress.address2.required}}</div> -->
                                         <div *ngIf="address2.errors?.pattern">{{errors.commAddress.address2.invalid}}</div>
@@ -864,7 +847,6 @@
                                                 class="form-control"
                                                 id="pincode"
                                                 required
-                                                tabindex="4"
                                                 [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.zipcode"
                                                 name="pinCode"
                                                 #commPinCode="ngModel" 
@@ -872,7 +854,7 @@
                                                 fieldFill
                                                 (blur)="onPinCodeChange($event, 'communicationAddress')" 
                                                 pattern="{{regexPattern.pinCode}}" />
-                                        <label for="pincode">Pincode</label>
+                                        <label for="pincode" tabindex="3">Pincode</label>
 
                                       <div *ngIf="(commPinCode.touched || commPinCode.dirty) && commPinCode.invalid" class="invalid-feedback">
                                           <!-- <div *ngIf="commPinCode.errors?.required">{{errors.commAddress.pinCode.required}}</div> -->
@@ -886,14 +868,13 @@
                                                 class="form-control"
                                                 id="cityState"
                                                 required
-                                                tabindex="5"
                                                 [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.cityState"
                                                 name="cityState"
                                                 #commCityState="ngModel"
                                                 fieldFill                     
                                                 pattern="{{regexPattern.address}}" />
                                             
-                                            <label for="cityState">City/State</label>
+                                            <label for="cityState" tabindex="4">City/State</label>
 
                                       <div *ngIf="(commCityState.touched || commCityState.dirty) && commCityState.invalid" class="invalid-feedback">
                                           <!-- <div *ngIf="commCityState.errors?.required">{{errors.commAddress.stateOrCity.required}}</div> -->
@@ -904,12 +885,11 @@
                                       <input spellcheck="false"
                                             type="checkbox"
                                               [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.permanentAddress"
-                                              tabindex="6"
                                               name="permanentAddress"
                                               (ngModelChange)="makePermanentAddressSame($event)"
                                               [checked]="qde.application.applicants[applicantIndex].communicationAddress.permanentAddress == true"
                                               id="permanentAddress" />
-                                      <label for="permanentAddress"><span>Current Address is Permanent Address</span></label>
+                                      <label for="permanentAddress" tabindex="5"><span>Current Address is Permanent Address</span></label>
                                   </div>
                                   <div class="permanent-add-wrap">
                                       <h1 class="sub-heading" style="text-align: left; margin-bottom: 12px">Permanent Address</h1>
@@ -917,13 +897,12 @@
                                               <input spellcheck="false"
                                                     type="text" class="form-control" id="per-address1"
                                               name="pAddressLineOne"
-                                              tabindex="7"
                                               #pAddress1="ngModel"
                                               pattern="{{regexPattern.address}}"
                                               fieldFill
                                               [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.addressLineOne"
                                               required />
-                                              <label for="per-address1">Address line 1</label>
+                                              <label for="per-address1" tabindex="6">Address line 1</label>
                                               <div *ngIf="(pAddress1.touched || pAddress1.dirty) && pAddress1.invalid" class="invalid-feedback">
                                                 <!-- <div *ngIf="pAddress1.errors?.required">{{errors.commAddress.address1.required}}</div> -->
                                                 <div *ngIf="pAddress1.errors?.pattern">{{errors.commAddress.address1.invalid}}</div>
@@ -934,12 +913,11 @@
                                                     type="text" class="form-control" id="per-address2"
                                               name="pAddressLineTwo"
                                               #pAddress2="ngModel"
-                                              tabindex="8"
                                               fieldFill
                                               pattern="{{regexPattern.address}}"
                                               [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.addressLineTwo"
                                               required/>
-                                              <label for="per-address2">Address line 2</label>
+                                              <label for="per-address2" tabindex="7">Address line 2</label>
                                               <div *ngIf="(pAddress2.touched || pAddress2.dirty) && pAddress2.invalid" class="invalid-feedback">
                                                 <!-- <div *ngIf="pAddress2.errors?.required">{{errors.commAddress.address2.required}}</div> -->
                                                 <div *ngIf="pAddress2.errors?.pattern">{{errors.commAddress.address2.invalid}}</div>
@@ -951,7 +929,6 @@
                                                         class="form-control"
                                                         id="per-pincode"
                                                         name="pZipcode"
-                                                        tabindex="9"
                                                         #pZipcode="ngModel"
                                                         (blur)="onPinCodeChange($event, 'permanentAddress')" 
                                                         fieldFill
@@ -960,7 +937,7 @@
                                                         maxlength="6"
                                                         pattern="{{regexPattern.pinCode}}"
                                                         required />
-                                              <label for="per-pincode">Pincode</label>
+                                              <label for="per-pincode" tabindex="8">Pincode</label>
                                               <div *ngIf="(pZipcode.touched || pZipcode.dirty) && pZipcode.invalid" class="invalid-feedback">
                                                 <!-- <div *ngIf="pZipcode.errors?.required">{{errors.commAddress.pinCode.required}}</div> -->
                                                 <div *ngIf="pZipcode.errors?.pattern">{{errors.commAddress.pinCode.invalid}}</div>
@@ -972,11 +949,10 @@
                                                     type="text" class="form-control" id="per-cityState"
                                               name="commCityState"
                                               #commCityState="ngModel"
-                                              tabindex="10"
                                               fieldFill
                                               readonly
                                               [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.cityState">
-                                              <label for="per-cityState">City/State</label>
+                                              <label for="per-cityState" tabindex="9">City/State</label>
                                           </div>
                                       </div>
                                       <div class="form-group last">
@@ -988,12 +964,11 @@
                                                type="radio" 
                                               name="prefredMail"
                                               [value]="1"
-                                              tabindex="11"
                                               fieldFill
                                               [(ngModel)]="isPreferred"
                                               [checked]="qde.application.applicants[applicantIndex].communicationAddress.preferedMailingAddress == true"
                                               id="current-add-mail" />
-                                            <label for="current-add-mail">
+                                            <label for="current-add-mail" tabindex="10">
                                                 Current Address
                                             </label>
                                           </div>
@@ -1002,12 +977,11 @@
                                                  type="radio"
                                                 name="prefredMail"
                                                 [value]="2"
-                                                tabindex="12"
                                                 fieldFill
                                                 [(ngModel)]="isPreferred"
                                                 [checked]="qde.application.applicants[applicantIndex].communicationAddress.preferedMailingAddress == false"
                                                 id="permanent-add-mail" />
-                                              <label for="permanent-add-mail">
+                                              <label for="permanent-add-mail" tabindex="11">
                                                     Permanent Address
                                                 </label>
                                           </div>
@@ -1019,13 +993,13 @@
                                               name="numberOfYearsInCurrentResidence"
                                               class="form-control"
                                               [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.numberOfYearsInCurrentResidence"
-                                              tabindex="13"
+                                              tabindex="12"
                                               min=0
                                               max=90
                                               #numberOfYearsInCurrentResidence="ngModel"
                                               fieldFill
                                               required />
-                                      <ng5-slider tabindex="14" [(value)]="qde.application.applicants[applicantIndex].communicationAddress.numberOfYearsInCurrentResidence" [options]="options"></ng5-slider>
+                                      <ng5-slider tabindex="13" [(value)]="qde.application.applicants[applicantIndex].communicationAddress.numberOfYearsInCurrentResidence" [options]="options"></ng5-slider>
                                   </div>
                               </div>
                               <div class="btn-wrap">

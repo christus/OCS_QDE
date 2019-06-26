@@ -171,12 +171,11 @@
                                                             maxlength="10"
                                                             pattern="{{regexPattern.pan}}"                                             
                                                             name="pan"
-                                                            tabindex="1"
                                                             #panNumber="ngModel"
                                                             fieldFill
                                                             spellcheck="false"
                                                             required />
-                                                    <label for="pan-inpt">Enter PAN in Uppercase</label>
+                                                    <label for="pan-inpt" tabindex="1">Enter PAN in Uppercase</label>
                                                     <div *ngIf="panNumber.touched && panNumber.invalid && panErrorCount < 3" class="invalid-feedback">
                                                         <!-- <div *ngIf="panNumber.errors?.required">{{errors.panNumber.required}}</div> -->
                                                         <div *ngIf="panNumber.errors?.pattern ? true : false">{{errors.pan.invalid}}</div>
@@ -194,7 +193,7 @@
                                                                         valueField="value"
                                                                         name="docTypeindividual"
                                                                         nick="pan.docType"
-                                                                        tabindex="2"
+                                                                        tabindex="0"
                                                                         #docTypeindividual
                                                                         (selectionChange)="selectValueChanged($event, docTypeindividual.hostElement)"
                                                                         [(ngModel)]="selectedDocType">
@@ -207,13 +206,13 @@
                                                             id="docNumber"
                                                             name="docNumber"
                                                             #panDocNumber="ngModel"
-                                                            tabindex="3"
+                                                            
                                                             pattern="{{regexPatternForDocType[parseInteger(selectedDocType.value) - 1].pattern}}"
                                                             maxlength="{{maxlength[selectedDocType.value - 1]}}"
                                                             fieldFill 
                                                             spellcheck="false"
                                                             required/>
-                                                <label for="docNumber">Document Number</label>
+                                                <label for="docNumber" tabindex="2">Document Number</label>
                                                 <span style="color:green">{{regexPatternForDocType[parseInteger(selectedDocType.value) - 1].hint}}</span>
 
                                                 <div *ngIf="panDocNumber.touched && panDocNumber.invalid" class="invalid-feedback">
@@ -238,7 +237,7 @@
                                             <div class="form-wrap">
                                                 <div class="bs-file">
                                                       <!-- <image-upload [url]="imageUrl" [headers]="myHeaders"></image-upload> -->
-                                                    <input type="file" tabindex="1" class="form-control" id="file">
+                                                    <input type="file" tabindex="3" class="form-control" id="file">
                                                     <label for="file"><span>click photo of PAN card</span></label>
                                                 </div>
                                             </div>

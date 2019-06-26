@@ -111,3 +111,11 @@
     margin-top: 2vw;
     width: 50%
 }
+
+.swiper-slide {
+visibility: hidden;
+}
+
+.swiper-slide.swiper-slide-active {
+visibility: visible;
+}
