@@ -111,13 +111,14 @@
                             id="ref1-name"
                             pattern="{{regexPattern.name}}"
                             #refOneFullName="ngModel"
+                            spellcheck="false"
                             fieldFill 
                             [(ngModel)]="selectedName1">
                             <label for="ref1-name">Full name</label>
 
                             <div *ngIf="refOneFullName.touched && refOneFullName.invalid" class="invalid-feedback">
-                              <div *ngIf="refOneFullName.errors?.required">{{errors.references.referenceOne.fullName.required}}</div>
-                              <div *ngIf="refOneFullName.errors?.pattern">{{errors.references.referenceTwo.fullName.invalid}}</div>
+                              <!-- <div *ngIf="refOneFullName.errors?.required">{{errors.references.referenceOne.fullName.required}}</div> -->
+                              <div *ngIf="refOneFullName.errors?.pattern">{{errors.references.referenceOne.fullName.invalid}}</div>
                             </div>
 
 
@@ -131,15 +132,16 @@
                             maxlength="10"
                             pattern="{{regexPattern.mobileNumber}}"  
                             ngModel
+                            spellcheck="false"
                             fieldFill 
                             #refOneMobileNumber="ngModel"
                             [(ngModel)]="selectedMobile1">
                             <label for="ref1-mobile">Mobile number</label>
 
                             <div *ngIf="refOneMobileNumber.touched && refOneMobileNumber.invalid" class="invalid-feedback">
-                              <div *ngIf="refOneMobileNumber.errors?.required">{{errors.references.referenceOne.mobileNumber.required}}</div>
+                              <!-- <div *ngIf="refOneMobileNumber.errors?.required">{{errors.references.referenceOne.mobileNumber.required}}</div> -->
                               <div *ngIf="refOneMobileNumber.errors?.pattern">{{errors.references.referenceOne.mobileNumber.invalid}}</div>
-                              <div *ngIf="mobileNumber.errors?.minlength">{{errors.contactDetails.referenceOne.minlength}}</div> 
+                              <div *ngIf="refOneMobileNumber.errors?.minlength">{{errors.references.referenceOne.mobileNumber.minlength}}</div> 
                             </div>
 
                           </div>
@@ -149,6 +151,7 @@
                             required
                             name="addressLineOne" 
                             ngModel
+                            spellcheck="false"
                             fieldFill
                             pattern="{{regexPattern.address}}" 
                             #refOneAddressLineOne="ngModel"
@@ -156,8 +159,8 @@
                             <label for="ref1-add1">Address line1</label>
 
                             <div *ngIf="refOneAddressLineOne.touched && refOneAddressLineOne.invalid" class="invalid-feedback">
-                              <div *ngIf="refOneAddressLineOne.errors?.required">{{errors.references.referenceOne.addressLineOne.required}}</div>
-                              <div *ngIf="refOneAddressLineOne.errors?.pattern">{{errors.references.referenceTwo.addressLineOne.invalid}}</div>
+                              <!-- <div *ngIf="refOneAddressLineOne.errors?.required">{{errors.references.referenceOne.addressLineOne.required}}</div> -->
+                              <div *ngIf="refOneAddressLineOne.errors?.pattern">{{errors.references.referenceOne.addressLineOne.invalid}}</div>
                             </div>
 
                           </div>
@@ -166,6 +169,7 @@
                             required
                             name="addressLineTwo" 
                             ngModel
+                            spellcheck="false"
                             fieldFill
                             pattern="{{regexPattern.address}}" 
                             #refOneAddressLineTwo="ngModel"
@@ -174,8 +178,8 @@
 
 
                             <div *ngIf="refOneAddressLineTwo.touched && refOneAddressLineTwo.invalid" class="invalid-feedback">
-                              <div *ngIf="refOneAddressLineTwo.errors?.required">{{errors.references.referenceOne.addressLineTwo.required}}</div>
-                              <div *ngIf="refOneAddressLineTwo.errors?.pattern">{{errors.references.referenceTwo.addressLineTwo.invalid}}</div>
+                              <!-- <div *ngIf="refOneAddressLineTwo.errors?.required">{{errors.references.referenceOne.addressLineTwo.required}}</div> -->
+                              <div *ngIf="refOneAddressLineTwo.errors?.pattern">{{errors.references.referenceOne.addressLineTwo.invalid}}</div>
                             </div>
 
                           </div>
@@ -289,12 +293,13 @@
                             #refTwoFullName="ngModel"
                             pattern="{{regexPattern.name}}"
                             required
+                            spellcheck="false"
                             fieldFill
                             [(ngModel)]="selectedName2">
                             <label for="ref2-name">Full name</label>
                             <div *ngIf="refTwoFullName.touched && refTwoFullName.invalid" class="invalid-feedback">
-                                <div *ngIf="refTwoFullName.errors?.required">{{errors.references.referenceOne.fullName.required}}</div>
-                                <div *ngIf="refTwoFullName.errors?.pattern">{{errors.references.referenceOne.fullName.invalid}}</div>
+                                <!-- <div *ngIf="refTwoFullName.errors?.required">{{errors.references.referenceTwo.fullName.required}}</div> -->
+                                <div *ngIf="refTwoFullName.errors?.pattern">{{errors.references.referenceTwo.fullName.invalid}}</div>
                             </div>
                           </div>
                           <div class="form-group">
@@ -306,14 +311,15 @@
                             #refTwoMobileNumber="ngModel"
                             pattern="{{regexPattern.mobileNumber}}"
                             fieldFill
+                            spellcheck="false"
                             required
                             [(ngModel)]="selectedMobile2">
                             <label for="ref2-mobile">Mobile number</label>
 
                             <div *ngIf="refTwoMobileNumber.touched && refTwoMobileNumber.invalid" class="invalid-feedback">
-                                <div *ngIf="refTwoMobileNumber.errors?.required">{{errors.references.referenceOne.mobileNumber.required}}</div>
-                                <div *ngIf="refTwoMobileNumber.errors?.pattern">{{errors.references.referenceOne.mobileNumber.invalid}}</div>
-                                <div *ngIf="mobileNumber.errors?.minlength">{{errors.contactDetails.referenceOne.minlength}}</div> 
+                                <!-- <div *ngIf="refTwoMobileNumber.errors?.required">{{errors.references.referenceTwo.mobileNumber.required}}</div> -->
+                                <div *ngIf="refTwoMobileNumber.errors?.pattern">{{errors.references.referenceTwo.mobileNumber.invalid}}</div>
+                                <div *ngIf="refTwoMobileNumber.errors?.minlength">{{errors.references.referenceTwo.mobileNumber.minlength}}</div> 
                               </div>
 
                           </div>
@@ -324,14 +330,15 @@
                               #refTwoAddressLineOne="ngModel"
                               pattern="{{regexPattern.address}}"
                               required
+                              spellcheck="false"
                               fieldFill
                               [(ngModel)]="selectedAddressLineOne2">
                                
                             <label for="ref2-add1">Address line1</label>
 
                             <div *ngIf="refTwoAddressLineOne.touched && refTwoAddressLineOne.invalid" class="invalid-feedback">
-                                <div *ngIf="refTwoAddressLineOne.errors?.required">{{errors.references.referenceOne.addressLineOne.required}}</div>
-                                <div *ngIf="refTwoAddressLineOne.errors?.pattern">{{errors.references.referenceOne.addressLineOne.invalid}}</div>
+                                <!-- <div *ngIf="refTwoAddressLineOne.errors?.required">{{errors.references.referenceTwo.addressLineOne.required}}</div> -->
+                                <div *ngIf="refTwoAddressLineOne.errors?.pattern">{{errors.references.referenceTwo.addressLineOne.invalid}}</div>
                             </div>
                           </div>
 
@@ -342,13 +349,14 @@
                              #refTwoAddressLineTwo="ngModel"
                              pattern="{{regexPattern.address}}"
                              required
+                             spellcheck="false"
                              fieldFill
                              [(ngModel)]="selectedAddressLineTwo2">
                             <label for="ref2-add2">Address line2</label>
 
                             <div *ngIf="refTwoAddressLineTwo.touched && refTwoAddressLineTwo.invalid" class="invalid-feedback">
-                                <div *ngIf="refTwoAddressLineTwo.errors?.required">{{errors.references.referenceOne.addressLineTwo.required}}</div>
-                                <div *ngIf="refTwoAddressLineTwo.errors?.pattern">{{errors.references.referenceOne.addressLineTwo.invalid}}</div>
+                                <!-- <div *ngIf="refTwoAddressLineTwo.errors?.required">{{errors.references.referenceTwo.addressLineTwo.required}}</div> -->
+                                <div *ngIf="refTwoAddressLineTwo.errors?.pattern">{{errors.references.referenceTwo.addressLineTwo.invalid}}</div>
                             </div>
                           </div>
                         </div>
