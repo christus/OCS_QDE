@@ -965,7 +965,6 @@
                                               name="prefredMail"
                                               [value]="1"
                                               fieldFill
-                                              [(ngModel)]="isPreferred"
                                               [checked]="qde.application.applicants[applicantIndex].communicationAddress.preferedMailingAddress == true"
                                               id="current-add-mail" />
                                             <label for="current-add-mail" tabindex="10">
@@ -978,7 +977,6 @@
                                                 name="prefredMail"
                                                 [value]="2"
                                                 fieldFill
-                                                [(ngModel)]="isPreferred"
                                                 [checked]="qde.application.applicants[applicantIndex].communicationAddress.preferedMailingAddress == false"
                                                 id="permanent-add-mail" />
                                               <label for="permanent-add-mail" tabindex="11">

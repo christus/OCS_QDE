@@ -1,3 +1,4 @@
+import { environment } from 'src/environments/environment';
 import { Component, OnInit,  ViewChild, ElementRef, Renderer2, AfterViewInit, HostListener } from '@angular/core';
 
 import * as Swiper from "swiper/dist/js/swiper.js";
@@ -112,26 +113,32 @@ export class DocumentUploadComponent implements OnInit {
 
   idProofFileName: string;
   idProofFileSize: string;
+  idProofId: string;
   idProofDoc: File;
 
   addressProofFileName: string;
   addressProofFileSize: string;
+  addressProofId: string;
   addressProofDoc: File;
 
   incomeProofFileName: string;
   incomeProofFileSize: string;
+  incomeProofId:string;
   incomeProofDoc: File;
 
   bankProofFileName: string;
   bankProofFileSize: string;
+  bankProofId:string;
   bankingProofDoc: File;
 
   collateralProofFileName: string;
   collateralProofFileSize: string;
+  collateralProofId:string;
   collateralProofDoc: File;
 
   photoProofFileName: string;
   photoProofFileSize: string;
+  photoProofId:string;
   photoProofDoc: File;
 
   qde: Qde;
@@ -226,6 +233,7 @@ export class DocumentUploadComponent implements OnInit {
           const applicants = this.qde.application.applicants;
           for (const applicant of applicants) {
             const applicantId = applicant["applicantId"];
+            const driveLoc = environment.host+environment.driveLocation;
           
             if (applicantId == this.currentApplicantId) {
               const documents = applicant["documents"];
@@ -259,6 +267,8 @@ export class DocumentUploadComponent implements OnInit {
                   this.idProofFileSize = this.getFileSize(
                     document["documentSize"]
                   );
+                  this.idProofId = driveLoc+""+document["documentImageId"];
+                  console.log("idProofId", this.idProofId);
                 } else if (docCategory == addressProofCategory) {
                   this.selectedAddressProof =
                     document["documentType"];
@@ -267,6 +277,7 @@ export class DocumentUploadComponent implements OnInit {
                   this.addressProofFileSize = this.getFileSize(
                     document["documentSize"]
                   );
+                  this.addressProofId = driveLoc+document["documentImageId"];
                 } else if (docCategory == incomeProofCategory) {
                   this.selectedIncomeProof =
                     document["documentType"];
@@ -275,12 +286,14 @@ export class DocumentUploadComponent implements OnInit {
                   this.incomeProofFileSize = this.getFileSize(
                     document["documentSize"]
                   );
+                  this.incomeProofId = driveLoc+document["documentImageId"];
                 } else if (docCategory == bankingProofCategory) {
                   this.selectedBankProof = document["documentType"];
                   this.bankProofFileName = document["documentName"];
                   this.bankProofFileSize = this.getFileSize(
                     document["documentSize"]
                   );
+                  this.bankProofId = driveLoc+document["documentImageId"];
                 } else if (docCategory == collateralProofCategory) {
                   this.selectedCollateralProof =
                     document["documentType"];
@@ -289,12 +302,14 @@ export class DocumentUploadComponent implements OnInit {
                   this.collateralProofFileSize = this.getFileSize(
                     document["documentSize"]
                   );
+                  this.collateralProofId = driveLoc+document["documentImageId"];
                 } else if (docCategory == photoProofCategory) {
                   this.photoProofFileName =
                     document["documentName"];
                   this.photoProofFileSize = this.getFileSize(
                     document["documentSize"]
                   );
+                  this.photoProofId = driveLoc+document["documentImageId"];
                 }
               }
             }

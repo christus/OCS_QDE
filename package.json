@@ -33,6 +33,7 @@
     "@progress/kendo-angular-dropdowns": "^3.5.4",
     "@progress/kendo-angular-l10n": "^1.4.1",
     "@progress/kendo-theme-default": "^3.6.1",
+    "@trademe/ng-defer-load": "^3.0.1",
     "add": "^2.0.6",
     "angular-dropdown-component": "^1.0.8",
     "angular2-image-upload": "^1.0.0-rc.2",

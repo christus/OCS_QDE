@@ -67,6 +67,15 @@ import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-nati
 
 import { NgxUiLoaderModule, NgxUiLoaderRouterModule } from  'ngx-ui-loader';
 import { ViewFormApplicantComponent } from './view-form-applicant/view-form-applicant.component';
+import { DeferLoadModule } from '@trademe/ng-defer-load';
+
+
+
+import {SecuredImageComponent} from  './applicant-dashboard/document-upload/secured-image.component';
+
+
+
+
 
 const appRoutes: Routes = [
   { path: "", redirectTo: "leads", pathMatch: "full" },
@@ -289,7 +298,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     OfflinePaymentComponent,
     OnlineSummaryComponent,
     EligibilityCheckComponent,
-    ViewFormApplicantComponent
+    ViewFormApplicantComponent,
+    SecuredImageComponent
   ],
   imports: [
     BrowserModule,
@@ -303,7 +313,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     DropDownsModule,
     ImageUploadModule.forRoot(),
     DeviceDetectorModule.forRoot(),
-    NgxUiLoaderModule
+    NgxUiLoaderModule,
+    DeferLoadModule
   ],
   providers: [
     ListOfValuesResolverService,
