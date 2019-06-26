@@ -123,8 +123,6 @@
                             [selectedDocType]="selectedDocType[c]"
                             [docType]="docType"
                             [selectedAssesmentMethodology]="selectedAssesmentMethodology[c]"
-                            [birthPlace]="birthPlace"
-                            [selectedBirthPlace]="selectedBirthPlace[c]"
                             [isIncomplete]="isIncomplete">
                         </app-view-form-applicant>
                         </form>
@@ -132,60 +130,70 @@
                 <div class="tab-content" id="loan-tab">
                     <h2 class="title">Loan details</h2>
                     <div class="bs-card">
-                        <h3 class="card-title">Income details</h3>
-                        <form action="" class="bs-form">
-                            <div class="row">
-                                <div class="col-6">
-                                    <div class="form-group inr filled">
-                                        <input type="text" class="form-control" id="annual-in" value="12,45,604">
-                                        <label for="annual-in">Annual family income</label>
-                                        <span class="addon">
-                                                <span class="icon icon-inr"></span>
-                                        </span>
-                                        <span class="in-word"></span>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="form-group inr filled">
-                                        <input type="text" class="form-control" id="monthly-exp" value="5,39,367">
-                                        <label for="monthly-exp">Monthly expenditure</label>
-                                        <span class="addon">
-                                                <span class="icon icon-inr"></span>
-                                        </span>
-                                        <span class="in-word"></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="bs-card">
                         <h3 class="card-title">Loan amount</h3>
                         <form action="" class="bs-form">
                             <div class="row">
-                                <div class="col-6">
+                                <div class="col-12">
                                     <div class="form-group inr filled">
-                                        <input type="text" class="form-control" id="amt-rqur" value="15,39,367">
-                                        <label for="amt-rqur">Amount required (in lakhs)</label>
+                                          <input type="text" class="form-control" id="amt-require" readonly="true"
+                                          required
+                                          ngModel
+                                          [(ngModel)]="qde?.application.loanDetails.loanAmount.amountRequired"
+                                          #amountRequired = "ngModel"
+                                          name="amountRequired"
+                                          fieldFill>
+                                        <label for="amt-require">Amount required (in lakhs)</label>
                                         <span class="addon">
                                             <span class="icon icon-inr"></span>
                                         </span>
                                         <span class="in-word"></span>
                                     </div>
                                 </div>
-                                <div class="col-6">
+                              </div>
+                              <div class="row">
+                                <div class="col-12">
                                     <div class="form-group filled">
-                                        <input type="text" class="form-control" id="loan-purpose" value="Purchase of property">
-                                        <label for="loan-purpose">Loan purpose</label>
+                                      <span class="control-title">Type of Loan</span>
+                                     <kendo-dropdownlist 
+                                          class="form-control"
+                                          name="loanType"
+                                          [data]="loanType" 
+                                          textField="key"
+                                          valueField="value"
+                                          [valuePrimitive]="true"
+                                          [(ngModel)]="selectedLoanType">
+                                          </kendo-dropdownlist>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
+                                  <div class="col-12">
+                                      <div class="form-group filled">
+                                        <span class="control-title">Loan Purpose</span>
+                                        <kendo-dropdownlist 
+                                          class="form-control"
+                                          name="loanPurpose"
+                                          [data]="loanpurposes" 
+                                          textField="key"
+                                          valueField="value"
+                                          [valuePrimitive]="true"
+                                          [(ngModel)]="selectedLoanPurpose">
+                                      </kendo-dropdownlist>
+                                      </div>
+                                  </div>
+                              </div>
+                            <div class="row">
                                 <div class="col-12">
-                                    <div class="form-group typ-range">
-                                        <span class="subtitle">Number of years in current residence</span>
-                                        <input type="text" class="form-control" id="no-yrs">
-                                        <span class="yr-text">Years</span>
-                                        <div id="year-range" class="range-slider"></div>
+                                    <div class="form-group inr filled">
+                                        <input type="text" class="form-control" id="no-yrs" readonly="true"
+                                        required
+                                        ngModel
+                                        pattern="^[A-Za-z]*$"
+                                        [(ngModel)]="qde?.application.tenure"
+                                        #amountRequired = "ngModel"
+                                        name="loanTenure"
+                                        fieldFill>
+                                      <label for="loan-tenure">Loan Tenure(in Years)</label>
                                     </div>
                                 </div>
                             </div>
@@ -198,11 +206,11 @@
                                 <div class="col-12">
                                     <h5 class="subtitle">Have you identified property?</h5>
                                     <div class="bs-radio">
-                                        <input type="radio" name="pro-id" id="pro-yes">
-                                        <label for="pro-yes"><span>Yes</span></label>
+                                        <input readonly="true"  type="radio" name="pro-id" [value]=true [(ngModel)]="isPropertyIdentified">
+                                       <label for="pro-yes"><span>Yes</span></label>
                                     </div>
                                     <div class="bs-radio">
-                                        <input type="radio" name="pro-id" id="pro-no">
+                                        <input readonly="true"  type="radio" name="pro-id" [value]=false [(ngModel)]="isPropertyIdentified">
                                         <label for="pro-no"><span>No</span></label>
                                     </div>
                                 </div>
@@ -210,9 +218,61 @@
                             <div class="inner-card">
                                 <h4 class="inner-title">Property address</h4>
                                 <div class="row">
+                                      <div class="col-12">
+                                          <div class="form-group">
+                                                  <span class="control-title">Property type</span>
+                                                  <kendo-dropdownlist 
+                                                    class="form-control" 
+                                                    name="propertyTypes1" 
+                                                    [data]="propertyTypes" 
+                                                    textField="key" 
+                                                    valueField="value"
+                                                    [valuePrimitive]="true" 
+                                                    [(ngModel)]="selectedPropertyType">
+                                                  </kendo-dropdownlist>
+                                          </div>
+                                      </div>
+                                  </div> 
+                                  <div class="row">
+                                          <div class="col-12">
+                                              <div class="form-group">
+                                                  <input ngModel 
+                                                      type="text" 
+                                                      class="form-control" 
+                                                      id="pro-add-line1" 
+                                                      name="propertyArea"
+                                                      #propertyClss="ngModel"
+                                                      [(ngModel)]="propertyClssValue"
+                                                      fieldFill
+                                                      required>
+                                                  <label for="prop-add1">Property CLSS Area</label>
+                                              </div>
+                                          </div>
+                                  </div> 
+                                  <div class="row">
+                                              <div class="col-12">
+                                                  <div class="form-group">
+                                                          <input ngModel type="number" class="form-control" id="pro-add-line2" 
+                                                          name="propertyAreaInSqFeets"
+                                                          #propertyArea="ngModel"
+                                                          [(ngModel)]="propertyAreaValue"
+                                                          fieldFill
+                                                          required/>
+                                                      <label for="prop-add1">Property area in sq. fts.</label>
+                                                  </div>
+                                              </div>
+                                  </div>
+                                <div class="row">
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" id="prop-add1">
+                                              <input type="text" class="form-control"
+                                              id="add-line1"
+                                              required
+                                              ngModel
+                                              #proaddressLineOne="ngModel"
+                                              [(ngModel)]="addressLineOneValue"
+                                              name="proaddressLineOne"
+                                              fieldFill/>
                                             <label for="prop-add1">Property address 1</label>
                                         </div>
                                     </div>
@@ -220,7 +280,13 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" id="prop-add2">
+                                              <input type="text" class="form-control" id="add-line2"
+                                              required
+                                              ngModel
+                                              #addressLineTwo = "ngModel"
+                                              fieldFill
+                                              [(ngModel)]="addressLineTwoValue"
+                                              name="addressLineTwo"/>
                                             <label for="prop-add2">Property address 2</label>
                                         </div>
                                     </div>
@@ -228,13 +294,28 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="form-group filled">
-                                            <input type="text" class="form-control" id="prop-pin" value="400012">
+                                              <input type="text" class="form-control" id="proprty-pin"
+                                              required
+                                              ngModel
+                                              #propertyPincode = "ngModel"
+                                              [(ngModel)]="propertyPincodeValue"
+                                              minlength="6"
+                                              maxlength="6"
+                                              name="propertyPincode"
+                                              fieldFill
+                                              (change)="onPinCodeChange($event)">
                                             <label for="prop-pin">Property pincode</label>
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" id="prop-city">
+                                              <input type="text" class="form-control" id="pro-city2"
+                                              required
+                                              ngModel
+                                              #cityOrState = "ngModel"
+                                              [(ngModel)] = "cityState"
+                                              fieldFill
+                                              name="cityOrState" />
                                             <label for="prop-city">Property City/State</label>
                                         </div>
                                     </div>
@@ -242,25 +323,25 @@
                             </div>
                         </form>
                     </div>
-                    <div class="bs-card">
+                    <!-- <div class="bs-card">
                         <h3 class="card-title">Existing Loan</h3>
                         <form action="" class="bs-form">
                             <div class="row">
                                 <div class="col-12">
                                     <div class="form-group typ-range">
                                         <span class="subtitle">Existing live loans</span>
-                                        <input type="text" class="form-control" id="no-yrs">
+                                        <input readonly="true"  type="text" class="form-control" id="no-yrs">
                                         <span class="yr-text">Loans</span>
                                         <div id="year-range" class="range-slider typ-number"></div>
                                     </div>
                                 </div>
                             </div>
                         </form>
-                    </div>
+                    </div> -->
                     <div class="bs-card">
                         <h3 class="card-title">Existing Loan</h3>
                         <form action="" class="bs-form">
-                            <div class="row">
+                            <!-- <div class="row">
                                 <div class="col-12">
                                     <div class="form-group">
                                         <span class="control-title">Existing loan type</span>
@@ -272,14 +353,18 @@
                                         </select>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="row">
                                 <div class="col-12">
                                     <div class="form-group typ-range">
                                         <span class="subtitle">Existing live loans</span>
-                                        <input type="text" class="form-control" id="no-yrs">
+                                        <input type="text" class="form-control" id="live-Loan"
+                                          required
+                                          #monthlyEmi = "ngModel"
+                                          [(ngModel)]="liveLoan"
+                                          fieldFill
+                                          name="liveLoan">
                                         <span class="yr-text">Loans</span>
-                                        <div id="year-range" class="range-slider typ-number"></div>
                                     </div>
                                 </div>
                             </div>
@@ -288,30 +373,39 @@
                                     <div class="col-12">
                                         <div class="form-group">
                                             <span class="control-title">Existing loan provider</span>
-                                            <select class="js-select" name="loan-provider" required>
-                                                <option value="" selected>SBI</option>
-                                                <option value="Ms">ICICI</option>
-                                                <option value="Mrs">HDFC</option>
-                                                <option value="Dr">HSBC</option>
-                                            </select>
+                                            <kendo-dropdownlist 
+                                              class="form-control" 
+                                              name="loanProvider" 
+                                              [data]="loanProviderList" 
+                                              textField="key" 
+                                              valueField="value"
+                                              [valuePrimitive]="true" 
+                                              [(ngModel)]="selectedLoanProvider">
+                                              </kendo-dropdownlist>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-6">
+                                    <!-- <div class="col-6">
                                         <div class="form-group inr filled">
-                                            <input type="text" class="form-control" id="ex-loan-amt" value="12,45,604">
+                                            <input readonly="true"  type="text" class="form-control" id="ex-loan-amt" value="12,45,604">
                                             <label for="ex-loan-amt">Existing loan amount</label>
                                             <span class="addon">
                                                 <span class="icon icon-inr"></span>
                                             </span>
                                             <span class="in-word"></span>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="col-6">
                                         <div class="form-group inr filled">
-                                            <input type="text" class="form-control" id="ex-emi" value="12,45,604">
-                                            <label for="ex-emi">Existing monthly EMI</label>
+                                              <input type="text" class="form-control" id="monthly-emi"
+                                              required
+                                              ngModel
+                                              #monthlyEmi = "ngModel"
+                                              [(ngModel)]="monthlyEmiValue"
+                                              fieldFill
+                                              name="monthlyEmi">                                          
+                                              <label for="ex-emi">Existing monthly EMI</label>
                                             <span class="addon">
                                                 <span class="icon icon-inr"></span>
                                             </span>
@@ -335,25 +429,60 @@
                                     <div class="col-12">
                                         <div class="form-group">
                                             <span class="control-title">Relationship with the applicant</span>
-                                            <select class="js-select" name="rel-app" required>
-                                                <option value="" selected>Father</option>
-                                                <option value="Ms">Mother</option>
-                                                <option value="Mrs">Sister</option>
-                                                <option value="Dr">Brother</option>
-                                            </select>
+                                            <kendo-dropdownlist class="form-control"
+                                            [data]="relationships" 
+                                            textField="key"
+                                            valueField="value"
+                                            name="relationShip"
+                                            [valuePrimitive]="true"
+                                            [(ngModel)]="selectedReferenceOne">
+                                          </kendo-dropdownlist>
+              
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-6">
+                                  <div class="col-6">
+                                      <div class="form-group">
+                                          <span class="control-title">Title</span>
+                                          <kendo-dropdownlist 
+                                            class="form-control" 
+                                            [data]="titles" 
+                                            textField="key" 
+                                            valueField="value" 
+                                            name="titles"
+                                            [valuePrimitive]="true" 
+                                            [(ngModel)]="selectedTiltle1">
+                                          </kendo-dropdownlist>
+                                      </div>
+                                  </div>
+                                  <div class="col-6">
+                                      <div class="form-group">
+                                          <input type="text" class="form-control"
+                                          required
+                                          ngModel
+                                          name="fullName" 
+                                          id="ref1-name"
+                                          #refOneFullName="ngModel"
+                                          fieldFill 
+                                          [(ngModel)]="selectedName1">
+                                          <label for="ref1-name">Name</label>
+                                      </div>
+                                  </div>
+                              </div>
+                                <div class="row">
+                                    <div class="col-12">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" id="ref1-name">
-                                            <label for="ref1-name">Name</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" id="ref1-mob">
+                                          <input type="text" class="form-control"
+                                          required 
+                                          ngModel
+                                          id="ref1-mobile"  
+                                          name="mobileNumber"
+                                          minlength="10"
+                                          maxlength="10"
+                                          fieldFill 
+                                          #refOneMobileNumber="ngModel"
+                                          [(ngModel)]="selectedMobile1">
                                             <label for="ref1-mob">Mobile</label>
                                         </div>
                                     </div>
@@ -361,7 +490,13 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" id="ref1-add1">
+                                          <input type="text" class="form-control" id="ref1-add1"  
+                                          required
+                                          ngModel
+                                          name="addressLineOne" 
+                                          fieldFill
+                                          #refOneAddressLineOne="ngModel"
+                                          [(ngModel)]="selectedAddressLineOne1">
                                             <label for="ref1-add1">Address line 1</label>
                                         </div>
                                     </div>
@@ -369,7 +504,13 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" id="ref1-add2">
+                                          <input type="text" class="form-control" id="ref1-add2" 
+                                          required
+                                          ngModel
+                                          name="addressLineTwo" 
+                                          fieldFill
+                                          #refOneAddressLineTwo="ngModel"
+                                          [(ngModel)]="selectedAddressLineTwo1">
                                             <label for="ref1-add2">Address line 2</label>
                                         </div>
                                     </div>
@@ -385,25 +526,60 @@
                                     <div class="col-12">
                                         <div class="form-group">
                                             <span class="control-title">Relationship with the applicant</span>
-                                            <select class="js-select" name="rel-app" required>
-                                                <option value="" selected>Father</option>
-                                                <option value="Ms">Mother</option>
-                                                <option value="Mrs">Sister</option>
-                                                <option value="Dr">Brother</option>
-                                            </select>
+                                            <kendo-dropdownlist 
+                                            class="form-control"
+                                            [data]="relationships" 
+                                            textField="key"
+                                            valueField="value"
+                                            name="relationShip"
+                                            [valuePrimitive]="true"
+                                            [(ngModel)]="selectedReferenceTwo">
+                                          </kendo-dropdownlist>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-6">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" id="ref2-name">
-                                            <label for="ref2-name">Name</label>
-                                        </div>
+                                          <div class="form-group">
+                                          <span class="control-title">Title</span>
+                                              <kendo-dropdownlist 
+                                              class="form-control" 
+                                              [data]="titles" 
+                                              textField="key" 
+                                              valueField="value" 
+                                              name="titles"
+                                              [valuePrimitive]="true" 
+                                              [(ngModel)]="selectedTiltle2">
+                                              </kendo-dropdownlist>
+                                          </div>
                                     </div>
                                     <div class="col-6">
+                                          <div class="form-group">
+                                            <input type="text" class="form-control"
+                                            ngModel
+                                            name="fullName" 
+                                            id="ref2-name"
+                                            #refTwoFullName="ngModel"
+                                            required
+                                            fieldFill
+                                            [(ngModel)]="selectedName2">
+                                              <label for="ref2-name">Name</label>
+                                          </div>
+                                      </div>
+    
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" id="ref2-mob">
+                                              <input type="text" class="form-control" id="ref2-mobile" 
+                                              name="mobileNumber"  
+                                              ngModel 
+                                              minlength="10"
+                                              maxlength="10"
+                                              #refTwoMobileNumber="ngModel"
+                                              fieldFill
+                                              required
+                                              [(ngModel)]="selectedMobile2">
                                             <label for="ref2-mob">Mobile</label>
                                         </div>
                                     </div>
@@ -411,7 +587,13 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" id="ref2-add1">
+                                              <input type="text" class="form-control" id="ref2-add1"
+                                              name="addressLineOne"
+                                              ngModel
+                                              #refTwoAddressLineOne="ngModel"
+                                              required
+                                              fieldFill
+                                              [(ngModel)]="selectedAddressLineOne2">
                                             <label for="ref2-add1">Address line 1</label>
                                         </div>
                                     </div>
@@ -419,7 +601,13 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" id="ref2-add2">
+                                              <input type="text" class="form-control" id="ref2-add2"
+                                              name="addressLineTwo" 
+                                              ngModel 
+                                              #refTwoAddressLineTwo="ngModel"
+                                              required
+                                              fieldFill
+                                              [(ngModel)]="selectedAddressLineTwo2">
                                             <label for="ref2-add2">Address line 2</label>
                                         </div>
                                     </div>

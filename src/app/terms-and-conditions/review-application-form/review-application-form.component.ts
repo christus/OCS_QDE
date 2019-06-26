@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { QdeService } from 'src/app/services/qde.service';
 import { ActivatedRoute } from '@angular/router';
 import Qde, { InCompleteFields, Applicant } from 'src/app/models/qde.model';
+import { QdeHttpService } from 'src/app/services/qde-http.service';
 
 interface Item {
   key: string,
@@ -55,6 +56,14 @@ export class ReviewApplicationFormComponent implements OnInit {
   categories: Array<any>;
   genders: Array<any>;
   constitutions: Array<any>;
+
+  loanProviders: Array<any>;
+  loanType: Array<any>;
+  propertyTypes: Array<any>;
+  loanProviderList: Array<any>;
+  liveLoan = 0;
+  monthlyEmiValue: number;
+
   days: Array<Item>;
   months: Array<Item>;
   years: Array<Item>;
@@ -73,6 +82,40 @@ export class ReviewApplicationFormComponent implements OnInit {
   selectedConstitution: Array<Item> = [];
   selectedDocType: Array<Item> = [];
 
+  selectedLoanProvider: Array<Item> = [];
+  selectedLoanPurpose: Array<Item> = [];
+  selectedLoanType: Array<Item> = [];
+  selectedPropertyType: Array<Item> = [];
+  isPropertyIdentified = false;
+  propertyClssValue: string;
+  propertyAreaValue: number;
+  propertyPincodeValue: number;
+  propertyPincodeId: number;
+  addressLineOneValue: string;
+  addressLineTwoValue: string;
+  cityId: number;
+  city: string;
+  stateId: number;
+  state: string;
+  cityState:string;
+
+  selectedReferenceOne: any;
+  selectedTiltle1: string;
+  selectedName1: string;
+  selectedMobile1: string;
+  selectedAddressLineOne1: string;
+  selectedAddressLineTwo1: string;
+
+  selectedReferenceTwo: any;
+  selectedTiltle2: string;
+  selectedName2: string;
+  selectedMobile2: string;
+  selectedAddressLineOne2: string;
+  selectedAddressLineTwo2: string;
+
+  referenceId1: number;
+  referenceId2: number;
+
   docType: Array<any> = [];
   selectedAssesmentMethodology: Array<Item> = [];
 
@@ -83,7 +126,8 @@ export class ReviewApplicationFormComponent implements OnInit {
   isIncomplete: Array<InCompleteFields> = [];
 
   constructor(private qdeService: QdeService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private qdeHttp: QdeHttpService) {
 
     
     this.qdeService.qdeSource.subscribe(val => {
@@ -171,6 +215,152 @@ export class ReviewApplicationFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    if(this.route.snapshot.data.listOfValues) {
+      const lov = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs);
+
+      this.loanpurposes = lov.LOVS.loan_purpose;
+      this.loanType = lov.LOVS.loan_type;
+      this.propertyTypes = lov.LOVS.property_type;
+
+      this.loanProviderList = lov.LOVS.loan_providers;
+
+      this.titles = lov.LOVS.applicant_title;
+    this.relationships = lov.LOVS.relationship;
+    }
+
+    // this.route.fragment.subscribe((fragment) => {
+    //   let localFragment = fragment;
+    //   if( fragment == null || (!this.fragments.includes(fragment)) ) {
+    //     localFragment = this.fragments[0];
+    //   } else {
+    //     // Replace Fragments in url
+    //     this.tabSwitch(this.fragments.indexOf(localFragment));
+    //   }
+      
+    // });
+
+    this.route.params.subscribe(params => {
+
+      // Make an http request to get the required qde data and set using setQde
+      const applicationId = params.applicationId;
+      if (applicationId) {
+        this.qdeHttp.getQdeData(applicationId).subscribe(response => {
+          let result = JSON.parse(response["ProcessVariables"]["response"]);
+
+          // All hardcoded value need to removed
+          this.selectedLoanType =
+            result.application.loanDetails.loanAmount.loanType ||
+            this.loanType[0].value;
+          this.selectedLoanPurpose =
+            result.application.loanDetails.loanAmount.loanPurpose ||
+            this.loanpurposes[0].value;
+
+          if (!result.application.loanDetails.propertyType) {
+            result.application.loanDetails.propertyType = {}; //This line need to be removed
+          }
+
+          this.selectedPropertyType =
+            result.application.loanDetails.propertyType.propertyType ||
+            this.propertyTypes[0].value;
+
+          this.isPropertyIdentified =
+            result.application.loanDetails.propertyType.propertyIdentified ||
+            false;
+
+          this.propertyClssValue =
+            result.application.loanDetails.propertyType.propertyClss || "";
+
+          this.propertyAreaValue =
+            result.application.loanDetails.propertyType.propertyArea || 0;
+
+          if (!result.application.loanDetails.property) {
+            result.application.loanDetails.property = {}; //This line need to be removed
+          }
+          this.propertyPincodeValue =
+            result.application.loanDetails.property.zipcode || "";
+
+          this.addressLineOneValue =
+            result.application.loanDetails.property.addressLineOne || "";
+
+          this.addressLineTwoValue =
+            result.application.loanDetails.property.addressLineTwo || "";
+
+          this.city = result.application.loanDetails.property.city || "";
+
+          this.state = result.application.loanDetails.property.state || "";
+
+          this.cityState = this.city +" "+ this.state;
+
+
+          // if (!result.application.loanDetails.existingLoans) {
+          //   result.application.loanDetails.existingLoans = {}; //This line need to be removed
+          // }
+          this.selectedLoanProvider =
+            result.application.loanDetails.existingLoans.loanProvider ||
+            this.loanProviderList[0].value;
+
+          this.liveLoan =
+            result.application.loanDetails.existingLoans.liveLoan || 0;
+
+          this.monthlyEmiValue =
+            result.application.loanDetails.existingLoans.monthlyEmi || "";
+
+            if (!result.application.references  || Object.keys(result.application.references).length === 0) {
+              result.application.references = {
+                referenceOne: {},
+                referenceTwo: {}
+              };
+            }
+  
+            if (!result.application.references.referenceOne || Object.keys(result.application.references.referenceOne).length === 0) {
+              result.application.references.referenceOne = {};
+            }
+  
+            if (!result.application.references.referenceTwo || Object.keys(result.application.references.referenceTwo).length === 0) {
+              result.application.references.referenceTwo = {};
+            }
+  
+            this.selectedReferenceOne =
+              result.application.references.referenceOne.relationShip ||
+              this.relationships[0].value;
+            this.selectedReferenceTwo =
+              result.application.references.referenceTwo.relationShip ||
+              this.relationships[0].value;
+  
+            this.selectedTiltle1 =
+              result.application.references.referenceOne.title ||
+              this.titles[0].value;
+            this.selectedName1 =
+              result.application.references.referenceOne.fullName || "";
+            this.selectedMobile1 =
+              result.application.references.referenceOne.mobileNumber || "";
+            this.selectedAddressLineOne1 =
+              result.application.references.referenceOne.addressLineOne || "";
+            this.selectedAddressLineTwo1 =
+              result.application.references.referenceOne.addressLineTwo || "";
+  
+            this.selectedTiltle2 =
+              result.application.references.referenceTwo.title ||
+              this.titles[0].value;
+            this.selectedName2 =
+              result.application.references.referenceTwo.fullName || "";
+            this.selectedMobile2 =
+              result.application.references.referenceTwo.mobileNumber || "";
+            this.selectedAddressLineOne2 =
+              result.application.references.referenceTwo.addressLineOne || "";
+            this.selectedAddressLineTwo2 =
+              result.application.references.referenceTwo.addressLineTwo || "";
+
+          this.qde = result;
+          this.qde.application.applicationId = applicationId;
+
+          this.qdeService.setQde(this.qde);
+         // this.valuechange(this.qde.application.tenure);
+        });
+      } else {
+        this.qde = this.qdeService.getQde();
+      }
+    });
   }
 
   prefillData() {
@@ -327,4 +517,32 @@ export class ReviewApplicationFormComponent implements OnInit {
     this.isAlternateResidenceNumber.push(eachApplicant.contactDetails.alternateResidenceNumber != "" ? true : false);
   }
 
+  onPinCodeChange(event) {
+    console.log(event.target.value);
+    let zipCode = event.target.value
+    this.qdeHttp.getCityAndState(zipCode).subscribe((response) => {
+     // console.log(JSON.parse(response["ProcessVariables"]["response"]));
+      var result = JSON.parse(response["ProcessVariables"]["response"]);
+
+      if (result.city && result.state) {
+
+        this.qde.application.loanDetails.property.zipcodeId = result.zipcodeId;
+        this.qde.application.loanDetails.property.stateId = result.stateId;
+        this.qde.application.loanDetails.property.cityId = result.cityId;
+
+        this.qde.application.loanDetails.property.city = result.city;
+        this.qde.application.loanDetails.property.state = result.state;
+        this.qde.application.loanDetails.property.zipcode = zipCode;
+
+        this.city = result.city;
+        this.state = result.state;
+
+        if(result.city != null && result.state != null && result.city != "" && result.state != "") {
+          this.cityState = result.city +" "+ result.state;
+        }
+      } else {
+        alert("Pin code not available / enter proper pincode")
+      }
+    });
+  }
 }

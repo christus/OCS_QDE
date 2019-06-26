@@ -146,7 +146,23 @@ export class ViewFormComponent implements OnInit {
   stateId: number;
   state: string;
   cityState:string;
-  
+
+  selectedReferenceOne: any;
+  selectedTiltle1: string;
+  selectedName1: string;
+  selectedMobile1: string;
+  selectedAddressLineOne1: string;
+  selectedAddressLineTwo1: string;
+
+  selectedReferenceTwo: any;
+  selectedTiltle2: string;
+  selectedName2: string;
+  selectedMobile2: string;
+  selectedAddressLineOne2: string;
+  selectedAddressLineTwo2: string;
+
+  referenceId1: number;
+  referenceId2: number;
 
   docType: Array<any> = [];
   selectedAssesmentMethodology: Array<Item> = [];
@@ -305,6 +321,9 @@ export class ViewFormComponent implements OnInit {
       this.propertyTypes = lov.LOVS.property_type;
 
       this.loanProviderList = lov.LOVS.loan_providers;
+
+      this.titles = lov.LOVS.applicant_title;
+    this.relationships = lov.LOVS.relationship;
     }
 
     this.route.fragment.subscribe((fragment) => {
@@ -366,6 +385,10 @@ export class ViewFormComponent implements OnInit {
 
           this.city = result.application.loanDetails.property.city || "";
 
+          this.state = result.application.loanDetails.property.state || "";
+
+          this.cityState = this.city +" "+ this.state;
+
           // if (!result.application.loanDetails.existingLoans) {
           //   result.application.loanDetails.existingLoans = {}; //This line need to be removed
           // }
@@ -379,11 +402,57 @@ export class ViewFormComponent implements OnInit {
           this.monthlyEmiValue =
             result.application.loanDetails.existingLoans.monthlyEmi || "";
 
+            if (!result.application.references  || Object.keys(result.application.references).length === 0) {
+              result.application.references = {
+                referenceOne: {},
+                referenceTwo: {}
+              };
+            }
+  
+            if (!result.application.references.referenceOne || Object.keys(result.application.references.referenceOne).length === 0) {
+              result.application.references.referenceOne = {};
+            }
+  
+            if (!result.application.references.referenceTwo || Object.keys(result.application.references.referenceTwo).length === 0) {
+              result.application.references.referenceTwo = {};
+            }
+  
+            this.selectedReferenceOne =
+              result.application.references.referenceOne.relationShip ||
+              this.relationships[0].value;
+            this.selectedReferenceTwo =
+              result.application.references.referenceTwo.relationShip ||
+              this.relationships[0].value;
+  
+            this.selectedTiltle1 =
+              result.application.references.referenceOne.title ||
+              this.titles[0].value;
+            this.selectedName1 =
+              result.application.references.referenceOne.fullName || "";
+            this.selectedMobile1 =
+              result.application.references.referenceOne.mobileNumber || "";
+            this.selectedAddressLineOne1 =
+              result.application.references.referenceOne.addressLineOne || "";
+            this.selectedAddressLineTwo1 =
+              result.application.references.referenceOne.addressLineTwo || "";
+  
+            this.selectedTiltle2 =
+              result.application.references.referenceTwo.title ||
+              this.titles[0].value;
+            this.selectedName2 =
+              result.application.references.referenceTwo.fullName || "";
+            this.selectedMobile2 =
+              result.application.references.referenceTwo.mobileNumber || "";
+            this.selectedAddressLineOne2 =
+              result.application.references.referenceTwo.addressLineOne || "";
+            this.selectedAddressLineTwo2 =
+              result.application.references.referenceTwo.addressLineTwo || "";
+
           this.qde = result;
           this.qde.application.applicationId = applicationId;
 
           this.qdeService.setQde(this.qde);
-          this.valuechange(this.qde.application.tenure, 0);
+          this.valuechange(this.qde.application.tenure);
         });
       } else {
         this.qde = this.qdeService.getQde();
@@ -395,9 +464,9 @@ export class ViewFormComponent implements OnInit {
     this.applicantName = this.qde.application.applicants[0].personalDetails.firstName;
     console.log("this.applicantName", this.applicantName);
   }
-  valuechange(newValue, valueIndex) {
+  valuechange(newValue) {
     console.log(newValue);
-    this.value[valueIndex]  = newValue;
+    this.value  = newValue;
   }
 
   /**
@@ -697,7 +766,7 @@ export class ViewFormComponent implements OnInit {
   }
 
   onPinCodeChange(event) {
-    console.log(event.target.value);
+    console.log("pincode",event.target.value);
     let zipCode = event.target.value
     this.qdeHttp.getCityAndState(zipCode).subscribe((response) => {
      // console.log(JSON.parse(response["ProcessVariables"]["response"]));

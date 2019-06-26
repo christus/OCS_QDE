@@ -184,6 +184,7 @@
                                   <div class="form-group inr filled">
                                         <input type="text" class="form-control" id="amt-require" readonly="true"
                                         required
+                                        ngModel
                                         [(ngModel)]="qde?.application.loanDetails.loanAmount.amountRequired"
                                         #amountRequired = "ngModel"
                                         name="amountRequired"
@@ -233,6 +234,7 @@
                                   <div class="form-group inr filled">
                                       <input type="text" class="form-control" id="no-yrs" readonly="true"
                                       required
+                                      ngModel
                                       pattern="^[A-Za-z]*$"
                                       [(ngModel)]="qde?.application.tenure"
                                       #amountRequired = "ngModel"
@@ -313,6 +315,7 @@
                                             <input type="text" class="form-control"
                                             id="add-line1"
                                             required
+                                            ngModel
                                             #proaddressLineOne="ngModel"
                                             [(ngModel)]="addressLineOneValue"
                                             name="proaddressLineOne"
@@ -326,6 +329,7 @@
                                       <div class="form-group">
                                             <input type="text" class="form-control" id="add-line2"
                                             required
+                                            ngModel
                                             #addressLineTwo = "ngModel"
                                             fieldFill
                                             [(ngModel)]="addressLineTwoValue"
@@ -339,6 +343,7 @@
                                       <div class="form-group filled">
                                             <input type="text" class="form-control" id="proprty-pin"
                                             required
+                                            ngModel
                                             #propertyPincode = "ngModel"
                                             [(ngModel)]="propertyPincodeValue"
                                             minlength="6"
@@ -353,6 +358,7 @@
                                       <div class="form-group">
                                             <input type="text" class="form-control" id="pro-city2"
                                             required
+                                            ngModel
                                             #cityOrState = "ngModel"
                                             [(ngModel)] = "cityState"
                                             fieldFill
@@ -476,22 +482,60 @@
                                   <div class="col-12">
                                       <div class="form-group">
                                           <span class="control-title">Relationship with the applicant</span>
-                                          <select name="relationship">
-                                            <option *ngFor="let rela of relationships" [value]="rela.value">{{rela.key}}</option>
-                                        </select>
+                                          <kendo-dropdownlist class="form-control"
+                                          [data]="relationships" 
+                                          textField="key"
+                                          valueField="value"
+                                          name="relationShip"
+                                          [valuePrimitive]="true"
+                                          [(ngModel)]="selectedReferenceOne">
+                                        </kendo-dropdownlist>
+            
                                       </div>
                                   </div>
                               </div>
                               <div class="row">
-                                  <div class="col-6">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <span class="control-title">Title</span>
+                                        <kendo-dropdownlist 
+                                          class="form-control" 
+                                          [data]="titles" 
+                                          textField="key" 
+                                          valueField="value" 
+                                          name="titles"
+                                          [valuePrimitive]="true" 
+                                          [(ngModel)]="selectedTiltle1">
+                                        </kendo-dropdownlist>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control"
+                                        required
+                                        ngModel
+                                        name="fullName" 
+                                        id="ref1-name"
+                                        #refOneFullName="ngModel"
+                                        fieldFill 
+                                        [(ngModel)]="selectedName1">
+                                        <label for="ref1-name">Name</label>
+                                    </div>
+                                </div>
+                            </div>
+                              <div class="row">
+                                  <div class="col-12">
                                       <div class="form-group">
-                                          <input readonly="true"  type="text" class="form-control" id="ref1-name">
-                                          <label for="ref1-name">Name</label>
-                                      </div>
-                                  </div>
-                                  <div class="col-6">
-                                      <div class="form-group">
-                                          <input readonly="true"  type="text" class="form-control" id="ref1-mob">
+                                        <input type="text" class="form-control"
+                                        required 
+                                        ngModel
+                                        id="ref1-mobile"  
+                                        name="mobileNumber"
+                                        minlength="10"
+                                        maxlength="10"
+                                        fieldFill 
+                                        #refOneMobileNumber="ngModel"
+                                        [(ngModel)]="selectedMobile1">
                                           <label for="ref1-mob">Mobile</label>
                                       </div>
                                   </div>
@@ -499,7 +543,13 @@
                               <div class="row">
                                   <div class="col-12">
                                       <div class="form-group">
-                                          <input readonly="true"  type="text" class="form-control" id="ref1-add1">
+                                        <input type="text" class="form-control" id="ref1-add1"  
+                                        required
+                                        ngModel
+                                        name="addressLineOne" 
+                                        fieldFill
+                                        #refOneAddressLineOne="ngModel"
+                                        [(ngModel)]="selectedAddressLineOne1">
                                           <label for="ref1-add1">Address line 1</label>
                                       </div>
                                   </div>
@@ -507,7 +557,13 @@
                               <div class="row">
                                   <div class="col-12">
                                       <div class="form-group">
-                                          <input readonly="true"  type="text" class="form-control" id="ref1-add2">
+                                        <input type="text" class="form-control" id="ref1-add2" 
+                                        required
+                                        ngModel
+                                        name="addressLineTwo" 
+                                        fieldFill
+                                        #refOneAddressLineTwo="ngModel"
+                                        [(ngModel)]="selectedAddressLineTwo1">
                                           <label for="ref1-add2">Address line 2</label>
                                       </div>
                                   </div>
@@ -523,22 +579,60 @@
                                   <div class="col-12">
                                       <div class="form-group">
                                           <span class="control-title">Relationship with the applicant</span>
-                                          <select name="relationship">
-                                            <option *ngFor="let rela of relationships" [value]="rela.value">{{rela.key}}</option>
-                                        </select>
+                                          <kendo-dropdownlist 
+                                          class="form-control"
+                                          [data]="relationships" 
+                                          textField="key"
+                                          valueField="value"
+                                          name="relationShip"
+                                          [valuePrimitive]="true"
+                                          [(ngModel)]="selectedReferenceTwo">
+                                        </kendo-dropdownlist>
                                       </div>
                                   </div>
                               </div>
                               <div class="row">
                                   <div class="col-6">
-                                      <div class="form-group">
-                                          <input readonly="true"  type="text" class="form-control" id="ref2-name">
-                                          <label for="ref2-name">Name</label>
-                                      </div>
+                                        <div class="form-group">
+                                        <span class="control-title">Title</span>
+                                            <kendo-dropdownlist 
+                                            class="form-control" 
+                                            [data]="titles" 
+                                            textField="key" 
+                                            valueField="value" 
+                                            name="titles"
+                                            [valuePrimitive]="true" 
+                                            [(ngModel)]="selectedTiltle2">
+                                            </kendo-dropdownlist>
+                                        </div>
                                   </div>
                                   <div class="col-6">
+                                        <div class="form-group">
+                                          <input type="text" class="form-control"
+                                          ngModel
+                                          name="fullName" 
+                                          id="ref2-name"
+                                          #refTwoFullName="ngModel"
+                                          required
+                                          fieldFill
+                                          [(ngModel)]="selectedName2">
+                                            <label for="ref2-name">Name</label>
+                                        </div>
+                                    </div>
+  
+                              </div>
+                              <div class="row">
+                                  <div class="col-12">
                                       <div class="form-group">
-                                          <input readonly="true"  type="text" class="form-control" id="ref2-mob">
+                                            <input type="text" class="form-control" id="ref2-mobile" 
+                                            name="mobileNumber"  
+                                            ngModel 
+                                            minlength="10"
+                                            maxlength="10"
+                                            #refTwoMobileNumber="ngModel"
+                                            fieldFill
+                                            required
+                                            [(ngModel)]="selectedMobile2">
                                           <label for="ref2-mob">Mobile</label>
                                       </div>
                                   </div>
@@ -546,7 +640,13 @@
                               <div class="row">
                                   <div class="col-12">
                                       <div class="form-group">
-                                          <input readonly="true"  type="text" class="form-control" id="ref2-add1">
+                                            <input type="text" class="form-control" id="ref2-add1"
+                                            name="addressLineOne"
+                                            ngModel
+                                            #refTwoAddressLineOne="ngModel"
+                                            required
+                                            fieldFill
+                                            [(ngModel)]="selectedAddressLineOne2">
                                           <label for="ref2-add1">Address line 1</label>
                                       </div>
                                   </div>
@@ -554,7 +654,13 @@
                               <div class="row">
                                   <div class="col-12">
                                       <div class="form-group">
-                                          <input readonly="true"  type="text" class="form-control" id="ref2-add2">
+                                            <input type="text" class="form-control" id="ref2-add2"
+                                            name="addressLineTwo" 
+                                            ngModel 
+                                            #refTwoAddressLineTwo="ngModel"
+                                            required
+                                            fieldFill
+                                            [(ngModel)]="selectedAddressLineTwo2">
                                           <label for="ref2-add2">Address line 2</label>
                                       </div>
                                   </div>
