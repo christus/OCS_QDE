@@ -67,9 +67,6 @@ import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-nati
 
 import { NgxUiLoaderModule, NgxUiLoaderRouterModule } from  'ngx-ui-loader';
 import { ViewFormApplicantComponent } from './view-form-applicant/view-form-applicant.component';
-import { DeferLoadModule } from '@trademe/ng-defer-load';
-
-
 
 import {SecuredImageComponent} from  './applicant-dashboard/document-upload/secured-image.component';
 
@@ -313,8 +310,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     DropDownsModule,
     ImageUploadModule.forRoot(),
     DeviceDetectorModule.forRoot(),
-    NgxUiLoaderModule,
-    DeferLoadModule
+    NgxUiLoaderModule
   ],
   providers: [
     ListOfValuesResolverService,

@@ -15,8 +15,14 @@ import Qde from 'src/app/models/qde.model';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { CommonDataService } from 'src/app/services/common-data.service';
 
-
-
+enum DocumentCategory {
+  ID_PROOF = "ID Proof",
+  ADDRESS_PROOF = "Address Proof",
+  INCOME_PROOF = "Income Document",
+  BANK_PROOF = "Banking",
+  COLLATERAL_PROOF = "Collateral",
+  PHOTO_PROOF = "Photo"
+}
 
 @Component({
   selector: "app-document-upload",
@@ -104,7 +110,6 @@ export class DocumentUploadComponent implements OnInit {
   selectedBankProof: string;
   selectedCollateralProof: string;
 
-  documentType: any;
   documentCategory: any;
   collateralType: any;
 
@@ -112,26 +117,31 @@ export class DocumentUploadComponent implements OnInit {
   fileSize: string;
   progress: string;
 
+  idProofDocumnetType: any;
   idProofFileName: string;
   idProofFileSize: string;
   idProofId: string;
   idProofDoc: File;
 
+  addressProofDocumnetType: any;
   addressProofFileName: string;
   addressProofFileSize: string;
   addressProofId: string;
   addressProofDoc: File;
 
+  incomeProofDocumnetType: any;
   incomeProofFileName: string;
   incomeProofFileSize: string;
   incomeProofId:string;
   incomeProofDoc: File;
 
+  bankProofDocumnetType: any;
   bankProofFileName: string;
   bankProofFileSize: string;
   bankProofId:string;
   bankingProofDoc: File;
 
+  collateralProofDocumnetType: any;
   collateralProofFileName: string;
   collateralProofFileSize: string;
   collateralProofId:string;
@@ -182,22 +192,9 @@ export class DocumentUploadComponent implements OnInit {
     // this.renderer.addClass(this.select2.selector.nativeElement, 'js-select');
 
     if (this.route.snapshot.data.listOfValues) {
-      const lov = JSON.parse(
-        this.route.snapshot.data.listOfValues["ProcessVariables"].lovs
-      );
+      const lov = JSON.parse(this.route.snapshot.data.listOfValues["ProcessVariables"].lovs);
 
-      this.documentType = lov.LOVS.document_type;
       this.documentCategory = lov.LOVS.document_category;
-      this.collateralType = lov.LOVS.collateral_type || [
-        {
-          key: "Property Papers",
-          value: "1"
-        },
-        {
-          key: "Gold Assets",
-          value: "2"
-        }
-      ];
     }
 
     // Check Whether there is qde data to be filled or else Initialize Qde
@@ -232,38 +229,38 @@ export class DocumentUploadComponent implements OnInit {
           this.qde = JSON.parse(response["ProcessVariables"]["response"]);
           this.applicationIdAsString = this.applicationId.toString();
           if (this.applicationId) {
-            this.applicationId = parseInt(this.qde.application.applicationId);
+            this.applicationId = parseInt(this.qde.application.applicationId, 10);
           }
           const applicants = this.qde.application.applicants;
           for (const applicant of applicants) {
             const applicantId = applicant["applicantId"];
-            const driveLoc = environment.host+environment.driveLocation;
+            const driveLoc = environment.host + environment.driveLocation;
           
             if (applicantId == this.currentApplicantId) {
+
+              const incomeDetails = applicant.incomeDetails;
+              let profileId = 1;
+              if (applicant.occupation.occupationType != "2") {
+                profileId = 2;
+              }
+              const data = {
+                isFinanceApplicant: incomeDetails.incomeConsider,
+                assessmentId: parseInt(incomeDetails.assessmentMethodology, 10),
+                profileId: profileId
+              };
+              this.getApplicableDocuments(data);
+
               const documents = applicant["documents"];
 
               for (const document of documents) {
                 const docCategory = document["documentCategory"];
 
-                const idProofCategory = this.findDocumentCategory(
-                  "ID Proof"
-                );
-                const addressProofCategory = this.findDocumentCategory(
-                  "Address Proof"
-                );
-                const incomeProofCategory = this.findDocumentCategory(
-                  "Income Document"
-                );
-                const bankingProofCategory = this.findDocumentCategory(
-                  "Banking"
-                );
-                const collateralProofCategory = this.findDocumentCategory(
-                  "Collateral"
-                );
-
-                const photoProofCategory = this.findDocumentCategory(
-                  "Photo"
-                );
+                const idProofCategory = this.findDocumentCategory(DocumentCategory.ID_PROOF);
+                const addressProofCategory = this.findDocumentCategory(DocumentCategory.ADDRESS_PROOF);
+                const incomeProofCategory = this.findDocumentCategory(DocumentCategory.INCOME_PROOF);
+                const bankingProofCategory = this.findDocumentCategory(DocumentCategory.BANK_PROOF);
+                const collateralProofCategory = this.findDocumentCategory(DocumentCategory.COLLATERAL_PROOF);
+                const photoProofCategory = this.findDocumentCategory(DocumentCategory.PHOTO_PROOF);
 
                 if (docCategory == idProofCategory) {
                   this.selectedIdProof = document["documentType"];
@@ -274,19 +271,15 @@ export class DocumentUploadComponent implements OnInit {
                   this.idProofId = driveLoc+""+document["documentImageId"];
                   console.log("idProofId", this.idProofId);
                 } else if (docCategory == addressProofCategory) {
-                  this.selectedAddressProof =
-                    document["documentType"];
-                  this.addressProofFileName =
-                    document["documentName"];
+                  this.selectedAddressProof = document["documentType"];
+                  this.addressProofFileName = document["documentName"];
                   this.addressProofFileSize = this.getFileSize(
                     document["documentSize"]
                   );
                   this.addressProofId = driveLoc+document["documentImageId"];
                 } else if (docCategory == incomeProofCategory) {
-                  this.selectedIncomeProof =
-                    document["documentType"];
-                  this.incomeProofFileName =
-                    document["documentName"];
+                  this.selectedIncomeProof = document["documentType"];
+                  this.incomeProofFileName = document["documentName"];
                   this.incomeProofFileSize = this.getFileSize(
                     document["documentSize"]
                   );
@@ -299,21 +292,16 @@ export class DocumentUploadComponent implements OnInit {
                   );
                   this.bankProofId = driveLoc+document["documentImageId"];
                 } else if (docCategory == collateralProofCategory) {
-                  this.selectedCollateralProof =
-                    document["documentType"];
-                  this.collateralProofFileName =
-                    document["documentName"];
+                  this.selectedCollateralProof = document["documentType"];
+                  this.collateralProofFileName = document["documentName"];
                   this.collateralProofFileSize = this.getFileSize(
                     document["documentSize"]
                   );
                   this.collateralProofId = driveLoc+document["documentImageId"];
                 } else if (docCategory == photoProofCategory) {
-                  this.photoProofFileName =
-                    document["documentName"];
-                  this.photoProofFileSize = this.getFileSize(
-                    document["documentSize"]
-                  );
-                  this.photoProofId = driveLoc+document["documentImageId"];
+                  this.photoProofFileName = document["documentName"];
+                  this.photoProofFileSize = this.getFileSize(document["documentSize"]);
+		  this.photoProofId = driveLoc+document["documentImageId"];
                 }
               }
             }
@@ -333,9 +321,7 @@ export class DocumentUploadComponent implements OnInit {
     });
   }
 
-  ngAfterViewInit() {
-
-  }
+  ngAfterViewInit() {}
 
   valuechange(newValue) {
     console.log(newValue);
@@ -423,7 +409,7 @@ export class DocumentUploadComponent implements OnInit {
     console.log("setIdProof files", files);
 
     if(this.isMobile) {
-      this.idProofDoc = files
+      this.idProofDoc = files;
       this.idProofFileName = (<any>window).Ionic.WebView.convertFileSrc(this.idProofDoc);
       this.idProofFileSize = "";
       return;
@@ -465,7 +451,7 @@ export class DocumentUploadComponent implements OnInit {
 
     const callback = (info: JSON) => {
       const documentId = info["id"];
-      const documentCategory = this.findDocumentCategory("ID Proof");
+      const documentCategory = this.findDocumentCategory(DocumentCategory.ID_PROOF);
 
       const documentInfo = {
         applicationId: this.applicationIdAsString,
@@ -522,7 +508,7 @@ export class DocumentUploadComponent implements OnInit {
 
 
     if(this.isMobile) {
-      this.addressProofDoc = files
+      this.addressProofDoc = files;
       this.addressProofFileName = (<any>window).Ionic.WebView.convertFileSrc(this.addressProofDoc);
       this.addressProofFileSize = "";
       return;
@@ -561,7 +547,7 @@ export class DocumentUploadComponent implements OnInit {
 
     const callback = (info: JSON) => {
       const documentId = info["id"];
-      const documentCategory = this.findDocumentCategory("Address Proof");
+      const documentCategory = this.findDocumentCategory(DocumentCategory.ADDRESS_PROOF);
 
       const documentInfo = {
         applicationId: this.applicationIdAsString,
@@ -578,14 +564,12 @@ export class DocumentUploadComponent implements OnInit {
   }
 
   setIncomeProof(files: any) {
-
-    if(this.isMobile) {
-      this.incomeProofDoc = files
+     if(this.isMobile) {
+      this.incomeProofDoc = files;
       this.incomeProofFileName = (<any>window).Ionic.WebView.convertFileSrc(this.incomeProofDoc);
       this.incomeProofFileSize = "";
       return;
     }
-
 
     this.incomeProofDoc = files.item(0);
     this.incomeProofFileName = this.incomeProofDoc["name"];
@@ -627,7 +611,7 @@ export class DocumentUploadComponent implements OnInit {
 
     const callback = (info: JSON) => {
       const documentId = info["id"];
-      const documentCategory = this.findDocumentCategory("Income Document");
+      const documentCategory = this.findDocumentCategory(DocumentCategory.INCOME_PROOF);
 
       const documentInfo = {
         applicationId: this.applicationIdAsString,
@@ -644,15 +628,12 @@ export class DocumentUploadComponent implements OnInit {
   }
 
   setBankingProof(files: any) {
-
-    if(this.isMobile) {
-      this.bankingProofDoc = files
+     if(this.isMobile) {
+      this.bankingProofDoc = files;
       this.bankProofFileName = (<any>window).Ionic.WebView.convertFileSrc(this.bankingProofDoc);
       this.bankProofFileSize = "";
       return;
     }
-
-
     this.bankingProofDoc = files.item(0);
     this.bankProofFileName = this.bankingProofDoc["name"];
 
@@ -667,7 +648,7 @@ export class DocumentUploadComponent implements OnInit {
       this.tabSwitch(tabIndex);
       return;
     }
-
+    
     if(this.isMobile) {
       const documentCategory = this.findDocumentCategory("Banking");
       this.sendImgProof(this.bankingProofDoc, tabIndex, slider, documentCategory, this.selectedBankProof);
@@ -691,7 +672,7 @@ export class DocumentUploadComponent implements OnInit {
 
     const callback = (info: JSON) => {
       const documentId = info["id"];
-      const documentCategory = this.findDocumentCategory("Banking");
+      const documentCategory = this.findDocumentCategory(DocumentCategory.BANK_PROOF);
 
       const documentInfo = {
         applicationId: this.applicationIdAsString,
@@ -708,15 +689,14 @@ export class DocumentUploadComponent implements OnInit {
   }
 
   setCollateralProof(files: any) {
-
+    
     if(this.isMobile) {
-      this.collateralProofDoc = files
+      this.collateralProofDoc = files;
       this.collateralProofFileName = (<any>window).Ionic.WebView.convertFileSrc(this.collateralProofDoc);
       this.collateralProofFileSize = "";
       return;
     }
 
-    
     this.collateralProofDoc = files.item(0);
     this.collateralProofFileName = this.collateralProofDoc["name"];
 
@@ -756,7 +736,7 @@ export class DocumentUploadComponent implements OnInit {
 
     const callback = (info: JSON) => {
       const documentId = info["id"];
-      const documentCategory = this.findDocumentCategory("Collateral");
+      const documentCategory = this.findDocumentCategory(DocumentCategory.COLLATERAL_PROOF);
 
       const documentInfo = {
         applicationId: this.applicationIdAsString,
@@ -773,14 +753,12 @@ export class DocumentUploadComponent implements OnInit {
   }
 
   setCustomerPhoto(files: any) {
-
     if(this.isMobile) {
-      this.photoProofDoc = files
+      this.photoProofDoc = files;
       this.photoProofFileName = (<any>window).Ionic.WebView.convertFileSrc(this.photoProofDoc);
       this.photoProofFileSize = "";
       return;
     }
-
 
     this.photoProofDoc = files.item(0);
     this.photoProofFileName = this.photoProofDoc["name"];
@@ -807,18 +785,11 @@ export class DocumentUploadComponent implements OnInit {
       writable: true,
       value: this.photoProofDoc["name"]
     });
-    modifiedFile["name"] =
-      this.applicationId +
-      "-" +
-      applicantId +
-      "-" +
-      new Date().getTime() +
-      "-" +
-      modifiedFile["name"];
+    modifiedFile["name"] = this.applicationId + "-" + applicantId + "-" + new Date().getTime() + "-" + modifiedFile["name"];
 
     const callback = (info: JSON) => {
       const documentId = info["id"];
-      const documentCategory = this.findDocumentCategory("Photo");
+      const documentCategory = this.findDocumentCategory(DocumentCategory.PHOTO_PROOF);
 
       const documentInfo = {
         applicationId: this.applicationIdAsString,
@@ -881,6 +852,36 @@ export class DocumentUploadComponent implements OnInit {
     );
   }
 
+  getApplicableDocuments(data: any) {
+
+    this.qdeHttp.getApplicableDocuments(data).subscribe(
+      response => {
+        const processVariables = response["ProcessVariables"];
+        if (response["Error"] === "0" && processVariables["status"]) {
+          console.log(response);
+
+          const res = JSON.parse(processVariables["response"]);
+          this.idProofDocumnetType = res.IdProof || [];
+          this.addressProofDocumnetType = res.AddressProof || [];
+          this.incomeProofDocumnetType = res.IncomeDocument || [];
+          this.bankProofDocumnetType = res.Banking || [];
+          this.collateralProofDocumnetType = res.PropertyPapers || [];
+
+        } else {
+
+          if (response["ErrorMessage"]) {
+            console.log("Response: " + response["ErrorMessage"]);
+          } else if (response["ProcessVariables"]["errorMessage"]) {
+            console.log("Response: " + response["ProcessVariables"]["errorMessage"]);
+          }
+        }
+      },
+      error => {
+        console.log("Error : ", error);
+      }
+    );
+  }
+
   findDocumentCategory(type: string) {
     let documentCategory: string;
     for (const category of this.documentCategory) {
@@ -917,7 +918,6 @@ export class DocumentUploadComponent implements OnInit {
     return fileSize;
   }
 
-
   openCamera(screen) {
 
     let screenName = screen;
@@ -930,9 +930,6 @@ export class DocumentUploadComponent implements OnInit {
       // Handle error
      });
   }
-
- 
-
 
   ngOnDestroy(): void {}
 

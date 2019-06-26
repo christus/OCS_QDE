@@ -262,6 +262,27 @@ createOrUpdatePersonalDetails(qde) {
     return this.http.put(uri, body.toString());
   }
 
+  getApplicableDocuments(data: any) {
+    const processId = environment.api.applicableDocuments.processId;
+    const workflowId = environment.api.applicableDocuments.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      ProcessVariables: data,
+      processId: processId,
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = new HttpParams().set(
+      "processVariables",
+      JSON.stringify(requestEntity)
+    );
+
+    let uri = environment.host + '/appiyo/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.http.put(uri, body.toString());
+  }
+
   dummyGetApi(qde) {
     return of({
       "Error": "0",
@@ -798,8 +819,6 @@ createOrUpdatePersonalDetails(qde) {
     }
 
     console.log("FileUploadOptions", fileTransfer);
-
-    console.log("environment", environment.host);
   
     return fileTransfer.upload(imageURI, encodeURI(environment.host + environment.appiyoDrive) , options)
   

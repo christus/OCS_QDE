@@ -522,7 +522,7 @@ export class LoanQdeComponent implements OnInit {
         this.state = result.state;
 
         if(result.city != null && result.state != null && result.city != "" && result.state != "") {
-          this.cityState = result.city +" "+ result.state;
+          this.cityState = result.city + " " + result.state;
         }
       } else {
         alert("Pin code not available / enter proper pincode")
