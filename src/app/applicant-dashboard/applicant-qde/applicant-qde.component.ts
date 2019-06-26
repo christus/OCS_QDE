@@ -1697,6 +1697,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
         whichSelectQde = whichSelectQde[val]
       }
     });
+    
   }
 
 

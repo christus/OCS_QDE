@@ -2055,7 +2055,7 @@
                                                   <div *ngIf="panNumber2.touched && panNumber2.invalid && panErrorCount < 3" class="invalid-feedback">
                                                       <!-- <div *ngIf="panNumber2.errors?.required">{{errors.pan.required}}</div> -->
                                                       <div *ngIf="panNumber2.errors?.pattern ? true : false">{{errors.pan.invalid}}</div>
-                                                      <!-- <div *ngIf="panNumber2.errors?.minlength || panNumber2.errors?.maxlength">*PAN must be at least {{pan.errors.minlength.requiredLength}} characters</div> -->
+                                                      <div *ngIf="panNumber2.errors?.minlength || panNumber2.errors?.maxlength">{{errors.pan.length}}</div>
                                                   </div>
                                                   <div *ngIf="panErrorCount >= 3" class="invalid-feedback">{{errors.pan.after3Attemps}}</div>
                                               </div>
