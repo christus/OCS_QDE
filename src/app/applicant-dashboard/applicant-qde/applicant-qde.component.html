@@ -499,8 +499,11 @@
                                                           [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.birthPlace"
                                                           pattern="{{regexPattern.name}}"
                                                           fieldFill
-                                                          #birthPlace="ngModel" />
-
+                                                          #birthPlace="ngModel" 
+                                                          required/>
+                                                          <div *ngIf="(birthPlace.touched || birthPlace.dirty) && birthPlace.invalid" class="invalid-feedback">
+                                                            <div *ngIf="birthPlace.errors?.pattern">{{errors.personalDetails.birthPlace.invalid}}</div>
+                                                          </div>
                                                   </div>
                                               </div>
                                               <div class="btn-wrap">

@@ -22,6 +22,10 @@ export const errors: any = {
     lastName: {
       required: "Last Name is mandatory",
       invalid: "Number and Special Characters not allowed"
+    },
+    birthPlace:{
+      required:"Birth Place is mandatory",
+      invalid:"Special Characters are not allowed / Invalid Birth place"
     }
   },
 
