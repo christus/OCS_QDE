@@ -13,6 +13,7 @@ import { QdeService } from 'src/app/services/qde.service';
 import Qde from 'src/app/models/qde.model';
 
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { CommonDataService } from 'src/app/services/common-data.service';
 
 
 
@@ -159,9 +160,12 @@ export class DocumentUploadComponent implements OnInit {
     private router: Router,
     private qdeHttp: QdeHttpService,
     private deviceService: DeviceDetectorService,
-    private qdeService: QdeService) {
+    private qdeService: QdeService,
+    private cds: CommonDataService) {
 
-
+      this.cds.changeMenuBarShown(true);
+      this.cds.changeViewFormVisible(true);
+      this.cds.changeLogoutVisible(true);
     this.isMainApplicant = false;
     if (this.route.url["value"][1].path === "applicant") {
       this.isMainApplicant = true;

@@ -12,6 +12,7 @@ import { NgForm } from "@angular/forms";
 import Qde from 'src/app/models/qde.model';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
 import { QdeService } from 'src/app/services/qde.service';
+import { CommonDataService } from 'src/app/services/common-data.service';
 
 
 interface Item {
@@ -174,8 +175,13 @@ export class ReferencesQdeComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private qdeHttp: QdeHttpService,
-    private qdeService: QdeService
-  ) {}
+    private qdeService: QdeService,
+    private cds: CommonDataService
+  ) {
+    this.cds.changeMenuBarShown(true);
+    this.cds.changeViewFormVisible(true);
+    this.cds.changeLogoutVisible(true);
+  }
 
   ngOnInit() {
     // this.renderer.addClass(this.select2.selector.nativeElement, 'js-select');
