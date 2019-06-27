@@ -91,3 +91,9 @@ table { border-collapse: collapse; }
 .dropbox.over {
     background-color: #bfb;
 }
+
+.doc_file_name_size {
+    font-size: 1vw;
+    line-height: 1.4vw;
+    margin: 0.5vw 0;
+}

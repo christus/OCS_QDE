@@ -33,6 +33,7 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(authReq).pipe(
       map(
         (event: HttpEvent<any>) => {
+          this.ngxService.stop();
           if (event instanceof HttpResponse) {
 
             this.ngxService.stop(); // stop foreground spinner of the master loader with 'default' taskId

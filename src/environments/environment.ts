@@ -85,9 +85,9 @@ export const environment = {
   appiyoDrive: "/appiyo/d/drive/upload/",
   //host: "http://192.168.1.108"
   host: "http://192.168.1.108",
-
+  //host: "",
   driveLocation: "/appiyo/d/drive/docs/"
-  //host:""
+
 
 };
 
