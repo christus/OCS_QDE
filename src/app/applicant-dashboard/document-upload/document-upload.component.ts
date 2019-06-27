@@ -829,7 +829,7 @@ export class DocumentUploadComponent implements OnInit {
           response["Error"] === "0" &&
           response["ProcessVariables"]["status"]
         ) {
-          alert("Uploaded Successfully!");
+          //alert("Uploaded Successfully!");
           this.cameraImage = "";
           if (slider) {
             this.goToNextSlide(slider);

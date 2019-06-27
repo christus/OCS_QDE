@@ -25,7 +25,7 @@ interface Item {
   styleUrls: ["./loan-qde.component.css"]
 })
 export class LoanQdeComponent implements OnInit {
-  value: Array<number> = [0,0,0];
+  value: Array<number> = [0, 0, 0];
   errors = {
      loanDetails: {
        incomeDetails: {
@@ -89,9 +89,9 @@ export class LoanQdeComponent implements OnInit {
     amount: "^[\\d]{0,14}([.][0-9]{0,4})?",
     name: "/^[a-zA-Z ]*$/",
     pinCode: "^[1-9][0-9]{5}$",
-    address : "^[0-9A-Za-z, _&'/#]+$",
-    tenure: "^[0-9]{1,2}$",
-  }
+    address: "^[0-9A-Za-z, _&'/#]+$",
+    tenure: "^[0-9]{1,2}$"
+  };
   // regexPattern = {
   //   email: "/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/",
   //   moblieNumber: "/^[0-9]{10}$/",
@@ -115,17 +115,17 @@ export class LoanQdeComponent implements OnInit {
     // showSelectionBar: true,
     showTicks: true,
     getLegend: (sliderVal: number): string => {
-      return  sliderVal + '<b>y</b>';
+      return sliderVal + "<b>y</b>";
     }
   };
 
   lhsConfig = {
     noSwiping: true,
-    noSwipingClass: '',
+    noSwipingClass: "",
     onlyExternal: true,
     autoplay: false,
     speed: 900,
-    effect: "fade",    
+    effect: "fade",
     fadeEffect: {
       crossFade: true
     }
@@ -210,15 +210,15 @@ export class LoanQdeComponent implements OnInit {
   city: string;
   stateId: number;
   state: string;
-  cityState:string;
+  cityState: string;
 
   selectedLoanProvider: string;
   loanProviderList: Array<any>;
 
   liveLoan = 0;
   monthlyEmiValue: number;
-  
-  applicantionId: string;
+
+  applicationId: string;
   applicantIndex = 0;
 
   constructor(
@@ -234,7 +234,7 @@ export class LoanQdeComponent implements OnInit {
     this.cds.changeLogoutVisible(true);
 
     this.route.params.subscribe(params => {
-      if(params.applicantId != null && params.applicantId != undefined) {
+      if (params.applicantId != null && params.applicantId != undefined) {
         console.log("APPLICANTID: ", params.applicantId);
         this.applicantId = params.applicantId;
       }
@@ -256,10 +256,10 @@ export class LoanQdeComponent implements OnInit {
     }
     
     // Check Whether there is qde data to be filled or else Initialize Qde
-    this.route.params.subscribe((params) => {
-      
+    this.route.params.subscribe(params => {
+      this.applicationId = params.applicationId;
       // Make an http request to get the required qde data and set using setQde
-      if(params.applicantId != undefined && params.applicantId != null) {
+      if (params.applicantId != undefined && params.applicantId != null) {
         // setQde(JSON.parse(response.ProcessVariables.response));
       } else {
         this.qde = this.qdeService.getQde();
@@ -503,9 +503,9 @@ export class LoanQdeComponent implements OnInit {
 
   onPinCodeChange(event) {
     console.log(event.target.value);
-    let zipCode = event.target.value
-    this.qdeHttp.getCityAndState(zipCode).subscribe((response) => {
-     // console.log(JSON.parse(response["ProcessVariables"]["response"]));
+    let zipCode = event.target.value;
+    this.qdeHttp.getCityAndState(zipCode).subscribe(response => {
+      // console.log(JSON.parse(response["ProcessVariables"]["response"]));
       var result = JSON.parse(response["ProcessVariables"]["response"]);
 
       if (result.city && result.state) {
@@ -525,7 +525,7 @@ export class LoanQdeComponent implements OnInit {
           this.cityState = result.city + " " + result.state;
         }
       } else {
-        alert("Pin code not available / enter proper pincode")
+        alert("Pin code not available / enter proper pincode");
       }
     });
   }
@@ -550,10 +550,9 @@ export class LoanQdeComponent implements OnInit {
       .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
       .subscribe(
         response => {
-          // If successful
           if (response["ProcessVariables"]["status"]) {
-            //console.log(this.qde.application.loanDetails.incomeDetails);
-            this.tabSwitch(2);
+            this.clssProbabilityCheck();
+            
           } else {
             // Throw Invalid Pan Error
           }
@@ -643,6 +642,22 @@ export class LoanQdeComponent implements OnInit {
           console.log("response : ", error);
         }
       );
+  }
+
+  clssProbabilityCheck() {
+    this.qdeHttp.clssProbabilityCheck(this.applicationId).subscribe(
+      response => {
+        if (response["Error"] === "0" && response["ProcessVariables"]["isClssEligible"]) {
+          alert("Application is eligible for CLSS");
+        } else {
+          alert("Application is not eligible for CLSS");
+        }
+        this.tabSwitch(2);
+      },
+      error => {
+        console.log("response : ", error);
+      }
+    );
   }
 
   selectValueChanged(event, to) {

@@ -729,6 +729,30 @@ createOrUpdatePersonalDetails(qde) {
     return this.http.put(uri, body.toString());
   }
 
+  clssProbabilityCheck(applicationId: string) {
+    const processId = environment.api.clss.processId;
+    const workflowId = environment.api.clss.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: {
+        applicationId: applicationId
+      },
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = new HttpParams().set(
+      'processVariables',
+      JSON.stringify(requestEntity)
+    );
+
+    let uri = environment.host + '/appiyo/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+
+    return this.http.put(uri, body.toString());
+  }
+
   viewFormSmsApi(applicationId: string) {
     const processId = environment.api.veiwFormSms.processId;
     const workflowId = environment.api.veiwFormSms.workflowId;
