@@ -206,7 +206,6 @@
                                                             id="docNumber"
                                                             name="docNumber"
                                                             #panDocNumber="ngModel"
-                                                            
                                                             pattern="{{regexPatternForDocType[parseInteger(selectedDocType.value) - 1].pattern}}"
                                                             maxlength="{{maxlength[selectedDocType.value - 1]}}"
                                                             fieldFill 
@@ -1566,15 +1565,13 @@
                                               required />
   
                                       <ng5-slider tabindex="4" [(value)]="qde.application.applicants[coApplicantIndex].occupation.numberOfYearsInCurrentCompany"
-                                                  [options]="options">
+                                      (valueChange)="checkOccupationDetailsYears($event)" [options]="options">
                                       </ng5-slider>
   
                                       <!-- <div *ngIf="numberOfYearsInCurrentCompany.touched && numberOfYearsInCurrentCompany.invalid" class="invalid-feedback">
                                         <div *ngIf="numberOfYearsInCurrentCompany.errors?.required">{{errors.occupationDetails.currentExp.required}}</div>
                                       </div> -->
-                                      <div *ngIf="expError" class="invalid-feedback">
-                                        <div *ngIf="expError"><br><br>Experience in current employment/business should not be greater than total work experience </div>
-                                      </div>
+                                      
   
                                   </div>
                                   <div class="form-group typ-range" *ngIf="selectedOccupation.value != '9' && selectedOccupation.value != '10'">
@@ -1590,11 +1587,15 @@
                                               spellcheck="false"
                                               required />
   
-                                      <ng5-slider tabindex="6" [(value)]="qde.application.applicants[coApplicantIndex].occupation.totalWorkExperience" [options]="options"></ng5-slider>
+                                      <ng5-slider tabindex="6" [(value)]="qde.application.applicants[coApplicantIndex].occupation.totalWorkExperience" [options]="options"
+                                      (valueChange)="checkOccupationDetailsYears($event)"></ng5-slider>
   
                                       <!-- <div *ngIf="(totalExperienceYear.touched || totalExperienceYear.dirty) && totalExperienceYear.invalid" class="invalid-feedback">
                                         <div *ngIf="totalExperienceYear.errors?.required">{{errors.occupationDetails.totalExp.required}}</div>
                                       </div> -->
+                                      <div *ngIf="expError" class="invalid-feedback">
+                                        <div *ngIf="expError"><br><br>Experience in current employment/business should not be greater than total work experience </div>
+                                      </div>
   
                                   </div>
                               </div>

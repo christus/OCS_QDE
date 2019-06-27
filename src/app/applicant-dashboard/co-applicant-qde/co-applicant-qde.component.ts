@@ -1144,20 +1144,20 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
   //-------------------------------------------------------------
   // Occupation Details
   //-------------------------------------------------------------
-  private expError = false;
+ 
   submitOccupationDetails(form: NgForm) {
     if (form && !form.valid) {
       return;
     }
-    const currentExp = form.value.numberOfYearsInCurrentCompany;
-    const totalExp = form.value.totalExperienceYear;
-    if(currentExp > totalExp) {
-      //form.valid = false;
-      this.expError = true;
-      return;
-    }else{
-      this.expError=false;
-    }
+    // const currentExp = form.value.numberOfYearsInCurrentCompany;
+    // const totalExp = form.value.totalExperienceYear;
+    // if(currentExp > totalExp) {
+    //   //form.valid = false;
+    //   this.expError = true;
+    //   return;
+    // }else{
+    //   this.expError=false;
+    // }
     
 
     this.qde.application.applicants[this.coApplicantIndex].occupation.occupationType = this.selectedOccupation.value.toString();
@@ -1766,6 +1766,17 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
 
   selectPreferedMailingAddress(value) {
     this.qde.application.applicants[this.coApplicantIndex].permanentAddress.preferedMailingAddress = (value == 1) ? true: false;
+  }
+
+  expError =false;
+  checkOccupationDetailsYears(event: any) {
+
+    if(this.qde.application.applicants[this.coApplicantIndex].occupation.numberOfYearsInCurrentCompany <= this.qde.application.applicants[this.coApplicantIndex].occupation.totalWorkExperience) {
+      // Next button should be enabled
+      this.expError = false;
+    } else {
+      this.expError = true;
+    }
   }
 
   ngOnDestroy() {
