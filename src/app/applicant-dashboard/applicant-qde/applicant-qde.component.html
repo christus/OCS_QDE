@@ -129,6 +129,7 @@
                                                             type="text"
                                                             class="form-control"
                                                             [(ngModel)]="qde.application.applicants[applicantIndex].pan.panNumber"
+                                                           
                                                             id="pan-inpt"
                                                             minlength="10"
                                                             maxlength="10"
@@ -165,6 +166,7 @@
                                                             class="form-control"
                                                             [(ngModel)]="qde.application.applicants[applicantIndex].pan.docNumber"
                                                             id="docNumber"
+                                                            oninput="this.value = this.value.toUpperCase()"
                                                             name="docNumber"
                                                             #panDocNumber="ngModel"
                                                             pattern="{{regexPatternForDocType[parseInteger(selectedDocType.value) - 1].pattern}}"
@@ -2052,6 +2054,7 @@
                                                     id="docNumber2"
                                                     tabindex="3"
                                                     name="docNumber"
+                                                    oninput="this.value = this.value.toUpperCase()"
                                                     #coappdocNumberNonIndividual="ngModel"
                                                     fieldFill
                                                     pattern="{{regexPatternForDocType[parseInteger(selectedDocType.value) - 1].pattern}}"

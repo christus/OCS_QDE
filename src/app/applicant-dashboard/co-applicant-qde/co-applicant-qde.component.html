@@ -206,6 +206,7 @@
                                                             id="docNumber"
                                                             name="docNumber"
                                                             #panDocNumber="ngModel"
+                                                            oninput="this.value = this.value.toUpperCase()"
                                                             pattern="{{regexPatternForDocType[parseInteger(selectedDocType.value) - 1].pattern}}"
                                                             maxlength="{{maxlength[selectedDocType.value - 1]}}"
                                                             fieldFill 
@@ -2084,6 +2085,7 @@
                                                     name="docNumber"
                                                     tabindex="3"
                                                     #coappdocNumberNonIndividual="ngModel"
+                                                    oninput="this.value = this.value.toUpperCase()"
                                                     fieldFill
                                                     spellcheck="false"
                                                     pattern="{{regexPatternForDocType[parseInteger(selectedDocType.value) - 1].pattern}}"
