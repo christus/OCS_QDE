@@ -50,7 +50,7 @@
 .lyt-box .summary-wrap .detail-wrap .box .tag {
     display: inline-block;
     width: 97px;
-    vertical-align: middle;
+    margin-left: 7vw;
     font-size: 10px;
     color: #999;
     font-family: zurich-light;
@@ -59,7 +59,7 @@
 .lyt-box .summary-wrap .detail-wrap.typ2 .box .tag {
     display: inline-block;
     width: 97px;
-    vertical-align: middle;
+    margin-left: -2vw;
     font-size: 10px;
     color: #999;
     font-family: zurich-light;

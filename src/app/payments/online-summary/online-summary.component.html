@@ -12,15 +12,15 @@
                     <div class="detail-wrap">
                         <div class="box">
                             <span class="tag">Name:</span>
-                            <span class="content">Varun Pimple</span>
+                            <span class="content">{{firstName}} {{lastName}}</span>
                         </div>
                         <div class="box">
                             <span class="tag">Application No.:</span>
-                            <span class="content">123456789</span>
+                            <span class="content">{{applicationNumber}}</span>
                         </div>
                         <div class="box">
                             <span class="tag">PAN No.:</span>
-                            <span class="content">WZRD1234E</span>
+                            <span class="content">{{panNumber}}</span>
                         </div>
                     </div>
                     <p class="para">
@@ -29,19 +29,19 @@
                     <div class="detail-wrap typ2">
                         <div class="box">
                             <span class="tag">Login Fees Payable:</span>
-                            <span class="content">₹10,000</span>
+                            <span class="content">₹{{loginFee}}</span>
                         </div>
                         <!-- <div class="box">
                             <span class="tag">Gross Amount</span>
                             <span class="content">₹35,000</span>
                         </div> -->
                         <div class="box">
-                            <span class="tag">GST(@18%):</span>
-                            <span class="content">₹1,800</span>
+                            <span class="tag">GST(@{{taxPercent}}%):</span>
+                            <span class="content">₹{{taxFee}}</span>
                         </div>
                         <div class="box typ-grey">
                             <span class="tag">Total Amount:</span>
-                            <span class="content">₹11,800</span>
+                            <span class="content">₹{{totalFee}}</span>
                         </div>
                     </div>
                 </div>

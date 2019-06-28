@@ -853,7 +853,31 @@ createOrUpdatePersonalDetails(qde) {
   
   }
 
+  loginFee(applicationId:number){
+
+    const processId = environment.api.loginfee.processId;
+    const workflowId = environment.api.loginfee.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: {
+        applicationId: applicationId
+      },
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    console.log("GET Login Fee", requestEntity);
+
+    const body = new HttpParams().set(
+      'processVariables',
+      JSON.stringify(requestEntity)
+    );
   
+    let uri = environment.host + '/appiyo/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.http.put(uri, body.toString());
+  }
 
 
 

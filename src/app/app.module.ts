@@ -69,6 +69,7 @@ import { NgxUiLoaderModule, NgxUiLoaderRouterModule } from  'ngx-ui-loader';
 import { ViewFormApplicantComponent } from './view-form-applicant/view-form-applicant.component';
 
 import {SecuredImageComponent} from  './applicant-dashboard/document-upload/secured-image.component';
+import { ThanksTAndCComponent } from './terms-and-conditions/thanks-t-and-c/thanks-t-and-c.component';
 
 
 
@@ -219,6 +220,14 @@ const appRoutes: Routes = [
           listOfValues: ListOfValuesResolverService,
           qde: GetQdeDataResolverService
         }
+      },
+      {
+        path: 'thankt&c/:applicationId/:applicantId',
+        component: ThanksTAndCComponent,
+        resolve: {
+          listOfValues: ListOfValuesResolverService,
+          qde: GetQdeDataResolverService
+        }
       }
     ]
   },
@@ -296,7 +305,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     OnlineSummaryComponent,
     EligibilityCheckComponent,
     ViewFormApplicantComponent,
-    SecuredImageComponent
+    SecuredImageComponent,
+    ThanksTAndCComponent
   ],
   imports: [
     BrowserModule,

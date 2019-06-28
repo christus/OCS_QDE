@@ -1,17 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+import Qde from 'src/app/models/qde.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
 import { CommonDataService } from 'src/app/services/common-data.service';
 import { QdeService } from 'src/app/services/qde.service';
-import Qde from 'src/app/models/qde.model';
 
 @Component({
-  selector: 'app-declaration2',
-  templateUrl: './declaration2.component.html',
-  styleUrls: ['./declaration2.component.css']
+  selector: 'app-thanks-t-and-c',
+  templateUrl: './thanks-t-and-c.component.html',
+  styleUrls: ['./thanks-t-and-c.component.css']
 })
-export class Declaration2Component implements OnInit {
-
+export class ThanksTAndCComponent implements OnInit, AfterViewInit {
   qde: Qde;
   applicationId: string;
   applicantId: string;
@@ -46,7 +45,13 @@ export class Declaration2Component implements OnInit {
   //   });
   // }
 
-  acceptBtn() {
-    this.qdeHttp.setStatusApi(this.applicationId, this.applicationStatus).subscribe(res => {}, err => {});
+  ngAfterViewInit() {
+    history.pushState(null, null, '/terms-and-conditions/thankt&c/'+this.applicationId+'/'+this.applicantId);
+    let dude = this;
+    window.addEventListener('popstate', function(event) {
+    history.pushState(null, null, '/terms-and-conditions/thankt&c/'+dude.applicationId+'/'+dude.applicantId);
+    });
   }
+
+
 }

@@ -742,9 +742,13 @@ export class ViewFormComponent implements OnInit {
   initializeVariables(eachApplicant) {
     this.residenceNumberStdCode.push(eachApplicant.contactDetails.residenceNumber != "" ? eachApplicant.contactDetails.residenceNumber.split("-")[0] : "");
     this.residenceNumberPhoneNumber.push(eachApplicant.contactDetails.residenceNumber != "" ? eachApplicant.contactDetails.residenceNumber.split("-")[1] : "");
+    console.log("residenceNumberStdCode: ", this.residenceNumberStdCode);
+    console.log("residenceNumberPhoneNumber: ", this.residenceNumberPhoneNumber);
 
     this.alternateResidenceNumberStdCode.push(eachApplicant.contactDetails.alternateResidenceNumber != "" ? eachApplicant.contactDetails.alternateResidenceNumber.split("-")[0] : "");
     this.alternateResidenceNumberPhoneNumber.push(eachApplicant.contactDetails.alternateResidenceNumber != "" ? eachApplicant.contactDetails.alternateResidenceNumber.split("-")[1] : "");
+    console.log("alternateResidenceNumberStdCode: " ,this.alternateResidenceNumberStdCode);
+    console.log("alternateResidenceNumberPhoneNumber: " ,this.alternateResidenceNumberPhoneNumber);
     this.addressCityState.push(eachApplicant.communicationAddress.city + '/'+ eachApplicant.communicationAddress.state);
 
     this.otherReligion.push(eachApplicant.other.religion == '6' ? eachApplicant.other.religion : '');

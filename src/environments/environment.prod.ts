@@ -73,6 +73,10 @@ export const environment = {
     "clss": {
       'workflowId': '8dc189f485df11e982270242ac110002',
       'processId': '8de0689285df11e982270242ac110002'
+    },
+    "loginfee": {
+      'workflowId': 'f512f03a8ea311e982270242ac110002',
+      'processId': 'f53166328ea311e982270242ac110002'
     }
   },
   userName: "icici@icici.com",
