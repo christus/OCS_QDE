@@ -1701,18 +1701,17 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
   inOTP: boolean = false;
 
-  submitOTP() {
+  submitOTP(form: NgForm) {
     console.log("Towards OTP");
-    this.qdeHttp.sendOTPAPI().subscribe(res => {
-      this.inOTP = true;
-      // if(res['ProcessVariables']['isPaymentSuccessful'] == true) {
-      //   this.showSuccessModal = true;
-      //   this.emiAmount = res['ProcessVariables']['emi'];
-      //   this.eligibleAmount = res['ProcessVariables']['eligibilityAmount'];
-      // }
-      // else if(res['ProcessVariables']['isPaymentSuccessful'] == false) {
-      //   this.showErrorModal = true;
-      // }
+    
+    const mobileNumber = form.value.mobileNumber;
+    this.qde.application.applicants[this.applicantIndex].contactDetails.mobileNumber = mobileNumber;
+
+    const applicantId = this.qde.application.applicationId
+    this.qdeHttp.sendOTPAPI(mobileNumber, applicantId).subscribe(res => {
+      if(res['ProcessVariables']['status'] == true) {
+        this.inOTP = true;
+      }
      });
   }
 
@@ -1722,8 +1721,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   }
 
   validateOTP(form: NgForm) {
-    console.log("Payment gateway")
-    this.qdeHttp.validateOTPAPI().subscribe(res => {
+    console.log("Payment gateway");
+    const mobileNumber = this.qde.application.applicants[this.applicantIndex].contactDetails.mobileNumber;
+    const applicantId = this.qde.application.applicationId;
+    const otp = form.value.otp;
+
+    this.qdeHttp.validateOTPAPI(mobileNumber, applicantId, otp).subscribe(res => {
       // if(res['ProcessVariables']['isPaymentSuccessful'] == true) {
       //   this.showSuccessModal = true;
       //   this.emiAmount = res['ProcessVariables']['emi'];
@@ -1732,6 +1735,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       // else if(res['ProcessVariables']['isPaymentSuccessful'] == false) {
       //   this.showErrorModal = true;
      // }
+      if(res['ProcessVariables']['status'] == true) {
+        alert("OTP verified successfully");
+        this.onBackOTP();
+      }else {
+        alert("Enter valid OTP");
+      }
      });
   }
 

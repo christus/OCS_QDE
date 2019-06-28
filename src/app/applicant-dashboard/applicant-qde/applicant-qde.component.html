@@ -601,7 +601,7 @@
   
                                         <label for="mob-no" tabindex="5">Mobile number</label>
                                         <span class="optional">10 digit</span>
-                                        <a href="javascript:void(0);" class="sent-otp modal-init" data-target="sent-otp-modal"><span class="text" (click)="submitOTP()">Send OTP</span><span class="icon icon-tick"></span></a>
+                                        <a href="javascript:void(0);" class="sent-otp modal-init" data-target="sent-otp-modal"><span class="text" (click)="submitOTP(contactForm)">Send OTP</span><span class="icon icon-tick"></span></a>
                                         <span class="alternate-data">
                                           <a  href="javascript:void(0);"
                                               class="alter-btn"
@@ -755,17 +755,23 @@
                         <h1 class="center">Verify OTP to continue</h1>
                         <!-- <p class="desc typ2">You have cleared the provisional eligibility check for the loan amount requested. Kindly note this clearance is based on the information provided and actual sanction amount is subject to further verification and process. We need more time to process your eligibility. </p>
                         <p class="cm-thin">Thank you for your loan application. Our representative will contact you shortly</p> -->
-                        <form class="bs-form" id="spouse-form">
+                        <form class="bs-form" id="spouse-form"
+                        #isValidOTP="ngForm">
                             <div class="form-wrap1">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="otp" fieldFill>
+                                    <input 
+                                    type="text" class="form-control" 
+                                    id="otp" 
+                                    name="otp" 
+                                    [(ngModel)]="otp"
+                                    fieldFill>
                                     <label for="otp">OTP</label>
                                 </div>
                             </div>
+                            <div class="btn-wrap">
+                                <button class="btn btn-border" (click)="validateOTP(isValidOTP)">Verify</button>
+                            </div>
                         </form>
-                        <div class="btn-wrap">
-                            <button class="btn btn-border">Verify</button>
-                        </div>   
                     </div>
                 </div>
 

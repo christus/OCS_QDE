@@ -137,7 +137,7 @@ createOrUpdatePersonalDetails(qde) {
     );
   
     let uri = environment.host + '/appiyo/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.put(uri, body);
+    return this.http.post(uri, body);
   }
 
   getQdeData(applicationId:number) {
@@ -163,7 +163,7 @@ createOrUpdatePersonalDetails(qde) {
     );
   
     let uri = environment.host + '/appiyo/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.put(uri, body.toString());
+    return this.http.post(uri, body.toString());
   }
 
   roleLogin() {
@@ -196,7 +196,7 @@ createOrUpdatePersonalDetails(qde) {
     );
 
     let uri = environment.host + '/appiyo/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.put(uri, body.toString());
+    return this.http.post(uri, body.toString());
   }
 
   getCityAndState(zipcode) {
@@ -224,7 +224,7 @@ createOrUpdatePersonalDetails(qde) {
     );
 
     let uri = environment.host + '/appiyo/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.put(uri, body.toString());
+    return this.http.post(uri, body.toString());
   }
 
   uploadToAppiyoDrive(fileToUpload: File) {
@@ -259,7 +259,7 @@ createOrUpdatePersonalDetails(qde) {
     );
 
     let uri = environment.host + '/appiyo/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.put(uri, body.toString());
+    return this.http.post(uri, body.toString());
   }
 
   getApplicableDocuments(data: any) {
@@ -280,7 +280,7 @@ createOrUpdatePersonalDetails(qde) {
     );
 
     let uri = environment.host + '/appiyo/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.put(uri, body.toString());
+    return this.http.post(uri, body.toString());
   }
 
   dummyGetApi(qde) {
@@ -336,7 +336,7 @@ createOrUpdatePersonalDetails(qde) {
     );
 
     let uri = environment.host + '/appiyo/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.put(uri, body.toString());
+    return this.http.post(uri, body.toString());
   }
 
   cibilDetails(ocsReferenceNumber){
@@ -365,7 +365,7 @@ createOrUpdatePersonalDetails(qde) {
     );
 
     let uri = environment.host + '/appiyo/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.put(uri, body.toString());
+    return this.http.post(uri, body.toString());
   }
 
   else{
@@ -677,7 +677,7 @@ createOrUpdatePersonalDetails(qde) {
   });
   }
 
-  sendOTPAPI() {
+  sendOTPAPI(mobileNumber, applicantId) {
     const processId = environment.api.sendOTP.processId;
     const workflowId = environment.api.sendOTP.workflowId;
     const projectId = environment.projectId;
@@ -689,6 +689,8 @@ createOrUpdatePersonalDetails(qde) {
     const requestEntity: RequestEntity = {
       processId: processId,
       ProcessVariables: {
+        "applicationId": applicantId,
+        "phoneNumber": mobileNumber,
       },
       workflowId: workflowId,
       projectId: projectId
@@ -699,11 +701,11 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     );
 
-    let uri = '/appiyo/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.put(uri, body.toString());
+    let uri = environment.host+ '/appiyo/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.http.post(uri, body.toString());
   }
 
-  validateOTPAPI() {
+  validateOTPAPI(mobileNumber, applicantId, otp) {
     const processId = environment.api.validateOTP.processId;
     const workflowId = environment.api.validateOTP.workflowId;
     const projectId = environment.projectId;
@@ -715,6 +717,9 @@ createOrUpdatePersonalDetails(qde) {
     const requestEntity: RequestEntity = {
       processId: processId,
       ProcessVariables: {
+        "phoneNumber": mobileNumber,
+        "applicationId": applicantId,
+        "otp": otp
       },
       workflowId: workflowId,
       projectId: projectId
@@ -725,8 +730,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     );
 
-    let uri = '/appiyo/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.put(uri, body.toString());
+    let uri = environment.host+ '/appiyo/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.http.post(uri, body.toString());
   }
 
   clssProbabilityCheck(applicationId: string) {
@@ -750,7 +755,7 @@ createOrUpdatePersonalDetails(qde) {
 
     let uri = environment.host + '/appiyo/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
 
-    return this.http.put(uri, body.toString());
+    return this.http.post(uri, body.toString());
   }
 
   viewFormSmsApi(applicationId: string) {
@@ -776,8 +781,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     );
 
-    let uri = '/appiyo/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.put(uri, body.toString());
+    let uri = environment.host+'/appiyo/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.http.post(uri, body.toString());
   }
 
   setStatusApi(applicationId: string, status: string) {
@@ -805,7 +810,7 @@ createOrUpdatePersonalDetails(qde) {
     );
 
     let uri = environment.host + '/appiyo/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.put(uri, body.toString());
+    return this.http.post(uri, body.toString());
   }
 
   async takePicture() {

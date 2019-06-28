@@ -221,6 +221,7 @@ export class LoanQdeComponent implements OnInit {
   applicationId: string;
   applicantIndex = 0;
 
+
   constructor(
     private renderer: Renderer2,
     private route: ActivatedRoute,
@@ -345,6 +346,22 @@ export class LoanQdeComponent implements OnInit {
 
           this.qdeService.setQde(this.qde);
           this.valuechange(this.qde.application.tenure, 0);
+
+          
+
+
+          this.qde.application.loanDetails.property.zipcodeId = result.application.loanDetails.property.zipcodeId;
+          this.qde.application.loanDetails.property.stateId = result.application.loanDetails.property.stateId;
+          this.qde.application.loanDetails.property.cityId = result.application.loanDetails.property.cityId;
+  
+          this.qde.application.loanDetails.property.city = result.application.loanDetails.property.city;
+          this.qde.application.loanDetails.property.state = result.application.loanDetails.property.state;
+          this.qde.application.loanDetails.property.zipcode = result.application.loanDetails.property.zipcode;
+
+          this.cityState = "";
+          if(result.application.loanDetails.property.city) {
+            this.cityState = result.application.loanDetails.property.city + " "+ result.application.loanDetails.property.state;
+          }
         });
       } else {
         this.qde = this.qdeService.getQde();

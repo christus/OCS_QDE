@@ -1786,9 +1786,13 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
   inOTP: boolean = false;
   backOTP: boolean = false;
 
-  submitOTP() {
-    console.log("Towards OTP")
-    this.qdeHttp.sendOTPAPI().subscribe(res => {
+  submitOTP(form: NgForm) {
+    console.log("Towards OTP");
+    const mobileNumber = form.value.mobileNumber;
+    this.qde.application.applicants[this.coApplicantIndex].contactDetails.mobileNumber = mobileNumber;
+
+    const applicantId = this.qde.application.applicationId
+    this.qdeHttp.sendOTPAPI(mobileNumber, applicantId).subscribe(res => {
       this.inOTP = true;
       // if(res['ProcessVariables']['isPaymentSuccessful'] == true) {
       //   this.showSuccessModal = true;
@@ -1807,16 +1811,18 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
   }
 
   validateOTP(form: NgForm) {
-    console.log("Payment gateway")
-    this.qdeHttp.validateOTPAPI().subscribe(res => {
-      // if(res['ProcessVariables']['isPaymentSuccessful'] == true) {
-      //   this.showSuccessModal = true;
-      //   this.emiAmount = res['ProcessVariables']['emi'];
-      //   this.eligibleAmount = res['ProcessVariables']['eligibilityAmount'];
-      // }
-      // else if(res['ProcessVariables']['isPaymentSuccessful'] == false) {
-      //   this.showErrorModal = true;
-     // }
+    console.log("Payment gateway");
+    const mobileNumber = this.qde.application.applicants[this.coApplicantIndex].contactDetails.mobileNumber;
+    const applicantId = this.qde.application.applicationId;
+    const otp = form.value.otp;
+
+    this.qdeHttp.validateOTPAPI(mobileNumber, applicantId, otp).subscribe(res => {
+      if(res['ProcessVariables']['status'] == true) {
+        alert("OTP verified successfully");
+        this.onBackOTP();
+      }else {
+        alert("Enter valid OTP");
+      }
      });
   }
 
