@@ -180,7 +180,7 @@ export class DocumentUploadComponent implements OnInit {
     if (this.route.url["value"][1].path === "applicant") {
       this.isMainApplicant = true;
     }
-    this.tabSwitch(1);
+    //this.tabSwitch(1);
   }
 
   ngOnInit() {
@@ -208,6 +208,9 @@ export class DocumentUploadComponent implements OnInit {
     });
 
     this.route.fragment.subscribe(fragment => {
+
+      this.tabSwitch(1);
+
       let localFragment = fragment;
 
       if (fragment == null) {
@@ -301,7 +304,7 @@ export class DocumentUploadComponent implements OnInit {
                 } else if (docCategory == photoProofCategory) {
                   this.photoProofFileName = document["documentName"];
                   this.photoProofFileSize = this.getFileSize(document["documentSize"]);
-		  this.photoProofId = driveLoc+document["documentImageId"];
+		  this.photoProofId = driveLoc + document["documentImageId"];
                 }
               }
             }
@@ -309,7 +312,13 @@ export class DocumentUploadComponent implements OnInit {
             if (applicant["isMainApplicant"]) {
               this.mainApplicantId = applicantId;
             } else {
-              this.coApplicants.push(applicant);
+
+              if (applicants.length - 1 === this.coApplicants.length) {
+
+              } else {
+                this.coApplicants.push(applicant);
+              }
+              
             }
           }
 
@@ -818,8 +827,6 @@ export class DocumentUploadComponent implements OnInit {
       },
       error => {
         console.log("Error : ", error);
-        alert(error.error.message);
-
       }
     );
   }
@@ -850,7 +857,6 @@ export class DocumentUploadComponent implements OnInit {
       },
       error => {
         console.log("Error : ", error);
-        alert(error.message);
       }
     );
   }
