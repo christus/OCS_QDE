@@ -212,6 +212,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
 
   isTabDisabled: boolean = true;
 
+  otp:string;
+
   constructor(private renderer: Renderer2,
               private route: ActivatedRoute,
               private router: Router,
@@ -1807,7 +1809,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
 
   onBackOTP() {
     console.log("Back button pressed")
-    this.backOTP = true;
+    this.inOTP = false; 
   }
 
   validateOTP(form: NgForm) {
@@ -1818,6 +1820,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
 
     this.qdeHttp.validateOTPAPI(mobileNumber, applicantId, otp).subscribe(res => {
       if(res['ProcessVariables']['status'] == true) {
+        this.otp = "";
         alert("OTP verified successfully");
         this.onBackOTP();
       }else {

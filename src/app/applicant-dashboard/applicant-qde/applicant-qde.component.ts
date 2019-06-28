@@ -226,6 +226,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
   panErrorCount: number = 0;
 
+  otp:string;
+
   constructor(private renderer: Renderer2,
               private route: ActivatedRoute,
               private router: Router,
@@ -1736,6 +1738,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       //   this.showErrorModal = true;
      // }
       if(res['ProcessVariables']['status'] == true) {
+        this.otp = "";
         alert("OTP verified successfully");
         this.onBackOTP();
       }else {

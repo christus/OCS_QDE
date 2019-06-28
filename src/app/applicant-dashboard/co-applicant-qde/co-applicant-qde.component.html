@@ -665,7 +665,7 @@
   
                                         <label for="alter-mob">Alternate mobile no</label>
                                         <span class="optional">10 digit</span>
-                                        <a href="#" class="sent-otp modal-init" data-target="sent-otp-modal"><span class="text" (click)="submitOTP()">Send OTP</span><span class="icon icon-tick"></span></a>
+                                        <a href="#" class="sent-otp modal-init" data-target="sent-otp-modal"><span class="text" (click)="submitOTP(contactForm)">Send OTP</span><span class="icon icon-tick"></span></a>
                                         <span class="alternate-data">
                                           <a  href="javascript:void(0);"
                                               class="alter-btn"
@@ -796,14 +796,19 @@
                         #isValidOTP="ngForm">
                             <div class="form-wrap1">
                                 <div class="form-group">
-                                        <input type="text" class="form-control" id="otp" fieldFill>
-                                        <label for="otp">OTP</label>
+                                    <input 
+                                    type="text" class="form-control" 
+                                    id="otp" 
+                                    name="otp" 
+                                    [(ngModel)]="otp"
+                                    fieldFill>
+                                    <label for="otp">OTP</label>
                                 </div>
                             </div>
+                            <div class="btn-wrap">
+                                <button class="btn btn-border" (click)="validateOTP(isValidOTP)">Verify</button>
+                            </div>
                         </form>
-                        <div class="btn-wrap">
-                            <button class="btn btn-border" (click)="validateOTP(isValidOTP)">Verify</button>
-                        </div>   
                     </div>
                 </div>
   
