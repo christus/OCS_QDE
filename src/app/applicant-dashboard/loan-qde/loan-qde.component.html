@@ -24,15 +24,17 @@
             <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(incomeDetail1)"></a>
             <div class="lyt-tabs">
               <div class="lhs">
+                <div class="swiper-slide">
                 <div class="title-wrap">
                   <h4 class="title">Enter desired loan <span class="cm-line-break"></span>amount & purpose</h4>
                   <p class="note">Enter the property details for which loan is being sought for</p>
+                </div>
                 </div>
               </div>
 
               <div class="rhs">
 
-
+                <div class="swiper-slide">
                 <form class="bs-form" id="personal-form"
                 #loanAmount="ngForm"
                 (ngSubmit)="submitLoanAmount(loanAmount)">
@@ -110,6 +112,7 @@
                     [disabled]="!loanAmount.valid">Next</button>
                   </div>
                 </form>
+                </div>
               </div>
             </div>
 

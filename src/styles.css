@@ -4154,7 +4154,7 @@ img {
 	position: relative;
 	display: inline-block;
 	vertical-align: top;
-	margin: 0 1.17vw
+	margin: 0 1.17vw;
 }
 
 .bs-radio input[type=radio] {
@@ -5486,9 +5486,9 @@ img {
 
 
   .ng5-slider .ng5-slider-tick-legend {
-    top: -35px !important;
-    font-size: 25px !important;;
-	color: #d2b3b3 !important;;
+    top: -1.5vw !important;
+    font-size: 1.2vw !important;
+	color: #d2b3b3 !important;
   }
 
   .ng5-slider .ng5-slider-tick-legend b {
@@ -5556,7 +5556,9 @@ img {
 .lakhs{
 	font-size: 2.50vw;
 }
-
+.rounded-radio .bs-radio {
+	height: 2.5vw;
+}
 /*** Modifications for Tablets***/
 
 
@@ -5569,5 +5571,25 @@ img {
 		padding: 0!important;
 		border-bottom: none!important;
 		font-size: normal!important;
+	}
+	.mobile .bs-form .form-wrap {
+		max-height: 50vw!important;
+	}
+	.mobile .lyt-home .rhs .bs-form,
+	.mobile .lyt-home .lhs .title-wrap {
+		position: static;
+		transform: none;
+		/*display: table-cell; 
+		vertical-align: middle; */
+		display: block;
+		margin-top:11vw;
+	}
+	.mobile .swiper-container-fade .swiper-slide-active, 
+	.mobile .swiper-container-fade .swiper-slide-active .swiper-slide-active,
+	.mobile .swiper-slide {
+		display: block;
+	}
+	.mobile .lyt-home .lhs:after {
+		top: 25vw;
 	}
 }

@@ -61,11 +61,14 @@
                         <div class="lyt-tabs">
 
                             <div class="lhs">
+                              <div class="swiper-slide">
                                 <div class="title-wrap">
                                     <h4 class="title">Co-Applicant's<span class="cm-line-break"></span>list</h4>
                                 </div>
+                              </div>
                             </div>
                             <div class="rhs">
+                              <div class="swiper-slide">
                                 <div class="right-panel">
                                     <button  href="javascript:void(0);"
                                         (click)="createCoApplicant()"
@@ -88,6 +91,7 @@
 
                                     </div>
                                 </form>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -552,12 +556,15 @@
                     <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
                     <div class="lyt-tabs">
                         <div class="lhs">
+                          <div class="swiper-slide">
                             <div class="title-wrap">
                                 <h4 class="title">Enter Co-Applicant's <span class="cm-line-break"></span>contact details</h4>
                                 <p class="note">Please capture the primary contact details as these <span class="cm-line-break"></span> will be used for all communication purposes <span class="cm-line-break"></span> between ICICI HFC and main applicant</p>
                             </div>
+                          </div>
                         </div>
                         <div class="rhs">
+                          <div class="swiper-slide">
                             <form class="bs-form" *ngIf="!isTabDisabled"
                                   id="contact-form"
                                   #contactForm="ngForm"
@@ -781,6 +788,7 @@
                                       </button>
                                 </div>
                             </form>
+                            </div>
                         </div>
                     </div>
                 </div> 
@@ -817,12 +825,15 @@
   
                   <div class="lyt-tabs">
                       <div class="lhs">
+                        <div class="swiper-slide">
                           <div class="title-wrap">
                               <h4 class="title">Enter Co-Applicant's <span class="cm-line-break"></span>address</h4>
                               <p class="note">Please enter primary address of the main <span class="cm-line-break"></span> applicant as this will be used for all official <span class="cm-line-break"></span> communications.</p>
                           </div>
+                        </div>
                       </div>
                       <div class="rhs">
+                        <div class="swiper-slide">
                           <form   class="bs-form" *ngIf="!isTabDisabled"
                               id="communication-form"
                                   #communicationForm="ngForm"
@@ -1060,6 +1071,7 @@
                                   </button>
                               </div>
                           </form>
+                          </div>
                       </div>
                     </div>
   
@@ -1446,15 +1458,18 @@
                   <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
   
                   <div class="lyt-tabs">
-                      <div class="lhs">
+                      <div class="lhs"> 
+                        <div class="swiper-slide">
                           <div class="title-wrap">
                               <h4 class="title">Enter relevant <span class="cm-line-break"></span>details</h4>
                               <p class="note">We may need this details for regulatory
                                   <span class="cm-line-break">purposes.</span>
                               </p>
                           </div>
+                        </div>
                       </div>
                       <div class="rhs">
+                        <div class="swiper-slide">
                           <form   class="bs-form" *ngIf="!isTabDisabled"
                                   #otherForm="ngForm"
                                   (ngSubmit)="submitOtherForm(otherForm)">
@@ -1500,6 +1515,7 @@
                                           class="btn btn-primary">Next</button>
                               </div>
                           </form>
+                          </div>
                       </div>
                   </div>
   
@@ -1510,14 +1526,17 @@
   
                   <div class="lyt-tabs">
                       <div class="lhs">
+                        <div class="swiper-slide">
                           <div class="title-wrap">
                               <h4 class="title">Enter Co-Applicant's <span class="cm-line-break"></span>current occupation <span class="cm-line-break"></span>details</h4>
                               <p class="note">We may need this details for regulatory
                                   <span class="cm-line-break">purposes.</span>
                               </p>
                           </div>
+                        </div>
                       </div>
                       <div class="rhs">
+                        <div class="swiper-slide">
                           <form   class="bs-form" *ngIf="!isTabDisabled"
                                   #occupationForm="ngForm"
                                   (ngSubmit)="submitOccupationDetails(occupationForm)">
@@ -1616,6 +1635,7 @@
                                   </button>
                               </div>
                           </form>
+                          </div>
                       </div>
                   </div>
   
@@ -1626,14 +1646,17 @@
   
                   <div class="lyt-tabs">
                       <div class="lhs">
+                        <div class="swiper-slide">
                           <div class="title-wrap">
                               <h4 class="title">Enter Co-Applicant's <span class="cm-line-break"></span>professional contact <span class="cm-line-break"></span>details</h4>
                               <p class="note">In case, main application is currently not work-
                                   <span class="cm-line-break">ing, pleases enter details of the applicant</span>
                               </p>
                           </div>
+                        </div>
                       </div>
                       <div class="rhs">
+                        <div class="swiper-slide">
                           <form   class="bs-form" *ngIf="!isTabDisabled"
                                   #officialCorrespondenceForm="ngForm"
                                   (ngSubmit)="submitOfficialCorrespondence(officialCorrespondenceForm)">
@@ -1799,6 +1822,7 @@
                                   </button>
                               </div>
                           </form>
+                          </div>
                       </div>
                   </div>
               </div>
@@ -2130,11 +2154,14 @@
   
                   <div class="lyt-tabs">
                       <div class="lhs">
+                        <div class="swiper-slide">
                           <div class="title-wrap">
                               <h4 class="title">Enter Organization <span class="cm-line-break"></span>details</h4>
                           </div>
+                        </div>
                       </div>
                       <div class="rhs">
+                        <div class="swiper-slide">
                           <form   class="bs-form" *ngIf="!isTabDisabled"
                                   #organizationForm="ngForm"
                                   (ngSubmit)="submitOrganizationDetails(organizationForm)">
@@ -2226,6 +2253,7 @@
                                   </button>
                               </div>
                           </form>
+                          </div>
                       </div>
                   </div>
               </div>
@@ -2234,12 +2262,14 @@
                   <a  href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
                   <div class="lyt-tabs">
                       <div class="lhs">
+                        <div class="swiper-slide">
                           <div class="title-wrap">
                               <h4 class="title">Enter Co-Applicant's <span class="cm-line-break"></span>registered address</h4>
                           </div>
-  
+                        </div>
                       </div>
                       <div class="rhs">
+                        <div class="swiper-slide">
                           <form class="bs-form" *ngIf="!isTabDisabled" #registeredAddressForm="ngForm" (ngSubmit)="submitRegisteredAddress(registeredAddressForm)">
                               <div class="form-wrap">
                                   <div class="form-group">
@@ -2328,6 +2358,7 @@
   
                               </div>
                           </form>
+                          </div>
                       </div>
                   </div>
               </div>
@@ -2335,11 +2366,14 @@
                   <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
                   <div class="lyt-tabs">
                       <div class="lhs">
+                        <div class="swiper-slide">
                           <div class="title-wrap">
                               <h4 class="title">Enter Co-Applicant's <span class="cm-line-break"></span>corporate address</h4>
                           </div>
+                        </div>
                       </div>
                       <div class="rhs">
+                        <div class="swiper-slide">
                           <form   class="bs-form" *ngIf="!isTabDisabled"
                                   #corporateAddressForm="ngForm"
                                   (ngSubmit)="submitCorporateAddress(corporateAddressForm)" >
@@ -2492,6 +2526,7 @@
                                   [disabled]="!corporateAddressForm.valid">Next</button>
                               </div>
                           </form>
+                          </div>
                       </div>
                   </div>
               </div>
@@ -2501,11 +2536,14 @@
 
                 <div class="lyt-tabs">
                     <div class="lhs">
+                      <div class="swiper-slide">
                         <div class="title-wrap">
                             <h4 class="title">Enter Co-Applicant's <span class="cm-line-break"></span>revenue details</h4>
                         </div>
+                      </div>
                     </div>
                     <div class="rhs">
+                      <div class="swiper-slide">
                         <form class="bs-form" *ngIf="!isTabDisabled" #revenueForm="ngForm" (ngSubmit)="submitRevenueDetails(revenueForm)">
                             <div class="form-wrap">
                                 <div class="form-group inr">
@@ -2577,6 +2615,7 @@
                                 [disabled]="!revenueForm.valid">Next</button>
                             </div>
                         </form>
+                        </div>
                     </div>
                 </div>
             </div>             

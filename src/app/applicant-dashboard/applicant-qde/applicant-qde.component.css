@@ -44,10 +44,8 @@
 	content: '';
 	font-family: icicihfc;
 	position: absolute;
-	left: .63vw;
-	top: .63vw;
-	bottom: .63vw;
-	right: .63vw;
+    left: 0.61vw;
+    top: .65vw;
 	background: #fff;
 	border-radius: 50%;
 	width: 1.17vw;
