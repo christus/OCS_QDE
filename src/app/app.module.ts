@@ -71,10 +71,6 @@ import { ViewFormApplicantComponent } from './view-form-applicant/view-form-appl
 import {SecuredImageComponent} from  './applicant-dashboard/document-upload/secured-image.component';
 import { ThanksTAndCComponent } from './terms-and-conditions/thanks-t-and-c/thanks-t-and-c.component';
 
-
-
-
-
 const appRoutes: Routes = [
   { path: "", redirectTo: "leads", pathMatch: "full" },
   { path: "login", component: LoginComponent },
