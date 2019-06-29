@@ -47,21 +47,104 @@
                     </tr>
                     <tr class="leadSearch">
                         <td colspan="3">
-                            <form action="" class="bs-form">
-                                <div class="form-group">
-
-                                    <input  type="text"
-                                            class="form-control"
-                                            id="address1"
-                                            pattern="^[0-9A-Za-z,_#\s]+$"
-                                            required 
-                                            fieldFill/>
-
-                                    <label for="address1">Search</label>
-
+                            <div class="row">
+                                <div class="col4">
+                                    <form class="bs-form">
+                                        <div class="form-group">
+                                            <input  type="text"
+                                                    class="form-control"
+                                                    id="search"
+                                                    name="search"
+                                                    pattern="^[0-9A-Za-z,_#\s]+$"
+                                                    (input)="filterLeads($event)"
+                                                    [(ngModel)]="searchTxt"
+                                                    fieldFill
+                                                    required />
+                                            <label for="search">Search</label>
+                                        </div>
+                                    </form>
                                 </div>
-                            </form>
-
+                                <div class="col4">
+                                    <div class="row">
+                                        <p class="center fromToDateLbl">From Date</p>
+                                        <div class="col4">
+                                            <kendo-dropdownlist class="form-control"
+                                                [data]="days"
+                                                textField="key"
+                                                valueField="value"
+                                                name="day"
+                                                tabindex="0"
+                                                (selectionChange)="filterLeads($event)"
+                                                [(ngModel)]="fromDay">
+                                            </kendo-dropdownlist>
+                                        </div>
+                                        <div class="col4">
+                                            <kendo-dropdownlist class="form-control"
+                                                [data]="months"
+                                                textField="key"
+                                                valueField="value"
+                                                name="month"
+                                                tabindex="0"
+                                                #dobMonth
+                                                (selectionChange)="filterLeads($event)"
+                                                [(ngModel)]="fromMonth">
+                                            </kendo-dropdownlist>
+                                        </div>
+                                        <div class="col4">
+                                            <kendo-dropdownlist class="form-control"
+                                                [data]="years"
+                                                textField="key"
+                                                valueField="value"
+                                                name="year"
+                                                tabindex="0"
+                                                #dobYear
+                                                (selectionChange)="filterLeads($event)"
+                                                [(ngModel)]="fromYear">
+                                            </kendo-dropdownlist>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col4">
+                                    <div class="row">
+                                        <p class="center fromToDateLbl">To Date</p>
+                                        <div class="col4">
+                                            <kendo-dropdownlist class="form-control"
+                                                [data]="days"
+                                                textField="key"
+                                                valueField="value"
+                                                name="day"
+                                                tabindex="0"
+                                                (selectionChange)="filterLeads($event)"
+                                                [(ngModel)]="toDay">
+                                            </kendo-dropdownlist>
+                                        </div>
+                                        <div class="col4">
+                                            <kendo-dropdownlist class="form-control"
+                                                [data]="months"
+                                                textField="key"
+                                                valueField="value"
+                                                name="month"
+                                                tabindex="0"
+                                                #dobMonth
+                                                (selectionChange)="filterLeads($event)"
+                                                [(ngModel)]="toMonth">
+                                            </kendo-dropdownlist>
+                                        </div>
+                                        <div class="col4">
+                                            <kendo-dropdownlist class="form-control"
+                                                [data]="years"
+                                                textField="key"
+                                                valueField="value"
+                                                name="year"
+                                                tabindex="0"
+                                                #dobYear
+                                                (selectionChange)="filterLeads($event)"
+                                                [(ngModel)]="toYear">
+                                            </kendo-dropdownlist>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </td>
                     </tr>
 

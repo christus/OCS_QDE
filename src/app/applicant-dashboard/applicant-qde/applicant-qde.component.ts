@@ -20,11 +20,6 @@ import { environment } from 'src/environments/environment';
 import { File } from '@ionic-native/file/ngx';
 import { DeviceDetectorService } from 'ngx-device-detector';
 
-
-
-
-
-
 interface Item {
   key: string,
   value: number | string

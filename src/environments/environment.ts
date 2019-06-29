@@ -85,10 +85,10 @@ export const environment = {
   },
   userName: "icici@icici.com",
   password: "icici@123",
-  // host: "http://182.156.249.170",
+  host: "http://182.156.249.170",
   appiyoDrive: "/appiyo/d/drive/upload/",
   //host: "http://192.168.1.108"
-  host: "http://192.168.1.108",
+  // host: "http://192.168.1.108",
   //host: "",
   driveLocation: "/appiyo/d/drive/docs/"
 

@@ -75,12 +75,12 @@ th, td {
   margin-bottom: 0;
   margin: 0 1%;
 }
-.leadSearch .bs-form .form-group .form-control,
+/* .leadSearch .bs-form .form-group .form-control,
 .leadSearch .bs-form .form-group label {
   width: 100%;
   max-width: 100%;
   margin: 0;
-}
+} */
 
 .leadFilter td {
     width: 20%;
@@ -123,4 +123,8 @@ a, a:visited {
 .leadList {
   margin-top: 9.45vw;
   display: flex;
+}
+
+.fromToDateLbl {
+  
 }

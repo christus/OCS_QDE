@@ -117,16 +117,21 @@ createOrUpdatePersonalDetails(qde) {
     return this.http.post(uri, body);
   }
 
-  getLeads() {
+  getLeads(search?: string, fromDay?: string, fromMonth?: string, fromYear?: string, toDay?: string, toMonth?: string, toYear?: string, assignedTo?: string) {
     const processId = environment.api.dashboard.processId;
     const workflowId = environment.api.dashboard.workflowId;
     const projectId = environment.projectId;
 
+    let processVariables = {
+      userId: localStorage.getItem("userId"),
+      firstName: (search != null) ? search : "",
+      fromDate: (fromDay != 'DD' || fromMonth != 'MM' || fromYear != 'YYYY') ? fromYear+""+"-"+fromMonth+"-"+fromDay: "",
+      toDate: (toDay != 'DD' || toMonth != 'MM' || toYear != 'YYYY') ? toYear+""+"-"+toMonth+"-"+toDay: ""
+    };
+
     const requestEntity: RequestEntity = {
       processId: processId,
-      ProcessVariables: {
-        userId: localStorage.getItem("userId")
-      },
+      ProcessVariables: processVariables,
       workflowId: workflowId,
       projectId: projectId
     };
