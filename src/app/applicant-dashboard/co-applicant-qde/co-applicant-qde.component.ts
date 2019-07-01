@@ -562,6 +562,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
 
     this.qdeHttp.checkPanValid(this.qdeService.getFilteredJson({actualPanNumber: form.value.pan})).subscribe((response) => {
 
+      response["ProcessVariables"]["status"] = true; // Comment while deploying if service is enabled false
+
       if(response["ProcessVariables"]["status"]) { // Boolean to check from nsdl website whether pan is valid or not 
 
         this.qde.application.applicants[this.coApplicantIndex].pan.isValid = true;
@@ -636,11 +638,11 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
 
     this.qdeHttp.checkPanValid(this.qdeService.getFilteredJson({actualPanNumber: form.value.pan})).subscribe((response) => {
 
-      response["ProcessVariables"]["status"] = true;
-
         let processVariables = response["ProcessVariables"];//need to check its needed for non individual
         this.qde.application.applicants[this.coApplicantIndex].personalDetails.firstName = processVariables["firstName"];
         this.qde.application.applicants[this.coApplicantIndex].personalDetails.lastName = processVariables["lastName"];
+
+        response["ProcessVariables"]["status"] = true; // Comment while deploying if service is enabled false
 
       if(response["ProcessVariables"]["status"]) { // Boolean to check from nsdl website whether pan is valid or not 
 

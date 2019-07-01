@@ -719,7 +719,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
     this.qdeHttp.checkPanValid(this.qdeService.getFilteredJson({actualPanNumber: form.value.pan})).subscribe((response) => {
 
-      response["ProcessVariables"]["status"] = true;
+      response["ProcessVariables"]["status"] = true; // Comment while deploying if service is enabled false
 
       if(response["ProcessVariables"]["status"]) { // Boolean to check from nsdl website whether pan is valid or not 
         
@@ -797,7 +797,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     this.qde.application.applicants[this.applicantIndex].pan.docNumber = form.value.docNumber;
 
     this.qdeHttp.checkPanValid(this.qdeService.getFilteredJson({actualPanNumber: form.value.pan})).subscribe((response) => {
-      response["ProcessVariables"]["status"] = true;
+      
+    response["ProcessVariables"]["status"] = true; // Comment while deploying if service is enabled false
+
     if(response["ProcessVariables"]["status"]) { // Boolean to check from nsdl website whether pan is valid or not 
 
       this.qde.application.applicants[this.applicantIndex].pan.isValid = true;
