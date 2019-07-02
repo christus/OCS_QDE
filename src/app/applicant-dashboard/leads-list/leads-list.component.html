@@ -180,8 +180,8 @@
                                         <a [routerLink]="detail.url">
                                             <ul>
                                                 <li><span>Branch :</span><b> {{detail.branchName}}</b></li>
-                                                <li><span>Generated date :</span><b> {{detail.appliedOn | slice:0:10}}</b></li>
-                                                <li><span>Assigned date :</span><b> {{detail.assignedDate | slice:0:10}}</b></li>
+                                                <li><span>Generated date :</span><b> {{detail.appliedOn | date:'dd-MM-yyyy HH:mm:ss'}}</b></li>
+                                                <li><span>Assigned date :</span><b> {{detail.assignedDate | date:'dd-MM-yyyy HH:mm:ss'}}</b></li>
                                             </ul>
                                         </a>
                                     </td>

@@ -732,7 +732,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     this.qdeHttp.checkPanValid(this.qdeService.getFilteredJson({actualPanNumber: form.value.pan})).subscribe((response) => {
 
       response["ProcessVariables"]["status"] = true; // Comment while deploying if service is enabled false
-
+      
       if(response["ProcessVariables"]["status"]) { // Boolean to check from nsdl website whether pan is valid or not 
         
         this.qde.application.applicants[this.applicantIndex].pan.isValid = true;
@@ -741,10 +741,13 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
         let processVariables = response["ProcessVariables"];
         this.qde.application.applicants[this.applicantIndex].personalDetails.firstName = processVariables["firstName"];
         this.qde.application.applicants[this.applicantIndex].personalDetails.lastName = processVariables["lastName"];
-        this.qde.application.applicants[this.applicantIndex].personalDetails.title  = processVariables["applicantTitleId"];
+        if(processVariables["applicantTitleId"] > 0) {
+          this.qde.application.applicants[this.applicantIndex].personalDetails.title  = processVariables["applicantTitleId"];
+        }
         this.selectedTitle  = this.getApplicantTitle(processVariables["applicantTitleId"]);
         this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
           // If successful
+          
           if(response["ProcessVariables"]["status"] == true) {
             let result = this.parseJson(response["ProcessVariables"]["response"]);
             // this.qde.application.ocsNumber = result["application"]["ocsNumber"];
@@ -821,7 +824,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       let processVariables = response["ProcessVariables"];//need to check its needed for non individual
       this.qde.application.applicants[this.applicantIndex].personalDetails.firstName = processVariables["firstName"];
       this.qde.application.applicants[this.applicantIndex].personalDetails.lastName = processVariables["lastName"];
-      this.qde.application.applicants[this.applicantIndex].personalDetails.title  = processVariables["applicantTitleId"];
+      if(processVariables["applicantTitleId"] > 0) {
+        this.qde.application.applicants[this.applicantIndex].personalDetails.title  = processVariables["applicantTitleId"];
+      }
       this.selectedTitle = this.getApplicantTitle(processVariables["applicantTitleId"]);
       this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successfull
