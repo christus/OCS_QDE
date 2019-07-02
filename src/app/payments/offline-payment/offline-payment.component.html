@@ -55,7 +55,8 @@
                                             <form class="bs-form">
                                                 <div class="form-wrap">
                                                     <div class="bs-radio">
-                                                      <input type="radio" name="payment-radio" id="online" [routerLink]="['/payments/eligibility-check', applicationId]">
+                                                      <!-- <input type="radio" name="payment-radio" id="online" [routerLink]="['/payments/eligibility-check', applicationId]" (click)="submitPaymentForm()"> -->
+                                                      <input type="radio" name="payment-radio" id="online" (click)="submitPaymentForm()">
                                                       <label for="online">
                                                           <div class="inner-sect">
                                                               <div class="title">Online</div>

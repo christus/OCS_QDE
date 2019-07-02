@@ -16,6 +16,13 @@ export class CommonDataService {
     this.isMenuBarShown$.next(isMenuBarShown);
   }
 
+  // paymentActive$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+
+  // paymentActive = this.paymentActive$.asObservable();
+
+  // changePayment(paymentActive: boolean) {
+  //   this.paymentActive$.next(paymentActive);
+  // }
 
   //private isViewFormNameVisible$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
 

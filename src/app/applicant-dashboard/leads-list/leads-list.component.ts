@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
 import { UtilService } from 'src/app/services/util.service';
+import { from } from 'rxjs';
 
 export interface UserDetails {
-  "amountEligible": number,
-  "amountRequired": number,
-  "firstName": string,
-  "ocsNumber": number
+  "amountEligible": number;
+  "amountRequired": number;
+  "firstName": string;
+  "ocsNumber": number;
+  "url": string;
 }
 
 interface Item {
@@ -104,6 +106,9 @@ export class LeadsListComponent implements OnInit {
 
         if (res['Error'] && res['Error'] == 0) {
           this.userDetails = res['ProcessVariables'].userDetails || [];
+          from(this.userDetails).subscribe(el => {
+            el.url = this.getUrl(el['status'], el['leadId'], el['applicantId']);
+          });
         } else if (res['login_required'] && res['login_required'] === true) {
           this.utilService.clearCredentials();
           alert(res['message']);
@@ -115,5 +120,29 @@ export class LeadsListComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  getUrl(status: string, applicationId?: string, applicantId?: string) {
+    if(status == "QDE Started") {
+      return "/applicant/"+applicationId;
+    } else if(status == "QDE Completed") {
+      return "/applicant/"+applicationId;
+    } else if(status == "KYC Document Uploaded") {
+      return "/applicant/"+applicationId;
+    } else if(status == "Terms and conditions accepted") {
+      return "/payments/online-summary/"+applicationId;
+    } else if(status == "Login Fee Paid") {
+      return "/payments/eligibility-check/"+applicationId;
+    } else if(status == "Eligibilty Passed") {
+      return "/applicant/"+applicationId;
+    } else if(status == "Eligibilty Failes") {
+      return "/applicant/"+applicationId;
+    } else if(status == "Mandatory Document Uploaded") {
+      return "/applicant/"+applicationId;
+    } else if(status == "DDE Submitted") {
+      return "/applicant/"+applicationId;
+    } else {
+      return "/applicant/";
+    }
   }
 }

@@ -210,5 +210,11 @@ export class OfflinePaymentComponent implements OnInit {
     this.qdeHttp.setStatusApi(this.applicationId, this.applicationStatus).subscribe(res => {}, err => {});
   }
 
+  amnt:string = '4480';
+  submitPaymentForm() {
+  console.log("Payment gateway")
+  this.qdeHttp.paymentGateway(this.amnt).subscribe(res => {
+   });
+}
 
 }

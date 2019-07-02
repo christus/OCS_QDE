@@ -23,9 +23,9 @@ export class OnlineSummaryComponent implements OnInit {
               private commonDataService: CommonDataService,
               private qdeService: QdeService
   ) { 
-    this.commonDataService.changeMenuBarShown(false);
-    this.commonDataService.changeViewFormVisible(false);
-    this.commonDataService.changeLogoutVisible(false);
+    this.commonDataService.changeMenuBarShown(true);
+    this.commonDataService.changeViewFormVisible(true);
+    this.commonDataService.changeLogoutVisible(true);
 
 
     this.route.params.subscribe(v => {

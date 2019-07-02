@@ -15,18 +15,18 @@ export class MenubarHeaderComponent implements OnInit {
   isMenuBarShown: boolean;
   isViewFormNameVisible: boolean;
   isViewFormVisible: boolean;
-  isLogoutVisible: boolean;
+  isLogoutVisible: boolean = false;
   applicationId: string;
   coApplicantIndex: number;
   applicantId: string;
   // isMenuBarShown: boolean;
   isViewFormNameShown: boolean;
+  paymentActive: boolean;
   // isViewFormVisible: boolean;
   // isLogoutVisible: boolean;
   // applicantId: string;
 
   public applicantName: string;
-
   qde:Qde;
 
 
@@ -42,13 +42,17 @@ export class MenubarHeaderComponent implements OnInit {
     });
 
     this.commonDataService.isViewFormVisible.subscribe((value) => {
-      this.isViewFormVisible = value;
+      this.isViewFormVisible = value = true;
     });
 
     this.commonDataService.isLogoutVisible.subscribe((value) => {
       this.isLogoutVisible = value;
     });
     
+    // this.commonDataService.paymentActive.subscribe((value) => {
+    //   this.paymentActive = value;
+    // });
+
     this.commonDataService.applicationId.subscribe(val => {
       this.applicationId = val;
       console.log("applicationId: ", this.applicationId);

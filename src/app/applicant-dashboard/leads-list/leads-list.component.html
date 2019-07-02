@@ -168,16 +168,16 @@
                                 </tr> 
                                 <tr>
                                     <td>
-                                        <a routerLink="/applicant/{{detail.leadId}}">
+                                        <a [routerLink]="detail.url">
                                             <ul>
-                                                <li><span>Name :</span><b> {{detail.firstName || detail.nameOfOrganization}}</b></li>
+                                                <li><span>Name :</span><b> {{detail.firstName || detail.nameOfOrganization}} {{detail.lastName}}</b></li>
                                                 <li><span>Product :</span><b> {{detail.product}}</b></li>
                                                 <li><span>Loan amount :</span><b> {{detail.amountRequired}}</b></li>
                                             </ul>
                                         </a>
                                     </td>
                                     <td>
-                                        <a routerLink="/applicant/{{detail.leadId}}">
+                                        <a [routerLink]="detail.url">
                                             <ul>
                                                 <li><span>Branch :</span><b> {{detail.branchName}}</b></li>
                                                 <li><span>Generated date :</span><b> {{detail.appliedOn | slice:0:10}}</b></li>
@@ -186,10 +186,10 @@
                                         </a>
                                     </td>
                                     <td>
-                                        <a routerLink="/applicant/{{detail.leadId}}">
+                                        <a [routerLink]="detail.url">
                                             <ul>
 
-                                                <li><span>Pending status :</span><b> {{detail.pendingStatus}}</b></li>
+                                                <li><span>Pending status :</span><b> {{detail.status}}</b></li>
                                                 <li><span>Pending with :</span><b> {{detail.appliedBy}}</b></li>
                                             </ul>
                                         </a>

@@ -197,15 +197,26 @@ export class EligibilityCheckComponent implements OnInit {
   emiAmount: number;
   eligibleAmount: number;
   firstname: number;
+  showEligible: boolean = false;
+  showNotEligible: boolean =false;
 
   submitEligibility() {
 
     this.qdeHttp.cibilDetails(this.ocsNumber).subscribe(res => {
-      console.log("res: ", res['ProcessVariables'].toLowerCase);
-      console.log(this.firstname)
+      if(res['ProcessVariables']['checkEligibility'].toLowerCase() == 'yes'){
+        this.showEligible = true;
+        console.log("res: ", res['ProcessVariables'].toLowerCase);
+        console.log(this.firstname)
         this.firstname = res['ProcessVariables']['firstName'];
         this.emiAmount = parseInt(res['ProcessVariables']['emi']);
         this.eligibleAmount = parseInt(res['ProcessVariables']['eligibilityAmount']);
+      }
+      else if(res['ProcessVariables']['checkEligibility'].toLowerCase() == 'no'){
+        this.showNotEligible = true;
+      }
+      else if(res['ProcessVariables']['checkEligibility'].toLowerCase() == 'review'){
+        this.showNotEligible = true;
+      }
     });
   }
 
