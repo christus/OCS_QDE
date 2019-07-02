@@ -185,11 +185,12 @@
                                         <input type="text" class="form-control" id="amt-require" readonly="true"
                                         required
                                         ngModel
+                                        pattern="^[A-Za-z]*$"
                                         [(ngModel)]="qde?.application.loanDetails.loanAmount.amountRequired"
                                         #amountRequired = "ngModel"
                                         name="amountRequired"
                                         fieldFill>
-                                      <label for="amt-require">Amount required (in lakhs)</label>
+                                      <label for="amt-requir">Amount required (in lakhs)</label>
                                       <span class="addon">
                                           <span class="icon icon-inr"></span>
                                       </span>
@@ -253,11 +254,11 @@
                               <div class="col-12">
                                   <h5 class="subtitle">Have you identified property?</h5>
                                   <div class="bs-radio">
-                                      <input readonly="true"  type="radio" name="pro-id" [value]=true [(ngModel)]="isPropertyIdentified">
+                                      <input readonly="true" id="pro-ye" type="radio" name="pro-id" [value]=true [(ngModel)]="isPropertyIdentified">
                                      <label for="pro-yes"><span>Yes</span></label>
                                   </div>
                                   <div class="bs-radio">
-                                      <input readonly="true"  type="radio" name="pro-id" [value]=false [(ngModel)]="isPropertyIdentified">
+                                      <input readonly="true" id="pro-n" type="radio" name="pro-id" [value]=false [(ngModel)]="isPropertyIdentified">
                                       <label for="pro-no"><span>No</span></label>
                                   </div>
                               </div>
@@ -292,7 +293,7 @@
                                                     [(ngModel)]="propertyClssValue"
                                                     fieldFill
                                                     required>
-                                                <label for="prop-add1">Property CLSS Area</label>
+                                                <label for="prop-add12">Property CLSS Area</label>
                                             </div>
                                         </div>
                                 </div> 
@@ -305,7 +306,7 @@
                                                         [(ngModel)]="propertyAreaValue"
                                                         fieldFill
                                                         required/>
-                                                    <label for="prop-add1">Property area in sq. fts.</label>
+                                                    <label for="prop-add13">Property area in sq. fts.</label>
                                                 </div>
                                             </div>
                                 </div>
@@ -320,7 +321,7 @@
                                             [(ngModel)]="addressLineOneValue"
                                             name="proaddressLineOne"
                                             fieldFill/>
-                                          <label for="prop-add1">Property address 1</label>
+                                          <label for="prop-add14">Property address 1</label>
                                       </div>
                                   </div>
                               </div>
@@ -334,7 +335,7 @@
                                             fieldFill
                                             [(ngModel)]="addressLineTwoValue"
                                             name="addressLineTwo"/>
-                                          <label for="prop-add2">Property address 2</label>
+                                          <label for="prop-add21">Property address 2</label>
                                       </div>
                                   </div>
                               </div>
@@ -351,7 +352,7 @@
                                             name="propertyPincode"
                                             fieldFill
                                             (change)="onPinCodeChange($event)">
-                                          <label for="prop-pin">Property pincode</label>
+                                          <label for="prop-pin2">Property pincode</label>
                                       </div>
                                   </div>
                                   <div class="col-6">
@@ -519,7 +520,7 @@
                                         #refOneFullName="ngModel"
                                         fieldFill 
                                         [(ngModel)]="selectedName1">
-                                        <label for="ref1-name">Name</label>
+                                        <label for="ref1-name12">Name</label>
                                     </div>
                                 </div>
                             </div>
@@ -529,14 +530,14 @@
                                         <input type="text" class="form-control"
                                         required 
                                         ngModel
-                                        id="ref1-mobile"  
+                                        id="ref1-mobile1"  
                                         name="mobileNumber"
                                         minlength="10"
                                         maxlength="10"
                                         fieldFill 
                                         #refOneMobileNumber="ngModel"
                                         [(ngModel)]="selectedMobile1">
-                                          <label for="ref1-mob">Mobile</label>
+                                          <label for="ref1-mob12">Mobile</label>
                                       </div>
                                   </div>
                               </div>
@@ -550,7 +551,7 @@
                                         fieldFill
                                         #refOneAddressLineOne="ngModel"
                                         [(ngModel)]="selectedAddressLineOne1">
-                                          <label for="ref1-add1">Address line 1</label>
+                                          <label for="ref1-add12">Address line 1</label>
                                       </div>
                                   </div>
                               </div>
@@ -564,7 +565,7 @@
                                         fieldFill
                                         #refOneAddressLineTwo="ngModel"
                                         [(ngModel)]="selectedAddressLineTwo1">
-                                          <label for="ref1-add2">Address line 2</label>
+                                          <label for="ref1-add22">Address line 2</label>
                                       </div>
                                   </div>
                               </div>
@@ -616,7 +617,7 @@
                                           required
                                           fieldFill
                                           [(ngModel)]="selectedName2">
-                                            <label for="ref2-name">Name</label>
+                                            <label for="ref2-name21">Name</label>
                                         </div>
                                     </div>
   
@@ -633,7 +634,7 @@
                                             fieldFill
                                             required
                                             [(ngModel)]="selectedMobile2">
-                                          <label for="ref2-mob">Mobile</label>
+                                          <label for="ref2-mob23">Mobile</label>
                                       </div>
                                   </div>
                               </div>
@@ -647,7 +648,7 @@
                                             required
                                             fieldFill
                                             [(ngModel)]="selectedAddressLineOne2">
-                                          <label for="ref2-add1">Address line 1</label>
+                                          <label for="ref2-add671">Address line 1</label>
                                       </div>
                                   </div>
                               </div>
@@ -661,7 +662,7 @@
                                             required
                                             fieldFill
                                             [(ngModel)]="selectedAddressLineTwo2">
-                                          <label for="ref2-add2">Address line 2</label>
+                                          <label for="ref2-add2jm">Address line 2</label>
                                       </div>
                                   </div>
                               </div>

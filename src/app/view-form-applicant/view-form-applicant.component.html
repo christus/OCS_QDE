@@ -16,7 +16,7 @@
                               [ngModel]="qde.application.applicants[applicantIndex].pan.panNumber"
                               id="pan-inpt"
                               name="pan" />
-                      <label for="pan-inpt">Enter PAN number</label>
+                      <label for="pan-inp">Enter PAN number</label>
                   </div>
               </div>
           </div>
@@ -49,7 +49,7 @@
                               pattern="^[A-Za-z]*$"
                               [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.firstName"
                               name="firstName" />
-                        <label for="first-name">First name</label>
+                        <label for="first-nam">First name</label>
                   </div>
               </div>
               <div class="col-4">
@@ -62,7 +62,7 @@
                                 [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.middleName"
                                 pattern="^[A-Za-z]*$"
                                 #middleName="ngModel" />
-                      <label for="middle-name">Middle name</label>
+                      <label for="middle-nam">Middle name</label>
                       <span class="optional">Optional</span>
                   </div>
               </div>
@@ -77,7 +77,7 @@
                                 pattern="^[A-Za-z]+$"
                                 fieldFill
                                 required />
-                      <label for="last-name">Last name</label>
+                      <label for="last-nam">Last name</label>
                      
                   </div>
               </div>
@@ -145,7 +145,7 @@
               </div>
               <div class="col-6">
                 <div class="form-group">                                                 
-                    <label for="birthPlace">Birth place</label>
+                    <label for="birthPlac">Birth place</label>
                         <input spellcheck="false"
                           type="text"
                           class="form-control"
@@ -178,7 +178,7 @@
                                 fieldFill
                                 required />
                       
-                      <label for="prefered-email" >Preferred email ID</label>
+                      <label for="prefered-emai" >Preferred email ID</label>
 
                       
                   </div>
@@ -191,7 +191,7 @@
                                 fieldFill
                                 #alternateEmailId="ngModel"
                                 email />
-                      <label for="alternate-email">Alternate email ID</label>
+                      <label for="alternate-emai">Alternate email ID</label>
                       
                   </div>
               </div>
@@ -219,7 +219,7 @@
                                 pattern="^[0-9]*$" 
                                 required />
 
-                      <label for="mob-no">Mobile number</label>
+                      <label for="mob-n">Mobile number</label>
                       <span class="optional">10 digit</span>
                       <a href="javascript:void(0);" class="sent-otp modal-init" data-target="sent-otp-modal"><span class="text">sent OTP</span><span class="icon icon-tick"></span></a>
 
@@ -239,7 +239,7 @@
                                 #altMobileNo="ngModel"
                                 pattern="^[0-9]*$" />
 
-                      <label for="alter-mob" *ngIf="altMobileNo.value == ''">Alternate mobile no</label>
+                      <label for="alter-mo" *ngIf="altMobileNo.value == ''">Alternate mobile no</label>
                       <span class="optional">10 digit</span>
                       <a href="javascript:void(0);" class="sent-otp modal-init" data-target="sent-otp-modal"><span class="text">sent OTP</span><span class="icon icon-tick"></span></a>
                       
@@ -253,7 +253,7 @@
                                 name="residenceNumber1"
                                 class="form-control"
                                 id="std" />
-                    <label for="std">STD</label>
+                    <label for="st">STD</label>
                   
                       </div>
                       <span class="seperator">-</span>
@@ -264,7 +264,7 @@
                                 fieldFill
                                 [(ngModel)]="residenceNumberPhoneNumber"
                                 name="residenceNumber2" />
-                          <label for="res-no" >Residence number</label>
+                          <label for="res-n" >Residence number</label>
                           
                       </div>
                   </div>
@@ -276,7 +276,7 @@
                                   fieldFill
                                   class="form-control"
                                   id="altrstd">
-                        <label for="altrstd">STD</label>
+                        <label for="altrst">STD</label>
                     </div>
                     <span class="seperator">-</span>
                     <div class="form-group">
@@ -287,7 +287,7 @@
                                   fieldFill
                                   id="altr-res-no"
                                   data-validation-attr="residenceno01" />
-                        <label for="altr-res-no">Residence number</label>
+                        <label for="altr-res-n">Residence number</label>
                     </div>
                   </div>
               </div>
@@ -327,7 +327,7 @@
 
                       
 
-                    <label for="address1">Address line 1</label>
+                    <label for="address12">Address line 1</label>
 
                   </div>
               </div>
@@ -345,7 +345,7 @@
                             #address2="ngModel"
                             required>
 
-                      <label for="address2" >Address line 2</label>
+                      <label for="address22" >Address line 2</label>
                       
                   </div>
               </div>
@@ -360,7 +360,7 @@
                         #commPinCode="ngModel" 
                         maxlength="6"
                         pattern="^[0-9]+$" />
-                      <label for="pincode">Pincode</label>
+                      <label for="pincod">Pincode</label>
 
                      
                   </div>
@@ -376,7 +376,7 @@
                             [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.city"
                             pattern="^[0-9A-Za-z,_#]+$" />
 
-                    <label for="cityState">City/State</label>
+                    <label for="cityStat">City/State</label>
 
                    
                   </div>
@@ -390,7 +390,7 @@
                                 name="permanentAddress"
                                 fieldFill
                                 id="permanentAddress">
-                        <label for="permanentAddress"><span>Current Address is Permanent Address</span></label>
+                        <label for="permanentAddress1"><span>Current Address is Permanent Address</span></label>
                   </div>
               </div>
           </div>
@@ -458,7 +458,7 @@
                                     fieldFill
                                     id="spouse-name"
                                     required />
-                          <label for="spouse-name">First name</label>
+                          <label for="spouse-name1">First name</label>
 
                       </div>
                   </div>
@@ -502,7 +502,7 @@
                             name="amount"
                             pattern="^-?\d*(\.\d+)?$" />
 
-                            <label for="amount">Amount (in lakhs)</label>
+                            <label for="amount1">Amount (in lakhs)</label>
                             <span class="addon">
                               <span class="icon icon-inr"></span>
                             </span>
@@ -558,7 +558,7 @@
                                   name="fatherName"
                                   fieldFill
                                   pattern="^[A-Za-z\s]+$" />
-                    <label for="father-name" *ngIf="fatherName.value==''">Father's name</label>
+                    <label for="father-name1" *ngIf="fatherName.value==''">Father's name</label>
 
                   </div>
               </div>
@@ -589,7 +589,7 @@
                               fieldFill
                               name="motherName"
                               pattern="^[A-Za-z\s]+$" />
-                        <label for="mother-name" *ngIf="motherName.value == ''">Mother's name</label>
+                        <label for="mother-name1" *ngIf="motherName.value == ''">Mother's name</label>
                   </div>
               </div>
           </div>
@@ -604,7 +604,7 @@
                               fieldFill
                               pattern="^[A-Za-z\s]+$" />
 
-                        <label for="maiden-name" *ngIf="motherMaiden.value==''">Mother's maiden name</label>
+                        <label for="maiden-name1" *ngIf="motherMaiden.value==''">Mother's maiden name</label>
                   </div>
               </div>
           </div>
@@ -684,7 +684,7 @@
                         #companyName="ngModel"
                         id="companyName" />
 
-                <label for="companyName" *ngIf="companyName.value == ''">Company name</label>
+                <label for="companyName1" *ngIf="companyName.value == ''">Company name</label>
 
                   </div>
               </div>
@@ -752,7 +752,7 @@
                         #ofcA1="ngModel"
                         required />
 
-                    <label for="ofcAddOne" *ngIf="ofcA1.value == ''">Office address line1</label>
+                    <label for="ofcAddOne1" *ngIf="ofcA1.value == ''">Office address line1</label>
 
                   </div>
               </div>
@@ -769,7 +769,7 @@
                                 name="ofcA2"
                                 #ofcA2="ngModel"
                                 required />
-                      <label for="ofcAddTwo" *ngIf="ofcA2.value == ''">Office address line2</label>
+                      <label for="ofcAddTwo1" *ngIf="ofcA2.value == ''">Office address line2</label>
 
                   </div>
               </div>
@@ -786,7 +786,7 @@
                                 pattern="^[0-9A-Za-z,_#]*$" 
                                 #landMark="ngModel" />
                       <label for="offLandmark" *ngIf="landMark.value == ''">Landmark</label>
-                      <span class="optional">optional</span>
+                      <span class="optional1">optional</span>
 
                   </div>
               </div>
@@ -803,7 +803,7 @@
                               name="pinCode"
                               maxlength="6"
                               pattern="^[0-9]+$" />
-                      <label for="offPincode" *ngIf="pinCode.value == ''">Pincode</label>
+                      <label for="offPincode1" *ngIf="pinCode.value == ''">Pincode</label>
 
                   </div>
               </div>
@@ -817,7 +817,7 @@
                               #offCityState="ngModel"
                               name="cityState"
                               pattern="^[0-9A-Za-z,_#]+$">
-                      <label for="offCityState" >City/State</label>
+                      <label for="offCityState1" >City/State</label>
 
                   
                   </div>
@@ -833,7 +833,7 @@
                             [(ngModel)]="officialCorrespondenceStdCode"
                             #stdCode = "ngModel"
                             name="stdCode" />
-                            <label for="std03">STD</label>
+                            <label for="std031">STD</label>
                           
                       </div>
                       <span class="seperator">-</span>
@@ -845,7 +845,7 @@
                             name="offStdNumber"
                             [(ngModel)]="officialCorrespondencePhoneNumber" />
 
-                            <label  for="res-no03"
+                            <label  for="res-no031"
                                     >Office number
                             </label>
 
@@ -864,7 +864,7 @@
                               email
                               #officeEmail = "ngModel"
                               name="officeEmail" />
-                      <label for="off-email">Office email ID</label>
+                      <label for="off-email1">Office email ID</label>
 
                       
                   </div>
@@ -886,7 +886,7 @@
                           name="annualFamilyIncome"
                           fieldFill
                           required/>
-                        <label for="annualFamilyIncome1">Annual Family Income <span class="lakhs">(in lakhs)</span> </label>
+                        <label for="annualFamilyIncome12">Annual Family Income <span class="lakhs">(in lakhs)</span> </label>
                         <span class="addon">
                             <span class="icon icon-inr"></span>
                           </span>
@@ -904,7 +904,7 @@
                             name="monthlyExpenditure"
                             fieldFill
                             required/>
-                          <label for="monthlyExpenditure2" >Monthly Expenditure</label>
+                          <label for="monthlyExpenditure22" >Monthly Expenditure</label>
                                     <span class="addon">
                                         <span class="icon icon-inr"></span>
                                     </span>
@@ -922,7 +922,7 @@
                                   fieldFill
                                   name="monthlyIncome"
                                   required/>
-                                  <label for="monthlyIncome1">Monthly income</label>
+                                  <label for="monthlyIncome13">Monthly income</label>
                                   <span class="addon">
                                       <span class="icon icon-inr"></span>
                                   </span>
@@ -962,7 +962,7 @@
                                   fieldFill
                                   spellcheck="false"
                                   required />
-                          <label for="org-name">Name of Organization</label>
+                          <label for="org-nam">Name of Organization</label>
                       </div>
                   </div>
               </div>
@@ -1034,7 +1034,7 @@
                                             fieldFill
                                             spellcheck="false"
                                             required />
-                                  <label for="reg-add">Registered Address</label>
+                                  <label for="reg-ad">Registered Address</label>
 
                               </div>
                   </div>
@@ -1051,7 +1051,7 @@
                                           [(ngModel)]="qde.application.applicants[applicantIndex].registeredAddress.landMark"
                                           id="landmark" />
 
-                                  <label for="landmark">Landmark</label>
+                                  <label for="landmar">Landmark</label>
                                   <span class="optional">optional</span>
 
                               </div>
@@ -1068,7 +1068,7 @@
                                           maxlength="6"
                                           fieldFill
                                           spellcheck="false" />
-                                    <label for="regoffPincode">Pincode</label>
+                                    <label for="regoffPincod">Pincode</label>
 
                               </div>
                   </div>
@@ -1081,7 +1081,7 @@
                                     name="cityState"
                                     fieldFill
                                     spellcheck="false" />
-                                    <label for="regAddrCityState">City/State</label>
+                                    <label for="regAddrCityStat">City/State</label>
                               </div>
                   </div>
               </div>
@@ -1104,7 +1104,7 @@
                                             fieldFill
                                             spellcheck="false"
                                             required />
-                                  <label for="corp-add">Corporate Address</label>
+                                  <label for="corp-ad">Corporate Address</label>
                               </div>
                   </div>
               </div>
@@ -1120,7 +1120,7 @@
                                           spellcheck="false"
                                           
                                           id="landmark01" />
-                                  <label for="landmark01">Landmark</label>
+                                  <label for="landmark012">Landmark</label>
                                   <span class="optional">optional</span>
                                   
                               </div>
@@ -1137,7 +1137,7 @@
                                           required
                                           spellcheck="false"
                                           fieldFill />
-                                  <label for="pincode01">Pincode</label>
+                                  <label for="pincode013">Pincode</label>
 
                               </div>
                   </div>
@@ -1151,7 +1151,7 @@
                                           name="corpCityState"
                                           fieldFill
                                           spellcheck="false" />
-                                    <label for="city-state01">City/State</label>
+                                    <label for="city-state013">City/State</label>
 
                               </div>
                   </div>
@@ -1170,7 +1170,7 @@
                                           required
                                           id="caStd"
                                           required/>
-                                  <label for="caStd">STD</label>
+                                  <label for="caSt">STD</label>
 
                               </div>
                   </div>
@@ -1186,7 +1186,7 @@
                                            maxlength="8" 
                                           data-validation-attr="residenceno" 
                                           required/>
-                                  <label for="ca-res-no">Residence number</label>
+                                  <label for="ca-res-n">Residence number</label>
                               </div>
                   </div>
               </div>
@@ -1203,7 +1203,7 @@
                                             fieldFill
                                             spellcheck="false"
                                             email />                                      
-                                <label for="ofc-email" *ngIf="ofcEmail.value==''">Office email ID</label>
+                                <label for="ofc-emai" *ngIf="ofcEmail.value==''">Office email ID</label>
 
                               </div>
                   </div>
@@ -1223,7 +1223,7 @@
                                   fieldFill
                                   spellcheck="false"
                                   required />
-                                  <label for="revenue">Revenue</label>
+                                  <label for="revenu">Revenue</label>
 
 
                                   <span class="addon">
@@ -1243,7 +1243,7 @@
                                   spellcheck="false"
                                   #annualNetincome="ngModel"
                                   name="annualNetIncome" />
-                                  <label for="net-income">Annual Net Income</label>
+                                  <label for="net-incom">Annual Net Income</label>
 
                                   <span class="addon">
                                       <span class="icon icon-inr"></span>
@@ -1260,7 +1260,7 @@
                                   fieldFill
                                   spellcheck="false"
                                   name="grossTurnOver" />
-                                  <label for="gross-turnover">Gross Turnover</label>
+                                  <label for="gross-turnove">Gross Turnover</label>
 
                                   <span class="addon">
                                       <span class="icon icon-inr"></span>
