@@ -504,7 +504,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
       // Personal Details Title
       if( ! isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].personalDetails.title)) ) {
-        this.selectedTitle = this.titles[(parseInt(this.qde.application.applicants[this.applicantIndex].personalDetails.title))-1];
+        this.selectedTitle = this.getApplicantTitle(this.qde.application.applicants[this.applicantIndex].personalDetails.title);
       }
 
       // Personal Details Qualification (different because qualification isnt sending sequential value like 1,2,3)
@@ -704,6 +704,17 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   // PAN
   //-------------------------------------------------------------
 
+  getApplicantTitle (salutation:string) {
+    let titles = JSON.parse(JSON.stringify(this.titles));
+    let selectedSalutationObj = {};
+    for(let key in titles) {
+      let salutationObj = titles[key];
+      if(salutationObj["value"] == salutation ) {
+        return salutationObj;
+      }
+    }
+    return titles[0];
+  }
   
   submitPanNumber(form: NgForm, swiperInstance ?: Swiper) {
 
@@ -729,7 +740,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
         let processVariables = response["ProcessVariables"];
         this.qde.application.applicants[this.applicantIndex].personalDetails.firstName = processVariables["firstName"];
         this.qde.application.applicants[this.applicantIndex].personalDetails.lastName = processVariables["lastName"];
-
+        this.qde.application.applicants[this.applicantIndex].personalDetails.title  = processVariables["applicantTitleId"];
+        this.selectedTitle  = this.getApplicantTitle(processVariables["applicantTitleId"]);
         this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
           // If successful
           if(response["ProcessVariables"]["status"] == true) {
@@ -808,7 +820,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       let processVariables = response["ProcessVariables"];//need to check its needed for non individual
       this.qde.application.applicants[this.applicantIndex].personalDetails.firstName = processVariables["firstName"];
       this.qde.application.applicants[this.applicantIndex].personalDetails.lastName = processVariables["lastName"];
-
+      this.qde.application.applicants[this.applicantIndex].personalDetails.title  = processVariables["applicantTitleId"];
+      this.selectedTitle = this.getApplicantTitle(processVariables["applicantTitleId"]);
       this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successfull
         if(response["ProcessVariables"]["status"]) {

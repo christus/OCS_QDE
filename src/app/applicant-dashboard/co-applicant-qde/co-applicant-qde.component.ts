@@ -547,6 +547,19 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
   //-------------------------------------------------------------
   // PAN
   //-------------------------------------------------------------
+
+  getCoApplicantTitle (salutation:string) {
+    let titles = JSON.parse(JSON.stringify(this.titles));
+    let selectedSalutationObj = {};
+    for(let key in titles) {
+      let salutationObj = titles[key];
+      if(salutationObj["value"] == salutation ) {
+        return salutationObj;
+      }
+    }
+    return titles[0];
+  }
+
   submitPanNumber(form: NgForm, swiperInstance ?: Swiper) {
 
     event.preventDefault();
@@ -572,7 +585,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
         let processVariables = response["ProcessVariables"];//need to check its needed for non individual
         this.qde.application.applicants[this.coApplicantIndex].personalDetails.firstName = processVariables["firstName"];
         this.qde.application.applicants[this.coApplicantIndex].personalDetails.lastName = processVariables["lastName"];
-
+        this.qde.application.applicants[this.coApplicantIndex].personalDetails.title  = processVariables["applicantTitleId"];
+        this.selectedTitle = this.getCoApplicantTitle(processVariables["applicantTitleId"]);
         this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
         if(response["ProcessVariables"]["status"]) {
@@ -641,7 +655,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
         let processVariables = response["ProcessVariables"];//need to check its needed for non individual
         this.qde.application.applicants[this.coApplicantIndex].personalDetails.firstName = processVariables["firstName"];
         this.qde.application.applicants[this.coApplicantIndex].personalDetails.lastName = processVariables["lastName"];
-
+        this.qde.application.applicants[this.coApplicantIndex].personalDetails.title  = processVariables["applicantTitleId"];
+        this.selectedTitle = this.getCoApplicantTitle(processVariables["applicantTitleId"]);
         response["ProcessVariables"]["status"] = true; // Comment while deploying if service is enabled false
 
       if(response["ProcessVariables"]["status"]) { // Boolean to check from nsdl website whether pan is valid or not 
@@ -1602,7 +1617,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
 
       // Personal Details Title
       if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].personalDetails.title)) ) {
-        this.selectedTitle = this.titles[(parseInt(this.qde.application.applicants[this.coApplicantIndex].personalDetails.title))-1];
+        this.selectedTitle = this.getCoApplicantTitle(this.qde.application.applicants[this.coApplicantIndex].personalDetails.title);
       }
 
       // Personal Details Qualification (different because qualification isnt sending sequential value like 1,2,3)
