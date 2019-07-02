@@ -539,7 +539,7 @@ createOrUpdatePersonalDetails(qde) {
         "referenceNumber": "",
         "requestType": "",
         "ocsReferenceNumber": "ocs00000000000000000037",
-        "checkEligibility": "yes",
+        "checkEligibility": "no",
         //"checkEligibility": "no",
         "eligibilityAmount": "50000",
         "emi": "15000",

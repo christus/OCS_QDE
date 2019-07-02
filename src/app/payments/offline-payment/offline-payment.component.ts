@@ -205,9 +205,9 @@ export class OfflinePaymentComponent implements OnInit {
     this.isAlternateResidenceNumber = !this.isAlternateResidenceNumber;
   }
 
-  applicationStatus: string = "20";
+  applicationStatusCheque: string = "16";
   offline(){
-    this.qdeHttp.setStatusApi(this.applicationId, this.applicationStatus).subscribe(res => {}, err => {});
+    this.qdeHttp.setStatusApi(this.applicationId, this.applicationStatusCheque).subscribe(res => {}, err => {});
   }
 
   totalFee:number;

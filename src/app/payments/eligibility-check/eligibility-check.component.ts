@@ -201,8 +201,9 @@ export class EligibilityCheckComponent implements OnInit {
   showNotEligible: boolean =false;
 
   submitEligibility() {
-
+console.log("Hi")
     this.qdeHttp.cibilDetails(this.ocsNumber).subscribe(res => {
+      console.log("hi2")
       if(res['ProcessVariables']['checkEligibility'].toLowerCase() == 'yes'){
         this.showEligible = true;
         console.log("res: ", res['ProcessVariables'].toLowerCase);
@@ -216,6 +217,9 @@ export class EligibilityCheckComponent implements OnInit {
       }
       else if(res['ProcessVariables']['checkEligibility'].toLowerCase() == 'review'){
         this.showNotEligible = true;
+      }
+      else{
+        alert("Server is Down!!!");
       }
     });
   }
