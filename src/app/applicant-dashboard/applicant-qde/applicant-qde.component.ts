@@ -55,7 +55,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
   regexPattern = {
     mobileNumber: "^[0-9]*$",
-    name: "^[A-Za-z, ]+$",
+    name: "^[A-Za-z ]+$",
     address : "^[0-9A-Za-z, _&'/#]+$",
     // cityState:"^[0-9A-Za-z, &'#]$",
     pinCode: "^[1-9][0-9]{5}$",

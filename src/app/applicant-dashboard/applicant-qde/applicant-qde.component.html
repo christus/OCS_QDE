@@ -1535,8 +1535,6 @@
                                               name="numberOfYearsInCurrentCompany"
                                               id="no-yrs"
                                               class="form-control"
-                                              min="0"
-                                              max="50"
                                               [(ngModel)]="qde.application.applicants[applicantIndex].occupation.numberOfYearsInCurrentCompany"
                                               tabindex="3"
                                               maxlength="2"
@@ -1564,8 +1562,6 @@
                                               [(ngModel)]="qde.application.applicants[applicantIndex].occupation.totalWorkExperience"
                                               maxlength="2"
                                               oninput="this.value=this.value.slice(0,this.maxLength)"
-                                              min="0"
-                                              max="50"
                                               #totalExperienceYear="ngModel"
                                               required />
   
