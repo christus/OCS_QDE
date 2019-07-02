@@ -174,7 +174,7 @@
                                                             minlength="10"
                                                             maxlength="10"
                                                             pattern="{{regexPattern.pan}}"      
-                                                            oninput="this.value=this.value.toUpperCase()"
+                                                            (ngModelChange)="qde.application.applicants[coApplicantIndex].pan.panNumber = $event.toUpperCase()"
                                                             name="pan"
                                                             #panNumber="ngModel"
                                                             fieldFill
@@ -1585,8 +1585,10 @@
                                               tabindex="3"
                                               class="form-control"
                                               [(ngModel)]="qde.application.applicants[coApplicantIndex].occupation.numberOfYearsInCurrentCompany"
-                                              min=0
-                                              max=90
+                                              min="0"
+                                              max="50"
+                                              maxlength="2"
+                                              oninput="this.value=this.value.slice(0,this.maxLength)"
                                               spellcheck="false"
                                               #numberOfYearsInCurrentCompany="ngModel"
                                               required />
@@ -1608,8 +1610,10 @@
                                               class="form-control"
                                               tabindex="5"
                                               [(ngModel)]="qde.application.applicants[coApplicantIndex].occupation.totalWorkExperience"
-                                              min=0
-                                              max=90
+                                              min="0"
+                                              max="50"
+                                              maxlength="2"
+                                              oninput="this.value=this.value.slice(0,this.maxLength)"
                                               #totalExperienceYear="ngModel"
                                               spellcheck="false"
                                               required />
@@ -1620,6 +1624,7 @@
                                       <!-- <div *ngIf="(totalExperienceYear.touched || totalExperienceYear.dirty) && totalExperienceYear.invalid" class="invalid-feedback">
                                         <div *ngIf="totalExperienceYear.errors?.required">{{errors.occupationDetails.totalExp.required}}</div>
                                       </div> -->
+
                                       <div *ngIf="expError" class="invalid-feedback">
                                         <div *ngIf="expError"><br><br>Experience in current employment/business should not be greater than total work experience </div>
                                       </div>
@@ -1651,7 +1656,7 @@
                           <div class="title-wrap">
                               <h4 class="title">Enter Co-Applicant's <span class="cm-line-break"></span>professional contact <span class="cm-line-break"></span>details</h4>
                               <p class="note">In case, main application is currently not work-
-                                  <span class="cm-line-break">ing, pleases enter details of the applicant</span>
+                                  <span class="cm-line-break">ing, please enter details of the applicant</span>
                               </p>
                           </div>
                         </div>
@@ -2081,7 +2086,7 @@
                                                           maxlength="10"
                                                           pattern="{{regexPattern.pan}}"                                              
                                                           name="pan"
-                                                          oninput="this.value=this.value.toUpperCase()"
+                                                          (ngModelChange)="qde.application.applicants[coApplicantIndex].pan.panNumber = $event.toUpperCase()"
                                                           #panNumber2="ngModel"
                                                           fieldFill
                                                           spellcheck="false"

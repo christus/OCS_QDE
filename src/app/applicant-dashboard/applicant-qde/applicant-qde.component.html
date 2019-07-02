@@ -129,7 +129,7 @@
                                                             type="text"
                                                             class="form-control"
                                                             [(ngModel)]="qde.application.applicants[applicantIndex].pan.panNumber"
-                                                            oninput="this.value=this.value.toUpperCase()"
+                                                            (ngModelChange)="qde.application.applicants[applicantIndex].pan.panNumber = $event.toUpperCase()" 
                                                             id="pan-inpt"
                                                             minlength="10"
                                                             maxlength="10"
@@ -1535,10 +1535,12 @@
                                               name="numberOfYearsInCurrentCompany"
                                               id="no-yrs"
                                               class="form-control"
+                                              min="0"
+                                              max="50"
                                               [(ngModel)]="qde.application.applicants[applicantIndex].occupation.numberOfYearsInCurrentCompany"
                                               tabindex="3"
-                                              min=0
-                                              max=90
+                                              maxlength="2"
+                                              oninput="this.value=this.value.slice(0,this.maxLength)"
                                               #numberOfYearsInCurrentCompany="ngModel"
                                               required />
   
@@ -1548,7 +1550,7 @@
                                       </ng5-slider>
   
                                       <!-- <div *ngIf="numberOfYearsInCurrentCompany.touched && numberOfYearsInCurrentCompany.invalid" class="invalid-feedback">
-                                        <div *ngIf="numberOfYearsInCurrentCompany.errors?.required">{{errors.occupationDetails.currentExp.required}}</div>
+                                        <div *ngIf="numberOfYearsInCurrentCompany.errors?.pattern"><br><br>{{errors.occupationDetails.currentExp.numeric}}</div>
                                       </div> -->
   
                                   </div>
@@ -1560,8 +1562,10 @@
                                               class="form-control"
                                               tabindex="5"
                                               [(ngModel)]="qde.application.applicants[applicantIndex].occupation.totalWorkExperience"
-                                              min=0
-                                              max=90
+                                              maxlength="2"
+                                              oninput="this.value=this.value.slice(0,this.maxLength)"
+                                              min="0"
+                                              max="50"
                                               #totalExperienceYear="ngModel"
                                               required />
   
@@ -1607,7 +1611,7 @@
                           <div class="title-wrap">
                               <h4 class="title">Enter Applicant’s <span class="cm-line-break"></span>professional contact <span class="cm-line-break"></span>details</h4>
                               <p class="note">In case, main application is currently not work-
-                                  <span class="cm-line-break">ing, pleases enter details of the applicant</span>
+                                  <span class="cm-line-break">ing, please enter details of the applicant</span>
                               </p>
                           </div>
                         </div>
@@ -2044,9 +2048,9 @@
                                                           id="pan-inpt2"
                                                           minlength="10"
                                                           maxlength="10"
-                                                          pattern="{{regexPattern.pan}}"                                              
+                                                          pattern="{{regexPattern.pan}}"     
+                                                          (ngModelChange)="qde.application.applicants[applicantIndex].pan.panNumber = $event.toUpperCase()"                                        
                                                           name="pan"
-                                                          oninput="this.value=this.value.toUpperCase()"
                                                           #panNumber2="ngModel"
                                                           fieldFill
                                                           required />

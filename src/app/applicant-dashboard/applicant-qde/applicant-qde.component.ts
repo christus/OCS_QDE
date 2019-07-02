@@ -61,6 +61,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     pinCode: "^[1-9][0-9]{5}$",
     pan:"[A-Z]{5}[0-9]{4}[A-Z]{1}",
     // amount:"[0-9]{0,17}\.[0-9]{1,4}?$",
+    sliderValue: " [0-9]{0,2}",
     amount:"^[\\d]{0,10}([.][0-9]{0,4})?",
     email:"^\\w+([\.-]?\\w+)*@\\w+([\.-]?\\w+)*(\\.\\w{2,10})+$",
     revenue:"^[\\d]{0,10}([.][0-9]{0,4})?",
