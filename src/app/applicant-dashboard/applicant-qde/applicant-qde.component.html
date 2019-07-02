@@ -129,7 +129,7 @@
                                                             type="text"
                                                             class="form-control"
                                                             [(ngModel)]="qde.application.applicants[applicantIndex].pan.panNumber"
-                                                           
+                                                            oninput="this.value=this.value.toUpperCase()"
                                                             id="pan-inpt"
                                                             minlength="10"
                                                             maxlength="10"
@@ -138,7 +138,7 @@
                                                             #panNumber="ngModel"
                                                             fieldFill
                                                             required />
-                                                    <label for="pan-inpt" tabindex="1">Enter PAN in Uppercase</label>
+                                                    <label for="pan-inpt" tabindex="1">Enter PAN</label>
                                                     <div *ngIf="panNumber.touched && panNumber.invalid && panErrorCount < 3" class="invalid-feedback">
                                                         <!-- <div *ngIf="panNumber.errors?.required">{{errors.panNumber.required}}</div> -->
                                                         <div *ngIf="panNumber.errors?.pattern ? true : false">{{errors.pan.invalid}}</div>
@@ -1529,7 +1529,7 @@
   
                                   </div>
                                   <div class="form-group typ-range"  *ngIf="selectedOccupation.value != '9' && selectedOccupation.value != '10'">
-                                      <span class="control-title">Years in current employment/bussiness</span>
+                                      <span class="control-title">Years in current employment/business</span>
                                       <input spellcheck="false"
                                             type="number"
                                               name="numberOfYearsInCurrentCompany"
@@ -2046,10 +2046,11 @@
                                                           maxlength="10"
                                                           pattern="{{regexPattern.pan}}"                                              
                                                           name="pan"
+                                                          oninput="this.value=this.value.toUpperCase()"
                                                           #panNumber2="ngModel"
                                                           fieldFill
                                                           required />
-                                                  <label for="pan-inpt2">Enter PAN in Uppercase</label>
+                                                  <label for="pan-inpt2">Enter PAN</label>
                                                   <div *ngIf="panNumber2.touched && panNumber2.invalid && panErrorCount < 3" class="invalid-feedback">
                                                       <!-- <div *ngIf="panNumber2.errors?.required">{{errors.pan.required}}</div> -->
                                                       <div *ngIf="panNumber2.errors?.pattern ? true : false">{{errors.pan.invalid}}</div>
