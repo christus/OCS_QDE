@@ -71,3 +71,7 @@
 .swiper-slide.swiper-slide-active {
     visibility: visible;
 } */
+
+.not-visible {
+    visibility: hidden;
+}
