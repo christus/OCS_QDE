@@ -16,6 +16,8 @@ export class OnlineSummaryComponent implements OnInit {
   qde: Qde;
   applicationId: string;
   applicationStatus: string = "8";
+  showSuccessModal:boolean;
+  showErrorModal:boolean;
   constructor(
               private route: ActivatedRoute,
               private router: Router,

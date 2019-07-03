@@ -54,7 +54,7 @@ export class QdeHttpService {
       JSON.stringify(qdeRequestEntity)
     );
     
-   let uri = environment.host + '/appiyo/d/workflows/' + environment.api.save.workflowId + '/execute?projectId=' + environment.projectId;
+   let uri = environment.host + '/d/workflows/' + environment.api.save.workflowId + '/execute?projectId=' + environment.projectId;
     return this.http.post(
       uri,
       body.toString()
@@ -77,7 +77,7 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(qdeRequestEntity)
     );
 
-    let uri = environment.host + '/appiyo/d/workflows/' + environment.api.save.workflowId + '/execute?projectId=' + environment.projectId;
+    let uri = environment.host + '/d/workflows/' + environment.api.save.workflowId + '/execute?projectId=' + environment.projectId;
     return this.http.post(
       uri,
       body.toString()
@@ -100,7 +100,7 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(qdeRequestEntity)
     );
 
-    let uri = environment.host + '/appiyo/d/workflows/' + environment.api.save.workflowId + '/execute?projectId=' + environment.projectId;
+    let uri = environment.host + '/d/workflows/' + environment.api.save.workflowId + '/execute?projectId=' + environment.projectId;
     return this.http.post(
       uri,
       body.toString()
@@ -113,7 +113,7 @@ createOrUpdatePersonalDetails(qde) {
       .set('email', data.email)
       .set('password', data.password);
 
-    let uri = environment.host + '/appiyo/account/login';
+    let uri = environment.host + '/account/login';
     return this.http.post(uri, body);
   }
 
@@ -141,7 +141,7 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     );
   
-    let uri = environment.host + '/appiyo/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
     return this.http.post(uri, body);
   }
 
@@ -167,7 +167,7 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     );
   
-    let uri = environment.host + '/appiyo/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
     return this.http.post(uri, body.toString());
   }
 
@@ -200,7 +200,7 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     );
 
-    let uri = environment.host + '/appiyo/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
     return this.http.post(uri, body.toString());
   }
 
@@ -228,7 +228,7 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     );
 
-    let uri = environment.host + '/appiyo/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
     return this.http.post(uri, body.toString());
   }
 
@@ -263,7 +263,7 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     );
 
-    let uri = environment.host + '/appiyo/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
     return this.http.post(uri, body.toString());
   }
 
@@ -284,7 +284,7 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     );
 
-    let uri = environment.host + '/appiyo/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
     return this.http.post(uri, body.toString());
   }
 
@@ -342,7 +342,7 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     );
 
-    let uri = environment.host + '/appiyo/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
     return this.http.post(uri, body.toString());
   }
   else{
@@ -417,7 +417,7 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     );
 
-    let uri = environment.host + '/appiyo/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
     return this.http.post(uri, body.toString());
   }
 
@@ -578,7 +578,7 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     );
 
-    let uri = environment.host+ '/appiyo/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    let uri = environment.host+ '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
     return this.http.post(uri, body.toString());
   }
 
@@ -607,7 +607,7 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     );
 
-    let uri = environment.host+ '/appiyo/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    let uri = environment.host+ '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
     return this.http.post(uri, body.toString());
   }
 
@@ -631,7 +631,7 @@ createOrUpdatePersonalDetails(qde) {
         JSON.stringify(requestEntity)
       );
   
-      let uri = environment.host + '/appiyo/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+      let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
   
       return this.http.post(uri, body.toString());
     }
@@ -696,7 +696,7 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     );
 
-    let uri = environment.host+'/appiyo/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    let uri = environment.host+'/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
     return this.http.post(uri, body.toString());
   }
 
@@ -724,7 +724,7 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     );
 
-    let uri = environment.host + '/appiyo/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
     return this.http.post(uri, body.toString());
   }
 
@@ -790,7 +790,7 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     );
   
-    let uri = environment.host + '/appiyo/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
     return this.http.put(uri, body.toString());
   }
 

@@ -660,7 +660,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
           this.qde.application.applicants[this.coApplicantIndex].personalDetails.title  = processVariables["applicantTitleId"];
         }
         this.selectedTitle = this.getCoApplicantTitle(processVariables["applicantTitleId"]);
-        response["ProcessVariables"]["status"] = true; // Comment while deploying if service is enabled false
+
+       response["ProcessVariables"]["status"] = true; // Comment while deploying if service is enabled false
 
         if(response["ProcessVariables"]["status"]) { // Boolean to check from nsdl website whether pan is valid or not 
 

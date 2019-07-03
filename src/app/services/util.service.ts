@@ -24,7 +24,7 @@ export class UtilService {
     });
 
     const options = { headers: headers };
-    let uri = environment.host + "/appiyo/account/logout";
+    let uri = environment.host + "/account/logout";
     return this.http.get(uri, options);
   }
 
