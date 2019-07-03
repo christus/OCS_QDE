@@ -38,6 +38,7 @@ export class LeadsListComponent implements OnInit {
   toYear: Item;
   assignedTo: Item;
   searchTxt: string;
+  show: boolean = false;
 
   // Lead ID === Application ID
   userDetails: Array<UserDetails>;
@@ -144,5 +145,9 @@ export class LeadsListComponent implements OnInit {
     } else {
       return "/applicant/";
     }
+  }
+
+  toggleFilters() {
+    this.show = !this.show;
   }
 }

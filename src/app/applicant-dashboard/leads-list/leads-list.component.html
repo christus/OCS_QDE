@@ -33,22 +33,9 @@
             <table class="">
                 <tbody>
                      <tr class="leadLogin">
-                        <td></td>
                         <td>
-                            <!-- <i></i>
-                            <h1>
-                                Welcome <b>Manpreet Singh</b> DEO <br>
-                                Branch Id: ICICI0000011
-                            </h1> -->
-                        </td>
-                        <td>
-                            <div class="btn btn-default cur-pointer" (click)="logout()">LOGOUT</div>
-                        </td>
-                    </tr>
-                    <tr class="leadSearch">
-                        <td colspan="3">
                             <div class="row">
-                                <div class="col4">
+                                <div class="col12">
                                     <form class="bs-form">
                                         <div class="form-group">
                                             <input  type="text"
@@ -64,6 +51,29 @@
                                         </div>
                                     </form>
                                 </div>
+                            </div>
+                        </td>
+                        <td class="filters">
+                            <i (click)="toggleFilters()"><img src="assets/images/calendar.png" alt=""></i>
+
+                            <!-- <i></i>
+                            <h1>
+                                Welcome <b>Manpreet Singh</b> DEO <br>
+                                Branch Id: ICICI0000011
+                            </h1> -->
+                        </td>
+                        <td>
+                            <div class="btn btn-default cur-pointer" (click)="logout()">LOGOUT</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+
+                        </td>
+                    </tr>
+                    <tr class="leadSearch">
+                        <td colspan="3">
+                            <div class="row"  *ngIf="show">
                                 <div class="col4">
                                     <div class="row">
                                         <p class="center fromToDateLbl">From Date</p>

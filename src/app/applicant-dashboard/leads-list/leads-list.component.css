@@ -108,9 +108,11 @@ a, a:visited {
   position: fixed;
 }
 .leadSearch {
-  top: 4.69vw;
-  position: fixed;
-  width: 66%;
+    top: 4.69vw;
+    position: fixed;
+    width: 98%;
+    margin-left: 1%;
+    margin-top: 2%;
 }
 .leadSearch td {
   width: 100%;
@@ -127,4 +129,10 @@ a, a:visited {
 
 .fromToDateLbl {
   
+}
+.leadLogin .bs-form .form-group {
+  width: auto;
+}
+.leadLogin .filters {
+  text-align: left;
 }
