@@ -214,7 +214,7 @@ export class OfflinePaymentComponent implements OnInit {
   submitPaymentForm() {
   this.qdeHttp.loginFee(parseInt(this.applicationId)).subscribe(res => {
     this.totalFee = res['ProcessVariables']['totalAmount'];
-    this.qdeHttp.paymentGateway(""+this.totalFee).subscribe(res => {
+    this.qdeHttp.paymentGateway(this.applicationId,""+this.totalFee).subscribe(res => {
     });
   });
   console.log("Payment gateway")

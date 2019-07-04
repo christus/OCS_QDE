@@ -317,7 +317,7 @@ createOrUpdatePersonalDetails(qde) {
    });
   }
 
-  paymentGateway(transactionAmount) {
+  paymentGateway(applicationId,transactionAmount) {
    //To take the response change false to true
    if(true){
     const processId = environment.api.payGate.processId;
@@ -331,6 +331,7 @@ createOrUpdatePersonalDetails(qde) {
     const requestEntity: RequestEntity = {
       processId: processId,
       ProcessVariables: {
+        applicationId : applicationId,
         transactionAmount : transactionAmount
       },
       workflowId: workflowId,
