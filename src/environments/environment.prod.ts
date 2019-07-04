@@ -77,6 +77,10 @@ export const environment = {
     "loginfee": {
       'workflowId': 'f512f03a8ea311e982270242ac110002',
       'processId': 'f53166328ea311e982270242ac110002'
+    },
+    "aps": {
+      'workflowId': '46f4c44490f911e982270242ac110002',
+      'processId': '4719724e90f911e982270242ac110002'
     }
   },
   userName: "icici@icici.com",

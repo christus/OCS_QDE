@@ -776,6 +776,11 @@ export class DocumentUploadComponent implements OnInit {
   }
 
   handleCustomerPhoto(slider) {
+    console.log("Hey")
+    this.qdeHttp.apsApi(""+this.applicationId).subscribe(res => {
+      console.log("res APS: ", res);
+    });
+    
     if (!this.photoProofDoc) {
       this.goToNextSlide(slider);
       return;
@@ -812,6 +817,7 @@ export class DocumentUploadComponent implements OnInit {
     };
 
     this.uploadToMongo(modifiedFile, callback);
+  
   }
 
   uploadToMongo(file: File, callback: any) {

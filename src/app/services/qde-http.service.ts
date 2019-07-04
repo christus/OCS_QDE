@@ -794,7 +794,31 @@ createOrUpdatePersonalDetails(qde) {
     return this.http.put(uri, body.toString());
   }
 
+  apsApi(applicationId:string){
 
+    const processId = environment.api.aps.processId;
+    const workflowId = environment.api.aps.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: {
+        applicationId: applicationId
+      },
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    console.log("GET APS", requestEntity);
+
+    const body = new HttpParams().set(
+      'processVariables',
+      JSON.stringify(requestEntity)
+    );
+  
+    let uri = environment.host + '/appiyo/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.http.put(uri, body.toString());
+  }
 
 
 }
