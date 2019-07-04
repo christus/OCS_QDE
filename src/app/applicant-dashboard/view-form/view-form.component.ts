@@ -369,7 +369,7 @@ export class ViewFormComponent implements OnInit {
             result.application.loanDetails.propertyType.propertyClss || "";
 
           this.propertyAreaValue =
-            result.application.loanDetails.propertyType.propertyArea || 0;
+            result.application.loanDetails.propertyType.propertyArea || null;
 
           if (!result.application.loanDetails.property) {
             result.application.loanDetails.property = {}; //This line need to be removed

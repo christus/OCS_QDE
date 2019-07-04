@@ -188,7 +188,7 @@
                                   [(ngModel)]="propertyClssValue"
                                   pattern="{{regexPattern.address}}"
                                   fieldFill
-                                  required>
+                                  required >
                                   <label for="pro-add-line1">Property CLSS area</label>
                                   <div *ngIf="(propertyClss.touched || propertyClss.dirty) && propertyClss.invalid" class="invalid-feedback">
                                     <!-- <div *ngIf="propertyClss.errors?.required">{{errors.loanDetails.property.propertyClss.required}}</div> -->
@@ -231,7 +231,7 @@
                             minlength="6"
                             maxlength="6"
                             name="propertyPincode"
-							fieldFill
+							              fieldFill
                             pattern='{{regexPattern.pinCode}}'
                             (change)="onPinCodeChange($event)">
 
@@ -267,7 +267,7 @@
                               required
                               ngModel
                               #addressLineTwo = "ngModel"
-							  fieldFill
+							                fieldFill
                               [(ngModel)]="addressLineTwoValue"
                               name="addressLineTwo"
                               pattern='{{regexPattern.address}}'/>
@@ -286,7 +286,7 @@
                               ngModel
                               #cityOrState = "ngModel"
                               [(ngModel)] = "cityState"
-							  fieldFill
+							                fieldFill
                               name="cityOrState"
                               pattern='{{regexPattern.address}}'
                               disabled />
@@ -413,7 +413,7 @@
                               ngModel
                               #monthlyEmi = "ngModel"
                               [(ngModel)]="monthlyEmiValue"
-							  fieldFill
+							                fieldFill
                               name="monthlyEmi"
                               pattern='{{regexPattern.amount}}'>
                               

@@ -219,6 +219,13 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   selectedAssesmentMethodology: Array<any>;
 
   panslideSub: Subscription;
+  panslideSub2: Subscription;
+  qdeSourceSub: Subscription;
+  fragmentSub: Subscription;
+  paramsSub: Subscription;
+  getQdeDataSub: Subscription;
+  checkPanValidSub: Subscription;
+
 
   panErrorCount: number = 0;
 
@@ -247,11 +254,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       this.panslide = val;
     });
 
-    this.cds.panslide2.subscribe(val => {
+    this.panslideSub2 =this.cds.panslide2.subscribe(val => {
       this.panslide2 = val;
     });
 
-    this.qdeService.qdeSource.subscribe(val => {
+    this.qdeSourceSub=this.qdeService.qdeSource.subscribe(val => {
       console.log("VALVE: ", val);
       this.qde = val;
       this.applicantIndex = val.application.applicants.findIndex(v => v.isMainApplicant == true);
@@ -259,7 +266,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
 
 
-    this.route.fragment.subscribe((fragment) => {
+    this.fragmentSub=this.route.fragment.subscribe((fragment) => {
       let localFragment = fragment;
 
       if(fragment == null) {
@@ -355,7 +362,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
     console.log("params: ", this.route.snapshot.params);
 
-    this.route.params.subscribe((params) => {
+    this.paramsSub=this.route.params.subscribe((params) => {
 
       console.log('PARAMS................................')
 
@@ -370,7 +377,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
         // If not coming from leads dashboard
         // if(this.qdeService.getQde().application.applicationId == "" || this.qdeService.getQde().application.applicationId == null) {
-          this.qdeHttp.getQdeData(params.applicationId).subscribe(response => {
+          this.getQdeDataSub=this.qdeHttp.getQdeData(params.applicationId).subscribe(response => {
             console.log("RESPONSE ", response);
             var result = JSON.parse(response["ProcessVariables"]["response"]);
             console.log("Get ", result);
@@ -729,7 +736,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     this.qde.application.applicants[this.applicantIndex].pan.docType = form.value.docTypeindividual.value;
     this.qde.application.applicants[this.applicantIndex].pan.docNumber = form.value.docNumber;
 
-    this.qdeHttp.checkPanValid(this.qdeService.getFilteredJson({actualPanNumber: form.value.pan})).subscribe((response) => {
+    this.checkPanValidSub=this.qdeHttp.checkPanValid(this.qdeService.getFilteredJson({actualPanNumber: form.value.pan})).subscribe((response) => {
 
       response["ProcessVariables"]["status"] = true; // Comment while deploying if service is enabled false
       
@@ -1872,12 +1879,16 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.panslideSub.unsubscribe();
+    this.panslideSub2.unsubscribe();
+    this.qdeSourceSub.unsubscribe();
+    this.fragmentSub.unsubscribe();
+    this.paramsSub.unsubscribe();
+    this.getQdeDataSub.unsubscribe();
   }
 
   openCamera() {
 
     this.qdeHttp.takePicture().then((imageURI) => {
-
       console.log("imageData", imageURI);
 
       this.imageURI = imageURI;
