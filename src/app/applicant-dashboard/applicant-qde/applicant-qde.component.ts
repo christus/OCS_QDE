@@ -710,6 +710,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   onBackButtonClick(swiperInstance ?: Swiper) {
 
     if(this.activeTab > 0) {
+    
       if(swiperInstance != null && swiperInstance.getIndex() > 0) {
         // Go to Previous Slide
         this.goToPrevSlide(swiperInstance);
@@ -1904,8 +1905,93 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
  
+    // if(this.panslideSub != null){
     this.panslideSub.unsubscribe();
-    
+    // }
+    // if(this.panslideSub2 != null){
+    this.panslideSub2.unsubscribe();
+    // }
+    if(this.qdeSourceSub != null){
+    this.qdeSourceSub.unsubscribe();
+    } 
+    if(this.fragmentSub != null){
+    this.fragmentSub.unsubscribe();
+    }
+    if(this.paramsSub != null){
+    this.paramsSub.unsubscribe();
+    }
+    if(this.getQdeDataSub != null){
+    this.getQdeDataSub.unsubscribe();
+    }
+    if(this.checkPanValidSub != null){
+         this.checkPanValidSub.unsubscribe();
+         }
+    if(this.createOrUpdatePanDetailsSub != null){
+         this.createOrUpdatePanDetailsSub.unsubscribe();
+         }
+    if(this.setStatusApiSub != null){
+         this.setStatusApiSub.unsubscribe();
+         }
+    if(this.checkPanValidSub2 != null){
+         this.checkPanValidSub2.unsubscribe();
+         }
+    if(this.createOrUpdatePanDetailsSub2 != null){
+        this.createOrUpdatePanDetailsSub2.unsubscribe();
+        }
+    if(this.setStatusApiSub2 != null){
+        this.setStatusApiSub2.unsubscribe();
+        }
+    if(this.createOrUpdatePersonalDetailsSub != null){
+        this.createOrUpdatePersonalDetailsSub.unsubscribe();
+        }
+    if(this.createOrUpdatePersonalDetailsSub2 != null){
+        this.createOrUpdatePersonalDetailsSub2.unsubscribe();
+        }
+    if(this.createOrUpdatePersonalDetailsSub3 != null){
+        this.createOrUpdatePersonalDetailsSub3.unsubscribe();
+        }
+    if(this.createOrUpdatePersonalDetailsSub4 != null){
+        this.createOrUpdatePersonalDetailsSub4.unsubscribe();
+        }
+    if(this.createOrUpdatePersonalDetailsSub5 != null){
+        this.createOrUpdatePersonalDetailsSub5.unsubscribe();
+        }
+    if(this.createOrUpdatePersonalDetailsSub6 != null){
+        this.createOrUpdatePersonalDetailsSub6.unsubscribe();
+        }
+     if(this.getCityAndStateSub != null){
+        this.getCityAndStateSub.unsubscribe();
+        }
+    if(this.createOrUpdatePersonalDetailsSub7 != null){
+       this.createOrUpdatePersonalDetailsSub7.unsubscribe();
+       }
+    if(this.createOrUpdatePersonalDetailsSub8 != null){
+       this.createOrUpdatePersonalDetailsSub8.unsubscribe();
+       }
+    if(this.createOrUpdatePersonalDetailsSub9 != null){
+       this.createOrUpdatePersonalDetailsSub9.unsubscribe();
+       }
+    if(this.createOrUpdatePersonalDetailsSub10 != null){
+       this.createOrUpdatePersonalDetailsSub10.unsubscribe();
+       }
+    if(this.createOrUpdatePersonalDetailsSub11 != null){
+       this.createOrUpdatePersonalDetailsSub11.unsubscribe();
+       }
+    if(this.createOrUpdatePersonalDetailsSub12 != null){
+       this.createOrUpdatePersonalDetailsSub12.unsubscribe();
+      }
+    if(this.createOrUpdatePersonalDetailsSub13 != null){
+        this.createOrUpdatePersonalDetailsSub13.unsubscribe();
+        }
+    if(this.createOrUpdatePersonalDetailsSub14 != null){
+        this.createOrUpdatePersonalDetailsSub14.unsubscribe();
+        }
+    if(this.createOrUpdatePersonalDetailsSub15 != null){
+        this.createOrUpdatePersonalDetailsSub15.unsubscribe();
+        }
+    if(this.createOrUpdatePersonalDetailsSub16 != null){
+      this.createOrUpdatePersonalDetailsSub16.unsubscribe();
+      }
 
   }
 

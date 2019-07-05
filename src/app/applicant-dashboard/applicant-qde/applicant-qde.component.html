@@ -1005,8 +1005,8 @@
                                               class="form-control"
                                               [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.numberOfYearsInCurrentResidence"
                                               tabindex="12"
-                                              min=0
-                                              max=90
+                                              maxlength="2"
+                                              oninput="this.value=this.value.slice(0,this.maxLength)"
                                               #numberOfYearsInCurrentResidence="ngModel"
                                               fieldFill
                                               required />

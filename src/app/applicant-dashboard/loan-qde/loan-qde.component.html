@@ -119,7 +119,7 @@
           </div>
 
           <div class="tab-content" [ngClass]="{'active': (activeTab == 1)}">
-            <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
+            <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(property2)"></a>
 
             <div class="lyt-tabs">
               <div class="lhs">
@@ -320,7 +320,7 @@
 
 
           <div class="tab-content" [ngClass]="{'active': (activeTab == 2)}">
-            <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
+            <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(existingLoan2)"></a>
             <div class="lyt-tabs">
               <div class="lhs">
                 <div class="swiper-container form-swiper " [swiper]="lhsConfig" #existingLoan1="ngxSwiper">
