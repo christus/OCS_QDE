@@ -1720,12 +1720,12 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       // Incoming from create in Individual Pan
       if(this.panslide == true && this.qde.application.applicants[this.coApplicantIndex].isIndividual == true) {
         console.log('COAPPLICANTINDEX: ', this.coApplicantIndex);
-        // this.panSlider2.setIndex(2);
-        this.tabSwitch(2);
+        this.tabSwitch(1);
+        this.panSlider2.setIndex(2);
       }
       // Incoming from create in Non Individual Pan
       else if(this.panslide2 == true && this.qde.application.applicants[this.coApplicantIndex].isIndividual == false) {
-        this.tabSwitch(12);
+        this.tabSwitch(11);
         this.panSlider4.setIndex(1);
       } else if(this.panslide == false && this.qde.application.applicants[this.coApplicantIndex].isIndividual == true) {
         this.tabSwitch(1);
@@ -1733,8 +1733,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       }
       else if(this.panslide2 == false && this.qde.application.applicants[this.coApplicantIndex].isIndividual == false) {
         this.tabSwitch(11);
-        // Enable it when upload file is enabled
-        // this.panSlider4.setIndex(1);
+        this.panSlider4.setIndex(0);
       }
 
       // So that route is now in edit mode only

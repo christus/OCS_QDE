@@ -626,21 +626,23 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
       // Incoming from create in Individual Pan
       if(this.panslide == true && this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
+        // this.tabSwitch(2);
          this.panSlider2.setIndex(2);
-        //this.tabSwitch(2);
       }
       // Incoming from create in Non Individual Pan
       else if(this.panslide2 == true && this.qde.application.applicants[this.applicantIndex].isIndividual == false) {
-        this.tabSwitch(11);
-        //this.panSlider4.setIndex(1);
+        this.tabSwitch(10);
+        this.panSlider4.setIndex(1);
       } else if(this.panslide == false && this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
-        this.tabSwitch(0);
-        // this.panSlider2.setIndex(2);
+        // this.tabSwitch(0);
+        this.panSlider2.setIndex(1);
       }
       else if(this.panslide2 == false && this.qde.application.applicants[this.applicantIndex].isIndividual == false) {
-        this.tabSwitch(10);
         // Enable it when upload file is enabled
-        // this.panSlider4.setIndex(1);
+        this.tabSwitch(10);
+        this.panSlider4.setIndex(1);
+
+        // this.tabSwitch(10);
       }
 
       // So that route is now in edit mode only
