@@ -247,7 +247,16 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   createOrUpdatePersonalDetailsSub14: Subscription;
   createOrUpdatePersonalDetailsSub15: Subscription;
   createOrUpdatePersonalDetailsSub16: Subscription;
-
+  createOrUpdatePersonalDetailsSub17: Subscription;
+  createOrUpdatePersonalDetailsSub18: Subscription;
+  createOrUpdatePersonalDetailsSub19: Subscription;
+  createOrUpdatePersonalDetailsSub20: Subscription;
+  createOrUpdatePersonalDetailsSub21: Subscription;
+  createOrUpdatePersonalDetailsSub22: Subscription;
+  createOrUpdatePersonalDetailsSub23: Subscription;
+  sendOTPAPISub: Subscription;
+  validateOTPAPISub: Subscription;
+  createOrUpdatePanDetailsSub3: Subscription;
 
   panErrorCount: number = 0;
 
@@ -1475,7 +1484,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
     console.log(this.qde.application.applicants[this.applicantIndex].organizationDetails);
 
-    this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
+    this.createOrUpdatePersonalDetailsSub17=this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
         let result = this.parseJson(response["ProcessVariables"]["response"]);
@@ -1517,7 +1526,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
     console.log(this.qde.application.applicants[this.applicantIndex].registeredAddress);
 
-    this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
+    this.createOrUpdatePersonalDetailsSub18 = this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
+
       // If successfull
       if(response["ProcessVariables"]["status"]) {
         this.tabSwitch(13);
@@ -1557,7 +1567,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
     console.log(this.qde.application.applicants[this.applicantIndex].corporateAddress);
 
-    this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
+    this.createOrUpdatePersonalDetailsSub19 = this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successfull
       if(response["ProcessVariables"]["status"]) {
         this.tabSwitch(14);
@@ -1585,7 +1595,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
     console.log(this.qde.application.applicants[this.applicantIndex].revenueDetails);
 
-    this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
+    this.createOrUpdatePersonalDetailsSub20 = this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successfull
       if(response["ProcessVariables"]["status"]) {
         this.tabSwitch(15);
@@ -1615,7 +1625,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
     console.log("INCOME DETAILS: ", this.qde.application.applicants[this.applicantIndex].incomeDetails);
 
-    this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
+    this.createOrUpdatePersonalDetailsSub21 = this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successfull
       if(response["ProcessVariables"]["status"]) {
         this.goToNextSlide(swiperInstance);
@@ -1639,7 +1649,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
     console.log("ID: ", this.qde.application.applicants[this.applicantIndex].incomeDetails);
 
-    this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
+    this.createOrUpdatePersonalDetailsSub22 = this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successfull
       if(response["ProcessVariables"]["status"]) {
         this.goToNextSlide(swiperInstance);
@@ -1694,7 +1704,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
     console.log(">>>", this.qde.application.applicants[this.applicantIndex].incomeDetails);
 
-    this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
+    this.createOrUpdatePersonalDetailsSub23 = this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successfull
       if(response["ProcessVariables"]["status"]) {
         if(value == 1) {
@@ -1756,7 +1766,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     this.qde.application.applicants[this.applicantIndex].contactDetails.mobileNumber = mobileNumber;
 
     const applicantId = this.qde.application.applicationId
-    this.qdeHttp.sendOTPAPI(mobileNumber, applicantId).subscribe(res => {
+    this.sendOTPAPISub = this.qdeHttp.sendOTPAPI(mobileNumber, applicantId).subscribe(res => {
       if(res['ProcessVariables']['status'] == true) {
         this.inOTP = true;
       }
@@ -1774,7 +1784,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     const applicantId = this.qde.application.applicationId;
     const otp = form.value.otp;
 
-    this.qdeHttp.validateOTPAPI(mobileNumber, applicantId, otp).subscribe(res => {
+    this.validateOTPAPISub = this.qdeHttp.validateOTPAPI(mobileNumber, applicantId, otp).subscribe(res => {
       // if(res['ProcessVariables']['isPaymentSuccessful'] == true) {
       //   this.showSuccessModal = true;
       //   this.emiAmount = res['ProcessVariables']['emi'];
@@ -1990,9 +2000,39 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
         this.createOrUpdatePersonalDetailsSub15.unsubscribe();
         }
     if(this.createOrUpdatePersonalDetailsSub16 != null){
-      this.createOrUpdatePersonalDetailsSub16.unsubscribe();
+       this.createOrUpdatePersonalDetailsSub16.unsubscribe();
+       }
+    if(this.createOrUpdatePersonalDetailsSub17 != null){
+        this.createOrUpdatePersonalDetailsSub17.unsubscribe();
+        }
+    if(this.createOrUpdatePersonalDetailsSub18 != null){
+        this.createOrUpdatePersonalDetailsSub18.unsubscribe();
+        }
+    if(this.createOrUpdatePersonalDetailsSub19 != null){
+       this.createOrUpdatePersonalDetailsSub19.unsubscribe();
+        }
+    if(this.createOrUpdatePersonalDetailsSub20 != null){
+      this.createOrUpdatePersonalDetailsSub20.unsubscribe();
       }
-
+      if(this.createOrUpdatePersonalDetailsSub21 != null){
+      this.createOrUpdatePersonalDetailsSub21.unsubscribe();
+      }
+      if(this.createOrUpdatePersonalDetailsSub22 != null){
+        this.createOrUpdatePersonalDetailsSub22.unsubscribe();
+        }
+      if(this.createOrUpdatePersonalDetailsSub23 != null){
+        this.createOrUpdatePersonalDetailsSub23.unsubscribe();
+        }
+      if(this.sendOTPAPISub != null){
+        this.sendOTPAPISub.unsubscribe();
+        }
+      if(this.validateOTPAPISub != null){
+        this.validateOTPAPISub.unsubscribe();
+        }
+      if(this.createOrUpdatePanDetailsSub3 != null){
+        this.createOrUpdatePanDetailsSub3.unsubscribe();
+        }
+        
   }
 
   openCamera() {
@@ -2026,7 +2066,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
         this.qde.application.applicants[this.applicantIndex].pan.imageId = imageId;
 
-        this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
+        this.createOrUpdatePanDetailsSub3 = this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
           // If successful
           if(response["ProcessVariables"]["status"] == true) {
             alert("Switch to tab 1");

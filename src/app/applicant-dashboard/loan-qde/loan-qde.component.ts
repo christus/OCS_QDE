@@ -371,6 +371,11 @@ export class LoanQdeComponent implements OnInit {
 
   ngAfterViewInit() {}
 
+  // loanProertyNo(swiperInstance: Swiper,value){
+  //  //switching to existing loan
+  //   this.tabSwitch(2);
+    
+  // }
   /**
    * Use to sync between lhs and rhs sliders
    * @param swiperInstance RHS Swiper Instance
