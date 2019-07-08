@@ -117,6 +117,16 @@ createOrUpdatePersonalDetails(qde) {
     return this.http.post(uri, body);
   }
 
+  duplicateLogin() {
+
+    const body = new HttpParams()
+      .set('email', "icici@icici.com")
+      .set('password', "icici@123");
+
+    let uri = environment.host + '/account/login';
+    return this.http.post(uri, body);
+  }
+  
   getLeads(search?: string, fromDay?: string, fromMonth?: string, fromYear?: string, toDay?: string, toMonth?: string, toYear?: string, assignedTo?: string) {
     const processId = environment.api.dashboard.processId;
     const workflowId = environment.api.dashboard.workflowId;
@@ -817,7 +827,7 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     );
   
-    let uri = environment.host + '/appiyo/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
     return this.http.put(uri, body.toString());
   }
 

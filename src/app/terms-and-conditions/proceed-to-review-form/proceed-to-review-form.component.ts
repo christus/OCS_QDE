@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { QdeService } from 'src/app/services/qde.service';
 import { ActivatedRoute } from '@angular/router';
 import Qde from 'src/app/models/qde.model';
+import { CommonDataService } from 'src/app/services/common-data.service';
+import { QdeHttpService } from 'src/app/services/qde-http.service';
 
 @Component({
   selector: 'app-proceed-to-review-form',
@@ -14,7 +16,10 @@ export class ProceedToReviewFormComponent implements OnInit {
   applicantId: string;
   qde: Qde;
 
-  constructor(private qdeService: QdeService,
+  constructor(
+              private commonDataService: CommonDataService, 
+              private qdehttpService: QdeHttpService,
+              private qdeService: QdeService,
               private route: ActivatedRoute) {
 
     this.qdeService.qdeSource.subscribe(val => {
@@ -31,6 +36,21 @@ export class ProceedToReviewFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log("HEy")
+    this.qdehttpService.duplicateLogin().subscribe(
+      res => {
+        console.log(res);
+        localStorage.setItem("token", res["token"] ? res["token"] : "");
+        this.qdehttpService.getQdeData(parseInt(this.applicantId));
+      console.log("HEyda")        
+        // this.commonDataService.changeMenuBarShown(false);
+        // this.commonDataService.changeViewFormVisible(false);
+        // this.commonDataService.changeLogoutVisible(false);
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 
 }

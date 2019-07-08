@@ -136,7 +136,7 @@ export class LeadsListComponent implements OnInit {
       return "/payments/eligibility-check/"+applicationId;
     } else if(status == "Eligibilty Passed") {
       return "/applicant/"+applicationId;
-    } else if(status == "Eligibilty Failes") {
+    } else if(status == "Eligibilty Failed") {
       return "/applicant/"+applicationId;
     } else if(status == "Mandatory Document Uploaded") {
       return "/applicant/"+applicationId;
