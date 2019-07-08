@@ -214,6 +214,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
 
   otp:string;
 
+  isReadOnly: boolean = false;
+
   constructor(private renderer: Renderer2,
               private route: ActivatedRoute,
               private router: Router,
@@ -251,6 +253,11 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
 
     this.cds.applicationId.subscribe(val => {
       this.applicationId = val;
+      if(JSON.parse(localStorage.getItem('roles')).includes('TBM')) {
+        this.cds.setReadOnlyForm(true);
+      } else {
+        this.cds.setReadOnlyForm(false);
+      }
     });
 
     this.route.fragment.subscribe((fragment) => {
@@ -459,6 +466,14 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
           });
         // }
       }
+    });
+
+    /********************************************************************
+    * Check for User and set isReadOnly=true to disable editing of fields
+    ********************************************************************/
+    this.cds.isReadOnlyForm.subscribe(val => {
+      this.isReadOnly = val;
+      this.options.readOnly = val;
     });
   }
 

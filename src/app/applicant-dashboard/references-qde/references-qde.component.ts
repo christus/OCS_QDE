@@ -170,6 +170,8 @@ export class ReferencesQdeComponent implements OnInit {
   referenceId1: number;
   referenceId2: number;
 
+  isReadOnly: boolean = false;
+
   constructor(
     private renderer: Renderer2,
     private route: ActivatedRoute,
@@ -181,6 +183,15 @@ export class ReferencesQdeComponent implements OnInit {
     this.cds.changeMenuBarShown(true);
     this.cds.changeViewFormVisible(true);
     this.cds.changeLogoutVisible(true);
+
+    this.cds.applicationId.subscribe(val => {
+      this.applicationId = val;
+      if(JSON.parse(localStorage.getItem('roles')).includes('TBM')) {
+        this.cds.setReadOnlyForm(true);
+      } else {
+        this.cds.setReadOnlyForm(false);
+      }
+    });
   }
 
   ngOnInit() {
@@ -274,6 +285,14 @@ export class ReferencesQdeComponent implements OnInit {
       if (this.fragments.includes(localFragment)) {
         this.tabSwitch(this.fragments.indexOf(localFragment));
       }
+    });
+
+    /********************************************************************
+    * Check for User and set isReadOnly=true to disable editing of fields
+    ********************************************************************/
+    this.cds.isReadOnlyForm.subscribe(val => {
+      this.isReadOnly = val;
+      this.options.readOnly = val;
     });
   }
 

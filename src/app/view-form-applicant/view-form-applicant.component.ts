@@ -67,7 +67,7 @@ export class ViewFormApplicantComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log("view-form: ", this.qde);
+    // console.log("view-form: ", this.qde);
   }
 
 }

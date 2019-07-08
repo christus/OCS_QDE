@@ -832,6 +832,112 @@ createOrUpdatePersonalDetails(qde) {
   }
 
 
+  /**
+  * OCS TBM Review Of Eligiblity
+  */
+  getElibilityReview(applicationId: string) {
+
+    const processId = environment.api.reviewEligibility.processId;
+    const workflowId = environment.api.reviewEligibility.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: {
+        applicationId: applicationId
+      },
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    console.log("GET APS", requestEntity);
+
+    const body = new HttpParams().set(
+      'processVariables',
+      JSON.stringify(requestEntity)
+    );
+  
+    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.http.post(uri, body.toString());
+  }
+
+  dummyGetEligibilityAPI(applicationId) {
+    return of({
+      "Error" : "0",
+      "ErrorCode" : "",
+      "ErrorMessage" : "",
+      "ProcessId" : "ec2f4f089f1b11e9b0c20242ac110003",
+      "ProcessInstanceId" : "fbd1c4d09f3a11e9bfc20242ac110003",
+      "ProcessName" : "OCS TBM Review Of Eligibility",
+      "ProcessVariables" : {
+         "applicationId" : "3090",
+         "assignedTo" : "Aisha",
+         "dateCreated" : "2019-06-11",
+         "eligibilityAmount" : 7,
+         "listOfApplicantsCreditScoreAboveCutOff" : [
+            {
+               "annualIncome" : "120000",
+               "emi" : "8000"
+            },
+            {
+               "annualIncome" : "120000",
+               "emi" : "8000"
+            },
+            {
+               "annualIncome" : "120000",
+               "emi" : "8000"
+            }
+         ],
+         "listOfApplicantsIncomeAndEMI" : [
+            {
+               "annualIncome" : "120000",
+               "emi" : "8000"
+            },
+            {
+               "annualIncome" : "120000",
+               "emi" : "8000"
+            },
+            {
+               "annualIncome" : "120000",
+               "emi" : "8000"
+            },
+            {
+               "annualIncome" : "120000",
+               "emi" : "8000"
+            }
+         ],
+         "listOfApplicantsNameAndCutOff" : [
+            {
+               "aboveCutOff" : "1",
+               "firstName" : "Hardeep",
+               "lastName" : "Trilochana"
+            },
+            {
+               "aboveCutOff" : "1",
+               "firstName" : "Deepen",
+               "lastName" : "Dhamecha"
+            },
+            {
+               "aboveCutOff" : "1",
+               "firstName" : "Arun",
+               "lastName" : "Kumar"
+            },
+            {
+               "aboveCutOff" : "0",
+               "firstName" : "Krishnan",
+               "lastName" : ""
+            }
+         ],
+         "loanType" : "Housing Loan",
+         "maxEMI" : 16000,
+         "revisedEligibilityAmount" : 1,
+         "revisedMaxEMI" : 4000,
+         "status" : true
+      },
+      "Status" : "Execution Completed",
+      "WorkflowId" : "ec16befc9f1b11e9a0040242ac110003"
+   });
+  }
 }
 
 

@@ -164,6 +164,8 @@ export class DocumentUploadComponent implements OnInit {
     "photo"
   ];
 
+  isReadOnly: boolean = false;
+ 
   constructor(
     private renderer: Renderer2,
     private route: ActivatedRoute,
@@ -181,6 +183,22 @@ export class DocumentUploadComponent implements OnInit {
       this.isMainApplicant = true;
     }
     //this.tabSwitch(1);
+    this.cds.applicationId.subscribe(val => {
+      this.applicationId = parseInt(val);
+      if(JSON.parse(localStorage.getItem('roles')).includes('TBM')) {
+        this.cds.setReadOnlyForm(true);
+      } else {
+        this.cds.setReadOnlyForm(false);
+      }
+    });
+
+    /********************************************************************
+    * Check for User and set isReadOnly=true to disable editing of fields
+    ********************************************************************/
+    this.cds.isReadOnlyForm.subscribe(val => {
+      this.isReadOnly = val;
+      this.options.readOnly = val;
+    });
   }
 
   ngOnInit() {
@@ -328,6 +346,14 @@ export class DocumentUploadComponent implements OnInit {
         this.qde = this.qdeService.getQde();
       }
     });
+
+    /********************************************************************
+    * Check for User and set isReadOnly=true to disable editing of fields
+    ********************************************************************/
+    // if(some condition) {
+    //   this.isReadOnly
+    // this.options.readOnly = this.isReadOnly;
+    // }
   }
 
   ngAfterViewInit() {}

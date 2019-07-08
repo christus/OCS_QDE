@@ -221,6 +221,7 @@ export class LoanQdeComponent implements OnInit {
   applicationId: string;
   applicantIndex = 0;
 
+  isReadOnly: boolean = false;
 
   constructor(
     private renderer: Renderer2,
@@ -241,6 +242,14 @@ export class LoanQdeComponent implements OnInit {
       }
     });
 
+    this.cds.applicationId.subscribe(val => {
+      this.applicationId = val;
+      if(JSON.parse(localStorage.getItem('roles')).includes('TBM')) {
+        this.cds.setReadOnlyForm(true);
+      } else {
+        this.cds.setReadOnlyForm(false);
+      }
+    });
   }
 
   ngOnInit() {
@@ -366,6 +375,14 @@ export class LoanQdeComponent implements OnInit {
       } else {
         this.qde = this.qdeService.getQde();
       }
+    });
+
+    /********************************************************************
+    * Check for User and set isReadOnly=true to disable editing of fields
+    ********************************************************************/
+    this.cds.isReadOnlyForm.subscribe(val => {
+      this.isReadOnly = val;
+      this.options.readOnly = val;
     });
   }
 

@@ -60,7 +60,7 @@
                               <option *ngFor="let rela of relationships" [value]="rela.value">{{rela.key}}</option>
                             </select> -->
 
-                            <kendo-dropdownlist class="form-control"
+                            <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
                               [data]="relationships" 
                               textField="key"
                               valueField="value"
@@ -90,7 +90,7 @@
                         <div class="form-wrap">
                           <div class="form-group">
                             <span class="control-title">Title</span>
-                            <kendo-dropdownlist 
+                            <kendo-dropdownlist [readonly]="isReadOnly" 
                               class="form-control" 
                               [data]="titles" 
                               textField="key" 
@@ -104,7 +104,7 @@
                             </select> -->
                           </div>
                           <div class="form-group">
-                            <input type="text" class="form-control"
+                            <input [readonly]="isReadOnly" type="text" class="form-control"
                             required
                             ngModel
                             name="fullName" 
@@ -124,7 +124,7 @@
 
                           </div>
                           <div class="form-group">
-                            <input type="text" class="form-control"
+                            <input [readonly]="isReadOnly" type="text" class="form-control"
                             required 
                             id="ref1-mobile"  
                             name="mobileNumber"
@@ -147,7 +147,7 @@
                           </div>
 
                           <div class="form-group">
-                            <input type="text" class="form-control" id="ref1-add1"  
+                            <input [readonly]="isReadOnly" type="text" class="form-control" id="ref1-add1"  
                             required
                             name="addressLineOne" 
                             ngModel
@@ -165,7 +165,7 @@
 
                           </div>
                           <div class="form-group">
-                            <input type="text" class="form-control" id="ref1-add2" 
+                            <input [readonly]="isReadOnly" type="text" class="form-control" id="ref1-add2" 
                             required
                             name="addressLineTwo" 
                             ngModel
@@ -243,7 +243,7 @@
 <!--                           <select ngModel name="relationShip" class="js-select" required>
                             <option *ngFor="let rela of relationships" [value]="rela.value">{{rela.key}}</option>
                           </select> -->
-                          <kendo-dropdownlist 
+                          <kendo-dropdownlist [readonly]="isReadOnly" 
                             class="form-control"
                             [data]="relationships" 
                             textField="key"
@@ -272,7 +272,7 @@
                         <div class="form-wrap">
                           <div class="form-group">
                             <span class="control-title">Title</span>
-                              <kendo-dropdownlist 
+                              <kendo-dropdownlist [readonly]="isReadOnly" 
                                 class="form-control" 
                                 [data]="titles" 
                                 textField="key" 
@@ -286,7 +286,7 @@
                             </select> -->
                           </div>
                           <div class="form-group">
-                            <input type="text" class="form-control"
+                            <input [readonly]="isReadOnly" type="text" class="form-control"
                             ngModel
                             name="fullName" 
                             id="ref2-name"
@@ -303,7 +303,7 @@
                             </div>
                           </div>
                           <div class="form-group">
-                            <input type="text" class="form-control" id="ref2-mobile" 
+                            <input [readonly]="isReadOnly" type="text" class="form-control" id="ref2-mobile" 
                             name="mobileNumber"  
                             ngModel 
                             minlength="10"
@@ -324,7 +324,7 @@
 
                           </div>
                           <div class="form-group">
-                            <input type="text" class="form-control" id="ref2-add1"
+                            <input [readonly]="isReadOnly" type="text" class="form-control" id="ref2-add1"
                               name="addressLineOne"
                               ngModel
                               #refTwoAddressLineOne="ngModel"
@@ -343,7 +343,7 @@
                           </div>
 
                           <div class="form-group">
-                            <input type="text" class="form-control" id="ref2-add2"
+                            <input [readonly]="isReadOnly" type="text" class="form-control" id="ref2-add2"
                              name="addressLineTwo" 
                              ngModel 
                              #refTwoAddressLineTwo="ngModel"

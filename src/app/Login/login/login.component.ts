@@ -43,12 +43,12 @@ export class LoginComponent implements OnInit {
     );
   }
 
-
   roleLogin() {
     this.qdeService.roleLogin().subscribe(
       res => {
-        console.log(res);
+        console.log("ROLE LOGIN: ", res['ProcessVariables']['roleName']);
         localStorage.setItem("userId", res["ProcessVariables"]["userId"]);
+        localStorage.setItem('roles', JSON.stringify(res["ProcessVariables"]["roleName"]));
         this.router.navigate(["/leads"]);
       },
       error => {

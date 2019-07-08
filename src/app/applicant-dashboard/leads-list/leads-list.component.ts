@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
 import { UtilService } from 'src/app/services/util.service';
 import { from } from 'rxjs';
+import { CommonDataService } from 'src/app/services/common-data.service';
+import { statuses } from '../../app.constants';
 
 export interface UserDetails {
   "amountEligible": number;
@@ -43,7 +45,7 @@ export class LeadsListComponent implements OnInit {
   // Lead ID === Application ID
   userDetails: Array<UserDetails>;
 
-  constructor(private service: QdeHttpService,private utilService: UtilService) {
+  constructor(private service: QdeHttpService, private utilService: UtilService, private cds: CommonDataService) {
 
     this.days = Array.from(Array(31).keys()).map((val, index) => {
       let v = ((index+1) < 10) ? "0"+(index+1) : (index+1)+"";
@@ -108,7 +110,7 @@ export class LeadsListComponent implements OnInit {
         if (res['Error'] && res['Error'] == 0) {
           this.userDetails = res['ProcessVariables'].userDetails || [];
           from(this.userDetails).subscribe(el => {
-            el.url = this.getUrl(el['status'], el['leadId'], el['applicantId']);
+            el.url = this.getUrl(el['status'], el['leadId'], el['applicantId'], this.getRoles());
           });
         } else if (res['login_required'] && res['login_required'] === true) {
           this.utilService.clearCredentials();
@@ -123,24 +125,42 @@ export class LeadsListComponent implements OnInit {
     );
   }
 
-  getUrl(status: string, applicationId?: string, applicantId?: string) {
-    if(status == "QDE Started") {
+  getUrl(status: string, applicationId?: string, applicantId?: string, roles?: Array<string>) {
+    if(roles.includes('TBM')) {
+      this.cds.setReadOnlyForm(true);
+    } else {
+      this.cds.setReadOnlyForm(false);
+    }
+
+    if(statuses[status] == "1") {
       return "/applicant/"+applicationId;
-    } else if(status == "QDE Completed") {
+    } else if(statuses[status] == "5") {
       return "/applicant/"+applicationId;
-    } else if(status == "KYC Document Uploaded") {
+    } else if(statuses[status] == "10") {
       return "/applicant/"+applicationId;
-    } else if(status == "Terms and conditions accepted") {
+    } else if(statuses[status] == "15") {
       return "/payments/online-summary/"+applicationId;
-    } else if(status == "Login Fee Paid") {
+    } else if(statuses[status] == "20") {
       return "/payments/eligibility-check/"+applicationId;
-    } else if(status == "Eligibilty Passed") {
+    } else if(statuses[status] == "25") {
       return "/applicant/"+applicationId;
-    } else if(status == "Eligibilty Failed") {
+    } else if(statuses[status] == "26") {
+
+      if(roles.includes('TBM')) {
+        this.cds.setEligibilityForReview({applicationId: applicationId, isEligibilityForReview: true});
+      } else {
+        this.cds.setEligibilityForReview({applicationId: applicationId, isEligibilityForReview: false});
+      }
+      return "/view-form/"+applicationId;
+    } else if(statuses[status] == "27") {
       return "/applicant/"+applicationId;
-    } else if(status == "Mandatory Document Uploaded") {
+    } else if(statuses[status] == "28") {
       return "/applicant/"+applicationId;
-    } else if(status == "DDE Submitted") {
+    } else if(statuses[status] == "30") {
+      return "/applicant/"+applicationId;
+    } else if(statuses[status] == "35") {
+      return "/applicant/"+applicationId;
+    } else if(statuses[status] == "40") {
       return "/applicant/"+applicationId;
     } else {
       return "/applicant/";
@@ -149,5 +169,9 @@ export class LeadsListComponent implements OnInit {
 
   toggleFilters() {
     this.show = !this.show;
+  }
+
+  getRoles(): Array<string> {
+    return JSON.parse(localStorage.getItem('roles'));
   }
 }

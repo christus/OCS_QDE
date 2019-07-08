@@ -262,6 +262,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
   otp:string;
 
+  isReadOnly: boolean = false;
+
   constructor(private renderer: Renderer2,
               private route: ActivatedRoute,
               private router: Router,
@@ -273,7 +275,6 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
               ) {
 
     this.isMobile = this.deviceService.isMobile() ;
-
 
     this.cds.changeMenuBarShown(true);
     this.cds.changeViewFormVisible(true);
@@ -392,6 +393,14 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     }
 
     console.log("params: ", this.route.snapshot.params);
+
+    this.cds.applicationId.subscribe(val => {
+      if(JSON.parse(localStorage.getItem('roles')).includes('TBM')) {
+        this.cds.setReadOnlyForm(true);
+      } else {
+        this.cds.setReadOnlyForm(false);
+      }
+    });
 
     this.paramsSub=this.route.params.subscribe((params) => {
 
@@ -662,6 +671,14 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
           });
         // }
       }
+    });
+
+    /********************************************************************
+    * Check for User and set isReadOnly=true to disable editing of fields
+    ********************************************************************/
+    this.cds.isReadOnlyForm.subscribe(val => {
+      this.isReadOnly = val;
+      this.options.readOnly = val;
     });
   }
  
