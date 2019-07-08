@@ -219,7 +219,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   selectedAssesmentMethodology: Array<any>;
 
   panslideSub: Subscription;
-  panslideSub2: Subscription;
+  panslide2Sub: Subscription;
   qdeSourceSub: Subscription;
   fragmentSub: Subscription;
   paramsSub: Subscription;
@@ -285,7 +285,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       this.panslide = val;
     });
 
-    this.panslideSub2 = this.cds.panslide2.subscribe(val => {
+    this.panslide2Sub = this.cds.panslide2.subscribe(val => {
       this.panslide2 = val;
     });
 
@@ -853,7 +853,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     this.qde.application.applicants[this.applicantIndex].pan.docType = form.value.panDocType.value;
     this.qde.application.applicants[this.applicantIndex].pan.docNumber = form.value.docNumber;
 
-    this.checkPanValidSub2=this.qdeHttp.checkPanValid(this.qdeService.getFilteredJson({actualPanNumber: form.value.pan})).subscribe((response) => {
+    this.checkPanValidSub2 = this.qdeHttp.checkPanValid(this.qdeService.getFilteredJson({actualPanNumber: form.value.pan})).subscribe((response) => {
       
     response["ProcessVariables"]["status"] = true; // Comment while deploying if service is enabled false
 
@@ -1919,7 +1919,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     this.panslideSub.unsubscribe();
     // }
     // if(this.panslideSub2 != null){
-    this.panslideSub2.unsubscribe();
+    this.panslide2Sub.unsubscribe();
     // }
     if(this.qdeSourceSub != null){
     this.qdeSourceSub.unsubscribe();

@@ -92,8 +92,10 @@
                         required
                         ngModel
                         #loanTenure = "ngModel"
+                        maxlength="2"
+                        oninput="this.value=this.value.slice(0,this.maxLength)"
                         name="loanTenure"
-			                [(ngModel)]="qde?.application.tenure"
+			                  [(ngModel)]="qde?.application.tenure"
                         (ngModelChange)="valuechange($event, 0)"
                         pattern='{{regexPattern.tenure}}'>
                       <span class="yr-text">Years</span>
