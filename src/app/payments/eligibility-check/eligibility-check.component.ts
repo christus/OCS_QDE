@@ -76,8 +76,8 @@ export class EligibilityCheckComponent implements OnInit {
   docType: Array<any>;
   ocsNumber: string;
   applicationId: string;
-  applicationStatusYes: string = "25";
-  applicationStatusNo: string = "30";
+  applicationStatusYes: string = "27";
+  applicationStatusNo: string = "28";
 
 
   fragments = ["eligibility1", "eligibility2"];

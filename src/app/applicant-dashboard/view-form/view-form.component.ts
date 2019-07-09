@@ -768,6 +768,11 @@ export class ViewFormComponent implements OnInit {
   qdeSubmit() {
     
   }
+  applicationStatus: string = "10";
+
+  setStatus(){
+     this.qdeHttp.setStatusApi(this.applicationId, this.applicationStatus).subscribe(res => {}, err => {});
+  }
 
   onPinCodeChange(event) {
     console.log("pincode",event.target.value);
