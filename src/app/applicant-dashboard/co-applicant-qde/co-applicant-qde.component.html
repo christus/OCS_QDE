@@ -1651,7 +1651,7 @@
                         <div class="swiper-slide">
                           <div class="title-wrap">
                               <h4 class="title">Enter Co-Applicant's <span class="cm-line-break"></span>professional contact <span class="cm-line-break"></span>details</h4>
-                              <p class="note">In case, The applicant is currently working,
+                              <p class="note">In case, if the applicant is currently working,
                                   <span class="cm-line-break">please enter details of the applicant</span>
                               </p>
                           </div>
@@ -2559,7 +2559,7 @@
                                     spellcheck="false"
                                     pattern="{{regexPattern.revenue}}"
                                     required />
-                                    <label for="revenue">Revenue</label>
+                                    <label for="revenue">Revenue (in Lakhs)</label>
                                     <div *ngIf="revenue.touched && revenue.invalid" class="invalid-feedback">
                                         <!-- <div *ngIf="revenue.errors?.required">{{errors.revenueDetails.revenue.required}}</div> -->
                                         <div *ngIf="revenue.errors?.pattern">{{errors.revenueDetails.revenue.invalid}}</div>
