@@ -2,6 +2,7 @@
 <main>
   <div class="main">
       <div class="lyt-home">
+          
           <div class="tabs">
               <ul class="tabs-head" [ngClass]="{'visibilityHidden': (activeTab == 0)}">
                 <li class="tab-link pending" [ngClass]="{'active': (activeTab == 0), 'hide': (!applicantIndividual)}">
@@ -47,7 +48,7 @@
                                 </div>
                             </div>
                             <div class="rhs">
-                                <div  class="swiper-container form-swiper"
+                                <div class="swiper-container form-swiper"
                                       [swiper]="rhsConfig"
                                       (slidePrevTransitionStart)="slidePrevTransitionStart(panSlider1)"
                                       (slideNextTransitionStart)="slideNextTransitionStart(panSlider1)"
@@ -640,7 +641,7 @@
                                         </div>
                                     </form>
                                   </div>
-                                  <div class="swiper-slide">cm
+                                  <div class="swiper-slide">
                                       <form class="bs-form">
                                           <div class="form-wrap">
 
@@ -708,7 +709,7 @@
                   <!-- Customer Photo -->
 
                   <div class="tab-content" [ngClass]="{'active': (activeTab == 6)}">
-                      <a href="javascript:void(0);" class="back-btn"></a>
+                      <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(panSlider2)"></a>
                       <div class="lyt-tabs">
                           <div class="lhs">
                               <div  class="swiper-container form-swiper"
@@ -724,7 +725,8 @@
                               </div>
                           <div class="rhs">
                               <div  class="swiper-container form-swiper"
-                              [swiper]="rhsConfig">
+                              [swiper]="rhsConfig"
+                              #panSlider2="ngxSwiper">
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide">
                                         <form class="bs-form">

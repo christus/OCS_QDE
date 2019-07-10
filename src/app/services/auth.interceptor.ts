@@ -6,11 +6,14 @@ import { Inject } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
 import { NgxUiLoaderService } from 'ngx-ui-loader'; // Import NgxUiLoaderService
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 export class AuthInterceptor implements HttpInterceptor {
 
   constructor(@Inject(UtilService) private utilService,
+  private route: ActivatedRoute,
+  private router: Router,
   private ngxService: NgxUiLoaderService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -22,6 +25,11 @@ export class AuthInterceptor implements HttpInterceptor {
       if (!req.headers.has('Content-Type') && req.url !== uri) {
         req = req.clone({ headers: req.headers.set('Content-Type', 'application/x-www-form-urlencoded') });
       }
+
+      // console.log("token: ", this.route.snapshot)
+      // if(this.route.snapshot.queryParams['token'] != null) {
+      //   localStorage.setItem('token', this.route.snapshot.queryParams['token']);
+      // }
 
       const authReq = req.clone({
         headers: req.headers.append(
@@ -41,7 +49,9 @@ export class AuthInterceptor implements HttpInterceptor {
             console.log("Response: " + event.body);
             const response = event.body;
             if (response && response["login_required"]) {
-              this.utilService.clearCredentials();
+              if(this.router.url.search('auto-login') == -1) {
+                this.utilService.clearCredentials();
+              }
             }
             return event;
           }

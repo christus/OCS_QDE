@@ -27,7 +27,7 @@
                 <div class="swiper-slide">
                 <div class="title-wrap">
                   <h4 class="title">Enter desired loan <span class="cm-line-break"></span>amount & purpose</h4>
-                  <p class="note">Enter the property details for which loan is being sought for</p>
+                  <!-- <p class="note">Enter the property details for which loan is being sought for</p> -->
                 </div>
                 </div>
               </div>
@@ -92,8 +92,12 @@
                         required
                         ngModel
                         #loanTenure = "ngModel"
+                        min="0"
+                        max="30"
+                        maxlength="2"
+                        oninput="this.value=this.value.slice(0,this.maxLength)"
                         name="loanTenure"
-			                [(ngModel)]="qde?.application.tenure"
+			                  [(ngModel)]="qde?.application.tenure"
                         (ngModelChange)="valuechange($event, 0)"
                         pattern='{{regexPattern.tenure}}'>
                       <span class="yr-text">Years</span>
@@ -154,7 +158,11 @@
                             <label for="yes-property"><span>Yes</span></label>
                           </div>
                           <div class="bs-radio">
+<<<<<<< HEAD
                             <input [readonly]="isReadOnly" type="radio" name="no-property" [value]=false [(ngModel)]="isPropertyIdentified" (click)="goToNextSlide(property2)">
+=======
+                            <input type="radio" name="no-property" [value]=false [(ngModel)]="isPropertyIdentified" (click)="loanPropertyNo(property2, false)">
+>>>>>>> de9fc9a93b7ce765b84f4108d3bfc1ddc92069df
                             <label for="no-property"><span>No</span></label>
                           </div>
                         </div>
@@ -325,7 +333,31 @@
           <div class="tab-content" [ngClass]="{'active': (activeTab == 2)}">
             <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(existingLoan2)"></a>
             <div class="lyt-tabs">
-              <div class="lhs">
+                <div class="lhs">
+                    <div class="swiper-container form-swiper " [swiper]="lhsConfig" #existingLoan1="ngxSwiper">
+                      <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                          <div class="title-wrap">
+                              <h4 class="title">Enter total number <span class="cm-line-break"></span>of live loans</h4>
+                              <p class="note">For applicant & all co-applicants together</p>
+                          </div>
+                        </div>
+                        <div class="swiper-slide">
+                          <div class="title-wrap">
+                              <h4 class="title">Select existing<span class="cm-line-break"></span>loan provider</h4>
+                              <p class="note">Enter EMI details for both applicant & co-applicant</p>
+                          </div>
+                        </div>
+                        <div class="swiper-slide">
+                          <div class="title-wrap">
+                            <h4 class="title">Enter total existing <span class="cm-line-break"></span>monthly EMI</h4>
+                            <p class="note">For applicant & all co-applicants together</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              <!-- <div class="lhs">
                 <div class="swiper-container form-swiper " [swiper]="lhsConfig" #existingLoan1="ngxSwiper">
                   <div class="swiper-wrapper">
                     <div class="swiper-slide">
@@ -348,12 +380,36 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> -->
               <div class="rhs">
                 <div class="swiper-container form-swiper" [swiper]="rhsConfig"
                   (slidePrevTransitionStart)="slidePrevTransitionStart(existingLoan1)"
                   (slideNextTransitionStart)="slideNextTransitionStart(existingLoan1)" #existingLoan2="ngxSwiper">
                   <div class="swiper-wrapper">
+
+                      <div class="swiper-slide">
+                          <form class="bs-form" #liveLoans="ngForm" 
+                          (ngSubmit)="submitLiveLoans(liveLoans, existingLoan2)">
+                            <div class="form-wrap">
+                              <div class="form-group">
+                                <div class="form-group typ-range">
+                                    <!-- <span class="control-title">Number of years in current residence</span>
+                                    <input type="number"
+                                            name="numberOfYearsInCurrentResidence"
+                                            class="form-control"
+                                            [ngModel]="value[0]"
+                                            (ngModelChange)="valuechange($event, 0)" /> -->
+                                    <ng5-slider [(ngModel)]="liveLoan" ngModel name="liveLoans" [options]="liveLoanOption"></ng5-slider>
+                                </div>
+                              </div>
+                            </div>
+    
+                            
+                            <div class="btn-wrap">
+                              <button type="submit" class="btn btn-primary">Next</button>
+                            </div>
+                          </form>
+                        </div>
 
                     <div class="swiper-slide">
                       <form class="bs-form" #loanProvider="ngForm"
@@ -376,11 +432,12 @@
                         <div class="btn-wrap">
                           <button type="submit" class="btn btn-primary" 
                           [ngClass]="{'disabled': !loanProvider.valid}"
-                          [disabled]="!loanProvider.valid">next</button>
+                          [disabled]="!loanProvider.valid">Next</button>
                         </div>
                       </form>
                     </div>
 
+<<<<<<< HEAD
                     <div class="swiper-slide">
                       <form class="bs-form" #liveLoans="ngForm" 
                       (ngSubmit)="submitLiveLoans(liveLoans, existingLoan2)">
@@ -404,6 +461,9 @@
                         </div>
                       </form>
                     </div>
+=======
+                    
+>>>>>>> de9fc9a93b7ce765b84f4108d3bfc1ddc92069df
 
                     <div class="swiper-slide">
                       <form class="bs-form"

@@ -106,6 +106,8 @@ export class LoanQdeComponent implements OnInit {
 
   // value: number = 0;
 
+  existingLoan = 2;
+
   minValue: number = 1;
   options: Options = {
     floor: 0,
@@ -221,7 +223,11 @@ export class LoanQdeComponent implements OnInit {
   applicationId: string;
   applicantIndex = 0;
 
+<<<<<<< HEAD
   isReadOnly: boolean = false;
+=======
+  
+>>>>>>> de9fc9a93b7ce765b84f4108d3bfc1ddc92069df
 
   constructor(
     private renderer: Renderer2,
@@ -388,11 +394,12 @@ export class LoanQdeComponent implements OnInit {
 
   ngAfterViewInit() {}
 
-  // loanProertyNo(swiperInstance: Swiper,value){
-  //  //switching to existing loan
-  //   this.tabSwitch(2);
+  loanPropertyNo(swiperInstance: Swiper,value){
+   //switching to existing loan
+   this.qde.application.loanDetails.propertyType.propertyIdentified = value;
+    this.tabSwitch(this.existingLoan);
     
-  // }
+  }
   /**
    * Use to sync between lhs and rhs sliders
    * @param swiperInstance RHS Swiper Instance
@@ -629,7 +636,7 @@ export class LoanQdeComponent implements OnInit {
       );
   }
 
-  submitLiveLoans(form: NgForm, swiperInstance?: Swiper) {
+  submitLiveLoans(form: NgForm, swiperInstance?: Swiper ) {
     if (form && !form.valid) {
       return;
     }
@@ -637,7 +644,7 @@ export class LoanQdeComponent implements OnInit {
     this.qde.application.loanDetails.existingLoans = {
       liveLoan: this.liveLoan
     };
-
+  
     this.qdeHttp
       .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
       .subscribe(
@@ -645,7 +652,13 @@ export class LoanQdeComponent implements OnInit {
           // If successful
           if (response["ProcessVariables"]["status"]) {
             console.log(this.qde.application.loanDetails.propertyType);
-            this.goToNextSlide(swiperInstance);
+            if(this.qde.application.loanDetails.existingLoans.liveLoan > 0 ){
+                this.goToNextSlide(swiperInstance);
+            }else{
+              
+              alert("Loan Detail process is Completed, you didn't have any existing loan for further step ")
+            }
+          
           } else {
             // Throw Invalid Pan Error
           }

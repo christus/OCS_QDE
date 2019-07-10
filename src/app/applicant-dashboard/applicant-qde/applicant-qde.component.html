@@ -1005,6 +1005,8 @@
                                               class="form-control"
                                               [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.numberOfYearsInCurrentResidence"
                                               tabindex="12"
+                                              min="0"
+                                              max="50"
                                               maxlength="2"
                                               oninput="this.value=this.value.slice(0,this.maxLength)"
                                               #numberOfYearsInCurrentResidence="ngModel"
@@ -1280,9 +1282,11 @@
                                                   <input [readonly]="isReadOnly" spellcheck="false"
                                                         type="number"
                                                           name="numberOfDependents"
-                                                          min=0
+                                                          min="0"
+                                                          max="6"
                                                           tabindex="1"
-                                                          max=90
+                                                          maxlength="1"
+                                                          oninput="this.value=this.value.slice(0,this.maxLength)"
                                                           class="form-control"
                                                           [(ngModel)]="qde.application.applicants[applicantIndex].familyDetails.numberOfDependents" />
                                                   <ng5-slider [(value)]="qde.application.applicants[applicantIndex].familyDetails.numberOfDependents" [options]="familyOptions"></ng5-slider>
@@ -1606,8 +1610,8 @@
                         <div class="swiper-slide">
                           <div class="title-wrap">
                               <h4 class="title">Enter Applicant’s <span class="cm-line-break"></span>professional contact <span class="cm-line-break"></span>details</h4>
-                              <p class="note">In case, main application is currently not work-
-                                  <span class="cm-line-break">ing, please enter details of the applicant</span>
+                              <p class="note">In case, if the applicant is currently working,
+                                  <span class="cm-line-break"> please enter details of the applicant</span>
                               </p>
                           </div>
                         </div>
@@ -1785,7 +1789,7 @@
               </div>
   
               <div class="tab-content" [ngClass]="{'active': (activeTab == 9)}">
-                    <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(incomeSlider3)"></a>
+                    <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(incomeSlider2)"></a>
                     <div class="lyt-tabs">
                         <div class="lhs">
                             <div  class="swiper-container form-swiper"
@@ -1914,8 +1918,8 @@
                                             <button 
                                                 type="submit"
                                                 class="btn btn-primary"
-                                                [ngClass]="{'disabled': !incomeDetailsForm1.valid }"
-                                                [disabled]="!incomeDetailsForm1.valid ">
+                                                [ngClass]="{'disabled': !incomeDetailsForm1.valid || qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == null }"
+                                                [disabled]="!incomeDetailsForm1.valid || qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == null ">
                                             Next
                                             </button>
                                       </div>
@@ -2006,7 +2010,7 @@
             </div>
   
               <div class="tab-content" [ngClass]="{'active': (activeTab == 10)}">
-                  <a href="javascript:void(0);" class="back-btn" (click)="tabSwitch(0)"></a>
+                  <a href="javascript:void(0);" class="back-btn" (click)="tabSwitch()"></a>
                   <div class="lyt-tabs">
                       <div class="lhs">
   
@@ -2718,8 +2722,8 @@
                                             <button 
                                                 type="submit"
                                                 class="btn btn-primary"
-                                                [ngClass]="{'disabled': !incomeDetailsForm3.valid }"
-                                                [disabled]="!incomeDetailsForm3.valid ">
+                                                [ngClass]="{'disabled': !incomeDetailsForm3.valid || qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == null }"
+                                                [disabled]="!incomeDetailsForm3.valid || qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == null ">
                                             Next
                                         </button>
                                         </div>
