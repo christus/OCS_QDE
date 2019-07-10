@@ -40,7 +40,7 @@
                 (ngSubmit)="submitLoanAmount(loanAmount)">
                   <div class="form-wrap">
                     <div class="form-group inr">
-                      <input type="text" class="form-control" id="amt-require"
+                      <input [readonly]="isReadOnly" type="text" class="form-control" id="amt-require"
                         required
                         [(ngModel)]="qde?.application.loanDetails.loanAmount.amountRequired"
                         #amountRequired = "ngModel"
@@ -62,7 +62,7 @@
                     </div>
                       <div class="form-group">
                         <span class="control-title">Type of loan</span>
-                        <kendo-dropdownlist 
+                        <kendo-dropdownlist [readonly]="isReadOnly" 
                           class="form-control"
                           name="loanType"
                           [data]="loanType" 
@@ -75,7 +75,7 @@
                     
                       <div class="form-group">
                         <span class="control-title">Loan purpose</span>
-                        <kendo-dropdownlist 
+                        <kendo-dropdownlist [readonly]="isReadOnly" 
                           class="form-control"
                           name="loanPurpose"
                           [data]="loanpurposes" 
@@ -88,7 +88,7 @@
 
                     <div class="form-group typ-range">
                       <span class="control-title">Loan tenure (in years)</span>
-                      <input type="number" class="form-control" id="no-yrs"
+                      <input [readonly]="isReadOnly" type="number" class="form-control" id="no-yrs"
                         required
                         ngModel
                         #loanTenure = "ngModel"
@@ -154,11 +154,11 @@
                       <form class="bs-form">
                         <div class="form-wrap">
                           <div class="bs-radio">
-                            <input type="radio" name="yes-property" [value]=true [(ngModel)]="isPropertyIdentified" (click)="goToNextSlide(property2)" >
+                            <input [readonly]="isReadOnly" type="radio" name="yes-property" [value]=true [(ngModel)]="isPropertyIdentified" (click)="goToNextSlide(property2)" >
                             <label for="yes-property"><span>Yes</span></label>
                           </div>
                           <div class="bs-radio">
-                            <input type="radio" name="no-property" [value]=false [(ngModel)]="isPropertyIdentified" (click)="loanPropertyNo(property2, false)">
+                            <input [readonly]="isReadOnly" type="radio" name="no-property" [value]=false [(ngModel)]="isPropertyIdentified" (click)="loanPropertyNo(property2, false)">
                             <label for="no-property"><span>No</span></label>
                           </div>
                         </div>
@@ -171,7 +171,7 @@
                           <div class="form-wrap">
                               <div class="form-group">
                                 <span class="control-title">Property type</span>
-                                <kendo-dropdownlist 
+                                <kendo-dropdownlist [readonly]="isReadOnly" 
                                   class="form-control" 
                                   name="propertyTypes1" 
                                   [data]="propertyTypes" 
@@ -182,9 +182,9 @@
                                 </kendo-dropdownlist>
                               </div>
                               <div class="form-group">
-                                  <input
-                                  type="text" 
-                                  class="form-control" 
+                                  <input [readonly]="isReadOnly" ngModel
+                                  type="text"
+                                  class="form-control"
                                   id="pro-add-line1" 
                                   name="propertyArea"
                                   ngModel
@@ -200,9 +200,12 @@
                                   </div>
                                 </div>
                               <div class="form-group">
-                                  <input type="number" class="form-control" id="pro-add-line2" 
+
+                                  <input [readonly]="isReadOnly"
+                                  type="number"
+                                  class="form-control"
+                                  id="pro-add-line2" 
                                   name="propertyAreaInSqFeets"
-                                  ngModel
                                   #propertyArea="ngModel"
                                   [(ngModel)]="propertyAreaValue"
                                   pattern="{{regexPattern.address}}"
@@ -227,7 +230,7 @@
                       (ngSubmit)="submitPropertyDetail(submitProperty, property2)">
                         <div class="form-wrap">
                           <div class="form-group">
-                            <input type="text" class="form-control" id="proprty-pin"
+                            <input [readonly]="isReadOnly" type="text" class="form-control" id="proprty-pin"
                             required
                             ngModel
                             #propertyPincode = "ngModel"
@@ -248,7 +251,7 @@
 
                           </div>
                           <div class="form-group">
-                            <input type="text" class="form-control"
+                            <input [readonly]="isReadOnly" type="text" class="form-control"
                             id="add-line1"
                             required
                             ngModel
@@ -267,7 +270,7 @@
                           </div>
 
                           <div class="form-group">
-                            <input type="text" class="form-control" id="add-line2"
+                            <input [readonly]="isReadOnly" type="text" class="form-control" id="add-line2"
                               required
                               ngModel
                               #addressLineTwo = "ngModel"
@@ -285,7 +288,7 @@
                           </div>
                           
                           <div class="form-group">
-                            <input type="text" class="form-control" id="pro-city2"
+                            <input [readonly]="isReadOnly" type="text" class="form-control" id="pro-city2"
                               required
                               ngModel
                               #cityOrState = "ngModel"
@@ -410,7 +413,7 @@
                         <div class="form-wrap">
                           <div class="form-group">
                             <span class="control-title">Loan provider</span>
-                            <kendo-dropdownlist 
+                            <kendo-dropdownlist [readonly]="isReadOnly" 
                               class="form-control" 
                               name="loanProvider" 
                               [data]="loanProviderList" 
@@ -430,7 +433,29 @@
                       </form>
                     </div>
 
-                    
+                    <div class="swiper-slide">
+                      <form class="bs-form" #liveLoans="ngForm" 
+                      (ngSubmit)="submitLiveLoans(liveLoans, existingLoan2)">
+                        <div class="form-wrap">
+                          <div class="form-group">
+                            <div class="form-group typ-range">
+                                <!-- <span class="control-title">Number of years in current residence</span>
+                                <input [readonly]="isReadOnly" type="number"
+                                        name="numberOfYearsInCurrentResidence"
+                                        class="form-control"
+                                        [ngModel]="value[0]"
+                                        (ngModelChange)="valuechange($event, 0)" /> -->
+                                <ng5-slider [(ngModel)]="liveLoan" ngModel name="liveLoans" [options]="liveLoanOption"></ng5-slider>
+                            </div>
+                          </div>
+                        </div>
+
+                        
+                        <div class="btn-wrap">
+                          <button type="submit" class="btn btn-primary">Next</button>
+                        </div>
+                      </form>
+                    </div>
 
                     <div class="swiper-slide">
                       <form class="bs-form"
@@ -438,7 +463,7 @@
                       (ngSubmit)="submitMonthlyEmi(monthlyEmiForm, existingLoan2)">
                         <div class="form-wrap">
                           <div class="form-group inr">
-                            <input type="text" class="form-control" id="monthly-emi"
+                            <input [readonly]="isReadOnly" type="text" class="form-control" id="monthly-emi"
                               required
                               ngModel
                               #monthlyEmi = "ngModel"

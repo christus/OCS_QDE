@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Renderer2  } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Renderer2, OnDestroy  } from '@angular/core';
 
 import * as Swiper from 'swiper/dist/js/swiper.js';
 // import { Select2Component } from 'ng2-select2';
@@ -12,7 +12,8 @@ import { QdeHttpService } from 'src/app/services/qde-http.service';
 import { CommonDataService } from 'src/app/services/common-data.service';
 import { QdeService } from 'src/app/services/qde.service';
 import { errors } from '../../services/errors';
-import { forEach } from '@angular/router/src/utils/collection';
+import { Subscription } from 'rxjs';
+import { statuses } from 'src/app/app.constants';
 
 interface Item {
   key: string,
@@ -24,9 +25,10 @@ interface Item {
   templateUrl: './view-form.component.html',
   styleUrls: ['./view-form.component.css']
 })
-export class ViewFormComponent implements OnInit {
+export class ViewFormComponent implements OnInit, OnDestroy {
 
   readonly errors = errors;
+  readonly statuses = statuses;
 
   private showSuccessModal: boolean = false;
 
@@ -176,7 +178,8 @@ export class ViewFormComponent implements OnInit {
                 'co-applicant',
                 'loan-details',
                 'references',
-                'document-uploads'
+                'document-uploads',
+                'review-eligibility'
   ];
 
   applicantIndex: number;
@@ -188,6 +191,16 @@ export class ViewFormComponent implements OnInit {
   isIncomplete: Array<InCompleteFields> = [];
   applicationId: string;
   applicantId: string;
+
+  isReadOnlyForm: boolean;
+  isEligibilityForReview: boolean;
+
+  eligibilityAssignedTo: string;
+  eligibilityDate: string;
+  listOfApplicantsNameAndCutOff: Array<{name: string, aboveCutOff: string}>;
+  maxEMI: number;
+
+  getElibilityReviewSub: Subscription;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -309,6 +322,53 @@ export class ViewFormComponent implements OnInit {
     console.log('IsIncomplete: ', this.isIncomplete);
 
     this.prefillData();
+
+    // For hiding Edit Button
+    this.commonDataService.isReadOnlyForm.subscribe(val => {
+      this.isReadOnlyForm = val;
+    });
+
+    // To Show Button Accept/Reject Form if TBM (Check leads.component.html)
+    this.commonDataService.isEligibilityForReview.subscribe(val => {
+      this.isEligibilityForReview = val['isEligibilityForReview'];
+      this.applicantId = val['applicationId'];
+      if(val['isEligibilityForReview'] == true && val['applicationId'] != null) {
+
+        /************************************
+        * Uncomment below for UAT/Production
+        ************************************/
+        // this.getElibilityReviewSub = this.qdeHttp.getElibilityReview(this.applicationId).subscribe(res => {
+        //   let response = res['ProcessVariables'];
+        //   this.eligibilityAssignedTo = response['assignedTo'];
+        //   this.eligibilityDate = response['dateCreated'].split('-')[2]+"-"+response['dateCreated'].split('-')[1]+"-"+response['dateCreated'].split('-')[0];
+        //   this.listOfApplicantsNameAndCutOff = response['listOfApplicantsNameAndCutOff'].map(v => {
+        //     return {
+        //       name: v['firstName']+" "+v['lastName'],
+        //       aboveCutOff: v['aboveCutOff'] == '1' ? 'Yes': 'No'
+        //     }
+        //   });
+        //   this.maxEMI = response['maxEMI'];
+        // });
+
+        /*********************************
+        * Remove below for UAT/Production
+        *********************************/
+        this.getElibilityReviewSub = this.qdeHttp.dummyGetEligibilityAPI(this.applicationId).subscribe(res => {
+          let response = res['ProcessVariables'];
+          this.eligibilityAssignedTo = response['assignedTo'];
+          this.eligibilityDate = response['dateCreated'].split('-')[2]+"-"+response['dateCreated'].split('-')[1]+"-"+response['dateCreated'].split('-')[0];
+          this.listOfApplicantsNameAndCutOff = response['listOfApplicantsNameAndCutOff'].map(v => {
+            return {
+              name: v['firstName']+" "+v['lastName'],
+              aboveCutOff: v['aboveCutOff'] == '1' ? 'Yes': 'No'
+            }
+          });
+          this.maxEMI = response['maxEMI'];
+        });
+      }
+    });
+
+
   }
   
   ngOnInit() {
@@ -803,4 +863,17 @@ export class ViewFormComponent implements OnInit {
     });
   }
 
+  applicationAccepted() {
+    this.qdeHttp.setStatusApi(this.applicationId, statuses['Eligibility Accepted']).subscribe(res => {}, err => {});
+  }
+
+  applicationRejected() {
+    this.qdeHttp.setStatusApi(this.applicationId, statuses['Eligibility Rejected']).subscribe(res => {}, err => {});
+  }
+
+  ngOnDestroy() {
+    if(this.getElibilityReviewSub != null) {
+      this.getElibilityReviewSub.unsubscribe();
+    }
+  }
 }

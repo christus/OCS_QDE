@@ -60,3 +60,64 @@
 .col-4.padd0 {
     padding: 0;
 }
+
+.bold {
+    font-weight: bold;
+}
+
+.eligibility-wrapper {
+    font-size: 20px;
+    background: #fff;
+    border-radius: 5px;
+    padding: 3.13vw 1.95vw 3.13vw;
+    margin-bottom: 1.56vw;
+    position: relative;
+}
+
+.eligibility-name {
+    padding: 5px;
+}
+
+.eligibility-yesno {
+    text-align: center;
+    border-left: 1px solid #333;
+    padding: 5px;
+}
+
+.eligibility-table {
+    outline: auto;
+    width: 100%;
+}
+
+.eligibility-table tr {
+    outline: auto;
+}
+
+.eligibility-table thead th:nth-child(2) {
+    border-left: 1px solid #333;
+}
+
+.eligibility-wrapper .card-title {
+    font-family: zurich-bold;
+    font-size: 2.11vw;
+    line-height: 3.28vw;
+    color: #004a80;
+    padding-left: 1.17vw;
+}
+
+.eligibility-wrapper .card-info {
+    padding-left: 1.17vw;
+}
+
+.clearfix {
+    display: block;
+    clear: both;
+}
+
+.marginTop15 {
+    margin-top: 15px;
+}
+
+.marginBot15 {
+    margin-bottom: 15px;    
+}

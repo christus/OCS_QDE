@@ -58,12 +58,12 @@
                                             <form class="bs-form">
                                                 <div class="form-wrap">
                                                     <div class="bs-radio" >
-                                                        <input  type="radio" [value]="true" [routerLink]="['/document-uploads', applicationId, 'applicant', mainApplicantId]" />
+                                                        <input [readonly]="isReadOnly"  type="radio" [value]="true" [routerLink]="['/document-uploads', applicationId, 'applicant', mainApplicantId]" />
                                                         <label for="individual"><span>Applicant</span></label>
                                                     </div>
 
                                                     <div class="bs-radio typ-doc" *ngFor="let coApp of coApplicants; let i=index;">
-                                                        <input type="radio" [routerLink]="['/document-uploads', applicationId, 'co-applicant', coApp.applicantId]" name="doc-upload"/>
+                                                        <input [readonly]="isReadOnly" type="radio" [routerLink]="['/document-uploads', applicationId, 'co-applicant', coApp.applicantId]" name="doc-upload"/>
                                                         <label for="applicant-radio">
                                                             <span class="desc-text">{{i+1}} <span>Co-Applicant</span></span>
                                                             <!-- <span class="icon icon-close"></span> -->
@@ -113,7 +113,7 @@
                                             <div class="form-wrap">
                                                 <div class="form-group">
                                                     <span class="control-title">Select a Document Type</span>
-                                                    <kendo-dropdownlist class="form-control" 
+                                                    <kendo-dropdownlist [readonly]="isReadOnly" class="form-control" 
                                                         name="id-proof" 
                                                         [data]="idProofDocumnetType" 
                                                         textField="key"
@@ -137,7 +137,7 @@
                                                     <div *ngIf="isMobile && idProofId" else idProof>
                                                         <div *ngIf="idProofId" class="bs-file" >
                                                             <secured-image [src]="idProofId"></secured-image>
-                                                            <input type="file" class="form-control" (change)="setIdProof($event.target.files)" >
+                                                            <input [readonly]="isReadOnly" type="file" class="form-control" (change)="setIdProof($event.target.files)" >
                                                             <label for="file"><span>Click photo of Id proof</span></label>    
                                                             <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setIdProof')">Retake</button>
                                                         </div>
@@ -152,7 +152,7 @@
                                                     </div>
 
                                                     <div *ngIf="!idProofId"  class="bs-file">
-                                                        <input type="file" class="form-control" (change)="setIdProof($event.target.files)" >
+                                                        <input [readonly]="isReadOnly" type="file" class="form-control" (change)="setIdProof($event.target.files)" >
                                                         <label for="file"><span>Click photo of Id proof</span></label>
                                                         <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setIdProof')">open camera</button>
                                                     </div>
@@ -162,7 +162,7 @@
                                                 <div *ngIf="!isMobile">
 
                                                     <div class="bs-file">
-                                                        <input type="file" class="form-control" (change)="setIdProof($event.target.files)" >
+                                                        <input [readonly]="isReadOnly" type="file" class="form-control" (change)="setIdProof($event.target.files)" >
                                                         <label for="file"><span>Click photo of Id proof</span></label>
                                                     </div>
                                                     
@@ -196,13 +196,13 @@
                                         <form class="bs-form">
                                             <div class="form-wrap">
                                                 <div class="bs-radio">
-                                                    <input  type="radio"
+                                                    <input [readonly]="isReadOnly"  type="radio"
                                                             [value]="true"
                                                            />
                                                     <label for="individual"><span>Get OTP</span></label>
                                                 </div>
                                                 <div class="bs-radio">
-                                                    <input  type="radio" 
+                                                    <input [readonly]="isReadOnly"  type="radio" 
                                                             [value]="true"
                                                             (click)="showSuccessModal = true"/>
                                                     <label for="non-individual"><span>Biometric Scan</span></label>
@@ -277,7 +277,7 @@
                                         <div class="form-wrap">
                                             <div class="form-group">
                                                 <span class="control-title">Select a Document Type</span>
-                                                <kendo-dropdownlist class="form-control" 
+                                                <kendo-dropdownlist [readonly]="isReadOnly" class="form-control" 
                                                     name="address-proof" 
                                                     [data]="addressProofDocumnetType" 
                                                     textField="key" 
@@ -314,7 +314,7 @@
                                                 </div>
 
                                                 <div *ngIf="!addressProofFileName" class="bs-file">
-                                                    <input type="file" class="form-control" (change)="setAddressProof($event.target.files)" >
+                                                    <input [readonly]="isReadOnly" type="file" class="form-control" (change)="setAddressProof($event.target.files)" >
                                                     <label for="file"><span>Click photo of Address Proof</span></label>
                                                     <button class="btn btn-primary" (click)="openCamera('setAddressProof')">open camera</button>
                                                 </div>
@@ -326,7 +326,7 @@
                                             <div *ngIf="!isMobile">
 
                                                 <div class="bs-file">
-                                                    <input type="file" class="form-control" (change)="setAddressProof($event.target.files)" >
+                                                    <input [readonly]="isReadOnly" type="file" class="form-control" (change)="setAddressProof($event.target.files)" >
                                                     <label for="file"><span>Click photo of Address Proof</span></label>
                                                 </div>
 
@@ -392,7 +392,7 @@
                                         <div class="form-wrap">
                                             <div class="form-group">
                                                 <span class="control-title">Select a Document Type</span>
-                                                <kendo-dropdownlist class="form-control" 
+                                                <kendo-dropdownlist [readonly]="isReadOnly" class="form-control" 
                                                     name="income-proof" 
                                                     [data]="incomeProofDocumnetType" 
                                                     textField="key" 
@@ -430,7 +430,7 @@
 
 
                                                 <div *ngIf="!incomeProofFileName" class="bs-file">
-                                                  <input type="file" class="form-control" (change)="setIncomeProof($event.target.files)" >
+                                                  <input [readonly]="isReadOnly" type="file" class="form-control" (change)="setIncomeProof($event.target.files)" >
                                                   <label for="file"><span>Click photo of Id proof</span></label>
                                                   <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setIncomeProof')">open camera</button>
                                                 </div>
@@ -440,7 +440,7 @@
                                             <div *ngIf="!isMobile">
 
                                                 <div class="bs-file">
-                                                    <input type="file" class="form-control" (change)="setIncomeProof($event.target.files)" >
+                                                    <input [readonly]="isReadOnly" type="file" class="form-control" (change)="setIncomeProof($event.target.files)" >
                                                     <label for="file"><span>Click photo of Id proof</span></label>
                                                 </div>
           
@@ -507,7 +507,7 @@
                                         <div class="form-wrap">
                                             <div class="form-group">
                                                 <span class="control-title">Select a Document Type</span>
-                                                <kendo-dropdownlist class="form-control" 
+                                                <kendo-dropdownlist [readonly]="isReadOnly" class="form-control" 
                                                     name="banking-proof" 
                                                     [data]="bankProofDocumnetType" 
                                                     textField="key" 
@@ -545,7 +545,7 @@
 
 
                                                 <div *ngIf="!bankProofFileName" class="bs-file">
-                                                  <input type="file" class="form-control" (change)="setBankingProof($event.target.files)" >
+                                                  <input [readonly]="isReadOnly" type="file" class="form-control" (change)="setBankingProof($event.target.files)" >
                                                   <label for="file"><span>Click photo of Banking Proof</span></label>
                                                   <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setBankingProof')">open camera</button>
                                                 </div>
@@ -555,7 +555,7 @@
                                             <div *ngIf="!isMobile">
 
                                                 <div class="bs-file">
-                                                    <input type="file" class="form-control" (change)="setBankingProof($event.target.files)" >
+                                                    <input [readonly]="isReadOnly" type="file" class="form-control" (change)="setBankingProof($event.target.files)" >
                                                     <label for="file"><span>Click photo of Banking Proof</span></label>
                                                 </div>
 
@@ -625,7 +625,7 @@
                                         <div class="form-wrap">
                                             <div class="form-group">
                                                 <span class="control-title">Select a Document Type</span>
-                                                <kendo-dropdownlist class="form-control" 
+                                                <kendo-dropdownlist [readonly]="isReadOnly" class="form-control" 
                                                     name="collateral-proof" 
                                                     [data]="collateralProofDocumnetType" 
                                                     textField="key" 
@@ -663,7 +663,7 @@
                                                 </div>
 
                                                 <div *ngIf="!collateralProofFileName" class="bs-file">
-                                                  <input type="file" class="form-control" (change)="setCollateralProof($event.target.files)" >
+                                                  <input [readonly]="isReadOnly" type="file" class="form-control" (change)="setCollateralProof($event.target.files)" >
                                                   <label for="file"><span>Click photo of Collateral</span></label>
                                                   <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setCollateralProof')">open camera</button>
                                                 </div>
@@ -673,7 +673,7 @@
                                             <div *ngIf="!isMobile">
 
                                                 <div class="bs-file">
-                                                    <input type="file" class="form-control" (change)="setCollateralProof($event.target.files)" >
+                                                    <input [readonly]="isReadOnly" type="file" class="form-control" (change)="setCollateralProof($event.target.files)" >
                                                     <label for="file"><span>Click photo of Collateral</span></label>
                                                 </div>
 
@@ -749,7 +749,7 @@
                                                 </div>
 
                                                 <div *ngIf="!photoProofFileName" class="bs-file">
-                                                    <input type="file" class="form-control" (change)="setCustomerPhoto($event.target.files)" >
+                                                    <input [readonly]="isReadOnly" type="file" class="form-control" (change)="setCustomerPhoto($event.target.files)" >
                                                     <label for="file"><span>Click photo of Customer</span></label>
                                                     <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setCustomerPhoto')">open camera</button>
                                                 </div>
@@ -759,7 +759,7 @@
                                             <div  *ngIf="!isMobile">
 
                                                     <div class="bs-file">
-                                                        <input type="file" class="form-control" (change)="setCustomerPhoto($event.target.files)" >
+                                                        <input [readonly]="isReadOnly" type="file" class="form-control" (change)="setCustomerPhoto($event.target.files)" >
                                                         <label for="file"><span>Click photo of Customer</span></label>
                                                     </div>
 

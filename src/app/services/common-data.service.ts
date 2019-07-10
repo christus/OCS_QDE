@@ -97,6 +97,21 @@ export class CommonDataService {
   }
 
 
-  
+  isEligibilityForReview$: BehaviorSubject<{applicationId: string, isEligibilityForReview: boolean}> = new BehaviorSubject<{applicationId: string, isEligibilityForReview: boolean}>({applicationId: null, isEligibilityForReview: false});
+  public isEligibilityForReview = this.isEligibilityForReview$.asObservable();
+
+
+  setEligibilityForReview(data: {applicationId: string, isEligibilityForReview: boolean}) {
+   this.isEligibilityForReview$.next(data)
+  }
+
+
+  isReadOnlyForm$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public isReadOnlyForm = this.isReadOnlyForm$.asObservable();
+
+
+  setReadOnlyForm(data: boolean) {
+   this.isReadOnlyForm$.next(data)
+  }
 
 }

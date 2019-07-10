@@ -79,7 +79,7 @@
                                     <div class="form-wrap" *ngIf="coApplicantsForDashboard.length > 0">
 
                                         <div class="bs-radio typ-doc" *ngFor="let coApp of coApplicantsForDashboard;let i=index;">
-                                            <input  type="radio"
+                                            <input [readonly]="isReadOnly"  type="radio"
                                                     (click)="selectCoApplicant(applicationId, (i+1))"
                                                     name="doc-upload"
                                                     [id]="'applicant-radio'+i" />
@@ -138,7 +138,7 @@
                                         <form class="bs-form" *ngIf="!isTabDisabled" #isIndividualForm="ngForm">
                                             <div class="form-wrap">
                                                 <div class="bs-radio">
-                                                    <input  type="radio"
+                                                    <input [readonly]="isReadOnly"  type="radio"
                                                             name="isIndividual"
                                                             id="individual"
                                                             value="1"
@@ -148,7 +148,7 @@
                                                     <label for="individual"><span>Individual</span></label>
                                                 </div>
                                                 <div class="bs-radio">
-                                                    <input  type="radio"
+                                                    <input [readonly]="isReadOnly"  type="radio"
                                                             name="isIndividual"
                                                             id="non-individual"
                                                             value="2"
@@ -167,7 +167,7 @@
                                               (ngSubmit)="submitPanNumber(panNumberForm, panSlider2)">
                                               <div class="form-wrap">
                                                 <div class="form-group last" style="margin-bottom: 40px;">
-                                                    <input  type="text"
+                                                    <input [readonly]="isReadOnly"  type="text"
                                                             class="form-control"
                                                             [(ngModel)]="qde.application.applicants[coApplicantIndex].pan.panNumber"
                                                             id="pan-inpt"
@@ -192,7 +192,7 @@
 
                                                   <span class="control-title">Document Type</span>
 
-                                                  <kendo-dropdownlist  class="form-control"
+                                                  <kendo-dropdownlist [readonly]="isReadOnly"  class="form-control"
                                                                         [data]="docType" 
                                                                         textField="key"
                                                                         valueField="value"
@@ -205,7 +205,7 @@
                                                   </kendo-dropdownlist>
                                               </div>
                                               <div class="form-group">
-                                                  <input    type="text"
+                                                  <input [readonly]="isReadOnly"    type="text"
                                                             class="form-control"
                                                             [(ngModel)]="qde.application.applicants[coApplicantIndex].pan.docNumber"
                                                             id="docNumber"
@@ -241,7 +241,7 @@
                                             <div class="form-wrap">
                                                 <div class="bs-file">
                                                       <!-- <image-upload [url]="imageUrl" [headers]="myHeaders"></image-upload> -->
-                                                    <input type="file" tabindex="3" class="form-control" id="file">
+                                                    <input [readonly]="isReadOnly" type="file" tabindex="3" class="form-control" id="file">
                                                     <label for="file"><span>click photo of PAN card</span></label>
                                                 </div>
                                             </div>
@@ -309,7 +309,7 @@
                                         <form class="bs-form" *ngIf="!isTabDisabled">
                                             <div class="form-wrap">
                                                 <div class="bs-radio">
-                                                    <input  type="radio"
+                                                    <input [readonly]="isReadOnly"  type="radio"
                                                             name="income-consider"
                                                             id="yes-consider1"
                                                             [value]="1"
@@ -320,7 +320,7 @@
                                                     <label for="yes-consider1"><span>Resident</span></label>
                                                 </div>
                                                 <div class="bs-radio">
-                                                    <input  type="radio"
+                                                    <input [readonly]="isReadOnly"  type="radio"
                                                             name="income-consider"
                                                             id="no-consider1"
                                                             class="not-usual"
@@ -342,7 +342,7 @@
                                                   <div class="form-group">
                                                       <span class="control-title">Title</span>
                                                       <div class="form-group">   
-                                                          <kendo-dropdownlist class="form-control"
+                                                          <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
                                                             [data]="titles"
                                                             tabindex="1"
                                                             textField="key"
@@ -354,7 +354,7 @@
                                                   </div>
                                                   <div class="form-group">
   
-                                                    <input  type="text"
+                                                    <input [readonly]="isReadOnly"  type="text"
                                                             class="form-control"
                                                             id="name"
                                                             [(ngModel)]="qde.application.applicants[coApplicantIndex].personalDetails.firstName"
@@ -372,7 +372,7 @@
                                                     </div>
                                                   </div>
                                                   <div class="form-group typ-optional">
-                                                    <input type="text"
+                                                    <input [readonly]="isReadOnly" type="text"
                                                           class="form-control"
                                                           id="middleName"
                                                           name="middleName"
@@ -391,7 +391,7 @@
                                                   </div>
                                                   <div class="form-group">
   
-                                                    <input    type="text"
+                                                    <input [readonly]="isReadOnly"    type="text"
                                                               class="form-control" 
                                                               [(ngModel)]="qde.application.applicants[coApplicantIndex].personalDetails.lastName" 
                                                               name="lastName" 
@@ -422,7 +422,7 @@
                                           <form class="bs-form" *ngIf="!isTabDisabled" #genderForm="ngForm">
                                               <div class="form-wrap">
                                                     <div class="bs-radio" *ngFor="let g of genders;let i=index;">
-                                                        <input  type="radio"
+                                                        <input [readonly]="isReadOnly"  type="radio"
                                                                 name="gender"
                                                                 [id]="g.key"
                                                                 [tabindex]="(i+1)"
@@ -441,7 +441,7 @@
                                               <div class="form-wrap">
                                                   <div class="form-group">
                                                       <span class="control-title">Qualification</span>
-                                                      <kendo-dropdownlist class="form-control"
+                                                      <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
                                                         [data]="qualifications" 
                                                         textField="key"
                                                         valueField="value"
@@ -471,7 +471,7 @@
 
                                                       <div class="row">
                                                         <div class="col4">
-                                                            <kendo-dropdownlist class="form-control"
+                                                            <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
                                                             [data]="days"
                                                             textField="key"
                                                             valueField="value"
@@ -485,7 +485,7 @@
                                                         </div>
     
                                                         <div class="col4">
-                                                            <kendo-dropdownlist class="form-control"
+                                                            <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
                                                             [data]="months"
                                                             textField="key"
                                                             valueField="value"
@@ -499,7 +499,7 @@
                                                         </div>
     
                                                         <div class="col4">
-                                                            <kendo-dropdownlist class="form-control"
+                                                            <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
                                                             [data]="years"
                                                             textField="key"
                                                             valueField="value"
@@ -518,7 +518,7 @@
                                                   </div>
                                                   <div class="form-group">                                                 
                                                     
-                                                        <input spellcheck="false"
+                                                        <input [readonly]="isReadOnly" spellcheck="false"
                                                           type="text"
                                                           class="form-control"
                                                           id="birthPlace"
@@ -573,7 +573,7 @@
                                 <div class="form-wrap">
                                     <div class="form-group" [ngClass]="{'prefer': isAlternateEmailId}">
   
-                                        <input type="text"
+                                        <input [readonly]="isReadOnly" type="text"
                                               class="form-control"
                                               id="pref-email"
                                               data-validation-attr="email"
@@ -600,7 +600,7 @@
                                           </div>
                                     </div>
                                     <div class="form-group" [ngClass]="{'typ-alternative': !isAlternateEmailId}">
-                                        <input type="text"
+                                        <input [readonly]="isReadOnly" type="text"
                                               class="form-control"
                                               id="alter-email"
                                               data-validation-attr="email01"
@@ -626,7 +626,7 @@
                                     </div>
   
                                     <div class="form-group typ-mob">
-                                        <input type="tel" class="form-control" id="mob-no"
+                                        <input [readonly]="isReadOnly" type="tel" class="form-control" id="mob-no"
                                           maxlength="10" im-insert="true"
                                           minlength="10"
                                           tabindex="5"
@@ -660,7 +660,7 @@
   
                                     <div class="form-group typ-mob" [ngClass]="{'typ-alternative': !isAlternateMobileNumber}">
   
-                                        <input type="tel" class="form-control" id="alter-mob" data-validation-attr="mobileno01" 
+                                        <input [readonly]="isReadOnly" type="tel" class="form-control" id="alter-mob" data-validation-attr="mobileno01" 
                                           maxlength="10" im-insert="true"
                                           minlength="10"
                                           tabindex="7"
@@ -688,7 +688,7 @@
   
                                     <div class="residence-no">
                                         <div class="form-group">
-                                            <input    type="text"
+                                            <input [readonly]="isReadOnly"    type="text"
                                                       [(ngModel)]="residenceNumberStdCode"
                                                       pattern="{{regexPattern.mobileNumber}}"
                                                       #residenceStdCode="ngModel"
@@ -709,7 +709,7 @@
                                         </div>
                                         <span class="seperator">-</span>
                                         <div class="form-group">
-                                            <input    type="text"
+                                            <input [readonly]="isReadOnly"    type="text"
                                                       class="form-control"
                                                       id="res-no"
                                                       [(ngModel)]="residenceNumberPhoneNumber"
@@ -738,7 +738,7 @@
                                     </div>
                                     <div class="residence-no" [ngClass]="{'typ-alternative': !isAlternateResidenceNumber}">
                                         <div class="form-group">
-                                            <input    type="text"
+                                            <input [readonly]="isReadOnly"    type="text"
                                                       [(ngModel)]="alternateResidenceNumberStdCode"
                                                       name="alternateResidenceNumberStd1"
                                                       maxlength="3"
@@ -756,7 +756,7 @@
                                         </div>
                                         <span class="seperator">-</span>
                                         <div class="form-group">
-                                            <input    type="text"
+                                            <input [readonly]="isReadOnly"    type="text"
                                                       class="form-control"
                                                       [(ngModel)]="alternateResidenceNumberPhoneNumber"
                                                       #alternateResidenceNumber2="ngModel"
@@ -805,7 +805,7 @@
                         #isValidOTP="ngForm">
                             <div class="form-wrap1">
                                 <div class="form-group">
-                                    <input 
+                                    <input [readonly]="isReadOnly" 
                                     type="text" class="form-control" 
                                     id="otp" 
                                     name="otp" 
@@ -843,7 +843,7 @@
                                   <h1 class="sub-heading" style="text-align: left ; margin-bottom: 12px">Current Address</h1>
                                   <div class="form-group">
                                       <span class="control-title">Residential status</span>
-                                      <kendo-dropdownlist class="form-control"
+                                      <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
                                         [data]="residences" 
                                         textField="key"
                                         tabindex="1"
@@ -858,7 +858,7 @@
                                   </div>
                                   <div class="form-group">
   
-                                      <input  type="text"
+                                      <input [readonly]="isReadOnly"  type="text"
                                               class="form-control"
                                               id="address1"
                                               tabindex="2"
@@ -880,7 +880,7 @@
                                   </div>
   
                                   <div class="form-group">
-                                      <input type="text" class="form-control" id="address2"
+                                      <input [readonly]="isReadOnly" type="text" class="form-control" id="address2"
                                         [(ngModel)]="qde.application.applicants[coApplicantIndex].communicationAddress.addressLineTwo"
                                         pattern="{{regexPattern.address}}"
                                         name="addressLineTwo"
@@ -898,7 +898,7 @@
                                   </div>
   
                                   <div class="form-group">
-                                      <input    type="text"
+                                      <input [readonly]="isReadOnly"    type="text"
                                                 class="form-control"
                                                 id="pincode"
                                                 required
@@ -920,7 +920,7 @@
                                   </div>
                                   <div class="form-group">
   
-                                      <input    type="text"
+                                      <input [readonly]="isReadOnly"    type="text"
                                                 class="form-control"
                                                 id="cityState"
                                                 required
@@ -942,7 +942,7 @@
                                       </div>
                                   </div>
                                   <div class="bs-checkbox typ-withForm">
-                                      <input  type="checkbox"
+                                      <input [readonly]="isReadOnly"  type="checkbox"
                                               name="permanentAddress"
                                               tabindex="6"
                                               [ngModel]="qde.application.applicants[coApplicantIndex].communicationAddress.permanentAddress"
@@ -954,7 +954,7 @@
                                   <div class="permanent-add-wrap">
                                       <h1 class="sub-heading" style="text-align: left; margin-bottom: 12px">Permanent Address</h1>
                                           <div class="form-group">
-                                              <input type="text" class="form-control" id="per-address1"
+                                              <input [readonly]="isReadOnly" type="text" class="form-control" id="per-address1"
                                               name="pAddressLineOne"
                                               #pAddress1="ngModel"
                                               pattern="{{regexPattern.address}}"
@@ -970,7 +970,7 @@
                                               </div>
                                           </div>
                                           <div class="form-group">
-                                              <input type="text" class="form-control" id="per-address2"
+                                              <input [readonly]="isReadOnly" type="text" class="form-control" id="per-address2"
                                               name="pAddressLineTwo"
                                               #pAddress2="ngModel"
                                               fieldFill
@@ -986,7 +986,7 @@
                                               </div>
                                           </div>
                                           <div class="form-group">
-                                              <input    type="text"
+                                              <input [readonly]="isReadOnly"    type="text"
                                                         class="form-control"
                                                         id="per-pincode"
                                                         name="pZipcode"
@@ -1008,7 +1008,7 @@
                                             </div>
                                           </div>
                                           <div class="form-group">
-                                              <input type="text" class="form-control" 
+                                              <input [readonly]="isReadOnly" type="text" class="form-control" 
                                               id="per-cityState"
                                               name="commCityState"
                                               #commCitystate="ngModel"
@@ -1024,7 +1024,7 @@
                                       </div>
                                       <div class="radio-wrap rounded-radio">
                                           <div class="bs-radio typ-normal">
-                                              <input    type="radio" 
+                                              <input [readonly]="isReadOnly"    type="radio" 
                                                         [value]="1"
                                                         tabindex="11"
                                                         name="preferedMailingAddress"
@@ -1036,7 +1036,7 @@
                                             </label>
                                           </div>
                                           <div class="bs-radio typ-normal">
-                                              <input    type="radio"
+                                              <input [readonly]="isReadOnly"    type="radio"
                                                         [value]="2"
                                                         tabindex="12"
                                                         name="preferedMailingAddress"
@@ -1050,7 +1050,7 @@
                                       </div>
                                   <div class="form-group typ-range">
                                       <span class="control-title">Number of years in current residence</span>
-                                      <input type="number"
+                                      <input [readonly]="isReadOnly" type="number"
                                               name="numberOfYearsInCurrentResidence"
                                               class="form-control"
                                               [(ngModel)]="qde.application.applicants[coApplicantIndex].communicationAddress.numberOfYearsInCurrentResidence"
@@ -1130,7 +1130,7 @@
                                                 <div class="form-group">
                                                     <span class="control-title">Marital Status</span>
 
-                                                    <kendo-dropdownlist class="form-control"
+                                                    <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
                                                       [data]="maritals" 
                                                       textField="key"
                                                       tabindex="1"
@@ -1158,7 +1158,7 @@
                                             <div class="form-wrap">
                                                 <div class="form-group">
                                                     <span class="control-title">Title</span>
-                                                    <kendo-dropdownlist class="form-control"
+                                                    <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
                                                                         [data]="titles" 
                                                                         textField="key"
                                                                         valueField="value"
@@ -1173,7 +1173,7 @@
                                                 </div>
                                                 <div class="form-group">
 
-                                                    <input type="text"
+                                                    <input [readonly]="isReadOnly" type="text"
                                                       class="form-control" 
                                                       [(ngModel)]="qde.application.applicants[coApplicantIndex].maritalStatus.firstName"
                                                       #spouseName="ngModel"
@@ -1207,7 +1207,7 @@
                                         <form class="bs-form" *ngIf="!isTabDisabled">
                                             <div class="form-wrap">
                                                 <div class="bs-radio">
-                                                    <input    type="radio"
+                                                    <input [readonly]="isReadOnly"    type="radio"
                                                               name="earning"
                                                               [value]="1"
                                                               [checked]="qde.application.applicants[coApplicantIndex].maritalStatus.earning == true"
@@ -1217,7 +1217,7 @@
                                                     <label for="earningYes"><span>Yes</span></label>
                                                 </div>
                                                 <div class="bs-radio">
-                                                    <input    type="radio"
+                                                    <input [readonly]="isReadOnly"    type="radio"
                                                               name="earning"
                                                               [value]="2"
                                                               tabindex="2"
@@ -1236,7 +1236,7 @@
                                             <div class="form-wrap">
                                                 <div class="form-group inr">
   
-                                                  <input type="text"
+                                                  <input [readonly]="isReadOnly" type="text"
                                                           class="form-control"
                                                           id="amount"
                                                           tabindex="1"
@@ -1325,7 +1325,7 @@
                                           <div class="form-wrap">
                                               <div class="form-group typ-range">
                                                   <span class="control-title">Enter number of dependents</span>
-                                                  <input  type="number"
+                                                  <input [readonly]="isReadOnly"  type="number"
                                                           name="numberOfDependents"
                                                           tabindex="1"
                                                           min=0
@@ -1355,7 +1355,7 @@
                                               <div class="form-group">
                                                   <span class="control-title">Father's Title</span>
 
-                                                  <kendo-dropdownlist class="form-control"
+                                                  <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
                                                     [data]="maleTitles" 
                                                     textField="key"
                                                     valueField="value"
@@ -1368,7 +1368,7 @@
                                                   </kendo-dropdownlist>
                                               </div>
                                               <div class="form-group">
-                                                  <input  type="text"
+                                                  <input [readonly]="isReadOnly"  type="text"
                                                           class="form-control"
                                                           id="father-name"
                                                           required
@@ -1387,7 +1387,7 @@
                                               </div>
                                               <div class="form-group">
                                                   <span class="control-title">Mother's Title</span>
-                                                  <kendo-dropdownlist class="form-control"
+                                                  <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
                                                   [data]="femaleTitles" 
                                                   textField="key"
                                                   valueField="value"
@@ -1400,7 +1400,7 @@
                                                 </kendo-dropdownlist>
                                               </div>
                                               <div class="form-group">
-                                                  <input type="text"
+                                                  <input [readonly]="isReadOnly" type="text"
                                                           class="form-control"
                                                           id="mother-name"
                                                           required
@@ -1418,7 +1418,7 @@
                                                   </div>
                                               </div>
                                               <div class="form-group">
-                                                  <input    type="text"
+                                                  <input [readonly]="isReadOnly"    type="text"
                                                             class="form-control"
                                                             id="maiden-name"
                                                             required
@@ -1477,7 +1477,7 @@
                               <div class="form-wrap">
                                   <div class="form-group">
                                       <span class="control-title">Religion</span>
-                                      <kendo-dropdownlist class="form-control"
+                                      <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
                                         [data]="religions" 
                                         textField="key"
                                         valueField="value"
@@ -1490,12 +1490,12 @@
                                       </kendo-dropdownlist>
                                   </div>
                                   <div class="form-group" *ngIf="selectedReligion.value == '6'" [ngClass]="{'hidden': (selectedReligion.value != '6')}">
-                                      <input type="text" class="form-control" [(ngModel)]="otherReligion" name="religionName" fieldFill id="religion-name">
+                                      <input [readonly]="isReadOnly" type="text" class="form-control" [(ngModel)]="otherReligion" name="religionName" fieldFill id="religion-name">
                                       <label for="religion-name">Specify other religion</label>
                                   </div>
                                   <div class="form-group">
                                       <span class="control-title">Category</span>
-                                      <kendo-dropdownlist class="form-control"
+                                      <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
                                         [data]="categories"
                                         tabindex="2"
                                         textField="key"
@@ -1545,7 +1545,7 @@
                                   <div class="form-group">
                                       <span class="control-title">Occupation type</span>
 
-                                      <kendo-dropdownlist class="form-control"
+                                      <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
                                         [data]="occupations"
                                         tabindex="1"
                                         textField="key"
@@ -1558,7 +1558,7 @@
                                       </kendo-dropdownlist>
                                   </div>
                                   <div class="form-group" *ngIf="selectedOccupation.value != '9' && selectedOccupation.value != '10'">
-                                      <input type="text"
+                                      <input [readonly]="isReadOnly" type="text"
                                             class="form-control"
                                               required
                                               tabindex="2"
@@ -1579,7 +1579,7 @@
                                   </div>
                                   <div class="form-group typ-range"  *ngIf="selectedOccupation.value != '9' && selectedOccupation.value != '10'">
                                       <span class="control-title">Years in current employment/business</span>
-                                      <input type="number"
+                                      <input [readonly]="isReadOnly" type="number"
                                               name="numberOfYearsInCurrentCompany"
                                               id="no-yrs"
                                               tabindex="3"
@@ -1603,7 +1603,7 @@
                                   </div>
                                   <div class="form-group typ-range" *ngIf="selectedOccupation.value != '9' && selectedOccupation.value != '10'">
                                       <span class="control-title">Total Work Experience</span>
-                                      <input type="number"
+                                      <input [readonly]="isReadOnly" type="number"
                                               name="totalExperienceYear"
                                               class="form-control"
                                               tabindex="5"
@@ -1664,7 +1664,7 @@
                                   (ngSubmit)="submitOfficialCorrespondence(officialCorrespondenceForm)">
                               <div class="form-wrap">
                                   <div class="form-group">
-                                      <input  type="text"
+                                      <input [readonly]="isReadOnly"  type="text"
                                               class="form-control"
                                               id="ofcAddOne"
                                               [(ngModel)]="qde.application.applicants[coApplicantIndex].officialCorrespondence.addressLineOne"
@@ -1684,7 +1684,7 @@
                                   </div>
   
                                   <div class="form-group">
-                                      <input type="text" class="form-control"
+                                      <input [readonly]="isReadOnly" type="text" class="form-control"
                                         id="ofcAddTwo"
                                         tabindex="2"
                                         [(ngModel)]="qde.application.applicants[coApplicantIndex].officialCorrespondence.addressLineTwo"
@@ -1702,7 +1702,7 @@
                                   </div>
   
                                   <div class="form-group typ-optional">
-                                      <input type="text" class="form-control"
+                                      <input [readonly]="isReadOnly" type="text" class="form-control"
                                         id="offLandmark"
                                         [(ngModel)]="qde.application.applicants[coApplicantIndex].officialCorrespondence.landMark"
                                         name="landMark"
@@ -1719,7 +1719,7 @@
                                       </div>
                                   </div>
                                   <div class="form-group typ-optional">
-                                      <input type="text"
+                                      <input [readonly]="isReadOnly" type="text"
                                             class="form-control"
                                             id="offPincode"
                                             required
@@ -1742,7 +1742,7 @@
   
                                   </div>
                                   <div class="form-group typ-optional">
-                                      <input type="text" class="form-control"
+                                      <input [readonly]="isReadOnly" type="text" class="form-control"
                                         id="offCityState"
                                         required
                                         tabindex="5"
@@ -1762,7 +1762,7 @@
                                   </div>
                                   <div class="residence-no">
                                       <div class="form-group">
-                                          <input type="text" class="form-control" id="std03"
+                                          <input [readonly]="isReadOnly" type="text" class="form-control" id="std03"
                                             required
                                             [(ngModel)]="officialCorrespondenceStdCode"
                                             #stdCode="ngModel"
@@ -1780,7 +1780,7 @@
                                       </div>
                                       <span class="seperator">-</span>
                                       <div class="form-group">
-                                          <input  type="text" class="form-control" id="res-no03" data-validation-attr="residenceno"
+                                          <input [readonly]="isReadOnly"  type="text" class="form-control" id="res-no03" data-validation-attr="residenceno"
                                                   required
                                                   #offStdNumber="ngModel"
                                                   name="offStdNumber"
@@ -1798,7 +1798,7 @@
                                       </div>
                                   </div>
                                   <div class="form-group typ-optional">
-                                      <input type="text" class="form-control" id="off-email"
+                                      <input [readonly]="isReadOnly" type="text" class="form-control" id="off-email"
                                         required
                                         [(ngModel)]="qde.application.applicants[coApplicantIndex].officialCorrespondence.officeEmailId"
                                         pattern="{{regexPattern.email}}"
@@ -1877,7 +1877,7 @@
                                     #incomeDetailsForm1="ngForm" (ngSubmit)="submitIncomeDetails1(incomeDetailsForm1, incomeSlider2)">
                                       <div class="form-wrap">
                                           <div class="form-group inr">
-                                                <input type="text" class="form-control"
+                                                <input [readonly]="isReadOnly" type="text" class="form-control"
                                                 id="annualFamilyIncome1"
                                                 [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.annualFamilyIncome"
                                                 #annualFamilyIncome1="ngModel"
@@ -1898,7 +1898,7 @@
                                                   </div> 
                                           </div>
                                             <div class="form-group inr">
-                                                  <input type="text" class="form-control" 
+                                                  <input [readonly]="isReadOnly" type="text" class="form-control" 
                                                   id="monthlyExpenditure1"
                                                   [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.monthlyExpenditure"
                                                   #monthlyExpenditure1="ngModel"
@@ -1924,7 +1924,7 @@
 
                                               <div class="radio-wrap rounded-radio">
                                                     <div class="bs-radio typ-normal">
-                                                        <input  type="radio" 
+                                                        <input [readonly]="isReadOnly"  type="radio" 
                                                                 name="puccaHouse"
                                                                 [value]="1"
                                                                 tabindex="3"
@@ -1937,7 +1937,7 @@
                                                         </label>
                                                     </div>
                                                     <div class="bs-radio typ-normal">
-                                                        <input  type="radio"
+                                                        <input [readonly]="isReadOnly"  type="radio"
                                                                 name="puccaHouse"
                                                                 [value]="2"
                                                                 tabindex="4"
@@ -1966,7 +1966,7 @@
                                     <form class="bs-form" *ngIf="!isTabDisabled">
                                         <div class="form-wrap">
                                             <div class="bs-radio">
-                                                <input  type="radio"
+                                                <input [readonly]="isReadOnly"  type="radio"
                                                         name="income-consider"
                                                         id="incomeConsiderYes1"
                                                         [value]="1"
@@ -1977,7 +1977,7 @@
                                                 <label for="incomeConsiderYes1"><span>Yes</span></label>
                                             </div>
                                             <div class="bs-radio">
-                                                <input  type="radio"
+                                                <input [readonly]="isReadOnly"  type="radio"
                                                         name="income-consider"
                                                         id="incomeConsiderNo1"
                                                         class="not-usual"
@@ -1994,7 +1994,7 @@
                                             #incomeDetailsForm2="ngForm" (ngSubmit)="submitIncomeDetails2(incomeDetailsForm2, incomeSlider4)">
                                                 <div class="form-wrap">
                                                     <div class="form-group inr">
-                                                        <input type="text" class="form-control" 
+                                                        <input [readonly]="isReadOnly" type="text" class="form-control" 
                                                         tabindex="1"
                                                         id="monthlyIncome1"
                                                         [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.monthlyIncome"
@@ -2018,7 +2018,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                             <span class="control-title">Assessment methodology</span>
-                                                            <kendo-dropdownlist class="form-control"
+                                                            <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
                                                             [data]="assessmentMethodology" 
                                                             tabindex="2"
                                                             textField="key"
@@ -2073,7 +2073,7 @@
                                             (ngSubmit)="submitOrgPanNumber(panNumberForm2, panSlider4)">
                                           <div class="form-wrap">
                                               <div class="form-group last">
-                                                  <input  type="text"
+                                                  <input [readonly]="isReadOnly"  type="text"
                                                           class="form-control"
                                                           [(ngModel)]="qde.application.applicants[coApplicantIndex].pan.panNumber"
                                                           id="pan-inpt2"
@@ -2097,7 +2097,7 @@
                                               </div>
                                               <div class="form-group">
                                                 <span class="control-title">Document Type</span>
-                                                <kendo-dropdownlist   class="form-control"
+                                                <kendo-dropdownlist [readonly]="isReadOnly"   class="form-control"
                                                     [data]="docType" 
                                                     textField="key"
                                                     valueField="value"
@@ -2111,7 +2111,7 @@
                                                 </kendo-dropdownlist>
                                             </div>
                                             <div class="form-group">
-                                              <input type="text"
+                                              <input [readonly]="isReadOnly" type="text"
                                                     class="form-control"
                                                     [(ngModel)]="qde.application.applicants[coApplicantIndex].pan.docNumber"
                                                     id="docNumber2"
@@ -2170,7 +2170,7 @@
                                   (ngSubmit)="submitOrganizationDetails(organizationForm)">
                                 <div class="form-wrap">
                                 <div class="form-group">
-                                    <input type="text"
+                                    <input [readonly]="isReadOnly" type="text"
                                             class="form-control" 
                                             id="org-name" 
                                             pattern="{{regexPattern.name}}"
@@ -2192,7 +2192,7 @@
                                     <span class="control-title">Date of Incorporation</span>
                                     <div class="row">
                                         <div class="col4">
-                                            <kendo-dropdownlist class="form-control"
+                                            <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
                                             [data]="days"
                                             textField="key"
                                             valueField="value"
@@ -2206,7 +2206,7 @@
                                         </div>
 
                                         <div class="col4">
-                                            <kendo-dropdownlist class="form-control"
+                                            <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
                                             [data]="months"
                                             textField="key"
                                             tabindex="3"
@@ -2220,7 +2220,7 @@
                                         </div>
 
                                         <div class="col4">
-                                            <kendo-dropdownlist class="form-control"
+                                            <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
                                             [data]="years"
                                             textField="key"
                                             valueField="value"
@@ -2236,7 +2236,7 @@
                                 </div>
                                 <div class="form-group last">
                                     <span class="control-title">Constitution</span>
-                                    <kendo-dropdownlist class="form-control"
+                                    <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
                                                         [data]="constitutions" 
                                                         textField="key"
                                                         valueField="value"
@@ -2276,7 +2276,7 @@
                           <form class="bs-form" *ngIf="!isTabDisabled" #registeredAddressForm="ngForm" (ngSubmit)="submitRegisteredAddress(registeredAddressForm)">
                               <div class="form-wrap">
                                   <div class="form-group">
-                                      <input    type="text"
+                                      <input [readonly]="isReadOnly"    type="text"
                                                 class="form-control"
                                                 id="reg-add"
                                                 [(ngModel)]="qde.application.applicants[coApplicantIndex].registeredAddress.registeredAddress"
@@ -2295,7 +2295,7 @@
                                       </div>
                                   </div>
                                   <div class="form-group typ-optional">
-                                      <input  type="text"
+                                      <input [readonly]="isReadOnly"  type="text"
                                               class="form-control"
                                               name="landmark"
                                               tabindex="2"
@@ -2313,7 +2313,7 @@
                                     </div>
                                   </div>
                                   <div class="form-group typ-optional">
-                                        <input  type="text"
+                                        <input [readonly]="isReadOnly"  type="text"
                                                 class="form-control"
                                                 id="regoffPincode"
                                                 required
@@ -2335,7 +2335,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group last">
-                                        <input type="text" class="form-control"
+                                        <input [readonly]="isReadOnly" type="text" class="form-control"
                                           id="regAddrCityState"
                                           required
                                           tabindex="4"
@@ -2382,7 +2382,7 @@
                                   (ngSubmit)="submitCorporateAddress(corporateAddressForm)" >
                               <div class="form-wrap">
                                   <div class="form-group">
-                                      <input    type="text"
+                                      <input [readonly]="isReadOnly"    type="text"
                                                 class="form-control"
                                                 id="corp-add"
                                                 tabindex="1"
@@ -2401,7 +2401,7 @@
                                       </div>
                                   </div>
                                   <div class="form-group typ-optional">
-                                      <input  type="text"
+                                      <input [readonly]="isReadOnly"  type="text"
                                               [(ngModel)]="qde.application.applicants[coApplicantIndex].corporateAddress.landMark"
                                               name="landmark"
                                               #landmark="ngModel"
@@ -2418,7 +2418,7 @@
                                     </div>
                                   </div>
                                   <div class="form-group">
-                                      <input  type="text"
+                                      <input [readonly]="isReadOnly"  type="text"
                                               class="form-control"
                                               id="pincode01" 
                                               [(ngModel)]="qde.application.applicants[coApplicantIndex].corporateAddress.zipcode"
@@ -2441,7 +2441,7 @@
   
                                   </div>
                                   <div class="form-group">
-                                      <input  type="text"
+                                      <input [readonly]="isReadOnly"  type="text"
                                               class="form-control"
                                               id="city-state01" 
                                               required
@@ -2462,7 +2462,7 @@
                                   </div>
                                   <div class="residence-no">
                                       <div class="form-group">
-                                          <input  type="text"
+                                          <input [readonly]="isReadOnly"  type="text"
                                                   [(ngModel)]="corporateAddressStdCode"
                                                   name="stdNumber"
                                                   class="form-control"
@@ -2483,7 +2483,7 @@
                                       </div>
                                       <span class="seperator">-</span>
                                       <div class="form-group">
-                                          <input  type="text"
+                                          <input [readonly]="isReadOnly"  type="text"
                                                   class="form-control"
                                                   [(ngModel)]="corporateAddressPhoneNumber"
                                                   name="phoneNumber"
@@ -2504,7 +2504,7 @@
                                       </div>
                                   </div>
                                   <div class="form-group last">
-                                      <input    type="text"
+                                      <input [readonly]="isReadOnly"    type="text"
                                                 class="form-control"
                                                 id="ofc-email"
                                                 required
@@ -2550,7 +2550,7 @@
                         <form class="bs-form" *ngIf="!isTabDisabled" #revenueForm="ngForm" (ngSubmit)="submitRevenueDetails(revenueForm)">
                             <div class="form-wrap">
                                 <div class="form-group inr">
-                                    <input type="text" class="form-control" id="revenue"
+                                    <input [readonly]="isReadOnly" type="text" class="form-control" id="revenue"
                                     [(ngModel)]="qde.application.applicants[coApplicantIndex].revenueDetails.revenue"
                                     #revenue="ngModel"
                                     name="revenue"
@@ -2571,7 +2571,7 @@
                                     <span class="in-word"></span>
                                 </div>
                                 <div class="form-group inr">
-                                    <input type="text" class="form-control" id="net-income"
+                                    <input [readonly]="isReadOnly" type="text" class="form-control" id="net-income"
                                     required
                                     [(ngModel)]="qde.application.applicants[coApplicantIndex].revenueDetails.annualNetIncome"
                                     fieldFill
@@ -2592,7 +2592,7 @@
                                     <span class="in-word"></span>
                                 </div>
                                 <div class="form-group inr last">
-                                    <input type="text" class="form-control" id="gross-turnover" 
+                                    <input [readonly]="isReadOnly" type="text" class="form-control" id="gross-turnover" 
                                     required
                                     tabindex="3"
                                     [(ngModel)]="qde.application.applicants[coApplicantIndex].revenueDetails.grossTurnOver"
@@ -2671,7 +2671,7 @@
                                       #incomeDetailsForm3="ngForm" (ngSubmit)="submitIncomeDetails1(incomeDetailsForm3, incomeSlider4)">
                                         <div class="form-wrap">
                                             <div class="form-group inr">
-                                                  <input type="text" class="form-control"
+                                                  <input [readonly]="isReadOnly" type="text" class="form-control"
                                                   id="annualFamilyIncome2"
                                                   [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.annualFamilyIncome"
                                                   #annualFamilyIncome2="ngModel"
@@ -2692,7 +2692,7 @@
                                                 </div> 
                                             </div>
                                               <div class="form-group inr" >
-                                                    <input type="text" class="form-control" 
+                                                    <input [readonly]="isReadOnly" type="text" class="form-control" 
                                                     id="monthlyExpenditure2"
                                                     [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.monthlyExpenditure"
                                                     #monthlyExpenditure2="ngModel"
@@ -2718,7 +2718,7 @@
 
                                                 <div class="radio-wrap rounded-radio">
                                                     <div class="bs-radio typ-normal">
-                                                        <input  type="radio" 
+                                                        <input [readonly]="isReadOnly"  type="radio" 
                                                                 name="puccaHouse"
                                                                 [value]="1"
                                                                 tabindex="3"
@@ -2731,7 +2731,7 @@
                                                         </label>
                                                     </div>
                                                     <div class="bs-radio typ-normal">
-                                                        <input  type="radio"
+                                                        <input [readonly]="isReadOnly"  type="radio"
                                                                 name="puccaHouse"
                                                                 [value]="2"
                                                                 tabindex="4"
@@ -2759,7 +2759,7 @@
                                           <form class="bs-form" *ngIf="!isTabDisabled">
                                               <div class="form-wrap">
                                                   <div class="bs-radio">
-                                                      <input  type="radio"
+                                                      <input [readonly]="isReadOnly"  type="radio"
                                                               name="income-consider"
                                                               id="incomeConsiderYes2"
                                                               [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.incomeConsider"
@@ -2771,7 +2771,7 @@
                                                       <label for="incomeConsiderYes2"><span>Yes</span></label>
                                                   </div>
                                                   <div class="bs-radio">
-                                                      <input  type="radio"
+                                                      <input [readonly]="isReadOnly"  type="radio"
                                                               name="income-consider"
                                                               id="incomeConsiderNo2"
                                                               class="not-usual"
@@ -2789,7 +2789,7 @@
                                               #incomeDetailsForm4="ngForm" (ngSubmit)="submitIncomeDetails2(incomeDetailsForm4, incomeSlider4)">
                                                   <div class="form-wrap">
                                                       <div class="form-group inr">
-                                                          <input type="text" class="form-control" 
+                                                          <input [readonly]="isReadOnly" type="text" class="form-control" 
                                                           id="monthlyIncome2"
                                                           [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.monthlyIncome"
                                                           #monthlyIncome2="ngModel"
@@ -2813,7 +2813,7 @@
                                                       </div>
                                                       <div class="form-group">
                                                             <span class="control-title">Assessment methodology</span>
-                                                            <kendo-dropdownlist class="form-control"
+                                                            <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
                                                             [data]="assessmentMethodology" 
                                                             tabindex="2"
                                                             textField="key"
