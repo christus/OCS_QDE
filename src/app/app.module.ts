@@ -70,6 +70,7 @@ import { ViewFormApplicantComponent } from './view-form-applicant/view-form-appl
 
 import {SecuredImageComponent} from  './applicant-dashboard/document-upload/secured-image.component';
 import { ThanksTAndCComponent } from './terms-and-conditions/thanks-t-and-c/thanks-t-and-c.component';
+import { IciciTermsComponent } from './applicant-dashboard/icici-terms/icici-terms.component';
 
 const appRoutes: Routes = [
   { path: "", redirectTo: "leads", pathMatch: "full" },
@@ -258,6 +259,10 @@ const appRoutes: Routes = [
       }
     ]
   },
+  {
+    path: "icici-terms/auto-login/:applicationId/:applicantId",
+    component: IciciTermsComponent
+    },
   { path: "**", component: PageNotFoundComponent }
 ];
  
@@ -302,7 +307,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     EligibilityCheckComponent,
     ViewFormApplicantComponent,
     SecuredImageComponent,
-    ThanksTAndCComponent
+    ThanksTAndCComponent,
+    IciciTermsComponent
   ],
   imports: [
     BrowserModule,
