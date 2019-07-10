@@ -223,11 +223,7 @@ export class LoanQdeComponent implements OnInit {
   applicationId: string;
   applicantIndex = 0;
 
-<<<<<<< HEAD
   isReadOnly: boolean = false;
-=======
-  
->>>>>>> de9fc9a93b7ce765b84f4108d3bfc1ddc92069df
 
   constructor(
     private renderer: Renderer2,

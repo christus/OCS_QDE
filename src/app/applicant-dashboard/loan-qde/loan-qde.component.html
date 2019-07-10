@@ -158,11 +158,7 @@
                             <label for="yes-property"><span>Yes</span></label>
                           </div>
                           <div class="bs-radio">
-<<<<<<< HEAD
-                            <input [readonly]="isReadOnly" type="radio" name="no-property" [value]=false [(ngModel)]="isPropertyIdentified" (click)="goToNextSlide(property2)">
-=======
-                            <input type="radio" name="no-property" [value]=false [(ngModel)]="isPropertyIdentified" (click)="loanPropertyNo(property2, false)">
->>>>>>> de9fc9a93b7ce765b84f4108d3bfc1ddc92069df
+                            <input [readonly]="isReadOnly" type="radio" name="no-property" [value]=false [(ngModel)]="isPropertyIdentified" (click)="loanPropertyNo(property2, false)">
                             <label for="no-property"><span>No</span></label>
                           </div>
                         </div>
@@ -437,7 +433,6 @@
                       </form>
                     </div>
 
-<<<<<<< HEAD
                     <div class="swiper-slide">
                       <form class="bs-form" #liveLoans="ngForm" 
                       (ngSubmit)="submitLiveLoans(liveLoans, existingLoan2)">
@@ -461,9 +456,6 @@
                         </div>
                       </form>
                     </div>
-=======
-                    
->>>>>>> de9fc9a93b7ce765b84f4108d3bfc1ddc92069df
 
                     <div class="swiper-slide">
                       <form class="bs-form"
