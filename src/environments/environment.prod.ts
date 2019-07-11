@@ -81,6 +81,10 @@ export const environment = {
     "aps": {
       'workflowId': '46f4c44490f911e982270242ac110002',
       'processId': '4719724e90f911e982270242ac110002'
+    },
+    "reviewEligibility": {
+      'workflowId': 'ec16befc9f1b11e9a0040242ac110003',
+      'processId': 'ec2f4f089f1b11e9b0c20242ac110003'
     }
   },
   userName: "icici@icici.com",
