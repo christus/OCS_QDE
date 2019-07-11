@@ -588,19 +588,6 @@ export class ViewFormComponent implements OnInit, OnDestroy {
     }
   }
 
-  // onBackButtonClick(swiperInstance ?: Swiper) {
-
-  //   if(this.activeTab > 0) {
-  //     if(swiperInstance != null && swiperInstance.getIndex() > 0) {
-  //       // Go to Previous Slide
-  //       this.goToPrevSlide(swiperInstance);
-  //     } else {
-  //       // Go To Previous Tab
-  //       this.tabSwitch(this.activeTab - 1);
-  //     }
-  //   }
-  // }
-
   counter(size): Array<number> {
     return new Array(size);
   }
@@ -862,6 +849,13 @@ export class ViewFormComponent implements OnInit, OnDestroy {
       }
     });
   }
+  onBackButtonClick() {
+    if (this.activeTab > 0) {
+     
+        // Go To Previous Tab
+        this.tabSwitch(this.activeTab - 1);
+      }
+    }
 
   applicationAccepted() {
     this.qdeHttp.setStatusApi(this.applicationId, statuses['Eligibility Accepted']).subscribe(res => {}, err => {});

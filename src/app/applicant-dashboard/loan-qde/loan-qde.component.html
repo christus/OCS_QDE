@@ -101,7 +101,12 @@
                         (ngModelChange)="valuechange($event, 0)"
                         pattern='{{regexPattern.tenure}}'>
                       <span class="yr-text">Years</span>
-                      <ng5-slider [(value)]="qde?.application.tenure" [options]="options"></ng5-slider>
+
+                      <div *ngIf="tenureYears">
+                           <div class="invalid-feedback"><br>One or greater than one year</div>
+                      </div>
+                      
+                      <ng5-slider [(value)]="qde?.application.tenure" [options]="options" ></ng5-slider>
 
                       <div *ngIf="(loanTenure.touched || loanTenure.dirty) && loanTenure.invalid" class="invalid-feedback">
                         <!-- <div *ngIf="loanTenure.errors?.required">{{errors.loanDetails.loanAmount.tenure.required}}</div> -->
@@ -399,11 +404,12 @@
                                 </div>
                               </div>
                             </div>
-    
                             
-                            <div class="btn-wrap">
-                              <button type="submit" class="btn btn-primary">Next</button>
+                            
+                            <div class="btn-wrap" >
+                                <button  type="submit" class="btn btn-primary">Next</button>
                             </div>
+                            
                           </form>
                         </div>
 

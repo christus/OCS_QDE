@@ -34,6 +34,13 @@
     text-align: right;
     z-index: 1;
 }
+.back-btn-wrap {
+    position: fixed;
+    top: 4vw;
+    left: 4vw;
+    text-align: left;
+    z-index: 1;
+}
 .bs-card .bs-form .form-group .form-control {
     font-size: 1.64vw;
     height: 3.13vw;

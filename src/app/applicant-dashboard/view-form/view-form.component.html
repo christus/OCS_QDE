@@ -29,16 +29,19 @@
 
           </ul>
           <div class="content tabs-contents">
+            <div class="btn-wrap back-btn-wrap">
+                 <button (click)="onBackButtonClick()" class="btn btn-default back">back</button>
+            </div>
               <div class="tab-content active" [ngClass]="{'active': (activeTab == 0)}">
                   <h2 class="title">Enter applicant details</h2>
 
                     <!-- *ngIf="qde.application.applicants[applicantIndex].isIndividual == true" -->
-
+                    
                     <div class="btn-wrap edit-btn-wrap">
                         <button [routerLink]="['/applicant', applicationId]" class="btn btn-default edit">Edit</button>
                     </div>
 
-                    <form   #applicantIndividualForm="ngForm">
+                    <form  #applicantIndividualForm="ngForm">
                         <app-view-form-applicant
                         [showEdit]="false"
                         [isCoApplicant]="false"
@@ -97,12 +100,12 @@
                             <button type="submit" class="btn btn-primary" (click)="tabSwitch(1)">Continue</button>
                         </div>
                     </form>
-
               </div>
 
               <!-- Co-Applicant -->
               <div class="tab-content" [ngClass]="{'active': (activeTab == 1)}">
                   <h2 class="title">Enter co-applicant details</h2>
+                  
                   <div class="btn-wrap edit-btn-wrap">
                     <button [routerLink]="['/applicant', applicationId, 'co-applicant']" class="btn btn-default edit">Edit</button>
                   </div>
@@ -172,7 +175,9 @@
               </div>
 
               <!-- Loan Details -->
+             
               <div class="tab-content" [ngClass]="{'active': (activeTab == 2)}">
+                 
                 <div class="btn-wrap edit-btn-wrap">
                     <button [routerLink]="['/loan', applicationId]" class="btn btn-default edit">Edit</button>
                   </div>  
@@ -471,7 +476,10 @@
               </div>
 
               <!-- References -->
+             
               <div class="tab-content" [ngClass]="{'active': (activeTab == 3)}">
+
+               
                 <div class="btn-wrap edit-btn-wrap">
                     <button [routerLink]="['/references', applicationId]" class="btn btn-default edit">Edit</button>
                   </div>  

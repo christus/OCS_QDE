@@ -13,6 +13,7 @@ import Qde from 'src/app/models/qde.model';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
 import { QdeService } from 'src/app/services/qde.service';
 import { CommonDataService } from 'src/app/services/common-data.service';
+
 interface Item {
   key: string,
   value: number
@@ -106,7 +107,7 @@ export class LoanQdeComponent implements OnInit {
 
   // value: number = 0;
 
-  existingLoan = 2;
+  existingLoan = 2; // tabswitch
 
   minValue: number = 1;
   options: Options = {
@@ -171,6 +172,7 @@ export class LoanQdeComponent implements OnInit {
   isAlternateEmailId: boolean = false;
   isAlternateMobileNumber: boolean = false;
   isAlternateResidenceNumber: boolean = false;
+  tenureYears:boolean = false;
 
   applicantIndividual: boolean = true;
 
@@ -488,6 +490,13 @@ export class LoanQdeComponent implements OnInit {
       loanTenure: form.value.loanTenure,
       loanType: form.value.loanType
     };
+    
+    if(this.qde.application.loanDetails.loanAmount.loanTenure == 0){
+      this.tenureYears = true;
+      return; 
+    }else{
+      this.tenureYears = false;
+    }
 
     this.qdeHttp
       .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
@@ -507,6 +516,8 @@ export class LoanQdeComponent implements OnInit {
       );
 
     // console.log("Submitted Amount"+ this.qde.application.loanDetails.loanAmount);
+
+
   }
 
   // goToNextSlide(swiperInstance?: Swiper) {
@@ -649,6 +660,7 @@ export class LoanQdeComponent implements OnInit {
           if (response["ProcessVariables"]["status"]) {
             console.log(this.qde.application.loanDetails.propertyType);
             if(this.qde.application.loanDetails.existingLoans.liveLoan > 0 ){
+              
                 this.goToNextSlide(swiperInstance);
             }else{
               
