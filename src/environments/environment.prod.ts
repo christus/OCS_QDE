@@ -85,11 +85,21 @@ export const environment = {
     "reviewEligibility": {
       'workflowId': 'ec16befc9f1b11e9a0040242ac110003',
       'processId': 'ec2f4f089f1b11e9b0c20242ac110003'
+    },
+    "mPINLogin": {
+      'workflowId': '6cf36ddca16911e984730242ac110003',
+      'processId': '6d12051ca16911e9be500242ac110003'
+    },
+    "resetMPIN": {
+      'workflowId': '6cf36ddca16911e984730242ac110003',
+      'processId': 'a444f89aa22811e984060242ac110002'
     }
   },
   userName: "icici@icici.com",
   password: "icici@123",
   appiyoDrive: "appiyo/d/drive/upload/",
   driveLocation: "/d/drive/docs/",
-  host: "/appiyo"
+  host: "http://192.168.1.108/appiyo",
+  //host: "/appiyo",
+  // host: "http://ihfcmobileuat.icicihfc.com:443/appiyo"
 };

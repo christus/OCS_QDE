@@ -6,19 +6,19 @@
           </a>
       </h1>
       <div class="title-wrap">
-          <h2 class="title">Forgot <span class="cm-line-break"></span> mPIN</h2>
+          <h2 class="title">Set <span class="cm-line-break"></span> mPIN</h2>
       </div>
   </div>
   <div class="rhs">
       <form class="bs-form">
           <div class="form-wrap">
               <div class="form-group last">
-                  <input type="text" class="form-control" id="emp-id" name="userName"  [(ngModel)]="userName" fieldFill>
-                  <label for="emp-id" >Employee ID</label>
+                  <input [(ngModel)]="userName" type="text" class="form-control" id="emp-id" name="userName" fieldFill>
+                  <label for="emp-id">Employee ID</label>
               </div>
           </div>
           <div class="btn-wrap">
-              <button class="btn btn-primary"  (click)="setMpin()">SEND <span class="cm-line-break"></span>mPIN</button>
+              <button class="btn btn-primary"  (click)="setMpin()" >SEND <span class="cm-line-break"></span>mPIN</button>
           </div>
       </form>
   </div>

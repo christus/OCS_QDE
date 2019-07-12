@@ -111,7 +111,18 @@ createOrUpdatePersonalDetails(qde) {
 
     const body = new HttpParams()
       .set('email', data.email)
-      .set('password', data.password);
+      .set('password', data.password)
+
+    let uri = environment.host + '/account/login';
+    return this.http.post(uri, body);
+  }
+
+  longLiveAuthenticate(data: any) {
+
+    const body = new HttpParams()
+      .set('email', data.email)
+      .set('password', data.password)
+      .set('longTimeToken', "true");
 
     let uri = environment.host + '/account/login';
     return this.http.post(uri, body);
@@ -851,6 +862,55 @@ createOrUpdatePersonalDetails(qde) {
     };
 
     console.log("GET APS", requestEntity);
+
+    const body = new HttpParams().set(
+      'processVariables',
+      JSON.stringify(requestEntity)
+    );
+  
+    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.http.post(uri, body.toString());
+  }
+
+  resetMpin(data: any) {
+
+    const processId = environment.api.resetMPIN.processId;
+    const workflowId = environment.api.resetMPIN.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: {
+        emailId: data.empId
+      },
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = new HttpParams().set(
+      'processVariables',
+      JSON.stringify(requestEntity)
+    );
+  
+    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.http.post(uri, body.toString());
+  }
+
+  loginMpin(data){
+
+    const processId = environment.api.mPINLogin.processId;
+    const workflowId = environment.api.mPINLogin.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: {
+        userName: data.userName,
+        mpin:data.mPin
+      },
+      workflowId: workflowId,
+      projectId: projectId
+    };
 
     const body = new HttpParams().set(
       'processVariables',

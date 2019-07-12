@@ -89,11 +89,18 @@ export const environment = {
     "reviewEligibility": {
       'workflowId': 'ec16befc9f1b11e9a0040242ac110003',
       'processId': 'ec2f4f089f1b11e9b0c20242ac110003'
+    },
+    "mPINLogin": {
+      'workflowId': '6cf36ddca16911e984730242ac110003',
+      'processId': '6d12051ca16911e9be500242ac110003'
+    },
+    "resetMPIN": {
+      'workflowId': '6cf36ddca16911e984730242ac110003',
+      'processId': 'a444f89aa22811e984060242ac110002'
     }
   },
   userName: "icici@icici.com",
   password: "icici@123",
-  // host: "http://182.156.249.170/appiyo",
   appiyoDrive: "/d/drive/upload/",
   host: "http://192.168.1.108/appiyo",
   driveLocation: "/d/drive/docs/"

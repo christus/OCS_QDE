@@ -1,25 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-
-import { Router } from '@angular/router';
-
 import { QdeHttpService } from 'src/app/services/qde-http.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
 
 
 @Component({
-  selector: 'app-forgot-mpin',
-  templateUrl: './forgot-mpin.component.html',
-  styleUrls: ['./forgot-mpin.component.css']
+  selector: 'app-set-mpin',
+  templateUrl: './set-mpin.component.html',
+  styleUrls: ['./set-mpin.component.css']
 })
-export class ForgotMPINComponent implements OnInit {
+export class SetMpinComponent implements OnInit {
 
   userName = "";
   uuID:string;
 
+  constructor(private router: Router, private qdeService: QdeHttpService, private uniqueDeviceID: UniqueDeviceID ) { 
 
-  constructor(private router: Router,
-    private qdeService: QdeHttpService, private uniqueDeviceID: UniqueDeviceID ) { }
+  }
 
   ngOnInit() {
   }
@@ -32,6 +30,9 @@ export class ForgotMPINComponent implements OnInit {
     .then((uuid: any) =>
       this.uuID = uuid
     ).catch((error: any) => console.log(error));   
+    
+    
+    this.router.navigate(["/ConfirmPin", {"EmpId": this.userName}]);
 
 
     console.log("UserName", this.userName);
@@ -42,7 +43,6 @@ export class ForgotMPINComponent implements OnInit {
       empId : empId,
       uuid: this.uuID
     };
-
     this.qdeService.resetMpin(data).subscribe(
       res => {
         console.log("move to confirm pin");
@@ -53,6 +53,5 @@ export class ForgotMPINComponent implements OnInit {
       }
     );
   }
-
 
 }

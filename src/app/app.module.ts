@@ -64,6 +64,8 @@ import { Camera } from '@ionic-native/camera/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { DeviceDetectorModule } from 'ngx-device-detector';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
+
 
 import { NgxUiLoaderModule, NgxUiLoaderRouterModule } from  'ngx-ui-loader';
 import { ViewFormApplicantComponent } from './view-form-applicant/view-form-applicant.component';
@@ -72,10 +74,15 @@ import {SecuredImageComponent} from  './applicant-dashboard/document-upload/secu
 import { ThanksTAndCComponent } from './terms-and-conditions/thanks-t-and-c/thanks-t-and-c.component';
 import { IciciTermsComponent } from './applicant-dashboard/icici-terms/icici-terms.component';
 import { ThankPaymentComponent } from './payments/thank-payment/thank-payment.component';
+import { SetMpinComponent } from './Login/set-mpin/set-mpin.component';
 
 const appRoutes: Routes = [
   { path: "", redirectTo: "leads", pathMatch: "full" },
   { path: "login", component: LoginComponent },
+  { path: "loginWithPin",  component: LoginWithMPINComponent, canActivate: [AuthGuard] },
+  { path: "ConfirmPin", component: EnterMPINComponent },
+  { path: "forgotPin", component: ForgotMPINComponent },
+  { path: "setPin", component: SetMpinComponent },
   {
     path: "leads",
     component: LeadsListComponent,
@@ -271,7 +278,7 @@ const appRoutes: Routes = [
   {
     path: "icici-terms/auto-login/:applicationId/:applicantId",
     component: IciciTermsComponent
-    },
+  },
   { path: "**", component: PageNotFoundComponent }
 ];
  
@@ -318,7 +325,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     SecuredImageComponent,
     ThanksTAndCComponent,
     IciciTermsComponent,
-    ThankPaymentComponent
+    ThankPaymentComponent,
+    SetMpinComponent
   ],
   imports: [
     BrowserModule,
@@ -350,7 +358,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     Camera,
     File,
     FileTransfer,
-    FileTransferObject
+    FileTransferObject,
+    UniqueDeviceID
   ],
   bootstrap: [AppComponent]
 })
