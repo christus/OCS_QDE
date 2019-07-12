@@ -358,30 +358,7 @@
                       </div>
                     </div>
                   </div>
-              <!-- <div class="lhs">
-                <div class="swiper-container form-swiper " [swiper]="lhsConfig" #existingLoan1="ngxSwiper">
-                  <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                      <div class="title-wrap">
-                        <h4 class="title">Select existing<span class="cm-line-break"></span>loan provider</h4>
-                        <p class="note">Enter existing loan & EMI details for both applicant & co-applicant</p>
-                      </div>
-                    </div>
-                    <div class="swiper-slide">
-                      <div class="title-wrap">
-                        <h4 class="title">Enter total number <span class="cm-line-break"></span>of live loans</h4>
-                        <p class="note">For applicant & all co-applicants together</p>
-                      </div>
-                    </div>
-                    <div class="swiper-slide">
-                      <div class="title-wrap">
-                        <h4 class="title">Enter total existing <span class="cm-line-break"></span>monthly EMI</h4>
-                        <p class="note">For applicant & all co-applicants together</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div> -->
+             
               <div class="rhs">
                 <div class="swiper-container form-swiper" [swiper]="rhsConfig"
                   (slidePrevTransitionStart)="slidePrevTransitionStart(existingLoan1)"
@@ -439,29 +416,6 @@
                       </form>
                     </div>
 
-                    <div class="swiper-slide">
-                      <form class="bs-form" #liveLoans="ngForm" 
-                      (ngSubmit)="submitLiveLoans(liveLoans, existingLoan2)">
-                        <div class="form-wrap">
-                          <div class="form-group">
-                            <div class="form-group typ-range">
-                                <!-- <span class="control-title">Number of years in current residence</span>
-                                <input [readonly]="isReadOnly" type="number"
-                                        name="numberOfYearsInCurrentResidence"
-                                        class="form-control"
-                                        [ngModel]="value[0]"
-                                        (ngModelChange)="valuechange($event, 0)" /> -->
-                                <ng5-slider [(ngModel)]="liveLoan" ngModel name="liveLoans" [options]="liveLoanOption"></ng5-slider>
-                            </div>
-                          </div>
-                        </div>
-
-                        
-                        <div class="btn-wrap">
-                          <button type="submit" class="btn btn-primary">Next</button>
-                        </div>
-                      </form>
-                    </div>
 
                     <div class="swiper-slide">
                       <form class="bs-form"
