@@ -151,7 +151,7 @@ export class LeadsListComponent implements OnInit {
       } else {
         this.cds.setEligibilityForReview({applicationId: applicationId, isEligibilityForReview: false});
       }
-      return "/view-form/"+applicationId;
+      return "/applicant/"+applicationId;
     } else if(statuses[status] == "27") {
       return "/applicant/"+applicationId;
     } else if(statuses[status] == "28") {
