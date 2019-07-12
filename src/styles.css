@@ -5550,6 +5550,7 @@ img {
 }
 
 .disabled {
+	touch-action: none;
 	cursor: not-allowed;
 	pointer-events: none;
 }

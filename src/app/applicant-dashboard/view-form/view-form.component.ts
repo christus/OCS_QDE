@@ -638,7 +638,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
   //   });
   // }
 
-  sendSMS(form: NgForm) {
+  sendSMS() {
 
       // this.qdeHttp.viewFormSmsApi(this.applicationId).subscribe((response)=>{
       //   let sms = response["ProcessVariables"];
@@ -819,6 +819,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
 
   setStatus(){
      this.qdeHttp.setStatusApi(this.applicationId, this.applicationStatus).subscribe(res => {}, err => {});
+     this.sendSMS();
   }
 
   onPinCodeChange(event) {

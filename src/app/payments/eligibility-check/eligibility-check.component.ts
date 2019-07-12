@@ -103,6 +103,10 @@ export class EligibilityCheckComponent implements OnInit {
       });
       console.log(this.route.snapshot.data);
       // this.applicationId
+
+      this.commonDataService.applicationId.subscribe(val => {
+        this.applicationId = val;
+      });
   }
 
   ngOnInit() {
@@ -201,9 +205,7 @@ export class EligibilityCheckComponent implements OnInit {
   showNotEligible: boolean =false;
 
   submitEligibility() {
-console.log("Hi")
     this.qdeHttp.cibilDetails(this.ocsNumber).subscribe(res => {
-      console.log("hi2")
       if(res['ProcessVariables']['checkEligibility'].toLowerCase() == 'yes'){
         this.showEligible = true;
         console.log("res: ", res['ProcessVariables'].toLowerCase);
@@ -211,12 +213,14 @@ console.log("Hi")
         this.firstname = res['ProcessVariables']['firstName'];
         this.emiAmount = parseInt(res['ProcessVariables']['emi']);
         this.eligibleAmount = parseInt(res['ProcessVariables']['eligibilityAmount']);
+        this.commonDataService.setIsMainTabEnabled(false);
       }
       else if(res['ProcessVariables']['checkEligibility'].toLowerCase() == 'no'){
         this.showNotEligible = true;
       }
       else if(res['ProcessVariables']['checkEligibility'].toLowerCase() == 'review'){
         this.showNotEligible = true;
+        this.commonDataService.setIsMainTabEnabled(false);
       }
       else{
         alert("Server is Down!!!");

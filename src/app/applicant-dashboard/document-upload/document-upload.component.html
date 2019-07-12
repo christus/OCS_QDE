@@ -8,23 +8,23 @@
                 <li class="tab-link " [ngClass]="{'active': (activeTab == 0), 'hide': (!applicantIndividual)}">
                     <a href="javascript:void(0);" (click)="tabSwitch(0)">Dashboard</a>
                 </li>
-                <li class="tab-link " [ngClass]="{'active': (activeTab == 1), 'hide': (!applicantIndividual)}">
-                  <a href="javascript:void(0);" (click)="tabSwitch(1)">Id Proof</a>
-                </li>
+                <li class="tab-link" [ngClass]="{'active': (activeTab == 1), 'hide': (!applicantIndividual)}">
+                    <a href="javascript:void(0);" (click)="tabSwitch(1)">Customer Photo</a>
+                  </li>
                 <li class="tab-link" [ngClass]="{'active': (activeTab == 2), 'hide': (!applicantIndividual)}">
-                  <a href="javascript:void(0);" (click)="tabSwitch(2)">Address Proof</a>
+                  <a href="javascript:void(0);" (click)="tabSwitch(2)">Id Proof</a>
                 </li>
                 <li class="tab-link" [ngClass]="{'active': (activeTab == 3), 'hide': (!applicantIndividual)}">
-                  <a href="javascript:void(0);" (click)="tabSwitch(3)">Income Proof</a>
+                  <a href="javascript:void(0);" (click)="tabSwitch(3)">Address Proof</a>
                 </li>
                 <li class="tab-link" [ngClass]="{'active': (activeTab == 4), 'hide': (!applicantIndividual)}">
-                  <a href="javascript:void(0);" (click)="tabSwitch(4)">Banking</a>
+                  <a href="javascript:void(0);" (click)="tabSwitch(4)">Income Proof</a>
                 </li>
                 <li class="tab-link" [ngClass]="{'active': (activeTab == 5), 'hide': (!applicantIndividual)}">
-                  <a href="javascript:void(0);" (click)="tabSwitch(5)">Collateral</a>
+                  <a href="javascript:void(0);" (click)="tabSwitch(5)">Banking</a>
                 </li>
                 <li class="tab-link" [ngClass]="{'active': (activeTab == 6), 'hide': (!applicantIndividual)}">
-                  <a href="javascript:void(0);" (click)="tabSwitch(6)">Customer Photo</a>
+                  <a href="javascript:void(0);" (click)="tabSwitch(6)">Collateral</a>
                 </li>
               </ul>
           
@@ -78,9 +78,94 @@
                     </div>
                 </div>
 
-              <!-- ID Proof -->
 
-                  <div class="tab-content" [ngClass]="{'active': (activeTab == 1)}">
+                <!-- Customer Photo -->
+
+                <div class="tab-content" [ngClass]="{'active': (activeTab == 1)}">
+                <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(panSlider2)"></a>
+                <div class="lyt-tabs">
+                    <div class="lhs">
+                        <div  class="swiper-container form-swiper"
+                                [swiper]="lhsConfig"
+                                #panSlider1="ngxSwiper"></div>
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <div class="title-wrap">
+                                        <h4 class="title">Upload<span class="cm-line-break"></span>Photo</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <div class="rhs">
+                        <div  class="swiper-container form-swiper"
+                        [swiper]="rhsConfig"
+                        #panSlider2="ngxSwiper">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <form class="bs-form">
+                                        <div class="form-wrap">
+
+                                        <div *ngIf="isMobile">
+
+                                            <div *ngIf="photoProofId" else photoProof>
+                                                <div *ngIf="photoProofId" class="bs-file" >
+                                                        <secured-image [src]="photoProofId"></secured-image>
+                                                    <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setCustomerPhoto')">Retake</button>
+                                                </div>
+                                            </div>
+
+                                            <div *ngIf="!photoProofId" #photoProof>
+                                                <div *ngIf="photoProofFileName" class="bs-file">
+                                                    <img [src]="photoProofFileName" />
+                                                    <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setCustomerPhoto')">Retake</button>
+                                                </div>
+                                            </div>
+
+                                            <div *ngIf="!photoProofFileName" class="bs-file">
+                                                <input [readonly]="isReadOnly" type="file" class="form-control" (change)="setCustomerPhoto($event.target.files)" >
+                                                <label for="file"><span>Click photo of Customer</span></label>
+                                                <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setCustomerPhoto')">open camera</button>
+                                            </div>
+
+                                        </div>
+
+                                        <div  *ngIf="!isMobile">
+
+                                                <div class="bs-file">
+                                                    <input [readonly]="isReadOnly" type="file" class="form-control" (change)="setCustomerPhoto($event.target.files)" >
+                                                    <label for="file"><span>Click photo of Customer</span></label>
+                                                </div>
+
+                                                <div class="doc_file_name_size" *ngIf="photoProofFileName">
+                                                    <div>
+                                                        <span>{{photoProofFileName}} </span>
+                                                        <span ng-switch-when="true">({{photoProofFileSize}})</span>
+                                                    </div>
+                                                    <!-- <div ng-show="progressVisible">
+                                                        <div class="percent">{{progress}}%</div>
+                                                        <div class="progress-bar">
+                                                            <div class="uploaded" ng-style="{'width': progress+'%'}"></div>
+                                                        </div>
+                                                    </div> -->
+                                                </div>
+
+                                        </div>
+
+                                        </div>
+                                        <div class="btn-wrap">
+                                            <button type="button" (click)="handleCustomerPhoto(panSlider1)" class="btn btn-primary">Next</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+                <!-- ID Proof -->
+
+                  <div class="tab-content" [ngClass]="{'active': (activeTab == 2)}">
                     <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(aadharSlider2)"></a>
                     <div class="lyt-tabs">
                         <div class="lhs">
@@ -183,10 +268,10 @@
                                                 </div>
 
                                             </div>
-                                            <div class="no-aadhar">
+                                            <!-- <div class="no-aadhar">
                                                 <span class="text">Don't have an Aadhaar card?</span>
                                                 <a class="upload-another-doc">Upload a different document <span class="icon icon-arrow"></span></a>
-                                            </div>
+                                            </div> -->
                                             <div class="btn-wrap">
                                                 <button class="btn btn-primary" (click)="handleIdProof(aadharSlider2)">Next</button>
                                             </div>
@@ -244,7 +329,7 @@
 
                   <!-- Address Proof -->
 
-                  <div class="tab-content" [ngClass]="{'active': (activeTab == 2)}">
+                  <div class="tab-content" [ngClass]="{'active': (activeTab == 3)}">
                       <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(addressSlider2)"></a>
                       <div class="lyt-tabs">
                           <div class="lhs">
@@ -359,7 +444,7 @@
 
                   <!-- Income Proof -->
 
-                  <div class="tab-content" [ngClass]="{'active': (activeTab == 3)}">
+                  <div class="tab-content" [ngClass]="{'active': (activeTab == 4)}">
                       <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(incomeSlider2)"></a>
                       <div class="lyt-tabs">
                           <div class="lhs">
@@ -474,7 +559,7 @@
 
                   <!-- Banking -->
 
-                  <div class="tab-content" [ngClass]="{'active': (activeTab == 4)}">
+                  <div class="tab-content" [ngClass]="{'active': (activeTab == 5)}">
                       <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(bankingSlider2)"></a>
                       <div class="lyt-tabs">
                           <div class="lhs">
@@ -592,7 +677,7 @@
 
                   <!-- Collateral -->
 
-                  <div class="tab-content" [ngClass]="{'active': (activeTab == 5)}">
+                  <div class="tab-content" [ngClass]="{'active': (activeTab == 6)}">
                       <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(collateralSlider2)"></a>
                       <div class="lyt-tabs">
                           <div class="lhs">
@@ -695,7 +780,7 @@
 
                                           </div>
                                           <div class="btn-wrap">
-                                              <button type="button" class="btn btn-primary" (click)="handleCollateralProof(collateralSlider2)">Next</button>
+                                              <button type="button" class="btn btn-primary" (click)="handleCollateralProof(collateralSlider2)">Submit</button>
                                           </div>
                                       </form>
                                   </div>
@@ -706,89 +791,6 @@
                       </div>
                   </div>
 
-                  <!-- Customer Photo -->
-
-                  <div class="tab-content" [ngClass]="{'active': (activeTab == 6)}">
-                      <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(panSlider2)"></a>
-                      <div class="lyt-tabs">
-                          <div class="lhs">
-                              <div  class="swiper-container form-swiper"
-                                    [swiper]="lhsConfig"
-                                    #panSlider1="ngxSwiper"></div>
-                                  <div class="swiper-wrapper">
-                                      <div class="swiper-slide">
-                                          <div class="title-wrap">
-                                              <h4 class="title">Upload<span class="cm-line-break"></span>Photo</h4>
-                                          </div>
-                                      </div>
-                                  </div>
-                              </div>
-                          <div class="rhs">
-                              <div  class="swiper-container form-swiper"
-                              [swiper]="rhsConfig"
-                              #panSlider2="ngxSwiper">
-                                <div class="swiper-wrapper">
-                                    <div class="swiper-slide">
-                                        <form class="bs-form">
-                                            <div class="form-wrap">
-
-                                            <div *ngIf="isMobile">
-
-                                                <div *ngIf="photoProofId" else photoProof>
-                                                    <div *ngIf="photoProofId" class="bs-file" >
-                                                            <secured-image [src]="photoProofId"></secured-image>
-                                                        <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setCustomerPhoto')">Retake</button>
-                                                    </div>
-                                                </div>
-
-                                                <div *ngIf="!photoProofId" #photoProof>
-                                                    <div *ngIf="photoProofFileName" class="bs-file">
-                                                        <img [src]="photoProofFileName" />
-                                                        <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setCustomerPhoto')">Retake</button>
-                                                    </div>
-                                                </div>
-
-                                                <div *ngIf="!photoProofFileName" class="bs-file">
-                                                    <input [readonly]="isReadOnly" type="file" class="form-control" (change)="setCustomerPhoto($event.target.files)" >
-                                                    <label for="file"><span>Click photo of Customer</span></label>
-                                                    <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setCustomerPhoto')">open camera</button>
-                                                </div>
-
-                                            </div>
-
-                                            <div  *ngIf="!isMobile">
-
-                                                    <div class="bs-file">
-                                                        <input [readonly]="isReadOnly" type="file" class="form-control" (change)="setCustomerPhoto($event.target.files)" >
-                                                        <label for="file"><span>Click photo of Customer</span></label>
-                                                    </div>
-
-                                                    <div class="doc_file_name_size" *ngIf="photoProofFileName">
-                                                        <div>
-                                                            <span>{{photoProofFileName}} </span>
-                                                            <span ng-switch-when="true">({{photoProofFileSize}})</span>
-                                                        </div>
-                                                        <!-- <div ng-show="progressVisible">
-                                                            <div class="percent">{{progress}}%</div>
-                                                            <div class="progress-bar">
-                                                                <div class="uploaded" ng-style="{'width': progress+'%'}"></div>
-                                                            </div>
-                                                        </div> -->
-                                                    </div>
-
-                                            </div>
-
-                                            </div>
-                                            <div class="btn-wrap">
-                                                <button type="button" (click)="handleCustomerPhoto(panSlider1)" class="btn btn-primary">Submit</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                              </div>
-                          </div>
-                      </div>
-                      </div>
                   </div>
 
           </div>

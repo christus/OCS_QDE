@@ -114,4 +114,11 @@ export class CommonDataService {
    this.isReadOnlyForm$.next(data)
   }
 
+  isMainTabEnabled$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  public isMainTabEnabled = this.isMainTabEnabled$.asObservable();
+
+
+  setIsMainTabEnabled(data: boolean) {
+   this.isMainTabEnabled$.next(data);
+  }
 }

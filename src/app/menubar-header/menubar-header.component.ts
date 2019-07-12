@@ -29,7 +29,7 @@ export class MenubarHeaderComponent implements OnInit {
   public applicantName: string;
   qde:Qde;
 
-
+  isMainTabEnabled: boolean;
 
   constructor(private utilService: UtilService, private commonDataService: CommonDataService,
   private qdeService:QdeService) {
@@ -90,6 +90,10 @@ export class MenubarHeaderComponent implements OnInit {
           this.applicantName = "Application for "+this.qde.application.applicants[index].personalDetails.firstName +" "+ this.qde.application.applicants[index].personalDetails.lastName;
         }
       }
+    });
+
+    this.commonDataService.isMainTabEnabled.subscribe(val => {
+      this.isMainTabEnabled = val;
     });
     
   }

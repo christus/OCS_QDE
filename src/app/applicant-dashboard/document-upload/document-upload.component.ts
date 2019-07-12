@@ -156,12 +156,12 @@ export class DocumentUploadComponent implements OnInit {
 
   fragments = [
     "aadhar1",
+    "photo",
     "aadhar2",
     "address",
     "income",
     "banking",
     "collateral",
-    "photo"
   ];
 
   isReadOnly: boolean = false;
@@ -439,6 +439,64 @@ export class DocumentUploadComponent implements OnInit {
     this.isAlternateResidenceNumber = !this.isAlternateResidenceNumber;
   }
 
+  setCustomerPhoto(files: any) {
+    if(this.isMobile) {
+      this.photoProofDoc = files;
+      this.photoProofFileName = (<any>window).Ionic.WebView.convertFileSrc(this.photoProofDoc);
+      this.photoProofFileSize = "";
+      return;
+    }
+
+    this.photoProofDoc = files.item(0);
+    this.photoProofFileName = this.photoProofDoc["name"];
+
+    this.photoProofFileSize = this.getFileSize(this.photoProofDoc["size"]);
+  }
+
+  handleCustomerPhoto(slider) {
+
+    const tabIndex = 2;
+    
+    if (!this.photoProofDoc) {
+      this.goToNextSlide(slider);
+      this.tabSwitch(tabIndex);
+      return;
+    }
+
+    if(this.isMobile) {
+      const documentCategory = this.findDocumentCategory("Photo");
+
+      this.sendImgProof(this.photoProofDoc, tabIndex,slider, documentCategory, "");
+      return;
+    }
+
+    const applicantId = this.currentApplicantId.toString();
+
+    let modifiedFile = Object.defineProperty(this.photoProofDoc, "name", {
+      writable: true,
+      value: this.photoProofDoc["name"]
+    });
+    modifiedFile["name"] = this.applicationId + "-" + applicantId + "-" + new Date().getTime() + "-" + modifiedFile["name"];
+
+    const callback = (info: JSON) => {
+      const documentId = info["id"];
+      const documentCategory = this.findDocumentCategory(DocumentCategory.PHOTO_PROOF);
+
+      const documentInfo = {
+        applicationId: this.applicationIdAsString,
+        applicantId: applicantId,
+        documentImageId: documentId,
+        documentType: "",
+        documentCategory: documentCategory
+      };
+
+      this.uploadToOmni(documentInfo, 2, slider);
+    };
+
+    this.uploadToMongo(modifiedFile, callback);
+  
+  }
+  
   setIdProof(files: any) {
 
     console.log("setIdProof files", files);
@@ -457,7 +515,7 @@ export class DocumentUploadComponent implements OnInit {
   }
 
   handleIdProof(slider) {
-    const tabIndex = 2;
+    const tabIndex = 3;
 
     if (!this.idProofDoc) {
       this.goToNextSlide(slider);
@@ -557,7 +615,7 @@ export class DocumentUploadComponent implements OnInit {
   }
 
   handleAddressProof(slider) {
-    const tabIndex = 3;
+    const tabIndex = 4;
     
     if (!this.addressProofDoc) {
       this.goToNextSlide(slider);
@@ -613,7 +671,7 @@ export class DocumentUploadComponent implements OnInit {
   }
 
   handleIncomeProof(slider) {
-    const tabIndex = 4;
+    const tabIndex = 5;
 
     if (!this.incomeProofDoc) {
       this.goToNextSlide(slider);
@@ -676,7 +734,7 @@ export class DocumentUploadComponent implements OnInit {
   }
 
   handleBankingProof(slider) {
-    const tabIndex = 5;
+    const tabIndex = 6;
 
     if (!this.bankingProofDoc) {
       this.goToNextSlide(slider);
@@ -739,18 +797,23 @@ export class DocumentUploadComponent implements OnInit {
   }
 
   handleCollateralProof(slider) {
-    const tabIndex = 6;
+    
+    this.qdeHttp.apsApi(""+this.applicationId).subscribe(res => {
+      console.log("res APS: ", res);
+    });
+    
+    // const tabIndex = 7;
 
     if (!this.collateralProofDoc) {
       this.goToNextSlide(slider);
-      this.tabSwitch(tabIndex);
+      // this.tabSwitch(tabIndex);
       return;
     }
 
     if(this.isMobile) {
       const documentCategory = this.findDocumentCategory("Collateral");
 
-      this.sendImgProof(this.collateralProofDoc, tabIndex, slider, documentCategory, this.selectedCollateralProof);
+      this.sendImgProof(this.collateralProofDoc, 0, slider, documentCategory, this.selectedCollateralProof);
       return;
     }
 
@@ -781,69 +844,10 @@ export class DocumentUploadComponent implements OnInit {
         documentCategory: documentCategory
       };
 
-      this.uploadToOmni(documentInfo, tabIndex, slider);
-    };
-
-    this.uploadToMongo(modifiedFile, callback);
-  }
-
-  setCustomerPhoto(files: any) {
-    if(this.isMobile) {
-      this.photoProofDoc = files;
-      this.photoProofFileName = (<any>window).Ionic.WebView.convertFileSrc(this.photoProofDoc);
-      this.photoProofFileSize = "";
-      return;
-    }
-
-    this.photoProofDoc = files.item(0);
-    this.photoProofFileName = this.photoProofDoc["name"];
-
-    this.photoProofFileSize = this.getFileSize(this.photoProofDoc["size"]);
-  }
-
-  handleCustomerPhoto(slider) {
-    console.log("Hey")
-    this.qdeHttp.apsApi(""+this.applicationId).subscribe(res => {
-      console.log("res APS: ", res);
-    });
-    
-    if (!this.photoProofDoc) {
-      this.goToNextSlide(slider);
-      return;
-    }
-
-    if(this.isMobile) {
-      const documentCategory = this.findDocumentCategory("Photo");
-
-      this.sendImgProof(this.photoProofDoc, 0 ,slider, documentCategory, "");
-      return;
-    }
-
-    const applicantId = this.currentApplicantId.toString();
-
-    let modifiedFile = Object.defineProperty(this.photoProofDoc, "name", {
-      writable: true,
-      value: this.photoProofDoc["name"]
-    });
-    modifiedFile["name"] = this.applicationId + "-" + applicantId + "-" + new Date().getTime() + "-" + modifiedFile["name"];
-
-    const callback = (info: JSON) => {
-      const documentId = info["id"];
-      const documentCategory = this.findDocumentCategory(DocumentCategory.PHOTO_PROOF);
-
-      const documentInfo = {
-        applicationId: this.applicationIdAsString,
-        applicantId: applicantId,
-        documentImageId: documentId,
-        documentType: "",
-        documentCategory: documentCategory
-      };
-
       this.uploadToOmni(documentInfo, 7, slider);
     };
 
     this.uploadToMongo(modifiedFile, callback);
-  
   }
 
   uploadToMongo(file: File, callback: any) {

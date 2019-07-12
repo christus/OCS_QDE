@@ -22,10 +22,10 @@
                   <!-- <span class="incomplete-count">3</span> -->
                   <span class="complete-sign"><span class="icon icon-tick"></span></span>
               </li>
-              <li class="tab-link" [ngClass]="{'active': activeTab == 4}">
+              <!-- <li class="tab-link" [ngClass]="{'active': activeTab == 4}">
                   <a href="javascript:void(0);" (click)="tabSwitch(4)">Document Uploads</a>
                   <span class="complete-sign"><span class="icon icon-tick"></span></span>
-              </li>
+              </li> -->
 
           </ul>
           <div class="content tabs-contents">
@@ -679,12 +679,13 @@
                       </form>
                   </div>
                   <div class="btn-wrap">
-                      <button class="btn btn-primary" (click)="tabSwitch(4)">Continue</button>
+                      <!-- <button class="btn btn-primary" (click)="tabSwitch(4)">Continue</button> -->
+                      <button class="btn btn-primary" (click)="setStatus()">Submit</button>
                   </div>
               </div>
 
               <!-- Document Upload -->
-              <div class="tab-content" [ngClass]="{'active': (activeTab == 4)}">
+              <!-- <div class="tab-content" [ngClass]="{'active': (activeTab == 4)}">
                     <div class="btn-wrap edit-btn-wrap">
                             <button [routerLink]="['/document-uploads', applicationId, 'applicant', applicantId]" class="btn btn-default edit">Edit</button>
                           </div>  
@@ -695,7 +696,6 @@
                         
                             <div class="row">
                                 <div class="col-12">
-                                    <!-- <h5 class="subtitle">Is applicant's spouse working?</h5> -->
                                     <div class="bs-radio typ-doc">
                                         <input readonly="true"  type="radio" name="doc-upload" id="applicant-radio">
                                         <label for="applicant-radio">
@@ -741,7 +741,6 @@
                         
                             <div class="row">
                                 <div class="col-12">
-                                    <!-- <h5 class="subtitle">Is applicant's spouse working?</h5> -->
                                     <div class="bs-radio typ-doc">
                                         <input readonly="true"  type="radio" name="doc-upload" id="applicant-radio">
                                         <label for="applicant-radio">
@@ -787,7 +786,6 @@
                         
                             <div class="row">
                                 <div class="col-12">
-                                    <!-- <h5 class="subtitle">Is applicant's spouse working?</h5> -->
                                     <div class="bs-radio typ-doc">
                                         <input readonly="true"  type="radio" name="doc-upload" id="applicant-radio">
                                         <label for="applicant-radio">
@@ -833,7 +831,6 @@
                         
                             <div class="row">
                                 <div class="col-12">
-                                    <!-- <h5 class="subtitle">Is applicant's spouse working?</h5> -->
                                     <div class="bs-radio typ-doc">
                                         <input readonly="true"  type="radio" name="doc-upload" id="applicant-radio">
                                         <label for="applicant-radio">
@@ -879,7 +876,6 @@
                         
                             <div class="row">
                                 <div class="col-12">
-                                    <!-- <h5 class="subtitle">Is applicant's spouse working?</h5> -->
                                     <div class="bs-radio typ-doc">
                                         <input readonly="true"  type="radio" name="doc-upload" id="applicant-radio">
                                         <label for="applicant-radio">
@@ -928,7 +924,7 @@
                     </div>
 
                   </form>
-              </div>
+              </div> -->
 
           </div>
       </div>

@@ -71,6 +71,7 @@ import { ViewFormApplicantComponent } from './view-form-applicant/view-form-appl
 import {SecuredImageComponent} from  './applicant-dashboard/document-upload/secured-image.component';
 import { ThanksTAndCComponent } from './terms-and-conditions/thanks-t-and-c/thanks-t-and-c.component';
 import { IciciTermsComponent } from './applicant-dashboard/icici-terms/icici-terms.component';
+import { ThankPaymentComponent } from './payments/thank-payment/thank-payment.component';
 
 const appRoutes: Routes = [
   { path: "", redirectTo: "leads", pathMatch: "full" },
@@ -256,6 +257,14 @@ const appRoutes: Routes = [
           listOfValues: ListOfValuesResolverService,
           qde: GetQdeDataResolverService
         }
+      },
+      {
+        path: 'thankpayment/:applicationId',
+        component: ThankPaymentComponent,
+        resolve: {
+          listOfValues: ListOfValuesResolverService,
+          qde: GetQdeDataResolverService
+        }
       }
     ]
   },
@@ -308,7 +317,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     ViewFormApplicantComponent,
     SecuredImageComponent,
     ThanksTAndCComponent,
-    IciciTermsComponent
+    IciciTermsComponent,
+    ThankPaymentComponent
   ],
   imports: [
     BrowserModule,
