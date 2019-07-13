@@ -46,6 +46,8 @@ export class LoginWithMPINComponent implements OnInit {
         localStorage.setItem("userId", res["ProcessVariables"]["userId"]);
         localStorage.setItem('roles', JSON.stringify(res["ProcessVariables"]["roleName"]));
         // this.roleLogin();
+        localStorage.setItem("firstTime", "true");
+        
         this.router.navigate(["/leads"]);
       },
       error => {

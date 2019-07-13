@@ -81,8 +81,6 @@ export class UtilService {
     return;
    }
 
-  //  localStorage.setItem("firstTime", "true");
-
     this.router.navigate(['/loginWithPin']);
   }
 }

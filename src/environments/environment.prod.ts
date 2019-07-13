@@ -101,5 +101,5 @@ export const environment = {
   driveLocation: "/d/drive/docs/",
   host: "http://192.168.1.108/appiyo",
   //host: "/appiyo",
-  // host: "http://ihfcmobileuat.icicihfc.com:443/appiyo"
+   //host: "http://ihfcmobileuat.icicihfc.com:443/appiyo"
 };
