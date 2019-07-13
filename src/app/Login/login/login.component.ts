@@ -11,6 +11,7 @@ import {CommonDataService} from 'src/app/services/common-data.service'
   styleUrls: ["./login.component.css"]
 })
 export class LoginComponent implements OnInit {
+
   userName = "";
   password = "";
 
@@ -32,16 +33,19 @@ export class LoginComponent implements OnInit {
     };
     this.qdeService.authenticate(data).subscribe(
       res => {
-        console.log(res);
+        console.log('hfgrhjgfc',res);
         this.commonDataService.setLogindata(data);
         localStorage.setItem("token", res["token"] ? res["token"] : "");
         this.roleLogin();
       },
       error => {
-        console.log(error);
+        console.log('err',error['error']['message']);
+        this.message = error['error']['message'];
       }
     );
   }
+
+  public message: string;
 
   roleLogin() {
     this.qdeService.roleLogin().subscribe(

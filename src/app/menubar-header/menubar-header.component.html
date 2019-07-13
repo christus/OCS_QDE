@@ -11,7 +11,8 @@
             </div>
             <div class="right-panel">
                 <h3 class="for-user" *ngIf="isViewFormNameShown"><span class="user-name">{{applicantName}}</span></h3>
-                <a [routerLink]="['/view-form', applicationId]" *ngIf="isViewFormVisible" class="btn btn-default view-form">View Form</a>
+                <a *ngIf="isViewFormVisible && applicationId == null" class="btn btn-default view-form">View Form</a>
+                <a [routerLink]="['/view-form', applicationId]" *ngIf="isViewFormVisible && applicationId != null" class="btn btn-default view-form">View Form</a>
                 <a (click)="logout()" *ngIf="isLogoutVisible" class="btn btn-default logout">Logout</a>
             </div>
         </div>

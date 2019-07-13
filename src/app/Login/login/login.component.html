@@ -20,10 +20,14 @@
                   <input type="password" [(ngModel)]="password" class="form-control" name="password" id="password" fieldFill />
                   <label for="password" >Password</label>
               </div>
+              <div class="error-msg">
+                <span>{{message}}</span>
+            </div>
           </div>
           <div class="btn-wrap">
               <button class="btn btn-primary" (click)="login()">LOGIN</button>
           </div>
       </form>
+     
   </div>
 </div>
