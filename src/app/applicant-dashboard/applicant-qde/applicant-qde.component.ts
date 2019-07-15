@@ -735,8 +735,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
   onBackButtonClick(swiperInstance ?: Swiper) {
 
-    if(this.activeTab > 0) {
-    
+    if(this.activeTab > -1) {
       if(swiperInstance != null && swiperInstance.getIndex() > 0) {
         // Go to Previous Slide
         this.goToPrevSlide(swiperInstance);
@@ -746,6 +745,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       }
     }
   }
+
 
   addRemoveEmailField() {
     this.isAlternateEmailId = !this.isAlternateEmailId;

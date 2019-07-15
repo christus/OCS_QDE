@@ -99,11 +99,11 @@
                         name="loanTenure"
 			                  [(ngModel)]="qde?.application.tenure"
                         (ngModelChange)="valuechange($event, 0)"
-                        pattern='{{regexPattern.tenure}}'>
+                        >
                       <span class="yr-text">Years</span>
 
                       <div *ngIf="tenureYears">
-                           <div class="invalid-feedback"><br>One or greater than one year</div>
+                           <div class="invalid-feedback"><br>{{errors.loanDetails.loanAmount.tenure.invalid}}</div>
                       </div>
                       
                       <ng5-slider [(value)]="qde?.application.tenure" [options]="options" ></ng5-slider>
@@ -383,7 +383,7 @@
                             </div>
                             
                             
-                            <div class="btn-wrap" >
+                            <div class="btn-wrap">
                                 <button  type="submit" class="btn btn-primary">Next</button>
                             </div>
                             

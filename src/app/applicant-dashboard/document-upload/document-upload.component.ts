@@ -161,7 +161,7 @@ export class DocumentUploadComponent implements OnInit {
     "address",
     "income",
     "banking",
-    "collateral",
+    "collateral"
   ];
 
   isReadOnly: boolean = false;
@@ -797,7 +797,7 @@ export class DocumentUploadComponent implements OnInit {
   }
 
   handleCollateralProof(slider) {
-    
+        
     this.qdeHttp.apsApi(""+this.applicationId).subscribe(res => {
       console.log("res APS: ", res);
     });

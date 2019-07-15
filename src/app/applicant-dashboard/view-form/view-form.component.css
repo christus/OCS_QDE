@@ -41,6 +41,18 @@
     text-align: left;
     z-index: 1;
 }
+.back-btn {
+	position: absolute;
+	left: 1vw;
+    /* top: 1.95vw; */
+    top: 4vw;
+	background: url(/assets/images/slide-back.png) no-repeat;
+	background-size: contain;
+	width: 2.73vw;
+	height: 2.73vw;
+	display: block;
+	z-index: 2
+}
 .bs-card .bs-form .form-group .form-control {
     font-size: 1.64vw;
     height: 3.13vw;

@@ -47,7 +47,7 @@ export class LoanQdeComponent implements OnInit {
          },
          tenure: {
            required: "Loan Tenure is Mandatory",
-           invalid: "Invalid Tenure"
+           invalid: "One or more than one year"
          }
        },
 
@@ -107,7 +107,7 @@ export class LoanQdeComponent implements OnInit {
 
   // value: number = 0;
 
-  existingLoan = 2; // tabswitch
+  propertyNoSwitchTab = 2; // tabswitch
 
   minValue: number = 1;
   options: Options = {
@@ -395,7 +395,7 @@ export class LoanQdeComponent implements OnInit {
   loanPropertyNo(swiperInstance: Swiper,value){
    //switching to existing loan
    this.qde.application.loanDetails.propertyType.propertyIdentified = value;
-    this.tabSwitch(this.existingLoan);
+    this.tabSwitch(this.propertyNoSwitchTab);
     
   }
   /**
@@ -664,7 +664,7 @@ export class LoanQdeComponent implements OnInit {
                 this.goToNextSlide(swiperInstance);
             }else{
               
-              alert("Loan Detail process is Completed, you didn't have any existing loan for further step ")
+              // alert("Loan Detail process is Completed, you didn't have any existing loan for further step ")
             }
           
           } else {

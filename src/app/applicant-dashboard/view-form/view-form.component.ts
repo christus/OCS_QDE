@@ -850,13 +850,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
       }
     });
   }
-  onBackButtonClick() {
-    if (this.activeTab > 0) {
-     
-        // Go To Previous Tab
-        this.tabSwitch(this.activeTab - 1);
-      }
-    }
+  
 
   applicationAccepted() {
     this.qdeHttp.setStatusApi(this.applicationId, statuses['Eligibility Accepted']).subscribe(res => {}, err => {});
