@@ -33,11 +33,11 @@ export class ThankPaymentComponent implements OnInit {
   ngOnInit() {
   }
 
-  ngAfterViewInit() {
-    history.pushState(null, null, '/payments/thankpayment/'+this.applicationId);
-    let dude = this;
-    window.addEventListener('popstate', function(event) {
-    history.pushState(null, null, '/payments/thankpayment/'+dude.applicationId);
-    });
-  }
+  // ngAfterViewInit() {
+  //   history.pushState(null, null, '/payments/thankpayment/'+this.applicationId);
+  //   let dude = this;
+  //   window.addEventListener('popstate', function(event) {
+  //   history.pushState(null, null, '/payments/thankpayment/'+dude.applicationId);
+  //   });
+  // }
 }
