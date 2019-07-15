@@ -97,12 +97,12 @@ export class CommonDataService {
   }
 
 
-  isEligibilityForReview$: BehaviorSubject<{applicationId: string, isEligibilityForReview: boolean}> = new BehaviorSubject<{applicationId: string, isEligibilityForReview: boolean}>({applicationId: null, isEligibilityForReview: false});
-  public isEligibilityForReview = this.isEligibilityForReview$.asObservable();
+  isEligibilityForReviews$: BehaviorSubject<Array<{applicationId: string, isEligibilityForReview: boolean}>> = new BehaviorSubject<Array<{applicationId: string, isEligibilityForReview: boolean}>>([]);
+  public isEligibilityForReviews = this.isEligibilityForReviews$.asObservable();
 
 
-  setEligibilityForReview(data: {applicationId: string, isEligibilityForReview: boolean}) {
-   this.isEligibilityForReview$.next(data)
+  setIsEligibilityForReviews(data: Array<{applicationId: string, isEligibilityForReview: boolean}>) {
+   this.isEligibilityForReviews$.next(data)
   }
 
 

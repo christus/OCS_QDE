@@ -329,44 +329,44 @@ export class ViewFormComponent implements OnInit, OnDestroy {
     });
 
     // To Show Button Accept/Reject Form if TBM (Check leads.component.html)
-    this.commonDataService.isEligibilityForReview.subscribe(val => {
-      this.isEligibilityForReview = val['isEligibilityForReview'];
-      this.applicantId = val['applicationId'];
-      if(val['isEligibilityForReview'] == true && val['applicationId'] != null) {
+    // this.commonDataService.isEligibilityForReview.subscribe(val => {
+    //   this.isEligibilityForReview = val['isEligibilityForReview'];
+    //   this.applicantId = val['applicationId'];
+    //   if(val['isEligibilityForReview'] == true && val['applicationId'] != null) {
 
-        /************************************
-        * Uncomment below for UAT/Production
-        ************************************/
-        // this.getElibilityReviewSub = this.qdeHttp.getElibilityReview(this.applicationId).subscribe(res => {
-        //   let response = res['ProcessVariables'];
-        //   this.eligibilityAssignedTo = response['assignedTo'];
-        //   this.eligibilityDate = response['dateCreated'].split('-')[2]+"-"+response['dateCreated'].split('-')[1]+"-"+response['dateCreated'].split('-')[0];
-        //   this.listOfApplicantsNameAndCutOff = response['listOfApplicantsNameAndCutOff'].map(v => {
-        //     return {
-        //       name: v['firstName']+" "+v['lastName'],
-        //       aboveCutOff: v['aboveCutOff'] == '1' ? 'Yes': 'No'
-        //     }
-        //   });
-        //   this.maxEMI = response['maxEMI'];
-        // });
+    //     /************************************
+    //     * Uncomment below for UAT/Production
+    //     ************************************/
+    //     // this.getElibilityReviewSub = this.qdeHttp.getElibilityReview(this.applicationId).subscribe(res => {
+    //     //   let response = res['ProcessVariables'];
+    //     //   this.eligibilityAssignedTo = response['assignedTo'];
+    //     //   this.eligibilityDate = response['dateCreated'].split('-')[2]+"-"+response['dateCreated'].split('-')[1]+"-"+response['dateCreated'].split('-')[0];
+    //     //   this.listOfApplicantsNameAndCutOff = response['listOfApplicantsNameAndCutOff'].map(v => {
+    //     //     return {
+    //     //       name: v['firstName']+" "+v['lastName'],
+    //     //       aboveCutOff: v['aboveCutOff'] == '1' ? 'Yes': 'No'
+    //     //     }
+    //     //   });
+    //     //   this.maxEMI = response['maxEMI'];
+    //     // });
 
-        /*********************************
-        * Remove below for UAT/Production
-        *********************************/
-        this.getElibilityReviewSub = this.qdeHttp.dummyGetEligibilityAPI(this.applicationId).subscribe(res => {
-          let response = res['ProcessVariables'];
-          this.eligibilityAssignedTo = response['assignedTo'];
-          this.eligibilityDate = response['dateCreated'].split('-')[2]+"-"+response['dateCreated'].split('-')[1]+"-"+response['dateCreated'].split('-')[0];
-          this.listOfApplicantsNameAndCutOff = response['listOfApplicantsNameAndCutOff'].map(v => {
-            return {
-              name: v['firstName']+" "+v['lastName'],
-              aboveCutOff: v['aboveCutOff'] == '1' ? 'Yes': 'No'
-            }
-          });
-          this.maxEMI = response['maxEMI'];
-        });
-      }
-    });
+    //     /*********************************
+    //     * Remove below for UAT/Production
+    //     *********************************/
+    //     this.getElibilityReviewSub = this.qdeHttp.dummyGetEligibilityAPI(this.applicationId).subscribe(res => {
+    //       let response = res['ProcessVariables'];
+    //       this.eligibilityAssignedTo = response['assignedTo'];
+    //       this.eligibilityDate = response['dateCreated'].split('-')[2]+"-"+response['dateCreated'].split('-')[1]+"-"+response['dateCreated'].split('-')[0];
+    //       this.listOfApplicantsNameAndCutOff = response['listOfApplicantsNameAndCutOff'].map(v => {
+    //         return {
+    //           name: v['firstName']+" "+v['lastName'],
+    //           aboveCutOff: v['aboveCutOff'] == '1' ? 'Yes': 'No'
+    //         }
+    //       });
+    //       this.maxEMI = response['maxEMI'];
+    //     });
+    //   }
+    // });
 
 
   }

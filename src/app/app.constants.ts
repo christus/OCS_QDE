@@ -8,7 +8,7 @@
 export const statuses = {
     "QDE Started": "1",
     "QDE Completed": "5",
-    "KYC Document Upload": "10",
+    "KYC Document Uploaded": "10",
     "Terms and conditions accepted": "15",
     "Cheque Received": "16",
     "Cheque Bounced": "17",

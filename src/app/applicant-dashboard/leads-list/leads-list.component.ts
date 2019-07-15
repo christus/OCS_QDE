@@ -44,6 +44,7 @@ export class LeadsListComponent implements OnInit {
 
   // Lead ID === Application ID
   userDetails: Array<UserDetails>;
+  isEligibilityForReviews: Array<{applicationId: string, isEligibilityForReview: boolean}> = [];
 
   constructor(private service: QdeHttpService, private utilService: UtilService, private cds: CommonDataService) {
 
@@ -109,9 +110,10 @@ export class LeadsListComponent implements OnInit {
 
         if (res['Error'] && res['Error'] == 0) {
           this.userDetails = res['ProcessVariables'].userDetails || [];
-          from(this.userDetails).subscribe(el => {
+          this.userDetails.forEach(el => {
             el.url = this.getUrl(el['status'], el['leadId'], el['applicantId'], this.getRoles());
           });
+          this.cds.setIsEligibilityForReviews(this.isEligibilityForReviews);
         } else if (res['login_required'] && res['login_required'] === true) {
           this.utilService.clearCredentials();
           alert(res['message']);
@@ -133,36 +135,48 @@ export class LeadsListComponent implements OnInit {
     }
 
     if(statuses[status] == "1") {
+      this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
       return "/applicant/"+applicationId;
     } else if(statuses[status] == "5") {
+      this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
       return "/applicant/"+applicationId;
     } else if(statuses[status] == "10") {
+      this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
       return "/applicant/"+applicationId;
     } else if(statuses[status] == "15") {
+      this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
       return "/payments/online-summary/"+applicationId;
     } else if(statuses[status] == "20") {
+      this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
       return "/payments/thankpayment/"+applicationId;
     } else if(statuses[status] == "25") {
+      this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
       return "/applicant/"+applicationId;
     } else if(statuses[status] == "26") {
 
       if(roles.includes('TBM')) {
-        this.cds.setEligibilityForReview({applicationId: applicationId, isEligibilityForReview: true});
+        this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: true});
       } else {
-        this.cds.setEligibilityForReview({applicationId: applicationId, isEligibilityForReview: false});
+        this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
       }
       return "/applicant/"+applicationId;
     } else if(statuses[status] == "27") {
+      this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
       return "/applicant/"+applicationId;
     } else if(statuses[status] == "28") {
+      this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
       return "/applicant/"+applicationId;
     } else if(statuses[status] == "30") {
+      this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
       return "/applicant/"+applicationId;
     } else if(statuses[status] == "35") {
+      this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
       return "/applicant/"+applicationId;
     } else if(statuses[status] == "40") {
+      this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
       return "/applicant/"+applicationId;
     } else {
+      this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
       return "/applicant/";
     }
   }
