@@ -1,0 +1,39 @@
+.review-eligibility-wrapper {
+    background: #f3f3f3;
+    padding: 20px 0;
+}
+
+.review-eligibility-card {
+    background: #fff;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.card-title {
+    font-family: zurich-bold;
+    font-size: 2.11vw;
+    line-height: 3.28vw;
+    color: #004a80;
+}
+
+.card-info {
+    font-size: 1.64vw;
+}
+
+.col-md-6 {
+    width: 50%;
+    float: left;
+    padding: 0 15px;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.eligibility-table {
+    width: 100%;
+    margin-top: 20px;
+    text-align: left;
+    font-size: 1.64vw;
+}
