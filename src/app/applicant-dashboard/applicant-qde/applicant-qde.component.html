@@ -101,6 +101,7 @@
                                                             name="isIndividual"
                                                             id="individual"
                                                             value="1"
+                                                            [disabled]="isTBMLoggedIn"
                                                             [checked]="qde.application.applicants[applicantIndex].isIndividual == true"
                                                             (click)="changeIsIndividual(1, panSlider2)" />
                                                     <label for="individual" tabindex="1"><span>Individual</span></label>
@@ -111,6 +112,7 @@
                                                             name="isIndividual"
                                                             id="non-individual"
                                                             value="2"
+                                                            [disabled]="isTBMLoggedIn"
                                                             [checked]="qde.application.applicants[applicantIndex].isIndividual == false"
                                                             (click)="changeIsIndividual(2, panSlider2)" />
                                                     <label for="non-individual" tabindex="2"><span>Non-Individual</span></label>
@@ -185,8 +187,8 @@
                                             <div class="btn-wrap">
                                                 <button type="submit"
                                                         class="btn btn-primary"
-                                                        [ngClass]="{'disabled': !panNumberForm.valid}"
-                                                        [disabled]="!panNumberForm.valid">Next
+                                                        [ngClass]="{'disabled': (!panNumberForm.valid || isTBMLoggedIn)}"
+                                                        [disabled]="!panNumberForm.valid || isTBMLoggedIn">Next
                                                 </button>
                                             </div>
                                         </form>
@@ -207,8 +209,8 @@
                                                 </div>
                                             </div>
                                             <div class="btn-wrap">
-                                                <button  *ngIf="isMobile" class="btn btn-primary" (click)="sendPanImage(imageURI)">Next</button>
-                                                <button  *ngIf="!isMobile" class="btn btn-primary" (click)="tabSwitch(1)">Next</button>
+                                                <button  *ngIf="isMobile" class="btn btn-primary" [disabled]="isTBMLoggedIn" [ngClass]="{'disabled': isTBMLoggedIn}" (click)="sendPanImage(imageURI)">Next</button>
+                                                <button  *ngIf="!isMobile" class="btn btn-primary" [disabled]="isTBMLoggedIn" [ngClass]="{'disabled': isTBMLoggedIn}" (click)="tabSwitch(1)">Next</button>
                                             </div>
                                         </form>
                                     </div>
@@ -276,6 +278,8 @@
                                                             name="income-consider"
                                                             id="yes-consider1"
                                                             [value]="1"
+                                                            [disabled]="isTBMLoggedIn"
+                                                            [ngClass]="{'disabled': isTBMLoggedIn}"
                                                             [checked]="qde.application.applicants[applicantIndex].personalDetails.applicantStatus == '1'"
                                                             (click)="changeApplicantStatus(1, pdSlider2)"
                                                             class="not-usual" />
@@ -288,6 +292,8 @@
                                                             id="no-consider1"
                                                             class="not-usual"
                                                             [value]="2"
+                                                            [disabled]="isTBMLoggedIn"
+                                                            [ngClass]="{'disabled': isTBMLoggedIn}"
                                                             [checked]="qde.application.applicants[applicantIndex].personalDetails.applicantStatus == '2'"
                                                             (click)="changeApplicantStatus(2, pdSlider2)" />
                                                     <label for="no-consider1" tabindex="2"><span>Non Resident</span></label>
@@ -374,8 +380,8 @@
                                               <div class="btn-wrap">
                                                 <button   type="submit"
                                                           class="btn btn-primary"
-                                                          [ngClass]="{'disabled': !nameForm.valid}"
-                                                          [disabled]="!nameForm.valid">Next
+                                                          [ngClass]="{'disabled': (!nameForm.valid || isTBMLoggedIn)}"
+                                                          [disabled]="!nameForm.valid || isTBMLoggedIn">Next
                                                 </button>
                                               </div>
                                           </form>
@@ -390,6 +396,8 @@
                                                                 [id]="g.key"
                                                                 [tabindex]="(i+1)"
                                                                 [value]="g.value"
+                                                                [disabled]="isTBMLoggedIn"
+                                                                [ngClass]="{'disabled': isTBMLoggedIn}"
                                                                 [checked]="qde.application.applicants[applicantIndex].personalDetails.gender == g.value"
                                                                 (click)="submitGenderDetails(g.value, pdSlider2)" />
                                                         <label [for]="g.key"><span>{{g.key}}</span></label>
@@ -420,8 +428,8 @@
                                               <div class="btn-wrap">
                                                   <button type="submit"
                                                           class="btn btn-primary"
-                                                          [ngClass]="{'disabled': !qualificationForm.valid}"
-                                                          [disabled]="!qualificationForm.valid">Next
+                                                          [ngClass]="{'disabled': (!qualificationForm.valid || isTBMLoggedIn)}"
+                                                          [disabled]="!qualificationForm.valid || isTBMLoggedIn">Next
                                                   </button>
                                               </div>
                                           </form>
@@ -503,8 +511,8 @@
 
                                                   <button type="submit"
                                                           class="btn btn-primary"
-                                                          [ngClass]="{'disabled': (dob.day.value == 'DD' || dob.month.value == 'MM' || dob.year.value == 'YYYY' || dobForm.invalid)}"
-                                                          [disabled]="(dob.day.value == 'DD' || dob.month.value == 'MM' || dob.year.value == 'YYYY' || dobForm.invalid)">Next
+                                                          [ngClass]="{'disabled': (dob.day.value == 'DD' || dob.month.value == 'MM' || dob.year.value == 'YYYY' || dobForm.invalid || isTBMLoggedIn)}"
+                                                          [disabled]="(dob.day.value == 'DD' || dob.month.value == 'MM' || dob.year.value == 'YYYY' || dobForm.invalid || isTBMLoggedIn)">Next
                                                       </button>
                                               </div>
                                           </form>
@@ -742,8 +750,8 @@
                                 <div class="btn-wrap">
                                       <button class="btn btn-primary"
                                               type="submit"
-                                              [ngClass]="{'disabled': !contactForm.valid}"
-                                              [disabled]="!contactForm.valid">Next
+                                              [ngClass]="{'disabled': (!contactForm.valid || isTBMLoggedIn)}"
+                                              [disabled]="!contactForm.valid || isTBMLoggedIn">Next
                                       </button>
                                 </div>
                             </form>
@@ -773,7 +781,7 @@
                                 </div>
                             </div>
                             <div class="btn-wrap">
-                                <button class="btn btn-border" (click)="validateOTP(isValidOTP)">Verify</button>
+                                <button class="btn btn-border" [disabled]="isTBMLoggedIn" [ngClass]="{'disabled': isTBMLoggedIn}" (click)="validateOTP(isValidOTP)">Verify</button>
                             </div>
                         </form>
                     </div>
@@ -1017,8 +1025,8 @@
                               </div>
                               <div class="btn-wrap">
                                   <button type="submit" class="btn btn-primary" 
-                                          [ngClass]="{'disabled': !communicationForm.valid}"
-                                          [disabled]="!communicationForm.valid">
+                                          [ngClass]="{'disabled': (!communicationForm.valid || isTBMLoggedIn)}"
+                                          [disabled]="!communicationForm.valid || isTBMLoggedIn">
                                       Next
                                   </button>
                               </div>
@@ -1096,8 +1104,10 @@
                                                 </div>
                                             </div>
                                             <div class="btn-wrap">
-                                              <button type="submit"
-                                                      class="btn btn-primary">Next
+                                              <button   type="submit"
+                                                        [disabled]="isTBMLoggedIn"
+                                                        [ngClass]="{'disabled': isTBMLoggedIn}"
+                                                        class="btn btn-primary">Next
                                               </button>
                                             </div>
                                         </form>
@@ -1146,8 +1156,8 @@
                                             </div>
                                             <div class="btn-wrap">
                                                 <button   type="submit"
-                                                          [ngClass]="{'disabled': !spouseForm.valid}"
-                                                          [disabled]="!spouseForm.valid"
+                                                          [ngClass]="{'disabled': (!spouseForm.valid || isTBMLoggedIn)}"
+                                                          [disabled]="!spouseForm.valid || isTBMLoggedIn"
                                                           class="btn btn-primary">
                                                   Next
                                                 </button>
@@ -1162,6 +1172,8 @@
                                                               type="radio"
                                                               name="earning"
                                                               [value]="1"
+                                                              [disabled]="isTBMLoggedIn"
+                                                              [ngClass]="{'disabled': isTBMLoggedIn}"
                                                               tabindex="1"
                                                               [checked]="qde.application.applicants[applicantIndex].maritalStatus.earning == true"
                                                               id="earningYes"
@@ -1173,6 +1185,8 @@
                                                               type="radio"
                                                               name="earning"
                                                               [value]="2"
+                                                              [disabled]="isTBMLoggedIn"
+                                                              [ngClass]="{'disabled': isTBMLoggedIn}"
                                                               tabindex="2"
                                                               [checked]="qde.application.applicants[applicantIndex].maritalStatus.earning == false"
                                                               id="earningNo"
@@ -1217,8 +1231,8 @@
                                             <div class="btn-wrap">
                                                 <button   type="submit"
                                                           class="btn btn-primary"
-                                                          [ngClass]="{'disabled': !spouseEarningAmtForm.valid}"
-                                                          [disabled]="!spouseEarningAmtForm.valid"
+                                                          [ngClass]="{'disabled': (!spouseEarningAmtForm.valid || isTBMLoggedIn)}"
+                                                          [disabled]="!spouseEarningAmtForm.valid || isTBMLoggedIn"
                                                   >Next
                                                 </button>
                                             </div>
@@ -1295,8 +1309,8 @@
                                           <div class="btn-wrap">
                                               <button type="submit"
                                                       class="btn btn-primary"
-                                                      [ngClass]="{'disabled': !familyForm1.valid}"
-                                                      [disabled]="!familyForm1.valid">Next
+                                                      [ngClass]="{'disabled': (!familyForm1.valid || isTBMLoggedIn)}"
+                                                      [disabled]="!familyForm1.valid || isTBMLoggedIn">Next
                                               </button>
                                           </div>
                                       </form>
@@ -1394,8 +1408,8 @@
                                           <div class="btn-wrap">
                                               <button type="submit"
                                                       class="btn btn-primary"
-                                                      [ngClass]="{'disabled': !familyForm2.valid}"
-                                                      [disabled]="!familyForm2.valid">
+                                                      [ngClass]="{'disabled': (!familyForm2.valid || isTBMLoggedIn)}"
+                                                      [disabled]="!familyForm2.valid || isTBMLoggedIn">
                                                   Next
                                               </button>
                                           </div>
@@ -1467,8 +1481,8 @@
   
                               <div class="btn-wrap">
                                   <button type="submit"
-                                          [ngClass]="{'disabled': !otherForm.valid}"
-                                          [disabled]="!otherForm.valid"
+                                          [ngClass]="{'disabled': (!otherForm.valid || isTBMLoggedIn)}"
+                                          [disabled]="!otherForm.valid || isTBMLoggedIn"
                                           class="btn btn-primary">Next</button>
                               </div>
                           </form>
@@ -1589,8 +1603,8 @@
   
                               <div class="btn-wrap">
                                   <button type="submit"
-                                          [ngClass]="{'disabled': !occupationForm.valid || expError}"
-                                          [disabled]="(!occupationForm.valid || expError)" 
+                                          [ngClass]="{'disabled': !occupationForm.valid || expError || isTBMLoggedIn}"
+                                          [disabled]="(!occupationForm.valid || expError || isTBMLoggedIn)" 
                                           class="btn btn-primary">
                                       Next
                                   </button>
@@ -1778,8 +1792,8 @@
   
                               <div class="btn-wrap">
                                   <button type="submit" class="btn btn-primary" 
-                                          [ngClass]="{'disabled': !officialCorrespondenceForm.valid}"
-                                          [disabled]="!officialCorrespondenceForm.valid">Next
+                                          [ngClass]="{'disabled': (!officialCorrespondenceForm.valid || isTBMLoggedIn)}"
+                                          [disabled]="!officialCorrespondenceForm.valid || isTBMLoggedIn">Next
                                   </button>
                               </div>
                           </form>
@@ -1918,8 +1932,8 @@
                                             <button 
                                                 type="submit"
                                                 class="btn btn-primary"
-                                                [ngClass]="{'disabled': !incomeDetailsForm1.valid || qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == null }"
-                                                [disabled]="!incomeDetailsForm1.valid || qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == null ">
+                                                [ngClass]="{'disabled': !incomeDetailsForm1.valid || qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == null || isTBMLoggedIn}"
+                                                [disabled]="!incomeDetailsForm1.valid || qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == null || isTBMLoggedIn">
                                             Next
                                             </button>
                                       </div>
@@ -1935,6 +1949,8 @@
                                                         tabindex="1"
                                                         id="incomeConsiderYes1"
                                                         [value]="1"
+                                                        [disabled]="isTBMLoggedIn"
+                                                        [ngClass]="{'disabled': isTBMLoggedIn}"
                                                         [checked]="qde.application.applicants[applicantIndex].incomeDetails.incomeConsider == true"
                                                         (click)="incomeDetailsYesNo(1, incomeSlider2)"
                                                         class="not-usual" />
@@ -1949,6 +1965,8 @@
                                                         class="not-usual"
                                                         [checked]="qde.application.applicants[applicantIndex].incomeDetails.incomeConsider == false"
                                                         [value]="2"
+                                                        [disabled]="isTBMLoggedIn"
+                                                        [ngClass]="{'disabled': isTBMLoggedIn}"
                                                         (click)="incomeDetailsYesNo(2, incomeSlider2)" />
                                                 <label for="incomeConsiderNo1"><span>No</span></label>
                                             </div>
@@ -1998,7 +2016,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="btn-wrap">
-                                                    <button type="submit" class="btn btn-primary" (click)="goToNextSlide(incomeSlider4)">Save</button>
+                                                    <button type="submit" [disabled]="isTBMLoggedIn" [ngClass]="{'disabled': isTBMLoggedIn}" class="btn btn-primary" (click)="goToNextSlide(incomeSlider4)">Save</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -2105,8 +2123,8 @@
                                           <div class="btn-wrap">
                                                 <button type="submit"
                                                         class="btn btn-primary"
-                                                        [ngClass]="{'disabled': !panNumberForm2.valid}"
-                                                        [disabled]="!panNumberForm2.valid">Next
+                                                        [ngClass]="{'disabled': (!panNumberForm2.valid || isTBMLoggedIn)}"
+                                                        [disabled]="!panNumberForm2.valid || isTBMLoggedIn">Next
                                                 </button>
                                           </div>
   
@@ -2222,8 +2240,8 @@
                             </div>
                               <div class="btn-wrap">
                                   <button class="btn btn-primary"
-                                          [ngClass]="{'disabled': (!organizationForm.valid || organizationDetails.day.value == 'DD' || organizationDetails.month.value == 'MM' || organizationDetails.year.value == 'YYYY')}"
-                                          [disabled]="(!organizationForm.valid || organizationDetails.day.value == 'DD' || organizationDetails.month.value == 'MM' || organizationDetails.year.value == 'YYYY')">Next
+                                          [ngClass]="{'disabled': (!organizationForm.valid || organizationDetails.day.value == 'DD' || organizationDetails.month.value == 'MM' || organizationDetails.year.value == 'YYYY') || isTBMLoggedIn}"
+                                          [disabled]="(!organizationForm.valid || organizationDetails.day.value == 'DD' || organizationDetails.month.value == 'MM' || organizationDetails.year.value == 'YYYY') || isTBMLoggedIn">Next
                                   </button>
                               </div>
                           </form>
@@ -2327,8 +2345,8 @@
                               </div>
                               <div class="btn-wrap">
                                   <button class="btn btn-primary"
-                                  [ngClass]="{'disabled': !registeredAddressForm.valid}"
-                                  [disabled]="!registeredAddressForm.valid" >Next</button>
+                                  [ngClass]="{'disabled': (!registeredAddressForm.valid || isTBMLoggedIn)}"
+                                  [disabled]="!registeredAddressForm.valid || isTBMLoggedIn" >Next</button>
   
                               </div>
                           </form>
@@ -2496,8 +2514,8 @@
                                   </div>
                               </div>
                               <div class="btn-wrap">
-                                  <button type="submit" class="btn btn-primary" [ngClass]="{'disabled': !corporateAddressForm.valid}"
-                                  [disabled]="!corporateAddressForm.valid">Next</button>
+                                  <button type="submit" class="btn btn-primary" [ngClass]="{'disabled': (!corporateAddressForm.valid || isTBMLoggedIn)}"
+                                  [disabled]="!corporateAddressForm.valid || isTBMLoggedIn">Next</button>
                               </div>
                           </form>
                           </div>
@@ -2585,8 +2603,8 @@
                                 </div>
                             </div>
                             <div class="btn-wrap">
-                                <button type="submit" class="btn btn-primary" [ngClass]="{'disabled': !revenueForm.valid}"
-                                [disabled]="!revenueForm.valid">Next</button>
+                                <button type="submit" class="btn btn-primary" [ngClass]="{'disabled': (!revenueForm.valid || isTBMLoggedIn)}"
+                                [disabled]="!revenueForm.valid || isTBMLoggedIn">Next</button>
                             </div>
                         </form>
                         </div>
@@ -2722,8 +2740,8 @@
                                             <button 
                                                 type="submit"
                                                 class="btn btn-primary"
-                                                [ngClass]="{'disabled': !incomeDetailsForm3.valid || qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == null }"
-                                                [disabled]="!incomeDetailsForm3.valid || qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == null ">
+                                                [ngClass]="{'disabled': !incomeDetailsForm3.valid || qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == null || isTBMLoggedIn}"
+                                                [disabled]="!incomeDetailsForm3.valid || qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == null || isTBMLoggedIn">
                                             Next
                                         </button>
                                         </div>
@@ -2738,6 +2756,8 @@
                                                             name="income-consider"
                                                             id="incomeConsiderYes2"
                                                             [value]="1"
+                                                            [disabled]="isTBMLoggedIn"
+                                                            [ngClass]="{'disabled': isTBMLoggedIn}"
                                                             tabindex="1"
                                                             [checked]="qde.application.applicants[applicantIndex].incomeDetails.incomeConsider == true"
                                                             (click)="incomeDetailsYesNo(1, incomeSlider4)"
@@ -2752,7 +2772,9 @@
                                                             class="not-usual"
                                                             tabindex="2"
                                                             [checked]="qde.application.applicants[applicantIndex].incomeDetails.incomeConsider == false"
-                                                            [value]="2" />
+                                                            [value]="2"
+                                                            [disabled]="isTBMLoggedIn"
+                                                            [ngClass]="{'disabled': isTBMLoggedIn}" />
                                                     <label for="incomeConsiderNo2"><span>No</span></label>
                                                 </div>
                                             </div>
@@ -2801,8 +2823,8 @@
                                                     </div>
                                                   </div>
                                                   <div class="btn-wrap">
-                                                      <button type="submit" class="btn btn-primary"  [ngClass]="{'disabled': !incomeDetailsForm4.valid}"
-                                                      [disabled]="!incomeDetailsForm4.valid">Save</button>
+                                                      <button type="submit" class="btn btn-primary"  [ngClass]="{'disabled': !incomeDetailsForm4.valid || isTBMLoggedIn}"
+                                                      [disabled]="!incomeDetailsForm4.valid || isTBMLoggedIn">Save</button>
                                                   </div>
                                               </form>
                                           </div>

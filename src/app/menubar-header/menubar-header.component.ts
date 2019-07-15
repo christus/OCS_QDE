@@ -1,16 +1,17 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
 import { CommonDataService } from '../services/common-data.service';
 import { UtilService } from '../services/util.service';
 import { QdeService } from '../services/qde.service';
 
 import Qde  from 'src/app/models/qde.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-menubar-header',
   templateUrl: './menubar-header.component.html',
   styleUrls: ['./menubar-header.component.css']
 })
-export class MenubarHeaderComponent implements OnInit {
+export class MenubarHeaderComponent implements OnInit, OnDestroy {
   
   isMenuBarShown: boolean;
   isViewFormNameVisible: boolean;
@@ -30,6 +31,9 @@ export class MenubarHeaderComponent implements OnInit {
   qde:Qde;
 
   isMainTabEnabled: boolean;
+  isEligibilityForReview: boolean = false;
+  isEligibilityForReviewsSub: Subscription;
+  isTBMLoggedIn: boolean = false;
 
   constructor(private utilService: UtilService, private commonDataService: CommonDataService,
   private qdeService:QdeService) {
@@ -96,6 +100,21 @@ export class MenubarHeaderComponent implements OnInit {
       this.isMainTabEnabled = val;
     });
     
+    this.commonDataService.applicationId.subscribe(value => {
+      
+      if(value != null) {
+        if(this.isEligibilityForReviewsSub != null) {
+          this.isEligibilityForReviewsSub.unsubscribe();
+        }
+        this.isEligibilityForReviewsSub = this.commonDataService.isEligibilityForReviews.subscribe(val => {
+          this.isEligibilityForReview = val.find(v => v.applicationId == value)['isEligibilityForReview'];
+        });
+      }
+    });
+
+    this.commonDataService.isTBMLoggedIn.subscribe(val => {
+      this.isTBMLoggedIn = val;
+    });
   }
 
   ngOnInit() {
@@ -118,4 +137,9 @@ export class MenubarHeaderComponent implements OnInit {
     );
   }
 
+  ngOnDestroy() {
+    if(this.isEligibilityForReviewsSub != null) {
+      this.isEligibilityForReviewsSub.unsubscribe();
+    }
+  }
 }

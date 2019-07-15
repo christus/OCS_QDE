@@ -11,7 +11,7 @@
             </div>
         </div>
         <div class="rhs">
-            <div class="btn-wrap">
+            <div class="btn-wrap" *ngIf="!isTBMLoggedIn">
                 <button routerLink="/applicant" class="btn btn-primary application">New Application</button>
             </div>
 

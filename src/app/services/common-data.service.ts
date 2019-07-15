@@ -121,4 +121,13 @@ export class CommonDataService {
   setIsMainTabEnabled(data: boolean) {
    this.isMainTabEnabled$.next(data);
   }
+
+
+  isTBMLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  public isTBMLoggedIn = this.isTBMLoggedIn$.asObservable();
+
+
+  setIsTBMLoggedIn(data: boolean) {
+   this.isTBMLoggedIn$.next(data);
+  }
 }

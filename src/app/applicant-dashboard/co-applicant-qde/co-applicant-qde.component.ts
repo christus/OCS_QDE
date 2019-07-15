@@ -253,6 +253,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
 
   isReadOnly: boolean = false;
 
+  isEligibilityForReview: boolean = false;
+  isEligibilityForReviewsSub: Subscription;
+  isTBMLoggedIn: boolean;
+
   constructor(private renderer: Renderer2,
               private route: ActivatedRoute,
               private router: Router,
@@ -503,6 +507,21 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
           });
         // }
       }
+
+
+      if(params['applicationId'] != null) {
+        if(this.isEligibilityForReviewsSub != null) {
+          this.isEligibilityForReviewsSub.unsubscribe();
+        }
+        this.isEligibilityForReviewsSub = this.cds.isEligibilityForReviews.subscribe(val => {
+          this.isEligibilityForReview = val.find(v => v.applicationId == params['applicationId'])['isEligibilityForReview'];
+        });
+      }
+    });
+
+        
+    this.cds.isTBMLoggedIn.subscribe(val => {
+      this.isTBMLoggedIn = val;
     });
 
     /********************************************************************

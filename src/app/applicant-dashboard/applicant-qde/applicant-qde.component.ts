@@ -263,6 +263,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   otp:string;
 
   isReadOnly: boolean = false;
+  isEligibilityForReview: boolean = false;
+  isEligibilityForReviewsSub: Subscription;
+  isTBMLoggedIn: boolean;
 
   constructor(private renderer: Renderer2,
               private route: ActivatedRoute,
@@ -271,8 +274,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
               private qdeService: QdeService,
               private cds:CommonDataService,
               private file: File,
-              private deviceService: DeviceDetectorService
-              ) {
+              private deviceService: DeviceDetectorService) {
 
     this.isMobile = this.deviceService.isMobile() ;
 
@@ -327,6 +329,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       }
     });
     
+    this.cds.isTBMLoggedIn.subscribe(val => {
+      this.isTBMLoggedIn = val;
+    });
   }
   
   panslide: boolean;
@@ -671,7 +676,18 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
           });
         // }
       }
+
+      if(params['applicationId'] != null) {
+        if(this.isEligibilityForReviewsSub != null) {
+          this.isEligibilityForReviewsSub.unsubscribe();
+        }
+        this.isEligibilityForReviewsSub = this.cds.isEligibilityForReviews.subscribe(val => {
+          this.isEligibilityForReview = val.find(v => v.applicationId == params['applicationId'])['isEligibilityForReview'];
+        });
+      }
     });
+
+
 
     /********************************************************************
     * Check for User and set isReadOnly=true to disable editing of fields
@@ -2050,6 +2066,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
         this.createOrUpdatePanDetailsSub3.unsubscribe();
         }
         
+    if(this.isEligibilityForReviewsSub != null) {
+      this.isEligibilityForReviewsSub.unsubscribe();
+    }
   }
 
   openCamera() {
@@ -2096,4 +2115,6 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+
 }

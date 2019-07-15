@@ -45,6 +45,7 @@ export class LeadsListComponent implements OnInit {
   // Lead ID === Application ID
   userDetails: Array<UserDetails>;
   isEligibilityForReviews: Array<{applicationId: string, isEligibilityForReview: boolean}> = [];
+  isTBMLoggedIn: boolean;
 
   constructor(private service: QdeHttpService, private utilService: UtilService, private cds: CommonDataService) {
 
@@ -114,6 +115,8 @@ export class LeadsListComponent implements OnInit {
             el.url = this.getUrl(el['status'], el['leadId'], el['applicantId'], this.getRoles());
           });
           this.cds.setIsEligibilityForReviews(this.isEligibilityForReviews);
+          this.isTBMLoggedIn = this.getRoles().includes('TBM');
+          this.cds.setIsTBMLoggedIn(this.isTBMLoggedIn);
         } else if (res['login_required'] && res['login_required'] === true) {
           this.utilService.clearCredentials();
           alert(res['message']);

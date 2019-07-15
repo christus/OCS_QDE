@@ -36,4 +36,13 @@
     margin-top: 20px;
     text-align: left;
     font-size: 1.64vw;
+    outline: 1px solid #333;
+}
+
+.eligibility-table thead {
+    outline: 1px solid #333;
+}
+
+.eligibility-table tbody tr {
+    border-bottom: 1px solid #333;
 }
