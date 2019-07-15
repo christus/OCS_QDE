@@ -75,6 +75,7 @@ import { ThanksTAndCComponent } from './terms-and-conditions/thanks-t-and-c/than
 import { IciciTermsComponent } from './applicant-dashboard/icici-terms/icici-terms.component';
 import { ThankPaymentComponent } from './payments/thank-payment/thank-payment.component';
 import { SetMpinComponent } from './Login/set-mpin/set-mpin.component';
+import { ReviewEligibilityComponent } from './applicant-dashboard/review-eligibility/review-eligibility.component';
 
 const appRoutes: Routes = [
   { path: "", redirectTo: "leads", pathMatch: "full" },
@@ -279,6 +280,10 @@ const appRoutes: Routes = [
     path: "icici-terms/auto-login/:applicationId/:applicantId",
     component: IciciTermsComponent
   },
+  {
+    path: 'review-eligibility/:applicationId',
+    component: ReviewEligibilityComponent
+  },
   { path: "**", component: PageNotFoundComponent }
 ];
  
@@ -326,7 +331,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     ThanksTAndCComponent,
     IciciTermsComponent,
     ThankPaymentComponent,
-    SetMpinComponent
+    SetMpinComponent,
+    ReviewEligibilityComponent
   ],
   imports: [
     BrowserModule,

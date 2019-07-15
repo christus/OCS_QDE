@@ -46,3 +46,7 @@
 .eligibility-table tbody tr {
     border-bottom: 1px solid #333;
 }
+
+.center {
+    text-align: center;
+}
