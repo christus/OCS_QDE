@@ -25,6 +25,7 @@ export class ViewFormApplicantComponent implements OnInit {
   @Input() coApplicantsForDashboard: any;
   @Input() officialCorrespondenceStdCode: any;
   @Input() officialCorrespondencePhoneNumber: any;
+  @Input() officialCorrespondenceCityState: any;
   @Input() religions: any;
   @Input() qualifications: any;
   @Input() occupations: any;

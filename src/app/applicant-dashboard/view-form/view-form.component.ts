@@ -89,6 +89,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
   coApplicantsForDashboard: Array<Applicant> = [];
   officialCorrespondenceStdCode: Array<string> = [];
   officialCorrespondencePhoneNumber: Array<string> = [];
+  officialCorrespondenceCityState: Array<string> = [];
 
   //-------------------------------------------------
   //          Lov Variables
@@ -447,7 +448,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
 
           this.state = result.application.loanDetails.property.state || "";
 
-          this.cityState = this.city +" "+ this.state;
+          this.cityState = this.city +"/"+ this.state;
 
           // if (!result.application.loanDetails.existingLoans) {
           //   result.application.loanDetails.existingLoans = {}; //This line need to be removed
@@ -797,7 +798,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
     console.log("alternateResidenceNumberStdCode: " ,this.alternateResidenceNumberStdCode);
     console.log("alternateResidenceNumberPhoneNumber: " ,this.alternateResidenceNumberPhoneNumber);
     this.addressCityState.push(eachApplicant.communicationAddress.city + '/'+ eachApplicant.communicationAddress.state);
-
+    console.log("addressCityState: " ,this.addressCityState);
     this.otherReligion.push(eachApplicant.other.religion == '6' ? eachApplicant.other.religion : '');
 
     this.registeredAddressCityState.push(eachApplicant.registeredAddress.city +'/'+ eachApplicant.registeredAddress.state);
@@ -806,7 +807,8 @@ export class ViewFormComponent implements OnInit, OnDestroy {
     this.corporateAddressPhoneNumber.push(eachApplicant.corporateAddress.stdNumber != "" ? eachApplicant.corporateAddress.stdNumber.split("-")[1] : "");
     this.officialCorrespondenceStdCode.push(eachApplicant.officialCorrespondence.officeNumber != "" ? eachApplicant.officialCorrespondence.officeNumber.split("-")[0] : "");
     this.officialCorrespondencePhoneNumber.push(eachApplicant.officialCorrespondence.officeNumber != "" ? eachApplicant.officialCorrespondence.officeNumber.split("-")[1] : "");
-
+    this.officialCorrespondenceCityState.push(eachApplicant.officialCorrespondence.city + '/'+ eachApplicant.officialCorrespondence.state);
+    console.log("officialCorrespondenceCityState: " ,this.officialCorrespondenceCityState);
     this.isAlternateEmailId.push(eachApplicant.contactDetails.alternateEmailId != "" ? true : false);
     this.isAlternateMobileNumber.push(eachApplicant.contactDetails.alternateMobileNumber != null ? true : false);
     this.isAlternateResidenceNumber.push(eachApplicant.contactDetails.alternateResidenceNumber != "" ? true : false);
@@ -815,7 +817,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
   qdeSubmit() {
     
   }
-  applicationStatus: string = "10";
+  applicationStatus: string = "5";
 
   setStatus(){
      this.qdeHttp.setStatusApi(this.applicationId, this.applicationStatus).subscribe(res => {}, err => {});

@@ -140,45 +140,59 @@ export class LeadsListComponent implements OnInit {
     if(statuses[status] == "1") {
       this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
       return "/applicant/"+applicationId;
-    } else if(statuses[status] == "5") {
-      this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
+    } 
+    else if(statuses[status] == "5") {
       return "/applicant/"+applicationId;
-    } else if(statuses[status] == "10") {
-      this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
+    } 
+    else if(statuses[status] == "10") {
       return "/applicant/"+applicationId;
-    } else if(statuses[status] == "15") {
-      this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
+    } 
+    else if(statuses[status] == "15") {
       return "/payments/online-summary/"+applicationId;
-    } else if(statuses[status] == "20") {
-      this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
-      return "/payments/thankpayment/"+applicationId;
-    } else if(statuses[status] == "25") {
-      this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
+    } 
+    else if(statuses[status] == "16") {
       return "/applicant/"+applicationId;
-    } else if(statuses[status] == "26") {
+    } 
+    else if(statuses[status] == "17") {
+      return "/applicant/"+applicationId;
+    } 
+    else if(statuses[status] == "20") {
+      return "/payments/thankpayment/"+applicationId;
+    } 
+    else if(statuses[status] == "25") {
+      return "/applicant/"+applicationId;
+    } 
+    else if(statuses[status] == "26") {
 
       if(roles.includes('TBM')) {
+
         this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: true});
       } else {
         this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
       }
       return "/applicant/"+applicationId;
-    } else if(statuses[status] == "27") {
+    } 
+    else if(statuses[status] == "27") {
       this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
       return "/applicant/"+applicationId;
-    } else if(statuses[status] == "28") {
+    } 
+    else if(statuses[status] == "28") {
       this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
       return "/applicant/"+applicationId;
-    } else if(statuses[status] == "30") {
+    } 
+    else if(statuses[status] == "30") {
       this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
       return "/applicant/"+applicationId;
-    } else if(statuses[status] == "35") {
+    } 
+    else if(statuses[status] == "35") {
       this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
       return "/applicant/"+applicationId;
-    } else if(statuses[status] == "40") {
+    } 
+    else if(statuses[status] == "40") {
       this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
       return "/applicant/"+applicationId;
-    } else {
+    } 
+    else {
       this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
       return "/applicant/";
     }
