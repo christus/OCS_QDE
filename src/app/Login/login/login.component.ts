@@ -1,9 +1,11 @@
+import { environment } from 'src/environments/environment';
 import { Component, OnInit } from '@angular/core';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UtilService } from 'src/app/services/util.service';
 
 import {CommonDataService} from 'src/app/services/common-data.service'
+
 
 @Component({
   selector: "app-login",
@@ -15,16 +17,18 @@ export class LoginComponent implements OnInit {
   userName = "";
   password = "";
 
+  version:String;
+
   constructor(
     private router: Router,
     private qdeService: QdeHttpService,
     private utilService: UtilService,
     private commonDataService: CommonDataService
-  ) {
-    
-  }
+  ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.version = environment.version;
+  }
 
   login() {
     const data = {
