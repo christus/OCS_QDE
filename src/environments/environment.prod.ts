@@ -1,5 +1,6 @@
 export const environment = {
-  version: "0.0.0",
+  version: "1.4.5",
+  buildDate: "16-7-19",
   production: true,
   projectId: '3209f7ea7ba811e982270242ac110002',
  //projectId: 'ff8e364e6fce11e98754782bcb8f3845',
@@ -101,6 +102,6 @@ export const environment = {
   appiyoDrive: "appiyo/d/drive/upload/",
   driveLocation: "/d/drive/docs/",
   //host: "http://192.168.1.108/appiyo",
-  host: "/appiyo",
-   //host: "http://ihfcmobileuat.icicihfc.com:443/appiyo"
+  //host: "/appiyo",
+  host: "http://ihfcmobileuat.icicihfc.com:443/appiyo"
 };

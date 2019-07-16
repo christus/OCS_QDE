@@ -17,7 +17,8 @@ export class LoginComponent implements OnInit {
   userName = "";
   password = "";
 
-  version:String;
+  version: string;
+  buildDate: string;
 
   constructor(
     private router: Router,
@@ -28,6 +29,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.version = environment.version;
+    this.buildDate = environment.buildDate;
   }
 
   login() {

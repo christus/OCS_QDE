@@ -4,6 +4,7 @@
 
 export const environment = {
   version: "0.0.0",
+  buildDate: "",
   production: false,
   status: {
     QDECREATED: "1"
