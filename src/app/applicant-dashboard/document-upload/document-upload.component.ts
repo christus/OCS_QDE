@@ -155,6 +155,7 @@ export class DocumentUploadComponent implements OnInit {
   qde: Qde;
 
   fragments = [
+    "dashboard",
     "aadhar1",
     "photo",
     "aadhar2",
@@ -178,10 +179,10 @@ export class DocumentUploadComponent implements OnInit {
       this.cds.changeMenuBarShown(true);
       this.cds.changeViewFormVisible(true);
       this.cds.changeLogoutVisible(true);
-    this.isMainApplicant = false;
-    if (this.route.url["value"][1].path === "applicant") {
-      this.isMainApplicant = true;
-    }
+    // this.isMainApplicant = false;
+    // if (this.route.url["value"][1].path === "applicant") {
+    //   this.isMainApplicant = true;
+    // }
     //this.tabSwitch(1);
     this.cds.applicationId.subscribe(val => {
       this.applicationId = parseInt(val);
@@ -227,7 +228,7 @@ export class DocumentUploadComponent implements OnInit {
 
     this.route.fragment.subscribe(fragment => {
 
-      this.tabSwitch(1);
+      this.tabSwitch(0);
 
       let localFragment = fragment;
 
@@ -403,6 +404,8 @@ export class DocumentUploadComponent implements OnInit {
   tabSwitch(tabIndex?: number) {
     // Check for invalid tabIndex
     if (tabIndex < this.fragments.length) {
+
+      console.log(tabIndex);
       this.router.navigate([], { fragment: this.fragments[tabIndex] });
 
       this.activeTab = tabIndex;
@@ -977,6 +980,14 @@ export class DocumentUploadComponent implements OnInit {
   }
 
   ngOnDestroy(): void {}
+
+  selectApplicant(applicationId, mainApplicantId, index) {
+      this.router.navigate(['/document-uploads/'+applicationId+'/applicant/'+mainApplicantId], {fragment: "aadhar1"});
+  }
+
+  selectCoApplicant(applicationId, mainApplicantId, index) {
+    this.router.navigate(['/document-uploads/'+applicationId+'/co-applicant/'+mainApplicantId], {fragment: "aadhar1"});
+  }
 
   temp;
 }

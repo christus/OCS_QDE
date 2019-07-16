@@ -167,6 +167,13 @@ const appRoutes: Routes = [
     path: "document-uploads",
     children: [
       {
+        path: ":applicationId",
+        component: DocumentUploadComponent,
+        resolve: {
+          listOfValues: ListOfValuesResolverService
+        }
+      },
+      {
         path: ":applicationId/applicant/:applicantId",
         component: DocumentUploadComponent,
         resolve: {
