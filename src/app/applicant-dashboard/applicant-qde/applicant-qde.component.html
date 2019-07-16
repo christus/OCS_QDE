@@ -96,23 +96,25 @@
                                         <form class="bs-form"  #isIndividualForm="ngForm">
                                             <div class="form-wrap">
                                                 <div class="bs-radio">
-                                                    <input [readonly]="isReadOnly" spellcheck="false"
+                                                    <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                             type="radio"
                                                             name="isIndividual"
                                                             id="individual"
                                                             value="1"
                                                             [disabled]="isTBMLoggedIn"
+                                                            [ngClass]="{'disabled': isTBMLoggedIn}"
                                                             [checked]="qde.application.applicants[applicantIndex].isIndividual == true"
                                                             (click)="changeIsIndividual(1, panSlider2)" />
                                                     <label for="individual" tabindex="1"><span>Individual</span></label>
                                                 </div>
                                                 <div class="bs-radio">
-                                                    <input [readonly]="isReadOnly" spellcheck="false"
+                                                    <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                             type="radio"
                                                             name="isIndividual"
                                                             id="non-individual"
                                                             value="2"
                                                             [disabled]="isTBMLoggedIn"
+                                                            [ngClass]="{'disabled': isTBMLoggedIn}"
                                                             [checked]="qde.application.applicants[applicantIndex].isIndividual == false"
                                                             (click)="changeIsIndividual(2, panSlider2)" />
                                                     <label for="non-individual" tabindex="2"><span>Non-Individual</span></label>
@@ -127,7 +129,7 @@
                                               (ngSubmit)="submitPanNumber(panNumberForm, panSlider2)">
                                               <div class="form-wrap">
                                                 <div class="form-group last" style="margin-bottom: 40px;">
-                                                    <input [readonly]="isReadOnly" spellcheck="false"
+                                                    <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                             type="text"
                                                             class="form-control"
                                                             [(ngModel)]="qde.application.applicants[applicantIndex].pan.panNumber"
@@ -150,7 +152,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                   <span class="control-title">Document Type</span>
-                                                  <kendo-dropdownlist [readonly]="isReadOnly"  class="form-control"
+                                                  <kendo-dropdownlist [readonly]="isTBMLoggedIn"  class="form-control"
                                                                         [data]="docType" 
                                                                         textField="key"
                                                                         tabindex="0"
@@ -163,7 +165,7 @@
                                                   </kendo-dropdownlist>
                                               </div>
                                               <div class="form-group">
-                                                  <input [readonly]="isReadOnly" spellcheck="false"
+                                                  <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                           type="text"
                                                             class="form-control"
                                                             [(ngModel)]="qde.application.applicants[applicantIndex].pan.docNumber"
@@ -187,8 +189,8 @@
                                             <div class="btn-wrap">
                                                 <button type="submit"
                                                         class="btn btn-primary"
-                                                        [ngClass]="{'disabled': (!panNumberForm.valid || isTBMLoggedIn)}"
-                                                        [disabled]="!panNumberForm.valid || isTBMLoggedIn">Next
+                                                        [ngClass]="{'disabled': (!panNumberForm.valid)}"
+                                                        [disabled]="!panNumberForm.valid">Next
                                                 </button>
                                             </div>
                                         </form>
@@ -202,15 +204,15 @@
                                                       <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera()">Retake</button>
                                                 </div>
                                                 <div *ngIf="!panImage" class="bs-file">
-                                                    <input [readonly]="isReadOnly" spellcheck="false"
+                                                    <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                     type="file" class="form-control" id="file">
                                                     <label tabindex="5" for="file"><span>click photo of PAN card</span></label>
                                                     <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera()">open camera</button>
                                                 </div>
                                             </div>
                                             <div class="btn-wrap">
-                                                <button  *ngIf="isMobile" class="btn btn-primary" [disabled]="isTBMLoggedIn" [ngClass]="{'disabled': isTBMLoggedIn}" (click)="sendPanImage(imageURI)">Next</button>
-                                                <button  *ngIf="!isMobile" class="btn btn-primary" [disabled]="isTBMLoggedIn" [ngClass]="{'disabled': isTBMLoggedIn}" (click)="tabSwitch(1)">Next</button>
+                                                <button  *ngIf="isMobile" class="btn btn-primary" (click)="sendPanImage(imageURI)">Next</button>
+                                                <button  *ngIf="!isMobile" class="btn btn-primary" (click)="tabSwitch(1)">Next</button>
                                             </div>
                                         </form>
                                     </div>
@@ -273,27 +275,23 @@
                                         <form class="bs-form" >
                                             <div class="form-wrap">
                                                 <div class="bs-radio">
-                                                    <input [readonly]="isReadOnly" spellcheck="false"
+                                                    <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                             type="radio"
                                                             name="income-consider"
                                                             id="yes-consider1"
                                                             [value]="1"
-                                                            [disabled]="isTBMLoggedIn"
-                                                            [ngClass]="{'disabled': isTBMLoggedIn}"
                                                             [checked]="qde.application.applicants[applicantIndex].personalDetails.applicantStatus == '1'"
                                                             (click)="changeApplicantStatus(1, pdSlider2)"
                                                             class="not-usual" />
                                                     <label for="yes-consider1" tabindex="1"><span>Resident</span></label>
                                                 </div>
                                                 <div class="bs-radio">
-                                                    <input [readonly]="isReadOnly" spellcheck="false"
+                                                    <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                             type="radio"
                                                             name="income-consider"
                                                             id="no-consider1"
                                                             class="not-usual"
                                                             [value]="2"
-                                                            [disabled]="isTBMLoggedIn"
-                                                            [ngClass]="{'disabled': isTBMLoggedIn}"
                                                             [checked]="qde.application.applicants[applicantIndex].personalDetails.applicantStatus == '2'"
                                                             (click)="changeApplicantStatus(2, pdSlider2)" />
                                                     <label for="no-consider1" tabindex="2"><span>Non Resident</span></label>
@@ -310,7 +308,7 @@
                                                   <div class="form-group">
                                                       <span class="control-title">Title</span>
                                                       <div class="form-group">   
-                                                          <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                                          <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control"
                                                             [data]="titles"
                                                             textField="key"
                                                             valueField="value"
@@ -325,7 +323,7 @@
                                                   </div>
                                                   <div class="form-group">
   
-                                                    <input [readonly]="isReadOnly" spellcheck="false"
+                                                    <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                             type="text"
                                                             class="form-control"
                                                             id="name"
@@ -342,7 +340,7 @@
                                                     </div>
                                                   </div>
                                                   <div class="form-group typ-optional">
-                                                    <input [readonly]="isReadOnly" spellcheck="false"
+                                                    <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                             type="text"
                                                           class="form-control"
                                                           id="middleName"
@@ -360,7 +358,7 @@
                                                   </div>
                                                   <div class="form-group">
   
-                                                    <input [readonly]="isReadOnly" spellcheck="false"
+                                                    <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                               type="text"
                                                               class="form-control" 
                                                               [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.lastName" 
@@ -380,8 +378,8 @@
                                               <div class="btn-wrap">
                                                 <button   type="submit"
                                                           class="btn btn-primary"
-                                                          [ngClass]="{'disabled': (!nameForm.valid || isTBMLoggedIn)}"
-                                                          [disabled]="!nameForm.valid || isTBMLoggedIn">Next
+                                                          [ngClass]="{'disabled': (!nameForm.valid)}"
+                                                          [disabled]="!nameForm.valid">Next
                                                 </button>
                                               </div>
                                           </form>
@@ -390,14 +388,12 @@
                                           <form class="bs-form"  #genderForm="ngForm">
                                               <div class="form-wrap">
                                                     <div class="bs-radio" *ngFor="let g of genders;let i=index;">
-                                                        <input [readonly]="isReadOnly" spellcheck="false"
+                                                        <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                                 type="radio"
                                                                 name="gender"
                                                                 [id]="g.key"
                                                                 [tabindex]="(i+1)"
                                                                 [value]="g.value"
-                                                                [disabled]="isTBMLoggedIn"
-                                                                [ngClass]="{'disabled': isTBMLoggedIn}"
                                                                 [checked]="qde.application.applicants[applicantIndex].personalDetails.gender == g.value"
                                                                 (click)="submitGenderDetails(g.value, pdSlider2)" />
                                                         <label [for]="g.key"><span>{{g.key}}</span></label>
@@ -412,7 +408,7 @@
                                               <div class="form-wrap">
                                                   <div class="form-group">
                                                       <span class="control-title">Qualification</span>
-                                                      <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                                      <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control"
                                                         [data]="qualifications" 
                                                         textField="key"
                                                         valueField="value"
@@ -428,8 +424,8 @@
                                               <div class="btn-wrap">
                                                   <button type="submit"
                                                           class="btn btn-primary"
-                                                          [ngClass]="{'disabled': (!qualificationForm.valid || isTBMLoggedIn)}"
-                                                          [disabled]="!qualificationForm.valid || isTBMLoggedIn">Next
+                                                          [ngClass]="{'disabled': (!qualificationForm.valid)}"
+                                                          [disabled]="!qualificationForm.valid">Next
                                                   </button>
                                               </div>
                                           </form>
@@ -442,7 +438,7 @@
 
                                                       <div class="row">
                                                         <div class="col4">
-                                                            <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                                            <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control"
                                                             [data]="days"
                                                             textField="key"
                                                             valueField="value"
@@ -456,7 +452,7 @@
                                                         </div>
     
                                                         <div class="col4">
-                                                            <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                                            <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control"
                                                             [data]="months"
                                                             textField="key"
                                                             valueField="value"
@@ -470,7 +466,7 @@
                                                         </div>
     
                                                         <div class="col4">
-                                                            <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                                            <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control"
                                                             [data]="years"
                                                             textField="key"
                                                             valueField="value"
@@ -491,7 +487,7 @@
                                                   <div class="form-group">                                                 
                                                     <label for="birthPlace" tabindex="1">Birth place</label>
 
-                                                        <input [readonly]="isReadOnly" spellcheck="false"
+                                                        <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                           type="text"
                                                           class="form-control"
                                                           id="birthPlace"
@@ -511,8 +507,8 @@
 
                                                   <button type="submit"
                                                           class="btn btn-primary"
-                                                          [ngClass]="{'disabled': (dob.day.value == 'DD' || dob.month.value == 'MM' || dob.year.value == 'YYYY' || dobForm.invalid || isTBMLoggedIn)}"
-                                                          [disabled]="(dob.day.value == 'DD' || dob.month.value == 'MM' || dob.year.value == 'YYYY' || dobForm.invalid || isTBMLoggedIn)">Next
+                                                          [ngClass]="{'disabled': (dob.day.value == 'DD' || dob.month.value == 'MM' || dob.year.value == 'YYYY' || dobForm.invalid)}"
+                                                          [disabled]="(dob.day.value == 'DD' || dob.month.value == 'MM' || dob.year.value == 'YYYY' || dobForm.invalid)">Next
                                                       </button>
                                               </div>
                                           </form>
@@ -546,7 +542,7 @@
                                 <div class="form-wrap">
                                     <div class="form-group" [ngClass]="{'prefer': isAlternateEmailId}">
   
-                                        <input [readonly]="isReadOnly" spellcheck="false"
+                                        <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                               type="text"
                                               class="form-control"
                                               id="pref-email"
@@ -573,7 +569,7 @@
                                     </div>
                                     <div class="form-group transOpacity500ms fadeOut" [ngClass]="{'typ-alternative': !isAlternateEmailId, 'fadeIn': isAlternateEmailId}">
   
-                                        <input [readonly]="isReadOnly" spellcheck="false"
+                                        <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                               type="text"
                                               class="form-control"
                                               id="alter-email"
@@ -599,7 +595,7 @@
   
                                     <div class="form-group typ-mob">
   
-                                        <input [readonly]="isReadOnly" spellcheck="false"
+                                        <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                 type="tel" class="form-control" id="mob-no"
                                                 minlength="10"    
                                           maxlength="10" im-insert="true"
@@ -630,7 +626,7 @@
   
                                     <div class="form-group typ-mob" [ngClass]="{'typ-alternative': !isAlternateMobileNumber}">
   
-                                        <input [readonly]="isReadOnly" spellcheck="false"
+                                        <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                             minlength="10"
                                                 type="tel" class="form-control" id="alter-mob" data-validation-attr="mobileno01" 
                                           maxlength="10" im-insert="true"
@@ -657,7 +653,7 @@
   
                                     <div class="residence-no">
                                         <div class="form-group">
-                                            <input [readonly]="isReadOnly" spellcheck="false"
+                                            <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                       type="text"
                                                       [(ngModel)]="residenceNumberStdCode"
                                                       pattern="{{regexPattern.mobileNumber}}"
@@ -677,7 +673,7 @@
                                         </div>
                                         <span class="seperator">-</span>
                                         <div class="form-group">
-                                            <input [readonly]="isReadOnly" spellcheck="false"
+                                            <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                       type="text"
                                                       class="form-control"
                                                       id="res-no"
@@ -705,7 +701,7 @@
                                     </div>
                                     <div class="residence-no" [ngClass]="{'typ-alternative': !isAlternateResidenceNumber}">
                                         <div class="form-group">
-                                            <input [readonly]="isReadOnly" spellcheck="false"
+                                            <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                       type="text"
                                                       [(ngModel)]="alternateResidenceNumberStdCode"
                                                       name="alternateResidenceNumberStd1"
@@ -722,7 +718,7 @@
                                         </div>
                                         <span class="seperator">-</span>
                                         <div class="form-group">
-                                            <input [readonly]="isReadOnly" spellcheck="false"
+                                            <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                       type="text"
                                                       class="form-control"
                                                       [(ngModel)]="alternateResidenceNumberPhoneNumber"
@@ -750,8 +746,8 @@
                                 <div class="btn-wrap">
                                       <button class="btn btn-primary"
                                               type="submit"
-                                              [ngClass]="{'disabled': (!contactForm.valid || isTBMLoggedIn)}"
-                                              [disabled]="!contactForm.valid || isTBMLoggedIn">Next
+                                              [ngClass]="{'disabled': (!contactForm.valid)}"
+                                              [disabled]="!contactForm.valid">Next
                                       </button>
                                 </div>
                             </form>
@@ -771,7 +767,7 @@
                         #isValidOTP="ngForm">
                             <div class="form-wrap1">
                                 <div class="form-group">
-                                    <input [readonly]="isReadOnly" 
+                                    <input [readonly]="isTBMLoggedIn" 
                                     type="text" class="form-control" 
                                     id="otp" 
                                     name="otp" 
@@ -810,7 +806,7 @@
                                   <h1 class="sub-heading" style="text-align: left ; margin-bottom: 12px">Current Address</h1>
                                   <div class="form-group">
                                       <span class="control-title">Residential status</span>
-                                      <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                      <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control"
                                         [data]="residences" 
                                         textField="key"
                                         tabindex="0"
@@ -825,7 +821,7 @@
                                   </div>
                                   <div class="form-group">
   
-                                      <input [readonly]="isReadOnly" spellcheck="false"
+                                      <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                             type="text"
                                               class="form-control"
                                               id="address1"
@@ -846,7 +842,7 @@
                                   </div>
   
                                   <div class="form-group">
-                                      <input [readonly]="isReadOnly" spellcheck="false"
+                                      <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                             type="text" class="form-control" id="address2"
                                         [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.addressLineTwo"
                                         pattern="{{regexPattern.address}}"
@@ -863,7 +859,7 @@
                                   </div>
   
                                   <div class="form-group">
-                                      <input [readonly]="isReadOnly" spellcheck="false"
+                                      <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                               type="text"
                                                 class="form-control"
                                                 id="pincode"
@@ -884,7 +880,7 @@
                                   </div>
                                   <div class="form-group">
   
-                                      <input [readonly]="isReadOnly" spellcheck="false"
+                                      <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                               type="text"
                                                 class="form-control"
                                                 id="cityState"
@@ -903,7 +899,7 @@
                                       </div>
                                   </div>
                                   <div class="bs-checkbox typ-withForm">
-                                      <input [readonly]="isReadOnly" spellcheck="false"
+                                      <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                             type="checkbox"
                                               [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.permanentAddress"
                                               name="permanentAddress"
@@ -915,7 +911,7 @@
                                   <div class="permanent-add-wrap">
                                       <h1 class="sub-heading" style="text-align: left; margin-bottom: 12px">Permanent Address</h1>
                                           <div class="form-group">
-                                              <input [readonly]="isReadOnly" spellcheck="false"
+                                              <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                     type="text" class="form-control" id="per-address1"
                                               name="pAddressLineOne"
                                               #pAddress1="ngModel"
@@ -930,7 +926,7 @@
                                               </div>
                                           </div>
                                           <div class="form-group">
-                                              <input [readonly]="isReadOnly" spellcheck="false"
+                                              <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                     type="text" class="form-control" id="per-address2"
                                               name="pAddressLineTwo"
                                               #pAddress2="ngModel"
@@ -945,7 +941,7 @@
                                               </div>
                                           </div>
                                           <div class="form-group">
-                                              <input [readonly]="isReadOnly" spellcheck="false"
+                                              <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                       type="text"
                                                         class="form-control"
                                                         id="per-pincode"
@@ -966,7 +962,7 @@
                                             </div>
                                           </div>
                                           <div class="form-group">
-                                              <input [readonly]="isReadOnly" spellcheck="false"
+                                              <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                     type="text" class="form-control" id="per-cityState"
                                               name="commCityState"
                                               #commCityState="ngModel"
@@ -981,7 +977,7 @@
                                       </div>
                                       <div class="radio-wrap rounded-radio">
                                           <div class="bs-radio typ-normal">
-                                             <input [readonly]="isReadOnly"
+                                             <input [readonly]="isTBMLoggedIn"
                                                type="radio" 
                                               name="prefredMail"
                                               [value]="1"
@@ -993,7 +989,7 @@
                                             </label>
                                           </div>
                                           <div class="bs-radio typ-normal">
-                                              <input [readonly]="isReadOnly" 
+                                              <input [readonly]="isTBMLoggedIn" 
                                                  type="radio"
                                                 name="prefredMail"
                                                 [value]="2"
@@ -1007,7 +1003,7 @@
                                       </div>
                                   <div class="form-group typ-range">
                                       <span class="control-title">Number of years in current residence</span>
-                                      <input [readonly]="isReadOnly" spellcheck="false"
+                                      <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                             type="number"
                                               name="numberOfYearsInCurrentResidence"
                                               class="form-control"
@@ -1025,8 +1021,8 @@
                               </div>
                               <div class="btn-wrap">
                                   <button type="submit" class="btn btn-primary" 
-                                          [ngClass]="{'disabled': (!communicationForm.valid || isTBMLoggedIn)}"
-                                          [disabled]="!communicationForm.valid || isTBMLoggedIn">
+                                          [ngClass]="{'disabled': (!communicationForm.valid)}"
+                                          [disabled]="!communicationForm.valid">
                                       Next
                                   </button>
                               </div>
@@ -1089,7 +1085,7 @@
                                                 <div class="form-group">
                                                     <span class="control-title">Marital Status</span>
 
-                                                    <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                                    <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control"
                                                       [data]="maritals" 
                                                       textField="key"
                                                       valueField="value"
@@ -1105,8 +1101,6 @@
                                             </div>
                                             <div class="btn-wrap">
                                               <button   type="submit"
-                                                        [disabled]="isTBMLoggedIn"
-                                                        [ngClass]="{'disabled': isTBMLoggedIn}"
                                                         class="btn btn-primary">Next
                                               </button>
                                             </div>
@@ -1119,7 +1113,7 @@
                                             <div class="form-wrap">
                                                 <div class="form-group">
                                                     <span class="control-title">Title</span>
-                                                    <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                                    <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control"
                                                                         [data]="titles" 
                                                                         textField="key"
                                                                         tabindex="1"
@@ -1134,7 +1128,7 @@
                                                 </div>
                                                 <div class="form-group">
 
-                                                    <input [readonly]="isReadOnly" spellcheck="false"
+                                                    <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                             type="text"
                                                       class="form-control" 
                                                       [(ngModel)]="qde.application.applicants[applicantIndex].maritalStatus.firstName"
@@ -1156,8 +1150,8 @@
                                             </div>
                                             <div class="btn-wrap">
                                                 <button   type="submit"
-                                                          [ngClass]="{'disabled': (!spouseForm.valid || isTBMLoggedIn)}"
-                                                          [disabled]="!spouseForm.valid || isTBMLoggedIn"
+                                                          [ngClass]="{'disabled': (!spouseForm.valid)}"
+                                                          [disabled]="!spouseForm.valid"
                                                           class="btn btn-primary">
                                                   Next
                                                 </button>
@@ -1168,12 +1162,10 @@
                                         <form class="bs-form">
                                             <div class="form-wrap">
                                                 <div class="bs-radio">
-                                                    <input [readonly]="isReadOnly" spellcheck="false"
+                                                    <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                               type="radio"
                                                               name="earning"
                                                               [value]="1"
-                                                              [disabled]="isTBMLoggedIn"
-                                                              [ngClass]="{'disabled': isTBMLoggedIn}"
                                                               tabindex="1"
                                                               [checked]="qde.application.applicants[applicantIndex].maritalStatus.earning == true"
                                                               id="earningYes"
@@ -1181,12 +1173,10 @@
                                                     <label for="earningYes"><span>Yes</span></label>
                                                 </div>
                                                 <div class="bs-radio">
-                                                    <input [readonly]="isReadOnly" spellcheck="false"
+                                                    <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                               type="radio"
                                                               name="earning"
                                                               [value]="2"
-                                                              [disabled]="isTBMLoggedIn"
-                                                              [ngClass]="{'disabled': isTBMLoggedIn}"
                                                               tabindex="2"
                                                               [checked]="qde.application.applicants[applicantIndex].maritalStatus.earning == false"
                                                               id="earningNo"
@@ -1203,7 +1193,7 @@
                                             <div class="form-wrap">
                                                 <div class="form-group inr">
   
-                                                  <input [readonly]="isReadOnly" spellcheck="false"
+                                                  <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                         type="text"
                                                           class="form-control"
                                                           id="amount"
@@ -1231,8 +1221,8 @@
                                             <div class="btn-wrap">
                                                 <button   type="submit"
                                                           class="btn btn-primary"
-                                                          [ngClass]="{'disabled': (!spouseEarningAmtForm.valid || isTBMLoggedIn)}"
-                                                          [disabled]="!spouseEarningAmtForm.valid || isTBMLoggedIn"
+                                                          [ngClass]="{'disabled': (!spouseEarningAmtForm.valid)}"
+                                                          [disabled]="!spouseEarningAmtForm.valid"
                                                   >Next
                                                 </button>
                                             </div>
@@ -1293,7 +1283,7 @@
                                           <div class="form-wrap">
                                               <div class="form-group typ-range">
                                                   <span class="control-title">Enter number of dependents</span>
-                                                  <input [readonly]="isReadOnly" spellcheck="false"
+                                                  <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                         type="number"
                                                           name="numberOfDependents"
                                                           min="0"
@@ -1309,8 +1299,8 @@
                                           <div class="btn-wrap">
                                               <button type="submit"
                                                       class="btn btn-primary"
-                                                      [ngClass]="{'disabled': (!familyForm1.valid || isTBMLoggedIn)}"
-                                                      [disabled]="!familyForm1.valid || isTBMLoggedIn">Next
+                                                      [ngClass]="{'disabled': (!familyForm1.valid)}"
+                                                      [disabled]="!familyForm1.valid">Next
                                               </button>
                                           </div>
                                       </form>
@@ -1324,7 +1314,7 @@
                                               <div class="form-group">
                                                   <span class="control-title">Father's Title</span>
 
-                                                  <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                                  <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control"
                                                     [data]="maleTitles" 
                                                     textField="key"
                                                     valueField="value"
@@ -1337,7 +1327,7 @@
                                                   </kendo-dropdownlist>
                                               </div>
                                               <div class="form-group">
-                                                  <input [readonly]="isReadOnly" spellcheck="false"
+                                                  <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                         type="text"
                                                           class="form-control"
                                                           id="father-name"
@@ -1356,7 +1346,7 @@
                                               </div>
                                               <div class="form-group">
                                                   <span class="control-title">Mother's Title</span>
-                                                  <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                                  <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control"
                                                   [data]="femaleTitles" 
                                                   textField="key"
                                                   valueField="value"
@@ -1369,7 +1359,7 @@
                                                 </kendo-dropdownlist>
                                               </div>
                                               <div class="form-group">
-                                                  <input [readonly]="isReadOnly" spellcheck="false"
+                                                  <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                         type="text"
                                                           class="form-control"
                                                           id="mother-name"
@@ -1387,7 +1377,7 @@
                                                   </div>
                                               </div>
                                               <div class="form-group">
-                                                  <input [readonly]="isReadOnly" spellcheck="false"
+                                                  <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                           type="text"
                                                             class="form-control"
                                                             id="maiden-name"
@@ -1408,8 +1398,8 @@
                                           <div class="btn-wrap">
                                               <button type="submit"
                                                       class="btn btn-primary"
-                                                      [ngClass]="{'disabled': (!familyForm2.valid || isTBMLoggedIn)}"
-                                                      [disabled]="!familyForm2.valid || isTBMLoggedIn">
+                                                      [ngClass]="{'disabled': (!familyForm2.valid)}"
+                                                      [disabled]="!familyForm2.valid">
                                                   Next
                                               </button>
                                           </div>
@@ -1446,7 +1436,7 @@
                               <div class="form-wrap">
                                   <div class="form-group">
                                       <span class="control-title">Religion</span>
-                                      <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                      <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control"
                                         [data]="religions" 
                                         textField="key"
                                         valueField="value"
@@ -1459,13 +1449,13 @@
                                       </kendo-dropdownlist>
                                   </div>
                                   <div class="form-group" *ngIf="selectedReligion.value == '6'" [ngClass]="{'hidden': (selectedReligion.value != '6')}">
-                                      <input [readonly]="isReadOnly" spellcheck="false"
+                                      <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                             type="text" class="form-control" tabindex="2" [(ngModel)]="otherReligion" name="religionName" fieldFill id="religion-name">
                                       <label for="religion-name">Specify other religion</label>
                                   </div>
                                   <div class="form-group">
                                       <span class="control-title">Category</span>
-                                      <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                      <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control"
                                         [data]="categories" 
                                         textField="key"
                                         valueField="value"
@@ -1481,8 +1471,8 @@
   
                               <div class="btn-wrap">
                                   <button type="submit"
-                                          [ngClass]="{'disabled': (!otherForm.valid || isTBMLoggedIn)}"
-                                          [disabled]="!otherForm.valid || isTBMLoggedIn"
+                                          [ngClass]="{'disabled': (!otherForm.valid)}"
+                                          [disabled]="!otherForm.valid"
                                           class="btn btn-primary">Next</button>
                               </div>
                           </form>
@@ -1515,7 +1505,7 @@
                                   <div class="form-group">
                                       <span class="control-title">Occupation type</span>
 
-                                      <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                      <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control"
                                         [data]="occupations" 
                                         textField="key"
                                         valueField="value"
@@ -1528,7 +1518,7 @@
                                       </kendo-dropdownlist>
                                   </div>
                                   <div class="form-group" *ngIf="selectedOccupation.value != '9' && selectedOccupation.value != '10'">
-                                      <input [readonly]="isReadOnly" spellcheck="false"
+                                      <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                             type="text" class="form-control"
                                               required 
                                               [(ngModel)]="qde.application.applicants[applicantIndex].occupation.companyName"
@@ -1548,7 +1538,7 @@
                                   </div>
                                   <div class="form-group typ-range"  *ngIf="selectedOccupation.value != '9' && selectedOccupation.value != '10'">
                                       <span class="control-title">Years in current employment/business</span>
-                                      <input [readonly]="isReadOnly" spellcheck="false"
+                                      <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                             type="number"
                                               name="numberOfYearsInCurrentCompany"
                                               id="no-yrs"
@@ -1572,7 +1562,7 @@
                                   </div>
                                   <div class="form-group typ-range" *ngIf="selectedOccupation.value != '9' && selectedOccupation.value != '10'">
                                       <span class="control-title">Total Work Experience</span>
-                                      <input [readonly]="isReadOnly" spellcheck="false"
+                                      <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                             type="number"
                                               name="totalExperienceYear"
                                               class="form-control"
@@ -1603,8 +1593,8 @@
   
                               <div class="btn-wrap">
                                   <button type="submit"
-                                          [ngClass]="{'disabled': !occupationForm.valid || expError || isTBMLoggedIn}"
-                                          [disabled]="(!occupationForm.valid || expError || isTBMLoggedIn)" 
+                                          [ngClass]="{'disabled': !occupationForm.valid || expError}"
+                                          [disabled]="(!occupationForm.valid || expError)" 
                                           class="btn btn-primary">
                                       Next
                                   </button>
@@ -1637,7 +1627,7 @@
                                   (ngSubmit)="submitOfficialCorrespondence(officialCorrespondenceForm)">
                               <div class="form-wrap">
                                   <div class="form-group">
-                                      <input [readonly]="isReadOnly" spellcheck="false"
+                                      <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                             type="text"
                                               class="form-control"
                                               id="ofcAddOne"
@@ -1657,7 +1647,7 @@
                                   </div>
   
                                   <div class="form-group">
-                                      <input [readonly]="isReadOnly" spellcheck="false"
+                                      <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                             type="text" class="form-control"
                                         id="ofcAddTwo"
                                         [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.addressLineTwo"
@@ -1675,7 +1665,7 @@
                                   </div>
   
                                   <div class="form-group typ-optional">
-                                      <input [readonly]="isReadOnly" spellcheck="false"
+                                      <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                             type="text" class="form-control"
                                         id="offLandmark"
                                         [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.landMark"
@@ -1692,7 +1682,7 @@
                                       </div>
                                   </div>
                                   <div class="form-group typ-optional">
-                                      <input [readonly]="isReadOnly" spellcheck="false"
+                                      <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                             type="text"
                                             class="form-control"
                                             id="offPincode"
@@ -1715,7 +1705,7 @@
   
                                   </div>
                                   <div class="form-group typ-optional">
-                                      <input [readonly]="isReadOnly" spellcheck="false"
+                                      <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                             type="text" class="form-control"
                                         id="offCityState"
                                         required
@@ -1735,7 +1725,7 @@
                                   </div>
                                   <div class="residence-no">
                                       <div class="form-group">
-                                          <input [readonly]="isReadOnly" spellcheck="false"
+                                          <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                 type="text" class="form-control" id="std03"
                                             required
                                             [(ngModel)]="officialCorrespondenceStdCode"
@@ -1753,7 +1743,7 @@
                                       </div>
                                       <span class="seperator">-</span>
                                       <div class="form-group">
-                                          <input [readonly]="isReadOnly" spellcheck="false"
+                                          <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                 type="text" class="form-control" id="res-no03" data-validation-attr="residenceno"
                                                   required
                                                   #offStdNumber="ngModel"
@@ -1771,7 +1761,7 @@
                                       </div>
                                   </div>
                                   <div class="form-group typ-optional">
-                                      <input [readonly]="isReadOnly" spellcheck="false"
+                                      <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                             type="text" class="form-control" id="off-email"
                                         required
                                         [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.officeEmailId"
@@ -1792,8 +1782,8 @@
   
                               <div class="btn-wrap">
                                   <button type="submit" class="btn btn-primary" 
-                                          [ngClass]="{'disabled': (!officialCorrespondenceForm.valid || isTBMLoggedIn)}"
-                                          [disabled]="!officialCorrespondenceForm.valid || isTBMLoggedIn">Next
+                                          [ngClass]="{'disabled': (!officialCorrespondenceForm.valid)}"
+                                          [disabled]="!officialCorrespondenceForm.valid">Next
                                   </button>
                               </div>
                           </form>
@@ -1850,7 +1840,7 @@
                                     #incomeDetailsForm1="ngForm" (ngSubmit)="submitIncomeDetails1(incomeDetailsForm1, incomeSlider2)">
                                       <div class="form-wrap">
                                           <div class="form-group inr">
-                                                <input [readonly]="isReadOnly" spellcheck="false"
+                                                <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                 type="text" class="form-control"
                                                 id="annualFamilyIncome1"
                                                 [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.annualFamilyIncome"
@@ -1873,7 +1863,7 @@
                                                   </div> 
                                           </div>
                                             <div class="form-group inr">
-                                                  <input [readonly]="isReadOnly" spellcheck="false"
+                                                  <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                         type="text" class="form-control" 
                                                   id="monthlyExpenditure1"
                                                   [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.monthlyExpenditure"
@@ -1899,7 +1889,7 @@
                                               </div>
                                               <div class="radio-wrap rounded-radio">
                                                     <div class="bs-radio typ-normal">
-                                                        <input [readonly]="isReadOnly" spellcheck="false"
+                                                        <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                                 type="radio" 
                                                                 name="puccaHouse"
                                                                 [value]="1"
@@ -1913,7 +1903,7 @@
                                                         </label>
                                                     </div>
                                                     <div class="bs-radio typ-normal">
-                                                        <input [readonly]="isReadOnly" spellcheck="false"
+                                                        <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                                 type="radio"
                                                                 name="puccaHouse"
                                                                 [value]="2"
@@ -1932,8 +1922,8 @@
                                             <button 
                                                 type="submit"
                                                 class="btn btn-primary"
-                                                [ngClass]="{'disabled': !incomeDetailsForm1.valid || qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == null || isTBMLoggedIn}"
-                                                [disabled]="!incomeDetailsForm1.valid || qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == null || isTBMLoggedIn">
+                                                [ngClass]="{'disabled': !incomeDetailsForm1.valid || qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == null}"
+                                                [disabled]="!incomeDetailsForm1.valid || qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == null">
                                             Next
                                             </button>
                                       </div>
@@ -1943,21 +1933,19 @@
                                     <form class="bs-form" >
                                         <div class="form-wrap">
                                             <div class="bs-radio">
-                                                <input [readonly]="isReadOnly" spellcheck="false"
+                                                <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                         type="radio"
                                                         name="income-consider"
                                                         tabindex="1"
                                                         id="incomeConsiderYes1"
                                                         [value]="1"
-                                                        [disabled]="isTBMLoggedIn"
-                                                        [ngClass]="{'disabled': isTBMLoggedIn}"
                                                         [checked]="qde.application.applicants[applicantIndex].incomeDetails.incomeConsider == true"
                                                         (click)="incomeDetailsYesNo(1, incomeSlider2)"
                                                         class="not-usual" />
                                                 <label for="incomeConsiderYes1"><span>Yes</span></label>
                                             </div>
                                             <div class="bs-radio">
-                                                <input [readonly]="isReadOnly" spellcheck="false"
+                                                <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                         type="radio"
                                                         name="income-consider"
                                                         tabindex="2"
@@ -1965,8 +1953,6 @@
                                                         class="not-usual"
                                                         [checked]="qde.application.applicants[applicantIndex].incomeDetails.incomeConsider == false"
                                                         [value]="2"
-                                                        [disabled]="isTBMLoggedIn"
-                                                        [ngClass]="{'disabled': isTBMLoggedIn}"
                                                         (click)="incomeDetailsYesNo(2, incomeSlider2)" />
                                                 <label for="incomeConsiderNo1"><span>No</span></label>
                                             </div>
@@ -1978,7 +1964,7 @@
                                             #incomeDetailsForm2="ngForm" (ngSubmit)="submitIncomeDetails2(incomeDetailsForm2, incomeSlider4)">
                                                 <div class="form-wrap">
                                                     <div class="form-group inr">
-                                                        <input [readonly]="isReadOnly" spellcheck="false"
+                                                        <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                                 type="text" class="form-control" 
                                                         id="monthlyIncome1"
                                                         tabindex="1"
@@ -2003,7 +1989,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                             <span class="control-title">Assessment methodology</span>
-                                                            <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                                            <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control"
                                                             [data]="assessmentMethodology"
                                                             tabindex="2"
                                                             textField="key"
@@ -2016,7 +2002,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="btn-wrap">
-                                                    <button type="submit" [disabled]="isTBMLoggedIn" [ngClass]="{'disabled': isTBMLoggedIn}" class="btn btn-primary" (click)="goToNextSlide(incomeSlider4)">Save</button>
+                                                    <button type="submit" class="btn btn-primary" [disabled]="isTBMLoggedIn" [ngClass]="{'disabled': isTBMLoggedIn}">Save</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -2058,7 +2044,7 @@
                                             (ngSubmit)="submitOrgPanNumber(panNumberForm2, panSlider4)">
                                           <div class="form-wrap">
                                               <div class="form-group last">
-                                                  <input [readonly]="isReadOnly" spellcheck="false"
+                                                  <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                         type="text"
                                                           class="form-control"
                                                           [(ngModel)]="qde.application.applicants[applicantIndex].pan.panNumber"
@@ -2082,7 +2068,7 @@
                                               </div>
                                               <div class="form-group">
                                                 <span class="control-title">Document Type</span>
-                                                <kendo-dropdownlist [readonly]="isReadOnly"   class="form-control"
+                                                <kendo-dropdownlist [readonly]="isTBMLoggedIn"   class="form-control"
                                                     [data]="docType" 
                                                     textField="key"
                                                     valueField="value"
@@ -2096,7 +2082,7 @@
                                                 </kendo-dropdownlist>
                                             </div>
                                             <div class="form-group">
-                                              <input [readonly]="isReadOnly" spellcheck="false"
+                                              <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                     type="text"
                                                     class="form-control"
                                                     [(ngModel)]="qde.application.applicants[applicantIndex].pan.docNumber"
@@ -2123,8 +2109,8 @@
                                           <div class="btn-wrap">
                                                 <button type="submit"
                                                         class="btn btn-primary"
-                                                        [ngClass]="{'disabled': (!panNumberForm2.valid || isTBMLoggedIn)}"
-                                                        [disabled]="!panNumberForm2.valid || isTBMLoggedIn">Next
+                                                        [ngClass]="{'disabled': (!panNumberForm2.valid)}"
+                                                        [disabled]="!panNumberForm2.valid">Next
                                                 </button>
                                           </div>
   
@@ -2156,7 +2142,7 @@
                                   (ngSubmit)="submitOrganizationDetails(organizationForm)">
                                 <div class="form-wrap">
                                 <div class="form-group">
-                                    <input [readonly]="isReadOnly" spellcheck="false"
+                                    <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                             type="text"
                                             class="form-control" 
                                             id="org-name"
@@ -2178,7 +2164,7 @@
                                     <span class="control-title">Date of Incorporation</span>
                                     <div class="row">
                                         <div class="col4">
-                                            <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                            <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control"
                                             [data]="days"
                                             textField="key"
                                             valueField="value"
@@ -2193,7 +2179,7 @@
                                         </div>
 
                                         <div class="col4">
-                                            <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                            <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control"
                                             [data]="months"
                                             textField="key"
                                             valueField="value"
@@ -2208,7 +2194,7 @@
                                         </div>
 
                                         <div class="col4">
-                                            <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                            <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control"
                                             [data]="years"
                                             textField="key"
                                             valueField="value"
@@ -2225,7 +2211,7 @@
                                 </div>
                                 <div class="form-group last">
                                     <span class="control-title">Constitution</span>
-                                    <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                    <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control"
                                                         [data]="constitutions" 
                                                         textField="key"
                                                         valueField="value"
@@ -2240,8 +2226,8 @@
                             </div>
                               <div class="btn-wrap">
                                   <button class="btn btn-primary"
-                                          [ngClass]="{'disabled': (!organizationForm.valid || organizationDetails.day.value == 'DD' || organizationDetails.month.value == 'MM' || organizationDetails.year.value == 'YYYY') || isTBMLoggedIn}"
-                                          [disabled]="(!organizationForm.valid || organizationDetails.day.value == 'DD' || organizationDetails.month.value == 'MM' || organizationDetails.year.value == 'YYYY') || isTBMLoggedIn">Next
+                                          [ngClass]="{'disabled': (!organizationForm.valid || organizationDetails.day.value == 'DD' || organizationDetails.month.value == 'MM' || organizationDetails.year.value == 'YYYY')}"
+                                          [disabled]="(!organizationForm.valid || organizationDetails.day.value == 'DD' || organizationDetails.month.value == 'MM' || organizationDetails.year.value == 'YYYY')">Next
                                   </button>
                               </div>
                           </form>
@@ -2265,7 +2251,7 @@
                           <form class="bs-form"  #registeredAddressForm="ngForm" (ngSubmit)="submitRegisteredAddress(registeredAddressForm)">
                               <div class="form-wrap">
                                   <div class="form-group">
-                                      <input [readonly]="isReadOnly" spellcheck="false"
+                                      <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                               type="text"
                                                 class="form-control"
                                                 id="reg-add"
@@ -2284,7 +2270,7 @@
                                       </div>
                                   </div>
                                   <div class="form-group typ-optional">
-                                      <input [readonly]="isReadOnly" spellcheck="false"
+                                      <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                             type="text"
                                               class="form-control"
                                               name="landmark"
@@ -2302,7 +2288,7 @@
                                     </div>
                                   </div>
                                   <div class="form-group typ-optional">
-                                        <input [readonly]="isReadOnly" spellcheck="false"
+                                        <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                 type="text"
                                                 class="form-control"
                                                 id="regoffPincode"
@@ -2324,7 +2310,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group last">
-                                        <input [readonly]="isReadOnly" spellcheck="false"
+                                        <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                 type="text" class="form-control"
                                           id="regAddrCityState"
                                           required
@@ -2345,8 +2331,8 @@
                               </div>
                               <div class="btn-wrap">
                                   <button class="btn btn-primary"
-                                  [ngClass]="{'disabled': (!registeredAddressForm.valid || isTBMLoggedIn)}"
-                                  [disabled]="!registeredAddressForm.valid || isTBMLoggedIn" >Next</button>
+                                  [ngClass]="{'disabled': (!registeredAddressForm.valid)}"
+                                  [disabled]="!registeredAddressForm.valid" >Next</button>
   
                               </div>
                           </form>
@@ -2371,7 +2357,7 @@
                                   (ngSubmit)="submitCorporateAddress(corporateAddressForm)" >
                               <div class="form-wrap">
                                   <div class="form-group">
-                                      <input [readonly]="isReadOnly" spellcheck="false"
+                                      <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                               type="text"
                                                 class="form-control"
                                                 id="corp-add"
@@ -2390,7 +2376,7 @@
                                       </div>
                                   </div>
                                   <div class="form-group typ-optional">
-                                      <input [readonly]="isReadOnly" spellcheck="false"
+                                      <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                             type="text"
                                               [(ngModel)]="qde.application.applicants[applicantIndex].corporateAddress.landMark"
                                               tabindex="2"
@@ -2407,7 +2393,7 @@
                                     </div>
                                   </div>
                                   <div class="form-group">
-                                      <input [readonly]="isReadOnly" spellcheck="false"
+                                      <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                             type="text"
                                               class="form-control"
                                               id="pincode01" 
@@ -2430,7 +2416,7 @@
   
                                   </div>
                                   <div class="form-group">
-                                      <input [readonly]="isReadOnly" spellcheck="false"
+                                      <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                             type="text"
                                               class="form-control"
                                               id="city-state01" 
@@ -2451,7 +2437,7 @@
                                   </div>
                                   <div class="residence-no">
                                       <div class="form-group">
-                                          <input [readonly]="isReadOnly" spellcheck="false"
+                                          <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                 type="text"
                                                   [(ngModel)]="corporateAddressStdCode"
                                                   name="stdNumber"
@@ -2472,7 +2458,7 @@
                                       </div>
                                       <span class="seperator">-</span>
                                       <div class="form-group">
-                                          <input [readonly]="isReadOnly" spellcheck="false"
+                                          <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                 type="text"
                                                   class="form-control"
                                                   [(ngModel)]="corporateAddressPhoneNumber"
@@ -2493,7 +2479,7 @@
                                       </div>
                                   </div>
                                   <div class="form-group last">
-                                      <input [readonly]="isReadOnly" spellcheck="false"
+                                      <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                               type="text"
                                                 class="form-control"
                                                 tabindex="7"
@@ -2514,8 +2500,8 @@
                                   </div>
                               </div>
                               <div class="btn-wrap">
-                                  <button type="submit" class="btn btn-primary" [ngClass]="{'disabled': (!corporateAddressForm.valid || isTBMLoggedIn)}"
-                                  [disabled]="!corporateAddressForm.valid || isTBMLoggedIn">Next</button>
+                                  <button type="submit" class="btn btn-primary" [ngClass]="{'disabled': (!corporateAddressForm.valid)}"
+                                  [disabled]="!corporateAddressForm.valid">Next</button>
                               </div>
                           </form>
                           </div>
@@ -2539,7 +2525,7 @@
                         <form class="bs-form"  #revenueForm="ngForm" (ngSubmit)="submitRevenueDetails(revenueForm)">
                             <div class="form-wrap">
                                 <div class="form-group inr">
-                                    <input [readonly]="isReadOnly" spellcheck="false"
+                                    <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                     type="text" class="form-control" id="revenue"
                                     [(ngModel)]="qde.application.applicants[applicantIndex].revenueDetails.revenue"
                                     #revenue="ngModel"
@@ -2560,7 +2546,7 @@
                                     <span class="in-word"></span>
                                 </div>
                                 <div class="form-group inr">
-                                    <input [readonly]="isReadOnly" spellcheck="false"
+                                    <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                             type="text" class="form-control" id="net-income"
                                     required
                                     [(ngModel)]="qde.application.applicants[applicantIndex].revenueDetails.annualNetIncome"
@@ -2581,7 +2567,7 @@
                                     <span class="in-word"></span>
                                 </div>
                                 <div class="form-group inr last">
-                                    <input [readonly]="isReadOnly" spellcheck="false"
+                                    <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                             type="text" class="form-control" id="gross-turnover" 
                                     required
                                     [(ngModel)]="qde.application.applicants[applicantIndex].revenueDetails.grossTurnOver"
@@ -2603,8 +2589,8 @@
                                 </div>
                             </div>
                             <div class="btn-wrap">
-                                <button type="submit" class="btn btn-primary" [ngClass]="{'disabled': (!revenueForm.valid || isTBMLoggedIn)}"
-                                [disabled]="!revenueForm.valid || isTBMLoggedIn">Next</button>
+                                <button type="submit" class="btn btn-primary" [ngClass]="{'disabled': (!revenueForm.valid)}"
+                                [disabled]="!revenueForm.valid">Next</button>
                             </div>
                         </form>
                         </div>
@@ -2660,7 +2646,7 @@
                                       #incomeDetailsForm3="ngForm" (ngSubmit)="submitIncomeDetails1(incomeDetailsForm3, incomeSlider4)">
                                         <div class="form-wrap">
                                             <div class="form-group inr">
-                                                  <input [readonly]="isReadOnly" spellcheck="false"
+                                                  <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                         type="text" class="form-control"
                                                   id="annualFamilyIncome2"
                                                   [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.annualFamilyIncome"
@@ -2683,7 +2669,7 @@
                                                 </div> 
                                             </div>
                                               <div class="form-group inr" >
-                                                    <input [readonly]="isReadOnly" spellcheck="false"
+                                                    <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                             type="text" class="form-control" 
                                                     id="monthlyExpenditure2"
                                                     [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.monthlyExpenditure"
@@ -2709,7 +2695,7 @@
                                                 </div>
                                                 <div class="radio-wrap rounded-radio">
                                                     <div class="bs-radio typ-normal">
-                                                        <input [readonly]="isReadOnly"  type="radio" 
+                                                        <input [readonly]="isTBMLoggedIn"  type="radio" 
                                                                 name="puccaHouse"
                                                                 [value]="1"
                                                                 [checked]="qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == true"                         
@@ -2722,7 +2708,7 @@
                                                         </label>
                                                     </div>
                                                     <div class="bs-radio typ-normal">
-                                                        <input [readonly]="isReadOnly" type="radio"
+                                                        <input [readonly]="isTBMLoggedIn" type="radio"
                                                                 name="puccaHouse"
                                                                 [value]="2"
                                                                 tabindex="4"
@@ -2740,8 +2726,8 @@
                                             <button 
                                                 type="submit"
                                                 class="btn btn-primary"
-                                                [ngClass]="{'disabled': !incomeDetailsForm3.valid || qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == null || isTBMLoggedIn}"
-                                                [disabled]="!incomeDetailsForm3.valid || qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == null || isTBMLoggedIn">
+                                                [ngClass]="{'disabled': !incomeDetailsForm3.valid || qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == null}"
+                                                [disabled]="!incomeDetailsForm3.valid || qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == null">
                                             Next
                                         </button>
                                         </div>
@@ -2751,13 +2737,11 @@
                                         <form class="bs-form" >
                                             <div class="form-wrap">
                                                 <div class="bs-radio">
-                                                    <input [readonly]="isReadOnly" spellcheck="false"
+                                                    <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                             type="radio"
                                                             name="income-consider"
                                                             id="incomeConsiderYes2"
                                                             [value]="1"
-                                                            [disabled]="isTBMLoggedIn"
-                                                            [ngClass]="{'disabled': isTBMLoggedIn}"
                                                             tabindex="1"
                                                             [checked]="qde.application.applicants[applicantIndex].incomeDetails.incomeConsider == true"
                                                             (click)="incomeDetailsYesNo(1, incomeSlider4)"
@@ -2765,16 +2749,14 @@
                                                     <label for="incomeConsiderYes2"><span>Yes</span></label>
                                                 </div>
                                                 <div class="bs-radio">
-                                                    <input [readonly]="isReadOnly" spellcheck="false"
+                                                    <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                             type="radio"
                                                             name="income-consider"
                                                             id="incomeConsiderNo2"
                                                             class="not-usual"
                                                             tabindex="2"
                                                             [checked]="qde.application.applicants[applicantIndex].incomeDetails.incomeConsider == false"
-                                                            [value]="2"
-                                                            [disabled]="isTBMLoggedIn"
-                                                            [ngClass]="{'disabled': isTBMLoggedIn}" />
+                                                            [value]="2" />
                                                     <label for="incomeConsiderNo2"><span>No</span></label>
                                                 </div>
                                             </div>
@@ -2785,7 +2767,7 @@
                                               #incomeDetailsForm4="ngForm" (ngSubmit)="submitIncomeDetails2(incomeDetailsForm4, incomeSlider4)">
                                                   <div class="form-wrap">
                                                       <div class="form-group inr">
-                                                          <input [readonly]="isReadOnly" spellcheck="false"
+                                                          <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                                 type="text" class="form-control" 
                                                           id="monthlyIncome2"
                                                           maxlength="10"
@@ -2810,7 +2792,7 @@
                                                       </div>
                                                       <div class="form-group">
                                                             <span class="control-title">Assessment methodology</span>
-                                                            <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                                            <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control"
                                                             [data]="assessmentMethodology" 
                                                             textField="key"
                                                             valueField="value"
@@ -2823,7 +2805,7 @@
                                                     </div>
                                                   </div>
                                                   <div class="btn-wrap">
-                                                      <button type="submit" class="btn btn-primary"  [ngClass]="{'disabled': !incomeDetailsForm4.valid || isTBMLoggedIn}"
+                                                      <button type="submit" class="btn btn-primary"  [ngClass]="{'disabled': (!incomeDetailsForm4.valid || isTBMLoggedIn)}"
                                                       [disabled]="!incomeDetailsForm4.valid || isTBMLoggedIn">Save</button>
                                                   </div>
                                               </form>

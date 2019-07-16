@@ -164,7 +164,7 @@ export class LeadsListComponent implements OnInit {
     } 
     else if(statuses[status] == "26") {
 
-      if(roles.includes('TBM')) {
+      if(roles.includes('TBM') || roles.includes('TMA')) {
 
         this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: true});
       } else {

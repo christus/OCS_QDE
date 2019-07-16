@@ -13,6 +13,7 @@ import Qde from 'src/app/models/qde.model';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
 import { QdeService } from 'src/app/services/qde.service';
 import { CommonDataService } from 'src/app/services/common-data.service';
+import { Subscription } from 'rxjs';
 
 interface Item {
   key: string,
@@ -226,6 +227,9 @@ export class LoanQdeComponent implements OnInit {
   applicantIndex = 0;
 
   isReadOnly: boolean = false;
+  isEligibilityForReview: boolean = false;
+  isEligibilityForReviewsSub: Subscription;
+  isTBMLoggedIn: boolean;
 
   constructor(
     private renderer: Renderer2,
@@ -244,6 +248,15 @@ export class LoanQdeComponent implements OnInit {
         console.log("APPLICANTID: ", params.applicantId);
         this.applicantId = params.applicantId;
       }
+
+      if(params['applicationId'] != null) {
+        if(this.isEligibilityForReviewsSub != null) {
+          this.isEligibilityForReviewsSub.unsubscribe();
+        }
+        this.isEligibilityForReviewsSub = this.cds.isEligibilityForReviews.subscribe(val => {
+          this.isEligibilityForReview = val.find(v => v.applicationId == params['applicationId'])['isEligibilityForReview'];
+        });
+      }
     });
 
     this.cds.applicationId.subscribe(val => {
@@ -253,6 +266,19 @@ export class LoanQdeComponent implements OnInit {
       } else {
         this.cds.setReadOnlyForm(false);
       }
+    });
+
+ 
+    this.cds.isTBMLoggedIn.subscribe(val => {
+      this.isTBMLoggedIn = val;
+    });
+
+    /********************************************************************
+    * Check for User and set isReadOnly=true to disable editing of fields
+    ********************************************************************/
+    this.cds.isReadOnlyForm.subscribe(val => {
+      this.isReadOnly = val;
+      this.options.readOnly = val;
     });
   }
 
@@ -480,44 +506,48 @@ export class LoanQdeComponent implements OnInit {
   }
 
   submitLoanAmount(form: NgForm) {
-    if (form && !form.valid) {
-      return;
-    }
-
-    this.qde.application.loanDetails.loanAmount = {
-      amountRequired: form.value.amountRequired,
-      loanPurpose: form.value.loanPurpose,
-      loanTenure: form.value.loanTenure,
-      loanType: form.value.loanType
-    };
-    
-    if(this.qde.application.loanDetails.loanAmount.loanTenure == 0){
-      this.tenureYears = true;
-      return; 
-    }else{
-      this.tenureYears = false;
-    }
-
-    this.qdeHttp
-      .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
-      .subscribe(
-        response => {
-          // If successful
-          if (response["ProcessVariables"]["status"]) {
-            // console.log(this.qde.application.references.referenceOne.relationShip);
-            this.tabSwitch(1);
-          } else {
-            // Throw Invalid Pan Error
+    if(this.isTBMLoggedIn) {
+      this.tabSwitch(1);
+    } else {
+      if (form && !form.valid) {
+        return;
+      }
+  
+      this.qde.application.loanDetails.loanAmount = {
+        amountRequired: form.value.amountRequired,
+        loanPurpose: form.value.loanPurpose,
+        loanTenure: form.value.loanTenure,
+        loanType: form.value.loanType
+      };
+      
+      if(this.qde.application.loanDetails.loanAmount.loanTenure == 0){
+        this.tenureYears = true;
+        return; 
+      }else{
+        this.tenureYears = false;
+      }
+  
+      this.qdeHttp
+        .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
+        .subscribe(
+          response => {
+            // If successful
+            if (response["ProcessVariables"]["status"]) {
+              // console.log(this.qde.application.references.referenceOne.relationShip);
+              this.tabSwitch(1);
+            } else {
+              // Throw Invalid Pan Error
+            }
+          },
+          error => {
+            console.log("response : ", error);
           }
-        },
-        error => {
-          console.log("response : ", error);
-        }
-      );
-
-    // console.log("Submitted Amount"+ this.qde.application.loanDetails.loanAmount);
-
-
+        );
+  
+      // console.log("Submitted Amount"+ this.qde.application.loanDetails.loanAmount);
+  
+  
+    }
   }
 
   // goToNextSlide(swiperInstance?: Swiper) {
@@ -525,33 +555,37 @@ export class LoanQdeComponent implements OnInit {
   // }
 
   updatePropertyType(form: NgForm, swiperInstance?: Swiper) {
-    if (form && !form.valid) {
-      return;
-    }
-
-    this.qde.application.loanDetails.propertyType = {
-      propertyIdentified: this.isPropertyIdentified,
-      propertyType: this.selectedPropertyType,
-      propertyClss: this.propertyClssValue,
-      propertyArea: this.propertyAreaValue
-    };
-
-    this.qdeHttp
-      .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
-      .subscribe(
-        response => {
-          // If successful
-          if (response["ProcessVariables"]["status"]) {
-            console.log(this.qde.application.loanDetails.propertyType);
-            this.goToNextSlide(swiperInstance);
-          } else {
-            // Throw Invalid Pan Error
+    if(this.isTBMLoggedIn) {
+      this.goToNextSlide(swiperInstance)
+    } else {
+      if (form && !form.valid) {
+        return;
+      }
+  
+      this.qde.application.loanDetails.propertyType = {
+        propertyIdentified: this.isPropertyIdentified,
+        propertyType: this.selectedPropertyType,
+        propertyClss: this.propertyClssValue,
+        propertyArea: this.propertyAreaValue
+      };
+  
+      this.qdeHttp
+        .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
+        .subscribe(
+          response => {
+            // If successful
+            if (response["ProcessVariables"]["status"]) {
+              console.log(this.qde.application.loanDetails.propertyType);
+              this.goToNextSlide(swiperInstance);
+            } else {
+              // Throw Invalid Pan Error
+            }
+          },
+          error => {
+            console.log("response : ", error);
           }
-        },
-        error => {
-          console.log("response : ", error);
-        }
-      );
+        );
+    }
   }
 
   onPinCodeChange(event) {
@@ -584,124 +618,142 @@ export class LoanQdeComponent implements OnInit {
   }
 
   submitPropertyDetail(form: NgForm, swiperInstance?: Swiper) {
-    if (form && !form.valid) {
-      return;
-    }
-
-    this.qde.application.loanDetails.property = {
-      zipcodeId: this.qde.application.loanDetails.property.zipcodeId,
-      zipcode: this.propertyPincodeValue,
-      addressLineOne: this.addressLineOneValue,
-      addressLineTwo: this.addressLineTwoValue,
-      cityId: this.qde.application.loanDetails.property.cityId,
-      city: this.city,
-      stateId: this.qde.application.loanDetails.property.stateId,
-      state: this.state
-    };
-
-    this.qdeHttp
-      .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
-      .subscribe(
-        response => {
-          if (response["ProcessVariables"]["status"]) {
-            this.clssProbabilityCheck();
-            
-          } else {
-            // Throw Invalid Pan Error
+    if(this.isTBMLoggedIn) {
+      this.tabSwitch(2);
+    } else {
+      if (form && !form.valid) {
+        return;
+      }
+  
+      this.qde.application.loanDetails.property = {
+        zipcodeId: this.qde.application.loanDetails.property.zipcodeId,
+        zipcode: this.propertyPincodeValue,
+        addressLineOne: this.addressLineOneValue,
+        addressLineTwo: this.addressLineTwoValue,
+        cityId: this.qde.application.loanDetails.property.cityId,
+        city: this.city,
+        stateId: this.qde.application.loanDetails.property.stateId,
+        state: this.state
+      };
+  
+      this.qdeHttp
+        .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
+        .subscribe(
+          response => {
+            if (response["ProcessVariables"]["status"]) {
+              this.clssProbabilityCheck();
+              
+            } else {
+              // Throw Invalid Pan Error
+            }
+          },
+          error => {
+            console.log("response : ", error);
           }
-        },
-        error => {
-          console.log("response : ", error);
-        }
-      );
+        );
+    }
   }
 
   submitExistingLoanProvider(form: NgForm, swiperInstance?: Swiper) {
-    if (form && !form.valid) {
-      return;
-    }
 
-    this.qde.application.loanDetails.existingLoans = {
-      loanProvider: this.selectedLoanProvider
-    };
-
-    this.qdeHttp
-      .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
-      .subscribe(
-        response => {
-          // If successful
-          if (response["ProcessVariables"]["status"]) {
-            console.log(this.qde.application.loanDetails.propertyType);
-            this.goToNextSlide(swiperInstance);
-          } else {
-            // Throw Invalid Pan Error
+    if(this.isTBMLoggedIn) {
+      this.goToNextSlide(swiperInstance)
+    } else {
+      if (form && !form.valid) {
+        return;
+      }
+  
+      this.qde.application.loanDetails.existingLoans = {
+        loanProvider: this.selectedLoanProvider
+      };
+  
+      this.qdeHttp
+        .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
+        .subscribe(
+          response => {
+            // If successful
+            if (response["ProcessVariables"]["status"]) {
+              console.log(this.qde.application.loanDetails.propertyType);
+              this.goToNextSlide(swiperInstance);
+            } else {
+              // Throw Invalid Pan Error
+            }
+          },
+          error => {
+            console.log("response : ", error);
           }
-        },
-        error => {
-          console.log("response : ", error);
-        }
-      );
+        );
+    }
   }
 
   submitLiveLoans(form: NgForm, swiperInstance?: Swiper ) {
-    if (form && !form.valid) {
-      return;
-    }
 
-    this.qde.application.loanDetails.existingLoans = {
-      liveLoan: this.liveLoan
-    };
+    if(this.isTBMLoggedIn) {
+      this.goToNextSlide(swiperInstance);
+    } else {
+      if (form && !form.valid) {
+        return;
+      }
   
-    this.qdeHttp
-      .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
-      .subscribe(
-        response => {
-          // If successful
-          if (response["ProcessVariables"]["status"]) {
-            console.log(this.qde.application.loanDetails.propertyType);
-            if(this.qde.application.loanDetails.existingLoans.liveLoan > 0 ){
-              
-                this.goToNextSlide(swiperInstance);
-            }else{
-              
-              // alert("Loan Detail process is Completed, you didn't have any existing loan for further step ")
+      this.qde.application.loanDetails.existingLoans = {
+        liveLoan: this.liveLoan
+      };
+    
+      this.qdeHttp
+        .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
+        .subscribe(
+          response => {
+            // If successful
+            if (response["ProcessVariables"]["status"]) {
+              console.log(this.qde.application.loanDetails.propertyType);
+              if(this.qde.application.loanDetails.existingLoans.liveLoan > 0 ){
+                
+                  this.goToNextSlide(swiperInstance);
+              }else{
+                
+                // alert("Loan Detail process is Completed, you didn't have any existing loan for further step ")
+              }
+            
+            } else {
+              // Throw Invalid Pan Error
             }
-          
-          } else {
-            // Throw Invalid Pan Error
+          },
+          error => {
+            console.log("response : ", error);
           }
-        },
-        error => {
-          console.log("response : ", error);
-        }
-      );
+        );
+    }
   }
 
   submitMonthlyEmi(form: NgForm, swiperInstance?: Swiper) {
-    if (form && !form.valid) {
-      return;
-    }
-
-    this.qde.application.loanDetails.existingLoans = {
-      monthlyEmi: this.monthlyEmiValue
-    };
-
-    this.qdeHttp
-      .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
-      .subscribe(
-        response => {
-          // If successful
-          if (response["ProcessVariables"]["status"]) {
-            console.log(this.qde.application.loanDetails.propertyType);
-            this.goToNextSlide(swiperInstance);
-          } else {
-            // Throw Invalid Pan Error
+    if(this.isTBMLoggedIn) {
+      this.goToNextSlide(swiperInstance);
+    } else {
+      if (form && !form.valid) {
+        return;
+      }
+  
+      this.qde.application.loanDetails.existingLoans = {
+        monthlyEmi: this.monthlyEmiValue
+      };
+  
+      this.qdeHttp
+        .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
+        .subscribe(
+          response => {
+            // If successful
+            if (response["ProcessVariables"]["status"]) {
+              console.log(this.qde.application.loanDetails.propertyType);
+              this.goToNextSlide(swiperInstance);
+            } else {
+              // Throw Invalid Pan Error
+            }
+          },
+          error => {
+            console.log("response : ", error);
           }
-        },
-        error => {
-          console.log("response : ", error);
-        }
-      );
+        );
+    }
   }
 
   clssProbabilityCheck() {

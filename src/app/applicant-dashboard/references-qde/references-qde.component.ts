@@ -13,6 +13,7 @@ import Qde from 'src/app/models/qde.model';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
 import { QdeService } from 'src/app/services/qde.service';
 import { CommonDataService } from 'src/app/services/common-data.service';
+import { Subscription } from 'rxjs';
 
 
 interface Item {
@@ -171,6 +172,9 @@ export class ReferencesQdeComponent implements OnInit {
   referenceId2: number;
 
   isReadOnly: boolean = false;
+  isEligibilityForReview: boolean = false;
+  isEligibilityForReviewsSub: Subscription;
+  isTBMLoggedIn: boolean;
 
   constructor(
     private renderer: Renderer2,
@@ -272,6 +276,15 @@ export class ReferencesQdeComponent implements OnInit {
       } else {
         this.qde = this.qdeService.getQde();
       }
+
+      if(params['applicationId'] != null) {
+        if(this.isEligibilityForReviewsSub != null) {
+          this.isEligibilityForReviewsSub.unsubscribe();
+        }
+        this.isEligibilityForReviewsSub = this.cds.isEligibilityForReviews.subscribe(val => {
+          this.isEligibilityForReview = val.find(v => v.applicationId == params['applicationId'])['isEligibilityForReview'];
+        });
+      }
     });
 
     this.route.fragment.subscribe(fragment => {
@@ -287,6 +300,20 @@ export class ReferencesQdeComponent implements OnInit {
       }
     });
 
+
+    this.cds.applicationId.subscribe(val => {
+      this.applicationId = val;
+      if(JSON.parse(localStorage.getItem('roles')).includes('TBM')) {
+        this.cds.setReadOnlyForm(true);
+      } else {
+        this.cds.setReadOnlyForm(false);
+      }
+    });
+
+ 
+    this.cds.isTBMLoggedIn.subscribe(val => {
+      this.isTBMLoggedIn = val;
+    });
     /********************************************************************
     * Check for User and set isReadOnly=true to disable editing of fields
     ********************************************************************/
@@ -380,159 +407,178 @@ export class ReferencesQdeComponent implements OnInit {
   }
 
   submitRelationWithApplicant1(form: NgForm, swiperInstance?: Swiper) {
-    if (form && !form.valid) {
-      return;
-    }
 
-    this.qde.application.references.referenceOne.relationShip = this.selectedReferenceOne;
-
-    this.qdeHttp
-      .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
-      .subscribe(
-        response => {
-          // If successful
-          if (
-            response["Error"] === "0" &&
-            response["ProcessVariables"]["status"]
-          ) {
-            this.referenceId1 = this.qde.application.references.referenceOne.referenceId;
-            console.log(
-              this.qde.application.references.referenceOne.relationShip
-            );
-            this.goToNextSlide(swiperInstance);
-          } else {
-            alert(response["ErrorMessage"]);
+    if(this.isTBMLoggedIn) {
+      this.goToNextSlide(swiperInstance);
+    } else {
+      if (form && !form.valid) {
+        return;
+      }
+  
+      this.qde.application.references.referenceOne.relationShip = this.selectedReferenceOne;
+  
+      this.qdeHttp
+        .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
+        .subscribe(
+          response => {
+            // If successful
+            if (
+              response["Error"] === "0" &&
+              response["ProcessVariables"]["status"]
+            ) {
+              this.referenceId1 = this.qde.application.references.referenceOne.referenceId;
+              console.log(
+                this.qde.application.references.referenceOne.relationShip
+              );
+              this.goToNextSlide(swiperInstance);
+            } else {
+              alert(response["ErrorMessage"]);
+            }
+          },
+          error => {
+            console.log("response : ", error);
+            alert(error["ErrorMessage"]);
           }
-        },
-        error => {
-          console.log("response : ", error);
-          alert(error["ErrorMessage"]);
-        }
-      );
-
-    console.log("submitted");
+        );
+  
+      console.log("submitted");
+    }
   }
 
   submitReference1Detail(form: NgForm, swiperInstance?: Swiper) {
-    if (form && !form.valid) {
-      return;
-    }
-
-    this.qde.application.references.referenceOne = {
-      referenceId: this.referenceId1,
-      title: this.selectedTiltle1,
-      fullName: this.selectedName1,
-      mobileNumber: this.selectedMobile1,
-      addressLineOne: this.selectedAddressLineOne1,
-      addressLineTwo: this.selectedAddressLineTwo1
-    };
-
-    console.log(this.qde.application.references.referenceOne.relationShip);
-
-    this.qdeHttp
-      .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
-      .subscribe(
-        response => {
-          // If successful
-          if (
-            response["Error"] === "0" &&
-            response["ProcessVariables"]["status"]
-          ) {
-            console.log(
-              this.qde.application.references.referenceOne.relationShip
-            );
-            this.tabSwitch(1);
-          } else {
-            alert(response["ErrorMessage"]);
+    if(this.isTBMLoggedIn) {
+      this.tabSwitch(1);
+    } else {
+      if (form && !form.valid) {
+        return;
+      }
+  
+      this.qde.application.references.referenceOne = {
+        referenceId: this.referenceId1,
+        title: this.selectedTiltle1,
+        fullName: this.selectedName1,
+        mobileNumber: this.selectedMobile1,
+        addressLineOne: this.selectedAddressLineOne1,
+        addressLineTwo: this.selectedAddressLineTwo1
+      };
+  
+      console.log(this.qde.application.references.referenceOne.relationShip);
+  
+      this.qdeHttp
+        .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
+        .subscribe(
+          response => {
+            // If successful
+            if (
+              response["Error"] === "0" &&
+              response["ProcessVariables"]["status"]
+            ) {
+              console.log(
+                this.qde.application.references.referenceOne.relationShip
+              );
+              this.tabSwitch(1);
+            } else {
+              alert(response["ErrorMessage"]);
+            }
+          },
+          error => {
+            alert(error["ErrorMessage"]);
+            console.log("response : ", error);
           }
-        },
-        error => {
-          alert(error["ErrorMessage"]);
-          console.log("response : ", error);
-        }
-      );
-
-    console.log("submitted");
+        );
+  
+      console.log("submitted");
+    }
   }
 
   submitRelationWithApplicant2(form: NgForm, swiperInstance?: Swiper) {
-    if (form && !form.valid) {
-      return;
-    }
 
-    this.qde.application.references.referenceTwo.relationShip = this.selectedReferenceTwo;
-
-    //console.log(this.qde.application.references.referenceOne.relationShip);
-
-    this.qdeHttp
-      .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
-      .subscribe(
-        response => {
-          // If successful
-          if (
-            response["Error"] === "0" &&
-            response["ProcessVariables"]["status"]
-          ) {
-            this.referenceId2 = this.qde.application.references.referenceTwo.referenceId;
-            // console.log(this.qde.application.references.referenceOne.relationShip);
-            this.goToNextSlide(swiperInstance);
-          } else {
-            alert(response["ErrorMessage"]);
+    if(this.isTBMLoggedIn) {
+      this.goToNextSlide(swiperInstance);
+    } else {
+      if (form && !form.valid) {
+        return;
+      }
+  
+      this.qde.application.references.referenceTwo.relationShip = this.selectedReferenceTwo;
+  
+      //console.log(this.qde.application.references.referenceOne.relationShip);
+  
+      this.qdeHttp
+        .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
+        .subscribe(
+          response => {
+            // If successful
+            if (
+              response["Error"] === "0" &&
+              response["ProcessVariables"]["status"]
+            ) {
+              this.referenceId2 = this.qde.application.references.referenceTwo.referenceId;
+              // console.log(this.qde.application.references.referenceOne.relationShip);
+              this.goToNextSlide(swiperInstance);
+            } else {
+              alert(response["ErrorMessage"]);
+            }
+          },
+          error => {
+            alert(error["ErrorMessage"]);
+            console.log("response : ", error);
           }
-        },
-        error => {
-          alert(error["ErrorMessage"]);
-          console.log("response : ", error);
-        }
-      );
-
-    console.log("submitted");
+        );
+  
+      console.log("submitted");
+    }
   }
 
   applicationId: string;
   applicationStatus: string = "10";
 
   submitReference2Detail(form: NgForm, swiperInstance?: Swiper) {
-    if (form && !form.valid) {
-      return;
-    }
 
-    this.qde.application.references.referenceTwo = {
-      referenceId: this.referenceId2,
-      title: this.selectedTiltle2,
-      fullName: this.selectedName2,
-      mobileNumber: this.selectedMobile2,
-      addressLineOne: this.selectedAddressLineOne2,
-      addressLineTwo: this.selectedAddressLineTwo2
-    };
-
-    console.log(this.qde.application.references.referenceOne.relationShip);
-
-    this.qdeHttp
-      .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
-      .subscribe(
-        response => {
-          // If successful
-          if (
-            response["Error"] === "0" &&
-            response["ProcessVariables"]["status"]
-          ) {
-            console.log(
-              this.qde.application.references.referenceOne.relationShip
-            );
-            this.tabSwitch(1);
-          } else {
-            alert(response["ErrorMessage"]);
+    if(this.isTBMLoggedIn) {
+      this.tabSwitch(1);
+    } else {
+      if (form && !form.valid) {
+        return;
+      }
+  
+      this.qde.application.references.referenceTwo = {
+        referenceId: this.referenceId2,
+        title: this.selectedTiltle2,
+        fullName: this.selectedName2,
+        mobileNumber: this.selectedMobile2,
+        addressLineOne: this.selectedAddressLineOne2,
+        addressLineTwo: this.selectedAddressLineTwo2
+      };
+  
+      console.log(this.qde.application.references.referenceOne.relationShip);
+  
+      this.qdeHttp
+        .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
+        .subscribe(
+          response => {
+            // If successful
+            if (
+              response["Error"] === "0" &&
+              response["ProcessVariables"]["status"]
+            ) {
+              console.log(
+                this.qde.application.references.referenceOne.relationShip
+              );
+              this.tabSwitch(1);
+            } else {
+              alert(response["ErrorMessage"]);
+            }
+          },
+          error => {
+            alert(error["ErrorMessage"]);
+            console.log("response : ", error);
           }
-        },
-        error => {
-          alert(error["ErrorMessage"]);
-          console.log("response : ", error);
-        }
-      );
-
-    console.log("submitted");
-    //this.qdeHttp.setStatusApi(this.applicationId, this.applicationStatus).subscribe(res => {}, err => {});
+        );
+  
+      console.log("submitted");
+      //this.qdeHttp.setStatusApi(this.applicationId, this.applicationStatus).subscribe(res => {}, err => {});
+    }
   }
 
   temp;

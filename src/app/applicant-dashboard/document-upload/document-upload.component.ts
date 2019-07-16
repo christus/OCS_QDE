@@ -14,6 +14,7 @@ import Qde from 'src/app/models/qde.model';
 
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { CommonDataService } from 'src/app/services/common-data.service';
+import { Subscription } from 'rxjs';
 
 enum DocumentCategory {
   ID_PROOF = "ID Proof",
@@ -166,6 +167,9 @@ export class DocumentUploadComponent implements OnInit {
   ];
 
   isReadOnly: boolean = false;
+  isEligibilityForReview: boolean = false;
+  isEligibilityForReviewsSub: Subscription;
+  isTBMLoggedIn: boolean;
  
   constructor(
     private renderer: Renderer2,
@@ -224,6 +228,20 @@ export class DocumentUploadComponent implements OnInit {
       } else {
         this.qde = this.qdeService.getQde();
       }
+
+
+      if(params['applicationId'] != null) {
+        if(this.isEligibilityForReviewsSub != null) {
+          this.isEligibilityForReviewsSub.unsubscribe();
+        }
+        this.isEligibilityForReviewsSub = this.cds.isEligibilityForReviews.subscribe(val => {
+          this.isEligibilityForReview = val.find(v => v.applicationId == params['applicationId'])['isEligibilityForReview'];
+        });
+      }
+    });
+
+    this.cds.isTBMLoggedIn.subscribe(val => {
+      this.isTBMLoggedIn = val;
     });
 
     this.route.fragment.subscribe(fragment => {
