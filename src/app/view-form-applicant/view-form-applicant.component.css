@@ -60,3 +60,8 @@
 .col-4.padd0 {
     padding: 0;
 }
+.col-3.org-name {
+    width: 33%;
+    float: left;
+    padding: 0 15px;
+}

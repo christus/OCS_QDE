@@ -54,6 +54,7 @@
                         [alternateResidenceNumberStdCode]="alternateResidenceNumberStdCode[applicantIndex]"
                         [alternateResidenceNumberPhoneNumber]="alternateResidenceNumberPhoneNumber[applicantIndex]"
                         [addressCityState]="addressCityState[applicantIndex]"
+                        [permAddressCityState]="permAddressCityState[applicantIndex]"
                         [otherReligion]="otherReligion[applicantIndex]"
                         [organizationDetails]="organizationDetails[applicantIndex]"
                         [registeredAddressCityState]="registeredAddressCityState[applicantIndex]"
@@ -63,6 +64,7 @@
                         [coApplicantsForDashboard]="coApplicantsForDashboard[applicantIndex]"
                         [officialCorrespondenceStdCode]="officialCorrespondenceStdCode[applicantIndex]"
                         [officialCorrespondencePhoneNumber]="officialCorrespondencePhoneNumber[applicantIndex]"
+                        [officialCorrespondenceCityState]="officialCorrespondenceCityState[applicantIndex]"
                         [religions]="religions"
                         [qualifications]="qualifications"
                         [occupations]="occupations"
@@ -86,6 +88,7 @@
                         [selectedCategory]="selectedCategory[applicantIndex]"
                         [selectedOccupation]="selectedOccupation[applicantIndex]"
                         [selectedResidence]="selectedResidence[applicantIndex]"
+                        [permSelectedResidence]="permSelectedResidence[applicantIndex]"
                         [selectedSpouseTitle]="selectedSpouseTitle[applicantIndex]"
                         [selectedFatherTitle]="selectedFatherTitle[applicantIndex]"
                         [selectedMotherTitle]="selectedMotherTitle[applicantIndex]"
@@ -125,6 +128,7 @@
                   [alternateResidenceNumberStdCode]="alternateResidenceNumberStdCode[c]"
                   [alternateResidenceNumberPhoneNumber]="alternateResidenceNumberPhoneNumber[c]"
                   [addressCityState]="addressCityState[c]"
+                  [permAddressCityState]="permAddressCityState[c]"
                   [otherReligion]="otherReligion[c]"
                   [organizationDetails]="organizationDetails[c]"
                   [registeredAddressCityState]="registeredAddressCityState[c]"
@@ -134,6 +138,7 @@
                   [coApplicantsForDashboard]="coApplicantsForDashboard[c]"
                   [officialCorrespondenceStdCode]="officialCorrespondenceStdCode[c]"
                   [officialCorrespondencePhoneNumber]="officialCorrespondencePhoneNumber[c]"
+                  [officialCorrespondenceCityState]="officialCorrespondenceCityState[c]"
                   [religions]="religions"
                   [qualifications]="qualifications"
                   [occupations]="occupations"
@@ -157,6 +162,7 @@
                   [selectedCategory]="selectedCategory[c]"
                   [selectedOccupation]="selectedOccupation[c]"
                   [selectedResidence]="selectedResidence[c]"
+                  [permSelectedResidence]="permSelectedResidence[c]"
                   [selectedSpouseTitle]="selectedSpouseTitle[c]"
                   [selectedFatherTitle]="selectedFatherTitle[c]"
                   [selectedMotherTitle]="selectedMotherTitle[c]"
@@ -681,7 +687,7 @@
                   </div>
                   <div class="btn-wrap">
                       <!-- <button class="btn btn-primary" (click)="tabSwitch(4)">Continue</button> -->
-                      <button class="btn btn-primary" (click)="setStatus()">Submit</button>
+                      <button class="btn btn-primary" (click)="setStatus()">QDE Submit</button>
                   </div>
               </div>
 
@@ -691,7 +697,7 @@
                             <button [routerLink]="['/document-uploads', applicationId, 'applicant', applicantId]" class="btn btn-default edit">Edit</button>
                           </div>  
                   <h2 class="title">Document upload</h2>
-                  <form action="" class="bs-form" #documentUploadForm="ngForm" (ngSubmit)="sendSMS(documentUploadForm)">
+                  <form class="bs-form" *ngFor="let a of qde.application.applicants;let i=index;">
                     <div class="bs-card">
                         <h3 class="card-title">Upload Aadhar card</h3>
                         
@@ -918,7 +924,7 @@
                             <div class="row">
                                 <div class="col-12 center">
                                     <div class="btn-wrap center">
-                                        <button type="submit" (click)="setStatus()" class="btn btn-primary">Submit</button>
+                                        <button type="submit" [disabled]="a.documents.length < 1" [ngClass]="{'disabled': (a.documents.length < 1)}" (click)="setStatus()" class="btn btn-primary">Submit</button>
                                     </div>
                                 </div>
                             </div>

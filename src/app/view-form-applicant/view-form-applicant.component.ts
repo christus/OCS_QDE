@@ -16,16 +16,17 @@ export class ViewFormApplicantComponent implements OnInit {
   @Input() alternateResidenceNumberStdCode: any;
   @Input() alternateResidenceNumberPhoneNumber: any;
   @Input() addressCityState: any;
+  @Input() permAddressCityState: any;
   @Input() otherReligion: any;
   @Input() organizationDetails: any;
-  @Input() registeredAddressCityState: any;
-  @Input() corporateAddressCityState: any;
+  @Input() registeredAddressCityState: any; //
+  @Input() corporateAddressCityState: any; //
   @Input() corporateAddressStdCode: any;
   @Input() corporateAddressPhoneNumber: any;
   @Input() coApplicantsForDashboard: any;
   @Input() officialCorrespondenceStdCode: any;
   @Input() officialCorrespondencePhoneNumber: any;
-  @Input() officialCorrespondenceCityState: any;
+  @Input() officialCorrespondenceCityState: any; //
   @Input() religions: any;
   @Input() qualifications: any;
   @Input() occupations: any;
@@ -49,6 +50,7 @@ export class ViewFormApplicantComponent implements OnInit {
   @Input() selectedCategory: any;
   @Input() selectedOccupation: any;
   @Input() selectedResidence: any;
+  @Input() permSelectedResidence: any;
   @Input() selectedSpouseTitle: any;
   @Input() selectedFatherTitle: any;
   @Input() selectedMotherTitle: any;

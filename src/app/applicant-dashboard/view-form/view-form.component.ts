@@ -80,6 +80,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
   alternateResidenceNumberStdCode: Array<string> = [];
   alternateResidenceNumberPhoneNumber: Array<string> = [];
   addressCityState: Array<string> = [];
+  permAddressCityState: Array<string> = [];
   otherReligion: Array<string> = [];
   organizationDetails: Array<{day: Item, month: Item, year: Item}> = [];
   registeredAddressCityState: Array<string> = [];
@@ -125,6 +126,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
   selectedCategory: Array<Item> = [];
   selectedOccupation: Array<Item> = [];
   selectedResidence: Array<Item> = [];
+  permSelectedResidence: Array<Item> = [];
   selectedSpouseTitle: Array<Item> = [];
   selectedFatherTitle: Array<Item> = [];
   selectedMotherTitle: Array<Item> = [];
@@ -746,6 +748,11 @@ export class ViewFormComponent implements OnInit, OnDestroy {
         this.selectedResidence[i] = (this.residences[(parseInt(eachApplicant.communicationAddress.residentialStatus)) - 1]);
       }
 
+      // Permanent address
+      if( ! isNaN(parseInt(eachApplicant.permanentAddress.residentialStatus)) ) {
+        this.permSelectedResidence[i] = (this.residences[(parseInt(eachApplicant.permanentAddress.residentialStatus)) - 1]);
+      }
+
       if( ! isNaN(parseInt(eachApplicant.maritalStatus.status)) ) {
         this.selectedMaritialStatus[i] = (this.maritals[(parseInt(eachApplicant.maritalStatus.status))-1]);
       }
@@ -798,11 +805,12 @@ export class ViewFormComponent implements OnInit, OnDestroy {
     console.log("alternateResidenceNumberStdCode: " ,this.alternateResidenceNumberStdCode);
     console.log("alternateResidenceNumberPhoneNumber: " ,this.alternateResidenceNumberPhoneNumber);
     this.addressCityState.push(eachApplicant.communicationAddress.city + '/'+ eachApplicant.communicationAddress.state);
+    this.permAddressCityState.push(eachApplicant.permanentAddress.city + '/'+ eachApplicant.permanentAddress.state);
     console.log("addressCityState: " ,this.addressCityState);
     this.otherReligion.push(eachApplicant.other.religion == '6' ? eachApplicant.other.religion : '');
 
     this.registeredAddressCityState.push(eachApplicant.registeredAddress.city +'/'+ eachApplicant.registeredAddress.state);
-    this.corporateAddressCityState.push(eachApplicant.corporateAddress.city +'-'+ eachApplicant.corporateAddress.state);
+    this.corporateAddressCityState.push(eachApplicant.corporateAddress.city +'/'+ eachApplicant.corporateAddress.state);
     this.corporateAddressStdCode.push(eachApplicant.corporateAddress.stdNumber != "" ? eachApplicant.corporateAddress.stdNumber.split("-")[0] : "");
     this.corporateAddressPhoneNumber.push(eachApplicant.corporateAddress.stdNumber != "" ? eachApplicant.corporateAddress.stdNumber.split("-")[1] : "");
     this.officialCorrespondenceStdCode.push(eachApplicant.officialCorrespondence.officeNumber != "" ? eachApplicant.officialCorrespondence.officeNumber.split("-")[0] : "");
@@ -819,7 +827,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
   }
   applicationStatus: string = "5";
 
-  setStatus(){
+  setStatus() {
      this.qdeHttp.setStatusApi(this.applicationId, this.applicationStatus).subscribe(res => {}, err => {});
      this.sendSMS();
   }

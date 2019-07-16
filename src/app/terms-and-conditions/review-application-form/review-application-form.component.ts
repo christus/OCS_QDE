@@ -26,6 +26,7 @@ export class ReviewApplicationFormComponent implements OnInit {
   alternateResidenceNumberStdCode: Array<string> = [];
   alternateResidenceNumberPhoneNumber: Array<string> = [];
   addressCityState: Array<string> = [];
+  permAddressCityState: Array<string> = [];
   otherReligion: Array<string> = [];
   organizationDetails: Array<{day: Item, month: Item, year: Item}> = [];
   registeredAddressCityState: Array<string> = [];
@@ -35,6 +36,7 @@ export class ReviewApplicationFormComponent implements OnInit {
   coApplicantsForDashboard: Array<Applicant> = [];
   officialCorrespondenceStdCode: Array<string> = [];
   officialCorrespondencePhoneNumber: Array<string> = [];
+  officialCorrespondenceCityState: Array<string> = [];
 
   isAlternateEmailId: Array<boolean> = [];
   isAlternateMobileNumber: Array<boolean> = [];
@@ -74,6 +76,7 @@ export class ReviewApplicationFormComponent implements OnInit {
   selectedCategory: Array<Item> = [];
   selectedOccupation: Array<Item> = [];
   selectedResidence: Array<Item> = [];
+  permSelectedResidence: Array<Item> = [];
   selectedSpouseTitle: Array<Item> = [];
   selectedFatherTitle: Array<Item> = [];
   selectedMotherTitle: Array<Item> = [];
@@ -454,6 +457,12 @@ export class ReviewApplicationFormComponent implements OnInit {
         this.selectedResidence[i] = (this.residences[(parseInt(eachApplicant.communicationAddress.residentialStatus)) - 1]);
       }
 
+        // Permanent address
+        if( ! isNaN(parseInt(eachApplicant.permanentAddress.residentialStatus)) ) {
+        this.permSelectedResidence[i] = (this.residences[(parseInt(eachApplicant.permanentAddress.residentialStatus)) - 1]);
+      }
+  
+
       if( ! isNaN(parseInt(eachApplicant.maritalStatus.status)) ) {
         this.selectedMaritialStatus[i] = (this.maritals[(parseInt(eachApplicant.maritalStatus.status))-1]);
       }
@@ -502,16 +511,17 @@ export class ReviewApplicationFormComponent implements OnInit {
     this.alternateResidenceNumberStdCode.push(eachApplicant.contactDetails.alternateResidenceNumber != "" ? eachApplicant.contactDetails.alternateResidenceNumber.split("-")[0] : "");
     this.alternateResidenceNumberPhoneNumber.push(eachApplicant.contactDetails.alternateResidenceNumber != "" ? eachApplicant.contactDetails.alternateResidenceNumber.split("-")[1] : "");
     this.addressCityState.push(eachApplicant.communicationAddress.city + '/'+ eachApplicant.communicationAddress.state);
-
+    this.permAddressCityState.push(eachApplicant.permanentAddress.city + '/'+ eachApplicant.permanentAddress.state);
     this.otherReligion.push(eachApplicant.other.religion == '6' ? eachApplicant.other.religion : '');
 
     this.registeredAddressCityState.push(eachApplicant.registeredAddress.city +'/'+ eachApplicant.registeredAddress.state);
-    this.corporateAddressCityState.push(eachApplicant.corporateAddress.city +'-'+ eachApplicant.corporateAddress.state);
+    this.corporateAddressCityState.push(eachApplicant.corporateAddress.city +'/'+ eachApplicant.corporateAddress.state);
     this.corporateAddressStdCode.push(eachApplicant.corporateAddress.stdNumber != "" ? eachApplicant.corporateAddress.stdNumber.split("-")[0] : "");
     this.corporateAddressPhoneNumber.push(eachApplicant.corporateAddress.stdNumber != "" ? eachApplicant.corporateAddress.stdNumber.split("-")[1] : "");
     this.officialCorrespondenceStdCode.push(eachApplicant.officialCorrespondence.officeNumber != "" ? eachApplicant.officialCorrespondence.officeNumber.split("-")[0] : "");
     this.officialCorrespondencePhoneNumber.push(eachApplicant.officialCorrespondence.officeNumber != "" ? eachApplicant.officialCorrespondence.officeNumber.split("-")[1] : "");
-
+    this.officialCorrespondenceCityState.push(eachApplicant.officialCorrespondence.city + '/'+ eachApplicant.officialCorrespondence.state);
+    console.log("officialCorrespondenceCityState: " ,this.officialCorrespondenceCityState);
     this.isAlternateEmailId.push(eachApplicant.contactDetails.alternateEmailId != "" ? true : false);
     this.isAlternateMobileNumber.push(eachApplicant.contactDetails.alternateMobileNumber != null ? true : false);
     this.isAlternateResidenceNumber.push(eachApplicant.contactDetails.alternateResidenceNumber != "" ? true : false);

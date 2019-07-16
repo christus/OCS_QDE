@@ -221,7 +221,7 @@
 
                       <label for="mob-n">Mobile number</label>
                       <span class="optional">10 digit</span>
-                      <a href="javascript:void(0);" class="sent-otp modal-init" data-target="sent-otp-modal"><span class="text">sent OTP</span><span class="icon icon-tick"></span></a>
+                      <!-- <a href="javascript:void(0);" class="sent-otp modal-init" data-target="sent-otp-modal"><span class="text">sent OTP</span><span class="icon icon-tick"></span></a> -->
 
                       
                   </div>
@@ -241,8 +241,8 @@
 
                       <label for="alter-mo" *ngIf="altMobileNo.value == ''">Alternate mobile no</label>
                       <span class="optional">10 digit</span>
-                      <a href="javascript:void(0);" class="sent-otp modal-init" data-target="sent-otp-modal"><span class="text">sent OTP</span><span class="icon icon-tick"></span></a>
-                      
+                      <!-- <a href="javascript:void(0);" class="sent-otp modal-init" data-target="sent-otp-modal"><span class="text">sent OTP</span><span class="icon icon-tick"></span></a>
+                       -->
                   </div>
                   <div class="residence-no">
                       <div class="form-group">
@@ -297,6 +297,8 @@
   </div>
   <div class="bs-card" *ngIf="qde.application.applicants[applicantIndex].isIndividual" [ngClass]="{'incomplete': isIncomplete.communicationDetails}">
       <h3 class="card-title">Communication details</h3>
+
+      <!-- Communication Address -->
       <div class="bs-form">
           <div class="row">
               <div class="col-6">
@@ -373,7 +375,7 @@
                             required
                             fieldFill
                             name="cityState"
-                            [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.city"
+                            [(ngModel)]="addressCityState"
                             pattern="^[0-9A-Za-z,_#]+$" />
 
                     <label for="cityStat">City/State</label>
@@ -412,6 +414,112 @@
               </div>
           </div>
       </div>
+
+      <!-- Permanent Address -->
+      <div class="bs-form" *ngIf="!qde.application.applicants[applicantIndex].communicationAddress.permanentAddress">
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group">
+                    <span class="control-title">Residential status</span>
+                    <kendo-dropdownlist class="form-control"
+                                    [data]="residences" 
+                                    textField="key"
+                                    valueField="value"
+                                    name="residentialStatus"
+                                    [(ngModel)]="permSelectedResidence">
+                    </kendo-dropdownlist>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                      <input readonly="true"   type="text"
+                          class="form-control"
+                          id="address1"
+                          fieldFill
+                          [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.addressLineOne"
+                          pattern="^[0-9A-Za-z,_#\s]+$"
+                          name="addressLineOne"
+                          #address1="ngModel"
+                          required />
+
+                    
+
+                  <label for="address12">Address line 1</label>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                  <input readonly="true"   type="text"
+                          class="form-control"
+                          id="address2"
+                          fieldFill
+                          [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.addressLineTwo"
+                          pattern="^[0-9A-Za-z,_#\s]+$"
+                          name="addressLineTwo"
+                          #address2="ngModel"
+                          required>
+
+                    <label for="address22" >Address line 2</label>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group">
+                      <input readonly="true"  type="number" class="form-control" id="pincode" required
+                      [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.zipcode"
+                      name="pinCode"
+                      fieldFill
+                      #commPinCode="ngModel" 
+                      maxlength="6"
+                      pattern="^[0-9]+$" />
+                    <label for="pincod">Pincode</label>
+
+                   
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                      <input readonly="true"   type="text"
+                          class="form-control"
+                          id="cityState"
+                          required
+                          fieldFill
+                          name="cityState"
+                          [(ngModel)]="permAddressCityState"
+                          pattern="^[0-9A-Za-z,_#]+$" />
+
+                  <label for="cityStat">City/State</label>
+
+                 
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group typ-range">
+                    <span class="subtitle">Number of years in current residence</span>
+                    <input readonly="true"     type="number"
+                              name="numberOfYearsInCurrentResidence"
+                              class="form-control"
+                              fieldFill
+                              [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.numberOfYearsInCurrentResidence"
+                              min=0
+                              max=90
+                              #numberOfYearsInCurrentResidence="ngModel"
+                              required />
+                      
+                </div>
+            </div>
+        </div>
+    </div>
   </div>
   <div class="bs-card" *ngIf="qde.application.applicants[applicantIndex].isIndividual" [ngClass]="{'incomplete': isIncomplete.maritalStatus}">
       <h3 class="card-title">Marital Status</h3>
@@ -813,7 +921,7 @@
                               id="offCityState"
                               required
                               fieldFill
-                              [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.city"
+                              [(ngModel)]="officialCorrespondenceCityState"
                               #offCityState="ngModel"
                               name="cityState"
                               pattern="^[0-9A-Za-z,_#]+$">
@@ -873,86 +981,12 @@
       </div>
   </div>
 
-  <div class="bs-card" [ngClass]="{'incomplete': isIncomplete.incomeDetails}">
-      <h3 class="card-title">Income details</h3>
-      <div class="bs-form">
-          <div class="row">
-              <div class="col-12">
-                  <div class="form-group inr filled">
-                      <input type="text" class="form-control"
-                          id="annualFamilyIncome1"
-                          [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.annualFamilyIncome"
-                          #annualFamilyIncome1="ngModel"
-                          name="annualFamilyIncome"
-                          fieldFill
-                          required/>
-                        <label for="annualFamilyIncome12">Annual Family Income <span class="lakhs">(in lakhs)</span> </label>
-                        <span class="addon">
-                            <span class="icon icon-inr"></span>
-                          </span>
-                          <span class="in-word"></span>
-                  </div>
-              </div>
-          </div>
-          <div class="row">
-                <div class="col-12">
-                    <div class="form-group inr">
-                            <input type="text" class="form-control" 
-                            id="monthlyExpenditure2"
-                            [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.monthlyExpenditure"
-                            #monthlyExpenditure2="ngModel"
-                            name="monthlyExpenditure"
-                            fieldFill
-                            required/>
-                          <label for="monthlyExpenditure22" >Monthly Expenditure</label>
-                                    <span class="addon">
-                                        <span class="icon icon-inr"></span>
-                                    </span>
-                                    <span class="in-word"></span>
-                    </div>
-                </div>
-            </div>
-          <div class="row">
-              <div class="col-12">
-                  <div class="form-group inr">
-                      <input type="text" class="form-control" 
-                                  id="monthlyIncome1"
-                                  [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.monthlyIncome"
-                                  #monthlyIncome1="ngModel"
-                                  fieldFill
-                                  name="monthlyIncome"
-                                  required/>
-                                  <label for="monthlyIncome13">Monthly income</label>
-                                  <span class="addon">
-                                      <span class="icon icon-inr"></span>
-                                  </span>
-                                  <span class="in-word"></span>
-                  </div>
-              </div>
-          </div>
-          <div class="row">
-              <div class="col-12">
-                  <div class="form-group">
-                      <span class="control-title">Assessment Methodology</span>
-                      <kendo-dropdownlist class="form-control"
-                          [data]="assessmentMethodology" 
-                          textField="key"
-                          valueField="value"
-                          name="assessmentMethodology"
-                          [(ngModel)]="selectedAssesmentMethodology">
-                      </kendo-dropdownlist>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </div>
-
   <!-- Non Inidividual -->
   <div class="bs-card" *ngIf="!qde.application.applicants[applicantIndex].isIndividual" [ngClass]="{'incomplete': isIncomplete.personalDetails}">
           <h3 class="card-title">Organization Details</h3>
           <div class="bs-form">
               <div class="row">
-                  <div class="col-3">
+                  <div class="col-3 org-name">
                       <div class="form-group">
                           <input type="text"
                                   class="form-control" 
@@ -969,9 +1003,9 @@
               <div class="row">
                   <div class="col-4">
                           <div class="form-group typ-select">
-                                  <span class="control-title">Date of Incorporation</span>
+                                  <span class="control-title1">Date of Incorporation</span>
                                   <div class="row">
-                                      <div class="col4">
+                                      <div class="col4 padd0">
                                           <kendo-dropdownlist class="form-control"
                                           [data]="days"
                                           textField="key"
@@ -981,7 +1015,7 @@
                                           </kendo-dropdownlist>
                                       </div>
 
-                                      <div class="col4">
+                                      <div class="col4 padd0">
                                           <kendo-dropdownlist class="form-control"
                                           [data]="months"
                                           textField="key"
@@ -991,7 +1025,7 @@
                                           </kendo-dropdownlist>
                                       </div>
 
-                                      <div class="col4">
+                                      <div class="col4 padd0">
                                           <kendo-dropdownlist class="form-control"
                                           [data]="years"
                                           textField="key"
@@ -1077,7 +1111,7 @@
                                   <input type="text" class="form-control"
                                     id="regAddrCityState"
                                     required
-                                    [(ngModel)]="qde.application.applicants[applicantIndex].registeredAddress.city"
+                                    [(ngModel)]="registeredAddressCityState"
                                     name="cityState"
                                     fieldFill
                                     spellcheck="false" />
@@ -1147,7 +1181,7 @@
                                           class="form-control"
                                           id="city-state01" 
                                           required
-                                          [(ngModel)]="qde.application.applicants[applicantIndex].corporateAddress.city"
+                                          [(ngModel)]="corporateAddressCityState"
                                           name="corpCityState"
                                           fieldFill
                                           spellcheck="false" />
@@ -1273,5 +1307,80 @@
 
           </div>
   </div>
+
+
+  <div class="bs-card" [ngClass]="{'incomplete': isIncomplete.incomeDetails}">
+    <h3 class="card-title">Income details</h3>
+    <div class="bs-form">
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group inr filled">
+                    <input type="text" class="form-control"
+                        id="annualFamilyIncome1"
+                        [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.annualFamilyIncome"
+                        #annualFamilyIncome1="ngModel"
+                        name="annualFamilyIncome"
+                        fieldFill
+                        required/>
+                      <label for="annualFamilyIncome12">Annual Family Income <span class="lakhs">(in lakhs)</span> </label>
+                      <span class="addon">
+                          <span class="icon icon-inr"></span>
+                        </span>
+                        <span class="in-word"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+              <div class="col-12">
+                  <div class="form-group inr">
+                          <input type="text" class="form-control" 
+                          id="monthlyExpenditure2"
+                          [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.monthlyExpenditure"
+                          #monthlyExpenditure2="ngModel"
+                          name="monthlyExpenditure"
+                          fieldFill
+                          required/>
+                        <label for="monthlyExpenditure22" >Monthly Expenditure</label>
+                                  <span class="addon">
+                                      <span class="icon icon-inr"></span>
+                                  </span>
+                                  <span class="in-word"></span>
+                  </div>
+              </div>
+          </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group inr">
+                    <input type="text" class="form-control" 
+                                id="monthlyIncome1"
+                                [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.monthlyIncome"
+                                #monthlyIncome1="ngModel"
+                                fieldFill
+                                name="monthlyIncome"
+                                required/>
+                                <label for="monthlyIncome13">Monthly income</label>
+                                <span class="addon">
+                                    <span class="icon icon-inr"></span>
+                                </span>
+                                <span class="in-word"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <span class="control-title">Assessment Methodology</span>
+                    <kendo-dropdownlist class="form-control"
+                        [data]="assessmentMethodology" 
+                        textField="key"
+                        valueField="value"
+                        name="assessmentMethodology"
+                        [(ngModel)]="selectedAssesmentMethodology">
+                    </kendo-dropdownlist>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <hr *ngIf="isCoApplicant" />
