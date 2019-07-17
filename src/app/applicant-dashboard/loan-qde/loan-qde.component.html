@@ -377,7 +377,8 @@
                                             class="form-control"
                                             [ngModel]="value[0]"
                                             (ngModelChange)="valuechange($event, 0)" /> -->
-                                    <ng5-slider [(ngModel)]="liveLoan" ngModel name="liveLoans" [options]="liveLoanOption"></ng5-slider>
+                                    <ng5-slider [(ngModel)]="liveLoan" ngModel name="liveLoans" 
+                                    [options]="liveLoanOption"></ng5-slider>
                                 </div>
                               </div>
                             </div>
@@ -386,7 +387,9 @@
                             <div class="btn-wrap">
                                 <button  type="submit" class="btn btn-primary">Next</button>
                             </div>
-                            
+                            <!-- <div class="btn-wrap" *ngIf="qde.application.loanDetails.existingLoans.liveLoan == 0">
+                              <button  type="submit" class="btn btn-primary">Save</button>
+                          </div> -->
                           </form>
                         </div>
 
