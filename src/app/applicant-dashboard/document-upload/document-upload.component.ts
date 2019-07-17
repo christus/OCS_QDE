@@ -884,6 +884,7 @@ export class DocumentUploadComponent implements OnInit {
       },
       error => {
         console.log("Error : ", error);
+        alert(error.statusText);
       }
     );
   }
