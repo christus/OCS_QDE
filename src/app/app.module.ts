@@ -274,7 +274,7 @@ const appRoutes: Routes = [
         }
       },
       {
-        path: 'eazypay/thankyou-payment',
+        path: 'thankpayment',
         component: ThankPaymentComponent
       }
     ]
