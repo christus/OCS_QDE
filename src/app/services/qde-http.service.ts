@@ -146,8 +146,8 @@ createOrUpdatePersonalDetails(qde) {
     let processVariables = {
       userId: localStorage.getItem("userId"),
       firstName: (search != null) ? search : "",
-      fromDate: (fromDay != 'DD' || fromMonth != 'MM' || fromYear != 'YYYY') ? fromYear+""+"-"+fromMonth+"-"+fromDay: "",
-      toDate: (toDay != 'DD' || toMonth != 'MM' || toYear != 'YYYY') ? toYear+""+"-"+toMonth+"-"+toDay: ""
+      fromDate: (fromDay != 'DD' || fromMonth != 'MM' || fromYear != 'YYYY') ? new Date(fromYear+""+"-"+fromMonth+"-"+fromDay).toJSON(): "",
+      toDate: (toDay != 'DD' || toMonth != 'MM' || toYear != 'YYYY') ? new Date(toYear+""+"-"+toMonth+"-"+toDay).toJSON(): ""
     };
 
     const requestEntity: RequestEntity = {

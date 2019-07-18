@@ -40,7 +40,7 @@ export class LeadsListComponent implements OnInit {
   toYear: Item;
   assignedTo: Item;
   searchTxt: string;
-  show: boolean = false;
+  show: boolean = true;
 
   // Lead ID === Application ID
   userDetails: Array<UserDetails>;
