@@ -998,6 +998,19 @@ createOrUpdatePersonalDetails(qde) {
       "WorkflowId" : "ec16befc9f1b11e9a0040242ac110003"
    });
   }
+
+  dummyDuplicateAPI() {
+    return of({
+      applicants: [{
+        applicantId: "2943",
+        personalDetails: {
+          firstName: 'Deepen',
+          middleName: 'Naresh',
+          lastName: 'Dhamecha'
+        }
+      }]
+    });
+  }
 }
 
 

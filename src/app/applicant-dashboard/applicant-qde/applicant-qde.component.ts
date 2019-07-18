@@ -12,7 +12,7 @@ import Qde from 'src/app/models/qde.model';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
 import { QdeService } from 'src/app/services/qde.service';
 import { CommonDataService } from '../../services/common-data.service';
-import { Subscription } from 'rxjs';
+import { Subscription, of } from 'rxjs';
 import { errors } from '../../services/errors';
 import { MenubarHeaderComponent } from '../../menubar-header/menubar-header.component';
 import { environment } from 'src/environments/environment';
@@ -266,6 +266,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   isEligibilityForReview: boolean = false;
   isEligibilityForReviewsSub: Subscription;
   isTBMLoggedIn: boolean;
+
+  isDuplicateModalShown: boolean = true;
 
   constructor(private renderer: Renderer2,
               private route: ActivatedRoute,
@@ -1098,7 +1100,13 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       this.createOrUpdatePersonalDetailsSub5=this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
-          this.tabSwitch(2);
+          this.qdeHttp.dummyDuplicateAPI().subscribe(val => {
+            this.isDuplicateModalShown = true;
+            if(this.isDuplicateModalShown) {
+              
+            }
+            // this.tabSwitch(2);
+          });
         } else {
           // Throw Invalid Pan Error
         }

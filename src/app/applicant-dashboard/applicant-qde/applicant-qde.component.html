@@ -2822,5 +2822,38 @@
           </div>
       </div>
     <!-- <span class="cm-autoSave"><span class="cm-bold">Autosaved</span> <span>at 09:26 AM</span></span> -->
+
+
+    <div class="overlay" [ngClass]="{'active': isDuplicateModalShown}"></div>
+    <div class="bs-modal" id="duplicate-modal" [ngClass]="{'active': isDuplicateModalShown}">
+        <div class="modal-body duplicate-modal-body">
+            <h1 class="duplicate-title">Duplicate Entries Found</h1>
+            <table class="duplicate-table">
+                <thead>
+                    <tr>
+                        <th>Applicant ID</th>
+                        <th>Name</th>
+                        <th>Select</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Applicant ID No.</td>
+                        <td>FirstName LastName</td>
+                        <td>
+                            <form>
+                                <input type="radio" name="selectme" value="1" class="duplicate-radio" />
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="duplicate-btn-wrapper">
+                <button type="button" class="duplicate-btn">Skip</button>
+                <button type="button" class="duplicate-btn grey" [disabled]="{'disabled': false}">Use this Data</button>
+            </div>
+        </div>
+    </div>
   </main>
   
