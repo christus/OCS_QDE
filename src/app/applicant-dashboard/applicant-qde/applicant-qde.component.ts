@@ -1587,7 +1587,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   //-------------------------------------------------------------
   // Organization Details
   //-------------------------------------------------------------
-  submitOrganizationDetails(form: NgForm, swiperInstance) {
+  submitOrganizationDetails(form: NgForm) {
     if(this.isTBMLoggedIn) {
       this.tabSwitch(12);
     } else {
