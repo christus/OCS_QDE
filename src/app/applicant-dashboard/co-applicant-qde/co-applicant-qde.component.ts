@@ -601,7 +601,12 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
         this.goToPrevSlide(swiperInstance);
       } else {
         // Go To Previous Tab
+        if(this.activeTab == 11){
+          this.tabSwitch(0);
+        }
+        else{
         this.tabSwitch(this.activeTab - 1);
+        }
       }
     }
   }
@@ -777,7 +782,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
   
                 }else {
                   // this.cds.changePanSlide2(true);
-                  this.tabSwitch(12);
+                  // this.tabSwitch(12);
+                  this.goToNextSlide(swiperInstance);
                 }
               } else {
                 this.panErrorCount++;
