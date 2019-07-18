@@ -30,6 +30,10 @@ interface Item {
 })
 export class CoApplicantQdeComponent implements OnInit, OnDestroy {
 
+  panImage:String;
+
+  isMobile:String;
+
   readonly errors = errors;
   panErrorCount: number = 0;
 

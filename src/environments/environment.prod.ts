@@ -99,9 +99,9 @@ export const environment = {
   },
   userName: "icici@icici.com",
   password: "icici@123",
-  appiyoDrive: "appiyo/d/drive/upload/",
+  appiyoDrive: "/d/drive/upload/",
   driveLocation: "/d/drive/docs/",
   //host: "http://192.168.1.108/appiyo",
-  //host: "/appiyo",
-  host: "http://ihfcmobileuat.icicihfc.com:443/appiyo"
+  host: "/appiyo",
+  //host: "http://ihfcmobileuat.icicihfc.com:443/appiyo"
 };
