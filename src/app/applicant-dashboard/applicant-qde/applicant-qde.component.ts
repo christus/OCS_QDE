@@ -813,7 +813,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       if(response["ProcessVariables"]["status"]) { // Boolean to check from nsdl website whether pan is valid or not 
 
         this.qde.application.applicants[this.applicantIndex].pan.isValid = true;
-        this.qde.application.applicants[this.applicantIndex].pan.errorMessage = "Error in pan Details";
+        this.qde.application.applicants[this.applicantIndex].pan.errorMessage = "";
 
         let processVariables = response["ProcessVariables"];
         this.qde.application.applicants[this.applicantIndex].personalDetails.firstName = processVariables["firstName"];
