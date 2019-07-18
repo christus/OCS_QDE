@@ -11,24 +11,34 @@ import Qde from 'src/app/models/qde.model';
   styleUrls: ['./thank-payment.component.css']
 })
 export class ThankPaymentComponent implements OnInit {
-  qde: Qde;
-  applicationId: string;
-  applicantId: string;
+  // qde: Qde;
+  // applicationId: string;
+  // applicantId: string;
+
+  queryParams: string;
   constructor( private route: ActivatedRoute,
               private router: Router,
               private qdeHttp: QdeHttpService,
               private commonDataService: CommonDataService,
               private qdeService: QdeService) {
-    this.qdeService.qdeSource.subscribe(val => {
+      
+    this.commonDataService.changeMenuBarShown(false);
+    this.commonDataService.changeViewFormVisible(false);
+    this.commonDataService.changeLogoutVisible(false);
+    // this.qdeService.qdeSource.subscribe(val => {
 
       
-      this.qde = val;
+    //   this.qde = val;
+    // });
+    // this.route.params.subscribe(val => {
+    //   this.applicationId = val.applicationId;
+    //   //this.applicantId = this.qde.application.applicants.find(v => v.applicantId == val.applicantId).applicantId;
+    // });
+    this.route.queryParams.subscribe(val => {
+      this.queryParams = JSON.stringify(val);
+      console.log('Query params: ', this.queryParams);
     });
-    this.route.params.subscribe(val => {
-      this.applicationId = val.applicationId;
-      //this.applicantId = this.qde.application.applicants.find(v => v.applicantId == val.applicantId).applicantId;
-    });
-               }
+  }
 
   ngOnInit() {
   }

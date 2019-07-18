@@ -274,12 +274,8 @@ const appRoutes: Routes = [
         }
       },
       {
-        path: 'thankpayment/:applicationId',
-        component: ThankPaymentComponent,
-        resolve: {
-          listOfValues: ListOfValuesResolverService,
-          qde: GetQdeDataResolverService
-        }
+        path: 'eazypay/thankyou-payment',
+        component: ThankPaymentComponent
       }
     ]
   },
