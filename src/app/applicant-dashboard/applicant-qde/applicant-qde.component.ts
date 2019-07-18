@@ -663,7 +663,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       else if(this.panslide2 == false && this.qde.application.applicants[this.applicantIndex].isIndividual == false) {
         // Enable it when upload file is enabled
         this.tabSwitch(10);
-        this.panSlider4.setIndex(1);
+        // this.panSlider4.setIndex(1);
 
         // this.tabSwitch(10);
       }
@@ -756,8 +756,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
         // Go to Previous Slide
         this.goToPrevSlide(swiperInstance);
       } else {
+        if(this.activeTab == 10){
+          this.tabSwitch(0);
+        }else{
         // Go To Previous Tab
         this.tabSwitch(this.activeTab - 1);
+        }
       }
     }
   }
@@ -930,7 +934,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
               });
   
             }else {
-              this.tabSwitch(11);
+              // this.tabSwitch(11);
+              this.goToNextSlide(swiperInstance);
               return;
             }
           } else {
@@ -1582,7 +1587,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   //-------------------------------------------------------------
   // Organization Details
   //-------------------------------------------------------------
-  submitOrganizationDetails(form: NgForm) {
+  submitOrganizationDetails(form: NgForm, swiperInstance) {
     if(this.isTBMLoggedIn) {
       this.tabSwitch(12);
     } else {
@@ -1604,6 +1609,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
           // this.qde.application.ocsNumber = result["application"]["ocsNumber"];
           // this.qde.application.applicants[this.applicantIndex].applicantId = result["application"]["applicationId"];
           this.tabSwitch(12);
+        
         } else {
           // Throw Invalid Pan Error
         }
