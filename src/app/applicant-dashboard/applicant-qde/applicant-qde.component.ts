@@ -1518,7 +1518,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       this.createOrUpdatePersonalDetailsSub15=this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
-          this.tabSwitch(8);
+          if(this.selectedOccupation.value == 9 || this.selectedOccupation.value == 10){
+            // this.tabSwitch();
+            return;
+          }else{
+            this.tabSwitch(8);
+          }
         } else {
           // Throw Invalid Pan Error
         }

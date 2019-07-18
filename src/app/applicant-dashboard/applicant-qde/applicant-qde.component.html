@@ -1591,7 +1591,15 @@
                                   </div>
                               </div>
   
-                              <div class="btn-wrap">
+                              <div *ngIf="selectedOccupation.value == 9 || selectedOccupation.value == 10" class="btn-wrap">
+                                <button type="submit"
+                                        [ngClass]="{'disabled': !occupationForm.valid || expError}"
+                                        [disabled]="(!occupationForm.valid || expError)" 
+                                        class="btn btn-primary">
+                                    Save
+                                </button>
+                            </div>
+                              <div *ngIf="selectedOccupation.value != 9 && selectedOccupation.value != 10" class="btn-wrap">
                                   <button type="submit"
                                           [ngClass]="{'disabled': !occupationForm.valid || expError}"
                                           [disabled]="(!occupationForm.valid || expError)" 
