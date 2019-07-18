@@ -38,7 +38,7 @@ export const environment = {
     },
     'cibil': {
       'workflowId': '43b3853e86c411e982270242ac110002',
-      'processId': '43d2719286c411e982270242ac110002'
+      'processId': '1c34e0c8a92611e9a4bd0242ac110002'
     },
     "birthPlace": {
       'workflowId': '4ab7cb9a723511e982270242ac110003',
