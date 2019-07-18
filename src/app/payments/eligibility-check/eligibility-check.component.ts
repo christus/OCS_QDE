@@ -217,6 +217,7 @@ export class EligibilityCheckComponent implements OnInit {
       }
       else if(res['ProcessVariables']['checkEligibility'].toLowerCase() == 'no'){
         this.showNotEligible = true;
+        this.commonDataService.setIsMainTabEnabled(false);
       }
       else if(res['ProcessVariables']['checkEligibility'].toLowerCase() == 'review'){
         this.showNotEligible = true;

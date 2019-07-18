@@ -521,6 +521,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
         this.qde = this.qdeService.getQde();
       }
     });
+    this.submitButtonChange();
   }
 
   setApplicantName(qde) {
@@ -620,26 +621,25 @@ export class ViewFormComponent implements OnInit, OnDestroy {
     return isIncomplete;
   }
 
-  // private isEligible: boolean = false;
-  // private isNotEligible: boolean = false;
-  // private emiAmount: number;
-  // private eligibleAmount: number;
+  isQdeSubmitButton: boolean;
+  emiAmount: number;
+  eligibleAmount: number;
+  
+  submitButtonChange() {
 
-  // submitDocumentUploadForm(form: NgForm) {
-
-  //   this.qdeHttp.dummyCIBILAPI().subscribe(res => {
-  //     console.log("res: ", res['ProcessVariables']['checkEligibility'].toLowerCase);
-  //     if(res['ProcessVariables']['checkEligibility'].toLowerCase() == 'yes') {
-  //       this.isEligible = true;
-
-  //       this.emiAmount = parseInt(res['ProcessVariables']['emi']);
-  //       this.eligibleAmount = parseInt(res['ProcessVariables']['eligibilityAmount']);
-  //     }
-  //     else if(res['ProcessVariables']['checkEligibility'].toLowerCase() == 'no') {
-  //       this.isNotEligible = true;
-  //     }
-  //   });
-  // }
+    this.qdeHttp.getQdeData(parseInt(this.applicationId)).subscribe(res => {
+      var button = JSON.parse(res['ProcessVariables']['response'])
+      var butRes = button.application.status;
+      
+      //Change Status in accordance to the ID Corresponding to QDE Completed in DB
+      if(butRes=='5') {
+        this.isQdeSubmitButton = false;
+      }
+      else{
+        this.isQdeSubmitButton = true;
+      }
+    });
+  }
 
   sendSMS() {
 
