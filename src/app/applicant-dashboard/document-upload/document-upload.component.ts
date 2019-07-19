@@ -826,7 +826,7 @@ export class DocumentUploadComponent implements OnInit {
     // const tabIndex = 7;
 
     if (!this.collateralProofDoc) {
-      this.goToNextSlide(slider);
+      //this.goToNextSlide(slider);
       // this.tabSwitch(tabIndex);
       return;
     }
@@ -865,7 +865,7 @@ export class DocumentUploadComponent implements OnInit {
         documentCategory: documentCategory
       };
 
-      this.uploadToOmni(documentInfo, 7, slider);
+      this.uploadToOmni(documentInfo, 7, "collateral");
     };
 
     this.uploadToMongo(modifiedFile, callback);
@@ -877,6 +877,7 @@ export class DocumentUploadComponent implements OnInit {
         if (response["ok"]) {
           //this.progress = Math.round(100 * event.loaded / event.total);
           //console.log(response);
+          
           callback(response["info"]);
         } else {
           console.log(response["ErrorMessage"]);
@@ -898,6 +899,9 @@ export class DocumentUploadComponent implements OnInit {
         ) {
           //alert("Uploaded Successfully!");
           this.cameraImage = "";
+          if(slider == "collateral") {
+            return;
+          }
           if (slider) {
             this.goToNextSlide(slider);
           }
