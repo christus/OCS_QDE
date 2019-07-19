@@ -13,7 +13,7 @@ import { CommonDataService } from 'src/app/services/common-data.service';
 import { QdeService } from 'src/app/services/qde.service';
 import { errors } from '../../services/errors';
 import { Subscription } from 'rxjs';
-import { statuses } from 'src/app/app.constants';
+import { statuses } from '../../app.constants';
 
 interface Item {
   key: string,
@@ -622,22 +622,75 @@ export class ViewFormComponent implements OnInit, OnDestroy {
   }
 
   isQdeSubmitButton: boolean;
-  emiAmount: number;
-  eligibleAmount: number;
-  
+  isQdeSubmitEnabled: boolean = false; 
+  isFinalSubmitEnabled: boolean = false;
   submitButtonChange() {
 
     this.qdeHttp.getQdeData(parseInt(this.applicationId)).subscribe(res => {
       var button = JSON.parse(res['ProcessVariables']['response'])
       var butRes = button.application.status;
       
+      const swappedStatuses = this.swapKeyWithValues(statuses);
+
       //Change Status in accordance to the ID Corresponding to QDE Completed in DB
-      if(butRes=='5') {
+      if(butRes == '5') {
+        // Show Final Button
         this.isQdeSubmitButton = false;
+        this.isFinalSubmitEnabled = true;
       }
-      else{
+      else {
+        // Show QDE Button
         this.isQdeSubmitButton = true;
+        this.isFinalSubmitEnabled = false;
       }
+
+      button.application.applicants.forEach(element => {
+
+        if(element.documents != null) {
+          
+          // element.documents.forEach(el => {
+
+            //For Qde Submit button
+            if(this.isQdeSubmitButton) {
+              if(element['incomeDetails']['incomeConsider'] != null && [true, false].includes(element['incomeDetails']['incomeConsider'])) {
+                if(element.documents.filter(el => el['documentCategory'] == '1' || el['documentCategory'] == '3' || el['documentCategory'] == '84').length == 3) {
+                  this.isQdeSubmitEnabled = true;
+                } else {
+                  this.isQdeSubmitEnabled = false;
+                }
+              } else {
+                this.isQdeSubmitEnabled = false;
+              }
+            } 
+            else {
+              //For final Submit button
+              if(element['incomeDetails']['incomeConsider'] == true) {
+                if( element.documents.filter(el => el['documentCategory'] == '1' || el['documentCategory'] == '3' || el['documentCategory'] =='5' || el['documentCategory'] == '6' || el['documentCategory'] == '84' || el['documentCategory'] == '85').length == 6) {
+                  this.isFinalSubmitEnabled = true;
+                }
+                else{
+                  this.isFinalSubmitEnabled = false;
+                }
+              }
+              else if(element['incomeDetails']['incomeConsider'] == false) {
+                if(element.documents.filter(el => el['documentCategory'] == '1' || el['documentCategory'] == '3' || el['documentCategory'] == '84').length == 3) {
+                  this.isFinalSubmitEnabled = true;
+                } else {
+                  this.isFinalSubmitEnabled = false;
+                }
+              } else {
+                this.isFinalSubmitEnabled = false;
+              }
+              
+            }
+
+        } else {
+          this.isQdeSubmitEnabled = false;
+          this.isFinalSubmitEnabled = false;
+        }
+      });
+
+
     });
   }
 
@@ -832,6 +885,10 @@ export class ViewFormComponent implements OnInit, OnDestroy {
      this.sendSMS();
   }
 
+  setAps(){
+    this.qdeHttp.apsApi(""+this.applicationId).subscribe(res => {});
+  }
+
   onPinCodeChange(event) {
     console.log("pincode",event.target.value);
     let zipCode = event.target.value
@@ -874,5 +931,13 @@ export class ViewFormComponent implements OnInit, OnDestroy {
     if(this.getElibilityReviewSub != null) {
       this.getElibilityReviewSub.unsubscribe();
     }
+  }
+
+  swapKeyWithValues(json) {
+    var ret = {};
+    for(var key in json){
+      ret[json[key]] = key;
+    }
+    return ret;
   }
 }

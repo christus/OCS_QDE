@@ -819,9 +819,9 @@ export class DocumentUploadComponent implements OnInit {
 
   handleCollateralProof(slider) {
         
-    this.qdeHttp.apsApi(""+this.applicationId).subscribe(res => {
-      console.log("res APS: ", res);
-    });
+    // this.qdeHttp.apsApi(""+this.applicationId).subscribe(res => {
+    //   console.log("res APS: ", res);
+    // });
     
     // const tabIndex = 7;
 
