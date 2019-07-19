@@ -709,9 +709,8 @@ export class LoanQdeComponent implements OnInit {
               if(this.qde.application.loanDetails.existingLoans.liveLoan > 0 ){
                 
                   this.goToNextSlide(swiperInstance);
-              }else{
-                
-                // alert("Loan Detail process is Completed, you didn't have any existing loan for further step ")
+              }else{                
+                alert("Loan detail process is completed.")
               }
             
             } else {
@@ -743,6 +742,7 @@ export class LoanQdeComponent implements OnInit {
           response => {
             // If successful
             if (response["ProcessVariables"]["status"]) {
+              alert("Loan detail process is completed.")
               console.log(this.qde.application.loanDetails.propertyType);
               this.goToNextSlide(swiperInstance);
             } else {

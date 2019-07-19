@@ -828,6 +828,7 @@ export class DocumentUploadComponent implements OnInit {
     if (!this.collateralProofDoc) {
       //this.goToNextSlide(slider);
       // this.tabSwitch(tabIndex);
+      alert("Documents successfully submitted");
       return;
     }
 
@@ -900,6 +901,7 @@ export class DocumentUploadComponent implements OnInit {
           //alert("Uploaded Successfully!");
           this.cameraImage = "";
           if(slider == "collateral") {
+            alert("Documents successfully submitted");
             return;
           }
           if (slider) {
