@@ -275,7 +275,7 @@ const appRoutes: Routes = [
         }
       },
       {
-        path: 'thankpayment/:applicationId',
+        path: 'thankpayment-eligibility/:applicationId',
         component: ThankPaymentEligibiltyComponent
       },
       {

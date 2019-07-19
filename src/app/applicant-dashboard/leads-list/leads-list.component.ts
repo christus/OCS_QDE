@@ -157,7 +157,7 @@ export class LeadsListComponent implements OnInit {
       return "/applicant/"+applicationId;
     } 
     else if(statuses[status] == "20") {
-      return "/payments/thankpayment/"+applicationId;
+      return "/payments/thankpayment-eligibility/"+applicationId;
     } 
     else if(statuses[status] == "25") {
       return "/applicant/"+applicationId;
