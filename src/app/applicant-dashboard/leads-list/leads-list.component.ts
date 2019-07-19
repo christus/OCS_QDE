@@ -111,9 +111,11 @@ export class LeadsListComponent implements OnInit {
 
         if (res['Error'] && res['Error'] == 0) {
           this.userDetails = res['ProcessVariables'].userDetails || [];
+
           this.userDetails.forEach(el => {
             el.url = this.getUrl(el['status'], el['leadId'], el['applicantId'], this.getRoles());
           });
+
           this.cds.setIsEligibilityForReviews(this.isEligibilityForReviews);
           this.isTBMLoggedIn = this.getRoles().includes('TBM');
           this.cds.setIsTBMLoggedIn(this.isTBMLoggedIn);
@@ -131,7 +133,7 @@ export class LeadsListComponent implements OnInit {
   }
 
   getUrl(status: string, applicationId?: string, applicantId?: string, roles?: Array<string>) {
-    if(roles.includes('TBM')) {
+    if(roles.includes('TBM') || roles.includes('TMA')) {
       this.cds.setReadOnlyForm(true);
     } else {
       this.cds.setReadOnlyForm(false);
@@ -142,24 +144,31 @@ export class LeadsListComponent implements OnInit {
       return "/applicant/"+applicationId;
     } 
     else if(statuses[status] == "5") {
+      this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
       return "/applicant/"+applicationId;
     } 
     else if(statuses[status] == "10") {
+      this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
       return "/applicant/"+applicationId;
     } 
     else if(statuses[status] == "15") {
+      this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
       return "/payments/online-summary/"+applicationId;
     } 
     else if(statuses[status] == "16") {
+      this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
       return "/applicant/"+applicationId;
     } 
     else if(statuses[status] == "17") {
+      this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
       return "/applicant/"+applicationId;
     } 
     else if(statuses[status] == "20") {
+      this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
       return "/payments/thankpayment-eligibility/"+applicationId;
     } 
     else if(statuses[status] == "25") {
+      this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
       return "/applicant/"+applicationId;
     } 
     else if(statuses[status] == "26") {
