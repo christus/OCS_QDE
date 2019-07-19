@@ -1387,8 +1387,13 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       this.createOrUpdatePersonalDetailsSub15 = this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
-          //alert("Co-Applicant's application successfully submitted");
-          this.tabSwitch(9);
+          if(this.selectedOccupation.value == 9 || this.selectedOccupation.value == 10){
+            alert("Co-Applicant's application successfully submitted");
+            // this.tabSwitch();
+            return;
+          }else{
+            this.tabSwitch(9);
+          }
         } else {
           // Throw Invalid Pan Error
         }
