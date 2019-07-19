@@ -102,6 +102,7 @@ export class CommonDataService {
 
 
   setIsEligibilityForReviews(data: Array<{applicationId: string, isEligibilityForReview: boolean}>) {
+    console.log(data.length);
    this.isEligibilityForReviews$.next(data)
   }
 

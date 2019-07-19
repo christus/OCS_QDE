@@ -267,7 +267,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   isEligibilityForReviewsSub: Subscription;
   isTBMLoggedIn: boolean;
 
-  isDuplicateModalShown: boolean = true;
+  isDuplicateModalShown: boolean = false;
 
   constructor(private renderer: Renderer2,
               private route: ActivatedRoute,
@@ -1105,7 +1105,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       this.createOrUpdatePersonalDetailsSub5=this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
-          this.qdeHttp.dummyDuplicateAPI().subscribe(val => {
+          this.qdeHttp.duplicateApplicantCheck(this.qde.application.applicants[this.applicantIndex].applicantId).subscribe(val => {
+            
+            
             this.isDuplicateModalShown = true;
             if(this.isDuplicateModalShown) {
               
