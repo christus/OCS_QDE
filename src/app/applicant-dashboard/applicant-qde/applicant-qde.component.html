@@ -1591,7 +1591,15 @@
                                   </div>
                               </div>
   
-                              <div class="btn-wrap">
+                              <div *ngIf="selectedOccupation.value == 9 || selectedOccupation.value == 10" class="btn-wrap">
+                                <button type="submit"
+                                        [ngClass]="{'disabled': !occupationForm.valid || expError}"
+                                        [disabled]="(!occupationForm.valid || expError)" 
+                                        class="btn btn-primary">
+                                    Save
+                                </button>
+                            </div>
+                              <div *ngIf="selectedOccupation.value != 9 && selectedOccupation.value != 10" class="btn-wrap">
                                   <button type="submit"
                                           [ngClass]="{'disabled': !occupationForm.valid || expError}"
                                           [disabled]="(!occupationForm.valid || expError)" 
@@ -2014,7 +2022,7 @@
             </div>
   
               <div class="tab-content" [ngClass]="{'active': (activeTab == 10)}">
-                  <a href="javascript:void(0);" class="back-btn" (click)="tabSwitch()"></a>
+                  <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(panSlider4)"></a>
                   <div class="lyt-tabs">
                       <div class="lhs">
   
@@ -2027,6 +2035,11 @@
                                           <h4 class="title">Enter Applicant’s <span class="cm-line-break"></span>PAN details</h4>
                                       </div>
                                   </div>
+                                  <div class="swiper-slide">
+                                    <div class="title-wrap">
+                                        <h4 class="title">Upload Applicant’s  <span class="cm-line-break"></span>PAN details</h4>
+                                    </div>
+                                </div>
                               </div>
                           </div>
   
@@ -2116,6 +2129,27 @@
   
                                       </form>
                                   </div>
+                                  <div class="swiper-slide">
+                                    <form class="bs-form" >
+                                        <div class="form-wrap">
+                                            <div *ngIf="panImage" class="bs-file">
+                                                  <!-- <image-upload [url]="imageUrl" [headers]="myHeaders"></image-upload> -->
+                                                  <img [src]="panImage" />
+                                                  <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera()">Retake</button>
+                                            </div>
+                                            <div *ngIf="!panImage" class="bs-file">
+                                                <input [readonly]="isTBMLoggedIn" spellcheck="false"
+                                                type="file" tabindex="5" class="form-control" id="file">
+                                                <label for="file"><span>click photo of PAN card</span></label>
+                                                <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera()">open camera</button>
+                                            </div>
+                                        </div>
+                                        <div class="btn-wrap">
+                                            <button  *ngIf="isMobile" class="btn btn-primary" (click)="sendPanImage(imageURI)">Next</button>
+                                            <button  *ngIf="!isMobile" class="btn btn-primary" (click)="tabSwitch(11)">Next</button>
+                                        </div>
+                                    </form>
+                                </div>
                               </div>
                           </div>
   

@@ -656,7 +656,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       }
       // Incoming from create in Non Individual Pan
       else if(this.panslide2 == true && this.qde.application.applicants[this.applicantIndex].isIndividual == false) {
-        this.tabSwitch(11);
+        this.tabSwitch(10);
         this.panSlider4.setIndex(1);
       } else if(this.panslide == false && this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
         // this.tabSwitch(0);
@@ -665,7 +665,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       else if(this.panslide2 == false && this.qde.application.applicants[this.applicantIndex].isIndividual == false) {
         // Enable it when upload file is enabled
         this.tabSwitch(10);
-        this.panSlider4.setIndex(1);
+        // this.panSlider4.setIndex(1);
 
         // this.tabSwitch(10);
       }
@@ -758,8 +758,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
         // Go to Previous Slide
         this.goToPrevSlide(swiperInstance);
       } else {
+        if(this.activeTab == 10){
+          this.tabSwitch(0);
+        }else{
         // Go To Previous Tab
         this.tabSwitch(this.activeTab - 1);
+        }
       }
     }
   }
@@ -815,7 +819,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       if(response["ProcessVariables"]["status"]) { // Boolean to check from nsdl website whether pan is valid or not 
 
         this.qde.application.applicants[this.applicantIndex].pan.isValid = true;
-        this.qde.application.applicants[this.applicantIndex].pan.errorMessage = "Error in pan Details";
+        this.qde.application.applicants[this.applicantIndex].pan.errorMessage = "";
 
         let processVariables = response["ProcessVariables"];
         this.qde.application.applicants[this.applicantIndex].personalDetails.firstName = processVariables["firstName"];
@@ -932,7 +936,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
               });
   
             }else {
-              this.tabSwitch(11);
+              // this.tabSwitch(11);
+              this.goToNextSlide(swiperInstance);
               return;
             }
           } else {
@@ -1526,7 +1531,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       this.createOrUpdatePersonalDetailsSub15=this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
-          this.tabSwitch(8);
+          if(this.selectedOccupation.value == 9 || this.selectedOccupation.value == 10){
+            // this.tabSwitch();
+            return;
+          }else{
+            this.tabSwitch(8);
+          }
         } else {
           // Throw Invalid Pan Error
         }
@@ -1607,6 +1617,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
           // this.qde.application.ocsNumber = result["application"]["ocsNumber"];
           // this.qde.application.applicants[this.applicantIndex].applicantId = result["application"]["applicationId"];
           this.tabSwitch(12);
+        
         } else {
           // Throw Invalid Pan Error
         }

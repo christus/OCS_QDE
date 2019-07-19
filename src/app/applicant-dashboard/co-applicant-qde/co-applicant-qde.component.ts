@@ -601,7 +601,12 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
         this.goToPrevSlide(swiperInstance);
       } else {
         // Go To Previous Tab
+        if(this.activeTab == 11){
+          this.tabSwitch(0);
+        }
+        else{
         this.tabSwitch(this.activeTab - 1);
+        }
       }
     }
   }
@@ -657,7 +662,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
         if(response["ProcessVariables"]["status"]) { // Boolean to check from nsdl website whether pan is valid or not 
   
           this.qde.application.applicants[this.coApplicantIndex].pan.isValid = true;
-          this.qde.application.applicants[this.coApplicantIndex].pan.errorMessage = "Error in pan Details";
+          this.qde.application.applicants[this.coApplicantIndex].pan.errorMessage = "";
   
           let processVariables = response["ProcessVariables"];//need to check its needed for non individual
           this.qde.application.applicants[this.coApplicantIndex].personalDetails.firstName = processVariables["firstName"];
@@ -777,7 +782,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
   
                 }else {
                   // this.cds.changePanSlide2(true);
-                  this.tabSwitch(12);
+                  // this.tabSwitch(12);
+                  this.goToNextSlide(swiperInstance);
                 }
               } else {
                 this.panErrorCount++;
@@ -1914,10 +1920,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       }
       // Incoming from create in Non Individual Pan
       else if(this.panslide2 == true && this.qde.application.applicants[this.coApplicantIndex].isIndividual == false) {
-        this.tabSwitch(12);
+        this.tabSwitch(11);
         this.panSlider4.setIndex(1);
       } else if(this.panslide == false && this.qde.application.applicants[this.coApplicantIndex].isIndividual == true) {
-        this.tabSwitch(1);
+        // this.tabSwitch(1);
         this.panSlider2.setIndex(1);
       }
       else if(this.panslide2 == false && this.qde.application.applicants[this.coApplicantIndex].isIndividual == false) {
