@@ -1387,6 +1387,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       this.createOrUpdatePersonalDetailsSub15 = this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
+          //alert("Co-Applicant's application successfully submitted");
           this.tabSwitch(9);
         } else {
           // Throw Invalid Pan Error
@@ -1654,6 +1655,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       this.createOrUpdatePersonalDetailsSub22 = this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successfull
         if(response["ProcessVariables"]["status"]) {
+          alert("Co-Applicant's application successfully submitted");
           this.goToNextSlide(swiperInstance);
         } else {
           // Throw Invalid Pan Error

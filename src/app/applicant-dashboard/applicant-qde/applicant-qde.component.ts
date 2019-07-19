@@ -1543,6 +1543,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
         // If successful
         if(response["ProcessVariables"]["status"]) {
           if(this.selectedOccupation.value == 9 || this.selectedOccupation.value == 10){
+            alert("Applicant's application successfully submitted");
             // this.tabSwitch();
             return;
           }else{
@@ -1810,6 +1811,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       this.createOrUpdatePersonalDetailsSub22 = this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successfull
         if(response["ProcessVariables"]["status"]) {
+          alert("Applicant's application successfully submitted");
           this.goToNextSlide(swiperInstance);
         } else {
           // Throw Invalid Pan Error
