@@ -262,6 +262,13 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
   otp:string;
 
+  idPanDocumnetType: any;
+  idPanFileName: string;
+  idPanFileSize: string;
+  idPanId: string;
+  idPanDoc: File;
+
+
   isReadOnly: boolean = false;
   isEligibilityForReview: boolean = false;
   isEligibilityForReviewsSub: Subscription;
@@ -549,7 +556,19 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
               }
             } catch(e) {}
 
-
+            try{
+              if(result.application.applicants[this.applicantIndex].pan.fileName != null){
+                this.idPanFileName = result.application.applicants[this.applicantIndex].pan.fileName;
+              }
+            }catch(e) {}  
+            
+            try{
+              if(result.application.applicants[this.applicantIndex].pan.fileSize != null){
+                this.idPanFileSize = result.application.applicants[this.applicantIndex].pan.fileSize;
+              }
+            }catch(e) {}  
+     
+      
       // Document Type
       if( ! isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].pan.docType)) ) {
         this.selectedDocType = this.docType[(parseInt(this.qde.application.applicants[this.applicantIndex].pan.docType))-1];
@@ -2230,4 +2249,97 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   }
 
 
+  setPanProof(files: any) {
+
+    console.log("setIdProof files", files);
+
+    if(this.isMobile) {
+      this.idPanDoc = files;
+      this.idPanFileName = (<any>window).Ionic.WebView.convertFileSrc(this.idPanDoc);
+      this.idPanFileSize = "";
+      return;
+    }
+    
+    this.idPanDoc = files.item(0);
+    this.idPanFileName = this.idPanDoc["name"];
+    this.idPanFileSize = this.getFileSize(this.idPanDoc["size"]);
+  }
+
+
+  getFileSize(size: any) {
+    size = size / 1024;
+
+    let isMegaByte = false;
+    if (size >= 1024) {
+      size = size / 1024;
+      isMegaByte = true;
+    }
+
+    let fileSize: string;
+    if (isMegaByte) {
+      fileSize = size.toFixed(2) + " MB";
+    } else {
+      fileSize = size.toFixed(2) + " KB";
+    }
+
+    return fileSize;
+  }
+
+  handlePanImage(isIndividual) {
+
+    if (this.qde.application.applicants[this.applicantIndex].pan.imageId != null) {
+      if(isIndividual) {
+        this.tabSwitch(1);
+      }else {
+        this.tabSwitch(11);
+      }
+      return;
+    }
+
+
+    let modifiedFile = Object.defineProperty(this.idPanDoc, "name", {
+      writable: true,
+      value: this.idPanDoc["name"]
+    });
+
+    modifiedFile["name"] = this.qde.application.applicationId + "-" + this.qde.application.applicants[this.applicantIndex].applicantId + "-" + new Date().getTime() + "-" + modifiedFile["name"];
+  
+
+    this.qdeHttp.uploadToAppiyoDrive(modifiedFile).subscribe(
+      response => {
+        if (response["ok"]) {
+          //this.progress = Math.round(100 * event.loaded / event.total);
+          console.log(response);
+          let info = response["info"];
+          const documentId = info["id"];
+          
+          console.log("imageId",documentId);
+
+          this.qde.application.applicants[this.applicantIndex].pan.imageId = documentId;
+
+          this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
+            // If successful
+            if(response["ProcessVariables"]["status"] == true) {
+                if(isIndividual) {
+                  this.tabSwitch(1);
+                }else {
+                  this.tabSwitch(11);
+                }
+            }
+          });
+
+        } else {
+          console.log(response["ErrorMessage"]);
+        }
+      },
+      error => {
+        console.log("Error : ", error);
+      }
+    );
+
+  }
+
+
+ 
+  
 }

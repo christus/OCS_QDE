@@ -243,15 +243,41 @@
                                     </div>
                                     <div class="swiper-slide">
                                         <form class="bs-form" *ngIf="!isTabDisabled">
-                                            <div class="form-wrap">
-                                                <div class="bs-file">
-                                                      <!-- <image-upload [url]="imageUrl" [headers]="myHeaders"></image-upload> -->
-                                                    <input [readonly]="isReadOnly" type="file" tabindex="3" class="form-control" id="file">
-                                                    <label for="file"><span>click photo of PAN card</span></label>
+                                           <div class="form-wrap">
+
+                                               <div *ngIf="isMobile">
+                                                    <div *ngIf="panImage" class="bs-file">
+                                                        <!-- <image-upload [url]="imageUrl" [headers]="myHeaders"></image-upload> -->
+                                                        <img [src]="panImage" />
+                                                        <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera()">Retake</button>
+                                                    </div>
+                                                    <div *ngIf="!panImage" class="bs-file">
+                                                        <input spellcheck="false"
+                                                        type="file" [readonly]="isReadOnly" class="form-control" id="file">
+                                                        <label tabindex="5" for="file"><span>click photo of PAN card</span></label>
+                                                        <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera()">open camera</button>
+                                                    </div>
                                                 </div>
+                                                
+                                                <div *ngIf="!isMobile">
+
+                                                        <div class="bs-file">
+                                                            <input type="file" class="form-control" (change)="setPanProof($event.target.files)" >
+                                                            <label for="file"><span>Click photo of Id proof</span></label>
+                                                        </div>
+                    
+                                                        <div class="doc_file_name_size" *ngIf="idPanFileName">
+                                                            <div>
+                                                                <span>{{idPanFileName}} </span>
+                                                                <span ng-switch-when="true">({{idPanFileSize}})</span>
+                                                            </div>
+                                                        </div>
+    
+                                                    </div>  
                                             </div>
                                             <div class="btn-wrap">
-                                                <button class="btn btn-primary" (click)="tabSwitch(2)">Next</button>
+                                                <button  *ngIf="isMobile" class="btn btn-primary" (click)="sendPanImage(imageURI)">Next</button>
+                                                <button  *ngIf="!isMobile" class="btn btn-primary" (click)="handlePanImage(true)">Next</button>
                                             </div>
                                         </form>
                                     </div>
@@ -2157,22 +2183,40 @@
                                   <div class="swiper-slide">
                                     <form class="bs-form" >
                                         <div class="form-wrap">
-                                            <div *ngIf="panImage" class="bs-file">
-                                                  <!-- <image-upload [url]="imageUrl" [headers]="myHeaders"></image-upload> -->
-                                                  <img [src]="panImage" />
-                                                  <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera()">Retake</button>
+                                            <div *ngIf="isMobile">
+
+                                                <div *ngIf="panImage" class="bs-file">
+                                                    <img [src]="panImage" />
+                                                    <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera()">Retake</button>
+                                                </div>
+                                                <div *ngIf="!panImage" class="bs-file">
+                                                    <input [readonly]="isTBMLoggedIn" spellcheck="false"
+                                                    type="file" class="form-control" id="file" (change)="setPanProof($event.target.files)">
+                                                    <label tabindex="5" for="file"><span>click photo of PAN card</span></label>
+                                                    <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera()">open camera</button>
+                                                </div>
+
                                             </div>
-                                            <div *ngIf="!panImage" class="bs-file">
-                                                <input [readonly]="isReadOnly" spellcheck="false"
-                                                type="file" class="form-control" id="file">
-                                                <label tabindex="5" for="file"><span>click photo of PAN card</span></label>
-                                                <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera()">open camera</button>
+                                            <div *ngIf="!isMobile">
+
+                                                <div class="bs-file">
+                                                    <input type="file" [readonly]="isTBMLoggedIn" class="form-control" (change)="setPanProof($event.target.files)" >
+                                                    <label for="file"><span>Click photo of Id proof</span></label>
+                                                </div>
+            
+                                                <div class="doc_file_name_size" *ngIf="idPanFileName">
+                                                    <div>
+                                                        <span>{{idPanFileName}} </span>
+                                                        <span ng-switch-when="true">({{idPanFileSize}})</span>
+                                                    </div>
+                                                </div>
+
                                             </div>
                                         </div>
                                         <div class="btn-wrap">
                                             <button  *ngIf="isMobile" class="btn btn-primary" (click)="sendPanImage(imageURI)">Next</button>
-                                            <button  *ngIf="!isMobile" class="btn btn-primary" (click)="tabSwitch(12)">Next</button>
-                                        </div>
+                                            <button  *ngIf="!isMobile" class="btn btn-primary" (click)="handlePanImage(false)">Next</button>
+                                    </div>
                                     </form>
                                 </div>
                               </div>
