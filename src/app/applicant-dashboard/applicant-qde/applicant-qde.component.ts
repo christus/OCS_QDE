@@ -2289,6 +2289,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
   handlePanImage(isIndividual) {
 
+    console.log("imageId", this.qde.application.applicants[this.applicantIndex].pan.imageId);
+
     if (this.qde.application.applicants[this.applicantIndex].pan.imageId != null) {
       if(isIndividual) {
         this.tabSwitch(1);
@@ -2296,6 +2298,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
         this.tabSwitch(11);
       }
       return;
+    }else {  /* Need to remove the else block once imageid is saved in back-end */
+      if(isIndividual) {
+        this.tabSwitch(1);
+      }else {
+        this.tabSwitch(11);
+      }
     }
 
 

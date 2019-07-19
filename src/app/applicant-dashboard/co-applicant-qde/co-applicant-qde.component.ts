@@ -2292,6 +2292,12 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
         this.tabSwitch(12);
       }
       return;
+    }else {  /* Need to remove the else block once imageid is saved in back-end */
+      if(isIndividual) {
+        this.tabSwitch(2);
+      }else {
+        this.tabSwitch(12);
+      }
     }
 
     
