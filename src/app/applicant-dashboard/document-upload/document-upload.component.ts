@@ -16,6 +16,11 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 import { CommonDataService } from 'src/app/services/common-data.service';
 import { Subscription } from 'rxjs';
 
+interface Item {
+  key: string;
+  value: string | number;
+}
+
 enum DocumentCategory {
   ID_PROOF = "ID Proof",
   ADDRESS_PROOF = "Address Proof",
@@ -98,60 +103,60 @@ export class DocumentUploadComponent implements OnInit {
 
   applicantIndividual = true;
 
-  applicationId: number;
+  applicationId: string;
   applicationIdAsString: string;
   mainApplicantId: string;
-  currentApplicantId: string;
+  // currentApplicantId: string;
   isMainApplicant: boolean;
   coApplicants: Array<any> = [];
 
-  selectedIdProof: string;
-  selectedAddressProof: string;
-  selectedIncomeProof: string;
-  selectedBankProof: string;
-  selectedCollateralProof: string;
+  selectedIdProof: Array<Item> = [];
+  selectedAddressProof: Array<Item> = [];
+  selectedIncomeProof: Array<Item> = [];
+  selectedBankProof: Array<Item> = [];
+  selectedCollateralProof: Array<Item> = [];
 
   documentCategory: any;
-  collateralType: any;
+  // collateralType: any;
 
-  fileName: string;
-  fileSize: string;
+  // fileName: string;
+  // fileSize: string;
   progress: string;
 
-  idProofDocumnetType: any;
-  idProofFileName: string;
-  idProofFileSize: string;
-  idProofId: string;
-  idProofDoc: File;
+  idProofDocumnetType: Array<Item> = [];
+  idProofFileName: Array<string> = [];
+  idProofFileSize: Array<string> = [];
+  idProofId: Array<string> = [];
+  idProofDoc: Array<File> = [];
 
-  addressProofDocumnetType: any;
-  addressProofFileName: string;
-  addressProofFileSize: string;
-  addressProofId: string;
-  addressProofDoc: File;
+  addressProofDocumnetType: Array<Item> = [];
+  addressProofFileName: Array<string> = [];
+  addressProofFileSize: Array<string> = [];
+  addressProofId: Array<string> = [];
+  addressProofDoc: Array<File> = [];
 
-  incomeProofDocumnetType: any;
-  incomeProofFileName: string;
-  incomeProofFileSize: string;
-  incomeProofId:string;
-  incomeProofDoc: File;
+  incomeProofDocumnetType: Array<Item> = [];
+  incomeProofFileName: Array<string> = [];
+  incomeProofFileSize: Array<string> = [];
+  incomeProofId: Array<string> = [];
+  incomeProofDoc: Array<File> = [];
 
-  bankProofDocumnetType: any;
-  bankProofFileName: string;
-  bankProofFileSize: string;
-  bankProofId:string;
-  bankingProofDoc: File;
+  bankProofDocumnetType: Array<Item> = [];
+  bankProofFileName: Array<string> = [];
+  bankProofFileSize: Array<string> = [];
+  bankProofId: Array<string> = [];
+  bankingProofDoc: Array<File> = [];
 
-  collateralProofDocumnetType: any;
-  collateralProofFileName: string;
-  collateralProofFileSize: string;
-  collateralProofId:string;
-  collateralProofDoc: File;
+  collateralProofDocumnetType: Array<Item> = [];
+  collateralProofFileName: Array<string> = [];
+  collateralProofFileSize: Array<string> = [];
+  collateralProofId: Array<string> = [];
+  collateralProofDoc: Array<File> = [];
 
-  photoProofFileName: string;
-  photoProofFileSize: string;
-  photoProofId:string;
-  photoProofDoc: File;
+  photoProofFileName: Array<string> = [];
+  photoProofFileSize: Array<string> = [];
+  photoProofId: Array<string> = [];
+  photoProofDoc: Array<File> = [];
 
   qde: Qde;
 
@@ -170,7 +175,11 @@ export class DocumentUploadComponent implements OnInit {
   isEligibilityForReview: boolean = false;
   isEligibilityForReviewsSub: Subscription;
   isTBMLoggedIn: boolean;
- 
+  isTabDisabled: boolean = true;
+  driveLoc: any;
+  getQdeDataSub: Subscription;
+  applicantIndex: number;
+
   constructor(
     private renderer: Renderer2,
     private route: ActivatedRoute,
@@ -189,7 +198,7 @@ export class DocumentUploadComponent implements OnInit {
     // }
     //this.tabSwitch(1);
     this.cds.applicationId.subscribe(val => {
-      this.applicationId = parseInt(val);
+      // this.applicationId = parseInt(val);
       if(JSON.parse(localStorage.getItem('roles')).includes('TBM')) {
         this.cds.setReadOnlyForm(true);
       } else {
@@ -223,10 +232,16 @@ export class DocumentUploadComponent implements OnInit {
     // Check Whether there is qde data to be filled or else Initialize Qde
     this.route.params.subscribe(params => {
       // Make an http request to get the required qde data and set using setQde
-      if (params.applicationId) {
-        // setQde(JSON.parse(response.ProcessVariables.response));
-      } else {
-        this.qde = this.qdeService.getQde();
+      if (params.applicationId != null) {
+        this.getQdeDataSub = this.qdeHttp.getQdeData(params.applicationId).subscribe(response => {
+          console.log("RESPONSE ", response);
+          var result = JSON.parse(response["ProcessVariables"]["response"]);
+          this.qdeService.setQde(result);
+
+            this.applicationId = this.qde.application.applicationId;
+            this.cds.changeApplicationId(this.qde.application.applicationId);
+
+        });
       }
 
 
@@ -238,6 +253,47 @@ export class DocumentUploadComponent implements OnInit {
           this.isEligibilityForReview = val.find(v => v.applicationId == params['applicationId'])['isEligibilityForReview'];
         });
       }
+
+
+    });
+
+    this.qdeService.qdeSource.subscribe(val => {
+      this.qde = val;
+
+      
+      const applicants = this.qde.application.applicants;
+      applicants.forEach((applicant, index) => {
+        const applicantId = applicant["applicantId"];
+        this.driveLoc = environment.host + environment.driveLocation;
+
+
+        const incomeDetails = applicant.incomeDetails;
+        let profileId = 1;
+        if (applicant.occupation.occupationType != "2") {
+          profileId = 2;
+        }
+        const data = {
+          isFinanceApplicant: incomeDetails.incomeConsider,
+          assessmentId: parseInt(incomeDetails.assessmentMethodology, 10),
+          profileId: profileId
+        };
+
+        this.getApplicableDocuments(data, (applicant['documents'] != null) ? applicant['documents'] : [], index);
+
+        // Ends here
+
+        if (applicant["isMainApplicant"]) {
+          this.mainApplicantId = applicantId;
+        } else {
+
+          if (applicants.length - 1 === this.coApplicants.length) {
+
+          } else {
+            this.coApplicants.push(applicant);
+          }
+          
+        }
+      });
     });
 
     this.cds.isTBMLoggedIn.subscribe(val => {
@@ -246,11 +302,9 @@ export class DocumentUploadComponent implements OnInit {
 
     this.route.fragment.subscribe(fragment => {
 
-      this.tabSwitch(0);
-
       let localFragment = fragment;
 
-      if (fragment == null) {
+      if (fragment == null || (!this.fragments.includes(fragment))) {
         localFragment = "aadhar";
       }
 
@@ -260,111 +314,6 @@ export class DocumentUploadComponent implements OnInit {
       }
     });
 
-    this.route.params.subscribe(params => {
-      // Make an http request to get the required qde data and set using setQde
-      this.applicationId = params.applicationId;
-      this.currentApplicantId = params.applicantId || null;
-      if (this.applicationId) {
-        this.qdeHttp.getQdeData(this.applicationId).subscribe(response => {
-          this.qde = JSON.parse(response["ProcessVariables"]["response"]);
-          this.applicationIdAsString = this.applicationId.toString();
-          if (this.applicationId) {
-            this.applicationId = parseInt(this.qde.application.applicationId, 10);
-          }
-          const applicants = this.qde.application.applicants;
-          for (const applicant of applicants) {
-            const applicantId = applicant["applicantId"];
-            const driveLoc = environment.host + environment.driveLocation;
-          
-            if (applicantId == this.currentApplicantId) {
-
-              const incomeDetails = applicant.incomeDetails;
-              let profileId = 1;
-              if (applicant.occupation.occupationType != "2") {
-                profileId = 2;
-              }
-              const data = {
-                isFinanceApplicant: incomeDetails.incomeConsider,
-                assessmentId: parseInt(incomeDetails.assessmentMethodology, 10),
-                profileId: profileId
-              };
-              this.getApplicableDocuments(data);
-
-              const documents = applicant["documents"];
-
-              for (const document of documents) {
-                const docCategory = document["documentCategory"];
-
-                const idProofCategory = this.findDocumentCategory(DocumentCategory.ID_PROOF);
-                const addressProofCategory = this.findDocumentCategory(DocumentCategory.ADDRESS_PROOF);
-                const incomeProofCategory = this.findDocumentCategory(DocumentCategory.INCOME_PROOF);
-                const bankingProofCategory = this.findDocumentCategory(DocumentCategory.BANK_PROOF);
-                const collateralProofCategory = this.findDocumentCategory(DocumentCategory.COLLATERAL_PROOF);
-                const photoProofCategory = this.findDocumentCategory(DocumentCategory.PHOTO_PROOF);
-
-                if (docCategory == idProofCategory) {
-                  this.selectedIdProof = document["documentType"];
-                  this.idProofFileName = document["documentName"];
-                  this.idProofFileSize = this.getFileSize(
-                    document["documentSize"]
-                  );
-                  this.idProofId = driveLoc+""+document["documentImageId"];
-                  console.log("idProofId", this.idProofId);
-                } else if (docCategory == addressProofCategory) {
-                  this.selectedAddressProof = document["documentType"];
-                  this.addressProofFileName = document["documentName"];
-                  this.addressProofFileSize = this.getFileSize(
-                    document["documentSize"]
-                  );
-                  this.addressProofId = driveLoc+document["documentImageId"];
-                } else if (docCategory == incomeProofCategory) {
-                  this.selectedIncomeProof = document["documentType"];
-                  this.incomeProofFileName = document["documentName"];
-                  this.incomeProofFileSize = this.getFileSize(
-                    document["documentSize"]
-                  );
-                  this.incomeProofId = driveLoc+document["documentImageId"];
-                } else if (docCategory == bankingProofCategory) {
-                  this.selectedBankProof = document["documentType"];
-                  this.bankProofFileName = document["documentName"];
-                  this.bankProofFileSize = this.getFileSize(
-                    document["documentSize"]
-                  );
-                  this.bankProofId = driveLoc+document["documentImageId"];
-                } else if (docCategory == collateralProofCategory) {
-                  this.selectedCollateralProof = document["documentType"];
-                  this.collateralProofFileName = document["documentName"];
-                  this.collateralProofFileSize = this.getFileSize(
-                    document["documentSize"]
-                  );
-                  this.collateralProofId = driveLoc+document["documentImageId"];
-                } else if (docCategory == photoProofCategory) {
-                  this.photoProofFileName = document["documentName"];
-                  this.photoProofFileSize = this.getFileSize(document["documentSize"]);
-		  this.photoProofId = driveLoc + document["documentImageId"];
-                }
-              }
-            }
-
-            if (applicant["isMainApplicant"]) {
-              this.mainApplicantId = applicantId;
-            } else {
-
-              if (applicants.length - 1 === this.coApplicants.length) {
-
-              } else {
-                this.coApplicants.push(applicant);
-              }
-              
-            }
-          }
-
-          this.qdeService.setQde(this.qde);
-        });
-      } else {
-        this.qde = this.qdeService.getQde();
-      }
-    });
 
     /********************************************************************
     * Check for User and set isReadOnly=true to disable editing of fields
@@ -420,6 +369,12 @@ export class DocumentUploadComponent implements OnInit {
   }
 
   tabSwitch(tabIndex?: number) {
+
+    if(tabIndex == 0) {
+      this.isTabDisabled = true;
+    } else {
+      this.isTabDisabled = false;
+    }
     // Check for invalid tabIndex
     if (tabIndex < this.fragments.length) {
 
@@ -462,23 +417,23 @@ export class DocumentUploadComponent implements OnInit {
 
   setCustomerPhoto(files: any) {
     if(this.isMobile) {
-      this.photoProofDoc = files;
-      this.photoProofFileName = (<any>window).Ionic.WebView.convertFileSrc(this.photoProofDoc);
-      this.photoProofFileSize = "";
+      this.photoProofDoc[this.applicantIndex] = files;
+      this.photoProofFileName[this.applicantIndex] = (<any>window).Ionic.WebView.convertFileSrc(this.photoProofDoc);
+      this.photoProofFileSize[this.applicantIndex] = "";
       return;
     }
 
-    this.photoProofDoc = files.item(0);
-    this.photoProofFileName = this.photoProofDoc["name"];
+    this.photoProofDoc[this.applicantIndex] = files.item(0);
+    this.photoProofFileName[this.applicantIndex] = this.photoProofDoc["name"];
 
-    this.photoProofFileSize = this.getFileSize(this.photoProofDoc["size"]);
+    this.photoProofFileSize[this.applicantIndex] = this.getFileSize(this.photoProofDoc["size"]);
   }
 
   handleCustomerPhoto(slider) {
 
     const tabIndex = 2;
     
-    if (!this.photoProofDoc) {
+    if (!this.photoProofDoc[this.applicantIndex]) {
       this.goToNextSlide(slider);
       this.tabSwitch(tabIndex);
       return;
@@ -487,15 +442,15 @@ export class DocumentUploadComponent implements OnInit {
     if(this.isMobile) {
       const documentCategory = this.findDocumentCategory("Photo");
 
-      this.sendImgProof(this.photoProofDoc, tabIndex,slider, documentCategory, "");
+      this.sendImgProof(this.photoProofDoc[this.applicantIndex], tabIndex,slider, documentCategory, "");
       return;
     }
 
-    const applicantId = this.currentApplicantId.toString();
+    const applicantId = this.qde.application.applicants[this.applicantIndex].applicantId.toString();
 
-    let modifiedFile = Object.defineProperty(this.photoProofDoc, "name", {
+    let modifiedFile = Object.defineProperty(this.photoProofDoc[this.applicantIndex], "name", {
       writable: true,
-      value: this.photoProofDoc["name"]
+      value: this.photoProofDoc[this.applicantIndex]["name"]
     });
     modifiedFile["name"] = this.applicationId + "-" + applicantId + "-" + new Date().getTime() + "-" + modifiedFile["name"];
 
@@ -518,27 +473,26 @@ export class DocumentUploadComponent implements OnInit {
   
   }
   
-  setIdProof(files: any) {
+  setIdProof(files: any, applicantIndex) {
 
     console.log("setIdProof files", files);
 
     if(this.isMobile) {
-      this.idProofDoc = files;
-      this.idProofFileName = (<any>window).Ionic.WebView.convertFileSrc(this.idProofDoc);
-      this.idProofFileSize = "";
+      this.idProofDoc[applicantIndex] = files;
+      this.idProofFileName[applicantIndex] = (<any>window).Ionic.WebView.convertFileSrc(this.idProofDoc[this.applicantIndex]);
+      this.idProofFileSize[applicantIndex] = "";
       return;
     }
     
-    this.idProofDoc = files.item(0);
-    this.idProofFileName = this.idProofDoc["name"];
-    this.idProofFileSize = this.getFileSize(this.idProofDoc["size"]);
-    
+    this.idProofDoc[applicantIndex] = files.item(0);
+    this.idProofFileName[applicantIndex] = this.idProofDoc["name"];
+    this.idProofFileSize[applicantIndex] = this.getFileSize(this.idProofDoc["size"]);
   }
 
   handleIdProof(slider) {
     const tabIndex = 3;
 
-    if (!this.idProofDoc) {
+    if (!this.idProofDoc[this.applicantIndex]) {
       this.goToNextSlide(slider);
       this.tabSwitch(tabIndex);
       return;
@@ -549,17 +503,17 @@ export class DocumentUploadComponent implements OnInit {
     if(this.isMobile) {
       const documentCategory = this.findDocumentCategory("ID Proof");
 
-      this.sendImgProof(this.idProofDoc, tabIndex, slider, documentCategory, this.selectedIdProof);
+      this.sendImgProof(this.idProofDoc[this.applicantIndex], tabIndex, slider, documentCategory, this.selectedIdProof[this.applicantIndex].value);
       return;
     }
 
     
-    const applicantId = this.currentApplicantId.toString();
+    const applicantId = this.qde.application.applicants[this.applicantIndex].applicantId.toString();
     //this.progress = this.idProofDoc["progress"];
 
-    const modifiedFile = Object.defineProperty(this.idProofDoc, "name", {
+    const modifiedFile = Object.defineProperty(this.idProofDoc[this.applicantIndex], "name", {
       writable: true,
-      value: this.idProofDoc["name"]
+      value: this.idProofDoc[this.applicantIndex]["name"]
     });
     modifiedFile["name"] = this.applicationId + "-" + applicantId + "-" + new Date().getTime() + "-" + modifiedFile["name"];
 
@@ -571,7 +525,7 @@ export class DocumentUploadComponent implements OnInit {
         applicationId: this.applicationIdAsString,
         applicantId: applicantId,
         documentImageId: documentId,
-        documentType: this.selectedIdProof,
+        documentType: this.selectedIdProof['value'],
         documentCategory: documentCategory
       };
 
@@ -584,7 +538,7 @@ export class DocumentUploadComponent implements OnInit {
 
   sendImgProof(image, tabIndex, slider, documentCategory, docType){
 
-    const applicantId = this.currentApplicantId.toString();
+    const applicantId = this.qde.application.applicants[this.applicantIndex].applicantId.toString();
 
     let fileName = this.qde.application.applicationId + "-" + applicantId + "-" + new Date().getTime()
 
@@ -622,23 +576,23 @@ export class DocumentUploadComponent implements OnInit {
 
 
     if(this.isMobile) {
-      this.addressProofDoc = files;
-      this.addressProofFileName = (<any>window).Ionic.WebView.convertFileSrc(this.addressProofDoc);
-      this.addressProofFileSize = "";
+      this.addressProofDoc[this.applicantIndex] = files;
+      this.addressProofFileName[this.applicantIndex] = (<any>window).Ionic.WebView.convertFileSrc(this.addressProofDoc);
+      this.addressProofFileSize[this.applicantIndex] = "";
       return;
     }
 
 
-    this.addressProofDoc = files.item(0);
-    this.addressProofFileName = this.addressProofDoc["name"];
+    this.addressProofDoc[this.applicantIndex] = files.item(0);
+    this.addressProofFileName[this.applicantIndex] = this.addressProofDoc["name"];
 
-    this.addressProofFileSize = this.getFileSize(this.addressProofDoc["size"]);
+    this.addressProofFileSize[this.applicantIndex] = this.getFileSize(this.addressProofDoc["size"]);
   }
 
   handleAddressProof(slider) {
     const tabIndex = 4;
     
-    if (!this.addressProofDoc) {
+    if (!this.addressProofDoc[this.applicantIndex]) {
       this.goToNextSlide(slider);
       this.tabSwitch(tabIndex);
       return;
@@ -647,15 +601,15 @@ export class DocumentUploadComponent implements OnInit {
     if(this.isMobile) {
       const documentCategory = this.findDocumentCategory("Address Proof");
 
-      this.sendImgProof(this.addressProofDoc, tabIndex, slider, documentCategory, this.selectedAddressProof);
+      this.sendImgProof(this.addressProofDoc[this.applicantIndex], tabIndex, slider, documentCategory, this.selectedAddressProof[this.applicantIndex].value);
       return;
     }
 
-    const applicantId = this.currentApplicantId.toString();
+    const applicantId = this.qde.application.applicants[this.applicantIndex].applicantId.toString();
 
-    let modifiedFile = Object.defineProperty(this.addressProofDoc, "name", {
+    let modifiedFile = Object.defineProperty(this.addressProofDoc[this.applicantIndex], "name", {
       writable: true,
-      value: this.addressProofDoc["name"]
+      value: this.addressProofDoc[this.applicantIndex]["name"]
     });
     modifiedFile["name"] = this.applicationId + "-" + applicantId + "-" + new Date().getTime() + "-" + modifiedFile["name"];
 
@@ -667,7 +621,7 @@ export class DocumentUploadComponent implements OnInit {
         applicationId: this.applicationIdAsString,
         applicantId: applicantId,
         documentImageId: documentId,
-        documentType: this.selectedAddressProof,
+        documentType: this.selectedAddressProof['value'],
         documentCategory: documentCategory
       };
 
@@ -679,22 +633,22 @@ export class DocumentUploadComponent implements OnInit {
 
   setIncomeProof(files: any) {
      if(this.isMobile) {
-      this.incomeProofDoc = files;
-      this.incomeProofFileName = (<any>window).Ionic.WebView.convertFileSrc(this.incomeProofDoc);
-      this.incomeProofFileSize = "";
+      this.incomeProofDoc[this.applicantIndex] = files;
+      this.incomeProofFileName[this.applicantIndex] = (<any>window).Ionic.WebView.convertFileSrc(this.incomeProofDoc);
+      this.incomeProofFileSize[this.applicantIndex] = "";
       return;
     }
 
-    this.incomeProofDoc = files.item(0);
-    this.incomeProofFileName = this.incomeProofDoc["name"];
+    this.incomeProofDoc[this.applicantIndex] = files.item(0);
+    this.incomeProofFileName[this.applicantIndex] = this.incomeProofDoc["name"];
 
-    this.incomeProofFileSize = this.getFileSize(this.incomeProofDoc["size"]);
+    this.incomeProofFileSize[this.applicantIndex] = this.getFileSize(this.incomeProofDoc["size"]);
   }
 
   handleIncomeProof(slider) {
     const tabIndex = 5;
 
-    if (!this.incomeProofDoc) {
+    if (!this.incomeProofDoc[this.applicantIndex]) {
       this.goToNextSlide(slider);
       this.tabSwitch(tabIndex);
       return;
@@ -703,16 +657,16 @@ export class DocumentUploadComponent implements OnInit {
     if(this.isMobile) {
       const documentCategory = this.findDocumentCategory("Income Document");
 
-      this.sendImgProof(this.incomeProofDoc, tabIndex, slider, documentCategory, this.selectedIncomeProof);
+      this.sendImgProof(this.incomeProofDoc[this.applicantIndex], tabIndex, slider, documentCategory, this.selectedIncomeProof[this.applicantIndex].value);
       return;
     }
 
 
-    const applicantId = this.currentApplicantId.toString();
+    const applicantId = this.qde.application.applicants[this.applicantIndex].applicantId.toString();
 
-    let modifiedFile = Object.defineProperty(this.incomeProofDoc, "name", {
+    let modifiedFile = Object.defineProperty(this.incomeProofDoc[this.applicantIndex], "name", {
       writable: true,
-      value: this.incomeProofDoc["name"]
+      value: this.incomeProofDoc[this.applicantIndex]["name"]
     });
     modifiedFile["name"] =
       this.applicationId +
@@ -731,7 +685,7 @@ export class DocumentUploadComponent implements OnInit {
         applicationId: this.applicationIdAsString,
         applicantId: applicantId,
         documentImageId: documentId,
-        documentType: this.selectedIncomeProof,
+        documentType: this.selectedIncomeProof['value'],
         documentCategory: documentCategory
       };
 
@@ -743,21 +697,21 @@ export class DocumentUploadComponent implements OnInit {
 
   setBankingProof(files: any) {
      if(this.isMobile) {
-      this.bankingProofDoc = files;
-      this.bankProofFileName = (<any>window).Ionic.WebView.convertFileSrc(this.bankingProofDoc);
-      this.bankProofFileSize = "";
+      this.bankingProofDoc[this.applicantIndex] = files;
+      this.bankProofFileName[this.applicantIndex] = (<any>window).Ionic.WebView.convertFileSrc(this.bankingProofDoc);
+      this.bankProofFileSize[this.applicantIndex] = "";
       return;
     }
-    this.bankingProofDoc = files.item(0);
-    this.bankProofFileName = this.bankingProofDoc["name"];
+    this.bankingProofDoc[this.applicantIndex] = files.item(0);
+    this.bankProofFileName[this.applicantIndex] = this.bankingProofDoc["name"];
 
-    this.bankProofFileSize = this.getFileSize(this.bankingProofDoc["size"]);
+    this.bankProofFileSize[this.applicantIndex] = this.getFileSize(this.bankingProofDoc["size"]);
   }
 
   handleBankingProof(slider) {
     const tabIndex = 6;
 
-    if (!this.bankingProofDoc) {
+    if (!this.bankingProofDoc[this.applicantIndex]) {
       this.goToNextSlide(slider);
       this.tabSwitch(tabIndex);
       return;
@@ -765,15 +719,15 @@ export class DocumentUploadComponent implements OnInit {
     
     if(this.isMobile) {
       const documentCategory = this.findDocumentCategory("Banking");
-      this.sendImgProof(this.bankingProofDoc, tabIndex, slider, documentCategory, this.selectedBankProof);
+      this.sendImgProof(this.bankingProofDoc[this.applicantIndex], tabIndex, slider, documentCategory, this.selectedBankProof[this.applicantIndex].value);
       return;
     }
 
-    const applicantId = this.currentApplicantId.toString();
+    const applicantId = this.qde.application.applicants[this.applicantIndex].applicantId.toString();
 
-    let modifiedFile = Object.defineProperty(this.bankingProofDoc, "name", {
+    let modifiedFile = Object.defineProperty(this.bankingProofDoc[this.applicantIndex], "name", {
       writable: true,
-      value: this.bankingProofDoc["name"]
+      value: this.bankingProofDoc[this.applicantIndex]["name"]
     });
     modifiedFile["name"] =
       this.applicationId +
@@ -792,7 +746,7 @@ export class DocumentUploadComponent implements OnInit {
         applicationId: this.applicationIdAsString,
         applicantId: applicantId,
         documentImageId: documentId,
-        documentType: this.selectedBankProof,
+        documentType: this.selectedBankProof['value'],
         documentCategory: documentCategory
       };
 
@@ -805,16 +759,16 @@ export class DocumentUploadComponent implements OnInit {
   setCollateralProof(files: any) {
     
     if(this.isMobile) {
-      this.collateralProofDoc = files;
-      this.collateralProofFileName = (<any>window).Ionic.WebView.convertFileSrc(this.collateralProofDoc);
-      this.collateralProofFileSize = "";
+      this.collateralProofDoc[this.applicantIndex] = files;
+      this.collateralProofFileName[this.applicantIndex] = (<any>window).Ionic.WebView.convertFileSrc(this.collateralProofDoc);
+      this.collateralProofFileSize[this.applicantIndex] = "";
       return;
     }
 
-    this.collateralProofDoc = files.item(0);
-    this.collateralProofFileName = this.collateralProofDoc["name"];
+    this.collateralProofDoc[this.applicantIndex] = files.item(0);
+    this.collateralProofFileName[this.applicantIndex] = this.collateralProofDoc["name"];
 
-    this.collateralProofFileSize = this.getFileSize(this.collateralProofDoc["size"]);
+    this.collateralProofFileSize[this.applicantIndex] = this.getFileSize(this.collateralProofDoc["size"]);
   }
 
   handleCollateralProof(slider) {
@@ -825,25 +779,24 @@ export class DocumentUploadComponent implements OnInit {
     
     // const tabIndex = 7;
 
-    if (!this.collateralProofDoc) {
-      //this.goToNextSlide(slider);
+    if (!this.collateralProofDoc[this.applicantIndex]) {
+      this.goToNextSlide(slider);
       // this.tabSwitch(tabIndex);
-      alert("Documents successfully submitted");
       return;
     }
 
     if(this.isMobile) {
       const documentCategory = this.findDocumentCategory("Collateral");
 
-      this.sendImgProof(this.collateralProofDoc, 0, slider, documentCategory, this.selectedCollateralProof);
+      this.sendImgProof(this.collateralProofDoc[this.applicantIndex], 0, slider, documentCategory, this.selectedCollateralProof[this.applicantIndex].value);
       return;
     }
 
-    const applicantId = this.currentApplicantId.toString();
+    const applicantId = this.qde.application.applicants[this.applicantIndex].applicantId.toString();
 
-    let modifiedFile = Object.defineProperty(this.collateralProofDoc, "name", {
+    let modifiedFile = Object.defineProperty(this.collateralProofDoc[this.applicantIndex], "name", {
       writable: true,
-      value: this.collateralProofDoc["name"]
+      value: this.collateralProofDoc[this.applicantIndex]["name"]
     });
     modifiedFile["name"] =
       this.applicationId +
@@ -862,11 +815,11 @@ export class DocumentUploadComponent implements OnInit {
         applicationId: this.applicationIdAsString,
         applicantId: applicantId,
         documentImageId: documentId,
-        documentType: this.selectedCollateralProof,
+        documentType: this.selectedCollateralProof['value'],
         documentCategory: documentCategory
       };
 
-      this.uploadToOmni(documentInfo, 7, "collateral");
+      this.uploadToOmni(documentInfo, 7, slider);
     };
 
     this.uploadToMongo(modifiedFile, callback);
@@ -878,7 +831,6 @@ export class DocumentUploadComponent implements OnInit {
         if (response["ok"]) {
           //this.progress = Math.round(100 * event.loaded / event.total);
           //console.log(response);
-          
           callback(response["info"]);
         } else {
           console.log(response["ErrorMessage"]);
@@ -900,10 +852,6 @@ export class DocumentUploadComponent implements OnInit {
         ) {
           //alert("Uploaded Successfully!");
           this.cameraImage = "";
-          if(slider == "collateral") {
-            alert("Documents successfully submitted");
-            return;
-          }
           if (slider) {
             this.goToNextSlide(slider);
           }
@@ -925,7 +873,7 @@ export class DocumentUploadComponent implements OnInit {
     );
   }
 
-  getApplicableDocuments(data: any) {
+  getApplicableDocuments(data: any, documents: Array<any>, index: number) {
 
     this.qdeHttp.getApplicableDocuments(data).subscribe(
       response => {
@@ -934,12 +882,29 @@ export class DocumentUploadComponent implements OnInit {
           console.log(response);
 
           const res = JSON.parse(processVariables["response"]);
-          this.idProofDocumnetType = res.IdProof || [];
-          this.addressProofDocumnetType = res.AddressProof || [];
-          this.incomeProofDocumnetType = res.IncomeDocument || [];
-          this.bankProofDocumnetType = res.Banking || [];
-          this.collateralProofDocumnetType = res.PropertyPapers || [];
 
+          /******************************
+          * Default Values for dropdowns
+          ******************************/
+          this.idProofDocumnetType = res.IdProof || [];
+          this.selectedIdProof.push(this.idProofDocumnetType[0]);
+
+          this.addressProofDocumnetType = res.AddressProof || [];
+          this.selectedAddressProof.push(this.addressProofDocumnetType[0]);
+
+          this.incomeProofDocumnetType = res.IncomeDocument || [];
+          this.selectedIncomeProof.push(this.incomeProofDocumnetType[0]);
+
+          this.bankProofDocumnetType = res.Banking || [];
+          this.selectedBankProof.push(this.bankProofDocumnetType[0]);
+
+          this.collateralProofDocumnetType = res.PropertyPapers || [];
+          this.selectedCollateralProof.push(this.collateralProofDocumnetType[0]);
+
+          /******************************************
+          * It will load Documents of all Applicants
+          ******************************************/
+          this.loadDocuments(documents, index);
         } else {
 
           if (response["ErrorMessage"]) {
@@ -967,10 +932,10 @@ export class DocumentUploadComponent implements OnInit {
     return documentCategory;
   }
 
-  onSelectApplicant(tabIndex?: number, isMainApplicant?: boolean) {
-    this.isMainApplicant = isMainApplicant;
-    this.tabSwitch(tabIndex);
-  }
+  // onSelectApplicant(tabIndex?: number, isMainApplicant?: boolean) {
+  //   this.isMainApplicant = isMainApplicant;
+  //   this.tabSwitch(tabIndex);
+  // }
 
   getFileSize(size: any) {
     size = size / 1024;
@@ -1004,15 +969,68 @@ export class DocumentUploadComponent implements OnInit {
      });
   }
 
-  ngOnDestroy(): void {}
-
-  selectApplicant(applicationId, mainApplicantId, index) {
-      this.router.navigate(['/document-uploads/'+applicationId+'/applicant/'+mainApplicantId], {fragment: "aadhar1"});
+  ngOnDestroy() {
+    if(this.getQdeDataSub != null) {
+      this.getQdeDataSub.unsubscribe();
+    }
   }
 
-  selectCoApplicant(applicationId, mainApplicantId, index) {
-    this.router.navigate(['/document-uploads/'+applicationId+'/co-applicant/'+mainApplicantId], {fragment: "aadhar1"});
+  selectAnApplicant(applicationId, mainApplicantId, index) {
+    this.applicantIndex = index;
+    this.isTabDisabled = false;
+    console.log("idProofDocumnetType: ", this.idProofDocumnetType);
+    this.router.navigate(['/document-uploads/'+applicationId+'/applicant/'+mainApplicantId], {fragment: "aadhar1"});
   }
+
+  // selectAnApplicant(applicationId, mainApplicantId, index) {
+    
+  //   this.router.navigate(['/document-uploads/'+applicationId+'/co-applicant/'+mainApplicantId], {fragment: "aadhar1"});
+  // }
 
   temp;
+
+  loadDocuments(documents: Array<any>, index: number) {
+
+    for (const document of documents) {
+      const docCategory = document["documentCategory"];
+
+      const idProofCategory = this.findDocumentCategory(DocumentCategory.ID_PROOF);
+      const addressProofCategory = this.findDocumentCategory(DocumentCategory.ADDRESS_PROOF);
+      const incomeProofCategory = this.findDocumentCategory(DocumentCategory.INCOME_PROOF);
+      const bankingProofCategory = this.findDocumentCategory(DocumentCategory.BANK_PROOF);
+      const collateralProofCategory = this.findDocumentCategory(DocumentCategory.COLLATERAL_PROOF);
+      const photoProofCategory = this.findDocumentCategory(DocumentCategory.PHOTO_PROOF);
+
+      if (docCategory == idProofCategory) {
+        this.selectedIdProof[index] = this.idProofDocumnetType.find(v => v.value == document["documentType"]);
+        this.idProofFileName[index] = document["documentName"];
+        this.idProofFileSize[index] = this.getFileSize(document["documentSize"]);
+        this.idProofId[index] = this.driveLoc+""+document["documentImageId"];
+      } else if (docCategory == addressProofCategory) {
+        this.selectedAddressProof[index] = this.addressProofDocumnetType.find(v => v.value == document["documentType"]);
+        this.addressProofFileName[index] = document["documentName"];
+        this.addressProofFileSize[index] = this.getFileSize(document["documentSize"]);
+        this.addressProofId[index] = this.driveLoc+document["documentImageId"];
+      } else if (docCategory == incomeProofCategory) {
+        this.selectedIncomeProof[index] = this.incomeProofDocumnetType.find(v => v.value == document["documentType"]);
+        this.incomeProofFileName[index] = document["documentName"];
+        this.incomeProofFileSize[index] = this.getFileSize(document["documentSize"]);
+        this.incomeProofId[index] = this.driveLoc+document["documentImageId"];
+      } else if (docCategory == bankingProofCategory) {
+        this.selectedBankProof[index] = this.bankProofDocumnetType.find(v => v.value == document["documentType"]);
+        this.bankProofFileName[index] = document["documentName"];
+        this.bankProofFileSize[index] = this.getFileSize(document["documentSize"]);
+        this.bankProofId[index] = this.driveLoc+document["documentImageId"];
+      } else if (docCategory == collateralProofCategory) {
+        this.selectedCollateralProof[index] = this.collateralProofDocumnetType.find(v => v.value == document["documentType"]);
+        this.collateralProofFileName[index] = document["documentName"];
+        this.collateralProofFileSize[index] = this.getFileSize(document["documentSize"]);
+        this.collateralProofId[index] = this.driveLoc+document["documentImageId"];
+      } else if (docCategory == photoProofCategory) {
+        this.photoProofFileName[index] = document["documentName"];
+        this.photoProofFileSize[index] = this.getFileSize(document["documentSize"]);
+        this.photoProofId[index] = this.driveLoc + document["documentImageId"];
+      }
+    }
+  }
 }
