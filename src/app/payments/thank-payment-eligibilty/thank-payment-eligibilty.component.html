@@ -1,0 +1,21 @@
+<app-menubar-header></app-menubar-header>
+<main>
+  <div class="main">
+      <div class="lyt-box typ2">
+          <span class="box-icon">
+              <img src="assets/images/thumb.png" alt="logo">
+          </span>
+          <div class="title-desc">
+              <h3 class="box-title">Payment Successful!</h3>
+              <p class="desc">Your payment is successful. Now click <b>Proceed</b> to check you eligibility.</p>
+          </div>
+          <div class="cont">
+              
+              <div class="btn-wrap">
+                  <button [routerLink]="['/payments/eligibility-check', applicationId]" class="btn btn-border typ2">Proceed</button>
+              </div>
+          </div>
+      </div>
+      <span class="cm-breath"></span>
+  </div>
+</main>
