@@ -447,6 +447,11 @@ export class ReviewApplicationFormComponent implements OnInit {
         this.selectedQualification[i] = (this.qualifications.find(e => e.value == eachApplicant.personalDetails.qualification));
       }
 
+      // Gender
+      if( ! isNaN(parseInt(eachApplicant.personalDetails.gender)) ) {
+        this.selectedGender[i] = (this.genders.find(e => e.value == eachApplicant.personalDetails.gender));
+      }
+
       // Constitution
       if( ! isNaN(parseInt(eachApplicant.organizationDetails.constitution)) ) {
         this.selectedConstitution[i] = (this.constitutions[(parseInt(eachApplicant.organizationDetails.constitution))-1]);

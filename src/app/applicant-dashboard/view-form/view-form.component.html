@@ -689,7 +689,7 @@
                       <!-- <button class="btn btn-primary" (click)="tabSwitch(4)">Continue</button> -->
                       <button class="btn btn-primary" [ngClass]="{'disabled': (!isQdeSubmitEnabled)}" (click)="setStatus()">QDE Submit</button>
                   </div>
-                  <div class="btn-wrap" *ngIf="!isQdeSubmitButton">
+                  <div class="btn-wrap" *ngIf="isFinalSubmitButton">
                     <button class="btn btn-primary" [ngClass]="{'disabled': (!isFinalSubmitEnabled)}" (click)="setAps()">Final Submit</button>
                 </div>
               </div>

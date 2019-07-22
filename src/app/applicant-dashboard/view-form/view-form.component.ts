@@ -621,7 +621,8 @@ export class ViewFormComponent implements OnInit, OnDestroy {
     return isIncomplete;
   }
 
-  isQdeSubmitButton: boolean;
+  isQdeSubmitButton: boolean = false;
+  isFinalSubmitButton: boolean = false;
   isQdeSubmitEnabled: boolean = false; 
   isFinalSubmitEnabled: boolean = false;
   submitButtonChange() {
@@ -633,15 +634,17 @@ export class ViewFormComponent implements OnInit, OnDestroy {
       const swappedStatuses = this.swapKeyWithValues(statuses);
 
       //Change Status in accordance to the ID Corresponding to QDE Completed in DB
-      if(butRes == '5') {
+      if(butRes >= 5) {
         // Show Final Button
         this.isQdeSubmitButton = false;
-        this.isFinalSubmitEnabled = true;
+        if(butRes == 25 || butRes == 26) {
+          // Show QDE Button
+          this.isFinalSubmitButton = true;
+        }
       }
       else {
         // Show QDE Button
         this.isQdeSubmitButton = true;
-        this.isFinalSubmitEnabled = false;
       }
 
       button.application.applicants.forEach(element => {
@@ -692,6 +695,8 @@ export class ViewFormComponent implements OnInit, OnDestroy {
 
 
     });
+
+    this.commonDataService.setIsMainTabEnabled(false);
   }
 
   sendSMS() {
@@ -789,6 +794,11 @@ export class ViewFormComponent implements OnInit, OnDestroy {
       // Personal Details Qualification (different because qualification isnt sending sequential value like 1,2,3)
       if( ! isNaN(parseInt(eachApplicant.personalDetails.qualification)) ) {
         this.selectedQualification[i] = (this.qualifications.find(e => e.value == eachApplicant.personalDetails.qualification));
+      }
+
+      // Gender
+      if( ! isNaN(parseInt(eachApplicant.personalDetails.gender)) ) {
+        this.selectedGender[i] = (this.genders.find(e => e.value == eachApplicant.personalDetails.gender));
       }
 
       // Constitution
