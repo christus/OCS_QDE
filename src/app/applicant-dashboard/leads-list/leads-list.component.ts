@@ -139,6 +139,9 @@ export class LeadsListComponent implements OnInit {
       this.cds.setReadOnlyForm(false);
     }
 
+    console.log("status", status);
+
+
     if(statuses[status] == "1") {
       this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
       return "/applicant/"+applicationId;

@@ -460,7 +460,7 @@ export class DocumentUploadComponent implements OnInit {
       return;
     }
 
-    alert("applicantId: "+ this.qde.application.applicants[this.applicantIndex]['applicantId']);
+    // alert("applicantId: "+ this.qde.application.applicants[this.applicantIndex]['applicantId']);
     const applicantId = this.qde.application.applicants[this.applicantIndex].applicantId.toString();
 
     let modifiedFile = Object.defineProperty(this.photoProofDoc[this.applicantIndex], "name", {
@@ -545,7 +545,7 @@ export class DocumentUploadComponent implements OnInit {
       const documentCategory = this.findDocumentCategory(DocumentCategory.ID_PROOF);
 
       const documentInfo = {
-        applicationId: this.applicationIdAsString,
+        applicationId: this.applicationId,
         applicantId: applicantId,
         documentImageId: documentId,
         documentType: this.selectedIdProof[this.applicantIndex]['value'],
@@ -579,7 +579,7 @@ export class DocumentUploadComponent implements OnInit {
         const documentId = imageId;
   
         const documentInfo = {
-          applicationId: this.applicationIdAsString,
+          applicationId: this.applicationId,
           applicantId: applicantId,
           documentImageId: documentId,
           documentType: docType,
@@ -647,7 +647,7 @@ export class DocumentUploadComponent implements OnInit {
       const documentCategory = this.findDocumentCategory(DocumentCategory.ADDRESS_PROOF);
 
       const documentInfo = {
-        applicationId: this.applicationIdAsString,
+        applicationId: this.applicationId,
         applicantId: applicantId,
         documentImageId: documentId,
         documentType: this.selectedAddressProof[this.applicantIndex]['value'],
@@ -717,7 +717,7 @@ export class DocumentUploadComponent implements OnInit {
       const documentCategory = this.findDocumentCategory(DocumentCategory.INCOME_PROOF);
 
       const documentInfo = {
-        applicationId: this.applicationIdAsString,
+        applicationId: this.applicationId,
         applicantId: applicantId,
         documentImageId: documentId,
         documentType: this.selectedIncomeProof[this.applicantIndex]['value'],
@@ -784,7 +784,7 @@ export class DocumentUploadComponent implements OnInit {
       const documentCategory = this.findDocumentCategory(DocumentCategory.BANK_PROOF);
 
       const documentInfo = {
-        applicationId: this.applicationIdAsString,
+        applicationId: this.applicationId,
         applicantId: applicantId,
         documentImageId: documentId,
         documentType: this.selectedBankProof[this.applicantIndex]['value'],
@@ -859,7 +859,7 @@ export class DocumentUploadComponent implements OnInit {
       const documentCategory = this.findDocumentCategory(DocumentCategory.COLLATERAL_PROOF);
 
       const documentInfo = {
-        applicationId: this.applicationIdAsString,
+        applicationId: this.applicationId,
         applicantId: applicantId,
         documentImageId: documentId,
         documentType: this.selectedCollateralProof[this.applicantIndex]['value'],
