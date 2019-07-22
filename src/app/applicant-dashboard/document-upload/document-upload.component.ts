@@ -446,8 +446,7 @@ export class DocumentUploadComponent implements OnInit {
   ************************/
   handleCustomerPhoto(slider) {
 
-    const tabIndex = 2;
-    
+    let tabIndex = 2;
     if (!this.photoProofDoc[this.applicantIndex]) {
       this.goToNextSlide(slider);
       this.tabSwitch(tabIndex);
@@ -493,21 +492,21 @@ export class DocumentUploadComponent implements OnInit {
   /************************
   * Id Proof Chooser
   ************************/
-  setIdProof(files: any, applicantIndex) {
+  setIdProof(files: any) {
 
     console.log("setIdProof files", files);
 
     if(this.isMobile) {
-      this.idProofDoc[applicantIndex] = files;
-      this.idProofFileName[applicantIndex] = (<any>window).Ionic.WebView.convertFileSrc(this.idProofDoc[this.applicantIndex]);
-      this.idProofFileSize[applicantIndex] = "";
+      this.idProofDoc[this.applicantIndex] = files;
+      this.idProofFileName[this.applicantIndex] = (<any>window).Ionic.WebView.convertFileSrc(this.idProofDoc[this.applicantIndex]);
+      this.idProofFileSize[this.applicantIndex] = "";
       return;
     }
     
     console.log("files: ", files.item(0));
-    this.idProofDoc[applicantIndex] = files.item(0);
-    this.idProofFileName[applicantIndex] = this.idProofDoc["name"];
-    this.idProofFileSize[applicantIndex] = this.getFileSize(this.idProofDoc["size"]);
+    this.idProofDoc[this.applicantIndex] = files.item(0);
+    this.idProofFileName[this.applicantIndex] = this.idProofDoc[this.applicantIndex]["name"];
+    this.idProofFileSize[this.applicantIndex] = this.getFileSize(this.idProofDoc[this.applicantIndex]["size"]);
   }
 
   /************************
@@ -517,7 +516,7 @@ export class DocumentUploadComponent implements OnInit {
     const tabIndex = 3;
 
     if (!this.idProofDoc[this.applicantIndex]) {
-      this.goToNextSlide(slider);
+      // this.goToNextSlide(slider);
       this.tabSwitch(tabIndex);
       return;
     }
@@ -549,7 +548,7 @@ export class DocumentUploadComponent implements OnInit {
         applicationId: this.applicationIdAsString,
         applicantId: applicantId,
         documentImageId: documentId,
-        documentType: this.selectedIdProof['value'],
+        documentType: this.selectedIdProof[this.applicantIndex]['value'],
         documentCategory: documentCategory
       };
 
@@ -611,9 +610,9 @@ export class DocumentUploadComponent implements OnInit {
 
 
     this.addressProofDoc[this.applicantIndex] = files.item(0);
-    this.addressProofFileName[this.applicantIndex] = this.addressProofDoc["name"];
+    this.addressProofFileName[this.applicantIndex] = this.addressProofDoc[this.applicantIndex]["name"];
 
-    this.addressProofFileSize[this.applicantIndex] = this.getFileSize(this.addressProofDoc["size"]);
+    this.addressProofFileSize[this.applicantIndex] = this.getFileSize(this.addressProofDoc[this.applicantIndex]["size"]);
   }
 
   /************************
@@ -651,7 +650,7 @@ export class DocumentUploadComponent implements OnInit {
         applicationId: this.applicationIdAsString,
         applicantId: applicantId,
         documentImageId: documentId,
-        documentType: this.selectedAddressProof['value'],
+        documentType: this.selectedAddressProof[this.applicantIndex]['value'],
         documentCategory: documentCategory
       };
 
@@ -673,9 +672,9 @@ export class DocumentUploadComponent implements OnInit {
     }
 
     this.incomeProofDoc[this.applicantIndex] = files.item(0);
-    this.incomeProofFileName[this.applicantIndex] = this.incomeProofDoc["name"];
+    this.incomeProofFileName[this.applicantIndex] = this.incomeProofDoc[this.applicantIndex]["name"];
 
-    this.incomeProofFileSize[this.applicantIndex] = this.getFileSize(this.incomeProofDoc["size"]);
+    this.incomeProofFileSize[this.applicantIndex] = this.getFileSize(this.incomeProofDoc[this.applicantIndex]["size"]);
   }
 
   /***************************
@@ -721,7 +720,7 @@ export class DocumentUploadComponent implements OnInit {
         applicationId: this.applicationIdAsString,
         applicantId: applicantId,
         documentImageId: documentId,
-        documentType: this.selectedIncomeProof['value'],
+        documentType: this.selectedIncomeProof[this.applicantIndex]['value'],
         documentCategory: documentCategory
       };
 
@@ -742,9 +741,9 @@ export class DocumentUploadComponent implements OnInit {
       return;
     }
     this.bankingProofDoc[this.applicantIndex] = files.item(0);
-    this.bankProofFileName[this.applicantIndex] = this.bankingProofDoc["name"];
+    this.bankProofFileName[this.applicantIndex] = this.bankingProofDoc[this.applicantIndex]["name"];
 
-    this.bankProofFileSize[this.applicantIndex] = this.getFileSize(this.bankingProofDoc["size"]);
+    this.bankProofFileSize[this.applicantIndex] = this.getFileSize(this.bankingProofDoc[this.applicantIndex]["size"]);
   }
 
   /****************************
@@ -788,7 +787,7 @@ export class DocumentUploadComponent implements OnInit {
         applicationId: this.applicationIdAsString,
         applicantId: applicantId,
         documentImageId: documentId,
-        documentType: this.selectedBankProof['value'],
+        documentType: this.selectedBankProof[this.applicantIndex]['value'],
         documentCategory: documentCategory
       };
 
@@ -802,7 +801,7 @@ export class DocumentUploadComponent implements OnInit {
   * Collateral Proof Chooser
   ***************************/
   setCollateralProof(files: any) {
-    
+
     if(this.isMobile) {
       this.collateralProofDoc[this.applicantIndex] = files;
       this.collateralProofFileName[this.applicantIndex] = (<any>window).Ionic.WebView.convertFileSrc(this.collateralProofDoc);
@@ -811,9 +810,9 @@ export class DocumentUploadComponent implements OnInit {
     }
 
     this.collateralProofDoc[this.applicantIndex] = files.item(0);
-    this.collateralProofFileName[this.applicantIndex] = this.collateralProofDoc["name"];
+    this.collateralProofFileName[this.applicantIndex] = this.collateralProofDoc[this.applicantIndex]["name"];
 
-    this.collateralProofFileSize[this.applicantIndex] = this.getFileSize(this.collateralProofDoc["size"]);
+    this.collateralProofFileSize[this.applicantIndex] = this.getFileSize(this.collateralProofDoc[this.applicantIndex]["size"]);
   }
 
   /*******************************
@@ -828,7 +827,7 @@ export class DocumentUploadComponent implements OnInit {
     // const tabIndex = 7;
 
     if (!this.collateralProofDoc[this.applicantIndex]) {
-      this.goToNextSlide(slider);
+      // this.goToNextSlide(slider);
       // this.tabSwitch(tabIndex);
       return;
     }
@@ -863,7 +862,7 @@ export class DocumentUploadComponent implements OnInit {
         applicationId: this.applicationIdAsString,
         applicantId: applicantId,
         documentImageId: documentId,
-        documentType: this.selectedCollateralProof['value'],
+        documentType: this.selectedCollateralProof[this.applicantIndex]['value'],
         documentCategory: documentCategory
       };
 

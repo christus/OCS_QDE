@@ -225,7 +225,7 @@
                                                     <div *ngIf="isMobile && idProofId[applicantIndex]" else idProof>
                                                         <div *ngIf="idProofId[applicantIndex]" class="bs-file" >
                                                             <secured-image [src]="idProofId[applicantIndex]"></secured-image>
-                                                            <input [readonly]="isTBMLoggedIn" type="file" class="form-control" (change)="setIdProof($event.target.files, applicantIndex)" >
+                                                            <input [readonly]="isTBMLoggedIn" type="file" class="form-control" (change)="setIdProof($event.target.files)" >
                                                             <label for="file"><span>Click photo of Id proof</span></label>
                                                             <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setIdProof')">Retake</button>
                                                         </div>
@@ -240,7 +240,7 @@
                                                     </div>
 
                                                     <div *ngIf="!idProofId[applicantIndex]"  class="bs-file">
-                                                        <input [readonly]="isTBMLoggedIn" type="file" class="form-control" (change)="setIdProof($event.target.files, applicantIndex)" >
+                                                        <input [readonly]="isTBMLoggedIn" type="file" class="form-control" (change)="setIdProof($event.target.files)" >
                                                         <label for="file"><span>Click photo of Id proof</span></label>
                                                         <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setIdProof')">open camera</button>
                                                     </div>
@@ -250,7 +250,7 @@
                                                 <div *ngIf="!isMobile">
 
                                                     <div class="bs-file">
-                                                        <input [readonly]="isTBMLoggedIn" type="file" class="form-control" id="idProofId" (change)="setIdProof($event.target.files, applicantIndex)" >
+                                                        <input [readonly]="isTBMLoggedIn" type="file" class="form-control" id="idProofId" (change)="setIdProof($event.target.files)" >
                                                         <label for="idProofId"><span>Click photo of Id proof</span></label>
                                                     </div>
                                                     
