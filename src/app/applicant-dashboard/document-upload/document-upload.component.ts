@@ -123,6 +123,12 @@ export class DocumentUploadComponent implements OnInit {
   // fileSize: string;
   progress: string;
 
+  
+  photoProofFileName: Array<string> = [];
+  photoProofFileSize: Array<string> = [];
+  photoProofId: Array<string> = [];
+  photoProofDoc: Array<File> = [];
+
   idProofDocumnetType: Array<Item> = [];
   idProofFileName: Array<string> = [];
   idProofFileSize: Array<string> = [];
@@ -153,11 +159,6 @@ export class DocumentUploadComponent implements OnInit {
   collateralProofId: Array<string> = [];
   collateralProofDoc: Array<File> = [];
 
-  photoProofFileName: Array<string> = [];
-  photoProofFileSize: Array<string> = [];
-  photoProofId: Array<string> = [];
-  photoProofDoc: Array<File> = [];
-
   qde: Qde;
 
   fragments = [
@@ -179,6 +180,7 @@ export class DocumentUploadComponent implements OnInit {
   driveLoc: any;
   getQdeDataSub: Subscription;
   applicantIndex: number;
+  applicantId: string;
 
   constructor(
     private renderer: Renderer2,
@@ -233,6 +235,10 @@ export class DocumentUploadComponent implements OnInit {
     this.route.params.subscribe(params => {
       // Make an http request to get the required qde data and set using setQde
       if (params.applicationId != null) {
+        if(params.applicantId != null) {
+          this.applicantId = params['applicantId'];
+        }
+
         this.getQdeDataSub = this.qdeHttp.getQdeData(params.applicationId).subscribe(response => {
           console.log("RESPONSE ", response);
           var result = JSON.parse(response["ProcessVariables"]["response"]);
@@ -260,7 +266,10 @@ export class DocumentUploadComponent implements OnInit {
     this.qdeService.qdeSource.subscribe(val => {
       this.qde = val;
 
-      
+      if(val != null) {
+        this.applicantIndex = val.application.applicants.findIndex(v => v.applicantId == this.applicantId);
+      }
+
       const applicants = this.qde.application.applicants;
       applicants.forEach((applicant, index) => {
         const applicantId = applicant["applicantId"];
@@ -415,20 +424,26 @@ export class DocumentUploadComponent implements OnInit {
     this.isAlternateResidenceNumber = !this.isAlternateResidenceNumber;
   }
 
+  /************************
+  * Customer Photo Chooser
+  ************************/
   setCustomerPhoto(files: any) {
     if(this.isMobile) {
       this.photoProofDoc[this.applicantIndex] = files;
-      this.photoProofFileName[this.applicantIndex] = (<any>window).Ionic.WebView.convertFileSrc(this.photoProofDoc);
+      this.photoProofFileName[this.applicantIndex] = (<any>window).Ionic.WebView.convertFileSrc(this.photoProofDoc[this.applicantIndex]);
       this.photoProofFileSize[this.applicantIndex] = "";
       return;
     }
 
     this.photoProofDoc[this.applicantIndex] = files.item(0);
-    this.photoProofFileName[this.applicantIndex] = this.photoProofDoc["name"];
+    this.photoProofFileName[this.applicantIndex] = this.photoProofDoc[this.applicantIndex]["name"];
 
-    this.photoProofFileSize[this.applicantIndex] = this.getFileSize(this.photoProofDoc["size"]);
+    this.photoProofFileSize[this.applicantIndex] = this.getFileSize(this.photoProofDoc[this.applicantIndex]["size"]);
   }
 
+  /************************
+  * Customer Photo Next(Submit)
+  ************************/
   handleCustomerPhoto(slider) {
 
     const tabIndex = 2;
@@ -446,12 +461,14 @@ export class DocumentUploadComponent implements OnInit {
       return;
     }
 
+    alert("applicantId: "+ this.qde.application.applicants[this.applicantIndex]['applicantId']);
     const applicantId = this.qde.application.applicants[this.applicantIndex].applicantId.toString();
 
     let modifiedFile = Object.defineProperty(this.photoProofDoc[this.applicantIndex], "name", {
       writable: true,
       value: this.photoProofDoc[this.applicantIndex]["name"]
     });
+    
     modifiedFile["name"] = this.applicationId + "-" + applicantId + "-" + new Date().getTime() + "-" + modifiedFile["name"];
 
     const callback = (info: JSON) => {
@@ -459,7 +476,7 @@ export class DocumentUploadComponent implements OnInit {
       const documentCategory = this.findDocumentCategory(DocumentCategory.PHOTO_PROOF);
 
       const documentInfo = {
-        applicationId: this.applicationIdAsString,
+        applicationId: this.applicationId,
         applicantId: applicantId,
         documentImageId: documentId,
         documentType: "",
@@ -473,6 +490,9 @@ export class DocumentUploadComponent implements OnInit {
   
   }
   
+  /************************
+  * Id Proof Chooser
+  ************************/
   setIdProof(files: any, applicantIndex) {
 
     console.log("setIdProof files", files);
@@ -484,11 +504,15 @@ export class DocumentUploadComponent implements OnInit {
       return;
     }
     
+    console.log("files: ", files.item(0));
     this.idProofDoc[applicantIndex] = files.item(0);
     this.idProofFileName[applicantIndex] = this.idProofDoc["name"];
     this.idProofFileSize[applicantIndex] = this.getFileSize(this.idProofDoc["size"]);
   }
 
+  /************************
+  * Id Proof Next(Submit)
+  ************************/
   handleIdProof(slider) {
     const tabIndex = 3;
 
@@ -572,6 +596,9 @@ export class DocumentUploadComponent implements OnInit {
     });
   }
 
+  /************************
+  * Address Proof Chooser
+  ************************/
   setAddressProof(files: any) {
 
 
@@ -589,6 +616,9 @@ export class DocumentUploadComponent implements OnInit {
     this.addressProofFileSize[this.applicantIndex] = this.getFileSize(this.addressProofDoc["size"]);
   }
 
+  /************************
+  * Address Proof Upload
+  ************************/
   handleAddressProof(slider) {
     const tabIndex = 4;
     
@@ -631,6 +661,9 @@ export class DocumentUploadComponent implements OnInit {
     this.uploadToMongo(modifiedFile, callback);
   }
 
+  /**********************
+  * Income Proof Chooser
+  **********************/
   setIncomeProof(files: any) {
      if(this.isMobile) {
       this.incomeProofDoc[this.applicantIndex] = files;
@@ -645,6 +678,9 @@ export class DocumentUploadComponent implements OnInit {
     this.incomeProofFileSize[this.applicantIndex] = this.getFileSize(this.incomeProofDoc["size"]);
   }
 
+  /***************************
+  * Income Proof Next(Submit)
+  ***************************/
   handleIncomeProof(slider) {
     const tabIndex = 5;
 
@@ -695,6 +731,9 @@ export class DocumentUploadComponent implements OnInit {
     this.uploadToMongo(modifiedFile, callback);
   }
 
+  /***************************
+  * Banking Proof Chooser
+  ***************************/
   setBankingProof(files: any) {
      if(this.isMobile) {
       this.bankingProofDoc[this.applicantIndex] = files;
@@ -708,6 +747,9 @@ export class DocumentUploadComponent implements OnInit {
     this.bankProofFileSize[this.applicantIndex] = this.getFileSize(this.bankingProofDoc["size"]);
   }
 
+  /****************************
+  * Banking Proof Next(Submit)
+  ****************************/
   handleBankingProof(slider) {
     const tabIndex = 6;
 
@@ -756,6 +798,9 @@ export class DocumentUploadComponent implements OnInit {
     this.uploadToMongo(modifiedFile, callback);
   }
 
+  /***************************
+  * Collateral Proof Chooser
+  ***************************/
   setCollateralProof(files: any) {
     
     if(this.isMobile) {
@@ -771,6 +816,9 @@ export class DocumentUploadComponent implements OnInit {
     this.collateralProofFileSize[this.applicantIndex] = this.getFileSize(this.collateralProofDoc["size"]);
   }
 
+  /*******************************
+  * Collateral Proof Next(Submit)
+  *******************************/
   handleCollateralProof(slider) {
         
     // this.qdeHttp.apsApi(""+this.applicationId).subscribe(res => {
