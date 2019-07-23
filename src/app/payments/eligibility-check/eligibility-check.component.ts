@@ -231,9 +231,11 @@ export class EligibilityCheckComponent implements OnInit {
 
   statusYes(){
     this.qdeHttp.setStatusApi(this.applicationId, this.applicationStatusYes).subscribe(res => {}, err => {});
+    this.commonDataService.setIsMainTabEnabled(false);
   }
 
   statusNo(){
     this.qdeHttp.setStatusApi(this.applicationId, this.applicationStatusNo).subscribe(res => {}, err => {});
+    this.commonDataService.setIsMainTabEnabled(false);
   }
 }

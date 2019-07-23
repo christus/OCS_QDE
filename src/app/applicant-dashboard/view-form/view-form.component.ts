@@ -637,7 +637,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
       if(butRes >= 5) {
         // Show Final Button
         this.isQdeSubmitButton = false;
-        if(butRes == 25 || butRes == 26) {
+        if(butRes == 27 || butRes == 29) {
           // Show QDE Button
           this.isFinalSubmitButton = true;
         }
