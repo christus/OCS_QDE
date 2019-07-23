@@ -221,7 +221,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
       this.qde = val;
 
       console.log('QDE: ', this.qde);
-      
+
       this.commonDataService.changeApplicationId(this.qde.application.applicationId);
 
       this.applicationId = this.qde.application.applicationId;

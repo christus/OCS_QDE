@@ -104,17 +104,17 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
     });
     
     this.commonDataService.applicationId.subscribe(value => {
-      
+
       if(value != null) {
         if(this.isEligibilityForReviewsSub != null) {
           this.isEligibilityForReviewsSub.unsubscribe();
         }
         this.isEligibilityForReviewsSub = this.commonDataService.isEligibilityForReviews.subscribe(val => {
-          try{
-            this.isEligibilityForReview = val.find(v => v.applicationId == value)['isEligibilityForReview'];
-          } catch(ex) {
-            this._router.navigate(['/leads']);
-          }
+          // try{
+          this.isEligibilityForReview = val.find(v => v.applicationId == value)['isEligibilityForReview'];
+          // } catch(ex) {
+          //   this._router.navigate(['/leads']);
+          // }
         });
       }
     });
