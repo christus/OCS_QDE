@@ -1089,6 +1089,8 @@
                                               max=90
                                               tabindex="13"
                                               spellcheck="false"
+                                              maxlength="2"
+                                              oninput="this.value=this.value.slice(0,this.maxLength)"
                                               #numberOfYearsInCurrentResidence="ngModel"
                                               fieldFill
                                               required />
@@ -1361,7 +1363,8 @@
                                                           tabindex="1"
                                                           min=0
                                                           max=2
-                                                          pattern="[0-9]"
+                                                          maxlength="1"
+                                                          oninput="this.value=this.value.slice(0,this.maxLength)"
                                                           class="form-control"
                                                           spellcheck="false"
                                                           [(ngModel)]="qde.application.applicants[coApplicantIndex].familyDetails.numberOfDependents" />
