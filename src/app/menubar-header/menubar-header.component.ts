@@ -5,6 +5,7 @@ import { QdeService } from '../services/qde.service';
 
 import Qde  from 'src/app/models/qde.model';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-menubar-header',
@@ -35,8 +36,10 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
   isEligibilityForReviewsSub: Subscription;
   isTBMLoggedIn: boolean = false;
 
-  constructor(private utilService: UtilService, private commonDataService: CommonDataService,
-  private qdeService:QdeService) {
+  constructor(private utilService: UtilService,
+              private commonDataService: CommonDataService,
+              private _router: Router,
+              private qdeService:QdeService) {
     this.commonDataService.isViewFormNameShown.subscribe((value) => {
       this.isViewFormNameShown = value;
     });
@@ -107,7 +110,11 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
           this.isEligibilityForReviewsSub.unsubscribe();
         }
         this.isEligibilityForReviewsSub = this.commonDataService.isEligibilityForReviews.subscribe(val => {
-          this.isEligibilityForReview = val.find(v => v.applicationId == value)['isEligibilityForReview'];
+          try{
+            this.isEligibilityForReview = val.find(v => v.applicationId == value)['isEligibilityForReview'];
+          } catch(ex) {
+            this._router.navigate(['/leads']);
+          }
         });
       }
     });

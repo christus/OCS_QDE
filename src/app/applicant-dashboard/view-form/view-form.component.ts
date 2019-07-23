@@ -196,7 +196,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
   applicantId: string;
 
   isReadOnlyForm: boolean;
-  isEligibilityForReview: boolean;
+  // isEligibilityForReview: boolean;
 
   eligibilityAssignedTo: string;
   eligibilityDate: string;
