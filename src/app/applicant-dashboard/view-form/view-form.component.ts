@@ -647,7 +647,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
         this.isQdeSubmitButton = true;
       }
 
-      button.application.applicants.forEach(element => {
+      button.application.applicants.some(element => {
 
         if(element.documents != null) {
           
@@ -673,6 +673,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
                 }
                 else{
                   this.isFinalSubmitEnabled = false;
+                  return true;
                 }
               }
               else if(element['incomeDetails']['incomeConsider'] == false) {
@@ -680,6 +681,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
                   this.isFinalSubmitEnabled = true;
                 } else {
                   this.isFinalSubmitEnabled = false;
+                  return true;
                 }
               } else {
                 this.isFinalSubmitEnabled = false;
