@@ -2640,6 +2640,7 @@
                                     [(ngModel)]="qde.application.applicants[coApplicantIndex].revenueDetails.revenue"
                                     #revenue="ngModel"
                                     name="revenue"
+                                    maxlength="15"
                                     fieldFill
                                     tabindex="1"
                                     spellcheck="false"
@@ -2661,6 +2662,7 @@
                                     required
                                     [(ngModel)]="qde.application.applicants[coApplicantIndex].revenueDetails.annualNetIncome"
                                     fieldFill
+                                    maxlength="15"
                                     tabindex="2"
                                     spellcheck="false"
                                     #annualNetincome="ngModel"
@@ -2684,6 +2686,7 @@
                                     [(ngModel)]="qde.application.applicants[coApplicantIndex].revenueDetails.grossTurnOver"
                                     #grossTurnover="ngModel"
                                     fieldFill
+                                    maxlength="15"
                                     spellcheck="false"
                                     name="grossTurnOver"
                                     pattern="{{regexPattern.revenue}}" />
@@ -2762,6 +2765,7 @@
                                                   [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.annualFamilyIncome"
                                                   #annualFamilyIncome2="ngModel"
                                                   name="annualFamilyIncome"
+                                                  maxlength="15"
                                                   fieldFill
                                                   tabindex="1"
                                                   spellcheck="false"

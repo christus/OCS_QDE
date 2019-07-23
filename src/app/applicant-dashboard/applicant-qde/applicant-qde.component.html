@@ -2601,6 +2601,7 @@
                                     [(ngModel)]="qde.application.applicants[applicantIndex].revenueDetails.revenue"
                                     #revenue="ngModel"
                                     name="revenue"
+                                    maxlength="15"
                                     fieldFill
                                     tabindex="1"
                                     pattern="{{regexPattern.revenue}}"
@@ -2618,7 +2619,7 @@
                                 </div>
                                 <div class="form-group inr">
                                     <input [readonly]="isTBMLoggedIn" spellcheck="false"
-                                            type="text" class="form-control" id="net-income"
+                                     maxlength="15" type="text" class="form-control" id="net-income"
                                     required
                                     [(ngModel)]="qde.application.applicants[applicantIndex].revenueDetails.annualNetIncome"
                                     fieldFill
@@ -2639,7 +2640,7 @@
                                 </div>
                                 <div class="form-group inr last">
                                     <input [readonly]="isTBMLoggedIn" spellcheck="false"
-                                            type="text" class="form-control" id="gross-turnover" 
+                                     maxlength="15" type="text" class="form-control" id="gross-turnover" 
                                     required
                                     [(ngModel)]="qde.application.applicants[applicantIndex].revenueDetails.grossTurnOver"
                                     #grossTurnover="ngModel"
@@ -2722,7 +2723,7 @@
                                                   id="annualFamilyIncome2"
                                                   [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.annualFamilyIncome"
                                                   #annualFamilyIncome2="ngModel"
-                                                  maxlength="10"
+                                                  maxlength="15"
                                                   name="annualFamilyIncome"
                                                   tabindex="1"
                                                   fieldFill

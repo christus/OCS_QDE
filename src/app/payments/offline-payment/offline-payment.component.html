@@ -126,11 +126,21 @@
                                   #aadharSlider2="ngxSwiper">
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide">
-                                      <form class="bs-form" id="spouse-form">
-                                        <div class="form-wrap">
+                                        <form class="bs-form" id="spouse-form">
+                                      <div class="form-wrap">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" id="Cheque-drawn" fieldFill>
+                                                <input type="text" class="form-control" id="Cheque-drawn"
+                                                spellcheck="false"
+                                                required
+                                                name="checkDrawnTo"
+                                                #paymentCheckDrawnTo="ngModel"
+                                                ngModel
+                                                pattern="{{regexPattern.name}}"
+                                                fieldFill>
                                                 <label for="Cheque-drawn">Cheque drawn to</label>
+                                                <div *ngIf="(paymentCheckDrawnTo.touched || paymentCheckDrawnTo.dirty) && paymentCheckDrawnTo.invalid" class="invalid-feedback">
+                                                    <div *ngIf="paymentCheckDrawnTo.errors?.pattern">{{errors.payment.offline.chequeDrawn.invalid}}</div>
+                                               </div>
                                             </div>
                                             <div class="form-group">
                                                 <span class="control-title">Name of the Bank</span>
@@ -149,22 +159,66 @@
                                               </kendo-dropdownlist>
                                             </div>
                                             <div class="form-group">
-                                                <input type="text" class="form-control" id="ifsc-code" fieldFill>
+                                                <input type="text" class="form-control" id="ifsc-code"
+                                                spellcheck="false"
+                                                maxlength="11"
+                                                required
+                                                name="ifsc"
+                                                #ifscCode="ngModel"
+                                                ngModel
+                                                pattern="{{regexPattern.ifsc}}"
+                                                fieldFill>
                                                 <label for="ifsc-code">IFSC Code</label>
+                                               
+                                                <div *ngIf="(ifscCode.touched || ifscCode.dirty) && ifscCode.invalid" class="invalid-feedback">
+                                                   <div *ngIf="ifscCode.errors?.pattern">{{errors.payment.offline.ifscCode.invalid}}</div>
+                                              </div>
                                             </div>
 
                                             <div class="form-group">
-                                                <input type="text" class="form-control" id="cheque-number" fieldFill>
+                                                <input type="text" class="form-control" id="cheque-number"
+                                                spellcheck="false"
+                                                required
+                                                minlength="0"
+                                                maxlength="18"
+                                                name="chequeNo"
+                                                #chequeNumber="ngModel"
+                                                ngModel
+                                                pattern="{{regexPattern.chequeNo}}"
+                                                fieldFill>
                                                 <label for="cheque-number">Cheque number</label>
+                                                <div *ngIf="(chequeNumber.touched || chequeNumber.dirty) && chequeNumber.invalid" class="invalid-feedback">
+                                                     <div *ngIf="chequeNumber.errors?.pattern">{{errors.payment.offline.chequeNumber.invalid}}</div>
+                                                </div>
                                             </div>
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" id="amount" fieldFill>
-                                                <label for="amount">Amount</label>
+                                            <div class="form-group inr">
+                                                <input type="text" class="form-control" id="amount"
+                                                spellcheck="false"
+                                                required
+                                                name="amount"
+                                                minlength="0"
+                                                maxlength="15"
+                                                #paymentAmountOffline="ngModel"
+                                                ngModel
+                                                pattern="{{regexPattern.amount}}"
+                                                fieldFill>
+                                               
+                                                <label for="amount">Amount (in Rupees)</label>
+                                                <span class="addon">
+                                                    <span class="icon icon-inr"></span>
+                                                </span>
+                                                <span class="in-word"></span>
+                                                <div *ngIf="(paymentAmountOffline.touched || paymentAmountOffline.dirty) && paymentAmountOffline.invalid" class="invalid-feedback">
+                                                    <div *ngIf="paymentAmountOffline.errors?.pattern">{{errors.payment.offline.amount.invalid}}</div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="btn-wrap">
-                                            <button class="btn btn-primary" (click)="offline()">Submit</button>
-                                        </div>
+                                      <div class="btn-wrap">
+                                          <button   class="btn btn-primary"
+                                          [disabled]="false"
+                                          [ngClass]="{'disabled': false}"
+                                           (click)="offline()">Submit</button>
+                                      </div>
                                     </form>
                                     </div>                              
                                 </div>

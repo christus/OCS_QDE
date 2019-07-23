@@ -1,14 +1,18 @@
+import { Other } from './../../models/qde.model';
 import { Component, OnInit,  ViewChild, ElementRef, Renderer2, AfterViewInit } from '@angular/core';
 
 import * as Swiper from "swiper/dist/js/swiper.js";
 // import { Select2Component } from 'ng2-select2';
 import { ActivatedRoute, Router } from "@angular/router";
 
+import Qde from 'src/app/models/qde.model';
 import { Options } from "ng5-slider";
 import { NgForm } from "@angular/forms";
 import { CommonDataService } from 'src/app/services/common-data.service';
 import { QdeService } from 'src/app/services/qde.service';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
+import { Subscription } from 'rxjs';
+import { statuses } from '../../app.constants';
 
 @Component({
   selector: 'app-offline-payment',
@@ -17,8 +21,34 @@ import { QdeHttpService } from 'src/app/services/qde-http.service';
 })
 export class OfflinePaymentComponent implements OnInit {
 
+  
   value: number = 0;
 
+  errors = {  
+    payment:{
+      offline:{
+        chequeDrawn:{
+          invalid: "Cheque drawn is not valid"
+        },
+        ifscCode:{
+          invalid : "Invalid IFSC Code"
+        },
+        chequeNumber:{
+          invalid : "Invalid Cheque Number"
+        },
+        amount:{
+          invalid: "Invalid Amount"
+        }
+      }
+    }
+  }
+
+  regexPattern={
+    name:"[A-Z|a-z]+$",
+    ifsc:"[A-Z|a-z]{4}[0][\\d]{6}$",
+    chequeNo: "[\\d]{0,18}",
+    amount:"^[\\d]{0,10}([.][0-9]{0,4})?"
+  }
   minValue: number = 1;
   options: Options = {
     floor: 0,
@@ -32,9 +62,10 @@ export class OfflinePaymentComponent implements OnInit {
     }
   };
 
+
   lhsConfig = {
     noSwiping: true,
-    noSwipingClass: "",
+    noSwipingClass: '',
     onlyExternal: true,
     autoplay: false,
     speed: 900,
@@ -45,8 +76,8 @@ export class OfflinePaymentComponent implements OnInit {
   };
 
   rhsConfig = {
-    // noSwiping: true,
-    // onlyExternal: true,
+    noSwiping: true,
+    noSwipingClass: '',
     autoplay: false,
     speed: 900,
     effect: "slide"
@@ -83,6 +114,9 @@ export class OfflinePaymentComponent implements OnInit {
 
   fragments = ["offlinepayment1", "offlinepayment2"];
 
+  getQdeDataSub: Subscription;
+  qde: Qde;
+
   constructor(
     private renderer: Renderer2,
     private route: ActivatedRoute,
@@ -101,6 +135,7 @@ export class OfflinePaymentComponent implements OnInit {
     this.qdeService.qdeSource.subscribe(value => {
       this.applicationId = value.application.applicationId;
       this.ocsNumber = value.application.ocsNumber;
+      this.qde = value;
     });
     console.log(this.route.snapshot.data);
   }
@@ -205,10 +240,14 @@ export class OfflinePaymentComponent implements OnInit {
     this.isAlternateResidenceNumber = !this.isAlternateResidenceNumber;
   }
 
-  applicationStatusCheque: string = "16";
+
+  
   offline(){
-    this.qdeHttp.setStatusApi(this.applicationId, this.applicationStatusCheque).subscribe(res => {}, err => {});
+    // Another APi call to submit offline payment details
+    this.qdeHttp.setStatusApi(this.applicationId, statuses['Cheque Received']).subscribe(res => {}, err => {});
   }
+
+
 
   totalFee:number;
   submitPaymentForm() {

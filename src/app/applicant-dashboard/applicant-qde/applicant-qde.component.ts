@@ -83,7 +83,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       return  sliderVal + '<b>y</b>';
     }
   };
-  familyOptions:Options={
+    familyOptions:Options={
     floor:0,
     ceil:6,
     step: 1,
