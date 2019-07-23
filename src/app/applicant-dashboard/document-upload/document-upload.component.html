@@ -140,7 +140,7 @@
                                                     <label for="clickCustomerPhoto1"><span>Click photo of Customer</span></label>
                                                 </div>
 
-                                                <div class="doc_file_name_size" *ngIf="photoProofFileName[applicantIndex]">
+                                                <div (click)="openLink(photoProofId[applicantIndex])" class="doc_file_name_size" *ngIf="photoProofFileName[applicantIndex]">
                                                     <div>
                                                         <span>{{photoProofFileName[applicantIndex]}} </span>
                                                         <span ng-switch-when="true">({{photoProofFileSize[applicantIndex]}})</span>

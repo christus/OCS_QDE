@@ -870,7 +870,7 @@ export class DocumentUploadComponent implements OnInit {
         documentCategory: documentCategory
       };
 
-      this.uploadToOmni(documentInfo, 7, slider);
+      this.uploadToOmni(documentInfo, 7, "collateral");
     };
 
     this.uploadToMongo(modifiedFile, callback);
@@ -903,6 +903,11 @@ export class DocumentUploadComponent implements OnInit {
         ) {
           //alert("Uploaded Successfully!");
           this.cameraImage = "";
+
+          if(slider == "collateral") {
+            alert("Document submitted successfully");
+            return;
+          }
           if (slider) {
             this.goToNextSlide(slider);
           }
@@ -1083,5 +1088,9 @@ export class DocumentUploadComponent implements OnInit {
         this.photoProofId[index] = this.driveLoc + document["documentImageId"];
       }
     }
+  }
+
+  openLink(url) {
+    window.open(url, '_blank');
   }
 }

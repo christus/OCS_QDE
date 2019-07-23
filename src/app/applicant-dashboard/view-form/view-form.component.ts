@@ -898,7 +898,12 @@ export class ViewFormComponent implements OnInit, OnDestroy {
   }
 
   setAps(){
-    this.qdeHttp.apsApi(""+this.applicationId).subscribe(res => {});
+    this.qdeHttp.apsApi(""+this.applicationId).subscribe(res => {
+      if(res["ProcessVariables"]["status"]) {
+      } else {
+        // Throw Invalid Pan Error
+      }
+    });
   }
 
   onPinCodeChange(event) {
