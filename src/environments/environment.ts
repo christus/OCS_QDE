@@ -102,6 +102,10 @@ export const environment = {
     "resetMPIN": {
       'workflowId': '6cf36ddca16911e984730242ac110003',
       'processId': 'a444f89aa22811e984060242ac110002'
+    },
+    "ops": {
+      'workflowId': '471f4154a3a211e9abab0242ac110002',
+      'processId': '473800cca3a211e989e10242ac110002'
     }
   },
   userName: "icici@icici.com",

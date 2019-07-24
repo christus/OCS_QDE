@@ -77,6 +77,7 @@ import { ThankPaymentComponent } from './payments/thank-payment/thank-payment.co
 import { SetMpinComponent } from './Login/set-mpin/set-mpin.component';
 import { ReviewEligibilityComponent } from './applicant-dashboard/review-eligibility/review-eligibility.component';
 import { ThankPaymentEligibiltyComponent } from './payments/thank-payment-eligibilty/thank-payment-eligibilty.component';
+import { OpsModuleComponent } from './admin/ops-module/ops-module.component';
 
 const appRoutes: Routes = [
   { path: "", redirectTo: "leads", pathMatch: "full" },
@@ -292,6 +293,10 @@ const appRoutes: Routes = [
     path: 'review-eligibility/:applicationId',
     component: ReviewEligibilityComponent
   },
+  {
+    path: 'ops-module',
+    component: OpsModuleComponent
+  },
   { path: "**", component: PageNotFoundComponent }
 ];
  
@@ -341,7 +346,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     ThankPaymentComponent,
     ThankPaymentEligibiltyComponent,
     SetMpinComponent,
-    ReviewEligibilityComponent
+    ReviewEligibilityComponent,
+    OpsModuleComponent
   ],
   imports: [
     BrowserModule,

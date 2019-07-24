@@ -288,6 +288,28 @@ createOrUpdatePersonalDetails(qde) {
     return this.http.post(uri, body.toString());
   }
 
+
+  uploadToOps(documentInfo: any) {
+    const processId = environment.api.upload.processId;
+    const workflowId = environment.api.upload.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      ProcessVariables: documentInfo,
+      processId: processId,
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = new HttpParams().set(
+      "processVariables",
+      JSON.stringify(requestEntity)
+    );
+
+    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.http.post(uri, body.toString());
+  }
+
   getApplicableDocuments(data: any) {
     const processId = environment.api.applicableDocuments.processId;
     const workflowId = environment.api.applicableDocuments.workflowId;

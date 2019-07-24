@@ -1,0 +1,27 @@
+<h2>Cheque PAYMENT</h2>
+
+<div class="container">
+  <div class="tab-slider--nav">
+    <ul class="tab-slider--tabs">
+      <li class="tab-slider--trigger" [class.active]="viewMode == 'tab1'" rel="tab1" (click)="viewMode ='tab1'">Tab 1</li>
+      <li class="tab-slider--trigger" [class.active]="viewMode == 'tab2'" rel="tab2" (click)="viewMode ='tab2'">Tab 2</li>
+    </ul>
+  </div>
+  <div class="tab-slider--container" [ngSwitch]="viewMode">
+    <div id="tab1" class="tab-slider--body" *ngSwitchCase="'tab1'">
+      <h2>UPDATE PAYMENT</h2>
+      <div>
+        <h4>Upload file</h4>
+      </div>
+      <form>
+        <input type="file" name="myFile"  (change)="setUploadDoc($event.target.files)" ><br><br>
+        <input type="submit" (click)="startUploadDoc()">
+      </form>    
+    </div>
+    <div id="tab2" class="tab-slider--body" *ngSwitchCase="'tab2'">
+      <h2>DOWNlOAD CSV</h2>
+      <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Cras mattis consectetur purus sit amet fermentum. Nulla vitae elit libero, a pharetra augue. Cras mattis consectetur purus sit amet fermentum. Aenean eu leo
+        quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</p>
+    </div>
+  </div>
+</div>
