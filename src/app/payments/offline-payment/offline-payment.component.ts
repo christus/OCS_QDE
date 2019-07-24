@@ -110,6 +110,7 @@ export class OfflinePaymentComponent implements OnInit {
   docType: Array<any>;
   ocsNumber: string;
   applicationId: string;
+  loanProviderList: Array<any>;
 
 
   fragments = ["offlinepayment1", "offlinepayment2"];
@@ -155,6 +156,9 @@ export class OfflinePaymentComponent implements OnInit {
         this.tabSwitch(this.fragments.indexOf(localFragment));
       }
     });
+
+    const lov = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs);
+    this.loanProviderList = lov.LOVS.loan_providers;
   }
 
   ngAfterViewInit() {}

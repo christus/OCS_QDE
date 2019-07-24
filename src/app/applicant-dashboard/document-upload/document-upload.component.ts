@@ -240,10 +240,17 @@ export class DocumentUploadComponent implements OnInit {
         }
 
         this.getQdeDataSub = this.qdeHttp.getQdeData(params.applicationId).subscribe(response => {
-          console.log("RESPONSE ", response);
           var result = JSON.parse(response["ProcessVariables"]["response"]);
           this.qdeService.setQde(result);
+          var butRes = result.application.status;
+          console.log("RESPONSEhgjfgjkfk ", butRes);
 
+          if(butRes >= 5) {
+            this.cds.setIsMainTabEnabled(false);
+          }
+          else{
+            this.cds.setIsMainTabEnabled(true);
+          }
             this.applicationId = this.qde.application.applicationId;
             this.cds.changeApplicationId(this.qde.application.applicationId);
 
@@ -335,6 +342,13 @@ export class DocumentUploadComponent implements OnInit {
     //   this.isReadOnly
     // this.options.readOnly = this.isReadOnly;
     // }
+
+    // this.qdeHttp.getQdeData(parseInt(this.applicationId)).subscribe(res => {
+    //   // var button = JSON.parse(res['ProcessVariables']['response'])
+    //   // var butRes = button.application.status;
+    // console.log("fhhhhhhhh",res)
+    // })
+
   }
 
   ngAfterViewInit() {}

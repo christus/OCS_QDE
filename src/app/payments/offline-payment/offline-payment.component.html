@@ -150,13 +150,15 @@
                                                         <option value="Citibank">Citibank</option>
                                                 </select>
                                                [(ngModel)]="selectedDocType" -->
-                                                <kendo-dropdownlist class="form-control"
-                                                [data]="docType" 
-                                                textField="key"
-                                                valueField="value"
-                                                name="bankname"
-                                                >
-                                              </kendo-dropdownlist>
+                                               <kendo-dropdownlist 
+                                               class="form-control" 
+                                               name="loanProvider" 
+                                               [data]="loanProviderList" 
+                                               textField="key" 
+                                               valueField="value"
+                                               [valuePrimitive]="true" 
+                                               [(ngModel)]="selectedLoanProvider">
+                                             </kendo-dropdownlist>
                                             </div>
                                             <div class="form-group">
                                                 <input type="text" class="form-control" id="ifsc-code"
