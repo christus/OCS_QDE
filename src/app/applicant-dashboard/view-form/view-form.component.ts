@@ -709,7 +709,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
       //     console.log("Response", response)
       // })
       this.qdeHttp.viewFormSmsApi(this.applicationId).subscribe(res => {}, err => {});
-
+      alert("Qde Submitted Successfully");
   }
 
   prefillData() {

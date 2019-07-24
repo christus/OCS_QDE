@@ -148,11 +148,11 @@ export class LeadsListComponent implements OnInit {
     } 
     else if(statuses[status] == "5") {
       this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
-      return "/applicant/"+applicationId;
+      return "/document-uploads/"+applicationId;
     } 
     else if(statuses[status] == "10") {
       this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
-      return "/applicant/"+applicationId;
+      return "/document-uploads/"+applicationId;
     } 
     else if(statuses[status] == "15") {
       this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
@@ -160,11 +160,11 @@ export class LeadsListComponent implements OnInit {
     } 
     else if(statuses[status] == "16") {
       this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
-      return "/applicant/"+applicationId;
+      return "/document-uploads/"+applicationId;
     } 
     else if(statuses[status] == "17") {
       this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
-      return "/applicant/"+applicationId;
+      return "/document-uploads/"+applicationId;
     } 
     else if(statuses[status] == "20") {
       this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
@@ -172,7 +172,7 @@ export class LeadsListComponent implements OnInit {
     } 
     else if(statuses[status] == "25") {
       this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
-      return "/applicant/"+applicationId;
+      return "/document-uploads/"+applicationId;
     } 
     else if(statuses[status] == "26") {
 
@@ -182,27 +182,27 @@ export class LeadsListComponent implements OnInit {
       } else {
         this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
       }
-      return "/applicant/"+applicationId;
+      return "/document-uploads/"+applicationId;
     } 
     else if(statuses[status] == "27") {
       this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
-      return "/applicant/"+applicationId;
+      return "/document-uploads/"+applicationId;
     } 
     else if(statuses[status] == "28") {
       this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
-      return "/applicant/"+applicationId;
+      return "/document-uploads/"+applicationId;
     } 
     else if(statuses[status] == "30") {
       this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
-      return "/applicant/"+applicationId;
+      return "/document-uploads/"+applicationId;
     } 
     else if(statuses[status] == "35") {
       this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
-      return "/applicant/"+applicationId;
+      return "/document-uploads/"+applicationId;
     } 
     else if(statuses[status] == "40") {
       this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
-      return "/applicant/"+applicationId;
+      return "/document-uploads/"+applicationId;
     } 
     else {
       this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});

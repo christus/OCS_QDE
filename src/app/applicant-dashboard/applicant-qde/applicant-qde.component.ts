@@ -289,6 +289,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     this.cds.changeViewFormVisible(true);
     this.cds.changeLogoutVisible(true);
 
+    this.cds.setIsMainTabEnabled(false);
+
     const isMobile = this.deviceService.isMobile();
             
     this.panslideSub = this.cds.panslide.subscribe(val => {
