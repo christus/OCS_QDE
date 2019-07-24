@@ -569,6 +569,7 @@ export class ReferencesQdeComponent implements OnInit {
               console.log(
                 this.qde.application.references.referenceOne.relationShip
               );
+              alert("References saved successfully");
               this.tabSwitch(1);
             } else {
               alert(response["ErrorMessage"]);

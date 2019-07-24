@@ -893,7 +893,9 @@ export class ViewFormComponent implements OnInit, OnDestroy {
   applicationStatus: string = "5";
 
   setStatus() {
-     this.qdeHttp.setStatusApi(this.applicationId, this.applicationStatus).subscribe(res => {}, err => {});
+     this.qdeHttp.setStatusApi(this.applicationId, this.applicationStatus).subscribe(res => {
+       alert("QDE Submitted successfully");
+     }, err => {});
      this.sendSMS();
   }
 
