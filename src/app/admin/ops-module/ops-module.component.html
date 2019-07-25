@@ -11,7 +11,7 @@
     <div id="tab1" class="tab-slider--body" *ngSwitchCase="'tab1'">
       <h2>UPDATE PAYMENT</h2>
       <div>
-        <h4>Upload file</h4>
+        <h2>Upload file</h2>
       </div>
       <form>
         <input type="file" name="myFile"  (change)="setUploadDoc($event.target.files)" ><br><br>
@@ -20,7 +20,7 @@
     </div>
     <div id="tab2" class="tab-slider--body" *ngSwitchCase="'tab2'">
       <h2>DOWNlOAD CSV</h2>
-      <p>Download CSV for Cheque payment</p>
+      <h2>Download CSV for Cheque payment</h2>
       <input type="submit" (click)="downloadCSV()">
     </div>
   </div>
