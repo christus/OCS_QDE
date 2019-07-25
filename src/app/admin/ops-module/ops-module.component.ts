@@ -16,15 +16,15 @@ export class OpsModuleComponent implements OnInit {
   setUploadDoc(files:any) {
     console.log(files.item(0));
     this.uploadDoc = files.item(0);
-    alert("upload page");
   }
 
   startUploadDoc() {
     const callback = (info: JSON) => {
       console.log("Info", info);
       const attachmentInfo ={
-        "id": "",
-        "name": ""
+        "id": info["id"],
+        "name": info["name"],
+        "operation": "upload"
       }
       const documentInfo = {
         "attachment": attachmentInfo,
@@ -37,8 +37,30 @@ export class OpsModuleComponent implements OnInit {
     this.uploadToMongo(this.uploadDoc, callback);
   }
 
-  showPaymentDownload() {
-    alert("upload download");
+  downloadCSV() {
+    var data = {
+      "Submit" : ""
+    }
+    this.qdeHttp.documentsPaymentReconCSV(data).subscribe(
+      response => {
+        if (
+          response["Error"] === "0" &&
+          response["ProcessVariables"]["status"]) {
+            // alert("Uploaded Successfully!");
+        } else {
+          if (response["ErrorMessage"]) {
+            console.log("Response: " + response["ErrorMessage"]);
+          } else if (response["ProcessVariables"]["errorMessage"]) {
+            console.log(
+              "Response: " + response["ProcessVariables"]["errorMessage"]
+            );
+          }
+        }
+      },
+      error => {
+        console.log("Error : ", error);
+      }
+    );
   }
 
 
@@ -50,12 +72,12 @@ export class OpsModuleComponent implements OnInit {
           //console.log(response);
           callback(response["info"]);
         } else {
-          console.log(response["ErrorMessage"]);
+          alert(["message"]);
         }
       },
       error => {
         console.log("Error : ", error);
-        alert(error.statusText);
+        alert(error.error.message);
       }
     );
   }
@@ -65,12 +87,8 @@ export class OpsModuleComponent implements OnInit {
       response => {
         if (
           response["Error"] === "0" &&
-          response["ProcessVariables"]["status"]
-        ) {
-          //alert("Uploaded Successfully!");
-
-          
-
+          response["ProcessVariables"]["status"]) {
+            alert("Uploaded Successfully!");
         } else {
           if (response["ErrorMessage"]) {
             console.log("Response: " + response["ErrorMessage"]);

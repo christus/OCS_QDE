@@ -61,8 +61,9 @@ export class LoginComponent implements OnInit {
         localStorage.setItem("userId", res["ProcessVariables"]["userId"]);
         localStorage.setItem('roles', roleName);
 
-        if(roleName == "admin") {
-          this.router.navigate(["/opsModule"]);
+        if(roleName.includes("Admin")) {
+          this.router.navigate(["/ops-module"]);
+          return;
         }
 
         this.router.navigate(["/leads"]);

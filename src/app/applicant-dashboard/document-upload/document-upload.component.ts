@@ -898,12 +898,12 @@ export class DocumentUploadComponent implements OnInit {
           //console.log(response);
           callback(response["info"]);
         } else {
-          console.log(response["ErrorMessage"]);
+          console.log(alert["message"]);
         }
       },
       error => {
         console.log("Error : ", error);
-        alert(error.statusText);
+        alert(error.error.message);
       }
     );
   }

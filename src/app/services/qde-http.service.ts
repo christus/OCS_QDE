@@ -331,6 +331,27 @@ createOrUpdatePersonalDetails(qde) {
     return this.http.post(uri, body.toString());
   }
 
+  documentsPaymentReconCSV(data: any) {
+    const processId = environment.api.paymentRecon.processId;
+    const workflowId = environment.api.paymentRecon.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      ProcessVariables: data,
+      processId: processId,
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = new HttpParams().set(
+      "processVariables",
+      JSON.stringify(requestEntity)
+    );
+
+    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.http.post(uri, body.toString());
+  }
+
   dummyGetApi(qde) {
     return of({
       "Error": "0",
