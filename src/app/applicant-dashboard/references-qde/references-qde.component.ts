@@ -285,7 +285,7 @@ export class ReferencesQdeComponent implements OnInit {
           try {
             this.isEligibilityForReview = val.find(v => v.applicationId == params['applicationId'])['isEligibilityForReview'];
           } catch(ex) {
-            this.router.navigate(['/leads']);
+            // this.router.navigate(['/leads']);
           }
         });
       }

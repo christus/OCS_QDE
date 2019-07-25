@@ -550,7 +550,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
           try {
             this.isEligibilityForReview = val.find(v => v.applicationId == params['applicationId'])['isEligibilityForReview'];
           } catch(ex) {
-            this.router.navigate(['/leads']);
+            // this.router.navigate(['/leads']);
           }
         });
       }

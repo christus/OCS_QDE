@@ -420,7 +420,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
       console.log('PARAMS................................')
 
-      this.cds.changeApplicationId(params.applicationId);
+      if(params['applicationId'] != null) {
+        this.cds.changeApplicationId(params['applicationId']);
+      }
 
       console.log("params ", params);
 
@@ -706,7 +708,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
           try {
             this.isEligibilityForReview = val.find(v => v.applicationId == params['applicationId'])['isEligibilityForReview'];
           } catch(ex) {
-            this.router.navigate(['/leads']);
+          //   this.router.navigate(['/leads']);
           }
         });
       }
