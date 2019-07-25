@@ -263,11 +263,11 @@ export class DocumentUploadComponent implements OnInit {
           this.isEligibilityForReviewsSub.unsubscribe();
         }
         this.isEligibilityForReviewsSub = this.cds.isEligibilityForReviews.subscribe(val => {
-          // try {
+          try {
             this.isEligibilityForReview = val.find(v => v.applicationId == params['applicationId'])['isEligibilityForReview'];
-          // } catch(ex) {
-          //   this.router.navigate(['/leads']);
-          // }
+          } catch(ex) {
+            this.router.navigate(['/leads']);
+          }
         });
       }
 

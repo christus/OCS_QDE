@@ -12,6 +12,9 @@ import { statuses } from '../../app.constants';
 })
 export class ReviewEligibilityComponent implements OnInit {
 
+  /************************
+  * TBM Review Eligibility
+  ************************/
   isEligibilityForReviewsSub: Subscription;
   elibilityReviewAPISub: Subscription;
   isEligibilityForReview: boolean
@@ -89,11 +92,11 @@ export class ReviewEligibilityComponent implements OnInit {
   }
 
   applicationAccepted() {
-    this.qdeHttp.setStatusApi(this.applicationId, statuses['Eligibility Accepted']).subscribe(res => {this._router.navigate(['/leads'])}, err => {});
+    this.qdeHttp.setStatusApi(this.applicationId, statuses['Eligibility Review Accepted']).subscribe(res => {this._router.navigate(['/leads'])}, err => {});
   }
 
   applicationRejected() {
-    this.qdeHttp.setStatusApi(this.applicationId, statuses['Eligibility Rejected']).subscribe(res => {this._router.navigate(['/leads'])}, err => {});
+    this.qdeHttp.setStatusApi(this.applicationId, statuses['Eligibility Review Rejected']).subscribe(res => {this._router.navigate(['/leads'])}, err => {});
   }
 
   ngOnDestroy() {
