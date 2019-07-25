@@ -282,7 +282,11 @@ export class ReferencesQdeComponent implements OnInit {
           this.isEligibilityForReviewsSub.unsubscribe();
         }
         this.isEligibilityForReviewsSub = this.cds.isEligibilityForReviews.subscribe(val => {
-          this.isEligibilityForReview = val.find(v => v.applicationId == params['applicationId'])['isEligibilityForReview'];
+          try {
+            this.isEligibilityForReview = val.find(v => v.applicationId == params['applicationId'])['isEligibilityForReview'];
+          } catch(ex) {
+            this.router.navigate(['/leads']);
+          }
         });
       }
     });
@@ -565,6 +569,7 @@ export class ReferencesQdeComponent implements OnInit {
               console.log(
                 this.qde.application.references.referenceOne.relationShip
               );
+              alert("References saved successfully");
               this.tabSwitch(1);
             } else {
               alert(response["ErrorMessage"]);

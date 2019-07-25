@@ -18,6 +18,9 @@ import { findLocaleData } from '@angular/common/src/i18n/locale_data_api';
 import { Subscription } from 'rxjs';
 import { errors } from '../../services/errors';
 import { environment } from 'src/environments/environment.prod';
+
+import { DeviceDetectorService } from 'ngx-device-detector';
+
 interface Item {
   key: string,
   value: number | string
@@ -32,7 +35,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
 
   panImage:String;
 
-  isMobile:String;
+  imageURI:String;
+
 
   readonly errors = errors;
   panErrorCount: number = 0;
@@ -255,6 +259,15 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
 
   otp:string;
 
+  idPanDocumnetType: any;
+  idPanFileName: string;
+  idPanFileSize: string;
+  idPanId: string;
+  idPanDoc: File;
+
+  isMobile:any;
+
+
   isReadOnly: boolean = false;
 
   isEligibilityForReview: boolean = false;
@@ -266,7 +279,11 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
               private router: Router,
               private qdeHttp: QdeHttpService,
               private qdeService: QdeService,
-              private cds: CommonDataService) {
+              private cds: CommonDataService,
+              private deviceService: DeviceDetectorService) {
+    
+    this.isMobile = this.deviceService.isMobile() ;
+
     this.cds.changeMenuBarShown(true);
     this.cds.changeViewFormVisible(true);
     this.cds.changeLogoutVisible(true);
@@ -506,6 +523,18 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
               }
             } catch(e) {}
 
+            try{
+              if(result.application.applicants[this.coApplicantIndex].pan.fileName != null){
+                this.idPanFileName = result.application.applicants[this.coApplicantIndex].pan.fileName;
+              }
+            }catch(e) {}  
+            
+            try{
+              if(result.application.applicants[this.coApplicantIndex].pan.fileSize != null){
+                this.idPanFileSize = result.application.applicants[this.coApplicantIndex].pan.fileSize;
+              }
+            }catch(e) {}  
+
 
             this.prefillData(params);
           });
@@ -518,7 +547,11 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
           this.isEligibilityForReviewsSub.unsubscribe();
         }
         this.isEligibilityForReviewsSub = this.cds.isEligibilityForReviews.subscribe(val => {
-          this.isEligibilityForReview = val.find(v => v.applicationId == params['applicationId'])['isEligibilityForReview'];
+          try {
+            this.isEligibilityForReview = val.find(v => v.applicationId == params['applicationId'])['isEligibilityForReview'];
+          } catch(ex) {
+            this.router.navigate(['/leads']);
+          }
         });
       }
     });
@@ -1358,7 +1391,13 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       this.createOrUpdatePersonalDetailsSub15 = this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
-          this.tabSwitch(9);
+          if(this.selectedOccupation.value == 9 || this.selectedOccupation.value == 10){
+            alert("Co-Applicant's application successfully submitted");
+            // this.tabSwitch();
+            return;
+          }else{
+            this.tabSwitch(9);
+          }
         } else {
           // Throw Invalid Pan Error
         }
@@ -1625,6 +1664,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       this.createOrUpdatePersonalDetailsSub22 = this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successfull
         if(response["ProcessVariables"]["status"]) {
+          alert("Co-Applicant's application successfully submitted");
           this.goToNextSlide(swiperInstance);
         } else {
           // Throw Invalid Pan Error
@@ -1931,6 +1971,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
         this.panSlider4.setIndex(0);
       }
 
+
+      
+
       // So that route is now in edit mode only
       this.cds.changePanSlide(false);
       this.cds.changePanSlide2(false);
@@ -2166,4 +2209,148 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
   allowOnlyNumbers() {
     console.log(this.qde.application.applicants[this.coApplicantIndex].familyDetails.numberOfDependents);
   }
+
+  openCamera() {
+
+    this.qdeHttp.takePicture().then((imageURI) => {
+      console.log("imageData", imageURI);
+
+      this.imageURI = imageURI;
+      //this.panImage = imageURI;
+      this.panImage = (<any>window).Ionic.WebView.convertFileSrc(imageURI);
+     }, (err) => {
+      // Handle error
+     });
+  }
+
+
+
+  sendPanImage(image){
+
+    let fileName = this.qde.application.applicationId + "-" + this.qde.application.applicants[this.coApplicantIndex].applicantId + "-" + new Date().getTime()
+
+    this.qdeHttp.uploadFile(fileName, image).then((data) => {
+      
+      if(data["responseCode"] == 200) {
+
+        var result = JSON.parse(data["response"]);
+
+        var imageId = result.info.id;
+
+        console.log("imageId",imageId);
+
+        this.qde.application.applicants[this.coApplicantIndex].pan.imageId = imageId;
+
+        this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
+          // If successful
+          if(response["ProcessVariables"]["status"] == true) {
+            alert("Switch to tab 1");
+            this.tabSwitch(1);
+          }
+        });
+      } else {
+        // Throw Invalid Pan Error
+        alert(JSON.parse(data["response"]));
+      }
+    });
+  }
+
+
+  setPanProof(files: any) {
+
+    console.log("setIdProof files", files);
+
+    if(this.isMobile) {
+      this.idPanDoc = files;
+      this.idPanFileName = (<any>window).Ionic.WebView.convertFileSrc(this.idPanDoc);
+      this.idPanFileSize = "";
+      return;
+    }
+    
+    this.idPanDoc = files.item(0);
+    this.idPanFileName = this.idPanDoc["name"];
+    this.idPanFileSize = this.getFileSize(this.idPanDoc["size"]);
+  }
+
+
+  getFileSize(size: any) {
+    size = size / 1024;
+
+    let isMegaByte = false;
+    if (size >= 1024) {
+      size = size / 1024;
+      isMegaByte = true;
+    }
+
+    let fileSize: string;
+    if (isMegaByte) {
+      fileSize = size.toFixed(2) + " MB";
+    } else {
+      fileSize = size.toFixed(2) + " KB";
+    }
+
+    return fileSize;
+  }
+
+  handlePanImage(isIndividual) {
+
+    if (this.qde.application.applicants[this.coApplicantIndex].pan.imageId != null) {
+      if(isIndividual) {
+        this.tabSwitch(2);
+      }else {
+        this.tabSwitch(12);
+      }
+      return;
+    }else {  /* Need to remove the else block once imageid is saved in back-end */
+      if(isIndividual) {
+        this.tabSwitch(2);
+      }else {
+        this.tabSwitch(12);
+      }
+    }
+
+    
+    let modifiedFile = Object.defineProperty(this.idPanDoc, "name", {
+      writable: true,
+      value: this.idPanDoc["name"]
+    });
+
+    modifiedFile["name"] = this.qde.application.applicationId + "-" + this.qde.application.applicants[this.coApplicantIndex].applicantId + "-" + new Date().getTime() + "-" + modifiedFile["name"];
+  
+
+    this.qdeHttp.uploadToAppiyoDrive(modifiedFile).subscribe(
+      response => {
+        if (response["ok"]) {
+          //this.progress = Math.round(100 * event.loaded / event.total);
+          console.log(response);
+          let info = response["info"];
+          const documentId = info["id"];
+          
+          console.log("imageId",documentId);
+
+          this.qde.application.applicants[this.coApplicantIndex].pan.imageId = documentId;
+
+          this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
+            // If successful
+            if(response["ProcessVariables"]["status"] == true) {
+              if(isIndividual) {
+                this.tabSwitch(2);
+              }else {
+                this.tabSwitch(12);
+              }
+            }
+          });
+
+        } else {
+          console.log(response["ErrorMessage"]);
+        }
+      },
+      error => {
+        console.log("Error : ", error);
+      }
+    );
+
+  }
+
+
 }

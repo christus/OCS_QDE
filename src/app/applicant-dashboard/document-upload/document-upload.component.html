@@ -8,22 +8,22 @@
                 <li class="tab-link " [ngClass]="{'active': (activeTab == 0), 'hide': (!applicantIndividual)}">
                     <a href="javascript:void(0);" (click)="tabSwitch(0)">Dashboard</a>
                 </li>
-                <li class="tab-link" [ngClass]="{'active': (activeTab == 1), 'hide': (!applicantIndividual)}">
+                <li class="tab-link" [ngClass]="{'disabled': isTabDisabled, 'active': (activeTab == 1), 'hide': (!applicantIndividual)}">
                     <a href="javascript:void(0);" (click)="tabSwitch(1)">Customer Photo</a>
                   </li>
-                <li class="tab-link " [ngClass]="{'active': (activeTab == 2), 'hide': (!applicantIndividual)}">
+                <li class="tab-link " [ngClass]="{'disabled': isTabDisabled, 'active': (activeTab == 2), 'hide': (!applicantIndividual)}">
                   <a href="javascript:void(0);" (click)="tabSwitch(2)">Id Proof</a>
                 </li>
-                <li class="tab-link" [ngClass]="{'active': (activeTab == 3), 'hide': (!applicantIndividual)}">
+                <li class="tab-link" [ngClass]="{'disabled': isTabDisabled, 'active': (activeTab == 3), 'hide': (!applicantIndividual)}">
                   <a href="javascript:void(0);" (click)="tabSwitch(3)">Address Proof</a>
                 </li>
-                <li class="tab-link" [ngClass]="{'active': (activeTab == 4), 'hide': (!applicantIndividual)}">
+                <li class="tab-link" [ngClass]="{'disabled': isTabDisabled, 'active': (activeTab == 4), 'hide': (!applicantIndividual)}">
                   <a href="javascript:void(0);" (click)="tabSwitch(4)">Income Proof</a>
                 </li>
-                <li class="tab-link" [ngClass]="{'active': (activeTab == 5), 'hide': (!applicantIndividual)}">
+                <li class="tab-link" [ngClass]="{'disabled': isTabDisabled, 'active': (activeTab == 5), 'hide': (!applicantIndividual)}">
                   <a href="javascript:void(0);" (click)="tabSwitch(5)">Banking</a>
                 </li>
-                <li class="tab-link" [ngClass]="{'active': (activeTab == 6), 'hide': (!applicantIndividual)}">
+                <li class="tab-link" [ngClass]="{'disabled': isTabDisabled, 'active': (activeTab == 6), 'hide': (!applicantIndividual)}">
                   <a href="javascript:void(0);" (click)="tabSwitch(6)">Collateral</a>
                 </li>
             </ul>
@@ -57,19 +57,19 @@
                                         <div class="swiper-slide">
                                             <form class="bs-form">
                                                 <div class="form-wrap">
-                                                    <div class="bs-radio" >
-                                                        <input [readonly]="isReadOnly"  
+                                                    <!-- <div class="bs-radio" >
+                                                        <input [readonly]="isTBMLoggedIn"  
                                                         (click)="selectApplicant(applicationId, mainApplicantId, 1)"
                                                         type="radio" [value]="true" />
                                                         <label for="individual"><span>Applicant</span></label>
-                                                    </div>
+                                                    </div> -->
 
-                                                    <div class="bs-radio typ-doc" *ngFor="let coApp of coApplicants; let i=index;">
-                                                        <input [readonly]="isReadOnly"
-                                                        (click)="selectCoApplicant(applicationId, coApp.applicantId, (i+1))"
+                                                    <div class="bs-radio typ-doc" *ngFor="let applicant of qde.application.applicants; let i=index;">
+                                                        <input [readonly]="isTBMLoggedIn"
+                                                        (click)="selectAnApplicant(applicationId, applicant.applicantId, i)"
                                                         type="radio" name="doc-upload"/>
                                                         <label for="applicant-radio">
-                                                            <span class="desc-text">{{i+1}} <span>Co-Applicant</span></span>
+                                                            <span class="desc-text"><span>{{i>0 ? 'Co-': ''}}Applicant</span>{{ i>0 ? i: ""}}</span>
                                                             <!-- <span class="icon icon-close"></span> -->
                                                         </label>
                                                     </div>
@@ -85,7 +85,7 @@
 
                 <!-- Customer Photo -->
 
-                <div class="tab-content" [ngClass]="{'active': (activeTab == 1)}">
+                <div class="tab-content" [ngClass]="{'active': (activeTab == 1)}" *ngIf="!isTabDisabled">
                 <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(panSlider2)"></a>
                 <div class="lyt-tabs">
                     <div class="lhs">
@@ -111,22 +111,22 @@
 
                                         <div *ngIf="isMobile">
 
-                                            <div *ngIf="photoProofId" else photoProof>
-                                                <div *ngIf="photoProofId" class="bs-file" >
-                                                        <secured-image [src]="photoProofId"></secured-image>
+                                            <div *ngIf="photoProofId[applicantIndex]" else photoProof>
+                                                <div *ngIf="photoProofId[applicantIndex]" class="bs-file" >
+                                                        <secured-image [src]="photoProofId[applicantIndex]"></secured-image>
                                                     <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setCustomerPhoto')">Retake</button>
                                                 </div>
                                             </div>
 
-                                            <div *ngIf="!photoProofId" #photoProof>
-                                                <div *ngIf="photoProofFileName" class="bs-file">
-                                                    <img [src]="photoProofFileName" />
+                                            <div *ngIf="!photoProofId[applicantIndex]" #photoProof>
+                                                <div *ngIf="photoProofFileName[applicantIndex]" class="bs-file">
+                                                    <img [src]="photoProofFileName[applicantIndex]" />
                                                     <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setCustomerPhoto')">Retake</button>
                                                 </div>
                                             </div>
 
-                                            <div *ngIf="!photoProofFileName" class="bs-file">
-                                                <input [readonly]="isReadOnly" type="file" class="form-control" (change)="setCustomerPhoto($event.target.files)" >
+                                            <div *ngIf="!photoProofFileName[applicantIndex]" class="bs-file">
+                                                <input [readonly]="isTBMLoggedIn" type="file" class="form-control" (change)="setCustomerPhoto($event.target.files)" >
                                                 <label for="file"><span>Click photo of Customer</span></label>
                                                 <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setCustomerPhoto')">open camera</button>
                                             </div>
@@ -136,14 +136,14 @@
                                         <div  *ngIf="!isMobile">
 
                                                 <div class="bs-file">
-                                                    <input [readonly]="isReadOnly" type="file" class="form-control" (change)="setCustomerPhoto($event.target.files)" >
-                                                    <label for="file"><span>Click photo of Customer</span></label>
+                                                    <input [readonly]="isTBMLoggedIn" id="clickCustomerPhoto1" type="file" class="form-control" (change)="setCustomerPhoto($event.target.files)" >
+                                                    <label for="clickCustomerPhoto1"><span>Click photo of Customer</span></label>
                                                 </div>
 
-                                                <div class="doc_file_name_size" *ngIf="photoProofFileName">
+                                                <div (click)="openLink(photoProofId[applicantIndex])" class="doc_file_name_size" *ngIf="photoProofFileName[applicantIndex]">
                                                     <div>
-                                                        <span>{{photoProofFileName}} </span>
-                                                        <span ng-switch-when="true">({{photoProofFileSize}})</span>
+                                                        <span>{{photoProofFileName[applicantIndex]}} </span>
+                                                        <span ng-switch-when="true">({{photoProofFileSize[applicantIndex]}})</span>
                                                     </div>
                                                     <!-- <div ng-show="progressVisible">
                                                         <div class="percent">{{progress}}%</div>
@@ -169,7 +169,7 @@
 
                 <!-- ID Proof -->
 
-                  <div class="tab-content" [ngClass]="{'active': (activeTab == 2)}">
+                  <div class="tab-content" [ngClass]="{'active': (activeTab == 2)}" *ngIf="!isTabDisabled">
                     <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(aadharSlider2)"></a>
                     <div class="lyt-tabs">
                         <div class="lhs">
@@ -202,13 +202,12 @@
                                             <div class="form-wrap">
                                                 <div class="form-group">
                                                     <span class="control-title">Select a Document Type</span>
-                                                    <kendo-dropdownlist [readonly]="isReadOnly" class="form-control" 
+                                                    <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control" 
                                                         name="id-proof" 
                                                         [data]="idProofDocumnetType" 
                                                         textField="key"
                                                         valueField="value" 
-                                                        [valuePrimitive]="true" 
-                                                        [(ngModel)]="selectedIdProof">
+                                                        [(ngModel)]="selectedIdProof[applicantIndex]">
                                                     </kendo-dropdownlist>
                                                 </div>
                                             </div>
@@ -223,25 +222,25 @@
                                                 
                                                 <div *ngIf="isMobile">
 
-                                                    <div *ngIf="isMobile && idProofId" else idProof>
-                                                        <div *ngIf="idProofId" class="bs-file" >
-                                                            <secured-image [src]="idProofId"></secured-image>
-                                                            <input [readonly]="isReadOnly" type="file" class="form-control" (change)="setIdProof($event.target.files)" >
-                                                            <label for="file"><span>Click photo of Id proof</span></label>    
+                                                    <div *ngIf="isMobile && idProofId[applicantIndex]" else idProof>
+                                                        <div *ngIf="idProofId[applicantIndex]" class="bs-file" >
+                                                            <secured-image [src]="idProofId[applicantIndex]"></secured-image>
+                                                            <input [readonly]="isTBMLoggedIn" type="file" class="form-control" (change)="setIdProof($event.target.files, applicantIndex)" >
+                                                            <label for="file"><span>Click photo of Id proof</span></label>
                                                             <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setIdProof')">Retake</button>
                                                         </div>
                                                     </div>
 
 
-                                                    <div *ngIf="isMobile && !idProofId" #idProof>
-                                                        <div *ngIf="isMobile && idProofFileName" class="bs-file">
-                                                            <img [src]="idProofFileName" />
+                                                    <div *ngIf="isMobile && !idProofId[applicantIndex]" #idProof>
+                                                        <div *ngIf="isMobile && idProofFileName[applicantIndex]" class="bs-file">
+                                                            <img [src]="idProofFileName[applicantIndex]" />
                                                             <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setIdProof')">Retake</button>
                                                         </div>
                                                     </div>
 
-                                                    <div *ngIf="!idProofId"  class="bs-file">
-                                                        <input [readonly]="isReadOnly" type="file" class="form-control" (change)="setIdProof($event.target.files)" >
+                                                    <div *ngIf="!idProofId[applicantIndex]"  class="bs-file">
+                                                        <input [readonly]="isTBMLoggedIn" type="file" class="form-control" (change)="setIdProof($event.target.files, applicantIndex)" >
                                                         <label for="file"><span>Click photo of Id proof</span></label>
                                                         <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setIdProof')">open camera</button>
                                                     </div>
@@ -251,15 +250,15 @@
                                                 <div *ngIf="!isMobile">
 
                                                     <div class="bs-file">
-                                                        <input [readonly]="isReadOnly" type="file" class="form-control" (change)="setIdProof($event.target.files)" >
-                                                        <label for="file"><span>Click photo of Id proof</span></label>
+                                                        <input [readonly]="isTBMLoggedIn" type="file" class="form-control" id="idProofId" (change)="setIdProof($event.target.files, applicantIndex)" >
+                                                        <label for="idProofId"><span>Click photo of Id proof</span></label>
                                                     </div>
                                                     
 
-                                                    <div class="doc_file_name_size" *ngIf="idProofFileName">
+                                                    <div class="doc_file_name_size" *ngIf="idProofFileName[applicantIndex]">
                                                         <div>
-                                                            <span>{{idProofFileName}} </span>
-                                                            <span ng-switch-when="true">({{idProofFileSize}})</span>
+                                                            <span>{{idProofFileName[applicantIndex]}} </span>
+                                                            <span ng-switch-when="true">({{idProofFileSize[applicantIndex]}})</span>
                                                         </div>
                                                         <!-- <div ng-show="progressVisible">
                                                             <div class="percent">{{progress}}%</div>
@@ -285,13 +284,13 @@
                                         <form class="bs-form">
                                             <div class="form-wrap">
                                                 <div class="bs-radio">
-                                                    <input [readonly]="isReadOnly"  type="radio"
+                                                    <input [readonly]="isTBMLoggedIn"  type="radio"
                                                             [value]="true"
                                                            />
                                                     <label for="individual"><span>Get OTP</span></label>
                                                 </div>
                                                 <div class="bs-radio">
-                                                    <input [readonly]="isReadOnly"  type="radio" 
+                                                    <input [readonly]="isTBMLoggedIn"  type="radio" 
                                                             [value]="true"
                                                             (click)="showSuccessModal = true"/>
                                                     <label for="non-individual"><span>Biometric Scan</span></label>
@@ -333,7 +332,7 @@
 
                   <!-- Address Proof -->
 
-                  <div class="tab-content" [ngClass]="{'active': (activeTab == 3)}">
+                  <div class="tab-content" [ngClass]="{'active': (activeTab == 3)}" *ngIf="!isTabDisabled">
                       <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(addressSlider2)"></a>
                       <div class="lyt-tabs">
                           <div class="lhs">
@@ -366,13 +365,12 @@
                                         <div class="form-wrap">
                                             <div class="form-group">
                                                 <span class="control-title">Select a Document Type</span>
-                                                <kendo-dropdownlist [readonly]="isReadOnly" class="form-control" 
+                                                <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control" 
                                                     name="address-proof" 
                                                     [data]="addressProofDocumnetType" 
                                                     textField="key" 
                                                     valueField="value"
-                                                    [valuePrimitive]="true" 
-                                                    [(ngModel)]="selectedAddressProof">
+                                                    [(ngModel)]="selectedAddressProof[applicantIndex]">
                                                 </kendo-dropdownlist>
                                             </div>
                                         </div>
@@ -388,22 +386,22 @@
 
                                             <div *ngIf="isMobile">
                                               
-                                                <div *ngIf="addressProofId" else addrProof>
-                                                    <div *ngIf="addressProofId" class="bs-file" >
-                                                            <secured-image [src]="addressProofId"></secured-image>
+                                                <div *ngIf="addressProofId[applicantIndex]" else addrProof>
+                                                    <div *ngIf="addressProofId[applicantIndex]" class="bs-file" >
+                                                            <secured-image [src]="addressProofId[applicantIndex]"></secured-image>
                                                         <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setAddressProof')">Retake</button>
                                                     </div>
                                                 </div>
 
-                                                <div *ngIf="!addressProofId" #addrProof>
-                                                    <div *ngIf="isMobile && addressProofFileName" class="bs-file">
-                                                        <img [src]="addressProofFileName" />
+                                                <div *ngIf="!addressProofId[applicantIndex]" #addrProof>
+                                                    <div *ngIf="isMobile && addressProofFileName[applicantIndex]" class="bs-file">
+                                                        <img [src]="addressProofFileName[applicantIndex]" />
                                                         <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setAddressProof')">Retake</button>
                                                     </div>
                                                 </div>
 
-                                                <div *ngIf="!addressProofFileName" class="bs-file">
-                                                    <input [readonly]="isReadOnly" type="file" class="form-control" (change)="setAddressProof($event.target.files)" >
+                                                <div *ngIf="!addressProofFileName[applicantIndex]" class="bs-file">
+                                                    <input [readonly]="isTBMLoggedIn" type="file" class="form-control" (change)="setAddressProof($event.target.files)" >
                                                     <label for="file"><span>Click photo of Address Proof</span></label>
                                                     <button class="btn btn-primary" (click)="openCamera('setAddressProof')">open camera</button>
                                                 </div>
@@ -415,14 +413,14 @@
                                             <div *ngIf="!isMobile">
 
                                                 <div class="bs-file">
-                                                    <input [readonly]="isReadOnly" type="file" class="form-control" (change)="setAddressProof($event.target.files)" >
-                                                    <label for="file"><span>Click photo of Address Proof</span></label>
+                                                    <input [readonly]="isTBMLoggedIn" type="file" id="addressProofID" class="form-control" (change)="setAddressProof($event.target.files)" >
+                                                    <label for="addressProofID"><span>Click photo of Address Proof</span></label>
                                                 </div>
 
-                                                <div class="doc_file_name_size" *ngIf="addressProofFileName">
+                                                <div class="doc_file_name_size" *ngIf="addressProofFileName[applicantIndex]">
                                                     <div>
-                                                        <span>{{addressProofFileName}} </span>
-                                                        <span ng-switch-when="true">({{addressProofFileSize}})</span>
+                                                        <span>{{addressProofFileName[applicantIndex]}} </span>
+                                                        <span ng-switch-when="true">({{addressProofFileSize[applicantIndex]}})</span>
                                                     </div>
                                                     <!-- <div ng-show="progressVisible">
                                                         <div class="percent">{{progress}}%</div>
@@ -448,7 +446,7 @@
 
                   <!-- Income Proof -->
 
-                  <div class="tab-content" [ngClass]="{'active': (activeTab == 4)}">
+                  <div class="tab-content" [ngClass]="{'active': (activeTab == 4)}" *ngIf="!isTabDisabled">
                       <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(incomeSlider2)"></a>
                       <div class="lyt-tabs">
                           <div class="lhs">
@@ -481,13 +479,12 @@
                                         <div class="form-wrap">
                                             <div class="form-group">
                                                 <span class="control-title">Select a Document Type</span>
-                                                <kendo-dropdownlist [readonly]="isReadOnly" class="form-control" 
+                                                <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control" 
                                                     name="income-proof" 
                                                     [data]="incomeProofDocumnetType" 
                                                     textField="key" 
                                                     valueField="value"
-                                                    [valuePrimitive]="true" 
-                                                    [(ngModel)]="selectedIncomeProof">
+                                                    [(ngModel)]="selectedIncomeProof[applicantIndex]">
                                                 </kendo-dropdownlist>
                                             </div>
                                         </div>
@@ -503,23 +500,23 @@
 
                                             <div *ngIf="isMobile">
                                            
-                                                <div *ngIf="incomeProofId" else incomeProof>
-                                                    <div *ngIf="incomeProofId" class="bs-file" >
-                                                            <secured-image [src]="incomeProofId"></secured-image>
+                                                <div *ngIf="incomeProofId[applicantIndex]" else incomeProof>
+                                                    <div *ngIf="incomeProofId[applicantIndex]" class="bs-file" >
+                                                            <secured-image [src]="incomeProofId[applicantIndex]"></secured-image>
                                                         <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setIncomeProof')">Retake</button>
                                                     </div>
                                                 </div>
 
-                                                <div *ngIf="!incomeProofId" #incomeProof>
-                                                    <div *ngIf="isMobile && incomeProofFileName" class="bs-file">
-                                                        <img [src]="incomeProofFileName" />
+                                                <div *ngIf="!incomeProofId[applicantIndex]" #incomeProof>
+                                                    <div *ngIf="isMobile && incomeProofFileName[applicantIndex]" class="bs-file">
+                                                        <img [src]="incomeProofFileName[applicantIndex]" />
                                                         <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setIncomeProof')">Retake</button>
                                                     </div>
                                                 </div>
 
 
-                                                <div *ngIf="!incomeProofFileName" class="bs-file">
-                                                  <input [readonly]="isReadOnly" type="file" class="form-control" (change)="setIncomeProof($event.target.files)" >
+                                                <div *ngIf="!incomeProofFileName[applicantIndex]" class="bs-file">
+                                                  <input [readonly]="isTBMLoggedIn" type="file" class="form-control" (change)="setIncomeProof($event.target.files)" >
                                                   <label for="file"><span>Click photo of Id proof</span></label>
                                                   <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setIncomeProof')">open camera</button>
                                                 </div>
@@ -529,14 +526,14 @@
                                             <div *ngIf="!isMobile">
 
                                                 <div class="bs-file">
-                                                    <input [readonly]="isReadOnly" type="file" class="form-control" (change)="setIncomeProof($event.target.files)" >
-                                                    <label for="file"><span>Click photo of Id proof</span></label>
+                                                    <input [readonly]="isTBMLoggedIn" type="file" class="form-control" id="incomeProofID" (change)="setIncomeProof($event.target.files)" >
+                                                    <label for="incomeProofID"><span>Click photo of Id proof</span></label>
                                                 </div>
           
-                                                <div class="doc_file_name_size" *ngIf="incomeProofFileName">
+                                                <div class="doc_file_name_size" *ngIf="incomeProofFileName[applicantIndex]">
                                                     <div>
-                                                        <span>{{incomeProofFileName}} </span>
-                                                        <span ng-switch-when="true">({{incomeProofFileSize}})</span>
+                                                        <span>{{incomeProofFileName[applicantIndex]}} </span>
+                                                        <span ng-switch-when="true">({{incomeProofFileSize[applicantIndex]}})</span>
                                                     </div>
                                                     <!-- <div ng-show="progressVisible">
                                                         <div class="percent">{{progress}}%</div>
@@ -563,7 +560,7 @@
 
                   <!-- Banking -->
 
-                  <div class="tab-content" [ngClass]="{'active': (activeTab == 5)}">
+                  <div class="tab-content" [ngClass]="{'active': (activeTab == 5)}" *ngIf="!isTabDisabled">
                       <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(bankingSlider2)"></a>
                       <div class="lyt-tabs">
                           <div class="lhs">
@@ -596,13 +593,12 @@
                                         <div class="form-wrap">
                                             <div class="form-group">
                                                 <span class="control-title">Select a Document Type</span>
-                                                <kendo-dropdownlist [readonly]="isReadOnly" class="form-control" 
+                                                <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control" 
                                                     name="banking-proof" 
                                                     [data]="bankProofDocumnetType" 
                                                     textField="key" 
                                                     valueField="value"
-                                                    [valuePrimitive]="true" 
-                                                    [(ngModel)]="selectedBankProof">
+                                                    [(ngModel)]="selectedBankProof[applicantIndex]">
                                                 </kendo-dropdownlist>
                                             </div>
                                         </div>
@@ -618,23 +614,23 @@
 
                                             <div *ngIf="isMobile">
                                                 
-                                                <div *ngIf="bankProofId" else bankProof>
-                                                    <div *ngIf="bankProofId" class="bs-file" >
-                                                            <secured-image [src]="bankProofId"></secured-image>
+                                                <div *ngIf="bankProofId[applicantIndex]" else bankProof>
+                                                    <div *ngIf="bankProofId[applicantIndex]" class="bs-file" >
+                                                            <secured-image [src]="bankProofId[applicantIndex]"></secured-image>
                                                         <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setBankingProof')">Retake</button>
                                                     </div>
                                                 </div>
 
-                                                <div *ngIf="!bankProofId" #bankProof>
-                                                    <div *ngIf="isMobile && bankProofFileName" class="bs-file">
-                                                        <img [src]="bankProofFileName" />
+                                                <div *ngIf="!bankProofId[applicantIndex]" #bankProof>
+                                                    <div *ngIf="isMobile && bankProofFileName[applicantIndex]" class="bs-file">
+                                                        <img [src]="bankProofFileName[applicantIndex]" />
                                                         <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setBankingProof')">Retake</button>
                                                     </div>
                                                 </div>
 
 
-                                                <div *ngIf="!bankProofFileName" class="bs-file">
-                                                  <input [readonly]="isReadOnly" type="file" class="form-control" (change)="setBankingProof($event.target.files)" >
+                                                <div *ngIf="!bankProofFileName[applicantIndex]" class="bs-file">
+                                                  <input [readonly]="isTBMLoggedIn" type="file" class="form-control" (change)="setBankingProof($event.target.files)" >
                                                   <label for="file"><span>Click photo of Banking Proof</span></label>
                                                   <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setBankingProof')">open camera</button>
                                                 </div>
@@ -644,14 +640,14 @@
                                             <div *ngIf="!isMobile">
 
                                                 <div class="bs-file">
-                                                    <input [readonly]="isReadOnly" type="file" class="form-control" (change)="setBankingProof($event.target.files)" >
-                                                    <label for="file"><span>Click photo of Banking Proof</span></label>
+                                                    <input [readonly]="isTBMLoggedIn" type="file" id="bankingProofID" class="form-control" (change)="setBankingProof($event.target.files)" >
+                                                    <label for="bankingProofID"><span>Click photo of Banking Proof</span></label>
                                                 </div>
 
-                                                <div class="doc_file_name_size" *ngIf="bankProofFileName">
+                                                <div class="doc_file_name_size" *ngIf="bankProofFileName[applicantIndex]">
                                                     <div>
-                                                        <span>{{bankProofFileName}} </span>
-                                                        <span ng-switch-when="true">({{bankProofFileSize}})</span>
+                                                        <span>{{bankProofFileName[applicantIndex]}} </span>
+                                                        <span ng-switch-when="true">({{bankProofFileSize[applicantIndex]}})</span>
                                                     </div>
                                                     <!-- <div ng-show="progressVisible">
                                                         <div class="percent">{{progress}}%</div>
@@ -681,7 +677,7 @@
 
                   <!-- Collateral -->
 
-                  <div class="tab-content" [ngClass]="{'active': (activeTab == 6)}">
+                  <div class="tab-content" [ngClass]="{'active': (activeTab == 6)}" *ngIf="!isTabDisabled">
                       <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(collateralSlider2)"></a>
                       <div class="lyt-tabs">
                           <div class="lhs">
@@ -714,13 +710,12 @@
                                         <div class="form-wrap">
                                             <div class="form-group">
                                                 <span class="control-title">Select a Document Type</span>
-                                                <kendo-dropdownlist [readonly]="isReadOnly" class="form-control" 
+                                                <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control" 
                                                     name="collateral-proof" 
                                                     [data]="collateralProofDocumnetType" 
                                                     textField="key" 
                                                     valueField="value"
-                                                    [valuePrimitive]="true" 
-                                                    [(ngModel)]="selectedCollateralProof">
+                                                    [(ngModel)]="selectedCollateralProof[applicantIndex]">
                                                 </kendo-dropdownlist>
                                             </div>
                                         </div>
@@ -736,23 +731,23 @@
 
                                             <div *ngIf="isMobile">
 
-                                                <div *ngIf="collateralProofId" else collateralProof>
-                                                    <div *ngIf="collateralProofId" class="bs-file" >
-                                                            <secured-image [src]="collateralProofId"></secured-image>
+                                                <div *ngIf="collateralProofId[applicantIndex]" else collateralProof>
+                                                    <div *ngIf="collateralProofId[applicantIndex]" class="bs-file" >
+                                                            <secured-image [src]="collateralProofId[applicantIndex]"></secured-image>
                                                         <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setCollateralProof')">Retake</button>
                                                     </div>
                                                 </div>
 
 
-                                                <div *ngIf="!collateralProofId" #collateralProof>
-                                                    <div *ngIf="!collateralProofId" class="bs-file">
-                                                        <img [src]="collateralProofFileName" />
+                                                <div *ngIf="!collateralProofId[applicantIndex]" #collateralProof>
+                                                    <div *ngIf="!collateralProofId[applicantIndex]" class="bs-file">
+                                                        <img [src]="collateralProofFileName[applicantIndex]" />
                                                         <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setCollateralProof')">Retake</button>
                                                     </div>
                                                 </div>
 
-                                                <div *ngIf="!collateralProofFileName" class="bs-file">
-                                                  <input [readonly]="isReadOnly" type="file" class="form-control" (change)="setCollateralProof($event.target.files)" >
+                                                <div *ngIf="!collateralProofFileName[applicantIndex]" class="bs-file">
+                                                  <input [readonly]="isTBMLoggedIn" type="file" class="form-control" (change)="setCollateralProof($event.target.files)" >
                                                   <label for="file"><span>Click photo of Collateral</span></label>
                                                   <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setCollateralProof')">open camera</button>
                                                 </div>
@@ -762,15 +757,15 @@
                                             <div *ngIf="!isMobile">
 
                                                 <div class="bs-file">
-                                                    <input [readonly]="isReadOnly" type="file" class="form-control" (change)="setCollateralProof($event.target.files)" >
-                                                    <label for="file"><span>Click photo of Collateral</span></label>
+                                                    <input [readonly]="isTBMLoggedIn" id="collateralProofID" type="file" class="form-control" (change)="setCollateralProof($event.target.files)" >
+                                                    <label for="collateralProofID"><span>Click photo of Collateral</span></label>
                                                 </div>
 
 
-                                                <div class="doc_file_name_size" *ngIf="collateralProofFileName">
+                                                <div class="doc_file_name_size" *ngIf="collateralProofFileName[applicantIndex]">
                                                         <div>
-                                                            <span>{{collateralProofFileName}} </span>
-                                                            <span ng-switch-when="true">({{collateralProofFileSize}})</span>
+                                                            <span>{{collateralProofFileName[applicantIndex]}} </span>
+                                                            <span ng-switch-when="true">({{collateralProofFileSize[applicantIndex]}})</span>
                                                         </div>
                                                         <!-- <div ng-show="progressVisible">
                                                             <div class="percent">{{progress}}%</div>

@@ -13,7 +13,7 @@ import { CommonDataService } from 'src/app/services/common-data.service';
 import { QdeService } from 'src/app/services/qde.service';
 import { errors } from '../../services/errors';
 import { Subscription } from 'rxjs';
-import { statuses } from 'src/app/app.constants';
+import { statuses } from '../../app.constants';
 
 interface Item {
   key: string,
@@ -196,7 +196,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
   applicantId: string;
 
   isReadOnlyForm: boolean;
-  isEligibilityForReview: boolean;
+  // isEligibilityForReview: boolean;
 
   eligibilityAssignedTo: string;
   eligibilityDate: string;
@@ -221,8 +221,8 @@ export class ViewFormComponent implements OnInit, OnDestroy {
       this.qde = val;
 
       console.log('QDE: ', this.qde);
-      
-      this.commonDataService.changeApplicationId(this.qde.application.applicationId);
+
+      // this.commonDataService.changeApplicationId(this.qde.application.applicationId);
 
       this.applicationId = this.qde.application.applicationId;
 
@@ -402,9 +402,12 @@ export class ViewFormComponent implements OnInit, OnDestroy {
 
     this.route.params.subscribe(params => {
 
+      
       // Make an http request to get the required qde data and set using setQde
-      const applicationId = params.applicationId;
-      if (applicationId) {
+      if (params['applicationId']) {
+        const applicationId = params.applicationId;
+        this.commonDataService.changeApplicationId(this.qde.application.applicationId);
+
         this.qdeHttp.getQdeData(applicationId).subscribe(response => {
           let result = JSON.parse(response["ProcessVariables"]["response"]);
 
@@ -621,24 +624,84 @@ export class ViewFormComponent implements OnInit, OnDestroy {
     return isIncomplete;
   }
 
-  isQdeSubmitButton: boolean;
-  emiAmount: number;
-  eligibleAmount: number;
-  
+  isQdeSubmitButton: boolean = false;
+  isFinalSubmitButton: boolean = false;
+  isQdeSubmitEnabled: boolean = false; 
+  isFinalSubmitEnabled: boolean = false;
   submitButtonChange() {
 
     this.qdeHttp.getQdeData(parseInt(this.applicationId)).subscribe(res => {
       var button = JSON.parse(res['ProcessVariables']['response'])
       var butRes = button.application.status;
       
+      const swappedStatuses = this.swapKeyWithValues(statuses);
+
       //Change Status in accordance to the ID Corresponding to QDE Completed in DB
-      if(butRes=='5') {
+      if(butRes >= 5) {
+        // Show Final Button
         this.isQdeSubmitButton = false;
+        if(butRes == 27 || butRes == 29) {
+          // Show QDE Button
+          this.isFinalSubmitButton = true;
+        }
       }
-      else{
+      else {
+        // Show QDE Button
         this.isQdeSubmitButton = true;
       }
+
+      button.application.applicants.some(element => {
+
+        if(element.documents != null) {
+          
+          // element.documents.forEach(el => {
+
+            //For Qde Submit button
+            if(this.isQdeSubmitButton) {
+              if(element['incomeDetails']['incomeConsider'] != null && [true, false].includes(element['incomeDetails']['incomeConsider'])) {
+                if(element.documents.filter(el => el['documentCategory'] == '1' || el['documentCategory'] == '3' || el['documentCategory'] == '84').length == 3) {
+                  this.isQdeSubmitEnabled = true;
+                } else {
+                  this.isQdeSubmitEnabled = false;
+                }
+              } else {
+                this.isQdeSubmitEnabled = false;
+              }
+            } 
+            else {
+              //For final Submit button
+              if(element['incomeDetails']['incomeConsider'] == true) {
+                if( element.documents.filter(el => el['documentCategory'] == '1' || el['documentCategory'] == '3' || el['documentCategory'] =='5' || el['documentCategory'] == '6' || el['documentCategory'] == '84' || el['documentCategory'] == '85').length == 6) {
+                  this.isFinalSubmitEnabled = true;
+                }
+                else{
+                  this.isFinalSubmitEnabled = false;
+                  return true;
+                }
+              }
+              else if(element['incomeDetails']['incomeConsider'] == false) {
+                if(element.documents.filter(el => el['documentCategory'] == '1' || el['documentCategory'] == '3' || el['documentCategory'] == '84').length == 3) {
+                  this.isFinalSubmitEnabled = true;
+                } else {
+                  this.isFinalSubmitEnabled = false;
+                  return true;
+                }
+              } else {
+                this.isFinalSubmitEnabled = false;
+              }
+              
+            }
+
+        } else {
+          this.isQdeSubmitEnabled = false;
+          this.isFinalSubmitEnabled = false;
+        }
+      });
+
+
     });
+
+    this.commonDataService.setIsMainTabEnabled(false);
   }
 
   sendSMS() {
@@ -649,7 +712,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
       //     console.log("Response", response)
       // })
       this.qdeHttp.viewFormSmsApi(this.applicationId).subscribe(res => {}, err => {});
-
+      alert("Qde Submitted Successfully");
   }
 
   prefillData() {
@@ -736,6 +799,11 @@ export class ViewFormComponent implements OnInit, OnDestroy {
       // Personal Details Qualification (different because qualification isnt sending sequential value like 1,2,3)
       if( ! isNaN(parseInt(eachApplicant.personalDetails.qualification)) ) {
         this.selectedQualification[i] = (this.qualifications.find(e => e.value == eachApplicant.personalDetails.qualification));
+      }
+
+      // Gender
+      if( ! isNaN(parseInt(eachApplicant.personalDetails.gender)) ) {
+        this.selectedGender[i] = (this.genders.find(e => e.value == eachApplicant.personalDetails.gender));
       }
 
       // Constitution
@@ -828,8 +896,19 @@ export class ViewFormComponent implements OnInit, OnDestroy {
   applicationStatus: string = "5";
 
   setStatus() {
-     this.qdeHttp.setStatusApi(this.applicationId, this.applicationStatus).subscribe(res => {}, err => {});
+     this.qdeHttp.setStatusApi(this.applicationId, this.applicationStatus).subscribe(res => {
+       alert("QDE Submitted successfully");
+     }, err => {});
      this.sendSMS();
+  }
+
+  setAps(){
+    this.qdeHttp.apsApi(""+this.applicationId).subscribe(res => {
+      if(res["ProcessVariables"]["status"]) {
+      } else {
+        // Throw Invalid Pan Error
+      }
+    });
   }
 
   onPinCodeChange(event) {
@@ -874,5 +953,13 @@ export class ViewFormComponent implements OnInit, OnDestroy {
     if(this.getElibilityReviewSub != null) {
       this.getElibilityReviewSub.unsubscribe();
     }
+  }
+
+  swapKeyWithValues(json) {
+    var ret = {};
+    for(var key in json){
+      ret[json[key]] = key;
+    }
+    return ret;
   }
 }

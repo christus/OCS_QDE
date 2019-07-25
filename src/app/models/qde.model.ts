@@ -85,6 +85,8 @@ export interface Pan {
     isValid  ?: boolean;
     errorMessage ?: string;
     imageId? : string;
+    // fileName? : string;
+    // fileSize? : string;
 }
 
 export interface PersonalDetail {

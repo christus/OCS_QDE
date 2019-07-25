@@ -83,7 +83,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       return  sliderVal + '<b>y</b>';
     }
   };
-  familyOptions:Options={
+    familyOptions:Options={
     floor:0,
     ceil:6,
     step: 1,
@@ -262,6 +262,13 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
   otp:string;
 
+  idPanDocumnetType: any;
+  idPanFileName: string;
+  idPanFileSize: string;
+  idPanId: string;
+  idPanDoc: File;
+
+
   isReadOnly: boolean = false;
   isEligibilityForReview: boolean = false;
   isEligibilityForReviewsSub: Subscription;
@@ -283,6 +290,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     this.cds.changeMenuBarShown(true);
     this.cds.changeViewFormVisible(true);
     this.cds.changeLogoutVisible(true);
+
+    this.cds.setIsMainTabEnabled(false);
 
     const isMobile = this.deviceService.isMobile();
             
@@ -551,7 +560,19 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
               }
             } catch(e) {}
 
-
+            try{
+              if(result.application.applicants[this.applicantIndex].pan.fileName != null){
+                this.idPanFileName = result.application.applicants[this.applicantIndex].pan.fileName;
+              }
+            }catch(e) {}  
+            
+            try{
+              if(result.application.applicants[this.applicantIndex].pan.fileSize != null){
+                this.idPanFileSize = result.application.applicants[this.applicantIndex].pan.fileSize;
+              }
+            }catch(e) {}  
+     
+      
       // Document Type
       if( ! isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].pan.docType)) ) {
         this.selectedDocType = this.docType[(parseInt(this.qde.application.applicants[this.applicantIndex].pan.docType))-1];
@@ -684,7 +705,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
           this.isEligibilityForReviewsSub.unsubscribe();
         }
         this.isEligibilityForReviewsSub = this.cds.isEligibilityForReviews.subscribe(val => {
-          this.isEligibilityForReview = val.find(v => v.applicationId == params['applicationId'])['isEligibilityForReview'];
+          try {
+            this.isEligibilityForReview = val.find(v => v.applicationId == params['applicationId'])['isEligibilityForReview'];
+          } catch(ex) {
+            this.router.navigate(['/leads']);
+          }
         });
       }
     });
@@ -1534,6 +1559,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
         // If successful
         if(response["ProcessVariables"]["status"]) {
           if(this.selectedOccupation.value == 9 || this.selectedOccupation.value == 10){
+            alert("Applicant's application successfully submitted");
             // this.tabSwitch();
             return;
           }else{
@@ -1801,6 +1827,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       this.createOrUpdatePersonalDetailsSub22 = this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successfull
         if(response["ProcessVariables"]["status"]) {
+          alert("Applicant's application successfully submitted");
           this.goToNextSlide(swiperInstance);
         } else {
           // Throw Invalid Pan Error
@@ -2240,4 +2267,105 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   }
 
 
+  setPanProof(files: any) {
+
+    console.log("setIdProof files", files);
+
+    if(this.isMobile) {
+      this.idPanDoc = files;
+      this.idPanFileName = (<any>window).Ionic.WebView.convertFileSrc(this.idPanDoc);
+      this.idPanFileSize = "";
+      return;
+    }
+    
+    this.idPanDoc = files.item(0);
+    this.idPanFileName = this.idPanDoc["name"];
+    this.idPanFileSize = this.getFileSize(this.idPanDoc["size"]);
+  }
+
+
+  getFileSize(size: any) {
+    size = size / 1024;
+
+    let isMegaByte = false;
+    if (size >= 1024) {
+      size = size / 1024;
+      isMegaByte = true;
+    }
+
+    let fileSize: string;
+    if (isMegaByte) {
+      fileSize = size.toFixed(2) + " MB";
+    } else {
+      fileSize = size.toFixed(2) + " KB";
+    }
+
+    return fileSize;
+  }
+
+  handlePanImage(isIndividual) {
+
+    console.log("imageId", this.qde.application.applicants[this.applicantIndex].pan.imageId);
+
+    if (this.qde.application.applicants[this.applicantIndex].pan.imageId != null) {
+      if(isIndividual) {
+        this.tabSwitch(1);
+      }else {
+        this.tabSwitch(11);
+      }
+      return;
+    }else {  /* Need to remove the else block once imageid is saved in back-end */
+      if(isIndividual) {
+        this.tabSwitch(1);
+      }else {
+        this.tabSwitch(11);
+      }
+    }
+
+
+    let modifiedFile = Object.defineProperty(this.idPanDoc, "name", {
+      writable: true,
+      value: this.idPanDoc["name"]
+    });
+
+    modifiedFile["name"] = this.qde.application.applicationId + "-" + this.qde.application.applicants[this.applicantIndex].applicantId + "-" + new Date().getTime() + "-" + modifiedFile["name"];
+  
+
+    this.qdeHttp.uploadToAppiyoDrive(modifiedFile).subscribe(
+      response => {
+        if (response["ok"]) {
+          //this.progress = Math.round(100 * event.loaded / event.total);
+          console.log(response);
+          let info = response["info"];
+          const documentId = info["id"];
+          
+          console.log("imageId",documentId);
+
+          this.qde.application.applicants[this.applicantIndex].pan.imageId = documentId;
+
+          this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
+            // If successful
+            if(response["ProcessVariables"]["status"] == true) {
+                if(isIndividual) {
+                  this.tabSwitch(1);
+                }else {
+                  this.tabSwitch(11);
+                }
+            }
+          });
+
+        } else {
+          console.log(response["ErrorMessage"]);
+        }
+      },
+      error => {
+        console.log("Error : ", error);
+      }
+    );
+
+  }
+
+
+ 
+  
 }
