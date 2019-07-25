@@ -222,7 +222,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
 
       console.log('QDE: ', this.qde);
 
-      this.commonDataService.changeApplicationId(this.qde.application.applicationId);
+      // this.commonDataService.changeApplicationId(this.qde.application.applicationId);
 
       this.applicationId = this.qde.application.applicationId;
 
@@ -402,9 +402,12 @@ export class ViewFormComponent implements OnInit, OnDestroy {
 
     this.route.params.subscribe(params => {
 
+      
       // Make an http request to get the required qde data and set using setQde
-      const applicationId = params.applicationId;
-      if (applicationId) {
+      if (params['applicationId']) {
+        const applicationId = params.applicationId;
+        this.commonDataService.changeApplicationId(this.qde.application.applicationId);
+
         this.qdeHttp.getQdeData(applicationId).subscribe(response => {
           let result = JSON.parse(response["ProcessVariables"]["response"]);
 
