@@ -340,7 +340,28 @@ createOrUpdatePersonalDetails(qde) {
       ProcessVariables: data,
       processId: processId,
       workflowId: workflowId,
-      projectId: projectId
+      projectId: projectId,
+    };
+
+    const body = new HttpParams().set(
+      "processVariables",
+      JSON.stringify(requestEntity)
+    );
+
+    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.http.post(uri, body.toString());
+  }
+
+  uploadOnlinePaymentRecon(data: any) {
+    const processId = environment.api.paymentReconUpload.processId;
+    const workflowId = environment.api.paymentReconUpload.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      ProcessVariables: data,
+      processId: processId,
+      workflowId: workflowId,
+      projectId: projectId,
     };
 
     const body = new HttpParams().set(

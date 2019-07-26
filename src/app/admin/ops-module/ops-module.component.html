@@ -14,7 +14,7 @@
         <h2>Upload file</h2>
       </div>
       <form>
-        <input type="file" name="myFile"  (change)="setUploadDoc($event.target.files)" ><br><br>
+        <input type="file" name="myFile"  (change)="setUploadDoc($event.target)" ><br><br>
         <input type="submit" (click)="startUploadDoc()">
       </form>    
     </div>

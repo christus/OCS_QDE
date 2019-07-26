@@ -110,6 +110,10 @@ export const environment = {
     "paymentRecon": {
       'workflowId': '575dd3d48cfd11e982270242ac110002',
       'processId': '575dd3d48cfd11e982270242ac110002'
+    },
+    "paymentReconUpload": {
+      'workflowId': '83c3fd7ea16911e99a8f0242ac110003',
+      'processId': '83c3fd7ea16911e99a8f0242ac110003'
     }
   },
   userName: "icici@icici.com",
