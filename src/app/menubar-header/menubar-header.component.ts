@@ -111,11 +111,11 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
         }
         this.isEligibilityForReviewsSub = this.commonDataService.isEligibilityForReviews.subscribe(val => {
           console.log("MENUHEADER,", value);
-          // try{
-          this.isEligibilityForReview = val.find(v => v.applicationId == value)['isEligibilityForReview'];
-          // } catch(ex) {
+          try{
+            this.isEligibilityForReview = val.find(v => v.applicationId == value)['isEligibilityForReview'];
+          } catch(ex) {
           //   this._router.navigate(['/leads']);
-          // }
+          }
         });
       }
     });
