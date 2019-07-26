@@ -385,6 +385,7 @@ export class LoanQdeComponent implements OnInit {
             result.application.loanDetails.existingLoans.monthlyEmi || "";
 
           this.qde = result;
+          this.cds.enableTabsIfStatus1(this.qde.application.status);
           this.qde.application.applicationId = applicationId;
 
           this.qdeService.setQde(this.qde);

@@ -311,6 +311,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       }
 
       this.coApplicantsForDashboard = val.application.applicants.filter(v => v.isMainApplicant == false);
+      this.cds.enableTabsIfStatus1(this.qde.application.status);
     });
 
     this.applicationIdSub = this.cds.applicationId.subscribe(val => {

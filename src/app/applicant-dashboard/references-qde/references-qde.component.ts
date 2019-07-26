@@ -269,12 +269,14 @@ export class ReferencesQdeComponent implements OnInit {
             result.application.references.referenceTwo.addressLineTwo || "";
 
           this.qde = result;
+          this.cds.enableTabsIfStatus1(this.qde.application.status);
           this.qde.application.applicationId = applicationId;
 
           this.qdeService.setQde(this.qde);
         });
       } else {
         this.qde = this.qdeService.getQde();
+        this.cds.enableTabsIfStatus1(this.qde.application.status);
       }
 
       if(params['applicationId'] != null) {

@@ -303,6 +303,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       console.log("VALVE: ", val);
       this.qde = val;
       this.applicantIndex = val.application.applicants.findIndex(v => v.isMainApplicant == true);
+      this.cds.enableTabsIfStatus1(this.qde.application.status);
     });
 
 
