@@ -1,4 +1,4 @@
-import { Other } from './../../models/qde.model';
+import { Other, Applicant } from './../../models/qde.model';
 import { Component, OnInit, ViewChild, ElementRef, Renderer2, OnDestroy } from '@angular/core';
     
 import * as Swiper from 'swiper/dist/js/swiper.js';
@@ -12,7 +12,7 @@ import Qde from 'src/app/models/qde.model';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
 import { QdeService } from 'src/app/services/qde.service';
 import { CommonDataService } from '../../services/common-data.service';
-import { Subscription } from 'rxjs';
+import { Subscription, of } from 'rxjs';
 import { errors } from '../../services/errors';
 import { MenubarHeaderComponent } from '../../menubar-header/menubar-header.component';
 import { environment } from 'src/environments/environment';
@@ -273,6 +273,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   isEligibilityForReview: boolean = false;
   isEligibilityForReviewsSub: Subscription;
   isTBMLoggedIn: boolean;
+
+  isDuplicateModalShown: boolean = false;
+  duplicates: Array<Applicant> = [];
 
   constructor(private renderer: Renderer2,
               private route: ActivatedRoute,
@@ -1100,6 +1103,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   ageError=false;
 
   submitDobDetails(form: NgForm, swiperInstance ?: Swiper) {
+    console.log("isTBMLoggedIn: ", this.isTBMLoggedIn);
     if(this.isTBMLoggedIn) {
       this.tabSwitch(2);
     } else {
@@ -1129,7 +1133,19 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       this.createOrUpdatePersonalDetailsSub5=this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
-          this.tabSwitch(2);
+          this.qdeHttp.duplicateApplicantCheck(this.qde.application.applicants[this.applicantIndex].applicantId).subscribe(res => {
+            
+            if(res['ProcessVariables']['status'] == true) {
+              if(res['ProcessVariables']['response'] == '' || res['ProcessVariables']['response'] == null) {
+                this.tabSwitch(2);
+              } else {
+                this.duplicates = JSON.parse(res['ProcessVariables']['response'])['duplicates'];
+                if(this.duplicates.length > 0 ) {
+                  this.openDuplicateModal();
+                }
+              }
+            }
+          });
         } else {
           // Throw Invalid Pan Error
         }
@@ -1633,9 +1649,20 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
         // If successful
         if(response["ProcessVariables"]["status"]) {
           let result = this.parseJson(response["ProcessVariables"]["response"]);
-          // this.qde.application.ocsNumber = result["application"]["ocsNumber"];
-          // this.qde.application.applicants[this.applicantIndex].applicantId = result["application"]["applicationId"];
-          this.tabSwitch(12);
+          this.qdeHttp.duplicateApplicantCheck(this.qde.application.applicants[this.applicantIndex].applicantId).subscribe(res => {
+            
+            if(res['ProcessVariables']['status'] == true) {
+              if(res['ProcessVariables']['response'] == '' || res['ProcessVariables']['response'] == null) {
+                this.closeDuplicateModal();
+              } else {
+                this.duplicates = JSON.parse(res['ProcessVariables']['response'])['duplicates'];
+                if(this.duplicates.length > 0 ) {
+                  this.openDuplicateModal();
+                }
+              }
+            }
+          });
+          // this.tabSwitch(12);
         
         } else {
           // Throw Invalid Pan Error
@@ -2337,11 +2364,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
           this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
             // If successful
             if(response["ProcessVariables"]["status"] == true) {
-                if(isIndividual) {
-                  this.tabSwitch(1);
-                }else {
-                  this.tabSwitch(11);
-                }
+              if(isIndividual) {
+                this.tabSwitch(1);
+              }else {
+                this.tabSwitch(11);
+              }
             }
           });
 
@@ -2357,6 +2384,28 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   }
 
 
- 
-  
+  openDuplicateModal() {
+    this.isDuplicateModalShown = true;
+  }
+
+  closeDuplicateModal() {
+    this.isDuplicateModalShown = false;
+    this.tabSwitch(this.activeTab+1);
+  }
+
+  submitDuplicateApplicant(form: NgForm, tabNumber: number) {
+    let tempApplicant = this.qde.application.applicants[this.applicantIndex];
+    let newApplicantToBeReplaced = this.duplicates.find(e => e.applicantId == form.value.selectDuplicateApplicant);
+    this.qde.application.applicants[this.applicantIndex] = this.qdeService.getModifiedObject(tempApplicant, newApplicantToBeReplaced);
+    this.qde.application.applicants[this.applicantIndex].applicantId = tempApplicant.applicantId;
+    this.qde.application.applicants[this.applicantIndex].isMainApplicant = tempApplicant.isMainApplicant;
+    this.qdeService.setQde(this.qde);
+
+    this.createOrUpdatePersonalDetailsSub5=this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
+      // If successful
+      if(response["ProcessVariables"]["status"]) {
+        this.closeDuplicateModal();
+      }
+    });
+  }
 }

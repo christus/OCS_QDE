@@ -102,6 +102,7 @@ export class CommonDataService {
 
 
   setIsEligibilityForReviews(data: Array<{applicationId: string, isEligibilityForReview: boolean}>) {
+    console.log(data.length);
    this.isEligibilityForReviews$.next(data)
   }
 
@@ -123,7 +124,7 @@ export class CommonDataService {
   }
 
 
-  isTBMLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  isTBMLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public isTBMLoggedIn = this.isTBMLoggedIn$.asObservable();
 
 
