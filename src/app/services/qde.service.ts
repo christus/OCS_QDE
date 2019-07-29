@@ -724,4 +724,64 @@ export class QdeService {
       }
     });
   }
+
+  /**
+   * Function that checks for one object key if present and not null/not empty string then it will replace in another object, however, both structure should be same to replace the respective.
+   * 
+   * Example:
+   * 
+   *  var currentValue = {
+        a: 1,
+        b: 2,
+        c: {
+          c1: 'c1x',
+          c2: '',
+          c3: 'c3x',
+          c4: [{x: '1', y: '2'}, {x: '3', y: '4'}, {x: '5', y: '6'}]
+        }
+      };
+
+      var newValue = {
+        a: 3,
+        b: 4,
+        c: {
+          c1: '',
+          c2: '',
+          c3: '',
+          c4: [{x: '', y: ''}, {x: '', y: '9'}, {x: '', y: '10'}]
+        }
+      }
+   * 
+   * 
+   * @param current Current Object 
+   * @param mew New object from where values should be replaced
+   */
+  getModifiedObject(current, mew) {
+
+    let temp;
+
+    if(current && current.constructor == Object) {
+      temp = {};
+      if(mew != null) {
+        Object.keys(current).forEach((e, index) => {
+          temp[e] = this.getModifiedObject(current[e], mew[e]);
+        });
+      } else {
+        temp = current;
+      }
+    } else if(current && current.constructor == Array) {
+      temp = [];
+      if(mew != null) {
+        current.forEach((e, index) => {
+          temp.push(this.getModifiedObject(current[index], mew[index]));
+        });
+      } else {
+        temp = current;
+      }
+    } else {
+      temp = mew ? mew: current;
+    }
+  
+    return temp;
+  }
 }

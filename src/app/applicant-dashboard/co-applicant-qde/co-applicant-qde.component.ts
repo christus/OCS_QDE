@@ -273,6 +273,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
   isEligibilityForReview: boolean = false;
   isEligibilityForReviewsSub: Subscription;
   isTBMLoggedIn: boolean;
+  isDuplicateModalShown: boolean = false;
+  duplicates: Array<Applicant> = [];
 
   constructor(private renderer: Renderer2,
               private route: ActivatedRoute,
@@ -978,7 +980,19 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       this.createOrUpdatePersonalDetailsSub5 = this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
-          this.tabSwitch(3);
+          this.qdeHttp.duplicateApplicantCheck(this.qde.application.applicants[this.coApplicantIndex].applicantId).subscribe(res => {
+            
+            if(res['ProcessVariables']['status'] == true) {
+              if(res['ProcessVariables']['response'] == '' || res['ProcessVariables']['response'] == null) {
+                this.closeDuplicateModal();
+              } else {
+                this.duplicates = JSON.parse(res['ProcessVariables']['response'])['duplicates'];
+                if(this.duplicates.length > 0 ) {
+                  this.openDuplicateModal();
+                }
+              }
+            }
+          });
         } else {
           // Throw Invalid Pan Error
         }
@@ -1482,9 +1496,19 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
         // If successful
         if(response["ProcessVariables"]["status"]) {
           let result = this.parseJson(response["ProcessVariables"]["response"]);
-          // this.qde.application.ocsNumber = result["application"]["ocsNumber"];
-          // this.qde.application.applicants[this.coApplicantIndex].applicantId = result["application"]["applicationId"];
-          this.tabSwitch(13);
+          this.qdeHttp.duplicateApplicantCheck(this.qde.application.applicants[this.coApplicantIndex].applicantId).subscribe(res => {
+            
+            if(res['ProcessVariables']['status'] == true) {
+              if(res['ProcessVariables']['response'] == '' || res['ProcessVariables']['response'] == null) {
+                this.closeDuplicateModal();
+              } else {
+                this.duplicates = JSON.parse(res['ProcessVariables']['response'])['duplicates'];
+                if(this.duplicates.length > 0 ) {
+                  this.openDuplicateModal();
+                }
+              }
+            }
+          });
         } else {
           // Throw Invalid Pan Error
         }
@@ -2353,5 +2377,28 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
 
   }
 
+  openDuplicateModal() {
+    this.isDuplicateModalShown = true;
+  }
 
+  closeDuplicateModal() {
+    this.isDuplicateModalShown = false;
+    this.tabSwitch(2);
+  }
+
+  submitDuplicateApplicant(form: NgForm) {
+    let tempApplicant = this.qde.application.applicants[this.coApplicantIndex];
+    let newApplicantToBeReplaced = this.duplicates.find(e => e.applicantId == form.value.selectDuplicateApplicant);
+    this.qde.application.applicants[this.coApplicantIndex] = this.qdeService.getModifiedObject(tempApplicant, newApplicantToBeReplaced);
+    this.qde.application.applicants[this.coApplicantIndex].applicantId = tempApplicant.applicantId;
+    this.qde.application.applicants[this.coApplicantIndex].isMainApplicant = tempApplicant.isMainApplicant;
+    this.qdeService.setQde(this.qde);
+
+    this.createOrUpdatePersonalDetailsSub5=this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
+      // If successful
+      if(response["ProcessVariables"]["status"]) {
+        this.closeDuplicateModal();
+      }
+    });
+  }
 }

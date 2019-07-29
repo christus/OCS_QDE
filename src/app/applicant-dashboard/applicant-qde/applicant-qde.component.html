@@ -2900,31 +2900,28 @@
     <div class="bs-modal" id="duplicate-modal" [ngClass]="{'active': isDuplicateModalShown}">
         <div class="modal-body duplicate-modal-body">
             <h1 class="duplicate-title">Duplicate Entries Found</h1>
-            <table class="duplicate-table">
-                <thead>
-                    <tr>
-                        <th>Applicant ID</th>
-                        <th>Name</th>
-                        <th>Select</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Applicant ID No.</td>
-                        <td>FirstName LastName</td>
-                        <td>
-                            <form>
-                                <input type="radio" name="selectme" value="1" class="duplicate-radio" />
-                            </form>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div class="duplicate-btn-wrapper">
-                <button type="button" class="duplicate-btn">Skip</button>
-                <button type="button" class="duplicate-btn grey" [disabled]="{'disabled': false}">Use this Data</button>
-            </div>
+            <form (ngSubmit)="submitDuplicateApplicant(duplicateApplicantForm)" #duplicateApplicantForm="ngForm">
+                <div class="duplicate-table">
+                    <div class="duplicate-table-heading">
+                        <div class="duplicate-table-col">Applicant ID</div>
+                        <div class="duplicate-table-col">Name</div>
+                        <div class="duplicate-table-col">Select</div>
+                    </div>
+                    <div class="duplicate-table-data-wrapper">
+                        <div class="duplicate-table-data" *ngFor="let d of duplicates;let i=index;">
+                            <div class="duplicate-table-col">{{d['applicantId']}}</div>
+                            <div class="duplicate-table-col">{{d['personalDetails']['firstName']}}{{d['personalDetails']['middleName'] ? " "+d['personalDetails']['middleName'] : ""}}{{" "+d['personalDetails']['lastName']}}</div>
+                            <div class="duplicate-table-col">
+                                <input type="radio" name="selectDuplicateApplicant" [value]="d['applicantId']" ngModel class="duplicate-radio" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="duplicate-btn-wrapper">
+                    <button type="button" class="duplicate-btn" (click)="closeDuplicateModal()">Skip</button>
+                    <button type="submit" class="duplicate-btn" [disabled]="false" [ngClass]="{'disabled grey': false}">Use this Data</button>
+                </div>
+            </form>
         </div>
     </div>
   </main>

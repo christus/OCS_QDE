@@ -2932,6 +2932,34 @@
           </div>
       </div>
     <!-- <span class="cm-autoSave"><span class="cm-bold">Autosaved</span> <span>at 09:26 AM</span></span> -->
+
+
+    <div class="overlay" [ngClass]="{'active': isDuplicateModalShown}"></div>
+    <div class="bs-modal" id="duplicate-modal" [ngClass]="{'active': isDuplicateModalShown}">
+        <div class="modal-body duplicate-modal-body">
+            <h1 class="duplicate-title">Duplicate Entries Found</h1>
+            <form (ngSubmit)="submitDuplicateApplicant(duplicateApplicantForm)" #duplicateApplicantForm="ngForm">
+                <div class="duplicate-table">
+                    <div class="duplicate-table-heading">
+                        <div class="duplicate-table-col">Applicant ID</div>
+                        <div class="duplicate-table-col">Name</div>
+                        <div class="duplicate-table-col">Select</div>
+                    </div>
+                    <div class="duplicate-table-data-wrapper">
+                        <div class="duplicate-table-data" *ngFor="let d of duplicates;let i=index;">
+                            <div class="duplicate-table-col">{{d['applicantId']}}</div>
+                            <div class="duplicate-table-col">{{d['personalDetails']['firstName']}}{{d['personalDetails']['middleName'] ? " "+d['personalDetails']['middleName'] : ""}}{{" "+d['personalDetails']['lastName']}}</div>
+                            <div class="duplicate-table-col">
+                                <input type="radio" name="selectDuplicateApplicant" [value]="d['applicantId']" ngModel class="duplicate-radio" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="duplicate-btn-wrapper">
+                    <button type="button" class="duplicate-btn" (click)="closeDuplicateModal()">Skip</button>
+                    <button type="submit" class="duplicate-btn" [disabled]="false" [ngClass]="{'disabled grey': false}">Use this Data</button>
+                </div>
+            </form>
+        </div>
+    </div>
   </main>
-  
-  <div class="overlay"></div>
