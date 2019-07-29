@@ -131,4 +131,12 @@ export class CommonDataService {
   setIsTBMLoggedIn(data: boolean) {
    this.isTBMLoggedIn$.next(data);
   }
+
+  enableTabsIfStatus1(status) {
+    if(status >= 5) {
+      this.setIsMainTabEnabled(false);
+    } else {
+      this.setIsMainTabEnabled(true);
+    }
+  }
 }

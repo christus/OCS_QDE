@@ -1,0 +1,11 @@
+{
+  "Callback": {
+    "appiyoUrl" : "",
+    "userName" : "",
+    "password" : "",
+    "authToken" : "",
+    "isHTTPS" : false,
+    "longTermToken" : "true",
+    "redirectURL" : "/ocs/payments/thankpayment"
+  }
+}

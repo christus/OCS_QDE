@@ -12,6 +12,7 @@ export interface Application {
     applicants ?: Array<Applicant>;
     loanDetails ?: LoanDetail;
     references ?: Reference;
+    status ?: number;
 }
 
 export interface Document {

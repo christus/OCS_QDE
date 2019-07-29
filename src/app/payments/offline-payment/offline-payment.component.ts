@@ -85,6 +85,8 @@ export class OfflinePaymentComponent implements OnInit {
 
   activeTab: number = 0;
 
+  selectedLoanProvider:string;
+
   @ViewChild("tabContents") tabContents: ElementRef;
   // @ViewChild(Select2Component) select2: Select2Component;
 
