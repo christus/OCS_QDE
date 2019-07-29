@@ -269,12 +269,14 @@ export class ReferencesQdeComponent implements OnInit {
             result.application.references.referenceTwo.addressLineTwo || "";
 
           this.qde = result;
+          this.cds.enableTabsIfStatus1(this.qde.application.status);
           this.qde.application.applicationId = applicationId;
 
           this.qdeService.setQde(this.qde);
         });
       } else {
         this.qde = this.qdeService.getQde();
+        this.cds.enableTabsIfStatus1(this.qde.application.status);
       }
 
       if(params['applicationId'] != null) {
@@ -282,11 +284,11 @@ export class ReferencesQdeComponent implements OnInit {
           this.isEligibilityForReviewsSub.unsubscribe();
         }
         this.isEligibilityForReviewsSub = this.cds.isEligibilityForReviews.subscribe(val => {
-          // try {
+          try {
             this.isEligibilityForReview = val.find(v => v.applicationId == params['applicationId'])['isEligibilityForReview'];
-          // } catch(ex) {
-          //   this.router.navigate(['/leads']);
-          // }
+          } catch(ex) {
+            // this.router.navigate(['/leads']);
+          }
         });
       }
     });

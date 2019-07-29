@@ -254,11 +254,11 @@ export class LoanQdeComponent implements OnInit {
           this.isEligibilityForReviewsSub.unsubscribe();
         }
         this.isEligibilityForReviewsSub = this.cds.isEligibilityForReviews.subscribe(val => {
-          // try {
+          try {
             this.isEligibilityForReview = val.find(v => v.applicationId == params['applicationId'])['isEligibilityForReview'];
-          // } catch(ex) {
-          //   this.router.navigate(['/leads']);
-          // }
+          } catch(ex) {
+            // this.router.navigate(['/leads']);
+          }
         });
       }
     });
@@ -385,6 +385,7 @@ export class LoanQdeComponent implements OnInit {
             result.application.loanDetails.existingLoans.monthlyEmi || "";
 
           this.qde = result;
+          this.cds.enableTabsIfStatus1(this.qde.application.status);
           this.qde.application.applicationId = applicationId;
 
           this.qdeService.setQde(this.qde);

@@ -245,14 +245,15 @@ export class DocumentUploadComponent implements OnInit {
           var butRes = result.application.status;
           console.log("RESPONSEhgjfgjkfk ", butRes);
 
-          if(butRes >= 5) {
-            this.cds.setIsMainTabEnabled(false);
-          }
-          else{
-            this.cds.setIsMainTabEnabled(true);
-          }
+          // if(butRes >= 5) {
+          //   this.cds.setIsMainTabEnabled(false);
+          // }
+          // else{
+          //   this.cds.setIsMainTabEnabled(true);
+          // }
             this.applicationId = this.qde.application.applicationId;
             this.cds.changeApplicationId(this.qde.application.applicationId);
+            this.cds.enableTabsIfStatus1(this.qde.application.status);
 
         });
       }
@@ -263,11 +264,11 @@ export class DocumentUploadComponent implements OnInit {
           this.isEligibilityForReviewsSub.unsubscribe();
         }
         this.isEligibilityForReviewsSub = this.cds.isEligibilityForReviews.subscribe(val => {
-          // try {
+          try {
             this.isEligibilityForReview = val.find(v => v.applicationId == params['applicationId'])['isEligibilityForReview'];
-          // } catch(ex) {
-          //   this.router.navigate(['/leads']);
-          // }
+          } catch(ex) {
+            // this.router.navigate(['/leads']);
+          }
         });
       }
 

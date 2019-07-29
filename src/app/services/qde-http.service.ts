@@ -1062,6 +1062,31 @@ createOrUpdatePersonalDetails(qde) {
       "WorkflowId" : "ec16befc9f1b11e9a0040242ac110003"
    });
   }
+
+  duplicateApplicantCheck(applicantId) {
+
+    const processId = environment.api.duplicateApplicantCheck.processId;
+    const workflowId = environment.api.duplicateApplicantCheck.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: {
+        applicantId: applicantId
+      },
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = new HttpParams().set(
+      'processVariables',
+      JSON.stringify(requestEntity)
+    );
+  
+    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.http.post(uri, body.toString());
+  }
+
 }
 
 

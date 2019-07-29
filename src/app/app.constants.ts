@@ -17,7 +17,9 @@ export const statuses = {
     "Eligibility for review": "26",
     "Eligibility Accepted": "27",
     "Eligibility Rejected": "28",
+    "Eligibility Review Accepted": "29",
     "Eligibility Failed": "30",
+    "Eligibility Review Rejected": "31",
     "Mandatory Document Uploaded": "35",
     "DDE Submitted": "40"
 }

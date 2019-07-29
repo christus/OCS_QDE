@@ -1225,7 +1225,7 @@
                                                           fieldFill
                                                           pattern="{{regexPattern.amount}}" />
   
-                                                  <label for="amount">Amount (in lakhs)</label>
+                                                  <label for="amount">Amount</label>
                                                   <span class="addon">
                                                     <span class="icon icon-inr"></span>
                                                   </span>
@@ -1878,7 +1878,7 @@
                                                 maxlength="10"
                                                 pattern="{{regexPattern.amount}}"
                                                 required/>
-                                              <label for="annualFamilyIncome1">Annual Family Income <span class="lakhs">(in lakhs)</span></label>
+                                              <label for="annualFamilyIncome1">Annual Family Income <span class="lakhs"></span></label>
                                               <span class="addon">
                                                   <span class="icon icon-inr"></span>
                                                 </span>
@@ -2685,22 +2685,22 @@
                                               <p class="note">House made with a high quality materials throughout, including a floor, roof and exterior walls, are called pucca houses</p>
                                           </div>
                                       </div>
-                                      <div class="swiper-slide">
+                                      <!-- <div class="swiper-slide">
                                           <div class="title-wrap">
                                               <h4 class="title">Do Applicant’s <span class="cm-line-break"></span>income considered?</h4>
                                           </div>
-                                      </div>
+                                      </div> -->
                                       <div class="swiper-slide">
                                           <div class="title-wrap">
                                               <h4 class="title">Applicant’s monthly<span class="cm-line-break"></span>income details</h4>
                                           </div>
                                       </div>
-                                      <div class="swiper-slide">
+                                      <!-- <div class="swiper-slide">
                                           <div class="title-wrap">
                                               <h4 class="title">Do you or any of the <span class="cm-line-break"></span>family members <span class="cm-line-break"></span> own a puccahouse <span class="cm-line-break"></span>anywhere in India?</h4>
                                               <p class="note">House made with a high quality materials throughout, including a floor, roof and exterior walls, are called pucca houses</p>
                                           </div>
-                                      </div>
+                                      </div> -->
                                   </div>
                               </div>
                           </div>
@@ -2729,7 +2729,7 @@
                                                   fieldFill
                                                   pattern="{{regexPattern.amount}}"
                                                   required/>
-                                                <label for="annualFamilyIncome2">Annual Family Income <span class="lakhs">(in lakhs)</span></label>
+                                                <label for="annualFamilyIncome2">Annual Family Income <span class="lakhs"></span></label>
                                                 <span class="addon">
                                                     <span class="icon icon-inr"></span>
                                                   </span>
@@ -2805,7 +2805,7 @@
                                         </div>
                                     </form>
                                   </div>
-                                  <div class="swiper-slide">
+                                  <!-- <div class="swiper-slide">
                                         <form class="bs-form" >
                                             <div class="form-wrap">
                                                 <div class="bs-radio">
@@ -2833,7 +2833,7 @@
                                                 </div>
                                             </div>
                                           </form>
-                                      </div>
+                                      </div> -->
                                       <div class="swiper-slide">
                                               <form class="bs-form"  
                                               #incomeDetailsForm4="ngForm" (ngSubmit)="submitIncomeDetails2(incomeDetailsForm4, incomeSlider4)">
@@ -2894,5 +2894,35 @@
           </div>
       </div>
     <!-- <span class="cm-autoSave"><span class="cm-bold">Autosaved</span> <span>at 09:26 AM</span></span> -->
+
+
+    <div class="overlay" [ngClass]="{'active': isDuplicateModalShown}"></div>
+    <div class="bs-modal" id="duplicate-modal" [ngClass]="{'active': isDuplicateModalShown}">
+        <div class="modal-body duplicate-modal-body">
+            <h1 class="duplicate-title">Duplicate Entries Found</h1>
+            <form (ngSubmit)="submitDuplicateApplicant(duplicateApplicantForm)" #duplicateApplicantForm="ngForm">
+                <div class="duplicate-table">
+                    <div class="duplicate-table-heading">
+                        <div class="duplicate-table-col">Applicant ID</div>
+                        <div class="duplicate-table-col">Name</div>
+                        <div class="duplicate-table-col">Select</div>
+                    </div>
+                    <div class="duplicate-table-data-wrapper">
+                        <div class="duplicate-table-data" *ngFor="let d of duplicates;let i=index;">
+                            <div class="duplicate-table-col">{{d['applicantId']}}</div>
+                            <div class="duplicate-table-col">{{d['personalDetails']['firstName']}}{{d['personalDetails']['middleName'] ? " "+d['personalDetails']['middleName'] : ""}}{{" "+d['personalDetails']['lastName']}}</div>
+                            <div class="duplicate-table-col">
+                                <input type="radio" name="selectDuplicateApplicant" [value]="d['applicantId']" ngModel class="duplicate-radio" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="duplicate-btn-wrapper">
+                    <button type="button" class="duplicate-btn" (click)="closeDuplicateModal()">Skip</button>
+                    <button type="submit" class="duplicate-btn" [disabled]="false" [ngClass]="{'disabled grey': false}">Use this Data</button>
+                </div>
+            </form>
+        </div>
+    </div>
   </main>
   
