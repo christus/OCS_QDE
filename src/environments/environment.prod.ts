@@ -103,8 +103,8 @@ export const environment = {
       'processId': '473800cca3a211e989e10242ac110002'
     },
     "paymentRecon": {
-      'workflowId': '575dd3d48cfd11e982270242ac110002',
-      'processId': '575dd3d48cfd11e982270242ac110002'
+      'workflowId': '83ab8a8ca16911e9b1900242ac110003',
+      'processId': '7230e902a21b11e9b52d0242ac110002'
     },
     "paymentReconUpload": {
       'workflowId': '83c3fd7ea16911e99a8f0242ac110003',
