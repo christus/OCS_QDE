@@ -2393,7 +2393,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     this.tabSwitch(this.activeTab+1);
   }
 
-  submitDuplicateApplicant(form: NgForm, tabNumber: number) {
+  submitDuplicateApplicant(form: NgForm) {
     let tempApplicant = this.qde.application.applicants[this.applicantIndex];
     let newApplicantToBeReplaced = this.duplicates.find(e => e.applicantId == form.value.selectDuplicateApplicant);
     this.qde.application.applicants[this.applicantIndex] = this.qdeService.getModifiedObject(tempApplicant, newApplicantToBeReplaced);
