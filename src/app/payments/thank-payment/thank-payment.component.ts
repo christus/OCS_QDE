@@ -37,11 +37,28 @@ export class ThankPaymentComponent implements OnInit {
     this.route.queryParams.subscribe(val => {
       this.queryParams = JSON.stringify(val);
       console.log('Query params: ', this.queryParams);
-      this.qdeHttp.executePaymentWF(this.queryParams).subscribe(res => {
-        console.log("Result",res);
+      this.qdeHttp.executePaymentWF(this.queryParams).subscribe(response => {
+        if (
+          response["Error"] === "0" &&
+          response["ProcessVariables"]["status"] ) {
+            let applicationId = response["ProcessVariables"]["applicationId"];
+            let applicationStatus = "20";
+            this.setStatus(applicationId, applicationStatus);
+        } else {
+          if (response["ErrorMessage"]) {
+            alert(response["ErrorMessage"]);
+          }
+        }
       });
     });
   }
+
+  setStatus(applicationId, applicationStatus) {
+    this.qdeHttp.setStatusApi(applicationId, applicationStatus).subscribe(res => {
+       alert("Login fee paid");
+    }, err => {});
+  }
+
 
   ngOnInit() {
   }

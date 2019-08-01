@@ -49,7 +49,7 @@ export class ReviewEligibilityComponent implements OnInit {
           try {
             this.isEligibilityForReview = eli.find(v => v.applicationId == this.applicationId)['isEligibilityForReview'];
           } catch(ex) {
-            this._router.navigate(['/leads']);
+            // this._router.navigate(['/leads']);
           }
           if(this.isEligibilityForReview == true) {
 
@@ -80,7 +80,7 @@ export class ReviewEligibilityComponent implements OnInit {
 
             });
           } else {
-            this._router.navigate(['/leads']);
+            // this._router.navigate(['/leads']);
           }
         });
 

@@ -114,7 +114,7 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
           try{
             this.isEligibilityForReview = val.find(v => v.applicationId == value)['isEligibilityForReview'];
           } catch(ex) {
-            this._router.navigate(['/leads']);
+            // this._router.navigate(['/leads']);
           }
         });
       }
