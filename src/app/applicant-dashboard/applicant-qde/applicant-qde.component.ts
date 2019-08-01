@@ -1843,7 +1843,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   submitIncomeDetails2(form: NgForm, swiperInstance ?: Swiper) {
     if(this.isTBMLoggedIn) {
       this.goToNextSlide(swiperInstance);
-    } else {
+    } 
+    else {
       if (form && !form.valid) {
         return;
       }
@@ -1866,6 +1867,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       });
   
     }
+    this.router.navigate(['/applicant', this.qde.application.applicationId, 'co-applicant'], {fragment: 'dashboard'} );
   }
 
   selectPuccaHouse(value) {
@@ -1918,6 +1920,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
         if(response["ProcessVariables"]["status"]) {
           if(value == 1) {
             this.goToNextSlide(swiperInstance);
+          } 
+          else if(value == 2) {
+            this.router.navigate(['/applicant', this.qde.application.applicationId, 'co-applicant'], {fragment: 'dashboard'} );
           }
         } else {
           // Throw Invalid Pan Error

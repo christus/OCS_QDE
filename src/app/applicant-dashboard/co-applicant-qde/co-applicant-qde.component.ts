@@ -1689,9 +1689,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       this.createOrUpdatePersonalDetailsSub22 = this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successfull
         if(response["ProcessVariables"]["status"]) {
-          alert("Co-Applicant's application successfully submitted");
           this.goToNextSlide(swiperInstance);
-        } else {
+        } 
+        else {
           // Throw Invalid Pan Error
         }
       }, (error) => {
@@ -1699,6 +1699,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       });
   
     }
+    this.router.navigate(['/loan', this.applicationId]);
   }
 
 
@@ -1747,6 +1748,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
         if(response["ProcessVariables"]["status"]) {
           if(value == 1) {
             this.goToNextSlide(swiperInstance);
+          }
+          else if(value == 2) {
+            this.router.navigate(['/loan', this.applicationId]);
           }
         } else {
           // Throw Invalid Pan Error
