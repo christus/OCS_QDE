@@ -1015,16 +1015,16 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       this.createOrUpdatePersonalDetailsSub=this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
-          let maleTitles = [1,10];
-          let femaleTitles = [2,3,15,16];
+          let maleTitles = ['1','10'];
+          let femaleTitles = ['2','3','15','16'];
           console.log("this.selectedTitle: ", this.selectedTitle);
           console.log("this.maleTitles: ", maleTitles.find(v => v == this.selectedTitle.value));
           console.log("this.femaleTiles: ", femaleTitles.find(v => v == this.selectedTitle.value));
           if(maleTitles.find(v => v == this.selectedTitle.value) != null) {
-            this.qde.application.applicants[this.applicantIndex].personalDetails.gender = 1;
+            this.qde.application.applicants[this.applicantIndex].personalDetails.gender = '1';
           }
           else if(femaleTitles.find(v => v == this.selectedTitle.value) != null) {
-            this.qde.application.applicants[this.applicantIndex].personalDetails.gender = 2;
+            this.qde.application.applicants[this.applicantIndex].personalDetails.gender = '2';
           }
           this.goToNextSlide(swiperInstance);
         } else {

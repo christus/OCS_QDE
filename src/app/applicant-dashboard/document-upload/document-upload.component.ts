@@ -969,7 +969,7 @@ export class DocumentUploadComponent implements OnInit {
           this.bankProofDocumnetType = res.Banking || [];
           this.selectedBankProof.push(this.bankProofDocumnetType[0]);
 
-          this.collateralProofDocumnetType = res.PropertyPapers || [];
+          this.collateralProofDocumnetType = res.collateral || [];
           this.selectedCollateralProof.push(this.collateralProofDocumnetType[0]);
 
           /******************************************
