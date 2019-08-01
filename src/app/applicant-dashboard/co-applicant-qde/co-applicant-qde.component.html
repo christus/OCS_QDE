@@ -1626,7 +1626,7 @@
                                               required />
   
                                       <ng5-slider tabindex="4" [(value)]="qde.application.applicants[coApplicantIndex].occupation.numberOfYearsInCurrentCompany"
-                                      (valueChange)="checkOccupationDetailsYears($event)" [options]="options">
+                                      (valueChange)="checkOccupationDetailsYears($event)" [options]="options1">
                                       </ng5-slider>
   
                                       <!-- <div *ngIf="numberOfYearsInCurrentCompany.touched && numberOfYearsInCurrentCompany.invalid" class="invalid-feedback">
@@ -1648,7 +1648,7 @@
                                               spellcheck="false"
                                               required />
   
-                                      <ng5-slider tabindex="6" [(value)]="qde.application.applicants[coApplicantIndex].occupation.totalWorkExperience" [options]="options"
+                                      <ng5-slider tabindex="6" [(value)]="qde.application.applicants[coApplicantIndex].occupation.totalWorkExperience" [options]="options1"
                                       (valueChange)="checkOccupationDetailsYears($event)"></ng5-slider>
   
                                       <!-- <div *ngIf="(totalExperienceYear.touched || totalExperienceYear.dirty) && totalExperienceYear.invalid" class="invalid-feedback">
