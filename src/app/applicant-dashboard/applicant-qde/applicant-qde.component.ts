@@ -276,6 +276,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
   isDuplicateModalShown: boolean = false;
   duplicates: Array<Applicant> = [];
+  dobYears: Array<Item>;
+  YYYY17YearsAgo = (new Date().getFullYear() - 17);
 
   constructor(private renderer: Renderer2,
               private route: ActivatedRoute,
@@ -285,6 +287,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
               private cds:CommonDataService,
               private file: File,
               private deviceService: DeviceDetectorService) {
+
+    this.dobYears = Array.from(Array(53).keys()).map((val, index) => {
+      let v = (this.YYYY17YearsAgo - index)+"";
+      return {key: v, value: v};
+    });
+    this.dobYears.unshift({key: 'YYYY', value: 'YYYY'});
 
     this.isMobile = this.deviceService.isMobile() ;
 
@@ -1148,7 +1156,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
             
             if(res['ProcessVariables']['status'] == true) {
               if(res['ProcessVariables']['response'] == '' || res['ProcessVariables']['response'] == null) {
-                this.tabSwitch(2);
+                this.closeDuplicateModal();
               } else {
                 this.duplicates = JSON.parse(res['ProcessVariables']['response'])['duplicates'];
                 if(this.duplicates.length > 0 ) {
@@ -1857,6 +1865,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
         // If successfull
         if(response["ProcessVariables"]["status"]) {
           alert("Applicant's application successfully submitted");
+          this.router.navigate(['/applicant', this.qde.application.applicationId, 'co-applicant'], {fragment: 'dashboard'} );
           this.goToNextSlide(swiperInstance);
         } else {
           // Throw Invalid Pan Error
@@ -1918,7 +1927,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
         if(response["ProcessVariables"]["status"]) {
           if(value == 1) {
             this.goToNextSlide(swiperInstance);
-          }
+          } 
+          else if(value == 2) {
+            this.router.navigate(['/applicant', this.qde.application.applicationId, 'co-applicant'], {fragment: 'dashboard'} );
+          } 
         } else {
           // Throw Invalid Pan Error
         }
@@ -1974,6 +1986,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     
     const mobileNumber = form.value.mobileNumber;
     this.qde.application.applicants[this.applicantIndex].contactDetails.mobileNumber = mobileNumber;
+    this.qde.application.applicants[this.applicantIndex].contactDetails.isMobileOTPverified = false;
 
     const applicantId = this.qde.application.applicationId
     this.sendOTPAPISub = this.qdeHttp.sendOTPAPI(mobileNumber, applicantId).subscribe(res => {
