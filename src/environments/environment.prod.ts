@@ -1,6 +1,6 @@
 export const environment = {
-  version: "1.4.9",
-  buildDate: "23-7-19_patch_release_2",
+  version: "1.4.9.1",
+  buildDate: "30-7-19_release",
   production: true,
   projectId: '5928d30eac7811e9a1670242ac110002', //developement
 
@@ -101,13 +101,18 @@ export const environment = {
     "duplicateApplicantCheck": {
       'workflowId': '471f4154a3a211e9abab0242ac110002',
       'processId': '473800cca3a211e989e10242ac110002'
+    },
+    "executePayment": {
+      'workflowId': '49fa2570a22a11e9a2f80242ac110002',
+      'processId': '4a1b6398a22a11e998e90242ac110002'
     }
   },
   userName: "icici@icici.com",
   password: "icici@123",
   appiyoDrive: "/d/drive/upload/",
   driveLocation: "/d/drive/docs/",
-  host: "http://192.168.1.108/appiyo",
-  //host: "/appiyo",
-  //host: "http://ihfcmobileuat.icicihfc.com:443/appiyo"
+  //host: "http://192.168.1.108/appiyo",
+  //host: "/ProcessStore",
+  host: "/appiyo",
+  //host: "https://ihfcmobileuat.icicihfc.com/appiyo"
 };

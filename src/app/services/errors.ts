@@ -3,7 +3,7 @@ export const errors: any = {
   pan: {
     required: "PAN is mandatory",
     length: "PAN must be at least 10 characters",
-    invalid: "Invalid PAN, valid PAN format - ABCD1234E",
+    invalid: "Invalid PAN, valid PAN format - ABCDE1234F",
     after3Attemps: "Please check and enter your correct PAN"
   },
   panDocumentNo: {

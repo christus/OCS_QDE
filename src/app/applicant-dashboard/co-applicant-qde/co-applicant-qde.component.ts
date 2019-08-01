@@ -2211,7 +2211,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
 
     const applicantId = this.qde.application.applicationId
     this.sendOTPAPISub = this.qdeHttp.sendOTPAPI(mobileNumber, applicantId).subscribe(res => {
-      this.inOTP = true;
+      if(res['ProcessVariables']['status'] == true) {
+        this.inOTP = true;
+        this.qde.application.applicants[this.coApplicantIndex].contactDetails.isMobileOTPverified = true;
+      }
       // if(res['ProcessVariables']['isPaymentSuccessful'] == true) {
       //   this.showSuccessModal = true;
       //   this.emiAmount = res['ProcessVariables']['emi'];

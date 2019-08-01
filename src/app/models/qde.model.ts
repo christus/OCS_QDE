@@ -109,6 +109,8 @@ export interface ContactDetail {
     alternateMobileNumber ?: number;
     residenceNumber : string;
     alternateResidenceNumber ?: string;
+    isMobileOTPverified ?: boolean;
+    isAlternateOTPverified ?:boolean;
 }
 
 export interface Address {
