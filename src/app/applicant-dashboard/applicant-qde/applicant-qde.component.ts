@@ -54,7 +54,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   docName:boolean;
 
   regexPattern = {
-    mobileNumber: "^[0-9]*$",
+    // mobileNumber: "^[0-9]*$",
+    mobileNumber: "(\d[0-9]{9})$",
     name: "^[A-Za-z ]+$",
     address : "^[0-9A-Za-z, _&'/#]+$",
     // cityState:"^[0-9A-Za-z, &'#]$",
@@ -169,6 +170,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
   isIndividual:boolean = false;
   YYYY: number = new Date().getFullYear();
+  YYYY17YearsAgo = (new Date().getFullYear() - 17);
 
   applicantStatus: string = "";
 
@@ -287,7 +289,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
   isDuplicateModalShown: boolean = false;
   duplicates: Array<Applicant> = [];
-
+  dobYears: Array<Item>;
   constructor(private renderer: Renderer2,
               private route: ActivatedRoute,
               private router: Router,
@@ -401,6 +403,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
         return {key: v, value: v};
       });
       this.years.unshift({key: 'YYYY', value: 'YYYY'});
+
+      this.dobYears = Array.from(Array(53).keys()).map((val, index) => {
+        let v = (this.YYYY17YearsAgo - index)+"";
+        return {key: v, value: v};
+      });
+      this.dobYears.unshift({key: 'YYYY', value: 'YYYY'});
 
       // this.docType = [{"key": "Aadhar", "value": "1"},{"key": "Driving License", "value": "2"},{"key": "passport", "value": "3"}];
 
@@ -1159,7 +1167,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
             
             if(res['ProcessVariables']['status'] == true) {
               if(res['ProcessVariables']['response'] == '' || res['ProcessVariables']['response'] == null) {
-                this.tabSwitch(2);
+                this.closeDuplicateModal();
               } else {
                 this.duplicates = JSON.parse(res['ProcessVariables']['response'])['duplicates'];
                 if(this.duplicates.length > 0 ) {

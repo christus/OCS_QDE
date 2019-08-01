@@ -486,7 +486,7 @@
     
                                                         <div class="col4">
                                                             <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control"
-                                                            [data]="years"
+                                                            [data]="dobYears"
                                                             textField="key"
                                                             valueField="value"
                                                             name="year"
@@ -501,7 +501,7 @@
                                                     <div *ngIf="ageError" class="invalid-feedback">
                                                         <div *ngIf="ageError">Age should not be less than 18 years and greater than 70 years</div>
                                                     </div>
-                                                  
+
                                                   </div>
                                                   <div class="form-group">                                                 
                                                     <label for="birthPlace" tabindex="1">Birth place</label>

@@ -285,6 +285,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
   isTBMLoggedIn: boolean;
   isDuplicateModalShown: boolean = false;
   duplicates: Array<Applicant> = [];
+  dobYears: Array<Item>;
+  YYYY17YearsAgo = (new Date().getFullYear() - 17);
 
   constructor(private renderer: Renderer2,
               private route: ActivatedRoute,
@@ -411,6 +413,13 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
         return {key: v, value: v};
       });
       this.years.unshift({key: 'YYYY', value: 'YYYY'});
+
+      // Requirement Year should be more than 17 and less than 70
+      this.dobYears = Array.from(Array(53).keys()).map((val, index) => {
+        let v = (this.YYYY17YearsAgo - index)+"";
+        return {key: v, value: v};
+      });
+      this.dobYears.unshift({key: 'YYYY', value: 'YYYY'});
 
       // this.docType = [{"key": "Aadhar", "value": "1"},{"key": "Driving License", "value": "2"},{"key": "passport", "value": "3"}];
 
