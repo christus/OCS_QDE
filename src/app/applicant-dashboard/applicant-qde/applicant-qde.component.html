@@ -682,7 +682,6 @@
                                                       name="residenceNumber1"
                                                       class="form-control"
                                                       fieldFill
-                                                      required
                                                       id="std" />
                                               <label for="std" tabindex="9">STD</label>
                                               <div *ngIf="residenceStdCode.touched && residenceStdCode.invalid" class="invalid-feedback">
@@ -703,8 +702,7 @@
                                                       name="residenceNumber2"
                                                       value="{{residenceNumber.phoneNumber}}"
                                                       data-validation-attr="residenceno"
-                                                      fieldFill
-                                                      required />
+                                                      fieldFill/>
                                             <label for="res-no" tabindex="10">Residence number</label>
                                             <div *ngIf="residenceNumber.touched  && residenceNumber.invalid" class="invalid-feedback">
                                               <div *ngIf="residenceNumber.errors?.pattern">{{errors.contactDetails.residenceNumber.invalid}}</div>
@@ -1240,8 +1238,6 @@
                                             <div class="btn-wrap">
                                                 <button   type="submit"
                                                           class="btn btn-primary"
-                                                          [ngClass]="{'disabled': (!spouseEarningAmtForm.valid)}"
-                                                          [disabled]="!spouseEarningAmtForm.valid"
                                                   >Next
                                                 </button>
                                             </div>
