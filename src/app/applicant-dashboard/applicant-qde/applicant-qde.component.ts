@@ -1974,11 +1974,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     
     const mobileNumber = form.value.mobileNumber;
     this.qde.application.applicants[this.applicantIndex].contactDetails.mobileNumber = mobileNumber;
-
+    this.qde.application.applicants[this.applicantIndex].contactDetails.isMobileOTPverified = false;
     const applicantId = this.qde.application.applicationId
     this.sendOTPAPISub = this.qdeHttp.sendOTPAPI(mobileNumber, applicantId).subscribe(res => {
       if(res['ProcessVariables']['status'] == true) {
         this.inOTP = true;
+        this.qde.application.applicants[this.applicantIndex].contactDetails.isMobileOTPverified = true;
       }
      });
   }

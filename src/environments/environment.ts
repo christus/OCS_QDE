@@ -106,13 +106,18 @@ export const environment = {
     "duplicateApplicantCheck": {
       'workflowId': '471f4154a3a211e9abab0242ac110002',
       'processId': '473800cca3a211e989e10242ac110002'
+    },
+    "executePayment": {
+      'workflowId': '49fa2570a22a11e9a2f80242ac110002',
+      'processId': '4a1b6398a22a11e998e90242ac110002'
     }
   },
   userName: "icici@icici.com",
   password: "icici@123",
   appiyoDrive: "/d/drive/upload/",
+  host: "http://192.168.1.108/appiyo",
   // host: "http://182.156.249.170/appiyo",
-  host: "https://ihfcmobileuat.icicihfc.com/appiyo",
+  //host: "https://ihfcmobileuat.icicihfc.com/appiyo",
   driveLocation: "/d/drive/docs/"
   //host: ""
 

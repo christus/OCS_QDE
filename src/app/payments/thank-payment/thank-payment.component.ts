@@ -37,6 +37,9 @@ export class ThankPaymentComponent implements OnInit {
     this.route.queryParams.subscribe(val => {
       this.queryParams = JSON.stringify(val);
       console.log('Query params: ', this.queryParams);
+      this.qdeHttp.executePaymentWF(this.queryParams).subscribe(res => {
+        console.log("Result",res);
+      });
     });
   }
 
