@@ -1273,7 +1273,6 @@
                                                           class="form-control"
                                                           id="amount"
                                                           tabindex="1"
-                                                          required
                                                           [(ngModel)]="qde.application.applicants[coApplicantIndex].maritalStatus.amount"
                                                           #amount="ngModel"
                                                           name="amount"
@@ -1296,8 +1295,6 @@
                                             <div class="btn-wrap">
                                                 <button   type="submit"
                                                           class="btn btn-primary"
-                                                          [ngClass]="{'disabled': (!spouseEarningAmtForm.valid)}"
-                                                          [disabled]="!spouseEarningAmtForm.valid"
                                                   >Next
                                                 </button>
                                             </div>

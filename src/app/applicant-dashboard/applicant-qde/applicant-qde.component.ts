@@ -1417,14 +1417,14 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     if(this.isTBMLoggedIn) {
       this.tabSwitch(5);
     } else {
-      if (form && !form.valid) {
-        return;
-      }
+      // if (form && !form.valid) {
+      //   return;
+      // }
   
       // Amount should be number
-      if(isNaN(parseInt(form.value.amount))) {
-        return;
-      }
+      // if(isNaN(parseInt(form.value.amount))) {
+      //   return;
+      // }
   
       this.qde.application.applicants[this.applicantIndex].maritalStatus.amount = form.value.amount;
   

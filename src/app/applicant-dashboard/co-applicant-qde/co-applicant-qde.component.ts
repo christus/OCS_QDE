@@ -1250,9 +1250,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
     if(this.isTBMLoggedIn) {
       this.tabSwitch(6);
     } else {
-      if (form && !form.valid) {
-        return;
-      }
+      // if (form && !form.valid) {
+      //   return;
+      // }
   
       // Amount should be number
       if(isNaN(parseInt(form.value.amount))) {

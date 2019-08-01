@@ -1217,7 +1217,6 @@
                                                           class="form-control"
                                                           id="amount"
                                                           tabindex="1"
-                                                          required
                                                           [(ngModel)]="qde.application.applicants[applicantIndex].maritalStatus.amount"
                                                           #amount="ngModel"
                                                           name="amount"
@@ -1231,7 +1230,7 @@
                                                   </span>
                                                   <span class="in-word"></span>
   
-                                                  <div *ngIf="(amount.touched || amount.dirty) && amount.invalid" class="invalid-feedback">
+                                                  <div *ngIf="(amount.touched || amount.dirty)" class="invalid-feedback">
                                                       <!-- <div *ngIf="amount.errors?.required">{{errors.maritialStatus.salaryAmount.required}}</div> -->
                                                       <div *ngIf="amount.errors?.pattern">{{errors.maritialStatus.salaryAmount.invalid}}</div>
                                                   </div>
