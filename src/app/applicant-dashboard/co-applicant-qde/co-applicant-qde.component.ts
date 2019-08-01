@@ -1255,9 +1255,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       // }
   
       // Amount should be number
-      if(isNaN(parseInt(form.value.amount))) {
-        return;
-      }
+      // if(isNaN(parseInt(form.value.amount))) {
+      //   return;
+      // }
   
       this.qde.application.applicants[this.coApplicantIndex].maritalStatus.amount = form.value.amount;
   
