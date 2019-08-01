@@ -40,7 +40,7 @@ export class LeadsListComponent implements OnInit {
   toYear: Item;
   assignedTo: Item;
   searchTxt: string;
-  show: boolean = true;
+  show: boolean = false;
 
   // Lead ID === Application ID
   userDetails: Array<UserDetails>;
@@ -192,12 +192,12 @@ export class LeadsListComponent implements OnInit {
       }
       
       return "/document-uploads/"+applicationId;
-    } 
+    }
     else if(statuses[status] == "27") {
       this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
       
       return "/document-uploads/"+applicationId;
-    } 
+    }
     else if(statuses[status] == "28") {
       this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
       
@@ -207,6 +207,16 @@ export class LeadsListComponent implements OnInit {
       this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
       
       return "/document-uploads/"+applicationId;
+    }
+    else if(statuses[status] == "29") {
+      this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
+      
+      return "/applicant/"+applicationId;
+    }
+    else if(statuses[status] == "31") {
+      this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
+      
+      return "/applicant/"+applicationId;
     } 
     else if(statuses[status] == "35") {
       this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});

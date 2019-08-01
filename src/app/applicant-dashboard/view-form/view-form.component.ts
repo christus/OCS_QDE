@@ -225,6 +225,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
       // this.commonDataService.changeApplicationId(this.qde.application.applicationId);
 
       this.applicationId = this.qde.application.applicationId;
+      console.log(">>>", this.applicationId+"");
 
       this.qdeService.qdeSource.subscribe(v => {
         this.qde = v;
@@ -406,7 +407,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
       // Make an http request to get the required qde data and set using setQde
       if (params['applicationId']) {
         const applicationId = params.applicationId;
-        this.commonDataService.changeApplicationId(this.qde.application.applicationId);
+        // this.commonDataService.changeApplicationId(this.qde.application.applicationId);
 
         this.qdeHttp.getQdeData(applicationId).subscribe(response => {
           let result = JSON.parse(response["ProcessVariables"]["response"]);
@@ -904,7 +905,15 @@ export class ViewFormComponent implements OnInit, OnDestroy {
 
   setAps(){
     this.qdeHttp.apsApi(""+this.applicationId).subscribe(res => {
-      if(res["ProcessVariables"]["status"]) {
+
+      // Temporary 
+      if(res["ProcessVariables"]['responseApplicationId'] != null) {
+        if(res["ProcessVariables"]['responseApplicationId'] == "") {
+          alert("Mandatory fields missing.");
+        } else {
+          this.qdeHttp.setStatusApi(this.applicationId, statuses["DDE Submitted"]).subscribe(res => {}, err => {});
+          alert("APS ID generated successfully with ID "+res["ProcessVariables"]['responseApplicationId']);
+        }
       } else {
         // Throw Invalid Pan Error
       }

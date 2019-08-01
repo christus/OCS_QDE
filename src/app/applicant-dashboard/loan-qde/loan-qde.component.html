@@ -198,7 +198,7 @@
                                   pattern="{{regexPattern.address}}"
                                   fieldFill
                                   required >
-                                  <label for="pro-add-line1">Property CLSS area</label>
+                                  <label for="pro-add-line1">Property area in sq. fts.</label>
                                   <div *ngIf="(propertyClss.touched || propertyClss.dirty) && propertyClss.invalid" class="invalid-feedback">
                                     <!-- <div *ngIf="propertyClss.errors?.required">{{errors.loanDetails.property.propertyClss.required}}</div> -->
                                     <div *ngIf="propertyClss.errors?.pattern">{{errors.loanDetails.property.propertyClss.invalid}}</div>
@@ -207,7 +207,7 @@
                               <div class="form-group">
 
                                   <input [readonly]="isTBMLoggedIn"
-                                  type="number"
+                                  type="text"
                                   class="form-control"
                                   id="pro-add-line2" 
                                   name="propertyAreaInSqFeets"
@@ -216,7 +216,7 @@
                                   pattern="{{regexPattern.address}}"
                                   fieldFill
                                   required/>
-                                  <label for="pro-add-line2">Property area in sq. fts.</label>
+                                  <label for="pro-add-line2">Property CLSS area</label>
                                   <div *ngIf="(propertyArea.touched || propertyArea.dirty) && propertyArea.invalid" class="invalid-feedback">
                                     <!-- <div *ngIf="propertyArea.errors?.required">{{errors.loanDetails.property.propertyArea.required}}</div> -->
                                     <div *ngIf="propertyArea.errors?.pattern">{{errors.loanDetails.property.propertyArea.invalid}}</div>
