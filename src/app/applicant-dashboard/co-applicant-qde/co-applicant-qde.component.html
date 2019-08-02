@@ -718,7 +718,7 @@
                                     </div>
   
                                     <div class="residence-no">
-                                        <div class="form-group">
+                                        <div class="form-group typ-optional">
                                             <input [readonly]="isReadOnly"    type="text"
                                                       [(ngModel)]="residenceNumberStdCode"
                                                       pattern="{{regexPattern.mobileNumber}}"
@@ -730,7 +730,6 @@
                                                       fieldFill
                                                       tabindex="9"
                                                       spellcheck="false"
-                                                      required
                                                       id="std" />
                                               <label for="std">STD</label>
                                               <div *ngIf="residenceStdCode.touched && residenceStdCode.invalid" class="invalid-feedback">
@@ -739,7 +738,7 @@
                                               </div>
                                         </div>
                                         <span class="seperator">-</span>
-                                        <div class="form-group">
+                                        <div class="form-group typ-optional">
                                             <input [readonly]="isReadOnly"    type="text"
                                                       class="form-control"
                                                       id="res-no"
@@ -752,9 +751,9 @@
                                                       data-validation-attr="residenceno"
                                                       fieldFill
                                                       tabindex="10"
-                                                      spellcheck="false"
-                                                      required />
+                                                      spellcheck="false" />
                                             <label for="res-no">Residence number</label>
+                                            <span class="optional">Optional</span>
                                             <div *ngIf="residenceNumber.touched  && residenceNumber.invalid" class="invalid-feedback">
                                               <div *ngIf="residenceNumber.errors?.pattern">{{errors.contactDetails.residenceNumber.invalid}}</div>
                                               <!-- <div *ngIf="residenceNumber.errors?.required">{{errors.contactDetails.residenceNumber.required}}</div> -->
@@ -786,7 +785,7 @@
                                           </div>
                                         </div>
                                         <span class="seperator">-</span>
-                                        <div class="form-group">
+                                        <div class="form-group typ-optional">
                                             <input [readonly]="isReadOnly"    type="text"
                                                       class="form-control"
                                                       [(ngModel)]="alternateResidenceNumberPhoneNumber"
@@ -800,6 +799,7 @@
                                                       pattern="{{regexPattern.mobileNumber}}"
                                                       data-validation-attr="residenceno01" />
                                             <label for="altr-res-no">Residence number</label>
+                                            <span class="optional">Optional</span>
                                             <div *ngIf="alternateResidenceNumber2.touched  && alternateResidenceNumber2.invalid" class="invalid-feedback">
                                               <div *ngIf="alternateResidenceNumber2.errors?.pattern">{{errors.contactDetails.alternateResidenceNumber2.invalid}}</div>
                                           </div>
@@ -1273,7 +1273,7 @@
                                               #spouseEarningAmtForm="ngForm"
                                               (ngSubmit)="submitSpouseEarningAmt(spouseEarningAmtForm, maritalSlider2)">
                                             <div class="form-wrap">
-                                                <div class="form-group inr">
+                                                <div class="form-group inr typ-optional">
   
                                                   <input [readonly]="isReadOnly" type="text"
                                                           class="form-control"
@@ -1290,8 +1290,7 @@
                                                   <span class="addon">
                                                     <span class="icon icon-inr"></span>
                                                   </span>
-                                                  <span class="in-word"></span>
-  
+                                                  <span class="optional">Optional</span>  
                                                   <div *ngIf="(amount.touched || amount.dirty) && amount.invalid" class="invalid-feedback">
                                                       <!-- <div *ngIf="amount.errors?.required">{{errors.maritialStatus.salaryAmount.required}}</div> -->
                                                       <div *ngIf="amount.errors?.pattern">{{errors.maritialStatus.salaryAmount.invalid}}</div>
