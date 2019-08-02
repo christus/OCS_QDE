@@ -1569,7 +1569,7 @@
   
                                       <ng5-slider tabindex="4" [(value)]="qde.application.applicants[applicantIndex].occupation.numberOfYearsInCurrentCompany"
                                       (valueChange)="checkOccupationDetailsYears($event)"
-                                      [options]="options" >
+                                      [options]="options1" >
                                       </ng5-slider>
   
                                       <!-- <div *ngIf="numberOfYearsInCurrentCompany.touched && numberOfYearsInCurrentCompany.invalid" class="invalid-feedback">
@@ -1592,7 +1592,7 @@
   
                                       <ng5-slider tabindex="6" [(value)]="qde.application.applicants[applicantIndex].occupation.totalWorkExperience" 
                                       (valueChange)="checkOccupationDetailsYears($event)"
-                                      [options]="options"></ng5-slider>
+                                      [options]="options1"></ng5-slider>
   
                                       <!-- <div *ngIf="(totalExperienceYear.touched || totalExperienceYear.dirty) && totalExperienceYear.invalid" class="invalid-feedback">
                                         <div *ngIf="totalExperienceYear.errors?.required">{{errors.occupationDetails.totalExp.required}}</div>
@@ -2541,7 +2541,7 @@
                                                    maxlength="8" 
                                                   data-validation-attr="residenceno" 
                                                   required/>
-                                          <label for="ca-res-no">Residence number</label>
+                                          <label for="ca-res-no">Contact number</label>
                                           <div *ngIf="phoneNumber.touched  && phoneNumber.invalid" class="invalid-feedback">
                                             <!-- <div *ngIf="phoneNumber.errors?.required">{{errors.corporateAddress.phoneNumber.required}}</div> -->
                                             <div *ngIf="phoneNumber.errors?.pattern">{{errors.corporateAddress.phoneNumber.invalid}}</div>

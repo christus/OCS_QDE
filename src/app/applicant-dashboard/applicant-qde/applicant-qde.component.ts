@@ -74,8 +74,19 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   minValue: number = 1;
   options: Options = {
     floor: 0,
-    ceil: 50,
+    ceil: 100,
     step: 10,
+    showTicksValues: false,
+    // showSelectionBar: true,
+    showTicks: true,
+    getLegend: (sliderVal: number): string => {
+      return  sliderVal + '<b>y</b>';
+    }
+  };
+  options1: Options = {
+    floor: 1,
+    ceil: 41,
+    step: 5,
     showTicksValues: false,
     // showSelectionBar: true,
     showTicks: true,
