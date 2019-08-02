@@ -76,3 +76,16 @@
 	cursor: not-allowed;
 	pointer-events: none;
 }
+
+.currentAddressFromMainApplicantBtnWrapper {
+    color: #f58220;
+    font-family: zurich-bold;
+    font-size: .94vw;
+    line-height: 3.28vw;
+    text-align: left;
+}
+
+.currentAddressFromMainApplicantBtnWrapper > button {
+    background: transparent;
+    border: none;
+}

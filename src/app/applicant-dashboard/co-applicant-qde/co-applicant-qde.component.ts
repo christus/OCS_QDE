@@ -288,6 +288,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
   dobYears: Array<Item>;
   YYYY17YearsAgo = (new Date().getFullYear() - 17);
 
+  isCurrentAddressFromMainApplicant: boolean = true;
+  isPermanentAddressFromMainApplicant: boolean = true;
+
   constructor(private renderer: Renderer2,
               private route: ActivatedRoute,
               private router: Router,
@@ -1509,8 +1512,6 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       this.qde.application.applicants[this.coApplicantIndex].organizationDetails.dateOfIncorporation = form.value.year.value+'-'+form.value.month.value+'-'+form.value.day.value;
       this.qde.application.applicants[this.coApplicantIndex].organizationDetails.constitution = form.value.constitution.value;
   
-      console.log(this.qde.application.applicants[this.coApplicantIndex].organizationDetails);
-  
       this.createOrUpdatePersonalDetailsSub17 = this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
@@ -2426,5 +2427,35 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
         this.closeDuplicateModal();
       }
     });
+  }
+
+  currentAddressFromMainApplicant() {
+    this.qde.application.applicants[this.coApplicantIndex].communicationAddress.residentialStatus = this.qde.application.applicants.find(v => v.isMainApplicant == true).communicationAddress.residentialStatus;
+    this.qde.application.applicants[this.coApplicantIndex].communicationAddress.addressLineOne = this.qde.application.applicants.find(v => v.isMainApplicant == true).communicationAddress.addressLineOne;
+    this.qde.application.applicants[this.coApplicantIndex].communicationAddress.addressLineTwo = this.qde.application.applicants.find(v => v.isMainApplicant == true).communicationAddress.addressLineTwo;
+    this.qde.application.applicants[this.coApplicantIndex].communicationAddress.zipcodeId = this.qde.application.applicants.find(v => v.isMainApplicant == true).communicationAddress.zipcodeId;
+    this.qde.application.applicants[this.coApplicantIndex].communicationAddress.zipcode = this.qde.application.applicants.find(v => v.isMainApplicant == true).communicationAddress.zipcode;
+    this.qde.application.applicants[this.coApplicantIndex].communicationAddress.cityId = this.qde.application.applicants.find(v => v.isMainApplicant == true).communicationAddress.cityId;
+    this.qde.application.applicants[this.coApplicantIndex].communicationAddress.city = this.qde.application.applicants.find(v => v.isMainApplicant == true).communicationAddress.city;
+    this.qde.application.applicants[this.coApplicantIndex].communicationAddress.stateId = this.qde.application.applicants.find(v => v.isMainApplicant == true).communicationAddress.stateId;
+    this.qde.application.applicants[this.coApplicantIndex].communicationAddress.state = this.qde.application.applicants.find(v => v.isMainApplicant == true).communicationAddress.state;
+
+    this.qde.application.applicants[this.coApplicantIndex].communicationAddress.cityState = this.qde.application.applicants.find(v => v.isMainApplicant == true).communicationAddress.city+" "+this.qde.application.applicants.find(v => v.isMainApplicant == true).communicationAddress.state;
+
+    this.isCurrentAddressFromMainApplicant = false;
+  }
+
+
+  permanentAddressFromMainApplicant() {
+    this.qde.application.applicants[this.coApplicantIndex].permanentAddress.addressLineOne = this.qde.application.applicants.find(v => v.isMainApplicant == true).permanentAddress.addressLineOne;
+    this.qde.application.applicants[this.coApplicantIndex].permanentAddress.addressLineTwo = this.qde.application.applicants.find(v => v.isMainApplicant == true).permanentAddress.addressLineTwo;
+    this.qde.application.applicants[this.coApplicantIndex].permanentAddress.zipcodeId = this.qde.application.applicants.find(v => v.isMainApplicant == true).permanentAddress.zipcodeId;
+    this.qde.application.applicants[this.coApplicantIndex].permanentAddress.cityId = this.qde.application.applicants.find(v => v.isMainApplicant == true).permanentAddress.cityId;
+    this.qde.application.applicants[this.coApplicantIndex].permanentAddress.stateId = this.qde.application.applicants.find(v => v.isMainApplicant == true).permanentAddress.stateId;
+    this.qde.application.applicants[this.coApplicantIndex].permanentAddress.numberOfYearsInCurrentResidence = this.qde.application.applicants.find(v => v.isMainApplicant == true).permanentAddress.numberOfYearsInCurrentResidence;
+
+    this.qde.application.applicants[this.coApplicantIndex].permanentAddress.cityState = this.qde.application.applicants.find(v => v.isMainApplicant == true).permanentAddress.city+" "+this.qde.application.applicants.find(v => v.isMainApplicant == true).permanentAddress.state;
+
+    this.isPermanentAddressFromMainApplicant = false;
   }
 }

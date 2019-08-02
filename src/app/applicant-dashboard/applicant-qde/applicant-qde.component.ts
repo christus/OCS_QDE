@@ -277,7 +277,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   isDuplicateModalShown: boolean = false;
   duplicates: Array<Applicant> = [];
   dobYears: Array<Item>;
-  YYYY17YearsAgo = (new Date().getFullYear() - 17);
+  YYYY17YearsAgo = (new Date().getFullYear() - 18);
 
   constructor(private renderer: Renderer2,
               private route: ActivatedRoute,
@@ -1137,7 +1137,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       const d2:any = new Date();
       var diff = d2 - d1 ;
       var age = Math.floor(diff/(1000*60*60*24*365.25));
-      if(age >= 70 || age <=18 ){
+      if(age >= 70 || age <18 ){
         this.ageError = true;
         return;
       }else {
