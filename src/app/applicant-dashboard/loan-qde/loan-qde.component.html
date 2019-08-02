@@ -106,7 +106,7 @@
                            <div class="invalid-feedback"><br>{{errors.loanDetails.loanAmount.tenure.invalid}}</div>
                       </div>
                       
-                      <ng5-slider [(value)]="qde?.application.tenure" [options]="options" ></ng5-slider>
+                      <ng5-slider class="commSlider" [(value)]="qde?.application.tenure" [options]="options" ></ng5-slider>
 
                       <div *ngIf="(loanTenure.touched || loanTenure.dirty) && loanTenure.invalid" class="invalid-feedback">
                         <!-- <div *ngIf="loanTenure.errors?.required">{{errors.loanDetails.loanAmount.tenure.required}}</div> -->
@@ -274,9 +274,8 @@
                             </div>
                           </div>
 
-                          <div class="form-group">
+                          <div class="form-group typ-optional">
                             <input [readonly]="isTBMLoggedIn" type="text" class="form-control" id="add-line2"
-                              required
                               ngModel
                               #addressLineTwo = "ngModel"
 							                fieldFill
@@ -285,7 +284,7 @@
                               pattern='{{regexPattern.address}}'/>
 
                             <label for="add-line2">Property address line2</label>
-
+                            <span class="optional">optional</span>
                             <div *ngIf="(addressLineTwo.touched || addressLineTwo.dirty) && addressLineTwo.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="addressLineTwo.errors?.required">{{errors.loanDetails.property.addressLineTwo.required}}</div> -->
                               <div *ngIf="addressLineTwo.errors?.pattern">{{errors.loanDetails.property.addressLineTwo.invalid}}</div>
@@ -377,7 +376,7 @@
                                             class="form-control"
                                             [ngModel]="value[0]"
                                             (ngModelChange)="valuechange($event, 0)" /> -->
-                                    <ng5-slider [(ngModel)]="liveLoan" ngModel name="liveLoans" 
+                                    <ng5-slider class="commSlider" [(ngModel)]="liveLoan" ngModel name="liveLoans" 
                                     [options]="liveLoanOption"></ng5-slider>
                                 </div>
                               </div>

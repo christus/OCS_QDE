@@ -72,24 +72,37 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   };
 
   minValue: number = 1;
+
   options: Options = {
     floor: 0,
     ceil: 100,
-    step: 10,
-    showTicksValues: false,
-    // showSelectionBar: true,
-    showTicks: true,
+    // step: 1,
+    // showTicksValues: false,
+    // // showSelectionBar: true,
+    // showTicks: true,
+    getLegend: (sliderVal: number): string => {
+      return  sliderVal + '<b>y</b>';
+    },
+    // value: 0
+  };
+  employementOptions: Options = {
+    floor: 1,
+    ceil: 41,
+    // step: 5,
+    // showTicksValues: false,
+    // // showSelectionBar: true,
+    // showTicks: true,
     getLegend: (sliderVal: number): string => {
       return  sliderVal + '<b>y</b>';
     }
   };
-  options1: Options = {
+  experienceOptions: Options = {
     floor: 1,
     ceil: 41,
-    step: 5,
-    showTicksValues: false,
-    // showSelectionBar: true,
-    showTicks: true,
+    // step: 5,
+    // showTicksValues: false,
+    // // showSelectionBar: true,
+    // showTicks: true,
     getLegend: (sliderVal: number): string => {
       return  sliderVal + '<b>y</b>';
     }
@@ -97,10 +110,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     familyOptions:Options={
     floor:0,
     ceil:6,
-    step: 1,
-    showTicksValues: false,
-    // showSelectionBar: true,
-    showTicks: true,
+    // step: 1,
+    // showTicksValues: false,
+    // // showSelectionBar: true,
+    // showTicks: true,
     getLegend: (sliderVal: number): string => {
       return  sliderVal + '<b></b>';
     }
@@ -2483,5 +2496,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
         this.closeDuplicateModal();
       }
     });
+  }
+
+  // @ViewChild('commSlider') commSlider: ElementRef;
+
+  commSliderChanged(event) {
+    // console.log('COMMSLIDER:', this.commSlider);
+    // this.commSlider.nativeElement.querySelector('.ng5-slider-span.ng5-slider-bubble.ng5-slider-model-value').innerHTML = event+'y';
   }
 }

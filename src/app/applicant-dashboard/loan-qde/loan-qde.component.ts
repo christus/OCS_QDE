@@ -114,10 +114,10 @@ export class LoanQdeComponent implements OnInit {
   options: Options = {
     floor: 0,
     ceil: 30,
-    step: 5,
-    showTicksValues: false,
-    // showSelectionBar: true,
-    showTicks: true,
+    // step: 5,
+    // showTicksValues: false,
+    // // showSelectionBar: true,
+    // showTicks: true,
     getLegend: (sliderVal: number): string => {
       return sliderVal + "<b>y</b>";
     }
@@ -148,10 +148,10 @@ export class LoanQdeComponent implements OnInit {
   liveLoanOption:Options={
     floor:0,
     ceil:6,
-    step: 1,
-    showTicksValues: false,
-    // showSelectionBar: true,
-    showTicks: true,
+    // step: 1,
+    // showTicksValues: false,
+    // // showSelectionBar: true,
+    // showTicks: true,
     getLegend: (sliderVal: number): string => {
       return  sliderVal + '<b></b>';
     }

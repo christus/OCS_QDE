@@ -66,36 +66,48 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
   options: Options = {
     floor: 0,
     ceil: 100,
-    step: 10,
-    showTicksValues: false,
-    // showSelectionBar: true,
-    showTicks: true,
+    // step: 1,
+    // showTicksValues: false,
+    // // showSelectionBar: true,
+    // showTicks: true,
     getLegend: (sliderVal: number): string => {
       return  sliderVal + '<b>y</b>';
-    }
+    },
+    // value: 0
   };
-  options1: Options = {
+  employementOptions: Options = {
     floor: 1,
     ceil: 41,
-    step: 5,
-    showTicksValues: false,
-    // showSelectionBar: true,
-    showTicks: true,
+    // step: 5,
+    // showTicksValues: false,
+    // // showSelectionBar: true,
+    // showTicks: true,
     getLegend: (sliderVal: number): string => {
       return  sliderVal + '<b>y</b>';
     }
   };
-  familyOptions: Options = {
-    floor: 0,
-    ceil: 6,
-    step: 1,
-    showTicksValues: false,
-    // showSelectionBar: true,
-    showTicks: true,
+  experienceOptions: Options = {
+    floor: 1,
+    ceil: 41,
+    // step: 5,
+    // showTicksValues: false,
+    // // showSelectionBar: true,
+    // showTicks: true,
     getLegend: (sliderVal: number): string => {
-      return  sliderVal + '';
+      return  sliderVal + '<b>y</b>';
     }
-  };  
+  };
+    familyOptions:Options={
+    floor:0,
+    ceil:6,
+    // step: 1,
+    // showTicksValues: false,
+    // // showSelectionBar: true,
+    // showTicks: true,
+    getLegend: (sliderVal: number): string => {
+      return  sliderVal + '<b></b>';
+    }
+  };
 
   imageUrl:string = "appiyo/d/drive/upload/";
 
@@ -2468,5 +2480,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
     this.qde.application.applicants[this.coApplicantIndex].permanentAddress.cityState = this.qde.application.applicants.find(v => v.isMainApplicant == true).permanentAddress.city+" "+this.qde.application.applicants.find(v => v.isMainApplicant == true).permanentAddress.state;
 
     this.isPermanentAddressFromMainApplicant = false;
+  }
+
+  commSliderChanged(event) {
+    // console.log('COMMSLIDER:', this.commSlider);
+    // this.commSlider.nativeElement.querySelector('.ng5-slider-span.ng5-slider-bubble.ng5-slider-model-value').innerHTML = event+'y';
   }
 }

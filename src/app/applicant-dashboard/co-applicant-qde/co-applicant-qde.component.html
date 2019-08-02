@@ -720,7 +720,7 @@
                                     </div>
   
                                     <div class="residence-no">
-                                        <div class="form-group typ-optional">
+                                        <div class="form-group">
                                             <input [readonly]="isReadOnly"    type="text"
                                                       [(ngModel)]="residenceNumberStdCode"
                                                       pattern="{{regexPattern.mobileNumber}}"
@@ -915,7 +915,7 @@
   
                                   </div>
   
-                                  <div class="form-group">
+                                  <div class="form-group typ-optional">
                                       <input [readonly]="isReadOnly" type="text" class="form-control" id="address2"
                                         [(ngModel)]="qde.application.applicants[coApplicantIndex].communicationAddress.addressLineTwo"
                                         pattern="{{regexPattern.address}}"
@@ -923,10 +923,10 @@
                                         #address2="ngModel"
                                         fieldFill
                                         tabindex="3"
-                                        spellcheck="false"
-                                        required />
+                                        spellcheck="false"/>
   
                                       <label for="address2">Address line 2</label>
+                                      <span class="optional">optional</span>
                                       <div *ngIf="(address2.touched || address2.dirty) && address2.invalid" class="invalid-feedback">
                                         <!-- <div *ngIf="address2.errors?.required">{{errors.commAddress.address2.required}}</div> -->
                                         <div *ngIf="address2.errors?.pattern">{{errors.commAddress.address2.invalid}}</div>
@@ -1008,7 +1008,7 @@
                                                 <div *ngIf="pAddress1.errors?.pattern">{{errors.commAddress.address1.invalid}}</div>
                                               </div>
                                           </div>
-                                          <div class="form-group">
+                                          <div class="form-group typ-optional">
                                               <input [readonly]="isReadOnly" type="text" class="form-control" id="per-address2"
                                               name="pAddressLineTwo"
                                               #pAddress2="ngModel"
@@ -1016,9 +1016,10 @@
                                               tabindex="8"
                                               pattern="{{regexPattern.address}}"
                                               spellcheck="false"
-                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].permanentAddress.addressLineTwo"
-                                              required/>
+                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].permanentAddress.addressLineTwo"/>
+
                                               <label for="per-address2">Address line 2</label>
+                                              <span class="optional">optional</span>
                                               <div *ngIf="(pAddress2.touched || pAddress2.dirty) && pAddress2.invalid" class="invalid-feedback">
                                                 <!-- <div *ngIf="pAddress2.errors?.required">{{errors.commAddress.address2.required}}</div> -->
                                                 <div *ngIf="pAddress2.errors?.pattern">{{errors.commAddress.address2.invalid}}</div>
@@ -1102,7 +1103,7 @@
                                               #numberOfYearsInCurrentResidence="ngModel"
                                               fieldFill
                                               required />
-                                      <ng5-slider tabindex="14" [(value)]="qde.application.applicants[coApplicantIndex].communicationAddress.numberOfYearsInCurrentResidence" [options]="options"></ng5-slider>
+                                              <ng5-slider tabindex="13" class="commSlider" [(value)]="qde.application.applicants[coApplicantIndex].communicationAddress.numberOfYearsInCurrentResidence" [options]="options" (valueChange)="commSliderChanged($event)"></ng5-slider>
                                   </div>
                               </div>
                               <div class="btn-wrap">
@@ -1372,7 +1373,7 @@
                                                           class="form-control"
                                                           spellcheck="false"
                                                           [(ngModel)]="qde.application.applicants[coApplicantIndex].familyDetails.numberOfDependents" />
-                                                  <ng5-slider [(value)]="qde.application.applicants[coApplicantIndex].familyDetails.numberOfDependents" [options]="familyOptions"></ng5-slider>
+                                                          <ng5-slider class="commSlider" [(value)]="qde.application.applicants[coApplicantIndex].familyDetails.numberOfDependents" [options]="familyOptions"></ng5-slider>
                                               </div>
                                           </div>
                                           <div class="btn-wrap">
@@ -1628,10 +1629,11 @@
                                               spellcheck="false"
                                               #numberOfYearsInCurrentCompany="ngModel"
                                               required />
-  
-                                      <ng5-slider tabindex="4" [(value)]="qde.application.applicants[coApplicantIndex].occupation.numberOfYearsInCurrentCompany"
-                                      (valueChange)="checkOccupationDetailsYears($event)" [options]="options1">
-                                      </ng5-slider>
+
+                                        <ng5-slider class="commSlider" tabindex="4" [(value)]="qde.application.applicants[coApplicantIndex].occupation.numberOfYearsInCurrentCompany"
+                                        (valueChange)="checkOccupationDetailsYears($event)"
+                                        [options]="employementOptions" >
+                                        </ng5-slider>
   
                                       <!-- <div *ngIf="numberOfYearsInCurrentCompany.touched && numberOfYearsInCurrentCompany.invalid" class="invalid-feedback">
                                         <div *ngIf="numberOfYearsInCurrentCompany.errors?.required">{{errors.occupationDetails.currentExp.required}}</div>
@@ -1652,8 +1654,9 @@
                                               spellcheck="false"
                                               required />
   
-                                      <ng5-slider tabindex="6" [(value)]="qde.application.applicants[coApplicantIndex].occupation.totalWorkExperience" [options]="options1"
-                                      (valueChange)="checkOccupationDetailsYears($event)"></ng5-slider>
+                                              <ng5-slider class="commSlider" tabindex="6" [(value)]="qde.application.applicants[coApplicantIndex].occupation.totalWorkExperience" 
+                                              (valueChange)="checkOccupationDetailsYears($event)"
+                                              [options]="experienceOptions"></ng5-slider>
   
                                       <!-- <div *ngIf="(totalExperienceYear.touched || totalExperienceYear.dirty) && totalExperienceYear.invalid" class="invalid-feedback">
                                         <div *ngIf="totalExperienceYear.errors?.required">{{errors.occupationDetails.totalExp.required}}</div>
@@ -1730,7 +1733,7 @@
                                       </div>
                                   </div>
   
-                                  <div class="form-group">
+                                  <div class="form-group typ-optional">
                                       <input [readonly]="isReadOnly" type="text" class="form-control"
                                         id="ofcAddTwo"
                                         tabindex="2"
@@ -1739,9 +1742,9 @@
                                         name="ofcA2"
                                         spellcheck="false"
                                         #ofcA2="ngModel"
-                                        fieldFill
-                                        required />
+                                        fieldFill/>
                                       <label for="ofcAddTwo">Office address line2</label>
+                                      <span class="optional">optional</span>
                                       <div *ngIf="ofcA2.touched && ofcA2.invalid" class="invalid-feedback">
                                           <!-- <div *ngIf="ofcA2.errors?.required">{{errors.officialCorrespondence.address2.required}}</div> -->
                                           <div *ngIf="ofcA2.errors?.pattern">{{errors.officialCorrespondence.address2.invalid}}</div>

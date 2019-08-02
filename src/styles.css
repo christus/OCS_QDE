@@ -5476,13 +5476,23 @@ img {
 	margin-top: -20px !important;
   }
 
-  .ng5-slider .ng5-slider-bubble.ng5-slider-limit {
+  /* .ng5-slider .ng5-slider-bubble.ng5-slider-limit {
 	color: #fff !important;
-  }
+  } */
 
   .ng5-slider .ng5-slider-bubble {
-	color: #FFF !important;
+	/* color: #FFF !important; */
   }
+
+  .commSlider.ng5-slider .ng5-slider-bubble.ng5-slider-limit {
+	  font-size: 1.5vw !important;
+	  color: #d2b3b3 !important;
+  }
+
+.commSlider .ng5-slider-span.ng5-slider-bubble.ng5-slider-model-value {
+	font-size: 1.5vw !important;
+	color: #d2b3b3 !important;
+}
 
 
   .ng5-slider .ng5-slider-tick-legend {
