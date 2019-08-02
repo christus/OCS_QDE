@@ -1280,7 +1280,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   
           this.qde.application.applicants[this.applicantIndex][screenName].city = result.city;
           this.qde.application.applicants[this.applicantIndex][screenName].state = result.state;
-          this.qde.application.applicants[this.applicantIndex][screenName].cityState = this.commCityState || "XXXX YYYY";  
+          this.qde.application.applicants[this.applicantIndex][screenName].cityState = this.commCityState || "";  
         }
         else if(response['Error'] == '1') {
           // alert("Invalid Pin");
