@@ -749,7 +749,7 @@ export class LoanQdeComponent implements OnInit {
             if (response["ProcessVariables"]["status"]) {
               alert("Loan detail process is completed.")
               console.log(this.qde.application.loanDetails.propertyType);
-              this.goToNextSlide(swiperInstance);
+              this.router.navigate(['/references', this.applicationId])
             } else {
               // Throw Invalid Pan Error
             }

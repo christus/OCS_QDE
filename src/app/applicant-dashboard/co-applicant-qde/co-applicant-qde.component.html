@@ -1663,7 +1663,8 @@
                                 <button type="submit"
                                         [ngClass]="{'disabled': !occupationForm.valid || expError}"
                                         [disabled]="(!occupationForm.valid || expError)" 
-                                        class="btn btn-primary">
+                                        class="btn btn-primary"
+                                        [routerLink]="['/loan', qde.application.applicationId]">
                                     Save
                                 </button>
                             </div>

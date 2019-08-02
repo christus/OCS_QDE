@@ -673,7 +673,7 @@
                                     </div>
   
                                     <div class="residence-no">
-                                        <div class="form-group">
+                                        <div class="form-group typ-optional">
                                             <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                       type="text"
                                                       [(ngModel)]="residenceNumberStdCode"
@@ -692,7 +692,7 @@
                                               </div>
                                         </div>
                                         <span class="seperator">-</span>
-                                        <div class="form-group">
+                                        <div class="form-group typ-optional">
                                             <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                       type="text"
                                                       class="form-control"
@@ -706,6 +706,7 @@
                                                       data-validation-attr="residenceno"
                                                       fieldFill/>
                                             <label for="res-no" tabindex="10">Residence number</label>
+                                            <span class="optional">Optional</span>
                                             <div *ngIf="residenceNumber.touched  && residenceNumber.invalid" class="invalid-feedback">
                                               <div *ngIf="residenceNumber.errors?.pattern">{{errors.contactDetails.residenceNumber.invalid}}</div>
                                               <!-- <div *ngIf="residenceNumber.errors?.required">{{errors.contactDetails.residenceNumber.required}}</div> -->
@@ -719,7 +720,7 @@
                                         </span>
                                     </div>
                                     <div class="residence-no" [ngClass]="{'typ-alternative': !isAlternateResidenceNumber}">
-                                        <div class="form-group">
+                                        <div class="form-group typ-optional">
                                             <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                       type="text"
                                                       [(ngModel)]="alternateResidenceNumberStdCode"
@@ -736,7 +737,7 @@
                                           </div>
                                         </div>
                                         <span class="seperator">-</span>
-                                        <div class="form-group">
+                                        <div class="form-group typ-optional">
                                             <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                       type="text"
                                                       class="form-control"
@@ -750,6 +751,7 @@
                                                       pattern="{{regexPattern.mobileNumber}}"
                                                       data-validation-attr="residenceno01" />
                                             <label for="altr-res-no" tabindex="13">Residence number</label>
+                                            <span class="optional">Optional</span>
                                             <div *ngIf="alternateResidenceNumber2.touched  && alternateResidenceNumber2.invalid" class="invalid-feedback">
                                               <div *ngIf="alternateResidenceNumber2.errors?.pattern">{{errors.contactDetails.alternateResidenceNumber1.invalid}}</div>
                                           </div>
@@ -1210,7 +1212,7 @@
                                               #spouseEarningAmtForm="ngForm"
                                               (ngSubmit)="submitSpouseEarningAmt(spouseEarningAmtForm, maritalSlider2)">
                                             <div class="form-wrap">
-                                                <div class="form-group inr">
+                                                <div class="form-group inr typ-optional">
   
                                                   <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                                         type="text"
@@ -1227,9 +1229,8 @@
                                                   <label for="amount">Amount</label>
                                                   <span class="addon">
                                                     <span class="icon icon-inr"></span>
-                                                  </span>
-                                                  <span class="in-word"></span>
-  
+                                                  </span>  
+                                                  <span class="optional">Optional</span>
                                                   <div *ngIf="(amount.touched || amount.dirty)" class="invalid-feedback">
                                                       <!-- <div *ngIf="amount.errors?.required">{{errors.maritialStatus.salaryAmount.required}}</div> -->
                                                       <div *ngIf="amount.errors?.pattern">{{errors.maritialStatus.salaryAmount.invalid}}</div>
@@ -1611,7 +1612,8 @@
                                 <button type="submit"
                                         [ngClass]="{'disabled': !occupationForm.valid || expError}"
                                         [disabled]="(!occupationForm.valid || expError)" 
-                                        class="btn btn-primary">
+                                        class="btn btn-primary"
+                                        [routerLink]="['/applicant', qde.application.applicationId, 'co-applicant']">
                                     Save
                                 </button>
                             </div>

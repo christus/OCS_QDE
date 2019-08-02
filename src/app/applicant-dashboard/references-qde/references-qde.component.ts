@@ -572,7 +572,7 @@ export class ReferencesQdeComponent implements OnInit {
                 this.qde.application.references.referenceOne.relationShip
               );
               alert("References saved successfully");
-              this.tabSwitch(1);
+              this.router.navigate(['/view-form', this.qde.application.applicationId])
             } else {
               alert(response["ErrorMessage"]);
             }
