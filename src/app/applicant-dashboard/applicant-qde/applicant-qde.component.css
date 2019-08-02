@@ -226,3 +226,11 @@ visibility: visible;
 .send-otp-disable {
     color: gray !important;
 }
+
+.otp_input_len{
+    width: 28.55vw;
+}
+
+.pull-right{
+    float: right;
+}

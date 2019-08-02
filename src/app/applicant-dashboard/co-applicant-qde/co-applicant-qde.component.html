@@ -672,7 +672,8 @@
                                         <label for="mob-no">Mobile number</label>
                                         <span class="optional">10 digit</span>
 
-                                        <a href="javascript:void(0);" class="sent-otp modal-init" data-target="sent-otp-modal"><span class="text"  (click)="submitOTP(contactForm)">Send OTP</span><span class="icon icon-tick"></span></a>
+                                        <a *ngIf="!qde.application.applicants[coApplicantIndex].contactDetails.isMobileOTPverified" href="javascript:void(0);" class="sent-otp modal-init" data-target="sent-otp-modal"><span class="text" (click)="submitOTP(contactForm, false)">Send OTP</span><span class="icon icon-tick"></span></a>
+                                        <a *ngIf="qde.application.applicants[coApplicantIndex].contactDetails.isMobileOTPverified" href="javascript:void(0);"   class="sent-otp modal-init send-otp-disable" data-target="sent-otp-modal"><span class="text" >Send OTP</span><span class="icon icon-tick"></span></a>
                                         <span class="alternate-data" *ngIf="!isAlternateMobileNumber">
 
                                           <a  href="javascript:void(0);"
@@ -704,7 +705,8 @@
   
                                         <label for="alter-mob">Alternate mobile no</label>
                                         <span class="optional">10 digit</span>
-                                        <a href="#" class="sent-otp modal-init" data-target="sent-otp-modal"><span class="text" (click)="submitOTP(contactForm)">Send OTP</span><span class="icon icon-tick"></span></a>
+                                        <a *ngIf="!qde.application.applicants[coApplicantIndex].contactDetails.isAlternateOTPverified" href="javascript:void(0);" class="sent-otp modal-init" data-target="sent-otp-modal"><span class="text" (click)="submitOTP(contactForm, true)">Send OTP</span><span class="icon icon-tick"></span></a>
+                                        <a *ngIf="qde.application.applicants[coApplicantIndex].contactDetails.isAlternateOTPverified" href="javascript:void(0);" class="sent-otp modal-init send-otp-disable" data-target="sent-otp-modal"><span class="text">Send OTP</span><span class="icon icon-tick"></span></a>
                                         <span class="alternate-data">
                                           <a  href="javascript:void(0);"
                                               class="alter-btn"

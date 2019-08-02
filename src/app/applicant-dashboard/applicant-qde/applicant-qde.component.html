@@ -658,8 +658,8 @@
   
                                         <label for="alter-mob" tabindex="7">Alternate mobile no</label>
                                         <span class="optional">10 digit</span>
-                                        <a *ngIf="!qde.application.applicants[applicantIndex].contactDetails.isAlternateOTPverified" href="javascript:void(0);" class="sent-otp modal-init" data-target="sent-otp-modal"><span class="text" (click)="submitOTP(contactForm, true)">Send OTP</span><span class="icon icon-tick"></span></a>
-                                        <a *ngIf="qde.application.applicants[applicantIndex].contactDetails.isAlternateOTPverified" href="javascript:void(0);" class="sent-otp modal-init send-otp-disable" data-target="sent-otp-modal"><span class="text">Send OTP</span><span class="icon icon-tick"></span></a>
+                                        <!-- <a *ngIf="!qde.application.applicants[applicantIndex].contactDetails.isAlternateOTPverified" href="javascript:void(0);" class="sent-otp modal-init" data-target="sent-otp-modal"><span class="text" (click)="submitOTP(contactForm, true)">Send OTP</span><span class="icon icon-tick"></span></a>
+                                        <a *ngIf="qde.application.applicants[applicantIndex].contactDetails.isAlternateOTPverified" href="javascript:void(0);" class="sent-otp modal-init send-otp-disable" data-target="sent-otp-modal"><span class="text">Send OTP</span><span class="icon icon-tick"></span></a> -->
                                         <span class="alternate-data">
                                           <a  href="javascript:void(0);"
                                               class="alter-btn"
@@ -670,6 +670,7 @@
                                           <div *ngIf="altMobileNo.errors?.pattern">{{errors.contactDetails.alternateMobile.invalid}}</div>
                                           <div *ngIf="altMobileNo.errors?.minlength">{{errors.contactDetails.alternateMobile.minlength}}</div>
                                         </div>
+                                        <div  class="invalid-feedback" *ngIf="(altMobileNo.value == mobileNumber.value)">{{errors.contactDetails.alternateMobile.sameNumber}}</div>
                                     </div>
   
                                     <div class="residence-no">
@@ -767,7 +768,7 @@
                                 <div class="btn-wrap">
                                       <button class="btn btn-primary"
                                               type="submit"
-                                              [ngClass]="{'disabled': (!contactForm.valid)}"
+                                              [ngClass]="{'disabled': (!contactForm.valid) || (altMobileNo.value == mobileNumber.value)}"
                                               [disabled]="!contactForm.valid">Next
                                       </button>
                                 </div>
@@ -779,7 +780,7 @@
  
                 <div class="overlay" [ngClass]="{'active': inOTP}"></div>
                 <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': inOTP}">
-                    <a class="modal-close" href="javascript:void(0);" (click)="onBackOTP()"><span class="icon icon-close"></span></a>
+                    <!-- <a class="modal-close" href="javascript:void(0);" (click)="onBackOTP()"><span class="icon icon-close"></span></a> -->
                     <div class="modal-body">
                         <h1 class="center">Verify OTP to continue</h1>
                         <!-- <p class="desc typ2">You have cleared the provisional eligibility check for the loan amount requested. Kindly note this clearance is based on the information provided and actual sanction amount is subject to further verification and process. We need more time to process your eligibility. </p>
@@ -787,7 +788,7 @@
                         <form class="bs-form" id="spouse-form"
                         #isValidOTP="ngForm">
                             <div class="form-wrap1">
-                                <div class="form-group">
+                                <div class="form-group otp_input_len">
                                     <input [readonly]="isTBMLoggedIn" 
                                     type="text" class="form-control" 
                                     id="otp" 
@@ -795,10 +796,12 @@
                                     [(ngModel)]="otp"
                                     fieldFill>
                                     <label for="otp">OTP</label>
+                                    <a  href="javascript:void(0);" (click)="resendOTP()"> <div class="pull-right">Resend OTP</div> </a>
                                 </div>
                             </div>
                             <div class="btn-wrap">
-                                <button class="btn btn-border" [disabled]="isTBMLoggedIn" [ngClass]="{'disabled': isTBMLoggedIn}" (click)="validateOTP(isValidOTP)">Verify</button>
+                                <button class="btn btn-border" style='margin-right:16px' [disabled]="isTBMLoggedIn" [ngClass]="{'disabled': isTBMLoggedIn}" (click)="validateOTP(isValidOTP)">Verify</button>
+                                <button class="btn btn-border" style='margin-right:16px' [disabled]="isTBMLoggedIn" [ngClass]="{'disabled': isTBMLoggedIn}" (click)="onBackOTP()">Cancel</button>
                             </div>
                         </form>
                     </div>

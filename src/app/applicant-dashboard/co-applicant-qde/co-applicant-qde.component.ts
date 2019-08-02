@@ -2257,6 +2257,11 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       if(res['ProcessVariables']['status'] == true) {
         this.otp = "";
         alert("OTP verified successfully");
+        if(this.isAlternateStatus) {
+          this.qde.application.applicants[this.coApplicantIndex].contactDetails.isAlternateOTPverified = true;
+        }else {
+          this.qde.application.applicants[this.coApplicantIndex].contactDetails.isMobileOTPverified = true;
+        }
         this.onBackOTP();
       }else {
         alert("Enter valid OTP");

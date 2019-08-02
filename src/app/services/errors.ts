@@ -44,7 +44,8 @@ export const errors: any = {
     },
     alternateMobile: {
       invalid: "Invalid mobile number/Alphabets and Special Characters not allowed",
-      minlength: "Mobile number must be 10 digits"
+      minlength: "Mobile number must be 10 digits",
+      sameNumber: "Mobile numbers are same, please use different numbers"
     },
     stdCode: {
       required: "Std Code is mandatory",

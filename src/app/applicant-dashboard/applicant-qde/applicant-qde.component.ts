@@ -2027,6 +2027,18 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
      });
   }
 
+  resendOTP() {
+    const mobileNumber = this.qde.application.applicants[this.applicantIndex].contactDetails.mobileNumber ;
+    const applicationId = this.qde.application.applicationId;
+    const applicantId = this.qde.application.applicants[this.applicantIndex].applicantId;
+    this.sendOTPAPISub = this.qdeHttp.sendOTPAPI(mobileNumber, applicantId, applicationId, false).subscribe(res => {
+      if(res['ProcessVariables']['status'] == true) {
+        this.inOTP = true;
+        this.isAlternateStatus =  false;
+      }
+     });
+  }
+
   onBackOTP() {
     console.log("Back button pressed")
     this.inOTP = false; 
