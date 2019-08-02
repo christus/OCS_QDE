@@ -1097,7 +1097,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
           this.qde.application.applicants[this.coApplicantIndex][screenName].cityId = result.cityId;
           this.qde.application.applicants[this.coApplicantIndex][screenName].city = result.city;
           this.qde.application.applicants[this.coApplicantIndex][screenName].state = result.state;
-          this.qde.application.applicants[this.coApplicantIndex][screenName].cityState = this.commCityState || "XXXX YYYY";
+          this.qde.application.applicants[this.coApplicantIndex][screenName].cityState = this.commCityState || "";
           console.log('city: ', result.city);
         }
         else if(response['Error'] == '1') {
