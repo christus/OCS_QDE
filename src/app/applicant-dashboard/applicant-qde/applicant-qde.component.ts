@@ -871,10 +871,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     this.qde.application.applicants[this.applicantIndex].pan.docType = form.value.docTypeindividual.value;
     this.qde.application.applicants[this.applicantIndex].pan.docNumber = form.value.docNumber;
 
-    if(this.qde.application.applicants[this.applicantIndex].pan.panNumber) {
-      this.panSlider2.setIndex(2);
-      return;
-    }
+    // if(this.qde.application.applicants[this.applicantIndex].pan.panNumber) {
+    //   this.panSlider2.setIndex(2);
+    //   return;
+    // }
 
     this.checkPanValidSub=this.qdeHttp.checkPanValid(this.qdeService.getFilteredJson({actualPanNumber: form.value.pan})).subscribe((response) => {
 

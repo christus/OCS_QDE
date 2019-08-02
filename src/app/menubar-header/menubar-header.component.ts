@@ -29,6 +29,8 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
   // applicantId: string;
 
   public applicantName: string;
+
+  referenceNumber: string;
   qde:Qde;
 
   isMainTabEnabled: boolean;
@@ -95,6 +97,7 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
       } else {
         if(this.qde.application.applicants[0].personalDetails.firstName != "") {
           this.applicantName = "Application for "+this.qde.application.applicants[index].personalDetails.firstName +" "+ this.qde.application.applicants[index].personalDetails.lastName;
+          this.referenceNumber = this.qde.application.ocsNumber;
         }
       }
     });
