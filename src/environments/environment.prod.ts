@@ -1,10 +1,10 @@
 export const environment = {
-  version: "1.4.9.1",
-  buildDate: "30-7-19_release",
+  version: "1.5.0",
+  buildDate: "1-8-19_release",
   production: true,
-  projectId: '5928d30eac7811e9a1670242ac110002', //developement
+ // projectId: '5928d30eac7811e9a1670242ac110002', //developement
 
-  //projectId: '3209f7ea7ba811e982270242ac110002', //production
+  projectId: '3209f7ea7ba811e982270242ac110002', //production
 
   status: {
     QDECREATED: "1"

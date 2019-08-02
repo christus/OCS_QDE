@@ -222,3 +222,7 @@ visibility: visible;
 .duplicate-table-data .duplicate-table-col {
     font-size: 1.2vw;
 }
+
+.send-otp-disable {
+    color: gray !important;
+}

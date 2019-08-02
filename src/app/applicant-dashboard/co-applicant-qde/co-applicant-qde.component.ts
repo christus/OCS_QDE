@@ -2214,16 +2214,20 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
   inOTP: boolean = false;
   backOTP: boolean = false;
 
-  submitOTP(form: NgForm) {
+  isAlternateStatus:boolean = false;
+
+
+  submitOTP(form: NgForm, isAlternateNumber) {
     console.log("Towards OTP");
     const mobileNumber = form.value.mobileNumber;
     this.qde.application.applicants[this.coApplicantIndex].contactDetails.mobileNumber = mobileNumber;
+    const applicationId = this.qde.application.applicationId;
 
     const applicantId = this.qde.application.applicationId
-    this.sendOTPAPISub = this.qdeHttp.sendOTPAPI(mobileNumber, applicantId).subscribe(res => {
+    this.sendOTPAPISub = this.qdeHttp.sendOTPAPI(mobileNumber, applicantId, applicationId, isAlternateNumber).subscribe(res => {
       if(res['ProcessVariables']['status'] == true) {
         this.inOTP = true;
-        this.qde.application.applicants[this.coApplicantIndex].contactDetails.isMobileOTPverified = true;
+        this.isAlternateStatus = isAlternateNumber;
       }
       // if(res['ProcessVariables']['isPaymentSuccessful'] == true) {
       //   this.showSuccessModal = true;
@@ -2246,8 +2250,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
     const mobileNumber = this.qde.application.applicants[this.coApplicantIndex].contactDetails.mobileNumber;
     const applicantId = this.qde.application.applicationId;
     const otp = form.value.otp;
+    const applicationId = this.qde.application.applicationId;
 
-    this.validateOTPAPISub = this.qdeHttp.validateOTPAPI(mobileNumber, applicantId, otp).subscribe(res => {
+
+    this.validateOTPAPISub = this.qdeHttp.validateOTPAPI(mobileNumber, applicantId, applicationId, otp, this.isAlternateStatus).subscribe(res => {
       if(res['ProcessVariables']['status'] == true) {
         this.otp = "";
         alert("OTP verified successfully");

@@ -581,6 +581,18 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
                 this.idPanFileSize = result.application.applicants[this.applicantIndex].pan.fileSize;
               }
             }catch(e) {}  
+
+            try {
+              if(result.application.applicants[this.applicantIndex].contactDetails.isMobileOTPverified != null) {
+                this.qde.application.applicants[this.applicantIndex].contactDetails.isMobileOTPverified = result.application.applicants[this.applicantIndex].contactDetails.isMobileOTPverified;
+              }
+            } catch(e) {}
+
+            try {
+              if(result.application.applicants[this.applicantIndex].contactDetails.isAlternateOTPverified != null) {
+                this.qde.application.applicants[this.applicantIndex].contactDetails.isAlternateOTPverified = result.application.applicants[this.applicantIndex].contactDetails.isAlternateOTPverified;
+              }
+            } catch(e) {}
      
       
       // Document Type
@@ -810,6 +822,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
   addRemoveMobileNumberField() {
     this.isAlternateMobileNumber = !this.isAlternateMobileNumber;
+    this.qde.application.applicants[this.applicantIndex].contactDetails.alternateMobileNumber = null;
   }
 
   addRemoveResidenceNumberField() {
@@ -846,6 +859,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     this.qde.application.applicants[this.applicantIndex].pan.panNumber = form.value.pan;
     this.qde.application.applicants[this.applicantIndex].pan.docType = form.value.docTypeindividual.value;
     this.qde.application.applicants[this.applicantIndex].pan.docNumber = form.value.docNumber;
+
+    if(this.qde.application.applicants[this.applicantIndex].pan.panNumber) {
+      this.panSlider2.setIndex(2);
+      return;
+    }
 
     this.checkPanValidSub=this.qdeHttp.checkPanValid(this.qdeService.getFilteredJson({actualPanNumber: form.value.pan})).subscribe((response) => {
 
@@ -1981,18 +1999,19 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
   inOTP: boolean = false;
 
-  submitOTP(form: NgForm) {
+  isAlternateStatus:boolean = false;
+
+  submitOTP(form: NgForm, isAlternateNumber) {
     console.log("Towards OTP");
     
     const mobileNumber = form.value.mobileNumber;
     this.qde.application.applicants[this.applicantIndex].contactDetails.mobileNumber = mobileNumber;
-    this.qde.application.applicants[this.applicantIndex].contactDetails.isMobileOTPverified = false;
-
-    const applicantId = this.qde.application.applicationId
-    this.sendOTPAPISub = this.qdeHttp.sendOTPAPI(mobileNumber, applicantId).subscribe(res => {
+    const applicationId = this.qde.application.applicationId;
+    const applicantId = this.qde.application.applicants[this.applicantIndex].applicantId;
+    this.sendOTPAPISub = this.qdeHttp.sendOTPAPI(mobileNumber, applicantId, applicationId, isAlternateNumber).subscribe(res => {
       if(res['ProcessVariables']['status'] == true) {
         this.inOTP = true;
-        this.qde.application.applicants[this.applicantIndex].contactDetails.isMobileOTPverified = true;
+        this.isAlternateStatus = isAlternateNumber;
       }
      });
   }
@@ -2005,10 +2024,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   validateOTP(form: NgForm) {
     console.log("Payment gateway");
     const mobileNumber = this.qde.application.applicants[this.applicantIndex].contactDetails.mobileNumber;
-    const applicantId = this.qde.application.applicationId;
+    const applicantId = this.qde.application.applicants[this.applicantIndex].applicantId;
+    const applicationId = this.qde.application.applicationId;
+
     const otp = form.value.otp;
 
-    this.validateOTPAPISub = this.qdeHttp.validateOTPAPI(mobileNumber, applicantId, otp).subscribe(res => {
+    this.validateOTPAPISub = this.qdeHttp.validateOTPAPI(mobileNumber, applicantId, applicationId, otp, this.isAlternateStatus).subscribe(res => {
       // if(res['ProcessVariables']['isPaymentSuccessful'] == true) {
       //   this.showSuccessModal = true;
       //   this.emiAmount = res['ProcessVariables']['emi'];
@@ -2020,6 +2041,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       if(res['ProcessVariables']['status'] == true) {
         this.otp = "";
         alert("OTP verified successfully");
+        if(this.isAlternateStatus) {
+          this.qde.application.applicants[this.applicantIndex].contactDetails.isAlternateOTPverified = true;
+        }else {
+          this.qde.application.applicants[this.applicantIndex].contactDetails.isMobileOTPverified = true;
+        }
         this.onBackOTP();
       }else {
         alert("Enter valid OTP");
@@ -2060,6 +2086,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     this.isAlternateEmailId = this.qde.application.applicants[this.applicantIndex].contactDetails.alternateEmailId != "" ? true : false;
     this.isAlternateMobileNumber = this.qde.application.applicants[this.applicantIndex].contactDetails.alternateMobileNumber != null ? true : false;
     this.isAlternateResidenceNumber = this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber != "" ? true : false;
+  
+  
   }
 
   makePermanentAddressSame(event: boolean) {

@@ -576,7 +576,7 @@ createOrUpdatePersonalDetails(qde) {
   }
 
 
-  sendOTPAPI(mobileNumber, applicantId) {
+  sendOTPAPI(mobileNumber, applicantId, applicationId, isAlternateNumber) {
     const processId = environment.api.sendOTP.processId;
     const workflowId = environment.api.sendOTP.workflowId;
     const projectId = environment.projectId;
@@ -588,8 +588,10 @@ createOrUpdatePersonalDetails(qde) {
     const requestEntity: RequestEntity = {
       processId: processId,
       ProcessVariables: {
-        "applicationId": applicantId,
+        "applicantId": applicantId,
         "phoneNumber": mobileNumber,
+        "applicationId": applicationId,
+        "isAlternateNumber":  isAlternateNumber
       },
       workflowId: workflowId,
       projectId: projectId
@@ -604,7 +606,7 @@ createOrUpdatePersonalDetails(qde) {
     return this.http.post(uri, body.toString());
   }
 
-  validateOTPAPI(mobileNumber, applicantId, otp) {
+  validateOTPAPI(mobileNumber, applicantId, applicationId, otp, isAlternateNumber) {
     const processId = environment.api.validateOTP.processId;
     const workflowId = environment.api.validateOTP.workflowId;
     const projectId = environment.projectId;
@@ -616,9 +618,11 @@ createOrUpdatePersonalDetails(qde) {
     const requestEntity: RequestEntity = {
       processId: processId,
       ProcessVariables: {
+        "applicantId": applicantId,
         "phoneNumber": mobileNumber,
-        "applicationId": applicantId,
-        "otp": otp
+        "applicationId": applicationId,
+        "otp": otp,
+        "isAlternateNumber":  isAlternateNumber
       },
       workflowId: workflowId,
       projectId: projectId

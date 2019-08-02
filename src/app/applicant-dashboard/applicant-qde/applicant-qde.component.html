@@ -627,8 +627,8 @@
   
                                         <label for="mob-no" tabindex="5">Mobile number</label>
                                         <span class="optional">10 digit</span>
-                                        <a *ngIf="!qde.application.applicants[applicantIndex].contactDetails.isMobileOTPverified" href="javascript:void(0);" class="sent-otp modal-init" data-target="sent-otp-modal"><span class="text" (click)="submitOTP(contactForm)">Send OTP</span><span class="icon icon-tick"></span></a>
-                                        <a *ngIf="qde.application.applicants[applicantIndex].contactDetails.isMobileOTPverified" href="javascript:void(0);" class="sent-otp modal-init" data-target="sent-otp-modal"><span class="text">OTP Verified</span><span class="icon icon-tick"></span></a>
+                                        <a *ngIf="!qde.application.applicants[applicantIndex].contactDetails.isMobileOTPverified" href="javascript:void(0);" class="sent-otp modal-init" data-target="sent-otp-modal"><span class="text" (click)="submitOTP(contactForm, false)">Send OTP</span><span class="icon icon-tick"></span></a>
+                                        <a *ngIf="qde.application.applicants[applicantIndex].contactDetails.isMobileOTPverified" href="javascript:void(0);"   class="sent-otp modal-init send-otp-disable" data-target="sent-otp-modal"><span class="text" >Send OTP</span><span class="icon icon-tick"></span></a>
                                         <span class="alternate-data">
                                           <a  href="javascript:void(0);"
                                               class="alter-btn"
@@ -658,8 +658,8 @@
   
                                         <label for="alter-mob" tabindex="7">Alternate mobile no</label>
                                         <span class="optional">10 digit</span>
-                                        <a *ngIf="!qde.application.applicants[applicantIndex].contactDetails.isAlternateOTPverified" href="javascript:void(0);" class="sent-otp modal-init" data-target="sent-otp-modal"><span class="text" (click)="submitOTP(contactForm)">Send OTP</span><span class="icon icon-tick"></span></a>
-                                        <a *ngIf="qde.application.applicants[applicantIndex].contactDetails.isAlternateOTPverified" href="javascript:void(0);" class="sent-otp modal-init" data-target="sent-otp-modal"><span class="text">OTP Verified</span><span class="icon icon-tick"></span></a>
+                                        <a *ngIf="!qde.application.applicants[applicantIndex].contactDetails.isAlternateOTPverified" href="javascript:void(0);" class="sent-otp modal-init" data-target="sent-otp-modal"><span class="text" (click)="submitOTP(contactForm, true)">Send OTP</span><span class="icon icon-tick"></span></a>
+                                        <a *ngIf="qde.application.applicants[applicantIndex].contactDetails.isAlternateOTPverified" href="javascript:void(0);" class="sent-otp modal-init send-otp-disable" data-target="sent-otp-modal"><span class="text">Send OTP</span><span class="icon icon-tick"></span></a>
                                         <span class="alternate-data">
                                           <a  href="javascript:void(0);"
                                               class="alter-btn"
