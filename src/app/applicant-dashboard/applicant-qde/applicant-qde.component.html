@@ -562,7 +562,7 @@
                                     <div class="form-group" [ngClass]="{'prefer': isAlternateEmailId}">
   
                                         <input [readonly]="isTBMLoggedIn" spellcheck="false"
-                                              type="text"
+                                              type="email"
                                               class="form-control"
                                               id="pref-email"
                                               data-validation-attr="email"
@@ -589,7 +589,7 @@
                                     <div class="form-group transOpacity500ms fadeOut" [ngClass]="{'typ-alternative': !isAlternateEmailId, 'fadeIn': isAlternateEmailId}">
   
                                         <input [readonly]="isTBMLoggedIn" spellcheck="false"
-                                              type="text"
+                                              type="email"
                                               class="form-control"
                                               id="alter-email"
                                               data-validation-attr="email01"
@@ -1797,7 +1797,7 @@
                                   </div>
                                   <div class="form-group typ-optional">
                                       <input [readonly]="isTBMLoggedIn" spellcheck="false"
-                                            type="text" class="form-control" id="off-email"
+                                            type="email" class="form-control" id="off-email"
                                         required
                                         [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.officeEmailId"
                                         pattern="{{regexPattern.email}}"
@@ -2559,7 +2559,7 @@
                                   </div>
                                   <div class="form-group last">
                                       <input [readonly]="isTBMLoggedIn" spellcheck="false"
-                                              type="text"
+                                              type="email"
                                                 class="form-control"
                                                 tabindex="7"
                                                 id="ofc-email"
