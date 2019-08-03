@@ -104,3 +104,38 @@
     margin-top: 3vw;
     margin-left: 8vw;
 }
+.bs-modal .modal-body {
+    text-align: center;
+    padding: 4.91vw 0;
+}
+.bs-modal .modal-body .center{
+    margin-top: 0vw;
+    margin-bottom: 5vw;
+}
+.btn.btn-border.yes {
+    border-radius: 3.91vw;
+    color: #f58220;
+    font-family: zurich-bold;
+    font-size: 1.64vw;
+    line-height: 2.81vw;
+    text-transform: uppercase;
+    padding: 0 1.56vw;
+    border: 1px solid #f58220;
+    margin-right: 1vw;
+    margin-left: 1vw;
+}
+.btn.btn-border.no {
+    border-radius: 3.91vw;
+    color: #f58220;
+    font-family: zurich-bold;
+    font-size: 1.64vw;
+    line-height: 2.81vw;
+    text-transform: uppercase;
+    padding: 0 1.56vw;
+    border: 1px solid #f58220;
+    margin-right: 1vw;
+    margin-right: 1vw;
+}
+.bs-modal .modal-body .pr-text{
+    margin-bottom: 1vw;
+}

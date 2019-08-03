@@ -118,7 +118,7 @@ export class EligibilityCheckComponent implements OnInit {
 
   ngOnInit() {
     // this.renderer.addClass(this.select2.selector.nativeElement, 'js-select');
-
+    this.submitEligibility();
     this.route.fragment.subscribe(fragment => {
       let localFragment = fragment;
 
@@ -210,6 +210,9 @@ export class EligibilityCheckComponent implements OnInit {
   firstname: number;
   showEligible: boolean = false;
   showNotEligible: boolean =false;
+  showReview:boolean = false;
+  isConfirmRejectionModal: boolean = false;
+  isProceedModal:boolean = false;
 
   submitEligibility() {
     this.qdeHttp.cibilDetails(this.ocsNumber).subscribe(res => {
@@ -227,7 +230,7 @@ export class EligibilityCheckComponent implements OnInit {
         this.commonDataService.setIsMainTabEnabled(false);
       }
       else if(res['ProcessVariables']['checkEligibility'].toLowerCase() == 'review'){
-        this.showNotEligible = true;
+        this.showReview = true;
         this.commonDataService.setIsMainTabEnabled(false);
       }
       else{
@@ -240,11 +243,19 @@ export class EligibilityCheckComponent implements OnInit {
     this.qdeHttp.setStatusApi(this.applicationId, this.applicationStatusYes).subscribe(res => {}, err => {});
     this.commonDataService.setIsMainTabEnabled(false);
     this.router.navigate(['/view-form', this.applicationId]);
-    console.log('jfdhgjfdhg',this.route)
   }
 
   statusNo(){
-    this.qdeHttp.setStatusApi(this.applicationId, this.applicationStatusNo).subscribe(res => {}, err => {});
     this.commonDataService.setIsMainTabEnabled(false);
+    this.isConfirmRejectionModal = true;
+  }
+
+  goBackEligibility(){
+    this.isConfirmRejectionModal = false;
+  }
+
+  rejectProceed(){
+    this.qdeHttp.setStatusApi(this.applicationId, this.applicationStatusNo).subscribe(res => {}, err => {});
+    this.isProceedModal = true;
   }
 }

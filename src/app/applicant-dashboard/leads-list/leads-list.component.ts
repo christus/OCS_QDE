@@ -175,7 +175,7 @@ export class LeadsListComponent implements OnInit {
     else if(statuses[status] == "20") {
       this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
       
-      return "/payments/thankpayment-eligibility/"+applicationId;
+      return "/payments/eligibility-check/"+applicationId;
     } 
     else if(statuses[status] == "25") {
       this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
@@ -196,7 +196,7 @@ export class LeadsListComponent implements OnInit {
     else if(statuses[status] == "27") {
       this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
       
-      return "/document-uploads/"+applicationId;
+      return "/view-form/"+applicationId;
     }
     else if(statuses[status] == "28") {
       this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
