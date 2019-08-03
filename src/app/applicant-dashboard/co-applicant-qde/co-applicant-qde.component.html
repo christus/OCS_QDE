@@ -544,7 +544,7 @@
                                                         </div>
                                                     </div>
                                                     <div *ngIf="ageError" class="invalid-feedback">
-                                                        <div *ngIf="ageError"> Age should not be less than 18 years and greater than 70 years</div>
+                                                        <div *ngIf="ageError">Age should not be less than 18 years</div>
                                                       </div>
                                                   </div>
                                                   <div class="form-group">                                                 
@@ -1673,8 +1673,7 @@
                                 <button type="submit"
                                         [ngClass]="{'disabled': !occupationForm.valid || expError}"
                                         [disabled]="(!occupationForm.valid || expError)" 
-                                        class="btn btn-primary"
-                                        [routerLink]="['/loan', qde.application.applicationId]">
+                                        class="btn btn-primary">
                                     Save
                                 </button>
                             </div>
@@ -2971,4 +2970,16 @@
             </form>
         </div>
     </div>
-  </main>
+
+    <div class="overlay" [ngClass]="{'active': isCoApplicantRouteModal}"></div>
+    <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isCoApplicantRouteModal}">
+        <!-- <a class="modal-close" href="javascript:void(0);" (click)="onBackOTP()"><span class="icon icon-close"></span></a> -->
+        <div class="modal-body">
+            <h1 class="center">Co-Applicant has been successfully saved!</h1>
+            <p>Click Proceed to continue</p>
+                <div class="btn-wrap">
+                    <button class="btn btn-border"  [routerLink]="['/loan', qde.application.applicationId]">Proceed</button>
+                </div>
+        </div>
+    </div>
+</main>

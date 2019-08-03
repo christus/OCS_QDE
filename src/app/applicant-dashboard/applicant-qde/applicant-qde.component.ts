@@ -109,7 +109,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   };
     familyOptions:Options={
     floor:0,
-    ceil:6,
+    ceil:20,
     // step: 1,
     // showTicksValues: false,
     // // showSelectionBar: true,
@@ -297,6 +297,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   isEligibilityForReview: boolean = false;
   isEligibilityForReviewsSub: Subscription;
   isTBMLoggedIn: boolean;
+  isApplicantRouteModal: boolean = false;
 
   isDuplicateModalShown: boolean = false;
   duplicates: Array<Applicant> = [];
@@ -312,7 +313,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
               private file: File,
               private deviceService: DeviceDetectorService) {
 
-    this.dobYears = Array.from(Array(53).keys()).map((val, index) => {
+    this.dobYears = Array.from(Array(100).keys()).map((val, index) => {
       let v = (this.YYYY17YearsAgo - index)+"";
       return {key: v, value: v};
     });
@@ -723,7 +724,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       }
       // Incoming from create in Non Individual Pan
       else if(this.panslide2 == true && this.qde.application.applicants[this.applicantIndex].isIndividual == false) {
-        this.tabSwitch(10);
+        this.tabSwitch(11);
         this.panSlider4.setIndex(1);
       } else if(this.panslide == false && this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
         // this.tabSwitch(0);
@@ -731,7 +732,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       }
       else if(this.panslide2 == false && this.qde.application.applicants[this.applicantIndex].isIndividual == false) {
         // Enable it when upload file is enabled
-        this.tabSwitch(10);
+        this.tabSwitch(11);
         // this.panSlider4.setIndex(1);
 
         // this.tabSwitch(10);
@@ -930,8 +931,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
             }else {
             //  this.cds.changePanSlide(true);
-             this.panSlider2.setIndex(2);
-             // this.tabSwitch(1);
+            //  this.panSlider2.setIndex(2);
+             this.tabSwitch(1);
               // return;
             //  this.panSlider2.setIndex(2);
             //   return;
@@ -972,8 +973,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       }
   
       this.qde.application.applicants[this.applicantIndex].pan.panNumber = form.value.pan;
-      this.qde.application.applicants[this.applicantIndex].pan.docType = form.value.panDocType.value;
-      this.qde.application.applicants[this.applicantIndex].pan.docNumber = form.value.docNumber;
+      // this.qde.application.applicants[this.applicantIndex].pan.docType = form.value.panDocType.value;
+      // this.qde.application.applicants[this.applicantIndex].pan.docNumber = form.value.docNumber;
   
       this.checkPanValidSub2 = this.qdeHttp.checkPanValid(this.qdeService.getFilteredJson({actualPanNumber: form.value.pan})).subscribe((response) => {
         
@@ -1013,8 +1014,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
               });
   
             }else {
-              // this.tabSwitch(11);
-              this.goToNextSlide(swiperInstance);
+               this.tabSwitch(11);
+             // this.goToNextSlide(swiperInstance);
               return;
             }
           } else {
@@ -1179,7 +1180,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       const d2:any = new Date();
       var diff = d2 - d1 ;
       var age = Math.floor(diff/(1000*60*60*24*365.25));
-      if(age >= 70 || age <18 ){
+      if(age < 18){
         this.ageError = true;
         return;
       }else {
@@ -1627,7 +1628,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
         // If successful
         if(response["ProcessVariables"]["status"]) {
           if(this.selectedOccupation.value == 9 || this.selectedOccupation.value == 10){
-            alert("Applicant's application successfully submitted");
+            this.isApplicantRouteModal = true
             // this.tabSwitch();
             return;
           }else{
@@ -1906,9 +1907,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       this.createOrUpdatePersonalDetailsSub22 = this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successfull
         if(response["ProcessVariables"]["status"]) {
-          alert("Applicant's application successfully submitted");
-          this.router.navigate(['/applicant', this.qde.application.applicationId, 'co-applicant'], {fragment: 'dashboard'} );
-          this.goToNextSlide(swiperInstance);
+          this.isApplicantRouteModal = true;
+          // alert("Applicant's application successfully submitted");
+          // this.router.navigate(['/applicant', this.qde.application.applicationId, 'co-applicant'], {fragment: 'dashboard'} );
+          // this.goToNextSlide(swiperInstance);
         } else {
           // Throw Invalid Pan Error
         }
@@ -1971,7 +1973,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
             this.goToNextSlide(swiperInstance);
           } 
           else if(value == 2) {
-            this.router.navigate(['/applicant', this.qde.application.applicationId, 'co-applicant'], {fragment: 'dashboard'} );
+            this.isApplicantRouteModal = true;
           } 
         } else {
           // Throw Invalid Pan Error
@@ -2000,7 +2002,6 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   //     console.log("response : ", error);
   //   });
   // }
-
 
   selectValueChanged(event, to) {
     let whichSelectQde = this.qde.application.applicants[this.applicantIndex];

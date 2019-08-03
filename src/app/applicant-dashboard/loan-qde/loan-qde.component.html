@@ -60,7 +60,7 @@
                       </div>
 
                     </div>
-                      <div class="form-group">
+                      <!-- <div class="form-group">
                         <span class="control-title">Type of loan</span>
                         <kendo-dropdownlist [readonly]="isTBMLoggedIn" 
                           class="form-control"
@@ -71,7 +71,7 @@
                           [valuePrimitive]="true"
                           [(ngModel)]="selectedLoanType">
                         </kendo-dropdownlist>
-                      </div>
+                      </div> -->
                     
                       <div class="form-group">
                         <span class="control-title">Loan purpose</span>
@@ -235,27 +235,6 @@
                       (ngSubmit)="submitPropertyDetail(submitProperty, property2)">
                         <div class="form-wrap">
                           <div class="form-group">
-                            <input [readonly]="isTBMLoggedIn" type="text" class="form-control" id="proprty-pin"
-                            required
-                            ngModel
-                            #propertyPincode = "ngModel"
-                            [(ngModel)]="propertyPincodeValue"
-                            minlength="6"
-                            maxlength="6"
-                            name="propertyPincode"
-							              fieldFill
-                            pattern='{{regexPattern.pinCode}}'
-                            (change)="onPinCodeChange($event)">
-
-                            <label for="proprty-pin">Property pincode</label>
-
-                            <div *ngIf="(propertyPincode.touched || propertyPincode.dirty) && propertyPincode.invalid" class="invalid-feedback">
-                              <!-- <div *ngIf="propertyPincode.errors?.required">{{errors.loanDetails.property.pinCode.required}}</div> -->
-                              <div *ngIf="propertyPincode.errors?.pattern">{{errors.loanDetails.property.pinCode.invalid}}</div>
-                            </div>
-
-                          </div>
-                          <div class="form-group">
                             <input [readonly]="isTBMLoggedIn" type="text" class="form-control"
                             id="add-line1"
                             required
@@ -289,6 +268,28 @@
                               <!-- <div *ngIf="addressLineTwo.errors?.required">{{errors.loanDetails.property.addressLineTwo.required}}</div> -->
                               <div *ngIf="addressLineTwo.errors?.pattern">{{errors.loanDetails.property.addressLineTwo.invalid}}</div>
                             </div>
+                          </div>
+
+                          <div class="form-group">
+                            <input [readonly]="isTBMLoggedIn" type="text" class="form-control" id="proprty-pin"
+                            required
+                            ngModel
+                            #propertyPincode = "ngModel"
+                            [(ngModel)]="propertyPincodeValue"
+                            minlength="6"
+                            maxlength="6"
+                            name="propertyPincode"
+							              fieldFill
+                            pattern='{{regexPattern.pinCode}}'
+                            (change)="onPinCodeChange($event)">
+
+                            <label for="proprty-pin">Property pincode</label>
+
+                            <div *ngIf="(propertyPincode.touched || propertyPincode.dirty) && propertyPincode.invalid" class="invalid-feedback">
+                              <!-- <div *ngIf="propertyPincode.errors?.required">{{errors.loanDetails.property.pinCode.required}}</div> -->
+                              <div *ngIf="propertyPincode.errors?.pattern">{{errors.loanDetails.property.pinCode.invalid}}</div>
+                            </div>
+
                           </div>
                           
                           <div class="form-group">
@@ -467,6 +468,39 @@
     </div>
   </div>
   <span class="cm-autoSave"><span class="cm-bold">Autosaved</span> <span>at 09:26 AM</span></span>
+  <div class="overlay" [ngClass]="{'active': isLoanRouteModal}"></div>
+  <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isLoanRouteModal}">
+      <!-- <a class="modal-close" href="javascript:void(0);" (click)="onBackOTP()"><span class="icon icon-close"></span></a> -->
+      <div class="modal-body">
+          <h1 class="center">Loan Details has been successfully saved!</h1>
+          <p>Click Proceed to continue</p>
+              <div class="btn-wrap">
+                  <button class="btn btn-border"  [routerLink]="['/references', qde.application.applicationId]">Proceed</button>
+              </div>
+      </div>
+  </div>
+  <div class="overlay" [ngClass]="{'active': isClssEligibleModal}"></div>
+  <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isClssEligibleModal}">
+      <!-- <a class="modal-close" href="javascript:void(0);" (click)="onBackOTP()"><span class="icon icon-close"></span></a> -->
+      <div class="modal-body">
+          <h1 class="center">Application is eligible for CLSS</h1>
+          <p>Click Proceed to continue</p>
+              <div class="btn-wrap">
+                  <button class="btn btn-border" (click)="proceedToExistingLoanEligible()">Proceed</button>
+              </div>
+      </div>
+  </div>
+  <div class="overlay" [ngClass]="{'active': isClssNotEligibleModal}"></div>
+  <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isClssNotEligibleModal}">
+      <!-- <a class="modal-close" href="javascript:void(0);" (click)="onBackOTP()"><span class="icon icon-close"></span></a> -->
+      <div class="modal-body">
+          <h1 class="center">Application is not eligible for CLSS</h1>
+          <p>Click Proceed to continue</p>
+              <div class="btn-wrap">
+                  <button class="btn btn-border" (click)="proceedToExistingLoanNotEligible()">Proceed</button>
+              </div>
+      </div>
+  </div>
 </main>
 
 <div class="overlay"></div>

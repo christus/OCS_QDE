@@ -76,11 +76,11 @@
                                             <h4 class="title">Enter Applicant’s <span class="cm-line-break"></span>PAN & KYC details</h4>
                                         </div>
                                     </div>
-                                    <div class="swiper-slide">
+                                    <!-- <div class="swiper-slide">
                                         <div class="title-wrap">
                                             <h4 class="title">Upload Applicant’s  <span class="cm-line-break"></span>PAN details</h4>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
 
@@ -195,7 +195,7 @@
                                             </div>
                                         </form>
                                     </div>
-                                    <div class="swiper-slide">
+                                    <!-- <div class="swiper-slide">
                                         <form class="bs-form" >
                                             <div class="form-wrap">
                                                 <div *ngIf="isMobile">
@@ -234,7 +234,7 @@
                                                 <button  *ngIf="!isMobile" class="btn btn-primary" (click)="handlePanImage(true)">Next</button>
                                             </div>
                                         </form>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
   
@@ -499,7 +499,7 @@
                                                         </div>
                                                     </div>
                                                     <div *ngIf="ageError" class="invalid-feedback">
-                                                        <div *ngIf="ageError">Age should not be less than 18 years and greater than 70 years</div>
+                                                        <div *ngIf="ageError">Age should not be less than 18 years</div>
                                                     </div>
 
                                                   </div>
@@ -1619,8 +1619,7 @@
                                 <button type="submit"
                                         [ngClass]="{'disabled': !occupationForm.valid || expError}"
                                         [disabled]="(!occupationForm.valid || expError)" 
-                                        class="btn btn-primary"
-                                        [routerLink]="['/applicant', qde.application.applicationId, 'co-applicant']">
+                                        class="btn btn-primary">
                                     Save
                                 </button>
                             </div>
@@ -2104,7 +2103,7 @@
                                                   </div>
                                                   <div *ngIf="panErrorCount >= 3" class="invalid-feedback">{{errors.pan.after3Attemps}}</div>
                                               </div>
-                                              <div class="form-group">
+                                              <!-- <div class="form-group">
                                                 <span class="control-title">Document Type</span>
                                                 <kendo-dropdownlist [readonly]="isTBMLoggedIn"   class="form-control"
                                                     [data]="docType" 
@@ -2134,15 +2133,15 @@
                                                     maxlength="{{maxlength[parseInteger(selectedDocType.value) - 1]}}"
                                                     required/>
                                                     <label for="docNumber2">Document Number</label>
-                                                    <h3 style="color:green;font-family: 'Zapf-Chancery', cursive;">hint for Document number: <b>{{regexPatternForDocType[parseInteger(selectedDocType.value) - 1].hint}}</b></h3>
+                                                    <h3 style="color:green;font-family: 'Zapf-Chancery', cursive;">hint for Document number: <b>{{regexPatternForDocType[parseInteger(selectedDocType.value) - 1].hint}}</b></h3> -->
 
                                             <!-- <image-upload [url]="imageUrl" [headers]="myHeaders"></image-upload> -->
-                                                    <div *ngIf="coappdocNumberNonIndividual.touched && coappdocNumberNonIndividual.invalid" class="invalid-feedback">
+                                                    <!-- <div *ngIf="coappdocNumberNonIndividual.touched && coappdocNumberNonIndividual.invalid" class="invalid-feedback"> -->
                                                       <!-- <div *ngIf="pan2.errors?.required">{{errors.panDocumentNo.required}}</div> -->
-                                                      <div *ngIf="coappdocNumberNonIndividual.errors?.pattern ? true : false">{{errors.panDocumentNo.invalid}}</div>
+                                                      <!-- <div *ngIf="coappdocNumberNonIndividual.errors?.pattern ? true : false">{{errors.panDocumentNo.invalid}}</div> -->
                                                       <!-- <div *ngIf="coappdocNumberNonIndividual.errors?.minlength || pan2.errors?.maxlength">*PAN must be at least {{pan.errors.minlength.requiredLength}} characters</div> -->
-                                                  </div>
-                                              </div>
+                                                  <!-- </div>
+                                              </div> -->
                                           </div>
                                           <div class="btn-wrap">
                                                 <button type="submit"
@@ -2154,7 +2153,7 @@
   
                                       </form>
                                   </div>
-                                  <div class="swiper-slide">
+                                  <!-- <div class="swiper-slide">
                                     <form class="bs-form" >
                                         <div class="form-wrap">
                                             <div *ngIf="isMobile">
@@ -2192,7 +2191,7 @@
                                             <button  *ngIf="!isMobile" class="btn btn-primary" (click)="handlePanImage(false)">Next</button>
                                         </div>
                                     </form>
-                                </div>
+                                </div> -->
                               </div>
                           </div>
   
@@ -2928,6 +2927,19 @@
                     <button type="submit" class="duplicate-btn" [disabled]="false" [ngClass]="{'disabled grey': false}">Use this Data</button>
                 </div>
             </form>
+        </div>
+    </div>
+
+
+    <div class="overlay" [ngClass]="{'active': isApplicantRouteModal}"></div>
+    <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isApplicantRouteModal}">
+        <!-- <a class="modal-close" href="javascript:void(0);" (click)="onBackOTP()"><span class="icon icon-close"></span></a> -->
+        <div class="modal-body">
+            <h1 class="center">Applicant has been successfully saved!</h1>
+            <p>Click Proceed to continue</p>
+                <div class="btn-wrap">
+                    <button class="btn btn-border"  [routerLink]="['/applicant', qde.application.applicationId, 'co-applicant']">Proceed</button>
+                </div>
         </div>
     </div>
   </main>

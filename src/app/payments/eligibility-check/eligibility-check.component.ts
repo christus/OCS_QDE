@@ -6,6 +6,8 @@ import { QdeService } from 'src/app/services/qde.service';
 import { NgForm } from '@angular/forms';
 import * as Swiper from "swiper/dist/js/swiper.js";
 import { Options } from "ng5-slider";
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import Qde from 'src/app/models/qde.model';
 
 @Component({
   selector: 'app-eligibility-check',
@@ -14,6 +16,7 @@ import { Options } from "ng5-slider";
 })
 export class EligibilityCheckComponent implements OnInit {
 
+  qde: Qde;
   value: number = 0;
 
   minValue: number = 1;
@@ -232,6 +235,8 @@ export class EligibilityCheckComponent implements OnInit {
   statusYes(){
     this.qdeHttp.setStatusApi(this.applicationId, this.applicationStatusYes).subscribe(res => {}, err => {});
     this.commonDataService.setIsMainTabEnabled(false);
+    this.router.navigate(['/view-form', this.route.params.value.applicationId]);
+    console.log('jfdhgjfdhg',this.route)
   }
 
   statusNo(){

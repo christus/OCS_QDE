@@ -230,6 +230,9 @@ export class LoanQdeComponent implements OnInit {
   isEligibilityForReview: boolean = false;
   isEligibilityForReviewsSub: Subscription;
   isTBMLoggedIn: boolean;
+  isLoanRouteModal: boolean = false;
+  isClssEligibleModal:boolean = false;
+  isClssNotEligibleModal:boolean = false
 
   constructor(
     private renderer: Renderer2,
@@ -747,9 +750,8 @@ export class LoanQdeComponent implements OnInit {
           response => {
             // If successful
             if (response["ProcessVariables"]["status"]) {
-              alert("Loan detail process is completed.")
               console.log(this.qde.application.loanDetails.propertyType);
-              this.router.navigate(['/references', this.applicationId])
+              this.isLoanRouteModal = true
             } else {
               // Throw Invalid Pan Error
             }
@@ -765,11 +767,10 @@ export class LoanQdeComponent implements OnInit {
     this.qdeHttp.clssProbabilityCheck(this.applicationId).subscribe(
       response => {
         if (response["Error"] === "0" && response["ProcessVariables"]["isClssEligible"]) {
-          alert("Application is eligible for CLSS");
+          this.isClssEligibleModal = true;
         } else {
-          alert("Application is not eligible for CLSS");
+          this.isClssNotEligibleModal = true;
         }
-        this.tabSwitch(2);
       },
       error => {
         console.log("response : ", error);
@@ -790,5 +791,12 @@ export class LoanQdeComponent implements OnInit {
       });
   }
 
-  temp;
+  proceedToExistingLoanEligible() {
+    this.isClssEligibleModal = false;
+    this.tabSwitch(2);
+  }
+  proceedToExistingLoanNotEligible() {
+    this.isClssNotEligibleModal = false;
+    this.tabSwitch(2);
+  }
 }

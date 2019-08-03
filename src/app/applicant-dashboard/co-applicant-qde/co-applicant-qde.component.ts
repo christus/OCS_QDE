@@ -99,7 +99,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
   };
     familyOptions:Options={
     floor:0,
-    ceil:6,
+    ceil:20,
     // step: 1,
     // showTicksValues: false,
     // // showSelectionBar: true,
@@ -296,6 +296,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
   isEligibilityForReviewsSub: Subscription;
   isTBMLoggedIn: boolean;
   isDuplicateModalShown: boolean = false;
+  isCoApplicantRouteModal: boolean = false;
+
   duplicates: Array<Applicant> = [];
   dobYears: Array<Item>;
   YYYY17YearsAgo = (new Date().getFullYear() - 17);
@@ -430,7 +432,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       this.years.unshift({key: 'YYYY', value: 'YYYY'});
 
       // Requirement Year should be more than 17 and less than 70
-      this.dobYears = Array.from(Array(53).keys()).map((val, index) => {
+      this.dobYears = Array.from(Array(100).keys()).map((val, index) => {
         let v = (this.YYYY17YearsAgo - index)+"";
         return {key: v, value: v};
       });
@@ -999,7 +1001,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       const d2:any = new Date();
       var diff = d2 - d1 ;
       var age = Math.floor(diff/(1000*60*60*24*365.25));
-      if(age >= 70 || age <=18 ){
+      if(age <=18 ){
         this.ageError = true;
         return;
       }else {
@@ -1441,7 +1443,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
         // If successful
         if(response["ProcessVariables"]["status"]) {
           if(this.selectedOccupation.value == 9 || this.selectedOccupation.value == 10){
-            alert("Co-Applicant's application successfully submitted");
+            this.isCoApplicantRouteModal = true;
             // this.tabSwitch();
             return;
           }else{
@@ -1731,7 +1733,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       });
   
     }
-    this.router.navigate(['/loan', this.applicationId]);
+    this.isCoApplicantRouteModal = true
   }
 
 
@@ -1782,7 +1784,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
             this.goToNextSlide(swiperInstance);
           }
           else if(value == 2) {
-            this.router.navigate(['/loan', this.applicationId]);
+            this.isCoApplicantRouteModal = true;
           }
         } else {
           // Throw Invalid Pan Error

@@ -251,6 +251,8 @@ export class OfflinePaymentComponent implements OnInit {
   offline(){
     // Another APi call to submit offline payment details
     this.qdeHttp.setStatusApi(this.applicationId, statuses['Cheque Received']).subscribe(res => {}, err => {});
+    this.router.navigate(["/leads"])
+
   }
 
 

@@ -538,6 +538,7 @@ export class ReferencesQdeComponent implements OnInit {
 
   applicationId: string;
   applicationStatus: string = "10";
+  isReferenceRouteModal:boolean = false
 
   submitReference2Detail(form: NgForm, swiperInstance?: Swiper) {
 
@@ -571,8 +572,7 @@ export class ReferencesQdeComponent implements OnInit {
               console.log(
                 this.qde.application.references.referenceOne.relationShip
               );
-              alert("References saved successfully");
-              this.router.navigate(['/view-form', this.qde.application.applicationId])
+              this.isReferenceRouteModal = true;
             } else {
               alert(response["ErrorMessage"]);
             }
