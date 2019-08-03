@@ -247,3 +247,10 @@ visibility: visible;
     margin: 0 auto;
     background: #ccc;
   }
+
+.redalert {
+    color: red;
+    font-size: .94vw;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}

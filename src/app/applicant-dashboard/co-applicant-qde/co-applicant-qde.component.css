@@ -320,3 +320,11 @@ visibility: visible;
 .send-otp-disable {
     color: gray !important;
 }
+
+
+.redalert {
+    color: red;
+    font-size: .94vw;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}

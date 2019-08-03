@@ -4866,9 +4866,8 @@ img {
 	left: 0;
 	right: 0;
 	text-align: center;
-	top:0
-	/* top: 50%; */
-	/* transform: translateY(-50%) */
+	top: 50%;
+	transform: translateY(-50%);
 }
 
 .lyt-home .form-swiper {

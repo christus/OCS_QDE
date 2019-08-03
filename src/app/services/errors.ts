@@ -41,7 +41,8 @@ export const errors: any = {
     prefferedMobile: {
       required: "10 digit mobile number is mandatory",
       invalid: "Invalid mobile number/Alphabets and Special Characters not allowed",
-      minlength: "Mobile number must be 10 digits"
+      minlength: "Mobile number must be 10 digits",
+      wrong: "Please provide valid mobile number"
     },
     alternateMobile: {
       invalid: "Invalid mobile number/Alphabets and Special Characters not allowed",

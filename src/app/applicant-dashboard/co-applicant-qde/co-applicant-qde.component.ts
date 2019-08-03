@@ -2488,4 +2488,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
     // console.log('COMMSLIDER:', this.commSlider);
     // this.commSlider.nativeElement.querySelector('.ng5-slider-span.ng5-slider-bubble.ng5-slider-model-value').innerHTML = event+'y';
   }
+
+  RegExp(param) {
+    return RegExp(param);
+  }
 }
