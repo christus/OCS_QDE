@@ -4816,8 +4816,7 @@ img {
 	min-height: 21.48vw;
 	position: absolute;
 	right: 0;
-	top: 50%;
-	transform: translateY(-50%);
+	top: 0;
 	padding: 3.91vw 7.81vw 3.91vw 1.95vw;
 	display: flex;
 	flex-wrap: wrap;
@@ -4867,8 +4866,9 @@ img {
 	left: 0;
 	right: 0;
 	text-align: center;
-	top: 50%;
-	transform: translateY(-50%)
+	top:0
+	/* top: 50%; */
+	/* transform: translateY(-50%) */
 }
 
 .lyt-home .form-swiper {
@@ -5202,7 +5202,7 @@ img {
 .tabs .tabs-contents .tab-content.active {
 	opacity: 1;
 	z-index: 1;
-	transform: scale(1);
+	/* transform: scale(1); */
 	transition-duration: .6s
 }
 
