@@ -642,6 +642,7 @@
                                         <div *ngIf="(mobileNumber.touched || mobileNumber.dirty) && mobileNumber.invalid" class="invalid-feedback">
                                           <!-- <div *ngIf="mobileNumber.errors?.required">{{errors.contactDetails.prefferedMobile.required}}</div> -->
                                           <div *ngIf="mobileNumber.errors?.pattern">{{errors.contactDetails.prefferedMobile.invalid}}</div>
+                                          <div *ngIf="new RegExp(/0{10}|1{10}|2{10}|3{10}|4{10}|5{10}|6{10}|7{10}|8{10}|9{10}/).test(mobileNumber.value)">{{errors.contactDetails.prefferedMobile.invalid}}</div>
                                           <div *ngIf="mobileNumber.errors?.minlength">{{errors.contactDetails.prefferedMobile.minlength}}</div> 
                                         </div>
                                     </div>
@@ -772,8 +773,8 @@
                                 <div class="btn-wrap">
                                       <button class="btn btn-primary"
                                               type="submit"
-                                              [ngClass]="{'disabled': (!contactForm.valid) || (altMobileNo.value == mobileNumber.value) || (alternateEmailId.value == preferEmailId.value) || (alternateResidenceNumber2.value == alternateResidenceNumberStd1.value)}"
-                                              [disabled]="!contactForm.valid">Next
+                                              [ngClass]="{'disabled': (!contactForm.valid) || (altMobileNo.value == mobileNumber.value) || new RegExp(/0{10}|1{10}|2{10}|3{10}|4{10}|5{10}|6{10}|7{10}|8{10}|9{10}/).test(mobileNumber.value)}"
+                                              [disabled]="!contactForm.valid || (altMobileNo.value == mobileNumber.value) || new RegExp(/0{10}|1{10}|2{10}|3{10}|4{10}|5{10}|6{10}|7{10}|8{10}|9{10}/).test(mobileNumber.value)">Next
                                       </button>
                                 </div>
                             </form>
