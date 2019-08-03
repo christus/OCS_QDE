@@ -110,6 +110,10 @@ export class EligibilityCheckComponent implements OnInit {
       this.commonDataService.applicationId.subscribe(val => {
         this.applicationId = val;
       });
+
+      this.route.params.subscribe(params => {
+        this.applicationId = params.applicationId;
+      });
   }
 
   ngOnInit() {
@@ -235,7 +239,7 @@ export class EligibilityCheckComponent implements OnInit {
   statusYes(){
     this.qdeHttp.setStatusApi(this.applicationId, this.applicationStatusYes).subscribe(res => {}, err => {});
     this.commonDataService.setIsMainTabEnabled(false);
-    this.router.navigate(['/view-form', this.route.params.value.applicationId]);
+    this.router.navigate(['/view-form', this.applicationId]);
     console.log('jfdhgjfdhg',this.route)
   }
 
