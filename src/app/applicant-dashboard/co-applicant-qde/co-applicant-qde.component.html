@@ -682,10 +682,11 @@
                                               (click)="addRemoveMobileNumberField()">+ Add</a> alternate Mobile number
                                         </span>
   
+                                        <div *ngIf="mobileNumber ? mobileNumber.value.search('0{10}|1{10}|2{10}|3{10}|4{10}|5{10}|6{10}|7{10}|8{10}|9{10}') == -1: false">{{errors.contactDetails.prefferedMobile.invalid}}</div>
+
                                         <div *ngIf="(mobileNumber.touched || mobileNumber.dirty) && mobileNumber.invalid" class="invalid-feedback">
                                           <!-- <div *ngIf="mobileNumber.errors?.required">{{errors.contactDetails.prefferedMobile.required}}</div> -->
                                           <div *ngIf="mobileNumber.errors?.pattern">{{errors.contactDetails.prefferedMobile.invalid}}</div>
-                                          <div *ngIf="mobileNumber ? mobileNumber.value.search('0{10}|1{10}|2{10}|3{10}|4{10}|5{10}|6{10}|7{10}|8{10}|9{10}') == -1: false">{{errors.contactDetails.prefferedMobile.invalid}}</div>
                                           <div *ngIf="mobileNumber.errors?.minlength">{{errors.contactDetails.prefferedMobile.minlength}}</div>
                                         </div>
                                     </div>
@@ -714,9 +715,9 @@
                                               tabindex="8"
                                               (click)="addRemoveMobileNumberField()">- Remove</a> alternate Mobile no
                                         </span>
+                                        <div *ngIf="altMobileNo.value?.search('0{10}|1{10}|2{10}|3{10}|4{10}|5{10}|6{10}|7{10}|8{10}|9{10}') == -1">{{errors.contactDetails.alternateMobile.invalid}}</div>
                                         <div *ngIf="(altMobileNo.touched || altMobileNo.dirty) && altMobileNo.invalid" class="invalid-feedback">
                                           <div *ngIf="altMobileNo.errors?.pattern">{{errors.contactDetails.alternateMobile.invalid}}</div>
-                                          <div *ngIf="altMobileNo ? altMobileNo.value.search('0{10}|1{10}|2{10}|3{10}|4{10}|5{10}|6{10}|7{10}|8{10}|9{10}') == -1: false">{{errors.contactDetails.alternateMobile.invalid}}</div>
                                           <div *ngIf="altMobileNo.errors?.minlength">{{errors.contactDetails.alternateMobile.minlength}}</div>
                                         </div>
                                     </div>
@@ -819,8 +820,8 @@
                                 <div class="btn-wrap">
                                       <button class="btn btn-primary"
                                               type="submit"
-                                              [ngClass]="{'disabled': (!contactForm.valid || (mobileNumber ? mobileNumber.value.search('0{10}|1{10}|2{10}|3{10}|4{10}|5{10}|6{10}|7{10}|8{10}|9{10}') == -1: false))}"
-                                              [disabled]="!contactForm.valid || (mobileNumber ? mobileNumber.value.search('0{10}|1{10}|2{10}|3{10}|4{10}|5{10}|6{10}|7{10}|8{10}|9{10}') == -1: false)">Next
+                                              [ngClass]="{'disabled': (!contactForm.valid || (mobileNumber.value?.search('0{10}|1{10}|2{10}|3{10}|4{10}|5{10}|6{10}|7{10}|8{10}|9{10}') == -1))}"
+                                              [disabled]="!contactForm.valid || (mobileNumber.value?.search('0{10}|1{10}|2{10}|3{10}|4{10}|5{10}|6{10}|7{10}|8{10}|9{10}') == -1)">Next
                                       </button>
                                 </div>
                             </form>
