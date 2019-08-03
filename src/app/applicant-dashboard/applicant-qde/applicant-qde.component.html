@@ -610,6 +610,9 @@
                                         <div *ngIf="(alternateEmailId.touched || alternateEmailId.dirty) && alternateEmailId.invalid" class="invalid-feedback">
                                           <div *ngIf="alternateEmailId.errors?.pattern">{{errors.contactDetails.alternateEmail.invalid}}</div>
                                         </div>
+
+                                        <div  class="invalid-feedback" *ngIf="(alternateEmailId.value == preferEmailId.value)">{{errors.contactDetails.alternateEmail.sameEmail}}</div>
+
                                     </div>
   
                                     <div class="form-group typ-mob">
@@ -755,7 +758,8 @@
                                             <span class="optional">Optional</span>
                                             <div *ngIf="alternateResidenceNumber2.touched  && alternateResidenceNumber2.invalid" class="invalid-feedback">
                                               <div *ngIf="alternateResidenceNumber2.errors?.pattern">{{errors.contactDetails.alternateResidenceNumber1.invalid}}</div>
-                                          </div>
+                                            </div>
+                                            <div  class="invalid-feedback" *ngIf="(alternateResidenceNumber2 == alternateResidenceNumberStd1)">{{errors.contactDetails.residenceNumber.sameNumber}}</div>
                                           </div>
                                         <span class="alternate-data">
                                           <a href="javascript:void(0);"
@@ -768,7 +772,7 @@
                                 <div class="btn-wrap">
                                       <button class="btn btn-primary"
                                               type="submit"
-                                              [ngClass]="{'disabled': (!contactForm.valid) || (altMobileNo.value == mobileNumber.value)}"
+                                              [ngClass]="{'disabled': (!contactForm.valid) || (altMobileNo.value == mobileNumber.value) || (alternateEmailId.value == preferEmailId.value) || (alternateResidenceNumber2.value == alternateResidenceNumberStd1.value)}"
                                               [disabled]="!contactForm.valid">Next
                                       </button>
                                 </div>
@@ -796,7 +800,7 @@
                                     [(ngModel)]="otp"
                                     fieldFill>
                                     <label for="otp">OTP</label>
-                                    <a  href="javascript:void(0);" (click)="resendOTP()"> <div class="pull-right">Resend OTP</div> </a>
+                                    <a  href="javascript:void(0);" (click)="resendOTP()"> <div class="pull-right resend_otp_size">Resend OTP</div> </a>
                                 </div>
                             </div>
                             <div class="btn-wrap">

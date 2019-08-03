@@ -67,13 +67,17 @@ export class UtilService {
   
     this.qdehttpService.longLiveAuthenticate(data).subscribe(
       res => {
-        console.log(res);
+        console.log("response");
+        console.log("login-response: ",res);
+
         localStorage.setItem("token", res["token"] ? res["token"] : "");
 
         this.router.navigate(['/setPin']);
 
       },
       error => {
+        console.log("error-response");
+
         console.log(error);
       }
     );

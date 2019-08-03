@@ -35,7 +35,8 @@ export const errors: any = {
       invalid: "Invalid Email ID"
     },
     alternateEmail: {
-      invalid: "Invalid Email ID"
+      invalid: "Invalid Email ID",
+      sameEmail: "Email ID's are same, please use different email"
     },
     prefferedMobile: {
       required: "10 digit mobile number is mandatory",
@@ -56,7 +57,8 @@ export const errors: any = {
     },
     residenceNumber: {
       required: "Residence number is mandatory",
-      invalid: "Invalid Residence number/Alphabets and Special Characters not allowed"
+      invalid: "Invalid Residence number/Alphabets and Special Characters not allowed",
+      sameNumber: "Residence numbers are same, please use different numbers"
     },
     alternateResidenceNumber1:{
       invalid:"Invalid Residence number/Alphabets and Special Characters not allowed"

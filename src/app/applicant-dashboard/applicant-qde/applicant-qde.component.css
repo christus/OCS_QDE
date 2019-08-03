@@ -234,3 +234,15 @@ visibility: visible;
 .pull-right{
     float: right;
 }
+
+.resend_otp_size {
+  font-size: 15px;  
+}
+
+.timer {
+    font-size: 2.5em;
+    padding: 10px;
+    text-align: center;
+    margin: 0 auto;
+    background: #ccc;
+  }
