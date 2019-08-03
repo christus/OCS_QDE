@@ -604,7 +604,7 @@
                                 <div class="form-wrap">
                                     <div class="form-group" [ngClass]="{'prefer': isAlternateEmailId}">
   
-                                        <input [readonly]="isReadOnly" type="text"
+                                        <input [readonly]="isReadOnly" type="email"
                                               class="form-control"
                                               id="pref-email"
                                               data-validation-attr="email"
@@ -631,7 +631,7 @@
                                           </div>
                                     </div>
                                     <div class="form-group" [ngClass]="{'typ-alternative': !isAlternateEmailId}">
-                                        <input [readonly]="isReadOnly" type="text"
+                                        <input [readonly]="isReadOnly" type="email"
                                               class="form-control"
                                               id="alter-email"
                                               data-validation-attr="email01"
@@ -1850,7 +1850,7 @@
                                       </div>
                                   </div>
                                   <div class="form-group typ-optional">
-                                      <input [readonly]="isReadOnly" type="text" class="form-control" id="off-email"
+                                      <input [readonly]="isReadOnly" type="email" class="form-control" id="off-email"
                                         required
                                         [(ngModel)]="qde.application.applicants[coApplicantIndex].officialCorrespondence.officeEmailId"
                                         pattern="{{regexPattern.email}}"
@@ -2601,7 +2601,7 @@
                                       </div>
                                   </div>
                                   <div class="form-group last">
-                                      <input [readonly]="isReadOnly"    type="text"
+                                      <input [readonly]="isReadOnly"    type="email"
                                                 class="form-control"
                                                 id="ofc-email"
                                                 required
