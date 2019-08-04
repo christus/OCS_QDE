@@ -136,3 +136,7 @@ a, a:visited {
 .leadLogin .filters {
   text-align: left;
 }
+.leadLogin .form-group {
+  margin: 0;
+}
+
