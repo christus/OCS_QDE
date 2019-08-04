@@ -20,10 +20,10 @@
                 </h3>
 
                 <a routerLink="/" class="btn btn-default">Home</a>
-                <a *ngIf="isTBMLoggedIn && isEligibilityForReview" class="btn btn-default" [routerLink]="['/review-eligibility', applicationId]">Review Eligibility</a>
-                <a *ngIf="isViewFormVisible && applicationId == null" class="btn btn-default view-form">View Form</a>
+                <a *ngIf="isTBMLoggedIn && isEligibilityForReview" class="space btn btn-default" [routerLink]="['/review-eligibility', applicationId]">Review Eligibility</a>
+                <a *ngIf="isViewFormVisible && applicationId == null" class="space btn btn-default view-form">View Form</a>
                 <a [routerLink]="['/view-form', applicationId]" *ngIf="isViewFormVisible && applicationId != null" class="btn btn-default view-form">View Form</a>
-                <a (click)="logout()" *ngIf="isLogoutVisible" class="btn btn-default logout">Logout</a>
+                <a (click)="logout()" *ngIf="isLogoutVisible" class="space btn btn-default logout">Logout</a>
             </div>
         </div>
         <ul class="main-nav" *ngIf="isMenuBarShown">
