@@ -87,14 +87,18 @@ export class LeadsListComponent implements OnInit {
     return this.utilService.clearCredentials();
   }
   logout() {
-    this.utilService.logout().subscribe(
-      res => {
-        this.utilService.clearCredentials();
-      },
-      error => {
-        this.utilService.clearCredentials();
-      }
-    );
+
+    this.utilService.clearCredentials();
+
+
+    // this.utilService.logout().subscribe(
+    //   res => {
+    //     this.utilService.clearCredentials();
+    //   },
+    //   error => {
+    //     this.utilService.clearCredentials();
+    //   }
+    // );
   }
 
 
