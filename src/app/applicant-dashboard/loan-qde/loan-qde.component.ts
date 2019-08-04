@@ -17,7 +17,7 @@ import { Subscription } from 'rxjs';
 
 interface Item {
   key: string,
-  value: number
+  value: number | string
 }
 
 
@@ -232,7 +232,10 @@ export class LoanQdeComponent implements OnInit {
   isTBMLoggedIn: boolean;
   isLoanRouteModal: boolean = false;
   isClssEligibleModal:boolean = false;
-  isClssNotEligibleModal:boolean = false
+  isClssNotEligibleModal:boolean = false;
+
+  allApplicantsItem: Array<Item> = [];
+  selectedApplicant: Item = {key: '', value: ''};
 
   constructor(
     private renderer: Renderer2,
@@ -409,6 +412,9 @@ export class LoanQdeComponent implements OnInit {
           if(result.application.loanDetails.property.city) {
             this.cityState = result.application.loanDetails.property.city + " "+ result.application.loanDetails.property.state;
           }
+
+          this.allApplicantsItem = this.qde.application.applicants.map(val => ({key: val.personalDetails.firstName+" "+val.personalDetails.lastName, value: val.applicantId}));
+          this.selectedApplicant = this.allApplicantsItem[0];
         });
       } else {
         this.qde = this.qdeService.getQde();

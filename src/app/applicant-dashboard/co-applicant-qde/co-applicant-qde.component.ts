@@ -305,6 +305,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
   isCurrentAddressFromMainApplicant: boolean = true;
   isPermanentAddressFromMainApplicant: boolean = true;
 
+  isValidPan: boolean;
+  tempOldPanNumber: string;
+
   constructor(private renderer: Renderer2,
               private route: ActivatedRoute,
               private router: Router,
@@ -726,31 +729,78 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       this.qde.application.applicants[this.coApplicantIndex].pan.panNumber = form.value.pan;
       this.qde.application.applicants[this.coApplicantIndex].pan.docType = form.value.docTypeindividual.value;
       this.qde.application.applicants[this.coApplicantIndex].pan.docNumber = form.value.docNumber;
+      if(this.isValidPan == false || this.isValidPan == null) {
+        this.checkPanValidSub = this.qdeHttp.checkPanValid(this.qdeService.getFilteredJson({actualPanNumber: form.value.pan})).subscribe((response) => {
   
-      this.checkPanValidSub = this.qdeHttp.checkPanValid(this.qdeService.getFilteredJson({actualPanNumber: form.value.pan})).subscribe((response) => {
+          // response["ProcessVariables"]["status"] = true; // Comment while deploying if service is enabled false
+    
+          if(response["ProcessVariables"]["status"] == true && response['ProcessVariables']['isValidPan'] == true) { // Boolean to check from nsdl website whether pan is valid or not 
+    
+            this.qde.application.applicants[this.coApplicantIndex].pan.panVerified = this.isValidPan = response['ProcessVariables']['isValidPan'];
   
-        response["ProcessVariables"]["status"] = true; // Comment while deploying if service is enabled false
-  
-        if(response["ProcessVariables"]["status"]) { // Boolean to check from nsdl website whether pan is valid or not 
-  
-          this.qde.application.applicants[this.coApplicantIndex].pan.isValid = true;
-          this.qde.application.applicants[this.coApplicantIndex].pan.errorMessage = "";
-  
-          let processVariables = response["ProcessVariables"];//need to check its needed for non individual
-          this.qde.application.applicants[this.coApplicantIndex].personalDetails.firstName = processVariables["firstName"];
-          this.qde.application.applicants[this.coApplicantIndex].personalDetails.lastName = processVariables["lastName"];
-          if(processVariables["applicantTitleId"] > 0) {
-            this.qde.application.applicants[this.coApplicantIndex].personalDetails.title  = processVariables["applicantTitleId"];
+            let processVariables = response["ProcessVariables"];//need to check its needed for non individual
+            this.qde.application.applicants[this.coApplicantIndex].personalDetails.firstName = processVariables["firstName"];
+            this.qde.application.applicants[this.coApplicantIndex].personalDetails.lastName = processVariables["lastName"];
+            if(processVariables["applicantTitleId"] > 0) {
+              this.qde.application.applicants[this.coApplicantIndex].personalDetails.title  = processVariables["applicantTitleId"];
+            }
+            this.createOrUpdatePanDetailsSub = this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
+          // If successful
+            if(response["ProcessVariables"]["status"] == true) {
+              let result = this.parseJson(response["ProcessVariables"]["response"]);
+    
+              console.log("GET141414", result);
+              // this.qde.application.ocsNumber = result["application"]["ocsNumber"];
+              // this.qde.application.applicationId = result["application"]["applicationId"];
+             
+              this.qde.application.applicationId = result['application']['applicationId'];
+    
+              // let isApplicantPresent:boolean = false;
+    
+              if((result["application"]["applicants"]).length > 0) {
+                // isApplicantPresent = applicants[this.applicantIndex].hasOwnProperty('applicantId');
+                // this.qde.application.applicants[this.coApplicantIndex].applicantId =  applicants[this.coApplicantIndex]["applicantId"];
+                // this.cds.changePanSlide(true);
+                // this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant/'+this.coApplicantIndex]);
+    
+                let applicationId = result['application']['applicationId'];
+                this.setStatusApiSub = this.qdeHttp.setStatusApi( applicationId, environment['status']['QDECREATED']).subscribe((response) => {
+                  if(response["ProcessVariables"]["status"] == true) { 
+                    this.cds.changePanSlide(true);
+                    this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant/'+this.coApplicantIndex]);
+                  }
+                });
+    
+              } else {
+                // this.cds.changePanSlide(true);
+                this.tabSwitch(2);
+              }
+            } else {
+              this.panErrorCount++;
+              // Throw Invalid Pan Error
+              }
+            }, (error) => {
+              console.log('error ', error);
+              // alert("error"+error);
+              // Throw Request Failure Error
+            });
+        } else {
+            this.qde.application.applicants[this.coApplicantIndex].pan.panVerified = false;
+            this.isValidPan = false;
           }
-          this.createOrUpdatePanDetailsSub = this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
+        });
+      }
+      // When Pan Not Verified
+      else {
+        this.createOrUpdatePanDetailsSub = this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful
-          if(response["ProcessVariables"]["status"]) {
+          if(response["ProcessVariables"]["status"] == true) {
             let result = this.parseJson(response["ProcessVariables"]["response"]);
   
             console.log("GET141414", result);
             // this.qde.application.ocsNumber = result["application"]["ocsNumber"];
             // this.qde.application.applicationId = result["application"]["applicationId"];
-           
+            
             this.qde.application.applicationId = result['application']['applicationId'];
   
             // let isApplicantPresent:boolean = false;
@@ -782,11 +832,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
             // alert("error"+error);
             // Throw Request Failure Error
           });
-      } else {
-          this.qde.application.applicants[this.coApplicantIndex].pan.isValid = false;
-          this.qde.application.applicants[this.coApplicantIndex].pan.errorMessage = "Error in pan Details";
-        }
-      });
+      }
+
     }
   }
 
@@ -809,7 +856,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       this.qde.application.applicants[this.coApplicantIndex].pan.docType = form.value.docType.value;
       this.qde.application.applicants[this.coApplicantIndex].pan.docNumber = form.value.docNumber;
   
-      this.checkPanValidSub2 = this.qdeHttp.checkPanValid(this.qdeService.getFilteredJson({actualPanNumber: form.value.pan})).subscribe((response) => {
+      if(this.isValidPan == false || this.isValidPan == null) {
+        this.checkPanValidSub2 = this.qdeHttp.checkPanValid(this.qdeService.getFilteredJson({actualPanNumber: form.value.pan})).subscribe((response) => {
   
           let processVariables = response["ProcessVariables"];//need to check its needed for non individual
           this.qde.application.applicants[this.coApplicantIndex].personalDetails.firstName = processVariables["firstName"];
@@ -819,13 +867,11 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
           }
           this.selectedTitle = this.getCoApplicantTitle(processVariables["applicantTitleId"]);
   
-         response["ProcessVariables"]["status"] = true; // Comment while deploying if service is enabled false
+        //  response["ProcessVariables"]["status"] = true; // Comment while deploying if service is enabled false
   
-          if(response["ProcessVariables"]["status"]) { // Boolean to check from nsdl website whether pan is valid or not 
+          if(response["ProcessVariables"]["status"] && response['ProcessVariables']['isValidPan'] == true) { // Boolean to check from nsdl website whether pan is valid or not 
   
-            this.qde.application.applicants[this.coApplicantIndex].pan.isValid = true;
-            this.qde.application.applicants[this.coApplicantIndex].pan.errorMessage = "";
-  
+            this.qde.application.applicants[this.coApplicantIndex].pan.panVerified = true;
   
             this.createOrUpdatePanDetailsSub2 = this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
   
@@ -867,10 +913,51 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
               // Throw Request Failure Error
             }); 
           } else {
-            this.qde.application.applicants[this.coApplicantIndex].pan.isValid = false;
-            this.qde.application.applicants[this.coApplicantIndex].pan.errorMessage = "Error in pan Details";
+            this.isValidPan = false;
+            this.qde.application.applicants[this.coApplicantIndex].pan.panVerified = false;
           }
-      });
+        });
+      } else {
+        this.createOrUpdatePanDetailsSub2 = this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
+  
+          console.log(response)
+
+          // If successfull
+          if(response["ProcessVariables"]["status"]) {
+            
+            let result = this.parseJson(response["ProcessVariables"]["response"]);
+
+
+            this.qde.application.applicationId = result['application']['applicationId'];
+
+            // let isApplicantPresent:boolean = false;
+
+            if((result["application"]["applicants"]).length > 0) {
+              // isApplicantPresent = applicants[this.applicantIndex].hasOwnProperty('applicantId');
+              // this.qde.application.applicants[this.coApplicantIndex].applicantId =  applicants[this.coApplicantIndex]["applicantId"];
+              let applicationId = result['application']['applicationId'];
+              this.setStatusApiSub2 = this.qdeHttp.setStatusApi( applicationId, environment.status.QDECREATED).subscribe((response) => {
+                if(response["ProcessVariables"]["status"] == true) { 
+                  this.cds.changePanSlide2(true);
+                  this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant/'+this.coApplicantIndex]);
+                }
+              });
+
+            }else {
+              // this.cds.changePanSlide2(true);
+              // this.tabSwitch(12);
+              this.goToNextSlide(swiperInstance);
+            }
+          } else {
+            this.panErrorCount++;
+            // Throw Invalid Pan Error
+          }
+        }, (error) => {
+          console.log('error ', error);
+          // alert("error"+error);
+          // Throw Request Failure Error
+        });
+      }
     }
   }
 
@@ -2018,24 +2105,23 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       // Incoming from create in Individual Pan
       if(this.panslide == true && this.qde.application.applicants[this.coApplicantIndex].isIndividual == true) {
         console.log('COAPPLICANTINDEX: ', this.coApplicantIndex);
-        this.tabSwitch(1);
-        this.panSlider2.setIndex(2);
+        // this.tabSwitch(1);
+        this.tabSwitch(2);
+        // this.panSlider2.setIndex(2);
       }
       // Incoming from create in Non Individual Pan
       else if(this.panslide2 == true && this.qde.application.applicants[this.coApplicantIndex].isIndividual == false) {
-        this.tabSwitch(11);
-        this.panSlider4.setIndex(1);
+        // this.tabSwitch(11);
+        // this.panSlider4.setIndex(1);
+        this.tabSwitch(12);
       } else if(this.panslide == false && this.qde.application.applicants[this.coApplicantIndex].isIndividual == true) {
-        // this.tabSwitch(1);
+        this.tabSwitch(1);
         this.panSlider2.setIndex(1);
       }
       else if(this.panslide2 == false && this.qde.application.applicants[this.coApplicantIndex].isIndividual == false) {
         this.tabSwitch(11);
         this.panSlider4.setIndex(0);
       }
-
-
-      
 
       // So that route is now in edit mode only
       this.cds.changePanSlide(false);
@@ -2491,5 +2577,14 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
 
   RegExp(param) {
     return RegExp(param);
+  }
+
+  keyUpPanNumber(event: Event) {
+    console.log("TEMPLD", this.tempOldPanNumber);
+    if(event['target']['value'].trim() != '' && event['target']['value'] == this.tempOldPanNumber) {
+      this.isValidPan = true;
+    } else {
+      this.isValidPan = null;
+    }
   }
 }

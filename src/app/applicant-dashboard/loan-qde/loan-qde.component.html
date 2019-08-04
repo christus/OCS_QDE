@@ -339,6 +339,12 @@
                       <div class="swiper-wrapper">
                         <div class="swiper-slide">
                           <div class="title-wrap">
+                              <h4 class="title">Select an Applicant</h4>
+                              <p class="note"></p>
+                          </div>
+                        </div>
+                        <div class="swiper-slide">
+                          <div class="title-wrap">
                               <h4 class="title">Enter total number <span class="cm-line-break"></span>of live loans</h4>
                               <p class="note">For applicant & all co-applicants together</p>
                           </div>
@@ -365,32 +371,49 @@
                   (slideNextTransitionStart)="slideNextTransitionStart(existingLoan1)" #existingLoan2="ngxSwiper">
                   <div class="swiper-wrapper">
 
-                      <div class="swiper-slide">
-                          <form class="bs-form" #liveLoans="ngForm" 
-                          (ngSubmit)="submitLiveLoans(liveLoans, existingLoan2)">
-                            <div class="form-wrap">
-                              <div class="form-group">
-                                <div class="form-group typ-range">
-                                    <!-- <span class="control-title">Number of years in current residence</span>
-                                    <input type="number"
-                                            name="numberOfYearsInCurrentResidence"
-                                            class="form-control"
-                                            [ngModel]="value[0]"
-                                            (ngModelChange)="valuechange($event, 0)" /> -->
-                                    <ng5-slider class="commSlider" [(ngModel)]="liveLoan" ngModel name="liveLoans" 
-                                    [options]="liveLoanOption"></ng5-slider>
-                                </div>
+                    <!-- Select an application -->
+                    <div class="swiper-slide">
+                      <div class="form-wrap">
+                        <div class="form-group">
+                          <kendo-dropdownlist [readonly]="isTBMLoggedIn" 
+                                              class="form-control"
+                                              name="selectApplicant"
+                                              [data]="allApplicantsItem" 
+                                              textField="key" 
+                                              valueField="value" 
+                                              [(ngModel)]="selectedApplicant">
+                          </kendo-dropdownlist>
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <div class="swiper-slide">
+                        <form class="bs-form" #liveLoans="ngForm" 
+                        (ngSubmit)="submitLiveLoans(liveLoans, existingLoan2)">
+                          <div class="form-wrap">
+                            <div class="form-group">
+                              <div class="form-group typ-range">
+                                  <!-- <span class="control-title">Number of years in current residence</span>
+                                  <input type="number"
+                                          name="numberOfYearsInCurrentResidence"
+                                          class="form-control"
+                                          [ngModel]="value[0]"
+                                          (ngModelChange)="valuechange($event, 0)" /> -->
+                                  <ng5-slider class="commSlider" [(ngModel)]="liveLoan" ngModel name="liveLoans" 
+                                  [options]="liveLoanOption"></ng5-slider>
                               </div>
                             </div>
-                            
-                            <div  *ngIf="liveLoan == 0" class="btn-wrap" >
-                              <button  type="submit" class="btn btn-primary">Save</button>
                           </div>
-                          <div  *ngIf="liveLoan != 0" class="btn-wrap" >
-                            <button  type="submit" class="btn btn-primary">Next</button>
-                          </div>
-                          </form>
+                          
+                          <div  *ngIf="liveLoan == 0" class="btn-wrap" >
+                            <button  type="submit" class="btn btn-primary">Save</button>
                         </div>
+                        <div  *ngIf="liveLoan != 0" class="btn-wrap" >
+                          <button  type="submit" class="btn btn-primary">Next</button>
+                        </div>
+                        </form>
+                      </div>
 
                     <div class="swiper-slide">
                       <form class="bs-form" #loanProvider="ngForm"

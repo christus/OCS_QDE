@@ -179,7 +179,7 @@ export class DocumentUploadComponent implements OnInit {
   isTabDisabled: boolean = true;
   driveLoc: any;
   getQdeDataSub: Subscription;
-  applicantIndex: number;
+  applicantIndex: number = 0;
   applicantId: string;
 
   constructor(
@@ -251,9 +251,21 @@ export class DocumentUploadComponent implements OnInit {
           // else{
           //   this.cds.setIsMainTabEnabled(true);
           // }
-            this.applicationId = this.qde.application.applicationId;
-            this.cds.changeApplicationId(this.qde.application.applicationId);
-            this.cds.enableTabsIfStatus1(this.qde.application.status);
+
+          this.qde = result;
+          this.qdeService.setQde(this.qde);
+
+          if(result != null) {
+            this.applicantIndex = result.application.applicants.findIndex(v => v.applicantId == this.applicantId);
+          }
+    
+          const applicants = this.qde.application.applicants;
+
+          this.recurvLovCalls(applicants);
+
+          this.applicationId = this.qde.application.applicationId;
+          this.cds.changeApplicationId(this.qde.application.applicationId);
+          this.cds.enableTabsIfStatus1(this.qde.application.status);
 
         });
       }
@@ -276,45 +288,9 @@ export class DocumentUploadComponent implements OnInit {
     });
 
     this.qdeService.qdeSource.subscribe(val => {
-      this.qde = val;
-
-      if(val != null) {
-        this.applicantIndex = val.application.applicants.findIndex(v => v.applicantId == this.applicantId);
+      if(val) {
+        this.qde = val;
       }
-
-      const applicants = this.qde.application.applicants;
-      applicants.forEach((applicant, index) => {
-        const applicantId = applicant["applicantId"];
-        this.driveLoc = environment.host + environment.driveLocation;
-
-
-        const incomeDetails = applicant.incomeDetails;
-        let profileId = 1;
-        if (applicant.occupation.occupationType != "2") {
-          profileId = 2;
-        }
-        const data = {
-          isFinanceApplicant: incomeDetails.incomeConsider,
-          assessmentId: parseInt(incomeDetails.assessmentMethodology, 10),
-          profileId: profileId
-        };
-
-        this.getApplicableDocuments(data, (applicant['documents'] != null) ? applicant['documents'] : [], index);
-
-        // Ends here
-
-        if (applicant["isMainApplicant"]) {
-          this.mainApplicantId = applicantId;
-        } else {
-
-          if (applicants.length - 1 === this.coApplicants.length) {
-
-          } else {
-            this.coApplicants.push(applicant);
-          }
-          
-        }
-      });
     });
 
     this.cds.isTBMLoggedIn.subscribe(val => {
@@ -950,7 +926,7 @@ export class DocumentUploadComponent implements OnInit {
       response => {
         const processVariables = response["ProcessVariables"];
         if (response["Error"] === "0" && processVariables["status"]) {
-          console.log(response);
+          console.log("getApplicableDocuments: ", response);
 
           const res = JSON.parse(processVariables["response"]);
 
@@ -960,6 +936,7 @@ export class DocumentUploadComponent implements OnInit {
           this.idProofDocumnetType = res.IdProof || [];
           this.selectedIdProof.push(this.idProofDocumnetType[0]);
 
+          console.log("AddressProof: ", res.AddressProof);
           this.addressProofDocumnetType = res.AddressProof || [];
           this.selectedAddressProof.push(this.addressProofDocumnetType[0]);
 
@@ -1107,5 +1084,45 @@ export class DocumentUploadComponent implements OnInit {
 
   openLink(url) {
     window.open(url, '_blank');
+  }
+
+  recurvLovCalls(applicants, index=0) {
+    const applicantId = applicants[index]["applicantId"];
+    this.driveLoc = environment.host + environment.driveLocation;
+
+
+    const incomeDetails = applicants[index].incomeDetails;
+    let profileId = 1;
+    if (applicants[index].occupation.occupationType != "2") {
+      profileId = 2;
+    }
+    const data = {
+      isFinanceApplicant: incomeDetails.incomeConsider,
+      assessmentId: parseInt(incomeDetails.assessmentMethodology, 10),
+      profileId: profileId
+    };
+
+    console.log("isFinanceApplicant: ", data);
+
+    
+    this.getApplicableDocuments(data, (applicants[index]['documents'] != null) ? applicants[index]['documents'] : [], index);
+
+    // Ends here
+
+    if (applicants[index]["isMainApplicant"]) {
+      this.mainApplicantId = applicantId;
+    } else {
+
+      if (length - 1 === this.coApplicants.length) {
+
+      } else {
+        this.coApplicants.push(applicants);
+      }
+      
+    }
+
+    if(applicants[index+1] != null) {
+      this.recurvLovCalls(applicants, index+1);
+    }
   }
 }

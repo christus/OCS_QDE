@@ -83,8 +83,8 @@ export interface Pan {
     panImage ?: string;
     docType ?: string; // As of new design
     docNumber ?: string; // As of new design
-    isValid  ?: boolean;
-    errorMessage ?: string;
+    panVerified : boolean;
+    // errorMessage ?: string;
     imageId? : string;
     // fileName? : string;
     // fileSize? : string;

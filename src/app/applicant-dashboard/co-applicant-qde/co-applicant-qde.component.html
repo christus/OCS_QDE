@@ -181,6 +181,7 @@
                                                             pattern="{{regexPattern.pan}}"      
                                                             (ngModelChange)="qde.application.applicants[coApplicantIndex].pan.panNumber = $event.toUpperCase()"
                                                             name="pan"
+                                                            (keyup)="keyUpPanNumber($event)"
                                                             #panNumber="ngModel"
                                                             fieldFill
                                                             spellcheck="false"
@@ -192,6 +193,7 @@
                                                         <div *ngIf="panNumber.errors?.minlength || panNumber.errors?.maxlength">{{errors.pan.length}}</div>
                                                     </div>
                                                     <div *ngIf="panErrorCount >= 3" class="invalid-feedback">{{errors.pan.after3Attemps}}</div>
+                                                    <div class="redalert" *ngIf="panNumber.touched && panNumber.valid && RegExp(regexPattern.pan).test(panNumber.value) && isValidPan == false">Invalid PAN</div>
                                                 </div>
                                                 <div class="form-group">
 
@@ -682,7 +684,7 @@
                                               (click)="addRemoveMobileNumberField()">+ Add</a> alternate Mobile number
                                         </span>
   
-                                        <div class="redalert" *ngIf="RegExp('0{10}|1{10}|2{10}|3{10}|4{10}|5{10}|6{10}|7{10}|8{10}|9{10}').test(mobileNumber.value)">{{errors.contactDetails.prefferedMobile.invalid}}</div>
+                                        <div class="redalert" *ngIf="RegExp('0{10}|1{10}|2{10}|3{10}|4{10}|5{10}|6{10}|7{10}|8{10}|9{10}').test(mobileNumber.value)">{{errors.contactDetails.prefferedMobile.wrong}}</div>
 
                                         <div *ngIf="(mobileNumber.touched || mobileNumber.dirty) && mobileNumber.invalid" class="invalid-feedback">
                                           <!-- <div *ngIf="mobileNumber.errors?.required">{{errors.contactDetails.prefferedMobile.required}}</div> -->
@@ -715,7 +717,7 @@
                                               tabindex="8"
                                               (click)="addRemoveMobileNumberField()">- Remove</a> alternate Mobile no
                                         </span>
-                                        <div class="redalert" *ngIf="RegExp('0{10}|1{10}|2{10}|3{10}|4{10}|5{10}|6{10}|7{10}|8{10}|9{10}').test(altMobileNo.value)">{{errors.contactDetails.prefferedMobile.wrong}}</div>
+                                        <div class="redalert" *ngIf="RegExp('0{10}|1{10}|2{10}|3{10}|4{10}|5{10}|6{10}|7{10}|8{10}|9{10}').test(altMobileNo.value)">{{errors.contactDetails.alternateMobile.wrong}}</div>
                                         <div *ngIf="(altMobileNo.touched || altMobileNo.dirty) && altMobileNo.invalid" class="invalid-feedback">
                                           <div *ngIf="altMobileNo.errors?.pattern">{{errors.contactDetails.alternateMobile.invalid}}</div>
                                           <div *ngIf="altMobileNo.errors?.minlength">{{errors.contactDetails.alternateMobile.minlength}}</div>
@@ -2143,6 +2145,7 @@
                                                           (ngModelChange)="qde.application.applicants[coApplicantIndex].pan.panNumber = $event.toUpperCase()"
                                                           #panNumber2="ngModel"
                                                           fieldFill
+                                                          (keyup)="keyUpPanNumber($event)"
                                                           spellcheck="false"
                                                           required />
                                                   <label for="pan-inpt2">Enter PAN</label>
@@ -2152,6 +2155,7 @@
                                                       <div *ngIf="panNumber2.errors?.minlength || panNumber2.errors?.maxlength">{{errors.pan.length}}</div>
                                                   </div>
                                                   <div *ngIf="panErrorCount >= 3" class="invalid-feedback">{{errors.pan.after3Attemps}}</div>
+                                                  <div class="redalert" *ngIf="panNumber2.touched && panNumber2.valid && RegExp(regexPattern.pan).test(panNumber2.value) && isValidPan == false">Invalid PAN</div>
                                               </div>
                                               <div class="form-group">
                                                 <span class="control-title">Document Type</span>
