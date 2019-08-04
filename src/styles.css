@@ -4866,8 +4866,8 @@ img {
 	left: 0;
 	right: 0;
 	text-align: center;
-	top: 0;
-	/* transform: translateY(-50%); */
+	top: 50%;
+	transform: translateY(-50%);
 }
 
 .lyt-home .form-swiper {
@@ -5604,6 +5604,7 @@ img {
 	}
 	
 }
+
 .mpinForm {
 	position: absolute;
     left: 0;
@@ -5627,4 +5628,41 @@ img {
 		border-bottom: none!important; 
 		font-size: inherit!important;
 	}
+
+
   }
+
+
+
+@media (orientation: landscape) {
+	.mobile .mob_personal_year{
+		width: 125px !important;
+	}
+	
+	.mobile .mob_current_residence {
+		width: 80px;
+	}
+
+	.mobile .lyt-home .rhs .bs-form {
+		top: 0 !important;
+		transform: none !important;
+	}
+
+	.mobile .depen-width {
+		width: 100px !important;
+	}
+
+	.mobile .mob_income_detail {
+		height: 450px;
+	}
+
+	.mobile .bs-file label {
+		height: 17.25vw;
+	}
+
+	.mobile .bs-file label span {
+		display: none;
+	}
+	
+}
+

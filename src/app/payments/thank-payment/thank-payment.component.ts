@@ -39,21 +39,21 @@ export class ThankPaymentComponent implements OnInit {
       console.log('Query params: ', this.queryParams);
       this.uniqueRefNo = (val["uniqueRefNo"] == "-1") ? "Failure": val["uniqueRefNo"];
       this.queryParams = JSON.stringify(val);
-      this.qdeHttp.executePaymentWF(this.queryParams).subscribe(response => {
-        if (
-          response["Error"] === "0" &&
-          response["ProcessVariables"]["status"] ) {
-            let applicationId = response["ProcessVariables"]["applicationId"];
+      // this.qdeHttp.executePaymentWF(this.queryParams).subscribe(response => {
+      //   if (
+      //     response["Error"] === "0" &&
+      //     response["ProcessVariables"]["status"] ) {
+      //       let applicationId = response["ProcessVariables"]["applicationId"];
 
-            this.uniqueRefNo = response["ProcessVariables"]["uniqueRefNo"];
-            let applicationStatus = "20";
-            this.setStatus(applicationId, applicationStatus);
-        } else {
-          if (response["ErrorMessage"]) {
-            alert(response["ErrorMessage"]);
-          }
-        }
-      });
+      //       this.uniqueRefNo = response["ProcessVariables"]["uniqueRefNo"];
+      //       let applicationStatus = "20";
+      //       this.setStatus(applicationId, applicationStatus);
+      //   } else {
+      //     if (response["ErrorMessage"]) {
+      //       alert(response["ErrorMessage"]);
+      //     }
+      //   }
+      // });
     });
   }
 

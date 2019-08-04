@@ -138,14 +138,16 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
   }
 
   logout() {
-    this.utilService.logout().subscribe(
-      res => {
-        this.utilService.clearCredentials();
-      },
-      error => {
-        this.utilService.clearCredentials();
-      }
-    );
+    this.utilService.clearCredentials();
+
+    // this.utilService.logout().subscribe(
+    //   res => {
+    //     this.utilService.clearCredentials();
+    //   },
+    //   error => {
+    //     this.utilService.clearCredentials();
+    //   }
+    // );
   }
 
   ngOnDestroy() {

@@ -485,7 +485,7 @@
                                                         </div>
     
                                                         <div class="col4">
-                                                            <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control"
+                                                            <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="mob_personal_year form-control"
                                                             [data]="dobYears"
                                                             textField="key"
                                                             valueField="value"
@@ -1036,7 +1036,7 @@
                                       <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                             type="number"
                                               name="numberOfYearsInCurrentResidence"
-                                              class="form-control"
+                                              class="form-control mob_current_residence"
                                               [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.numberOfYearsInCurrentResidence"
                                               tabindex="12"
                                               min="0"
@@ -1317,7 +1317,7 @@
                                                           tabindex="1"
                                                           maxlength="1"
                                                           oninput="this.value=this.value.slice(0,this.maxLength)"
-                                                          class="form-control"
+                                                          class="depen-width form-control"
                                                           [(ngModel)]="qde.application.applicants[applicantIndex].familyDetails.numberOfDependents" />
                                                   <ng5-slider class="commSlider" [(value)]="qde.application.applicants[applicantIndex].familyDetails.numberOfDependents" [options]="familyOptions"></ng5-slider>
                                               </div>
@@ -1414,7 +1414,7 @@
                                                             name="motherMaidenName"
                                                             fieldFill
                                                             pattern="{{regexPattern.name}}" />
-                                                          <label for="maiden-name" >Mother's maiden name</label>
+                                                          <label style="font-size: 26px;" for="maiden-name" >Mother's maiden name</label>
                                                   <div *ngIf="motherMaiden.touched && motherMaiden.invalid" class="invalid-feedback">
                                                       <!-- <div *ngIf="motherMaiden.errors?.required">{{errors.familyDetails.motherMaiden.required}}</div> -->
                                                       <div *ngIf="motherMaiden.errors?.pattern">{{errors.familyDetails.motherMaiden.invalid}}</div>
@@ -1828,7 +1828,7 @@
   
               <div class="tab-content" [ngClass]="{'active': (activeTab == 9)}">
                     <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(incomeSlider2)"></a>
-                    <div class="lyt-tabs">
+                    <div class="lyt-tabs mob_income_detail">
                         <div class="lhs">
                             <div  class="swiper-container form-swiper"
                                   [swiper]="lhsConfig"

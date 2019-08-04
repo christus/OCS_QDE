@@ -15,8 +15,9 @@
             android:name="com.icici.hfc.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBarLaunch"
-            android:screenOrientation="portrait"
+            android:screenOrientation="landscape"
             android:launchMode="singleTask">
+            <!--android:screenOrientation="portrait"-->
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -2321,7 +2321,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
         this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
           // If successful
           if(response["ProcessVariables"]["status"] == true) {
-            alert("Switch to tab 1");
+            // alert("Switch to tab 1");
             this.tabSwitch(1);
           }
         });

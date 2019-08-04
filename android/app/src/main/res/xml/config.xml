@@ -23,6 +23,11 @@
   </feature>
 
 
+  <feature name="Keyboard">
+    <param name="android-package" value="org.apache.cordova.labs.keyboard.Keyboard" onload="true"/>
+  </feature>
+
+
   <feature name="UniqueDeviceID">
     <param name="android-package" value="hu.dpal.phonegap.plugins.UniqueDeviceID"/>
   </feature>

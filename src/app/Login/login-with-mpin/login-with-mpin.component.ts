@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
 
@@ -13,12 +13,15 @@ export class LoginWithMPINComponent implements OnInit {
   userName = "";
   password = "";
 
+  values = '';
+
   mPin = "";
   mPin1 = "";
   mPin2 = "";
   mPin3 = "";
   mPin4 = "";
 
+  @ViewChild('mPin') input:ElementRef; 
 
 
   constructor(private router: Router,
@@ -29,6 +32,22 @@ export class LoginWithMPINComponent implements OnInit {
 
   forgotPin() {
     this.router.navigate(["/forgotPin"]);
+  }
+
+
+  onKeyUp(event, maxlength) {
+    this.values = event.target.value;
+    console.log(this.values);
+
+    let element = event.srcElement.nextElementSibling; // get the sibling element
+
+
+    if (this.values.length <= maxlength) {
+      if (this.input)
+        element.focus();
+      else
+        element.blur();
+    }
   }
 
   login() {

@@ -2363,7 +2363,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
         this.createOrUpdatePanDetailsSub3 = this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
           // If successful
           if(response["ProcessVariables"]["status"] == true) {
-            alert("Switch to tab 1");
+            // alert("Switch to tab 1");
             this.tabSwitch(1);
           }
         });

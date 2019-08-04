@@ -42,10 +42,10 @@ export class UtilService {
   clearCredentials() {
     localStorage.removeItem('token');
 
-    // if(this.isMobile) {
-    //   this.navigateToLoginWithMpin();
-    //   return;
-    // }   
+    if(this.isMobile) {
+      this.navigateToLoginWithMpin();
+      return;
+    }   
     this.navigateToLogin();
   }
 
