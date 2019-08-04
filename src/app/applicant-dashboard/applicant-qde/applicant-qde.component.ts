@@ -1835,13 +1835,14 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
         return;
       }
   
+      console.log(">>>>", this.qde.application.applicants[this.applicantIndex].registeredAddress);
+
       // let zipCityStateID = this.qde.application.applicants[this.applicantIndex].registeredAddress.zipCityStateID
   
       // let zipId = zipCityStateID.split(',')[0] || "";
       // let cityId = zipCityStateID.split(',')[1] || "";
       // let stateId = zipCityStateID.split(',')[2] || "";
-  
-  
+
   
       this.qde.application.applicants[this.applicantIndex].registeredAddress = {
         registeredAddress : form.value.regAdd,

@@ -20,7 +20,7 @@
                 <li class="tab-link" [ngClass]="{'disabled': isTabDisabled, 'active': (activeTab == 4), 'hide': (!applicantIndividual)}">
                   <a href="javascript:void(0);" (click)="tabSwitch(4)">Income Proof</a>
                 </li>
-                <li class="tab-link" *ngIf="this.qde.application.applicants[this.applicantIndex].occupation ? this.qde.application.applicants[this.applicantIndex].occupation.occupationType == '2': false" [ngClass]="{'disabled': isTabDisabled, 'active': (activeTab == 5), 'hide': (!applicantIndividual)}">
+                <li class="tab-link" [ngClass]="{'disabled': isTabDisabled, 'active': (activeTab == 5), 'hide': (!applicantIndividual)}">
                   <a href="javascript:void(0);" (click)="tabSwitch(5)">Banking</a>
                 </li>
                 <li class="tab-link" [ngClass]="{'disabled': isTabDisabled, 'active': (activeTab == 6), 'hide': (!applicantIndividual)}">
