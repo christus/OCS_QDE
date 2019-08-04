@@ -235,9 +235,9 @@ export class DocumentUploadComponent implements OnInit {
     this.route.params.subscribe(params => {
       // Make an http request to get the required qde data and set using setQde
       if (params.applicationId != null) {
-        if(params.applicantId != null) {
-          this.applicantId = params['applicantId'];
-        }
+        
+        this.applicantId = params['applicantId'];
+        
 
         this.getQdeDataSub = this.qdeHttp.getQdeData(params.applicationId).subscribe(response => {
           var result = JSON.parse(response["ProcessVariables"]["response"]);
@@ -1026,6 +1026,7 @@ export class DocumentUploadComponent implements OnInit {
   selectAnApplicant(applicationId, mainApplicantId, index) {
     this.applicantIndex = index;
     this.isTabDisabled = false;
+    console.log("Applicant:::", this.qde.application.applicants[this.applicantIndex]);
     console.log("idProofDocumnetType: ", this.idProofDocumnetType);
     this.router.navigate(['/document-uploads/'+applicationId+'/applicant/'+mainApplicantId], {fragment: "aadhar1"});
   }

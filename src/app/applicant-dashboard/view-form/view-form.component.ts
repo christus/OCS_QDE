@@ -668,14 +668,14 @@ export class ViewFormComponent implements OnInit, OnDestroy {
               } else {
                 this.isQdeSubmitEnabled = false;
               }
-            } 
+            }
             else {
               //For final Submit button
               if(element['incomeDetails']['incomeConsider'] == true) {
-                if( element.documents.filter(el => el['documentCategory'] == '1' || el['documentCategory'] == '3' || el['documentCategory'] =='5' || el['documentCategory'] == '6' || el['documentCategory'] == '84' || el['documentCategory'] == '85').length == 6) {
+                if( element.documents.filter(el => el['documentCategory'] == '1' || el['documentCategory'] == '3' || el['documentCategory'] =='5' || el['documentCategory'] == '84' || el['documentCategory'] == '85').length == 6) {
                   this.isFinalSubmitEnabled = true;
                 }
-                else{
+                else {
                   this.isFinalSubmitEnabled = false;
                   return true;
                 }
