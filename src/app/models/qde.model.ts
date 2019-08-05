@@ -46,6 +46,7 @@ export interface Applicant {
     revenueDetails ?: RevenueDetail;
     incomeDetails ?: IncomeDetail; // New fields added
     documents ?: Array<any>;
+    existingLoans ?: ExistingLoan
 }
 
 export interface MaritalStatus {

@@ -82,6 +82,7 @@ import { SetMpinComponent } from './Login/set-mpin/set-mpin.component';
 import { ReviewEligibilityComponent } from './applicant-dashboard/review-eligibility/review-eligibility.component';
 import { ThankPaymentEligibiltyComponent } from './payments/thank-payment-eligibilty/thank-payment-eligibilty.component';
 import { OpsModuleComponent } from './admin/ops-module/ops-module.component';
+import { NumberFormatDirective } from './directives/number-format.directive';
 
 import { UserModuleComponent } from './admin/user-module/user-module.component';
 
@@ -368,7 +369,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     ReviewEligibilityComponent,
     OpsModuleComponent,
     UserModuleComponent,
-    AdminPanelComponent
+    AdminPanelComponent,
+    NumberFormatDirective
   ],
   imports: [
     BrowserModule,

@@ -139,4 +139,5 @@ export class CommonDataService {
       this.setIsMainTabEnabled(true);
     }
   }
+
 }

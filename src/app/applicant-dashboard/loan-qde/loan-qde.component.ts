@@ -217,7 +217,7 @@ export class LoanQdeComponent implements OnInit {
   state: string;
   cityState: string;
 
-  selectedLoanProvider: string;
+  selectedLoanProvider: Item;
   loanProviderList: Array<any>;
 
   liveLoan = 0;
@@ -236,6 +236,8 @@ export class LoanQdeComponent implements OnInit {
 
   allApplicantsItem: Array<Item> = [];
   selectedApplicant: Item = {key: '', value: ''};
+  selectedApplicantName: string;
+  selectedApplicantIndex: number = 0;
 
   constructor(
     private renderer: Renderer2,
@@ -290,9 +292,7 @@ export class LoanQdeComponent implements OnInit {
       this.isReadOnly = val;
       this.options.readOnly = val;
     });
-  }
 
-  ngOnInit() {
     // this.renderer.addClass(this.select2.selector.nativeElement, 'js-select');
 
     if(this.route.snapshot.data.listOfValues) {
@@ -331,11 +331,17 @@ export class LoanQdeComponent implements OnInit {
 
     this.route.params.subscribe(params => {
 
+
+
       // Make an http request to get the required qde data and set using setQde
       const applicationId = params.applicationId;
       if (applicationId) {
+        this.qdeService.resetQde();
+        this.qde = this.qdeService.getQde();
+
         this.qdeHttp.getQdeData(applicationId).subscribe(response => {
           let result = JSON.parse(response["ProcessVariables"]["response"]);
+
 
           // All hardcoded value need to removed
           this.selectedLoanType =
@@ -380,15 +386,13 @@ export class LoanQdeComponent implements OnInit {
           if (!result.application.loanDetails.existingLoans) {
             result.application.loanDetails.existingLoans = {}; //This line need to be removed
           }
-          this.selectedLoanProvider =
-            result.application.loanDetails.existingLoans.loanProvider ||
-            this.loanProviderList[0].value;
 
-          this.liveLoan =
-            result.application.loanDetails.existingLoans.liveLoan || 0;
+          this.selectedLoanProvider = result.application.applicants[0].existingLoans.loanProvider != '' ? this.loanProviderList.find(v => v.value == result.application.applicants[0].existingLoans.loanProvider) : this.loanProviderList[0];
+          
+          this.liveLoan = result.application.applicants[0].existingLoans ? result.application.applicants[0].existingLoans.liveLoan ? result.application.applicants[0].existingLoans.liveLoan :0 :0;
 
-          this.monthlyEmiValue =
-            result.application.loanDetails.existingLoans.monthlyEmi || "";
+          this.monthlyEmiValue = result.application.applicants[0].existingLoans ? result.application.applicants[0].existingLoans.monthlyEmi ? result.application.applicants[0].existingLoans.monthlyEmi :'' :'';
+
 
           this.qde = result;
           this.cds.enableTabsIfStatus1(this.qde.application.status);
@@ -415,6 +419,8 @@ export class LoanQdeComponent implements OnInit {
 
           this.allApplicantsItem = this.qde.application.applicants.map(val => ({key: val.personalDetails.firstName+" "+val.personalDetails.lastName, value: val.applicantId}));
           this.selectedApplicant = this.allApplicantsItem[0];
+          this.selectedApplicantIndex = this.qde.application.applicants.findIndex(v => v.applicantId == this.selectedApplicant.value);
+          this.selectedApplicantName = this.qde.application.applicants[this.selectedApplicantIndex].personalDetails ? `${this.qde.application.applicants[this.selectedApplicantIndex].personalDetails['firstName']} ${this.qde.application.applicants[this.selectedApplicantIndex].personalDetails['lastName']}`: '';
         });
       } else {
         this.qde = this.qdeService.getQde();
@@ -428,6 +434,15 @@ export class LoanQdeComponent implements OnInit {
       this.isReadOnly = val;
       this.options.readOnly = val;
     });
+
+    this.qdeService.qdeSource.subscribe(val => {
+      console.log("Latest Qde: ", val);
+      this.qde = val;
+    });
+  }
+
+  ngOnInit() {
+
   }
 
   ngAfterViewInit() {}
@@ -515,7 +530,6 @@ export class LoanQdeComponent implements OnInit {
   }
 
   valuechange(newValue, valueIndex) {
-    console.log(newValue);
     this.value[valueIndex] = newValue;
   }
 
@@ -677,9 +691,11 @@ export class LoanQdeComponent implements OnInit {
         return;
       }
   
-      this.qde.application.loanDetails.existingLoans = {
-        loanProvider: this.selectedLoanProvider
-      };
+      // this.qde.application.loanDetails.existingLoans = {
+      //   loanProvider: this.selectedLoanProvider
+      // };
+
+      this.qde.application.applicants.find(v => v.applicantId == this.selectedApplicant.value).existingLoans.loanProvider = this.selectedLoanProvider.value+"";
   
       this.qdeHttp
         .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
@@ -700,6 +716,13 @@ export class LoanQdeComponent implements OnInit {
     }
   }
 
+  submitAnApplicantForExistingLoan(form: NgForm, swiperInstance?: Swiper) {
+    this.selectedApplicantIndex = this.qde.application.applicants.findIndex(v => v.applicantId == this.selectedApplicant.value);
+    let s = this.qde.application.applicants.find(v => v.applicantId == this.selectedApplicant.value);
+    this.selectedApplicantName = s.personalDetails ? `${s.personalDetails['firstName']} ${s.personalDetails['lastName']}`: '';
+    this.goToNextSlide(swiperInstance);
+  }
+
   submitLiveLoans(form: NgForm, swiperInstance?: Swiper ) {
 
     if(this.isTBMLoggedIn) {
@@ -709,10 +732,14 @@ export class LoanQdeComponent implements OnInit {
         return;
       }
   
-      this.qde.application.loanDetails.existingLoans = {
-        liveLoan: this.liveLoan
+      // this.qde.application.applicants.loanDetails.existingLoans = {
+      //   liveLoan: this.liveLoan
+      // };
+
+      this.qde.application.applicants.find(v => v.applicantId == this.selectedApplicant.value).existingLoans = {
+        liveLoan: form.value.liveLoansNumber
       };
-    
+
       this.qdeHttp
         .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
         .subscribe(
@@ -720,8 +747,7 @@ export class LoanQdeComponent implements OnInit {
             // If successful
             if (response["ProcessVariables"]["status"]) {
               console.log(this.qde.application.loanDetails.propertyType);
-              if(this.qde.application.loanDetails.existingLoans.liveLoan > 0 ){
-                
+              if(this.qde.application.applicants[this.selectedApplicantIndex].existingLoans.liveLoan > 0 ) {
                   this.goToNextSlide(swiperInstance);
               }else{                
                 alert("Loan detail process is completed.")
@@ -746,10 +772,12 @@ export class LoanQdeComponent implements OnInit {
         return;
       }
   
-      this.qde.application.loanDetails.existingLoans = {
-        monthlyEmi: this.monthlyEmiValue
-      };
-  
+      // this.qde.application.loanDetails.existingLoans = {
+      //   monthlyEmi: this.monthlyEmiValue
+      // };
+
+      this.qde.application.applicants.find(v => v.applicantId == this.selectedApplicant.value).existingLoans.monthlyEmi = this.monthlyEmiValue;
+
       this.qdeHttp
         .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
         .subscribe(
@@ -804,5 +832,19 @@ export class LoanQdeComponent implements OnInit {
   proceedToExistingLoanNotEligible() {
     this.isClssNotEligibleModal = false;
     this.tabSwitch(2);
+  }
+  
+  /*******************************************
+   * Pass "1,23,45,678" and will return number
+   *******************************************/
+  getNumberWithoutCommaFormat(x: string) : string {
+    return x.split(',').join('');
+  }
+  
+  /****************************************
+  * Is a valid Number after removing Comma
+  ****************************************/
+  isValidNumber(x) {
+    return RegExp('[0-9]').test(this.getNumberWithoutCommaFormat(x));
   }
 }

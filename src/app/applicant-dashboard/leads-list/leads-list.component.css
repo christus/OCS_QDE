@@ -140,3 +140,8 @@ a, a:visited {
   margin: 0;
 }
 
+.makeItScrollable {
+  display: block;
+  height: 98vh;
+  overflow-y: scroll;
+}
