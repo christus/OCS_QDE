@@ -113,6 +113,8 @@ export class OfflinePaymentComponent implements OnInit {
   ocsNumber: string;
   applicationId: string;
   loanProviderList: Array<any>;
+  isChequeProceedModal:boolean = false;
+  isOnlineProceedModal:boolean = false;
 
 
   fragments = ["offlinepayment1", "offlinepayment2"];
@@ -251,7 +253,7 @@ export class OfflinePaymentComponent implements OnInit {
   offline(){
     // Another APi call to submit offline payment details
     this.qdeHttp.setStatusApi(this.applicationId, statuses['Cheque Received']).subscribe(res => {}, err => {});
-    this.router.navigate(["/leads"])
+    this.isChequeProceedModal = true;
 
   }
 
@@ -262,9 +264,13 @@ export class OfflinePaymentComponent implements OnInit {
   this.qdeHttp.loginFee(parseInt(this.applicationId)).subscribe(res => {
     this.totalFee = res['ProcessVariables']['totalAmount'];
     this.qdeHttp.paymentGateway(this.applicationId,""+this.totalFee).subscribe(res => {
+      if(res['ProcessVariables']['status'] == true){
+        console.log('hi',(res['ProcessVariables']['status']));
+        this.isOnlineProceedModal = true;
+      }
     });
   });
-  console.log("Payment gateway")
+  console.log("Payment gateway");
  
 }
 

@@ -232,5 +232,27 @@
               </div>
               </div>
             </div>
- 
+            <div class="overlay" [ngClass]="{'active': isChequeProceedModal}"></div>
+            <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isChequeProceedModal}">
+                <!-- <a class="modal-close" href="javascript:void(0);" (click)="onBackOTP()"><span class="icon icon-close"></span></a> -->
+                <div class="modal-body">
+                    <p class="center">Your Cheque has been successfully submitted</p>
+                    <h1 class="pr-text">Click Proceed to continue</h1>
+                    <div class="btn-wrap">
+                        <button class="btn btn-border"  [routerLink]="['/leads']">Proceed</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="overlay" [ngClass]="{'active': isOnlineProceedModal}"></div>
+            <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isOnlineProceedModal}">
+                <!-- <a class="modal-close" href="javascript:void(0);" (click)="onBackOTP()"><span class="icon icon-close"></span></a> -->
+                <div class="modal-body">
+                    <p class="center">Payment message has been sent successfully</p>
+                    <h1 class="pr-text">Click Proceed to continue</h1>
+                    <div class="btn-wrap">
+                        <button class="btn btn-border"  [routerLink]="['/leads']">Proceed</button>
+                    </div>
+                </div>
+            </div>
     </main>

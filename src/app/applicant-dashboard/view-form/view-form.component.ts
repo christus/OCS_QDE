@@ -171,6 +171,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
 
   docType: Array<any> = [];
   selectedAssesmentMethodology: Array<Item> = [];
+  isViewFormModal:boolean = false;
 
   @ViewChild('tabContents') tabContents: ElementRef;
 
@@ -713,7 +714,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
       //     console.log("Response", response)
       // })
       this.qdeHttp.viewFormSmsApi(this.applicationId).subscribe(res => {}, err => {});
-      alert("Qde Submitted Successfully");
+       this.isViewFormModal = true;
   }
 
   prefillData() {
@@ -897,9 +898,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
   applicationStatus: string = "5";
 
   setStatus() {
-     this.qdeHttp.setStatusApi(this.applicationId, this.applicationStatus).subscribe(res => {
-       alert("QDE Submitted successfully");
-     }, err => {});
+     this.qdeHttp.setStatusApi(this.applicationId, this.applicationStatus).subscribe(res => {}, err => {});
      this.sendSMS();
   }
 
