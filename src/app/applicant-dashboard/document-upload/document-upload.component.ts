@@ -885,6 +885,7 @@ export class DocumentUploadComponent implements OnInit {
     );
   }
 
+  isDocUploadRouteModal: boolean = false;
   uploadToOmni(documentInfo: any, tabIndex: number, slider) {
     this.qdeHttp.uploadToOmni(documentInfo).subscribe(
       response => {
@@ -896,7 +897,7 @@ export class DocumentUploadComponent implements OnInit {
           this.cameraImage = "";
 
           if(slider == "collateral") {
-            alert("Document submitted successfully");
+            this.isDocUploadRouteModal = true;
             return;
           }
           if (slider) {

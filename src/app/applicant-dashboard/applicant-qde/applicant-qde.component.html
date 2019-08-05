@@ -576,7 +576,7 @@
                                               required />
   
                                         <label for="pref-email" tabindex="1">Preferred email ID</label>
-                                        <span class="alternate-data">
+                                        <span class="alternate-data" *ngIf="!isAlternateEmailId">
                                             <a  href="javascript:void(0);"
                                                 class="alter-btn"
                                                 tabindex="2"
@@ -613,7 +613,7 @@
                                           <div *ngIf="alternateEmailId.errors?.pattern">{{errors.contactDetails.alternateEmail.invalid}}</div>
                                         </div>
 
-                                        <div  class="invalid-feedback" *ngIf="(alternateEmailId.value == preferEmailId.value)">{{errors.contactDetails.alternateEmail.sameEmail}}</div>
+                                        <div  class="invalid-feedback" *ngIf="(alternateEmailId.value != '' && alternateEmailId.touched && alternateEmailId.value == preferEmailId.value)">{{errors.contactDetails.alternateEmail.sameEmail}}</div>
 
                                     </div>
   
@@ -634,13 +634,13 @@
                                         <span class="optional">10 digit</span>
                                         <a *ngIf="!qde.application.applicants[applicantIndex].contactDetails.isMobileOTPverified" href="javascript:void(0);" class="sent-otp modal-init" data-target="sent-otp-modal"><span class="text" (click)="submitOTP(contactForm, false)">Send OTP</span><span class="icon icon-tick"></span></a>
                                         <a *ngIf="qde.application.applicants[applicantIndex].contactDetails.isMobileOTPverified" href="javascript:void(0);"   class="sent-otp modal-init send-otp-disable" data-target="sent-otp-modal"><span class="text" >Send OTP</span><span class="icon icon-tick"></span></a>
-                                        <span class="alternate-data">
+                                        <span class="alternate-data" *ngIf="!isAlternateMobileNumber">
                                           <a  href="javascript:void(0);"
                                               class="alter-btn"
                                               tabindex="6"
                                               (click)="addRemoveMobileNumberField()">+ Add</a> alternate Mobile number
                                         </span>
-                                        <div class="redalert" *ngIf="RegExp('0{10}|1{10}|2{10}|3{10}|4{10}|5{10}|6{10}|7{10}|8{10}|9{10}').test(mobileNumber.value)">{{errors.contactDetails.prefferedMobile.wrong}}</div>
+                                        <div class="redalert" *ngIf="RegExp(regexPattern.sameDigit).test(mobileNumber.value)">{{errors.contactDetails.prefferedMobile.wrong}}</div>
 
                                         <div *ngIf="(mobileNumber.touched || mobileNumber.dirty) && mobileNumber.invalid" class="invalid-feedback">
                                           <!-- <div *ngIf="mobileNumber.errors?.required">{{errors.contactDetails.prefferedMobile.required}}</div> -->
@@ -673,12 +673,12 @@
                                               (click)="addRemoveMobileNumberField()">- Remove</a> alternate Mobile no
                                         </span>
 
-                                        <div class="redalert" *ngIf="RegExp('0{10}|1{10}|2{10}|3{10}|4{10}|5{10}|6{10}|7{10}|8{10}|9{10}').test(altMobileNo.value)">{{errors.contactDetails.alternateMobile.wrong}}</div>
+                                        <div class="redalert" *ngIf="RegExp(regexPattern.sameDigit).test(altMobileNo.value)">{{errors.contactDetails.alternateMobile.wrong}}</div>
                                         <div *ngIf="(altMobileNo.touched || altMobileNo.dirty) && altMobileNo.invalid" class="invalid-feedback">
                                           <div *ngIf="altMobileNo.errors?.pattern">{{errors.contactDetails.alternateMobile.invalid}}</div>
                                           <div *ngIf="altMobileNo.errors?.minlength">{{errors.contactDetails.alternateMobile.minlength}}</div>
                                         </div>
-                                        <div  class="invalid-feedback" *ngIf="(altMobileNo.value == mobileNumber.value)">{{errors.contactDetails.alternateMobile.sameNumber}}</div>
+                                        <div  class="invalid-feedback" *ngIf="(altMobileNo.value != '' && altMobileNo.touched && altMobileNo.value == mobileNumber.value)">{{errors.contactDetails.alternateMobile.sameNumber}}</div>
                                     </div>
   
                                     <div class="residence-no">
@@ -688,6 +688,7 @@
                                                       [(ngModel)]="residenceNumberStdCode"
                                                       pattern="{{regexPattern.mobileNumber}}"
                                                       #residenceStdCode="ngModel"
+                                                      data-validation-attr="residenceno01"
                                                       maxlength="5"
                                                       minlength="0"
                                                       name="residenceNumber1"
@@ -721,7 +722,7 @@
                                               <!-- <div *ngIf="residenceNumber.errors?.required">{{errors.contactDetails.residenceNumber.required}}</div> -->
                                             </div>
                                         </div>
-                                        <span class="alternate-data">
+                                        <span class="alternate-data" *ngIf="!isAlternateResidenceNumber">
                                           <a  href="javascript:void(0);"
                                               class="alter-btn"
                                               tabindex="11"
@@ -764,7 +765,7 @@
                                             <div *ngIf="alternateResidenceNumber2.touched  && alternateResidenceNumber2.invalid" class="invalid-feedback">
                                               <div *ngIf="alternateResidenceNumber2.errors?.pattern">{{errors.contactDetails.alternateResidenceNumber1.invalid}}</div>
                                             </div>
-                                            <div  class="invalid-feedback" *ngIf="(alternateResidenceNumber2 == alternateResidenceNumberStd1)">{{errors.contactDetails.residenceNumber.sameNumber}}</div>
+                                            <div  class="invalid-feedback" *ngIf="(alternateResidenceNumber2.value != '' && alternateResidenceNumber2.touched && residenceNumber.value == alternateResidenceNumber2.value)">{{errors.contactDetails.residenceNumber.sameNumber}}</div>
                                           </div>
                                         <span class="alternate-data">
                                           <a href="javascript:void(0);"
@@ -777,8 +778,8 @@
                                 <div class="btn-wrap">
                                       <button class="btn btn-primary"
                                               type="submit"
-                                              [ngClass]="{'disabled': (!contactForm.valid) || (altMobileNo.value == mobileNumber.value) || RegExp('0{10}|1{10}|2{10}|3{10}|4{10}|5{10}|6{10}|7{10}|8{10}|9{10}').test(mobileNumber.value) || RegExp('0{10}|1{10}|2{10}|3{10}|4{10}|5{10}|6{10}|7{10}|8{10}|9{10}').test(altMobileNo.value)}"
-                                              [disabled]="!contactForm.valid || (altMobileNo.value == mobileNumber.value) || RegExp('0{10}|1{10}|2{10}|3{10}|4{10}|5{10}|6{10}|7{10}|8{10}|9{10}').test(mobileNumber.value) || RegExp('0{10}|1{10}|2{10}|3{10}|4{10}|5{10}|6{10}|7{10}|8{10}|9{10}').test(altMobileNo.value)">Next
+                                              [ngClass]="{'disabled': (!contactForm.valid) || (altMobileNo.value == mobileNumber.value) || RegExp(regexPattern.sameDigit).test(mobileNumber.value) || RegExp(regexPattern.sameDigit).test(altMobileNo.value)}"
+                                              [disabled]="!contactForm.valid || (altMobileNo.value == mobileNumber.value) || RegExp(regexPattern.sameDigit).test(mobileNumber.value) || RegExp(regexPattern.sameDigit).test(altMobileNo.value)">Next
                                       </button>
                                 </div>
                             </form>
@@ -2942,7 +2943,7 @@
     <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isApplicantRouteModal}">
         <!-- <a class="modal-close" href="javascript:void(0);" (click)="onBackOTP()"><span class="icon icon-close"></span></a> -->
         <div class="modal-body">
-            <h1 class="center">Applicant has been successfully saved!</h1>
+            <h1 class="center">Applicant Details has been saved successfully!</h1>
             <p>Click Proceed to continue</p>
                 <div class="btn-wrap">
                     <button class="btn btn-border"  [routerLink]="['/applicant', qde.application.applicationId, 'co-applicant']">Proceed</button>

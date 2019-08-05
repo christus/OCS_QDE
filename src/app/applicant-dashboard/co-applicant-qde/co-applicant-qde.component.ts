@@ -43,7 +43,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
 
   // regexPatternForDocType: Array<string> = ['[A-Z]{1}[0-9]{7}','^[A-Z]{2}[0-9]{13}$','^[A-Z]{3}[0-9]{7}$','[2-9]{1}[0-9]{11}','[0-9]{18}','[0-9]{14}','[0-9]{16}'];
 
-  regexPatternForDocType:Array<any>=[{pattern:'[A-Z]{1}[0-9]{7}',hint:"V1234567"},{pattern:'^[A-Z]{2}[0-9]{13}$',hint:"AN01/2010/0051926"},{pattern:'^[A-Z]{3}[0-9]{7}$',hint:"LWN5672084"},{pattern:'[2-9]{1}[0-9]{11}',hint:"12 digit number, with first digit not 0 or 1"},{pattern:'[0-9]{18}',hint:"	18 digit number"},{pattern:'[0-9]{14}',hint:"	14 digit number"},{pattern:'[0-9]{16}',hint:"	16 digit number"}]
+  regexPatternForDocType:Array<any>=[{pattern:'[A-Z]{1}[0-9]{7}',hint:"V1234567"},{pattern:'^[A-Z]{2}[0-9]{13}$',hint:"AN0120100051926"},{pattern:'^[A-Z]{3}[0-9]{7}$',hint:"LWN5672084"},{pattern:'[2-9]{1}[0-9]{11}',hint:"12 digit number, with first digit not 0 or 1"},{pattern:'[0-9]{18}',hint:"	18 digit number"},{pattern:'[0-9]{14}',hint:"	14 digit number"},{pattern:'[0-9]{16}',hint:"	16 digit number"}]
 
   maxlength:Array<string> = ['8','15','10','12','18','14','16'];
 
@@ -53,11 +53,11 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
     address : "^[0-9A-Za-z, _&'/#]+$",
     // cityState:"^[0-9A-Za-z, &'#]$",
     pinCode: "^[1-9][0-9]{5}$",
-    pan:"[A-Z]{5}[0-9]{4}[A-Z]{1}",
+    pan:"[A-Z]{3}(P|F|C|H|A|T)[A-Z]{1}[0-9]{4}[A-Z]{1}",
     amount:"^[\\d]{0,10}([.][0-9]{0,4})?",
     revenue:"^[\\d]{0,10}([.][0-9]{0,4})?",
     email:"^\\w+([\.-]?\\w+)*@\\w+([\.-]?\\w+)*(\\.\\w{2,10})+$",
-
+    sameDigit: '0{10}|1{10}|2{10}|3{10}|4{10}|5{10}|6{10}|7{10}|8{10}|9{10}'
     // revenue:"^[0-9]{0,17}\.[0-9]{1,4}?$"
    
   };
@@ -77,7 +77,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
   };
   employementOptions: Options = {
     floor: 1,
-    ceil: 41,
+    ceil: 40,
     // step: 5,
     // showTicksValues: false,
     // // showSelectionBar: true,
@@ -88,7 +88,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
   };
   experienceOptions: Options = {
     floor: 1,
-    ceil: 41,
+    ceil: 40,
     // step: 5,
     // showTicksValues: false,
     // // showSelectionBar: true,
@@ -307,6 +307,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
 
   isValidPan: boolean;
   tempOldPanNumber: string;
+  monthsInChar: Array<string> = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'AUG', 'NOV', 'DEC'];
 
   constructor(private renderer: Renderer2,
               private route: ActivatedRoute,
@@ -424,9 +425,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
 
       this.months = Array.from(Array(12).keys()).map((val, index) => {
         let v = ((index+1) < 10) ? "0"+(index+1) : (index+1)+"";
-        return {key: v, value: v};
+        return {key: this.monthsInChar[index], value: v};
       });
-      this.months.unshift({key: 'MM', value: 'MM'});
+      this.months.unshift({key: 'MMM', value: 'MMM'});
 
       this.years = Array.from(Array(100).keys()).map((val, index) => {
         let v = (this.YYYY - index)+"";
@@ -853,8 +854,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       }
   
       this.qde.application.applicants[this.coApplicantIndex].pan.panNumber = form.value.pan;
-      this.qde.application.applicants[this.coApplicantIndex].pan.docType = form.value.docType.value;
-      this.qde.application.applicants[this.coApplicantIndex].pan.docNumber = form.value.docNumber;
+      // this.qde.application.applicants[this.coApplicantIndex].pan.docType = form.value.docType.value;
+      // this.qde.application.applicants[this.coApplicantIndex].pan.docNumber = form.value.docNumber;
   
       if(this.isValidPan == false || this.isValidPan == null) {
         this.checkPanValidSub2 = this.qdeHttp.checkPanValid(this.qdeService.getFilteredJson({actualPanNumber: form.value.pan})).subscribe((response) => {
