@@ -52,8 +52,8 @@ export class AppComponent implements OnInit{
       //   document.activeElement.scrollIntoView();
       // })
 
-      this.Keyboard.shrinkView(true);
-      this.Keyboard.hideFormAccessoryBar(true);
+      // this.Keyboard.shrinkView(true);
+      // this.Keyboard.hideFormAccessoryBar(true);
 
 
        window.addEventListener('keyboardDidShow', function () {

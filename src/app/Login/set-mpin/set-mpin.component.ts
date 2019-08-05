@@ -32,7 +32,7 @@ export class SetMpinComponent implements OnInit {
     ).catch((error: any) => console.log(error));   
     
     
-    this.router.navigate(["/ConfirmPin", {"EmpId": this.userName}]);
+   // this.router.navigate(["/ConfirmPin", {"EmpId": this.userName}]);
 
 
     console.log("UserName", this.userName);
