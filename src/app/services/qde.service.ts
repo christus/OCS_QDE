@@ -51,7 +51,8 @@ export class QdeService {
             panNumber: "",
             panImage: "",
             docType: null,
-            docNumber: ""
+            docNumber: "",
+            panVerified: null
           },
           personalDetails: {
             title: "",
@@ -370,7 +371,8 @@ export class QdeService {
         panNumber: "",
         panImage: "",
         docType: null,
-        docNumber: ""
+        docNumber: "",
+        panVerified: null
       },
       personalDetails: {
         title: "",
@@ -536,7 +538,8 @@ export class QdeService {
               panNumber: "",
               panImage: "",
               docType: null,
-              docNumber: ""
+              docNumber: "",
+              panVerified: null
             },
             personalDetails: {
               title: "",

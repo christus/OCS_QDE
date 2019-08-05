@@ -6,3 +6,11 @@
 .logout {
     cursor: pointer;
 }
+.header_reference_no{
+    font-size: 15px;
+    text-align: left;
+    color: #f58220;
+}
+.space{
+    margin-right: 8px;
+}

@@ -65,6 +65,9 @@ import { File } from '@ionic-native/file/ngx';
 import { DeviceDetectorModule } from 'ngx-device-detector';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
+import { Keyboard } from '@ionic-native/keyboard/ngx';
+import { NativeKeyboard } from '@ionic-native/native-keyboard/ngx';
+
 
 
 import { NgxUiLoaderModule, NgxUiLoaderRouterModule } from  'ngx-ui-loader';
@@ -380,7 +383,9 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     File,
     FileTransfer,
     FileTransferObject,
-    UniqueDeviceID
+    UniqueDeviceID,
+    Keyboard,
+    NativeKeyboard
   ],
   bootstrap: [AppComponent]
 })

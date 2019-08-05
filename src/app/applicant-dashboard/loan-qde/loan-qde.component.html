@@ -60,7 +60,7 @@
                       </div>
 
                     </div>
-                      <div class="form-group">
+                      <!-- <div class="form-group">
                         <span class="control-title">Type of loan</span>
                         <kendo-dropdownlist [readonly]="isTBMLoggedIn" 
                           class="form-control"
@@ -71,7 +71,7 @@
                           [valuePrimitive]="true"
                           [(ngModel)]="selectedLoanType">
                         </kendo-dropdownlist>
-                      </div>
+                      </div> -->
                     
                       <div class="form-group">
                         <span class="control-title">Loan purpose</span>
@@ -106,7 +106,7 @@
                            <div class="invalid-feedback"><br>{{errors.loanDetails.loanAmount.tenure.invalid}}</div>
                       </div>
                       
-                      <ng5-slider [(value)]="qde?.application.tenure" [options]="options" ></ng5-slider>
+                      <ng5-slider class="commSlider" [(value)]="qde?.application.tenure" [options]="options" ></ng5-slider>
 
                       <div *ngIf="(loanTenure.touched || loanTenure.dirty) && loanTenure.invalid" class="invalid-feedback">
                         <!-- <div *ngIf="loanTenure.errors?.required">{{errors.loanDetails.loanAmount.tenure.required}}</div> -->
@@ -198,7 +198,7 @@
                                   pattern="{{regexPattern.address}}"
                                   fieldFill
                                   required >
-                                  <label for="pro-add-line1">Property CLSS area</label>
+                                  <label for="pro-add-line1">Property area in sq. fts.</label>
                                   <div *ngIf="(propertyClss.touched || propertyClss.dirty) && propertyClss.invalid" class="invalid-feedback">
                                     <!-- <div *ngIf="propertyClss.errors?.required">{{errors.loanDetails.property.propertyClss.required}}</div> -->
                                     <div *ngIf="propertyClss.errors?.pattern">{{errors.loanDetails.property.propertyClss.invalid}}</div>
@@ -207,7 +207,7 @@
                               <div class="form-group">
 
                                   <input [readonly]="isTBMLoggedIn"
-                                  type="number"
+                                  type="text"
                                   class="form-control"
                                   id="pro-add-line2" 
                                   name="propertyAreaInSqFeets"
@@ -216,7 +216,7 @@
                                   pattern="{{regexPattern.address}}"
                                   fieldFill
                                   required/>
-                                  <label for="pro-add-line2">Property area in sq. fts.</label>
+                                  <label for="pro-add-line2">Property CLSS area</label>
                                   <div *ngIf="(propertyArea.touched || propertyArea.dirty) && propertyArea.invalid" class="invalid-feedback">
                                     <!-- <div *ngIf="propertyArea.errors?.required">{{errors.loanDetails.property.propertyArea.required}}</div> -->
                                     <div *ngIf="propertyArea.errors?.pattern">{{errors.loanDetails.property.propertyArea.invalid}}</div>
@@ -234,6 +234,42 @@
                       <form class="bs-form" #submitProperty="ngForm"
                       (ngSubmit)="submitPropertyDetail(submitProperty, property2)">
                         <div class="form-wrap">
+                          <div class="form-group">
+                            <input [readonly]="isTBMLoggedIn" type="text" class="form-control"
+                            id="add-line1"
+                            required
+                            ngModel
+                            #proaddressLineOne="ngModel"
+                            [(ngModel)]="addressLineOneValue"
+                            name="proaddressLineOne"
+                            fieldFill
+                            pattern='{{regexPattern.address}}'/>
+                      
+                            <label for="add-line1">Property address line1</label>
+
+                            <div *ngIf="(proaddressLineOne.touched || proaddressLineOne.dirty) && proaddressLineOne.invalid" class="invalid-feedback">
+                              <!-- <div *ngIf="proaddressLineOne.errors?.required">{{errors.loanDetails.property.addressLineOne.required}}</div> -->
+                              <div *ngIf="proaddressLineOne.errors?.pattern">{{errors.loanDetails.property.addressLineOne.invalid}}</div>
+                            </div>
+                          </div>
+
+                          <div class="form-group typ-optional">
+                            <input [readonly]="isTBMLoggedIn" type="text" class="form-control" id="add-line2"
+                              ngModel
+                              #addressLineTwo = "ngModel"
+							                fieldFill
+                              [(ngModel)]="addressLineTwoValue"
+                              name="addressLineTwo"
+                              pattern='{{regexPattern.address}}'/>
+
+                            <label for="add-line2">Property address line2</label>
+                            <span class="optional">optional</span>
+                            <div *ngIf="(addressLineTwo.touched || addressLineTwo.dirty) && addressLineTwo.invalid" class="invalid-feedback">
+                              <!-- <div *ngIf="addressLineTwo.errors?.required">{{errors.loanDetails.property.addressLineTwo.required}}</div> -->
+                              <div *ngIf="addressLineTwo.errors?.pattern">{{errors.loanDetails.property.addressLineTwo.invalid}}</div>
+                            </div>
+                          </div>
+
                           <div class="form-group">
                             <input [readonly]="isTBMLoggedIn" type="text" class="form-control" id="proprty-pin"
                             required
@@ -254,42 +290,6 @@
                               <div *ngIf="propertyPincode.errors?.pattern">{{errors.loanDetails.property.pinCode.invalid}}</div>
                             </div>
 
-                          </div>
-                          <div class="form-group">
-                            <input [readonly]="isTBMLoggedIn" type="text" class="form-control"
-                            id="add-line1"
-                            required
-                            ngModel
-                            #proaddressLineOne="ngModel"
-                            [(ngModel)]="addressLineOneValue"
-                            name="proaddressLineOne"
-                            fieldFill
-                            pattern='{{regexPattern.address}}'/>
-                      
-                            <label for="add-line1">Property address line1</label>
-
-                            <div *ngIf="(proaddressLineOne.touched || proaddressLineOne.dirty) && proaddressLineOne.invalid" class="invalid-feedback">
-                              <!-- <div *ngIf="proaddressLineOne.errors?.required">{{errors.loanDetails.property.addressLineOne.required}}</div> -->
-                              <div *ngIf="proaddressLineOne.errors?.pattern">{{errors.loanDetails.property.addressLineOne.invalid}}</div>
-                            </div>
-                          </div>
-
-                          <div class="form-group">
-                            <input [readonly]="isTBMLoggedIn" type="text" class="form-control" id="add-line2"
-                              required
-                              ngModel
-                              #addressLineTwo = "ngModel"
-							                fieldFill
-                              [(ngModel)]="addressLineTwoValue"
-                              name="addressLineTwo"
-                              pattern='{{regexPattern.address}}'/>
-
-                            <label for="add-line2">Property address line2</label>
-
-                            <div *ngIf="(addressLineTwo.touched || addressLineTwo.dirty) && addressLineTwo.invalid" class="invalid-feedback">
-                              <!-- <div *ngIf="addressLineTwo.errors?.required">{{errors.loanDetails.property.addressLineTwo.required}}</div> -->
-                              <div *ngIf="addressLineTwo.errors?.pattern">{{errors.loanDetails.property.addressLineTwo.invalid}}</div>
-                            </div>
                           </div>
                           
                           <div class="form-group">
@@ -377,7 +377,7 @@
                                             class="form-control"
                                             [ngModel]="value[0]"
                                             (ngModelChange)="valuechange($event, 0)" /> -->
-                                    <ng5-slider [(ngModel)]="liveLoan" ngModel name="liveLoans" 
+                                    <ng5-slider class="commSlider" [(ngModel)]="liveLoan" ngModel name="liveLoans" 
                                     [options]="liveLoanOption"></ng5-slider>
                                 </div>
                               </div>
@@ -468,6 +468,39 @@
     </div>
   </div>
   <span class="cm-autoSave"><span class="cm-bold">Autosaved</span> <span>at 09:26 AM</span></span>
+  <div class="overlay" [ngClass]="{'active': isLoanRouteModal}"></div>
+  <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isLoanRouteModal}">
+      <!-- <a class="modal-close" href="javascript:void(0);" (click)="onBackOTP()"><span class="icon icon-close"></span></a> -->
+      <div class="modal-body">
+          <h1 class="center">Loan Details has been successfully saved!</h1>
+          <p>Click Proceed to continue</p>
+              <div class="btn-wrap">
+                  <button class="btn btn-border"  [routerLink]="['/references', qde.application.applicationId]">Proceed</button>
+              </div>
+      </div>
+  </div>
+  <div class="overlay" [ngClass]="{'active': isClssEligibleModal}"></div>
+  <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isClssEligibleModal}">
+      <!-- <a class="modal-close" href="javascript:void(0);" (click)="onBackOTP()"><span class="icon icon-close"></span></a> -->
+      <div class="modal-body">
+          <h1 class="center">Application is eligible for CLSS</h1>
+          <p>Click Proceed to continue</p>
+              <div class="btn-wrap">
+                  <button class="btn btn-border" (click)="proceedToExistingLoanEligible()">Proceed</button>
+              </div>
+      </div>
+  </div>
+  <div class="overlay" [ngClass]="{'active': isClssNotEligibleModal}"></div>
+  <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isClssNotEligibleModal}">
+      <!-- <a class="modal-close" href="javascript:void(0);" (click)="onBackOTP()"><span class="icon icon-close"></span></a> -->
+      <div class="modal-body">
+          <h1 class="center">Application is not eligible for CLSS</h1>
+          <p>Click Proceed to continue</p>
+              <div class="btn-wrap">
+                  <button class="btn btn-border" (click)="proceedToExistingLoanNotEligible()">Proceed</button>
+              </div>
+      </div>
+  </div>
 </main>
 
 <div class="overlay"></div>

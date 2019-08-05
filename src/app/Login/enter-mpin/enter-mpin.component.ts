@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -22,6 +22,11 @@ export class EnterMPINComponent implements OnInit {
   mPin3 = "";
   mPin4 = "";
 
+  values = '';
+
+  @ViewChild('mPin') input:ElementRef; 
+
+
   empId:string;
 
   constructor(private router: Router, private route: ActivatedRoute,
@@ -29,6 +34,7 @@ export class EnterMPINComponent implements OnInit {
 
     this.empId = this.route.snapshot.paramMap.get('EmpId');
   }
+  
 
   ngOnInit() {
   }
@@ -55,6 +61,22 @@ export class EnterMPINComponent implements OnInit {
       }
     );
 
+  }
+
+
+  onKeyUp(event, maxlength) {
+    this.values = event.target.value;
+    console.log(this.values);
+
+    let element = event.srcElement.nextElementSibling; // get the sibling element
+
+
+    if (this.values.length <= maxlength) {
+      if (this.input)
+        element.focus();
+      else
+        element.blur();
+    }
   }
 
 

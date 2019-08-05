@@ -164,9 +164,8 @@
                             </div>
 
                           </div>
-                          <div class="form-group">
+                          <div class="form-group typ-optional">
                             <input [readonly]="isReadOnly" type="text" class="form-control" id="ref1-add2" 
-                            required
                             name="addressLineTwo" 
                             ngModel
                             spellcheck="false"
@@ -176,7 +175,7 @@
                             [(ngModel)]="selectedAddressLineTwo1">
                             <label for="ref1-add2">Address line2</label>
 
-
+                            <span class="optional">optional</span>
                             <div *ngIf="refOneAddressLineTwo.touched && refOneAddressLineTwo.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="refOneAddressLineTwo.errors?.required">{{errors.references.referenceOne.addressLineTwo.required}}</div> -->
                               <div *ngIf="refOneAddressLineTwo.errors?.pattern">{{errors.references.referenceOne.addressLineTwo.invalid}}</div>
@@ -342,18 +341,17 @@
                             </div>
                           </div>
 
-                          <div class="form-group">
+                          <div class="form-group typ-optional">
                             <input [readonly]="isReadOnly" type="text" class="form-control" id="ref2-add2"
                              name="addressLineTwo" 
                              ngModel 
                              #refTwoAddressLineTwo="ngModel"
                              pattern="{{regexPattern.address}}"
-                             required
                              spellcheck="false"
                              fieldFill
                              [(ngModel)]="selectedAddressLineTwo2">
                             <label for="ref2-add2">Address line2</label>
-
+                            <span class="optional">optional</span>
                             <div *ngIf="refTwoAddressLineTwo.touched && refTwoAddressLineTwo.invalid" class="invalid-feedback">
                                 <!-- <div *ngIf="refTwoAddressLineTwo.errors?.required">{{errors.references.referenceTwo.addressLineTwo.required}}</div> -->
                                 <div *ngIf="refTwoAddressLineTwo.errors?.pattern">{{errors.references.referenceTwo.addressLineTwo.invalid}}</div>
@@ -381,6 +379,17 @@
     </div>
   </div>
   <span class="cm-autoSave"><span class="cm-bold">Autosaved</span> <span>at 09:26 AM</span></span>
+  <div class="overlay" [ngClass]="{'active': isReferenceRouteModal}"></div>
+  <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isReferenceRouteModal}">
+      <!-- <a class="modal-close" href="javascript:void(0);" (click)="onBackOTP()"><span class="icon icon-close"></span></a> -->
+      <div class="modal-body">
+          <h1 class="center">References has been successfully saved!</h1>
+          <p>Click Proceed to continue</p>
+              <div class="btn-wrap">
+                  <button class="btn btn-border"  [routerLink]="['/document-uploads', qde.application.applicationId]">Proceed</button>
+              </div>
+      </div>
+  </div>
 </main>
 
 <div class="overlay"></div>

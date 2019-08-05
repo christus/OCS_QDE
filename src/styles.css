@@ -4690,12 +4690,13 @@ img {
     background: url(/assets/images/login-bg.jpg) no-repeat center;
     background-size: cover;
     padding: 3.91vw 3.91vw 3.91vw 1.95vw;
-    height: 100%;
+	height: 100%;
+	overflow:auto;
 }
 
 .lyt-login .lhs .logo {
 	height: 3.75vw;
-	position: absolute;
+	/* position: absolute; */
 	left: 3.91vw;
 	right: 3.91vw;
 	top: 3.75vw;
@@ -4744,7 +4745,6 @@ img {
 }
 
 .lyt-login .rhs .resend-pin {
-	position: absolute;
 	bottom: 4.69vw;
 	left: 0;
 	right: 0;
@@ -4816,8 +4816,7 @@ img {
 	min-height: 21.48vw;
 	position: absolute;
 	right: 0;
-	top: 50%;
-	transform: translateY(-50%);
+	top: 0;
 	padding: 3.91vw 7.81vw 3.91vw 1.95vw;
 	display: flex;
 	flex-wrap: wrap;
@@ -4868,7 +4867,7 @@ img {
 	right: 0;
 	text-align: center;
 	top: 50%;
-	transform: translateY(-50%)
+	transform: translateY(-50%);
 }
 
 .lyt-home .form-swiper {
@@ -5202,7 +5201,7 @@ img {
 .tabs .tabs-contents .tab-content.active {
 	opacity: 1;
 	z-index: 1;
-	transform: scale(1);
+	/* transform: scale(1); */
 	transition-duration: .6s
 }
 
@@ -5476,13 +5475,23 @@ img {
 	margin-top: -20px !important;
   }
 
-  .ng5-slider .ng5-slider-bubble.ng5-slider-limit {
+  /* .ng5-slider .ng5-slider-bubble.ng5-slider-limit {
 	color: #fff !important;
-  }
+  } */
 
   .ng5-slider .ng5-slider-bubble {
-	color: #FFF !important;
+	/* color: #FFF !important; */
   }
+
+  .commSlider.ng5-slider .ng5-slider-bubble.ng5-slider-limit {
+	  font-size: 1.5vw !important;
+	  color: #d2b3b3 !important;
+  }
+
+.commSlider .ng5-slider-span.ng5-slider-bubble.ng5-slider-model-value {
+	font-size: 1.5vw !important;
+	color: #d2b3b3 !important;
+}
 
 
   .ng5-slider .ng5-slider-tick-legend {
@@ -5595,3 +5604,65 @@ img {
 	}
 	
 }
+
+.mpinForm {
+	position: absolute;
+    left: 0;
+    right: 0;
+    text-align: center;
+    top: 15px;
+}
+
+
+@media only screen and (max-width: 1000px) {  
+	.mobile .leadList table td {
+	  width: 100%!important;
+	  display: block;
+	}
+	.mobile .leadList td {
+	  float: left;
+	  margin-left: 10px;
+	}
+	.mobile .leadList li:first-child {
+		padding: 10px 0!important; 
+		border-bottom: none!important; 
+		font-size: inherit!important;
+	}
+
+
+  }
+
+
+
+@media (orientation: landscape) {
+	.mobile .mob_personal_year{
+		width: 125px !important;
+	}
+	
+	.mobile .mob_current_residence {
+		width: 80px;
+	}
+
+	.mobile .lyt-home .rhs .bs-form {
+		top: 0 !important;
+		transform: none !important;
+	}
+
+	.mobile .depen-width {
+		width: 100px !important;
+	}
+
+	.mobile .mob_income_detail {
+		height: 450px;
+	}
+
+	.mobile .bs-file label {
+		height: 17.25vw;
+	}
+
+	.mobile .bs-file label span {
+		display: none;
+	}
+	
+}
+

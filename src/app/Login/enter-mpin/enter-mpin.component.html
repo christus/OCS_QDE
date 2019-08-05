@@ -17,16 +17,17 @@
               <div class="form-wrap">
                   <div class="form-group typ-otp last">
                       <span class="control-title">Confirm mPIN</span>
-                      <input type="password" [(ngModel)]="mPin1" class="form-control" name="mPin1" maxlength="1">
-                      <input type="password" [(ngModel)]="mPin2" class="form-control" name="mPin2"  maxlength="1">
-                      <input type="password" [(ngModel)]="mPin3" class="form-control" name="mPin3"  maxlength="1">
-                      <input type="password" [(ngModel)]="mPin4" class="form-control" name="mPin4"  maxlength="1">
+                      <input type="password" #mPin (keyup)="onKeyUp($event, 1)" [(ngModel)]="mPin1" class="form-control" name="mPin1" maxlength="1">
+                      <input type="password" #mPin (keyup)="onKeyUp($event, 1)" [(ngModel)]="mPin2" class="form-control" name="mPin2"  maxlength="1">
+                      <input type="password" #mPin (keyup)="onKeyUp($event, 1)" [(ngModel)]="mPin3" class="form-control" name="mPin3"  maxlength="1">
+                      <input type="password" #mPin (keyup)="onKeyUp($event, 1)" [(ngModel)]="mPin4" class="form-control" name="mPin4"  maxlength="1">
                       </div>
               </div>
               <div class="btn-wrap">
                   <button class="btn btn-primary" (click)="confirmPin()">NEXT</button>
               </div>
+              <p class="resend-pin" (click)="resendPin()"> Not Received it yet? <a href="#" class="btn">RESEND mPIN</a></p>
+
           </form>
-          <p class="resend-pin" (click)="resendPin()"> Not Received it yet? <a href="#" class="btn">RESEND mPIN</a></p>
       </div>
   </div>

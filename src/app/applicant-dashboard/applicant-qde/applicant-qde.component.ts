@@ -1,5 +1,5 @@
 import { Other, Applicant } from './../../models/qde.model';
-import { Component, OnInit, ViewChild, ElementRef, Renderer2, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Renderer2, OnDestroy, AfterViewInit } from '@angular/core';
     
 import * as Swiper from 'swiper/dist/js/swiper.js';
 // import { Select2Component } from 'ng2-select2';
@@ -72,24 +72,48 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   };
 
   minValue: number = 1;
+
   options: Options = {
     floor: 0,
-    ceil: 50,
-    step: 10,
-    showTicksValues: false,
-    // showSelectionBar: true,
-    showTicks: true,
+    ceil: 100,
+    // step: 1,
+    // showTicksValues: false,
+    // // showSelectionBar: true,
+    // showTicks: true,
+    getLegend: (sliderVal: number): string => {
+      return  sliderVal + '<b>y</b>';
+    },
+    // value: 0
+  };
+  employementOptions: Options = {
+    floor: 1,
+    ceil: 41,
+    // step: 5,
+    // showTicksValues: false,
+    // // showSelectionBar: true,
+    // showTicks: true,
+    getLegend: (sliderVal: number): string => {
+      return  sliderVal + '<b>y</b>';
+    }
+  };
+  experienceOptions: Options = {
+    floor: 1,
+    ceil: 41,
+    // step: 5,
+    // showTicksValues: false,
+    // // showSelectionBar: true,
+    // showTicks: true,
     getLegend: (sliderVal: number): string => {
       return  sliderVal + '<b>y</b>';
     }
   };
     familyOptions:Options={
     floor:0,
-    ceil:6,
-    step: 1,
-    showTicksValues: false,
-    // showSelectionBar: true,
-    showTicks: true,
+    ceil:20,
+    // step: 1,
+    // showTicksValues: false,
+    // // showSelectionBar: true,
+    // showTicks: true,
     getLegend: (sliderVal: number): string => {
       return  sliderVal + '<b></b>';
     }
@@ -273,9 +297,14 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   isEligibilityForReview: boolean = false;
   isEligibilityForReviewsSub: Subscription;
   isTBMLoggedIn: boolean;
+  isApplicantRouteModal: boolean = false;
 
   isDuplicateModalShown: boolean = false;
   duplicates: Array<Applicant> = [];
+  dobYears: Array<Item>;
+  YYYY17YearsAgo = (new Date().getFullYear() - 18);
+  isValidPan: boolean;
+  tempOldPanNumber: string;
 
   constructor(private renderer: Renderer2,
               private route: ActivatedRoute,
@@ -285,6 +314,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
               private cds:CommonDataService,
               private file: File,
               private deviceService: DeviceDetectorService) {
+
+    this.dobYears = Array.from(Array(100).keys()).map((val, index) => {
+      let v = (this.YYYY17YearsAgo - index)+"";
+      return {key: v, value: v};
+    });
+    this.dobYears.unshift({key: 'YYYY', value: 'YYYY'});
 
     this.isMobile = this.deviceService.isMobile() ;
 
@@ -306,6 +341,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       console.log("VALVE: ", val);
       this.qde = val;
       this.applicantIndex = val.application.applicants.findIndex(v => v.isMainApplicant == true);
+      // this.isValidPan = val.application.applicants[this.applicantIndex].pan.panVerified;
       this.cds.enableTabsIfStatus1(this.qde.application.status);
     });
 
@@ -441,8 +477,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
             console.log("Get ", result);
 
             this.qdeService.setQde(result);
-            console.log(result);
-
+            this.tempOldPanNumber = result.application.applicants[this.applicantIndex].pan.panNumber;
 
             try {
               if(result.application.applicants[this.applicantIndex].communicationAddress != null) {
@@ -573,6 +608,18 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
                 this.idPanFileSize = result.application.applicants[this.applicantIndex].pan.fileSize;
               }
             }catch(e) {}  
+
+            try {
+              if(result.application.applicants[this.applicantIndex].contactDetails.isMobileOTPverified != null) {
+                this.qde.application.applicants[this.applicantIndex].contactDetails.isMobileOTPverified = result.application.applicants[this.applicantIndex].contactDetails.isMobileOTPverified;
+              }
+            } catch(e) {}
+
+            try {
+              if(result.application.applicants[this.applicantIndex].contactDetails.isAlternateOTPverified != null) {
+                this.qde.application.applicants[this.applicantIndex].contactDetails.isAlternateOTPverified = result.application.applicants[this.applicantIndex].contactDetails.isAlternateOTPverified;
+              }
+            } catch(e) {}
      
       
       // Document Type
@@ -674,15 +721,15 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
       // Incoming from create in Individual Pan
       if(this.panslide == true && this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
-        // this.tabSwitch(2);
-         this.panSlider2.setIndex(2);
+        this.tabSwitch(1);
+        //  this.panSlider2.setIndex(2);
       }
       // Incoming from create in Non Individual Pan
       else if(this.panslide2 == true && this.qde.application.applicants[this.applicantIndex].isIndividual == false) {
-        this.tabSwitch(10);
+        this.tabSwitch(11);
         this.panSlider4.setIndex(1);
       } else if(this.panslide == false && this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
-        // this.tabSwitch(0);
+        this.tabSwitch(0);
         this.panSlider2.setIndex(1);
       }
       else if(this.panslide2 == false && this.qde.application.applicants[this.applicantIndex].isIndividual == false) {
@@ -802,6 +849,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
   addRemoveMobileNumberField() {
     this.isAlternateMobileNumber = !this.isAlternateMobileNumber;
+    this.qde.application.applicants[this.applicantIndex].contactDetails.alternateMobileNumber = null;
   }
 
   addRemoveResidenceNumberField() {
@@ -839,69 +887,122 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     this.qde.application.applicants[this.applicantIndex].pan.docType = form.value.docTypeindividual.value;
     this.qde.application.applicants[this.applicantIndex].pan.docNumber = form.value.docNumber;
 
-    this.checkPanValidSub=this.qdeHttp.checkPanValid(this.qdeService.getFilteredJson({actualPanNumber: form.value.pan})).subscribe((response) => {
+    // if(this.qde.application.applicants[this.applicantIndex].pan.panNumber) {
+    //   this.panSlider2.setIndex(2);
+    //   return;
+    // }
 
-      response["ProcessVariables"]["status"] = true; // Comment while deploying if service is enabled false
-      
-      if(response["ProcessVariables"]["status"]) { // Boolean to check from nsdl website whether pan is valid or not 
+    if(this.isValidPan == false || this.isValidPan == null) {
 
-        this.qde.application.applicants[this.applicantIndex].pan.isValid = true;
-        this.qde.application.applicants[this.applicantIndex].pan.errorMessage = "";
+      this.checkPanValidSub=this.qdeHttp.checkPanValid(this.qdeService.getFilteredJson({actualPanNumber: form.value.pan})).subscribe((response) => {
 
-        let processVariables = response["ProcessVariables"];
-        this.qde.application.applicants[this.applicantIndex].personalDetails.firstName = processVariables["firstName"];
-        this.qde.application.applicants[this.applicantIndex].personalDetails.lastName = processVariables["lastName"];
-        if(processVariables["applicantTitleId"] > 0) {
-          this.qde.application.applicants[this.applicantIndex].personalDetails.title  = processVariables["applicantTitleId"];
-        }
-        this.selectedTitle  = this.getApplicantTitle(processVariables["applicantTitleId"]);
-        this.createOrUpdatePanDetailsSub=this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
-          // If successful
-          
-          if(response["ProcessVariables"]["status"] == true) {
-            let result = this.parseJson(response["ProcessVariables"]["response"]);
-            // this.qde.application.ocsNumber = result["application"]["ocsNumber"];
-            // this.qde.application.applicationId = result["application"]["applicationId"];
-           
-            this.qde.application.applicationId = result['application']['applicationId'];
-    
-            // let isApplicantPresent:boolean = false;
-    
-            if((result["application"]["applicants"]).length > 0) {
-              // isApplicantPresent = applicants[this.applicantIndex].hasOwnProperty('applicantId');
-              // this.qde.application.applicants[this.coApplicantIndex].applicantId =  applicants[this.coApplicantIndex]["applicantId"];
-              let applicationId = result['application']['applicationId'];
-             this.setStatusApiSub= this.qdeHttp.setStatusApi( applicationId, environment.status.QDECREATED).subscribe((response) => {
-                if(response["ProcessVariables"]["status"] == true) { 
-                  this.cds.changePanSlide(true);
-                  this.router.navigate(['/applicant/'+this.qde.application.applicationId]);
-                }
-              });
+        if(response["ProcessVariables"]["status"] == true && response['ProcessVariables']['isValidPan'] == true) { // Boolean to check from nsdl website whether pan is valid or not 
 
-            }else {
-            //  this.cds.changePanSlide(true);
-             this.panSlider2.setIndex(2);
-             // this.tabSwitch(1);
-              // return;
-            //  this.panSlider2.setIndex(2);
-            //   return;
-            }
-
-
-          } else {
-            this.panErrorCount++;
-            // Throw Invalid Pan Error
+          this.qde.application.applicants[this.applicantIndex].pan.panVerified = this.isValidPan = response['ProcessVariables']['isValidPan'];
+  
+          let processVariables = response["ProcessVariables"];
+          this.qde.application.applicants[this.applicantIndex].personalDetails.firstName = processVariables["firstName"];
+          this.qde.application.applicants[this.applicantIndex].personalDetails.lastName = processVariables["lastName"];
+          if(processVariables["applicantTitleId"] > 0) {
+            this.qde.application.applicants[this.applicantIndex].personalDetails.title  = processVariables["applicantTitleId"];
           }
-        }, (error) => {
-          // alert("error"+error);
-          // Throw Request Failure Error
-        });
+          this.selectedTitle  = this.getApplicantTitle(processVariables["applicantTitleId"]);
+          this.createOrUpdatePanDetailsSub=this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
+            // If successful
+            
+            if(response["ProcessVariables"]["status"] == true) {
+              let result = this.parseJson(response["ProcessVariables"]["response"]);
+              // this.qde.application.ocsNumber = result["application"]["ocsNumber"];
+              // this.qde.application.applicationId = result["application"]["applicationId"];
+             
+              this.qde.application.applicationId = result['application']['applicationId'];
+      
+              // let isApplicantPresent:boolean = false;
+      
+              this.tempOldPanNumber = this.qde.application.applicants[this.applicantIndex].pan.panNumber;
 
-      } else {
-        this.qde.application.applicants[this.applicantIndex].pan.isValid = false;
-        this.qde.application.applicants[this.applicantIndex].pan.errorMessage = "Error in pan Details";
-      }
-    });
+              if((result["application"]["applicants"]).length > 0) {
+                // isApplicantPresent = applicants[this.applicantIndex].hasOwnProperty('applicantId');
+                // this.qde.application.applicants[this.coApplicantIndex].applicantId =  applicants[this.coApplicantIndex]["applicantId"];
+                let applicationId = result['application']['applicationId'];
+               this.setStatusApiSub= this.qdeHttp.setStatusApi( applicationId, environment.status.QDECREATED).subscribe((response) => {
+                  if(response["ProcessVariables"]["status"] == true) { 
+                    this.cds.changePanSlide(true);
+                    this.router.navigate(['/applicant/'+this.qde.application.applicationId]);
+                  }
+                });
+  
+              }else {
+              //  this.cds.changePanSlide(true);
+              //  this.panSlider2.setIndex(2);
+               this.tabSwitch(1);
+                // return;
+              //  this.panSlider2.setIndex(2);
+              //   return;
+              }
+  
+  
+            } else {
+              this.panErrorCount++;
+              // Throw Invalid Pan Error
+            }
+          }, (error) => {
+            // alert("error"+error);
+            // Throw Request Failure Error
+          });
+  
+        }
+        // When Pan Not Verified
+        else {
+          this.qde.application.applicants[this.applicantIndex].pan.panVerified = false;
+          this.isValidPan = false;
+        }
+      });
+    }
+    // Only create HFC API when PAN is already valid and not touched
+    else {
+      this.createOrUpdatePanDetailsSub=this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
+        // If successful
+        
+        if(response["ProcessVariables"]["status"] == true) {
+          let result = this.parseJson(response["ProcessVariables"]["response"]);
+          // this.qde.application.ocsNumber = result["application"]["ocsNumber"];
+          // this.qde.application.applicationId = result["application"]["applicationId"];
+         
+          this.qde.application.applicationId = result['application']['applicationId'];
+  
+          // let isApplicantPresent:boolean = false;
+  
+          if((result["application"]["applicants"]).length > 0) {
+            // isApplicantPresent = applicants[this.applicantIndex].hasOwnProperty('applicantId');
+            // this.qde.application.applicants[this.coApplicantIndex].applicantId =  applicants[this.coApplicantIndex]["applicantId"];
+            let applicationId = result['application']['applicationId'];
+           this.setStatusApiSub= this.qdeHttp.setStatusApi( applicationId, environment.status.QDECREATED).subscribe((response) => {
+              if(response["ProcessVariables"]["status"] == true) { 
+                this.cds.changePanSlide(true);
+                this.router.navigate(['/applicant/'+this.qde.application.applicationId]);
+              }
+            });
+
+          }else {
+          //  this.cds.changePanSlide(true);
+          //  this.panSlider2.setIndex(2);
+           this.tabSwitch(1);
+            // return;
+          //  this.panSlider2.setIndex(2);
+          //   return;
+          }
+
+
+        } else {
+          this.panErrorCount++;
+          // Throw Invalid Pan Error
+        }
+      }, (error) => {
+        // alert("error"+error);
+        // Throw Request Failure Error
+      });
+    }
 
     }
   }
@@ -922,28 +1023,69 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       }
   
       this.qde.application.applicants[this.applicantIndex].pan.panNumber = form.value.pan;
-      this.qde.application.applicants[this.applicantIndex].pan.docType = form.value.panDocType.value;
-      this.qde.application.applicants[this.applicantIndex].pan.docNumber = form.value.docNumber;
+      // this.qde.application.applicants[this.applicantIndex].pan.docType = form.value.panDocType.value;
+      // this.qde.application.applicants[this.applicantIndex].pan.docNumber = form.value.docNumber;
+
+      if(this.isValidPan == false || this.isValidPan == null) {
+        this.checkPanValidSub2 = this.qdeHttp.checkPanValid(this.qdeService.getFilteredJson({actualPanNumber: form.value.pan})).subscribe((response) => {
+
+          // response["ProcessVariables"]["status"] = true; // Comment while deploying if service is enabled false
   
-      this.checkPanValidSub2 = this.qdeHttp.checkPanValid(this.qdeService.getFilteredJson({actualPanNumber: form.value.pan})).subscribe((response) => {
-        
-      response["ProcessVariables"]["status"] = true; // Comment while deploying if service is enabled false
-  
-      if(response["ProcessVariables"]["status"]) { // Boolean to check from nsdl website whether pan is valid or not 
-  
-        this.qde.application.applicants[this.applicantIndex].pan.isValid = true;
-        this.qde.application.applicants[this.applicantIndex].pan.errorMessage = "";
-  
-        let processVariables = response["ProcessVariables"];//need to check its needed for non individual
-        this.qde.application.applicants[this.applicantIndex].personalDetails.firstName = processVariables["firstName"];
-        this.qde.application.applicants[this.applicantIndex].personalDetails.lastName = processVariables["lastName"];
-        if(processVariables["applicantTitleId"] > 0) {
-          this.qde.application.applicants[this.applicantIndex].personalDetails.title  = processVariables["applicantTitleId"];
-        }
-        this.selectedTitle = this.getApplicantTitle(processVariables["applicantTitleId"]);
+          if(response["ProcessVariables"]["status"] == true && response['ProcessVariables']['isValidPan'] == true) { // Boolean to check from nsdl website whether pan is valid or not 
+      
+            this.qde.application.applicants[this.applicantIndex].pan.panVerified = this.isValidPan = true;
+      
+            let processVariables = response["ProcessVariables"];//need to check its needed for non individual
+            this.qde.application.applicants[this.applicantIndex].personalDetails.firstName = processVariables["firstName"];
+            this.qde.application.applicants[this.applicantIndex].personalDetails.lastName = processVariables["lastName"];
+            if(processVariables["applicantTitleId"] > 0) {
+              this.qde.application.applicants[this.applicantIndex].personalDetails.title  = processVariables["applicantTitleId"];
+            }
+            this.selectedTitle = this.getApplicantTitle(processVariables["applicantTitleId"]);
+            this.createOrUpdatePanDetailsSub2=this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
+              // If successfull
+              if(response["ProcessVariables"]["status"] == true) {
+      
+                let result = this.parseJson(response["ProcessVariables"]["response"]);
+      
+                this.qde.application.applicationId = result['application']['applicationId'];
+      
+                // let isApplicantPresent:boolean = false;
+      
+                if((result["application"]["applicants"]).length > 0) {
+                  // isApplicantPresent = applicants[this.applicantIndex].hasOwnProperty('applicantId');
+                  // this.qde.application.applicants[this.coApplicantIndex].applicantId =  applicants[this.coApplicantIndex]["applicantId"];
+                  let applicationId = result['application']['applicationId'];
+                  this.setStatusApiSub2=this.qdeHttp.setStatusApi( applicationId, environment.status.QDECREATED).subscribe((response) => {
+                    if(response["ProcessVariables"]["status"] == true) { 
+                      this.cds.changePanSlide2(true);
+                      this.router.navigate(['/applicant/'+this.qde.application.applicationId]);
+                    }
+                  });
+      
+                }else {
+                    this.tabSwitch(11);
+                  // this.goToNextSlide(swiperInstance);
+                  return;
+                }
+              } else {
+                this.panErrorCount++;
+                // Throw Invalid Pan Error
+              }
+            }, (error) => {
+              console.log('error ', error);
+              // alert("error"+error);
+              // Throw Request Failure Error
+            });
+          } else {
+              this.isValidPan = false;
+              this.qde.application.applicants[this.applicantIndex].pan.panVerified = false;
+            }
+        });
+      } else {
         this.createOrUpdatePanDetailsSub2=this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
           // If successfull
-          if(response["ProcessVariables"]["status"]) {
+          if(response["ProcessVariables"]["status"] == true) {
   
             let result = this.parseJson(response["ProcessVariables"]["response"]);
   
@@ -963,8 +1105,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
               });
   
             }else {
-              // this.tabSwitch(11);
-              this.goToNextSlide(swiperInstance);
+                this.tabSwitch(11);
+              // this.goToNextSlide(swiperInstance);
               return;
             }
           } else {
@@ -976,11 +1118,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
           // alert("error"+error);
           // Throw Request Failure Error
         });
-      } else {
-          this.qde.application.applicants[this.applicantIndex].pan.isValid = false;
-          this.qde.application.applicants[this.applicantIndex].pan.errorMessage = "Error in pan Details";
-        }
-      }); 
+      }
+
     }
   }
 
@@ -1015,6 +1154,17 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       this.createOrUpdatePersonalDetailsSub=this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
+          let maleTitles = ['1','10'];
+          let femaleTitles = ['2','3','15','16'];
+          console.log("this.selectedTitle: ", this.selectedTitle);
+          console.log("this.maleTitles: ", maleTitles.find(v => v == this.selectedTitle.value));
+          console.log("this.femaleTiles: ", femaleTitles.find(v => v == this.selectedTitle.value));
+          if(maleTitles.find(v => v == this.selectedTitle.value) != null) {
+            this.qde.application.applicants[this.applicantIndex].personalDetails.gender = '1';
+          }
+          else if(femaleTitles.find(v => v == this.selectedTitle.value) != null) {
+            this.qde.application.applicants[this.applicantIndex].personalDetails.gender = '2';
+          }
           this.goToNextSlide(swiperInstance);
         } else {
           // Throw Invalid Pan Error
@@ -1118,7 +1268,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       const d2:any = new Date();
       var diff = d2 - d1 ;
       var age = Math.floor(diff/(1000*60*60*24*365.25));
-      if(age >= 70 || age <=18 ){
+      if(age < 18){
         this.ageError = true;
         return;
       }else {
@@ -1137,7 +1287,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
             
             if(res['ProcessVariables']['status'] == true) {
               if(res['ProcessVariables']['response'] == '' || res['ProcessVariables']['response'] == null) {
-                this.tabSwitch(2);
+                this.closeDuplicateModal();
               } else {
                 this.duplicates = JSON.parse(res['ProcessVariables']['response'])['duplicates'];
                 if(this.duplicates.length > 0 ) {
@@ -1219,7 +1369,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   
           this.qde.application.applicants[this.applicantIndex][screenName].city = result.city;
           this.qde.application.applicants[this.applicantIndex][screenName].state = result.state;
-          this.qde.application.applicants[this.applicantIndex][screenName].cityState = this.commCityState || "XXXX YYYY";  
+          this.qde.application.applicants[this.applicantIndex][screenName].cityState = this.commCityState || "";  
         }
         else if(response['Error'] == '1') {
           // alert("Invalid Pin");
@@ -1387,14 +1537,14 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     if(this.isTBMLoggedIn) {
       this.tabSwitch(5);
     } else {
-      if (form && !form.valid) {
-        return;
-      }
+      // if (form && !form.valid) {
+      //   return;
+      // }
   
       // Amount should be number
-      if(isNaN(parseInt(form.value.amount))) {
-        return;
-      }
+      // if(isNaN(parseInt(form.value.amount))) {
+      //   return;
+      // }
   
       this.qde.application.applicants[this.applicantIndex].maritalStatus.amount = form.value.amount;
   
@@ -1566,7 +1716,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
         // If successful
         if(response["ProcessVariables"]["status"]) {
           if(this.selectedOccupation.value == 9 || this.selectedOccupation.value == 10){
-            alert("Applicant's application successfully submitted");
+            this.isApplicantRouteModal = true
             // this.tabSwitch();
             return;
           }else{
@@ -1685,13 +1835,14 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
         return;
       }
   
+      console.log(">>>>", this.qde.application.applicants[this.applicantIndex].registeredAddress);
+
       // let zipCityStateID = this.qde.application.applicants[this.applicantIndex].registeredAddress.zipCityStateID
   
       // let zipId = zipCityStateID.split(',')[0] || "";
       // let cityId = zipCityStateID.split(',')[1] || "";
       // let stateId = zipCityStateID.split(',')[2] || "";
-  
-  
+
   
       this.qde.application.applicants[this.applicantIndex].registeredAddress = {
         registeredAddress : form.value.regAdd,
@@ -1845,8 +1996,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       this.createOrUpdatePersonalDetailsSub22 = this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successfull
         if(response["ProcessVariables"]["status"]) {
-          alert("Applicant's application successfully submitted");
-          this.goToNextSlide(swiperInstance);
+          this.isApplicantRouteModal = true;
+          // alert("Applicant's application successfully submitted");
+          // this.router.navigate(['/applicant', this.qde.application.applicationId, 'co-applicant'], {fragment: 'dashboard'} );
+          // this.goToNextSlide(swiperInstance);
         } else {
           // Throw Invalid Pan Error
         }
@@ -1907,7 +2060,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
         if(response["ProcessVariables"]["status"]) {
           if(value == 1) {
             this.goToNextSlide(swiperInstance);
-          }
+          } 
+          else if(value == 2) {
+            this.isApplicantRouteModal = true;
+          } 
         } else {
           // Throw Invalid Pan Error
         }
@@ -1936,7 +2092,6 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   //   });
   // }
 
-
   selectValueChanged(event, to) {
     let whichSelectQde = this.qde.application.applicants[this.applicantIndex];
     let nick = to.getAttribute('nick').split(".");
@@ -1958,16 +2113,31 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
   inOTP: boolean = false;
 
-  submitOTP(form: NgForm) {
+  isAlternateStatus:boolean = false;
+
+  submitOTP(form: NgForm, isAlternateNumber) {
     console.log("Towards OTP");
     
     const mobileNumber = form.value.mobileNumber;
     this.qde.application.applicants[this.applicantIndex].contactDetails.mobileNumber = mobileNumber;
-
-    const applicantId = this.qde.application.applicationId
-    this.sendOTPAPISub = this.qdeHttp.sendOTPAPI(mobileNumber, applicantId).subscribe(res => {
+    const applicationId = this.qde.application.applicationId;
+    const applicantId = this.qde.application.applicants[this.applicantIndex].applicantId;
+    this.sendOTPAPISub = this.qdeHttp.sendOTPAPI(mobileNumber, applicantId, applicationId, isAlternateNumber).subscribe(res => {
       if(res['ProcessVariables']['status'] == true) {
         this.inOTP = true;
+        this.isAlternateStatus = isAlternateNumber;
+      }
+     });
+  }
+
+  resendOTP() {
+    const mobileNumber = this.qde.application.applicants[this.applicantIndex].contactDetails.mobileNumber ;
+    const applicationId = this.qde.application.applicationId;
+    const applicantId = this.qde.application.applicants[this.applicantIndex].applicantId;
+    this.sendOTPAPISub = this.qdeHttp.sendOTPAPI(mobileNumber, applicantId, applicationId, false).subscribe(res => {
+      if(res['ProcessVariables']['status'] == true) {
+        this.inOTP = true;
+        this.isAlternateStatus =  false;
       }
      });
   }
@@ -1980,10 +2150,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   validateOTP(form: NgForm) {
     console.log("Payment gateway");
     const mobileNumber = this.qde.application.applicants[this.applicantIndex].contactDetails.mobileNumber;
-    const applicantId = this.qde.application.applicationId;
+    const applicantId = this.qde.application.applicants[this.applicantIndex].applicantId;
+    const applicationId = this.qde.application.applicationId;
+
     const otp = form.value.otp;
 
-    this.validateOTPAPISub = this.qdeHttp.validateOTPAPI(mobileNumber, applicantId, otp).subscribe(res => {
+    this.validateOTPAPISub = this.qdeHttp.validateOTPAPI(mobileNumber, applicantId, applicationId, otp, this.isAlternateStatus).subscribe(res => {
       // if(res['ProcessVariables']['isPaymentSuccessful'] == true) {
       //   this.showSuccessModal = true;
       //   this.emiAmount = res['ProcessVariables']['emi'];
@@ -1995,6 +2167,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       if(res['ProcessVariables']['status'] == true) {
         this.otp = "";
         alert("OTP verified successfully");
+        if(this.isAlternateStatus) {
+          this.qde.application.applicants[this.applicantIndex].contactDetails.isAlternateOTPverified = true;
+        }else {
+          this.qde.application.applicants[this.applicantIndex].contactDetails.isMobileOTPverified = true;
+        }
         this.onBackOTP();
       }else {
         alert("Enter valid OTP");
@@ -2035,6 +2212,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     this.isAlternateEmailId = this.qde.application.applicants[this.applicantIndex].contactDetails.alternateEmailId != "" ? true : false;
     this.isAlternateMobileNumber = this.qde.application.applicants[this.applicantIndex].contactDetails.alternateMobileNumber != null ? true : false;
     this.isAlternateResidenceNumber = this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber != "" ? true : false;
+  
+  
   }
 
   makePermanentAddressSame(event: boolean) {
@@ -2273,7 +2452,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
         this.createOrUpdatePanDetailsSub3 = this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
           // If successful
           if(response["ProcessVariables"]["status"] == true) {
-            alert("Switch to tab 1");
+            // alert("Switch to tab 1");
             this.tabSwitch(1);
           }
         });
@@ -2393,7 +2572,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     this.tabSwitch(this.activeTab+1);
   }
 
-  submitDuplicateApplicant(form: NgForm, tabNumber: number) {
+  submitDuplicateApplicant(form: NgForm) {
     let tempApplicant = this.qde.application.applicants[this.applicantIndex];
     let newApplicantToBeReplaced = this.duplicates.find(e => e.applicantId == form.value.selectDuplicateApplicant);
     this.qde.application.applicants[this.applicantIndex] = this.qdeService.getModifiedObject(tempApplicant, newApplicantToBeReplaced);
@@ -2408,4 +2587,25 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+  // @ViewChild('commSlider') commSlider: ElementRef;
+
+  commSliderChanged(event) {
+    // console.log('COMMSLIDER:', this.commSlider);
+    // this.commSlider.nativeElement.querySelector('.ng5-slider-span.ng5-slider-bubble.ng5-slider-model-value').innerHTML = event+'y';
+  }
+
+  RegExp(param) {
+    return RegExp(param);
+  }
+
+  keyUpPanNumber(event: Event) {
+    console.log("TEMPLD", this.tempOldPanNumber);
+    if(event['target']['value'].trim() != '' && event['target']['value'] == this.tempOldPanNumber) {
+      this.isValidPan = true;
+    } else {
+      this.isValidPan = null;
+    }
+  }
+
 }

@@ -1,8 +1,8 @@
 {
   "Callback": {
-    "appiyoUrl" : "",
-    "userName" : "",
-    "password" : "",
+    "appiyoUrl" : "http://localhost:8080/ProcessStore",
+    "userName" : "inswit@inswit.com",
+    "password" : "inswit123",
     "authToken" : "",
     "isHTTPS" : false,
     "longTermToken" : "true",

@@ -98,6 +98,7 @@
     text-transform: uppercase;
     padding: 0 1.56vw;
     border: 1px solid #f58220;
+    /* margin-top: 4vw; */
 }
 .bs-modal .modal-body .or {
     font-size: 1.41vw;
@@ -221,4 +222,35 @@ visibility: visible;
 
 .duplicate-table-data .duplicate-table-col {
     font-size: 1.2vw;
+}
+
+.send-otp-disable {
+    color: gray !important;
+}
+
+.otp_input_len{
+    width: 28.55vw;
+}
+
+.pull-right{
+    float: right;
+}
+
+.resend_otp_size {
+  font-size: 15px;  
+}
+
+.timer {
+    font-size: 2.5em;
+    padding: 10px;
+    text-align: center;
+    margin: 0 auto;
+    background: #ccc;
+  }
+
+.redalert {
+    color: red;
+    font-size: .94vw;
+    font-weight: bold;
+    letter-spacing: 0.5px;
 }

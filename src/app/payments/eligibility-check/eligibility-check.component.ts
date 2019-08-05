@@ -6,6 +6,8 @@ import { QdeService } from 'src/app/services/qde.service';
 import { NgForm } from '@angular/forms';
 import * as Swiper from "swiper/dist/js/swiper.js";
 import { Options } from "ng5-slider";
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import Qde from 'src/app/models/qde.model';
 
 @Component({
   selector: 'app-eligibility-check',
@@ -14,6 +16,7 @@ import { Options } from "ng5-slider";
 })
 export class EligibilityCheckComponent implements OnInit {
 
+  qde: Qde;
   value: number = 0;
 
   minValue: number = 1;
@@ -107,11 +110,15 @@ export class EligibilityCheckComponent implements OnInit {
       this.commonDataService.applicationId.subscribe(val => {
         this.applicationId = val;
       });
+
+      this.route.params.subscribe(params => {
+        this.applicationId = params.applicationId;
+      });
   }
 
   ngOnInit() {
     // this.renderer.addClass(this.select2.selector.nativeElement, 'js-select');
-
+    this.submitEligibility();
     this.route.fragment.subscribe(fragment => {
       let localFragment = fragment;
 
@@ -203,6 +210,9 @@ export class EligibilityCheckComponent implements OnInit {
   firstname: number;
   showEligible: boolean = false;
   showNotEligible: boolean =false;
+  showReview:boolean = false;
+  isConfirmRejectionModal: boolean = false;
+  isProceedModal:boolean = false;
 
   submitEligibility() {
     this.qdeHttp.cibilDetails(this.ocsNumber).subscribe(res => {
@@ -220,7 +230,7 @@ export class EligibilityCheckComponent implements OnInit {
         this.commonDataService.setIsMainTabEnabled(false);
       }
       else if(res['ProcessVariables']['checkEligibility'].toLowerCase() == 'review'){
-        this.showNotEligible = true;
+        this.showReview = true;
         this.commonDataService.setIsMainTabEnabled(false);
       }
       else{
@@ -232,10 +242,20 @@ export class EligibilityCheckComponent implements OnInit {
   statusYes(){
     this.qdeHttp.setStatusApi(this.applicationId, this.applicationStatusYes).subscribe(res => {}, err => {});
     this.commonDataService.setIsMainTabEnabled(false);
+    this.router.navigate(['/view-form', this.applicationId]);
   }
 
   statusNo(){
-    this.qdeHttp.setStatusApi(this.applicationId, this.applicationStatusNo).subscribe(res => {}, err => {});
     this.commonDataService.setIsMainTabEnabled(false);
+    this.isConfirmRejectionModal = true;
+  }
+
+  goBackEligibility(){
+    this.isConfirmRejectionModal = false;
+  }
+
+  rejectProceed(){
+    this.qdeHttp.setStatusApi(this.applicationId, this.applicationStatusNo).subscribe(res => {}, err => {});
+    this.isProceedModal = true;
   }
 }

@@ -29,6 +29,8 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
   // applicantId: string;
 
   public applicantName: string;
+
+  referenceNumber: string;
   qde:Qde;
 
   isMainTabEnabled: boolean;
@@ -95,6 +97,7 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
       } else {
         if(this.qde.application.applicants[0].personalDetails.firstName != "") {
           this.applicantName = "Application for "+this.qde.application.applicants[index].personalDetails.firstName +" "+ this.qde.application.applicants[index].personalDetails.lastName;
+          this.referenceNumber = this.qde.application.ocsNumber;
         }
       }
     });
@@ -112,7 +115,7 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
         this.isEligibilityForReviewsSub = this.commonDataService.isEligibilityForReviews.subscribe(val => {
           console.log("MENUHEADER,", value);
           try{
-          this.isEligibilityForReview = val.find(v => v.applicationId == value)['isEligibilityForReview'];
+            this.isEligibilityForReview = val.find(v => v.applicationId == value)['isEligibilityForReview'];
           } catch(ex) {
             // this._router.navigate(['/leads']);
           }
@@ -135,14 +138,16 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
   }
 
   logout() {
-    this.utilService.logout().subscribe(
-      res => {
-        this.utilService.clearCredentials();
-      },
-      error => {
-        this.utilService.clearCredentials();
-      }
-    );
+    this.utilService.clearCredentials();
+
+    // this.utilService.logout().subscribe(
+    //   res => {
+    //     this.utilService.clearCredentials();
+    //   },
+    //   error => {
+    //     this.utilService.clearCredentials();
+    //   }
+    // );
   }
 
   ngOnDestroy() {

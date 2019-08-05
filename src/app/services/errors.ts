@@ -3,7 +3,7 @@ export const errors: any = {
   pan: {
     required: "PAN is mandatory",
     length: "PAN must be at least 10 characters",
-    invalid: "Invalid PAN, valid PAN format - ABCD1234E",
+    invalid: "Invalid PAN, valid PAN format - ABCDE1234F",
     after3Attemps: "Please check and enter your correct PAN"
   },
   panDocumentNo: {
@@ -35,16 +35,20 @@ export const errors: any = {
       invalid: "Invalid Email ID"
     },
     alternateEmail: {
-      invalid: "Invalid Email ID"
+      invalid: "Invalid Email ID",
+      sameEmail: "Email ID's are same, please use different email"
     },
     prefferedMobile: {
       required: "10 digit mobile number is mandatory",
       invalid: "Invalid mobile number/Alphabets and Special Characters not allowed",
-      minlength: "Mobile number must be 10 digits"
+      minlength: "Mobile number must be 10 digits",
+      wrong: "Please provide valid mobile number"
     },
     alternateMobile: {
       invalid: "Invalid mobile number/Alphabets and Special Characters not allowed",
-      minlength: "Mobile number must be 10 digits"
+      minlength: "Mobile number must be 10 digits",
+      sameNumber: "Mobile numbers are same, please use different numbers",
+      wrong: "Please provide valid mobile number"
     },
     stdCode: {
       required: "Std Code is mandatory",
@@ -55,7 +59,8 @@ export const errors: any = {
     },
     residenceNumber: {
       required: "Residence number is mandatory",
-      invalid: "Invalid Residence number/Alphabets and Special Characters not allowed"
+      invalid: "Invalid Residence number/Alphabets and Special Characters not allowed",
+      sameNumber: "Residence numbers are same, please use different numbers"
     },
     alternateResidenceNumber1:{
       invalid:"Invalid Residence number/Alphabets and Special Characters not allowed"

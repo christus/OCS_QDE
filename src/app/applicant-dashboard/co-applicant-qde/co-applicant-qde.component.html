@@ -181,6 +181,7 @@
                                                             pattern="{{regexPattern.pan}}"      
                                                             (ngModelChange)="qde.application.applicants[coApplicantIndex].pan.panNumber = $event.toUpperCase()"
                                                             name="pan"
+                                                            (keyup)="keyUpPanNumber($event)"
                                                             #panNumber="ngModel"
                                                             fieldFill
                                                             spellcheck="false"
@@ -192,6 +193,7 @@
                                                         <div *ngIf="panNumber.errors?.minlength || panNumber.errors?.maxlength">{{errors.pan.length}}</div>
                                                     </div>
                                                     <div *ngIf="panErrorCount >= 3" class="invalid-feedback">{{errors.pan.after3Attemps}}</div>
+                                                    <div class="redalert" *ngIf="panNumber.touched && panNumber.valid && RegExp(regexPattern.pan).test(panNumber.value) && isValidPan == false">Invalid PAN</div>
                                                 </div>
                                                 <div class="form-group">
 
@@ -531,7 +533,7 @@
     
                                                         <div class="col4">
                                                             <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
-                                                            [data]="years"
+                                                            [data]="dobYears"
                                                             textField="key"
                                                             valueField="value"
                                                             tabindex="3"
@@ -544,7 +546,7 @@
                                                         </div>
                                                     </div>
                                                     <div *ngIf="ageError" class="invalid-feedback">
-                                                        <div *ngIf="ageError"> Age should not be less than 18 years and greater than 70 years</div>
+                                                        <div *ngIf="ageError">Age should not be less than 18 years</div>
                                                       </div>
                                                   </div>
                                                   <div class="form-group">                                                 
@@ -604,7 +606,7 @@
                                 <div class="form-wrap">
                                     <div class="form-group" [ngClass]="{'prefer': isAlternateEmailId}">
   
-                                        <input [readonly]="isReadOnly" type="text"
+                                        <input [readonly]="isReadOnly" type="email"
                                               class="form-control"
                                               id="pref-email"
                                               data-validation-attr="email"
@@ -631,7 +633,7 @@
                                           </div>
                                     </div>
                                     <div class="form-group" [ngClass]="{'typ-alternative': !isAlternateEmailId}">
-                                        <input [readonly]="isReadOnly" type="text"
+                                        <input [readonly]="isReadOnly" type="email"
                                               class="form-control"
                                               id="alter-email"
                                               data-validation-attr="email01"
@@ -672,7 +674,8 @@
                                         <label for="mob-no">Mobile number</label>
                                         <span class="optional">10 digit</span>
 
-                                        <a href="javascript:void(0);" class="sent-otp modal-init" data-target="sent-otp-modal"><span class="text"  (click)="submitOTP(contactForm)">Send OTP</span><span class="icon icon-tick"></span></a>
+                                        <a *ngIf="!qde.application.applicants[coApplicantIndex].contactDetails.isMobileOTPverified" href="javascript:void(0);" class="sent-otp modal-init" data-target="sent-otp-modal"><span class="text" (click)="submitOTP(contactForm, false)">Send OTP</span><span class="icon icon-tick"></span></a>
+                                        <a *ngIf="qde.application.applicants[coApplicantIndex].contactDetails.isMobileOTPverified" href="javascript:void(0);"   class="sent-otp modal-init send-otp-disable" data-target="sent-otp-modal"><span class="text" >Send OTP</span><span class="icon icon-tick"></span></a>
                                         <span class="alternate-data" *ngIf="!isAlternateMobileNumber">
 
                                           <a  href="javascript:void(0);"
@@ -681,6 +684,8 @@
                                               (click)="addRemoveMobileNumberField()">+ Add</a> alternate Mobile number
                                         </span>
   
+                                        <div class="redalert" *ngIf="RegExp('0{10}|1{10}|2{10}|3{10}|4{10}|5{10}|6{10}|7{10}|8{10}|9{10}').test(mobileNumber.value)">{{errors.contactDetails.prefferedMobile.wrong}}</div>
+
                                         <div *ngIf="(mobileNumber.touched || mobileNumber.dirty) && mobileNumber.invalid" class="invalid-feedback">
                                           <!-- <div *ngIf="mobileNumber.errors?.required">{{errors.contactDetails.prefferedMobile.required}}</div> -->
                                           <div *ngIf="mobileNumber.errors?.pattern">{{errors.contactDetails.prefferedMobile.invalid}}</div>
@@ -704,13 +709,15 @@
   
                                         <label for="alter-mob">Alternate mobile no</label>
                                         <span class="optional">10 digit</span>
-                                        <a href="#" class="sent-otp modal-init" data-target="sent-otp-modal"><span class="text" (click)="submitOTP(contactForm)">Send OTP</span><span class="icon icon-tick"></span></a>
+                                        <a *ngIf="!qde.application.applicants[coApplicantIndex].contactDetails.isAlternateOTPverified" href="javascript:void(0);" class="sent-otp modal-init" data-target="sent-otp-modal"><span class="text" (click)="submitOTP(contactForm, true)">Send OTP</span><span class="icon icon-tick"></span></a>
+                                        <a *ngIf="qde.application.applicants[coApplicantIndex].contactDetails.isAlternateOTPverified" href="javascript:void(0);" class="sent-otp modal-init send-otp-disable" data-target="sent-otp-modal"><span class="text">Send OTP</span><span class="icon icon-tick"></span></a>
                                         <span class="alternate-data">
                                           <a  href="javascript:void(0);"
                                               class="alter-btn"
                                               tabindex="8"
                                               (click)="addRemoveMobileNumberField()">- Remove</a> alternate Mobile no
                                         </span>
+                                        <div class="redalert" *ngIf="RegExp('0{10}|1{10}|2{10}|3{10}|4{10}|5{10}|6{10}|7{10}|8{10}|9{10}').test(altMobileNo.value)">{{errors.contactDetails.alternateMobile.wrong}}</div>
                                         <div *ngIf="(altMobileNo.touched || altMobileNo.dirty) && altMobileNo.invalid" class="invalid-feedback">
                                           <div *ngIf="altMobileNo.errors?.pattern">{{errors.contactDetails.alternateMobile.invalid}}</div>
                                           <div *ngIf="altMobileNo.errors?.minlength">{{errors.contactDetails.alternateMobile.minlength}}</div>
@@ -730,7 +737,6 @@
                                                       fieldFill
                                                       tabindex="9"
                                                       spellcheck="false"
-                                                      required
                                                       id="std" />
                                               <label for="std">STD</label>
                                               <div *ngIf="residenceStdCode.touched && residenceStdCode.invalid" class="invalid-feedback">
@@ -739,7 +745,7 @@
                                               </div>
                                         </div>
                                         <span class="seperator">-</span>
-                                        <div class="form-group">
+                                        <div class="form-group typ-optional">
                                             <input [readonly]="isReadOnly"    type="text"
                                                       class="form-control"
                                                       id="res-no"
@@ -752,9 +758,9 @@
                                                       data-validation-attr="residenceno"
                                                       fieldFill
                                                       tabindex="10"
-                                                      spellcheck="false"
-                                                      required />
+                                                      spellcheck="false" />
                                             <label for="res-no">Residence number</label>
+                                            <span class="optional">Optional</span>
                                             <div *ngIf="residenceNumber.touched  && residenceNumber.invalid" class="invalid-feedback">
                                               <div *ngIf="residenceNumber.errors?.pattern">{{errors.contactDetails.residenceNumber.invalid}}</div>
                                               <!-- <div *ngIf="residenceNumber.errors?.required">{{errors.contactDetails.residenceNumber.required}}</div> -->
@@ -786,7 +792,7 @@
                                           </div>
                                         </div>
                                         <span class="seperator">-</span>
-                                        <div class="form-group">
+                                        <div class="form-group typ-optional">
                                             <input [readonly]="isReadOnly"    type="text"
                                                       class="form-control"
                                                       [(ngModel)]="alternateResidenceNumberPhoneNumber"
@@ -800,6 +806,7 @@
                                                       pattern="{{regexPattern.mobileNumber}}"
                                                       data-validation-attr="residenceno01" />
                                             <label for="altr-res-no">Residence number</label>
+                                            <span class="optional">Optional</span>
                                             <div *ngIf="alternateResidenceNumber2.touched  && alternateResidenceNumber2.invalid" class="invalid-feedback">
                                               <div *ngIf="alternateResidenceNumber2.errors?.pattern">{{errors.contactDetails.alternateResidenceNumber2.invalid}}</div>
                                           </div>
@@ -815,8 +822,8 @@
                                 <div class="btn-wrap">
                                       <button class="btn btn-primary"
                                               type="submit"
-                                              [ngClass]="{'disabled': (!contactForm.valid)}"
-                                              [disabled]="!contactForm.valid">Next
+                                              [ngClass]="{'disabled': (!contactForm.valid || RegExp('0{10}|1{10}|2{10}|3{10}|4{10}|5{10}|6{10}|7{10}|8{10}|9{10}').test(mobileNumber.value) || RegExp('0{10}|1{10}|2{10}|3{10}|4{10}|5{10}|6{10}|7{10}|8{10}|9{10}').test(altMobileNo.value))}"
+                                              [disabled]="!contactForm.valid || RegExp('0{10}|1{10}|2{10}|3{10}|4{10}|5{10}|6{10}|7{10}|8{10}|9{10}').test(mobileNumber.value) || RegExp('0{10}|1{10}|2{10}|3{10}|4{10}|5{10}|6{10}|7{10}|8{10}|9{10}').test(altMobileNo.value)">Next
                                       </button>
                                 </div>
                             </form>
@@ -872,6 +879,9 @@
                                   (ngSubmit)="submitCommunicationAddressDetails(communicationForm)">
                               <div class="form-wrap">
                                   <h1 class="sub-heading" style="text-align: left ; margin-bottom: 12px">Current Address</h1>
+                                  <div class="currentAddressFromMainApplicantBtnWrapper" *ngIf="isCurrentAddressFromMainApplicant">
+                                      <button type="button" (click)="currentAddressFromMainApplicant()">Current Address From Main Applicant</button>
+                                  </div>
                                   <div class="form-group">
                                       <span class="control-title">Residential status</span>
                                       <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
@@ -910,7 +920,7 @@
   
                                   </div>
   
-                                  <div class="form-group">
+                                  <div class="form-group typ-optional">
                                       <input [readonly]="isReadOnly" type="text" class="form-control" id="address2"
                                         [(ngModel)]="qde.application.applicants[coApplicantIndex].communicationAddress.addressLineTwo"
                                         pattern="{{regexPattern.address}}"
@@ -918,10 +928,10 @@
                                         #address2="ngModel"
                                         fieldFill
                                         tabindex="3"
-                                        spellcheck="false"
-                                        required />
+                                        spellcheck="false"/>
   
                                       <label for="address2">Address line 2</label>
+                                      <span class="optional">optional</span>
                                       <div *ngIf="(address2.touched || address2.dirty) && address2.invalid" class="invalid-feedback">
                                         <!-- <div *ngIf="address2.errors?.required">{{errors.commAddress.address2.required}}</div> -->
                                         <div *ngIf="address2.errors?.pattern">{{errors.commAddress.address2.invalid}}</div>
@@ -984,6 +994,9 @@
                                   </div>
                                   <div class="permanent-add-wrap">
                                       <h1 class="sub-heading" style="text-align: left; margin-bottom: 12px">Permanent Address</h1>
+                                        <div class="currentAddressFromMainApplicantBtnWrapper" *ngIf="isPermanentAddressFromMainApplicant">
+                                            <button type="button" (click)="permanentAddressFromMainApplicant()">Permanent Address From Main Applicant</button>
+                                        </div>
                                           <div class="form-group">
                                               <input [readonly]="isReadOnly" type="text" class="form-control" id="per-address1"
                                               name="pAddressLineOne"
@@ -1000,7 +1013,7 @@
                                                 <div *ngIf="pAddress1.errors?.pattern">{{errors.commAddress.address1.invalid}}</div>
                                               </div>
                                           </div>
-                                          <div class="form-group">
+                                          <div class="form-group typ-optional">
                                               <input [readonly]="isReadOnly" type="text" class="form-control" id="per-address2"
                                               name="pAddressLineTwo"
                                               #pAddress2="ngModel"
@@ -1008,9 +1021,10 @@
                                               tabindex="8"
                                               pattern="{{regexPattern.address}}"
                                               spellcheck="false"
-                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].permanentAddress.addressLineTwo"
-                                              required/>
+                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].permanentAddress.addressLineTwo"/>
+
                                               <label for="per-address2">Address line 2</label>
+                                              <span class="optional">optional</span>
                                               <div *ngIf="(pAddress2.touched || pAddress2.dirty) && pAddress2.invalid" class="invalid-feedback">
                                                 <!-- <div *ngIf="pAddress2.errors?.required">{{errors.commAddress.address2.required}}</div> -->
                                                 <div *ngIf="pAddress2.errors?.pattern">{{errors.commAddress.address2.invalid}}</div>
@@ -1094,7 +1108,7 @@
                                               #numberOfYearsInCurrentResidence="ngModel"
                                               fieldFill
                                               required />
-                                      <ng5-slider tabindex="14" [(value)]="qde.application.applicants[coApplicantIndex].communicationAddress.numberOfYearsInCurrentResidence" [options]="options"></ng5-slider>
+                                              <ng5-slider tabindex="13" class="commSlider" [(value)]="qde.application.applicants[coApplicantIndex].communicationAddress.numberOfYearsInCurrentResidence" [options]="options" (valueChange)="commSliderChanged($event)"></ng5-slider>
                                   </div>
                               </div>
                               <div class="btn-wrap">
@@ -1267,13 +1281,12 @@
                                               #spouseEarningAmtForm="ngForm"
                                               (ngSubmit)="submitSpouseEarningAmt(spouseEarningAmtForm, maritalSlider2)">
                                             <div class="form-wrap">
-                                                <div class="form-group inr">
+                                                <div class="form-group inr typ-optional">
   
                                                   <input [readonly]="isReadOnly" type="text"
                                                           class="form-control"
                                                           id="amount"
                                                           tabindex="1"
-                                                          required
                                                           [(ngModel)]="qde.application.applicants[coApplicantIndex].maritalStatus.amount"
                                                           #amount="ngModel"
                                                           name="amount"
@@ -1285,8 +1298,7 @@
                                                   <span class="addon">
                                                     <span class="icon icon-inr"></span>
                                                   </span>
-                                                  <span class="in-word"></span>
-  
+                                                  <span class="optional">Optional</span>  
                                                   <div *ngIf="(amount.touched || amount.dirty) && amount.invalid" class="invalid-feedback">
                                                       <!-- <div *ngIf="amount.errors?.required">{{errors.maritialStatus.salaryAmount.required}}</div> -->
                                                       <div *ngIf="amount.errors?.pattern">{{errors.maritialStatus.salaryAmount.invalid}}</div>
@@ -1296,8 +1308,6 @@
                                             <div class="btn-wrap">
                                                 <button   type="submit"
                                                           class="btn btn-primary"
-                                                          [ngClass]="{'disabled': (!spouseEarningAmtForm.valid)}"
-                                                          [disabled]="!spouseEarningAmtForm.valid"
                                                   >Next
                                                 </button>
                                             </div>
@@ -1368,7 +1378,7 @@
                                                           class="form-control"
                                                           spellcheck="false"
                                                           [(ngModel)]="qde.application.applicants[coApplicantIndex].familyDetails.numberOfDependents" />
-                                                  <ng5-slider [(value)]="qde.application.applicants[coApplicantIndex].familyDetails.numberOfDependents" [options]="familyOptions"></ng5-slider>
+                                                          <ng5-slider class="commSlider" [(value)]="qde.application.applicants[coApplicantIndex].familyDetails.numberOfDependents" [options]="familyOptions"></ng5-slider>
                                               </div>
                                           </div>
                                           <div class="btn-wrap">
@@ -1624,10 +1634,11 @@
                                               spellcheck="false"
                                               #numberOfYearsInCurrentCompany="ngModel"
                                               required />
-  
-                                      <ng5-slider tabindex="4" [(value)]="qde.application.applicants[coApplicantIndex].occupation.numberOfYearsInCurrentCompany"
-                                      (valueChange)="checkOccupationDetailsYears($event)" [options]="options">
-                                      </ng5-slider>
+
+                                        <ng5-slider class="commSlider" tabindex="4" [(value)]="qde.application.applicants[coApplicantIndex].occupation.numberOfYearsInCurrentCompany"
+                                        (valueChange)="checkOccupationDetailsYears($event)"
+                                        [options]="employementOptions" >
+                                        </ng5-slider>
   
                                       <!-- <div *ngIf="numberOfYearsInCurrentCompany.touched && numberOfYearsInCurrentCompany.invalid" class="invalid-feedback">
                                         <div *ngIf="numberOfYearsInCurrentCompany.errors?.required">{{errors.occupationDetails.currentExp.required}}</div>
@@ -1648,8 +1659,9 @@
                                               spellcheck="false"
                                               required />
   
-                                      <ng5-slider tabindex="6" [(value)]="qde.application.applicants[coApplicantIndex].occupation.totalWorkExperience" [options]="options"
-                                      (valueChange)="checkOccupationDetailsYears($event)"></ng5-slider>
+                                              <ng5-slider class="commSlider" tabindex="6" [(value)]="qde.application.applicants[coApplicantIndex].occupation.totalWorkExperience" 
+                                              (valueChange)="checkOccupationDetailsYears($event)"
+                                              [options]="experienceOptions"></ng5-slider>
   
                                       <!-- <div *ngIf="(totalExperienceYear.touched || totalExperienceYear.dirty) && totalExperienceYear.invalid" class="invalid-feedback">
                                         <div *ngIf="totalExperienceYear.errors?.required">{{errors.occupationDetails.totalExp.required}}</div>
@@ -1725,7 +1737,7 @@
                                       </div>
                                   </div>
   
-                                  <div class="form-group">
+                                  <div class="form-group typ-optional">
                                       <input [readonly]="isReadOnly" type="text" class="form-control"
                                         id="ofcAddTwo"
                                         tabindex="2"
@@ -1734,9 +1746,9 @@
                                         name="ofcA2"
                                         spellcheck="false"
                                         #ofcA2="ngModel"
-                                        fieldFill
-                                        required />
+                                        fieldFill/>
                                       <label for="ofcAddTwo">Office address line2</label>
+                                      <span class="optional">optional</span>
                                       <div *ngIf="ofcA2.touched && ofcA2.invalid" class="invalid-feedback">
                                           <!-- <div *ngIf="ofcA2.errors?.required">{{errors.officialCorrespondence.address2.required}}</div> -->
                                           <div *ngIf="ofcA2.errors?.pattern">{{errors.officialCorrespondence.address2.invalid}}</div>
@@ -1840,7 +1852,7 @@
                                       </div>
                                   </div>
                                   <div class="form-group typ-optional">
-                                      <input [readonly]="isReadOnly" type="text" class="form-control" id="off-email"
+                                      <input [readonly]="isReadOnly" type="email" class="form-control" id="off-email"
                                         required
                                         [(ngModel)]="qde.application.applicants[coApplicantIndex].officialCorrespondence.officeEmailId"
                                         pattern="{{regexPattern.email}}"
@@ -2025,6 +2037,7 @@
                                                         class="not-usual"
                                                         tabindex="2"
                                                         [checked]="qde.application.applicants[coApplicantIndex].incomeDetails.incomeConsider == false"
+                                                        (click)="incomeDetailsYesNo(2, incomeSlider2)"
                                                         [value]="2" />
                                                 <label for="incomeConsiderNo1"><span>No</span></label>
                                             </div>
@@ -2132,6 +2145,7 @@
                                                           (ngModelChange)="qde.application.applicants[coApplicantIndex].pan.panNumber = $event.toUpperCase()"
                                                           #panNumber2="ngModel"
                                                           fieldFill
+                                                          (keyup)="keyUpPanNumber($event)"
                                                           spellcheck="false"
                                                           required />
                                                   <label for="pan-inpt2">Enter PAN</label>
@@ -2141,6 +2155,7 @@
                                                       <div *ngIf="panNumber2.errors?.minlength || panNumber2.errors?.maxlength">{{errors.pan.length}}</div>
                                                   </div>
                                                   <div *ngIf="panErrorCount >= 3" class="invalid-feedback">{{errors.pan.after3Attemps}}</div>
+                                                  <div class="redalert" *ngIf="panNumber2.touched && panNumber2.valid && RegExp(regexPattern.pan).test(panNumber2.value) && isValidPan == false">Invalid PAN</div>
                                               </div>
                                               <div class="form-group">
                                                 <span class="control-title">Document Type</span>
@@ -2582,7 +2597,7 @@
                                                    maxlength="8" 
                                                   data-validation-attr="residenceno" 
                                                   required/>
-                                          <label for="ca-res-no">Residence number</label>
+                                          <label for="ca-res-no">Contact number</label>
                                           <div *ngIf="phoneNumber.touched  && phoneNumber.invalid" class="invalid-feedback">
                                             <!-- <div *ngIf="phoneNumber.errors?.required">{{errors.corporateAddress.phoneNumber.required}}</div> -->
                                             <div *ngIf="phoneNumber.errors?.pattern">{{errors.corporateAddress.phoneNumber.invalid}}</div>
@@ -2590,7 +2605,7 @@
                                       </div>
                                   </div>
                                   <div class="form-group last">
-                                      <input [readonly]="isReadOnly"    type="text"
+                                      <input [readonly]="isReadOnly"    type="email"
                                                 class="form-control"
                                                 id="ofc-email"
                                                 required
@@ -2962,4 +2977,16 @@
             </form>
         </div>
     </div>
-  </main>
+
+    <div class="overlay" [ngClass]="{'active': isCoApplicantRouteModal}"></div>
+    <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isCoApplicantRouteModal}">
+        <!-- <a class="modal-close" href="javascript:void(0);" (click)="onBackOTP()"><span class="icon icon-close"></span></a> -->
+        <div class="modal-body">
+            <h1 class="center">Co-Applicant has been successfully saved!</h1>
+            <p>Click Proceed to continue</p>
+                <div class="btn-wrap">
+                    <button class="btn btn-border"  [routerLink]="['/loan', qde.application.applicationId]">Proceed</button>
+                </div>
+        </div>
+    </div>
+</main>

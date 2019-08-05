@@ -122,3 +122,40 @@
     margin-top: 1vw;
     font-size: 1vw
 }
+
+.lyt-box .summary-wrap .detail-wrap {
+    width: 50%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.lyt-box .summary-wrap .detail-wrap .box {
+    text-align: left;
+}
+
+.lyt-box .summary-wrap .detail-wrap .box .tag {
+    margin: 0 auto;
+    font-size: 1vw;
+    width: 50%;
+}
+
+.lyt-box .summary-wrap .detail-wrap .box .content {
+    font-size: 1vw;
+    width: 50%;
+    margin: 0 auto;
+}
+
+.lyt-box .summary-wrap .para {
+    font-size: 1vw;
+}
+
+.lyt-box .summary-wrap .detail-wrap.typ2 .box .tag {
+    font-size: 1vw;
+    width: 50%;
+    margin: 0 auto;
+}
+
+.lyt-box .summary-wrap .detail-wrap.typ2 .box .content {
+    font-size: 1vw;
+    width: 50%;
+}

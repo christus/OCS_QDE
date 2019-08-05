@@ -171,6 +171,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
 
   docType: Array<any> = [];
   selectedAssesmentMethodology: Array<Item> = [];
+  isViewFormModal:boolean = false;
 
   @ViewChild('tabContents') tabContents: ElementRef;
 
@@ -225,6 +226,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
       // this.commonDataService.changeApplicationId(this.qde.application.applicationId);
 
       this.applicationId = this.qde.application.applicationId;
+      console.log(">>>", this.applicationId+"");
 
       this.qdeService.qdeSource.subscribe(v => {
         this.qde = v;
@@ -406,7 +408,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
       // Make an http request to get the required qde data and set using setQde
       if (params['applicationId']) {
         const applicationId = params.applicationId;
-        this.commonDataService.changeApplicationId(this.qde.application.applicationId);
+        // this.commonDataService.changeApplicationId(this.qde.application.applicationId);
 
         this.qdeHttp.getQdeData(applicationId).subscribe(response => {
           let result = JSON.parse(response["ProcessVariables"]["response"]);
@@ -667,14 +669,14 @@ export class ViewFormComponent implements OnInit, OnDestroy {
               } else {
                 this.isQdeSubmitEnabled = false;
               }
-            } 
+            }
             else {
               //For final Submit button
               if(element['incomeDetails']['incomeConsider'] == true) {
-                if( element.documents.filter(el => el['documentCategory'] == '1' || el['documentCategory'] == '3' || el['documentCategory'] =='5' || el['documentCategory'] == '6' || el['documentCategory'] == '84' || el['documentCategory'] == '85').length == 6) {
+                if( element.documents.filter(el => el['documentCategory'] == '1' || el['documentCategory'] == '3' || el['documentCategory'] =='5' || el['documentCategory'] == '84' || el['documentCategory'] == '85').length == 6) {
                   this.isFinalSubmitEnabled = true;
                 }
-                else{
+                else {
                   this.isFinalSubmitEnabled = false;
                   return true;
                 }
@@ -712,7 +714,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
       //     console.log("Response", response)
       // })
       this.qdeHttp.viewFormSmsApi(this.applicationId).subscribe(res => {}, err => {});
-      alert("Qde Submitted Successfully");
+       this.isViewFormModal = true;
   }
 
   prefillData() {
@@ -896,15 +898,21 @@ export class ViewFormComponent implements OnInit, OnDestroy {
   applicationStatus: string = "5";
 
   setStatus() {
-     this.qdeHttp.setStatusApi(this.applicationId, this.applicationStatus).subscribe(res => {
-       alert("QDE Submitted successfully");
-     }, err => {});
+     this.qdeHttp.setStatusApi(this.applicationId, this.applicationStatus).subscribe(res => {}, err => {});
      this.sendSMS();
   }
 
   setAps(){
     this.qdeHttp.apsApi(""+this.applicationId).subscribe(res => {
-      if(res["ProcessVariables"]["status"]) {
+
+      // Temporary 
+      if(res["ProcessVariables"]['responseApplicationId'] != null) {
+        if(res["ProcessVariables"]['responseApplicationId'] == "") {
+          alert("Mandatory fields missing.");
+        } else {
+          this.qdeHttp.setStatusApi(this.applicationId, statuses["DDE Submitted"]).subscribe(res => {}, err => {});
+          alert("APS ID generated successfully with ID "+res["ProcessVariables"]['responseApplicationId']);
+        }
       } else {
         // Throw Invalid Pan Error
       }

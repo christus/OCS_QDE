@@ -17,7 +17,7 @@ import { Subscription } from 'rxjs';
 
 interface Item {
   key: string,
-  value: number
+  value: number | string
 }
 
 
@@ -114,10 +114,10 @@ export class LoanQdeComponent implements OnInit {
   options: Options = {
     floor: 0,
     ceil: 30,
-    step: 5,
-    showTicksValues: false,
-    // showSelectionBar: true,
-    showTicks: true,
+    // step: 5,
+    // showTicksValues: false,
+    // // showSelectionBar: true,
+    // showTicks: true,
     getLegend: (sliderVal: number): string => {
       return sliderVal + "<b>y</b>";
     }
@@ -148,10 +148,10 @@ export class LoanQdeComponent implements OnInit {
   liveLoanOption:Options={
     floor:0,
     ceil:6,
-    step: 1,
-    showTicksValues: false,
-    // showSelectionBar: true,
-    showTicks: true,
+    // step: 1,
+    // showTicksValues: false,
+    // // showSelectionBar: true,
+    // showTicks: true,
     getLegend: (sliderVal: number): string => {
       return  sliderVal + '<b></b>';
     }
@@ -230,6 +230,12 @@ export class LoanQdeComponent implements OnInit {
   isEligibilityForReview: boolean = false;
   isEligibilityForReviewsSub: Subscription;
   isTBMLoggedIn: boolean;
+  isLoanRouteModal: boolean = false;
+  isClssEligibleModal:boolean = false;
+  isClssNotEligibleModal:boolean = false;
+
+  allApplicantsItem: Array<Item> = [];
+  selectedApplicant: Item = {key: '', value: ''};
 
   constructor(
     private renderer: Renderer2,
@@ -406,6 +412,9 @@ export class LoanQdeComponent implements OnInit {
           if(result.application.loanDetails.property.city) {
             this.cityState = result.application.loanDetails.property.city + " "+ result.application.loanDetails.property.state;
           }
+
+          this.allApplicantsItem = this.qde.application.applicants.map(val => ({key: val.personalDetails.firstName+" "+val.personalDetails.lastName, value: val.applicantId}));
+          this.selectedApplicant = this.allApplicantsItem[0];
         });
       } else {
         this.qde = this.qdeService.getQde();
@@ -747,9 +756,8 @@ export class LoanQdeComponent implements OnInit {
           response => {
             // If successful
             if (response["ProcessVariables"]["status"]) {
-              alert("Loan detail process is completed.")
               console.log(this.qde.application.loanDetails.propertyType);
-              this.goToNextSlide(swiperInstance);
+              this.isLoanRouteModal = true
             } else {
               // Throw Invalid Pan Error
             }
@@ -765,11 +773,10 @@ export class LoanQdeComponent implements OnInit {
     this.qdeHttp.clssProbabilityCheck(this.applicationId).subscribe(
       response => {
         if (response["Error"] === "0" && response["ProcessVariables"]["isClssEligible"]) {
-          alert("Application is eligible for CLSS");
+          this.isClssEligibleModal = true;
         } else {
-          alert("Application is not eligible for CLSS");
+          this.isClssNotEligibleModal = true;
         }
-        this.tabSwitch(2);
       },
       error => {
         console.log("response : ", error);
@@ -790,5 +797,12 @@ export class LoanQdeComponent implements OnInit {
       });
   }
 
-  temp;
+  proceedToExistingLoanEligible() {
+    this.isClssEligibleModal = false;
+    this.tabSwitch(2);
+  }
+  proceedToExistingLoanNotEligible() {
+    this.isClssNotEligibleModal = false;
+    this.tabSwitch(2);
+  }
 }

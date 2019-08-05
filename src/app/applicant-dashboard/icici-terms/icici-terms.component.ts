@@ -32,7 +32,8 @@ export class IciciTermsComponent implements OnInit {
     if(this.router.url.search('auto-login') != -1) {
       this.qdeHttpService.authenticate(data).subscribe(
         res => {
-          console.log(res);
+          console.log("response");
+          console.log("login-response: ",res);
           this.commonDataService.setLogindata(data);
           localStorage.setItem("token", res["token"] ? res["token"] : "");
           if(this.applicationId != null && this.applicantId != null) {
