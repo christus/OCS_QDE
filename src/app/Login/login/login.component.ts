@@ -57,8 +57,15 @@ export class LoginComponent implements OnInit {
     this.qdeService.roleLogin().subscribe(
       res => {
         console.log("ROLE LOGIN: ", res['ProcessVariables']['roleName']);
+        let roleName = JSON.stringify(res["ProcessVariables"]["roleName"]);
         localStorage.setItem("userId", res["ProcessVariables"]["userId"]);
-        localStorage.setItem('roles', JSON.stringify(res["ProcessVariables"]["roleName"]));
+        localStorage.setItem('roles', roleName);
+
+        if(roleName.includes("Admin")) {
+          this.router.navigate(["/ops-module"]);
+          return;
+        }
+
         this.router.navigate(["/leads"]);
       },
       error => {

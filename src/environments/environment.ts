@@ -103,6 +103,18 @@ export const environment = {
       'workflowId': '6cf36ddca16911e984730242ac110003',
       'processId': 'a444f89aa22811e984060242ac110002'
     },
+    "ops": {
+      'workflowId': '471f4154a3a211e9abab0242ac110002',
+      'processId': '473800cca3a211e989e10242ac110002'
+    },
+    "paymentRecon": {
+      'workflowId': '83ab8a8ca16911e9b1900242ac110003',
+      'processId': '7230e902a21b11e9b52d0242ac110002'
+    },
+    "paymentReconUpload": {
+      'workflowId': '83c3fd7ea16911e99a8f0242ac110003',
+      'processId': '83c3fd7ea16911e99a8f0242ac110003'
+    },
     "duplicateApplicantCheck": {
       'workflowId': '471f4154a3a211e9abab0242ac110002',
       'processId': '473800cca3a211e989e10242ac110002'

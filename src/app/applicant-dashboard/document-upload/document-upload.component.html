@@ -142,7 +142,7 @@
 
                                                 <div (click)="openLink(photoProofId[applicantIndex])" class="doc_file_name_size" *ngIf="photoProofFileName[applicantIndex]">
                                                     <div>
-                                                        <span>{{photoProofFileName[applicantIndex]}} </span>
+                                                        <span class="ellipsis">{{photoProofFileName[applicantIndex]}} </span>
                                                         <span ng-switch-when="true">({{photoProofFileSize[applicantIndex]}})</span>
                                                     </div>
                                                     <!-- <div ng-show="progressVisible">
@@ -257,7 +257,7 @@
 
                                                     <div class="doc_file_name_size" *ngIf="idProofFileName[applicantIndex]">
                                                         <div>
-                                                            <span>{{idProofFileName[applicantIndex]}} </span>
+                                                            <span class="ellipsis" >{{idProofFileName[applicantIndex]}} </span>
                                                             <span ng-switch-when="true">({{idProofFileSize[applicantIndex]}})</span>
                                                         </div>
                                                         <!-- <div ng-show="progressVisible">
@@ -419,7 +419,7 @@
 
                                                 <div class="doc_file_name_size" *ngIf="addressProofFileName[applicantIndex]">
                                                     <div>
-                                                        <span>{{addressProofFileName[applicantIndex]}} </span>
+                                                        <span class="ellipsis">{{addressProofFileName[applicantIndex]}} </span>
                                                         <span ng-switch-when="true">({{addressProofFileSize[applicantIndex]}})</span>
                                                     </div>
                                                     <!-- <div ng-show="progressVisible">
@@ -532,7 +532,7 @@
           
                                                 <div class="doc_file_name_size" *ngIf="incomeProofFileName[applicantIndex]">
                                                     <div>
-                                                        <span>{{incomeProofFileName[applicantIndex]}} </span>
+                                                        <span class="ellipsis">{{incomeProofFileName[applicantIndex]}} </span>
                                                         <span ng-switch-when="true">({{incomeProofFileSize[applicantIndex]}})</span>
                                                     </div>
                                                     <!-- <div ng-show="progressVisible">
@@ -646,7 +646,7 @@
 
                                                 <div class="doc_file_name_size" *ngIf="bankProofFileName[applicantIndex]">
                                                     <div>
-                                                        <span>{{bankProofFileName[applicantIndex]}} </span>
+                                                        <span class="ellipsis">{{bankProofFileName[applicantIndex]}} </span>
                                                         <span ng-switch-when="true">({{bankProofFileSize[applicantIndex]}})</span>
                                                     </div>
                                                     <!-- <div ng-show="progressVisible">
@@ -764,7 +764,7 @@
 
                                                 <div class="doc_file_name_size" *ngIf="collateralProofFileName[applicantIndex]">
                                                         <div>
-                                                            <span>{{collateralProofFileName[applicantIndex]}} </span>
+                                                            <span class="ellipsis">{{collateralProofFileName[applicantIndex]}} </span>
                                                             <span ng-switch-when="true">({{collateralProofFileSize[applicantIndex]}})</span>
                                                         </div>
                                                         <!-- <div ng-show="progressVisible">
