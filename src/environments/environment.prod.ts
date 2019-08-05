@@ -1,6 +1,6 @@
 export const environment = {
   version: "1.6.0",
-  buildDate: "4-8-19_release",
+  buildDate: "5-8-19_release",
   production: true,
   projectId: '5928d30eac7811e9a1670242ac110002', //developement
 
@@ -111,9 +111,10 @@ export const environment = {
   password: "icici@123",
   appiyoDrive: "/d/drive/upload/",
   driveLocation: "/d/drive/docs/",
-  //host: "http://192.168.1.108/appiyo",
+  host: "http://192.168.1.108/appiyo",
   //host: "/ProcessStore",
-   host:  "/appiyo",
+  // host:  "/appiyo",
   //host: "https://ihfcmobileuat.icicihfc.com/appiyo"
   //host: "https://103.87.42.117/appiyo"
+  //host:"http://www.twixor.in/appiyo"
 };
