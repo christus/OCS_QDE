@@ -43,9 +43,7 @@ export class OpsModuleComponent implements OnInit {
 
   downloadCSV() {
     var data = {
-      ProcessVariables: {
-        userId: localStorage.getItem("userId")
-      },
+      userId: localStorage.getItem("userId"),
       "Submit" : ""
     }
     this.qdeHttp.documentsPaymentReconCSV(data).subscribe(
@@ -73,9 +71,7 @@ export class OpsModuleComponent implements OnInit {
 
   uploadOnlinePaymentRecon(callback) {
     let documentInfo = {
-      ProcessVariables: {
-        userId: localStorage.getItem("userId")
-      },
+      userId: localStorage.getItem("userId"),
       "attachment": {
         "content": this.uploadCSVFile,
         "mime": "text/csv",

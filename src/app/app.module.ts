@@ -1,3 +1,4 @@
+import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgModule, Component } from '@angular/core';
@@ -81,6 +82,12 @@ import { SetMpinComponent } from './Login/set-mpin/set-mpin.component';
 import { ReviewEligibilityComponent } from './applicant-dashboard/review-eligibility/review-eligibility.component';
 import { ThankPaymentEligibiltyComponent } from './payments/thank-payment-eligibilty/thank-payment-eligibilty.component';
 import { OpsModuleComponent } from './admin/ops-module/ops-module.component';
+
+import { UserModuleComponent } from './admin/user-module/user-module.component';
+
+import { NgxPaginationModule } from 'ngx-pagination';
+
+
 
 const appRoutes: Routes = [
   { path: "", redirectTo: "leads", pathMatch: "full" },
@@ -297,8 +304,17 @@ const appRoutes: Routes = [
     component: ReviewEligibilityComponent
   },
   {
-    path: 'ops-module',
-    component: OpsModuleComponent
+    path:"admin", component: AdminPanelComponent,
+    children:[
+      {
+        path: 'ops-module',
+        component: OpsModuleComponent
+      },
+      {
+        path: 'user-module',
+        component: UserModuleComponent
+      },
+    ]
   },
   { path: "**", component: PageNotFoundComponent }
 ];
@@ -350,7 +366,9 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     ThankPaymentEligibiltyComponent,
     SetMpinComponent,
     ReviewEligibilityComponent,
-    OpsModuleComponent
+    OpsModuleComponent,
+    UserModuleComponent,
+    AdminPanelComponent
   ],
   imports: [
     BrowserModule,
@@ -364,7 +382,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     DropDownsModule,
     ImageUploadModule.forRoot(),
     DeviceDetectorModule.forRoot(),
-    NgxUiLoaderModule
+    NgxUiLoaderModule,
+    NgxPaginationModule
   ],
   providers: [
     ListOfValuesResolverService,
