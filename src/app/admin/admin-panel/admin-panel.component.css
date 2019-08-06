@@ -1,0 +1,33 @@
+.admin-wrapper {
+    clear: both;
+    width: 100%;
+}
+
+.admin-sidebar {
+    width: 20%;
+    float: left;
+    background: #e66e23;
+    height: 100vh;
+    font-size: 16px;
+}
+
+.admin-sidebar-links {
+    display: block;
+    color: #fff;
+    padding: 15px;
+    transition: all 300ms;
+}
+
+.admin-sidebar-links:hover,
+.admin-sidebar-links:focus {
+    padding-left: 20px;
+    font-weight: bold;
+}
+
+.admin-dashboard {
+    width: 80%;
+    float: left;
+    font-size: 16px;
+    padding-left: 15px;
+}
+

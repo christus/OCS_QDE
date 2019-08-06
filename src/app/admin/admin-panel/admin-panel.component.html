@@ -1,14 +1,15 @@
-<router-outlet></router-outlet>
-
-<h1>admin</h1>
-<br>
-<br>
-
-<a  routerLink="ops-module">
-    <h3>ops-module</h3>
-</a>
-<br>
-<a  routerLink="user-module">
-    <h3>user-module</h3>
-</a>
-
+<div class="admin-wrapper">
+    <div class="admin-sidebar">
+        <a class="admin-sidebar-links" routerLink="/admin/lovs">LOVs</a>
+        <a class="admin-sidebar-links" routerLink="/admin/ops-module">Ops Module</a>
+        <a class="admin-sidebar-links" routerLink="/admin/user-module">User Module</a>
+    </div>
+    
+    <div class="admin-dashboard">    
+        <h1>Admin</h1>
+        <br>
+        <br>
+        <router-outlet></router-outlet>
+    </div>
+            
+</div>

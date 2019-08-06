@@ -87,6 +87,7 @@ import { NumberFormatDirective } from './directives/number-format.directive';
 import { UserModuleComponent } from './admin/user-module/user-module.component';
 
 import { NgxPaginationModule } from 'ngx-pagination';
+import { AdminLovsComponent } from './admin/admin-panel/admin-lovs/admin-lovs.component';
 
 
 
@@ -315,6 +316,10 @@ const appRoutes: Routes = [
         path: 'user-module',
         component: UserModuleComponent
       },
+      {
+        path: 'lovs',
+        component: AdminLovsComponent
+      }
     ]
   },
   { path: "**", component: PageNotFoundComponent }
@@ -370,7 +375,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     OpsModuleComponent,
     UserModuleComponent,
     AdminPanelComponent,
-    NumberFormatDirective
+    NumberFormatDirective,
+    AdminLovsComponent
   ],
   imports: [
     BrowserModule,
