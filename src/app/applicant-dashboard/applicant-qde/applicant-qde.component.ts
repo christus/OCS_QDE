@@ -2570,7 +2570,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
   closeDuplicateModal() {
     this.isDuplicateModalShown = false;
-    if(this.qde.application.applicants[this.applicantIndex].isMainApplicant == true) {
+    if(this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
       this.tabSwitch(2);
     } else {
       this.tabSwitch(12);
