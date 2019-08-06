@@ -25,10 +25,11 @@ export class FieldFillDirective implements OnChanges {
     // } else {
     //   this.ren.removeClass(this.el.nativeElement.parentElement, 'filled');
     // }
+    // alert(this.el.nativeElement.classList.contains('ng-untouched'));
     if(this.el.nativeElement.classList.contains('ng-untouched') && change.ngModel.currentValue != '' && change.ngModel.currentValue != null && change.ngModel.currentValue != undefined) {
       this.ren.addClass(this.el.nativeElement.parentElement, 'filled');
     } else {
-      this.ren.addClass(this.el.nativeElement.parentElement, 'filled');
+      this.ren.removeClass(this.el.nativeElement.parentElement, 'filled');
     }
   }
 
