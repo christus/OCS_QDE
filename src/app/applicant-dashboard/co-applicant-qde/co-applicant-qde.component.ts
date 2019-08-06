@@ -2522,7 +2522,11 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
 
   closeDuplicateModal() {
     this.isDuplicateModalShown = false;
-    this.tabSwitch(3);
+    if(this.qde.application.applicants[this.coApplicantIndex].isMainApplicant == true) {
+      this.tabSwitch(3);
+    } else {
+      this.tabSwitch(13);
+    }
   }
 
   submitDuplicateApplicant(form: NgForm) {

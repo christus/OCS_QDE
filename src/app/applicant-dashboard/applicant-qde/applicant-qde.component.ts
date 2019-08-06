@@ -2570,7 +2570,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
   closeDuplicateModal() {
     this.isDuplicateModalShown = false;
-    this.tabSwitch(this.activeTab+1);
+    if(this.qde.application.applicants[this.applicantIndex].isMainApplicant == true) {
+      this.tabSwitch(2);
+    } else {
+      this.tabSwitch(12);
+    }
   }
 
   submitDuplicateApplicant(form: NgForm) {
