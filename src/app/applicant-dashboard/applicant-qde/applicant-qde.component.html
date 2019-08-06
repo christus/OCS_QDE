@@ -87,7 +87,7 @@
                         </div>
                         <div class="rhs">
                             <div  class="swiper-container form-swiper"
-                                  [swiper]="rhsConfig"
+                                  [swiper]="rhsConfig" #swiperS="ngxSwiper"
                                   (slidePrevTransitionStart)="slidePrevTransitionStart(panSlider1)"
                                   (slideNextTransitionStart)="slideNextTransitionStart(panSlider1)"
                                   #panSlider2="ngxSwiper">
@@ -137,7 +137,7 @@
                                                             id="pan-inpt"
                                                             minlength="10"
                                                             maxlength="10"
-                                                            pattern="{{regexPattern.pan}}"                                             
+                                                            pattern="{{regexPattern.panInd}}"                                             
                                                             name="pan"
                                                             (keyup)="keyUpPanNumber($event)"
                                                             #panNumber="ngModel"
@@ -150,7 +150,7 @@
                                                         <div *ngIf="panNumber.errors?.minlength || panNumber.errors?.maxlength">{{errors.pan.length}}</div>
                                                     </div>
                                                     <div *ngIf="panErrorCount >= 3" class="invalid-feedback">{{errors.pan.after3Attemps}}</div>
-                                                    <div class="redalert" *ngIf="panNumber.touched && panNumber.valid && RegExp(regexPattern.pan).test(panNumber.value) && isValidPan == false">Invalid PAN</div>
+                                                    <div class="redalert" *ngIf="panNumber.touched && panNumber.valid && RegExp(regexPattern.panInd).test(panNumber.value) && isValidPan == false">Invalid PAN</div>
                                                 </div>
                                                 <div class="form-group">
                                                   <span class="control-title">Document Type</span>
@@ -287,7 +287,7 @@
                           </div>
                           <div class="rhs">
                               <div  class="swiper-container form-swiper"
-                                    [swiper]="rhsConfig"
+                                    [swiper]="rhsConfig" #swiperS="ngxSwiper"
                                     (slidePrevTransitionStart)="slidePrevTransitionStart(pdSlider1)"
                                   (slideNextTransitionStart)="slideNextTransitionStart(pdSlider1)"
                                     #pdSlider2="ngxSwiper">
@@ -1106,7 +1106,7 @@
                         </div>
                         <div class="rhs">
                             <div  class="swiper-container form-swiper"
-                                  [swiper]="rhsConfig"
+                                  [swiper]="rhsConfig" #swiperS="ngxSwiper"
                                   (slidePrevTransitionStart)="slidePrevTransitionStart(maritalSlider1)"
                                   (slideNextTransitionStart)="slideNextTransitionStart(maritalSlider1)"
                                   #maritalSlider2="ngxSwiper">
@@ -1280,19 +1280,19 @@
                                   <div class="swiper-slide">
                                       <div class="title-wrap">
                                           <h4 class="title">Enter Applicant’s <span class="cm-line-break"></span>family details</h4>
-                                          <p class="note">Family details are required to evaluate
+                                          <!-- <p class="note">Family details are required to evaluate
                                               <span class="cm-line-break">credit-worthiness of the main applicant & for </span>
                                               <span class="cm-line-break">other regulatory purposes.</span>
-                                          </p>
+                                          </p> -->
                                       </div>
                                   </div>
                                   <div class="swiper-slide">
                                       <div class="title-wrap">
                                           <h4 class="title">Enter Applicant’s <span class="cm-line-break"></span>family details</h4>
-                                          <p class="note">Family details are required to evaluate
+                                          <!-- <p class="note">Family details are required to evaluate
                                               <span class="cm-line-break">credit-worthiness of the main applicant & for </span>
                                               <span class="cm-line-break">other regulatory purposes.</span>
-                                          </p>
+                                          </p> -->
                                       </div>
                                   </div>
                               </div>
@@ -1301,7 +1301,7 @@
                       </div>
                       <div class="rhs">
                           <div  class="swiper-container form-swiper"
-                                [swiper]="rhsConfig"
+                                [swiper]="rhsConfig" #swiperS="ngxSwiper"
                                 (slidePrevTransitionStart)="slidePrevTransitionStart(familySlider1)"
                                   (slideNextTransitionStart)="slideNextTransitionStart(familySlider1)"
                                 #familySlider2="ngxSwiper">
@@ -1547,7 +1547,7 @@
                                         [(ngModel)]="selectedOccupation">
                                       </kendo-dropdownlist>
                                   </div>
-                                  <div class="form-group" *ngIf="selectedOccupation.value != '9' && selectedOccupation.value != '10'">
+                                  <div class="form-group" *ngIf="selectedOccupation.value != '9' && selectedOccupation.value != '10' && selectedOccupation.value != '14'">
                                       <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                             type="text" class="form-control"
                                               required 
@@ -1566,7 +1566,7 @@
                                       </div>
   
                                   </div>
-                                  <div class="form-group typ-range"  *ngIf="selectedOccupation.value != '9' && selectedOccupation.value != '10'">
+                                  <div class="form-group typ-range"  *ngIf="selectedOccupation.value != '9' && selectedOccupation.value != '10' && selectedOccupation.value != '14'">
                                       <span class="control-title">Years in current employment/business</span>
                                       <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                             type="number"
@@ -1590,7 +1590,7 @@
                                       </div> -->
   
                                   </div>
-                                  <div class="form-group typ-range" *ngIf="selectedOccupation.value != '9' && selectedOccupation.value != '10'">
+                                  <div class="form-group typ-range" *ngIf="selectedOccupation.value != '9' && selectedOccupation.value != '10' && selectedOccupation.value != '14'">
                                       <span class="control-title">Total Work Experience</span>
                                       <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                             type="number"
@@ -1621,7 +1621,7 @@
                                   </div>
                               </div>
   
-                              <div *ngIf="selectedOccupation.value == 9 || selectedOccupation.value == 10" class="btn-wrap">
+                              <div *ngIf="selectedOccupation.value == 9 || selectedOccupation.value == 10|| selectedOccupation.value == 14" class="btn-wrap">
                                 <button type="submit"
                                         [ngClass]="{'disabled': !occupationForm.valid || expError}"
                                         [disabled]="(!occupationForm.valid || expError)" 
@@ -1629,7 +1629,7 @@
                                     Save
                                 </button>
                             </div>
-                              <div *ngIf="selectedOccupation.value != 9 && selectedOccupation.value != 10" class="btn-wrap">
+                              <div *ngIf="selectedOccupation.value != 9 && selectedOccupation.value != 10 && selectedOccupation.value != 14" class="btn-wrap">
                                   <button type="submit"
                                           [ngClass]="{'disabled': !occupationForm.valid || expError}"
                                           [disabled]="(!occupationForm.valid || expError)" 
@@ -1868,7 +1868,7 @@
                         <div class="rhs">
 
                             <div class="swiper-container form-swiper"
-                                    [swiper]="rhsConfig"
+                                    [swiper]="rhsConfig" #swiperS="ngxSwiper"
                                     (slidePrevTransitionStart)="slidePrevTransitionStart(incomeSlider1)"
                                   (slideNextTransitionStart)="slideNextTransitionStart(incomeSlider1)"
                                     #incomeSlider2="ngxSwiper">
@@ -2076,7 +2076,7 @@
                       </div>
                       <div class="rhs">
                           <div  class="swiper-container form-swiper"
-                                [swiper]="rhsConfig"
+                                [swiper]="rhsConfig" #swiperS="ngxSwiper"
                                 (slidePrevTransitionStart)="slidePrevTransitionStart(panSlider3)"
                                   (slideNextTransitionStart)="slideNextTransitionStart(panSlider3)"
                                 #panSlider4="ngxSwiper">
@@ -2095,7 +2095,7 @@
                                                           id="pan-inpt2"
                                                           minlength="10"
                                                           maxlength="10"
-                                                          pattern="{{regexPattern.pan}}"
+                                                          pattern="{{regexPattern.panNonInd}}"
                                                           (ngModelChange)="qde.application.applicants[applicantIndex].pan.panNumber = $event.toUpperCase()"
                                                           (keyup)="keyUpPanNumber($event)"
                                                           name="pan"
@@ -2109,7 +2109,7 @@
                                                       <div *ngIf="panNumber2.errors?.minlength || panNumber2.errors?.maxlength">{{errors.pan.length}}</div>
                                                   </div>
                                                   <div *ngIf="panErrorCount >= 3" class="invalid-feedback">{{errors.pan.after3Attemps}}</div>
-                                                  <div class="redalert" *ngIf="panNumber2.touched && panNumber2.valid && RegExp(regexPattern.pan).test(panNumber2.value) && isValidPan == false">Invalid PAN</div>
+                                                  <div class="redalert" *ngIf="panNumber2.touched && panNumber2.valid && RegExp(regexPattern.panNonInd).test(panNumber2.value) && isValidPan == false">Invalid PAN</div>
                                               </div>
                                               <!-- <div class="form-group">
                                                 <span class="control-title">Document Type</span>
@@ -2721,7 +2721,7 @@
                           <div class="rhs">
   
                               <div class="swiper-container form-swiper"
-                                      [swiper]="rhsConfig"
+                                      [swiper]="rhsConfig" #swiperS="ngxSwiper"
                                       (slidePrevTransitionStart)="slidePrevTransitionStart(incomeSlider3)"
                                     (slideNextTransitionStart)="slideNextTransitionStart(incomeSlider3)"
                                       #incomeSlider4="ngxSwiper">

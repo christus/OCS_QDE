@@ -1,5 +1,5 @@
 import { Other, Applicant } from './../../models/qde.model';
-import { Component, OnInit, ViewChild, ElementRef, Renderer2, OnDestroy, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Renderer2, OnDestroy, AfterViewInit, ViewChildren, QueryList } from '@angular/core';
     
 import * as Swiper from 'swiper/dist/js/swiper.js';
 // import { Select2Component } from 'ng2-select2';
@@ -30,7 +30,7 @@ interface Item {
   templateUrl: './applicant-qde.component.html',
   styleUrls: ['./applicant-qde.component.css']
 })
-export class ApplicantQdeComponent implements OnInit, OnDestroy {
+export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   isMobile:any;
 
@@ -59,7 +59,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     address : "^[0-9A-Za-z, _&'/#]+$",
     // cityState:"^[0-9A-Za-z, &'#]$",
     pinCode: "^[1-9][0-9]{5}$",
-    pan:"[A-Z]{3}(P|F|C|H|A|T)[A-Z]{1}[0-9]{4}[A-Z]{1}",
+    panInd:"[A-Z]{3}(P)[A-Z]{1}[0-9]{4}[A-Z]{1}",
+    panNonInd:"[A-Z]{3}(C)[A-Z]{1}[0-9]{4}[A-Z]{1}",
     // amount:"[0-9]{0,17}\.[0-9]{1,4}?$",
     sliderValue: " [0-9]{0,2}",
     amount:"^[\\d]{0,10}([.][0-9]{0,4})?",
@@ -307,6 +308,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   tempOldPanNumber: string;
   monthsInChar: Array<string> = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'AUG', 'NOV', 'DEC'];
 
+  @ViewChildren('swiperS') swiperSliders: QueryList<Swiper>;
+
   constructor(private renderer: Renderer2,
               private route: ActivatedRoute,
               private router: Router,
@@ -420,7 +423,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
         let v = ((index+1) < 10) ? "0"+(index+1) : (index+1)+"";
         return {key: this.monthsInChar[index], value: v};
       });
-      this.months.unshift({key: 'MMM', value: 'MMM'});
+      this.months.unshift({key: 'MON', value: 'MM'});
 
       this.years = Array.from(Array(100).keys()).map((val, index) => {
         let v = (this.YYYY - index)+"";
@@ -722,18 +725,30 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
 
       // Incoming from create in Individual Pan
       if(this.panslide == true && this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
+        this.swiperSliders.forEach((v, i, a) => {
+          v.setIndex(0);
+        });
         this.tabSwitch(1);
         //  this.panSlider2.setIndex(2);
       }
       // Incoming from create in Non Individual Pan
       else if(this.panslide2 == true && this.qde.application.applicants[this.applicantIndex].isIndividual == false) {
+        this.swiperSliders.forEach((v, i, a) => {
+          v.setIndex(0);
+        });
         this.tabSwitch(11);
         this.panSlider4.setIndex(1);
       } else if(this.panslide == false && this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
+        this.swiperSliders.forEach((v, i, a) => {
+          v.setIndex(0);
+        });
         this.tabSwitch(0);
         this.panSlider2.setIndex(1);
       }
       else if(this.panslide2 == false && this.qde.application.applicants[this.applicantIndex].isIndividual == false) {
+        this.swiperSliders.forEach((v, i, a) => {
+          v.setIndex(0);
+        });
         // Enable it when upload file is enabled
         this.tabSwitch(10);
         // this.panSlider4.setIndex(1);
@@ -1699,16 +1714,16 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
   
   
       this.qde.application.applicants[this.applicantIndex].occupation.occupationType = this.selectedOccupation.value.toString();
-      if(this.selectedOccupation.value.toString() != '9' && this.selectedOccupation.value.toString() != '10') {
+      if(this.selectedOccupation.value.toString() != '9' && this.selectedOccupation.value.toString() != '10' && this.selectedOccupation.value.toString() != '14') {
         this.qde.application.applicants[this.applicantIndex].occupation.companyName = form.value.companyName;
       }
   
-      if(this.selectedOccupation.value.toString() != '9' && this.selectedOccupation.value.toString() != '10') {
-        this.qde.application.applicants[this.applicantIndex].occupation.numberOfYearsInCurrentCompany = (this.selectedOccupation.value.toString() != '9' && this.selectedOccupation.value.toString() != '10') ? form.value.numberOfYearsInCurrentCompany : 0;
+      if(this.selectedOccupation.value.toString() != '9' && this.selectedOccupation.value.toString() != '10' && this.selectedOccupation.value.toString() != '14') {
+        this.qde.application.applicants[this.applicantIndex].occupation.numberOfYearsInCurrentCompany = (this.selectedOccupation.value.toString() != '9' && this.selectedOccupation.value.toString() != '10' && this.selectedOccupation.value.toString() != '14') ? form.value.numberOfYearsInCurrentCompany : 0;
       }
   
-      if(this.selectedOccupation.value.toString() != '9' && this.selectedOccupation.value.toString() != '10') {
-        this.qde.application.applicants[this.applicantIndex].occupation.totalWorkExperience = (this.selectedOccupation.value.toString() != '9' && this.selectedOccupation.value.toString() != '10') ? form.value.totalExperienceYear : 0;
+      if(this.selectedOccupation.value.toString() != '9' && this.selectedOccupation.value.toString() != '10' && this.selectedOccupation.value.toString() != '14') {
+        this.qde.application.applicants[this.applicantIndex].occupation.totalWorkExperience = (this.selectedOccupation.value.toString() != '9' && this.selectedOccupation.value.toString() != '10' && this.selectedOccupation.value.toString() != '14') ? form.value.totalExperienceYear : 0;
       }
   
       console.log(this.qde.application.applicants[this.applicantIndex].occupation);
@@ -1716,7 +1731,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
       this.createOrUpdatePersonalDetailsSub15=this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
-          if(this.selectedOccupation.value == 9 || this.selectedOccupation.value == 10){
+          if(this.selectedOccupation.value == 9 || this.selectedOccupation.value == 10 || this.selectedOccupation.value == 14){
             this.isApplicantRouteModal = true
             // this.tabSwitch();
             return;
@@ -2613,4 +2628,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy {
     }
   }
 
+  ngAfterViewInit() {
+    this.swiperSliders.forEach((v, i, a) => {
+      v.setIndex(0);
+    });
+  }
 }

@@ -845,6 +845,7 @@ export class LoanQdeComponent implements OnInit {
   * Is a valid Number after removing Comma
   ****************************************/
   isValidNumber(x) {
-    return RegExp('[0-9]').test(this.getNumberWithoutCommaFormat(x));
+    console.log("Monthly EMI", RegExp('^[0-9]*$').test(this.getNumberWithoutCommaFormat(x)));
+    return RegExp('^[0-9]*$').test(this.getNumberWithoutCommaFormat(x));
   }
 }

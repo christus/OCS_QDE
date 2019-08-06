@@ -1,5 +1,5 @@
 import { Other, Applicant } from './../../models/qde.model';
-import { Component, OnInit, ViewChild, ElementRef, Renderer2, OnDestroy, Inject, ɵConsole } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Renderer2, OnDestroy, Inject, ViewChildren, QueryList, AfterViewInit} from '@angular/core';
     
 import * as Swiper from 'swiper/dist/js/swiper.js';
 // import { Select2Component } from 'ng2-select2';
@@ -31,7 +31,7 @@ interface Item {
   templateUrl: './co-applicant-qde.component.html',
   styleUrls: ['./co-applicant-qde.component.css']
 })
-export class CoApplicantQdeComponent implements OnInit, OnDestroy {
+export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   panImage:String;
 
@@ -309,6 +309,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
   tempOldPanNumber: string;
   monthsInChar: Array<string> = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'AUG', 'NOV', 'DEC'];
 
+  @ViewChildren('swiperS') swiperSliders: QueryList<Swiper>;
+
   constructor(private renderer: Renderer2,
               private route: ActivatedRoute,
               private router: Router,
@@ -427,7 +429,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
         let v = ((index+1) < 10) ? "0"+(index+1) : (index+1)+"";
         return {key: this.monthsInChar[index], value: v};
       });
-      this.months.unshift({key: 'MMM', value: 'MMM'});
+      this.months.unshift({key: 'MON', value: 'MM'});
 
       this.years = Array.from(Array(100).keys()).map((val, index) => {
         let v = (this.YYYY - index)+"";
@@ -2107,6 +2109,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       if(this.panslide == true && this.qde.application.applicants[this.coApplicantIndex].isIndividual == true) {
         console.log('COAPPLICANTINDEX: ', this.coApplicantIndex);
         // this.tabSwitch(1);
+        this.swiperSliders.forEach((v, i, a) => {
+          v.setIndex(0);
+        });
         this.tabSwitch(2);
         // this.panSlider2.setIndex(2);
       }
@@ -2114,12 +2119,22 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
       else if(this.panslide2 == true && this.qde.application.applicants[this.coApplicantIndex].isIndividual == false) {
         // this.tabSwitch(11);
         // this.panSlider4.setIndex(1);
+        this.swiperSliders.forEach((v, i, a) => {
+          v.setIndex(0);
+        });
         this.tabSwitch(12);
       } else if(this.panslide == false && this.qde.application.applicants[this.coApplicantIndex].isIndividual == true) {
+        
+        this.swiperSliders.forEach((v, i, a) => {
+          v.setIndex(0);
+        });
         this.tabSwitch(1);
         this.panSlider2.setIndex(1);
       }
       else if(this.panslide2 == false && this.qde.application.applicants[this.coApplicantIndex].isIndividual == false) {
+        this.swiperSliders.forEach((v, i, a) => {
+          v.setIndex(0);
+        });
         this.tabSwitch(11);
         this.panSlider4.setIndex(0);
       }
@@ -2137,6 +2152,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
     this.qdeService.addNewCoApplicant();
     this.initializeVariables();
     this.tabSwitch(1);
+
   }
 
   resetQdeForm() {
@@ -2591,5 +2607,11 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy {
     } else {
       this.isValidPan = null;
     }
+  }
+
+  ngAfterViewInit() {
+    this.swiperSliders.forEach((v, i, a) => {
+      v.setIndex(0);
+    });
   }
 }

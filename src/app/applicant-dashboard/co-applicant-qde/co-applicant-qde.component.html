@@ -130,7 +130,7 @@
                         </div>
                         <div class="rhs">
                             <div  class="swiper-container form-swiper"
-                                  [swiper]="rhsConfig"
+                                  [swiper]="rhsConfig" #swiperS="ngxSwiper"
                                   (slidePrevTransitionStart)="slidePrevTransitionStart(panSlider1)"
                                   (slideNextTransitionStart)="slideNextTransitionStart(panSlider1)"
                                   #panSlider2="ngxSwiper">
@@ -333,7 +333,7 @@
                           </div>
                           <div class="rhs">
                               <div  class="swiper-container form-swiper"
-                                    [swiper]="rhsConfig"
+                                    [swiper]="rhsConfig" #swiperS="ngxSwiper"
                                     (slidePrevTransitionStart)="slidePrevTransitionStart(pdSlider1)"
                                   (slideNextTransitionStart)="slideNextTransitionStart(pdSlider1)"
                                     #pdSlider2="ngxSwiper">
@@ -1168,7 +1168,7 @@
                         </div>
                         <div class="rhs">
                             <div  class="swiper-container form-swiper"
-                                  [swiper]="rhsConfig"
+                                  [swiper]="rhsConfig" #swiperS="ngxSwiper"
                                   (slidePrevTransitionStart)="slidePrevTransitionStart(maritalSlider1)"
                                   (slideNextTransitionStart)="slideNextTransitionStart(maritalSlider1)"
                                   #maritalSlider2="ngxSwiper">
@@ -1339,19 +1339,19 @@
                                   <div class="swiper-slide">
                                       <div class="title-wrap">
                                           <h4 class="title">Enter Co-Applicant's <span class="cm-line-break"></span>family details</h4>
-                                          <p class="note">Family details are required to evaluate
+                                          <!-- <p class="note">Family details are required to evaluate
                                               <span class="cm-line-break">credit-worthiness of the main applicant & for </span>
                                               <span class="cm-line-break">other regulatory purposes.</span>
-                                          </p>
+                                          </p> -->
                                       </div>
                                   </div>
                                   <div class="swiper-slide">
                                       <div class="title-wrap">
                                           <h4 class="title">Enter Co-Applicant's <span class="cm-line-break"></span>family details</h4>
-                                          <p class="note">Family details are required to evaluate
+                                          <!-- <p class="note">Family details are required to evaluate
                                               <span class="cm-line-break">credit-worthiness of the main applicant & for </span>
                                               <span class="cm-line-break">other regulatory purposes.</span>
-                                          </p>
+                                          </p> -->
                                       </div>
                                   </div>
                               </div>
@@ -1360,7 +1360,7 @@
                       </div>
                       <div class="rhs">
                           <div  class="swiper-container form-swiper"
-                                [swiper]="rhsConfig"
+                                [swiper]="rhsConfig" #swiperS="ngxSwiper"
                                 (slidePrevTransitionStart)="slidePrevTransitionStart(familySlider1)"
                                   (slideNextTransitionStart)="slideNextTransitionStart(familySlider1)"
                                 #familySlider2="ngxSwiper">
@@ -1925,7 +1925,7 @@
                         <div class="rhs">
 
                             <div class="swiper-container form-swiper"
-                                    [swiper]="rhsConfig"
+                                    [swiper]="rhsConfig" #swiperS="ngxSwiper"
                                     (slidePrevTransitionStart)="slidePrevTransitionStart(incomeSlider1)"
                                   (slideNextTransitionStart)="slideNextTransitionStart(incomeSlider1)"
                                     #incomeSlider2="ngxSwiper">
@@ -2126,7 +2126,7 @@
                       </div>
                       <div class="rhs">
                           <div  class="swiper-container form-swiper"
-                                [swiper]="rhsConfig"
+                                [swiper]="rhsConfig" #swiperS="ngxSwiper"
                                 (slidePrevTransitionStart)="slidePrevTransitionStart(panSlider3)"
                                   (slideNextTransitionStart)="slideNextTransitionStart(panSlider3)"
                                 #panSlider4="ngxSwiper">
@@ -2766,7 +2766,7 @@
                           <div class="rhs">
   
                               <div class="swiper-container form-swiper"
-                                      [swiper]="rhsConfig"
+                                      [swiper]="rhsConfig" #swiperS="ngxSwiper"
                                       (slidePrevTransitionStart)="slidePrevTransitionStart(incomeSlider3)"
                                   (slideNextTransitionStart)="slideNextTransitionStart(incomeSlider3)"
                                       #incomeSlider4="ngxSwiper">
