@@ -19,14 +19,9 @@ export class FieldFillDirective implements OnChanges {
   }
 
   ngOnChanges(change: SimpleChanges) {
-    // if( change.ngModel.currentValue != null &&
-    //     change.ngModel.currentValue != undefined) {
-    //   this.ren.addClass(this.el.nativeElement.parentElement, 'filled');
-    // } else {
-    //   this.ren.removeClass(this.el.nativeElement.parentElement, 'filled');
-    // }
-    // alert(this.el.nativeElement.classList.contains('ng-untouched'));
-    if(this.el.nativeElement.classList.contains('ng-untouched') && change.ngModel.currentValue != '' && change.ngModel.currentValue != null && change.ngModel.currentValue != undefined) {
+    if( change.ngModel.currentValue != '' &&
+        change.ngModel.currentValue != null &&
+        change.ngModel.currentValue != undefined) {
       this.ren.addClass(this.el.nativeElement.parentElement, 'filled');
     } else {
       this.ren.removeClass(this.el.nativeElement.parentElement, 'filled');
