@@ -6,7 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./user-module.component.css']
 })
 export class UserModuleComponent implements OnInit {
-  collection = [];
+  collection: any[] = [];  
+  p: number = 1;
+
 
   constructor() { 
     for (let i = 1; i <= 100; i++) {
