@@ -71,3 +71,7 @@ h2 {
 .tab-slider--body {
   margin-bottom: 20px;
 }
+.error-msg{
+  color: #96752f;
+  font-size: 15px; 
+}

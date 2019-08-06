@@ -88,6 +88,8 @@ import { UserModuleComponent } from './admin/user-module/user-module.component';
 
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AdminLovsComponent } from './admin/admin-panel/admin-lovs/admin-lovs.component';
+import { AddAdminUserComponent } from './admin/add-admin-user/add-admin-user.component';
+import { EditAdminUserComponent } from './admin/edit-admin-user/edit-admin-user.component';
 
 
 
@@ -319,6 +321,14 @@ const appRoutes: Routes = [
       {
         path: 'lovs',
         component: AdminLovsComponent
+      },
+      {
+        path: 'add-user',
+        component: AddAdminUserComponent
+      },
+      {
+        path: 'edit-user/:userId',
+        component: EditAdminUserComponent
       }
     ]
   },
@@ -376,7 +386,9 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     UserModuleComponent,
     AdminPanelComponent,
     NumberFormatDirective,
-    AdminLovsComponent
+    AdminLovsComponent,
+    AddAdminUserComponent,
+    EditAdminUserComponent
   ],
   imports: [
     BrowserModule,

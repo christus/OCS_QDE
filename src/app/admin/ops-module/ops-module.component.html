@@ -16,7 +16,8 @@
       <form>
         <input type="file" name="myFile"  (change)="setUploadDoc($event.target)" ><br><br>
         <input type="submit" (click)="startUploadDoc()">
-      </form>    
+      </form>
+      <div class="error-msg">{{errorMsg}}</div>
     </div>
     <div id="tab2" class="tab-slider--body" *ngSwitchCase="'tab2'">
       <h2>DOWNlOAD CSV</h2>

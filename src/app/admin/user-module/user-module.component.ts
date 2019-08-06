@@ -1,3 +1,4 @@
+import { QdeHttpService } from 'src/app/services/qde-http.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -8,15 +9,19 @@ import { Component, OnInit } from '@angular/core';
 export class UserModuleComponent implements OnInit {
   collection: any[] = [];  
   p: number = 1;
+  userTable:any[] ;
 
 
-  constructor() { 
-    for (let i = 1; i <= 100; i++) {
-      this.collection.push(`${i}`);
-    }
+  constructor(private qdeHttp: QdeHttpService) { 
+
+     
   }
 
   ngOnInit() {
+    this.qdeHttp.getAdminUsers({}).subscribe((response) => {
+        this.collection = response['ProcessVariables'].userTable;
+        console.log(this.collection);
+    });
   }
 
 }

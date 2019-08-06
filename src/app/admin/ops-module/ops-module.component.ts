@@ -13,6 +13,8 @@ export class OpsModuleComponent implements OnInit {
 
   viewMode:string = 'tab1';
 
+  errorMsg:string;
+
   constructor(private qdeHttp: QdeHttpService) { }
 
   ngOnInit() {}
@@ -60,11 +62,13 @@ export class OpsModuleComponent implements OnInit {
             console.log(
               "Response: " + response["ProcessVariables"]["errorMessage"]
             );
+            this.errorMsg = response["ProcessVariables"]["errorMessage"];
           }
         }
       },
       error => {
         console.log("Error : ", error);
+        this.errorMsg = error;
       }
     );
   }
@@ -93,11 +97,14 @@ export class OpsModuleComponent implements OnInit {
             console.log(
               "Response: " + response["ProcessVariables"]["errorMessage"]
             );
+            this.errorMsg = response["ProcessVariables"]["errorMessage"];
+
           }
         }
       },
       error => {
         console.log("Error : ", error);
+        this.errorMsg = error;
       }
     );
   }
@@ -166,11 +173,13 @@ export class OpsModuleComponent implements OnInit {
             console.log(
               "Response: " + response["ProcessVariables"]["errorMessage"]
             );
+            this.errorMsg = response["ProcessVariables"]["errorMessage"];
           }
         }
       },
       error => {
         console.log("Error : ", error);
+        this.errorMsg = error;
       }
     );
   }

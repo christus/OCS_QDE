@@ -1,0 +1,42 @@
+<form #userdata = "ngForm" (ngSubmit)="onSubmit(userdata)">
+  First name:<br>
+  <input type="text" ngModel name="firstname">
+  <br>
+  Last name:<br>
+  <input type="text" ngModel name="lastName">
+  <br><br>
+  User name:<br>
+  <input type="email" ngModel name="userName" >
+  <br><br>
+  Password:<br>
+  <input type="password" ngModel name="password" >
+  <br><br>
+  Email:<br>
+  <input type="email" ngModel name="mailId">
+  <br><br>
+  Mobile number:<br>
+  <input type="number" ngModel  name="mobileNumber">
+  <br><br>
+  <span class="controltitle">User role</span>
+  <select name="userBranch" ngModel name="userRoleId">
+      <option [ngValue]="null" disabled>Choose your role</option>
+      <option *ngFor="let userRole of userRoles" value={{userRole.value}}>
+          {{userRole.key}}
+      </option>
+  </select>
+  <br><br>
+  <span class="controltitle">User branch</span>
+  <select name="userBranch" ngModel name="branchName">
+      <option  [ngValue]="null" disabled>Choose your branch</option>
+      <option *ngFor="let b of branch" value={{b.value}}>
+          {{b.key}}
+      </option>
+  </select>
+  <br><br>
+  Reporting to:<br>
+  <input type="text" ngModel name="reportingTo" value="Mouse">
+  <br><br>
+  <input type="submit" value="Submit"
+  [ngClass]="{'disabled': (!userdata.valid)}"
+  [disabled]="!userdata.valid">
+</form> 
