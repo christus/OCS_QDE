@@ -57,7 +57,7 @@
               </ul>
                 <div class="tabs-contents" #tabContents>
                     <div class="tab-content" [ngClass]="{'active': (activeTab == 0)}">
-                        <!-- <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(panSlider2)"></a> -->
+                        <!-- <a href="javascript:void(0);" class="back-btn" [routerLink]="['/applicant', applicationId]"></a> -->
                         <div class="lyt-tabs">
 
                             <div class="lhs">
@@ -2598,7 +2598,7 @@
                                                    maxlength="8" 
                                                   data-validation-attr="residenceno" 
                                                   required/>
-                                          <label for="ca-res-no">Contact number</label>
+                                          <label for="ca-res-no">Office number</label>
                                           <div *ngIf="phoneNumber.touched  && phoneNumber.invalid" class="invalid-feedback">
                                             <!-- <div *ngIf="phoneNumber.errors?.required">{{errors.corporateAddress.phoneNumber.required}}</div> -->
                                             <div *ngIf="phoneNumber.errors?.pattern">{{errors.corporateAddress.phoneNumber.invalid}}</div>
@@ -2662,7 +2662,7 @@
                                     spellcheck="false"
                                     pattern="{{regexPattern.revenue}}"
                                     required />
-                                    <label for="revenue">Revenue</label>
+                                    <label for="revenue">Recieved Gross Turnover</label>
                                     <div *ngIf="revenue.touched && revenue.invalid" class="invalid-feedback">
                                         <!-- <div *ngIf="revenue.errors?.required">{{errors.revenueDetails.revenue.required}}</div> -->
                                         <div *ngIf="revenue.errors?.pattern">{{errors.revenueDetails.revenue.invalid}}</div>
@@ -2684,7 +2684,7 @@
                                     #annualNetincome="ngModel"
                                     name="annualNetIncome"
                                     pattern="{{regexPattern.revenue}}" />
-                                    <label for="net-income">Annual Net Income</label>
+                                    <label for="net-income">Annual Net Profit</label>
                                     <div *ngIf="annualNetincome.touched && annualNetincome.invalid" class="invalid-feedback">
                                         <!-- <div *ngIf="annualNetincome.errors?.required">{{errors.revenueDetails.annualNetincome.required}}</div> -->
                                         <div *ngIf="annualNetincome.errors?.pattern">{{errors.revenueDetails.annualNetincome.invalid}}</div>
@@ -2695,7 +2695,7 @@
                                     </span>
                                     <span class="in-word"></span>
                                 </div>
-                                <div class="form-group inr last">
+                                <!-- <div class="form-group inr last">
                                     <input [readonly]="isReadOnly" type="text" class="form-control" id="gross-turnover" 
                                     required
                                     tabindex="3"
@@ -2707,16 +2707,16 @@
                                     name="grossTurnOver"
                                     pattern="{{regexPattern.revenue}}" />
                                     <label for="gross-turnover">Gross Turnover</label>
-                                    <div *ngIf="grossTurnover.touched && grossTurnover.invalid" class="invalid-feedback">
+                                    <div *ngIf="grossTurnover.touched && grossTurnover.invalid" class="invalid-feedback"> -->
                                         <!-- <div *ngIf="grossTurnover.errors?.required">{{errors.revenueDetails.grossTurnover.required}}</div> -->
-                                        <div *ngIf="grossTurnover.errors?.pattern">{{errors.revenueDetails.grossTurnover.invalid}}</div>
+                                        <!-- <div *ngIf="grossTurnover.errors?.pattern">{{errors.revenueDetails.grossTurnover.invalid}}</div>
                                     </div>
 
                                     <span class="addon">
                                         <span class="icon icon-inr"></span>
                                     </span>
                                     <span class="in-word"></span>
-                                </div>
+                                </div> -->
                             </div>
                             <div class="btn-wrap">
                                 <button type="submit" class="btn btn-primary" [ngClass]="{'disabled': (!revenueForm.valid)}"
@@ -2986,7 +2986,7 @@
             <h1 class="center">Co-Applicant has been successfully saved!</h1>
             <p>Would you like to add more Co-Applicants</p>
                 <div class="btn-wrap">
-                    <button class="btn btn-border"  [routerLink]="['/applicant', qde.application.applicationId, 'co-applicant']">Yes</button>
+                    <button class="btn btn-border"  (click)="moreCoApp()">Yes</button>
                     <button class="btn btn-border"  [routerLink]="['/loan', qde.application.applicationId]">No</button>
                 </div>
         </div>

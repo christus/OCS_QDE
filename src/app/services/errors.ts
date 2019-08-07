@@ -239,8 +239,8 @@ export const errors: any = {
       invalid: "revenue is not valid"
     },
     annualNetincome:{
-      required:"Annual Net Income is mandatory",
-      invalid:"Invalid Annual Net Income"
+      required:"Annual Net Profit is mandatory",
+      invalid:"Invalid Annual Net Profit"
     },
     grossTurnover:{
       required: "Gross Turnover is mandatory",

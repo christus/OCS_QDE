@@ -464,11 +464,6 @@
                                               <h4 class="title">Upload<span class="cm-line-break">Income Proof</span></h4>
                                           </div>
                                       </div>
-                                      <div class="swiper-slide">
-                                            <div class="title-wrap">
-                                                <h4 class="title">Upload<span class="cm-line-break">Income Proof</span></h4>
-                                            </div>
-                                        </div>
                                   </div>
                               </div>
                           </div>
@@ -808,6 +803,7 @@
           <h1 class="center">Documents have been uploaded successfully!</h1>
           <p>Click Proceed to continue</p>
               <div class="btn-wrap">
+                  <button class="btn btn-border"  (click)="moreDocUpload()">Yes</button>
                   <button class="btn btn-border"  [routerLink]="['/references', qde.application.applicationId]">Proceed</button>
               </div>
       </div>

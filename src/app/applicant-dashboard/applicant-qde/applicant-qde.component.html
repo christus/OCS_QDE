@@ -2619,7 +2619,7 @@
                                     tabindex="1"
                                     pattern="{{regexPattern.revenue}}"
                                     required />
-                                    <label for="revenue">Revenue (in lahks)</label>
+                                    <label for="revenue">Recieved Gross turnover</label>
                                     <div *ngIf="revenue.touched && revenue.invalid" class="invalid-feedback">
                                         <!-- <div *ngIf="revenue.errors?.required">{{errors.revenueDetails.revenue.required}}</div> -->
                                         <div *ngIf="revenue.errors?.pattern">{{errors.revenueDetails.revenue.invalid}}</div>
@@ -2640,7 +2640,7 @@
                                     #annualNetincome="ngModel"
                                     name="annualNetIncome"
                                     pattern="{{regexPattern.revenue}}" />
-                                    <label for="net-income">Annual Net Income</label>
+                                    <label for="net-income">Annual Net Profit</label>
                                     <div *ngIf="annualNetincome.touched && annualNetincome.invalid" class="invalid-feedback">
                                         <!-- <div *ngIf="annualNetincome.errors?.required">{{errors.revenueDetails.annualNetincome.required}}</div> -->
                                         <div *ngIf="annualNetincome.errors?.pattern">{{errors.revenueDetails.annualNetincome.invalid}}</div>
@@ -2651,7 +2651,7 @@
                                     </span>
                                     <span class="in-word"></span>
                                 </div>
-                                <div class="form-group inr last">
+                                <!-- <div class="form-group inr last">
                                     <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                      maxlength="15" type="text" class="form-control" id="gross-turnover" 
                                     required
@@ -2662,16 +2662,16 @@
                                     name="grossTurnOver"
                                     pattern="{{regexPattern.revenue}}" />
                                     <label for="gross-turnover">Gross Turnover</label>
-                                    <div *ngIf="grossTurnover.touched && grossTurnover.invalid" class="invalid-feedback">
+                                    <div *ngIf="grossTurnover.touched && grossTurnover.invalid" class="invalid-feedback"> -->
                                         <!-- <div *ngIf="grossTurnover.errors?.required">{{errors.revenueDetails.grossTurnover.required}}</div> -->
-                                        <div *ngIf="grossTurnover.errors?.pattern">{{errors.revenueDetails.grossTurnover.invalid}}</div>
+                                        <!-- <div *ngIf="grossTurnover.errors?.pattern">{{errors.revenueDetails.grossTurnover.invalid}}</div>
                                     </div>
 
                                     <span class="addon">
                                         <span class="icon icon-inr"></span>
                                     </span>
                                     <span class="in-word"></span>
-                                </div>
+                                </div> -->
                             </div>
                             <div class="btn-wrap">
                                 <button type="submit" class="btn btn-primary" [ngClass]="{'disabled': (!revenueForm.valid)}"

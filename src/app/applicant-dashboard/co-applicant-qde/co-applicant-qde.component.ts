@@ -2617,4 +2617,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       v.setIndex(0);
     });
   }
+
+  moreCoApp(){
+    this.router.navigate(['/applicant', this.qde.application.applicationId, 'co-applicant']);
+    this.isCoApplicantRouteModal = false;
+  }
 }

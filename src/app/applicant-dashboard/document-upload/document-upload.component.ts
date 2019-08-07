@@ -158,6 +158,7 @@ export class DocumentUploadComponent implements OnInit {
   collateralProofFileSize: Array<string> = [];
   collateralProofId: Array<string> = [];
   collateralProofDoc: Array<File> = [];
+  isDocUploadRouteModal: boolean = false;
 
   qde: Qde;
 
@@ -885,7 +886,6 @@ export class DocumentUploadComponent implements OnInit {
     );
   }
 
-  isDocUploadRouteModal: boolean = false;
   uploadToOmni(documentInfo: any, tabIndex: number, slider) {
     this.qdeHttp.uploadToOmni(documentInfo).subscribe(
       response => {
@@ -897,6 +897,7 @@ export class DocumentUploadComponent implements OnInit {
           this.cameraImage = "";
 
           if(slider == "collateral") {
+            console.log("hios")
             this.isDocUploadRouteModal = true;
             return;
           }
@@ -1126,5 +1127,10 @@ export class DocumentUploadComponent implements OnInit {
     if(applicants[index+1] != null) {
       this.recurvLovCalls(applicants, index+1);
     }
+  }
+
+  moreDocUpload(){
+    this.router.navigate(['/document-uploads', this.qde.application.applicationId])
+    this.isDocUploadRouteModal = false
   }
 }
