@@ -889,7 +889,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                 this.qde.application.applicationId = result['application']['applicationId'];
   
                 // let isApplicantPresent:boolean = false;
-  
+
+
                 if((result["application"]["applicants"]).length > 0) {
                   // isApplicantPresent = applicants[this.applicantIndex].hasOwnProperty('applicantId');
                   // this.qde.application.applicants[this.coApplicantIndex].applicantId =  applicants[this.coApplicantIndex]["applicantId"];
@@ -903,8 +904,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   
                 }else {
                   // this.cds.changePanSlide2(true);
-                  // this.tabSwitch(12);
-                  this.goToNextSlide(swiperInstance);
+                  this.tabSwitch(12);
+                  // this.goToNextSlide(swiperInstance);
                 }
               } else {
                 this.panErrorCount++;
@@ -1922,7 +1923,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   selectCoApplicant(applicationId, index) {
+
     this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant/'+index], {fragment: "pan1"});
+
   }
 
   changeApplicantStatus(value, swiperInstance ?: Swiper) {

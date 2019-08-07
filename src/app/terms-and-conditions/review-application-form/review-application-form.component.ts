@@ -127,6 +127,7 @@ export class ReviewApplicationFormComponent implements OnInit {
   YYYY: number = new Date().getFullYear();
 
   isIncomplete: Array<InCompleteFields> = [];
+  monthsInChar: Array<string> = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'AUG', 'NOV', 'DEC'];
 
   constructor(private qdeService: QdeService,
               private route: ActivatedRoute,
@@ -201,9 +202,9 @@ export class ReviewApplicationFormComponent implements OnInit {
 
       this.months = Array.from(Array(12).keys()).map((val, index) => {
         let v = ((index+1) < 10) ? "0"+(index+1) : (index+1)+"";
-        return {key: v, value: v};
+        return {key: this.monthsInChar[index], value: v};
       });
-      this.months.unshift({key: 'MM', value: 'MM'});
+      this.months.unshift({key: 'MON', value: 'MM'});
 
       this.years = Array.from(Array(120).keys()).map((val, index) => {
         let v = (this.YYYY - index)+"";

@@ -119,7 +119,7 @@
                                             <h4 class="title">Enter Co-Applicant's <span class="cm-line-break"></span>PAN & KYC details</h4>
                                         </div>
                                     </div>
-                                    <div class="swiper-slide">
+                                    <div class="swiper-slide" *ngIf="false">
                                         <div class="title-wrap">
                                             <h4 class="title">Upload Co-Applicant's  <span class="cm-line-break"></span>PAN details</h4>
                                         </div>
@@ -243,7 +243,7 @@
                                             </div>
                                         </form>
                                     </div>
-                                    <div class="swiper-slide">
+                                    <div class="swiper-slide" *ngIf="false">
                                         <form class="bs-form" *ngIf="!isTabDisabled">
                                            <div class="form-wrap">
 
@@ -2984,9 +2984,10 @@
         <!-- <a class="modal-close" href="javascript:void(0);" (click)="onBackOTP()"><span class="icon icon-close"></span></a> -->
         <div class="modal-body">
             <h1 class="center">Co-Applicant has been successfully saved!</h1>
-            <p>Click Proceed to continue</p>
+            <p>Would you like to add more Co-Applicants</p>
                 <div class="btn-wrap">
-                    <button class="btn btn-border"  [routerLink]="['/loan', qde.application.applicationId]">Proceed</button>
+                    <button class="btn btn-border"  [routerLink]="['/applicant', qde.application.applicationId, 'co-applicant']">Yes</button>
+                    <button class="btn btn-border"  [routerLink]="['/loan', qde.application.applicationId]">No</button>
                 </div>
         </div>
     </div>
