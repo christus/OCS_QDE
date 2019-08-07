@@ -234,7 +234,7 @@ export interface ExistingLoan {
   loanProvider?: string;
   numberOfYears?: string;
   liveLoan?: number;
-  monthlyEmi?: number;
+  monthlyEmi?: string | number;
 }
 
 export interface Reference {

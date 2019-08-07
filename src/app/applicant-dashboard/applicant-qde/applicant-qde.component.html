@@ -1576,13 +1576,16 @@
                                               [(ngModel)]="qde.application.applicants[applicantIndex].occupation.numberOfYearsInCurrentCompany"
                                               tabindex="3"
                                               maxlength="2"
-                                              oninput="this.value=this.value.slice(0,this.maxLength)"
+                                              min="1"
+                                              max="40"
                                               #numberOfYearsInCurrentCompany="ngModel"
                                               required />
   
-                                      <ng5-slider class="commSlider" tabindex="4" [(value)]="qde.application.applicants[applicantIndex].occupation.numberOfYearsInCurrentCompany"
-                                      (valueChange)="checkOccupationDetailsYears($event)"
-                                      [options]="employementOptions" >
+                                      <ng5-slider   class="commSlider"
+                                                    tabindex="4"
+                                                    [(value)]="qde.application.applicants[applicantIndex].occupation.numberOfYearsInCurrentCompany"
+                                                    (valueChange)="checkOccupationDetailsYears($event)"
+                                                    [options]="employementOptions" >
                                       </ng5-slider>
   
                                       <!-- <div *ngIf="numberOfYearsInCurrentCompany.touched && numberOfYearsInCurrentCompany.invalid" class="invalid-feedback">
@@ -1621,7 +1624,7 @@
                                   </div>
                               </div>
   
-                              <div *ngIf="selectedOccupation.value == 9 || selectedOccupation.value == 10|| selectedOccupation.value == 14" class="btn-wrap">
+                              <div *ngIf="selectedOccupation.value == 9 || selectedOccupation.value == 10 || selectedOccupation.value == 14" class="btn-wrap">
                                 <button type="submit"
                                         [ngClass]="{'disabled': !occupationForm.valid || expError}"
                                         [disabled]="(!occupationForm.valid || expError)" 

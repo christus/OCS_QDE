@@ -2300,7 +2300,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   expError =false;
   checkOccupationDetailsYears(event: any) {
-
+    console.log("numberOfYearsInCurrentCompany: ", this.qde.application.applicants[this.applicantIndex].occupation.numberOfYearsInCurrentCompany);
+    console.log("totalWorkExperience: ", this.qde.application.applicants[this.applicantIndex].occupation.totalWorkExperience);
     if(this.qde.application.applicants[this.applicantIndex].occupation.numberOfYearsInCurrentCompany <= this.qde.application.applicants[this.applicantIndex].occupation.totalWorkExperience) {
       // Next button should be enabled
       this.expError = false;

@@ -1605,7 +1605,7 @@
                                         [(ngModel)]="selectedOccupation">
                                       </kendo-dropdownlist>
                                   </div>
-                                  <div class="form-group" *ngIf="selectedOccupation.value != '9' && selectedOccupation.value != '10'">
+                                  <div class="form-group" *ngIf="selectedOccupation.value != '9' && selectedOccupation.value != '10' && selectedOccupation.value != '14'">
                                       <input [readonly]="isReadOnly" type="text"
                                             class="form-control"
                                               required
@@ -1625,7 +1625,7 @@
                                       </div>
   
                                   </div>
-                                  <div class="form-group typ-range"  *ngIf="selectedOccupation.value != '9' && selectedOccupation.value != '10'">
+                                  <div class="form-group typ-range"  *ngIf="selectedOccupation.value != '9' && selectedOccupation.value != '10' && selectedOccupation.value != '14'">
                                       <span class="control-title">Years in current employment/business</span>
                                       <input [readonly]="isReadOnly" type="number"
                                               name="numberOfYearsInCurrentCompany"
@@ -1650,7 +1650,7 @@
                                       
   
                                   </div>
-                                  <div class="form-group typ-range" *ngIf="selectedOccupation.value != '9' && selectedOccupation.value != '10'">
+                                  <div class="form-group typ-range" *ngIf="selectedOccupation.value != '9' && selectedOccupation.value != '10' && selectedOccupation.value != '14'">
                                       <span class="control-title">Total Work Experience</span>
                                       <input [readonly]="isReadOnly" type="number"
                                               name="totalExperienceYear"
@@ -1678,7 +1678,7 @@
                                   </div>
                               </div>
   
-                              <div *ngIf="selectedOccupation.value == 9 || selectedOccupation.value == 10" class="btn-wrap">
+                              <div *ngIf="selectedOccupation.value == 9 || selectedOccupation.value == 10 || selectedOccupation.value == 14" class="btn-wrap">
                                 <button type="submit"
                                         [ngClass]="{'disabled': !occupationForm.valid || expError}"
                                         [disabled]="(!occupationForm.valid || expError)" 
@@ -1686,7 +1686,7 @@
                                     Save
                                 </button>
                             </div>
-                              <div *ngIf="selectedOccupation.value != 9 && selectedOccupation.value != 10" class="btn-wrap">
+                              <div *ngIf="selectedOccupation.value != 9 && selectedOccupation.value != 10 && selectedOccupation.value != 14" class="btn-wrap">
                                   <button type="submit"
                                           [ngClass]="{'disabled': !occupationForm.valid || expError}"
                                           [disabled]="(!occupationForm.valid || expError)" 

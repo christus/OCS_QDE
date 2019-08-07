@@ -221,7 +221,7 @@ export class LoanQdeComponent implements OnInit {
   loanProviderList: Array<any>;
 
   liveLoan = 0;
-  monthlyEmiValue: number;
+  monthlyEmiValue: string;
 
   applicationId: string;
   applicantIndex = 0;
@@ -391,8 +391,7 @@ export class LoanQdeComponent implements OnInit {
           
           this.liveLoan = result.application.applicants[0].existingLoans ? result.application.applicants[0].existingLoans.liveLoan ? result.application.applicants[0].existingLoans.liveLoan :0 :0;
 
-          this.monthlyEmiValue = result.application.applicants[0].existingLoans ? result.application.applicants[0].existingLoans.monthlyEmi ? result.application.applicants[0].existingLoans.monthlyEmi :'' :'';
-
+          this.monthlyEmiValue = result.application.applicants[0].existingLoans ? result.application.applicants[0].existingLoans.monthlyEmi ? result.application.applicants[0].existingLoans.monthlyEmi+'' :'' :'';
 
           this.qde = result;
           this.cds.enableTabsIfStatus1(this.qde.application.status);
@@ -776,7 +775,7 @@ export class LoanQdeComponent implements OnInit {
       //   monthlyEmi: this.monthlyEmiValue
       // };
 
-      this.qde.application.applicants.find(v => v.applicantId == this.selectedApplicant.value).existingLoans.monthlyEmi = this.monthlyEmiValue;
+      this.qde.application.applicants.find(v => v.applicantId == this.selectedApplicant.value).existingLoans.monthlyEmi = parseInt(this.monthlyEmiValue+''.split(',').join(''));
 
       this.qdeHttp
         .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
@@ -838,14 +837,13 @@ export class LoanQdeComponent implements OnInit {
    * Pass "1,23,45,678" and will return number
    *******************************************/
   getNumberWithoutCommaFormat(x: string) : string {
-    return x.split(',').join('');
+    return x ? x.split(',').join(''): '';
   }
   
   /****************************************
   * Is a valid Number after removing Comma
   ****************************************/
   isValidNumber(x) {
-    console.log("Monthly EMI", RegExp('^[0-9]*$').test(this.getNumberWithoutCommaFormat(x)));
     return RegExp('^[0-9]*$').test(this.getNumberWithoutCommaFormat(x));
   }
 }

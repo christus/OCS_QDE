@@ -1516,16 +1516,16 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       
   
       this.qde.application.applicants[this.coApplicantIndex].occupation.occupationType = this.selectedOccupation.value.toString();
-      if(this.selectedOccupation.value.toString() != '9' && this.selectedOccupation.value.toString() != '10') {
+      if(this.selectedOccupation.value.toString() != '9' && this.selectedOccupation.value.toString() != '10' && this.selectedOccupation.value.toString() != '14') {
         this.qde.application.applicants[this.coApplicantIndex].occupation.companyName = form.value.companyName;
       }
   
-      if(this.selectedOccupation.value.toString() != '9' && this.selectedOccupation.value.toString() != '10') {
-        this.qde.application.applicants[this.coApplicantIndex].occupation.numberOfYearsInCurrentCompany = (this.selectedOccupation.value.toString() != '9' && this.selectedOccupation.value.toString() != '10') ? form.value.numberOfYearsInCurrentCompany : 0;
+      if(this.selectedOccupation.value.toString() != '9' && this.selectedOccupation.value.toString() != '10' && this.selectedOccupation.value.toString() != '14') {
+        this.qde.application.applicants[this.coApplicantIndex].occupation.numberOfYearsInCurrentCompany = (this.selectedOccupation.value.toString() != '9' && this.selectedOccupation.value.toString() != '10' && this.selectedOccupation.value.toString() != '14') ? form.value.numberOfYearsInCurrentCompany : 0;
       }
   
-      if(this.selectedOccupation.value.toString() != '9' && this.selectedOccupation.value.toString() != '10') {
-        this.qde.application.applicants[this.coApplicantIndex].occupation.totalWorkExperience = (this.selectedOccupation.value.toString() != '9' && this.selectedOccupation.value.toString() != '10') ? form.value.totalExperienceYear : 0;
+      if(this.selectedOccupation.value.toString() != '9' && this.selectedOccupation.value.toString() != '10' && this.selectedOccupation.value.toString() != '14') {
+        this.qde.application.applicants[this.coApplicantIndex].occupation.totalWorkExperience = (this.selectedOccupation.value.toString() != '9' && this.selectedOccupation.value.toString() != '10' && this.selectedOccupation.value.toString() != '14') ? form.value.totalExperienceYear : 0;
       }
   
       console.log(this.qde.application.applicants[this.coApplicantIndex].occupation);
@@ -1533,7 +1533,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       this.createOrUpdatePersonalDetailsSub15 = this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
-          if(this.selectedOccupation.value == 9 || this.selectedOccupation.value == 10){
+          if(this.selectedOccupation.value == 9 || this.selectedOccupation.value == 10 || this.selectedOccupation.value == 14){
             this.isCoApplicantRouteModal = true;
             // this.tabSwitch();
             return;
