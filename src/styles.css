@@ -5107,7 +5107,8 @@ img {
 	font-size: .94vw;
 	line-height: 2.73vw;
 	text-transform: uppercase;
-	padding: 0 1.56vw
+	padding: 0 1.56vw;
+	margin-left: 1vw
 }
 
 .btn.btn-border {

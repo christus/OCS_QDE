@@ -1133,4 +1133,5 @@ export class DocumentUploadComponent implements OnInit {
     this.router.navigate(['/document-uploads', this.qde.application.applicationId])
     this.isDocUploadRouteModal = false
   }
+
 }

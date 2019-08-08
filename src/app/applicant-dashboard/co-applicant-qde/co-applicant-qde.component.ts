@@ -2622,4 +2622,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     this.router.navigate(['/applicant', this.qde.application.applicationId, 'co-applicant']);
     this.isCoApplicantRouteModal = false;
   }
+
+  backButton(){
+    let mainApplicant = this.qde.application.applicants.find(v => v['isMainApplicant']);
+    this.router.navigate(['/applicant', this.applicationId], {fragment: mainApplicant.isIndividual == true ? 'income1': 'income2'});
+    
+  }
 }

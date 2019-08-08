@@ -21,7 +21,7 @@
         </ul>
         <div class="tabs-contents" #tabContents>
           <div class="tab-content" [ngClass]="{'active': (activeTab == 0)}">
-            <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(incomeDetail1)"></a>
+              <a [routerLink]="['/applicant', qde.application.applicationId, 'co-applicant']" fragment="existingLoan" class="back-btn"></a>
             <div class="lyt-tabs">
               <div class="lhs">
                 <div class="swiper-slide">

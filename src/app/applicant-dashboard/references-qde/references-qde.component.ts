@@ -188,12 +188,14 @@ export class ReferencesQdeComponent implements OnInit {
     this.cds.changeViewFormVisible(true);
     this.cds.changeLogoutVisible(true);
 
-    this.cds.applicationId.subscribe(val => {
-      this.applicationId = val;
-      if(JSON.parse(localStorage.getItem('roles')).includes('TBM')) {
-        this.cds.setReadOnlyForm(true);
-      } else {
-        this.cds.setReadOnlyForm(false);
+    this.route.params.subscribe(params => {
+      if(params['applicationId'] != null) {
+        this.applicationId = params['applicationId'];
+        if(JSON.parse(localStorage.getItem('roles')).includes('TBM')) {
+          this.cds.setReadOnlyForm(true);
+        } else {
+          this.cds.setReadOnlyForm(false);
+        }
       }
     });
   }
@@ -307,14 +309,14 @@ export class ReferencesQdeComponent implements OnInit {
     });
 
 
-    this.cds.applicationId.subscribe(val => {
-      this.applicationId = val;
-      if(JSON.parse(localStorage.getItem('roles')).includes('TBM')) {
-        this.cds.setReadOnlyForm(true);
-      } else {
-        this.cds.setReadOnlyForm(false);
-      }
-    });
+    // this.cds.applicationId.subscribe(val => {
+    //   this.applicationId = val;
+    //   if(JSON.parse(localStorage.getItem('roles')).includes('TBM')) {
+    //     this.cds.setReadOnlyForm(true);
+    //   } else {
+    //     this.cds.setReadOnlyForm(false);
+    //   }
+    // });
 
  
     this.cds.isTBMLoggedIn.subscribe(val => {

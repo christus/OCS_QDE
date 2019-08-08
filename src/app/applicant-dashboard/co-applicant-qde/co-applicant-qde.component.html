@@ -57,7 +57,7 @@
               </ul>
                 <div class="tabs-contents" #tabContents>
                     <div class="tab-content" [ngClass]="{'active': (activeTab == 0)}">
-                        <!-- <a href="javascript:void(0);" class="back-btn" [routerLink]="['/applicant', applicationId]"></a> -->
+                        <a class="back-btn" (click)="backButton()"></a>
                         <div class="lyt-tabs">
 
                             <div class="lhs">

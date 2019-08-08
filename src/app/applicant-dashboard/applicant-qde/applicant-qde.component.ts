@@ -358,6 +358,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         localFragment = this.fragments[0];
       }
 
+      if(fragment == 'income1' || fragment == 'income2') {
+        localFragment = fragment;
+      }
+
       // Replace Fragments in url
       if( this.fragments.includes(localFragment) &&
           this.panslide == false &&

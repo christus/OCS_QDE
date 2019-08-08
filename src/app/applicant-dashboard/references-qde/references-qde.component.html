@@ -15,7 +15,7 @@
         </ul>
         <div class="tabs-contents" #tabContents>
           <div class="tab-content" [ngClass]="{'active': (activeTab == 0)}">
-            <!-- <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(panSlider2)"></a> -->
+              <a [routerLink]="['/loan', applicationId]" fragment="existingLoan" class="back-btn"></a>
             <div class="lyt-tabs">
 
               <div class="lhs">
@@ -386,7 +386,7 @@
           <h1 class="center">References has been successfully saved!</h1>
           <p>Click Proceed to continue</p>
               <div class="btn-wrap">
-                  <button class="btn btn-border"  [routerLink]="['/document-uploads', qde.application.applicationId]">Proceed</button>
+                  <button class="btn btn-border"  [routerLink]="['/document-uploads', applicationId]">Proceed</button>
               </div>
       </div>
   </div>
