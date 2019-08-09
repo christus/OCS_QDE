@@ -1,0 +1,100 @@
+
+.editsavebtn {
+    background: #e66e23;
+    border: none;
+    padding: 4px 10px;
+    color: #fff;
+    box-shadow: 1px 1px 3px 0 #333;
+}
+
+.editsavebtn:active {
+    box-shadow: none;
+}
+
+.lov-heading {
+    display: inline-block;
+    margin-left: 15px;
+    margin-right: 15px;
+    vertical-align: middle;
+}
+
+.pagination {
+    display: inline-block;
+}
+
+.pagination-link {
+    display: inline-block;
+    padding: 8px 14px;
+    border: 1px dotted #ccc;
+    margin-right: 5px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.pagination-link:hover,
+.pagination-link:focus {
+    background: #e66e23;
+    color: #fff;
+}
+
+.zipcode-table {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.zipcode-table thead tr th {
+    font-weight: bold;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    text-align: left;
+}
+
+.zipcode-table tbody tr td {
+    cursor: pointer;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    text-align: left;
+}
+
+.add-form {
+    /* width: 30vw; */
+}
+
+label {
+    display: block;
+}
+
+select {
+    display: block;
+    width: 100%;
+    margin-bottom: 15px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+
+.descvalue {
+    display: block;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+
+.saveBtn {
+    background: #e66e23;
+    border: none;
+    padding: 4px 10px;
+    color: #fff;
+    box-shadow: 1px 1px 3px 0 #333;
+    margin-top: 15px;
+}
+
+form {
+    clear: both;
+}
+
+.admin-col-half {
+    width: 50%;
+    float: left;
+    padding-left: 15px;
+    padding-right: 15px;
+}

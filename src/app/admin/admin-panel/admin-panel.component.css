@@ -9,6 +9,7 @@
     background: #e66e23;
     height: 100vh;
     font-size: 16px;
+    box-shadow: 1px 1px 10px 0 #ccc;
 }
 
 .admin-sidebar-links {
@@ -28,6 +29,10 @@
     width: 80%;
     float: left;
     font-size: 16px;
-    padding-left: 15px;
+    padding: 15px 30px;
 }
 
+.admin-logo-wrapper {
+    background: #fff;
+    padding: 15px;
+}

@@ -1,0 +1,48 @@
+<a class="editsavebtn" routerLink="/admin/lovs">Go Back</a>
+<h1 class="lov-heading">{{tableName.split('_').join(' ')}}</h1>
+<!-- <input type="text" class="lov-search" placeholder="Search" (input)="search($event)" /> -->
+<button type="button" class="editsavebtn" (click)="addNew()">Add New</button>
+
+<div class="admin-lovs-wrapper">
+ <table class="admin-table">
+   <thead>
+     <tr>
+       <th>Key</th>
+       <th>Description</th>
+       <th>Value</th>
+       <th>Edit</th>
+       <th *ngIf="isApplicantTitle">Male/Female</th>
+       <th [ngStyle]="{textAlign: 'center'}">Delete</th>
+     </tr>
+   </thead>
+   <tbody>
+     <tr *ngFor="let l of lovs;let i=index;">
+       <td>{{l.key}}</td>
+       <td>
+         <input type="text" #lovsElements placeholder="Description" [(ngModel)]="l.description" tabindex="1" [disabled]="l.isEdit" />
+       </td>
+       <td>
+        <input type="text" placeholder="Value" tabindex="2" [(ngModel)]="l.value" [disabled]="l.isEdit" />
+      </td>
+      <td>
+        <button type="button" class="editsavebtn" *ngIf="l.isEdit" (click)="edit(i)">Edit</button>
+        <button type="button" class="editsavebtn" *ngIf="!l.isEdit" (click)="save(i)">Save</button>
+      </td>
+      <td *ngIf="isApplicantTitle">
+        <form>
+          <input (change)="changeGender(1, i)" type="radio" class="genders" [checked]="(l.male == true && l.female == false)" name="gender" *ngIf="!l.isEdit" /><label [ngClass]="{'displayNun': !(l.male == true && l.female == false), 'displayInlineBlock': !l.isEdit}">Male</label>
+          <br *ngIf="!l.isEdit" />
+          <input (change)="changeGender(2, i)" type="radio" class="genders" [checked]="(l.male == false && l.female == true)" name="gender" *ngIf="!l.isEdit" /><label [ngClass]="{'displayNun': !(l.male == false && l.female == true), 'displayInlineBlock': !l.isEdit}">Female</label>
+          <br *ngIf="!l.isEdit" />
+          <input (change)="changeGender(3, i)" type="radio" class="genders" [checked]="(l.male == true && l.female == true)" name="gender" *ngIf="!l.isEdit" /><label [ngClass]="{'displayNun': !(l.male == true && l.female == true), 'displayInlineBlock': !l.isEdit}">Both</label>
+        </form>
+      </td>
+       <td [ngStyle]="{textAlign: 'center'}">
+         <button type="button" class="deleteBtn" (click)="delete(i)" *ngIf="l.id != null">
+           <img src="assets/images/delete.svg" class="img-responsive deleteImg" alt="Delete" />
+         </button>
+       </td>
+     </tr>
+   </tbody>
+ </table> 
+</div>

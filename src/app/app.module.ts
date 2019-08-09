@@ -88,10 +88,14 @@ import { UserModuleComponent } from './admin/user-module/user-module.component';
 
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AdminLovsComponent } from './admin/admin-panel/admin-lovs/admin-lovs.component';
+
 import { AddAdminUserComponent } from './admin/add-admin-user/add-admin-user.component';
 import { EditAdminUserComponent } from './admin/edit-admin-user/edit-admin-user.component';
-
-
+import { AdminLovsResolverService } from './services/admin-lovs-resolver.service';
+import { AdminGetEachLovResolverService } from './services/admin-get-each-lov-resolver.service';
+import { AdminEachLovComponent } from './admin/admin-panel/admin-lovs/admin-each-lov/admin-each-lov.component';
+import { AdminFieldEditDirective } from './directives/admin-field-edit.directive';
+import { AdminZipCodeComponent } from './admin/admin-panel/admin-lovs/admin-zip-code/admin-zip-code.component';
 
 const appRoutes: Routes = [
   { path: "", redirectTo: "leads", pathMatch: "full" },
@@ -320,7 +324,10 @@ const appRoutes: Routes = [
       },
       {
         path: 'lovs',
-        component: AdminLovsComponent
+        component: AdminLovsComponent,
+        resolve: {
+          adminLovs: AdminLovsResolverService
+        }
       },
       {
         path: 'add-user',
@@ -329,6 +336,20 @@ const appRoutes: Routes = [
       {
         path: 'edit-user/:userId',
         component: EditAdminUserComponent
+      },
+      {
+        path: 'lovs/zipcode',
+        component: AdminZipCodeComponent,
+        resolve: {
+          
+        }
+      },
+      {
+        path: 'lovs/:eachLovName',
+        component: AdminEachLovComponent,
+        resolve: {
+          eachLovs: AdminGetEachLovResolverService
+        }
       }
     ]
   },
@@ -388,7 +409,10 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     NumberFormatDirective,
     AdminLovsComponent,
     AddAdminUserComponent,
-    EditAdminUserComponent
+    EditAdminUserComponent,
+    AdminEachLovComponent,
+    AdminFieldEditDirective,
+    AdminZipCodeComponent
   ],
   imports: [
     BrowserModule,
@@ -424,7 +448,9 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     FileTransferObject,
     UniqueDeviceID,
     Keyboard,
-    NativeKeyboard
+    NativeKeyboard,
+    AdminLovsResolverService,
+    AdminGetEachLovResolverService
   ],
   bootstrap: [AppComponent]
 })

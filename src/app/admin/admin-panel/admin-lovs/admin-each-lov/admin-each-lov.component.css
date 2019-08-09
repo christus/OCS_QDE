@@ -1,0 +1,112 @@
+.lov-heading {
+    display: inline-block;
+    margin-left: 15px;
+    margin-right: 15px;
+    vertical-align: middle;
+}
+
+.lov-search {
+    border: 0;
+    border-bottom: 1px solid #333;
+    padding: 8px 16px 8px 0;
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.admin-lovs-wrapper {
+    width: 100%;
+    font-size: 1vw;
+}
+
+.admin-table {
+    width: 100%;
+    text-align: left;
+}
+
+.admin-table thead tr th {
+    border-bottom: 2px solid #e66e23;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    font-weight: bold;
+}
+
+.admin-table tbody tr td {
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.admin-lovs-wrapper .editLovBtn {
+    background: transparent;
+    border: 0;
+    padding: 0;
+}
+
+.admin-lovs-wrapper .editLovBtn:hover,
+.admin-lovs-wrapper .editLovBtn:focus {
+    color: #e66e23;
+}
+
+.displayNun {
+    display: none;
+}
+
+.displayInlineBlock {
+    display: inline-block;
+}
+
+.admin-table tbody tr td {
+    width: 16.66%;
+}
+
+.deleteBtn {
+    background: transparent;
+    border: none;
+}
+
+.deleteImg {
+    color: #e66e23;
+    height: 20px;
+    vertical-align: middle;
+}
+
+.lov-search {
+    border: 0;
+    border-bottom: 1px solid #333;
+    padding: 8px 16px 8px 0;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+tbody {
+    display:block;
+    height: 70vh;
+    overflow:scroll;
+}
+thead, tbody tr {
+    display:table;
+    width:100%;
+    table-layout:fixed;/* even columns width , fix width of table too*/
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.editsavebtn {
+    background: #e66e23;
+    border: none;
+    padding: 4px 10px;
+    color: #fff;
+    box-shadow: 1px 1px 3px 0 #333;
+}
+
+.editsavebtn:hover,
+.editsavebtn:focus {
+    box-shadow: none;
+}
+
+.editsavebtn:active {
+    box-shadow: inset 1px 1px 3px 0 #333;
+}

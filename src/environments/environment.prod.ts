@@ -129,6 +129,22 @@ export const environment = {
     "adminUserLOV": {
       'workflowId': '49fa2570a22a11e9a2f80242ac110002',
       'processId': '4a1b6398a22a11e998e90242ac110002'
+    },
+    "adminListOfValues": {
+      'workflowId': '3189bc1eb50611e982a40242ac110002',
+      'processId': '31a9c2c0b50611e9a0150242ac110002'
+    },
+    "adminGetEachLov": {
+      'workflowId': '3189bc1eb50611e982a40242ac110002',
+      'processId': 'dcb96e9ab50611e9b6d80242ac110002'
+    },
+    "adminInsertUpdateEachLov": {
+      'workflowId': '3189bc1eb50611e982a40242ac110002',
+      'processId': '174399a6b50b11e9be530242ac110002'
+    },
+    "adminSoftDeleteLov": {
+      'workflowId': '3189bc1eb50611e982a40242ac110002',
+      'processId': '3189bc1eb50611e982a40242ac110002'
     }
   },
   userName: "icici@icici.com",

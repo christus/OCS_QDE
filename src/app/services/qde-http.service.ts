@@ -9,7 +9,7 @@ import {CommonDataService} from 'src/app/services/common-data.service';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
-
+import { QdeService } from '../services/qde.service';
 
 
 @Injectable({
@@ -24,7 +24,8 @@ export class QdeHttpService {
   constructor(private http: HttpClient,
   private commonDataService: CommonDataService,
   private camera: Camera,
-  private transfer: FileTransfer
+  private transfer: FileTransfer,
+  private qdeService: QdeService
 ) {
 
     this.commonDataService.loginData.subscribe(result => {
@@ -1184,11 +1185,63 @@ createOrUpdatePersonalDetails(qde) {
     return this.http.post(uri, body.toString());
   }
 
+
+  insertUpdateEachLovs(lovs: any) {
+    const processId = environment.api.adminInsertUpdateEachLov.processId;
+    const workflowId = environment.api.adminInsertUpdateEachLov.workflowId;
+    const projectId = environment.projectId;
+
+    console.log(lovs);
+    let obj = this.qdeService.getFilteredJson({
+      userId: parseInt(lovs.userId),
+      tableName: lovs.tableName,
+      description: lovs.description,
+      value: lovs.value,
+      id: lovs.id!=null ? parseInt(lovs.id) : null,
+      male: lovs.male!=null ? lovs.male: null,
+      female: lovs.female!=null ? lovs.female: null
+    });
+    console.log(obj);
+
+    let requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: obj,
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = new HttpParams().set(
+      'processVariables',
+      JSON.stringify(requestEntity)
+    );
+  
+    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.http.post(uri, body.toString());
+  }
+
+  softDeleteLov(lovs: any) {
+    const processId = environment.api.adminSoftDeleteLov.processId;
+    const workflowId = environment.api.adminSoftDeleteLov.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: {
+        userId: parseInt(lovs.userId),
+        tableName: lovs.tableName,
+        id: parseInt(lovs.id)
+      },
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+
+    const body = new HttpParams().set(
+      'processVariables',
+      JSON.stringify(requestEntity)
+    );
+  
+    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.http.post(uri, body.toString());
+  }
 }
-
-
-
-
-
-
-

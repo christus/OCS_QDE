@@ -1,3 +1,10 @@
-<p>
-  admin-lovs works!
-</p>
+<h1 class="lov-heading">LOVs</h1>
+<input type="text" class="lov-search" #searchInp placeholder="Search" tabindex="1" (input)="search($event)" />
+
+<div class="lovs-wrapper">
+  <ul>
+    <li class="lovs" *ngFor="let eachLov of filteredLovs">
+      <a class="lovs-link" [routerLink]="['/admin/lovs', eachLov['value']]">{{eachLov['description']}}</a>
+    </li>
+  </ul>
+</div>
