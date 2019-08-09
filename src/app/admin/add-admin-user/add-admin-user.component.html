@@ -21,7 +21,6 @@
             <input type="text"  class="form-control" formControlName="userName" autocomplete="nope"/>
             <div *ngIf="formValue.userName.errors" >
                 <div *ngIf="formValue.userName.errors.required"> required</div>
-                <div *ngIf="formValue.userName.errors.email"> Invalid email</div>
             </div>
             <br><br>
         </div>
@@ -59,7 +58,7 @@
             <label class="controltitle">User role</label>
             <select class="form-control" formControlName="userRoleId">
                 <option [ngValue]="null" disabled>Choose your role</option>
-                <option *ngFor="let userRole of userRoles" value={{userRole.value}}>
+                <option *ngFor="let userRole of userRoles" [ngValue] = "userRole" value={{userRole.value}}>
                     {{userRole.key}}
                 </option>
             </select>
@@ -69,7 +68,7 @@
             <label class="controltitle">User branch</label>
             <select class="form-control" formControlName="branchName">
                 <option  [ngValue]="null" disabled>Choose your branch</option>
-                <option *ngFor="let b of branch" value={{b.value}}>
+                <option *ngFor="let b of branch" [ngValue] = "b" value={{b.value}}>
                     {{b.key}}
                 </option>
             </select>

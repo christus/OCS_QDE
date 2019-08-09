@@ -335,6 +335,10 @@ const appRoutes: Routes = [
         component: AddAdminUserComponent
       },
       {
+        path: 'add-user/:userId',
+        component: AddAdminUserComponent
+      },
+      {
         path: 'edit-user/:userId',
         component: EditAdminUserComponent
       },

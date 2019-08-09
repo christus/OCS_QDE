@@ -1115,6 +1115,7 @@ createOrUpdatePersonalDetails(qde) {
     return this.http.post(uri, body.toString());
   }
 
+  /**Get list of users created */
 
   getAdminUsers(data){
     const processId = environment.api.adminGetUsers.processId;
@@ -1139,7 +1140,6 @@ createOrUpdatePersonalDetails(qde) {
     return this.http.post(uri, body.toString());
   }
 
-  /**Get list of users created */
 
   getAdminUser(data){
     const processId = environment.api.adminGetUser.processId;
@@ -1148,9 +1148,7 @@ createOrUpdatePersonalDetails(qde) {
 
     const requestEntity: RequestEntity = {
       processId: processId,
-      ProcessVariables: {
-        data: data
-      },
+      ProcessVariables: data,
       workflowId: workflowId,
       projectId: projectId
     };
@@ -1186,6 +1184,29 @@ createOrUpdatePersonalDetails(qde) {
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
     return this.http.post(uri, body.toString());
   }
+
+
+  updateAdminUsers(data) {
+    const processId = environment.api.adminUpdateUser.processId;
+    const workflowId = environment.api.adminUpdateUser.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: data,
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = new HttpParams().set(
+      'processVariables',
+      JSON.stringify(requestEntity)
+    );
+  
+    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.http.post(uri, body.toString());
+  }
+
 
   /**Branch, User Lovs API */
 

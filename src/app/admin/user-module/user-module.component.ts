@@ -11,6 +11,11 @@ export class UserModuleComponent implements OnInit {
   p: number = 1;
   userTable:any[] ;
 
+  // paginationConfig =  { 
+  //   itemsPerPage: 2, 
+  //   totalItems: total 
+  // }
+
 
   constructor(private qdeHttp: QdeHttpService) { 
 
@@ -19,7 +24,7 @@ export class UserModuleComponent implements OnInit {
 
   ngOnInit() {
     this.qdeHttp.getAdminUsers({}).subscribe((response) => {
-        this.collection = response['ProcessVariables'].userTable;
+        this.collection = response['ProcessVariables'].userDetails;
         console.log(this.collection);
     });
   }
