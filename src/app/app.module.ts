@@ -26,8 +26,7 @@ import { LeadsListComponent } from './applicant-dashboard/leads-list/leads-list.
 import { ApplicantQdeComponent } from './applicant-dashboard/applicant-qde/applicant-qde.component';
 
 
-import { NgSelectModule } from '@ng-select/ng-select';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { Ng5SliderModule } from 'ng5-slider';
 import { CoApplicantQdeComponent } from './applicant-dashboard/co-applicant-qde/co-applicant-qde.component';
@@ -96,6 +95,8 @@ import { AdminGetEachLovResolverService } from './services/admin-get-each-lov-re
 import { AdminEachLovComponent } from './admin/admin-panel/admin-lovs/admin-each-lov/admin-each-lov.component';
 import { AdminFieldEditDirective } from './directives/admin-field-edit.directive';
 import { AdminZipCodeComponent } from './admin/admin-panel/admin-lovs/admin-zip-code/admin-zip-code.component';
+
+
 
 const appRoutes: Routes = [
   { path: "", redirectTo: "leads", pathMatch: "full" },
@@ -420,14 +421,15 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     RouterModule.forRoot(appRoutes),
     SwiperModule,
     FormsModule,
-    NgSelectModule,
+    ReactiveFormsModule,
     Ng5SliderModule,
     HttpClientModule,
     DropDownsModule,
     ImageUploadModule.forRoot(),
     DeviceDetectorModule.forRoot(),
     NgxUiLoaderModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    
   ],
   providers: [
     ListOfValuesResolverService,

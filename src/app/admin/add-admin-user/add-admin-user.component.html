@@ -1,42 +1,101 @@
-<form #userdata = "ngForm" (ngSubmit)="onSubmit(userdata)">
-  First name:<br>
-  <input type="text" ngModel name="firstname">
-  <br>
-  Last name:<br>
-  <input type="text" ngModel name="lastName">
-  <br><br>
-  User name:<br>
-  <input type="email" ngModel name="userName" >
-  <br><br>
-  Password:<br>
-  <input type="password" ngModel name="password" >
-  <br><br>
-  Email:<br>
-  <input type="email" ngModel name="mailId">
-  <br><br>
-  Mobile number:<br>
-  <input type="number" ngModel  name="mobileNumber">
-  <br><br>
-  <span class="controltitle">User role</span>
-  <select name="userBranch" ngModel name="userRoleId">
-      <option [ngValue]="null" disabled>Choose your role</option>
-      <option *ngFor="let userRole of userRoles" value={{userRole.value}}>
-          {{userRole.key}}
-      </option>
-  </select>
-  <br><br>
-  <span class="controltitle">User branch</span>
-  <select name="userBranch" ngModel name="branchName">
-      <option  [ngValue]="null" disabled>Choose your branch</option>
-      <option *ngFor="let b of branch" value={{b.value}}>
-          {{b.key}}
-      </option>
-  </select>
-  <br><br>
-  Reporting to:<br>
-  <input type="text" ngModel name="reportingTo" value="Mouse">
-  <br><br>
-  <input type="submit" value="Submit"
-  [ngClass]="{'disabled': (!userdata.valid)}"
-  [disabled]="!userdata.valid">
-</form> 
+<div style="overflow-y: scroll;height: 1024px;">
+    <form [formGroup]="registerUser" (ngSubmit)="onSubmit(userdata)"  autocomplete="off">
+        <div class="form-group">
+                First name:<br>
+                <input type="text" class="form-control" formControlName="firstName" autocomplete="nope"/>
+                <div *ngIf="formValue.firstName.errors" >
+                    <div *ngIf="formValue.firstName.errors.required"> required</div>
+                </div>
+                <br>
+        </div>
+        <div class="form-group">
+                Last name:<br>
+                <input type="text"  class="form-control" formControlName="lastName" autocomplete="nope"/>
+                <div *ngIf="formValue.lastName.errors" >
+                    <div *ngIf="formValue.lastName.errors.required"> required</div>
+                </div>
+                <br><br>
+        </div>
+         <div class="form-group">
+            User name:<br>
+            <input type="text"  class="form-control" formControlName="userName" autocomplete="nope"/>
+            <div *ngIf="formValue.userName.errors" >
+                <div *ngIf="formValue.userName.errors.required"> required</div>
+                <div *ngIf="formValue.userName.errors.email"> Invalid email</div>
+            </div>
+            <br><br>
+        </div>
+        <div class="form-group">
+            Password:<br>
+            <input type="password"  class="form-control" formControlName="password" autocomplete="new-password" />
+            <div *ngIf="formValue.password.errors">
+                    <div *ngIf="formValue.password.errors.required"> required</div>
+                    <div *ngIf="formValue.password.errors.minlength"> Minimum 6 character required</div>
+                </div>
+            <br><br>
+        </div>
+       <div class="form-group">
+            Email:<br>
+            <input type="text"  class="form-control" formControlName="mailId" autocomplete="nope"/>
+            <div *ngIf="formValue.mailId.errors" >
+                    <div *ngIf="formValue.mailId.errors.required"> required</div>
+                    <div *ngIf="formValue.mailId.errors.email"> Invalid email</div>
+                </div>
+            <br><br>
+        </div>
+        <div class="form-group">
+            Mobile number:<br>
+            <input type="number"  class="form-control"  
+            maxlength="10"
+            (keypress)=_keyPress($event)
+            formControlName="mobileNumber" />
+            <div *ngIf="formValue.mobileNumber.errors" >
+                <div *ngIf="formValue.mobileNumber.errors.required"> required</div>
+                <div *ngIf="registerUser.get('mobileNumber').hasError('pattern')"> Invalid mobileNumber</div>
+            </div>
+            <br><br>
+        </div>
+        <div class="form-group">
+            <label class="controltitle">User role</label>
+            <select class="form-control" formControlName="userRoleId">
+                <option [ngValue]="null" disabled>Choose your role</option>
+                <option *ngFor="let userRole of userRoles" value={{userRole.value}}>
+                    {{userRole.key}}
+                </option>
+            </select>
+            <br><br>
+        </div>
+        <div class="form-group">
+            <label class="controltitle">User branch</label>
+            <select class="form-control" formControlName="branchName">
+                <option  [ngValue]="null" disabled>Choose your branch</option>
+                <option *ngFor="let b of branch" value={{b.value}}>
+                    {{b.key}}
+                </option>
+            </select>
+            <br><br>
+        </div>
+    
+        <div class="form-group">
+            Reporting to:<br>
+            <input type="text"  (input)="filterLeads($event)" class="form-control"  formControlName="reportingTo" placeholder="Search" />
+            <input type="hidden" class="form-control" hidden  formControlName="reportingToInp" />
+            <span class="reporting_to">
+                <ul>
+                    <li class="item" id="{{i.userId}}" (click)="selectedReportedTo(reportingToInp, i)" *ngFor="let i of filteredItems;let in=index;">
+                        {{i.userName}}
+                    </li>
+                </ul>
+                
+            </span>
+          
+            <br><br>
+        </div>
+        
+        <div class="form-group">
+            <input type="submit" value="Submit">          
+        </div> 
+    
+    </form> 
+</div>
+

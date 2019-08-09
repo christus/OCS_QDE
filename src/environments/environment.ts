@@ -132,8 +132,8 @@ export const environment = {
       'processId': '07906c06ad4e11e9a7f80242ac110002'
     },
     "adminUserLOV": {
-      'workflowId': '49fa2570a22a11e9a2f80242ac110002',
-      'processId': '4a1b6398a22a11e998e90242ac110002'
+      'workflowId': '4c1a5e74b84611e988b70242ac110002',
+      'processId': '4c2dcd56b84611e98b890242ac110002'
     },
     "adminListOfValues": {
       'workflowId': '3189bc1eb50611e982a40242ac110002',
@@ -150,6 +150,17 @@ export const environment = {
     "adminSoftDeleteLov": {
       'workflowId': '3189bc1eb50611e982a40242ac110002',
       'processId': '69bea66eb76b11e9b2e30242ac110002'
+
+      // 'workflowId': '4c1a5e74b84611e988b70242ac110002',
+      // 'processId': '4c2dcd56b84611e98b890242ac110002'
+    },
+    "adminGetUser": {
+      'workflowId': '5871a7f8ad3911e9ad4f0242ac110002',
+      'processId': '5871a7f8ad3911e9ad4f0242ac110002'
+    },
+    "adminReportingTo": {
+      'workflowId': '1afeb32ab8dd11e9a7520242ac110002',
+      'processId': '1b175d3ab8dd11e988a00242ac110002'
     }
   },
   userName: "icici@icici.com",

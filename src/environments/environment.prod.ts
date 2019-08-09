@@ -1,6 +1,6 @@
 export const environment = {
-  version: "1.6.1",
-  buildDate: "6-8-19_release",
+  version: "1.6.2",
+  buildDate: "6-8-19_eve_release",
   production: true,
   projectId: '5928d30eac7811e9a1670242ac110002', //developement
 
@@ -145,6 +145,16 @@ export const environment = {
     "adminSoftDeleteLov": {
       'workflowId': '3189bc1eb50611e982a40242ac110002',
       'processId': '3189bc1eb50611e982a40242ac110002'
+      // 'workflowId': '4c1a5e74b84611e988b70242ac110002',
+      // 'processId': '4c2dcd56b84611e98b890242ac110002'
+    },
+    "adminGetUser": {
+      'workflowId': '5871a7f8ad3911e9ad4f0242ac110002',
+      'processId': '5871a7f8ad3911e9ad4f0242ac110002'
+    },
+    "adminReportingTo": {
+      'workflowId': '1afeb32ab8dd11e9a7520242ac110002',
+      'processId': '1b175d3ab8dd11e988a00242ac110002'
     }
   },
   userName: "icici@icici.com",
@@ -153,8 +163,8 @@ export const environment = {
   driveLocation: "/d/drive/docs/",
   //host: "http://192.168.1.108/appiyo",
   //host: "/ProcessStore",
-  //host:  "/appiyo",
+  host:  "/appiyo",
   //host: "https://ihfcmobileuat.icicihfc.com/appiyo"
   //host: "https://103.87.42.117/appiyo"
-  host:"http://www.twixor.in/appiyo"
+  //host:"http://www.twixor.in/appiyo"
 };
