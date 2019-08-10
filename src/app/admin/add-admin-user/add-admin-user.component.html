@@ -1,60 +1,54 @@
-<div style="overflow-y: scroll;height: 1024px;">
+<div class="app-admin-container">
     <form [formGroup]="registerUser" (ngSubmit)="onSubmit(userdata)"  autocomplete="off">
-        <div class="form-group">
-                First name:<br>
-                <input type="text" class="form-control" formControlName="firstName" autocomplete="nope"/>
+        <div class="inputBox">
+                <label for="firstname" class="inputText">First name:</label>
+                <input type="text" id="firstname" class="form-control" fieldFill formControlName="firstName" autocomplete="nope"/>
                 <div *ngIf="formValue.firstName.errors" >
                     <div *ngIf="formValue.firstName.errors.required"> required</div>
                 </div>
-                <br>
         </div>
-        <div class="form-group">
-                Last name:<br>
-                <input type="text"  class="form-control" formControlName="lastName" autocomplete="nope"/>
+        <div class="inputBox">
+                <label for="lastName" class="inputText">Last name:</label>
+                <input type="text" id="lastName" class="form-control" fieldFill formControlName="lastName" autocomplete="nope"/>
                 <div *ngIf="formValue.lastName.errors" >
                     <div *ngIf="formValue.lastName.errors.required"> required</div>
                 </div>
-                <br><br>
         </div>
-         <div class="form-group">
-            User name:<br>
-            <input type="text"  class="form-control" formControlName="userName" autocomplete="nope"/>
+         <div class="inputBox">
+                <label for="userName" class="inputText">User name:</label>
+            <input type="text" id="userName" class="form-control" fieldFill formControlName="userName" autocomplete="nope"/>
             <div *ngIf="formValue.userName.errors" >
                 <div *ngIf="formValue.userName.errors.required"> required</div>
             </div>
-            <br><br>
         </div>
-        <div class="form-group">
-            Password:<br>
-            <input type="password"  class="form-control" formControlName="password" autocomplete="new-password" />
+        <div class="inputBox">
+            <label for="password" class="inputText">Password:</label>
+            <input type="password" id="password"  class="form-control" fieldFill formControlName="password" autocomplete="new-password" />
             <div *ngIf="formValue.password.errors">
                     <div *ngIf="formValue.password.errors.required"> required</div>
                     <div *ngIf="formValue.password.errors.minlength"> Minimum 6 character required</div>
                 </div>
-            <br><br>
         </div>
-       <div class="form-group">
-            Email:<br>
-            <input type="text"  class="form-control" formControlName="mailId" autocomplete="nope"/>
+       <div class="inputBox">
+            <label for="mailId" class="inputText">Email:</label>
+            <input type="text" id="mailId"  class="form-control" fieldFill formControlName="mailId" autocomplete="nope"/>
             <div *ngIf="formValue.mailId.errors" >
                     <div *ngIf="formValue.mailId.errors.required"> required</div>
                     <div *ngIf="formValue.mailId.errors.email"> Invalid email</div>
                 </div>
-            <br><br>
         </div>
-        <div class="form-group">
-            Mobile number:<br>
-            <input type="number"  class="form-control"  
+        <div class="inputBox">
+            <label for="mobileNumber" class="inputText">Mobile number:</label>
+            <input type="number"  class="form-control"  fieldFill
             maxlength="10"
             (keypress)=_keyPress($event)
-            formControlName="mobileNumber" />
+            formControlName="mobileNumber" id="mobileNumber" />
             <div *ngIf="formValue.mobileNumber.errors" >
                 <div *ngIf="formValue.mobileNumber.errors.required"> required</div>
                 <div *ngIf="registerUser.get('mobileNumber').hasError('pattern')"> Invalid mobileNumber</div>
             </div>
-            <br><br>
         </div>
-        <div class="form-group">
+        <div class="selectBox">
             <label class="controltitle">User role</label>
             <select class="form-control" formControlName="userRoleId">
                 <option [ngValue]="null" disabled>Choose your role</option>
@@ -62,9 +56,8 @@
                     {{userRole.key}}
                 </option>
             </select>
-            <br><br>
         </div>
-        <div class="form-group">
+        <div class="selectBox">
             <label class="controltitle">User branch</label>
             <select class="form-control" formControlName="branchName">
                 <option  [ngValue]="null" disabled>Choose your branch</option>
@@ -72,29 +65,24 @@
                     {{b.key}}
                 </option>
             </select>
-            <br><br>
         </div>
     
-        <div class="form-group">
-            Reporting to:<br>
-            <input type="text"  (input)="filterLeads($event)" class="form-control"  formControlName="reportingTo" placeholder="Search" />
+        <div class="inputBox">
+            <!-- <label for="reportingTo" class="">Reporting to:</label> -->
+            <input type="text" id="reportingTo"  (input)="filterLeads($event)" class="form-control"  formControlName="reportingTo" placeholder="Search" />
             <input type="hidden" class="form-control" hidden  formControlName="reportingToInp" />
             <span class="reporting_to">
                 <ul>
                     <li class="item" id="{{i.userId}}" (click)="selectedReportedTo(reportingToInp, i)" *ngFor="let i of filteredItems;let in=index;">
                         {{i.userName}}
                     </li>
-                </ul>
-                
-            </span>
-          
-            <br><br>
+                </ul>                
+            </span>          
         </div>
         
-        <div class="form-group">
-            <input type="submit" value="Submit">          
+        <div class="inputBox">
+            <input type="submit" value="Submit" class="btn btn-default">          
         </div> 
     
     </form> 
 </div>
-

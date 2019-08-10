@@ -1,6 +1,6 @@
 .container {
-  width: 75%;
-  margin: 3rem auto;
+  /* width: 75%;
+  margin: 3rem auto; */
 }
 h2 {
   color: #345F90;
@@ -16,7 +16,7 @@ h2 {
   margin-bottom: 20px;
 }
 .tab-slider--tabs {
-  display: block;
+  /* display: block;
   float: left;
   margin: 0;
   padding: 0;
@@ -29,7 +29,9 @@ h2 {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
-  user-select: none;
+  user-select: none; */
+  display: flex;
+  justify-content: center;
 }
 .tab-slider--tabs:after {
   content: "";
@@ -75,3 +77,18 @@ h2 {
   color: #96752f;
   font-size: 15px; 
 }
+.paymentUploadPicContainer label {
+  position: relative;
+}
+.tabs .tabs-head {
+  justify-content: left;
+}
+.paymentUploadPicContainer,
+.btn-wrap {
+  display: inline-block;
+  vertical-align: middle;
+}
+.btn-wrap {
+  margin-left: 5vw;
+}
+

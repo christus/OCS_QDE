@@ -1,11 +1,10 @@
 import { ActivatedRoute } from '@angular/router';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
+import {NgForm} from '@angular/forms';
+import { FieldFillDirective } from 'src/app/directives/field-fill.directive';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
-
-
-
 
 @Component({
   selector: 'app-add-admin-user',
