@@ -5,8 +5,9 @@
     overflow-y: scroll;
     height: 100px;
     position: absolute;
-    width: 100px;
-    background: #CCC
+    width: 17.75vw;
+    background: #eee;
+    border: 1px solid #ccc;
 }
 
 li .item:active { 
@@ -138,4 +139,21 @@ select:-webkit-autofill:focus {
     color: #999;
     font-family: zurich-light;
     padding: 0;
+}
+.reportingToBlock input {
+    max-width: 17.75vw ;
+}
+.reporting_to {
+    overflow-y: scroll;
+    height: 100px;
+    position: absolute;
+    width: 17.75vw;
+    background: #eee;
+    border: 1px solid #ccc;
+}
+.reporting_to li {
+    padding: 0.5vw;
+    font-size: 1.4vw;
+    background: #fff;
+    border-bottom: 1px solid #ddd;
 }

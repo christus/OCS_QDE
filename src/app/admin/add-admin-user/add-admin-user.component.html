@@ -2,7 +2,7 @@
     <form [formGroup]="registerUser" (ngSubmit)="onSubmit(userdata)"  autocomplete="off">
         <div class="inputBox">
                 <label for="firstname" class="inputText">First name:</label>
-                <input type="text" id="firstname" class="form-control" fieldFill formControlName="firstName" autocomplete="nope"/>
+                <input type="text" id="firstname" class="form-control" formControlName="firstName" fieldFill autocomplete="nope"/>
                 <div *ngIf="formValue.firstName.errors" >
                     <div *ngIf="formValue.firstName.errors.required"> required</div>
                 </div>
@@ -67,7 +67,7 @@
             </select>
         </div>
     
-        <div class="inputBox">
+        <div class="inputBox reportingToBlock">
             <!-- <label for="reportingTo" class="">Reporting to:</label> -->
             <input type="text" id="reportingTo"  (input)="filterLeads($event)" class="form-control"  formControlName="reportingTo" placeholder="Search" />
             <input type="hidden" class="form-control" hidden  formControlName="reportingToInp" />
