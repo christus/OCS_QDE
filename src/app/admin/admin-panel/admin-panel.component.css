@@ -30,7 +30,10 @@
     float: left;
     font-size: 16px;
     padding: 0 30px 15px 30px;
-    
+    overflow-y: auto;
+    height: 100%;
+    position: fixed;
+    margin-left: 19%;
 }
 
 .admin-logo-wrapper {

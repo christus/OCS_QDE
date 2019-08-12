@@ -1124,9 +1124,7 @@ createOrUpdatePersonalDetails(qde) {
 
     const requestEntity: RequestEntity = {
       processId: processId,
-      ProcessVariables: {
-        data: data
-      },
+      ProcessVariables: data,
       workflowId: workflowId,
       projectId: projectId
     };

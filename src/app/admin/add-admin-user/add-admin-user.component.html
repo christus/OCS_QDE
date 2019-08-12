@@ -4,37 +4,37 @@
                 <label for="firstname" class="inputText">First name:</label>
                 <input type="text" id="firstname" class="form-control" formControlName="firstName" fieldFill autocomplete="nope"/>
                 <div *ngIf="formValue.firstName.errors" >
-                    <div *ngIf="formValue.firstName.errors.required"> required</div>
+                    <div class="redalert" *ngIf="formValue.firstName.errors.required"> required</div>
                 </div>
         </div>
         <div class="inputBox">
                 <label for="lastName" class="inputText">Last name:</label>
                 <input type="text" id="lastName" class="form-control" fieldFill formControlName="lastName" autocomplete="nope"/>
                 <div *ngIf="formValue.lastName.errors" >
-                    <div *ngIf="formValue.lastName.errors.required"> required</div>
+                    <div class="redalert" *ngIf="formValue.lastName.errors.required"> required</div>
                 </div>
         </div>
          <div class="inputBox">
                 <label for="userName" class="inputText">User name:</label>
             <input type="text" id="userName" class="form-control" fieldFill formControlName="userName" autocomplete="nope"/>
             <div *ngIf="formValue.userName.errors" >
-                <div *ngIf="formValue.userName.errors.required"> required</div>
+                <div class="redalert"  *ngIf="formValue.userName.errors.required"> required</div>
             </div>
         </div>
         <div class="inputBox">
             <label for="password" class="inputText">Password:</label>
             <input type="password" id="password"  class="form-control" fieldFill formControlName="password" autocomplete="new-password" />
             <div *ngIf="formValue.password.errors">
-                    <div *ngIf="formValue.password.errors.required"> required</div>
-                    <div *ngIf="formValue.password.errors.minlength"> Minimum 6 character required</div>
+                    <div class="redalert" *ngIf="formValue.password.errors.required"> required</div>
+                    <div class="redalert" *ngIf="formValue.password.errors.minlength"> Minimum 6 character required</div>
                 </div>
         </div>
        <div class="inputBox">
             <label for="mailId" class="inputText">Email:</label>
             <input type="text" id="mailId"  class="form-control" fieldFill formControlName="mailId" autocomplete="nope"/>
             <div *ngIf="formValue.mailId.errors" >
-                    <div *ngIf="formValue.mailId.errors.required"> required</div>
-                    <div *ngIf="formValue.mailId.errors.email"> Invalid email</div>
+                    <div class="redalert"  *ngIf="formValue.mailId.errors.required"> required</div>
+                    <div class="redalert" *ngIf="formValue.mailId.errors.email"> Invalid email</div>
                 </div>
         </div>
         <div class="inputBox">
@@ -44,8 +44,8 @@
             (keypress)=_keyPress($event)
             formControlName="mobileNumber" id="mobileNumber" />
             <div *ngIf="formValue.mobileNumber.errors" >
-                <div *ngIf="formValue.mobileNumber.errors.required"> required</div>
-                <div *ngIf="registerUser.get('mobileNumber').hasError('pattern')"> Invalid mobileNumber</div>
+                <div class="redalert"  *ngIf="formValue.mobileNumber.errors.required"> required</div>
+                <div class="redalert"  *ngIf="registerUser.get('mobileNumber').hasError('pattern')"> Invalid mobileNumber</div>
             </div>
         </div>
         <div class="selectBox">
@@ -56,33 +56,46 @@
                     {{userRole.key}}
                 </option>
             </select>
+            <div *ngIf="formValue.userRoleId.errors" >
+                <div class="redalert" *ngIf="formValue.userRoleId.errors.required"> required</div>
+            </div>
         </div>
         <div class="selectBox">
             <label class="controltitle">User branch</label>
-            <select class="form-control" formControlName="branchName">
+            <select class="form-control" formControlName="branchId">
                 <option  [ngValue]="null" disabled>Choose your branch</option>
                 <option *ngFor="let b of branch" [ngValue] = "b" value={{b.value}}>
                     {{b.key}}
                 </option>
             </select>
+            <div *ngIf="formValue.branchId.errors" >
+                <div class="redalert" *ngIf="formValue.branchId.errors.required"> required</div>
+            </div>
         </div>
     
         <div class="inputBox reportingToBlock">
             <!-- <label for="reportingTo" class="">Reporting to:</label> -->
-            <input type="text" id="reportingTo"  (input)="filterLeads($event)" class="form-control"  formControlName="reportingTo" placeholder="Search" />
+            <input type="text" id="reportingTo"  (input)="filterLeads($event)" class="form-control"  formControlName="reportingTo" placeholder="Reporting to" />
             <input type="hidden" class="form-control" hidden  formControlName="reportingToInp" />
             <span class="reporting_to">
                 <ul>
-                    <li class="item" id="{{i.userId}}" (click)="selectedReportedTo(reportingToInp, i)" *ngFor="let i of filteredItems;let in=index;">
+                    <li #reportingTo class="item" id="{{i.userId}}" (click)="selectedReportedTo(reportingToInp, i)" *ngFor="let i of filteredItems;let in=index;">
                         {{i.userName}}
                     </li>
                 </ul>                
-            </span>          
+            </span>
+            <div *ngIf="formValue.reportingTo.errors" >
+                <div class="redalert" *ngIf="formValue.reportingTo.errors.required"> required</div>
+            </div>          
         </div>
         
         <div class="inputBox">
-            <input type="submit" value="Submit" class="btn btn-default">          
+            <button type="submit" class="btn btn-default"   [ngClass]="{'disabled': (!registerUser.valid)}"
+            [disabled]="!registerUser.valid" > Submit   </button>
         </div> 
+
+        <div class="redalert error-msg">{{errorMsg}}</div>
+
     
     </form> 
 </div>

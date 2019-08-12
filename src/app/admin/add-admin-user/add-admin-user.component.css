@@ -157,3 +157,15 @@ select:-webkit-autofill:focus {
     background: #fff;
     border-bottom: 1px solid #ddd;
 }
+
+.active{
+   background: orange !important; 
+}
+
+
+.redalert {
+    color: red;
+    font-size: .94vw;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}

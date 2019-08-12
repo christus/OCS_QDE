@@ -15,13 +15,19 @@ export class OpsModuleComponent implements OnInit {
 
   errorMsg:string;
 
+  uploadFileName: string;
+
   constructor(private qdeHttp: QdeHttpService) { }
 
   ngOnInit() {}
 
   setUploadDoc(inputValue:any) {
     this.uploadDoc = inputValue.files[0];
+    this.uploadFileName = "";
+    this.uploadFileName = this.uploadDoc.name;
     this.getBase64(this.uploadDoc);
+    this.errorMsg = "";
+
   }
 
   startUploadDoc() {
@@ -41,6 +47,8 @@ export class OpsModuleComponent implements OnInit {
       this.uploadToOps(documentInfo);
     }
     this.uploadOnlinePaymentRecon(callback);
+
+    this.errorMsg = "";
   }
 
   downloadCSV() {

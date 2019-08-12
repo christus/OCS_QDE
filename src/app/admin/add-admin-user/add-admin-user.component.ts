@@ -1,10 +1,13 @@
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Renderer2 } from '@angular/core';
 import {NgForm} from '@angular/forms';
 import { FieldFillDirective } from 'src/app/directives/field-fill.directive';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
+
+import {ViewChild, ElementRef} from '@angular/core';
+
 
 @Component({
   selector: 'app-add-admin-user',
@@ -17,6 +20,9 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
     console.log("After view init");
   }
 
+  @ViewChild('reportingTo') reportingRef: ElementRef;
+
+
   userRoles: Array<any>;
   branch: Array<any>;
   formdata;
@@ -26,6 +32,7 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
   _timeout: any = null;
   userId: number;
   updatebtn:boolean = false;
+  errorMsg:string;
 
 
 
@@ -33,26 +40,44 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
   registerUser = new FormGroup({
     firstName: new FormControl('', Validators.required),
     lastName: new FormControl('', Validators.required),
-    userName: new FormControl('', [Validators.required, Validators.email]),
+    userName: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required, Validators.minLength(6)]),
     mailId: new FormControl('', [Validators.required, Validators.email]),
     mobileNumber: new FormControl('', [Validators.required, Validators.maxLength(10), Validators.pattern('[6-9]\\d{9}')]),
     userRoleId: new FormControl('', [Validators.required]),
-    branchName: new FormControl('', [Validators.required]),
+    branchId: new FormControl('', [Validators.required]),
     reportingTo: new FormControl('', [Validators.required]),
-    reportingToInp: new FormControl('', [Validators.required]),
+    reportingToInp: new FormControl(''),
   });
 
   constructor(private qdeHttp: QdeHttpService,
     private formBuilder: FormBuilder,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private router: Router,
+    private renderer: Renderer2
+  ) {
     this.filteredItems = this.items;
     this.selectedItem = 0;
+
+    // if(this.route.snapshot.data['userBranchLovs']) {
+    //   // this.adminLovs = this.route.snapshot.data['adminLovs']['ProcessVariables']['mastersList'];
+    //   // this.filteredLovs = this.adminLovs;
+    //   var lov = JSON.parse(this.route.snapshot.data.userBranchLovs['ProcessVariables'].lovs);
+
+
+    //   // var lov = JSON.parse(response['ProcessVariables'].lovs);
+    //   console.log("Lov", lov);
+    //   this.userRoles = lov.LOVS.user_role;
+    //   this.branch = lov.LOVS.branch;
+
+    // } else {
+    //   alert('Could not Load Data.');
+    // }
 
     this.qdeHttp.adminGetUserLov({}).subscribe((response) => {
       var lov = JSON.parse(response['ProcessVariables'].lovs);
       console.log("Lov", lov);
-      this.userRoles = lov.LOVS.users;
+      this.userRoles = lov.LOVS.user_role;
       this.branch = lov.LOVS.branch;
     });
 
@@ -66,18 +91,17 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
         }
         this.qdeHttp.getAdminUser(data).subscribe((response) => {
 
-          this.registerUser = this.formBuilder.group({
-            firstName: response['ProcessVariables']['firstName'],
-            lastName: response['ProcessVariables']['lastName'],
-            userName: [{ value:response['ProcessVariables']['userName'], disabled: true }],
-            password: [{ value: response['ProcessVariables']['password'], disabled: true }],
-            mailId: response['ProcessVariables']['emailId'],
-            mobileNumber: response['ProcessVariables']['mobileNumber'],
-            reportingTo: response['ProcessVariables']['reportingToUser'],
-            // branchName: [{"key":"Ajmer","value":"94"}],
-            branchName: response['ProcessVariables']['branchId'],
-            userRoleId: response['ProcessVariables']['roleId'],
-            reportingToInp: response['ProcessVariables']['reportingTo']
+          this.registerUser.setValue({
+            firstName: response['ProcessVariables']['firstName'] || "",
+            lastName: response['ProcessVariables']['lastName'] || "",
+            userName:  response['ProcessVariables']['userName'] || "",
+            password: response['ProcessVariables']['password'] || "",
+            mailId: response['ProcessVariables']['emailId'] || "",
+            mobileNumber: response['ProcessVariables']['mobileNumber'] || "",
+            reportingTo: response['ProcessVariables']['reportingToUser'] || "",
+            branchId: response['ProcessVariables']['branchId'] || "",
+            userRoleId: parseInt(response['ProcessVariables']['roleId']) || "",
+            reportingToInp: response['ProcessVariables']['reportingTo'] || ""
           });
         });
       }
@@ -102,48 +126,55 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
   }
 
   onSubmit() {
-    console.log('data', this.formValue.reportingToInp.value);
-    console.log('data', this.formValue.reportingTo.value);
 
-    if(this.updatebtn) {
-      this.updateUserDetails();
-      return;
-    }
 
-    let data = {
-      "userName": this.formValue.userName.value + "@iciciltd.com",
-      "firstName": this.formValue.firstName.value,
-      "lastName": this.formValue.lastName.value,
-      "password": this.formValue.password.value,
-      "mobileNumber": this.formValue.mobileNumber.value,
-      "mailId": this.formValue.mailId.value,
-      "roleId": parseInt(this.formValue.userRoleId.value["value"]),
-      "branchId": parseInt(this.formValue.branchName.value["value"]),
-      "reportingTo": parseInt(this.formValue.reportingToInp.value),
-      "userId": parseInt(localStorage.getItem("userId"))
-    }
-    console.log(data);
+      console.log('data', this.formValue.reportingToInp.value);
+      console.log('data', this.formValue.reportingTo.value);
 
-    this.qdeHttp.addAdminUsers(data).subscribe((response) => {
-      console.log(response);
-
-      if (response["Error"] === "0" &&
-        response["ProcessVariables"]["status"]) {
-        //alert("Uploaded Successfully!");
-        this.registerUser.reset();
-      } else {
-        if (response["ErrorMessage"]) {
-          console.log("Response: " + response["ErrorMessage"]);
-        } else if (response["ProcessVariables"]["errorMessage"]) {
-          console.log(
-            "Response: " + response["ProcessVariables"]["errorMessage"]
-          );
-        }
+      if(this.updatebtn) {
+        this.updateUserDetails();
+        return;
       }
-    },
-    error => {
-      console.log("Error : ", error);
-    });
+
+      let data = {
+        "userName": this.formValue.userName.value + "@icicibankltd.com",
+        "firstName": this.formValue.firstName.value,
+        "lastName": this.formValue.lastName.value,
+        "password": this.formValue.password.value,
+        "mobileNumber": this.formValue.mobileNumber.value,
+        "mailId": this.formValue.mailId.value,
+        "roleId": parseInt(this.formValue.userRoleId.value),
+        "branchId": parseInt(this.formValue.branchId.value),
+        "reportingTo": parseInt(this.formValue.reportingToInp.value),
+        "userId": parseInt(localStorage.getItem("userId"))
+      }
+      console.log(data);
+
+      this.qdeHttp.addAdminUsers(data).subscribe((response) => {
+        console.log(response);
+
+        if (response["Error"] === "0" &&
+          response["ProcessVariables"]["status"]) {
+          //alert("Uploaded Successfully!");
+          this.registerUser.reset();
+          this.router.navigate(['admin/user-module']);
+        } else {
+          if (response["ErrorMessage"]) {
+            console.log("Response: " + response["ErrorMessage"]);
+            this.errorMsg = response["ErrorMessage"];
+          } else if (response["ProcessVariables"]["errorMessage"]) {
+            console.log(
+              "Response: " + response["ProcessVariables"]["errorMessage"]
+            );
+            this.errorMsg = response["ProcessVariables"]["errorMessage"];
+          }
+        }
+      },
+      error => {
+        console.log("Error : ", error);
+      });
+
+  
 
   }
 
@@ -179,6 +210,9 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
     this.registerUser.patchValue({ reportingTo: data.userName });
     this.registerUser.patchValue({ reportingToInp: data.userId });
 
+    // this.renderer.removeClass(this.reportingRef.nativeElement, 'active');
+
+    this.renderer.addClass(this.reportingRef.nativeElement, 'active');
   }
 
   filterLeads(event) {
@@ -215,8 +249,8 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
       "userId": parseInt(localStorage.getItem("userId")),
       "mobile": this.formValue.mobileNumber.value,
       "mailId": this.formValue.mailId.value,
-      "roleId": parseInt(this.formValue.userRoleId.value) || parseInt(this.formValue.userRoleId.value["value"]),
-      "branchId":  parseInt(this.formValue.branchName.value) || parseInt(this.formValue.branchName.value["value"]),
+      "roleId": parseInt(this.formValue.userRoleId.value),
+      "branchId":  parseInt(this.formValue.branchId.value),
       "reportingTo": parseInt(this.formValue.reportingToInp.value)
 
     }
@@ -224,11 +258,28 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
 
     this.qdeHttp.updateAdminUsers(data).subscribe((response) => {
       console.log(response);
-      //this.registerUser.reset();
-      if (response["Error"] == "1") {
-        alert(response["ErrorMessage"]);
-      }
-    });
+
+        if (response["Error"] === "0" &&
+          response["ProcessVariables"]["status"]) {
+          //alert("Uploaded Successfully!");
+          this.registerUser.reset();
+          this.router.navigate(['admin/user-module']);
+        } else {
+          if (response["ErrorMessage"]) {
+            console.log("Response: " + response["ErrorMessage"]);
+            this.errorMsg = response["ErrorMessage"];
+          } else if (response["ProcessVariables"]["errorMessage"]) {
+            console.log(
+              "Response: " + response["ProcessVariables"]["errorMessage"]
+            );
+            this.errorMsg = response["ProcessVariables"]["errorMessage"];
+          }
+        }
+      },
+      error => {
+        console.log("Error : ", error);
+      });
   }
+
 
 }

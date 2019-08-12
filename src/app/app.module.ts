@@ -1,3 +1,4 @@
+import { AdminAddUserLovResolverService } from './services/admin-add-user-lov-resolver.service';
 import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -332,7 +333,11 @@ const appRoutes: Routes = [
       },
       {
         path: 'add-user',
-        component: AddAdminUserComponent
+        component: AddAdminUserComponent,
+        resolve: {
+          userBranchLovs: AdminAddUserLovResolverService
+        }
+      
       },
       {
         path: 'add-user/:userId',
@@ -456,7 +461,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     Keyboard,
     NativeKeyboard,
     AdminLovsResolverService,
-    AdminGetEachLovResolverService
+    AdminGetEachLovResolverService,
+    AdminAddUserLovResolverService
   ],
   bootstrap: [AppComponent]
 })

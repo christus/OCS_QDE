@@ -11,24 +11,21 @@
           <th>User Role</th>
           <th>Branch Name</th>
           <th>Reporting To</th>
-          <th>Is Valid</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of collection | paginate: { itemsPerPage: 2, currentPage: p }">
-          <td>{{item.Id}}</td>
+        <tr *ngFor="let item of collection | paginate: { itemsPerPage: perPage, currentPage: currentPage, totalItems: totalItems  }">
+          <td><a [routerLink]= "['/admin/add-user', item.Id]">{{item.Id}}</a></td>
           <td>{{item.userFirstName}}</td>
           <td>{{item.userLastName}}</td>
           <td>{{item.userName}}</td>
           <td>{{item.userMail}}</td>
           <td>{{item.mobile}}</td>
-          <td><a [routerLink]= "['/admin/add-user', item.Id]">{{item.roleId}}</a></td>
+          <td>{{item.userRole}}</td>
           <td>{{item.branchName}}</td>
-          <td>{{item.reportingTo}}</td>
-          <td>{{item.isValid}}</td>
+          <td>{{item.reportingToName}}</td>
         </tr>											
       </tbody>
     </table>
-
-  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  <pagination-controls  (pageChange)="pageChanged($event)"  ></pagination-controls>
 </div>
