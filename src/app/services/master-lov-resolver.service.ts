@@ -22,6 +22,10 @@ export class MasterLovResolverService  implements Resolve<Observable<any>>  {
       tableName = 'zipcode';
     }
 
+    else if(_route.url[1]['path'] == 'pmay_list') {
+      tableName = 'pmay_list';
+    }
+
     let qdeRequestEntity: RequestEntity = {
       processId: processId,
       ProcessVariables: {

@@ -178,6 +178,22 @@ export const environment = {
     "adminCLSSGet": {
       'workflowId': '223a54c8b8e711e997f60242ac110002',
       'processId': '26c4fe6cb9c311e9bcfb0242ac110002'
+    },
+    "adminPmayList": {
+      'workflowId': 'ba0222ecb9c111e998f70242ac110002',
+      'processId': 'f3af354cbcc411e9b5e00242ac110002'
+    },
+    "adminPmayRecord": {
+      'workflowId': 'ba0222ecb9c111e998f70242ac110002',
+      'processId': 'ee98cdb6ba6211e98c2a0242ac110002'
+    },
+    "adminAddPmayList": {
+      'workflowId': 'ba0222ecb9c111e998f70242ac110002',
+      'processId': 'ba1b1752b9c111e992ae0242ac110002'
+    },
+    "deletePmayRecord": {
+      'workflowId': 'ba0222ecb9c111e998f70242ac110002',
+      'processId': 'ba1b1752b9c111e992ae0242ac110002'
     }
   },
   userName: "icici@icici.com",

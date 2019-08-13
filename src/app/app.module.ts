@@ -1,3 +1,4 @@
+import { PmayListComponent } from './admin/admin-panel/pmay-list/pmay-list.component';
 import { AdminAddUserLovResolverService } from './services/admin-add-user-lov-resolver.service';
 import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
 import { BrowserModule } from '@angular/platform-browser';
@@ -100,6 +101,7 @@ import { MasterLovResolverService } from './services/master-lov-resolver.service
 import { GeneralLovsService } from './services/general-lovs-resolver.service';
 import { ClssChecklistComponent } from './admin/admin-panel/clss-checklist/clss-checklist.component';
 import { ClssChecklistResolverService } from './services/clss-checklist-resolver.service';
+import { PmayAddDetailsComponent } from './admin/admin-panel/pmay-add-details/pmay-add-details.component';
 
 
 
@@ -359,6 +361,27 @@ const appRoutes: Routes = [
         }
       },
       {
+        path: 'lovs/pmay_list',
+        component: PmayListComponent,
+        resolve: {
+          eachLovs: MasterLovResolverService
+        }
+      },
+      {
+        path: 'lovs/pmay_list/add',
+        component: PmayAddDetailsComponent,
+        resolve: {
+          eachLovs: MasterLovResolverService
+        }
+      },
+      {
+        path: 'lovs/pmay_list/:userId',
+        component: PmayAddDetailsComponent,
+        resolve: {
+          eachLovs: MasterLovResolverService
+        }
+      },
+      {
         path: 'lovs/zipcode',
         component: AdminZipCodeComponent,
         resolve: {
@@ -435,7 +458,9 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     AdminEachLovComponent,
     AdminFieldEditDirective,
     AdminZipCodeComponent,
-    ClssChecklistComponent
+    ClssChecklistComponent,
+    PmayListComponent,
+    PmayAddDetailsComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,65 @@
+<!-- <form [formGroup]="registerUser" (ngSubmit)="onSubmit()"  autocomplete="off">
+    <div class="inputBox">
+            <label for="stateCode" class="inputText">State code:</label>
+            <input type="text" id="stateCode" class="form-control" formControlName="stateCode" fieldFill autocomplete="nope"/> 
+    </div>
+    <div class="inputBox">
+            <label for="distCode" class="inputText">Dist code:</label>
+            <input type="text" id="distCode" class="form-control" fieldFill formControlName="distCode" autocomplete="nope"/>
+    </div>
+     <div class="inputBox">
+        <label for="stateName" class="inputText">State name:</label>
+        <input type="text" id="stateName" class="form-control" fieldFill formControlName="stateName" autocomplete="nope"/>
+    </div>
+    <div class="inputBox">
+        <label for="distName" class="inputText">Dist name:</label>
+        <input type="text" id="distName"  class="form-control" fieldFill formControlName="distName" autocomplete="nope" />
+    </div>
+    <div class="inputBox">
+        <label for="townName" class="inputText">Town name:</label>
+        <input type="text" id="townName"  class="form-control" fieldFill formControlName="townName" autocomplete="nope" />
+    </div>
+    <div class="inputBox">
+        <label for="townCode" class="inputText">Town code:</label>
+        <input type="text" id="townCode"  class="form-control" fieldFill formControlName="townCode" autocomplete="nope" />
+    </div>
+    <div class="inputBox">
+        <label for="subDistCode" class="inputText">Sub dist code:</label>
+        <input type="text" id="subDistCode"  class="form-control" fieldFill formControlName="subDistCode" autocomplete="nope" />
+    </div>
+    <div class="inputBox">
+        <button type="submit" class="btn btn-default" > Submit   </button>
+    </div> 
+
+</form> -->
+
+<div class="list">
+    <table class="table table-striped- table-bordered table-hover table-checkable">
+        <thead>
+          <tr>
+            <th>Dist code</th>
+            <th>Dist name</th>
+            <th>State code</th>
+            <th>State Name</th>
+            <th>Sub dist code</th>
+            <th>Town code</th>
+            <th>Town Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of collection | paginate: { itemsPerPage: perPage, currentPage: currentPage, totalItems: totalItems  }">
+            <td><a [routerLink]= "['/admin/lovs/pmay_list', item.id]">{{item.distCode}}</a></td>
+            <td>{{item.distName}}</td>
+            <td>{{item.stateCode}}</td>
+            <td>{{item.stateName}}</td>
+            <td>{{item.subDistCode}}</td>
+            <td>{{item.townCode}}</td>
+            <td>{{item.townName}}</td>
+            <button (click)="delete(item.id)"> Delete</button>
+          </tr>											
+        </tbody>
+      </table>
+    <pagination-controls  (pageChange)="pageChanged($event)"  ></pagination-controls>
+
+    <a class="admin-sidebar-links" routerLink="/admin/lovs/pmay_list/add">Add Pmay</a>
+  </div>
