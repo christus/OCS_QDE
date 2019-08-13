@@ -195,6 +195,30 @@ export const environment = {
     "adminCLSSUpdate": {
       'workflowId': '223a54c8b8e711e997f60242ac110002',
       'processId': '22534d7ab8e711e9b9de0242ac110002'
+    },
+    "deleteRecord": {
+      'workflowId': '3189bc1eb50611e982a40242ac110002',
+      'processId': '69bea66eb76b11e9b2e30242ac110002'
+    },
+    "adminGetBranchList": {
+      'workflowId': '900c5bdcb82811e98dac0242ac110002',
+      'processId': '1c67c2b4bb5411e9900d0242ac110002'
+    },
+    "adminGetBranchRecord": {
+      'workflowId': '900c5bdcb82811e98dac0242ac110002',
+      'processId': '66e48d08ba8811e9ba4c0242ac110002'
+    },
+    "adminAddBranchRecord": {
+      'workflowId': '900c5bdcb82811e98dac0242ac110002',
+      'processId': '902b508cb82811e996b80242ac110002'
+    },
+    "getCityLov": {
+      'workflowId': 'e77f2900bcd111e9871a0242ac110002',
+      'processId': 'e797e6b6bcd111e9ab9a0242ac110002'
+    },
+    "getZipLov": {
+      'workflowId': 'e77f2900bcd111e9871a0242ac110002',
+      'processId': 'f84cb0eebdc211e98e020242ac110002'
     }
   },
   userName: "icici@icici.com",

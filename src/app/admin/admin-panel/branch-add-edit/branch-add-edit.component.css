@@ -1,0 +1,121 @@
+.app-admin-container {
+    padding-top: 2vh;
+}
+.reporting_to {
+    overflow-y: scroll;
+    height: 100px;
+    position: absolute;
+    width: 17.75vw;
+    background: #eee;
+    border: 1px solid #ccc;
+}
+
+li .item:active { 
+    background-color: yellow;
+  }
+.inputBox,
+.selectBox {
+    position: relative;
+    margin-bottom: 2.08vw;
+    max-width: 35.55vw;
+    text-align: left;
+}
+.inputBox label,
+.selectBox label {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+    color: rgba(153, 153, 153, .4);
+    font-family: zurich-light;
+    font-size: 1.64vw;
+    line-height: 2.35vw;
+    transition: -webkit-transform .4s ease-in;
+    transition: transform .4s ease-in;
+    transition: transform .4s ease-in, -webkit-transform .4s ease-in;
+    -webkit-transform-origin: left;
+    transform-origin: left;
+    width: 100%;
+    right: 0;
+    display: block;
+}
+.inputBox .form-control {
+    background: 0 0;
+    border: 0;
+    border-bottom: 1px solid #bbb;
+    border-radius: 0;
+    width: 100%;
+    font-size: 1.64vw;
+    line-height: 2.35vw;
+    color: #999;
+    font-family: zurich-light;
+    padding: 0;
+}
+.inputBox.filled label,
+.selectBox label {
+	transform: translateY(-1.64vw) scale(0.8);
+	color: #444;
+	font-family: zurich-bold;
+	font-size: 1.17vw
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: #444;
+  -webkit-box-shadow: 0 0 0px 1000px #fff inset;
+  transition: background-color 5000s ease-in-out 0s;
+  color: #999!important;
+}
+
+
+.reportingToBlock input {
+    max-width: 17.75vw ;
+}
+.reporting_to {
+    overflow-y: scroll;
+    height: 100px;
+    position: absolute;
+    width: 17.75vw;
+    background: #eee;
+    border: 1px solid #ccc;
+
+}
+.reporting_to li {
+    padding: 0.5vw;
+    font-size: 1.4vw;
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+}
+
+.active{
+   background: orange !important; 
+}
+
+.reporting_to_margin {
+    top: 40px;
+}
+
+.selectBox {
+    margin-bottom: 2.08vw;
+}
+.selectBox select {
+    background: 0 0;
+    border: 0;
+    border-bottom: 1px solid #bbb;
+    border-radius: 0;
+    width: 100%;
+    font-size: 1.64vw;
+    line-height: 2.35vw;
+    color: #999;
+    font-family: zurich-light;
+    padding: 0;
+}

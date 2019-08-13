@@ -18,6 +18,7 @@ export class AdminLovsComponent implements OnInit, AfterViewInit {
       this.adminLovs = this.route.snapshot.data['adminLovs']['ProcessVariables']['mastersList'];
       this.adminLovs.push({description: 'CLSS Checklist', value: 'clss_checklist'});
       this.adminLovs.push({description: 'PMAY LIST', value: 'pmay_list'});
+      this.adminLovs.push({description: 'Branch LIST', value: 'branch_list'});
 
       this.filteredLovs = this.adminLovs;
     } else {

@@ -1,3 +1,4 @@
+import { BranchListComponent } from './admin/admin-panel/branch-list/branch-list.component';
 import { PmayListComponent } from './admin/admin-panel/pmay-list/pmay-list.component';
 import { AdminAddUserLovResolverService } from './services/admin-add-user-lov-resolver.service';
 import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
@@ -102,6 +103,7 @@ import { GeneralLovsService } from './services/general-lovs-resolver.service';
 import { ClssChecklistComponent } from './admin/admin-panel/clss-checklist/clss-checklist.component';
 import { ClssChecklistResolverService } from './services/clss-checklist-resolver.service';
 import { PmayAddDetailsComponent } from './admin/admin-panel/pmay-add-details/pmay-add-details.component';
+import { BranchAddEditComponent } from './admin/admin-panel/branch-add-edit/branch-add-edit.component';
 
 
 
@@ -382,6 +384,28 @@ const appRoutes: Routes = [
         }
       },
       {
+        path: 'lovs/branch_list',
+        component: BranchListComponent,
+        resolve: {
+          eachLovs: MasterLovResolverService
+        }
+      },
+      {
+        path: 'lovs/branch_list/add',
+        component: BranchAddEditComponent,
+        resolve: {
+          eachLovs: MasterLovResolverService,
+          listOfValues: ListOfValuesResolverService
+        }
+      },
+      {
+        path: 'lovs/branch_add/:userId',
+        component: BranchAddEditComponent,
+        resolve: {
+          eachLovs: MasterLovResolverService
+        }
+      },
+      {
         path: 'lovs/zipcode',
         component: AdminZipCodeComponent,
         resolve: {
@@ -460,7 +484,9 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     AdminZipCodeComponent,
     ClssChecklistComponent,
     PmayListComponent,
-    PmayAddDetailsComponent
+    PmayAddDetailsComponent,
+    BranchListComponent,
+    BranchAddEditComponent
   ],
   imports: [
     BrowserModule,

@@ -1164,8 +1164,8 @@ createOrUpdatePersonalDetails(qde) {
   /** Pmay delete */
 
   deletePmayList(data){
-    const processId = environment.api.deletePmayRecord.processId;
-    const workflowId = environment.api.deletePmayRecord.workflowId;
+    const processId = environment.api.deleteRecord.processId;
+    const workflowId = environment.api.deleteRecord.workflowId;
     const projectId = environment.projectId;
 
     const requestEntity: RequestEntity = {
@@ -1230,6 +1230,75 @@ createOrUpdatePersonalDetails(qde) {
     return this.http.post(uri, body.toString());
   }
 
+
+  /**getBranchList */
+
+  getBranchList(data) {
+    const processId = environment.api.adminGetBranchList.processId;
+    const workflowId = environment.api.adminGetBranchList.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: data,
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = new HttpParams().set(
+      'processVariables',
+      JSON.stringify(requestEntity)
+    );
+  
+    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.http.post(uri, body.toString());
+  }
+
+  /**Get branch record */
+
+  getBranchRecord(data) {
+    const processId = environment.api.adminGetBranchRecord.processId;
+    const workflowId = environment.api.adminGetBranchRecord.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: data,
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = new HttpParams().set(
+      'processVariables',
+      JSON.stringify(requestEntity)
+    );
+  
+    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.http.post(uri, body.toString());
+  }
+
+  /**Add branch record */
+
+  addBranchRecord(data) {
+    const processId = environment.api.adminAddBranchRecord.processId;
+    const workflowId = environment.api.adminAddBranchRecord.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: data,
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = new HttpParams().set(
+      'processVariables',
+      JSON.stringify(requestEntity)
+    );
+  
+    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.http.post(uri, body.toString());
+  }
 
   getAdminUser(data){
     const processId = environment.api.adminGetUser.processId;
@@ -1310,6 +1379,52 @@ createOrUpdatePersonalDetails(qde) {
       ProcessVariables: {
         data: data
       },
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = new HttpParams().set(
+      'processVariables',
+      JSON.stringify(requestEntity)
+    );
+  
+    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.http.post(uri, body.toString());
+  }
+
+
+  /** Get city lov */
+
+  adminGetCityLov(data){
+    const processId = environment.api.getCityLov.processId;
+    const workflowId = environment.api.getCityLov.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables:  data,
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = new HttpParams().set(
+      'processVariables',
+      JSON.stringify(requestEntity)
+    );
+  
+    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.http.post(uri, body.toString());
+  }
+
+  /** Get zip lov */
+  adminGetZipLov(data){
+    const processId = environment.api.getZipLov.processId;
+    const workflowId = environment.api.getZipLov.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables:  data,
       workflowId: workflowId,
       projectId: projectId
     };

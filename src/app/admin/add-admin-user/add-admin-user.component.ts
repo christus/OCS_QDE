@@ -1,6 +1,6 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
-import { Component, OnInit, AfterViewInit, Renderer2 } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Renderer2, QueryList, ViewChildren } from '@angular/core';
 import {NgForm} from '@angular/forms';
 import { FieldFillDirective } from 'src/app/directives/field-fill.directive';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
@@ -50,6 +50,7 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
     reportingToInp: new FormControl(''),
   });
 
+  @ViewChildren("reportingTo") reportingToList: QueryList<ElementRef>;
   constructor(private qdeHttp: QdeHttpService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
@@ -205,14 +206,17 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
     }
   }
 
-  selectedReportedTo(el, data) {
+  selectedReportedTo(index, data) {
     console.log("clicked", data.userName);
     this.registerUser.patchValue({ reportingTo: data.userName });
     this.registerUser.patchValue({ reportingToInp: data.userId });
 
     // this.renderer.removeClass(this.reportingRef.nativeElement, 'active');
-
-    this.renderer.addClass(this.reportingRef.nativeElement, 'active');
+    console.log("reportingToList",this.reportingToList);
+    this.reportingToList.forEach(v => {
+      this.renderer.removeClass(v.nativeElement, "active");
+    })
+    this.renderer.addClass(this.reportingToList["_results"][index+1].nativeElement, 'active');
   }
 
   filterLeads(event) {

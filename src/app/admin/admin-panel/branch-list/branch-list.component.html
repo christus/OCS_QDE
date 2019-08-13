@@ -1,0 +1,28 @@
+<div class="list">
+    <table class="table table-striped- table-bordered table-hover table-checkable">
+        <thead>
+          <tr>
+            <th>Branch code</th>
+            <th>Branch Id</th>
+            <th>Branch name</th>
+            <th>Branch type</th>
+            <th>City name</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of collection | paginate: { itemsPerPage: perPage, currentPage: currentPage, totalItems: totalItems  }">
+            <td><a [routerLink]= "['/admin/lovs/branch_add', item.branchId]">{{item.branchCode}}</a></td>
+            <td>{{item.branchId}}</td>
+            <td>{{item.branchName}}</td>
+            <td>{{item.branchType}}</td>
+            <td>{{item.cityName}}</td>
+          </tr>											
+        </tbody>
+      </table>
+    <pagination-controls  (pageChange)="pageChanged($event)"  ></pagination-controls>
+
+    <a class="admin-sidebar-links" routerLink="/admin/lovs/branch_list/add">Add Branch</a>
+
+    <div class="redalert error-msg">{{errorMsg}}</div>
+
+  </div>

@@ -49,7 +49,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of collection | paginate: { itemsPerPage: perPage, currentPage: currentPage, totalItems: totalItems  }">
+          <tr class="item" *ngFor="let item of collection | paginate: { itemsPerPage: perPage, currentPage: currentPage, totalItems: totalItems  }">
             <td><a [routerLink]= "['/admin/lovs/pmay_list', item.id]">{{item.distCode}}</a></td>
             <td>{{item.distName}}</td>
             <td>{{item.stateCode}}</td>
@@ -62,5 +62,10 @@
         </tbody>
       </table>
     <pagination-controls  (pageChange)="pageChanged($event)"  ></pagination-controls>
+
+
+    <a class="admin-sidebar-links" routerLink="/admin/lovs/pmay_list/add">Add Pmay</a>
+
+    <div class="redalert error-msg">{{errorMsg}}</div>
 
   </div>

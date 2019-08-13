@@ -78,10 +78,10 @@
         <div class="inputBox form-field-el reportingToBlock">
             <label for="reportingTo" class="">Reporting to:</label>
             <input type="text" id="reportingTo"  (input)="filterLeads($event)" class="form-control"  formControlName="reportingTo" fieldFill/>
-            <input type="hidden" class="form-control" hidden  formControlName="reportingToInp" />
+            <input type="hidden" class="form-control" hidden  formControlName="reportingToInp" #reportingTo/>
             <span class="reporting_to">
                 <ul>
-                    <li #reportingTo class="item" id="{{i.userId}}" (click)="selectedReportedTo(reportingToInp, i)" *ngFor="let i of filteredItems;let in=index;">
+                    <li #reportingTo class="item" id="{{i.userId}}"  (click)="selectedReportedTo(in, i)" *ngFor="let i of filteredItems;let in=index;">
                         {{i.userName}}
                     </li>
                 </ul>                

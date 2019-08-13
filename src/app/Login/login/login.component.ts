@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
         localStorage.setItem('roles', roleName);
 
         if(roleName.includes("Admin")) {
-          this.router.navigate(["/admin"]);
+          this.router.navigate(["/admin/lovs"]);
           //this.router.navigate(["/user-module"]);
           return;
         }

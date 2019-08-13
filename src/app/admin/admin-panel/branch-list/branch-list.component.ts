@@ -4,13 +4,12 @@ import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
 
 
-
 @Component({
-  selector: 'app-pmay-list',
-  templateUrl: './pmay-list.component.html',
-  styleUrls: ['./pmay-list.component.css']
+  selector: 'app-branch-list',
+  templateUrl: './branch-list.component.html',
+  styleUrls: ['./branch-list.component.css']
 })
-export class PmayListComponent implements OnInit {
+export class BranchListComponent implements OnInit {
 
   constructor(private route:ActivatedRoute, private qdeHttp: QdeHttpService) { }
 
@@ -27,31 +26,26 @@ export class PmayListComponent implements OnInit {
   errorMsg:string;
   enableLoadMore:boolean;
 
-  // paginationConfig =  { 
-  //   itemsPerPage: 2, 
-  //   totalItems: total 
-  // }
-
 
   ngOnInit() {
     let data = {};
     data["currentPage"] = 1;
 
-    this.getPmayList(data);
+    this.getBranchList(data);
   }
 
   loadMore() {
     console.log("Load more");
     let data = {};
     data["from"] = this.collection.length +1
-    this.getPmayList(data);
+    this.getBranchList(data);
 
   }
 
-  getPmayList(data) {
+  getBranchList(data) {
     let from = data.currentPage;
-    this.qdeHttp.getPmayList(data).subscribe((response) => {
-      this.collection = response['ProcessVariables'].pmayList;
+    this.qdeHttp.getBranchList(data).subscribe((response) => {
+      this.collection = response['ProcessVariables'].branchDetails;
       this.totalPages = response['ProcessVariables'].totalPages;
       this.from = response['ProcessVariables'].from;
       this.currentPage = response['ProcessVariables'].currentPage;
@@ -100,7 +94,7 @@ export class PmayListComponent implements OnInit {
     let data = {};
     data["currentPage"] = value;
 
-    this.getPmayList(data);
+    this.getBranchList(data);
   }
 
 
