@@ -1,31 +1,31 @@
 <div class="app-admin-container">
-    <form [formGroup]="registerUser" (ngSubmit)="onSubmit(userdata)"  autocomplete="off">
+    <form [formGroup]="registerUser" (ngSubmit)="onSubmit()"  autocomplete="off">
         <div class="inputBox">
                 <label for="firstname" class="inputText">First name:</label>
                 <input type="text" id="firstname" class="form-control" formControlName="firstName" fieldFill autocomplete="nope"/>
                 <div *ngIf="formValue.firstName.errors" >
-                    <div class="redalert" *ngIf="formValue.firstName.errors.required"> required</div>
+                    <!-- <div class="redalert" *ngIf="formValue.firstName.errors.required"> required</div> -->
                 </div>
         </div>
         <div class="inputBox">
                 <label for="lastName" class="inputText">Last name:</label>
                 <input type="text" id="lastName" class="form-control" fieldFill formControlName="lastName" autocomplete="nope"/>
                 <div *ngIf="formValue.lastName.errors" >
-                    <div class="redalert" *ngIf="formValue.lastName.errors.required"> required</div>
+                    <!-- <div class="redalert" *ngIf="formValue.lastName.errors.required"> required</div> -->
                 </div>
         </div>
          <div class="inputBox">
                 <label for="userName" class="inputText">User name:</label>
             <input type="text" id="userName" class="form-control" fieldFill formControlName="userName" autocomplete="nope"/>
             <div *ngIf="formValue.userName.errors" >
-                <div class="redalert"  *ngIf="formValue.userName.errors.required"> required</div>
+                <!-- <div class="redalert"  *ngIf="formValue.userName.errors.required"> required</div> -->
             </div>
         </div>
         <div class="inputBox">
             <label for="password" class="inputText">Password:</label>
             <input type="password" id="password"  class="form-control" fieldFill formControlName="password" autocomplete="new-password" />
             <div *ngIf="formValue.password.errors">
-                    <div class="redalert" *ngIf="formValue.password.errors.required"> required</div>
+                    <!-- <div class="redalert" *ngIf="formValue.password.errors.required"> required</div> -->
                     <div class="redalert" *ngIf="formValue.password.errors.minlength"> Minimum 6 character required</div>
                 </div>
         </div>
@@ -33,8 +33,9 @@
             <label for="mailId" class="inputText">Email:</label>
             <input type="text" id="mailId"  class="form-control" fieldFill formControlName="mailId" autocomplete="nope"/>
             <div *ngIf="formValue.mailId.errors" >
-                    <div class="redalert"  *ngIf="formValue.mailId.errors.required"> required</div>
+                    <!-- <div class="redalert"  *ngIf="formValue.mailId.errors.required"> required</div> -->
                     <div class="redalert" *ngIf="formValue.mailId.errors.email"> Invalid email</div>
+                    <div *ngIf="formValue.mailId.errors.emailDomain">Email must be on the codecraft.tv domain</div>
                 </div>
         </div>
         <div class="inputBox">
@@ -44,7 +45,7 @@
             (keypress)=_keyPress($event)
             formControlName="mobileNumber" id="mobileNumber" />
             <div *ngIf="formValue.mobileNumber.errors" >
-                <div class="redalert"  *ngIf="formValue.mobileNumber.errors.required"> required</div>
+                <!-- <div class="redalert"  *ngIf="formValue.mobileNumber.errors.required"> required</div> -->
                 <div class="redalert"  *ngIf="registerUser.get('mobileNumber').hasError('pattern')"> Invalid mobileNumber</div>
             </div>
         </div>
@@ -57,7 +58,7 @@
                 </option>
             </select>
             <div *ngIf="formValue.userRoleId.errors" >
-                <div class="redalert" *ngIf="formValue.userRoleId.errors.required"> required</div>
+                <!-- <div class="redalert" *ngIf="formValue.userRoleId.errors.required"> required</div> -->
             </div>
         </div>
         <div class="selectBox">
@@ -69,7 +70,7 @@
                 </option>
             </select>
             <div *ngIf="formValue.branchId.errors" >
-                <div class="redalert" *ngIf="formValue.branchId.errors.required"> required</div>
+                <!-- <div class="redalert" *ngIf="formValue.branchId.errors.required"> required</div> -->
             </div>
         </div>
     
@@ -85,7 +86,7 @@
                 </ul>                
             </span>
             <div *ngIf="formValue.reportingTo.errors" >
-                <div class="redalert" *ngIf="formValue.reportingTo.errors.required"> required</div>
+                <!-- <div class="redalert" *ngIf="formValue.reportingTo.errors.required"> required</div> -->
             </div>          
         </div>
         

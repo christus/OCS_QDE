@@ -42,7 +42,7 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
     lastName: new FormControl('', Validators.required),
     userName: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required, Validators.minLength(6)]),
-    mailId: new FormControl('', [Validators.required, Validators.email]),
+    mailId: new FormControl('', [Validators.required, Validators.email, Validators.pattern("[^ @]*@[^ @]*"), this.emailDomainValidator]),
     mobileNumber: new FormControl('', [Validators.required, Validators.maxLength(10), Validators.pattern('[6-9]\\d{9}')]),
     userRoleId: new FormControl('', [Validators.required]),
     branchId: new FormControl('', [Validators.required]),
@@ -279,6 +279,22 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
       error => {
         console.log("Error : ", error);
       });
+  }
+
+
+  emailDomainValidator(control: FormControl) { (1)
+    let email = control.value; (2)
+    if (email && email.indexOf("@") != -1) { (3)
+      let [_, domain] = email.split("@"); (4)
+      if (domain !== "codecraft.tv") { (5)
+        return {
+          emailDomain: {
+            parsedDomain: domain
+          }
+        }
+      }
+    }
+    return null;
   }
 
 

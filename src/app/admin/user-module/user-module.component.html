@@ -15,7 +15,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let item of collection | paginate: { itemsPerPage: perPage, currentPage: currentPage, totalItems: totalItems  }">
-          <td><a [routerLink]= "['/admin/add-user', item.Id]">{{item.Id}}</a></td>
+          <td><a [routerLink]= "['/admin/add-user', item.Id]">{{item.userName}}</a></td>
           <td>{{item.userFirstName}}</td>
           <td>{{item.userLastName}}</td>
           <td>{{item.userName}}</td>
