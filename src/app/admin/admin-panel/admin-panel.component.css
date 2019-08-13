@@ -5,6 +5,7 @@
 
 .admin-sidebar {
     width: 20%;
+    position: fixed;
     float: left;
     background: #e66e23;
     height: 100vh;
@@ -26,8 +27,8 @@
 }
 
 .admin-dashboard {
-    width: 80%;
-    float: left;
+    width: auto;
+    margin-left: 20%;
     font-size: 16px;
     padding: 0 30px 15px 30px;
     overflow-y: auto;

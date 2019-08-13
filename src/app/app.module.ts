@@ -96,6 +96,10 @@ import { AdminGetEachLovResolverService } from './services/admin-get-each-lov-re
 import { AdminEachLovComponent } from './admin/admin-panel/admin-lovs/admin-each-lov/admin-each-lov.component';
 import { AdminFieldEditDirective } from './directives/admin-field-edit.directive';
 import { AdminZipCodeComponent } from './admin/admin-panel/admin-lovs/admin-zip-code/admin-zip-code.component';
+import { MasterLovResolverService } from './services/master-lov-resolver.service';
+import { GeneralLovsService } from './services/general-lovs-resolver.service';
+import { ClssChecklistComponent } from './admin/admin-panel/clss-checklist/clss-checklist.component';
+import { ClssChecklistResolverService } from './services/clss-checklist-resolver.service';
 
 
 
@@ -348,10 +352,18 @@ const appRoutes: Routes = [
         component: EditAdminUserComponent
       },
       {
+        path: 'lovs/clss_checklist',
+        component: ClssChecklistComponent,
+        resolve: {
+          clssData: ClssChecklistResolverService
+        }
+      },
+      {
         path: 'lovs/zipcode',
         component: AdminZipCodeComponent,
         resolve: {
-          
+          eachLovs: MasterLovResolverService,
+          generalLovs: GeneralLovsService
         }
       },
       {
@@ -422,7 +434,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     EditAdminUserComponent,
     AdminEachLovComponent,
     AdminFieldEditDirective,
-    AdminZipCodeComponent
+    AdminZipCodeComponent,
+    ClssChecklistComponent
   ],
   imports: [
     BrowserModule,
@@ -462,7 +475,10 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     NativeKeyboard,
     AdminLovsResolverService,
     AdminGetEachLovResolverService,
-    AdminAddUserLovResolverService
+    AdminAddUserLovResolverService,
+    MasterLovResolverService,
+    GeneralLovsService,
+    ClssChecklistResolverService
   ],
   bootstrap: [AppComponent]
 })

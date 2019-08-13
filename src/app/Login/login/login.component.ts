@@ -1,5 +1,5 @@
 import { environment } from 'src/environments/environment';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UtilService } from 'src/app/services/util.service';
@@ -12,13 +12,15 @@ import {CommonDataService} from 'src/app/services/common-data.service'
   templateUrl: "./login.component.html",
   styleUrls: ["./login.component.css"]
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, AfterViewInit {
 
   userName = "";
   password = "";
 
   version: string;
   buildDate: string;
+
+  @ViewChild('userNameField') userNameField: ElementRef;
 
   constructor(
     private router: Router,
@@ -73,5 +75,9 @@ export class LoginComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  ngAfterViewInit() {
+    this.userNameField.nativeElement.focus();
   }
 }

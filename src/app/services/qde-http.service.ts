@@ -1267,7 +1267,10 @@ createOrUpdatePersonalDetails(qde) {
       value: lovs.value,
       id: lovs.id!=null ? parseInt(lovs.id) : null,
       male: lovs.male!=null ? lovs.male: null,
-      female: lovs.female!=null ? lovs.female: null
+      female: lovs.female!=null ? lovs.female: null,
+      stateId : lovs.stateId!=null ? lovs.stateId: null,
+      zone : lovs.zone != null ? lovs.zone: null,
+      cityId : lovs.cityId!=null ? lovs.cityId: null,
     });
     console.log(obj);
 
@@ -1282,7 +1285,7 @@ createOrUpdatePersonalDetails(qde) {
       'processVariables',
       JSON.stringify(requestEntity)
     );
-  
+
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
     return this.http.post(uri, body.toString());
   }
@@ -1297,7 +1300,8 @@ createOrUpdatePersonalDetails(qde) {
       ProcessVariables: {
         userId: parseInt(lovs.userId),
         tableName: lovs.tableName,
-        id: parseInt(lovs.id)
+        id: parseInt(lovs.id),
+        isDelete: true
       },
       workflowId: workflowId,
       projectId: projectId
@@ -1311,6 +1315,98 @@ createOrUpdatePersonalDetails(qde) {
   
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
     return this.http.post(uri, body.toString());
+  }
+
+
+  adminLoadMoreLovs(tableName: string, currentPage?: number, perPage?: number) {
+    const processId = environment.api.adminGetEachLov.processId;
+    const workflowId = environment.api.adminGetEachLov.workflowId;
+    const projectId = environment.projectId;
+
+    let qdeRequestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: {
+        tableName: tableName,
+        userId: parseInt(localStorage.getItem('userId')),
+        currentPage: currentPage ? currentPage: null,
+        perPage: perPage ? perPage: null
+      },
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    if(qdeRequestEntity['ProcessVariables']['currentPage'] == null) {
+      delete qdeRequestEntity['ProcessVariables']['currentPage'];
+    }
+
+    if(qdeRequestEntity['ProcessVariables']['perPage'] == null) {
+      delete qdeRequestEntity['ProcessVariables']['perPage'];
+    }
+
+    const body = new HttpParams().set(
+      "processVariables",
+      JSON.stringify(qdeRequestEntity)
+    );
+
+    let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
+    return this.http.post(
+      uri,
+      body.toString()
+    );
+  }
+
+  adminGetZoneFromState(stateId: string) {
+    const processId = environment.api.adminGetZoneFromState.processId;
+    const workflowId = environment.api.adminGetZoneFromState.workflowId;
+    const projectId = environment.projectId;
+
+    let qdeRequestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: {
+        userId: parseInt(localStorage.getItem('userId')),
+        stateId: parseInt(stateId)
+      },
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = new HttpParams().set(
+      "processVariables",
+      JSON.stringify(qdeRequestEntity)
+    );
+
+    let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
+    return this.http.post(
+      uri,
+      body.toString()
+    );
+  }
+
+  adminGetCityFromZone(zoneId: string) {
+    const processId = environment.api.adminGetCityFromZone.processId;
+    const workflowId = environment.api.adminGetCityFromZone.workflowId;
+    const projectId = environment.projectId;
+
+    let qdeRequestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: {
+        userId: parseInt(localStorage.getItem('userId')),
+        zoneId: parseInt(zoneId)
+      },
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = new HttpParams().set(
+      "processVariables",
+      JSON.stringify(qdeRequestEntity)
+    );
+
+    let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
+    return this.http.post(
+      uri,
+      body.toString()
+    );
   }
 
 }

@@ -159,13 +159,29 @@ export const environment = {
     "adminReportingTo": {
       'workflowId': '1afeb32ab8dd11e9a7520242ac110002',
       'processId': '1b175d3ab8dd11e988a00242ac110002'
+    },
+    "adminStatesZonesLovs": {
+      'workflowId': '4c1a5e74b84611e988b70242ac110002',
+      'processId': '4c2dcd56b84611e98b890242ac110002'
+    },
+    "adminGetZoneFromState": {
+      'workflowId': '2351a8c2ba7511e9b7b30242ac110002',
+      'processId': 'ecae1acebaad11e98a370242ac110002'
+    },
+    "adminGetCityFromZone": {
+      'workflowId': '2351a8c2ba7511e9b7b30242ac110002',
+      'processId': '2dffe0ccba7511e98e4f0242ac110002'
+    },
+    "adminCLSSGet": {
+      'workflowId': '223a54c8b8e711e997f60242ac110002',
+      'processId': '26c4fe6cb9c311e9bcfb0242ac110002'
     }
   },
   userName: "icici@icici.com",
   password: "icici@123",
   appiyoDrive: "/d/drive/upload/",
   driveLocation: "/d/drive/docs/",
-  //host: "http://192.168.1.108/appiyo",
+  // host: "http://192.168.1.108/appiyo",
   //host: "/ProcessStore",
   host:  "/appiyo",
   //host: "https://ihfcmobileuat.icicihfc.com/appiyo"

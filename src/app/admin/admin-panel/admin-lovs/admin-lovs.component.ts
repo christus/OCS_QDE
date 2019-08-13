@@ -16,6 +16,7 @@ export class AdminLovsComponent implements OnInit, AfterViewInit {
   constructor(private route: ActivatedRoute) {
     if(this.route.snapshot.data['adminLovs']) {
       this.adminLovs = this.route.snapshot.data['adminLovs']['ProcessVariables']['mastersList'];
+      this.adminLovs.push({description: 'CLSS Checklist', value: 'clss_checklist'});
       this.filteredLovs = this.adminLovs;
     } else {
       alert('Could not Load Data.');

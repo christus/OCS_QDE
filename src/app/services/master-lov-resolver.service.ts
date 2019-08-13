@@ -1,27 +1,34 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
-import { HttpParams, HttpClient } from '@angular/common/http';
+import { RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import RequestEntity from '../models/request-entity.model';
+import { HttpParams, HttpHeaders, HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { Resolve } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Injectable()
-export class AdminGetEachLovResolverService implements Resolve<Observable<any>>  {
+export class MasterLovResolverService  implements Resolve<Observable<any>>  {
 
   constructor(private http: HttpClient) { }
 
-  resolve(_route: ActivatedRouteSnapshot): any {
+  resolve(_route: ActivatedRouteSnapshot, _state: RouterStateSnapshot): any {
     const processId   = environment.api.adminGetEachLov.processId;
     const workflowId  = environment.api.adminGetEachLov.workflowId;
     const projectId   = environment.projectId;
 
-    let tableName = _route.params['eachLovName'];
+    let tableName;
+
+    if(_route.url[1]['path'] == 'zipcode') {
+      tableName = 'zipcode';
+    }
 
     let qdeRequestEntity: RequestEntity = {
       processId: processId,
       ProcessVariables: {
         tableName: tableName,
-        userId: parseInt(localStorage.getItem('userId'))
+        userId: parseInt(localStorage.getItem('userId')),
+        currentPage: _route.queryParams['currentPage'] ? parseInt(_route.queryParams['currentPage']): 1,
+        perPage: _route.queryParams['perPage'] ? parseInt(_route.queryParams['perPage']): 10,
       },
       workflowId: workflowId,
       projectId: projectId

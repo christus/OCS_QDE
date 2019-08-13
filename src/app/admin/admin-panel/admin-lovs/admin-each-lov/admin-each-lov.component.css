@@ -100,6 +100,8 @@ thead, tbody tr {
     padding: 4px 10px;
     color: #fff;
     box-shadow: 1px 1px 3px 0 #333;
+    margin-left: 15px;
+    margin-right: 15px;
 }
 
 .editsavebtn:hover,

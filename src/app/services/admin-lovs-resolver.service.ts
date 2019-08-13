@@ -18,6 +18,7 @@ export class AdminLovsResolverService implements Resolve<Observable<any>> {
     let qdeRequestEntity: RequestEntity = {
       processId: processId,
       ProcessVariables: {
+        userId: parseInt(localStorage.getItem('userId'))
       },
       workflowId: workflowId,
       projectId: projectId

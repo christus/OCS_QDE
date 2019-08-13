@@ -7,28 +7,34 @@
 
     <div class="admin-col-half">
 
-      <label for="state">Select State</label>
-      <select id="state" name="state" ngModel>
-        <option *ngFor="let s of states;" value="s.value">{{s.key}}</option>
-      </select>
-  
-      <label for="zone">Select Zone</label>
-      <select id="zone" name="zone" ngModel>
-        <option *ngFor="let z of zones;" value="z.value">{{z.key}}</option>
-      </select>
-  
-      <label for="city">Select City</label>
-      <select id="city" name="city" ngModel>
-        <option *ngFor="let c of cities;" value="c.value">{{c.key}}</option>
-      </select>
+      <!-- ZipCode -->
+      <div *ngIf="tableName == 'zipcode'">
+        <label for="state">Select State</label>
+        <select id="state" name="stateId" [(ngModel)]="selectedState.value" (ngModelChange)="stateChanged($event)">
+          <option *ngFor="let s of states;" [ngValue]="s.value">{{s.key}}</option>
+        </select>
+    
+        <label for="zone">Select Zone</label>
+        <select id="zone" name="zone" [(ngModel)]="selectedZone.value" (ngModelChange)="zoneChanged($event)">
+          <option *ngFor="let z of zones;" [ngValue]="z.value">{{z.key}}</option>
+        </select>
+    
+        <label for="city" *ngIf="selectedCity && selectedCity.value != -1">Select City</label>
+        <select id="city" name="cityId" *ngIf="selectedCity && selectedCity.value != -1" [(ngModel)]="selectedCity.value" (ngModelChange)="cityChanged($event)">
+          <option *ngFor="let c of cities;" [ngValue]="c.value">{{c.key}}</option>
+        </select>
+      </div>
+
+      <input type="hidden" name="id" *ngIf="selectedIndex != -1 && selectedIndex != null && selectedIndex != ''" [value]="data[selectedIndex].id" />
+
     </div>
 
     <div class="admin-col-half">
       <label for="description">Description</label>
-      <input type="text" class="descvalue" id="description" name="description" ngModel />
+      <input type="text" class="descvalue" [(ngModel)]="description" id="description" name="description" ngModel />
   
       <label for="value">Value</label>
-      <input type="text" class="descvalue" id="value" name="value" ngModel />
+      <input type="text" class="descvalue" [(ngModel)]="value" id="value" name="value" ngModel />
 
       <button type="submit" class="saveBtn">Save</button>
     </div>
@@ -42,6 +48,7 @@
   <table class="zipcode-table">
     <thead>
       <tr>
+        <th>Sr No.</th>
         <th>State</th>
         <th>Zone</th>
         <th>City</th>
@@ -52,23 +59,42 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let d of data">
-        <td>{{d.state}}</td>
-        <td>{{d.zone}}</td>
-        <td>{{d.city}}</td>
+      <tr *ngFor="let d of data;let i=index;">
+        <td>{{i+1}}</td>
+        <td>{{d.stateName}}</td>
+        <td>{{d.zoneName}}</td>
+        <td>{{d.cityName}}</td>
         <td>{{d.description}}</td>
         <td>{{d.value}}</td>
-        <td>Edit/Save</td>
-        <td>Delete</td>
+        <td>
+          <button type="button" class="editsavebtn" (click)="edit(i)">Edit</button>
+        </td>
+        <td>
+          <button type="button" class="editsavebtn" (click)="delete(i)">Delete</button>
+        </td>
+      </tr>
+      <tr>
+        <td><button type="button" class="editsavebtn" (click)="loadMore()">Load More</button></td>
       </tr>
     </tbody>
   </table>
 
+  
+
   <div class="pagination-wrapper">
-    <ul>
-      <li class="pagination" *ngFor="let page of pagination;let i=index">
+    <!-- <ul>
+      <li class="pagination" *ngIf="currentPage != 1">
+        <a class="pagination-link">&lt;</a>
+      </li>
+      <li class="pagination" *ngFor="let page of counter(perPageCount);let i=index">
         <a class="pagination-link">{{i+1}}</a>
       </li>
-    </ul>
+      <li class="pagination" *ngIf="currentPage == totalPages">
+        <a class="pagination-link">&gt;</a>
+      </li>
+    </ul> -->
+    <div class="pagination">
+      
+    </div>
   </div>
 </div>

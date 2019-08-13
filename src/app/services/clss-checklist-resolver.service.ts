@@ -1,26 +1,24 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
-import { HttpParams, HttpClient } from '@angular/common/http';
+import { RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import RequestEntity from '../models/request-entity.model';
+import { HttpParams, HttpHeaders, HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { Resolve } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Injectable()
-export class AdminGetEachLovResolverService implements Resolve<Observable<any>>  {
+export class ClssChecklistResolverService implements Resolve<Observable<any>> {
 
   constructor(private http: HttpClient) { }
 
-  resolve(_route: ActivatedRouteSnapshot): any {
-    const processId   = environment.api.adminGetEachLov.processId;
-    const workflowId  = environment.api.adminGetEachLov.workflowId;
-    const projectId   = environment.projectId;
-
-    let tableName = _route.params['eachLovName'];
+  resolve(): any {
+    const processId = environment.api.adminCLSSGet.processId;
+    const workflowId = environment.api.adminCLSSGet.workflowId;
+    const projectId = environment.projectId;
 
     let qdeRequestEntity: RequestEntity = {
       processId: processId,
       ProcessVariables: {
-        tableName: tableName,
         userId: parseInt(localStorage.getItem('userId'))
       },
       workflowId: workflowId,
@@ -38,4 +36,6 @@ export class AdminGetEachLovResolverService implements Resolve<Observable<any>> 
       body.toString()
     );
   }
+
+
 }
