@@ -119,3 +119,17 @@ select:-webkit-autofill:focus {
     font-family: zurich-light;
     padding: 0;
 }
+
+.form-field-el {
+    width: 48%;
+    float: left;
+}
+.form-field-el:nth-child(even) {
+    margin-left: 3%;
+}
+.form-field-el:nth-child(odd) {
+    margin-left: 1%;
+}
+.branch-edit {
+    padding-top: 3vh;
+}
