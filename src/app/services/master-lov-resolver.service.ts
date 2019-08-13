@@ -25,6 +25,9 @@ export class MasterLovResolverService  implements Resolve<Observable<any>>  {
     else if(_route.url[1]['path'] == 'pmay_list') {
       tableName = 'pmay_list';
     }
+    else if(_route.url[1]['path'] == 'loan_type_purpose_map') {
+      tableName = 'loan_type_purpose_map';
+    }
 
     let qdeRequestEntity: RequestEntity = {
       processId: processId,

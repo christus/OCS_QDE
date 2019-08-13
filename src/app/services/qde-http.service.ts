@@ -1664,5 +1664,56 @@ createOrUpdatePersonalDetails(qde) {
     );
   }
 
+
+  adminInsertUpdateLoanTypePurposeMap(data) {
+    const processId = environment.api.adminInsertUpdateLoanTypePurposeMap.processId;
+    const workflowId = environment.api.adminInsertUpdateLoanTypePurposeMap.workflowId;
+    const projectId = environment.projectId;
+
+    let qdeRequestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: data,
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = new HttpParams().set(
+      "processVariables",
+      JSON.stringify(qdeRequestEntity)
+    );
+
+    let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
+    return this.http.post(
+      uri,
+      body.toString()
+    );
+  }
+
+  adminLoanTypePurposeMap() {
+    const processId   = environment.api.adminLoanTypePurposeMap.processId;
+    const workflowId  = environment.api.adminLoanTypePurposeMap.workflowId;
+    const projectId   = environment.projectId;
+  
+    let qdeRequestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: {
+        userId: localStorage.getItem('userId')
+      },
+      workflowId: workflowId,
+      projectId: projectId
+    };
+  
+    const body = new HttpParams().set(
+      "processVariables",
+      JSON.stringify(qdeRequestEntity)
+    );
+  
+    let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
+    return this.http.post(
+      uri,
+      body.toString()
+    );
+  }
+
 }
 

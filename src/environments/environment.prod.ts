@@ -219,6 +219,14 @@ export const environment = {
     "getZipLov": {
       'workflowId': 'e77f2900bcd111e9871a0242ac110002',
       'processId': 'f84cb0eebdc211e98e020242ac110002'
+    },
+    "adminLoanTypePurposeMap": {
+      'workflowId': '923cb878b8d411e9a42f0242ac110002',
+      'processId': 'f7c57d26bb5711e9b4160242ac110002'
+    },
+    "adminInsertUpdateLoanTypePurposeMap": {
+      'workflowId': '923cb878b8d411e9a42f0242ac110002',
+      'processId': 'cb3957bab8d611e989900242ac110002' 
     }
   },
   userName: "icici@icici.com",
