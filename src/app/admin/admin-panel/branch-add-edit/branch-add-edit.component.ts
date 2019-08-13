@@ -182,8 +182,8 @@ export class BranchAddEditComponent implements OnInit {
 
   
         let data = {
-          "id": this.userId || "",
-          "Value": this.formValue.Value.value,
+          "id": this.userId || 0,
+          "value": this.formValue.Value.value,
           "description": this.formValue.description.value,
           "address": this.formValue.address.value,
           "branchType": this.formValue.branchType.value,
@@ -191,7 +191,7 @@ export class BranchAddEditComponent implements OnInit {
           "newFinnOneCode": this.formValue.newFinnOneCode.value,
           "city": this.formValue.cityInp.value,
           "cityInp": this.formValue.city.value,
-          "zipCode": this.formValue.zipCodeInp.value,
+          "zipcode": this.formValue.zipCodeInp.value,
           "zipCodeInp": this.formValue.zipCode.value,
           "userId": parseInt(localStorage.getItem("userId"))
         }
@@ -204,7 +204,7 @@ export class BranchAddEditComponent implements OnInit {
             response["ProcessVariables"]["status"]) {
             //alert("Uploaded Successfully!");
             this.registerUser.reset();
-            this.router.navigate(['admin/lovs/pmay_list']);
+            this.router.navigate(['admin/lovs/branch_list']);
           } else {
             if (response["ErrorMessage"]) {
               console.log("Response: " + response["ErrorMessage"]);

@@ -286,11 +286,11 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
   }
 
 
-  emailDomainValidator(control: FormControl) { (1)
-    let email = control.value; (2)
-    if (email && email.indexOf("@") != -1) { (3)
-      let [_, domain] = email.split("@"); (4)
-      if (domain !== "codecraft.tv") { (5)
+  emailDomainValidator(control: FormControl) { 
+    let email = control.value;
+    if (email && email.indexOf("@") != -1) {
+      let [_, domain] = email.split("@");
+      if (domain !== "codecraft.tv") {
         return {
           emailDomain: {
             parsedDomain: domain
