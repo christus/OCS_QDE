@@ -1,3 +1,4 @@
+import { UtilService } from 'src/app/services/util.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminPanelComponent implements OnInit {
 
-  constructor() { }
+  constructor(private utilService: UtilService) { }
 
   ngOnInit() {
+  }
+  logout() {
+    this.utilService.clearCredentials();
   }
 
 }
