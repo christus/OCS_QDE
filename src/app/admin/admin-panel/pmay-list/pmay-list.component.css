@@ -19,3 +19,8 @@
     color: #053c6d;
     font-weight: bold;
 }
+.add-pmay {
+    display: inline-block;
+    margin-top: 1vh;
+    cursor: pointer;
+}

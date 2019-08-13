@@ -1,33 +1,33 @@
-<form [formGroup]="registerUser" (ngSubmit)="onSubmit()"  autocomplete="off">
-    <div class="inputBox">
+<form [formGroup]="registerUser" (ngSubmit)="onSubmit()"  autocomplete="off" class="add-pmay">
+    <div class="inputBox form-field-el">
             <label for="stateCode" class="inputText">State code:</label>
             <input type="text" id="stateCode" class="form-control" formControlName="stateCode" fieldFill autocomplete="nope"/> 
     </div>
-    <div class="inputBox">
+    <div class="inputBox form-field-el">
             <label for="distCode" class="inputText">Dist code:</label>
             <input type="text" id="distCode" class="form-control" fieldFill formControlName="distCode" autocomplete="nope"/>
     </div>
-     <div class="inputBox">
+     <div class="inputBox form-field-el">
         <label for="stateName" class="inputText">State name:</label>
         <input type="text" id="stateName" class="form-control" fieldFill formControlName="stateName" autocomplete="nope"/>
     </div>
-    <div class="inputBox">
+    <div class="inputBox form-field-el">
         <label for="distName" class="inputText">Dist name:</label>
         <input type="text" id="distName"  class="form-control" fieldFill formControlName="distName" autocomplete="nope" />
     </div>
-    <div class="inputBox">
+    <div class="inputBox form-field-el">
         <label for="townName" class="inputText">Town name:</label>
         <input type="text" id="townName"  class="form-control" fieldFill formControlName="townName" autocomplete="nope" />
     </div>
-    <div class="inputBox">
+    <div class="inputBox form-field-el">
         <label for="townCode" class="inputText">Town code:</label>
         <input type="text" id="townCode"  class="form-control" fieldFill formControlName="townCode" autocomplete="nope" />
     </div>
-    <div class="inputBox">
+    <div class="inputBox form-field-el">
         <label for="subDistCode" class="inputText">Sub dist code:</label>
         <input type="text" id="subDistCode"  class="form-control" fieldFill formControlName="subDistCode" autocomplete="nope" />
     </div>
-    <div class="inputBox">
+    <div class="inputBox form-field-el">
         <button type="submit" class="btn btn-default" > Submit   </button>
     </div> 
 
