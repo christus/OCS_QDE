@@ -1501,5 +1501,53 @@ createOrUpdatePersonalDetails(qde) {
     );
   }
 
+  adminCLSSUpdate(data) {
+    const processId = environment.api.adminCLSSUpdate.processId;
+    const workflowId = environment.api.adminCLSSUpdate.workflowId;
+    const projectId = environment.projectId;
+
+    let qdeRequestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: data,
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = new HttpParams().set(
+      "processVariables",
+      JSON.stringify(qdeRequestEntity)
+    );
+
+    let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
+    return this.http.post(
+      uri,
+      body.toString()
+    );
+  }
+
+  adminZipCodeSearch(data) {
+    const processId = environment.api.adminGetEachLov.processId;
+    const workflowId = environment.api.adminGetEachLov.workflowId;
+    const projectId = environment.projectId;
+
+    let qdeRequestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: data,
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = new HttpParams().set(
+      "processVariables",
+      JSON.stringify(qdeRequestEntity)
+    );
+
+    let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
+    return this.http.post(
+      uri,
+      body.toString()
+    );
+  }
+
 }
 

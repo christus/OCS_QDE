@@ -194,13 +194,17 @@ export const environment = {
     "deletePmayRecord": {
       'workflowId': 'ba0222ecb9c111e998f70242ac110002',
       'processId': 'ba1b1752b9c111e992ae0242ac110002'
+    },
+    "adminCLSSUpdate": {
+      'workflowId': '223a54c8b8e711e997f60242ac110002',
+      'processId': '22534d7ab8e711e9b9de0242ac110002'
     }
   },
   userName: "icici@icici.com",
   password: "icici@123",
   appiyoDrive: "/d/drive/upload/",
-  host: "http://192.168.1.108/appiyo",
-  // host: "http://182.156.249.170/appiyo",
+  // host: "http://192.168.1.108/appiyo",
+  host: "http://182.156.249.170/appiyo",
   //host: "https://ihfcmobileuat.icicihfc.com/appiyo",
   driveLocation: "/d/drive/docs/"
   //host: ""

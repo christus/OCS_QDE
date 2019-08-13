@@ -191,6 +191,10 @@ export const environment = {
     "deletePmayRecord": {
       'workflowId': 'ba0222ecb9c111e998f70242ac110002',
       'processId': 'ba1b1752b9c111e992ae0242ac110002'
+    },
+    "adminCLSSUpdate": {
+      'workflowId': '223a54c8b8e711e997f60242ac110002',
+      'processId': '22534d7ab8e711e9b9de0242ac110002'
     }
   },
   userName: "icici@icici.com",

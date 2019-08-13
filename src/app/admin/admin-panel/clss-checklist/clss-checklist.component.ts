@@ -1,32 +1,34 @@
 import { Component, OnInit, ViewChildren, ElementRef, QueryList, EventEmitter, OnChanges, SimpleChanges, AfterViewInit, Renderer2 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
+import { NgForm } from '@angular/forms';
 
 interface CLSS {
-    aadhaarRequired: boolean;
-    clssId: number;
-    clssType: string;
-    femaleOwnership: boolean;
-    houseConstruction: boolean;
-    houseExtension: boolean;
-    houseImprovement: boolean;
-    maximumAge: number;
-    maximumIncomeInLakhs: number;
-    maximumLoanAmountInLakhs: number;
-    maximumTenureInMonths: number;
-    minimumAge: number;
-    minimumIncomeInLakhs: number;
-    minimumLoanAmountInLakhs: number;
-    newHouse: boolean;
-    nonHousingProduct: boolean;
-    plotLoan: boolean;
-    propertySizeInSquareMetre: number;
-    resaleHouse: boolean;
-    schemeBenefitsInYears: number;
-    schemeBenefitsUptoInLakhs: number;
-    subsidyInterest: number;
-    targetSegment: string;
-    isEdit: boolean;
+  userId: number;
+  aadhaarRequired: boolean;
+  clssId: number;
+  clssType: string;
+  femaleOwnership: boolean;
+  houseConstruction: boolean;
+  houseExtension: boolean;
+  houseImprovement: boolean;
+  maximumAge: number;
+  maximumIncomeInLakhs: number;
+  maximumLoanAmountInLakhs: number;
+  maximumTenureInMonths: number;
+  minimumAge: number;
+  minimumIncomeInLakhs: number;
+  minimumLoanAmountInLakhs: number;
+  newHouse: boolean;
+  nonHousingProduct: boolean;
+  plotLoan: boolean;
+  propertySizeInSquareMetre: number;
+  resaleHouse: boolean;
+  schemeBenefitsInYears: number;
+  schemeBenefitsUptoInLakhs: number;
+  subsidyInterest: number;
+  targetSegment: string;
+  isEdit: boolean;
 }
 
 @Component({
@@ -42,6 +44,7 @@ export class ClssChecklistComponent implements OnInit {
   lovs: Array<CLSS>;
 
   @ViewChildren('lovsElements') lovsElements: QueryList<ElementRef>;
+  @ViewChildren('myForm') myForm: QueryList<NgForm>;
 
   constructor(private route: ActivatedRoute,
               private qdeHttp: QdeHttpService,
@@ -52,9 +55,12 @@ export class ClssChecklistComponent implements OnInit {
     // if(response['status'] == true) {
       this.tempLovs = this.lovs = response['clssDetailsList'].map((v, i) => {
 
+        console.log(v['aadhaarRequired']);
+
         return {
+          userId: localStorage.getItem('userId'), // Ashwin told
           aadhaarRequired: v['aadhaarRequired'],
-          clssId: v['clssId'],
+          clssId: parseInt(v['clssId']),
           clssType: v['clssType'],
           femaleOwnership: v['femaleOwnership'],
           houseConstruction: v['houseConstruction'],
@@ -75,7 +81,8 @@ export class ClssChecklistComponent implements OnInit {
           schemeBenefitsInYears: v['schemeBenefitsInYears'],
           schemeBenefitsUptoInLakhs: v['schemeBenefitsUptoInLakhs'],
           subsidyInterest: v['subsidyInterest'],
-          targetSegment: v['targetSegment']
+          targetSegment: v['targetSegment'],
+          isEdit: true
         };
       });
     // }
@@ -86,6 +93,39 @@ export class ClssChecklistComponent implements OnInit {
 
   save(index) {
 
+    this.lovs[index].maximumAge = parseInt(this.lovs[index].maximumAge.toString());
+    this.lovs[index].maximumIncomeInLakhs = parseInt(this.lovs[index].maximumIncomeInLakhs.toString());
+    this.lovs[index].maximumLoanAmountInLakhs = parseInt(this.lovs[index].maximumLoanAmountInLakhs.toString());
+    this.lovs[index].maximumTenureInMonths = parseInt(this.lovs[index].maximumTenureInMonths.toString());
+    this.lovs[index].minimumAge = parseInt(this.lovs[index].minimumAge.toString());
+    this.lovs[index].minimumIncomeInLakhs = parseInt(this.lovs[index].minimumIncomeInLakhs.toString());
+    this.lovs[index].minimumLoanAmountInLakhs = parseInt(this.lovs[index].minimumLoanAmountInLakhs.toString());
+    this.lovs[index].propertySizeInSquareMetre = parseInt(this.lovs[index].propertySizeInSquareMetre.toString());
+    this.lovs[index].schemeBenefitsInYears = parseInt(this.lovs[index].schemeBenefitsInYears.toString());
+    this.lovs[index].schemeBenefitsUptoInLakhs = parseInt(this.lovs[index].schemeBenefitsUptoInLakhs.toString());
+    this.lovs[index].subsidyInterest = parseFloat((this.lovs[index].subsidyInterest).toFixed(1));
+
+    this.lovs.forEach((v, i) => {
+      delete this.lovs[i].isEdit;
+    });
+
+    if(this.lovs[index].minimumIncomeInLakhs > 0 && this.myForm['_results'][index].valid) {
+      this.qdeHttp.adminCLSSUpdate(this.lovs[index]).subscribe(response => {
+        if(response['ProcessVariables']['status'] == true) {
+          this.lovs.forEach((v, i) => {
+            this.lovs[i].isEdit = true;
+          });
+        } else {
+          alert("Please enter valid data. Server does'nt Accept Invalid entries");
+        }
+      });
+    } else {
+      alert("Please enter valid data.");
+    }
+
+    console.log(this.lovs[index]);
+
+    
     // console.log(this.lovs[index].description);
     // if(this.lovs[index].description != '' && this.lovs[index].value != '') {
 
@@ -94,22 +134,22 @@ export class ClssChecklistComponent implements OnInit {
       //   this.refresh();
       // }
 
-      this.qdeHttp.insertUpdateEachLovs(this.lovs[index]).subscribe(res => {
-        if(res['ProcessVariables']['status'] == true) {
-          console.log(this.lovs[index]);
-          this.lovs[index].isEdit = true;
-          this.lovs[index].clssId = res['ProcessVariables']['id'];
-        } else {
-          this.refresh();
-          alert('LOV could not be saved');
-        }
-      });
-    // } else {
-    //   console.log(this.lovs[index]);
-    //   alert("Please enter all values");
-    //   this.refresh();
-    // }
-    this.tempLovs = this.lovs;
+    //   this.qdeHttp.insertUpdateEachLovs(this.lovs[index]).subscribe(res => {
+    //     if(res['ProcessVariables']['status'] == true) {
+    //       console.log(this.lovs[index]);
+    //       this.lovs[index].isEdit = true;
+    //       this.lovs[index].clssId = res['ProcessVariables']['id'];
+    //     } else {
+    //       this.refresh();
+    //       alert('LOV could not be saved');
+    //     }
+    //   });
+    // // } else {
+    // //   console.log(this.lovs[index]);
+    // //   alert("Please enter all values");
+    // //   this.refresh();
+    // // }
+    // this.tempLovs = this.lovs;
   }
 
 
@@ -180,4 +220,8 @@ export class ClssChecklistComponent implements OnInit {
     // });
   }
 
+  changeRadio(event, keyName, index) {
+    this.lovs[index][keyName] = event.target.value == 'true' ? true: false;
+    console.log(this.lovs[index]);
+  }
 }

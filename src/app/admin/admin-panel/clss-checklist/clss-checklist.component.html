@@ -4,153 +4,153 @@
 <button type="button" class="editsavebtn" (click)="refresh()">Refresh Data</button>
 
 <div class="admin-lovs-wrapper">
- <table class="admin-table">
-   <thead>
-     <tr>
-       <th>Sr. No.</th>
-       <th>Edit</th>
-       <th>aadhaarRequired</th>
-       <th>clssType</th>
-       <th>femaleOwnership</th>
-       <th>houseConstruction</th>
-       <th>houseExtension</th>
-       <th>houseImprovement</th>
-       <th>maximumAge</th>
-       <th>maximumIncomeInLakhs</th>
-       <th>maximumLoanAmountInLakhs</th>
-       <th>maximumTenureInMonths</th>
-       <th>minimumAge</th>
-       <th>minimumIncomeInLakhs</th>
-       <th>minimumLoanAmountInLakhs</th>
-       <th>newHouse</th>
-       <th>nonHousingProduct</th>
-       <th>plotLoan</th>
-       <th>propertySizeInSquareMetre</th>
-       <th>resaleHouse</th>
-       <th>schemeBenefitsInYears</th>
-       <th>schemeBenefitsUptoInLakhs</th>
-       <th>subsidyInterest</th>
-       <th>targetSegment</th>
-     </tr>
-   </thead>
-   <tbody>
-     <form (ngSubmit)="save(i)" *ngFor="let l of lovs;let i=index;">
-     <tr>
-       <td>{{l.key}}</td>
-       <td>
+ <div class="admin-table">
+   <div class="thead">
+     <div class="tr">
+       <div class="th">Sr. No.</div>
+       <div class="th">Edit</div>
+       <div class="th">AadhaarRequired</div>
+       <div class="th">CLSS Type</div>
+       <div class="th">Female Ownership</div>
+       <div class="th">houseConstruction</div>
+       <div class="th">houseExtension</div>
+       <div class="th">houseImprovement</div>
+       <div class="th">Maximum Age</div>
+       <div class="th">Maximum Income In Lakhs</div>
+       <div class="th">Maximum Loan Amount In Lakhs</div>
+       <div class="th">Maximum Tenure In Months</div>
+       <div class="th">Minimum Age</div>
+       <div class="th">Minimum Income In Lakhs</div>
+       <div class="th">Minimum Loan Amount In Lakhs</div>
+       <div class="th">New House</div>
+       <div class="th">Non Housing Product</div>
+       <div class="th">Plot Loan</div>
+       <div class="th">Property Size In Square Metre</div>
+       <div class="th">Resale House</div>
+       <div class="th">Scheme Benefits In Years</div>
+       <div class="th">Scheme Benefits Upto In Lakhs</div>
+       <div class="th">Subsidy Interest</div>
+       <div class="th">Target Segment</div>
+     </div>
+   </div>
+   <div class="tbody">
+     <form (ngSubmit)="save(i)" *ngFor="let l of lovs;let i=index;" #myForm="ngForm">
+     <div class="tr">
+       <div class="td">{{i+1}}</div>
+       <div class="td">
          <button type="button" class="editsavebtn" *ngIf="l.isEdit" (click)="edit(i)">Edit</button>
          <button type="submit" class="editsavebtn" *ngIf="!l.isEdit">Save</button>
          <input type="hidden" name="clssId" [(ngModel)]="l.clssId" />
-       </td>
+       </div>
 
-       <td>
+       <div class="td">
          <!-- Boolean -->
-          <input [(ngModel)]="l.aadhaarRequired" type="radio" class="genders" name="aadhaarRequired" *ngIf="!l.isEdit" /><label [ngClass]="{'displayNun': false, 'displayInlineBlock': false}">Yes</label>
-          <input [(ngModel)]="l.aadhaarRequired" type="radio" class="genders" name="aadhaarRequired" *ngIf="!l.isEdit" /><label [ngClass]="{'displayNun': false, 'displayInlineBlock': false}">No</label>
-       </td>
+          <input (click)="changeRadio($event, 'aadhaarRequired', i)" value="true" [checked]="l.aadhaarRequired == true" type="radio" class="genders" name="aadhaarRequired" *ngIf="!l.isEdit" /><label [ngClass]="{'displayNun': !(l.aadhaarRequired == true), 'displayInlineBlock': !l.isEdit}">Yes</label>
+          <input (click)="changeRadio($event, 'aadhaarRequired', i)" value="false" [checked]="l.aadhaarRequired == false" type="radio" class="genders" name="aadhaarRequired" *ngIf="!l.isEdit" /><label [ngClass]="{'displayNun': !(l.aadhaarRequired == false), 'displayInlineBlock': !l.isEdit}">No</label>
+       </div>
 
-       <td>
-          <input type="text" #lovsElements name="ClssType" placeholder="ClssType" [(ngModel)]="l.clssType" [tabindex]="i" [disabled]="l.isEdit" />
-        </td>
+       <div class="td">
+          <input type="text" required #lovsElements name="ClssType" placeholder="ClssType" [(ngModel)]="l.clssType" [tabindex]="i" [disabled]="l.isEdit" />
+        </div>
 
-        <td>
+        <div class="td">
           <!-- Boolean -->
-            <input [(ngModel)]="l.femaleOwnership" type="radio" class="genders" name="femaleOwnership" *ngIf="!l.isEdit" /><label [ngClass]="{'displayNun': false, 'displayInlineBlock': false}">Yes</label>
-            <input [(ngModel)]="l.femaleOwnership" type="radio" class="genders" name="femaleOwnership" *ngIf="!l.isEdit" /><label [ngClass]="{'displayNun': false, 'displayInlineBlock': false}">No</label>
-        </td>
+            <input (click)="changeRadio($event, 'femaleOwnership', i)" [checked]="l.femaleOwnership == true" type="radio" class="genders" name="femaleOwnership" *ngIf="!l.isEdit" /><label [ngClass]="{'displayNun': !(l.femaleOwnership == true), 'displayInlineBlock': !l.isEdit}">Yes</label>
+            <input (click)="changeRadio($event, 'femaleOwnership', i)" [checked]="l.femaleOwnership == false" type="radio" class="genders" name="femaleOwnership" *ngIf="!l.isEdit" /><label [ngClass]="{'displayNun': !(l.femaleOwnership == false), 'displayInlineBlock': !l.isEdit}">No</label>
+        </div>
 
-        <td>
+        <div class="td">
           <!-- Boolean -->
-            <input [(ngModel)]="l.houseConstruction" type="radio" class="genders" name="houseConstruction" *ngIf="!l.isEdit" /><label [ngClass]="{'displayNun': false, 'displayInlineBlock': false}">Yes</label>
-            <input [(ngModel)]="l.houseConstruction" type="radio" class="genders" name="houseConstruction" *ngIf="!l.isEdit" /><label [ngClass]="{'displayNun': false, 'displayInlineBlock': false}">No</label>
-        </td>
+            <input (click)="changeRadio($event, 'houseConstruction', i)" [checked]="l.houseConstruction == true" type="radio" class="genders" name="houseConstruction" *ngIf="!l.isEdit" /><label [ngClass]="{'displayNun': !(l.houseConstruction == true), 'displayInlineBlock': !l.isEdit}">Yes</label>
+            <input (click)="changeRadio($event, 'houseConstruction', i)" [checked]="l.houseConstruction == false" type="radio" class="genders" name="houseConstruction" *ngIf="!l.isEdit" /><label [ngClass]="{'displayNun': !(l.houseConstruction == false), 'displayInlineBlock': !l.isEdit}">No</label>
+        </div>
 
-        <td>
+        <div class="td">
           <!-- Boolean -->
-            <input [(ngModel)]="l.houseExtension" type="radio" class="genders" name="houseExtension" *ngIf="!l.isEdit" /><label [ngClass]="{'displayNun': false, 'displayInlineBlock': false}">Yes</label>
-            <input [(ngModel)]="l.houseExtension" type="radio" class="genders" name="houseExtension" *ngIf="!l.isEdit" /><label [ngClass]="{'displayNun': false, 'displayInlineBlock': false}">No</label>
-        </td>
+            <input (click)="changeRadio($event, 'houseExtension', i)" [checked]="l.houseExtension == true" type="radio" class="genders" name="houseExtension" *ngIf="!l.isEdit" /><label [ngClass]="{'displayNun': !(l.houseExtension == true), 'displayInlineBlock': !l.isEdit}">Yes</label>
+            <input (click)="changeRadio($event, 'houseExtension', i)" [checked]="l.houseExtension == false" type="radio" class="genders" name="houseExtension" *ngIf="!l.isEdit" /><label [ngClass]="{'displayNun': !(l.houseExtension == false), 'displayInlineBlock': !l.isEdit}">No</label>
+        </div>
 
-        <td>
+        <div class="td">
           <!-- Boolean -->
-            <input [(ngModel)]="l.houseImprovement" type="radio" class="genders" name="houseImprovement" *ngIf="!l.isEdit" /><label [ngClass]="{'displayNun': false, 'displayInlineBlock': false}">Yes</label>
-            <input [(ngModel)]="l.houseImprovement" type="radio" class="genders" name="houseImprovement" *ngIf="!l.isEdit" /><label [ngClass]="{'displayNun': false, 'displayInlineBlock': false}">No</label>
-        </td>
+            <input (click)="changeRadio($event, 'houseImprovement', i)" [checked]="l.houseImprovement == true" type="radio" class="genders" name="houseImprovement" *ngIf="!l.isEdit" /><label [ngClass]="{'displayNun': !(l.houseImprovement == true), 'displayInlineBlock': !l.isEdit}">Yes</label>
+            <input (click)="changeRadio($event, 'houseImprovement', i)" [checked]="l.houseImprovement == false" type="radio" class="genders" name="houseImprovement" *ngIf="!l.isEdit" /><label [ngClass]="{'displayNun': !(l.houseImprovement == false), 'displayInlineBlock': !l.isEdit}">No</label>
+        </div>
 
-        <td>
-          <input type="text" #lovsElements name="maximumAge" placeholder="maximumAge" [(ngModel)]="l.maximumAge" [tabindex]="i" [disabled]="l.isEdit" />
-        </td>
+        <div class="td">
+          <input type="text" required pattern="^[0-9]*$" #lovsElements name="maximumAge" placeholder="maximumAge" [(ngModel)]="l.maximumAge" [tabindex]="i" [disabled]="l.isEdit" />
+        </div>
 
-        <td>
-          <input type="text" #lovsElements name="maximumIncomeInLakhs" placeholder="maximumIncomeInLakhs" [(ngModel)]="l.maximumIncomeInLakhs" [tabindex]="i" [disabled]="l.isEdit" />
-        </td>
+        <div class="td">
+          <input type="text" required pattern="^[0-9]*$" #lovsElements name="maximumIncomeInLakhs" placeholder="maximumIncomeInLakhs" [(ngModel)]="l.maximumIncomeInLakhs" [tabindex]="i" [disabled]="l.isEdit" />
+        </div>
 
-        <td>
-          <input type="text" #lovsElements name="maximumLoanAmountInLakhs" placeholder="maximumLoanAmountInLakhs" [(ngModel)]="l.maximumLoanAmountInLakhs" [tabindex]="i" [disabled]="l.isEdit" />
-        </td>
+        <div class="td">
+          <input type="text" required pattern="^[0-9]*$" #lovsElements name="maximumLoanAmountInLakhs" placeholder="maximumLoanAmountInLakhs" [(ngModel)]="l.maximumLoanAmountInLakhs" [tabindex]="i" [disabled]="l.isEdit" />
+        </div>
 
-        <td>
-          <input type="text" #lovsElements name="maximumTenureInMonths" placeholder="maximumTenureInMonths" [(ngModel)]="l.maximumTenureInMonths" [tabindex]="i" [disabled]="l.isEdit" />
-        </td>
+        <div class="td">
+          <input type="text" required pattern="^[0-9]*$" #lovsElements name="maximumTenureInMonths" placeholder="maximumTenureInMonths" [(ngModel)]="l.maximumTenureInMonths" [tabindex]="i" [disabled]="l.isEdit" />
+        </div>
 
-        <td>
-          <input type="text" #lovsElements name="minimumAge" placeholder="minimumAge" [(ngModel)]="l.minimumAge" [tabindex]="i" [disabled]="l.isEdit" />
-        </td>
+        <div class="td">
+          <input type="text" required pattern="^[0-9]*$" #lovsElements name="minimumAge" placeholder="minimumAge" [(ngModel)]="l.minimumAge" [tabindex]="i" [disabled]="l.isEdit" />
+        </div>
 
-        <td>
-          <input type="text" #lovsElements name="minimumIncomeInLakhs" placeholder="minimumIncomeInLakhs" [(ngModel)]="l.minimumIncomeInLakhs" [tabindex]="i" [disabled]="l.isEdit" />
-        </td>
+        <div class="td">
+          <input type="text" required pattern="^[0-9]*$" #lovsElements name="minimumIncomeInLakhs" placeholder="minimumIncomeInLakhs" [(ngModel)]="l.minimumIncomeInLakhs" [tabindex]="i" [disabled]="l.isEdit" />
+        </div>
 
-        <td>
-          <input type="text" #lovsElements name="minimumLoanAmountInLakhs" placeholder="minimumLoanAmountInLakhs" [(ngModel)]="l.minimumLoanAmountInLakhs" [tabindex]="i" [disabled]="l.isEdit" />
-        </td>
+        <div class="td">
+          <input type="text" required pattern="^[0-9]*$" min="0" #lovsElements name="minimumLoanAmountInLakhs" placeholder="minimumLoanAmountInLakhs" [(ngModel)]="l.minimumLoanAmountInLakhs" [tabindex]="i" [disabled]="l.isEdit" />
+        </div>
 
-        <td>
+        <div class="td">
           <!-- Boolean -->
-            <input [(ngModel)]="l.newHouse" type="radio" class="genders" name="newHouse" *ngIf="!l.isEdit" /><label [ngClass]="{'displayNun': false, 'displayInlineBlock': false}">Yes</label>
-            <input [(ngModel)]="l.newHouse" type="radio" class="genders" name="newHouse" *ngIf="!l.isEdit" /><label [ngClass]="{'displayNun': false, 'displayInlineBlock': false}">No</label>
-        </td>
+            <input (click)="changeRadio($event, 'newHouse', i)" [checked]="l.newHouse == true" type="radio" class="genders" name="newHouse" *ngIf="!l.isEdit" /><label [ngClass]="{'displayNun': !(l.newHouse == true), 'displayInlineBlock': !l.isEdit}">Yes</label>
+            <input (click)="changeRadio($event, 'newHouse', i)" [checked]="l.newHouse == false" type="radio" class="genders" name="newHouse" *ngIf="!l.isEdit" /><label [ngClass]="{'displayNun': !(l.newHouse == false), 'displayInlineBlock': !l.isEdit}">No</label>
+        </div>
 
-        <td>
+        <div class="td">
           <!-- Boolean -->
-            <input [(ngModel)]="l.nonHousingProduct" type="radio" class="genders" name="nonHousingProduct" *ngIf="!l.isEdit" /><label [ngClass]="{'displayNun': false, 'displayInlineBlock': false}">Yes</label>
-            <input [(ngModel)]="l.nonHousingProduct" type="radio" class="genders" name="nonHousingProduct" *ngIf="!l.isEdit" /><label [ngClass]="{'displayNun': false, 'displayInlineBlock': false}">No</label>
-        </td>
+            <input (click)="changeRadio($event, 'nonHousingProduct', i)" (checked)="l.nonHousingProduct == true" type="radio" class="genders" name="nonHousingProduct" *ngIf="!l.isEdit" /><label [ngClass]="{'displayNun': !(l.nonHousingProduct == true), 'displayInlineBlock': !l.isEdit}">Yes</label>
+            <input (click)="changeRadio($event, 'nonHousingProduct', i)" (checked)="l.nonHousingProduct == false" type="radio" class="genders" name="nonHousingProduct" *ngIf="!l.isEdit" /><label [ngClass]="{'displayNun': !(l.nonHousingProduct == false), 'displayInlineBlock': !l.isEdit}">No</label>
+        </div>
 
-        <td>
+        <div class="td">
           <!-- Boolean -->
-            <input [(ngModel)]="l.plotLoan" type="radio" class="genders" name="plotLoan" *ngIf="!l.isEdit" /><label [ngClass]="{'displayNun': false, 'displayInlineBlock': false}">Yes</label>
-            <input [(ngModel)]="l.plotLoan" type="radio" class="genders" name="plotLoan" *ngIf="!l.isEdit" /><label [ngClass]="{'displayNun': false, 'displayInlineBlock': false}">No</label>
-        </td>
+            <input (click)="changeRadio($event, 'plotLoan', i)" (checked)="l.plotLoan == true" type="radio" class="genders" name="plotLoan" *ngIf="!l.isEdit" /><label [ngClass]="{'displayNun': !(l.plotLoan == true), 'displayInlineBlock': !l.isEdit}">Yes</label>
+            <input (click)="changeRadio($event, 'plotLoan', i)" (checked)="l.plotLoan == false" type="radio" class="genders" name="plotLoan" *ngIf="!l.isEdit" /><label [ngClass]="{'displayNun': !(l.plotLoan == false), 'displayInlineBlock': !l.isEdit}">No</label>
+        </div>
 
-        <td>
-          <input type="text" #lovsElements name="propertySizeInSquareMetre" placeholder="propertySizeInSquareMetre" [(ngModel)]="l.propertySizeInSquareMetre" [tabindex]="i" [disabled]="l.isEdit" />
-        </td>
+        <div class="td">
+          <input type="text" required pattern="^[0-9]*$" #lovsElements name="propertySizeInSquareMetre" placeholder="propertySizeInSquareMetre" [(ngModel)]="l.propertySizeInSquareMetre" [tabindex]="i" [disabled]="l.isEdit" />
+        </div>
 
-        <td>
+        <div class="td">
           <!-- Boolean -->
-            <input [(ngModel)]="l.resaleHouse" type="radio" class="genders" name="resaleHouse" *ngIf="!l.isEdit" /><label [ngClass]="{'displayNun': false, 'displayInlineBlock': false}">Yes</label>
-            <input [(ngModel)]="l.resaleHouse" type="radio" class="genders" name="resaleHouse" *ngIf="!l.isEdit" /><label [ngClass]="{'displayNun': false, 'displayInlineBlock': false}">No</label>
-        </td>
+            <input (click)="changeRadio($event, 'resaleHouse', i)" (checked)="l.resaleHouse == true" type="radio" class="genders" name="resaleHouse" *ngIf="!l.isEdit" /><label [ngClass]="{'displayNun': !(l.resaleHouse == true), 'displayInlineBlock': !l.isEdit}">Yes</label>
+            <input (click)="changeRadio($event, 'resaleHouse', i)" (checked)="l.resaleHouse == false" type="radio" class="genders" name="resaleHouse" *ngIf="!l.isEdit" /><label [ngClass]="{'displayNun': !(l.resaleHouse == false), 'displayInlineBlock': !l.isEdit}">No</label>
+        </div>
 
-        <td>
-          <input type="text" #lovsElements name="schemeBenefitsInYears" placeholder="schemeBenefitsInYears" [(ngModel)]="l.schemeBenefitsInYears" [tabindex]="i" [disabled]="l.isEdit" />
-        </td>
+        <div class="td">
+          <input type="text" required pattern="^[0-9]*$" #lovsElements name="schemeBenefitsInYears" placeholder="schemeBenefitsInYears" [(ngModel)]="l.schemeBenefitsInYears" [tabindex]="i" [disabled]="l.isEdit" />
+        </div>
 
-        <td>
-          <input type="text" #lovsElements name="schemeBenefitsUptoInLakhs" placeholder="schemeBenefitsUptoInLakhs" [(ngModel)]="l.schemeBenefitsUptoInLakhs" [tabindex]="i" [disabled]="l.isEdit" />
-        </td>
+        <div class="td">
+          <input type="text" required pattern="^[0-9]*$" #lovsElements name="schemeBenefitsUptoInLakhs" placeholder="schemeBenefitsUptoInLakhs" [(ngModel)]="l.schemeBenefitsUptoInLakhs" [tabindex]="i" [disabled]="l.isEdit" />
+        </div>
 
-        <td>
-          <input type="text" #lovsElements name="subsidyInterest" placeholder="subsidyInterest" [(ngModel)]="l.subsidyInterest" [tabindex]="i" [disabled]="l.isEdit" />
-        </td>
+        <div class="td">
+          <input type="text" required pattern="[0-9]+(\.[0-9]{0,2})?%?" #lovsElements name="subsidyInterest" placeholder="subsidyInterest" [(ngModel)]="l.subsidyInterest" [tabindex]="i" [disabled]="l.isEdit" />
+        </div>
 
-        <td>
-          <input type="text" #lovsElements name="targetSegment" placeholder="targetSegment" [(ngModel)]="l.targetSegment" [tabindex]="i" [disabled]="l.isEdit" />
-        </td>
+        <div class="td">
+          <input type="text" required #lovsElements name="targetSegment" placeholder="targetSegment" [(ngModel)]="l.targetSegment" [tabindex]="i" [disabled]="l.isEdit" />
+        </div>
 
-     </tr>
+     </div>
     </form>
-   </tbody>
- </table> 
+   </div>
+  </div> 
 </div>

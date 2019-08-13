@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
@@ -28,6 +28,8 @@ export class AdminZipCodeComponent implements OnInit {
   description: string;
   value: string;
 
+  tempData: Array<any>;
+
   // data: Array<any> = [
   //   {
   //     userId: 54,
@@ -53,6 +55,8 @@ export class AdminZipCodeComponent implements OnInit {
   totalElements: number;
   // perPageCount: number = 5;
 
+  @ViewChild('searchInp') searchInp: ElementRef;
+
   constructor(private route: ActivatedRoute, private qdeHttp: QdeHttpService, private qdeService: QdeService) {
     this.userId = parseInt(localStorage.getItem('userId'));
     this.tableName = 'zipcode';
@@ -61,6 +65,7 @@ export class AdminZipCodeComponent implements OnInit {
       if(this.route.snapshot.data['eachLovs']['ProcessVariables']['valueDescription']) {
 
         this.data = this.route.snapshot.data['eachLovs']['ProcessVariables']['valueDescription'].map(v => {
+          console.log("....", v);
           return {
             userId: parseInt(localStorage.getItem('userId')),
             tableName: this.tableName,
@@ -75,6 +80,8 @@ export class AdminZipCodeComponent implements OnInit {
             zoneName: v['zoneName']
           }
         });
+
+        this.tempData = this.data;
 
         this.currentPage = parseInt(this.route.snapshot.data['eachLovs']['ProcessVariables']['currentPage']);
         this.totalPages = parseInt(this.route.snapshot.data['eachLovs']['ProcessVariables']['totalPages']);
@@ -117,16 +124,27 @@ export class AdminZipCodeComponent implements OnInit {
 
   submitForm(form: NgForm) {
     let dude;
-    if(form.value.id == -1 || form.value.id == null || form.value.id == '') {
+
+    console.log("selectedIndex: " ,this.selectedIndex);
+    if(this.selectedIndex != -1) {
       dude = form.value;
       dude.userId = localStorage.getItem('userId');
+      dude.id = this.data[this.selectedIndex].id;
       dude.tableName = this.tableName;
     } else {
-      dude = this.qdeService.getFilteredJson(this.data[this.selectedIndex]);
+      dude = form.value;
+      dude.userId = parseInt(localStorage.getItem('userId'));
+      dude.tableName = this.tableName;
+      dude = this.qdeService.getFilteredJson(dude);
     }
 
     this.qdeHttp.insertUpdateEachLovs(dude).subscribe(res => {
-      console.log(res);
+      if(res['ProcessVariables']['status'] == true) {
+        alert("ZipCode Saved Successfully!");
+        this.isAdd = false;
+      } else {
+        alert(res['ProcessVariables']['errorMessage']);
+      }
     }, err => {
 
     });
@@ -140,12 +158,29 @@ export class AdminZipCodeComponent implements OnInit {
     this.qdeHttp.adminLoadMoreLovs(this.tableName, (this.currentPage+1), this.perPage).subscribe(res => {
       if(res['ProcessVariables']['status'] == true) {
         if(res['ProcessVariables']['valueDescription']) {
-          this.data = this.data.concat(res['ProcessVariables']['valueDescription']);
-          this.currentPage = res['ProcessVariables']['currentPage'];
-          this.totalPages = res['ProcessVariables']['totalPages'];
-          this.perPage = res['ProcessVariables']['perPage'];
+
+          this.data = res['ProcessVariables']['valueDescription'].map(v => {
+            return {
+              userId: parseInt(localStorage.getItem('userId')),
+              tableName: this.tableName,
+              cityId: v['cityId'],
+              cityName: v['cityName'],
+              value: v['value'],
+              description: v['description'],
+              id: v['id'] ? v['id'] : null,
+              stateId: v['stateId'],
+              stateName: v['stateName'],
+              zone: v['zone'],
+              zoneName: v['zoneName']
+            }
+          });
+  
+          this.tempData = this.data;
+  
+          this.currentPage = parseInt(res['ProcessVariables']['currentPage']);
+          this.totalPages = parseInt(res['ProcessVariables']['totalPages']);
+          this.perPage = parseInt(res['ProcessVariables']['perPage']);
           this.totalElements = res['ProcessVariables']['totalPages'] * this.perPage;
-          // this.perPageCount = Math.ceil(this.totalElements/this.perPage);
         } else {
           alert('No Data Present Further');
         }
@@ -161,6 +196,7 @@ export class AdminZipCodeComponent implements OnInit {
     this.qdeHttp.adminGetZoneFromState(this.selectedState.value).subscribe(res => {
       if(res['ProcessVariables']['status'] == true) {
         this.zones = res['ProcessVariables']['zoneList'];
+
         if(this.zones == null) {
           this.zones = [{key:'No Data Available', value: '-1'}];
           this.selectedZone = this.zones[0];
@@ -212,7 +248,7 @@ export class AdminZipCodeComponent implements OnInit {
     this.isAdd = true;
     this.selectedIndex = index;
     if(this.tableName == 'zipcode') {
-      this.selectedState = this.states.find(v => v.value == this.data[index].stateId);
+      this.stateChanged(this.data[index].stateId);
     }
 
     this.description = this.data[index].description;
@@ -223,16 +259,115 @@ export class AdminZipCodeComponent implements OnInit {
     this.isAdd = false;
     this.selectedIndex = -1;
     let dude = this.qdeService.getFilteredJson(this.data[index]);
-    console.log(dude);
+
     if(confirm("Are you sure?")) {
       this.qdeHttp.softDeleteLov(dude).subscribe(res => {
         // console.log(res['ProcessVariables']);
-        this.refresh();
+        if(res['ProcessVariables']['status'] == true) {
+          alert('Deleted Successfully!');
+          this.refresh();
+        } else {
+          alert('Something went wrong');
+        }
       });
     } 
   }
 
   refresh() {
+    // let dude = {
+    //   userId : localStorage.getItem('userId'),
+    //   tableName: 'zipcode',
+    //   perPage: this.perPage
+    // };
 
+    // console.log(this.searchInp);
+    // if(this.searchInp.nativeElement.value != '') {
+    //   dude['searchKey'] = this.searchInp.nativeElement.value;
+    // }
+
+    // this.qdeHttp.adminZipCodeSearch(dude).subscribe(res => {
+    //   if(res['ProcessVariables']['status'] == true) {
+    //     if(res['ProcessVariables']['valueDescription']) {
+  
+    //       this.data = res['ProcessVariables']['valueDescription'].map(v => {
+    //         console.log("....", v);
+    //         return {
+    //           userId: parseInt(localStorage.getItem('userId')),
+    //           tableName: this.tableName,
+    //           cityId: v['cityId'],
+    //           cityName: v['cityName'],
+    //           value: v['value'],
+    //           description: v['description'],
+    //           id: v['id'] ? v['id'] : null,
+    //           stateId: v['stateId'],
+    //           stateName: v['stateName'],
+    //           zone: v['zone'],
+    //           zoneName: v['zoneName']
+    //         }
+    //       });
+
+    //       this.currentPage = parseInt(res['ProcessVariables']['currentPage']);
+    //       this.totalPages = parseInt(res['ProcessVariables']['totalPages']);
+    //       this.perPage = parseInt(res['ProcessVariables']['perPage']);
+    //       this.totalElements = res['ProcessVariables']['totalPages'] * this.perPage;
+    //       // this.perPageCount = Math.ceil(this.totalElements/this.perPage);
+    //     } else {
+    //       alert('No Data Present');
+    //     }
+    //   } else {
+    //     alert('No Data Present');
+    //   }
+    // });
+
+    this.data = this.tempData;
+  }
+
+  search(event) {
+    if(event.target.value != '') {
+      let dude = {
+        tableName: 'zipcode',
+        stateId: '',
+        cityId: '',
+        zone: '',
+        searchKey: event.target.value,
+        userId: parseInt(localStorage.getItem('userId')),
+        perPage: 10
+      };
+
+      this.qdeHttp.adminZipCodeSearch(dude).subscribe(res => {
+        if(res['ProcessVariables']['status'] == true) {
+          if(res['ProcessVariables']['valueDescription']) {
+
+            this.data = res['ProcessVariables']['valueDescription'].map(v => {
+              console.log("<<<<", v);
+              return {
+                userId: parseInt(localStorage.getItem('userId')),
+                tableName: this.tableName,
+                cityId: v['cityId'],
+                cityName: v['cityName'],
+                value: v['value'],
+                description: v['description'],
+                id: v['id'] ? v['id'] : null,
+                stateId: v['stateId'],
+                stateName: v['stateName'],
+                zone: v['zone'],
+                zoneName: v['zoneName']
+              }
+            });
+
+            this.currentPage = parseInt(res['ProcessVariables']['currentPage']);
+            this.totalPages = parseInt(res['ProcessVariables']['totalPages']);
+            this.perPage = parseInt(res['ProcessVariables']['perPage']);
+            this.totalElements = res['ProcessVariables']['totalPages'] * this.perPage;
+          } else {
+            alert('No Data Present Further');
+          }
+        } else {
+          alert('No Data Present Further');
+        }
+      });
+    } else {
+      this.data = this.tempData;
+    }
   }
 }

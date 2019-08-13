@@ -1,6 +1,7 @@
 <a class="editsavebtn" routerLink="/admin/lovs">Go Back</a>
 <h1 class="lov-heading">{{tableName.split('_').join(' ')}}</h1>
 <button type="button" class="editsavebtn" (click)="add()">{{isAdd ? 'Close': 'Add New'}}</button>
+<input type="text" class="lov-search" #searchInp placeholder="Search" tabindex="1" (input)="search($event)" />
 
 <div class="add-form" *ngIf="isAdd">
   <form (ngSubmit)="submitForm(addForm)" #addForm="ngForm">
@@ -25,7 +26,6 @@
         </select>
       </div>
 
-      <input type="hidden" name="id" *ngIf="selectedIndex != -1 && selectedIndex != null && selectedIndex != ''" [value]="data[selectedIndex].id" />
 
     </div>
 
@@ -74,7 +74,7 @@
         </td>
       </tr>
       <tr>
-        <td><button type="button" class="editsavebtn" (click)="loadMore()">Load More</button></td>
+        <td><button type="button" class="editsavebtn" *ngIf="currentPage != totalPages" (click)="loadMore()">Load More</button></td>
       </tr>
     </tbody>
   </table>

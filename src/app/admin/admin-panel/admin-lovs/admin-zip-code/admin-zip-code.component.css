@@ -130,3 +130,12 @@ thead, tbody tr {
     padding-top: 8px;
     padding-bottom: 8px;
 }
+
+
+.lov-search {
+    border: 0;
+    border-bottom: 1px solid #333;
+    padding: 8px 16px 8px 0;
+    display: inline-block;
+    vertical-align: middle;
+}
