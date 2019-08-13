@@ -1,27 +1,28 @@
 <div class="app-admin-container">
     <form [formGroup]="registerUser" (ngSubmit)="onSubmit()"  autocomplete="off">
-        <div class="inputBox">
+        <p class="redalert user-hint">*All Fields are Mandatory<br></p>
+        <div class="inputBox form-field-el">
                 <label for="firstname" class="inputText">First name:</label>
                 <input type="text" id="firstname" class="form-control" formControlName="firstName" fieldFill autocomplete="nope"/>
                 <div *ngIf="formValue.firstName.errors" >
                     <!-- <div class="redalert" *ngIf="formValue.firstName.errors.required"> required</div> -->
                 </div>
         </div>
-        <div class="inputBox">
+        <div class="inputBox form-field-el">
                 <label for="lastName" class="inputText">Last name:</label>
                 <input type="text" id="lastName" class="form-control" fieldFill formControlName="lastName" autocomplete="nope"/>
                 <div *ngIf="formValue.lastName.errors" >
                     <!-- <div class="redalert" *ngIf="formValue.lastName.errors.required"> required</div> -->
                 </div>
         </div>
-         <div class="inputBox">
+         <div class="inputBox form-field-el">
                 <label for="userName" class="inputText">User name:</label>
             <input type="text" id="userName" class="form-control" fieldFill formControlName="userName" autocomplete="nope"/>
             <div *ngIf="formValue.userName.errors" >
                 <!-- <div class="redalert"  *ngIf="formValue.userName.errors.required"> required</div> -->
             </div>
         </div>
-        <div class="inputBox">
+        <div class="inputBox form-field-el">
             <label for="password" class="inputText">Password:</label>
             <input type="password" id="password"  class="form-control" fieldFill formControlName="password" autocomplete="new-password" />
             <div *ngIf="formValue.password.errors">
@@ -29,16 +30,16 @@
                     <div class="redalert" *ngIf="formValue.password.errors.minlength"> Minimum 6 character required</div>
                 </div>
         </div>
-       <div class="inputBox">
+       <div class="inputBox form-field-el">
             <label for="mailId" class="inputText">Email:</label>
             <input type="text" id="mailId"  class="form-control" fieldFill formControlName="mailId" autocomplete="nope"/>
             <div *ngIf="formValue.mailId.errors" >
                     <!-- <div class="redalert"  *ngIf="formValue.mailId.errors.required"> required</div> -->
                     <div class="redalert" *ngIf="formValue.mailId.errors.email"> Invalid email</div>
-                    <div *ngIf="formValue.mailId.errors.emailDomain">Email must be on the codecraft.tv domain</div>
+                    <div *ngIf="formValue.mailId.errors.emailDomain" class="redalert">Email must be on the codecraft.tv domain</div>
                 </div>
         </div>
-        <div class="inputBox">
+        <div class="inputBox form-field-el">
             <label for="mobileNumber" class="inputText">Mobile number:</label>
             <input type="number"  class="form-control"  fieldFill
             maxlength="10"
@@ -49,7 +50,7 @@
                 <div class="redalert"  *ngIf="registerUser.get('mobileNumber').hasError('pattern')"> Invalid mobileNumber</div>
             </div>
         </div>
-        <div class="selectBox">
+        <div class="selectBox form-field-el">
             <label class="controltitle">User role</label>
             <select class="form-control" formControlName="userRoleId">
                 <option [ngValue]="null" disabled>Choose your role</option>
@@ -61,7 +62,7 @@
                 <!-- <div class="redalert" *ngIf="formValue.userRoleId.errors.required"> required</div> -->
             </div>
         </div>
-        <div class="selectBox">
+        <div class="selectBox form-field-el">
             <label class="controltitle">User branch</label>
             <select class="form-control" formControlName="branchId">
                 <option  [ngValue]="null" disabled>Choose your branch</option>
@@ -74,9 +75,9 @@
             </div>
         </div>
     
-        <div class="inputBox reportingToBlock">
-            <!-- <label for="reportingTo" class="">Reporting to:</label> -->
-            <input type="text" id="reportingTo"  (input)="filterLeads($event)" class="form-control"  formControlName="reportingTo" placeholder="Reporting to" />
+        <div class="inputBox form-field-el reportingToBlock">
+            <label for="reportingTo" class="">Reporting to:</label>
+            <input type="text" id="reportingTo"  (input)="filterLeads($event)" class="form-control"  formControlName="reportingTo" fieldFill/>
             <input type="hidden" class="form-control" hidden  formControlName="reportingToInp" />
             <span class="reporting_to">
                 <ul>
@@ -90,7 +91,7 @@
             </div>          
         </div>
         
-        <div class="inputBox">
+        <div class="inputBox form-field-el">
             <button type="submit" class="btn btn-default"   [ngClass]="{'disabled': (!registerUser.valid)}"
             [disabled]="!registerUser.valid" > Submit   </button>
         </div> 

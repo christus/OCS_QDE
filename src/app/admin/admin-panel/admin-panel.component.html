@@ -11,10 +11,11 @@
     </div>
     
     <div class="admin-dashboard">
-        <h1 class="title">User: Admin</h1>
-        <span>
-            <button (click)="logout()">Logout</button>
-        </span>
+        <h1 class="title">User: Admin         
+            <span>
+                <button class="btn btn-default pull-right" (click)="logout()">Logout</button>
+            </span>
+        </h1>
         <router-outlet></router-outlet>
     </div>
             

@@ -16,7 +16,7 @@ li .item:active {
 .inputBox,
 .selectBox {
     position: relative;
-    margin-bottom: 2.08vw;
+    margin-bottom: 3.08vw;
     max-width: 35.55vw;
     text-align: left;
 }
@@ -168,4 +168,20 @@ select:-webkit-autofill:focus {
     font-size: .94vw;
     font-weight: bold;
     letter-spacing: 0.5px;
+}
+.form-field-el {
+    width: 48%;
+    float: left;
+}
+.app-admin-container .form-field-el:nth-child(even) {
+    margin-left: 3%;
+}
+.app-admin-container .form-field-el:nth-child(odd) {
+    margin-left: 1%;
+}
+.user-hint {
+    margin-bottom: 35px;
+}
+.inputBox .redalert {
+    position: absolute;
 }
