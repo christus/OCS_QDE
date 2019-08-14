@@ -9,8 +9,8 @@ import { QdeHttpService } from 'src/app/services/qde-http.service';
 })
 export class AdminEachLovComponent implements OnInit, AfterViewInit {
 
-  lovs: Array<any>;
-  tempLovs: Array<any>;
+  lovs: Array<any> = [];
+  tempLovs: Array<any> = [];
   // previousLength: number;
   tableName: string;
   isApplicantTitle: boolean;
@@ -29,20 +29,24 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
     let response = this.route.snapshot.data['eachLovs']['ProcessVariables'];
 
     if(this.route.snapshot.data['eachLovs']['ProcessVariables']['status'] == true) {
-      this.tempLovs = this.lovs = this.route.snapshot.data['eachLovs']['ProcessVariables']['valueDescription'].map((v, i) => {
+      if(this.route.snapshot.data['eachLovs']['ProcessVariables']['valueDescription'] && this.route.snapshot.data['eachLovs']['ProcessVariables']['valueDescription'].length > 0 ) {
+        this.tempLovs = this.lovs = this.route.snapshot.data['eachLovs']['ProcessVariables']['valueDescription'].map((v, i) => {
 
-        return {
-          userId: localStorage.getItem('userId'),
-          key: (i+1),
-          description: v['description'],
-          value: v['value'],
-          isEdit: true,
-          id: v['id'],
-          male: v['male'],
-          female: v['female'],
-          tableName: this.tableName
-        }
-      });
+          return {
+            userId: localStorage.getItem('userId'),
+            key: (i+1),
+            description: v['description'],
+            value: v['value'],
+            isEdit: true,
+            id: v['id'],
+            male: v['male'],
+            female: v['female'],
+            tableName: this.tableName
+          }
+        });
+      } else {
+        alert('No Data Found');
+      }
     }
   }
 
@@ -163,20 +167,24 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
   refresh() {
     this.qdeHttp.adminLoadMoreLovs(this.tableName).subscribe(res => {
       if(res['ProcessVariables']['status'] == true) {
-        this.tempLovs = this.lovs = res['ProcessVariables']['valueDescription'].map((v, i) => {
+        if(res['ProcessVariables']['valueDescription'] && res['ProcessVariables']['valueDescription'].length > 0) {
+          this.tempLovs = this.lovs = res['ProcessVariables']['valueDescription'].map((v, i) => {
 
-          return {
-            userId: localStorage.getItem('userId'),
-            key: (i+1),
-            description: v['description'],
-            value: v['value'],
-            isEdit: true,
-            id: v['id'],
-            male: v['male'],
-            female: v['female'],
-            tableName: this.tableName
-          }
-        });
+            return {
+              userId: localStorage.getItem('userId'),
+              key: (i+1),
+              description: v['description'],
+              value: v['value'],
+              isEdit: true,
+              id: v['id'],
+              male: v['male'],
+              female: v['female'],
+              tableName: this.tableName
+            }
+          });
+        } else {
+          alert("No Data Found");
+        }
       }
     }, err => {
 
