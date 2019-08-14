@@ -16,7 +16,7 @@
                 </div>
         </div>
          <div class="inputBox form-field-el">
-                <label for="userName" class="inputText">User name:</label>
+                <label for="userName" class="inputText">Employee Id:</label>
             <input type="text" id="userName" class="form-control" fieldFill formControlName="userName" autocomplete="nope"/>
             <div *ngIf="formValue.userName.errors" >
                 <!-- <div class="redalert"  *ngIf="formValue.userName.errors.required"> required</div> -->
@@ -35,8 +35,8 @@
             <input type="text" id="mailId"  class="form-control" fieldFill formControlName="mailId" autocomplete="nope"/>
             <div *ngIf="formValue.mailId.errors" >
                     <!-- <div class="redalert"  *ngIf="formValue.mailId.errors.required"> required</div> -->
-                    <div class="redalert" *ngIf="formValue.mailId.errors.email"> Invalid email</div>
-                    <div *ngIf="formValue.mailId.errors.emailDomain" class="redalert">Email must be on the codecraft.tv domain</div>
+                    <!-- <div class="redalert" *ngIf="formValue.mailId.errors.email"> Invalid email</div> -->
+                    <div *ngIf="formValue.mailId.errors.emailDomain" class="redalert">Email must be on the icichfc.com domain</div>
                 </div>
         </div>
         <div class="inputBox form-field-el">

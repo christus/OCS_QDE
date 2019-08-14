@@ -1,6 +1,6 @@
 export const environment = {
-  version: "1.6.2",
-  buildDate: "12-8-19_eve_release",
+  version: "1.6.3",
+  buildDate: "13-8-19_eve_release",
   production: true,
   projectId: '5928d30eac7811e9a1670242ac110002', //developement
 
@@ -219,6 +219,38 @@ export const environment = {
     "getZipLov": {
       'workflowId': 'e77f2900bcd111e9871a0242ac110002',
       'processId': 'f84cb0eebdc211e98e020242ac110002'
+    },
+    "adminLoanTypePurposeMap": {
+      'workflowId': '923cb878b8d411e9a42f0242ac110002',
+      'processId': 'f7c57d26bb5711e9b4160242ac110002'
+    },
+    "adminInsertUpdateLoanTypePurposeMap": {
+      'workflowId': '923cb878b8d411e9a42f0242ac110002',
+      'processId': 'cb3957bab8d611e989900242ac110002' 
+    },
+    "adminDocumentProfile": {
+      'workflowId': '2565d5f4b8e311e996d50242ac110002',
+      'processId': '4cd3a740bcbe11e9baf50242ac110002'
+    },
+    "adminUpdateDocumentProfile": {
+      'workflowId': '2565d5f4b8e311e996d50242ac110002',
+      'processId': '257e4aa8b8e311e993e80242ac110002'
+    },
+    "adminGetAllLoginFee": {
+      'workflowId': '74907e5aba7211e985490242ac110002',
+      'processId': '03ddc21ebb5111e9bc080242ac110002'
+    },
+    "adminUpdateLoginFee": {
+      'workflowId': '74907e5aba7211e985490242ac110002',
+      'processId': '74afdc8cba7211e9bf1a0242ac110002'
+    },
+    "adminGetAllLoanMaster": {
+      'workflowId': '4d71bd12b81e11e998630242ac110002',
+      'processId': '1311dc10bb5211e9b7460242ac110002'
+    },
+    "adminUpdateLoanMaster": {
+      'workflowId': '4d71bd12b81e11e998630242ac110002',
+      'processId': '4d90d742b81e11e984c60242ac110002'
     }
   },
   userName: "icici@icici.com",

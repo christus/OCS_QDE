@@ -1,33 +1,21 @@
 import { Injectable } from '@angular/core';
-import { RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
-import RequestEntity from '../models/request-entity.model';
-import { HttpParams, HttpHeaders, HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
-import { Resolve } from '@angular/router';
 import { Observable } from 'rxjs';
+import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
+import { HttpParams, HttpClient } from '@angular/common/http';
+import RequestEntity from '../models/request-entity.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
-export class MasterLovResolverService  implements Resolve<Observable<any>>  {
+export class DocAssessDoccatProfileMapResolverService implements Resolve<Observable<any>> {
 
   constructor(private http: HttpClient) { }
 
-  resolve(_route: ActivatedRouteSnapshot, _state: RouterStateSnapshot): any {
-    const processId   = environment.api.adminGetEachLov.processId;
-    const workflowId  = environment.api.adminGetEachLov.workflowId;
+  resolve(_route: ActivatedRouteSnapshot): any {
+    const processId   = environment.api.adminDocumentProfile.processId;
+    const workflowId  = environment.api.adminDocumentProfile.workflowId;
     const projectId   = environment.projectId;
 
-    let tableName;
-
-    if(_route.url[1]['path'] == 'zipcode') {
-      tableName = 'zipcode';
-    }
-
-    else if(_route.url[1]['path'] == 'pmay_list') {
-      tableName = 'pmay_list';
-    }
-    else if(_route.url[1]['path'] == 'loan_type_purpose_map') {
-      tableName = 'loan_type_purpose_map';
-    }
+    let tableName = _route.params['eachLovName'];
 
     let qdeRequestEntity: RequestEntity = {
       processId: processId,

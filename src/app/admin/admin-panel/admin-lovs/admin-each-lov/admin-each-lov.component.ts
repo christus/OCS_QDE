@@ -103,19 +103,42 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
     } 
   }
 
+
   search(event) {
-    if(event.target.value != '') {
-      this.lovs = this.tempLovs.filter(v => {
-        if(v.description.toLowerCase().trim().search(event.target.value.toLowerCase().trim()) >= 0) {
-          return true;
+    let dude = {
+      tableName: this.tableName,
+      searchKey: event.target.value,
+      userId: parseInt(localStorage.getItem('userId')),
+    };
+
+    this.qdeHttp.adminZipCodeSearch(dude).subscribe(res => {
+      if(res['ProcessVariables']['status'] == true) {
+        if(res['ProcessVariables']['valueDescription']) {
+
+          this.lovs = res['ProcessVariables']['valueDescription'].map(v => {
+            return {
+              userId: parseInt(localStorage.getItem('userId')),
+              tableName: this.tableName,
+              cityId: v['cityId'],
+              cityName: v['cityName'],
+              value: v['value'],
+              description: v['description'],
+              id: v['id'] ? v['id'] : null,
+              stateId: v['stateId'],
+              stateName: v['stateName'],
+              zone: v['zone'],
+              zoneName: v['zoneName']
+            }
+          });
+
         } else {
-          return false;
+          alert('No Data Present Further');
         }
-      });
-    } else {
-      console.log(this.tempLovs)
-      this.lovs = this.tempLovs;
-    }
+      } else {
+        alert('No Data Present Further');
+      }
+    });
+  
   }
 
   edit(index) {

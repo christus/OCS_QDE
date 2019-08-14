@@ -290,7 +290,7 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
     let email = control.value;
     if (email && email.indexOf("@") != -1) {
       let [_, domain] = email.split("@");
-      if (domain !== "codecraft.tv") {
+      if (domain !== "icichfc.com") {
         return {
           emailDomain: {
             parsedDomain: domain

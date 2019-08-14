@@ -1,0 +1,93 @@
+<a class="editsavebtn" routerLink="/admin/lovs">Go Back</a>
+<h1 class="lov-heading">{{tableName.split('_').join(' ')}}</h1>
+<button type="button" class="editsavebtn" (click)="add()">{{isAdd ? 'Close': 'Add New'}}</button>
+<!-- <input type="text" class="lov-search" #searchInp placeholder="Search" tabindex="1" (input)="search($event)" /> -->
+
+<div class="add-form" *ngIf="isAdd">
+  <form (ngSubmit)="submitForm(addForm)" #addForm="ngForm">
+
+    <div class="admin-col-half">
+
+      <label for="loan_type">Select Loan Type</label>
+      <select id="loan_type" name="loan_type" [ngModel]="selectedLoanTypeData.value" (ngModelChange)="loanTypeChanged($event)">
+        <option *ngFor="let z of loanTypeData;" [value]="z.value">{{z.description}}</option>
+      </select>
+  
+      <label for="loan_purpose">Select Loan Purpose</label>
+      <select id="loan_purpose" name="loan_purpose" [ngModel]="selectedLoanPurposeData.value" (ngModelChange)="loanPurposeChanged($event)">
+        <option *ngFor="let c of loanPurposeData;" [value]="c.value">{{c.description}}</option>
+      </select>
+
+    </div>
+
+    <!-- <div class="admin-col-half">
+      <label for="description">Description</label>
+      <input type="text" class="descvalue" [(ngModel)]="description" id="description" name="description" ngModel />
+  
+      <label for="value">Value</label>
+      <input type="text" class="descvalue" [(ngModel)]="value" id="value" name="value" ngModel />
+
+    </div> -->
+    <button type="submit" class="saveBtn">Save</button>
+
+  </form>
+</div>
+
+<!-- <input type="text" class="lov-search" placeholder="Search" (input)="search($event)" /> -->
+<div class="zipcode-table-wrapper">
+
+  <table class="zipcode-table">
+    <thead>
+      <tr>
+        <th>Sr No.</th>
+        <th>Loan Type</th>
+        <th>Loan Purpose</th>
+        <th>Save</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let d of data;let i=index;">
+        <td>{{i+1}}</td>
+        <td>
+          <select id="loan_type" name="loan_type" [ngModel]="d.loanTypeValue" (ngModelChange)="tableLoanTypeChanged($event, i)">
+            <option *ngFor="let z of loanTypeData;" [value]="z.value">{{z.description}}</option>
+          </select>
+        </td>
+        <td>
+          <select id="loan_purpose" name="loan_purpose" [ngModel]="d.loanPurposeValue" (ngModelChange)="tableLoanPurposeChanged($event, i)">
+            <option *ngFor="let c of loanPurposeData;" [value]="c.value">{{c.description}}</option>
+          </select>
+        </td>
+        <td>
+          <button type="button" class="editsavebtn" (click)="update(i)">Save</button>
+        </td>
+        <td>
+          <button type="button" class="editsavebtn" (click)="delete(i)">Delete</button>
+        </td>
+      </tr>
+      <tr>
+        <td><button type="button" class="editsavebtn" *ngIf="currentPage != totalPages" (click)="loadMore()">Load More</button></td>
+      </tr>
+    </tbody>
+  </table>
+
+  
+
+  <div class="pagination-wrapper">
+    <!-- <ul>
+      <li class="pagination" *ngIf="currentPage != 1">
+        <a class="pagination-link">&lt;</a>
+      </li>
+      <li class="pagination" *ngFor="let page of counter(perPageCount);let i=index">
+        <a class="pagination-link">{{i+1}}</a>
+      </li>
+      <li class="pagination" *ngIf="currentPage == totalPages">
+        <a class="pagination-link">&gt;</a>
+      </li>
+    </ul> -->
+    <div class="pagination">
+      
+    </div>
+  </div>
+</div>

@@ -103,7 +103,11 @@ import { GeneralLovsService } from './services/general-lovs-resolver.service';
 import { ClssChecklistComponent } from './admin/admin-panel/clss-checklist/clss-checklist.component';
 import { ClssChecklistResolverService } from './services/clss-checklist-resolver.service';
 import { PmayAddDetailsComponent } from './admin/admin-panel/pmay-add-details/pmay-add-details.component';
+
 import { BranchAddEditComponent } from './admin/admin-panel/branch-add-edit/branch-add-edit.component';
+
+import { LoanTypePurposeMapComponent } from './admin/admin-panel/loan-type-purpose-map/loan-type-purpose-map.component';
+import { LoanTypePurposeMapResolverService } from '../app/services/loan-type-purpose-map-resolver.service';
 
 
 
@@ -406,6 +410,13 @@ const appRoutes: Routes = [
         }
       },
       {
+        path: 'lovs/loan_type_purpose_map',
+        component: LoanTypePurposeMapComponent,
+        resolve: {
+          eachLovs: LoanTypePurposeMapResolverService
+        }
+      },
+      {
         path: 'lovs/zipcode',
         component: AdminZipCodeComponent,
         resolve: {
@@ -486,7 +497,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     PmayListComponent,
     PmayAddDetailsComponent,
     BranchListComponent,
-    BranchAddEditComponent
+    BranchAddEditComponent,
+    LoanTypePurposeMapComponent
   ],
   imports: [
     BrowserModule,
@@ -529,7 +541,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     AdminAddUserLovResolverService,
     MasterLovResolverService,
     GeneralLovsService,
-    ClssChecklistResolverService
+    ClssChecklistResolverService,
+    LoanTypePurposeMapResolverService
   ],
   bootstrap: [AppComponent]
 })
