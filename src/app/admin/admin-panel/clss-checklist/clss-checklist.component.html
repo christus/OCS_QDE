@@ -1,20 +1,23 @@
-<a class="editsavebtn" routerLink="/admin/lovs">Go Back</a>
-<h1 class="lov-heading">CLSS Checklist</h1>
-<!-- <input type="text" class="lov-search" name="Search" placeholder="Search" (input)="search($event)" /> -->
-<button type="button" class="editsavebtn" (click)="refresh()">Refresh Data</button>
+<h1 class="lov-heading">
+  CLSS Checklist
+  <a class="editsavebtn btn btn-default pull-right" routerLink="/admin/lovs">Go Back</a>
+  <button type="button" class="editsavebtn btn btn-default pull-right" (click)="refresh()">Refresh Data</button>
 
-<div class="admin-lovs-wrapper">
- <div class="admin-table">
+</h1>
+<!-- <input type="text" class="lov-search" name="Search" placeholder="Search" (input)="search($event)" /> -->
+
+<div class="admin-lovs-wrapper clss-checklist-container">
+ <div class="admin-table table">
    <div class="thead">
      <div class="tr">
-       <div class="th">Sr. No.</div>
-       <div class="th">Edit</div>
-       <div class="th">AadhaarRequired</div>
+       <div class="th td5vw">Sr. No.</div>
+       <div class="th td5vw">Edit</div>
+       <div class="th">Aadhaar Required</div>
        <div class="th">CLSS Type</div>
        <div class="th">Female Ownership</div>
-       <div class="th">houseConstruction</div>
-       <div class="th">houseExtension</div>
-       <div class="th">houseImprovement</div>
+       <div class="th">House Construction</div>
+       <div class="th">House Extension</div>
+       <div class="th">House Improvement</div>
        <div class="th">Maximum Age</div>
        <div class="th">Maximum Income In Lakhs</div>
        <div class="th">Maximum Loan Amount In Lakhs</div>
@@ -36,8 +39,8 @@
    <div class="tbody">
      <form (ngSubmit)="save(i)" *ngFor="let l of lovs;let i=index;" #myForm="ngForm">
      <div class="tr">
-       <div class="td">{{i+1}}</div>
-       <div class="td">
+       <div class="td td5vw">{{i+1}}</div>
+       <div class="td td5vw">
          <button type="button" class="editsavebtn" *ngIf="l.isEdit" (click)="edit(i)">Edit</button>
          <button type="submit" class="editsavebtn" *ngIf="!l.isEdit">Save</button>
          <input type="hidden" name="clssId" [(ngModel)]="l.clssId" />

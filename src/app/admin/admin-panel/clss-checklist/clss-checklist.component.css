@@ -4,34 +4,61 @@
     table-layout:fixed;/* even columns width , fix width of table too*/
     white-space: nowrap;
 }
-
-
 .tbody {
     display:block;
     height: 50vh;
-    /* overflow :scroll; */
 }
-
-.thead .tr .th {
-    width: 100px;
-    display: inline-block;
-    white-space: normal;
-    border-bottom: 1px solid #333;
-    font-display: bold;
-    padding-left: 5px;
-    padding-right: 5px;
+.admin-table {
+    display: table;
 }
-
-.tbody .tr .td {
-    width: 200px;
-    display: inline-block;
-    white-space: normal;
-}
-
 .displayNun {
     display: none;
 }
 
 .displayInlineBlock {
     display: inline-block;
+}
+.clss-checklist-container {
+    width: 100%;
+    overflow-x: auto;
+}
+.clss-checklist-container .admin-table {
+    overflow-y: auto;
+}
+.pull-right {
+    float: right;
+}
+.lov-heading {
+    margin: 2vh 0;
+}
+
+.table {
+    width: 100%;
+    margin-top: 2vh;
+    margin-bottom: 1vh;
+    color: #212529;
+    background-color: transparent;
+    display: table;
+}
+.table .th, .table .td {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid #ebedf2;
+    border: 1px solid #ebedf2;
+    text-align: center;
+    display: table-cell;
+    white-space: normal;
+    width: 8vw;
+}
+.table .thead .th,
+.table .thead .td {
+    color: #053c6d;
+    font-weight: bold;
+}
+.table .td5vw {
+    width: 5vw;
+}
+
+.table .td input[type="text"] {
+    width: 100%;
 }
