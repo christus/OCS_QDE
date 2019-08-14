@@ -2,7 +2,7 @@
 /* You can add global styles to this file, and also import other style files */
 /* @import '~bootstrap/dist/css/bootstrap.min.css'; */
 @import '~swiper/dist/css/swiper.min.css';
-
+@import 'assets/css/kendo.css';
 
 body {
 	height: 100vh;
