@@ -26,6 +26,13 @@ export class PmayAddDetailsComponent implements OnInit {
     townCode: new FormControl(''),
     subDistCode: new FormControl('')
   });
+  stateCode: string;
+  distCode: string;
+  stateName: string;
+  distName: string;
+  townName: string;
+  townCode: string;
+  subDistCode: string;
 
 
   constructor(private qdeHttp: QdeHttpService,
@@ -57,6 +64,16 @@ export class PmayAddDetailsComponent implements OnInit {
 
         }
 
+      });
+
+      this.registerUser.valueChanges.subscribe(val=>{
+        this.stateCode = val['stateCode'];
+        this.distCode = val['distCode'];
+        this.stateName =  val['stateName'];
+        this.distName = val['distName'];
+        this.townName = val['townName'];
+        this.townCode = val['townCode'];
+        this.subDistCode = val['subDistCode'];
       });
 
     }
