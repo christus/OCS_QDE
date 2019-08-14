@@ -185,3 +185,7 @@ select:-webkit-autofill:focus {
 .inputBox .redalert {
     position: absolute;
 }
+
+.trans-lower-case{
+    text-transform: lowercase;
+}
