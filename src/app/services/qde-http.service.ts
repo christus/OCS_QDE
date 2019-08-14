@@ -1505,7 +1505,7 @@ createOrUpdatePersonalDetails(qde) {
     const requestEntity: RequestEntity = {
       processId: processId,
       ProcessVariables: {
-        userId: parseInt(lovs.userId),
+        userId: parseInt(localStorage.getItem('userId')),
         tableName: lovs.tableName,
         id: parseInt(lovs.id),
         isDelete: true
@@ -1753,6 +1753,126 @@ createOrUpdatePersonalDetails(qde) {
     let qdeRequestEntity: RequestEntity = {
       processId: processId,
       ProcessVariables: {},
+      workflowId: workflowId,
+      projectId: projectId
+    };
+  
+    const body = new HttpParams().set(
+      "processVariables",
+      JSON.stringify(qdeRequestEntity)
+    );
+  
+    let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
+    return this.http.post(
+      uri,
+      body.toString()
+    );
+  }
+
+  adminGetAllLoginFee(currentPage ?: number, perPage ?: number) {
+    const processId   = environment.api.adminGetAllLoginFee.processId;
+    const workflowId  = environment.api.adminGetAllLoginFee.workflowId;
+    const projectId   = environment.projectId;
+  
+    let dude = this.qdeService.getFilteredJson({
+      userId: localStorage.getItem('userId')
+    });
+
+    let qdeRequestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: {
+        userId: parseInt(localStorage.getItem('userId')),
+        currentPage: currentPage ? currentPage: 1,
+        perPage: perPage ? perPage: 100,
+      },
+      workflowId: workflowId,
+      projectId: projectId
+    };
+  
+    const body = new HttpParams().set(
+      "processVariables",
+      JSON.stringify(qdeRequestEntity)
+    );
+  
+    let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
+    return this.http.post(
+      uri,
+      body.toString()
+    );
+  }
+
+  adminUpdateLoginFee(data) {
+    const processId   = environment.api.adminUpdateLoginFee.processId;
+    const workflowId  = environment.api.adminUpdateLoginFee.workflowId;
+    const projectId   = environment.projectId;
+  
+    let dude = this.qdeService.getFilteredJson({
+      userId: localStorage.getItem('userId')
+    });
+
+    let qdeRequestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: data,
+      workflowId: workflowId,
+      projectId: projectId
+    };
+  
+    const body = new HttpParams().set(
+      "processVariables",
+      JSON.stringify(qdeRequestEntity)
+    );
+  
+    let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
+    return this.http.post(
+      uri,
+      body.toString()
+    );
+  }
+
+  adminGetAllLoanMaster(currentPage ?: number, perPage ?: number) {
+    const processId   = environment.api.adminGetAllLoanMaster.processId;
+    const workflowId  = environment.api.adminGetAllLoanMaster.workflowId;
+    const projectId   = environment.projectId;
+  
+    let dude = this.qdeService.getFilteredJson({
+      userId: localStorage.getItem('userId')
+    });
+
+    let qdeRequestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: {
+        userId: localStorage.getItem('userId'),
+        currentPage: currentPage ? currentPage: null,
+        perPage: perPage ? perPage: null
+      },
+      workflowId: workflowId,
+      projectId: projectId
+    };
+  
+    const body = new HttpParams().set(
+      "processVariables",
+      JSON.stringify(qdeRequestEntity)
+    );
+  
+    let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
+    return this.http.post(
+      uri,
+      body.toString()
+    );
+  }
+
+  adminUpdateLoanMaster(data) {
+    const processId   = environment.api.adminUpdateLoanMaster.processId;
+    const workflowId  = environment.api.adminUpdateLoanMaster.workflowId;
+    const projectId   = environment.projectId;
+  
+    let dude = this.qdeService.getFilteredJson({
+      userId: localStorage.getItem('userId')
+    });
+
+    let qdeRequestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: data,
       workflowId: workflowId,
       projectId: projectId
     };

@@ -111,7 +111,6 @@ import { LoanTypePurposeMapResolverService } from '../app/services/loan-type-pur
 import { DocumentAssessmentDoccatDoctypeComponent } from './admin/admin-panel/document-assessment-doccat-doctype/document-assessment-doccat-doctype.component';
 
 import { DocAssessDoccatProfileMapResolverService } from './services/doc-assess-doccat-profile-map-resolver.service';
-import { LoginFeeComponent } from './admin/admin-panel/login-fee/login-fee.component';
 import { LoanMasterComponent } from './admin/admin-panel/loan-master/loan-master.component';
 
 const appRoutes: Routes = [
@@ -413,7 +412,7 @@ const appRoutes: Routes = [
       },
       {
         path: 'lovs/login_fee',
-        component: LoginFeeComponent
+        component: LoanMasterComponent
       },
       {
         path: 'lovs/loan_master',
@@ -517,7 +516,6 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     BranchAddEditComponent,
     LoanTypePurposeMapComponent,
     DocumentAssessmentDoccatDoctypeComponent,
-    LoginFeeComponent,
     LoanMasterComponent
   ],
   imports: [

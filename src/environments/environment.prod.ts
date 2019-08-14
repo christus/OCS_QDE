@@ -148,9 +148,7 @@ export const environment = {
     },
     "adminSoftDeleteLov": {
       'workflowId': '3189bc1eb50611e982a40242ac110002',
-      'processId': '3189bc1eb50611e982a40242ac110002'
-      // 'workflowId': '4c1a5e74b84611e988b70242ac110002',
-      // 'processId': '4c2dcd56b84611e98b890242ac110002'
+      'processId': '69bea66eb76b11e9b2e30242ac110002'
     },
     "adminGetUser": {
       'workflowId': '30d9085ead3311e9a3ae0242ac110002',

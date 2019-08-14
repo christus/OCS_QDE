@@ -192,10 +192,10 @@ export class DocumentAssessmentDoccatDoctypeComponent implements OnInit {
 
     let dude = {
       userId: this.userId,
-      assessmentId: this.data[index].assessmentId,
-      docCategoryId: this.data[index].docCategoryId,
-      docTypeId: this.data[index].docTypeId,
-      profileId: this.data[index].profileId,
+      assessmentId: this.data[index].assessmentId+"",
+      docCategoryId: this.data[index].docCategoryId+"",
+      docTypeId: this.data[index].docTypeId+"",
+      profileId: this.data[index].profileId+"",
       id: this.data[index]['id'],
       tableName: this.tableName
     };
@@ -209,5 +209,17 @@ export class DocumentAssessmentDoccatDoctypeComponent implements OnInit {
     }, err => {
       alert('Something went wrong');
     });
+  }
+
+  delete(index) {
+    let dude = this.data[index];
+    dude.tableName = this.tableName;
+
+    if(confirm("Are you sure?")) {
+      this.qdeHttp.softDeleteLov(dude).subscribe(res => {
+        // console.log(res['ProcessVariables']);
+        this.refresh();
+      });
+    } 
   }
 }

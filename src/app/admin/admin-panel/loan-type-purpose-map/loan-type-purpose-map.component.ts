@@ -201,6 +201,7 @@ export class LoanTypePurposeMapComponent implements OnInit {
 
   delete(index) {
     let dude = this.data[index];
+    dude.tableName = this.tableName;
     if(confirm("Are you sure?")) {
       this.qdeHttp.softDeleteLov(dude).subscribe(res => {
         // console.log(res['ProcessVariables']);
