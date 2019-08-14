@@ -189,3 +189,7 @@ select:-webkit-autofill:focus {
 .trans-lower-case{
     text-transform: lowercase;
 }
+
+.hide {
+    display: none;
+}

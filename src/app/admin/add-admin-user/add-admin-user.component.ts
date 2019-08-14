@@ -16,6 +16,7 @@ import {ViewChild, ElementRef} from '@angular/core';
 })
 export class AddAdminUserComponent implements OnInit, AfterViewInit {
 
+  reportingToInp: any;
   ngAfterViewInit(): void {
     console.log("After view init");
   }
@@ -29,12 +30,15 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
   branch: Array<any>;
   formdata;
   reportingTo: string;
+  reportingToStr: string;
+
   // registerUser: FormGroup;
   filteredItems: Array<string>;
   _timeout: any = null;
   userId: number;
   updatebtn:boolean = false;
   errorMsg:string;
+
 
 
 
@@ -52,6 +56,15 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
     reportingToInp: new FormControl(''),
   });
 
+  firstName:string;
+  lastName:string;
+  userName:string;
+  password:string;
+  mailId:string;
+  mobileNumber:string;
+  userRoleId:string;
+  branchId:string;
+
   @ViewChildren("reportingTo") reportingToList: QueryList<ElementRef>;
   constructor(private qdeHttp: QdeHttpService,
     private formBuilder: FormBuilder,
@@ -61,6 +74,20 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
   ) {
     this.filteredItems = this.items;
     this.selectedItem = 0;
+
+    this.registerUser.valueChanges.subscribe(val => {
+      this.firstName = val['firstName'];
+      this.lastName = val['lastName'];
+      this.userName = val['userName'];
+      this.password = val['password'];
+      this.mailId = val['mailId'];
+      this.mobileNumber = val['mobileNumber'];
+      this.userRoleId = val['userRoleId']; 
+      this.branchId = val['branchId']; 
+      this.reportingToInp = val['reportingToInp']; 
+      this.reportingTo = val['reportingTo']; 
+      
+    })
 
     // if(this.route.snapshot.data['userBranchLovs']) {
     //   // this.adminLovs = this.route.snapshot.data['adminLovs']['ProcessVariables']['mastersList'];

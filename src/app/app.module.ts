@@ -113,6 +113,8 @@ import { DocumentAssessmentDoccatDoctypeComponent } from './admin/admin-panel/do
 import { DocAssessDoccatProfileMapResolverService } from './services/doc-assess-doccat-profile-map-resolver.service';
 import { LoanMasterComponent } from './admin/admin-panel/loan-master/loan-master.component';
 
+
+
 const appRoutes: Routes = [
   { path: "", redirectTo: "leads", pathMatch: "full" },
   { path: "login", component: LoginComponent },
@@ -532,6 +534,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     DeviceDetectorModule.forRoot(),
     NgxUiLoaderModule,
     NgxPaginationModule,
+    ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'})
     
   ],
   providers: [
