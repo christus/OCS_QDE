@@ -144,8 +144,8 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
         "password": this.formValue.password.value,
         "mobileNumber": this.formValue.mobileNumber.value,
         "mailId": this.formValue.mailId.value,
-        "roleId": parseInt(this.formValue.userRoleId.value),
-        "branchId": parseInt(this.formValue.branchId.value),
+        "roleId": parseInt(this.changeUserRole),
+        "branchId": parseInt(this.changeBranch),
         "reportingTo": parseInt(this.formValue.reportingToInp.value),
         "userId": parseInt(localStorage.getItem("userId"))
       }
@@ -186,6 +186,18 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
       event.preventDefault();
 
     }
+  }
+
+
+  // Getter method to access formcontrols
+  get changeUserRole() {
+    console.log("change value", this.registerUser.get('userRoleId').value.value);
+    return this.registerUser.get('userRoleId').value.value;
+  }
+
+  get changeBranch() {
+    console.log("change branchId value", this.registerUser.get('branchId').value.value);
+    return this.registerUser.get('branchId').value.value;
   }
 
   items: Array<string> = [''];
@@ -290,7 +302,7 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
     let email = control.value;
     if (email && email.indexOf("@") != -1) {
       let [_, domain] = email.split("@");
-      if (domain !== "icichfc.com") {
+      if (domain !== "icicihfc.com") {
         return {
           emailDomain: {
             parsedDomain: domain

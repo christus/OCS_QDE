@@ -36,7 +36,7 @@
             <div *ngIf="formValue.mailId.errors" >
                     <!-- <div class="redalert"  *ngIf="formValue.mailId.errors.required"> required</div> -->
                     <!-- <div class="redalert" *ngIf="formValue.mailId.errors.email"> Invalid email</div> -->
-                    <div *ngIf="formValue.mailId.errors.emailDomain" class="redalert">Email must be on the icichfc.com domain</div>
+                    <div *ngIf="formValue.mailId.errors.emailDomain" class="redalert">Email must be on the icicihfc.com domain</div>
                 </div>
         </div>
         <div class="inputBox form-field-el">
@@ -52,9 +52,9 @@
         </div>
         <div class="selectBox form-field-el">
             <label class="controltitle">User role</label>
-            <select class="form-control" formControlName="userRoleId">
+            <select class="form-control" formControlName="userRoleId" >
                 <option [ngValue]="null" disabled>Choose your role</option>
-                <option *ngFor="let userRole of userRoles" [ngValue] = "userRole" value={{userRole.value}}>
+                <option *ngFor="let userRole of userRoles" [ngValue] = "userRole" value={{userRole.value}} (change)="changeUserRole($event)">
                     {{userRole.key}}
                 </option>
             </select>
@@ -66,7 +66,7 @@
             <label class="controltitle">User branch</label>
             <select class="form-control" formControlName="branchId">
                 <option  [ngValue]="null" disabled>Choose your branch</option>
-                <option *ngFor="let b of branch" [ngValue] = "b" value={{b.value}}>
+                <option *ngFor="let b of branch" [ngValue] = "b" value={{b.value}} (change)="changeBranch($event)">
                     {{b.key}}
                 </option>
             </select>

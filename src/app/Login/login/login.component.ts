@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   login() {
     const data = {
-      email: this.userName.trim() + "@icici.com",
+      email: this.userName.trim() + "@icicibankltd.com",
       password: this.password.trim()
     };
     this.qdeService.authenticate(data).subscribe(
