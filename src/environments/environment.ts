@@ -230,13 +230,37 @@ export const environment = {
     "adminInsertUpdateLoanTypePurposeMap": {
       'workflowId': '923cb878b8d411e9a42f0242ac110002',
       'processId': 'cb3957bab8d611e989900242ac110002' 
+    },
+    "adminDocumentProfile": {
+      'workflowId': '2565d5f4b8e311e996d50242ac110002',
+      'processId': '4cd3a740bcbe11e9baf50242ac110002'
+    },
+    "adminUpdateDocumentProfile": {
+      'workflowId': '2565d5f4b8e311e996d50242ac110002',
+      'processId': '257e4aa8b8e311e993e80242ac110002'
+    },
+    "adminGetAllLoginFee": {
+      'workflowId': '74907e5aba7211e985490242ac110002',
+      'processId': '03ddc21ebb5111e9bc080242ac110002'
+    },
+    "adminUpdateLoginFee": {
+      'workflowId': '74907e5aba7211e985490242ac110002',
+      'processId': '74afdc8cba7211e9bf1a0242ac110002'
+    },
+    "adminGetAllLoanMaster": {
+      'workflowId': '4d71bd12b81e11e998630242ac110002',
+      'processId': '1311dc10bb5211e9b7460242ac110002'
+    },
+    "adminUpdateLoanMaster": {
+      'workflowId': '4d71bd12b81e11e998630242ac110002',
+      'processId': '4d90d742b81e11e984c60242ac110002'
     }
   },
   userName: "icici@icici.com",
   password: "icici@123",
   appiyoDrive: "/d/drive/upload/",
-  host: "http://192.168.1.108/appiyo",
-  // host: "http://182.156.249.170/appiyo",
+  // host: "http://192.168.1.108/appiyo",
+  host: "http://182.156.249.170/appiyo",
   //host: "https://ihfcmobileuat.icicihfc.com/appiyo",
   driveLocation: "/d/drive/docs/"
   //host: ""
