@@ -108,8 +108,11 @@ import { BranchAddEditComponent } from './admin/admin-panel/branch-add-edit/bran
 
 import { LoanTypePurposeMapComponent } from './admin/admin-panel/loan-type-purpose-map/loan-type-purpose-map.component';
 import { LoanTypePurposeMapResolverService } from '../app/services/loan-type-purpose-map-resolver.service';
+import { DocumentAssessmentDoccatDoctypeComponent } from './admin/admin-panel/document-assessment-doccat-doctype/document-assessment-doccat-doctype.component';
 
-
+import { DocAssessDoccatProfileMapResolverService } from './services/doc-assess-doccat-profile-map-resolver.service';
+import { LoginFeeComponent } from './admin/admin-panel/login-fee/login-fee.component';
+import { LoanMasterComponent } from './admin/admin-panel/loan-master/loan-master.component';
 
 const appRoutes: Routes = [
   { path: "", redirectTo: "leads", pathMatch: "full" },
@@ -349,7 +352,6 @@ const appRoutes: Routes = [
         resolve: {
           userBranchLovs: AdminAddUserLovResolverService
         }
-      
       },
       {
         path: 'add-user/:userId',
@@ -407,6 +409,21 @@ const appRoutes: Routes = [
         component: BranchAddEditComponent,
         resolve: {
           eachLovs: MasterLovResolverService
+        }
+      },
+      {
+        path: 'lovs/login_fee',
+        component: LoginFeeComponent
+      },
+      {
+        path: 'lovs/loan_master',
+        component: LoanMasterComponent
+      },
+      {
+        path: 'lovs/document_profile',
+        component: DocumentAssessmentDoccatDoctypeComponent,
+        resolve: {
+          eachLovs: DocAssessDoccatProfileMapResolverService
         }
       },
       {
@@ -498,7 +515,10 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     PmayAddDetailsComponent,
     BranchListComponent,
     BranchAddEditComponent,
-    LoanTypePurposeMapComponent
+    LoanTypePurposeMapComponent,
+    DocumentAssessmentDoccatDoctypeComponent,
+    LoginFeeComponent,
+    LoanMasterComponent
   ],
   imports: [
     BrowserModule,
@@ -542,7 +562,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     MasterLovResolverService,
     GeneralLovsService,
     ClssChecklistResolverService,
-    LoanTypePurposeMapResolverService
+    LoanTypePurposeMapResolverService,
+    DocAssessDoccatProfileMapResolverService
   ],
   bootstrap: [AppComponent]
 })

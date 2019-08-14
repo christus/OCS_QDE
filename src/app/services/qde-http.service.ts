@@ -1715,5 +1715,58 @@ createOrUpdatePersonalDetails(qde) {
     );
   }
 
+  adminUpdateDocumentProfile(data) {
+    const processId   = environment.api.adminUpdateDocumentProfile.processId;
+    const workflowId  = environment.api.adminUpdateDocumentProfile.workflowId;
+    const projectId   = environment.projectId;
+  
+    let qdeRequestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: data,
+      workflowId: workflowId,
+      projectId: projectId
+    };
+  
+    const body = new HttpParams().set(
+      "processVariables",
+      JSON.stringify(qdeRequestEntity)
+    );
+  
+    let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
+    return this.http.post(
+      uri,
+      body.toString()
+    );
+  }
+
+  adminDocumentProfile(currentPage ?: number, perPage ?: number) {
+    const processId   = environment.api.adminDocumentProfile.processId;
+    const workflowId  = environment.api.adminDocumentProfile.workflowId;
+    const projectId   = environment.projectId;
+  
+    let dude = this.qdeService.getFilteredJson({
+      userId: localStorage.getItem('userId'),
+      currentPage: currentPage ? currentPage: null,
+      perPage: perPage ? perPage: null
+    });
+
+    let qdeRequestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: {},
+      workflowId: workflowId,
+      projectId: projectId
+    };
+  
+    const body = new HttpParams().set(
+      "processVariables",
+      JSON.stringify(qdeRequestEntity)
+    );
+  
+    let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
+    return this.http.post(
+      uri,
+      body.toString()
+    );
+  }
 }
 
