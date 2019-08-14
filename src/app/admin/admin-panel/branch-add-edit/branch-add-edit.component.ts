@@ -1,6 +1,6 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
-import { Component, OnInit, Renderer2, QueryList, ViewChildren, ElementRef } from '@angular/core';
+import { Component, OnInit, Renderer2, QueryList, ViewChildren, ElementRef, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 
 @Component({
@@ -27,6 +27,10 @@ export class BranchAddEditComponent implements OnInit {
 
   @ViewChildren("city") cityList: QueryList<ElementRef>;
   @ViewChildren("zipCode") zipCodeList: QueryList<ElementRef>;
+
+  @ViewChild('selectBox') selectBoxRef: ElementRef;
+  @ViewChild('selectBox2') selectBoxRef2: ElementRef;
+
 
 
    
@@ -129,6 +133,10 @@ export class BranchAddEditComponent implements OnInit {
 
   filterLeads(event) {
     this._timeout = null;
+
+    this.selectBoxRef.nativeElement.querySelector('.reporting_to').classList.remove('hide');
+
+
     if (this._timeout) { //if there is already a timeout in process cancel it
       window.clearTimeout(this._timeout);
     }
@@ -148,6 +156,9 @@ export class BranchAddEditComponent implements OnInit {
 
   filteredZipItems(event) {
     this._timeout = null;
+
+    this.selectBoxRef2.nativeElement.querySelector('.reporting_to').classList.remove('hide');
+
     if (this._timeout) { //if there is already a timeout in process cancel it
       window.clearTimeout(this._timeout);
     }

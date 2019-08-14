@@ -36,11 +36,11 @@
         <input type="text" id="newFinnOneCode"  class="form-control" fieldFill formControlName="newFinnOneCode" autocomplete="nope" />
     </div>
 
-    <div class="inputBox form-field-el reportingToBlock">
+    <div class="inputBox form-field-el reportingToBlock" #selectBox>
         <label for="city" class="">City:</label>
         <input type="text" id="city"  (input)="filterLeads($event)" class="form-control"  formControlName="city" fieldFill  autocomplete="nope"/>
         <input type="hidden" class="form-control" hidden  formControlName="cityInp" #cityEl  autocomplete="nope"/>
-        <span class="reporting_to">
+        <span class="reporting_to hide">
             <ul>
                 <li #city class="item" id="{{i.cityId}}"  (click)="selectedCity(in, i)" *ngFor="let i of filteredItems;let in=index;">
                     {{i.cityDescription}}
@@ -50,11 +50,11 @@
     </div>
 
 
-    <div class="inputBox form-field-el reportingToBlock reporting_to_margin">
+    <div class="inputBox form-field-el reportingToBlock reporting_to_margin" #selectBox2>
             <label for="zipCode" class="">Zip code:</label>
             <input type="text" id="zipCode"  (input)="filteredZipItems($event)" class="form-control"  formControlName="zipCode" fieldFill  autocomplete="nope"/>
             <input type="hidden" class="form-control" hidden  formControlName="zipCodeInp" #zipCodeEl  autocomplete="nope"/>
-            <span class="reporting_to ">
+            <span class="reporting_to hide">
                 <ul>
                     <li #zipCode class="item" id="{{i.zipcodeId}}"  (click)="selectedzipCode(in, i)" *ngFor="let i of filteredZipCodeItems;let in=index;">
                         {{i.zipcodeValue}}

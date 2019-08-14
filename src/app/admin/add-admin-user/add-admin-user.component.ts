@@ -22,6 +22,8 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
 
   @ViewChild('reportingTo') reportingRef: ElementRef;
 
+  @ViewChild('selectBox') selectBoxRef: ElementRef;
+
 
   userRoles: Array<any>;
   branch: Array<any>;
@@ -233,6 +235,9 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
 
   filterLeads(event) {
     this._timeout = null;
+    
+    this.selectBoxRef.nativeElement.querySelector('.reporting_to').classList.remove('hide');
+
     if (this._timeout) { //if there is already a timeout in process cancel it
       window.clearTimeout(this._timeout);
     }

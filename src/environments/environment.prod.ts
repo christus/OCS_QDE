@@ -131,8 +131,8 @@ export const environment = {
       'processId': '92bab630adf611e998450242ac110002'
     },
     "adminUserLOV": {
-      'workflowId': '49fa2570a22a11e9a2f80242ac110002',
-      'processId': '4a1b6398a22a11e998e90242ac110002'
+      'workflowId': '4c1a5e74b84611e988b70242ac110002',
+      'processId': '4c2dcd56b84611e98b890242ac110002'
     },
     "adminListOfValues": {
       'workflowId': '3189bc1eb50611e982a40242ac110002',
