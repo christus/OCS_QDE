@@ -25,6 +25,16 @@ export class BranchAddEditComponent implements OnInit {
   branchType:string;
   selectedItem: number;
 
+
+  Value:string;
+  description:string;
+  address:string;
+  branchCode:string;
+  newFinnOneCode:string;
+  cityInp:string;
+  zipCodeInp:string;
+  zipCode:string;
+
   @ViewChildren("city") cityList: QueryList<ElementRef>;
   @ViewChildren("zipCode") zipCodeList: QueryList<ElementRef>;
 
@@ -92,7 +102,7 @@ export class BranchAddEditComponent implements OnInit {
       });
 
     }
-    
+
 
 
     get formValue() {
