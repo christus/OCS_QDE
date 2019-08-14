@@ -28,7 +28,6 @@ export class LoanTypePurposeMapComponent implements OnInit {
   tableName: string;
   isAdd: boolean;
 
-  trigger: number = 0;
 
   constructor(private qdeHttp: QdeHttpService, private route: ActivatedRoute) {
 

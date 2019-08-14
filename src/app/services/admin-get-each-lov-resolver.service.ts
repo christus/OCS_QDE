@@ -6,7 +6,7 @@ import RequestEntity from '../models/request-entity.model';
 import { environment } from 'src/environments/environment';
 
 @Injectable()
-export class AdminGetEachLovResolverService implements Resolve<Observable<any>>  {
+export class AdminGetEachLovResolverService implements Resolve<Observable<any>> {
 
   constructor(private http: HttpClient) { }
 

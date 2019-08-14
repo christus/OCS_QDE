@@ -50,12 +50,12 @@
       <tr *ngFor="let d of data;let i=index;">
         <td>{{i+1}}</td>
         <td>
-          <select id="loan_type" name="loan_type" [ngModel]="d.loanTypeValue" (ngModelChange)="tableLoanTypeChanged($event, i)">
+          <select name="loan_type" [ngModel]="d.loanTypeValue" (ngModelChange)="tableLoanTypeChanged($event, i)">
             <option *ngFor="let z of loanTypeData;" [value]="z.value">{{z.description}}</option>
           </select>
         </td>
         <td>
-          <select id="loan_purpose" name="loan_purpose" [ngModel]="d.loanPurposeValue" (ngModelChange)="tableLoanPurposeChanged($event, i)">
+          <select name="loan_purpose" [ngModel]="d.loanPurposeValue" (ngModelChange)="tableLoanPurposeChanged($event, i)">
             <option *ngFor="let c of loanPurposeData;" [value]="c.value">{{c.description}}</option>
           </select>
         </td>
@@ -66,9 +66,9 @@
           <button type="button" class="editsavebtn" (click)="delete(i)">Delete</button>
         </td>
       </tr>
-      <tr>
+      <!-- <tr>
         <td><button type="button" class="editsavebtn" *ngIf="currentPage != totalPages" (click)="loadMore()">Load More</button></td>
-      </tr>
+      </tr> -->
     </tbody>
   </table>
 

@@ -20,6 +20,9 @@ export class AdminLovsComponent implements OnInit, AfterViewInit {
       this.adminLovs.push({description: 'PMAY LIST', value: 'pmay_list'});
       this.adminLovs.push({description: 'Branch LIST', value: 'branch_list'});
       this.adminLovs.push({description: 'Loan Type Purpose Mapping', value: 'loan_type_purpose_map'});
+      this.adminLovs.push({description: 'Document Profile', value: 'document_profile'});
+      this.adminLovs.push({description: 'Loan Master', value: 'loan_master'});
+      this.adminLovs.push({description: 'Login Fee', value: 'login_fee'});
 
       this.filteredLovs = this.adminLovs;
     } else {
