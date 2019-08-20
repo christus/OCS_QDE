@@ -986,7 +986,7 @@
                                           <div *ngIf="commCityState.errors?.pattern">{{errors.commAddress.stateOrCity.invalid}}</div>
                                       </div>
                                   </div>
-                                  <div class="bs-checkbox typ-withForm">
+                                  <div class="bs-checkbox typ-withForm" *ngIf="qde.application.applicants[coApplicantIndex].communicationAddress.addressLineOne != '' && qde.application.applicants[coApplicantIndex].communicationAddress.zipcode != '' && qde.application.applicants[coApplicantIndex].communicationAddress.cityState != ''">
                                       <input [readonly]="isReadOnly"  type="checkbox"
                                               name="permanentAddress"
                                               tabindex="6"
@@ -2662,7 +2662,7 @@
                                     spellcheck="false"
                                     pattern="{{regexPattern.revenue}}"
                                     required />
-                                    <label for="revenue">Recieved Gross Turnover</label>
+                                    <label for="revenue">Receipt Gross Turnover</label>
                                     <div *ngIf="revenue.touched && revenue.invalid" class="invalid-feedback">
                                         <!-- <div *ngIf="revenue.errors?.required">{{errors.revenueDetails.revenue.required}}</div> -->
                                         <div *ngIf="revenue.errors?.pattern">{{errors.revenueDetails.revenue.invalid}}</div>
