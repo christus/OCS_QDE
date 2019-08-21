@@ -23,3 +23,8 @@ export const statuses = {
     "Mandatory Document Uploaded": "35",
     "DDE Submitted": "40"
 }
+
+export const screenPages = {
+    "applicantDetails": "ApplicantDetails",
+    "coApplicantDetails": "CoApplicantDetails"
+}

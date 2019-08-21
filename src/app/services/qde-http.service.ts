@@ -1888,5 +1888,38 @@ createOrUpdatePersonalDetails(qde) {
       body.toString()
     );
   }
+
+  auditTrailUpdateAPI(applicationId: string, applicantId: string, pageNumber: number, tabPage: string, screenPage: string) {
+    const processId   = environment.api.auditTrailUpdateAPI.processId;
+    const workflowId  = environment.api.auditTrailUpdateAPI.workflowId;
+    const projectId   = environment.projectId;
+  
+    let data = {
+      userId: parseInt(localStorage.getItem('userId')),
+      applicationId: parseInt(applicationId),
+      applicantId: parseInt(applicantId),
+      pageNumber: pageNumber,
+      tabPage: tabPage,
+      screenPage: screenPage
+    }
+
+    let qdeRequestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: data,
+      workflowId: workflowId,
+      projectId: projectId
+    };
+  
+    const body = new HttpParams().set(
+      "processVariables",
+      JSON.stringify(qdeRequestEntity)
+    );
+  
+    let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
+    return this.http.post(
+      uri,
+      body.toString()
+    );
+  }
 }
 

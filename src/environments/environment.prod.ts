@@ -249,6 +249,10 @@ export const environment = {
     "adminUpdateLoanMaster": {
       'workflowId': '4d71bd12b81e11e998630242ac110002',
       'processId': '4d90d742b81e11e984c60242ac110002'
+    },
+    "auditTrailUpdateAPI": {
+      'workflowId': '98b55c00be8811e98e020242ac110002',
+      'processId': '98ce328ebe8811e9b9a00242ac110002'
     }
   },
   userName: "icici@icici.com",

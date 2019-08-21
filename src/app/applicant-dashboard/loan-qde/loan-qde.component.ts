@@ -417,10 +417,19 @@ export class LoanQdeComponent implements OnInit {
           if(result.application.loanDetails.property.city) {
             this.cityState = result.application.loanDetails.property.city + " "+ result.application.loanDetails.property.state;
           }
-          this.allApplicantsItem = this.qde.application.applicants.map(val => ({
-            key: this.getApplicantTitle(val.personalDetails.title).key + " " + val.personalDetails.firstName+" "+val.personalDetails.lastName,
-            value: val.applicantId
-          }));
+
+
+          this.allApplicantsItem = this.qde.application.applicants.map(val => {
+            if(val.isIndividual == true) {
+              return {
+                key: this.getApplicantTitle(val.personalDetails.title).key + " " + val.personalDetails.firstName+" "+val.personalDetails.lastName,
+                value: val.applicantId
+              };
+            } else {
+              return {key: val.organizationDetails.nameOfOrganization+" "+val.personalDetails.lastName, value: val.applicantId};
+            }
+          });
+
           this.selectedApplicant = this.allApplicantsItem[0];
           this.selectedApplicantIndex = this.qde.application.applicants.findIndex(v => v.applicantId == this.selectedApplicant.value);
           this.selectedApplicantName = this.qde.application.applicants[this.selectedApplicantIndex].personalDetails ? `${this.qde.application.applicants[this.selectedApplicantIndex].personalDetails['firstName']} ${this.qde.application.applicants[this.selectedApplicantIndex].personalDetails['lastName']}`: '';

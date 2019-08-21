@@ -12,13 +12,15 @@ import Qde from 'src/app/models/qde.model';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
 import { QdeService } from 'src/app/services/qde.service';
 import { CommonDataService } from '../../services/common-data.service';
-import { Subscription, of } from 'rxjs';
+import { Subscription, merge } from 'rxjs';
 import { errors } from '../../services/errors';
 import { MenubarHeaderComponent } from '../../menubar-header/menubar-header.component';
 import { environment } from 'src/environments/environment';
 
 import { File } from '@ionic-native/file/ngx';
 import { DeviceDetectorService } from 'ngx-device-detector';
+
+import { screenPages } from '../../app.constants';
 
 interface Item {
   key: string,
@@ -243,8 +245,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   docType: Array<any>;
   selectedAssesmentMethodology: Array<any>;
 
-  panslideSub: Subscription;
-  panslide2Sub: Subscription;
+  // panslideSub: Subscription;
+  // panslide2Sub: Subscription;
   qdeSourceSub: Subscription;
   fragmentSub: Subscription;
   paramsSub: Subscription;
@@ -311,7 +313,13 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   tempOldPanNumber: string;
   monthsInChar: Array<string> = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'AUG', 'NOV', 'DEC'];
 
-  @ViewChildren('swiperS') swiperSliders: QueryList<Swiper>;
+  // Only RHS Sliders
+  @ViewChildren('swiperS') swiperS$: QueryList<Swiper>;
+
+  tabName: string;
+  page: number;
+  auditTrialApiSub: Subscription;
+  swiperSliders: Array<Swiper> = [];
 
   constructor(private renderer: Renderer2,
               private route: ActivatedRoute,
@@ -321,6 +329,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
               private cds:CommonDataService,
               private file: File,
               private deviceService: DeviceDetectorService) {
+
+    this.tabName = this.fragments[0];
+    this.page = 1;
 
     this.dobYears = Array.from(Array(100).keys()).map((val, index) => {
       let v = (this.YYYY17YearsAgo - index)+"";
@@ -336,13 +347,13 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
     const isMobile = this.deviceService.isMobile();
             
-    this.panslideSub = this.cds.panslide.subscribe(val => {
-      this.panslide = val;
-    });
+    // this.panslideSub = this.cds.panslide.subscribe(val => {
+    //   this.panslide = val;
+    // });
 
-    this.panslide2Sub = this.cds.panslide2.subscribe(val => {
-      this.panslide2 = val;
-    });
+    // this.panslide2Sub = this.cds.panslide2.subscribe(val => {
+    //   this.panslide2 = val;
+    // });
 
     this.qdeSourceSub=this.qdeService.qdeSource.subscribe(val => {
       console.log("VALVE: ", val);
@@ -354,37 +365,55 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
 
-    this.fragmentSub=this.route.fragment.subscribe((fragment) => {
-      let localFragment = fragment;
+    // this.fragmentSub = this.route.fragment.subscribe((fragment) => {
+    //   let localFragment = fragment;
 
-      if(fragment == null) {
-        localFragment = this.fragments[0];
+    //   if(fragment == null) {
+    //     localFragment = this.fragments[0];
+    //   }
+
+    //   if(fragment == 'income1' || fragment == 'income2') {
+    //     localFragment = fragment;
+    //   }
+
+    //   // Replace Fragments in url
+    //   if( this.fragments.includes(localFragment) &&
+    //       this.panslide == false &&
+    //       this.panslide2 == false) {
+
+    //     // if(this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
+    //     //   if(localFragment == 'pan1') {
+    //     //     this.tabSwitch(0);
+    //     //     this.panSlider2.setIndex(1);
+    //     //   }
+    //     // } else if(this.qde.application.applicants[this.applicantIndex].isIndividual == false) {
+    //     //   if(localFragment == 'pan2') {
+    //     //     this.tabSwitch(10);
+    //     //   }
+    //     // }
+
+    //     this.activeTab = this.fragments.indexOf(localFragment);
+    //     this.tabSwitch(this.activeTab);
+    //     this.applicantIndividual = (this.activeTab >= 10) ? false: true;
+    //   }
+    // });
+
+    this.fragmentSub = this.route.queryParams.subscribe(val => {
+
+      if(val['tabName'] && val['tabName'] != '') {
+        this.tabName = this.fragments.includes(val['tabName']) ? val['tabName'].toString(): this.fragments[0];
+        this.activeTab = this.fragments.findIndex(v => v == val['tabName']);
       }
 
-      if(fragment == 'income1' || fragment == 'income2') {
-        localFragment = fragment;
+      if(val['page'] && val['page'] != '') {
+        this.page = (val && val['page'] != null && parseInt(val['page']) != NaN && parseInt(val['page']) >= 1) ? parseInt(val['page']): 1;
       }
 
-      // Replace Fragments in url
-      if( this.fragments.includes(localFragment) &&
-          this.panslide == false &&
-          this.panslide2 == false) {
-
-        // if(this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
-        //   if(localFragment == 'pan1') {
-        //     this.tabSwitch(0);
-        //     this.panSlider2.setIndex(1);
-        //   }
-        // } else if(this.qde.application.applicants[this.applicantIndex].isIndividual == false) {
-        //   if(localFragment == 'pan2') {
-        //     this.tabSwitch(10);
-        //   }
-        // }
-
-        this.activeTab = this.fragments.indexOf(localFragment);
-        this.tabSwitch(this.activeTab);
-        this.applicantIndividual = (this.activeTab >= 10) ? false: true;
-      }
+      console.log("Fragment & QueryParams: ", this.tabName, this.page);
+      // Here in this condition, fragment and page number will be appropriate
+      // if(this.fragment && this.page > -1) {
+      //   alert(this.fragment+" "+this.page);
+      // }
     });
     
     this.cds.isTBMLoggedIn.subscribe(val => {
@@ -392,8 +421,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   
-  panslide: boolean;
-  panslide2: boolean;
+  // panslide: boolean;
+  // panslide2: boolean;
 
   ngOnInit() {
     console.log(">>", JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs));
@@ -489,6 +518,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
             this.qdeService.setQde(result);
             this.tempOldPanNumber = result.application.applicants[this.applicantIndex].pan.panNumber;
+
+            if(this.qde.application.auditTrailDetails.screenPage == screenPages['applicantDetails']) {
+              this.goToExactPageAndTab(this.qde.application.auditTrailDetails.tabPage, this.qde.application.auditTrailDetails.pageNumber);
+            }
 
             try {
               if(result.application.applicants[this.applicantIndex].communicationAddress != null) {
@@ -730,42 +763,52 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         this.selectedAssesmentMethodology = this.assessmentMethodology[(parseInt(this.qde.application.applicants[this.applicantIndex].incomeDetails.assessmentMethodology))-1];
       }
 
+      /******************************************************************************
+      * Sacred Route Start (WARNING: TOUCH THIS ONLY IF YOU KNOW WHAT YOU ARE DOING)
+      ******************************************************************************/
       // Incoming from create in Individual Pan
-      if(this.panslide == true && this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
-        this.swiperSliders.forEach((v, i, a) => {
-          v.setIndex(0);
-        });
-        this.tabSwitch(1);
-        //  this.panSlider2.setIndex(2);
-      }
-      // Incoming from create in Non Individual Pan
-      else if(this.panslide2 == true && this.qde.application.applicants[this.applicantIndex].isIndividual == false) {
-        this.swiperSliders.forEach((v, i, a) => {
-          v.setIndex(0);
-        });
-        this.tabSwitch(11);
-        this.panSlider4.setIndex(1);
-      } else if(this.panslide == false && this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
-        this.swiperSliders.forEach((v, i, a) => {
-          v.setIndex(0);
-        });
-        this.tabSwitch(0);
-        this.panSlider2.setIndex(1);
-      }
-      else if(this.panslide2 == false && this.qde.application.applicants[this.applicantIndex].isIndividual == false) {
-        this.swiperSliders.forEach((v, i, a) => {
-          v.setIndex(0);
-        });
-        // Enable it when upload file is enabled
-        this.tabSwitch(10);
-        // this.panSlider4.setIndex(1);
+      // if(this.panslide == true && this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
+      //   this.swiperSliders.forEach((v, i, a) => {
+      //     v.setIndex(0);
+      //   });
+      //   this.tabSwitch(1);
+      //   //  this.panSlider2.setIndex(2);
+      // }
+      // // Incoming from create in Non Individual Pan
+      // else if(this.panslide2 == true && this.qde.application.applicants[this.applicantIndex].isIndividual == false) {
+      //   this.swiperSliders.forEach((v, i, a) => {
+      //     v.setIndex(0);
+      //   });
+      //   this.tabSwitch(11);
+      //   this.panSlider4.setIndex(1);
+      // }
+      // // Incoming for edit Individual
+      // else if(this.panslide == false && this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
+      //   this.swiperSliders.forEach((v, i, a) => {
+      //     v.setIndex(0);
+      //   });
+      //   this.tabSwitch(0);
+      //   this.panSlider2.setIndex(1);
+      // }
+      // // Incoming for edit Non-Individual
+      // else if(this.panslide2 == false && this.qde.application.applicants[this.applicantIndex].isIndividual == false) {
+      //   this.swiperSliders.forEach((v, i, a) => {
+      //     v.setIndex(0);
+      //   });
+      //   // Enable it when upload file is enabled
+      //   this.tabSwitch(10);
+      //   // this.panSlider4.setIndex(1);
 
-        // this.tabSwitch(10);
-      }
+      //   // this.tabSwitch(10);
+      // }
 
       // So that route is now in edit mode only
-      this.cds.changePanSlide(false);
-      this.cds.changePanSlide2(false);
+      // this.cds.changePanSlide(false);
+      // this.cds.changePanSlide2(false);
+      /*******************************************
+      * Sacred Route End
+      *******************************************/
+
 
       this.initializeVariables();
           });
@@ -785,7 +828,6 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         });
       }
     });
-
 
 
     /********************************************************************
@@ -809,6 +851,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
     // Create ngModel of radio button in future
     swiperInstance.nextSlide();
+    this.page++;
+    this.router.navigate([], {queryParams: { tabName: this.tabName, page: this.page }});
   }
 
   /**
@@ -827,7 +871,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   goToPrevSlide(swiperInstance: Swiper) {
 
     // Create ngModel of radio button in future
+    // swiperInstance.prevSlide();
     swiperInstance.prevSlide();
+    this.page--;
+    this.router.navigate([], {queryParams: { tabName: this.tabName, page: this.page }});
   }
 
   /**
@@ -838,13 +885,19 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     swiperInstance.prevSlide();
   }
 
-  tabSwitch(tabIndex ?: number) {
+  tabSwitch(tabIndex ?: number, fromQde ?: boolean) {
 
     // Check for invalid tabIndex
     if(tabIndex < this.fragments.length) {
 
-      this.router.navigate([], { fragment: this.fragments[tabIndex]});
+      let t = fromQde ? this.page: 1;
 
+      // It should not allow to go to any other tabs if applicationId is not present
+      if(this.applicantIndex != null && this.qde.application.applicationId != null && this.qde.application.applicationId != '') {
+        this.router.navigate([], {queryParams: { tabName: this.fragments[tabIndex], page: t }});
+      }
+
+      // this.router.navigate([], { fragment: this.fragments[tabIndex]});
     }
   }
 
@@ -945,12 +998,16 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
               this.tempOldPanNumber = this.qde.application.applicants[this.applicantIndex].pan.panNumber;
 
               if((result["application"]["applicants"]).length > 0) {
+                this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(result['application']['applicationId'], result['application']['applicants'][0]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
+                  if(auditRes['ProcessVariables']['status'] == true) {
+                  }
+                });
                 // isApplicantPresent = applicants[this.applicantIndex].hasOwnProperty('applicantId');
                 // this.qde.application.applicants[this.coApplicantIndex].applicantId =  applicants[this.coApplicantIndex]["applicantId"];
                 let applicationId = result['application']['applicationId'];
-               this.setStatusApiSub= this.qdeHttp.setStatusApi( applicationId, environment.status.QDECREATED).subscribe((response) => {
+                this.setStatusApiSub= this.qdeHttp.setStatusApi( applicationId, environment.status.QDECREATED).subscribe((response) => {
                   if(response["ProcessVariables"]["status"] == true) { 
-                    this.cds.changePanSlide(true);
+                    // this.cds.changePanSlide(true);
                     this.router.navigate(['/applicant/'+this.qde.application.applicationId]);
                   }
                 });
@@ -999,10 +1056,16 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           if((result["application"]["applicants"]).length > 0) {
             // isApplicantPresent = applicants[this.applicantIndex].hasOwnProperty('applicantId');
             // this.qde.application.applicants[this.coApplicantIndex].applicantId =  applicants[this.coApplicantIndex]["applicantId"];
+
+            this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(result['application']['applicationId'], result['application']['applicants'][0]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
+              if(auditRes['ProcessVariables']['status'] == true) {
+              }
+            });
+
             let applicationId = result['application']['applicationId'];
            this.setStatusApiSub= this.qdeHttp.setStatusApi( applicationId, environment.status.QDECREATED).subscribe((response) => {
               if(response["ProcessVariables"]["status"] == true) { 
-                this.cds.changePanSlide(true);
+                // this.cds.changePanSlide(true);
                 this.router.navigate(['/applicant/'+this.qde.application.applicationId]);
               }
             });
@@ -1076,13 +1139,18 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
                 // let isApplicantPresent:boolean = false;
       
                 if((result["application"]["applicants"]).length > 0) {
+
+                  this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(result['application']['applicationId'], result['application']['applicants'][0]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
+                    if(auditRes['ProcessVariables']['status'] == true) {
+                    }
+                  });
                   // isApplicantPresent = applicants[this.applicantIndex].hasOwnProperty('applicantId');
                   // this.qde.application.applicants[this.coApplicantIndex].applicantId =  applicants[this.coApplicantIndex]["applicantId"];
                   let applicationId = result['application']['applicationId'];
                   this.setStatusApiSub2=this.qdeHttp.setStatusApi( applicationId, environment.status.QDECREATED).subscribe((response) => {
                     if(response["ProcessVariables"]["status"] == true) { 
-                      this.cds.changePanSlide2(true);
-                      this.router.navigate(['/applicant/'+this.qde.application.applicationId]);
+                      // this.cds.changePanSlide2(true);
+                      this.router.navigate(['/applicant/'+this.qde.application.applicationId], { queryParams: { tabName: this.tabName, page: ++this.page} });
                     }
                   });
       
@@ -1117,12 +1185,18 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
             // let isApplicantPresent:boolean = false;
   
             if((result["application"]["applicants"]).length > 0) {
+
+              this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(result['application']['applicationId'], result['application']['applicants'][0]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
+                if(auditRes['ProcessVariables']['status'] == true) {
+                }
+              });
+
               // isApplicantPresent = applicants[this.applicantIndex].hasOwnProperty('applicantId');
               // this.qde.application.applicants[this.coApplicantIndex].applicantId =  applicants[this.coApplicantIndex]["applicantId"];
               let applicationId = result['application']['applicationId'];
               this.setStatusApiSub2=this.qdeHttp.setStatusApi( applicationId, environment.status.QDECREATED).subscribe((response) => {
                 if(response["ProcessVariables"]["status"] == true) { 
-                  this.cds.changePanSlide2(true);
+                  // this.cds.changePanSlide2(true);
                   this.router.navigate(['/applicant/'+this.qde.application.applicationId]);
                 }
               });
@@ -1177,6 +1251,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.createOrUpdatePersonalDetailsSub=this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
+
+          this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
+            if(auditRes['ProcessVariables']['status'] == true) {
+            }
+          });
+
           let maleTitles = ['1','10'];
           let femaleTitles = ['2','3','15','16'];
           console.log("this.selectedTitle: ", this.selectedTitle);
@@ -1208,6 +1288,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.createOrUpdatePersonalDetailsSub2=this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
       if(response["ProcessVariables"]["status"]) {
+        this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
+          if(auditRes['ProcessVariables']['status'] == true) {
+          }
+        });
         this.goToNextSlide(swiperInstance);
       } else {
         // Throw Invalid Pan Error
@@ -1230,6 +1314,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.createOrUpdatePersonalDetailsSub3=this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
+          this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
+            if(auditRes['ProcessVariables']['status'] == true) {
+            }
+          });
           this.goToNextSlide(swiperInstance);
           console.log(response['ProcessVariables']['response']);
         } else {
@@ -1261,6 +1349,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.createOrUpdatePersonalDetailsSub4=this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
+          this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
+            if(auditRes['ProcessVariables']['status'] == true) {
+            }
+          });
           this.goToNextSlide(swiperInstance);
         } else {
           // Throw Invalid Pan Error
@@ -1306,6 +1398,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.createOrUpdatePersonalDetailsSub5=this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
+          this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
+            if(auditRes['ProcessVariables']['status'] == true) {
+            }
+          });
           this.qdeHttp.duplicateApplicantCheck(this.qde.application.applicants[this.applicantIndex].applicantId).subscribe(res => {
             
             if(res['ProcessVariables']['status'] == true) {
@@ -1357,6 +1453,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.createOrUpdatePersonalDetailsSub6=this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
+          this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
+            if(auditRes['ProcessVariables']['status'] == true) {
+            }
+          });
           this.tabSwitch(3);
         } else {
           // Throw Invalid Pan Error
@@ -1442,6 +1542,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.createOrUpdatePersonalDetailsSub7=this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
+          this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
+            if(auditRes['ProcessVariables']['status'] == true) {
+            }
+          });
           this.tabSwitch(4);
         } else {
           // Throw Invalid Pan Error
@@ -1479,7 +1583,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         // If successful
         if(response["ProcessVariables"]["status"]) {
           // Dont show spouse details for Single
-  
+          this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
+            if(auditRes['ProcessVariables']['status'] == true) {
+            }
+          });
           console.log("Marital Status: ", form.value.maritalStatus.value);
           if(form.value.maritalStatus.value == "2") {
             this.goToNextSlide(swiperInstance);
@@ -1511,6 +1618,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.createOrUpdatePersonalDetailsSub9=this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
+          this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
+            if(auditRes['ProcessVariables']['status'] == true) {
+            }
+          });
           this.goToNextSlide(swiperInstance);
         } else {
           // Throw Invalid Pan Error
@@ -1539,6 +1650,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.createOrUpdatePersonalDetailsSub10=this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
+          this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
+            if(auditRes['ProcessVariables']['status'] == true) {
+            }
+          });
           if(value == 1) {
             this.goToNextSlide(swiperInstance);
           } else {
@@ -1609,6 +1724,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.createOrUpdatePersonalDetailsSub12=this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
+          this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
+            if(auditRes['ProcessVariables']['status'] == true) {
+            }
+          });
           this.goToNextSlide(swiperInstance);
         } else {
           // Throw Invalid Pan Error
@@ -1640,6 +1759,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.createOrUpdatePersonalDetailsSub13=this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
+          this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
+            if(auditRes['ProcessVariables']['status'] == true) {
+            }
+          });
           this.tabSwitch(6);
         } else {
           // Throw Invalid Pan Error
@@ -1680,6 +1803,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.createOrUpdatePersonalDetailsSub14=this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
+          this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
+            if(auditRes['ProcessVariables']['status'] == true) {
+            }
+          });
           this.tabSwitch(7);
         } else {
           // Throw Invalid Pan Error
@@ -1699,9 +1826,19 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   //-------------------------------------------------------------
 
 
-  submitOccupationDetails(form: NgForm) {
+  submitOccupationDetails(form: NgForm, swiperInstance: Swiper) {
     if(this.isTBMLoggedIn) {
-      this.tabSwitch(8);
+      // this.tabSwitch(8);
+
+      /*********************************************************************************************************
+      * If Salaried, Self Employed Professional, Self Employed Business, Retired then only show income consider
+      *********************************************************************************************************/
+      if(['2','5','8','10'].includes(this.selectedOccupation.value.toString())) {
+        // this.isApplicantRouteModal = true
+        this.goToNextSlide(swiperInstance);
+      } else {
+        this.tabSwitch(8);
+      }
     } else {
       if (form && !form.valid) {
         return;
@@ -1721,30 +1858,44 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   
   
       this.qde.application.applicants[this.applicantIndex].occupation.occupationType = this.selectedOccupation.value.toString();
-      if(this.selectedOccupation.value.toString() != '9' && this.selectedOccupation.value.toString() != '10' && this.selectedOccupation.value.toString() != '14') {
+      if(['2','5','8','10'].includes(this.selectedOccupation.value.toString())) {
         this.qde.application.applicants[this.applicantIndex].occupation.companyName = form.value.companyName;
       }
   
-      if(this.selectedOccupation.value.toString() != '9' && this.selectedOccupation.value.toString() != '10' && this.selectedOccupation.value.toString() != '14') {
-        this.qde.application.applicants[this.applicantIndex].occupation.numberOfYearsInCurrentCompany = (this.selectedOccupation.value.toString() != '9' && this.selectedOccupation.value.toString() != '10' && this.selectedOccupation.value.toString() != '14') ? form.value.numberOfYearsInCurrentCompany : 0;
+      if(['2','5','8','10'].includes(this.selectedOccupation.value.toString())) {
+        this.qde.application.applicants[this.applicantIndex].occupation.numberOfYearsInCurrentCompany = form.value.numberOfYearsInCurrentCompany;
+      } else {
+        this.qde.application.applicants[this.applicantIndex].occupation.numberOfYearsInCurrentCompany = 0;
       }
   
-      if(this.selectedOccupation.value.toString() != '9' && this.selectedOccupation.value.toString() != '10' && this.selectedOccupation.value.toString() != '14') {
-        this.qde.application.applicants[this.applicantIndex].occupation.totalWorkExperience = (this.selectedOccupation.value.toString() != '9' && this.selectedOccupation.value.toString() != '10' && this.selectedOccupation.value.toString() != '14') ? form.value.totalExperienceYear : 0;
+      if(['2','5','8','10'].includes(this.selectedOccupation.value.toString())) {
+        this.qde.application.applicants[this.applicantIndex].occupation.totalWorkExperience = form.value.totalExperienceYear;
+      } else {
+        this.qde.application.applicants[this.applicantIndex].occupation.totalWorkExperience = 0;
       }
-  
-      console.log(this.qde.application.applicants[this.applicantIndex].occupation);
+
+      if(['2','5','8','10'].includes(this.selectedOccupation.value.toString())) {
+        this.qde.application.applicants[this.applicantIndex].incomeDetails.incomeConsider = false;
+      }
   
       this.createOrUpdatePersonalDetailsSub15=this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
-          if(this.selectedOccupation.value == 9 || this.selectedOccupation.value == 10 || this.selectedOccupation.value == 14){
-            this.isApplicantRouteModal = true
-            // this.tabSwitch();
-            return;
-          }else{
-            this.tabSwitch(8);
+          this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
+            if(auditRes['ProcessVariables']['status'] == true) {
+            }
+          });
+
+          /*********************************************************************************************************
+          * If Salaried, Self Employed Professional, Self Employed Business, Retired then only show income consider
+          *********************************************************************************************************/
+          if(['2','5','8','10'].includes(this.selectedOccupation.value.toString())) {
+            // this.isApplicantRouteModal = true
+            this.goToNextSlide(swiperInstance);
+          } else {
+            this.tabSwitch(9);
           }
+          
         } else {
           // Throw Invalid Pan Error
         }
@@ -1788,6 +1939,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.createOrUpdatePersonalDetailsSub16 = this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
+          this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
+            if(auditRes['ProcessVariables']['status'] == true) {
+            }
+          });
           this.tabSwitch(9);
         } else {
           // Throw Invalid Pan Error
@@ -1821,6 +1976,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.createOrUpdatePersonalDetailsSub17=this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
+          this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
+            if(auditRes['ProcessVariables']['status'] == true) {
+            }
+          });
           let result = this.parseJson(response["ProcessVariables"]["response"]);
           this.qdeHttp.duplicateApplicantCheck(this.qde.application.applicants[this.applicantIndex].applicantId).subscribe(res => {
             
@@ -1881,6 +2040,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   
         // If successfull
         if(response["ProcessVariables"]["status"]) {
+          this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
+            if(auditRes['ProcessVariables']['status'] == true) {
+            }
+          });
           this.tabSwitch(13);
         } else {
           // Throw Invalid Pan Error
@@ -1925,6 +2088,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.createOrUpdatePersonalDetailsSub19 = this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successfull
         if(response["ProcessVariables"]["status"]) {
+          this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
+            if(auditRes['ProcessVariables']['status'] == true) {
+            }
+          });
           this.tabSwitch(14);
         } else {
           // Throw Invalid Pan Error
@@ -1957,6 +2124,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.createOrUpdatePersonalDetailsSub20 = this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successfull
         if(response["ProcessVariables"]["status"]) {
+          this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
+            if(auditRes['ProcessVariables']['status'] == true) {
+            }
+          });
           this.tabSwitch(15);
         } else {
           // Throw Invalid Pan Error
@@ -1991,6 +2162,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.createOrUpdatePersonalDetailsSub21 = this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successfull
         if(response["ProcessVariables"]["status"]) {
+          this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
+            if(auditRes['ProcessVariables']['status'] == true) {
+            }
+          });
           this.goToNextSlide(swiperInstance);
         } else {
           // Throw Invalid Pan Error
@@ -2019,6 +2194,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.createOrUpdatePersonalDetailsSub22 = this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successfull
         if(response["ProcessVariables"]["status"]) {
+          this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
+            if(auditRes['ProcessVariables']['status'] == true) {
+            }
+          });
           this.isApplicantRouteModal = true;
           // alert("Applicant's application successfully submitted");
           // this.router.navigate(['/applicant', this.qde.application.applicationId, 'co-applicant'], {fragment: 'dashboard'} );
@@ -2070,7 +2249,32 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     return new Array(size);
   }
 
-  incomeDetailsYesNo(value, swiperInstance ?: Swiper) {
+  incomeConsiderYesNoIndividual(value, swiperInstance ?: Swiper) {
+    if(this.isTBMLoggedIn) {
+      this.goToNextSlide(swiperInstance);
+    } else {
+      this.qde.application.applicants[this.applicantIndex].incomeDetails.incomeConsider = (value == 1) ? true : false;
+  
+      this.createOrUpdatePersonalDetailsSub23 = this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
+        // If successfull
+        if(response["ProcessVariables"]["status"]) {
+          if(value == 1) {
+            this.tabSwitch(8);
+          } 
+          else if(value == 2) {
+            // this.isApplicantRouteModal = true;
+            this.tabSwitch(9);
+          } 
+        } else {
+          // Throw Invalid Pan Error
+        }
+      }, (error) => {
+        console.log("response : ", error);
+      });
+    }
+  }
+
+  incomeConsiderYesNoNonIndividual(value, swiperInstance ?: Swiper) {
     if(this.isTBMLoggedIn) {
       this.goToNextSlide(swiperInstance);
     } else {
@@ -2338,10 +2542,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnDestroy() {
  
     // if(this.panslideSub != null){
-    this.panslideSub.unsubscribe();
+    // this.panslideSub.unsubscribe();
     // }
     // if(this.panslideSub2 != null){
-    this.panslide2Sub.unsubscribe();
+    // this.panslide2Sub.unsubscribe();
     // }
     if(this.qdeSourceSub != null){
     this.qdeSourceSub.unsubscribe();
@@ -2458,6 +2662,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     if(this.isEligibilityForReviewsSub != null) {
       this.isEligibilityForReviewsSub.unsubscribe();
     }
+
+    if(this.auditTrialApiSub != null) {
+      this.auditTrialApiSub.unsubscribe();
+    }
   }
 
   openCamera() {
@@ -2568,7 +2776,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     });
 
     modifiedFile["name"] = this.qde.application.applicationId + "-" + this.qde.application.applicants[this.applicantIndex].applicantId + "-" + new Date().getTime() + "-" + modifiedFile["name"];
-  
+
 
     this.qdeHttp.uploadToAppiyoDrive(modifiedFile).subscribe(
       response => {
@@ -2655,8 +2863,19 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.swiperSliders.forEach((v, i, a) => {
-      v.setIndex(0);
-    });
+    // this.swiperSliders.forEach((v, i, a) => {
+    //   v.setIndex(0);
+    // });
+
+    this.swiperSliders = this.swiperS$.toArray();
   }
+
+  goToExactPageAndTab(tabPage: string, pageNumber: number) {
+    let index = this.fragments.findIndex(v => v == tabPage);
+    this.tabName = tabPage;
+    this.page = pageNumber;
+    this.tabSwitch(index, true);
+    this.swiperSliders[index].setIndex(pageNumber-1);
+  }
+
 }

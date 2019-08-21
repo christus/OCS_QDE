@@ -13,6 +13,7 @@ export interface Application {
     loanDetails ?: LoanDetail;
     references ?: Reference;
     status ?: number;
+    auditTrailDetails?: AuditTrailDetails;
 }
 
 export interface Document {
@@ -263,4 +264,11 @@ export interface InCompleteFields {
     occupation: boolean;
     officialCorrespondence: boolean;
     incomeDetails: boolean;
+}
+
+export interface AuditTrailDetails {
+    applicantId: number;
+    pageNumber: number;
+    screenPage: string;
+    tabPage: string;
 }
