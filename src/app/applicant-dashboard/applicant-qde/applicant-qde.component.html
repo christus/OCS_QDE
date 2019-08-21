@@ -806,7 +806,10 @@
                                     [(ngModel)]="otp"
                                     fieldFill>
                                     <label for="otp">OTP</label>
-                                    <a  href="javascript:void(0);" (click)="resendOTP()"> <div class="pull-right resend_otp_size">Resend OTP</div> </a>
+                                    <span><b>{{timeLeft}} Seconds Left...</b></span>
+                                    <span *ngIf="isDisabled">
+                                        <a  href="javascript:void(0);" (click)="resendOTP()"> <div class="pull-right resend_otp_size">Resend OTP</div> </a>
+                                    </span>
                                 </div>
                             </div>
                             <div class="btn-wrap">

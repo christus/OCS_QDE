@@ -293,6 +293,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   idPanId: string;
   idPanDoc: File;
 
+  isDisabled: boolean = false;
+  interval;
+  timeLeft : number = 180;
 
   isReadOnly: boolean = false;
   isEligibilityForReview: boolean = false;
@@ -2148,9 +2151,25 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         this.isAlternateStatus = isAlternateNumber;
       }
      });
+     this.timeout();
+  }
+  timeout(){
+    this.interval = setInterval(()=>{
+      if(this.timeLeft > 0){
+        this.isDisabled = false;
+        this.timeLeft--;
+      }else{
+        this.isDisabled = true;
+      }
+    },1000)
+  }
+  stopInterval(){
+    clearInterval(this.interval);
+    this.timeLeft = 180;
   }
 
   resendOTP() {
+    this.stopInterval();
     const mobileNumber = this.qde.application.applicants[this.applicantIndex].contactDetails.mobileNumber ;
     const applicationId = this.qde.application.applicationId;
     const applicantId = this.qde.application.applicants[this.applicantIndex].applicantId;
@@ -2160,11 +2179,13 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         this.isAlternateStatus =  false;
       }
      });
+     this.timeout();
   }
 
   onBackOTP() {
     console.log("Back button pressed")
-    this.inOTP = false; 
+    this.inOTP = false;
+    this.stopInterval(); 
   }
 
   validateOTP(form: NgForm) {
