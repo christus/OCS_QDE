@@ -180,7 +180,6 @@ export class LoanQdeComponent implements OnInit {
   fragments = ["loan", "property", "existingLoan"];
 
   qde: Qde;
-
   religions: Array<any>;
   qualifications: Array<any>;
   occupations: Array<any>;
@@ -271,6 +270,8 @@ export class LoanQdeComponent implements OnInit {
       }
     });
 
+
+
     this.cds.applicationId.subscribe(val => {
       this.applicationId = val;
       if(JSON.parse(localStorage.getItem('roles')).includes('TBM')) {
@@ -297,6 +298,7 @@ export class LoanQdeComponent implements OnInit {
 
     if(this.route.snapshot.data.listOfValues) {
       const lov = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs);
+      this.titles = lov.LOVS.applicant_title;
 
       this.loanpurposes = lov.LOVS.loan_purpose;
       this.loanType = lov.LOVS.loan_type;
@@ -415,8 +417,10 @@ export class LoanQdeComponent implements OnInit {
           if(result.application.loanDetails.property.city) {
             this.cityState = result.application.loanDetails.property.city + " "+ result.application.loanDetails.property.state;
           }
-
-          this.allApplicantsItem = this.qde.application.applicants.map(val => ({key: val.personalDetails.firstName+" "+val.personalDetails.lastName, value: val.applicantId}));
+          this.allApplicantsItem = this.qde.application.applicants.map(val => ({
+            key: this.getApplicantTitle(val.personalDetails.title).key + " " + val.personalDetails.firstName+" "+val.personalDetails.lastName,
+            value: val.applicantId
+          }));
           this.selectedApplicant = this.allApplicantsItem[0];
           this.selectedApplicantIndex = this.qde.application.applicants.findIndex(v => v.applicantId == this.selectedApplicant.value);
           this.selectedApplicantName = this.qde.application.applicants[this.selectedApplicantIndex].personalDetails ? `${this.qde.application.applicants[this.selectedApplicantIndex].personalDetails['firstName']} ${this.qde.application.applicants[this.selectedApplicantIndex].personalDetails['lastName']}`: '';
@@ -444,6 +448,17 @@ export class LoanQdeComponent implements OnInit {
 
   }
 
+  getApplicantTitle (salutation:string) {
+    let titles = JSON.parse(JSON.stringify(this.titles));
+    let selectedSalutationObj = {};
+    for(let key in titles) {
+      let salutationObj = titles[key];
+      if(salutationObj["value"] == salutation ) {
+        return salutationObj;
+      }
+    }
+    return titles[0];
+  }
   ngAfterViewInit() {}
 
   loanPropertyNo(swiperInstance: Swiper,value){
