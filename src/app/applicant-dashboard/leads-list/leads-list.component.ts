@@ -118,6 +118,14 @@ export class LeadsListComponent implements OnInit {
 
           this.userDetails.forEach(el => {
             el.url = this.getUrl(el['status'], el['leadId'], el['applicantId'], this.getRoles());
+            if(el['auditTrialTabPage'] != null && el['auditTrialPageNumber'] != null) {
+              el['queryParams'] = {
+                tabName : el['auditTrialTabPage'],
+                page : el['auditTrialPageNumber'],
+              }
+            } else {
+              el['queryParams'] = null;
+            }
           });
 
           this.cds.setIsEligibilityForReviews(this.isEligibilityForReviews);

@@ -923,75 +923,6 @@
                             </div>
                         </div>
 
-                                      <div *ngIf="(commPinCode.touched || commPinCode.dirty) && commPinCode.invalid" class="invalid-feedback">
-                                          <!-- <div *ngIf="commPinCode.errors?.required">{{errors.commAddress.pinCode.required}}</div> -->
-                                          <div *ngIf="commPinCode.errors?.pattern">{{errors.commAddress.pinCode.invalid}}</div>
-                                      </div>
-                                  </div>
-                                  <div class="form-group">
-  
-                                      <input [readonly]="isReadOnly"    type="text"
-                                                class="form-control"
-                                                id="cityState"
-                                                required
-                                                tabindex="5"
-                                                [(ngModel)]="qde.application.applicants[coApplicantIndex].communicationAddress.cityState"
-                                                name="cityState"
-                                                #commCityState="ngModel"
-                                                fieldFill   
-                                                spellcheck="false"
-                                                readonly                  
-                                                pattern="{{regexPattern.address}}" />
-                                            
-                                            <label for="cityState">City/State</label>
-        
-  
-                                      <div *ngIf="(commCityState.touched || commCityState.dirty) && commCityState.invalid" class="invalid-feedback">
-                                          <!-- <div *ngIf="commCityState.errors?.required">{{errors.commAddress.stateOrCity.required}}</div> -->
-                                          <div *ngIf="commCityState.errors?.pattern">{{errors.commAddress.stateOrCity.invalid}}</div>
-                                      </div>
-                                  </div>
-                                  <div class="bs-checkbox typ-withForm" *ngIf="qde.application.applicants[coApplicantIndex].communicationAddress.addressLineOne != '' && qde.application.applicants[coApplicantIndex].communicationAddress.zipcode != '' && qde.application.applicants[coApplicantIndex].communicationAddress.cityState != ''">
-                                      <input [readonly]="isReadOnly"  type="checkbox"
-                                              name="permanentAddress"
-                                              tabindex="6"
-                                              [ngModel]="qde.application.applicants[coApplicantIndex].communicationAddress.permanentAddress"
-                                              (ngModelChange)="makePermanentAddressSame($event)"
-                                              [checked]="qde.application.applicants[coApplicantIndex].communicationAddress.permanentAddress == true"
-                                              id="permanentAddress" />
-                                      <label for="permanentAddress"><span>Current Address is Permanent Address</span></label>
-                                  </div>
-                                  <div class="permanent-add-wrap">
-                                      <h1 class="sub-heading" style="text-align: left; margin-bottom: 12px">Permanent Address</h1>
-                                        <div class="currentAddressFromMainApplicantBtnWrapper" *ngIf="isPermanentAddressFromMainApplicant">
-                                            <button type="button" (click)="permanentAddressFromMainApplicant()">Permanent Address From Main Applicant</button>
-                                        </div>
-                                          <div class="form-group">
-                                              <input [readonly]="isReadOnly" type="text" class="form-control" id="per-address1"
-                                              name="pAddressLineOne"
-                                              #pAddress1="ngModel"
-                                              pattern="{{regexPattern.address}}"
-                                              fieldFill
-                                              tabindex="7"
-                                              spellcheck="false"
-                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].permanentAddress.addressLineOne"
-                                              required />
-                                              <label for="per-address1">Address line 1</label>
-                                              <div *ngIf="(pAddress1.touched || pAddress1.dirty) && pAddress1.invalid" class="invalid-feedback">
-                                                <!-- <div *ngIf="pAddress1.errors?.required">{{errors.commAddress.address1.required}}</div> -->
-                                                <div *ngIf="pAddress1.errors?.pattern">{{errors.commAddress.address1.invalid}}</div>
-                                              </div>
-                                          </div>
-                                          <div class="form-group typ-optional">
-                                              <input [readonly]="isReadOnly" type="text" class="form-control" id="per-address2"
-                                              name="pAddressLineTwo"
-                                              #pAddress2="ngModel"
-                                              fieldFill
-                                              tabindex="8"
-                                              pattern="{{regexPattern.address}}"
-                                              spellcheck="false"
-                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].permanentAddress.addressLineTwo"/>
-
 
                       </div>
                       <div class="rhs">
@@ -1113,7 +1044,7 @@
                                                       <div *ngIf="commCityState.errors?.pattern">{{errors.commAddress.stateOrCity.invalid}}</div>
                                                   </div>
                                               </div>
-                                              <div class="bs-checkbox typ-withForm">
+                                              <div class="bs-checkbox typ-withForm" *ngIf="qde.application.applicants[coApplicantIndex].communicationAddress.addressLineOne != '' && qde.application.applicants[coApplicantIndex].communicationAddress.zipcode != '' && qde.application.applicants[coApplicantIndex].communicationAddress.cityState != ''">
                                                   <input [readonly]="isReadOnly"  type="checkbox"
                                                           name="permanentAddress"
                                                           tabindex="6"
@@ -2087,11 +2018,6 @@
                                             <h4 class="title">Enter Co-Applicant's<span class="cm-line-break"></span>income details</h4>
                                             <p class="note">Please enter household income & expenditure of main applicant & co-applicant/s</p>
                                             <p class="note">House made with a high quality materials throughout, including a floor, roof and exterior walls, are called pucca houses</p>
-                                        </div>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <div class="title-wrap">
-                                            <h4 class="title">Do Co-Applicant's <span class="cm-line-break"></span>income considered?</h4>
                                         </div>
                                     </div>
                                     <div class="swiper-slide">
