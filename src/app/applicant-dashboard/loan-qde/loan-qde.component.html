@@ -55,7 +55,7 @@
                       <span class="in-word"></span>
 
                       <!-- <div class="redalert" *ngIf="amountRequired.touched && amountRequired.valid && isValidNumber(amountRequired.value)">{{errors.loanDetails.loanAmount.amount.invalid}}</div> -->
-                      <div *ngIf="(amountRequired.touched || amountRequired.dirty) && amountRequired.invalid" class="invalid-feedback">
+                      <div class="invalid-feedback">
                         <!-- <div *ngIf="amountRequired.errors?.required">{{errors.loanDetails.loanAmount.amount.required}}</div> -->
                         <div *ngIf="amountRequired.errors?.pattern">{{errors.loanDetails.loanAmount.amount.invalid}}</div>
                       </div>

@@ -1128,7 +1128,9 @@ export class DocumentUploadComponent implements OnInit {
       this.recurvLovCalls(applicants, index+1);
     }
   }
-
+  onCrossModal(){
+    this.isDocUploadRouteModal = false;
+  }
   moreDocUpload(){
     this.router.navigate(['/document-uploads', this.qde.application.applicationId])
     this.isDocUploadRouteModal = false
