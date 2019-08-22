@@ -15,7 +15,7 @@
             <a href="javascript:void(0);" (click)="tabSwitch(1)">PROPERTY</a>
           </li>
           <li class="tab-link" [ngClass]="{'active': (activeTab == 2), 'hide': (!applicantIndividual)}">
-            <a href="javascript:void(0);" (click)="tabSwitch(2)">EXISTING LOANS</a>
+            <a href="javascript:void(0);" (click)="tabSwitch(2)">EXISTING LOAN OBLIGATION</a>
           </li>
          
         </ul>
@@ -54,7 +54,7 @@
                       </span>
                       <span class="in-word"></span>
 
-                      <div class="redalert" *ngIf="amountRequired.touched && amountRequired.valid && isValidNumber(amountRequired.value)">{{errors.loanDetails.existingLoans.monthlyEmi.invalid}}</div>
+                      <!-- <div class="redalert" *ngIf="amountRequired.touched && amountRequired.valid && isValidNumber(amountRequired.value)">{{errors.loanDetails.loanAmount.amount.invalid}}</div> -->
                       <div *ngIf="(amountRequired.touched || amountRequired.dirty) && amountRequired.invalid" class="invalid-feedback">
                         <!-- <div *ngIf="amountRequired.errors?.required">{{errors.loanDetails.loanAmount.amount.required}}</div> -->
                         <div *ngIf="amountRequired.errors?.pattern">{{errors.loanDetails.loanAmount.amount.invalid}}</div>
@@ -501,7 +501,7 @@
   <!-- <span class="cm-autoSave"><span class="cm-bold">Autosaved</span> <span>at 09:26 AM</span></span> -->
   <div class="overlay" [ngClass]="{'active': isLoanRouteModal}"></div>
   <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isLoanRouteModal}">
-      <!-- <a class="modal-close" href="javascript:void(0);" (click)="onBackOTP()"><span class="icon icon-close"></span></a> -->
+      <a class="modal-close" (click)="onCrossModal()"><span class="icon icon-close"></span></a>
       <div class="modal-body">
           <h1 class="center">Loan Details has been successfully saved!</h1>
           <p>Click Proceed to continue</p>

@@ -856,6 +856,10 @@ export class LoanQdeComponent implements OnInit {
     this.isClssNotEligibleModal = false;
     this.tabSwitch(2);
   }
+
+  onCrossModal(){
+    this.isLoanRouteModal = false;
+  }
   
   /*******************************************
    * Pass "1,23,45,678" and will return number

@@ -542,6 +542,10 @@ export class ReferencesQdeComponent implements OnInit {
   applicationStatus: string = "10";
   isReferenceRouteModal:boolean = false
 
+  onCrossModal(){
+    this.isReferenceRouteModal = false;
+  }
+
   submitReference2Detail(form: NgForm, swiperInstance?: Swiper) {
 
     if(this.isTBMLoggedIn) {

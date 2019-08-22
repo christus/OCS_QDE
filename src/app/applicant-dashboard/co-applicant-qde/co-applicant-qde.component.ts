@@ -55,7 +55,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     address : "^[0-9A-Za-z, _&'/#]+$",
     // cityState:"^[0-9A-Za-z, &'#]$",
     pinCode: "^[1-9][0-9]{5}$",
-    pan:"[A-Z]{3}(P|F|C|H|A|T)[A-Z]{1}[0-9]{4}[A-Z]{1}",
+    panInd:"[A-Z]{3}(P)[A-Z]{1}[0-9]{4}[A-Z]{1}",
+    panNonInd:"[A-Z]{3}(C)[A-Z]{1}[0-9]{4}[A-Z]{1}",
     amount:"^[\\d]{0,10}([.][0-9]{0,4})?",
     revenue:"^[\\d]{0,10}([.][0-9]{0,4})?",
     email:"^\\w+([\.-]?\\w+)*@\\w+([\.-]?\\w+)*(\\.\\w{2,10})+$",
@@ -2129,6 +2130,33 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     }
   }
 
+  makeCorporateAddressSame(event: boolean) {
+    this.qde.application.applicants[this.coApplicantIndex].registeredAddress.corporateAddress = event;
+
+    if(event == true) {
+      this.qde.application.applicants[this.coApplicantIndex].corporateAddress.corporateAddress = this.qde.application.applicants[this.coApplicantIndex].registeredAddress.registeredAddress;
+      this.qde.application.applicants[this.coApplicantIndex].corporateAddress.zipcode = this.qde.application.applicants[this.coApplicantIndex].registeredAddress.zipcode;
+   
+      this.qde.application.applicants[this.coApplicantIndex].corporateAddress.city = this.qde.application.applicants[this.coApplicantIndex].registeredAddress.city;
+      this.qde.application.applicants[this.coApplicantIndex].corporateAddress.state = this.qde.application.applicants[this.coApplicantIndex].registeredAddress.state;
+      this.qde.application.applicants[this.coApplicantIndex].corporateAddress.cityState = this.qde.application.applicants[this.coApplicantIndex].registeredAddress.cityState;
+      this.qde.application.applicants[this.coApplicantIndex].corporateAddress.zipcodeId = this.qde.application.applicants[this.coApplicantIndex].registeredAddress.zipcodeId;
+      this.qde.application.applicants[this.coApplicantIndex].corporateAddress.stateId = this.qde.application.applicants[this.coApplicantIndex].registeredAddress.stateId;
+      this.qde.application.applicants[this.coApplicantIndex].corporateAddress.cityId = this.qde.application.applicants[this.coApplicantIndex].registeredAddress.cityId;
+
+   
+    } else {
+      this.qde.application.applicants[this.coApplicantIndex].corporateAddress.corporateAddress = "";
+      this.qde.application.applicants[this.coApplicantIndex].corporateAddress.zipcode = "";
+      this.qde.application.applicants[this.coApplicantIndex].corporateAddress.cityState = "";
+      this.qde.application.applicants[this.coApplicantIndex].corporateAddress.stateId = "";
+      this.qde.application.applicants[this.coApplicantIndex].corporateAddress.zipcodeId = "";
+      this.qde.application.applicants[this.coApplicantIndex].corporateAddress.city = "";
+      this.qde.application.applicants[this.coApplicantIndex].corporateAddress.cityId = "";
+      this.qde.application.applicants[this.coApplicantIndex].corporateAddress.state = "";
+    }
+  }
+
   prefillData(params) {
 
     // Set ApplicantIndex
@@ -2739,6 +2767,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
   RegExp(param) {
     return RegExp(param);
+  }
+
+  onCrossModal(){
+    this.isCoApplicantRouteModal = false;
   }
 
   keyUpPanNumber(event: Event) {

@@ -165,6 +165,7 @@ export interface RegisteredAddress {
     stateId?: string;
     cityState? : string;
     zipCityStateID?: string;
+    corporateAddress?: boolean;
 }
 
 export interface CorporateAddress {

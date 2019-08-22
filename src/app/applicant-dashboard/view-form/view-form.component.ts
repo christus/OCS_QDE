@@ -903,6 +903,10 @@ export class ViewFormComponent implements OnInit, OnDestroy {
      this.sendSMS();
   }
 
+  onCrossModal(){
+    this.isViewFormModal = false;
+  }
+
   setAps(){
     this.qdeHttp.apsApi(""+this.applicationId).subscribe(res => {
 
