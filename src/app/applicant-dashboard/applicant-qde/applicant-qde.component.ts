@@ -405,11 +405,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         this.tabName = this.fragments.includes(val['tabName']) ? val['tabName'].toString(): this.fragments[0];
         this.activeTab = this.fragments.findIndex(v => v == val['tabName']);
 
-        if(this.qde.application.applicants[this.applicantIndex].incomeDetails.incomeConsider == true) {
-          this.applicantIndividual = (this.activeTab >= 10) ? false: true;
-        } else {
-          this.applicantIndividual = (this.activeTab >= 9) ? false: true;
-        }
+        this.applicantIndividual = (this.activeTab >= 10) ? false: true;
       }
 
       if(val['page'] && val['page'] != '') {
