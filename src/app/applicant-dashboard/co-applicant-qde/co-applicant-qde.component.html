@@ -395,6 +395,22 @@
                                                       #nameForm="ngForm"
                                                       (ngSubmit)="submitNameDetails(nameForm, pdSlider2)">
                                                   <div class="form-wrap">
+                                                        <div class="form-group">
+                                                                <span class="control-title">Relationship</span>
+                                                            <!-- <select ngModel name="relationShip" class="js-select" required>
+                                                                   <option *ngFor="let rela of relationships" [value]="rela.value">{{rela.key}}</option>
+                                                                </select> -->
+                                            
+                                                                <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                                                [data]="relationships" 
+                                                                textField="key"
+                                                                valueField="value"
+                                                                name="relationShip"
+                                                                [valuePrimitive]="true"
+                                                                [(ngModel)]="selectedRelationship">
+                                                                </kendo-dropdownlist>
+                                            
+                                                            </div>
                                                       <div class="form-group">
                                                           <span class="control-title">Title</span>
                                                           <div class="form-group">   

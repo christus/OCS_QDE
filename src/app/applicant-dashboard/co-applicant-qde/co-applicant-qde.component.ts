@@ -291,7 +291,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   idPanDoc: File;
 
   isMobile:any;
-
+  selectedRelationship : any;
 
   isReadOnly: boolean = false;
 
@@ -512,6 +512,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
             this.qdeService.setQde(result);
             console.log(result);
+
+            this.selectedRelationship =
+            result.application.applicants[this.coApplicantIndex].personalDetails.relationShip ||
+            this.relationships[0].value;
 
             if(this.qde.application.auditTrailDetails.screenPage == screenPages['coApplicantDetails']) {
               this.coApplicantIndex = result.application.applicants.findIndex(v => v.applicantId == this.qde.application.auditTrailDetails.applicantId);
@@ -1041,6 +1045,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         return;
       }
   
+      this.qde.application.applicants[this.coApplicantIndex].personalDetails.relationShip = this.selectedRelationship;
       this.qde.application.applicants[this.coApplicantIndex].personalDetails.title = form.value.title.value;
       this.qde.application.applicants[this.coApplicantIndex].personalDetails.firstName = form.value.firstName;
       this.qde.application.applicants[this.coApplicantIndex].personalDetails.middleName = form.value.middleName;

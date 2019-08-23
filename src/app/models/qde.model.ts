@@ -3,6 +3,7 @@ export default interface Qde {
 }
 
 export interface Application {
+    applicationFormNumber ?: string;
     ocsNumber : string;
     applicationId: string;
     loanAmount ?: string;
@@ -81,6 +82,7 @@ export interface Occupation {
 }
 
 export interface Pan {
+    
     panNumber ?: string;
     panImage ?: string;
     docType ?: string; // As of new design
@@ -93,6 +95,7 @@ export interface Pan {
 }
 
 export interface PersonalDetail {
+    relationShip ?: string;
     title ?: string;
     firstName ?: string;
     middleName ?: string;

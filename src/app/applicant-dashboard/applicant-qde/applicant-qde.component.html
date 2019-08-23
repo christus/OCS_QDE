@@ -128,6 +128,28 @@
                       <form class="bs-form" id="pan-form" #panNumberForm="ngForm"
                         (ngSubmit)="submitPanNumber(panNumberForm, panSlider2)">
                         <div class="form-wrap">
+                            <div class="form-group last" style="margin-bottom: 60px;">
+                                <input [readonly]="isTBMLoggedIn" spellcheck="false"
+                                        type="text"
+                                        class="form-control"
+                                        [(ngModel)]="qde.application.applicationFormNumber"
+                                        (ngModelChange)="qde.application.applicationFormNumber = $event.toUpperCase()" 
+                                        id="ref-no"
+                                        minlength="10"
+                                        maxlength="10"
+                                        pattern="{{regexPattern.applicationRefNo}}"                                             
+                                        name="applicationFormNo"
+                                        (keyup)="keyUpPanNumber($event)"
+                                        #applicationRefNo="ngModel"
+                                        fieldFill
+                                        required />
+                                        <label for="ref-no" tabindex="0">Application Reference No</label>
+                                        <!-- <div *ngIf="applicationRefNo.touched && applicationRefNo.invalid && panErrorCount < 3" class="invalid-feedback">
+                                            
+                                            <div *ngIf="applicationRefNo.errors?.pattern ? true : false">{{errors.pan.invalid}}</div>
+                                            <div *ngIf="applicationRefNo.errors?.minlength || applicationRefNo.errors?.maxlength">{{errors.pan.length}}</div>
+                                            </div> -->
+                            </div>
                           <div class="form-group last" style="margin-bottom: 40px;">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                               [(ngModel)]="qde.application.applicants[applicantIndex].pan.panNumber"
@@ -1795,6 +1817,28 @@
                       <form class="bs-form" #panNumberForm2="ngForm"
                         (ngSubmit)="submitOrgPanNumber(panNumberForm2, panSlider4)">
                         <div class="form-wrap" style="overflow: hidden;">
+                            <div class="form-group last" style="margin-bottom: 60px;">
+                                <input [readonly]="isTBMLoggedIn" spellcheck="false"
+                                        type="text"
+                                        class="form-control"
+                                        [(ngModel)]="qde.application.applicationFormNumber"
+                                        (ngModelChange)="qde.application.applicationFormNumber = $event.toUpperCase()" 
+                                        id="ref-no-nonind"
+                                        minlength="10"
+                                        maxlength="10"
+                                        pattern="{{regexPattern.applicationRefNo}}"                                             
+                                        name="applicationFormNo"
+                                        (keyup)="keyUpPanNumber($event)"
+                                        #applicationRefNoNonInd="ngModel"
+                                        fieldFill
+                                        required />
+                                        <label for="ref-no-nonind">Application Reference No</label>
+                                    <!-- <div *ngIf="applicationRefNoNonInd.touched && applicationRefNoNonInd.invalid && panErrorCount < 3" class="invalid-feedback">
+                                                    
+                                            <div *ngIf="applicationRefNoNonInd.errors?.pattern ? true : false">{{errors.pan.invalid}}</div>
+                                            <div *ngIf="applicationRefNoNonInd.errors?.minlength || applicationRefNoNonInd.errors?.maxlength">{{errors.pan.length}}</div>
+                                        </div> -->
+                            </div>
                           <div class="form-group last">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                               [(ngModel)]="qde.application.applicants[applicantIndex].pan.panNumber" tabindex="1"

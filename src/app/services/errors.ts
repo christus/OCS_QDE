@@ -1,5 +1,8 @@
 export const errors: any = {
 
+  applicationReferenceNo:{
+
+  },
   pan: {
     required: "PAN is mandatory",
     length: "PAN must be at least 10 characters",

@@ -61,6 +61,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     address : "^[0-9A-Za-z, _&'/#]+$",
     // cityState:"^[0-9A-Za-z, &'#]$",
     pinCode: "^[1-9][0-9]{5}$",
+    // applicationRefNo : "",
     panInd:"[A-Z]{3}(P)[A-Z]{1}[0-9]{4}[A-Z]{1}",
     panNonInd:"[A-Z]{3}(C)[A-Z]{1}[0-9]{4}[A-Z]{1}",
     // amount:"[0-9]{0,17}\.[0-9]{1,4}?$",
@@ -527,6 +528,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
             }
 
             try {
+              // this.qde.application.applicationFormNumber = "ijijijjjjj"
               if(result.application.applicants[this.applicantIndex].communicationAddress != null) {
                 this.commCityState = "";
                 if(result.application.applicants[this.applicantIndex].communicationAddress.city) {
@@ -962,6 +964,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       return;
     }
 
+    this.qde.application.applicationFormNumber = form.value.applicationFormNo;
     this.qde.application.applicants[this.applicantIndex].pan.panNumber = form.value.pan;
     this.qde.application.applicants[this.applicantIndex].pan.docType = form.value.docTypeindividual.value;
     this.qde.application.applicants[this.applicantIndex].pan.docNumber = form.value.docNumber;
@@ -1112,6 +1115,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         return;
       }
   
+      this.qde.application.applicationFormNumber = form.value.applicationFormNo;
       this.qde.application.applicants[this.applicantIndex].pan.panNumber = form.value.pan;
       // this.qde.application.applicants[this.applicantIndex].pan.docType = form.value.panDocType.value;
       // this.qde.application.applicants[this.applicantIndex].pan.docNumber = form.value.docNumber;

@@ -11,6 +11,7 @@ export class QdeService {
   leads: Array<Qde>;
   defaultValue: Qde = {
     application: {
+      applicationFormNumber: "",
       ocsNumber: "",
       loanAmount: "",
       tenure: "",
@@ -48,6 +49,7 @@ export class QdeService {
             totalWorkExperience: null
           },
           pan: {
+            
             panNumber: "",
             panImage: "",
             docType: null,
@@ -55,6 +57,7 @@ export class QdeService {
             panVerified: null
           },
           personalDetails: {
+            relationShip: "",
             title: "",
             firstName: "",
             middleName: "",
@@ -375,6 +378,7 @@ export class QdeService {
         panVerified: null
       },
       personalDetails: {
+        relationShip: "",
         title: "",
         firstName: "",
         middleName: "",
@@ -498,6 +502,7 @@ export class QdeService {
   resetQde() {
     this.setQde({
       application: {
+        applicationFormNumber:"",
         ocsNumber: "",
         loanAmount: "",
         tenure: "",
@@ -542,6 +547,7 @@ export class QdeService {
               panVerified: null
             },
             personalDetails: {
+              relationShip: "",
               title: "",
               firstName: "",
               middleName: "",
