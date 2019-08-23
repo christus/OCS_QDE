@@ -72,6 +72,7 @@ export interface Other {
     religion ?: string;
     otherReligion ?: string;
     category ?: string;
+    certificateId ?: string;
 }
 
 export interface Occupation {

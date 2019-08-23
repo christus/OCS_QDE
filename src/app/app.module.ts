@@ -518,7 +518,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     BranchAddEditComponent,
     LoanTypePurposeMapComponent,
     DocumentAssessmentDoccatDoctypeComponent,
-    LoanMasterComponent
+    LoanMasterComponent,
   ],
   imports: [
     BrowserModule,

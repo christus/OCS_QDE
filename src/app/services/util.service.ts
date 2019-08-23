@@ -29,14 +29,8 @@ export class UtilService {
   }
 
   logout() {
-    const headers = new HttpHeaders({
-      Accept: 'text/html,application/xhtml+xml,application/xml',
-      "Access-Control-Allow-Origin": "*"
-    });
-
-    const options = { headers: headers };
     let uri = environment.host + "/account/logout";
-    return this.http.get(uri, options);
+    return this.http.get(uri);
   }
 
   clearCredentials() {

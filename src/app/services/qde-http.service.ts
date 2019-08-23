@@ -118,6 +118,18 @@ createOrUpdatePersonalDetails(qde) {
     return this.http.post(uri, body);
   }
 
+  checkActiveSession(data: any) {
+    const body = new HttpParams()
+      .set('email', data.email)
+      .set('password', data.password)
+      .set('removeExistingSession', data.removeExistingSession)
+      .set('appId', data.appId)
+
+    let uri = environment.host + '/account/login';
+    return this.http.post(uri, body);
+  }
+
+
   longLiveAuthenticate(data: any) {
 
     const body = new HttpParams()

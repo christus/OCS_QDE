@@ -16,6 +16,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   userName = "";
   password = "";
+  activeSessionExists = false;
+  sessionMessage="";
 
   version: string;
   buildDate: string;
@@ -37,20 +39,54 @@ export class LoginComponent implements OnInit, AfterViewInit {
   login() {
     const data = {
       email: this.userName.trim().toLowerCase()+ "@icicibankltd.com",
-      password: this.password.trim()
+      password: this.password.trim(),
+      removeExistingSession: false,
+      appId: "OCS"
     };
-    this.qdeService.authenticate(data).subscribe(
-      res => {
-        console.log('hfgrhjgfc',res);
-        this.commonDataService.setLogindata(data);
-        localStorage.setItem("token", res["token"] ? res["token"] : "");
-        this.roleLogin();
-      },
-      error => {
-        console.log('err',error['error']['message']);
-        this.message = error['error']['message'];
-      }
-    );
+
+    this.qdeService.checkActiveSession(data).subscribe(res => {
+      console.log('hfgrhjgfc',res);
+      this.commonDataService.setLogindata(data);
+      localStorage.setItem("token", res["token"] ? res["token"] : "");
+      this.roleLogin();
+    },
+    error => {
+      //this.sessionMessage = error['error']['message'] ;
+      this.sessionMessage = "An active session with these credential's does exists, please logout the existing session" ;
+      this.activeSessionExists = error['error']["activeSessionExists"];
+    });
+    // this.qdeService.authenticate(data).subscribe(
+    //   res => {
+    //     console.log('hfgrhjgfc',res);
+    //     this.commonDataService.setLogindata(data);
+    //     localStorage.setItem("token", res["token"] ? res["token"] : "");
+    //     this.roleLogin();
+    //   },
+    //   error => {
+    //     console.log('err',error['error']['message']);
+    //     this.message = error['error']['message'];
+    //   }
+    // );
+  }
+
+  removeExisitingSession() {
+    const data = {
+      email: this.userName.trim().toLowerCase()+ "@icicibankltd.com",
+      password: this.password.trim(),
+      removeExistingSession: true,
+      appId: "OCS"
+    };
+
+    this.qdeService.checkActiveSession(data).subscribe(res => {
+      console.log('hfgrhjgfc',res);
+      this.commonDataService.setLogindata(data);
+      localStorage.setItem("token", res["token"] ? res["token"] : "");
+      this.roleLogin();
+    },
+    error => {
+      console.log('err',error['error']['message']);
+      this.message = error['error']['message'];
+    });
   }
 
   public message: string;

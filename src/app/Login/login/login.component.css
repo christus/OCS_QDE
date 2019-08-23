@@ -13,3 +13,12 @@
 	font-size: 18px;
 	color: #bdacac;
 }
+
+.login_modal {
+	height: 220px;
+    padding-top: 2px;
+}
+
+.margin_right {
+	margin-right: 15px;
+}
