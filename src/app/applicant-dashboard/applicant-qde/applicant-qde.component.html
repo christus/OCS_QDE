@@ -36,7 +36,7 @@
             <a href="javascript:void(0);" (click)="tabSwitch(7)">occupation details</a>
           </li>
           <li class="tab-link"
-            [ngClass]="{'hide': !(qde?.application?.applicants[applicantIndex]?.incomeDetails?.incomeConsider == true), 'active': (activeTab == 8), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
+            [ngClass]="{'hide': !(qde?.application?.applicants[applicantIndex]?.incomeDetails?.incomeConsider == true), 'active': (activeTab == 8), 'disabled': isTabDisabled}">
             <a href="javascript:void(0);" (click)="tabSwitch(8)">official correspondence</a>
           </li>
           <li class="tab-link"
@@ -137,7 +137,6 @@
                                         id="ref-no"
                                         minlength="10"
                                         maxlength="10"
-                                        pattern="{{regexPattern.applicationRefNo}}"                                             
                                         name="applicationFormNo"
                                         (keyup)="keyUpPanNumber($event)"
                                         #applicationRefNo="ngModel"
@@ -1870,7 +1869,6 @@
                                         id="ref-no-nonind"
                                         minlength="10"
                                         maxlength="10"
-                                        pattern="{{regexPattern.applicationRefNo}}"                                             
                                         name="applicationFormNo"
                                         (keyup)="keyUpPanNumber($event)"
                                         #applicationRefNoNonInd="ngModel"

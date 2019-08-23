@@ -8,8 +8,8 @@ import { FormGroup, FormBuilder, Validators, FormControl, FormArray, NgForm } fr
   styleUrls: ['./collateral.component.css']
 })
 export class CollateralComponent  {
-  private fieldArray: Array<any> = [];
-  private newAttribute: any = {};
+    fieldArray: Array<any> = [];
+    newAttribute: any = {};
 
 
   addFieldValue() {
