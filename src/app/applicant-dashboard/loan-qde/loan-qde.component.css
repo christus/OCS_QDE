@@ -249,3 +249,347 @@ visibility: visible;
     padding: 1.56vw 0;
     margin-top: -2vw;
 }
+
+/* Product CSS */
+
+.lyt-product {
+	position: relative;
+	height: calc(100vh - 4.53vw);
+    /* margin-top: 4.53vw; */
+    margin-top: 0;
+}
+
+.lyt-product .product-list {
+	position: absolute;
+	display: flex;
+	align-items: stretch;
+	height: 100%;
+	width: 100%
+}
+
+.lyt-product .product-list .item-product {
+	width: 33.33%;
+	background-repeat: no-repeat;
+	background-size: cover;
+	justify-content: center;
+	align-items: center;
+	display: inherit;
+	flex-direction: column;
+    transition: width .4s ease;
+    cursor: pointer;
+}
+
+.lyt-product .product-list .item-product.deactive {
+	width: 0;
+	overflow: hidden
+}
+
+.lyt-product .product-list .item-product.deactive .icon,
+.lyt-product .product-list .item-product.deactive .product-title {
+	opacity: 0;
+	transition-delay: 0s
+}
+
+.lyt-product .product-list .item-product:not(:last-child) {
+	border-right: 1px solid #fff
+}
+
+.lyt-product .product-list .item-product.typ-loan {
+	background-image: url(/assets/images/home-loan-bg.jpg)
+}
+
+.lyt-product .product-list .item-product.typ-equity {
+	background-image: url(/assets/images/home-equity-bg.jpg)
+}
+
+.lyt-product .product-list .item-product.typ-others {
+	background-image: url(/assets/images/others-bg.jpg)
+}
+
+.lyt-product .product-list .item-product:hover .icon {
+	transform: scale(1.1)
+}
+
+.lyt-product .product-list .item-product .icon {
+	color: #fff;
+	font-size: 7.81vw;
+	transition: opacity .3s ease-out, transform .3s ease-in;
+	transition-delay: .3s
+}
+
+.lyt-product .product-list .item-product .product-title {
+	font-size: 3.28vw;
+	line-height: 4.69vw;
+	font-family: zurich-bold;
+	color: #fff;
+	display: block;
+	transition: opacity .3s ease-out;
+	transition-delay: .3s
+}
+
+.lyt-product .product-detail-list {
+	width: 0;
+	height: 100%;
+	position: absolute;
+	background: #fff;
+	right: 0;
+	top: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: width .5s ease;
+	overflow: hidden
+}
+
+.lyt-product .product-detail-list.active {
+	width: 66.66%
+}
+
+.lyt-product .product-detail-list .product-expand {
+	display: none;
+	max-width: 100%;
+	text-align: center
+}
+
+.lyt-product .product-detail-list .product-expand.active {
+	display: block
+}
+
+.lyt-product .product-detail-list .product-expand .product-close {
+	position: absolute;
+	right: 2.34vw;
+	top: 2.34vw;
+	font-size: 2.34vw;
+	color: #999
+}
+
+.lyt-product .product-detail-list .product-expand .slide-title {
+	font-size: 3.28vw;
+	line-height: 4.69vw;
+	color: #999;
+	font-family: zurich-light;
+	text-align: left;
+	margin-bottom: 3.91vw
+}
+
+.lyt-product .product-detail-list .product-expand .bs-form {
+	display: inline-block
+}
+
+.lyt-product .product-detail-list .product-expand .bs-radio:first-of-type {
+	margin-left: 0
+}
+
+.lyt-product .product-detail-list .product-expand .product-type-list .product-type {
+	display: inline-block;
+	vertical-align: middle;
+	text-align: center;
+	padding: 1.17vw 4.69vw 2.34vw;
+	position: relative
+}
+
+.lyt-product .product-detail-list .product-expand .product-type-list .product-type:after {
+	content: '';
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 1px;
+	height: 100%;
+	background: #999
+}
+
+.lyt-product .product-detail-list .product-expand .product-type-list .product-type:first-child {
+	padding-left: 0
+}
+
+.lyt-product .product-detail-list .product-expand .product-type-list .product-type:last-child {
+	padding-right: 0
+}
+
+.lyt-product .product-detail-list .product-expand .product-type-list .product-type:last-child:after {
+	display: none
+}
+
+.lyt-product .product-detail-list .product-expand .product-type-list .product-type .icon {
+	font-size: 5.47vw;
+	color: #f58220
+}
+
+.lyt-product .product-detail-list .product-expand .product-type-list .product-type .name {
+	display: block;
+	font-size: 1.25vw;
+	line-height: 1.95vw;
+	color: #999;
+	font-family: zurich-bold
+}
+
+
+
+/* FOnTS */
+
+@charset "UTF-8";
+@font-face {
+    font-family: "icicihfc";
+    src: url("/assets/fonts/icicihfc.eot");
+    src: url("/assets/fonts/icicihfc.eot?#iefix") format("embedded-opentype"), url("/assets/fonts/icicihfc.woff") format("woff"), url("/assets/fonts/icicihfc.ttf") format("truetype"), url("/assets/fonts/icicihfc.svg#icicihfc") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+
+[data-icon]:before {
+    font-family: "icicihfc" !important;
+    content: attr(data-icon);
+    font-style: normal !important;
+    font-weight: normal !important;
+    font-variant: normal !important;
+    text-transform: none !important;
+    speak: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+[class^="icon-"]:before,
+[class*=" icon-"]:before {
+    font-family: "icicihfc" !important;
+    font-style: normal !important;
+    font-weight: normal !important;
+    font-variant: normal !important;
+    text-transform: none !important;
+    speak: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-tick:before {
+    content: "\61";
+}
+
+.icon-down:before {
+    content: "\62";
+}
+
+.icon-close:before {
+    content: "\63";
+}
+
+.icon-inr:before {
+    content: "\65";
+}
+
+.icon-angle-right:before {
+    content: "\64";
+}
+
+.icon-angle-left:before {
+    content: "\66";
+}
+
+.icon-back:before {
+    content: "\67";
+}
+
+.icon-arrow:before {
+    content: "\68";
+}
+
+.icon-doc-upload:before {
+    content: "\69";
+}
+
+.icon-user:before {
+    content: "\6a";
+}
+
+.icon-call:before {
+    content: "\6b";
+}
+
+.icon-email:before {
+    content: "\6c";
+}
+
+.icon-loaction:before {
+    content: "\6d";
+}
+
+.icon-info:before {
+    content: "\6e";
+}
+
+.icon-leads:before {
+    content: "\6f";
+}
+
+.icon-dashboard:before {
+    content: "\70";
+}
+
+.icon-performance:before {
+    content: "\71";
+}
+
+.icon-train:before {
+    content: "\72";
+}
+
+.icon-doc:before {
+    content: "\73";
+}
+
+.icon-arrow-left:before {
+    content: "\74";
+}
+
+.icon-arrow-right:before {
+    content: "\75";
+}
+
+.icon-search:before {
+    content: "\76";
+}
+
+.icon-notification:before {
+    content: "\77";
+}
+
+.icon-home-equity:before {
+    content: "\78";
+}
+
+.icon-others:before {
+    content: "\79";
+}
+
+.icon-residential:before {
+    content: "\7a";
+}
+
+.icon-commercial:before {
+    content: "\41";
+}
+
+.icon-lease:before {
+    content: "\42";
+}
+
+.icon-topup:before {
+    content: "\43";
+}
+
+.icon-office:before {
+    content: "\44";
+}
+
+.icon-home-improve:before {
+    content: "\45";
+}
+
+.icon-securities:before {
+    content: "\46";
+}
+
+.icon-home-loan:before {
+    content: "\47";
+}

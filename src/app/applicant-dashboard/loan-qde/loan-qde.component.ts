@@ -198,8 +198,8 @@ export class LoanQdeComponent implements OnInit {
 
   loanType: Array<any>;
   isPropertyIdentified = false;
-  selectedLoanPurpose: string;
-  selectedLoanType: string;
+  selectedLoanPurpose: any;
+  selectedLoanType: any;
 
   propertyTypes: Array<any>;
   selectedPropertyType: string;
@@ -238,6 +238,8 @@ export class LoanQdeComponent implements OnInit {
   selectedApplicantName: string;
   selectedApplicantIndex: number = 0;
 
+  isLoanProductPage: boolean;
+
   constructor(
     private renderer: Renderer2,
     private route: ActivatedRoute,
@@ -246,7 +248,7 @@ export class LoanQdeComponent implements OnInit {
     private qdeService: QdeService,
     private cds: CommonDataService) {
 
-    this.cds.changeMenuBarShown(true);
+    this.cds.changeMenuBarShown(false);
     this.cds.changeViewFormVisible(true);
     this.cds.changeLogoutVisible(true);
 
@@ -300,7 +302,7 @@ export class LoanQdeComponent implements OnInit {
       const lov = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs);
       this.titles = lov.LOVS.applicant_title;
 
-      this.loanpurposes = lov.LOVS.loan_purpose;
+      // this.loanpurposes = lov.LOVS.loan_purpose;
       this.loanType = lov.LOVS.loan_type;
       this.propertyTypes = lov.LOVS.property_type;
 
@@ -344,14 +346,39 @@ export class LoanQdeComponent implements OnInit {
         this.qdeHttp.getQdeData(applicationId).subscribe(response => {
           let result = JSON.parse(response["ProcessVariables"]["response"]);
 
+          this.cds.enableTabsIfStatus1(result.application.status);
+
+          /****************************************************************************
+          * If Loan Amount is present show qde screen (false) else show product screen
+          ****************************************************************************/
+         console.log(result.application.loanDetails.loanAmount.amountRequired != null);
+
+          if(result.application.loanDetails &&
+            result.application.loanDetails.loanAmount &&
+            result.application.loanDetails.loanAmount.loanType) {
+
+            this.isLoanProductPage = false;
+            this.cds.changeMenuBarShown(true);            
+          } else {
+            this.isLoanProductPage = true;
+            this.cds.changeMenuBarShown(false);
+          }
 
           // All hardcoded value need to removed
-          this.selectedLoanType =
-            result.application.loanDetails.loanAmount.loanType ||
-            this.loanType[0].value;
-          this.selectedLoanPurpose =
-            result.application.loanDetails.loanAmount.loanPurpose ||
-            this.loanpurposes[0].value;
+          this.loanType = this.loanType.slice(0, 3);
+          this.selectedLoanType = result.application.loanDetails.loanAmount.loanType || this.loanType[0];
+
+          // this.selectedLoanPurpose =
+          //   result.application.loanDetails.loanAmount.loanPurpose ||
+          //   this.loanpurposes[0].value;
+          console.log("loanType: ", result.application.loanDetails.loanAmount.loanType);
+          if(result.application.loanDetails.loanAmount.loanType) {
+            this.setLoanPurposes(result.application.loanDetails.loanAmount.loanType+"", result.application.loanDetails.loanAmount.loanPurpose);
+          } else {
+            this.loanpurposes = [{key: '', value: ''}];
+            this.selectedLoanPurpose = this.loanpurposes[0];
+          }
+          
 
           if (!result.application.loanDetails.propertyType) {
             result.application.loanDetails.propertyType = {}; //This line need to be removed
@@ -564,11 +591,13 @@ export class LoanQdeComponent implements OnInit {
         return;
       }
   
+      console.log("selectedLoanPurpose: ", this.selectedLoanPurpose.value);
+
       this.qde.application.loanDetails.loanAmount = {
-        amountRequired: form.value.amountRequired,
-        loanPurpose: form.value.loanPurpose,
+        amountRequired: parseInt(this.getNumberWithoutCommaFormat(form.value.amountRequired)),
+        loanPurpose: this.selectedLoanPurpose.value,
         loanTenure: form.value.loanTenure,
-        loanType: form.value.loanType
+        loanType: parseInt(this.selectedLoanType.value+"")
       };
       
       if(this.qde.application.loanDetails.loanAmount.loanTenure == 0){
@@ -577,7 +606,7 @@ export class LoanQdeComponent implements OnInit {
       }else{
         this.tenureYears = false;
       }
-  
+
       this.qdeHttp
         .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
         .subscribe(
@@ -873,5 +902,25 @@ export class LoanQdeComponent implements OnInit {
   ****************************************/
   isValidNumber(x) {
     return RegExp('^[0-9]*$').test(this.getNumberWithoutCommaFormat(x));
+  }
+
+  selectLoanType(lt) {
+    this.isLoanProductPage = false;
+    this.selectedLoanType = lt;
+    this.cds.changeMenuBarShown(true);
+
+    this.setLoanPurposes(lt.value);
+  }
+  
+  setLoanPurposes(loanType: string, data ?: string) {
+    this.qdeHttp.getLoanPurposeFromLoanType({loanType: loanType}).subscribe(res => {
+      this.loanpurposes = res['ProcessVariables']['loanPurposeLov'];
+      console.log("loanpurposes: ", this.loanpurposes);
+      if(data) {
+        this.selectedLoanPurpose = this.loanpurposes.find(v => v.value == data) || this.loanpurposes[0];
+      } else {
+        this.selectedLoanPurpose = this.loanpurposes[0];
+      }
+    });
   }
 }

@@ -253,6 +253,10 @@ export const environment = {
     "auditTrailUpdateAPI": {
       'workflowId': '98b55c00be8811e98e020242ac110002',
       'processId': '98ce328ebe8811e9b9a00242ac110002'
+    },
+    "getLoanPurposeFromLoanType": {
+      'workflowId': '1d28844c72f011e982270242ac110003',
+      'processId': 'cdec0538b83711e990590242ac110002'
     }
   },
   userName: "icici@icici.com",

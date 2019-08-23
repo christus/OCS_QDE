@@ -319,6 +319,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   page: number;
   auditTrialApiSub: Subscription;
   swiperSliders: Array<Swiper> = [];
+  swiperSlidersSub: Subscription;
 
   constructor(private renderer: Renderer2,
               private route: ActivatedRoute,
@@ -328,6 +329,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
               private cds: CommonDataService,
               private deviceService: DeviceDetectorService) {
     
+    this.qde = this.qdeService.defaultValue;
+
     this.isMobile = this.deviceService.isMobile() ;
 
     this.cds.changeMenuBarShown(true);
@@ -342,23 +345,24 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     //   this.panslide2 = val;
     // });
 
-    this.qdeSourceSub = this.qdeService.qdeSource.subscribe(val => {
-      this.qde = val;
-      console.log("latest Qde: ", this.qde);
-      console.log(this.qde.application.applicants.length);
-      let i = this.qde.application.applicants.length <= 1 ? 1 : this.qde.application.applicants.length - 1;
-      console.log(i);
-      // this.isTabDisabled = this.qde.application.applicants.filter(v => v.isMainApplicant == false).length > 0 ? true: false;
-      if(this.qde.application.applicants.length > i && this.qde.application.applicants[i]['applicantId'] == "") {
-        this.coApplicantIndex = i;
-        console.log("coapplicantindex: ", this.coApplicantIndex);
-        this.isTabDisabled = false;
-        console.log(this.qde.application.applicants[this.coApplicantIndex]);
-      }
+    // DEPRECATED
+    // this.qdeSourceSub = this.qdeService.qdeSource.subscribe(val => {
+    //   this.qde = val;
+    //   console.log("latest Qde: ", this.qde);
+    //   console.log(this.qde.application.applicants.length);
+    //   let i = this.qde.application.applicants.length <= 1 ? 1 : this.qde.application.applicants.length - 1;
+    //   console.log(i);
+    //   // this.isTabDisabled = this.qde.application.applicants.filter(v => v.isMainApplicant == false).length > 0 ? true: false;
+    //   if(this.qde.application.applicants.length > i && this.qde.application.applicants[i]['applicantId'] == "") {
+    //     this.coApplicantIndex = i;
+    //     console.log("coapplicantindex: ", this.coApplicantIndex);
+    //     this.isTabDisabled = false;
+    //     console.log(this.qde.application.applicants[this.coApplicantIndex]);
+    //   }
 
-      this.coApplicantsForDashboard = val.application.applicants.filter(v => v.isMainApplicant == false);
-      this.cds.enableTabsIfStatus1(this.qde.application.status);
-    });
+    //   this.coApplicantsForDashboard = val.application.applicants.filter(v => v.isMainApplicant == false);
+    //   this.cds.enableTabsIfStatus1(this.qde.application.status);
+    // });
 
     this.applicationIdSub = this.cds.applicationId.subscribe(val => {
       this.applicationId = val;
@@ -414,6 +418,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       if(val['page'] && val['page'] != '') {
         this.page = (val && val['page'] != null && parseInt(val['page']) != NaN && parseInt(val['page']) >= 1) ? parseInt(val['page']): 1;
       }
+
+      this.applicantIndividual = (this.activeTab >= 11) ? false: true;
 
       console.log("Fragment & QueryParams: ", this.tabName, this.page);
       // Here in this condition, fragment and page number will be appropriate
@@ -494,7 +500,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
     this.paramsSub = this.route.params.subscribe((params) => {
 
-      console.log('PARAMS................................')
+      console.log('PARAMS................................');
 
       this.cds.changeApplicationId(params.applicationId);
 
@@ -503,26 +509,43 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       // Make an http request to get the required qde data and set using setQde
       if(params.applicationId != null) {
 
+        this.cds.changeApplicationId(params.applicationId);
+
         // If not coming from leads dashboard
         // if(this.qdeService.getQde().application.applicationId == "" || this.qdeService.getQde().application.applicationId == null) {
           this.getQdeDataSub = this.qdeHttp.getQdeData(params.applicationId).subscribe(response => {
             console.log("RESPONSE ", response);
             var result = JSON.parse(response["ProcessVariables"]["response"]);
             console.log("Get ", result);
+            this.qde = result;
+            this.coApplicantsForDashboard = result.application.applicants.filter(v => v.isMainApplicant == false);
+            this.cds.enableTabsIfStatus1(this.qde.application.status);
 
-            this.qdeService.setQde(result);
-            console.log(result);
+            // TO BE REMOVED
+            // this.qdeService.setQde(result);
 
-            this.selectedRelationship =
-            result.application.applicants[this.coApplicantIndex].personalDetails.relationShip ||
-            this.relationships[0].value;
+            /***********************************************
+            * Check if route is appropriate with Applicants
+            * If not then redirect to Dashboard
+            ***********************************************/
+            if(result.application.applicants.length <= params.coApplicantIndex) {
+              this.router.navigate(['/applicant', result.application.applicationId, 'co-applicant'], {queryParams: {tabName: this.fragments[0], page: 1}});
+            }
 
-            if(this.qde.application.auditTrailDetails.screenPage == screenPages['coApplicantDetails']) {
-              this.coApplicantIndex = result.application.applicants.findIndex(v => v.applicantId == this.qde.application.auditTrailDetails.applicantId);
-              this.goToExactPageAndTab(this.qde.application.auditTrailDetails.tabPage, this.qde.application.auditTrailDetails.pageNumber);
+            this.selectedRelationship = result.application.applicants[this.coApplicantIndex].personalDetails.relationShip || this.relationships[0].value;
+
+            if(params['coApplicantIndex'] && this.qde.application.auditTrailDetails.screenPage == screenPages['coApplicantDetails']) {
+              if(this.qde.application.auditTrailDetails.applicantId == parseInt(this.qde.application.applicants[params.coApplicantIndex].applicantId)) {
+                this.coApplicantIndex = result.application.applicants.findIndex(v => v.applicantId == this.qde.application.auditTrailDetails.applicantId);
+                this.router.navigate(['/appplicant', this.qde.application.applicationId, 'co-applicant', params.coApplicantIndex]);
+                this.goToExactPageAndTab(result.application.auditTrailDetails.tabPage, result.application.auditTrailDetails.pageNumber);
+              } else {
+                this.tabSwitch(0);  
+              }
+
             } else {
               // If audit trail isnt of applicant details page
-              // this.goToExactPageAndTab(this.qde.application.auditTrailDetails.tabPage, this.qde.application.auditTrailDetails.pageNumber);
+              this.tabSwitch(0);
             }
 
             try {
@@ -701,10 +724,14 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
   tabSwitch(tabIndex ?: number, fromQde ?: boolean) {
 
+
     if(tabIndex == 0) {
       // Remove not saved coapplicants
       this.qde.application.applicants = this.qde.application.applicants.filter(v => v.applicantId != "");
-      this.qdeService.setQde(this.qde);
+
+
+      // TO BE REMOVED
+      // this.qdeService.setQde(this.qde);
       this.isTabDisabled = true;
     }
 
@@ -712,7 +739,6 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
     // Check for invalid tabIndex
     if(tabIndex < this.fragments.length) {
-      // alert(tabIndex);
       this.router.navigate([], {queryParams: { tabName: this.fragments[tabIndex], page: t }});
     }
   }
@@ -807,8 +833,12 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
               // let isApplicantPresent:boolean = false;
     
               if((result["application"]["applicants"]).length > 0) {
-                this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(result['application']['applicationId'], result['application']['applicants'][0]['applicantId']+"", this.page, this.tabName, screenPages['coApplicantDetails']).subscribe(auditRes => {
+                this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(result['application']['applicationId'], result['application']['applicants'][0]['applicantId']+"", 1, this.fragments[this.activeTab+1], screenPages['coApplicantDetails']).subscribe(auditRes => {
                   if(auditRes['ProcessVariables']['status'] == true) {
+                    this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                    this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                    this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                    this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
                   }
                 });
                 // isApplicantPresent = applicants[this.applicantIndex].hasOwnProperty('applicantId');
@@ -858,8 +888,12 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             // let isApplicantPresent:boolean = false;
   
             if((result["application"]["applicants"]).length > 0) {
-              this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(result['application']['applicationId'], result['application']['applicants'][0]['applicantId']+"", this.page, this.tabName, screenPages['coApplicantDetails']).subscribe(auditRes => {
+              this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(result['application']['applicationId'], result['application']['applicants'][0]['applicantId']+"", 1, this.fragments[this.activeTab+1], screenPages['coApplicantDetails']).subscribe(auditRes => {
                 if(auditRes['ProcessVariables']['status'] == true) {
+                    this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                    this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                    this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                    this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
                 }
               });
 
@@ -946,8 +980,12 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
 
                 if((result["application"]["applicants"]).length > 0) {
-                  this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(result['application']['applicationId'], result['application']['applicants'][0]['applicantId']+"", this.page, this.tabName, screenPages['coApplicantDetails']).subscribe(auditRes => {
+                  this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(result['application']['applicationId'], result['application']['applicants'][0]['applicantId']+"", 1, this.fragments[this.activeTab+1], screenPages['coApplicantDetails']).subscribe(auditRes => {
                     if(auditRes['ProcessVariables']['status'] == true) {
+                    this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                    this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                    this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                    this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
                     }
                   });
                   // isApplicantPresent = applicants[this.applicantIndex].hasOwnProperty('applicantId');
@@ -995,8 +1033,12 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             // let isApplicantPresent:boolean = false;
 
             if((result["application"]["applicants"]).length > 0) {
-              this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(result['application']['applicationId'], result['application']['applicants'][0]['applicantId']+"", this.page, this.tabName, screenPages['coApplicantDetails']).subscribe(auditRes => {
+              this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(result['application']['applicationId'], result['application']['applicants'][0]['applicantId']+"", 1, this.fragments[this.activeTab+1], screenPages['coApplicantDetails']).subscribe(auditRes => {
                 if(auditRes['ProcessVariables']['status'] == true) {
+                    this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                    this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                    this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                    this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
                 }
               });
               // isApplicantPresent = applicants[this.applicantIndex].hasOwnProperty('applicantId');
@@ -1058,6 +1100,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         if(response["ProcessVariables"]["status"]) {
           this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.coApplicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['coApplicantDetails']).subscribe(auditRes => {
             if(auditRes['ProcessVariables']['status'] == true) {
+                    this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                    this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                    this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                    this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
           this.goToNextSlide(swiperInstance);
@@ -1082,6 +1128,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       if(response["ProcessVariables"]["status"]) {
         this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.coApplicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['coApplicantDetails']).subscribe(auditRes => {
           if(auditRes['ProcessVariables']['status'] == true) {
+                    this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                    this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                    this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                    this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
           }
         });        
         this.goToNextSlide(swiperInstance);
@@ -1108,6 +1158,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         if(response["ProcessVariables"]["status"]) {
           this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.coApplicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['coApplicantDetails']).subscribe(auditRes => {
             if(auditRes['ProcessVariables']['status'] == true) {
+                    this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                    this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                    this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                    this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
           this.goToNextSlide(swiperInstance);
@@ -1144,6 +1198,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         if(response["ProcessVariables"]["status"]) {
           this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.coApplicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['coApplicantDetails']).subscribe(auditRes => {
             if(auditRes['ProcessVariables']['status'] == true) {
+                    this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                    this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                    this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                    this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
           this.goToNextSlide(swiperInstance);
@@ -1188,6 +1246,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         if(response["ProcessVariables"]["status"]) {
           this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.coApplicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['coApplicantDetails']).subscribe(auditRes => {
             if(auditRes['ProcessVariables']['status'] == true) {
+                    this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                    this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                    this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                    this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
           this.qdeHttp.duplicateApplicantCheck(this.qde.application.applicants[this.coApplicantIndex].applicantId).subscribe(res => {
@@ -1241,6 +1303,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         if(response["ProcessVariables"]["status"]) {
           this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.coApplicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['coApplicantDetails']).subscribe(auditRes => {
             if(auditRes['ProcessVariables']['status'] == true) {
+                    this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                    this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                    this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                    this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
           this.tabSwitch(4);
@@ -1328,6 +1394,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         if(response["ProcessVariables"]["status"]) {
           this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.coApplicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['coApplicantDetails']).subscribe(auditRes => {
             if(auditRes['ProcessVariables']['status'] == true) {
+                    this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                    this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                    this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                    this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
           this.tabSwitch(5);
@@ -1370,6 +1440,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
           if(form.value.maritalStatus.value == "2") {
             this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.coApplicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['coApplicantDetails']).subscribe(auditRes => {
               if(auditRes['ProcessVariables']['status'] == true) {
+                    this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                    this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                    this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                    this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
               }
             });
             this.goToNextSlide(swiperInstance);
@@ -1405,6 +1479,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         if(response["ProcessVariables"]["status"]) {
           this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.coApplicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['coApplicantDetails']).subscribe(auditRes => {
             if(auditRes['ProcessVariables']['status'] == true) {
+                    this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                    this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                    this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                    this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
           this.goToNextSlide(swiperInstance);
@@ -1436,6 +1514,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         if(response["ProcessVariables"]["status"]) {
           this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.coApplicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['coApplicantDetails']).subscribe(auditRes => {
             if(auditRes['ProcessVariables']['status'] == true) {
+                    this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                    this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                    this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                    this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
           if(value == 1) {
@@ -1477,6 +1559,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         if(response["ProcessVariables"]["status"]) {
           this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.coApplicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['coApplicantDetails']).subscribe(auditRes => {
             if(auditRes['ProcessVariables']['status'] == true) {
+                    this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                    this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                    this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                    this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
           this.tabSwitch(6);
@@ -1515,6 +1601,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         if(response["ProcessVariables"]["status"]) {
           this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.coApplicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['coApplicantDetails']).subscribe(auditRes => {
             if(auditRes['ProcessVariables']['status'] == true) {
+                    this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                    this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                    this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                    this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
           this.goToNextSlide(swiperInstance);
@@ -1550,6 +1640,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         if(response["ProcessVariables"]["status"]) {
           this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.coApplicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['coApplicantDetails']).subscribe(auditRes => {
             if(auditRes['ProcessVariables']['status'] == true) {
+                    this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                    this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                    this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                    this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
           this.tabSwitch(7);
@@ -1593,6 +1687,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         if(response["ProcessVariables"]["status"]) {
           this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.coApplicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['coApplicantDetails']).subscribe(auditRes => {
             if(auditRes['ProcessVariables']['status'] == true) {
+                    this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                    this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                    this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                    this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
           this.tabSwitch(8);
@@ -1613,10 +1711,18 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   // Occupation Details
   //-------------------------------------------------------------
  
-  submitOccupationDetails(form: NgForm) {
+  submitOccupationDetails(form: NgForm, swiperInstance ?: Swiper) {
 
     if(this.isTBMLoggedIn) {
-      this.tabSwitch(9);
+      /*********************************************************************************************************
+      * If Salaried, Self Employed Professional, Self Employed Business, Retired then only show income consider
+      *********************************************************************************************************/
+     if(['2','5','8','10'].includes(this.selectedOccupation.value.toString())) {
+        // this.isApplicantRouteModal = true
+        this.goToNextSlide(swiperInstance);
+      } else {
+        this.tabSwitch(10);
+      }
     } else {
       if (form && !form.valid) {
         return;
@@ -1633,33 +1739,49 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       
   
       this.qde.application.applicants[this.coApplicantIndex].occupation.occupationType = this.selectedOccupation.value.toString();
-      if(this.selectedOccupation.value.toString() != '9' && this.selectedOccupation.value.toString() != '10' && this.selectedOccupation.value.toString() != '14') {
+
+      if(['2','5','8','10'].includes(this.selectedOccupation.value.toString())) {
         this.qde.application.applicants[this.coApplicantIndex].occupation.companyName = form.value.companyName;
       }
   
-      if(this.selectedOccupation.value.toString() != '9' && this.selectedOccupation.value.toString() != '10' && this.selectedOccupation.value.toString() != '14') {
-        this.qde.application.applicants[this.coApplicantIndex].occupation.numberOfYearsInCurrentCompany = (this.selectedOccupation.value.toString() != '9' && this.selectedOccupation.value.toString() != '10' && this.selectedOccupation.value.toString() != '14') ? form.value.numberOfYearsInCurrentCompany : 0;
+      if(['2','5','8','10'].includes(this.selectedOccupation.value.toString())) {
+        this.qde.application.applicants[this.coApplicantIndex].occupation.numberOfYearsInCurrentCompany = form.value.numberOfYearsInCurrentCompany;
+      } else {
+        this.qde.application.applicants[this.coApplicantIndex].occupation.numberOfYearsInCurrentCompany = 0;
       }
   
-      if(this.selectedOccupation.value.toString() != '9' && this.selectedOccupation.value.toString() != '10' && this.selectedOccupation.value.toString() != '14') {
-        this.qde.application.applicants[this.coApplicantIndex].occupation.totalWorkExperience = (this.selectedOccupation.value.toString() != '9' && this.selectedOccupation.value.toString() != '10' && this.selectedOccupation.value.toString() != '14') ? form.value.totalExperienceYear : 0;
+      if(['2','5','8','10'].includes(this.selectedOccupation.value.toString())) {
+        this.qde.application.applicants[this.coApplicantIndex].occupation.totalWorkExperience = form.value.totalExperienceYear;
+      } else {
+        this.qde.application.applicants[this.coApplicantIndex].occupation.totalWorkExperience = 0;
+      }
+
+      // Housewife and non-working
+      if(['9','18'].includes(this.selectedOccupation.value.toString())) {
+        this.qde.application.applicants[this.coApplicantIndex].incomeDetails.incomeConsider = false;
       }
   
-      console.log(this.qde.application.applicants[this.coApplicantIndex].occupation);
   
       this.createOrUpdatePersonalDetailsSub15 = this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
           this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.coApplicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['coApplicantDetails']).subscribe(auditRes => {
             if(auditRes['ProcessVariables']['status'] == true) {
+                    this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                    this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                    this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                    this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
-          if(this.selectedOccupation.value == 9 || this.selectedOccupation.value == 10 || this.selectedOccupation.value == 14){
-            this.isCoApplicantRouteModal = true;
-            // this.tabSwitch();
-            return;
-          }else{
-            this.tabSwitch(9);
+          
+          /*********************************************************************************************************
+          * If Salaried, Self Employed Professional, Self Employed Business, Retired then only show income consider
+          *********************************************************************************************************/
+          if(['2','5','8','10'].includes(this.selectedOccupation.value.toString())) {
+            // this.isApplicantRouteModal = true
+            this.goToNextSlide(swiperInstance);
+          } else {
+            this.tabSwitch(10);
           }
         } else {
           // Throw Invalid Pan Error
@@ -1711,6 +1833,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         if(response["ProcessVariables"]["status"]) {
           this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.coApplicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['coApplicantDetails']).subscribe(auditRes => {
             if(auditRes['ProcessVariables']['status'] == true) {
+                    this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                    this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                    this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                    this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
           this.tabSwitch(10);
@@ -1747,6 +1873,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         if(response["ProcessVariables"]["status"]) {
           this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.coApplicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['coApplicantDetails']).subscribe(auditRes => {
             if(auditRes['ProcessVariables']['status'] == true) {
+                    this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                    this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                    this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                    this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
           let result = this.parseJson(response["ProcessVariables"]["response"]);
@@ -1805,6 +1935,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         if(response["ProcessVariables"]["status"]) {
           this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.coApplicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['coApplicantDetails']).subscribe(auditRes => {
             if(auditRes['ProcessVariables']['status'] == true) {
+                    this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                    this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                    this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                    this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
           this.tabSwitch(14);
@@ -1851,6 +1985,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         if(response["ProcessVariables"]["status"]) {
           this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.coApplicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['coApplicantDetails']).subscribe(auditRes => {
             if(auditRes['ProcessVariables']['status'] == true) {
+                    this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                    this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                    this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                    this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
           this.tabSwitch(15);
@@ -1888,6 +2026,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         if(response["ProcessVariables"]["status"]) {
           this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.coApplicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['coApplicantDetails']).subscribe(auditRes => {
             if(auditRes['ProcessVariables']['status'] == true) {
+                    this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                    this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                    this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                    this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
           this.tabSwitch(16);
@@ -1928,6 +2070,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         if(response["ProcessVariables"]["status"]) {
           this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.coApplicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['coApplicantDetails']).subscribe(auditRes => {
             if(auditRes['ProcessVariables']['status'] == true) {
+                    this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                    this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                    this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                    this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
           this.goToNextSlide(swiperInstance);
@@ -1942,7 +2088,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
 
-  submitIncomeDetails2(form: NgForm, swiperInstance ?: Swiper) {
+  submitMonthlyIncomeNonIndividual(form: NgForm, swiperInstance ?: Swiper) {
 
     if(this.isTBMLoggedIn) {
       this.goToNextSlide(swiperInstance);
@@ -1961,6 +2107,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         if(response["ProcessVariables"]["status"]) {
           this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.coApplicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['coApplicantDetails']).subscribe(auditRes => {
             if(auditRes['ProcessVariables']['status'] == true) {
+                    this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                    this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                    this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                    this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
           this.goToNextSlide(swiperInstance);
@@ -2008,10 +2158,53 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     return new Array(size);
   }
 
-  incomeDetailsYesNo(value, swiperInstance ?: Swiper) {
+  incomeConsiderYesNoIndividual(value, swiperInstance ?: Swiper) {
 
     if(this.isTBMLoggedIn) {
-      this.goToNextSlide(swiperInstance);
+      if(this.qde.application.applicants[this.coApplicantIndex].incomeDetails.incomeConsider) {
+        this.tabSwitch(9);
+      } else {
+        this.tabSwitch(10);
+      }
+    } else {
+      this.qde.application.applicants[this.coApplicantIndex].incomeDetails.incomeConsider = (value == 1) ? true : false;
+
+  
+      this.createOrUpdatePersonalDetailsSub23 = this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
+        // If successfull
+        if(response["ProcessVariables"]["status"]) {
+          this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.coApplicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['coApplicantDetails']).subscribe(auditRes => {
+            if(auditRes['ProcessVariables']['status'] == true) {
+                    this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                    this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                    this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                    this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
+            }
+          });
+
+          if(this.qde.application.applicants[this.coApplicantIndex].incomeDetails.incomeConsider) {
+            this.tabSwitch(9);
+          } else {
+            this.tabSwitch(10);
+          }
+        } else {
+          // Throw Invalid Pan Error
+        }
+      }, (error) => {
+        console.log("response : ", error);
+      });
+    }
+  }
+
+  incomeConsiderYesNoNonIndividual(value, swiperInstance ?: Swiper) {
+
+    if(this.isTBMLoggedIn) {
+      if(value == 1) {
+        this.goToNextSlide(swiperInstance);
+      } 
+      else if(value == 2) {
+        this.isCoApplicantRouteModal = true;
+      }
     } else {
       this.qde.application.applicants[this.coApplicantIndex].incomeDetails.incomeConsider = (value == 1) ? true : false;
 
@@ -2020,9 +2213,19 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       this.createOrUpdatePersonalDetailsSub23 = this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successfull
         if(response["ProcessVariables"]["status"]) {
+
+          this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.coApplicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['coApplicantDetails']).subscribe(auditRes => {
+            if(auditRes['ProcessVariables']['status'] == true) {
+                    this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                    this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                    this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                    this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
+            }
+          });
+
           if(value == 1) {
             this.goToNextSlide(swiperInstance);
-          }
+          } 
           else if(value == 2) {
             this.isCoApplicantRouteModal = true;
           }
@@ -2072,8 +2275,12 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   selectCoApplicant(applicationId, index) {
-    this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant/'+index]);
-
+    if( this.qde.application.auditTrailDetails.screenPage == screenPages['coApplicantDetails'] &&
+        this.qde.application.auditTrailDetails.applicantId == parseInt(this.qde.application.applicants[index].applicantId)) {
+      this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant/'+index], {queryParams: { tabName: this.qde.application.auditTrailDetails.tabPage, page: this.qde.application.auditTrailDetails.pageNumber }});
+    } else {
+      this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant/'+index], {queryParams: { tabName: this.fragments[1], page: this.page }});
+    }
   }
 
   changeApplicantStatus(value, swiperInstance ?: Swiper) {
@@ -2171,9 +2378,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     // Make QDE Data Global Across App
 
     // This is when co-applicant is being edited
-    if( params.coApplicantIndex != null && (!isNaN(parseInt(params.coApplicantIndex))) && parseInt(params.coApplicantIndex) != 0 ) {
+    if( params.coApplicantIndex != null && (!isNaN(parseInt(params.coApplicantIndex))) && params.coApplicantIndex < this.qde.application.applicants.length) {
 
       this.coApplicantIndex = params.coApplicantIndex;
+      console.log(this.coApplicantIndex);
       this.isTabDisabled = false;
       //------------------------------------------------------
       //    Prefilling values
@@ -2327,42 +2535,201 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
   // New CoApplicant Index for New CoApplicant
   createCoApplicant() {
-    this.qdeService.addNewCoApplicant();
+    this.addNewCoApplicant();
+    this.coApplicantIndex = this.qde.application.applicants.length - 1;
+    this.isTabDisabled = false;
     this.initializeVariables();
     this.tabSwitch(1);
-
   }
 
-  resetQdeForm() {
-    this.qdeService.resetQde();
-    this.residenceNumberStdCode = "";
-    this.residenceNumberPhoneNumber = "";
-    this.alternateResidenceNumberStdCode = ""
-    this.alternateResidenceNumberPhoneNumber = "";
-    this.addressCityState = ""
-    this.otherReligion = "";
-    this.registeredAddressCityState = "";
-    this.corporateAddressCityState = "";
-    this.corporateAddressStdCode = "";
-    this.corporateAddressPhoneNumber = "";
-    this.dob = { day: {key: "DD", value: "DD"}, month: {key: "MM", value: "MM"}, year: {key: "YYYY", value: "YYYY"} };
-    this.organizationDetails = { day: {key: "DD", value: "DD"}, month: {key: "MM", value: "MM"}, year: {key: "YYYY", value: "YYYY"} };
-    this.commCityState = "";
-
-    this.selectedTitle = this.titles[0];
-    this.selectedReligion = this.religions[0];
-    this.selectedMaritialStatus = this.maritals[0];
-    this.selectedCategory = this.categories[0];
-    this.selectedOccupation = this.occupations[0];
-    this.selectedResidence = this.residences[0];
-    this.selectedSpouseTitle = this.titles[0];
-    this.selectedFatherTitle = this.maleTitles[0];
-    this.selectedMotherTitle = this.femaleTitles[0]
-    this.selectedQualification = this.qualifications[0];
-    this.selectedConstitution = this.constitutions[0];
-    this.selectedDocType = this.docType[0];
-    this.selectedAssesmentMethodology = this.assessmentMethodology[0];
+  addNewCoApplicant() {
+    this.qde.application.applicants.push({
+      applicantId: "",
+      isMainApplicant: false,
+      isIndividual: null,
+      partnerRelationship: "",
+      maritalStatus: {
+        status: "",
+        spouseTitle: "",
+        firstName: "",
+        earning: null,
+        amount: null
+      },
+      familyDetails: {
+        numberOfDependents: null,
+        fatherTitle: "",
+        fatherName: "",
+        motherTitle: "",
+        motherName: "",
+        motherMaidenName: ""
+      },
+      other: {
+        religion: "",
+        category: ""
+      },
+      occupation: {
+        occupationType: "",
+        companyName: "",
+        numberOfYearsInCurrentCompany: null,
+        totalWorkExperience: null
+      },
+      pan: {
+        panNumber: "",
+        panImage: "",
+        docType: null,
+        docNumber: "",
+        panVerified: null
+      },
+      personalDetails: {
+        title: "",
+        firstName: "",
+        middleName: "",
+        lastName: "",
+        gender: "",
+        qualification: "",
+        dob: "",
+        birthPlace: "",
+        applicantStatus: ""
+      },
+      contactDetails: {
+        preferredEmailId: "",
+        alternateEmailId: "",
+        mobileNumber: null,
+        alternateMobileNumber: null,
+        residenceNumber: "",
+        alternateResidenceNumber: ""
+      },
+      communicationAddress: {
+        residentialStatus: "",
+        addressLineOne: "",
+        addressLineTwo: "",
+        zipcode: "",
+        city: "",
+        state: "",
+        cityState: "",
+        numberOfYearsInCurrentResidence: "",
+        permanentAddress: null,
+        preferedMailingAddress: null
+      },
+      permanentAddress: {
+        residentialStatus: "",
+        addressLineOne: "",
+        addressLineTwo: "",
+        zipcode: "",
+        city: "",
+        state: "",
+        cityState: "",
+        numberOfYearsInCurrentResidence: "",
+        permanentAddress: null,
+        preferedMailingAddress: null
+      },
+      residentialAddress: {
+        residentialStatus: "",
+        addressLineOne: "",
+        addressLineTwo: "",
+        zipcode: "",
+        city: "",
+        state: "",
+        cityState: "",
+        numberOfYearsInCurrentResidence: "",
+        permanentAddress: null
+      },
+      officialCorrespondence: {
+        addressLineOne: "",
+        addressLineTwo: "",
+        landMark: "",
+        zipcode: "",
+        city: "",
+        state: "",
+        officeNumber: "",
+        officeEmailId: "",
+        cityState: "",
+        zipCityStateID: ""
+      },
+      organizationDetails: {
+        nameOfOrganization: "",
+        dateOfIncorporation: "",
+        constitution: ""
+      },
+      registeredAddress: {
+        registeredAddress: "",
+        landMark: "",
+        zipcode: "",
+        city: "",
+        state: ""
+      },
+      corporateAddress: {
+        corporateAddress: "",
+        landMark: "",
+        zipcode: "",
+        city: "",
+        state: "",
+        stdNumber: "",
+        officeEmailId: ""
+      },
+      revenueDetails: {
+        revenue: null,
+        annualNetIncome: null,
+        grossTurnOver: null
+      },
+      incomeDetails: {
+        annualFamilyIncome: "",
+        monthlyExpenditure: "",
+        incomeConsider: null,
+        monthlyIncome: "",
+        assessmentMethodology: "",
+        puccaHouse: null
+      },
+      documents: [
+        {
+          documentType: "",
+          documentCategory: "",
+          documentImageId: "",
+          documentName: "",
+          documentSize: null
+        },
+        {
+          documentType: "",
+          documentCategory: "",
+          documentImageId: "",
+          documentName: "",
+          documentSize: null
+        }
+      ]
+    });
   }
+
+  // DEPRECATED
+  // resetQdeForm() {
+  //   this.qdeService.resetQde();
+  //   this.residenceNumberStdCode = "";
+  //   this.residenceNumberPhoneNumber = "";
+  //   this.alternateResidenceNumberStdCode = ""
+  //   this.alternateResidenceNumberPhoneNumber = "";
+  //   this.addressCityState = ""
+  //   this.otherReligion = "";
+  //   this.registeredAddressCityState = "";
+  //   this.corporateAddressCityState = "";
+  //   this.corporateAddressStdCode = "";
+  //   this.corporateAddressPhoneNumber = "";
+  //   this.dob = { day: {key: "DD", value: "DD"}, month: {key: "MM", value: "MM"}, year: {key: "YYYY", value: "YYYY"} };
+  //   this.organizationDetails = { day: {key: "DD", value: "DD"}, month: {key: "MM", value: "MM"}, year: {key: "YYYY", value: "YYYY"} };
+  //   this.commCityState = "";
+
+  //   this.selectedTitle = this.titles[0];
+  //   this.selectedReligion = this.religions[0];
+  //   this.selectedMaritialStatus = this.maritals[0];
+  //   this.selectedCategory = this.categories[0];
+  //   this.selectedOccupation = this.occupations[0];
+  //   this.selectedResidence = this.residences[0];
+  //   this.selectedSpouseTitle = this.titles[0];
+  //   this.selectedFatherTitle = this.maleTitles[0];
+  //   this.selectedMotherTitle = this.femaleTitles[0]
+  //   this.selectedQualification = this.qualifications[0];
+  //   this.selectedConstitution = this.constitutions[0];
+  //   this.selectedDocType = this.docType[0];
+  //   this.selectedAssesmentMethodology = this.assessmentMethodology[0];
+  // }
 
   commZipcodeFocusout($event: any ) {
     //call API
@@ -2729,7 +3096,6 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     this.qde.application.applicants[this.coApplicantIndex] = this.qdeService.getModifiedObject(tempApplicant, newApplicantToBeReplaced);
     this.qde.application.applicants[this.coApplicantIndex].applicantId = tempApplicant.applicantId;
     this.qde.application.applicants[this.coApplicantIndex].isMainApplicant = tempApplicant.isMainApplicant;
-    this.qdeService.setQde(this.qde);
 
     this.createOrUpdatePersonalDetailsSub5=this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
       // If successful
@@ -2795,7 +3161,12 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     // this.swiperSliders.forEach((v, i, a) => {
     //   v.setIndex(0);
     // });
-    this.swiperSliders = this.swiperS$.toArray();
+    this.swiperSlidersSub = this.swiperS$.changes.subscribe(v => {
+      this.swiperSliders = v._results;
+      if(this.swiperSliders && this.swiperSliders.length > 0) {
+        this.swiperSliders[this.activeTab].setIndex(this.page-1);
+      }
+    });
   }
 
   moreCoApp(){
@@ -2814,6 +3185,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     this.tabName = tabPage;
     this.page = pageNumber;
     this.tabSwitch(index, true);
-    this.swiperSliders[index].setIndex(pageNumber-1);
-  }  
+    // alert(this.coApplicantIndex);
+  }
+
 }

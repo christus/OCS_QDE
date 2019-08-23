@@ -2,7 +2,17 @@
 <main>
   <div class="main">
 
-    <div class="lyt-home">
+    <div class="lyt-product" *ngIf="isLoanProductPage == true">
+      <ul class="product-list">
+          <li class="item-product typ-loan" *ngFor="let lt of loanType;" (click)="selectLoanType(lt)">
+              <span class="icon icon-home-loan"></span>
+              <h3 class="product-title">{{lt.key}}</h3>
+          </li>
+      </ul>      
+    </div>
+
+
+    <div class="lyt-home" *ngIf="isLoanProductPage == false">
       <div class="tabs">
         <ul class="tabs-head">
           <!-- <li class="tab-link pending" [ngClass]="{'active': (activeTab == 0)}">
@@ -82,7 +92,6 @@
                           [data]="loanpurposes" 
                           textField="key"
                           valueField="value"
-                          [valuePrimitive]="true"
                           [(ngModel)]="selectedLoanPurpose">
                         </kendo-dropdownlist>
                       </div>
@@ -350,7 +359,7 @@
                               <p class="note">For applicant {{selectedApplicantName}}</p>
                           </div>
                         </div>
-                        <div class="swiper-slide">
+                        <div class="swiper-slide" *ngIf="selectedLoanPurpose && ['16', '17'].includes(selectedLoanPurpose.value)">
                           <div class="title-wrap">
                               <h4 class="title">Select existing<span class="cm-line-break"></span>loan provider</h4>
                               <p class="note">For Applicant {{selectedApplicantName}}</p>
@@ -423,7 +432,7 @@
                           </form>
                         </div>
 
-                    <div class="swiper-slide">
+                    <div class="swiper-slide" *ngIf="selectedLoanPurpose && ['16', '17'].includes(selectedLoanPurpose.value)">
                       <form class="bs-form" #loanProvider="ngForm"
                       (ngSubmit)="submitExistingLoanProvider(loanProvider, existingLoan2)">
                         <div class="form-wrap">

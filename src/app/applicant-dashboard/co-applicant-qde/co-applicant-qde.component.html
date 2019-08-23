@@ -5,7 +5,7 @@
                 <div class="tabs">
                     <ul class="tabs-head">
                       <li class="tab-link" [ngClass]="{'active': (activeTab == 0), 'pending': false}">
-                        <a [routerLink]="['/applicant', applicationId, 'co-applicant']">Dashboard</a>
+                        <a [routerLink]="['/applicant', applicationId, 'co-applicant']" [queryParams]="{tabName: 'dashboard', page: 1}">Dashboard</a>
                       </li>
                       <li class="tab-link" [ngClass]="{'not-visible': isTabDisabled, 'active': (activeTab == 1), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
                         <a href="javascript:void(0);" (click)="tabSwitch(1)">PAN</a>
@@ -31,7 +31,7 @@
                       <li class="tab-link" [ngClass]="{'not-visible': isTabDisabled, 'active': (activeTab == 8), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
                         <a href="javascript:void(0);" (click)="tabSwitch(8)">occupation details</a>
                       </li>
-                      <li class="tab-link" [ngClass]="{'not-visible': isTabDisabled, 'active': (activeTab == 9), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
+                      <li class="tab-link" [ngClass]="{'not-visible': isTabDisabled, 'active': (activeTab == 9), 'hide': ((!applicantIndividual) || !(qde?.application?.applicants[coApplicantIndex]?.incomeDetails?.incomeConsider == true)), 'disabled': isTabDisabled}">
                         <a href="javascript:void(0);" (click)="tabSwitch(9)">official correspondence</a>
                       </li>
                       <li class="tab-link" [ngClass]="{'not-visible': isTabDisabled, 'active': (activeTab == 10), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
@@ -60,7 +60,7 @@
                         <div class="tab-content" [ngClass]="{'active': (activeTab == 0)}">
                             <a class="back-btn" (click)="backButton()"></a>
                             <div class="lyt-tabs">
-    
+
                                 <div class="lhs">
     
                                     <div  class="swiper-container form-swiper"
@@ -1670,7 +1670,7 @@
                   </div>
       
                   <div class="tab-content" [ngClass]="{'active': (activeTab == 8)}">
-                      <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
+                      <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(occupationSlider2)"></a>
       
                       <div class="lyt-tabs">
                           <div class="lhs">
@@ -1687,6 +1687,12 @@
                                           </p>
                                       </div>
                                     </div>
+
+                                    <div class="swiper-slide">
+                                        <div class="title-wrap">
+                                            <h4 class="title">Do Applicant’s <span class="cm-line-break"></span>income considered?</h4>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
     
@@ -1702,7 +1708,7 @@
                                         <div class="swiper-slide">
                                           <form   class="bs-form" *ngIf="!isTabDisabled"
                                                   #occupationForm="ngForm"
-                                                  (ngSubmit)="submitOccupationDetails(occupationForm)">
+                                                  (ngSubmit)="submitOccupationDetails(occupationForm, occupationSlider2)">
                                               <div class="form-wrap">
                                                   <div class="form-group">
                                                       <span class="control-title">Occupation type</span>
@@ -1855,6 +1861,28 @@
                                               </div>
                                           </form>
                                           </div>
+
+                                        <div class="swiper-slide">
+                                            <form class="bs-form" *ngIf="!isTabDisabled">
+                                                <div class="form-wrap" pika>
+                                                <div class="bs-radio">
+                                                    <input [readonly]="isTBMLoggedIn" spellcheck="false" type="radio" name="income-consider"
+                                                    id="incomeConsiderYes2" [value]="1" tabindex="1"
+                                                    [checked]="qde.application.applicants[coApplicantIndex].incomeDetails.incomeConsider == true"
+                                                    (click)="incomeConsiderYesNoIndividual(1, occupationSlider2)" class="not-usual" />
+                                                    <label for="incomeConsiderYes2"><span>Yes</span></label>
+                                                </div>
+                                                <div class="bs-radio">
+                                                    <input [readonly]="isTBMLoggedIn" spellcheck="false" type="radio" name="income-consider"
+                                                    id="incomeConsiderNo2" class="not-usual" tabindex="2"
+                                                    (click)="incomeConsiderYesNoIndividual(2, occupationSlider2)"
+                                                    [checked]="qde.application.applicants[coApplicantIndex].incomeDetails.incomeConsider == false"
+                                                    [value]="2" />
+                                                    <label for="incomeConsiderNo2"><span>No</span></label>
+                                                </div>
+                                                </div>
+                                            </form>
+                                            </div>
                                     </div>
                                 </div>
                           </div>
@@ -1862,7 +1890,7 @@
       
                     </div>
       
-                    <div class="tab-content" [ngClass]="{'active': (activeTab == 9)}">
+                    <div class="tab-content" [ngClass]="{'hide': !(qde?.application?.applicants[coApplicantIndex]?.incomeDetails?.incomeConsider == true), 'active': (activeTab == 9)}">
                       <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
       
                       <div class="lyt-tabs">
@@ -2068,31 +2096,24 @@
                   </div>
       
                   <div class="tab-content" [ngClass]="{'active': (activeTab == 10)}">
-                        <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(incomeSlider2)"></a>
+                        <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(incomeSliderIndividual2)"></a>
                         <div class="lyt-tabs">
                             <div class="lhs">
-                                <div  class="swiper-container form-swiper"
-                                      [swiper]="lhsConfig"
-                                      #incomeSlider1="ngxSwiper">
+                                <div class="swiper-container form-swiper" [swiper]="lhsConfig" #incomeSliderIndividual1="ngxSwiper">
                                     <div class="swiper-wrapper">
+                                        <div class="swiper-slide"
+                                        *ngIf="qde?.application?.applicants[coApplicantIndex]?.incomeDetails?.incomeConsider == true">
+                                        <div class="title-wrap">
+                                            <h4 class="title">Applicant’s monthly<span class="cm-line-break"></span>income details</h4>
+                                        </div>
+                                        </div>
+                    
                                         <div class="swiper-slide">
                                             <div class="title-wrap">
-                                                <h4 class="title">Enter Co-Applicant's<span class="cm-line-break"></span>income details</h4>
-                                                <p class="note">Please enter household income & expenditure of main applicant & co-applicant/s</p>
-                                                <p class="note">House made with a high quality materials throughout, including a floor, roof and exterior walls, are called pucca houses</p>
+                                                <h4 class="title">Do Applicant’s <span class="cm-line-break"></span>income considered?</h4>
                                             </div>
                                         </div>
-                                        <div class="swiper-slide">
-                                            <div class="title-wrap">
-                                                <h4 class="title">Co-Applicant's monthly<span class="cm-line-break"></span>income details</h4>
-                                            </div>
-                                        </div>
-                                        <div class="swiper-slide">
-                                            <div class="title-wrap">
-                                                <h4 class="title">Do you or any of the <span class="cm-line-break"></span>family members <span class="cm-line-break"></span> own a puccahouse <span class="cm-line-break"></span>anywhere in India?</h4>
-                                                <p class="note">House made with a high quality materials throughout, including a floor, roof and exterior walls, are called pucca houses</p>
-                                            </div>
-                                        </div>
+                    
                                     </div>
                                 </div>
                             </div>
@@ -2101,175 +2122,149 @@
     
                                 <div class="swiper-container form-swiper"
                                         [swiper]="rhsConfig" #swiperS="ngxSwiper"
-                                        (slidePrevTransitionStart)="slidePrevTransitionStart(incomeSlider1)"
-                                      (slideNextTransitionStart)="slideNextTransitionStart(incomeSlider1)"
-                                        #incomeSlider2="ngxSwiper">
+                                        (slidePrevTransitionStart)="slidePrevTransitionStart(incomeSliderIndividual1)"
+                                      (slideNextTransitionStart)="slideNextTransitionStart(incomeSliderIndividual1)"
+                                        #incomeSliderIndividual2="ngxSwiper">
                                   <div class="swiper-wrapper">
-                                    <div class="swiper-slide">
-                                      <form class="bs-form" *ngIf="!isTabDisabled"
-                                        #incomeDetailsForm1="ngForm" (ngSubmit)="submitIncomeDetails1(incomeDetailsForm1, incomeSlider2)">
-                                          <div class="form-wrap">
-                                              <div class="form-group inr">
-                                                    <input [readonly]="isReadOnly" type="text" class="form-control"
-                                                    id="annualFamilyIncome1"
-                                                    [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.annualFamilyIncome"
-                                                    #annualFamilyIncome1="ngModel"
-                                                    name="annualFamilyIncome"
-                                                    tabindex="1"
-                                                    fieldFill
-                                                    spellcheck="false"
-                                                    pattern="{{regexPattern.amount}}"
-                                                    required/>
-                                                  <label for="annualFamilyIncome1">Annual Family Income <span class="lakhs"></span> </label>
-                                                  <span class="addon">
-                                                      <span class="icon icon-inr"></span>
-                                                    </span>
-                                                    <span class="in-word"></span>
-                                                  <div *ngIf="annualFamilyIncome1.touched && annualFamilyIncome1.invalid" class="invalid-feedback">
-                                                          <!-- <div *ngIf="annualFamilyIncome1.errors?.required">{{errors.incomeDetails.familyIncome.required}}</div> -->
-                                                          <div *ngIf="annualFamilyIncome1.errors?.pattern">{{errors.incomeDetails.familyIncome.invalid}}</div>
-                                                      </div> 
-                                              </div>
-                                                <div class="form-group inr">
-                                                      <input [readonly]="isReadOnly" type="text" class="form-control" 
-                                                      id="monthlyExpenditure1"
-                                                      [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.monthlyExpenditure"
-                                                      #monthlyExpenditure1="ngModel"
-                                                      pattern="{{regexPattern.amount}}"
-                                                      name="monthlyExpenditure"
-                                                      spellcheck="false"
-                                                      tabindex="2"
-                                                      fieldFill
-                                                      required/>
-                                                    <label for="monthlyExpenditure1">Monthly Expenditure</label>
-                                                    <span class="addon">
-                                                      <span class="icon icon-inr"></span>
-                                                    </span>
-                                                    <span class="in-word"></span>
-                                                    <div *ngIf="monthlyExpenditure1.touched && monthlyExpenditure1.invalid" class="invalid-feedback">
-                                                          <!-- <div *ngIf="monthlyExpenditure1.errors?.required">{{errors.incomeDetails.monthlyExpenditure.required}}</div> -->
-                                                          <div *ngIf="monthlyExpenditure1.errors?.pattern">{{errors.incomeDetails.monthlyExpenditure.invalid}}</div>
-                                                      </div> 
-                                                </div>
-                                                <div class="form-group last">
-                                                  <span class="control-title">Do you or any of the family members own a puccahouse anywhere in India?</span>
-                                                  </div>
-    
-                                                  <div class="radio-wrap rounded-radio">
-                                                        <div class="bs-radio typ-normal">
-                                                            <input [readonly]="isReadOnly"  type="radio" 
-                                                                    name="puccaHouse"
-                                                                    [value]="1"
-                                                                    tabindex="3"
-                                                                    [checked]="qde.application.applicants[coApplicantIndex].incomeDetails.puccaHouse == true"
-                                                                    (click)="selectPuccaHouse(1)"
-                                                                    fieldFill
-                                                                    id="pucchaHouseIdYes1" />
-                                                            <label for="pucchaHouseIdYes1">
-                                                                yes
-                                                            </label>
-                                                        </div>
-                                                        <div class="bs-radio typ-normal">
-                                                            <input [readonly]="isReadOnly"  type="radio"
-                                                                    name="puccaHouse"
-                                                                    [value]="2"
-                                                                    tabindex="4"
-                                                                    id="pucchaHouseIdNo1"
-                                                                    [checked]="qde.application.applicants[coApplicantIndex].incomeDetails.puccaHouse == false"
-                                                                    (click)="selectPuccaHouse(2)"
-                                                                    fieldFill />
-                                                            <label for="pucchaHouseIdNo1">
-                                                                No
-                                                            </label>
+
+                                        <div class="swiper-slide" *ngIf="qde?.application?.applicants[coApplicantIndex]?.incomeDetails?.incomeConsider == true">
+                                            <form class="bs-form" *ngIf="!isTabDisabled" 
+                                            #incomeDetailsForm2="ngForm" (ngSubmit)="submitIncomeDetails2(incomeDetailsForm2, incomeSliderIndividual2)">
+                                                <div class="form-wrap">
+                                                    <div class="form-group inr">
+                                                        <input [readonly]="isReadOnly" type="text" class="form-control" 
+                                                        tabindex="1"
+                                                        id="monthlyIncome1"
+                                                        [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.monthlyIncome"
+                                                        #monthlyIncome1="ngModel"
+                                                        fieldFill
+                                                        spellcheck="false"
+                                                        pattern="{{regexPattern.amount}}"
+                                                        name="monthlyIncome"
+                                                        required/>
+                                                        <label for="monthlyIncome1">Monthly income</label>
+                                                        <span class="addon">
+                                                            <span class="icon icon-inr"></span>
+                                                        </span>
+                                                        <span class="in-word"></span>
+
+                                                        <div *ngIf="monthlyIncome1.touched && monthlyIncome1.invalid" class="invalid-feedback">
+                                                            <!-- <div *ngIf="monthlyIncome1.errors?.required">{{errors.incomeDetails.monthlyIncome.required}}</div> -->
+                                                            <div *ngIf="monthlyIncome1.errors?.pattern">{{errors.incomeDetails.monthlyIncome.invalid}}</div>
+
                                                         </div>
                                                     </div>
-                                            </div>
-                                          <div class="btn-wrap">
-                                                <button 
-                                                    type="submit"
-                                                    class="btn btn-primary"
-                                                    [ngClass]="{'disabled': (incomeDetailsForm1.invalid || qde.application.applicants[coApplicantIndex].incomeDetails.puccaHouse == null)}"
-                                                    [disabled]="incomeDetailsForm1.invalid || qde.application.applicants[coApplicantIndex].incomeDetails.puccaHouse == null">
-                                                Next
-                                                </button>
-                                          </div>
-                                      </form>
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <form class="bs-form" *ngIf="!isTabDisabled">
-                                            <div class="form-wrap">
-                                                <div class="bs-radio">
-                                                    <input [readonly]="isReadOnly"  type="radio"
-                                                            name="income-consider"
-                                                            id="incomeConsiderYes1"
-                                                            [value]="1"
-                                                            [checked]="qde.application.applicants[coApplicantIndex].incomeDetails.incomeConsider == true"
-                                                            (click)="incomeDetailsYesNo(1, incomeSlider2)"
-                                                            tabindex="1"
-                                                            class="not-usual" />
-                                                    <label for="incomeConsiderYes1"><span>Yes</span></label>
-                                                </div>
-                                                <div class="bs-radio">
-                                                    <input [readonly]="isReadOnly"  type="radio"
-                                                            name="income-consider"
-                                                            id="incomeConsiderNo1"
-                                                            class="not-usual"
+                                                    <div class="form-group">
+                                                            <span class="control-title">Assessment methodology</span>
+                                                            <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                                            [data]="assessmentMethodology" 
                                                             tabindex="2"
-                                                            [checked]="qde.application.applicants[coApplicantIndex].incomeDetails.incomeConsider == false"
-                                                            (click)="incomeDetailsYesNo(2, incomeSlider2)"
-                                                            [value]="2" />
-                                                    <label for="incomeConsiderNo1"><span>No</span></label>
+                                                            textField="key"
+                                                            valueField="value"
+                                                            name="assessmentMethodology"
+                                                            nick="incomeDetails.assessmentMethodology"
+                                                            #assessmentMethodology1
+                                                            (selectionChange)="selectValueChanged($event, assessmentMethodology1.hostElement)"
+                                                            [(ngModel)]="selectedAssesmentMethodology"></kendo-dropdownlist>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                                <div class="btn-wrap">
+                                                    <button type="submit" class="btn btn-primary" [disabled]="isTBMLoggedIn" [ngClass]="{'disabled': isTBMLoggedIn}">Next</button>
+                                                </div>
                                             </form>
                                         </div>
+
                                         <div class="swiper-slide">
-                                                <form class="bs-form" *ngIf="!isTabDisabled" 
-                                                #incomeDetailsForm2="ngForm" (ngSubmit)="submitIncomeDetails2(incomeDetailsForm2, incomeSlider4)">
-                                                    <div class="form-wrap">
-                                                        <div class="form-group inr">
-                                                            <input [readonly]="isReadOnly" type="text" class="form-control" 
-                                                            tabindex="1"
-                                                            id="monthlyIncome1"
-                                                            [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.monthlyIncome"
-                                                            #monthlyIncome1="ngModel"
-                                                            fieldFill
-                                                            spellcheck="false"
-                                                            pattern="{{regexPattern.amount}}"
-                                                            name="monthlyIncome"
-                                                            required/>
-                                                            <label for="monthlyIncome1">Monthly income</label>
-                                                            <span class="addon">
-                                                                <span class="icon icon-inr"></span>
-                                                            </span>
-                                                            <span class="in-word"></span>
-    
-                                                            <div *ngIf="monthlyIncome1.touched && monthlyIncome1.invalid" class="invalid-feedback">
-                                                              <!-- <div *ngIf="monthlyIncome1.errors?.required">{{errors.incomeDetails.monthlyIncome.required}}</div> -->
-                                                              <div *ngIf="monthlyIncome1.errors?.pattern">{{errors.incomeDetails.monthlyIncome.invalid}}</div>
-    
-                                                          </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                                <span class="control-title">Assessment methodology</span>
-                                                                <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
-                                                                [data]="assessmentMethodology" 
-                                                                tabindex="2"
-                                                                textField="key"
-                                                                valueField="value"
-                                                                name="assessmentMethodology"
-                                                                nick="incomeDetails.assessmentMethodology"
-                                                                #assessmentMethodology1
-                                                                (selectionChange)="selectValueChanged($event, assessmentMethodology1.hostElement)"
-                                                                [(ngModel)]="selectedAssesmentMethodology"></kendo-dropdownlist>
-                                                        </div>
+                                        <form class="bs-form" *ngIf="!isTabDisabled"
+                                            #annualIncomeForm="ngForm" (ngSubmit)="submitIncomeDetails1(annualIncomeForm, incomeSliderIndividual2)">
+                                            <div class="form-wrap">
+                                                <div class="form-group inr">
+                                                        <input [readonly]="isReadOnly" type="text" class="form-control"
+                                                        id="annualFamilyIncome1"
+                                                        [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.annualFamilyIncome"
+                                                        #annualFamilyIncome1="ngModel"
+                                                        name="annualFamilyIncome"
+                                                        tabindex="1"
+                                                        fieldFill
+                                                        spellcheck="false"
+                                                        pattern="{{regexPattern.amount}}"
+                                                        required/>
+                                                    <label for="annualFamilyIncome1">Annual Family Income <span class="lakhs"></span> </label>
+                                                    <span class="addon">
+                                                        <span class="icon icon-inr"></span>
+                                                        </span>
+                                                        <span class="in-word"></span>
+                                                    <div *ngIf="annualFamilyIncome1.touched && annualFamilyIncome1.invalid" class="invalid-feedback">
+                                                            <!-- <div *ngIf="annualFamilyIncome1.errors?.required">{{errors.incomeDetails.familyIncome.required}}</div> -->
+                                                            <div *ngIf="annualFamilyIncome1.errors?.pattern">{{errors.incomeDetails.familyIncome.invalid}}</div>
+                                                        </div> 
+                                                </div>
+                                                    <div class="form-group inr">
+                                                        <input [readonly]="isReadOnly" type="text" class="form-control" 
+                                                        id="monthlyExpenditure1"
+                                                        [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.monthlyExpenditure"
+                                                        #monthlyExpenditure1="ngModel"
+                                                        pattern="{{regexPattern.amount}}"
+                                                        name="monthlyExpenditure"
+                                                        spellcheck="false"
+                                                        tabindex="2"
+                                                        fieldFill
+                                                        required/>
+                                                        <label for="monthlyExpenditure1">Monthly Expenditure</label>
+                                                        <span class="addon">
+                                                        <span class="icon icon-inr"></span>
+                                                        </span>
+                                                        <span class="in-word"></span>
+                                                        <div *ngIf="monthlyExpenditure1.touched && monthlyExpenditure1.invalid" class="invalid-feedback">
+                                                            <!-- <div *ngIf="monthlyExpenditure1.errors?.required">{{errors.incomeDetails.monthlyExpenditure.required}}</div> -->
+                                                            <div *ngIf="monthlyExpenditure1.errors?.pattern">{{errors.incomeDetails.monthlyExpenditure.invalid}}</div>
+                                                        </div> 
                                                     </div>
-                                                    <div class="btn-wrap">
-                                                        <button type="submit"  class="btn btn-primary" [disabled]="isTBMLoggedIn" [ngClass]="{'disabled': isTBMLoggedIn}">Save</button>
+                                                    <div class="form-group last">
+                                                    <span class="control-title">Do you or any of the family members own a puccahouse anywhere in India?</span>
                                                     </div>
-                                                </form>
+        
+                                                    <div class="radio-wrap rounded-radio">
+                                                            <div class="bs-radio typ-normal">
+                                                                <input [readonly]="isReadOnly"  type="radio" 
+                                                                        name="puccaHouse"
+                                                                        [value]="1"
+                                                                        tabindex="3"
+                                                                        [checked]="qde.application.applicants[coApplicantIndex].incomeDetails.puccaHouse == true"
+                                                                        (click)="selectPuccaHouse(1)"
+                                                                        fieldFill
+                                                                        id="pucchaHouseIdYes1" />
+                                                                <label for="pucchaHouseIdYes1">
+                                                                    yes
+                                                                </label>
+                                                            </div>
+                                                            <div class="bs-radio typ-normal">
+                                                                <input [readonly]="isReadOnly"  type="radio"
+                                                                        name="puccaHouse"
+                                                                        [value]="2"
+                                                                        tabindex="4"
+                                                                        id="pucchaHouseIdNo1"
+                                                                        [checked]="qde.application.applicants[coApplicantIndex].incomeDetails.puccaHouse == false"
+                                                                        (click)="selectPuccaHouse(2)"
+                                                                        fieldFill />
+                                                                <label for="pucchaHouseIdNo1">
+                                                                    No
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                </div>
+                                            <div class="btn-wrap">
+                                                    <button 
+                                                        type="submit"
+                                                        class="btn btn-primary"
+                                                        [ngClass]="{'disabled': (annualIncomeForm.invalid || qde.application.applicants[coApplicantIndex].incomeDetails.puccaHouse == null)}"
+                                                        [disabled]="annualIncomeForm.invalid || qde.application.applicants[coApplicantIndex].incomeDetails.puccaHouse == null">
+                                                    Save
+                                                    </button>
                                             </div>
-    
+                                        </form>
+                                        </div>
+
                                   </div>
                                 </div>
                             </div>
@@ -2986,37 +2981,25 @@
                 </div>             
       
                   <div class="tab-content" [ngClass]="{'active': (activeTab == 16)}">
-                          <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(incomeSlider4)"></a>
+                          <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(incomeSliderNonIndividual2)"></a>
                           <div class="lyt-tabs">
                               <div class="lhs">
-                                  <div  class="swiper-container form-swiper"
-                                        [swiper]="lhsConfig"
-                                        #incomeSlider3="ngxSwiper">
-                                      <div class="swiper-wrapper">
-                                          <div class="swiper-slide">
-                                              <div class="title-wrap">
-                                                  <h4 class="title">Enter Co-Applicant's<span class="cm-line-break"></span>income details</h4>
-                                                  <p class="note">Please enter household income & expenditure of main applicant & co-applicant/s</p>
-                                                  <p class="note">House made with a high quality materials throughout, including a floor, roof and exterior walls, are called pucca houses</p>
-                                              </div>
-                                          </div>
-                                          <div class="swiper-slide">
-                                              <div class="title-wrap">
-                                                  <h4 class="title">Do Co-Applicant's <span class="cm-line-break"></span>income considered?</h4>
-                                              </div>
-                                          </div>
-                                          <div class="swiper-slide">
-                                              <div class="title-wrap">
-                                                  <h4 class="title">Co-Applicant's monthly<span class="cm-line-break"></span>income details</h4>
-                                              </div>
-                                          </div>
-                                          <!-- <div class="swiper-slide">
-                                              <div class="title-wrap">
-                                                  <h4 class="title">Do you or any of the <span class="cm-line-break"></span>family members <span class="cm-line-break"></span> own a puccahouse <span class="cm-line-break"></span>anywhere in India?</h4>
-                                                  <p class="note">House made with a high quality materials throughout, including a floor, roof and exterior walls, are called pucca houses</p>
-                                              </div>
-                                          </div> -->
+                                <div class="swiper-container form-swiper" [swiper]="lhsConfig" #incomeConsiderSliderNonIndividual1="ngxSwiper">
+                                    <div class="swiper-wrapper">
+                  
+                                      <div class="swiper-slide">
+                                        <div class="title-wrap">
+                                          <h4 class="title">Do Applicant’s <span class="cm-line-break"></span>income considered?</h4>
+                                        </div>
                                       </div>
+                  
+                                      <div class="swiper-slide">
+                                        <div class="title-wrap">
+                                          <h4 class="title">Applicant’s monthly<span class="cm-line-break"></span>income details</h4>
+                                        </div>
+                                      </div>
+                  
+                                    </div>
                                   </div>
                               </div>
                               
@@ -3024,176 +3007,79 @@
       
                                   <div class="swiper-container form-swiper"
                                           [swiper]="rhsConfig" #swiperS="ngxSwiper"
-                                          (slidePrevTransitionStart)="slidePrevTransitionStart(incomeSlider3)"
-                                      (slideNextTransitionStart)="slideNextTransitionStart(incomeSlider3)"
-                                          #incomeSlider4="ngxSwiper">
+                                          (slidePrevTransitionStart)="slidePrevTransitionStart(incomeSliderNonIndividual1)"
+                                      (slideNextTransitionStart)="slideNextTransitionStart(incomeSliderNonIndividual1)"
+                                          #incomeSliderNonIndividual2="ngxSwiper">
                                     <div class="swiper-wrapper">
-                                      <div class="swiper-slide">
-                                        <form class="bs-form" *ngIf="!isTabDisabled"
-                                          #incomeDetailsForm3="ngForm" (ngSubmit)="submitIncomeDetails1(incomeDetailsForm3, incomeSlider4)">
-                                            <div class="form-wrap">
-                                                <div class="form-group inr">
-                                                      <input [readonly]="isReadOnly" type="text" class="form-control"
-                                                      id="annualFamilyIncome2"
-                                                      [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.annualFamilyIncome"
-                                                      #annualFamilyIncome2="ngModel"
-                                                      name="annualFamilyIncome"
-                                                      maxlength="15"
-                                                      fieldFill
-                                                      tabindex="1"
-                                                      spellcheck="false"
-                                                      pattern="{{regexPattern.amount}}"
-                                                      required/>
-                                                    <label for="annualFamilyIncome2">Annual Family Income <span class="lakhs"></span></label>
-                                                    <span class="addon">
-                                                        <span class="icon icon-inr"></span>
-                                                      </span>
-                                                      <span class="in-word"></span>
-                                                    <div *ngIf="annualFamilyIncome2.touched && annualFamilyIncome2.invalid" class="invalid-feedback">
-                                                        <!-- <div *ngIf="annualFamilyIncome2.errors?.required">{{errors.incomeDetails.familyIncome.required}}</div> -->
-                                                        <div *ngIf="annualFamilyIncome2.errors?.pattern">{{errors.incomeDetails.familyIncome.invalid}}</div>
-                                                    </div> 
+
+                                        <div class="swiper-slide">
+                                            <form class="bs-form" *ngIf="!isTabDisabled">
+                                                <div class="form-wrap">
+                                                <div class="bs-radio">
+                                                    <input [readonly]="isTBMLoggedIn" spellcheck="false" type="radio" name="income-consider"
+                                                    id="incomeConsiderYes2" [value]="1" tabindex="1"
+                                                    [checked]="qde.application.applicants[coApplicantIndex].incomeDetails.incomeConsider == true"
+                                                    (click)="incomeConsiderYesNoNonIndividual(1, incomeSliderNonIndividual2)" class="not-usual" />
+                                                    <label for="incomeConsiderYes2"><span>Yes</span></label>
                                                 </div>
-                                                  <div class="form-group inr" >
+                                                <div class="bs-radio">
+                                                    <input [readonly]="isTBMLoggedIn" spellcheck="false" type="radio" name="income-consider"
+                                                    id="incomeConsiderNo2" class="not-usual" tabindex="2"
+                                                    [checked]="qde.application.applicants[coApplicantIndex].incomeDetails.incomeConsider == false"
+                                                    (click)="incomeConsiderYesNoNonIndividual(2, incomeSliderNonIndividual2)" [value]="2" />
+                                                    <label for="incomeConsiderNo2"><span>No</span></label>
+                                                </div>
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                        <div class="swiper-slide">
+                                            <form class="bs-form" *ngIf="!isTabDisabled" 
+                                                    #incomeDetailsForm4="ngForm" (ngSubmit)="submitMonthlyIncomeNonIndividual(incomeDetailsForm4, incomeSliderNonIndividual2)">
+                                                <div class="form-wrap">
+                                                    <div class="form-group inr">
                                                         <input [readonly]="isReadOnly" type="text" class="form-control" 
-                                                        id="monthlyExpenditure2"
-                                                        [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.monthlyExpenditure"
-                                                        #monthlyExpenditure2="ngModel"
-                                                        pattern="{{regexPattern.amount}}"
-                                                        tabindex="2"
-                                                        name="monthlyExpenditure"
+                                                        id="monthlyIncome2"
+                                                        [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.monthlyIncome"
+                                                        #monthlyIncome2="ngModel"
                                                         fieldFill
+                                                        tabindex="1"
                                                         spellcheck="false"
+                                                        pattern="{{regexPattern.amount}}"
+                                                        name="monthlyIncome"
                                                         required/>
-                                                      <label for="monthlyExpenditure2" >Monthly Expenditure</label>
-                                                      <span class="addon">
-                                                        <span class="icon icon-inr"></span>
-                                                      </span>
-                                                      <span class="in-word"></span>
-                                                      <div *ngIf="monthlyExpenditure2.touched && monthlyExpenditure2.invalid" class="invalid-feedback">
-                                                            <!-- <div *ngIf="monthlyExpenditure2.errors?.required">{{errors.incomeDetails.monthlyExpenditure.required}}</div> -->
-                                                            <div *ngIf="monthlyExpenditure2.errors?.pattern">{{errors.incomeDetails.monthlyExpenditure.invalid}}</div>
-                                                        </div> 
-                                                  </div>
-                                                  <div class="form-group last">
-                                                    <span class="control-title">Do you or any of the family members own a puccahouse anywhere in India?</span>
+                                                        <label for="monthlyIncome2">Monthly income</label>
+                                                        <span class="addon">
+                                                            <span class="icon icon-inr"></span>
+                                                        </span>
+                                                        <span class="in-word"></span>
+
+                                                        <div *ngIf="monthlyIncome2.touched && monthlyIncome2.invalid" class="invalid-feedback">
+                                                        <!-- <div *ngIf="monthlyIncome2.errors?.required">{{errors.incomeDetails.monthlyIncome.required}}</div> -->
+                                                        <div *ngIf="monthlyIncome2.errors?.pattern">{{errors.incomeDetails.monthlyIncome.invalid}}</div>
+
                                                     </div>
-    
-                                                    <div class="radio-wrap rounded-radio">
-                                                        <div class="bs-radio typ-normal">
-                                                            <input [readonly]="isReadOnly"  type="radio" 
-                                                                    name="puccaHouse"
-                                                                    [value]="1"
-                                                                    tabindex="3"
-                                                                    [checked]="qde.application.applicants[coApplicantIndex].incomeDetails.puccaHouse == true"
-                                                                    (click)="selectPuccaHouse(1)"
-                                                                    fieldFill
-                                                                    id="pucchaHouseIdYes2" />
-                                                            <label for="pucchaHouseIdYes2">
-                                                                yes
-                                                            </label>
-                                                        </div>
-                                                        <div class="bs-radio typ-normal">
-                                                            <input [readonly]="isReadOnly"  type="radio"
-                                                                    name="puccaHouse"
-                                                                    [value]="2"
-                                                                    tabindex="4"
-                                                                    id="pucchaHouseIdNo2"
-                                                                    [checked]="qde.application.applicants[coApplicantIndex].incomeDetails.puccaHouse == false"
-                                                                    (click)="selectPuccaHouse(2)"
-                                                                    fieldFill />
-                                                            <label for="pucchaHouseIdNo2">
-                                                                No
-                                                            </label>
-                                                        </div>
                                                     </div>
-                                              </div>
-                                            <div class="btn-wrap">
-                                                  <button   type="submit"
-                                                            class="btn btn-primary"
-                                                            [ngClass]="{'disabled': (incomeDetailsForm3.invalid || qde.application.applicants[coApplicantIndex].incomeDetails.puccaHouse == null)}"
-                                                            [disabled]="incomeDetailsForm3.invalid || qde.application.applicants[coApplicantIndex].incomeDetails.puccaHouse == null">
-                                                  Next
-                                                  </button>
-                                            </div>
-                                        </form>
-                                      </div>
-                                      <div class="swiper-slide">
-                                              <form class="bs-form" *ngIf="!isTabDisabled">
-                                                  <div class="form-wrap">
-                                                      <div class="bs-radio">
-                                                          <input [readonly]="isReadOnly"  type="radio"
-                                                                  name="income-consider"
-                                                                  id="incomeConsiderYes2"
-                                                                  [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.incomeConsider"
-                                                                  tabindex="1"
-                                                                  [value]="1"
-                                                                  [checked]="qde.application.applicants[coApplicantIndex].incomeDetails.incomeConsider == true"
-                                                                  (click)="incomeDetailsYesNo(1, incomeSlider4)"
-                                                                  class="not-usual" />
-                                                          <label for="incomeConsiderYes2"><span>Yes</span></label>
-                                                      </div>
-                                                      <div class="bs-radio">
-                                                          <input [readonly]="isReadOnly"  type="radio"
-                                                                  name="income-consider"
-                                                                  id="incomeConsiderNo2"
-                                                                  class="not-usual"
-                                                                  [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.incomeConsider"
-                                                                  [checked]="qde.application.applicants[coApplicantIndex].incomeDetails.incomeConsider == false"
-                                                                  (click)="incomeDetailsYesNo(2, incomeSlider4)"
-                                                                  tabindex="2"
-                                                                  [value]="2"/>
-                                                          <label for="incomeConsiderNo2"><span>No</span></label>
-                                                      </div>
-                                                  </div>
-                                              </form>
-                                          </div>
-                                          <div class="swiper-slide">
-                                                  <form class="bs-form" *ngIf="!isTabDisabled" 
-                                                  #incomeDetailsForm4="ngForm" (ngSubmit)="submitIncomeDetails2(incomeDetailsForm4, incomeSlider4)">
-                                                      <div class="form-wrap">
-                                                          <div class="form-group inr">
-                                                              <input [readonly]="isReadOnly" type="text" class="form-control" 
-                                                              id="monthlyIncome2"
-                                                              [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.monthlyIncome"
-                                                              #monthlyIncome2="ngModel"
-                                                              fieldFill
-                                                              tabindex="1"
-                                                              spellcheck="false"
-                                                              pattern="{{regexPattern.amount}}"
-                                                              name="monthlyIncome"
-                                                              required/>
-                                                              <label for="monthlyIncome2">Monthly income</label>
-                                                              <span class="addon">
-                                                                  <span class="icon icon-inr"></span>
-                                                              </span>
-                                                              <span class="in-word"></span>
-    
-                                                              <div *ngIf="monthlyIncome2.touched && monthlyIncome2.invalid" class="invalid-feedback">
-                                                                <!-- <div *ngIf="monthlyIncome2.errors?.required">{{errors.incomeDetails.monthlyIncome.required}}</div> -->
-                                                                <div *ngIf="monthlyIncome2.errors?.pattern">{{errors.incomeDetails.monthlyIncome.invalid}}</div>
-    
-                                                            </div>
-                                                          </div>
-                                                          <div class="form-group">
-                                                                <span class="control-title">Assessment methodology</span>
-                                                                <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
-                                                                [data]="assessmentMethodology" 
-                                                                tabindex="2"
-                                                                textField="key"
-                                                                valueField="value"
-                                                                name="assessmentMethodology"
-                                                                nick="incomeDetails.assessmentMethodology"
-                                                                #assessmentMethodology2
-                                                                (selectionChange)="selectValueChanged($event, assessmentMethodology2.hostElement)"
-                                                                [(ngModel)]="selectedAssesmentMethodology"></kendo-dropdownlist>
-                                                        </div>
-                                                      </div>
-                                                      <div class="btn-wrap">
-                                                          <button type="submit" class="btn btn-primary" [disabled]="isTBMLoggedIn" [ngClass]="{'disabled': isTBMLoggedIn}">Save</button>
-                                                      </div>
-                                                  </form>
-                                              </div>
+                                                    <div class="form-group">
+                                                        <span class="control-title">Assessment methodology</span>
+                                                        <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                                        [data]="assessmentMethodology" 
+                                                        tabindex="2"
+                                                        textField="key"
+                                                        valueField="value"
+                                                        name="assessmentMethodology"
+                                                        nick="incomeDetails.assessmentMethodology"
+                                                        #assessmentMethodology2
+                                                        (selectionChange)="selectValueChanged($event, assessmentMethodology2.hostElement)"
+                                                        [(ngModel)]="selectedAssesmentMethodology"></kendo-dropdownlist>
+                                                </div>
+                                                </div>
+                                                <div class="btn-wrap">
+                                                    <button type="submit" class="btn btn-primary" [disabled]="isTBMLoggedIn" [ngClass]="{'disabled': isTBMLoggedIn}">Save</button>
+                                                </div>
+                                            </form>
+                                        </div>
+
                                     </div>
                                   </div>
                               </div>
@@ -3243,10 +3129,10 @@
             <div class="modal-body">
                 <h1 class="center">Co-Applicant has been successfully saved!</h1>
                 <p>Do you want to add more Co-Applicants?</p>
-                    <div class="btn-wrap">
-                        <button class="btn btn-border"  (click)="moreCoApp()">Yes</button>
-                        <button class="btn btn-border"  [routerLink]="['/loan', qde.application.applicationId]">No</button>
-                    </div>
+                <div class="btn-wrap">
+                    <button class="btn btn-border"  (click)="moreCoApp()">Yes</button>
+                    <button class="btn btn-border"  [routerLink]="['/loan', qde.application.applicationId]">No</button>
+                </div>
             </div>
         </div>
     </main>

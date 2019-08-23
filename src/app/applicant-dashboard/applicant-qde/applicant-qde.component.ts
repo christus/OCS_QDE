@@ -989,14 +989,15 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
             this.qde.application.applicants[this.applicantIndex].personalDetails.title  = processVariables["applicantTitleId"];
           }
           this.selectedTitle  = this.getApplicantTitle(processVariables["applicantTitleId"]);
+
           this.createOrUpdatePanDetailsSub=this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
+
             // If successful
-            
             if(response["ProcessVariables"]["status"] == true) {
               let result = this.parseJson(response["ProcessVariables"]["response"]);
               // this.qde.application.ocsNumber = result["application"]["ocsNumber"];
               // this.qde.application.applicationId = result["application"]["applicationId"];
-             
+
               this.qde.application.applicationId = result['application']['applicationId'];
       
               // let isApplicantPresent:boolean = false;
@@ -1004,8 +1005,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
               this.tempOldPanNumber = this.qde.application.applicants[this.applicantIndex].pan.panNumber;
 
               if((result["application"]["applicants"]).length > 0) {
-                this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(result['application']['applicationId'], result['application']['applicants'][0]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
+                this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(result['application']['applicationId'], result['application']['applicants'][0]['applicantId']+"", 1, this.fragments[this.activeTab+1], screenPages['applicantDetails']).subscribe(auditRes => {
                   if(auditRes['ProcessVariables']['status'] == true) {
+                    this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                    this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                    this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                    this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
                   }
                 });
                 // isApplicantPresent = applicants[this.applicantIndex].hasOwnProperty('applicantId');
@@ -1063,8 +1068,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
             // isApplicantPresent = applicants[this.applicantIndex].hasOwnProperty('applicantId');
             // this.qde.application.applicants[this.coApplicantIndex].applicantId =  applicants[this.coApplicantIndex]["applicantId"];
 
-            this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(result['application']['applicationId'], result['application']['applicants'][0]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
+            this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(result['application']['applicationId'], result['application']['applicants'][0]['applicantId']+"", 1, this.fragments[this.activeTab+1], screenPages['applicantDetails']).subscribe(auditRes => {
               if(auditRes['ProcessVariables']['status'] == true) {
+                this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
               }
             });
 
@@ -1150,6 +1159,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
                   this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(result['application']['applicationId'], result['application']['applicants'][0]['applicantId']+"", 1, this.fragments[this.activeTab+1], screenPages['applicantDetails']).subscribe(auditRes => {
                     if(auditRes['ProcessVariables']['status'] == true) {
+                      this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                      this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                      this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                      this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
                     }
                   });
                   // isApplicantPresent = applicants[this.applicantIndex].hasOwnProperty('applicantId');
@@ -1196,6 +1209,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
               this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(result['application']['applicationId'], result['application']['applicants'][0]['applicantId']+"", 1, this.fragments[this.activeTab+1], screenPages['applicantDetails']).subscribe(auditRes => {
                 if(auditRes['ProcessVariables']['status'] == true) {
+                  this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                  this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                  this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                  this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
                 }
               });
 
@@ -1262,6 +1279,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
           this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
             if(auditRes['ProcessVariables']['status'] == true) {
+              this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+              this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+              this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+              this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
 
@@ -1298,6 +1319,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       if(response["ProcessVariables"]["status"]) {
         this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
           if(auditRes['ProcessVariables']['status'] == true) {
+            this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+            this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+            this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+            this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
           }
         });
         this.goToNextSlide(swiperInstance);
@@ -1324,6 +1349,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         if(response["ProcessVariables"]["status"]) {
           this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
             if(auditRes['ProcessVariables']['status'] == true) {
+              this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+              this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+              this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+              this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
           this.goToNextSlide(swiperInstance);
@@ -1359,6 +1388,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         if(response["ProcessVariables"]["status"]) {
           this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
             if(auditRes['ProcessVariables']['status'] == true) {
+              this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+              this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+              this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+              this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
           this.goToNextSlide(swiperInstance);
@@ -1408,6 +1441,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         if(response["ProcessVariables"]["status"]) {
           this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
             if(auditRes['ProcessVariables']['status'] == true) {
+              this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+              this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+              this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+              this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
           this.qdeHttp.duplicateApplicantCheck(this.qde.application.applicants[this.applicantIndex].applicantId).subscribe(res => {
@@ -1463,6 +1500,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         if(response["ProcessVariables"]["status"]) {
           this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
             if(auditRes['ProcessVariables']['status'] == true) {
+              this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+              this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+              this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+              this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
           this.tabSwitch(3);
@@ -1552,6 +1593,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         if(response["ProcessVariables"]["status"]) {
           this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
             if(auditRes['ProcessVariables']['status'] == true) {
+              this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+              this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+              this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+              this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
           this.tabSwitch(4);
@@ -1593,6 +1638,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           // Dont show spouse details for Single
           this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
             if(auditRes['ProcessVariables']['status'] == true) {
+              this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+              this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+              this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+              this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
           console.log("Marital Status: ", form.value.maritalStatus.value);
@@ -1628,6 +1677,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         if(response["ProcessVariables"]["status"]) {
           this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
             if(auditRes['ProcessVariables']['status'] == true) {
+              this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+              this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+              this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+              this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
           this.goToNextSlide(swiperInstance);
@@ -1660,6 +1713,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         if(response["ProcessVariables"]["status"]) {
           this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
             if(auditRes['ProcessVariables']['status'] == true) {
+              this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+              this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+              this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+              this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
           if(value == 1) {
@@ -1734,6 +1791,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         if(response["ProcessVariables"]["status"]) {
           this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
             if(auditRes['ProcessVariables']['status'] == true) {
+              this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+              this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+              this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+              this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
           this.goToNextSlide(swiperInstance);
@@ -1769,6 +1830,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         if(response["ProcessVariables"]["status"]) {
           this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
             if(auditRes['ProcessVariables']['status'] == true) {
+              this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+              this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+              this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+              this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
           this.tabSwitch(6);
@@ -1813,6 +1878,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         if(response["ProcessVariables"]["status"]) {
           this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
             if(auditRes['ProcessVariables']['status'] == true) {
+              this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+              this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+              this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+              this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
           this.tabSwitch(7);
@@ -1893,6 +1962,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         if(response["ProcessVariables"]["status"]) {
           this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
             if(auditRes['ProcessVariables']['status'] == true) {
+              this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+              this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+              this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+              this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
 
@@ -1951,6 +2024,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         if(response["ProcessVariables"]["status"]) {
           this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
             if(auditRes['ProcessVariables']['status'] == true) {
+              this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+              this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+              this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+              this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
           this.tabSwitch(9);
@@ -1988,6 +2065,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         if(response["ProcessVariables"]["status"]) {
           this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
             if(auditRes['ProcessVariables']['status'] == true) {
+              this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+              this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+              this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+              this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
           let result = this.parseJson(response["ProcessVariables"]["response"]);
@@ -2058,6 +2139,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         if(response["ProcessVariables"]["status"]) {
           this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
             if(auditRes['ProcessVariables']['status'] == true) {
+              this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+              this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+              this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+              this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
           this.tabSwitch(13);
@@ -2106,6 +2191,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         if(response["ProcessVariables"]["status"]) {
           this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
             if(auditRes['ProcessVariables']['status'] == true) {
+              this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+              this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+              this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+              this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
           this.tabSwitch(14);
@@ -2142,6 +2231,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         if(response["ProcessVariables"]["status"]) {
           this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
             if(auditRes['ProcessVariables']['status'] == true) {
+              this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+              this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+              this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+              this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
           this.tabSwitch(15);
@@ -2180,6 +2273,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         if(response["ProcessVariables"]["status"]) {
           this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
             if(auditRes['ProcessVariables']['status'] == true) {
+              this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+              this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+              this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+              this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
           
@@ -2214,6 +2311,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         if(response["ProcessVariables"]["status"]) {
           this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
             if(auditRes['ProcessVariables']['status'] == true) {
+              this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+              this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+              this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+              this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
           // this.isApplicantRouteModal = true;
@@ -2232,7 +2333,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   submitMonthlyIncomeNonIndividual(form: NgForm, swiperInstance ?: Swiper) {
     if(this.isTBMLoggedIn) {
-      this.goToNextSlide(swiperInstance);
+      this.router.navigate(['/applicant', this.qde.application.applicants[this.applicantIndex].applicantId, 'co-applicant'], {queryParams: {tabName: 'dashboard', page: 1}})
     } else {
       if (form && !form.valid) {
         return;
@@ -2248,6 +2349,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         if(response["ProcessVariables"]["status"]) {
           this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
             if(auditRes['ProcessVariables']['status'] == true) {
+              this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+              this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+              this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+              this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
           // this.isApplicantRouteModal = true;
@@ -2320,6 +2425,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         if(response["ProcessVariables"]["status"]) {
           this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
             if(auditRes['ProcessVariables']['status'] == true) {
+              this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+              this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+              this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+              this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
           
@@ -2356,6 +2465,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         if(response["ProcessVariables"]["status"]) {
           this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
             if(auditRes['ProcessVariables']['status'] == true) {
+              this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+              this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+              this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+              this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
           if(value == 1) {
@@ -2974,7 +3087,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     // });
 
     this.swiperSlidersSub = this.swiperS$.changes.subscribe(v => {
-      this.swiperSliders = v;
+      this.swiperSliders = v._results;
     });
   }
 

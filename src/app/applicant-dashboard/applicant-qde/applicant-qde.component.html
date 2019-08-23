@@ -1691,11 +1691,7 @@
 
                     <div class="swiper-slide">
                       <div class="title-wrap">
-                        <h4 class="title">Enter Applicant’s<span class="cm-line-break"></span>income details</h4>
-                        <p class="note">Please enter household income & expenditure of main applicant & co-applicant/s
-                        </p>
-                        <p class="note">House made with a high quality materials throughout, including a floor, roof and
-                          exterior walls, are called pucca houses</p>
+                        <h4 class="title">Do Applicant’s <span class="cm-line-break"></span>income considered?</h4>
                       </div>
                     </div>
 
@@ -2573,7 +2569,7 @@
       <h1 class="center">Applicant Details has been saved successfully!</h1>
       <p>Click Proceed to continue</p>
       <div class="btn-wrap">
-        <button class="btn btn-border" [routerLink]="['/applicant', qde.application.applicationId, 'co-applicant']">Proceed</button>
+        <button class="btn btn-border" [routerLink]="['/applicant', qde.application.applicationId, 'co-applicant']" [queryParams]="{queryParams: {tabName: 'dashboard', page: 1}}">Proceed</button>
         <button class="btn btn-border" (click)="isApplicantRouteModal = false">Cancel</button>
       </div>
     </div>
