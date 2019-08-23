@@ -2981,7 +2981,7 @@
                 </div>             
       
                   <div class="tab-content" [ngClass]="{'active': (activeTab == 16)}">
-                          <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(incomeSliderNonIndividual2)"></a>
+                          <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(incomeConsiderSliderNonIndividual2)"></a>
                           <div class="lyt-tabs">
                               <div class="lhs">
                                 <div class="swiper-container form-swiper" [swiper]="lhsConfig" #incomeConsiderSliderNonIndividual1="ngxSwiper">
@@ -3007,9 +3007,9 @@
       
                                   <div class="swiper-container form-swiper"
                                           [swiper]="rhsConfig" #swiperS="ngxSwiper"
-                                          (slidePrevTransitionStart)="slidePrevTransitionStart(incomeSliderNonIndividual1)"
-                                      (slideNextTransitionStart)="slideNextTransitionStart(incomeSliderNonIndividual1)"
-                                          #incomeSliderNonIndividual2="ngxSwiper">
+                                          (slidePrevTransitionStart)="slidePrevTransitionStart(incomeConsiderSliderNonIndividual1)"
+                                      (slideNextTransitionStart)="slideNextTransitionStart(incomeConsiderSliderNonIndividual1)"
+                                          #incomeConsiderSliderNonIndividual2="ngxSwiper">
                                     <div class="swiper-wrapper">
 
                                         <div class="swiper-slide">
@@ -3019,14 +3019,14 @@
                                                     <input [readonly]="isTBMLoggedIn" spellcheck="false" type="radio" name="income-consider"
                                                     id="incomeConsiderYes2" [value]="1" tabindex="1"
                                                     [checked]="qde.application.applicants[coApplicantIndex].incomeDetails.incomeConsider == true"
-                                                    (click)="incomeConsiderYesNoNonIndividual(1, incomeSliderNonIndividual2)" class="not-usual" />
+                                                    (click)="incomeConsiderYesNoNonIndividual(1, incomeConsiderSliderNonIndividual2)" class="not-usual" />
                                                     <label for="incomeConsiderYes2"><span>Yes</span></label>
                                                 </div>
                                                 <div class="bs-radio">
                                                     <input [readonly]="isTBMLoggedIn" spellcheck="false" type="radio" name="income-consider"
                                                     id="incomeConsiderNo2" class="not-usual" tabindex="2"
                                                     [checked]="qde.application.applicants[coApplicantIndex].incomeDetails.incomeConsider == false"
-                                                    (click)="incomeConsiderYesNoNonIndividual(2, incomeSliderNonIndividual2)" [value]="2" />
+                                                    (click)="incomeConsiderYesNoNonIndividual(2, incomeConsiderSliderNonIndividual2)" [value]="2" />
                                                     <label for="incomeConsiderNo2"><span>No</span></label>
                                                 </div>
                                                 </div>
@@ -3035,7 +3035,7 @@
 
                                         <div class="swiper-slide">
                                             <form class="bs-form" *ngIf="!isTabDisabled" 
-                                                    #incomeDetailsForm4="ngForm" (ngSubmit)="submitMonthlyIncomeNonIndividual(incomeDetailsForm4, incomeSliderNonIndividual2)">
+                                                    #incomeDetailsForm4="ngForm" (ngSubmit)="submitMonthlyIncomeNonIndividual(incomeDetailsForm4, incomeConsiderSliderNonIndividual2)">
                                                 <div class="form-wrap">
                                                     <div class="form-group inr">
                                                         <input [readonly]="isReadOnly" type="text" class="form-control" 
