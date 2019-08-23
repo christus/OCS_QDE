@@ -1,3 +1,4 @@
+import { CollateralComponent } from './applicant-dashboard/document-upload/collateral/collateral.component';
 import { BranchListComponent } from './admin/admin-panel/branch-list/branch-list.component';
 import { PmayListComponent } from './admin/admin-panel/pmay-list/pmay-list.component';
 import { AdminAddUserLovResolverService } from './services/admin-add-user-lov-resolver.service';
@@ -330,6 +331,10 @@ const appRoutes: Routes = [
     component: ReviewEligibilityComponent
   },
   {
+    path: 'collateralDoc',
+    component: CollateralComponent
+  },
+  {
     path:"admin", component: AdminPanelComponent,
     children:[
       {
@@ -519,6 +524,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     LoanTypePurposeMapComponent,
     DocumentAssessmentDoccatDoctypeComponent,
     LoanMasterComponent,
+    CollateralComponent
   ],
   imports: [
     BrowserModule,

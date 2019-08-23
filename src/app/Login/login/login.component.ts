@@ -51,8 +51,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
       this.roleLogin();
     },
     error => {
-      //this.sessionMessage = error['error']['message'] ;
-      this.sessionMessage = "An active session with these credential's does exists, please logout the existing session" ;
+      this.sessionMessage = error['error']['message'] ;
+      //this.sessionMessage = "An active session with these credential's does exists, please logout the existing session" ;
       this.activeSessionExists = error['error']["activeSessionExists"];
     });
     // this.qdeService.authenticate(data).subscribe(
