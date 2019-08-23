@@ -174,6 +174,10 @@ export const errors: any = {
       required: "Annual family Income is mandatory",
       invalid:"Invalid Family Income / Alphabets and Special characters are not allowed"
     },
+    pensionIncome:{
+      required: "Annual Pension is mandatory",
+      invalid:"Invalid Pension Amount / Alphabets and Special characters are not allowed"
+    },
     monthlyExpenditure:{
       required:"Monthly Expenditure is mandatory",
       invalid:"Invalid Monthly Expenditure / Alphabets and Special characters are not allowed"

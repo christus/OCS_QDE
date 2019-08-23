@@ -79,6 +79,8 @@ export interface Occupation {
     companyName ?: string;
     numberOfYearsInCurrentCompany ?: number;
     totalWorkExperience ?: number;
+    pensioner?: boolean;
+    pensionAmount?: number;
 }
 
 export interface Pan {

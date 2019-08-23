@@ -2372,6 +2372,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     this.qde.application.applicants[this.coApplicantIndex].incomeDetails.puccaHouse = (value == 1) ? true: false;
   }
 
+  selectPension(value) {
+    this.qde.application.applicants[this.coApplicantIndex].occupation.pensioner = (value == 1) ? true: false;
+  }
+
   selectPreferedMailingAddress(value) {
     this.qde.application.applicants[this.coApplicantIndex].permanentAddress.preferedMailingAddress = (value == 1) ? true: false;
   }

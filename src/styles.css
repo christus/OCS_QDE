@@ -3799,10 +3799,12 @@ img {
 	margin-bottom: 5.08vw;
 	max-width: 35.55vw;
 	text-align: left;
+	margin-top: 3vw;
 }
 
 .bs-form .form-group.last {
-	margin-bottom: 0
+	margin-bottom: 0;
+	margin-top:-3vw;
 }
 
 .bs-form .form-group.prefer {

@@ -1790,6 +1790,51 @@
                                                       </div>
                   
                                                   </div>
+                                                  <div *ngIf="selectedOccupation.value == 10" class="form-group last">
+                                                    <span class="control-title">Do you recieve pension?</span>
+                                                </div>
+                                                  <div *ngIf="selectedOccupation.value == 10" class="radio-wrap rounded-radio">
+                                                    <div class="bs-radio typ-normal">
+                                                      <input [readonly]="isTBMLoggedIn" spellcheck="false" type="radio" name="pensioner"
+                                                        [value]="1"
+                                                        [checked]="qde.application.applicants[coApplicantIndex].occupation.pensioner == true"
+                                                        fieldFill (click)="selectPension(1)" tabindex="7" id="pensionerIdYes1" />
+                                                      <label for="pensionerIdYes1">
+                                                        Yes
+                                                      </label>
+                                                    </div>
+                                                    <div class="bs-radio typ-normal">
+                                                      <input [readonly]="isTBMLoggedIn" spellcheck="false" type="radio" name="pensioner"
+                                                        [value]="2" id="pensionerIdNo1" tabindex="8" (click)="selectPension(2)"
+                                                        [checked]="qde.application.applicants[coApplicantIndex].occupation.pensioner == false"
+                                                        fieldFill />
+                                                      <label for="pensionerIdNo1">
+                                                        No
+                                                      </label>
+                                                    </div>
+                                                  </div>
+                      
+                                                  <div *ngIf="selectedOccupation.value == 10 && qde.application.applicants[coApplicantIndex].occupation.pensioner == true" class="form-group inr">
+                                                    <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
+                                                      id="annualPensionIncome1"
+                                                      [(ngModel)]="qde.application.applicants[coApplicantIndex].occupation.pensionAmount"
+                                                      #annualPensionIncome1="ngModel" name="annualFamilyIncome" tabindex="9" fieldFill
+                                                      maxlength="10" pattern="{{regexPattern.amount}}" required />
+                                                    <label for="annualPensionIncome1">Pension Amount<span class="lakhs"></span></label>
+                                                    <span class="addon">
+                                                      <span class="icon icon-inr"></span>
+                                                    </span>
+                                                    <span class="in-word"></span>
+                        
+                                                    <div *ngIf="annualPensionIncome1.touched && annualPensionIncome1.invalid"
+                                                      class="invalid-feedback">
+                                                      <!-- <div *ngIf="annualPensionIncome1.errors?.required">{{errors.incomeDetails.familyIncome.required}}</div> -->
+                                                      <div *ngIf="annualPensionIncome1.errors?.pattern">
+                                                        {{errors.incomeDetails.pensionIncome.invalid}}</div>
+                                                    </div>
+                                                  </div>
+
+                                                  
                                               </div>
                   
                                               <div *ngIf="selectedOccupation.value == 9 || selectedOccupation.value == 10 || selectedOccupation.value == 18" class="btn-wrap">

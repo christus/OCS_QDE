@@ -2268,6 +2268,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.qde.application.applicants[this.applicantIndex].incomeDetails.puccaHouse = (value == 1) ? true: false;
   }
 
+  selectPension(value) {
+    this.qde.application.applicants[this.applicantIndex].occupation.pensioner = (value == 1) ? true: false;
+  }
+
   parseJson(response):JSON {
     let result = JSON.parse(response);
     return result;
