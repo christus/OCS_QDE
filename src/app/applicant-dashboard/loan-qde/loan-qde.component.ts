@@ -44,7 +44,8 @@ export class LoanQdeComponent implements OnInit {
        loanAmount: {
          amount: {
            required: "Loan Amount is Madatory",
-           invalid: "Invalid Loan Amount / Alphabets and special characters not allowed"
+           invalid: "Invalid Loan Amount / Alphabets and special characters not allowed",
+           minamount: "Amount should be greater than Rs.50000",
          },
          tenure: {
            required: "Loan Tenure is Mandatory",
@@ -89,6 +90,7 @@ export class LoanQdeComponent implements OnInit {
   };
   regexPattern = {
     amount: "^[\\d]{0,14}([.][0-9]{0,4})?",
+    minAmount: "[5-9][0-9]{4}|[1-9]\d{5,}",
     name: "/^[a-zA-Z ]*$/",
     pinCode: "^[1-9][0-9]{5}$",
     address: "^[0-9A-Za-z, _&'/#]+$",
@@ -203,6 +205,7 @@ export class LoanQdeComponent implements OnInit {
 
   propertyTypes: Array<any>;
   selectedPropertyType: string;
+  propertyClssLabel: string;
   propertyClssValue: string;
   propertyAreaValue: number;
 
@@ -239,6 +242,8 @@ export class LoanQdeComponent implements OnInit {
   selectedApplicantIndex: number = 0;
 
   isLoanProductPage: boolean;
+  allClssAreas: Array<any>;
+  isNumberLessThan50k: boolean;
 
   constructor(
     private renderer: Renderer2,
@@ -481,7 +486,6 @@ export class LoanQdeComponent implements OnInit {
   }
 
   ngOnInit() {
-
   }
 
   getApplicantTitle (salutation:string) {
@@ -922,5 +926,30 @@ export class LoanQdeComponent implements OnInit {
         this.selectedLoanPurpose = this.loanpurposes[0];
       }
     });
+  }
+
+  clssSearchArea(event: any){
+    //console.log("gfegffdgewhj",event.target.value)
+    this.qdeHttp.clssSearch(event.target.value).subscribe(res => {
+      if(res['ProcessVariables']['status']) {
+        this.allClssAreas = res['ProcessVariables']['townNames'] ? res['ProcessVariables']['townNames']: []
+        console.log("CLSSArea: ", this.allClssAreas);
+      }
+    }, err => {});
+  }
+
+  selectClssArea(c) {
+    this.propertyClssLabel = c.label;
+    this.propertyClssValue = c.value;
+    this.allClssAreas = [];
+  }
+
+  checkNumberLessThan50k(event) {
+    if(this.isValidNumber(event.target.value)) {
+      let n = parseInt(this.getNumberWithoutCommaFormat(event.target.value));
+      this.isNumberLessThan50k = (n < 50000);
+    } else {
+      this.isNumberLessThan50k = false;
+    }
   }
 }

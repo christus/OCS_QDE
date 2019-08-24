@@ -113,6 +113,7 @@ import { DocumentAssessmentDoccatDoctypeComponent } from './admin/admin-panel/do
 
 import { DocAssessDoccatProfileMapResolverService } from './services/doc-assess-doccat-profile-map-resolver.service';
 import { LoanMasterComponent } from './admin/admin-panel/loan-master/loan-master.component';
+import { ConnectorLeadCreateComponent } from './connector-lead-create/connector-lead-create.component';
 
 
 
@@ -126,6 +127,12 @@ const appRoutes: Routes = [
   {
     path: "leads",
     component: LeadsListComponent,
+    canActivate: [AuthGuard],
+    canDeactivate: [ConfirmDeactivateGuard]
+  },
+  {
+    path: "connector/lead-create",
+    component: ConnectorLeadCreateComponent,
     canActivate: [AuthGuard],
     canDeactivate: [ConfirmDeactivateGuard]
   },
@@ -524,7 +531,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     LoanTypePurposeMapComponent,
     DocumentAssessmentDoccatDoctypeComponent,
     LoanMasterComponent,
-    CollateralComponent
+    CollateralComponent,
+    ConnectorLeadCreateComponent
   ],
   imports: [
     BrowserModule,

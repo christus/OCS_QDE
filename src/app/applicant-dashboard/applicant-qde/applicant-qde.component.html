@@ -2217,11 +2217,11 @@
                                   [checked]="qde.application.applicants[applicantIndex].registeredAddress.corporateAddress == true"
                                   id="corporateAddress" />    
                                 <!-- <label for="corporateAddress" tabindex="5"><span>Registered Address is Corporate Address</span></label> -->
-                                <label for="corporateAddress"><span>Registered Address is Corporate Address</span></label>
+                                <label for="corporateAddress" tabindex="1"><span>Registered Address is Corporate Address</span></label>
                             </div>
                           <div class="form-group">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="corp-add" tabindex="1"
+                              id="corp-add" tabindex="2"
                               [(ngModel)]="qde.application.applicants[applicantIndex].corporateAddress.corporateAddress"
                               pattern="{{regexPattern.address}}" name="corpAddress" #corpAddress="ngModel" fieldFill
                               required />
@@ -2235,7 +2235,7 @@
                           <div class="form-group typ-optional">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text"
                               [(ngModel)]="qde.application.applicants[applicantIndex].corporateAddress.landMark"
-                              tabindex="2" name="landmark" #landmark="ngModel" class="form-control" fieldFill
+                              tabindex="3" name="landmark" #landmark="ngModel" class="form-control" fieldFill
                               pattern="{{regexPattern.address}}" id="landmark01" />
                             <label for="landmark01">Landmark</label>
                             <span class="optional">optional</span>
@@ -2248,7 +2248,7 @@
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                               id="pincode01"
                               [(ngModel)]="qde.application.applicants[applicantIndex].corporateAddress.zipcode"
-                              tabindex="3" pattern="{{regexPattern.pinCode}}" name="pincode" minlength="6" maxlength="6"
+                              tabindex="4" pattern="{{regexPattern.pinCode}}" name="pincode" minlength="6" maxlength="6"
                               required #corpPincode="ngModel" (blur)="onPinCodeChange($event, 'corporateAddress')"
                               fieldFill />
                             <label for="pincode01">Pincode</label>
@@ -2261,7 +2261,7 @@
                           </div>
                           <div class="form-group">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="city-state01" required tabindex="4"
+                              id="city-state01" required tabindex="5"
                               [(ngModel)]="qde.application.applicants[applicantIndex].corporateAddress.cityState"
                               #corpCityState="ngModel" name="corpCityState" fieldFill readonly
                               pattern="{{regexPattern.address}}" />
@@ -2277,7 +2277,7 @@
                             <div class="form-group">
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text"
                                 [(ngModel)]="corporateAddressStdCode" name="stdNumber" class="form-control"
-                                #stdNumber="ngModel" tabindex="5" fieldFill maxlength="5" required id="caStd"
+                                #stdNumber="ngModel" tabindex="6" fieldFill maxlength="5" required id="caStd"
                                 pattern="{{regexPattern.mobileNumber}}" required />
                               <label for="caStd">STD</label>
                               <div *ngIf="stdNumber.touched  && stdNumber.invalid" class="invalid-feedback">
@@ -2289,7 +2289,7 @@
                             <span class="seperator">-</span>
                             <div class="form-group">
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                                [(ngModel)]="corporateAddressPhoneNumber" name="phoneNumber" id="ca-res-no" tabindex="6"
+                                [(ngModel)]="corporateAddressPhoneNumber" name="phoneNumber" id="ca-res-no" tabindex="7"
                                 fieldFill #phoneNumber="ngModel" pattern="{{regexPattern.mobileNumber}}" maxlength="8"
                                 data-validation-attr="residenceno" required />
                               <label for="ca-res-no">Office number</label>
@@ -2302,7 +2302,7 @@
                           </div>
                           <div class="form-group last">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="email" class="form-control"
-                              tabindex="7" id="ofc-email" required pattern="{{regexPattern.email}}"
+                              tabindex="8" id="ofc-email" required pattern="{{regexPattern.email}}"
                               [(ngModel)]="qde.application.applicants[applicantIndex].corporateAddress.officeEmailId"
                               name="officeEmailId" #ofcEmail="ngModel" fieldFill />
                             <label for="ofc-email">Office email ID</label>
@@ -2357,7 +2357,7 @@
                               [(ngModel)]="qde.application.applicants[applicantIndex].revenueDetails.revenue"
                               #revenue="ngModel" name="revenue" maxlength="15" fieldFill tabindex="1"
                               pattern="{{regexPattern.revenue}}" required />
-                            <label for="revenue">Receipt Gross turnover</label>
+                            <label for="revenue">Received Gross turnover</label>
                             <div *ngIf="revenue.touched && revenue.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="revenue.errors?.required">{{errors.revenueDetails.revenue.required}}</div> -->
                               <div *ngIf="revenue.errors?.pattern">{{errors.revenueDetails.revenue.invalid}}</div>

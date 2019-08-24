@@ -2712,13 +2712,13 @@
                                                               [checked]="qde.application.applicants[coApplicantIndex].registeredAddress.corporateAddress == true"
                                                               id="corporateAddress" />    
                                                             <!-- <label for="corporateAddress" tabindex="5"><span>Registered Address is Corporate Address</span></label> -->
-                                                            <label for="corporateAddress"><span>Registered Address is Corporate Address</span></label>
+                                                            <label for="corporateAddress" tabindex="1"><span>Registered Address is Corporate Address</span></label>
                                                         </div>
                                                   <div class="form-group">
                                                       <input [readonly]="isReadOnly"    type="text"
                                                                 class="form-control"
                                                                 id="corp-add"
-                                                                tabindex="1"
+                                                                tabindex="2"
                                                                 [(ngModel)]="qde.application.applicants[coApplicantIndex].corporateAddress.corporateAddress"
                                                                 pattern="{{regexPattern.address}}"
                                                                 name="corpAddress"
@@ -2741,7 +2741,7 @@
                                                               class="form-control"
                                                               fieldFill
                                                               spellcheck="false"
-                                                              tabindex="2"
+                                                              tabindex="3"
                                                               pattern="{{regexPattern.address}}"
                                                               id="landmark01" />
                                                       <label for="landmark01">Landmark</label>
@@ -2758,7 +2758,7 @@
                                                               pattern="{{regexPattern.pinCode}}"
                                                               name="pincode"
                                                               minlength="6"
-                                                              tabindex="3"
+                                                              tabindex="4"
                                                               maxlength="6"
                                                               required
                                                               spellcheck="false"
@@ -2778,7 +2778,7 @@
                                                               class="form-control"
                                                               id="city-state01" 
                                                               required
-                                                              tabindex="4"
+                                                              tabindex="5"
                                                               [(ngModel)]="qde.application.applicants[coApplicantIndex].corporateAddress.cityState"
                                                               #corpCityState="ngModel" 
                                                               name="corpCityState"
@@ -2801,7 +2801,7 @@
                                                                   class="form-control"
                                                                   #stdNumber="ngModel"
                                                                   fieldFill
-                                                                  tabindex="5"
+                                                                  tabindex="6"
                                                                   spellcheck="false"
                                                                   maxlength="5"
                                                                   required
@@ -2821,7 +2821,7 @@
                                                                   [(ngModel)]="corporateAddressPhoneNumber"
                                                                   name="phoneNumber"
                                                                   id="ca-res-no"
-                                                                  tabindex="6"
+                                                                  tabindex="7"
                                                                   fieldFill
                                                                   spellcheck="false"
                                                                   #phoneNumber="ngModel"
@@ -2841,7 +2841,7 @@
                                                                 class="form-control"
                                                                 id="ofc-email"
                                                                 required
-                                                                tabindex="7"
+                                                                tabindex="8"
                                                                 [(ngModel)]="qde.application.applicants[coApplicantIndex].corporateAddress.officeEmailId"
                                                                 name="officeEmailId"
                                                                 #ofcEmail="ngModel"
@@ -2911,7 +2911,7 @@
                                                   spellcheck="false"
                                                   pattern="{{regexPattern.revenue}}"
                                                   required />
-                                                  <label for="revenue">Receipt Gross Turnover</label>
+                                                  <label for="revenue">Received Gross Turnover</label>
                                                   <div *ngIf="revenue.touched && revenue.invalid" class="invalid-feedback">
                                                       <!-- <div *ngIf="revenue.errors?.required">{{errors.revenueDetails.revenue.required}}</div> -->
                                                       <div *ngIf="revenue.errors?.pattern">{{errors.revenueDetails.revenue.invalid}}</div>

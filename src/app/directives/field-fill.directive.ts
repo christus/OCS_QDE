@@ -22,6 +22,7 @@ export class FieldFillDirective implements OnChanges {
     if( change.ngModel.currentValue != '' &&
         change.ngModel.currentValue != null &&
         change.ngModel.currentValue != undefined) {
+      console.log("change.ngModel.currentValue:", change.ngModel.currentValue);
       this.ren.addClass(this.el.nativeElement.parentElement, 'filled');
     } else {
       this.ren.removeClass(this.el.nativeElement.parentElement, 'filled');

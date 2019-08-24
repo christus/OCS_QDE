@@ -262,6 +262,10 @@ export const environment = {
     "getLoanPurposeFromLoanType": {
       'workflowId': '1d28844c72f011e982270242ac110003',
       'processId': 'cdec0538b83711e990590242ac110002'
+    },
+    "clssSearch": {
+      'workflowId': '15985832c56711e9a0b00242ac110002',
+      'processId': '15b0dceac56711e9b81a0242ac110002'
     }
   },
   userName: "icici@icici.com",

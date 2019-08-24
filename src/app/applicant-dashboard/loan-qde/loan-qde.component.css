@@ -426,8 +426,8 @@ visibility: visible;
 
 
 /* FOnTS */
-
-@charset "UTF-8";
+/* 
+@charset "UTF-8"; */
 @font-face {
     font-family: "icicihfc";
     src: url("/assets/fonts/icicihfc.eot");
@@ -592,4 +592,27 @@ visibility: visible;
 
 .icon-home-loan:before {
     content: "\47";
+}
+.clss-area-list {
+    box-shadow: 0 0 48.06px 5.94px rgba(0, 0, 0, .16);
+    max-height: 10vw;
+    font-size: 1vw;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    position: absolute;
+    background-color: #fff;
+    z-index: 10;
+    width: 100%;
+}
+
+.clss-area-list li {
+    display: block;
+    padding: 8px;
+    cursor: pointer;
+}
+
+.clss-area-list li:hover,
+.clss-area-list li:focus {
+    background: #f58220;
+    color: #fff;
 }
