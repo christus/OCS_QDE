@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Renderer2, AfterViewInit  } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Renderer2, AfterViewInit, ViewChildren, QueryList, OnDestroy  } from '@angular/core';
 
 
 import * as Swiper from "swiper/dist/js/swiper.js";
@@ -15,6 +15,8 @@ import { QdeService } from 'src/app/services/qde.service';
 import { CommonDataService } from 'src/app/services/common-data.service';
 import { Subscription } from 'rxjs';
 
+import { screenPages } from '../../app.constants';
+
 interface Item {
   key: string,
   value: number | string
@@ -26,7 +28,7 @@ interface Item {
   templateUrl: "./loan-qde.component.html",
   styleUrls: ["./loan-qde.component.css"]
 })
-export class LoanQdeComponent implements OnInit {
+export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
   value: Array<number> = [0, 0, 0];
   errors = {
      loanDetails: {
@@ -175,9 +177,9 @@ export class LoanQdeComponent implements OnInit {
   isAlternateEmailId: boolean = false;
   isAlternateMobileNumber: boolean = false;
   isAlternateResidenceNumber: boolean = false;
-  tenureYears:boolean = false;
+  tenureYears: boolean = false;
 
-  applicantIndividual: boolean = true;
+  // applicantIndividual: boolean = true;
 
   fragments = ["loan", "property", "existingLoan"];
 
@@ -242,8 +244,20 @@ export class LoanQdeComponent implements OnInit {
   selectedApplicantIndex: number = 0;
 
   isLoanProductPage: boolean;
+
   allClssAreas: Array<any>;
   isNumberLessThan50k: boolean;
+
+  fragmentSub: Subscription;
+  tabName: string;
+  page: number;
+
+  // Only RHS Sliders
+  @ViewChildren('swiperS') swiperS$: QueryList<Swiper>;
+
+  swiperSliders: Array<any>;
+  swiperSlidersSub: Subscription;
+  auditTrialApiSub: Subscription;
 
   constructor(
     private renderer: Renderer2,
@@ -253,13 +267,14 @@ export class LoanQdeComponent implements OnInit {
     private qdeService: QdeService,
     private cds: CommonDataService) {
 
+    this.qde = this.qdeService.defaultValue;
+
     this.cds.changeMenuBarShown(false);
     this.cds.changeViewFormVisible(true);
     this.cds.changeLogoutVisible(true);
 
     this.route.params.subscribe(params => {
       if (params.applicantId != null && params.applicantId != undefined) {
-        console.log("APPLICANTID: ", params.applicantId);
         this.applicantId = params.applicantId;
       }
 
@@ -314,69 +329,80 @@ export class LoanQdeComponent implements OnInit {
       this.loanProviderList = lov.LOVS.loan_providers;
     }
     
-    // Check Whether there is qde data to be filled or else Initialize Qde
-    this.route.params.subscribe(params => {
-      this.applicationId = params.applicationId;
-      // Make an http request to get the required qde data and set using setQde
-      if (params.applicantId != undefined && params.applicantId != null) {
-        // setQde(JSON.parse(response.ProcessVariables.response));
-      } else {
-        this.qde = this.qdeService.getQde();
+
+
+    // this.route.fragment.subscribe(fragment => {
+    //   let localFragment = fragment;
+
+    //   if (fragment == null) {
+    //     localFragment = "loan";
+    //   }
+
+    //   // Replace Fragments in url
+    //   if (this.fragments.includes(localFragment)) {
+    //     this.tabSwitch(this.fragments.indexOf(localFragment));
+    //   }
+    // });
+
+    this.fragmentSub = this.route.queryParams.subscribe(val => {
+
+      if(val['tabName'] && val['tabName'] != '') {
+        this.tabName = this.fragments.includes(val['tabName']) ? val['tabName'].toString(): this.fragments[0];
+        this.activeTab = this.fragments.findIndex(v => v == val['tabName']);
+
       }
+
+      if(val['page'] && val['page'] != '') {
+        this.page = (val && val['page'] != null && parseInt(val['page']) != NaN && parseInt(val['page']) >= 1) ? parseInt(val['page']): 1;
+      }
+
     });
 
-    this.route.fragment.subscribe(fragment => {
-      let localFragment = fragment;
-
-      if (fragment == null) {
-        localFragment = "loan";
-      }
-
-      // Replace Fragments in url
-      if (this.fragments.includes(localFragment)) {
-        this.tabSwitch(this.fragments.indexOf(localFragment));
-      }
-    });
-
     this.route.params.subscribe(params => {
-
-
 
       // Make an http request to get the required qde data and set using setQde
       const applicationId = params.applicationId;
       if (applicationId) {
-        this.qdeService.resetQde();
-        this.qde = this.qdeService.getQde();
+        // this.qdeService.resetQde();
+        // this.qde = this.qdeService.getQde();
 
         this.qdeHttp.getQdeData(applicationId).subscribe(response => {
           let result = JSON.parse(response["ProcessVariables"]["response"]);
 
           this.cds.enableTabsIfStatus1(result.application.status);
 
+          console.log("loanType: ", this.loanType);
+          
+          this.qde = result;
+          
           /****************************************************************************
           * If Loan Amount is present show qde screen (false) else show product screen
           ****************************************************************************/
-         console.log(result.application.loanDetails.loanAmount.amountRequired != null);
-
-          if(result.application.loanDetails &&
-            result.application.loanDetails.loanAmount &&
-            result.application.loanDetails.loanAmount.loanType) {
-
+         if(result.application.loanDetails &&
+          result.application.loanDetails.loanAmount &&
+          result.application.loanDetails.loanAmount.loanType) {
+            
             this.isLoanProductPage = false;
             this.cds.changeMenuBarShown(true);            
           } else {
             this.isLoanProductPage = true;
             this.cds.changeMenuBarShown(false);
           }
+          
+          if(this.qde.application.auditTrailDetails.screenPage == screenPages['loanDetails']) {
+            this.goToExactPageAndTab(this.qde.application.auditTrailDetails.tabPage, this.qde.application.auditTrailDetails.pageNumber);
+          } else {
+            this.goToExactPageAndTab(this.fragments[0], 1);
+          }
 
           // All hardcoded value need to removed
           this.loanType = this.loanType.slice(0, 3);
-          this.selectedLoanType = result.application.loanDetails.loanAmount.loanType || this.loanType[0];
+          console.log("result.application.loanDetails.loanAmount.loanType: ", result.application.loanDetails.loanAmount.loanType);
+          // this.selectedLoanType = result.application.loanDetails.loanAmount.loanType.find() || this.loanType[0];
 
           // this.selectedLoanPurpose =
           //   result.application.loanDetails.loanAmount.loanPurpose ||
           //   this.loanpurposes[0].value;
-          console.log("loanType: ", result.application.loanDetails.loanAmount.loanType);
           if(result.application.loanDetails.loanAmount.loanType) {
             this.setLoanPurposes(result.application.loanDetails.loanAmount.loanType+"", result.application.loanDetails.loanAmount.loanPurpose);
           } else {
@@ -431,7 +457,7 @@ export class LoanQdeComponent implements OnInit {
           this.cds.enableTabsIfStatus1(this.qde.application.status);
           this.qde.application.applicationId = applicationId;
 
-          this.qdeService.setQde(this.qde);
+          // this.qdeService.setQde(this.qde);
           this.valuechange(this.qde.application.tenure, 0);
 
           
@@ -467,7 +493,7 @@ export class LoanQdeComponent implements OnInit {
           this.selectedApplicantName = this.qde.application.applicants[this.selectedApplicantIndex].personalDetails ? `${this.qde.application.applicants[this.selectedApplicantIndex].personalDetails['firstName']} ${this.qde.application.applicants[this.selectedApplicantIndex].personalDetails['lastName']}`: '';
         });
       } else {
-        this.qde = this.qdeService.getQde();
+        this.qde = this.qdeService.defaultValue;
       }
     });
 
@@ -479,10 +505,10 @@ export class LoanQdeComponent implements OnInit {
       this.options.readOnly = val;
     });
 
-    this.qdeService.qdeSource.subscribe(val => {
-      console.log("Latest Qde: ", val);
-      this.qde = val;
-    });
+    // this.qdeService.qdeSource.subscribe(val => {
+    //   console.log("Latest Qde: ", val);
+    //   this.qde = val;
+    // });
   }
 
   ngOnInit() {
@@ -499,7 +525,6 @@ export class LoanQdeComponent implements OnInit {
     }
     return titles[0];
   }
-  ngAfterViewInit() {}
 
   loanPropertyNo(swiperInstance: Swiper,value){
    //switching to existing loan
@@ -544,18 +569,34 @@ export class LoanQdeComponent implements OnInit {
     swiperInstance.prevSlide();
   }
 
-  tabSwitch(tabIndex?: number) {
+  // tabSwitch(tabIndex?: number) {
+  //   // Check for invalid tabIndex
+  //   if (tabIndex < this.fragments.length) {
+  //     this.router.navigate([], { fragment: this.fragments[tabIndex] });
+
+  //     this.activeTab = tabIndex;
+
+  //     // if (tabIndex == 9) {
+  //     //   this.applicantIndividual = false;
+  //     // } else if (tabIndex == 0) {
+  //     //   this.applicantIndividual = true;
+  //     // }
+  //   }
+  // }
+
+  tabSwitch(tabIndex ?: number, fromQde ?: boolean) {
+
     // Check for invalid tabIndex
-    if (tabIndex < this.fragments.length) {
-      this.router.navigate([], { fragment: this.fragments[tabIndex] });
+    if(tabIndex < this.fragments.length) {
 
-      this.activeTab = tabIndex;
+      let t = fromQde ? this.page: 1;
 
-      if (tabIndex == 9) {
-        this.applicantIndividual = false;
-      } else if (tabIndex == 0) {
-        this.applicantIndividual = true;
-      }
+      // It should not allow to go to any other tabs if applicationId is not present
+      // if(this.applicantIndex != null && this.qde.application.applicationId != null && this.qde.application.applicationId != '') {
+      this.router.navigate([], {queryParams: { tabName: this.fragments[tabIndex], page: t }});
+      // }
+
+      // this.router.navigate([], { fragment: this.fragments[tabIndex]});
     }
   }
 
@@ -617,8 +658,18 @@ export class LoanQdeComponent implements OnInit {
           response => {
             // If successful
             if (response["ProcessVariables"]["status"]) {
+              let result = response['ProcessVariables']['response'];
               // console.log(this.qde.application.references.referenceOne.relationShip);
+              this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
+                if(auditRes['ProcessVariables']['status'] == true) {
+                  this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                  this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                  this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                  this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
+                }
+              });
               this.tabSwitch(1);
+              
             } else {
               // Throw Invalid Pan Error
             }
@@ -657,9 +708,18 @@ export class LoanQdeComponent implements OnInit {
         .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
         .subscribe(
           response => {
+            let result = response['ProcessVariables']['response'];
+
             // If successful
             if (response["ProcessVariables"]["status"]) {
-              console.log(this.qde.application.loanDetails.propertyType);
+              this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
+                if(auditRes['ProcessVariables']['status'] == true) {
+                  this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                  this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                  this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                  this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
+                }
+              });
               this.goToNextSlide(swiperInstance);
             } else {
               // Throw Invalid Pan Error
@@ -724,9 +784,18 @@ export class LoanQdeComponent implements OnInit {
         .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
         .subscribe(
           response => {
+            let result = response['ProcessVariables']['response'];
+
             if (response["ProcessVariables"]["status"]) {
+              this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
+                if(auditRes['ProcessVariables']['status'] == true) {
+                  this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                  this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                  this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                  this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
+                }
+              });
               this.clssProbabilityCheck();
-              
             } else {
               // Throw Invalid Pan Error
             }
@@ -758,8 +827,17 @@ export class LoanQdeComponent implements OnInit {
         .subscribe(
           response => {
             // If successful
+            let result = response['ProcessVariables']['response'];
+
             if (response["ProcessVariables"]["status"]) {
-              console.log(this.qde.application.loanDetails.propertyType);
+              this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
+                if(auditRes['ProcessVariables']['status'] == true) {
+                  this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                  this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                  this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                  this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
+                }
+              });
               this.goToNextSlide(swiperInstance);
             } else {
               // Throw Invalid Pan Error
@@ -801,10 +879,20 @@ export class LoanQdeComponent implements OnInit {
         .subscribe(
           response => {
             // If successful
+
+            let result = response['ProcessVariables']['response'];
+
             if (response["ProcessVariables"]["status"]) {
-              console.log(this.qde.application.loanDetails.propertyType);
               if(this.qde.application.applicants[this.selectedApplicantIndex].existingLoans.liveLoan > 0 ) {
-                  this.goToNextSlide(swiperInstance);
+                this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
+                  if(auditRes['ProcessVariables']['status'] == true) {
+                    this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                    this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                    this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                    this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
+                  }
+                });
+                this.goToNextSlide(swiperInstance);
               }else{                
                 alert("Loan detail process is completed.")
               }
@@ -838,9 +926,18 @@ export class LoanQdeComponent implements OnInit {
         .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
         .subscribe(
           response => {
+            let result = response['ProcessVariables']['response'];
+
             // If successful
             if (response["ProcessVariables"]["status"]) {
-              console.log(this.qde.application.loanDetails.propertyType);
+              this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
+                if(auditRes['ProcessVariables']['status'] == true) {
+                  this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                  this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                  this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                  this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
+                }
+              });
               this.isLoanRouteModal = true
             } else {
               // Throw Invalid Pan Error
@@ -950,6 +1047,29 @@ export class LoanQdeComponent implements OnInit {
       this.isNumberLessThan50k = (n < 50000);
     } else {
       this.isNumberLessThan50k = false;
+    }
+  }
+
+  ngAfterViewInit() {
+    this.swiperSlidersSub = this.swiperS$.changes.subscribe(v => {
+      this.swiperSliders = v._results;
+      if(this.swiperSliders && this.swiperSliders.length > 0) {
+        this.swiperSliders[this.activeTab].setIndex(this.page-1);
+      }
+    });
+  }
+
+  goToExactPageAndTab(tabPage: string, pageNumber: number) {
+    let index = this.fragments.findIndex(v => v == tabPage) != -1 ? this.fragments.findIndex(v => v == tabPage) : 0;
+    this.tabName = tabPage;
+    this.page = pageNumber;
+    this.tabSwitch(index, true);
+    // this.swiperSliders[index].setIndex(pageNumber-1);
+  }
+
+  ngOnDestroy() {
+    if(this.swiperSlidersSub != null) {
+      this.swiperSlidersSub.unsubscribe();
     }
   }
 }

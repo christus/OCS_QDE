@@ -332,6 +332,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
               private file: File,
               private deviceService: DeviceDetectorService) {
 
+    this.qde = this.qdeService.defaultValue;
     this.tabName = this.fragments[0];
     this.page = 1;
 
@@ -356,14 +357,6 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     // this.panslide2Sub = this.cds.panslide2.subscribe(val => {
     //   this.panslide2 = val;
     // });
-
-    this.qdeSourceSub=this.qdeService.qdeSource.subscribe(val => {
-      console.log("VALVE: ", val);
-      this.qde = val;
-      this.applicantIndex = val.application.applicants.findIndex(v => v.isMainApplicant == true);
-      // this.isValidPan = val.application.applicants[this.applicantIndex].pan.panVerified;
-      this.cds.enableTabsIfStatus1(this.qde.application.status);
-    });
 
 
 
@@ -520,11 +513,21 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
             var result = JSON.parse(response["ProcessVariables"]["response"]);
             console.log("Get ", result);
 
-            this.qdeService.setQde(result);
+            this.qde = result;
+            this.applicantIndex = result.application.applicants.findIndex(v => v.isMainApplicant == true);
+            this.cds.enableTabsIfStatus1(this.qde.application.status);
             this.tempOldPanNumber = result.application.applicants[this.applicantIndex].pan.panNumber;
 
             if(this.qde.application.auditTrailDetails.screenPage == screenPages['applicantDetails']) {
               this.goToExactPageAndTab(this.qde.application.auditTrailDetails.tabPage, this.qde.application.auditTrailDetails.pageNumber);
+            } else {
+              if(this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
+                this.tabSwitch(0);
+              } else if(this.qde.application[this.applicantIndex].isIndividual == false) {
+                this.tabSwitch(10);
+              } else {
+                this.tabSwitch(0);
+              }
             }
 
             try {
@@ -3092,7 +3095,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   goToExactPageAndTab(tabPage: string, pageNumber: number) {
-    let index = this.fragments.findIndex(v => v == tabPage);
+    let index = this.fragments.findIndex(v => v == tabPage) != -1 ? this.fragments.findIndex(v => v == tabPage) : 0;
     this.tabName = tabPage;
     this.page = pageNumber;
     this.tabSwitch(index, true);
