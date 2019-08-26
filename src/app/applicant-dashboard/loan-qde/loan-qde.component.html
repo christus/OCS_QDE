@@ -69,7 +69,7 @@
                       <div class="invalid-feedback">
                         <div *ngIf="amountRequired.touched && isNumberLessThan50k">{{errors.loanDetails.loanAmount.amount.minamount}}</div>
                         <div *ngIf="amountRequired.errors?.required">{{errors.loanDetails.loanAmount.amount.required}}</div>
-                        <div *ngIf="amountRequired.errors?.pattern">{{errors.loanDetails.loanAmount.amount.invalid}}</div>
+                        <div *ngIf="amountRequired.errors?.amount">{{errors.loanDetails.loanAmount.amount.invalid}}</div>
                       </div>
 
                     </div>

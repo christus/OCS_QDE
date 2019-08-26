@@ -1,0 +1,38 @@
+.bs-header.typ-dashboard {
+    box-shadow: 0 0 28.75px 0.25px rgba(0,0,0,.1);
+}
+.bs-header .sec-nav {
+    padding: 1.17vw 2.34vw;
+    display: inline-block;
+    width: 100%;
+}
+.bs-header.typ-dashboard .right-panel.of-dashboard {
+    display: flex;
+}
+.bs-header.typ-dashboard .right-panel .search-wrap {
+    padding-right: 3.13vw;
+}
+.bs-header.typ-dashboard .right-panel .search-wrap .search-btn {
+    display: inline-block;
+    color: #444;
+}
+.bs-header.typ-dashboard .right-panel .search-wrap .icon-search {
+    font-size: 1.95vw;
+    line-height: 3.13vw;
+}
+.bs-header.typ-dashboard .right-panel .notification-wrap {
+    margin-right: 1.56vw;
+}
+.bs-header.typ-dashboard .right-panel .hover-wrap {
+    position: relative;
+}
+.lyt-lead-gen .title {
+    font-size: 2.34vw;
+    line-height: 3.52vw;
+    font-family: zurich-bold;
+}
+.lyt-lead-gen .desc {
+    padding-bottom: 1.95vw;
+    font-size: 1.41vw;
+    line-height: 1.95vw;
+}

@@ -3126,6 +3126,7 @@
         <div class="overlay" [ngClass]="{'active': isCoApplicantRouteModal}"></div>
         <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isCoApplicantRouteModal}">
             <!-- <a class="modal-close" href="javascript:void(0);" (click)="onBackOTP()"><span class="icon icon-close"></span></a> -->
+            <a class="modal-close" (click)="onCrossModal()"><span class="icon icon-close"></span></a>
             <div class="modal-body">
                 <h1 class="center">Co-Applicant has been successfully saved!</h1>
                 <p>Do you want to add more Co-Applicants?</p>
