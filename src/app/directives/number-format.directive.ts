@@ -8,7 +8,17 @@ export class NumberFormatDirective {
 
   // @Input('ngModel') ngModel: FormControl;
 
-  constructor(private el: ElementRef) { }
+  constructor(private el: ElementRef<HTMLInputElement>) { }
+
+  // @HostListener('keypress', ['$event'])
+  // input(e) {
+  //   if ((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105)) {
+  //     // let k = this.getNumberWithCommaFormat(e.target.value+e.key);
+  //     // e.target.value = k;
+  //   } else {
+  //     e.target.value = e.target.value.toString();
+  //   }
+  // }
 
   @HostListener('input', ['$event.target'])
   input(e) {
@@ -17,7 +27,7 @@ export class NumberFormatDirective {
   }
 
   ngOnChanges(change: SimpleChanges) {
-    this.el.nativeElement.setAttribute('attr-invalid', true);
+    // this.el.setAttribute('attr-invalid', true);
   }
 
   /*********************************************************

@@ -18,13 +18,13 @@
           <!-- <li class="tab-link pending" [ngClass]="{'active': (activeTab == 0)}">
             <a href="javascript:void(0);" (click)="tabSwitch(0)">INCOME DETAILS</a>
           </li> -->
-          <li class="tab-link" [ngClass]="{'active': (activeTab == 0), 'hide': (!applicantIndividual)}">
+          <li class="tab-link" [ngClass]="{'active': (activeTab == 0)}">
             <a href="javascript:void(0);" (click)="tabSwitch(0)">LOAN AMOUNT</a>
           </li>
-          <li class="tab-link" [ngClass]="{'active': (activeTab == 1), 'hide': (!applicantIndividual)}">
+          <li class="tab-link" [ngClass]="{'active': (activeTab == 1)}">
             <a href="javascript:void(0);" (click)="tabSwitch(1)">PROPERTY</a>
           </li>
-          <li class="tab-link" [ngClass]="{'active': (activeTab == 2), 'hide': (!applicantIndividual)}">
+          <li class="tab-link" [ngClass]="{'active': (activeTab == 2)}">
             <a href="javascript:void(0);" (click)="tabSwitch(2)">EXISTING LOAN OBLIGATION</a>
           </li>
          
@@ -34,105 +34,117 @@
               <a [routerLink]="['/applicant', qde.application.applicationId, 'co-applicant']" fragment="existingLoan" class="back-btn"></a>
             <div class="lyt-tabs">
               <div class="lhs">
-                <div class="swiper-slide">
-                <div class="title-wrap">
-                  <h4 class="title">Enter desired loan <span class="cm-line-break"></span>amount & purpose</h4>
-                  <!-- <p class="note">Enter the property details for which loan is being sought for</p> -->
+
+                <div class="swiper-container form-swiper" [swiper]="lhsConfig" #loanAmountSlider1="ngxSwiper">
+                  <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                      <div class="title-wrap">
+                        <h4 class="title">Enter desired loan <span class="cm-line-break"></span>amount & purpose</h4>
+                        <!-- <p class="note">Enter the property details for which loan is being sought for</p> -->
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                </div>
+
               </div>
 
               <div class="rhs">
-
-                <div class="swiper-slide">
-                <form class="bs-form" id="personal-form"
-                #loanAmount="ngForm"
-                (ngSubmit)="submitLoanAmount(loanAmount)">
-                  <div class="form-wrap">
-                    <div class="form-group inr">
-                      <input [readonly]="isTBMLoggedIn" type="text" class="form-control" id="amt-require"
-                        required
-                        [(ngModel)]="qde?.application.loanDetails.loanAmount.amountRequired"
-                        #amountRequired = "ngModel"
-                        name="amountRequired"
-                        fieldFill
-                        (input)="checkNumberLessThan50k($event)"
-                        >
-
-                      <label for="amt-require">Amount required</label>
-                      <span class="addon">
-                        <span class="icon icon-inr"></span>
-                      </span>
-                      <span class="in-word"></span>
-
-                      <!-- <div class="redalert" *ngIf="amountRequired.touched && amountRequired.invalid">{{errors.loanDetails.loanAmount.amount.minamount}}</div> -->
-                      <div class="invalid-feedback">
-                        <div *ngIf="amountRequired.touched && isNumberLessThan50k">{{errors.loanDetails.loanAmount.amount.minamount}}</div>
-                        <div *ngIf="amountRequired.errors?.required">{{errors.loanDetails.loanAmount.amount.required}}</div>
-                        <div *ngIf="amountRequired.errors?.amount">{{errors.loanDetails.loanAmount.amount.invalid}}</div>
+                <div class="swiper-container form-swiper" [swiper]="rhsConfig" #swiperS="ngxSwiper"
+                  (slidePrevTransitionStart)="slidePrevTransitionStart(loanAmountSlider1)"
+                  (slideNextTransitionStart)="slideNextTransitionStart(loanAmountSlider1)" #loanAmountSlider2="ngxSwiper">
+                  <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                    <form class="bs-form" id="personal-form"
+                    #loanAmount="ngForm"
+                    (ngSubmit)="submitLoanAmount(loanAmount)">
+                      <div class="form-wrap">
+                        <div class="form-group inr">
+                          <input [readonly]="isTBMLoggedIn" type="text" class="form-control" id="amt-require"
+                            required
+                            [(ngModel)]="qde?.application.loanDetails.loanAmount.amountRequired"
+                            #amountRequired = "ngModel"
+                            name="amountRequired"
+                            fieldFill
+                            (input)="checkNumberLessThan50k($event)"
+                            >
+    
+                          <label for="amt-require">Amount required</label>
+                          <span class="addon">
+                            <span class="icon icon-inr"></span>
+                          </span>
+                          <span class="in-word"></span>
+    
+                          <!-- <div class="redalert" *ngIf="amountRequired.touched && amountRequired.invalid">{{errors.loanDetails.loanAmount.amount.minamount}}</div> -->
+                          <div class="invalid-feedback">
+                            <div *ngIf="amountRequired.touched && isNumberLessThan50k">{{errors.loanDetails.loanAmount.amount.minamount}}</div>
+                            <div *ngIf="amountRequired.errors?.required">{{errors.loanDetails.loanAmount.amount.required}}</div>
+                            <div *ngIf="amountRequired.errors?.pattern">{{errors.loanDetails.loanAmount.amount.invalid}}</div>
+                          </div>
+    
+                        </div>
+                          <!-- <div class="form-group">
+                            <span class="control-title">Type of loan</span>
+                            <kendo-dropdownlist [readonly]="isTBMLoggedIn" 
+                              class="form-control"
+                              name="loanType"
+                              [data]="loanType" 
+                              textField="key"
+                              valueField="value"
+                              [valuePrimitive]="true"
+                              [(ngModel)]="selectedLoanType">
+                            </kendo-dropdownlist>
+                          </div> -->
+                        
+                          <div class="form-group">
+                            <span class="control-title">Loan purpose</span>
+                            <kendo-dropdownlist [readonly]="isTBMLoggedIn" 
+                              class="form-control"
+                              name="loanPurpose"
+                              [data]="loanpurposes" 
+                              textField="key"
+                              valueField="value"
+                              [(ngModel)]="selectedLoanPurpose">
+                            </kendo-dropdownlist>
+                          </div>
+    
+                        <div class="form-group typ-range">
+                          <span class="control-title">Loan tenure (in years)</span>
+                          <input [readonly]="isTBMLoggedIn" type="number" class="form-control" id="no-yrs"
+                            required
+                            ngModel
+                            #loanTenure = "ngModel"
+                            min="0"
+                            max="30"
+                            maxlength="2"
+                            oninput="this.value=this.value.slice(0,this.maxLength)"
+                            name="loanTenure"
+                            [(ngModel)]="qde?.application.tenure"
+                            (ngModelChange)="valuechange($event, 0)">
+                          <span class="yr-text">Years</span>
+    
+                          <div *ngIf="tenureYears">
+                                <div class="invalid-feedback"><br>{{errors.loanDetails.loanAmount.tenure.invalid}}</div>
+                          </div>
+                          
+                          <ng5-slider class="commSlider" [(value)]="qde?.application.tenure" [options]="options" ></ng5-slider>
+    
+                          <div *ngIf="(loanTenure.touched || loanTenure.dirty) && loanTenure.invalid" class="invalid-feedback">
+                            <!-- <div *ngIf="loanTenure.errors?.required">{{errors.loanDetails.loanAmount.tenure.required}}</div> -->
+                            <div *ngIf="loanTenure.errors?.pattern">{{errors.loanDetails.loanAmount.tenure.invalid}}</div>
+                          </div>
+                        </div>
                       </div>
-
-                    </div>
-                      <!-- <div class="form-group">
-                        <span class="control-title">Type of loan</span>
-                        <kendo-dropdownlist [readonly]="isTBMLoggedIn" 
-                          class="form-control"
-                          name="loanType"
-                          [data]="loanType" 
-                          textField="key"
-                          valueField="value"
-                          [valuePrimitive]="true"
-                          [(ngModel)]="selectedLoanType">
-                        </kendo-dropdownlist>
-                      </div> -->
-                    
-                      <div class="form-group">
-                        <span class="control-title">Loan purpose</span>
-                        <kendo-dropdownlist [readonly]="isTBMLoggedIn" 
-                          class="form-control"
-                          name="loanPurpose"
-                          [data]="loanpurposes" 
-                          textField="key"
-                          valueField="value"
-                          [(ngModel)]="selectedLoanPurpose">
-                        </kendo-dropdownlist>
+                      <div class="btn-wrap">
+                        <!-- <button type="submit"  class="btn btn-primary">Next</button> -->
+                        <button class="btn btn-primary"
+                        [ngClass]="{'disabled': loanAmount.invalid || isNumberLessThan50k}"
+                        [disabled]="loanAmount.invalid || isNumberLessThan50k">Next</button>
                       </div>
-
-                    <div class="form-group typ-range">
-                      <span class="control-title">Loan tenure (in years)</span>
-                      <input [readonly]="isTBMLoggedIn" type="number" class="form-control" id="no-yrs"
-                        required
-                        ngModel
-                        #loanTenure = "ngModel"
-                        min="0"
-                        max="30"
-                        maxlength="2"
-                        oninput="this.value=this.value.slice(0,this.maxLength)"
-                        name="loanTenure"
-			                  [(ngModel)]="qde?.application.tenure"
-                        (ngModelChange)="valuechange($event, 0)">
-                      <span class="yr-text">Years</span>
-
-                      <div *ngIf="tenureYears">
-                           <div class="invalid-feedback"><br>{{errors.loanDetails.loanAmount.tenure.invalid}}</div>
-                      </div>
-                      
-                      <ng5-slider class="commSlider" [(value)]="qde?.application.tenure" [options]="options" ></ng5-slider>
-
-                      <div *ngIf="(loanTenure.touched || loanTenure.dirty) && loanTenure.invalid" class="invalid-feedback">
-                        <!-- <div *ngIf="loanTenure.errors?.required">{{errors.loanDetails.loanAmount.tenure.required}}</div> -->
-                        <div *ngIf="loanTenure.errors?.pattern">{{errors.loanDetails.loanAmount.tenure.invalid}}</div>
-                      </div>
+                    </form>
                     </div>
                   </div>
-                  <div class="btn-wrap">
-                    <!-- <button type="submit"  class="btn btn-primary">Next</button> -->
-                    <button class="btn btn-primary"
-                    [ngClass]="{'disabled': loanAmount.invalid || isNumberLessThan50k}"
-                    [disabled]="loanAmount.invalid || isNumberLessThan50k">Next</button>
-                  </div>
-                </form>
                 </div>
+
               </div>
             </div>
 
@@ -163,7 +175,7 @@
               <div class="rhs">
                 <div class="swiper-container form-swiper" [swiper]="rhsConfig"
                   (slidePrevTransitionStart)="slidePrevTransitionStart(property1)"
-                  (slideNextTransitionStart)="slideNextTransitionStart(property1)" #property2="ngxSwiper">
+                  (slideNextTransitionStart)="slideNextTransitionStart(property1)" #property2="ngxSwiper" #swiperS="ngxSwiper">
                   <div class="swiper-wrapper">
                    
                     <div class="swiper-slide">
@@ -385,7 +397,7 @@
               <div class="rhs">
                 <div class="swiper-container form-swiper" [swiper]="rhsConfig"
                   (slidePrevTransitionStart)="slidePrevTransitionStart(existingLoan1)"
-                  (slideNextTransitionStart)="slideNextTransitionStart(existingLoan1)" #existingLoan2="ngxSwiper">
+                  (slideNextTransitionStart)="slideNextTransitionStart(existingLoan1)" #existingLoan2="ngxSwiper" #swiperS="ngxSwiper">
                   <div class="swiper-wrapper">
 
                     <!-- Select an applicant for Existing Loan -->
