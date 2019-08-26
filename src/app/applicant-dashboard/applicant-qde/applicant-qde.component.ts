@@ -514,6 +514,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
             console.log("Get ", result);
 
             this.qde = result;
+            this.qdeService.setQde(result);
             this.applicantIndex = result.application.applicants.findIndex(v => v.isMainApplicant == true);
             this.cds.enableTabsIfStatus1(this.qde.application.status);
             this.tempOldPanNumber = result.application.applicants[this.applicantIndex].pan.panNumber;
@@ -2684,6 +2685,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
     if(event == true) {
       this.qde.application.applicants[this.applicantIndex].corporateAddress.corporateAddress = this.qde.application.applicants[this.applicantIndex].registeredAddress.registeredAddress;
+      this.qde.application.applicants[this.applicantIndex].corporateAddress.landMark = this.qde.application.applicants[this.applicantIndex].registeredAddress.landMark;
       this.qde.application.applicants[this.applicantIndex].corporateAddress.zipcode = this.qde.application.applicants[this.applicantIndex].registeredAddress.zipcode;
    
       this.qde.application.applicants[this.applicantIndex].corporateAddress.city = this.qde.application.applicants[this.applicantIndex].registeredAddress.city;

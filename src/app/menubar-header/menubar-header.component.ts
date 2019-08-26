@@ -95,10 +95,12 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
       if(index == -1) {
         this.applicantName = "";
       } else {
-        if(this.qde.application.applicants[0].personalDetails.firstName != "") {
+        if(this.qde.application.applicants[index].personalDetails.firstName != "") {
           this.applicantName = "Application for "+this.qde.application.applicants[index].personalDetails.firstName +" "+ this.qde.application.applicants[index].personalDetails.lastName;
-          this.referenceNumber = this.qde.application.ocsNumber;
+        } else {
+          this.applicantName = "Application for "+this.qde.application.applicants[index].organizationDetails.nameOfOrganization;
         }
+        this.referenceNumber = this.qde.application.ocsNumber;
       }
     });
 

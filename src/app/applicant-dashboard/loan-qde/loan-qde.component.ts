@@ -374,6 +374,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
           console.log("loanType: ", this.loanType);
           
           this.qde = result;
+          this.qdeService.setQde(result);
           
           /****************************************************************************
           * If Loan Amount is present show qde screen (false) else show product screen
@@ -398,7 +399,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
           // All hardcoded value need to removed
           this.loanType = this.loanType.slice(0, 3);
           console.log("result.application.loanDetails.loanAmount.loanType: ", result.application.loanDetails.loanAmount.loanType);
-          // this.selectedLoanType = result.application.loanDetails.loanAmount.loanType.find() || this.loanType[0];
+          this.selectedLoanType = this.loanType.find(v => v.value == this.qde.application.loanDetails.loanAmount.loanType) || this.loanType[0];
 
           // this.selectedLoanPurpose =
           //   result.application.loanDetails.loanAmount.loanPurpose ||
@@ -526,22 +527,28 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
     return titles[0];
   }
 
-  loanPropertyNo(swiperInstance: Swiper,value){
-   //switching to existing loan
-   this.qde.application.loanDetails.propertyType.propertyIdentified = value;
-    this.tabSwitch(this.propertyNoSwitchTab);
-    
+  changePropertyIdentified(swiperInstance: Swiper, value: boolean) {
+    if(value) {
+      this.goToNextSlide(swiperInstance);
+    } else {
+      //switching to existing loan
+       this.qde.application.loanDetails.propertyType.propertyIdentified = value;
+       this.tabSwitch(this.propertyNoSwitchTab);
+    }
   }
+
   /**
    * Use to sync between lhs and rhs sliders
    * @param swiperInstance RHS Swiper Instance
    */
   goToNextSlide(swiperInstance: Swiper, form?: NgForm) {
-    if (form && !form.valid) {
-      return;
-    }
+    // if (form && !form.valid) {
+    //   return;
+    // }
     // Create ngModel of radio button in future
     swiperInstance.nextSlide();
+    this.page++;
+    this.router.navigate([], {queryParams: { tabName: this.tabName, page: this.page }});
   }
 
   /**
@@ -559,6 +566,8 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
   goToPrevSlide(swiperInstance: Swiper) {
     // Create ngModel of radio button in future
     swiperInstance.prevSlide();
+    this.page--;
+    this.router.navigate([], {queryParams: { tabName: this.tabName, page: this.page }});
   }
 
   /**
@@ -995,7 +1004,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
    * Pass "1,23,45,678" and will return number
    *******************************************/
   getNumberWithoutCommaFormat(x: string) : string {
-    return x ? x.split(',').join(''): '';
+    return x ? x+"".split(',').join(''): '';
   }
   
   /****************************************

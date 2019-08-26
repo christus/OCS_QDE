@@ -65,8 +65,7 @@
                             #amountRequired = "ngModel"
                             name="amountRequired"
                             fieldFill
-                            (input)="checkNumberLessThan50k($event)"
-                            >
+                            (input)="checkNumberLessThan50k($event)">
     
                           <label for="amt-require">Amount required</label>
                           <span class="addon">
@@ -182,11 +181,11 @@
                       <form class="bs-form">
                         <div class="form-wrap">
                           <div class="bs-radio">
-                            <input [readonly]="isTBMLoggedIn" type="radio" name="yes-property" [value]=true [(ngModel)]="isPropertyIdentified" (click)="goToNextSlide(property2)" >
+                            <input [readonly]="isTBMLoggedIn" type="radio" name="yes-property" [value]=true [(ngModel)]="isPropertyIdentified" (click)="changePropertyIdentified(property2, true)" >
                             <label for="yes-property"><span>Yes</span></label>
                           </div>
                           <div class="bs-radio">
-                            <input [readonly]="isTBMLoggedIn" type="radio" name="no-property" [value]=false [(ngModel)]="isPropertyIdentified" (click)="loanPropertyNo(property2, false)">
+                            <input [readonly]="isTBMLoggedIn" type="radio" name="no-property" [value]=false [(ngModel)]="isPropertyIdentified" (click)="changePropertyIdentified(property2, false)">
                             <label for="no-property"><span>No</span></label>
                           </div>
                         </div>
