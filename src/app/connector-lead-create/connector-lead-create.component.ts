@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, Renderer2 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { QdeHttpService } from '../services/qde-http.service';
 import { CommonDataService } from '../services/common-data.service';
@@ -11,11 +11,14 @@ import { QdeService } from '../services/qde.service';
 })
 export class ConnectorLeadCreateComponent implements OnInit {
 
+  isOptionsMenuDropOpen: boolean = false;
+
   constructor(private route: ActivatedRoute,
     private router: Router,
     private qdeHttp: QdeHttpService,
     private commonDataService: CommonDataService,
-    private qdeService: QdeService) { 
+    private qdeService: QdeService,
+    private ren: Renderer2) { 
       
     this.commonDataService.changeMenuBarShown(false);
     this.commonDataService.changeViewFormVisible(false);
@@ -25,4 +28,12 @@ export class ConnectorLeadCreateComponent implements OnInit {
   ngOnInit() {
   }
 
+  openOptionsMenuDropdown(a: ElementRef) {
+    this.isOptionsMenuDropOpen = true;
+    // a.nativeElement.focus();
+  }
+
+  closeOptionsMenuDropdown(optionsMenuDropdownContent: ElementRef) {
+    // this.isOptionsMenuDropOpen = false;
+  }
 }

@@ -6,7 +6,7 @@
             <div class="logo">
                 <h1>
                     <a href="login.html">
-                        <img src="assets/images/logo.svg" alt="logo" class="img-responsive">
+                        <img src="/assets/images/logo.svg" alt="logo" class="img-responsive">
                     </a>
                 </h1>
             </div>
@@ -23,10 +23,10 @@
             </div> -->
             <div class="right-panel of-dashboard">
                 <div class="search-wrap">
-                    <a href="#" class="search-btn"><span class="icon icon-search"></span></a>
+                    <a href="javascript:void(0);" class="search-btn"><span class="icon icon-search"></span></a>
                 </div>
                 <div class="notification-wrap hover-wrap">
-                    <a href="#" class="notification-btn hover-link"><span class="icon icon-notification"></span></a>
+                    <a href="javascript:void(0);" class="notification-btn hover-link"><span class="icon icon-notification"></span></a>
                     <div class="hover-content">
                         <ul class="notification-list">
                             <li class="bs-notification">
@@ -68,12 +68,12 @@
                     </div>
                 </div>
                 <div class="profile-wrap hover-wrap">
-                    <div class="profile-btn hover-link">
-                        <img src="assets/images/profile-thumb.png" alt="" class="profile-thumb">
+                    <div class="profile-btn hover-link" #optionsMenuDropdown [ngClass]="{'active': isOptionsMenuDropOpen}" (click)="openOptionsMenuDropdown(optionsMenuDropdownContent)">
+                        <img src="/assets/images/profile-thumb.png" alt="" class="profile-thumb">
                         <span class="profile-name">Satish Kamat</span>
                         <span class="icon icon-down"></span>
                     </div>
-                    <div class="hover-content">
+                    <div class="hover-content" #optionsMenuDropdownContent [ngClass]="{'active': isOptionsMenuDropOpen}" tabindex="0" (blur)="closeOptionsMenuDropdown(optionsMenuDropdownContent)">
                         <nav class="user-menu">
                             <a class="user-link typ-two" href="">My Profile</a>
                             <a class="user-link typ-two" href="">App Settings</a>
@@ -91,6 +91,17 @@
         <!-- header end -->
     </div>
 </header>
+
+<nav class="bs-side-menu">
+    <a href="" class="nav-link active">
+        <span class="icon icon-dashboard"></span>
+        <span class="link-text">Dashboard</span>
+    </a>
+    <a href="" class="nav-link">
+        <span class="icon icon-performance"></span>
+        <span class="link-text">Performance</span>
+    </a>
+</nav>
 
 <main>
   <div class="main">
@@ -142,7 +153,7 @@
           </div>
           <div class="sidebar">
               <div class="card">
-                  <div class="lyt-alerts">
+                  <!-- <div class="lyt-alerts">
                       <h4 class="title">Alerts</h4>
                       <span class="date">January, 2019</span>
                       <ul class="alerts-list">
@@ -171,14 +182,14 @@
                               <a href="" class="alert-link"></a>
                           </li>
                       </ul>
-                  </div>
+                  </div> -->
                   <div class="lyt-perform-sidebar">
                       <h4 class="title">Performance</h4>
                       <span class="date">January, 2019</span>
                       <div class="pie-wrap">
                           <h5 class="pie-title">Target Achieved</h5>
                           <div class="performance-pie">
-                              <span class="val-wrap"><span class="valuesub">40</span>%</span>
+                              <span class="val-wrap"><span class="valuesub">0</span>%</span>
                           </div>
                       </div>
                       <ul class="performance-state">
