@@ -11,6 +11,12 @@ export class QdeService {
   leads: Array<Qde>;
   defaultValue: Qde = {
     application: {
+      auditTrailDetails: {
+        applicantId: null,
+        pageNumber: null,
+        screenPage: "",
+        tabPage: ""
+      },
       applicationFormNumber: "",
       ocsNumber: "",
       loanAmount: "",

@@ -901,6 +901,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
       let t = fromQde ? this.page: 1;
 
+      if(this.swiperSliders && this.swiperSliders.length > 0) {
+        this.swiperSliders[tabIndex].setIndex(this.page-1);
+      }
+
       // It should not allow to go to any other tabs if applicationId is not present
       if(this.applicantIndex != null && this.qde.application.applicationId != null && this.qde.application.applicationId != '') {
         this.router.navigate([], {queryParams: { tabName: this.fragments[tabIndex], page: t }});
@@ -3093,6 +3097,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.swiperSlidersSub = this.swiperS$.changes.subscribe(v => {
       this.swiperSliders = v._results;
+      if(this.swiperSliders && this.swiperSliders.length > 0) {
+        this.swiperSliders[this.activeTab].setIndex(this.page-1);
+      }
     });
   }
 
@@ -3101,7 +3108,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.tabName = tabPage;
     this.page = pageNumber;
     this.tabSwitch(index, true);
-    this.swiperSliders[index].setIndex(pageNumber-1);
+    
   }
 
 }

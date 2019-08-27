@@ -600,6 +600,10 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
       let t = fromQde ? this.page: 1;
 
+      if(this.swiperSliders && this.swiperSliders.length > 0) {
+        this.swiperSliders[tabIndex].setIndex(this.page-1);
+      }
+
       // It should not allow to go to any other tabs if applicationId is not present
       // if(this.applicantIndex != null && this.qde.application.applicationId != null && this.qde.application.applicationId != '') {
       this.router.navigate([], {queryParams: { tabName: this.fragments[tabIndex], page: t }});

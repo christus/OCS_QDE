@@ -533,8 +533,6 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
               this.router.navigate(['/applicant', result.application.applicationId, 'co-applicant'], {queryParams: {tabName: this.fragments[0], page: 1}});
             }
 
-            this.selectedRelationship = result.application.applicants[this.coApplicantIndex].personalDetails.relationShip || this.relationships[0].value;
-
             if(params['coApplicantIndex'] && this.qde.application.auditTrailDetails.screenPage == screenPages['coApplicantDetails']) {
               if(this.qde.application.auditTrailDetails.applicantId == parseInt(this.qde.application.applicants[params.coApplicantIndex].applicantId)) {
                 this.coApplicantIndex = result.application.applicants.findIndex(v => v.applicantId == this.qde.application.auditTrailDetails.applicantId);
@@ -738,6 +736,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
     let t = fromQde ? this.page: 1;
 
+    if(this.swiperSliders && this.swiperSliders.length > 0) {
+      this.swiperSliders[tabIndex].setIndex(this.page-1);
+    }
     // Check for invalid tabIndex
     if(tabIndex < this.fragments.length) {
       this.router.navigate([], {queryParams: { tabName: this.fragments[tabIndex], page: t }});
@@ -2490,6 +2491,12 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       console.log("AM: ", this.assessmentMethodology);
       if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].incomeDetails.assessmentMethodology)) ) {
         this.selectedAssesmentMethodology = this.assessmentMethodology[(parseInt(this.qde.application.applicants[this.coApplicantIndex].incomeDetails.assessmentMethodology))-1];
+      }
+
+      try {
+        this.selectedRelationship = this.qde.application.applicants[this.coApplicantIndex].personalDetails.relationShip || this.relationships[0].value;
+      } catch(ex) {
+        this.selectedRelationship = this.relationships[0].value;
       }
 
       // // Incoming from create in Individual Pan

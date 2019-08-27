@@ -322,7 +322,7 @@
                             <div class="form-group">
                               <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control" [data]="titles"
                                 textField="key" valueField="value" name="title" nick="personalDetails.title"
-                                tabindex="0" #title (selectionChange)="selectValueChanged($event, title.hostElement)"
+                                tabindex="1" #title (selectionChange)="selectValueChanged($event, title.hostElement)"
                                 [(ngModel)]="selectedTitle">
                               </kendo-dropdownlist>
                             </div>
@@ -333,8 +333,9 @@
                               id="name"
                               [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.firstName"
                               name="firstName" #firstName="ngModel" fieldFill required
+                              tabindex="2"
                               pattern="{{regexPattern.name}}" />
-                            <label for="name" tabindex="1">First name</label>
+                            <label for="name">First name</label>
                             <div *ngIf="(firstName.touched || firstName.dirty) && firstName.invalid"
                               class="invalid-feedback">
                               <!-- <div *ngIf="firstName.errors?.required">{{errors.personalDetails.firstName.required}}</div> -->
@@ -345,8 +346,8 @@
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                               id="middleName" name="middleName"
                               [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.middleName"
-                              pattern="{{regexPattern.name}}" fieldFill #middleName="ngModel" />
-                            <label for="middleName" tabindex="2">Middle name</label>
+                              pattern="{{regexPattern.name}}" fieldFill #middleName="ngModel" tabindex="3" />
+                            <label for="middleName">Middle name</label>
 
                             <span class="optional">Optional</span>
                             <div *ngIf="(middleName.touched || middleName.dirty) && middleName.invalid"
@@ -360,8 +361,8 @@
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                               [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.lastName"
                               name="lastName" #lastName="ngModel" id="lastName" fieldFill
-                              pattern="{{regexPattern.name}}" required />
-                            <label for="lastName" tabindex="3">Last name</label>
+                              pattern="{{regexPattern.name}}" required tabindex="4" />
+                            <label for="lastName">Last name</label>
                             <div *ngIf="(lastName.touched || lastName.dirty) && lastName.invalid"
                               class="invalid-feedback">
                               <!-- <div *ngIf="lastName.errors?.required">{{errors.personalDetails.lastName.required}}</div> -->
@@ -371,6 +372,7 @@
                         </div>
                         <div class="btn-wrap">
                           <button type="submit" class="btn btn-primary" [ngClass]="{'disabled': (!nameForm.valid)}"
+                          tabindex="-1"
                             [disabled]="!nameForm.valid">Next
                           </button>
                         </div>
@@ -2360,7 +2362,7 @@
                               [(ngModel)]="qde.application.applicants[applicantIndex].revenueDetails.revenue"
                               #revenue="ngModel" name="revenue" maxlength="15" fieldFill tabindex="1"
                               pattern="{{regexPattern.revenue}}" required />
-                            <label for="revenue">Received Gross turnover</label>
+                            <label for="revenue">Receipt/Gross turnover</label>
                             <div *ngIf="revenue.touched && revenue.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="revenue.errors?.required">{{errors.revenueDetails.revenue.required}}</div> -->
                               <div *ngIf="revenue.errors?.pattern">{{errors.revenueDetails.revenue.invalid}}</div>
