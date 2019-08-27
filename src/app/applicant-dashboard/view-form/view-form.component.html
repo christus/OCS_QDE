@@ -40,6 +40,7 @@
                     
                     <div class="btn-wrap edit-btn-wrap">
                         <button [routerLink]="['/applicant', applicationId]" class="btn btn-default edit">Edit</button>
+                        <button (click)="downloadPdf()" class="btn btn-default download">Download</button>
                     </div>
 
                     <form  #applicantIndividualForm="ngForm">

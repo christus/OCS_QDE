@@ -261,6 +261,10 @@ export const environment = {
     "clssSearch": {
       'workflowId': '15985832c56711e9a0b00242ac110002',
       'processId': '15b0dceac56711e9b81a0242ac110002'
+    },
+    "downloadPdf": {
+      'processId': 'a88fd316c4a111e993030242ac110002',
+      'projectId': 'ff8e364e6fce11e98754782bcb8f3845'
     }
   },
   userName: "icici@icici.com",
@@ -270,6 +274,7 @@ export const environment = {
   // host: "http://192.168.1.108/appiyo",
   //host: "/ProcessStore",
   host:  "/appiyo",
+  pdfLocation: "/d/download/pdf?"
   //host: "https://ihfcmobileuat.icicihfc.com/appiyo"
   //host: "https://103.87.42.117/appiyo"
   //host:"http://www.twixor.in/appiyo"

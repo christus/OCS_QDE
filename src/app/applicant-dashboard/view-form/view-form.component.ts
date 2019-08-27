@@ -14,6 +14,7 @@ import { QdeService } from 'src/app/services/qde.service';
 import { errors } from '../../services/errors';
 import { Subscription } from 'rxjs';
 import { statuses } from '../../app.constants';
+import { environment } from 'src/environments/environment.prod';
 
 interface Item {
   key: string,
@@ -196,6 +197,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
   isIncomplete: Array<InCompleteFields> = [];
   applicationId: string;
   applicantId: string;
+  ocsNumber: string;
 
   isReadOnlyForm: boolean;
   // isEligibilityForReview: boolean;
@@ -227,6 +229,8 @@ export class ViewFormComponent implements OnInit, OnDestroy {
       // this.commonDataService.changeApplicationId(this.qde.application.applicationId);
 
       this.applicationId = this.qde.application.applicationId;
+      this.ocsNumber = this.qde.application.ocsNumber;
+
       console.log(">>>", this.applicationId+"");
 
       this.qdeService.qdeSource.subscribe(v => {
@@ -596,6 +600,14 @@ export class ViewFormComponent implements OnInit, OnDestroy {
         this.applicantIndividual = true;
       }
     }
+  }
+
+  downloadPdf() {
+    let uri = environment.host + environment.pdfLocation + 
+    'filename=' + this.ocsNumber + '.pdf&content_var=jsonResponse&template_var=htmlData&timezoneOffset=-330&processVariables={"processId":"'
+     + environment.api.downloadPdf.processId + 
+     '","projectId":"' + environment.api.downloadPdf.projectId + '","ProcessVariables":{"applicationId":"' + this.applicationId + '"}}';
+    window.open(uri, '_blank');
   }
 
   counter(size): Array<number> {
