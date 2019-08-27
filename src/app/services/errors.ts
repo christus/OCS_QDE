@@ -63,7 +63,8 @@ export const errors: any = {
     residenceNumber: {
       required: "Residence number is mandatory",
       invalid: "Invalid Residence number/Alphabets and Special Characters not allowed",
-      sameNumber: "Residence numbers are same, please use different numbers"
+      sameNumber: "Residence numbers are same. Please use different number",
+      sameNumberMobile: "Numbers are same. Please use different number"
     },
     alternateResidenceNumber1:{
       invalid:"Invalid Residence number/Alphabets and Special Characters not allowed"
