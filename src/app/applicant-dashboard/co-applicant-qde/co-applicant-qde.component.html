@@ -396,7 +396,7 @@
                                                       (ngSubmit)="submitNameDetails(nameForm, pdSlider2)">
                                                   <div class="form-wrap">
                                                         <div class="form-group">
-                                                                <span class="control-title">Relationship</span>
+                                                                <span class="control-title">Relationship with Main Applicant</span>
                                                             <!-- <select ngModel name="relationShip" class="js-select" required>
                                                                    <option *ngFor="let rela of relationships" [value]="rela.value">{{rela.key}}</option>
                                                                 </select> -->
@@ -958,8 +958,15 @@
                                                   (ngSubmit)="submitCommunicationAddressDetails(communicationForm)">
                                               <div class="form-wrap">
                                                   <h1 class="sub-heading" style="text-align: left ; margin-bottom: 12px">Current Address</h1>
-                                                  <div class="currentAddressFromMainApplicantBtnWrapper" *ngIf="isCurrentAddressFromMainApplicant">
-                                                      <button type="button" (click)="currentAddressFromMainApplicant()">Current Address From Main Applicant</button>
+                                                  <br>
+                                                  <div class="bs-checkbox typ-withForm" *ngIf="isCurrentAddressFromMainApplicant">
+                                                      <input [readonly]="isReadOnly"  type="checkbox"
+                                                              [ngModel]="qde.application.applicants[coApplicantIndex].communicationAddress.currentAddFromApp"
+                                                              name="currentAddFromApp"
+                                                              (ngModelChange)="currentAddressFromMainApplicant($event)"
+                                                              [checked]="qde.application.applicants[coApplicantIndex].communicationAddress.currentAddFromApp == true"
+                                                              id="currAddressFromMainApplicant" />
+                                                      <label for="currAddressFromMainApplicant"><span>Current Address From Main Applicant</span></label>
                                                   </div>
                                                   <div class="form-group">
                                                       <span class="control-title">Residential status</span>
@@ -1073,9 +1080,16 @@
                                                   </div>
                                                   <div class="permanent-add-wrap">
                                                       <h1 class="sub-heading" style="text-align: left; margin-bottom: 12px">Permanent Address</h1>
-                                                        <div class="currentAddressFromMainApplicantBtnWrapper" *ngIf="isPermanentAddressFromMainApplicant">
-                                                            <button type="button" (click)="permanentAddressFromMainApplicant()">Permanent Address From Main Applicant</button>
-                                                        </div>
+                                                      <br>
+                                                      <div class="bs-checkbox typ-withForm" *ngIf="isPermanentAddressFromMainApplicant">
+                                                              <input [readonly]="isReadOnly"  type="checkbox"
+                                                              [ngModel]="qde.application.applicants[this.coApplicantIndex].communicationAddress.permanentAddFromApp"
+                                                              name="permanentAddFromApp"
+                                                              (ngModelChange)="permanentAddressFromMainApplicant($event)"
+                                                              [checked]="qde.application.applicants[this.coApplicantIndex].communicationAddress.permanentAddFromApp == true"
+                                                              id="permntAddressFromMainApplicant" />
+                                                      <label for="permntAddressFromMainApplicant"><span>Permanent Address From Main Applicant</span></label>
+                                                      </div>
                                                           <div class="form-group">
                                                               <input [readonly]="isReadOnly" type="text" class="form-control" id="per-address1"
                                                               name="pAddressLineOne"

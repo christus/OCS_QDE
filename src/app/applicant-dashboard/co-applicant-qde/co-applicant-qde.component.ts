@@ -3106,7 +3106,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     });
   }
 
-  currentAddressFromMainApplicant() {
+  currentAddressFromMainApplicant(event: boolean) {
+    this.qde.application.applicants[this.coApplicantIndex].communicationAddress.currentAddFromApp = event;
+    if(event == true){
     this.qde.application.applicants[this.coApplicantIndex].communicationAddress.residentialStatus = this.qde.application.applicants.find(v => v.isMainApplicant == true).communicationAddress.residentialStatus;
     this.qde.application.applicants[this.coApplicantIndex].communicationAddress.addressLineOne = this.qde.application.applicants.find(v => v.isMainApplicant == true).communicationAddress.addressLineOne;
     this.qde.application.applicants[this.coApplicantIndex].communicationAddress.addressLineTwo = this.qde.application.applicants.find(v => v.isMainApplicant == true).communicationAddress.addressLineTwo;
@@ -3118,22 +3120,51 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     this.qde.application.applicants[this.coApplicantIndex].communicationAddress.state = this.qde.application.applicants.find(v => v.isMainApplicant == true).communicationAddress.state;
 
     this.qde.application.applicants[this.coApplicantIndex].communicationAddress.cityState = this.qde.application.applicants.find(v => v.isMainApplicant == true).communicationAddress.city+" "+this.qde.application.applicants.find(v => v.isMainApplicant == true).communicationAddress.state;
+    }
+    else{
+      this.qde.application.applicants[this.coApplicantIndex].communicationAddress.residentialStatus = "";
+      this.qde.application.applicants[this.coApplicantIndex].communicationAddress.addressLineOne = "";
+      this.qde.application.applicants[this.coApplicantIndex].communicationAddress.addressLineTwo = "";
+      this.qde.application.applicants[this.coApplicantIndex].communicationAddress.zipcodeId = "";
+      this.qde.application.applicants[this.coApplicantIndex].communicationAddress.zipcode = "";
+      this.qde.application.applicants[this.coApplicantIndex].communicationAddress.cityId = "";
+      this.qde.application.applicants[this.coApplicantIndex].communicationAddress.city = "";
+      this.qde.application.applicants[this.coApplicantIndex].communicationAddress.stateId = "";
+      this.qde.application.applicants[this.coApplicantIndex].communicationAddress.state = "";
 
-    this.isCurrentAddressFromMainApplicant = false;
+      this.qde.application.applicants[this.coApplicantIndex].communicationAddress.cityState = "";
+    }
+    // this.isCurrentAddressFromMainApplicant = false;
   }
 
 
-  permanentAddressFromMainApplicant() {
+  permanentAddressFromMainApplicant(event: boolean) {
+    this.qde.application.applicants[this.coApplicantIndex].communicationAddress.permanentAddFromApp = event;
+    if(event == true){
     this.qde.application.applicants[this.coApplicantIndex].permanentAddress.addressLineOne = this.qde.application.applicants.find(v => v.isMainApplicant == true).permanentAddress.addressLineOne;
     this.qde.application.applicants[this.coApplicantIndex].permanentAddress.addressLineTwo = this.qde.application.applicants.find(v => v.isMainApplicant == true).permanentAddress.addressLineTwo;
     this.qde.application.applicants[this.coApplicantIndex].permanentAddress.zipcodeId = this.qde.application.applicants.find(v => v.isMainApplicant == true).permanentAddress.zipcodeId;
+    this.qde.application.applicants[this.coApplicantIndex].permanentAddress.zipcode = this.qde.application.applicants.find(v => v.isMainApplicant == true).permanentAddress.zipcode;
     this.qde.application.applicants[this.coApplicantIndex].permanentAddress.cityId = this.qde.application.applicants.find(v => v.isMainApplicant == true).permanentAddress.cityId;
     this.qde.application.applicants[this.coApplicantIndex].permanentAddress.stateId = this.qde.application.applicants.find(v => v.isMainApplicant == true).permanentAddress.stateId;
     this.qde.application.applicants[this.coApplicantIndex].permanentAddress.numberOfYearsInCurrentResidence = this.qde.application.applicants.find(v => v.isMainApplicant == true).permanentAddress.numberOfYearsInCurrentResidence;
 
     this.qde.application.applicants[this.coApplicantIndex].permanentAddress.cityState = this.qde.application.applicants.find(v => v.isMainApplicant == true).permanentAddress.city+" "+this.qde.application.applicants.find(v => v.isMainApplicant == true).permanentAddress.state;
 
-    this.isPermanentAddressFromMainApplicant = false;
+    // this.isPermanentAddressFromMainApplicant = false;
+    }else{
+      this.qde.application.applicants[this.coApplicantIndex].permanentAddress.residentialStatus = "";
+      this.qde.application.applicants[this.coApplicantIndex].permanentAddress.addressLineOne = "";
+      this.qde.application.applicants[this.coApplicantIndex].permanentAddress.addressLineTwo = "";
+      this.qde.application.applicants[this.coApplicantIndex].permanentAddress.zipcodeId = "";
+      this.qde.application.applicants[this.coApplicantIndex].permanentAddress.zipcode = "";
+      this.qde.application.applicants[this.coApplicantIndex].permanentAddress.cityId = "";
+      this.qde.application.applicants[this.coApplicantIndex].permanentAddress.city = "";
+      this.qde.application.applicants[this.coApplicantIndex].permanentAddress.stateId = "";
+      this.qde.application.applicants[this.coApplicantIndex].permanentAddress.state = "";
+
+      this.qde.application.applicants[this.coApplicantIndex].permanentAddress.cityState = "";
+    }
   }
 
   commSliderChanged(event) {

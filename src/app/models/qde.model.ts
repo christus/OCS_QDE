@@ -133,6 +133,8 @@ export interface Address {
     stateId?: string;
     numberOfYearsInCurrentResidence? : string;
     permanentAddress ?: boolean;
+    currentAddFromApp?: boolean;
+    permanentAddFromApp?: boolean;
     cityState? : string;
     preferedMailingAddress?: boolean; // As of new design
 }
