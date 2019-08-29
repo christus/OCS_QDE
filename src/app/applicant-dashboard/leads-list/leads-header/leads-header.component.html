@@ -1,0 +1,23 @@
+<header>
+        <div class="bs-header" data-nav="dashboard">
+            <!-- header start -->
+            <div class="sec-nav">
+                <div class="logo">
+                    <h1>
+                        <a routerLink="/leads">
+                            <img src="assets/images/logo.svg" alt="logo" class="img-responsive" />
+                        </a>
+                    </h1>
+                </div>
+                <div class="right-panel">
+    
+                    <a (click)="logout()" *ngIf="isLogoutVisible" class="space btn btn-default logout">Logout</a>
+                
+                </div>
+            </div>
+            
+            <!-- header end -->
+        </div>
+      </header>
+ 
+          

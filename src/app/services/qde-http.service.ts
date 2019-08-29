@@ -151,13 +151,42 @@ createOrUpdatePersonalDetails(qde) {
     return this.http.post(uri, body);
   }
   
-  getLeads(search?: string, fromDay?: string, fromMonth?: string, fromYear?: string, toDay?: string, toMonth?: string, toYear?: string, assignedTo?: string) {
+  getLeads(search?: string, fromDay?: string, fromMonth?: string, fromYear?: string, toDay?: string, toMonth?: string, toYear?: string, assignedTo?: string, status?: string) {
     const processId = environment.api.dashboard.processId;
     const workflowId = environment.api.dashboard.workflowId;
     const projectId = environment.projectId;
 
     let processVariables = {
       userId: localStorage.getItem("userId"),
+      firstName: (search != null) ? search : "",
+      fromDate: (fromDay != 'DD' || fromMonth != 'MM' || fromYear != 'YYYY') ? new Date(fromYear+""+"-"+fromMonth+"-"+fromDay).toJSON(): "",
+      toDate: (toDay != 'DD' || toMonth != 'MM' || toYear != 'YYYY') ? new Date(toYear+""+"-"+toMonth+"-"+toDay).toJSON(): "",
+      applicationStatus: status
+    };
+
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: processVariables,
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = new HttpParams().set(
+      'processVariables',
+      JSON.stringify(requestEntity)
+    );
+  
+    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.http.post(uri, body);
+  }
+
+  getNewLeads(search?: string, fromDay?: string, fromMonth?: string, fromYear?: string, toDay?: string, toMonth?: string, toYear?: string, assignedTo?: string, status?: string) {
+    const processId = environment.api.newLeads.processId;
+    const workflowId = environment.api.newLeads.workflowId;
+    const projectId = environment.projectId;
+
+    let processVariables = {
+      userId: parseInt(localStorage.getItem("userId")),
       firstName: (search != null) ? search : "",
       fromDate: (fromDay != 'DD' || fromMonth != 'MM' || fromYear != 'YYYY') ? new Date(fromYear+""+"-"+fromMonth+"-"+fromDay).toJSON(): "",
       toDate: (toDay != 'DD' || toMonth != 'MM' || toYear != 'YYYY') ? new Date(toYear+""+"-"+toMonth+"-"+toDay).toJSON(): ""

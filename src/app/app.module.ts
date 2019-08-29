@@ -114,6 +114,10 @@ import { DocumentAssessmentDoccatDoctypeComponent } from './admin/admin-panel/do
 import { DocAssessDoccatProfileMapResolverService } from './services/doc-assess-doccat-profile-map-resolver.service';
 import { LoanMasterComponent } from './admin/admin-panel/loan-master/loan-master.component';
 import { ConnectorLeadCreateComponent } from './connector-lead-create/connector-lead-create.component';
+import { TabComponent } from './applicant-dashboard/leads-list/tabs/tab.component';
+import { TabsComponent } from './applicant-dashboard/leads-list/tabs/tabs.component';
+import { LeadsHeaderComponent } from './applicant-dashboard/leads-list/leads-header/leads-header.component';
+import { LeadsSidebarComponent } from './applicant-dashboard/leads-list/leads-sidebar/leads-sidebar.component';
 
 
 
@@ -535,7 +539,11 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     DocumentAssessmentDoccatDoctypeComponent,
     LoanMasterComponent,
     CollateralComponent,
-    ConnectorLeadCreateComponent
+    ConnectorLeadCreateComponent,
+    TabComponent,
+    TabsComponent,
+    LeadsHeaderComponent,
+    LeadsSidebarComponent
   ],
   imports: [
     BrowserModule,

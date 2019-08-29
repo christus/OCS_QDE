@@ -145,3 +145,121 @@ a, a:visited {
   height: 98vh;
   overflow-y: scroll;
 }
+
+
+.bs-lead-card {
+  box-shadow: 0 0 27px 0 rgba(68,68,68,.13);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.41vw 1.17vw;
+  margin: .78vw 1.56vw 0
+}
+
+.bs-lead-card>li {
+  width: 22.5%
+}
+
+.bs-lead-card>li:nth-child(5) {
+  width: 8%
+}
+
+.bs-lead-card>li:last-child {
+  /* width: 2% */
+}
+
+.bs-lead-card .initials {
+  width: 1.95vw;
+  height: 1.95vw;
+  text-transform: uppercase;
+  color: #fff;
+  background: #004a80;
+  border-radius: 50%;
+  font-size: .78vw;
+  line-height: 1.95vw;
+  display: inline-block;
+  text-align: center;
+  margin-right: 8px
+}
+
+.bs-lead-card .user-name {
+  font-size: 1.09vw;
+  line-height: 1.95vw;
+  font-family: zurich-bold;
+  color: #444;
+  text-transform: capitalize
+}
+
+.bs-lead-card li .name {
+  font-size: .94vw;
+  line-height: 1.41vw;
+  color: #999;
+  display: block;
+  text-transform: capitalize
+}
+
+.bs-lead-card li .value {
+  font-size: .94vw;
+  line-height: 1.41vw;
+  color: #444;
+  display: block
+}
+
+.bs-lead-card li .value .bs-progress-bar {
+  margin-left: .78vw
+}
+
+.bs-lead-card .lead-action {
+  color: #f58220;
+  font-family: zurich-bold;
+  font-size: .94vw;
+  line-height: 1.95vw;
+  text-transform: uppercase
+}
+
+.bs-lead-card .lead-details {
+  color: #444;
+  font-size: 1.25vw
+}
+
+
+
+
+.typ-dash .tabs-head {
+  justify-content: left;
+  border-bottom: 1px solid rgba(0,74,128,.2);
+  margin: 0 1.56vw;
+  padding: 0 3.91vw 0 0;
+}
+.typ-dash .tabs-head .tab-link a {
+  display: inline-block;
+  padding-bottom: 1.17vw;
+  font-size: 1.41vw;
+  text-transform: capitalize;
+  color: #004a80;
+  font-family: zurich-bold;
+  line-height: 1.88vw;
+  position: relative;
+}
+.add-lead-link,
+.add-new-login {
+  line-height: 2.73vw;
+  font-size: 1.09vw;
+  text-align: center;
+  color: #f58220;
+  text-transform: uppercase;
+  border: 1px solid #f58220;
+  padding: 0 .78vw;
+  border-radius: 25px;
+  float: right;
+  margin: 1.2vh;
+}
+
+.add-new-login {
+  
+}
+
+
+.typ-connector {
+  padding: 0 0 0 5.47vw;
+}

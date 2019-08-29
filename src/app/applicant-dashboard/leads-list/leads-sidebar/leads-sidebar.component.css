@@ -1,0 +1,47 @@
+.bs-side-menu {
+	position: fixed;
+	width: 5.47vw;
+	height: calc(100vh - 5vw);
+	background: #ed7722;
+	background: -moz-linear-gradient(top,#ed7722 0,#c1402c 100%);
+	background: -webkit-gradient(left top,left bottom,color-stop(0,#ed7722),color-stop(100%,#c1402c));
+	background: -webkit-linear-gradient(top,#ed7722 0,#c1402c 100%);
+	background: -o-linear-gradient(top,#ed7722 0,#c1402c 100%);
+	background: -ms-linear-gradient(top,#ed7722 0,#c1402c 100%);
+	background: linear-gradient(to bottom,#ed7722 0,#c1402c 100%);
+	text-align: center;
+	left: 0;
+  }
+  
+  .bs-side-menu .nav-link {
+	display: block;
+	position: relative;
+	padding: 20px 0;
+	opacity: .5
+  }
+  
+  .bs-side-menu .nav-link.active {
+	opacity: 1
+  }
+  
+  .bs-side-menu .nav-link .icon {
+	color: #fff;
+	font-size: 1.95vw
+  }
+  
+  .bs-side-menu .nav-link .link-text {
+	font-size: .78vw;
+	line-height: .94vw;
+	color: #fff;
+	display: block
+  }
+  
+  .bs-side-menu .nav-link:not(:last-child):after {
+	content: '';
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	height: 1px;
+	background: rgba(250,250,250,.5)
+  }

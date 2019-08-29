@@ -1,279 +1,113 @@
-<main>
-    <div class="lyt-login">
-        <div class="lhs">
-            <h1 class="logo">
-                <a href="#">
-                    <img src="/assets/images/logo-white.svg" alt="logo">
-                </a>
-            </h1>
-            <div class="title-wrap">
-                <h2 class="title">Current Leads <span class="cm-line-break"></span> status</h2>
-            </div>
-        </div>
-        <div class="rhs">
-            <div class="btn-wrap" *ngIf="!isTBMLoggedIn">
-                <button routerLink="/applicant" class="btn btn-primary application">New Application</button>
-            </div>
+<app-leads-header></app-leads-header>
+<app-leads-sidebar></app-leads-sidebar>
+<div class="typ-connector">
 
+<div class="typ-dash">
+  <ul class="tabs-head">
+    <li class="tab-link active" data-target="leads-tab"><a> Logins</a></li>
+  </ul>
+  <button routerLink="/applicant" class="btn application add-new-login">NEW LOGIN</button>
+  <button routerLink="/connector/lead-create" class="btn application add-lead-link">CREATE LEAD</button>
 
-<!--             <table class="leadFilter">
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td>
-                        Assigned To
-                    </td>
-                    <td>Location</td>
-                    <td>From</td>
-                    <td>To</td>
-                </tr>
-            </table> -->
+</div>
+<tabs>
+    <tab tabTitle="ALL" class="tab">
+        <ul *ngFor="let detail of userDetails">
+            <li>
+             <a [routerLink]="detail.url" [queryParams]="detail['queryParams']" class="lead-action">
 
+              <ul class="bs-lead-card">
+                  <li>
+                      <span class="initials">AK</span>
+                      <span class="user-name">{{detail.firstName || detail.nameOfOrganization}} {{detail.lastName}}</span></li>
+                  <li>
+                      <span class="name">applied on</span>
+                      <span class="value">{{detail.appliedOn | date:'dd-MM-yyyy HH:mm:ss'}}</span>
+                  </li>
+                  <li>
+                      <span class="name">phone</span>
+                      <span class="value">{{detail.mobileNumber}}</span>
+                  </li>
+                  <li>
+                      <span class="name">Status</span>
+                      <span class="value">{{detail.status}}</span>
+                  </li>
+              </ul>
+            </a>
+          </li>
+      </ul>
 
-            <table class="">
-                <tbody class="makeItScrollable">
-                     <tr class="leadLogin">
-                        <td>
-                            <div class="row">
-                                <div class="col12">
-                                    <form class="bs-form">
-                                        <div class="form-group">
-                                            <input  type="text"
-                                                    class="form-control"
-                                                    id="search"
-                                                    name="search"
-                                                    pattern="^[0-9A-Za-z,_#\s]+$"
-                                                    (input)="filterLeads($event)"
-                                                    [(ngModel)]="searchTxt"
-                                                    fieldFill
-                                                    required />
-                                            <label for="search">Search</label>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="filters">
-                            <i (click)="toggleFilters()"><img src="assets/images/calendar.png" alt=""></i>
-
-                            <!-- <i></i>
-                            <h1>
-                                Welcome <b>Manpreet Singh</b> DEO <br>
-                                Branch Id: ICICI0000011
-                            </h1> -->
-                        </td>
-                        <td>
-                            <div class="btn btn-default cur-pointer" (click)="logout()">LOGOUT</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="3">
-
-                        </td>
-                    </tr>
-                    <tr class="leadSearch">
-                        <td colspan="3">
-                            <div class="row" *ngIf="show">
-                                <div class="col4">
-                                    <div class="row">
-                                        <p class="center fromToDateLbl">From Date</p>
-                                        <div class="col4">
-                                            <kendo-dropdownlist class="form-control"
-                                                [data]="days"
-                                                textField="key"
-                                                valueField="value"
-                                                name="day"
-                                                tabindex="0"
-                                                (selectionChange)="filterLeads($event)"
-                                                [(ngModel)]="fromDay">
-                                            </kendo-dropdownlist>
-                                        </div>
-                                        <div class="col4">
-                                            <kendo-dropdownlist class="form-control"
-                                                [data]="months"
-                                                textField="key"
-                                                valueField="value"
-                                                name="month"
-                                                tabindex="0"
-                                                #dobMonth
-                                                (selectionChange)="filterLeads($event)"
-                                                [(ngModel)]="fromMonth">
-                                            </kendo-dropdownlist>
-                                        </div>
-                                        <div class="col4">
-                                            <kendo-dropdownlist class="form-control"
-                                                [data]="years"
-                                                textField="key"
-                                                valueField="value"
-                                                name="year"
-                                                tabindex="0"
-                                                #dobYear
-                                                (selectionChange)="filterLeads($event)"
-                                                [(ngModel)]="fromYear">
-                                            </kendo-dropdownlist>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col4">
-                                    <div class="row">
-                                        <p class="center fromToDateLbl">To Date</p>
-                                        <div class="col4">
-                                            <kendo-dropdownlist class="form-control"
-                                                [data]="days"
-                                                textField="key"
-                                                valueField="value"
-                                                name="day"
-                                                tabindex="0"
-                                                (selectionChange)="filterLeads($event)"
-                                                [(ngModel)]="toDay">
-                                            </kendo-dropdownlist>
-                                        </div>
-                                        <div class="col4">
-                                            <kendo-dropdownlist class="form-control"
-                                                [data]="months"
-                                                textField="key"
-                                                valueField="value"
-                                                name="month"
-                                                tabindex="0"
-                                                #dobMonth
-                                                (selectionChange)="filterLeads($event)"
-                                                [(ngModel)]="toMonth">
-                                            </kendo-dropdownlist>
-                                        </div>
-                                        <div class="col4">
-                                            <kendo-dropdownlist class="form-control"
-                                                [data]="years"
-                                                textField="key"
-                                                valueField="value"
-                                                name="year"
-                                                tabindex="0"
-                                                #dobYear
-                                                (selectionChange)="filterLeads($event)"
-                                                [(ngModel)]="toYear">
-                                            </kendo-dropdownlist>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-
-<!--                     <tr class="leadFilter">
-                        <td></td>
-                        <td>
-                            Assigned To
-                        </td>
-                        <td>Location</td>
-                        <td>From</td>
-                        <td>To</td>
-                    </tr> -->
-
-                    <tr class="leadList">
-                        <td>
-                            <table *ngFor="let detail of userDetails">
-                                <tr>
-                                    <td colspan="3">                                               
-                                        <li><span>Lead ID / OCS Number: </span><b> {{detail.ocsNumber | uppercase}}</b></li>
-                                    </td>
-                                </tr> 
-                                <tr>
-                                    <td>
-                                        <a [routerLink]="detail.url" [queryParams]="detail['queryParams']">
-                                            <ul>
-                                                <li><span>Name :</span><b> {{detail.firstName || detail.nameOfOrganization}} {{detail.lastName}}</b></li>
-                                                <li><span>Product :</span><b> {{detail.product}}</b></li>
-                                                <li><span>Loan amount :</span><b> {{detail.amountRequired}}</b></li>
-                                            </ul>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a [routerLink]="detail.url" [queryParams]="detail['queryParams']">
-                                            <ul>
-                                                <li><span>Branch :</span><b> {{detail.branchName}}</b></li>
-                                                <li><span>Generated date :</span><b> {{detail.appliedOn | date:'dd-MM-yyyy HH:mm:ss'}}</b></li>
-                                                <li><span>Assigned date :</span><b> {{detail.assignedDate | date:'dd-MM-yyyy HH:mm:ss'}}</b></li>
-                                            </ul>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a [routerLink]="detail.url" [queryParams]="detail['queryParams']">
-                                            <ul>
-
-                                                <li><span>Pending status :</span><b> {{detail.status}}</b></li>
-                                                <li><span>Pending with :</span><b> {{detail.appliedBy}}</b></li>
-                                            </ul>
-                                        </a>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-
-
-
-                </tbody>
-
-            </table>
-
-
-<!--             <div 
-              fxLayout="row wrap" 
-              fxLayout.lt-sm="column" 
-              fxLayoutGap="32px" 
-              fxLayoutAlign="flex-start">
-            <ng-container *ngFor="let _ of [1,2,3]">
-              <app-card 
-                fxFlex="0 1 calc(33.3% - 32px)"
-                fxFlex.lt-md="0 1 calc(50% - 32px)"
-                fxFlex.lt-sm="100%"
-              >
-                  <div class="col-sm-4">{{detail.firstName}}</div>
-                  <div class="col-sm-4">{{detail.firstName}}</div>
-                  <div class="col-sm-4">{{detail.firstName}}</div>
-              </app-card>
-            </ng-container>
-            </div> -->
-
-
-
-<!--             <div class="row" *ngFor="let detail of userDeta">
-             
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-               
-                    <div class="box-part text-center">
-                        
-                        <i class="fa fa-instagram fa-3x" aria-hidden="true"></i>
-                        
-                        <div class="title">
-                            <h4>Instagram</h4>
-                        </div>
-                        
-                        <div class="text">
-                            <span>Lorem ipsum dolor sit amet, id quo eruditi eloquentiam. Assum decore te sed. Elitr scripta ocurreret qui ad.</span>
-                        </div>
-                        
-                        <a href="#">Learn More</a>
-                        
-                     </div>
-                </div> 
-        
-            </div> -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        </div>
-    </div>
-</main>
+    </tab>
+    <tab tabTitle="NEW LEADS">
+      <ul *ngFor="let detail of newLeadsDetails">
+        <li>
+            <a [routerLink]="detail.url" [queryParams]="detail['queryParams']" class="lead-action">
+            <ul class="bs-lead-card">
+                <li>
+                    <span class="initials">AK</span>
+                    <span class="user-name">{{detail.name}}</span></li>
+                <li>
+                    <span class="name">applied on</span>
+                    <span class="value">{{detail.createdOn | date:'dd-MM-yyyy HH:mm:ss'}}</span>
+                </li>
+                <li>
+                    <span class="name">phone</span>
+                    <span class="value">{{detail.mobileNumber}}</span>
+                </li>
+            </ul>
+          </a>
+        </li>
+    </ul>
+    </tab>
+    <tab tabTitle="PENDING APPLICATION">
+      <ul *ngFor="let detail of newPendingApplicationDetails">
+        <li>
+            <a [routerLink]="detail.url" [queryParams]="detail['queryParams']" class="lead-action">
+            <ul class="bs-lead-card">
+                <li>
+                    <span class="initials">AK</span>
+                    <span class="user-name">{{detail.firstName || detail.nameOfOrganization}} {{detail.lastName}}</span></li>
+                <li>
+                    <span class="name">applied on</span>
+                    <span class="value">{{detail.appliedOn | date:'dd-MM-yyyy HH:mm:ss'}}</span>
+                </li>
+                <li>
+                    <span class="name">phone</span>
+                    <span class="value">{{detail.mobileNumber}}</span>
+                </li>
+                <li>
+                    <span class="name">Status</span>
+                    <span class="value">{{detail.status}}</span>
+                </li>
+            </ul>
+          </a>
+        </li>
+    </ul>
+    </tab>
+    <tab tabTitle="PENDING PAYMENT">
+      <ul *ngFor="let detail of newPendingPaymentDetails">
+        <li>
+            <a [routerLink]="detail.url" [queryParams]="detail['queryParams']" class="lead-action">
+            <ul class="bs-lead-card">
+                <li>
+                    <span class="initials">AK</span>
+                    <span class="user-name">{{detail.firstName || detail.nameOfOrganization}} {{detail.lastName}}</span></li>
+                <li>
+                    <span class="name">applied on</span>
+                    <span class="value">{{detail.appliedOn | date:'dd-MM-yyyy HH:mm:ss'}}</span>
+                </li>
+                <li>
+                    <span class="name">phone</span>
+                    <span class="value">{{detail.mobileNumber}}</span>
+                </li>
+                <li>
+                    <span class="name">Status</span>
+                    <span class="value">{{detail.status}}</span>
+                </li>
+            </ul>
+          </a>
+        </li>
+    </ul>
+    </tab>
+</tabs>
+</div>

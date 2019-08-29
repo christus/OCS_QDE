@@ -1,0 +1,4 @@
+.pane{
+  height: calc(100vh - 12.19vw);
+  overflow: auto;
+}

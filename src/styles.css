@@ -3,6 +3,7 @@
 /* @import '~bootstrap/dist/css/bootstrap.min.css'; */
 @import '~swiper/dist/css/swiper.min.css';
 @import 'assets/css/kendo.css';
+@import 'assets/css/fonts.css';
 
 body {
 	height: 100vh;

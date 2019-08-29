@@ -275,6 +275,10 @@ export const environment = {
     "leadSave": {
       'workflowId': 'd848a7fca6e911e995e30242ac110002',
       'processId': 'd86751a2a6e911e98ad90242ac110002'
+    },
+    "newLeads": {
+      'workflowId': '9c388b88a6e911e9bce50242ac110002',
+      'processId': '9c5a8562a6e911e985160242ac110002'
     }
 
   },

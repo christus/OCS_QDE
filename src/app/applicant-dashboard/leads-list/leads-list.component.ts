@@ -4,6 +4,7 @@ import { UtilService } from 'src/app/services/util.service';
 import { from } from 'rxjs';
 import { CommonDataService } from 'src/app/services/common-data.service';
 import { statuses } from '../../app.constants';
+import { TabsComponent } from './tabs/tabs.component';
 
 export interface UserDetails {
   "amountEligible": number;
@@ -41,11 +42,19 @@ export class LeadsListComponent implements OnInit {
   assignedTo: Item;
   searchTxt: string;
   show: boolean = false;
-
+  isLogoutVisible: boolean;
   // Lead ID === Application ID
-  userDetails: Array<UserDetails>;
+  userDetails: Array<UserDetails>;  
+  newLeadsDetails: Array<any>;
+  newPendingApplicationDetails: Array<any>;
+  newPendingPaymentDetails: Array<any>;
+
   isEligibilityForReviews: Array<{applicationId: string, isEligibilityForReview: boolean}> = [];
   isTBMLoggedIn: boolean;
+  allStatus: string = "";
+  newLeadsStatus: string = "5";
+  pendingAppStatus: string = "pendingApplication";
+  pendingPaymentStatus: string = "pendingPayment";
 
   constructor(private service: QdeHttpService, private utilService: UtilService, private cds: CommonDataService) {
 
@@ -77,6 +86,9 @@ export class LeadsListComponent implements OnInit {
     this.assignedTo = this.assignedToList[0];
 
     this.getFilteredLeads();
+    this.getNewLeads();
+    this.getPendingApplication();
+    this.getPendingPayment();
   }
 
   isloggedIn() {
@@ -103,8 +115,117 @@ export class LeadsListComponent implements OnInit {
     this.getFilteredLeads();
   }
 
+  getPendingApplication() {
+       this.service.getLeads(this.searchTxt, this.fromDay.value, this.fromMonth.value, this.fromYear.value, this.toDay.value, this.toMonth.value, this.toYear.value, "", this.pendingAppStatus).subscribe(
+      res => {
+        console.log(res);
+
+        if (res['Error'] && res['Error'] == 0) {
+          this.newPendingApplicationDetails = res['ProcessVariables'].userDetails || [];
+
+          this.newPendingApplicationDetails.forEach(el => {
+            el.url = this.getUrl(el['status'], el['leadId'], el['applicantId'], this.getRoles());
+            if(el['auditTrialTabPage'] != null && el['auditTrialPageNumber'] != null) {
+              el['queryParams'] = {
+                tabName : el['auditTrialTabPage'],
+                page : el['auditTrialPageNumber'],
+              }
+            } else {
+              el['queryParams'] = null;
+            }
+          });
+
+          this.cds.setIsEligibilityForReviews(this.isEligibilityForReviews);
+          this.isTBMLoggedIn = this.getRoles().includes('TBM') || this.getRoles().includes('TMA');
+          this.cds.setIsTBMLoggedIn(this.isTBMLoggedIn);
+        } else if (res['login_required'] && res['login_required'] === true) {
+          this.utilService.clearCredentials();
+          alert(res['message']);
+        } else {
+          alert(res['ErrorMessage']);
+        }
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+  getPendingPayment() {
+    this.service.getLeads(this.searchTxt, this.fromDay.value, this.fromMonth.value, this.fromYear.value, this.toDay.value, this.toMonth.value, this.toYear.value, "", this.pendingPaymentStatus).subscribe(
+      res => {
+        console.log(res);
+
+        if (res['Error'] && res['Error'] == 0) {
+          this.newPendingPaymentDetails = res['ProcessVariables'].userDetails || [];
+
+          this.newPendingPaymentDetails.forEach(el => {
+            el.url = this.getUrl(el['status'], el['leadId'], el['applicantId'], this.getRoles());
+            if(el['auditTrialTabPage'] != null && el['auditTrialPageNumber'] != null) {
+              el['queryParams'] = {
+                tabName : el['auditTrialTabPage'],
+                page : el['auditTrialPageNumber'],
+              }
+            } else {
+              el['queryParams'] = null;
+            }
+          });
+
+          this.cds.setIsEligibilityForReviews(this.isEligibilityForReviews);
+          this.isTBMLoggedIn = this.getRoles().includes('TBM') || this.getRoles().includes('TMA');
+          this.cds.setIsTBMLoggedIn(this.isTBMLoggedIn);
+        } else if (res['login_required'] && res['login_required'] === true) {
+          this.utilService.clearCredentials();
+          alert(res['message']);
+        } else {
+          alert(res['ErrorMessage']);
+        }
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
+  getNewLeads() {
+    this.service.getNewLeads(this.searchTxt, this.fromDay.value, this.fromMonth.value, this.fromYear.value, this.toDay.value, this.toMonth.value, this.toYear.value).subscribe(
+      res => {
+        console.log(res);
+
+        if (res['Error'] && res['Error'] == 0) {
+          this.newLeadsDetails = res['ProcessVariables'].userDetails || [];
+
+          this.newLeadsDetails.forEach(el => {
+            el.url = this.getUrl(el['status'], el['leadId'], el['applicantId'], this.getRoles());
+            if(el['auditTrialTabPage'] != null && el['auditTrialPageNumber'] != null) {
+              el['queryParams'] = {
+                tabName : el['auditTrialTabPage'],
+                page : el['auditTrialPageNumber'],
+              }
+            } else {
+              el['queryParams'] = null;
+            }
+          });
+
+          this.cds.setIsEligibilityForReviews(this.isEligibilityForReviews);
+          this.isTBMLoggedIn = this.getRoles().includes('TBM') || this.getRoles().includes('TMA');
+          this.cds.setIsTBMLoggedIn(this.isTBMLoggedIn);
+        } else if (res['login_required'] && res['login_required'] === true) {
+          this.utilService.clearCredentials();
+          alert(res['message']);
+        } else {
+          alert(res['ErrorMessage']);
+        }
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
+  
+
   getFilteredLeads() {
-    this.service.getLeads(this.searchTxt, this.fromDay.value, this.fromMonth.value, this.fromYear.value, this.toDay.value, this.toMonth.value, this.toYear.value).subscribe(
+    this.service.getLeads(this.searchTxt, this.fromDay.value, this.fromMonth.value, this.fromYear.value, this.toDay.value, this.toMonth.value, this.toYear.value,"", this.allStatus).subscribe(
       res => {
         console.log(res);
 
