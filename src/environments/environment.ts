@@ -20,6 +20,10 @@ export const environment = {
       'workflowId': '050f5c82789a11e982270242ac110002',
       'processId': '05282424789a11e982270242ac110002'
     },
+    'newLeads': {
+      'workflowId': '9c388b88a6e911e9bce50242ac110002',
+      'processId': '9c5a8562a6e911e985160242ac110002'
+    },
     'lov': {
       'workflowId': '5f28d48c808311e982270242ac110002',
       'processId': '6569b6d6762911e982270242ac110003'
@@ -275,11 +279,8 @@ export const environment = {
     "leadSave": {
       'workflowId': 'd848a7fca6e911e995e30242ac110002',
       'processId': 'd86751a2a6e911e98ad90242ac110002'
-    },
-    "newLeads": {
-      'workflowId': '9c388b88a6e911e9bce50242ac110002',
-      'processId': '9c5a8562a6e911e985160242ac110002'
     }
+    
 
   },
   userName: "icici@icici.com",
