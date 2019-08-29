@@ -247,6 +247,15 @@ export class QdeService {
           addressLineOne: "",
           addressLineTwo: ""
         }
+      },
+      leadCreate: {
+        name : "",
+        mobileNumber : null,
+        address : "",
+        zipcode : null,
+        emailId : "",
+        loanAmount : null,
+        loanType : null
       }
     }
   };

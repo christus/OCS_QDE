@@ -1982,5 +1982,27 @@ createOrUpdatePersonalDetails(qde) {
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
     return this.http.post(uri, body);
   }
+
+  connectorLeadCreateSave(data){
+    const processId = environment.api.leadSave.processId;
+    const workflowId = environment.api.leadSave.workflowId;
+    const projectId = environment.projectId;
+
+
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: data,
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = new HttpParams().set(
+      'processVariables',
+      JSON.stringify(requestEntity)
+    );
+  
+    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.http.post(uri, body);
+  }
 }
 

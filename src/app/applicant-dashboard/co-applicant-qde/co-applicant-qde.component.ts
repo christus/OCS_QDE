@@ -2048,7 +2048,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   // Income Details
   //-----------------------------------------------------------------------
 
-  submitIncomeDetails1(form: NgForm, swiperInstance ?: Swiper) {
+  submitAnnualFamilyIncomeIndividual(form: NgForm, swiperInstance ?: Swiper) {
 
     if(this.isTBMLoggedIn) {
       this.goToNextSlide(swiperInstance);
@@ -2078,6 +2078,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                     this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
+          
+          // Show modal here
           this.goToNextSlide(swiperInstance);
         } else {
           // Throw Invalid Pan Error

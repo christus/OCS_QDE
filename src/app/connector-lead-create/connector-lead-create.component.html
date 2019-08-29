@@ -5,7 +5,7 @@
         <div class="sec-nav">
             <div class="logo">
                 <h1>
-                    <a href="login.html">
+                    <a routerLink="/leads">
                         <img src="/assets/images/logo.svg" alt="logo" class="img-responsive">
                     </a>
                 </h1>
@@ -25,48 +25,6 @@
                 <div class="search-wrap">
                     <a href="javascript:void(0);" class="search-btn"><span class="icon icon-search"></span></a>
                 </div>
-                <div class="notification-wrap hover-wrap">
-                    <a href="javascript:void(0);" class="notification-btn hover-link"><span class="icon icon-notification"></span></a>
-                    <div class="hover-content">
-                        <ul class="notification-list">
-                            <li class="bs-notification">
-                                <span class="icon">!</span>
-                                <p class="text">Action required on</p>
-                                <span class="not-id">Application (ICICI234567)</span>
-                                <span class="highlight">Document Reupload</span>
-                                <span class="date">15:50, 09/12/18</span>
-                            </li>
-                            <li class="bs-notification">
-                                <span class="icon icon-notification"></span>
-                                <p class="text">Action required on</p>
-                                <span class="not-id">Application (ICICI234567)</span>
-                                <span class="highlight">Document Reupload</span>
-                                <span class="date">15:50, 09/12/18</span>
-                            </li>
-                            <li class="bs-notification">
-                                <span class="icon">!</span>
-                                <p class="text">Action required on</p>
-                                <span class="not-id">Application (ICICI234567)</span>
-                                <span class="highlight">Document Reupload</span>
-                                <span class="date">15:50, 09/12/18</span>
-                            </li>
-                            <li class="bs-notification">
-                                <span class="icon">!</span>
-                                <p class="text">Action required on</p>
-                                <span class="not-id">Application (ICICI234567)</span>
-                                <span class="highlight">Document Reupload</span>
-                                <span class="date">15:50, 09/12/18</span>
-                            </li>
-                            <li class="bs-notification">
-                                <span class="icon">!</span>
-                                <p class="text">Action required on</p>
-                                <span class="not-id">Application (ICICI234567)</span>
-                                <span class="highlight">Document Reupload</span>
-                                <span class="date">15:50, 09/12/18</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
                 <div class="profile-wrap hover-wrap">
                     <div class="profile-btn hover-link" #optionsMenuDropdown [ngClass]="{'active': isOptionsMenuDropOpen}" (click)="openOptionsMenuDropdown(optionsMenuDropdownContent)">
                         <img src="/assets/images/profile-thumb.png" alt="" class="profile-thumb">
@@ -75,13 +33,13 @@
                     </div>
                     <div class="hover-content" #optionsMenuDropdownContent [ngClass]="{'active': isOptionsMenuDropOpen}" tabindex="0" (blur)="closeOptionsMenuDropdown(optionsMenuDropdownContent)">
                         <nav class="user-menu">
-                            <a class="user-link typ-two" href="">My Profile</a>
+                            <!-- <a class="user-link typ-two" href="">My Profile</a>
                             <a class="user-link typ-two" href="">App Settings</a>
-                            <a class="user-link typ-two" href="">Help & Support</a>
-                            <a class="user-link typ-two" href="">Logout</a>
-                            <a class="user-link" href="">Privacy Policy</a>
+                            <a class="user-link typ-two" href="">Help & Support</a> -->
+                            <a class="user-link typ-two" (click)="logout()">Logout</a>
+                            <!-- <a class="user-link" href="">Privacy Policy</a> -->
                             <!-- <a class="user-link" href="">Disclaimer</a> -->
-                            <a class="user-link not-link">Version 12.04</a>
+                            <a class="user-link not-link" title="{{buildDate}}">Version - {{version}}</a>
                             <a class="user-link not-link">Copyright 2019 @ICICI</a>
                         </nav>
                     </div>
@@ -93,14 +51,14 @@
 </header>
 
 <nav class="bs-side-menu">
-    <a href="" class="nav-link active">
+    <a [routerLink]="['/leads']" routerLinkActive="router-link-active"  class="nav-link active">
         <span class="icon icon-dashboard"></span>
         <span class="link-text">Dashboard</span>
     </a>
-    <a href="" class="nav-link">
+    <!-- <a href="" class="nav-link">
         <span class="icon icon-performance"></span>
         <span class="link-text">Performance</span>
-    </a>
+    </a> -->
 </nav>
 
 <main>
@@ -109,50 +67,70 @@
           <div class="main-area">
               <div class="lyt-lead-gen">
                   <h4 class="title">Create New Lead</h4>
-                  <p class="desc">The below lead will be sent to Vikas bhalla, bhandup west</p>
-                  <form action="" class="bs-form">
-                      <div class="form-group">
-                          <label for="lead-name">Name</label>
-                          <input type="text" class="form-control" id="lead-name">
-                      </div>
-                      <div class="form-group">
-                          <label for="lead-mobile">Mobile number</label>
-                          <input type="text" class="form-control" id="lead-mobile">
-                      </div>
-                      <div class="form-group">
-                          <label for="lead-address">Address</label>
-                          <input type="text" class="form-control" id="lead-address">
-                      </div>
-                      <div class="form-group">
-                          <label for="lead-pin">Pin code</label>
-                          <input type="text" class="form-control" id="lead-pin">
-                      </div>
-                      <div class="form-group">
-                          <label for="lead-email">Email ID</label>
-                          <input type="text" class="form-control" id="lead-email">
-                      </div>
-                      <div class="form-group">
-                          <label for="lead-loan-type">Loan amount</label>
-                          <input type="text" class="form-control" id="lead-loan-type">
-                      </div>
-                      <div class="form-group">
-                          <span class="control-title">Type of loan</span>
-                          <select name="" class="js-select">
-                              <option value="">Home loan</option>
-                              <option value="">Car loan</option>
-                              <option value="">Home loan</option>
-                              <option value="">Home loan</option>
-                              <option value="">Home loan</option>
-                          </select>
-                      </div>
+                  <!-- <p class="desc">The below lead will be sent to Vikas bhalla, bhandup west</p> -->
+                  <p class="desc">Fill up the form to create new lead</p>
+                  <form #leadForm="ngForm" class="bs-form" (ngSubmit)="leadSaveConnector(leadForm)">
+                    <div class="form-group">
+                        <input spellcheck="false" type="text" class="form-control"
+                          id="name"
+                          [(ngModel)]="qde.application.leadCreate.name"
+                          name="firstName" fieldFill required/>
+                        <label for="name">First name</label>    
+                    </div>
+                    <div class="form-group">
+                        <input spellcheck="false" type="text" class="form-control"
+                          id="mobNumber"
+                          [(ngModel)]="qde.application.leadCreate.mobileNumber"
+                          name="mobiNumber" #mobiNumber="ngModel" fieldFill required/>
+                        <label for="mobNumber">Mobile Number</label>    
+                    </div>
+                    <div class="form-group">
+                        <input spellcheck="false" type="text" class="form-control"
+                          id="address"
+                          [(ngModel)]="qde.application.leadCreate.address"
+                          name="addresss" #addresss="ngModel" fieldFill required/>
+                        <label for="address">Address</label>    
+                    </div>
+                    <div class="form-group">
+                        <input spellcheck="false" type="text" class="form-control"
+                          id="zipcode"
+                          [(ngModel)]="qde.application.leadCreate.zipcode"
+                          name="pincode" #pincode="ngModel" fieldFill required/>
+                        <label for="zipcode">Pin Code</label>    
+                    </div>
+                    <div class="form-group">
+                        <input spellcheck="false" type="text" class="form-control"
+                          id="emailId"
+                          [(ngModel)]="qde.application.leadCreate.emailId"
+                          name="email" #email="ngModel" fieldFill required/>
+                        <label for="emailId">Email ID</label>    
+                    </div>
+                    <div class="form-group">
+                        <input spellcheck="false" type="text" class="form-control"
+                          id="loanAmt"
+                          [(ngModel)]="qde.application.leadCreate.loanAmount"
+                          name="loanAmount" #loanAmount="ngModel" fieldFill required/>
+                        <label for="loanAmt">Loan Amount</label>    
+                    </div>
+                        <div class="form-group">
+                            <span class="control-title">Type of loan</span>
+                            <kendo-dropdownlist
+                              class="form-control"
+                              name="loanType"
+                              [data]="loanType" 
+                              textField="key"
+                              valueField="value"
+                              [(ngModel)]="qde.application.leadCreate.loanType">
+                            </kendo-dropdownlist>
+                           </div>
                       <div class="btn-wrap">
                           <button class="btn btn-primary">Submit</button>
                       </div>
                   </form>
               </div>
           </div>
-          <div class="sidebar">
-              <div class="card">
+          <!-- <div class="sidebar">
+              <div class="card"> -->
                   <!-- <div class="lyt-alerts">
                       <h4 class="title">Alerts</h4>
                       <span class="date">January, 2019</span>
@@ -183,7 +161,7 @@
                           </li>
                       </ul>
                   </div> -->
-                  <div class="lyt-perform-sidebar">
+                  <!-- <div class="lyt-perform-sidebar">
                       <h4 class="title">Performance</h4>
                       <span class="date">January, 2019</span>
                       <div class="pie-wrap">
@@ -206,9 +184,23 @@
                               <span class="value">12</span>
                           </li>
                       </ul>
-                  </div>
-              </div>
-          </div>
+                  </div> -->
+              <!-- </div>
+          </div> -->
       </div>
+  </div>
+
+  <div class="overlay" [ngClass]="{'active': isSuccessfulRouteModal}"></div>
+  <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isSuccessfulRouteModal}">
+    <!-- <a class="modal-close" href="javascript:void(0);" (click)="onBackOTP()"><span class="icon icon-close"></span></a> -->
+    <a class="modal-close" (click)="onCrossModal()"><span class="icon icon-close"></span></a>
+    <div class="modal-body">
+      <h1 class="center" style="margin-left: 6.5vw">Lead has been created successfully</h1>
+      <p>Do you like to add more leads?</p>
+      <div class="btn-wrap">
+        <button class="btn btn-border" (click)="onCrossModal()">Yes</button>
+        <button class="btn btn-border" [routerLink]="['/leads']">No</button>
+      </div>
+    </div>
   </div>
 </main>

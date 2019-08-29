@@ -265,6 +265,10 @@ export const environment = {
     "downloadPdf": {
       'processId': 'a88fd316c4a111e993030242ac110002',
       'projectId': 'ff8e364e6fce11e98754782bcb8f3845'
+    },
+    "leadSave": {
+      'workflowId': 'd848a7fca6e911e995e30242ac110002',
+      'processId': 'd86751a2a6e911e98ad90242ac110002'
     }
   },
   userName: "icici@icici.com",

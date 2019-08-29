@@ -206,8 +206,7 @@
                                                                 (keyup)="keyUpPanNumber($event)"
                                                                 #panNumber="ngModel"
                                                                 fieldFill
-                                                                spellcheck="false"
-                                                                required />
+                                                                spellcheck="false" />
                                                         <label for="pan-inpt" tabindex="1">Enter PAN</label>
                                                         <div *ngIf="panNumber.touched && panNumber.invalid && panErrorCount < 3" class="invalid-feedback">
                                                             <!-- <div *ngIf="panNumber.errors?.required">{{errors.panNumber.required}}</div> -->
@@ -2143,7 +2142,7 @@
 
                                         <div class="swiper-slide" *ngIf="qde?.application?.applicants[coApplicantIndex]?.incomeDetails?.incomeConsider == true">
                                             <form class="bs-form" *ngIf="!isTabDisabled" 
-                                            #incomeDetailsForm2="ngForm" (ngSubmit)="submitIncomeDetails2(incomeDetailsForm2, incomeSliderIndividual2)">
+                                            #incomeDetailsForm2="ngForm" (ngSubmit)="submitMonthlyIncomeIndividual(incomeDetailsForm2, incomeSliderIndividual2)">
                                                 <div class="form-wrap">
                                                     <div class="form-group inr">
                                                         <input [readonly]="isReadOnly" type="text" class="form-control" 
@@ -2190,7 +2189,7 @@
 
                                         <div class="swiper-slide">
                                         <form class="bs-form" *ngIf="!isTabDisabled"
-                                            #annualIncomeForm="ngForm" (ngSubmit)="submitIncomeDetails1(annualIncomeForm, incomeSliderIndividual2)">
+                                            #annualIncomeForm="ngForm" (ngSubmit)="submitAnnualFamilyIncomeIndividual(annualIncomeForm, incomeSliderIndividual2)">
                                             <div class="form-wrap">
                                                 <div class="form-group inr">
                                                         <input [readonly]="isReadOnly" type="text" class="form-control"
@@ -2334,8 +2333,7 @@
                                                               #panNumber2="ngModel"
                                                               fieldFill
                                                               (keyup)="keyUpPanNumber($event)"
-                                                              spellcheck="false"
-                                                              required />
+                                                              spellcheck="false"/>
                                                       <label for="pan-inpt2">Enter PAN</label>
                                                       <div *ngIf="panNumber2.touched && panNumber2.invalid && panErrorCount < 3" class="invalid-feedback">
                                                           <!-- <div *ngIf="panNumber2.errors?.required">{{errors.pan.required}}</div> -->

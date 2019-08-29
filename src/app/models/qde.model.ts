@@ -15,6 +15,7 @@ export interface Application {
     references ?: Reference;
     status ?: number;
     auditTrailDetails?: AuditTrailDetails;
+    leadCreate?: LeadCreate;
 }
 
 export interface Document {
@@ -48,7 +49,7 @@ export interface Applicant {
     revenueDetails ?: RevenueDetail;
     incomeDetails ?: IncomeDetail; // New fields added
     documents ?: Array<any>;
-    existingLoans ?: ExistingLoan
+    existingLoans ?: ExistingLoan;
 }
 
 export interface MaritalStatus {
@@ -280,4 +281,14 @@ export interface AuditTrailDetails {
     pageNumber: number;
     screenPage: string;
     tabPage: string;
+}
+
+export interface LeadCreate {
+    name ?: string;
+    mobileNumber ?: number;
+    address ?: string;
+    zipcode ?: number;
+    emailId ?: string;
+    loanAmount ?: number;
+    loanType ?: number;
 }

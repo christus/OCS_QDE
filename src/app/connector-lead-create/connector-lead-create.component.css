@@ -121,6 +121,7 @@
     line-height: .94vw;
     color: #fff;
     display: block;
+    margin-bottom: 1vw;
 }
 .bs-side-menu .nav-link:not(:last-child):after {
     content: '';
@@ -280,4 +281,13 @@
 
 .icon-performance:before {
     content: "\71";
+}
+
+.bs-header.typ-dashboard .right-panel .profile-wrap .user-menu .user-link {
+    display: block;
+    font-size: .94vw;
+    line-height: 1.95vw;
+    color: #999;
+    padding: 1.56vw 2.34vw;
+    position: relative;
 }

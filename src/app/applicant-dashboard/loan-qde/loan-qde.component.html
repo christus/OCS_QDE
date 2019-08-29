@@ -217,7 +217,7 @@
                                   name="propertyClssArea"
                                   #propertyClss="ngModel"
                                   [(ngModel)]="propertyClssLabel"
-                                  pattern="{{regexPattern.address}}"
+                                  pattern="^[a-zA-Z]+$"
                                   (input)="clssSearchArea($event)"
                                   fieldFill
                                   required >
@@ -483,7 +483,6 @@
                         <div class="form-wrap">
                           <div class="form-group inr">
                             <input [readonly]="isTBMLoggedIn" type="text" class="form-control" id="monthly-emi"
-                              required
                               ngModel
                               #monthlyEmi = "ngModel"
                               [(ngModel)]="monthlyEmiValue"

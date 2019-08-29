@@ -134,7 +134,10 @@ const appRoutes: Routes = [
     path: "connector/lead-create",
     component: ConnectorLeadCreateComponent,
     canActivate: [AuthGuard],
-    canDeactivate: [ConfirmDeactivateGuard]
+    canDeactivate: [ConfirmDeactivateGuard],
+    resolve: {
+      listOfValues: ListOfValuesResolverService
+    }
   },
   {
     path: "applicant",

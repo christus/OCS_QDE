@@ -8,7 +8,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "post-build": "node ./build/post-build.js"
+    "post-build": "node ./build/post-build.js",
+    "aotbuild": "ng build --prod=true --aot=true --base-href='/ocs/'"
   },
   "private": true,
   "dependencies": {
