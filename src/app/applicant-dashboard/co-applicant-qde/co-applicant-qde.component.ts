@@ -3229,4 +3229,18 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     // alert(this.coApplicantIndex);
   }
 
+  isCategoryModal: boolean = false;
+  checkForCondition(){
+    if(this.selectedCategory.value != "1"){
+      this.isCategoryModal = true;
+    }
+    else{
+      this.isCategoryModal = false
+    }
+  }
+
+  onCrossCatgModal(){
+    this.isCategoryModal = false
+  }
+
 }

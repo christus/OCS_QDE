@@ -45,7 +45,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
        loanAmount: {
          amount: {
-           required: "Loan Amount is Madatory",
+           required: "Loan Amount is Mandatory",
            invalid: "Invalid Loan Amount / Alphabets and special characters not allowed",
            minamount: "Amount should be greater than Rs.50000",
          },

@@ -1296,7 +1296,7 @@
                             <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control" [data]="categories"
                               textField="key" valueField="value" tabindex="3" name="category" nick="other.category"
                               #category (selectionChange)="selectValueChanged($event, category.hostElement)"
-                              [(ngModel)]="selectedCategory">
+                              [(ngModel)]="selectedCategory" (ngModelChange)="checkForCondition()">
                             </kendo-dropdownlist>
                           </div>
                         </div>
@@ -1313,6 +1313,19 @@
               </div>
             </div>
 
+          </div>
+
+         <div class="overlay" [ngClass]="{'active': isCategoryModal}"></div>
+          <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isCategoryModal}">
+            <!-- <a class="modal-close" href="javascript:void(0);" (click)="onBackOTP()"><span class="icon icon-close"></span></a> -->
+            <!-- <a class="modal-close" (click)="onCrossCatgModal()"><span class="icon icon-close"></span></a> -->
+            <div class="modal-body">
+              <h1 class="center">You have to produce your caste certificate inside additional documents</h1>
+              <!-- <p>Click Proceed to continue</p> -->
+              <div class="btn-wrap">
+                <button class="btn btn-border" (click)="onCrossCatgModal()">Okay</button>
+              </div>
+            </div>
           </div>
 
           <div class="tab-content" [ngClass]="{'active': (activeTab == 7)}">

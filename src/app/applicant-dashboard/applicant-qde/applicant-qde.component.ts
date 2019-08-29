@@ -3111,4 +3111,18 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     
   }
 
+  isCategoryModal: boolean = false;
+  checkForCondition(){
+    if(this.selectedCategory.value != "1"){
+      this.isCategoryModal = true;
+    }
+    else{
+      this.isCategoryModal = false
+    }
+  }
+
+  onCrossCatgModal(){
+    this.isCategoryModal = false
+  }
+
 }
