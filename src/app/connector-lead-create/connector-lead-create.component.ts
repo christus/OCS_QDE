@@ -27,6 +27,39 @@ export class ConnectorLeadCreateComponent implements OnInit {
   buildDate: string;
   isSuccessfulRouteModal: boolean;
 
+  regexPattren={
+    firstName: "[A-Za-z ]+$",
+    mobileNumber:"^[0-9]*$",
+    address:"^[0-9A-Za-z, _&'/#]+$",
+    pincode:"^[1-9][0-9]{5}$",
+    email:"^\\w+([\.-]?\\w+)*@\\w+([\.-]?\\w+)*(\\.\\w{2,10})+$",
+
+  }
+  errors = {
+    leadCreate :{
+      firstName:{
+        required: "First Name is mandatory",
+        invalid: "Number and Special Characters not allowed"
+        },
+      mobileNumber:{
+        required: "10 digit mobile number is mandatory",
+        invalid: "Invalid mobile number/Alphabets and Special Characters not allowed",
+        },
+      address:{
+        required: "Address is mandatory",
+        invalid: "Incomplete address"
+        },
+      pincode:{
+        required: "Pincode is mandatory",
+        invalid: "Invalid/Incomplete Pincode",
+        },
+      email:{
+        required: "Email Id is mandatory",
+        invalid: "Invalid Email ID"
+      }
+    }
+  }
+
   constructor(private route: ActivatedRoute,
     private router: Router,
     private qdeHttp: QdeHttpService,

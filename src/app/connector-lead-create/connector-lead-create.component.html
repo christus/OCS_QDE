@@ -72,38 +72,69 @@
                   <form #leadForm="ngForm" class="bs-form" (ngSubmit)="leadSaveConnector(leadForm)">
                     <div class="form-group">
                         <input spellcheck="false" type="text" class="form-control"
-                          id="name"
+                          id="name" 
                           [(ngModel)]="qde.application.leadCreate.name"
-                          name="firstName" fieldFill required/>
+                          pattern="{{regexPattren.firstName}}"
+                          name="firstName" #fName="ngModel" fieldFill required/>
                         <label for="name">First name</label>    
+                        <div *ngIf="(fName.touched || fName.dirty) && fName.invalid"
+                                class="invalid-feedback">
+                             <div *ngIf="fName.errors?.required">{{errors.leadCreate.firstName.required}}</div>
+                              <div *ngIf="fName.errors?.pattern">{{errors.leadCreate.firstName.invalid}}</div>
+                            </div>
                     </div>
                     <div class="form-group">
                         <input spellcheck="false" type="text" class="form-control"
                           id="mobNumber"
                           [(ngModel)]="qde.application.leadCreate.mobileNumber"
+                          pattern="{{regexPattren.mobileNumber}}" minlength="10" maxlength="10"
                           name="mobiNumber" #mobiNumber="ngModel" fieldFill required/>
                         <label for="mobNumber">Mobile Number</label>    
+                        <div *ngIf="(mobiNumber.touched || mobiNumber.dirty) && mobiNumber.invalid"
+                                class="invalid-feedback">
+                             <div *ngIf="mobiNumber.errors?.required">{{errors.leadCreate.mobileNumber.required}}</div>
+                              <div *ngIf="mobiNumber.errors?.pattern">{{errors.leadCreate.mobileNumber.invalid}}</div>
+                            </div>
                     </div>
                     <div class="form-group">
                         <input spellcheck="false" type="text" class="form-control"
                           id="address"
                           [(ngModel)]="qde.application.leadCreate.address"
+                          pattern="{{regexPattren.address}}"
                           name="addresss" #addresss="ngModel" fieldFill required/>
-                        <label for="address">Address</label>    
+                        <label for="address">Address</label>   
+                        <div *ngIf="(addresss.touched || addresss.dirty) && addresss.invalid"
+                                class="invalid-feedback">
+                             <div *ngIf="addresss.errors?.required">{{errors.leadCreate.address.required}}</div>
+                              <div *ngIf="addresss.errors?.pattern">{{errors.leadCreate.address.invalid}}</div>
+                            </div> 
                     </div>
                     <div class="form-group">
                         <input spellcheck="false" type="text" class="form-control"
                           id="zipcode"
                           [(ngModel)]="qde.application.leadCreate.zipcode"
+                          pattern="{{regexPattren.pincode}}" maxlength="6" minlength="6"
                           name="pincode" #pincode="ngModel" fieldFill required/>
                         <label for="zipcode">Pin Code</label>    
+                            <div *ngIf="(pincode.touched || pincode.dirty) && pincode.invalid"
+                                class="invalid-feedback">
+                             <div *ngIf="pincode.errors?.required">{{errors.leadCreate.pincode.required}}</div>
+                              <div *ngIf="pincode.errors?.pattern">{{errors.leadCreate.pincode.invalid}}</div>
+                            </div>
                     </div>
                     <div class="form-group">
                         <input spellcheck="false" type="text" class="form-control"
                           id="emailId"
                           [(ngModel)]="qde.application.leadCreate.emailId"
-                          name="email" #email="ngModel" fieldFill required/>
-                        <label for="emailId">Email ID</label>    
+                          name="email" #email="ngModel" 
+                          pattern="{{regexPattren.email}}" 
+                          fieldFill required/>
+                        <label for="emailId">Email ID</label>
+                        <div *ngIf="(email.touched || email.dirty) && email.invalid"
+                                class="invalid-feedback">
+                             <div *ngIf="email.errors?.required">{{errors.leadCreate.email.required}}</div>
+                              <div *ngIf="email.errors?.pattern">{{errors.leadCreate.email.invalid}}</div>
+                            </div>    
                     </div>
                     <div class="form-group">
                         <input spellcheck="false" type="text" class="form-control"
@@ -124,7 +155,11 @@
                             </kendo-dropdownlist>
                            </div>
                       <div class="btn-wrap">
-                          <button class="btn btn-primary">Submit</button>
+                          <button class="btn btn-primary"
+                          [ngClass]="{'disabled': (!leadForm.valid)}"
+                          tabindex="-1"
+                            [disabled]="!leadForm.valid"
+                          >Submit</button>
                       </div>
                   </form>
               </div>

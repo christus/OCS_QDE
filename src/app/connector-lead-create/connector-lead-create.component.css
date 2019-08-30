@@ -291,3 +291,10 @@
     padding: 1.56vw 2.34vw;
     position: relative;
 }
+.invalid-feedback {
+	font-size: .94vw;
+	line-height: 1.09vw;
+	font-family: zurich-bold;
+    letter-spacing: .5px;
+    color:red;
+}

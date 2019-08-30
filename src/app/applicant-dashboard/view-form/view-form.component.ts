@@ -603,10 +603,12 @@ export class ViewFormComponent implements OnInit, OnDestroy {
   }
 
   downloadPdf() {
-    let uri = environment.host + environment.pdfLocation + 
-    'filename=' + this.ocsNumber + '.pdf&content_var=jsonResponse&template_var=htmlData&timezoneOffset=-330&processVariables={"processId":"'
-     + environment.api.downloadPdf.processId + 
-     '","projectId":"' + environment.api.downloadPdf.projectId + '","ProcessVariables":{"applicationId":"' + "" + this.applicationId + '"}}';
+    let uri = environment.host +
+              environment.pdfLocation + 
+              'filename=' + this.ocsNumber + 
+              '.pdf&content_var=jsonResponse&template_var=htmlData&timezoneOffset=-330&processVariables={"processId":"'
+              + environment.api.downloadPdf.processId + '","projectId":"' + environment.api.downloadPdf.projectId 
+              + '","ProcessVariables":{"applicationId":"' + "" + this.applicationId + '"}}';
     window.open(uri, '_blank');
   }
 
