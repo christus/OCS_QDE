@@ -26,6 +26,7 @@ export class ConnectorLeadCreateComponent implements OnInit {
   version: string;
   buildDate: string;
   isSuccessfulRouteModal: boolean;
+  isNumberLessThan50k: boolean;
 
   regexPattren={
     firstName: "[A-Za-z ]+$",
@@ -33,7 +34,7 @@ export class ConnectorLeadCreateComponent implements OnInit {
     address:"^[0-9A-Za-z, _&'/#]+$",
     pincode:"^[1-9][0-9]{5}$",
     email:"^\\w+([\.-]?\\w+)*@\\w+([\.-]?\\w+)*(\\.\\w{2,10})+$",
-
+    amount: "^[\\d]{0,14}([.][0-9]{0,4})?",
   }
   errors = {
     leadCreate :{
@@ -43,6 +44,7 @@ export class ConnectorLeadCreateComponent implements OnInit {
         },
       mobileNumber:{
         required: "10 digit mobile number is mandatory",
+        minlength: "Mobile number must be 10 digits",
         invalid: "Invalid mobile number/Alphabets and Special Characters not allowed",
         },
       address:{
@@ -56,6 +58,11 @@ export class ConnectorLeadCreateComponent implements OnInit {
       email:{
         required: "Email Id is mandatory",
         invalid: "Invalid Email ID"
+      },
+      amount: {
+        required: "Loan Amount is Mandatory",
+        invalid: "Invalid Loan Amount / Alphabets and special characters not allowed",
+        minamount: "Amount should be greater than Rs.50000",
       }
     }
   }
@@ -127,5 +134,25 @@ export class ConnectorLeadCreateComponent implements OnInit {
 
   onCrossModal() {
     this.isSuccessfulRouteModal = false;
+  }
+
+  getNumberWithoutCommaFormat(x: string) : string {
+    return x ? x+"".split(',').join(''): '';
+  }
+  
+  /****************************************
+  * Is a valid Number after removing Comma
+  ****************************************/
+  isValidNumber(x) {
+    return RegExp('^[0-9]*$').test(this.getNumberWithoutCommaFormat(x));
+  }
+  
+  checkNumberLessThan50k(event) {
+    if(this.isValidNumber(event.target.value)) {
+      let n = parseInt(this.getNumberWithoutCommaFormat(event.target.value));
+      this.isNumberLessThan50k = (n < 50000);
+    } else {
+      this.isNumberLessThan50k = false;
+    }
   }
 }

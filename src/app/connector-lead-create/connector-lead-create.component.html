@@ -94,6 +94,7 @@
                                 class="invalid-feedback">
                              <div *ngIf="mobiNumber.errors?.required">{{errors.leadCreate.mobileNumber.required}}</div>
                               <div *ngIf="mobiNumber.errors?.pattern">{{errors.leadCreate.mobileNumber.invalid}}</div>
+                              <div *ngIf="mobiNumber.errors?.minlength">{{errors.leadCreate.mobileNumber.minlength}}</div>
                             </div>
                     </div>
                     <div class="form-group">
@@ -134,14 +135,23 @@
                                 class="invalid-feedback">
                              <div *ngIf="email.errors?.required">{{errors.leadCreate.email.required}}</div>
                               <div *ngIf="email.errors?.pattern">{{errors.leadCreate.email.invalid}}</div>
-                            </div>    
+                        </div>    
                     </div>
                     <div class="form-group">
                         <input spellcheck="false" type="text" class="form-control"
                           id="loanAmt"
                           [(ngModel)]="qde.application.leadCreate.loanAmount"
-                          name="loanAmount" #loanAmount="ngModel" fieldFill required/>
+                          name="loanAmount" 
+                          #loanAmount="ngModel" 
+                          fieldFill 
+                          required
+                          (input)="checkNumberLessThan50k($event)"/>
                         <label for="loanAmt">Loan Amount</label>    
+                        <div class="invalid-feedback">
+                            <div *ngIf="loanAmount.touched && isNumberLessThan50k">{{errors.leadCreate.amount.minamount}}</div>
+                            <div *ngIf="loanAmount.touched && loanAmount.errors?.required">{{errors.leadCreate.amount.required}}</div>
+                            <div *ngIf="loanAmount.errors?.pattern">{{errors.leadCreate.amount.invalid}}</div>
+                        </div>
                     </div>
                         <div class="form-group">
                             <span class="control-title">Type of loan</span>
@@ -156,9 +166,8 @@
                            </div>
                       <div class="btn-wrap">
                           <button class="btn btn-primary"
-                          [ngClass]="{'disabled': (!leadForm.valid)}"
-                          tabindex="-1"
-                            [disabled]="!leadForm.valid"
+                          [ngClass]="{'disabled': (!leadForm.valid)|| isNumberLessThan50k}"
+                          [disabled]="!leadForm.valid || isNumberLessThan50k"
                           >Submit</button>
                       </div>
                   </form>

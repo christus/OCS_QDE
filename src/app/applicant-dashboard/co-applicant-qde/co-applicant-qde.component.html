@@ -193,7 +193,7 @@
                                                   #panNumberForm="ngForm"
                                                   (ngSubmit)="submitPanNumber(panNumberForm, panSlider2)">
                                                   <div class="form-wrap">
-                                                    <div class="form-group last" style="margin-bottom: 40px;">
+                                                    <div class="form-group last typ-optional" style="margin-bottom: 40px;">
                                                         <input [readonly]="isReadOnly"  type="text"
                                                                 class="form-control"
                                                                 [(ngModel)]="qde.application.applicants[coApplicantIndex].pan.panNumber"
@@ -208,6 +208,7 @@
                                                                 fieldFill
                                                                 spellcheck="false" />
                                                         <label for="pan-inpt" tabindex="1">Enter PAN</label>
+                                                        <span class="optional">optional</span>
                                                         <div *ngIf="panNumber.touched && panNumber.invalid && panErrorCount < 3" class="invalid-feedback">
                                                             <!-- <div *ngIf="panNumber.errors?.required">{{errors.panNumber.required}}</div> -->
                                                             <div *ngIf="panNumber.errors?.pattern ? true : false">{{errors.pan.invalid}}</div>
@@ -2332,7 +2333,7 @@
                                                 #panNumberForm2="ngForm"
                                                 (ngSubmit)="submitOrgPanNumber(panNumberForm2, panSlider4)">
                                               <div class="form-wrap">
-                                                  <div class="form-group last">
+                                                  <div class="form-group last typ-optional">
                                                       <input [readonly]="isReadOnly"  type="text"
                                                               class="form-control"
                                                               [(ngModel)]="qde.application.applicants[coApplicantIndex].pan.panNumber"
@@ -2348,9 +2349,10 @@
                                                               (keyup)="keyUpPanNumber($event)"
                                                               spellcheck="false"/>
                                                       <label for="pan-inpt2">Enter PAN</label>
+                                                      <span class="optional">optional</span>
                                                       <div *ngIf="panNumber2.touched && panNumber2.invalid && panErrorCount < 3" class="invalid-feedback">
                                                           <!-- <div *ngIf="panNumber2.errors?.required">{{errors.pan.required}}</div> -->
-                                                          <div *ngIf="panNumber2.errors?.pattern ? true : false">{{errors.pan.invalid}}</div>
+                                                          <div *ngIf="panNumber2.errors?.pattern ? true : false">{{errors.pan.invalidNonInd}}</div>
                                                           <div *ngIf="panNumber2.errors?.minlength || panNumber2.errors?.maxlength">{{errors.pan.length}}</div>
                                                       </div>
                                                       <div *ngIf="panErrorCount >= 3" class="invalid-feedback">{{errors.pan.after3Attemps}}</div>

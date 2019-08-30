@@ -65,6 +65,7 @@
                             #amountRequired = "ngModel"
                             name="amountRequired"
                             fieldFill
+                            pattern="^[0-9]*$"
                             (input)="checkNumberLessThan50k($event)">
     
                           <label for="amt-require">Amount required</label>
@@ -217,11 +218,12 @@
                                   name="propertyClssArea"
                                   #propertyClss="ngModel"
                                   [(ngModel)]="propertyClssLabel"
-                                  pattern="^[a-zA-Z]+$"
+                                  pattern="^[a-zA-Z ]+$"
                                   (input)="clssSearchArea($event)"
                                   fieldFill
                                   required >
                                   <label for="propertyClssArea">Property CLSS area</label>
+                                  <span class="optional" style="font-size: 1vw">Type to search</span>
                                   <div *ngIf="(propertyClss.touched || propertyClss.dirty) && propertyClss.invalid" class="invalid-feedback">
                                     <!-- <div *ngIf="propertyClss.errors?.required">{{errors.loanDetails.property.propertyClss.required}}</div> -->
                                     <div *ngIf="propertyClss.errors?.pattern">{{errors.loanDetails.property.propertyClss.invalid}}</div>
@@ -481,16 +483,16 @@
                       #monthlyEmiForm="ngForm"
                       (ngSubmit)="submitMonthlyEmi(monthlyEmiForm, existingLoan2)">
                         <div class="form-wrap">
-                          <div class="form-group inr">
+                          <div class="form-group inr typ-optional">
                             <input [readonly]="isTBMLoggedIn" type="text" class="form-control" id="monthly-emi"
                               ngModel
                               #monthlyEmi = "ngModel"
                               [(ngModel)]="monthlyEmiValue"
                               fieldFill
-                              name="monthlyEmi" />
+                              name="monthlyEmi" pattern="^[0-9]*$"/>
 
                             <label for="monthly-emi">Monthly EMI</label>
-
+                            <span class="optional">optional</span>
                             <div class="redalert" *ngIf="monthlyEmi.touched && monthlyEmi.valid && !isValidNumber(monthlyEmi.value)">{{errors.loanDetails.existingLoans.monthlyEmi.invalid}}</div>
                             <div *ngIf="(monthlyEmi.touched || monthlyEmi.dirty) && monthlyEmi.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="monthlyEmi.errors?.required">{{errors.loanDetails.existingLoans.monthlyEmi.required}}</div> -->

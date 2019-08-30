@@ -643,12 +643,17 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   submitLoanAmount(form: NgForm) {
     if(this.isTBMLoggedIn) {
-      this.tabSwitch(1);
+      if(this.selectedLoanPurpose.value == "17") {
+        this.tabSwitch(2);
+      } else {
+        this.tabSwitch(1);
+      }
     } else {
       if (form && !form.valid) {
         return;
       }
-  
+
+      
       console.log("selectedLoanPurpose: ", this.selectedLoanPurpose.value);
 
       this.qde.application.loanDetails.loanAmount = {
@@ -681,7 +686,11 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
                   this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
                 }
               });
-              this.tabSwitch(1);
+              if(this.selectedLoanPurpose.value == "17") {
+                this.tabSwitch(2);
+              } else {
+                this.tabSwitch(1);
+              }
               
             } else {
               // Throw Invalid Pan Error
