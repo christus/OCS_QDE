@@ -76,7 +76,7 @@
                           <!-- <div class="redalert" *ngIf="amountRequired.touched && amountRequired.invalid">{{errors.loanDetails.loanAmount.amount.minamount}}</div> -->
                           <div class="invalid-feedback">
                             <div *ngIf="amountRequired.touched && isNumberLessThan50k">{{errors.loanDetails.loanAmount.amount.minamount}}</div>
-                            <div *ngIf="amountRequired.errors?.required">{{errors.loanDetails.loanAmount.amount.required}}</div>
+                            <div *ngIf="amountRequired.touched && amountRequired.errors?.required">{{errors.loanDetails.loanAmount.amount.required}}</div>
                             <div *ngIf="amountRequired.errors?.pattern">{{errors.loanDetails.loanAmount.amount.invalid}}</div>
                           </div>
     
@@ -487,7 +487,6 @@
                               #monthlyEmi = "ngModel"
                               [(ngModel)]="monthlyEmiValue"
                               fieldFill
-                              numberFormatComma
                               name="monthlyEmi" />
 
                             <label for="monthly-emi">Monthly EMI</label>
