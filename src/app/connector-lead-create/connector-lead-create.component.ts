@@ -27,6 +27,7 @@ export class ConnectorLeadCreateComponent implements OnInit {
   buildDate: string;
   isSuccessfulRouteModal: boolean;
   isNumberLessThan50k: boolean;
+  sessionMessage="";
 
   regexPattern={
     firstName: "[A-Za-z ]+$",
@@ -117,6 +118,9 @@ export class ConnectorLeadCreateComponent implements OnInit {
     this.qdeHttp.connectorLeadCreateSave(data).subscribe(res => {
       if(res['ProcessVariables']['status'] == true) {
         this.isSuccessfulRouteModal = true;
+      }
+      else{
+        this.sessionMessage = res['ProcessVariables']['errorMessage']
       }
     });
   }

@@ -1,11 +1,6 @@
 .lyt-login {
 	position: absolute;
 }
-.error-msg{
-	font-size: 1vw;
-	color: red;
-	margin-top: 2vw
-}
 .bottomright {
 	position: absolute;
 	bottom: 8px;

@@ -165,7 +165,10 @@
                               valueField="value"
                               [(ngModel)]="qde.application.leadCreate.loanType">
                             </kendo-dropdownlist>
-                           </div>
+                        </div>
+                        <div class="error-msg">
+                            <span>{{sessionMessage}}</span>
+                        </div>
                       <div class="btn-wrap">
                           <button class="btn btn-primary"
                           [ngClass]="{'disabled': (!leadForm.valid)|| isNumberLessThan50k}"

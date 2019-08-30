@@ -533,7 +533,12 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
     } else {
       //switching to existing loan
        this.qde.application.loanDetails.propertyType.propertyIdentified = value;
-       this.tabSwitch(this.propertyNoSwitchTab);
+       if(this.selectedLoanPurpose.value == "17") {
+        this.router.navigate(['/references', this.qde.application.applicationId])
+      } else {
+        this.tabSwitch(this.propertyNoSwitchTab);
+       
+      }
     }
   }
 
@@ -643,11 +648,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   submitLoanAmount(form: NgForm) {
     if(this.isTBMLoggedIn) {
-      if(this.selectedLoanPurpose.value == "17") {
-        this.tabSwitch(2);
-      } else {
         this.tabSwitch(1);
-      }
     } else {
       if (form && !form.valid) {
         return;
@@ -686,12 +687,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
                   this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
                 }
               });
-              if(this.selectedLoanPurpose.value == "17") {
-                this.tabSwitch(2);
-              } else {
-                this.tabSwitch(1);
-              }
-              
+                this.tabSwitch(1);              
             } else {
               // Throw Invalid Pan Error
             }
@@ -785,7 +781,11 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   submitPropertyDetail(form: NgForm, swiperInstance?: Swiper) {
     if(this.isTBMLoggedIn) {
-      this.tabSwitch(2);
+      if(this.selectedLoanPurpose.value == "17") {
+        this.router.navigate(['/references', this.qde.application.applicationId])
+      } else {
+        this.tabSwitch(2);
+      }
     } else {
       if (form && !form.valid) {
         return;
@@ -1002,11 +1002,19 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   proceedToExistingLoanEligible() {
     this.isClssEligibleModal = false;
-    this.tabSwitch(2);
+    if(this.selectedLoanPurpose.value == "17") {
+      this.router.navigate(['/references', this.qde.application.applicationId])
+    } else {
+      this.tabSwitch(2);
+    }
   }
   proceedToExistingLoanNotEligible() {
     this.isClssNotEligibleModal = false;
-    this.tabSwitch(2);
+    if(this.selectedLoanPurpose.value == "17") {
+      this.router.navigate(['/references', this.qde.application.applicationId])
+    } else {
+      this.tabSwitch(2);
+    }
   }
 
   onCrossModal(){

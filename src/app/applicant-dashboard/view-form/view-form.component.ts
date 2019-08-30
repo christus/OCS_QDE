@@ -532,6 +532,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
       }
     });
     this.submitButtonChange();
+  //  this.docNotUpload();
   }
 
   setApplicantName(qde) {
@@ -966,7 +967,34 @@ export class ViewFormComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+  // isDocNotUploadModal: boolean = false;
+  // docNotUpload(){
+  //   this.qdeHttp.getQdeData(parseInt(this.applicationId)).subscribe(res => {
+  //       var button = JSON.parse(res['ProcessVariables']['response'])
+  //       var butRes = button.application.status;
+  //       button.application.applicants.some(element => {
+  //         if(element.documents.filter(el => el['documentCategory'] == '1' || el['documentCategory'] == '3' || el['documentCategory'] == '84').length == 3) {
+  //           this.isDocNotUploadModal = false;
+  //         } else {
+  //           this.isDocNotUploadModal = true;
+  //         }
+  //       });
+  //   });
+  // }
   
+  // onCrossDocModal(){
+  //   this.isDocNotUploadModal = false;
+  // }
+  // var button = JSON.parse(res['ProcessVariables']['response'])
+  // var butRes = button.application.status;
+  // button.application.applicants.some(element => {
+  //   if(element.documents.filter(el => el['documentCategory'] == '1' || el['documentCategory'] == '3' || el['documentCategory'] == '84').length == 3) {
+  //     this.isDocNotUploadModal = true;
+  //   } else {
+  //     this.isDocNotUploadModal = false;
+  //   }
+  // });
 
   applicationAccepted() {
     this.qdeHttp.setStatusApi(this.applicationId, statuses['Eligibility Accepted']).subscribe(res => {}, err => {});

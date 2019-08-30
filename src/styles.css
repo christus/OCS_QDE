@@ -4180,7 +4180,11 @@ img {
 	color: #f58220;
 	box-shadow: 0 0 48.06px 5.94px rgba(0, 0, 0, .16)
 }
-
+.error-msg{
+	font-size: 1vw;
+	color: red;
+	margin-top: 2vw
+}
 .bs-radio label {
 	display: block;
 	width: 15.63vw;
@@ -5671,6 +5675,5 @@ img {
 	.mobile .bs-file label span {
 		display: none;
 	}
-	
 }
 

@@ -15,7 +15,7 @@ export class IciciTermsComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private router: Router, private qdeHttpService: QdeHttpService, private commonDataService: CommonDataService) {
     const data = {
-      email: 'icici@icici.com',
+      email: 'icici@icicibankltd.com',
       password: 'icici@123'
     };
 
