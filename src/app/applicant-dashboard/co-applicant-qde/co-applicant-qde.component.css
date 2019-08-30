@@ -64,6 +64,24 @@
     right: 50px;
     z-index: 11;
 }
+
+.timer {
+    font-size: 2.5em;
+    padding: 10px;
+    text-align: center;
+    margin: 0 auto;
+    background: #ccc;
+  }
+.otp_input_len{
+    width: 28.55vw;
+}
+.pull-right{
+    float: right;
+}
+
+.resend_otp_size {
+  font-size: 15px;  
+}
 /* .swiper-slide {
     visibility: hidden;
 }

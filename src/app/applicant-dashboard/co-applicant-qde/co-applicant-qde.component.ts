@@ -138,6 +138,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     effect: "slide"
   };
 
+  isDisabled: boolean = false;
+  interval;
+  timeLeft : number = 5;
+
   activeTab: number = 0;
   dob: {day: Item, month: Item, year: Item} = { day: {key: "DD", value: "DD"}, month: {key: "MM", value: "MM"}, year: {key: "YYYY", value: "YYYY"} };
   residenceNumberStdCode: string = "";
@@ -2910,11 +2914,40 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       //   this.showErrorModal = true;
       // }
      });
+     this.timeout();
+  }
+  timeout(){
+    this.interval = setInterval(()=>{
+      if(this.timeLeft > 0){
+        this.isDisabled = false;
+        this.timeLeft--;
+      }else{
+        this.isDisabled = true;
+      }
+    },1000)
+  }
+  stopInterval(){
+    clearInterval(this.interval);
+    this.timeLeft = 5;
   }
 
+  resendOTP() {
+    this.stopInterval();
+    const mobileNumber = this.qde.application.applicants[this.coApplicantIndex].contactDetails.mobileNumber ;
+    const applicationId = this.qde.application.applicationId;
+    const applicantId = this.qde.application.applicants[this.coApplicantIndex].applicantId;
+    this.sendOTPAPISub = this.qdeHttp.sendOTPAPI(mobileNumber, applicantId, applicationId, false).subscribe(res => {
+      if(res['ProcessVariables']['status'] == true) {
+        this.inOTP = true;
+        this.isAlternateStatus =  false;
+      }
+     });
+     this.timeout();
+  }
   onBackOTP() {
     console.log("Back button pressed")
     this.inOTP = false; 
+    this.stopInterval();
   }
 
   validateOTP(form: NgForm) {

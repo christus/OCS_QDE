@@ -28,13 +28,14 @@ export class ConnectorLeadCreateComponent implements OnInit {
   isSuccessfulRouteModal: boolean;
   isNumberLessThan50k: boolean;
 
-  regexPattren={
+  regexPattern={
     firstName: "[A-Za-z ]+$",
     mobileNumber:"^[0-9]*$",
     address:"^[0-9A-Za-z, _&'/#]+$",
     pincode:"^[1-9][0-9]{5}$",
     email:"^\\w+([\.-]?\\w+)*@\\w+([\.-]?\\w+)*(\\.\\w{2,10})+$",
     amount: "^[\\d]{0,14}([.][0-9]{0,4})?",
+    sameDigit: '0{10}|1{10}|2{10}|3{10}|4{10}|5{10}|6{10}|7{10}|8{10}|9{10}'
   }
   errors = {
     leadCreate :{
@@ -45,6 +46,7 @@ export class ConnectorLeadCreateComponent implements OnInit {
       mobileNumber:{
         required: "10 digit mobile number is mandatory",
         minlength: "Mobile number must be 10 digits",
+        wrong: "Please provide valid mobile number",
         invalid: "Invalid mobile number/Alphabets and Special Characters not allowed",
         },
       address:{
@@ -146,7 +148,11 @@ export class ConnectorLeadCreateComponent implements OnInit {
   isValidNumber(x) {
     return RegExp('^[0-9]*$').test(this.getNumberWithoutCommaFormat(x));
   }
-  
+
+  RegExp(param) {
+    return RegExp(param);
+  }
+
   checkNumberLessThan50k(event) {
     if(this.isValidNumber(event.target.value)) {
       let n = parseInt(this.getNumberWithoutCommaFormat(event.target.value));

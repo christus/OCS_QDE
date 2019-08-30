@@ -912,10 +912,20 @@
                                         [(ngModel)]="otp"
                                         fieldFill>
                                         <label for="otp">OTP</label>
+                                        <br>
+                                        <span><b>{{timeLeft}} Seconds Left...</b></span>
+                                        <span *ngIf="isDisabled">
+                                        <a href="javascript:void(0);" (click)="resendOTP()">
+                                            <div class="pull-right resend_otp_size">Resend OTP</div>
+                                        </a>
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="btn-wrap">
-                                    <button class="btn btn-border" [disabled]="isTBMLoggedIn" [ngClass]="{'disabled': isTBMLoggedIn}" (click)="validateOTP(isValidOTP)">Verify</button>
+                                    <button class="btn btn-border" style='margin-right:16px' [disabled]="isTBMLoggedIn" 
+                                        [ngClass]="{'disabled': isTBMLoggedIn}" (click)="validateOTP(isValidOTP)">Verify</button>
+                                    <button class="btn btn-border" style='margin-right:16px' [disabled]="isTBMLoggedIn"
+                                        [ngClass]="{'disabled': isTBMLoggedIn}" (click)="onBackOTP()">Cancel</button>
                                 </div>
                             </form>
                         </div>

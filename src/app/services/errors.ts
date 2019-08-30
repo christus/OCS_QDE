@@ -15,6 +15,9 @@ export const errors: any = {
     length: "Enter 16 Digits Document number",
     invalid: "Invalid Document Number"
   },
+  appRefNo:{
+    invalid: "Application number is not valid"
+  },
   personalDetails: {
     firstName: {
       required: "First Name is mandatory",

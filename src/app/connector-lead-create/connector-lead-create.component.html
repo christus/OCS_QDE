@@ -6,7 +6,7 @@
             <div class="logo">
                 <h1>
                     <a routerLink="/leads">
-                        <img src="/assets/images/logo.svg" alt="logo" class="img-responsive">
+                        <img src="assets/images/logo.svg" alt="logo" class="img-responsive">
                     </a>
                 </h1>
             </div>
@@ -74,7 +74,7 @@
                         <input spellcheck="false" type="text" class="form-control"
                           id="name" 
                           [(ngModel)]="qde.application.leadCreate.name"
-                          pattern="{{regexPattren.firstName}}"
+                          pattern="{{regexPattern.firstName}}"
                           name="firstName" #fName="ngModel" fieldFill required/>
                         <label for="name">First name</label>    
                         <div *ngIf="(fName.touched || fName.dirty) && fName.invalid"
@@ -87,9 +87,11 @@
                         <input spellcheck="false" type="text" class="form-control"
                           id="mobNumber"
                           [(ngModel)]="qde.application.leadCreate.mobileNumber"
-                          pattern="{{regexPattren.mobileNumber}}" minlength="10" maxlength="10"
+                          pattern="{{regexPattern.mobileNumber}}" minlength="10" maxlength="10"
                           name="mobiNumber" #mobiNumber="ngModel" fieldFill required/>
                         <label for="mobNumber">Mobile Number</label>    
+                        <div class="redalert" *ngIf="RegExp(regexPattern.sameDigit).test(mobiNumber.value)">
+                                {{errors.leadCreate.mobileNumber.wrong}}</div>
                         <div *ngIf="(mobiNumber.touched || mobiNumber.dirty) && mobiNumber.invalid"
                                 class="invalid-feedback">
                              <div *ngIf="mobiNumber.errors?.required">{{errors.leadCreate.mobileNumber.required}}</div>
@@ -101,7 +103,7 @@
                         <input spellcheck="false" type="text" class="form-control"
                           id="address"
                           [(ngModel)]="qde.application.leadCreate.address"
-                          pattern="{{regexPattren.address}}"
+                          pattern="{{regexPattern.address}}"
                           name="addresss" #addresss="ngModel" fieldFill required/>
                         <label for="address">Address</label>   
                         <div *ngIf="(addresss.touched || addresss.dirty) && addresss.invalid"
@@ -114,7 +116,7 @@
                         <input spellcheck="false" type="text" class="form-control"
                           id="zipcode"
                           [(ngModel)]="qde.application.leadCreate.zipcode"
-                          pattern="{{regexPattren.pincode}}" maxlength="6" minlength="6"
+                          pattern="{{regexPattern.pincode}}" maxlength="6" minlength="6"
                           name="pincode" #pincode="ngModel" fieldFill required/>
                         <label for="zipcode">Pin Code</label>    
                             <div *ngIf="(pincode.touched || pincode.dirty) && pincode.invalid"
@@ -128,7 +130,7 @@
                           id="emailId"
                           [(ngModel)]="qde.application.leadCreate.emailId"
                           name="email" #email="ngModel" 
-                          pattern="{{regexPattren.email}}" 
+                          pattern="{{regexPattern.email}}" 
                           fieldFill required/>
                         <label for="emailId">Email ID</label>
                         <div *ngIf="(email.touched || email.dirty) && email.invalid"
