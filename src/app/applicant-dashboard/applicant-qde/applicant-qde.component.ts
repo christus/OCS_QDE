@@ -333,7 +333,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
               private file: File,
               private deviceService: DeviceDetectorService) {
 
-    this.qde = this.qdeService.defaultValue;
+   this.qde = this.qdeService.defaultValue;
+
+    this.qdeService.resetQde();
     this.tabName = this.fragments[0];
     this.page = 1;
 
@@ -393,6 +395,15 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     //     this.applicantIndividual = (this.activeTab >= 10) ? false: true;
     //   }
     // });
+
+
+    this.qdeSourceSub=this.qdeService.qdeSource.subscribe(val => {
+      console.log("VALVE: ", val);
+      this.qde = val;
+      this.applicantIndex = val.application.applicants.findIndex(v => v.isMainApplicant == true);
+      // this.isValidPan = val.application.applicants[this.applicantIndex].pan.panVerified;
+      this.cds.enableTabsIfStatus1(this.qde.application.status);
+    });
 
     this.fragmentSub = this.route.queryParams.subscribe(val => {
 

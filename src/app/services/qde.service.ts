@@ -521,6 +521,12 @@ export class QdeService {
   resetQde() {
     this.setQde({
       application: {
+        auditTrailDetails: {
+          applicantId: null,
+          pageNumber: null,
+          screenPage: "",
+          tabPage: ""
+        },
         applicationFormNumber:"",
         ocsNumber: "",
         loanAmount: "",
@@ -750,6 +756,15 @@ export class QdeService {
             addressLineOne: "",
             addressLineTwo: ""
           }
+        },
+        leadCreate: {
+          name : "",
+          mobileNumber : null,
+          address : "",
+          zipcode : null,
+          emailId : "",
+          loanAmount : null,
+          loanType : null
         }
       }
     });

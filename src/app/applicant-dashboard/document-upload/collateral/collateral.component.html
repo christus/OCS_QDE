@@ -1,43 +1,88 @@
-<table class="table table-striped table-bordered">
-  <thead>
-      <tr>
-          <th>Code</th>
-          <th>Name</th>
-          <th>Price</th>
-          <th>Action</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr *ngFor="let field of fieldArray; let i = index">
-          <td>
-              <input [(ngModel)]="field.code" class="form-control" type="text" name="{{field.code}}" />
-          </td>
-          <td>
-              <input [(ngModel)]="field.name" class="form-control" type="text" name="{{field.name}}" />
-          </td>
-          <td>
-              <input [(ngModel)]="field.price" class="form-control" type="text" name="{{field.price}}" />
-          </td>
-          <td>
-              <button class="btn btn-default"  type="button" (click)="deleteFieldValue(i)">Delete</button>
-          </td>
-      </tr>
-      <tr>
-          <td>
-              <input class="form-control" type="text" id="newAttributeCode" [(ngModel)]="newAttribute.code" name="newAttributeCode" />
-          </td>
-          <td>
-              <input class="form-control" type="text" id="newAttributeName" [(ngModel)]="newAttribute.name" name="newAttributeName" />
-          </td>
-          <td>
-              <input class="form-control" type="text" id="newAttributePrice" [(ngModel)]="newAttribute.price" name="newAttributePrice" />
-          </td>
-          <td>
-            <input class="form-control" type="file" id="newAttributeImageId" [(ngModel)]="newAttribute.imageId" name="newAttributeImageId" />
-          </td>
-          <td>
-              <button class="btn btn-default" type="button" (click)="addFieldValue()">Upload</button>
-          </td>
-      </tr>
-  </tbody>
-</table>
+<div class="container-fluid">
+
+        <section class="content">
+      
+          <div id="main-form-content">
+            <form [formGroup]="documentGrp" (ngSubmit)="OnSubmit(documentGrp.value)" #uploadDocumentsForm="ngForm" ngNativeValidate>
+      
+      
+      
+              <div class="box box-solid box-primary">
+      
+                <div class="box-body" formArrayName="items">
+      
+      
+                  <h2 class="page-header  text-blue ">
+                    <i class="fa fa-files-o"></i> Upload Documents
+                  </h2>
+                  <div class="row">
+                    <div class="col-sm-12">
+      
+      
+                      <div *ngFor="let item of items.controls; let i = index;">
+                        <div [formGroupName]="i">
+                          <table id="tbl-upload" class="table table-bordered">
+                            <tbody>
+                              <tr *ngIf="i==0" class="active">
+                                <th>Document Name</th>
+                                <th>Document Description</th>
+                                <th>Document File</th>
+                                <th>&nbsp;</th>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <div class="form-group required">
+                                    <input type="text" class="form-control" name="doc_name" formControlName="doc_name" placeholder="Enter document Category"
+                                      required="">
+      
+      
+      
+      
+                                    <div class="help-block"></div>
+                                  </div>
+                                </td>
+      
+                                <td>
+                                  <div class="form-group ">
+      
+                                    <input type="text" class="form-control" name="doc_description" formControlName="doc_description" maxlength="100" placeholder="Enter document related descriptions"
+                                      required="">
+      
+                                    <div class="help-block"></div>
+                                  </div>
+                                </td>
+                                <td>
+                                  <div class="form-group  required">
+      
+                                    <input type="file" title="Browse Document"   (change)="fileSelectionEvent($event,i)" required="">
+                                    <div class="help-block"></div>
+                                  </div>
+                                </td>
+                                <td class="remove" *ngIf=" i!=0 ">
+                                  <a title="Remove" (click)="removeItem(i)" class="fa fa-minus-square fa-lg text-red"> Remove</a>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      <div class="pull-right">
+                        <button type="submit" class="btn btn-sm btn-success" title="Add More" (click)="addItem()">Add More</button>
+                         
+                      </div>
+                    </div>
+                    <!--./col-->
+                  </div>
+                  <!--./row-->
+                </div>
+                <!--./box-body-->
+                <div class="box-footer" style="align-content: center">
+                  <button type="submit" class="btn btn-primary pull-right">Save</button>
+                </div>
+              </div>
+            </form>
+          </div>
+      
+      
+        </section>
+      </div>
