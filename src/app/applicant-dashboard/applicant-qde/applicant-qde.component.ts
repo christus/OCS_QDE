@@ -2337,8 +2337,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
               this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
-          // this.isApplicantRouteModal = true;
-          // alert("Applicant's application successfully submitted");
+          this.isApplicantRouteModal = true;
           // this.router.navigate(['/applicant', this.qde.application.applicationId, 'co-applicant'], {fragment: 'dashboard'} );
           this.goToNextSlide(swiperInstance);
         } else {
@@ -2375,7 +2374,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
               this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
-          // this.isApplicantRouteModal = true;
+          this.isApplicantRouteModal = true;
           // alert("Applicant's application successfully submitted");
           // this.router.navigate(['/applicant', this.qde.application.applicationId, 'co-applicant'], {fragment: 'dashboard'} );
           this.goToNextSlide(swiperInstance);

@@ -2083,7 +2083,45 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             }
           });
           
+          this.isCoApplicantRouteModal = true;
           // Show modal here
+          this.goToNextSlide(swiperInstance);
+        } else {
+          // Throw Invalid Pan Error
+        }
+      }, (error) => {
+        console.log("response : ", error);
+      });
+  
+    }
+  }
+
+  submitMonthlyIncomeIndividual(form: NgForm, swiperInstance ?: Swiper) {
+    if(this.isTBMLoggedIn) {
+      this.goToNextSlide(swiperInstance);
+    } else {
+      if (form && !form.valid) {
+        return;
+      }
+  
+      this.qde.application.applicants[this.coApplicantIndex].incomeDetails.monthlyIncome = form.value.monthlyIncome;
+      this.qde.application.applicants[this.coApplicantIndex].incomeDetails.assessmentMethodology = this.selectedAssesmentMethodology['value'];
+  
+      console.log("ID: ", this.qde.application.applicants[this.coApplicantIndex].incomeDetails);
+  
+      this.createOrUpdatePersonalDetailsSub22 = this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
+        // If successfull
+        if(response["ProcessVariables"]["status"]) {
+          this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.coApplicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
+            if(auditRes['ProcessVariables']['status'] == true) {
+              this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+              this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+              this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+              this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
+            }
+          });
+          this.isCoApplicantRouteModal = true;
+          // this.router.navigate(['/applicant', this.qde.application.applicationId, 'co-applicant'], {fragment: 'dashboard'} );
           this.goToNextSlide(swiperInstance);
         } else {
           // Throw Invalid Pan Error
@@ -2121,6 +2159,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                     this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
+
+          this.isCoApplicantRouteModal = true;
           this.goToNextSlide(swiperInstance);
         } 
         else {
