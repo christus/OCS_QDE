@@ -2551,16 +2551,25 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     console.log("Towards OTP");
     
     const mobileNumber = form.value.mobileNumber;
-    this.qde.application.applicants[this.applicantIndex].contactDetails.mobileNumber = mobileNumber;
-    const applicationId = this.qde.application.applicationId;
-    const applicantId = this.qde.application.applicants[this.applicantIndex].applicantId;
-    this.sendOTPAPISub = this.qdeHttp.sendOTPAPI(mobileNumber, applicantId, applicationId, isAlternateNumber).subscribe(res => {
-      if(res['ProcessVariables']['status'] == true) {
-        this.inOTP = true;
-        this.isAlternateStatus = isAlternateNumber;
-      }
-     });
-     this.timeout();
+    const emailId = form.value.preferEmailId;    
+    const isValidMobile = this.RegExp(this.regexPattern.mobileNumber).test(mobileNumber);
+    const isValidEmailID = this.RegExp(this.regexPattern.email).test(emailId);
+
+    if(isValidMobile && isValidEmailID) {
+      this.qde.application.applicants[this.applicantIndex].contactDetails.mobileNumber = mobileNumber;
+      this.qde.application.applicants[this.applicantIndex].contactDetails.preferredEmailId = emailId;
+      const applicationId = this.qde.application.applicationId;
+      const applicantId = this.qde.application.applicants[this.applicantIndex].applicantId;
+      this.sendOTPAPISub = this.qdeHttp.sendOTPAPI(mobileNumber, applicantId, applicationId, isAlternateNumber, emailId).subscribe(res => {
+        if(res['ProcessVariables']['status'] == true) {
+          this.inOTP = true;
+          this.isAlternateStatus = isAlternateNumber;
+        }
+       });
+       this.timeout();
+    } else {
+      alert("Email id and Mobile number is mandatory for verification");
+    }
   }
   timeout(){
     this.interval = setInterval(()=>{
@@ -2582,7 +2591,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     const mobileNumber = this.qde.application.applicants[this.applicantIndex].contactDetails.mobileNumber ;
     const applicationId = this.qde.application.applicationId;
     const applicantId = this.qde.application.applicants[this.applicantIndex].applicantId;
-    this.sendOTPAPISub = this.qdeHttp.sendOTPAPI(mobileNumber, applicantId, applicationId, false).subscribe(res => {
+    const emailId = this.qde.application.applicants[this.applicantIndex].contactDetails.preferredEmailId;
+    this.sendOTPAPISub = this.qdeHttp.sendOTPAPI(mobileNumber, applicantId, applicationId, false, emailId).subscribe(res => {
       if(res['ProcessVariables']['status'] == true) {
         this.inOTP = true;
         this.isAlternateStatus =  false;

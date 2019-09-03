@@ -2936,25 +2936,34 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   submitOTP(form: NgForm, isAlternateNumber) {
     console.log("Towards OTP");
     const mobileNumber = form.value.mobileNumber;
-    this.qde.application.applicants[this.coApplicantIndex].contactDetails.mobileNumber = mobileNumber;
-    const applicationId = this.qde.application.applicationId;
+    const emailId = form.value.preferEmailId;
+    const isValidMobile = this.RegExp(this.regexPattern.mobileNumber).test(mobileNumber);
+    const isValidEmailID = this.RegExp(this.regexPattern.email).test(emailId);
+    if(isValidMobile && isValidEmailID) {
+      this.qde.application.applicants[this.coApplicantIndex].contactDetails.mobileNumber = mobileNumber;
+      this.qde.application.applicants[this.coApplicantIndex].contactDetails.preferredEmailId = emailId;
+      const applicationId = this.qde.application.applicationId;
+  
+      const applicantId = this.qde.application.applicationId;
+      this.sendOTPAPISub = this.qdeHttp.sendOTPAPI(mobileNumber, applicantId, applicationId, isAlternateNumber,emailId).subscribe(res => {
+        if(res['ProcessVariables']['status'] == true) {
+          this.inOTP = true;
+          this.isAlternateStatus = isAlternateNumber;
+        }
+        // if(res['ProcessVariables']['isPaymentSuccessful'] == true) {
+        //   this.showSuccessModal = true;
+        //   this.emiAmount = res['ProcessVariables']['emi'];
+        //   this.eligibleAmount = res['ProcessVariables']['eligibilityAmount'];
+        // }
+        // else if(res['ProcessVariables']['isPaymentSuccessful'] == false) {
+        //   this.showErrorModal = true;
+        // }
+       });
+       this.timeout();
+    } else {
+      alert("Email id and Mobile number is mandatory for verification");
+    }
 
-    const applicantId = this.qde.application.applicationId
-    this.sendOTPAPISub = this.qdeHttp.sendOTPAPI(mobileNumber, applicantId, applicationId, isAlternateNumber).subscribe(res => {
-      if(res['ProcessVariables']['status'] == true) {
-        this.inOTP = true;
-        this.isAlternateStatus = isAlternateNumber;
-      }
-      // if(res['ProcessVariables']['isPaymentSuccessful'] == true) {
-      //   this.showSuccessModal = true;
-      //   this.emiAmount = res['ProcessVariables']['emi'];
-      //   this.eligibleAmount = res['ProcessVariables']['eligibilityAmount'];
-      // }
-      // else if(res['ProcessVariables']['isPaymentSuccessful'] == false) {
-      //   this.showErrorModal = true;
-      // }
-     });
-     this.timeout();
   }
   timeout(){
     this.interval = setInterval(()=>{
@@ -2974,9 +2983,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   resendOTP() {
     this.stopInterval();
     const mobileNumber = this.qde.application.applicants[this.coApplicantIndex].contactDetails.mobileNumber ;
+    const emailId = this.qde.application.applicants[this.coApplicantIndex].contactDetails.preferredEmailId;
     const applicationId = this.qde.application.applicationId;
     const applicantId = this.qde.application.applicants[this.coApplicantIndex].applicantId;
-    this.sendOTPAPISub = this.qdeHttp.sendOTPAPI(mobileNumber, applicantId, applicationId, false).subscribe(res => {
+    this.sendOTPAPISub = this.qdeHttp.sendOTPAPI(mobileNumber, applicantId, applicationId, false, emailId).subscribe(res => {
       if(res['ProcessVariables']['status'] == true) {
         this.inOTP = true;
         this.isAlternateStatus =  false;

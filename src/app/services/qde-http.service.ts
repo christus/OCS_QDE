@@ -682,7 +682,7 @@ createOrUpdatePersonalDetails(qde) {
   }
 
 
-  sendOTPAPI(mobileNumber, applicantId, applicationId, isAlternateNumber) {
+  sendOTPAPI(mobileNumber, applicantId, applicationId, isAlternateNumber, emailId) {
     const processId = environment.api.sendOTP.processId;
     const workflowId = environment.api.sendOTP.workflowId;
     const projectId = environment.projectId;
@@ -697,7 +697,8 @@ createOrUpdatePersonalDetails(qde) {
         "applicantId": applicantId,
         "phoneNumber": mobileNumber,
         "applicationId": applicationId,
-        "isAlternateNumber":  isAlternateNumber
+        "isAlternateNumber":  isAlternateNumber,
+        "emailId": emailId
       },
       workflowId: workflowId,
       projectId: projectId
