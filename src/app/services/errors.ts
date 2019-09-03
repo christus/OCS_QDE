@@ -1,7 +1,7 @@
 export const errors: any = {
 
   applicationReferenceNo:{
-
+    invalid: "Invalid Application Form Number "
   },
   pan: {
     required: "PAN is mandatory",

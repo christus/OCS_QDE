@@ -31,7 +31,7 @@ export class ConnectorLeadCreateComponent implements OnInit {
 
   regexPattern={
     firstName: "[A-Za-z ]+$",
-    mobileNumber:"^[0-9]*$",
+    mobileNumber:"[1-9][0-9]+",
     address:"^[0-9A-Za-z, _&'/#]+$",
     pincode:"^[1-9][0-9]{5}$",
     email:"^\\w+([\.-]?\\w+)*@\\w+([\.-]?\\w+)*(\\.\\w{2,10})+$",
@@ -42,9 +42,10 @@ export class ConnectorLeadCreateComponent implements OnInit {
     leadCreate :{
       firstName:{
         required: "First Name is mandatory",
-        invalid: "Number and Special Characters not allowed"
+        invalid: "Number and Special Characters not allowed",
+        length: "Please provide valid First name"
         },
-      mobileNumber:{
+      mobileNo:{
         required: "10 digit mobile number is mandatory",
         minlength: "Mobile number must be 10 digits",
         wrong: "Please provide valid mobile number",
@@ -52,7 +53,8 @@ export class ConnectorLeadCreateComponent implements OnInit {
         },
       address:{
         required: "Address is mandatory",
-        invalid: "Incomplete address"
+        invalid: "Incomplete address",
+        length: "Please provide valid address"
         },
       pincode:{
         required: "Pincode is mandatory",

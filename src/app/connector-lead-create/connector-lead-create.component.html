@@ -72,7 +72,7 @@
                   <form #leadForm="ngForm" class="bs-form" (ngSubmit)="leadSaveConnector(leadForm)">
                     <div class="form-group">
                         <input spellcheck="false" type="text" class="form-control"
-                          id="name" 
+                          id="name" minlength="2"
                           [(ngModel)]="qde.application.leadCreate.name"
                           pattern="{{regexPattern.firstName}}"
                           name="firstName" #fName="ngModel" fieldFill required/>
@@ -81,35 +81,38 @@
                                 class="invalid-feedback">
                              <div *ngIf="fName.errors?.required">{{errors.leadCreate.firstName.required}}</div>
                               <div *ngIf="fName.errors?.pattern">{{errors.leadCreate.firstName.invalid}}</div>
+                              <div *ngIf="fName.errors?.minlength">{{errors.leadCreate.firstName.length}}</div>
                             </div>
                     </div>
                     <div class="form-group">
                         <input spellcheck="false" type="text" class="form-control"
                           id="mobNumber"
                           [(ngModel)]="qde.application.leadCreate.mobileNumber"
-                          pattern="{{regexPattern.mobileNumber}}" minlength="10" maxlength="10"
-                          name="mobiNumber" #mobiNumber="ngModel" fieldFill required/>
+                          #phNumber="ngModel" minlength="10" maxlength="10"
+                          pattern="{{regexPattern.mobileNumber}}"
+                          name="mobileNumber" fieldFill required/>
                         <label for="mobNumber">Mobile Number</label>    
-                        <div class="redalert" *ngIf="RegExp(regexPattern.sameDigit).test(mobiNumber.value)">
-                                {{errors.leadCreate.mobileNumber.wrong}}</div>
-                        <div *ngIf="(mobiNumber.touched || mobiNumber.dirty) && mobiNumber.invalid"
+                        <div class="redalert" *ngIf="RegExp(regexPattern.sameDigit).test(phNumber.value)">
+                                {{errors.leadCreate.mobileNo.wrong}}</div>
+                        <div *ngIf="phNumber.touched && phNumber.invalid"
                                 class="invalid-feedback">
-                             <div *ngIf="mobiNumber.errors?.required">{{errors.leadCreate.mobileNumber.required}}</div>
-                              <div *ngIf="mobiNumber.errors?.pattern">{{errors.leadCreate.mobileNumber.invalid}}</div>
-                              <div *ngIf="mobiNumber.errors?.minlength">{{errors.leadCreate.mobileNumber.minlength}}</div>
+                             <div *ngIf="phNumber.errors?.required">{{errors.leadCreate.mobileNo.required}}</div>
+                              <div *ngIf="phNumber.errors?.pattern">{{errors.leadCreate.mobileNo.invalid}}</div>
+                              <div *ngIf="phNumber.errors?.minlength">{{errors.leadCreate.mobileNo.minlength}}</div>
                             </div>
                     </div>
                     <div class="form-group">
                         <input spellcheck="false" type="text" class="form-control"
                           id="address"
                           [(ngModel)]="qde.application.leadCreate.address"
-                          pattern="{{regexPattern.address}}"
+                          pattern="{{regexPattern.address}}" minlength="2"
                           name="addresss" #addresss="ngModel" fieldFill required/>
                         <label for="address">Address</label>   
                         <div *ngIf="(addresss.touched || addresss.dirty) && addresss.invalid"
                                 class="invalid-feedback">
                              <div *ngIf="addresss.errors?.required">{{errors.leadCreate.address.required}}</div>
                               <div *ngIf="addresss.errors?.pattern">{{errors.leadCreate.address.invalid}}</div>
+                              <div *ngIf="addresss.errors?.minlength">{{errors.leadCreate.address.length}}</div>
                             </div> 
                     </div>
                     <div class="form-group">
