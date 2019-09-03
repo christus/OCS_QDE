@@ -1,7 +1,8 @@
 export const errors: any = {
 
   applicationReferenceNo:{
-    invalid: "Invalid Application Form Number "
+    invalid: "Invalid Application Form Number ",
+    wrong: "please enter valid application form number"
   },
   pan: {
     required: "PAN is mandatory",
@@ -14,9 +15,6 @@ export const errors: any = {
     required: "Document number is mandatory",
     length: "Enter 16 Digits Document number",
     invalid: "Invalid Document Number"
-  },
-  appRefNo:{
-    invalid: "Application number is not valid"
   },
   personalDetails: {
     firstName: {

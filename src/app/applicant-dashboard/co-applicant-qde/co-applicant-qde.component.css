@@ -209,7 +209,7 @@
     text-transform: uppercase;
     padding: 0 1.56vw;
     border: 1px solid #f58220;
-    margin-top: 4vw
+    /* margin-top: 4vw */
 }
 .bs-modal .modal-body .or {
     font-size: 1.41vw;

@@ -50,7 +50,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   maxlength:Array<string> = ['8','15','10','12','18','14','16'];
 
   regexPattern = {
-    mobileNumber: "^[0-9]*$",
+    mobileNumber: "^[1-9][0-9]*$",
     name: "^[A-Za-z, ]+$",
     address : "^[0-9A-Za-z, _&'/#]+$",
     // cityState:"^[0-9A-Za-z, &'#]$",
@@ -140,7 +140,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
   isDisabled: boolean = false;
   interval;
-  timeLeft : number = 5;
+  timeLeft : number = 180;
 
   activeTab: number = 0;
   dob: {day: Item, month: Item, year: Item} = { day: {key: "DD", value: "DD"}, month: {key: "MM", value: "MM"}, year: {key: "YYYY", value: "YYYY"} };
@@ -2977,7 +2977,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   }
   stopInterval(){
     clearInterval(this.interval);
-    this.timeLeft = 5;
+    this.timeLeft = 180;
   }
 
   resendOTP() {

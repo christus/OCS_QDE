@@ -904,7 +904,7 @@
                             <form class="bs-form" id="spouse-form"
                             #isValidOTP="ngForm">
                                 <div class="form-wrap1">
-                                    <div class="form-group">
+                                    <div class="form-group otp_input_len">
                                         <input [readonly]="isReadOnly" 
                                         type="text" class="form-control" 
                                         id="otp" 
@@ -912,7 +912,6 @@
                                         [(ngModel)]="otp"
                                         fieldFill>
                                         <label for="otp">OTP</label>
-                                        <br>
                                         <span><b>{{timeLeft}} Seconds Left...</b></span>
                                         <span *ngIf="isDisabled">
                                         <a href="javascript:void(0);" (click)="resendOTP()">

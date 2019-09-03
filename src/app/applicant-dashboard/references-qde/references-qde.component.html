@@ -137,7 +137,9 @@
                             #refOneMobileNumber="ngModel"
                             [(ngModel)]="selectedMobile1">
                             <label for="ref1-mobile">Mobile number</label>
-
+                            
+                            <div class="redalert" *ngIf="RegExp(regexPattern.sameDigit).test(refOneMobileNumber.value)">
+                                {{errors.references.referenceOne.mobileNumber.wrong}}</div>
                             <div *ngIf="refOneMobileNumber.touched && refOneMobileNumber.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="refOneMobileNumber.errors?.required">{{errors.references.referenceOne.mobileNumber.required}}</div> -->
                               <div *ngIf="refOneMobileNumber.errors?.pattern">{{errors.references.referenceOne.mobileNumber.invalid}}</div>
@@ -315,6 +317,8 @@
                             [(ngModel)]="selectedMobile2">
                             <label for="ref2-mobile">Mobile number</label>
 
+                            <div class="redalert" *ngIf="RegExp(regexPattern.sameDigit).test(refTwoMobileNumber.value)">
+                                {{errors.references.referenceTwo.mobileNumber.wrong}}</div>
                             <div *ngIf="refTwoMobileNumber.touched && refTwoMobileNumber.invalid" class="invalid-feedback">
                                 <!-- <div *ngIf="refTwoMobileNumber.errors?.required">{{errors.references.referenceTwo.mobileNumber.required}}</div> -->
                                 <div *ngIf="refTwoMobileNumber.errors?.pattern">{{errors.references.referenceTwo.mobileNumber.invalid}}</div>
