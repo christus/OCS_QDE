@@ -29,7 +29,7 @@ export class IciciTermsComponent implements OnInit {
       }
     });
 
-    if(this.router.url.search('auto-login') != -1) {
+    if(this.router.url.search('auto-login') != 0) {
       this.qdeHttpService.authenticate(data).subscribe(
         res => {
           console.log("response");

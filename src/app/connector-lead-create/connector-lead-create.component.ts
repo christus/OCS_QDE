@@ -28,6 +28,7 @@ export class ConnectorLeadCreateComponent implements OnInit {
   isSuccessfulRouteModal: boolean;
   isNumberLessThan50k: boolean;
   sessionMessage="";
+  firstName: string;
 
   regexPattern={
     firstName: "[A-Za-z ]+$",
@@ -67,7 +68,7 @@ export class ConnectorLeadCreateComponent implements OnInit {
       amount: {
         required: "Loan Amount is Mandatory",
         invalid: "Invalid Loan Amount / Alphabets and special characters not allowed",
-        minamount: "Amount should be greater than Rs.50000",
+        minamount: "Amount should be greater than or equal to Rs.50000",
       }
     }
   }
@@ -96,6 +97,7 @@ export class ConnectorLeadCreateComponent implements OnInit {
 
     this.version = environment.version;
     this.buildDate = environment.buildDate;
+    this.loginName()
   }
 
   openOptionsMenuDropdown(a: ElementRef) {
@@ -167,4 +169,12 @@ export class ConnectorLeadCreateComponent implements OnInit {
       this.isNumberLessThan50k = false;
     }
   }
+
+  loginName(){
+    this.qdeHttp.roleLogin().subscribe(res => {
+      this.firstName =  res['ProcessVariables']['firstName'];
+      console.log("ROLE Name: ", this.firstName);
+    })
+  }
+
 }

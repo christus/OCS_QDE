@@ -144,7 +144,7 @@ createOrUpdatePersonalDetails(qde) {
   duplicateLogin() {
 
     const body = new HttpParams()
-      .set('email', "icici@icici.com")
+      .set('email', "icici@icicibankltd.com")
       .set('password', "icici@123");
 
     let uri = environment.host + '/account/login';

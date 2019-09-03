@@ -94,7 +94,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   roleLogin() {
     this.qdeService.roleLogin().subscribe(
       res => {
-        console.log("ROLE LOGIN: ", res['ProcessVariables']['roleName']);
+        console.log("ROLE Name: ", res);
         let roleName = JSON.stringify(res["ProcessVariables"]["roleName"]);
         localStorage.setItem("userId", res["ProcessVariables"]["userId"]);
         localStorage.setItem('roles', roleName);

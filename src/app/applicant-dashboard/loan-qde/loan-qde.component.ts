@@ -47,7 +47,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
          amount: {
            required: "Loan Amount is Mandatory",
            invalid: "Invalid Loan Amount / Alphabets and special characters not allowed",
-           minamount: "Amount should be greater than Rs.50000",
+           minamount: "Amount should be greater than or equal to Rs.50000",
          },
          tenure: {
            required: "Loan Tenure is Mandatory",
@@ -679,7 +679,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
             if (response["ProcessVariables"]["status"]) {
               let result = response['ProcessVariables']['response'];
               // console.log(this.qde.application.references.referenceOne.relationShip);
-              this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
+              this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['loanDetails']).subscribe(auditRes => {
                 if(auditRes['ProcessVariables']['status'] == true) {
                   this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
                   this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
@@ -730,7 +730,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
             // If successful
             if (response["ProcessVariables"]["status"]) {
-              this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
+              this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['loanDetails']).subscribe(auditRes => {
                 if(auditRes['ProcessVariables']['status'] == true) {
                   this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
                   this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
@@ -809,7 +809,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
             let result = response['ProcessVariables']['response'];
 
             if (response["ProcessVariables"]["status"]) {
-              this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
+              this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['loanDetails']).subscribe(auditRes => {
                 if(auditRes['ProcessVariables']['status'] == true) {
                   this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
                   this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
@@ -852,7 +852,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
             let result = response['ProcessVariables']['response'];
 
             if (response["ProcessVariables"]["status"]) {
-              this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
+              this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['loanDetails']).subscribe(auditRes => {
                 if(auditRes['ProcessVariables']['status'] == true) {
                   this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
                   this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
@@ -906,7 +906,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
             if (response["ProcessVariables"]["status"]) {
               if(this.qde.application.applicants[this.selectedApplicantIndex].existingLoans.liveLoan > 0 ) {
-                this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
+                this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['loanDetails']).subscribe(auditRes => {
                   if(auditRes['ProcessVariables']['status'] == true) {
                     this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
                     this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
@@ -952,7 +952,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
             // If successful
             if (response["ProcessVariables"]["status"]) {
-              this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
+              this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['loanDetails']).subscribe(auditRes => {
                 if(auditRes['ProcessVariables']['status'] == true) {
                   this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
                   this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
@@ -1094,7 +1094,6 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.tabName = tabPage;
     this.page = pageNumber;
     this.tabSwitch(index, true);
-    // this.swiperSliders[index].setIndex(pageNumber-1);
   }
 
   ngOnDestroy() {

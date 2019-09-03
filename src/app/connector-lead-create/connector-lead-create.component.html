@@ -23,12 +23,12 @@
             </div> -->
             <div class="right-panel of-dashboard">
                 <div class="search-wrap">
-                    <a href="javascript:void(0);" class="search-btn"><span class="icon icon-search"></span></a>
+                    <!-- <a href="javascript:void(0);" class="search-btn"><span class="icon icon-search"></span></a> -->
                 </div>
                 <div class="profile-wrap hover-wrap">
                     <div class="profile-btn hover-link" #optionsMenuDropdown [ngClass]="{'active': isOptionsMenuDropOpen}" (click)="openOptionsMenuDropdown(optionsMenuDropdownContent)">
-                        <img src="/assets/images/profile-thumb.png" alt="" class="profile-thumb">
-                        <span class="profile-name">Satish Kamat</span>
+                        <!-- <img src="/assets/images/profile-thumb.png" alt="" class="profile-thumb"> -->
+                        <span class="profile-name">{{firstName}}</span>
                         <span class="icon icon-down"></span>
                     </div>
                     <div class="hover-content" #optionsMenuDropdownContent [ngClass]="{'active': isOptionsMenuDropOpen}" tabindex="0" (blur)="closeOptionsMenuDropdown(optionsMenuDropdownContent)">

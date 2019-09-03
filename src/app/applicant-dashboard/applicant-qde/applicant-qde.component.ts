@@ -3112,6 +3112,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       if(this.swiperSliders && this.swiperSliders.length > 0) {
         this.swiperSliders[this.activeTab].setIndex(this.page-1);
       }
+
     });
   }
 
@@ -3120,7 +3121,6 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.tabName = tabPage;
     this.page = pageNumber;
     this.tabSwitch(index, true);
-    
   }
 
   isCategoryModal: boolean = false;
