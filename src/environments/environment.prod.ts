@@ -275,7 +275,7 @@ export const environment = {
       'processId': 'd86751a2a6e911e98ad90242ac110002'
     }
   },
-  userName: "icici@icici.com",
+  userName: "icici@icicibankltd.com",
   password: "icici@123",
   appiyoDrive: "/d/drive/upload/",
   driveLocation: "/d/drive/docs/",

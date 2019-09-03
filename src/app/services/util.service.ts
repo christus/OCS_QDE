@@ -54,7 +54,7 @@ export class UtilService {
    if(isFirstTime == null) {
 
     let data = {
-      'email': "icici@icici.com",
+      'email': "icici@icicibankltd.com",
       'password': 'icici@123',
       'longTimeToken': "true"
     }
