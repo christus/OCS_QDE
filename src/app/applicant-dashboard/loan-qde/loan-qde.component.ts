@@ -533,7 +533,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
     } else {
       //switching to existing loan
        this.qde.application.loanDetails.propertyType.propertyIdentified = value;
-       if(this.selectedLoanPurpose.value == "17") {
+       if(this.selectedLoanPurpose.value != "17") {
         this.router.navigate(['/references', this.qde.application.applicationId])
       } else {
         this.tabSwitch(this.propertyNoSwitchTab);
@@ -781,7 +781,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   submitPropertyDetail(form: NgForm, swiperInstance?: Swiper) {
     if(this.isTBMLoggedIn) {
-      if(this.selectedLoanPurpose.value == "17") {
+      if(this.selectedLoanPurpose.value != "17") {
         this.router.navigate(['/references', this.qde.application.applicationId])
       } else {
         this.tabSwitch(2);
@@ -1002,7 +1002,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   proceedToExistingLoanEligible() {
     this.isClssEligibleModal = false;
-    if(this.selectedLoanPurpose.value == "17") {
+    if(this.selectedLoanPurpose.value != "17") {
       this.router.navigate(['/references', this.qde.application.applicationId])
     } else {
       this.tabSwitch(2);
@@ -1010,7 +1010,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   proceedToExistingLoanNotEligible() {
     this.isClssNotEligibleModal = false;
-    if(this.selectedLoanPurpose.value == "17") {
+    if(this.selectedLoanPurpose.value != "17") {
       this.router.navigate(['/references', this.qde.application.applicationId])
     } else {
       this.tabSwitch(2);
