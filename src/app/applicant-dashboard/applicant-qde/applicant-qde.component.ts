@@ -70,7 +70,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     amount:"^[\\d]{0,10}([.][0-9]{0,4})?",
     email:"^\\w+([\.-]?\\w+)*@\\w+([\.-]?\\w+)*(\\.\\w{2,10})+$",
     revenue:"^[\\d]{0,10}([.][0-9]{0,4})?",
-    sameDigit: '0{10}|1{10}|2{10}|3{10}|4{10}|5{10}|6{10}|7{10}|8{10}|9{10}'
+    sameDigit: '^0{10}|1{10}|2{10}|3{10}|4{10}|5{10}|6{10}|7{10}|8{10}|9{10}$'
 
     // revenue:"^[\\d]{0,14}([.][0-9]{0,4})?"
    
@@ -313,7 +313,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   YYYY17YearsAgo = (new Date().getFullYear() - 18);
   isValidPan: boolean;
   tempOldPanNumber: string;
-  monthsInChar: Array<string> = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'AUG', 'NOV', 'DEC'];
+  monthsInChar: Array<string> = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
 
   // Only RHS Sliders
   @ViewChildren('swiperS') swiperS$: QueryList<Swiper>;
@@ -533,7 +533,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
             if(this.qde.application.auditTrailDetails.screenPage == screenPages['applicantDetails']) {
               this.goToExactPageAndTab(this.qde.application.auditTrailDetails.tabPage, this.qde.application.auditTrailDetails.pageNumber);
-            } else {
+            }
+            // else if(this.qde.application.auditTrailDetails.screenPage == screenPages['loanDetails']){
+            //   this.router.navigate(['/loanDetails/'+this.qde.application.applicationId]);
+            // }
+            else{
               if(this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
                 this.tabSwitch(0);
               } else if(this.qde.application[this.applicantIndex].isIndividual == false) {

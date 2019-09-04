@@ -91,6 +91,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
      }
   };
   regexPattern = {
+    mobileNumber: "^[1-9][0-9]+$",
     amount: "^[\\d]{0,14}([.][0-9]{0,4})?",
     minAmount: "[5-9][0-9]{4}|[1-9]\d{5,}",
     name: "/^[a-zA-Z ]*$/",
