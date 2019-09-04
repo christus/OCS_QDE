@@ -31,7 +31,9 @@ export class ViewFormComponent implements OnInit, OnDestroy {
   readonly errors = errors;
   readonly statuses = statuses;
 
-  private showSuccessModal: boolean = false;
+  showSuccessModal: boolean = false;
+
+  isDocNotUploadModal: boolean = false;
 
   public applicantName: string;
 
@@ -681,9 +683,11 @@ export class ViewFormComponent implements OnInit, OnDestroy {
                   this.isQdeSubmitEnabled = true;
                 } else {
                   this.isQdeSubmitEnabled = false;
+                  this.isDocNotUploadModal = true;
                 }
               } else {
                 this.isQdeSubmitEnabled = false;
+                this.isDocNotUploadModal = true;
               }
             }
             else {
@@ -920,6 +924,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
 
   onCrossModal(){
     this.isViewFormModal = false;
+    this.isDocNotUploadModal = false;
   }
 
   setAps(){
