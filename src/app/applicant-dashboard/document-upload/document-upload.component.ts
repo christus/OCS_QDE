@@ -434,9 +434,16 @@ export class DocumentUploadComponent implements OnInit {
     }
 
     this.photoProofDoc[this.applicantIndex] = files.item(0);
-    this.photoProofFileName[this.applicantIndex] = this.photoProofDoc[this.applicantIndex]["name"];
 
-    this.photoProofFileSize[this.applicantIndex] = this.getFileSize(this.photoProofDoc[this.applicantIndex]["size"]);
+    let size = this.getFileSize(this.photoProofDoc[this.applicantIndex]["size"])
+
+
+    if(size) {
+      this.photoProofFileSize[this.applicantIndex] = size;
+      this.photoProofFileName[this.applicantIndex] = this.photoProofDoc[this.applicantIndex]["name"];
+    }
+
+
   }
 
   /************************
@@ -503,8 +510,13 @@ export class DocumentUploadComponent implements OnInit {
     
     console.log("files: ", files.item(0));
     this.idProofDoc[this.applicantIndex] = files.item(0);
-    this.idProofFileName[this.applicantIndex] = this.idProofDoc[this.applicantIndex]["name"];
-    this.idProofFileSize[this.applicantIndex] = this.getFileSize(this.idProofDoc[this.applicantIndex]["size"]);
+    let size = this.getFileSize(this.idProofDoc[this.applicantIndex]["size"]);
+
+    if(size) {
+      this.idProofFileSize[this.applicantIndex] = size;
+      this.idProofFileName[this.applicantIndex] = this.idProofDoc[this.applicantIndex]["name"];
+    }
+
   }
 
   /************************
@@ -608,9 +620,13 @@ export class DocumentUploadComponent implements OnInit {
 
 
     this.addressProofDoc[this.applicantIndex] = files.item(0);
-    this.addressProofFileName[this.applicantIndex] = this.addressProofDoc[this.applicantIndex]["name"];
 
-    this.addressProofFileSize[this.applicantIndex] = this.getFileSize(this.addressProofDoc[this.applicantIndex]["size"]);
+    let size = this.getFileSize(this.addressProofDoc[this.applicantIndex]["size"]);
+
+    if(size) {
+      this.addressProofFileSize[this.applicantIndex] = size;
+      this.addressProofFileName[this.applicantIndex] = this.addressProofDoc[this.applicantIndex]["name"];
+    }
   }
 
   /************************
@@ -670,9 +686,13 @@ export class DocumentUploadComponent implements OnInit {
     }
 
     this.incomeProofDoc[this.applicantIndex] = files.item(0);
-    this.incomeProofFileName[this.applicantIndex] = this.incomeProofDoc[this.applicantIndex]["name"];
 
-    this.incomeProofFileSize[this.applicantIndex] = this.getFileSize(this.incomeProofDoc[this.applicantIndex]["size"]);
+    let size = this.getFileSize(this.incomeProofDoc[this.applicantIndex]["size"]);
+
+    if(size){
+      this.incomeProofFileSize[this.applicantIndex] = size;
+      this.incomeProofFileName[this.applicantIndex] = this.incomeProofDoc[this.applicantIndex]["name"];
+    }
   }
 
   /***************************
@@ -739,9 +759,14 @@ export class DocumentUploadComponent implements OnInit {
       return;
     }
     this.bankingProofDoc[this.applicantIndex] = files.item(0);
-    this.bankProofFileName[this.applicantIndex] = this.bankingProofDoc[this.applicantIndex]["name"];
 
-    this.bankProofFileSize[this.applicantIndex] = this.getFileSize(this.bankingProofDoc[this.applicantIndex]["size"]);
+    let size= this.getFileSize(this.bankingProofDoc[this.applicantIndex]["size"]);
+
+    if(size) {
+      this.bankProofFileSize[this.applicantIndex] = size;
+      this.bankProofFileName[this.applicantIndex] = this.bankingProofDoc[this.applicantIndex]["name"];
+    }
+
   }
 
   /****************************
@@ -808,9 +833,13 @@ export class DocumentUploadComponent implements OnInit {
     }
 
     this.collateralProofDoc[this.applicantIndex] = files.item(0);
-    this.collateralProofFileName[this.applicantIndex] = this.collateralProofDoc[this.applicantIndex]["name"];
 
-    this.collateralProofFileSize[this.applicantIndex] = this.getFileSize(this.collateralProofDoc[this.applicantIndex]["size"]);
+    let size = this.getFileSize(this.collateralProofDoc[this.applicantIndex]["size"]);
+
+    if(size) {
+      this.collateralProofFileSize[this.applicantIndex] = size;
+      this.collateralProofFileName[this.applicantIndex] = this.collateralProofDoc[this.applicantIndex]["name"];
+    }
   }
 
   /*******************************
@@ -990,22 +1019,31 @@ export class DocumentUploadComponent implements OnInit {
   // }
 
   getFileSize(size: any) {
-    size = size / 1024;
 
-    let isMegaByte = false;
-    if (size >= 1024) {
-      size = size / 1024;
-      isMegaByte = true;
-    }
-
-    let fileSize: string;
-    if (isMegaByte) {
-      fileSize = size.toFixed(2) + " MB";
+    var FileSize = size / 1024 / 1024; // in MB
+    if (FileSize > 2) {
+        alert('File size exceeds 2 MB');
+       // $(file).val(''); //for clearing with Jquery
+       return null;
     } else {
-      fileSize = size.toFixed(2) + " KB";
-    }
+     
+      size = size / 1024;
 
-    return fileSize;
+      let isMegaByte = false;
+      if (size >= 1024) {
+        size = size / 1024;
+        isMegaByte = true;
+      }
+
+      let fileSize: string;
+      if (isMegaByte) {
+        fileSize = size.toFixed(2) + " MB";
+      } else {
+        fileSize = size.toFixed(2) + " KB";
+      }
+
+      return fileSize;
+    }
   }
 
   openCamera(screen) {
