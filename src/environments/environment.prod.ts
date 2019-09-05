@@ -1,6 +1,6 @@
 export const environment = {
-  version: "1.7.4",
-  buildDate: "3-9-2019",
+  version: "1.7.5",
+  buildDate: "5-9-2019",
   production: true,
   projectId: '5928d30eac7811e9a1670242ac110002', //developement
 
@@ -281,6 +281,10 @@ export const environment = {
     "mandatoryDocs": {
       'workflowId': '197cc83ec7c411e9bb0c0242ac110002',
       'processId': '1995b4cac7c411e985c10242ac110002'
+    },
+    "roleName" : {
+      'workflowId': '8fdf0f40ca5911e9a0280242ac110002',
+      'processId': '90003788ca5911e992030242ac110002'
     }
   },
   userName: "icici@icicibankltd.com",
@@ -288,9 +292,9 @@ export const environment = {
   appiyoDrive: "/d/drive/upload/",
   driveLocation: "/d/drive/docs/",
   ocsHost: "/ocs",
-  host: "http://192.168.1.108/appiyo",
+  //host: "http://192.168.1.108/appiyo",
   //host: "/ProcessStore",
-  //host:  "/appiyo",
+  host:  "/appiyo",
   pdfLocation: "/d/download/pdf?"
   //host: "https://ihfcmobileuat.icicihfc.com/appiyo"
   //host: "https://103.87.42.117/appiyo"

@@ -287,6 +287,10 @@ export const environment = {
     "mandatoryDocs": {
       'workflowId': '197cc83ec7c411e9bb0c0242ac110002',
       'processId': '1995b4cac7c411e985c10242ac110002'
+    },
+    "roleName" : {
+      'workflowId': '8fdf0f40ca5911e9a0280242ac110002',
+      'processId': '90003788ca5911e992030242ac110002'
     }
     
 

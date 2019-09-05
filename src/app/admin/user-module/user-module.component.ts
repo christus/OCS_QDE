@@ -16,6 +16,9 @@ export class UserModuleComponent implements OnInit {
   currentPage: string;
   perPage:string;
   enableLoadMore:boolean;
+  activityList: any;
+  rolesList: any[]= [];
+  filterData: number;
 
   // paginationConfig =  { 
   //   itemsPerPage: 2, 
@@ -31,9 +34,22 @@ export class UserModuleComponent implements OnInit {
   ngOnInit() {
     let data = {};
     data["currentPage"] = 1;
-
+    //data["roleId"]
     this.getAdminUsers(data);
+
+    this.getRoleName();
   }
+
+  getRoleName() {
+    let data = {
+      roleName: ""
+    };
+    this.qdeHttp.getRoleNameList(data).subscribe((response) => {
+      this.rolesList = response['ProcessVariables'].roleList;
+      
+    });
+  }
+
 
   loadMore() {
     console.log("Load more");
@@ -44,7 +60,6 @@ export class UserModuleComponent implements OnInit {
   }
 
   getAdminUsers(data) {
-    let from = data.currentPage;
     this.qdeHttp.getAdminUsers(data).subscribe((response) => {
       this.collection = response['ProcessVariables'].userDetails;
       this.totalPages = response['ProcessVariables'].totalPages;
@@ -52,6 +67,7 @@ export class UserModuleComponent implements OnInit {
       this.currentPage = response['ProcessVariables'].currentPage;
       this.perPage = response['ProcessVariables'].perPage;
       this.totalItems = parseInt(this.totalPages) * parseInt(this.perPage);
+      this.activityList = response['ProcessVariables'].activityList;
       if(this.currentPage == this.totalPages) {
         this.enableLoadMore = false;
       }
@@ -59,10 +75,26 @@ export class UserModuleComponent implements OnInit {
     });
   }
 
+  // changeRole() {
+  //   console.log(PARAMETERS)
+  // }
+  changeRole(value){
+
+    console.log("roleID:",value);
+
+    this.filterData = parseInt(value);
+
+    let data = {};
+    data["currentPage"] = 1;
+    data["roleId"] = this.filterData;
+    this.getAdminUsers(data);
+
+  }
+
   pageChanged(value){
     let data = {};
     data["currentPage"] = value;
-
+    data["roleId"] = this.filterData;
     this.getAdminUsers(data);
   }
 
