@@ -50,5 +50,20 @@ export class Declaration2Component implements OnInit {
 
   acceptBtn() {
     this.qdeHttp.setStatusApi(this.applicationId, this.applicationStatus).subscribe(res => {}, err => {});
+
+    var data = {
+      "smsAlerts": true,
+      "emailAlerts": true,
+      "applicantId": this.applicantId,
+      "ihfcExchange": true,
+      "termsConditions": true,
+      "phoneCallAlert": true,
+      "applicationId": this.applicationId,
+      "cibilCheck": true,
+      "financialAssistance": true
+    }
+
+    this.qdeHttp.updateTermsAndCondition(data).subscribe(res => {}, err => {});
+
   }
 }

@@ -80,6 +80,10 @@ export const environment = {
       'workflowId': '1d41cd0a8c4311e982270242ac110002',
       'processId': '1d5a18748c4311e982270242ac110002'
     },
+    "saveTermsAndCondition": {
+      'workflowId': '17d45f6a90c411e982270242ac110002',
+      'processId': '17f2f34e90c411e982270242ac110002'
+    },
     "applicableDocuments": {
       'workflowId': '0705a6c4810311e982270242ac110002',
       'processId': '071e0f5c810311e982270242ac110002'
