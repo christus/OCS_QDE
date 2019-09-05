@@ -64,7 +64,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     pinCode: "^[1-9][0-9]{5}$",
     // applicationRefNo : "",
     panInd:"[A-Z]{3}(P)[A-Z]{1}[0-9]{4}[A-Z]{1}",
-    panNonInd:"[A-Z]{3}(C)[A-Z]{1}[0-9]{4}[A-Z]{1}",
+    panNonInd:"[A-Z]{5}[0-9]{4}[A-Z]{1}",
     // amount:"[0-9]{0,17}\.[0-9]{1,4}?$",
     sliderValue: " [0-9]{0,2}",
     amount:"^[\\d]{0,10}([.][0-9]{0,4})?",

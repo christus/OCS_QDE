@@ -7,6 +7,7 @@ import { NgForm } from '@angular/forms';
 import Qde from '../models/qde.model';
 import { UtilService } from '../services/util.service';
 import { environment } from 'src/environments/environment';
+import { Subscription } from 'rxjs';
 
 interface Item {
   key: string,
@@ -29,6 +30,8 @@ export class ConnectorLeadCreateComponent implements OnInit {
   isNumberLessThan50k: boolean;
   sessionMessage="";
   firstName: string;
+  qdeSourceSub: Subscription;
+  applicantIndex: number = 0;
 
   regexPattern={
     firstName: "[A-Za-z ]+$",
@@ -82,9 +85,14 @@ export class ConnectorLeadCreateComponent implements OnInit {
     private utilService: UtilService) { 
       
     this.qde = this.qdeService.defaultValue;
+    this.qdeService.resetQde();
     this.commonDataService.changeMenuBarShown(false);
     this.commonDataService.changeViewFormVisible(false);
     this.commonDataService.changeLogoutVisible(true);
+    this.qdeSourceSub=this.qdeService.qdeSource.subscribe(val => {
+      console.log("VALVE: ", val);
+      this.qde = val;
+    });
   }
 
   ngOnInit() {
