@@ -340,6 +340,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     this.cds.changeMenuBarShown(true);
     this.cds.changeViewFormVisible(true);
     this.cds.changeLogoutVisible(true);
+    this.cds.changeHomeVisible(true);
+
     // console.log("QDE:::: ", route.data['qde']);
     // this.panslideSub = this.cds.panslide.subscribe(val => {
     //   this.panslide = val;

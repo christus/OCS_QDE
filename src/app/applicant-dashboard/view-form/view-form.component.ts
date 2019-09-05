@@ -222,6 +222,8 @@ export class ViewFormComponent implements OnInit, OnDestroy {
     this.commonDataService.changeMenuBarShown(false);
     this.commonDataService.changeViewFormVisible(false);
     this.commonDataService.changeLogoutVisible(true);
+    this.commonDataService.changeHomeVisible(true);
+
 
     this.qdeService.qdeSource.subscribe(val => {
       this.qde = val;

@@ -12,6 +12,8 @@ export class TermsAndConditionsComponent implements OnInit {
     this.commonDataService.changeMenuBarShown(false);
     this.commonDataService.changeViewFormVisible(false);
     this.commonDataService.changeLogoutVisible(false);
+    this.commonDataService.changeHomeVisible(false);
+
   }
 
   ngOnInit() {

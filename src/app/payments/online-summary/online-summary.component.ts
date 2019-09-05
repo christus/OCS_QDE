@@ -28,6 +28,7 @@ export class OnlineSummaryComponent implements OnInit {
     this.commonDataService.changeMenuBarShown(true);
     this.commonDataService.changeViewFormVisible(true);
     this.commonDataService.changeLogoutVisible(true);
+    this.commonDataService.changeHomeVisible(true);
 
 
     this.route.params.subscribe(v => {

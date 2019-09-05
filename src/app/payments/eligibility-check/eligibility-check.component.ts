@@ -97,6 +97,7 @@ export class EligibilityCheckComponent implements OnInit {
     this.commonDataService.changeViewFormNameVisible(true);
     this.commonDataService.changeViewFormVisible(true);
     this.commonDataService.changeLogoutVisible(true);
+    this.commonDataService.changeHomeVisible(true);
 
       console.log("this.route: ", this.route);
       this.qdeService.setQde(JSON.parse(this.route.snapshot.data['qde']['ProcessVariables']['response']));

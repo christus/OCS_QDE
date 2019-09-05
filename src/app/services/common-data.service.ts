@@ -50,6 +50,16 @@ export class CommonDataService {
     this.isLogoutVisible$.next(isLogoutVisible);
   }
 
+
+  isHomeVisible$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+
+  isHomeVisible = this.isHomeVisible$.asObservable();
+
+  changeHomeVisible(isHomeVisible: boolean) {
+    this.isHomeVisible$.next(isHomeVisible);
+  }
+
+
   panslide$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   panslide = this.panslide$.asObservable();
   

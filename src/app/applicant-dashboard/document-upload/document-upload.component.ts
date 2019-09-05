@@ -195,6 +195,8 @@ export class DocumentUploadComponent implements OnInit {
       this.cds.changeMenuBarShown(true);
       this.cds.changeViewFormVisible(true);
       this.cds.changeLogoutVisible(true);
+      this.cds.changeHomeVisible(true);
+
     // this.isMainApplicant = false;
     // if (this.route.url["value"][1].path === "applicant") {
     //   this.isMainApplicant = true;

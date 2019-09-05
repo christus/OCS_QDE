@@ -23,6 +23,7 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
   applicantId: string;
   // isMenuBarShown: boolean;
   isViewFormNameShown: boolean;
+  isHomeVisible: boolean;
   paymentActive: boolean;
   // isViewFormVisible: boolean;
   // isLogoutVisible: boolean;
@@ -56,6 +57,10 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
 
     this.commonDataService.isLogoutVisible.subscribe((value) => {
       this.isLogoutVisible = value;
+    });
+
+    this.commonDataService.isHomeVisible.subscribe((value) => {
+      this.isHomeVisible = value;
     });
     
     // this.commonDataService.paymentActive.subscribe((value) => {

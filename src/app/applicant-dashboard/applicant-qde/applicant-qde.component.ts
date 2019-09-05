@@ -351,6 +351,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.cds.changeMenuBarShown(true);
     this.cds.changeViewFormVisible(true);
     this.cds.changeLogoutVisible(true);
+    this.cds.changeHomeVisible(true);
 
     const isMobile = this.deviceService.isMobile();
             

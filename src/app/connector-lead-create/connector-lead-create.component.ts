@@ -89,6 +89,8 @@ export class ConnectorLeadCreateComponent implements OnInit {
     this.commonDataService.changeMenuBarShown(false);
     this.commonDataService.changeViewFormVisible(false);
     this.commonDataService.changeLogoutVisible(true);
+    this.commonDataService.changeHomeVisible(true);
+    
     this.qdeSourceSub=this.qdeService.qdeSource.subscribe(val => {
       console.log("VALVE: ", val);
       this.qde = val;

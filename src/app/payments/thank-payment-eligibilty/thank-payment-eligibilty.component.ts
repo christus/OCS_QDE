@@ -27,6 +27,8 @@ export class ThankPaymentEligibiltyComponent  {
     this.commonDataService.changeMenuBarShown(false);
     this.commonDataService.changeViewFormVisible(false);
     this.commonDataService.changeLogoutVisible(false);
+    this.commonDataService.changeHomeVisible(false);
+    
     this.qdeService.qdeSource.subscribe(val => {
 
       this.qde = val;

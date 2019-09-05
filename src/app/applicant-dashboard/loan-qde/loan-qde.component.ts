@@ -275,6 +275,8 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.cds.changeMenuBarShown(false);
     this.cds.changeViewFormVisible(true);
     this.cds.changeLogoutVisible(true);
+    this.cds.changeHomeVisible(true);
+
 
     this.route.params.subscribe(params => {
       if (params.applicantId != null && params.applicantId != undefined) {
