@@ -616,3 +616,9 @@ visibility: visible;
     background: #f58220;
     color: #fff;
 }
+.redalert {
+    color: red;
+    font-size: .94vw;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}

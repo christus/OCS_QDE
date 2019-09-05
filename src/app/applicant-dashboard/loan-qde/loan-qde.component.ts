@@ -93,13 +93,15 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
      }
   };
   regexPattern = {
-    mobileNumber: "^[1-9][0-9]+$",
+    mobileNumber: "^[1-9][0-9]*$",
     amount: "^[\\d]{0,14}([.][0-9]{0,4})?",
     minAmount: "[5-9][0-9]{4}|[1-9]\d{5,}",
     name: "/^[a-zA-Z ]*$/",
     pinCode: "^[1-9][0-9]{5}$",
     address: "^[0-9A-Za-z, _&'/#]+$",
-    tenure: "^[0-9]{1,2}$"
+    tenure: "^[0-9]{1,2}$",
+    sameDigit: '^0{6,10}|1{6,10}|2{6,10}|3{6,10}|4{6,10}|5{6,10}|6{6,10}|7{6,10}|8{6,10}|9{6,10}$'
+
   };
   // regexPattern = {
   //   email: "/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/",
