@@ -3,6 +3,7 @@ import { QdeService } from 'src/app/services/qde.service';
 import { ActivatedRoute } from '@angular/router';
 import Qde, { InCompleteFields, Applicant } from 'src/app/models/qde.model';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
+import { environment } from '../../../environments/environment.prod';
 
 interface Item {
   key: string,
@@ -165,7 +166,9 @@ export class ReviewApplicationFormComponent implements OnInit {
 
     this.route.params.subscribe(value => {
       this.applicationId = value.applicationId;
-      this.applicantId = this.qde.application.applicants.find(v => v.applicantId == value.applicantId).applicantId;
+      this.applicantId = value.applicantId;
+
+      // this.applicantId = this.qde.application.applicants.find(v => v.applicantId == value.applicantId).applicantId;
     });
 
 
@@ -229,7 +232,7 @@ export class ReviewApplicationFormComponent implements OnInit {
       this.loanProviderList = lov.LOVS.loan_providers;
 
       this.titles = lov.LOVS.applicant_title;
-    this.relationships = lov.LOVS.relationship;
+      this.relationships = lov.LOVS.relationship;
     }
 
     // this.route.fragment.subscribe((fragment) => {
@@ -248,6 +251,28 @@ export class ReviewApplicationFormComponent implements OnInit {
       // Make an http request to get the required qde data and set using setQde
       const applicationId = params.applicationId;
       if (applicationId) {
+
+
+        // var data = {
+        //   get: {
+        //     'workflowId': environment.api.get.workflowId,
+        //     'processId': environment.api.get.processId
+        //   },
+        //   processVariables: {
+        //     applicationId : applicationId
+        //   }
+        // };
+
+
+
+        //  this.qdeHttp.publicWrkFlowExecute(data).subscribe(response =>{
+
+        //   let result = JSON.parse(response["ProcessVariables"]["response"]);
+
+        //   console.log("this.route.snapshot.data['qde']", result);
+        //   this.qdeService.setQde(result);
+
+
         this.qdeHttp.getQdeData(applicationId).subscribe(response => {
           let result = JSON.parse(response["ProcessVariables"]["response"]);
 

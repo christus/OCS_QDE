@@ -26,7 +26,8 @@ export class Declaration1Component implements OnInit {
 
     this.route.params.subscribe(val => {
       this.applicationId = val.applicationId;
-      this.applicantId = this.qde.application.applicants.find(v => v.applicantId == val.applicantId).applicantId;
+      // this.applicantId = this.qde.application.applicants.find(v => v.applicantId == val.applicantId).applicantId;
+      this.applicantId = val.applicantId;
     });
   }
 

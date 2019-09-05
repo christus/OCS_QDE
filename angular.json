@@ -21,8 +21,8 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "META-INF",
-              "WEB-INF"
+              { "glob": "**/*", "input": "./META-INF/", "output": "./META-INF/" },
+              { "glob": "**/*", "input": "./WEB-INF/", "output": "./WEB-INF/" }
             ],
             "styles": [
               "src/styles.css"            ],

@@ -28,7 +28,8 @@ export class ThanksTAndCComponent implements OnInit, AfterViewInit {
     });
     this.route.params.subscribe(val => {
       this.applicationId = val.applicationId;
-      this.applicantId = this.qde.application.applicants.find(v => v.applicantId == val.applicantId).applicantId;
+      // this.applicantId = this.qde.application.applicants.find(v => v.applicantId == val.applicantId).applicantId;
+      this.applicantId = val.applicantId;
     });
   }
 
@@ -46,10 +47,10 @@ export class ThanksTAndCComponent implements OnInit, AfterViewInit {
   // }
 
   ngAfterViewInit() {
-    history.pushState(null, null, '/terms-and-conditions/thankt&c/'+this.applicationId+'/'+this.applicantId);
+    history.pushState(null, null, '/static/terms-and-conditions/thankt&c/'+this.applicationId+'/'+this.applicantId);
     let dude = this;
     window.addEventListener('popstate', function(event) {
-    history.pushState(null, null, '/terms-and-conditions/thankt&c/'+dude.applicationId+'/'+dude.applicantId);
+    history.pushState(null, null, '/static/terms-and-conditions/thankt&c/'+dude.applicationId+'/'+dude.applicantId);
     });
   }
 

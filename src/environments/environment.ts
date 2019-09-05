@@ -287,6 +287,7 @@ export const environment = {
   password: "icici@123",
   appiyoDrive: "/d/drive/upload/",
   host: "http://192.168.1.108/appiyo",
+  ocsHost: "http://192.168.1.108/ocs",
   // host: "http://182.156.249.170/appiyo",
   //host: "https://ihfcmobileuat.icicihfc.com/appiyo",
   driveLocation: "/d/drive/docs/"

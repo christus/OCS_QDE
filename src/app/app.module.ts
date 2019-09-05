@@ -251,7 +251,7 @@ const appRoutes: Routes = [
     }
   },
   {
-    path: "terms-and-conditions",
+    path: "static/terms-and-conditions",
     component: TermsAndConditionsComponent,
     children: [
       { path: '', redirectTo: "proceed-to-review", pathMatch: "full" },
@@ -337,7 +337,7 @@ const appRoutes: Routes = [
     ]
   },
   {
-    path: "icici-terms/auto-login/:applicationId/:applicantId",
+    path: "static/icici-terms/auto-login/:applicationId/:applicantId",
     component: IciciTermsComponent
   },
   {

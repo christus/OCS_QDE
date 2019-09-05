@@ -1,3 +1,4 @@
+import { environment } from 'src/environments/environment';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
@@ -15,8 +16,8 @@ export class IciciTermsComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private router: Router, private qdeHttpService: QdeHttpService, private commonDataService: CommonDataService) {
     const data = {
-      email: 'icici@icicibankltd.com',
-      password: 'icici@123'
+      email: environment.userName,
+      password: environment.password
     };
 
     this.route.params.subscribe(val => {
@@ -37,7 +38,7 @@ export class IciciTermsComponent implements OnInit {
           this.commonDataService.setLogindata(data);
           localStorage.setItem("token", res["token"] ? res["token"] : "");
           if(this.applicationId != null && this.applicantId != null) {
-            this.router.navigate(['/terms-and-conditions/proceed-to-review', this.applicationId, this.applicantId]);
+            this.router.navigate(['/static/terms-and-conditions/proceed-to-review', this.applicationId, this.applicantId]);
           }
         },
         error => {
@@ -45,7 +46,13 @@ export class IciciTermsComponent implements OnInit {
         }
       );
     }
+
+   
+    
   }
+
+
+  
 
   ngOnInit() {
   }
