@@ -435,8 +435,7 @@ export class DocumentUploadComponent implements OnInit {
 
     this.photoProofDoc[this.applicantIndex] = files.item(0);
 
-    let size = this.getFileSize(this.photoProofDoc[this.applicantIndex]["size"])
-
+    let size = this.getFileSize(this.photoProofDoc[this.applicantIndex]["size"]);
 
     if(size) {
       this.photoProofFileSize[this.applicantIndex] = size;
@@ -1020,7 +1019,7 @@ export class DocumentUploadComponent implements OnInit {
 
   getFileSize(size: any) {
 
-    var FileSize = size / 1024 / 1024; // in MB
+    let FileSize = size / 1024 / 1024; // in MB
     if (FileSize > 2) {
         alert('File size exceeds 2 MB');
        // $(file).val(''); //for clearing with Jquery
