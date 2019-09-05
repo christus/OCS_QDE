@@ -2035,7 +2035,6 @@ createOrUpdatePersonalDetails(qde) {
     return this.http.post(uri, body);
   }
 
-
   publicWrkFlowExecute(data){
 
       const processId = data.get.processId;
@@ -2057,6 +2056,33 @@ createOrUpdatePersonalDetails(qde) {
     
       let uri = environment.ocsHost + '/payments/appiyo/execute_workflow';
       return this.http.post(uri, requestEntity);
+  }
+
+  mandatoryDocsApi(applicationId: number) {
+    const processId = environment.api.mandatoryDocs.processId;
+    const workflowId = environment.api.mandatoryDocs.workflowId;
+    const projectId = environment.projectId;
+
+    const userName = environment.userName;
+    const password = environment.password;
+
+
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: {
+        applicationId: applicationId
+      },
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = new HttpParams().set(
+      'processVariables',
+      JSON.stringify(requestEntity)
+    );
+
+    let uri = environment.host+'/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.http.post(uri, body.toString());
   }
 }
 

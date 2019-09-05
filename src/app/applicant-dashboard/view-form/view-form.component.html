@@ -985,7 +985,7 @@
       <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isDocNotUploadModal}">
           <a class="modal-close" (click)="onCrossModal()"><span class="icon icon-close"></span></a>
           <div class="modal-body">
-              <h1 class="center">Mandatory Documents have not been uploaded</h1>
+              <h1 class="center">{{butMes}}</h1>
               <p class="body">Do you like to upload documents?</p>
                   <div class="btn-wrap">
                       <button class="btn btn-border" [routerLink]="['/document-uploads', applicationId]">Yes</button>

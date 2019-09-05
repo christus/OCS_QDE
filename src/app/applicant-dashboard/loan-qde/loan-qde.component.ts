@@ -786,11 +786,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   submitPropertyDetail(form: NgForm, swiperInstance?: Swiper) {
     if(this.isTBMLoggedIn) {
-      if(this.selectedLoanPurpose.value != "17") {
-        this.router.navigate(['/references', this.qde.application.applicationId])
-      } else {
         this.tabSwitch(2);
-      }
     } else {
       if (form && !form.valid) {
         return;
@@ -1007,19 +1003,25 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   proceedToExistingLoanEligible() {
     this.isClssEligibleModal = false;
-    if(this.selectedLoanPurpose.value != "17") {
-      this.router.navigate(['/references', this.qde.application.applicationId])
-    } else {
-      this.tabSwitch(2);
-    }
+       if(this.selectedLoanPurpose.value != "17") {
+        this.router.navigate(['/references', this.qde.application.applicationId])
+      } else {
+        // this.tabSwitch(this.propertyNoSwitchTab);
+        this.router.navigate([], {queryParams: { tabName: this.fragments[2], page: 0 }});
+       
+      }
   }
   proceedToExistingLoanNotEligible() {
     this.isClssNotEligibleModal = false;
     if(this.selectedLoanPurpose.value != "17") {
-      this.router.navigate(['/references', this.qde.application.applicationId])
-    } else {
-      this.tabSwitch(2);
-    }
+     this.router.navigate(['/references', this.qde.application.applicationId])
+   } else {
+     //this.tabSwitch(this.propertyNoSwitchTab, 0);
+
+     this.router.navigate([], {queryParams: { tabName: this.fragments[2], page: 0 }});
+
+    
+   }
   }
 
   onCrossModal(){

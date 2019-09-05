@@ -36,6 +36,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
   isDocNotUploadModal: boolean = false;
 
   public applicantName: string;
+  public butMes: string;
 
   value: number = 0;
 
@@ -536,7 +537,6 @@ export class ViewFormComponent implements OnInit, OnDestroy {
       }
     });
     this.submitButtonChange();
-  //  this.docNotUpload();
   }
 
   setApplicantName(qde) {
@@ -652,78 +652,107 @@ export class ViewFormComponent implements OnInit, OnDestroy {
   isFinalSubmitEnabled: boolean = false;
   submitButtonChange() {
 
-    this.qdeHttp.getQdeData(parseInt(this.applicationId)).subscribe(res => {
-      var button = JSON.parse(res['ProcessVariables']['response'])
-      var butRes = button.application.status;
+    // this.qdeHttp.getQdeData(parseInt(this.applicationId)).subscribe(res => {
+    //   var button = JSON.parse(res['ProcessVariables']['response'])
+    //   var butRes = button.application.status;
       
-      const swappedStatuses = this.swapKeyWithValues(statuses);
+    //   const swappedStatuses = this.swapKeyWithValues(statuses);
 
+    //   //Change Status in accordance to the ID Corresponding to QDE Completed in DB
+    //   if(butRes >= 5) {
+    //     // Show Final Button
+    //     this.isQdeSubmitButton = false;
+    //     if(butRes == 27 || butRes == 29) {
+    //       // Show QDE Button
+    //       this.isFinalSubmitButton = true;
+    //     }
+    //   }
+    //   else {
+    //     // Show QDE Button
+    //     this.isQdeSubmitButton = true;
+    //   }
+
+    //   button.application.applicants.some(element => {
+
+    //     if(element.documents != null) {
+          
+    //       // element.documents.forEach(el => {
+
+    //         //For Qde Submit button
+    //         if(this.isQdeSubmitButton) {
+    //           if(element['incomeDetails']['incomeConsider'] != null && [true, false].includes(element['incomeDetails']['incomeConsider'])) {
+    //             if(element.documents.filter(el => el['documentCategory'] == '1' || el['documentCategory'] == '3' || el['documentCategory'] == '84').length == 3) {
+    //               this.isQdeSubmitEnabled = true;
+    //             } else {
+    //               this.isQdeSubmitEnabled = false;
+    //               this.isDocNotUploadModal = true;
+    //             }
+    //           } else {
+    //             this.isQdeSubmitEnabled = false;
+    //             this.isDocNotUploadModal = true;
+    //           }
+    //         }
+    //         else {
+    //           //For final Submit button
+    //           if(element['incomeDetails']['incomeConsider'] == true) {
+    //             if( element.documents.filter(el => el['documentCategory'] == '1' || el['documentCategory'] == '3' || el['documentCategory'] =='5' || el['documentCategory'] == '84' || el['documentCategory'] == '85').length == 6) {
+    //               this.isFinalSubmitEnabled = true;
+    //             }
+    //             else {
+    //               this.isFinalSubmitEnabled = false;
+    //               return true;
+    //             }
+    //           }
+    //           else if(element['incomeDetails']['incomeConsider'] == false) {
+    //             if(element.documents.filter(el => el['documentCategory'] == '1' || el['documentCategory'] == '3' || el['documentCategory'] == '84').length == 3) {
+    //               this.isFinalSubmitEnabled = true;
+    //             } else {
+    //               this.isFinalSubmitEnabled = false;
+    //               return true;
+    //             }
+    //           } else {
+    //             this.isFinalSubmitEnabled = false;
+    //           }
+              
+    //         }
+
+    //     } else {
+    //       this.isQdeSubmitEnabled = false;
+    //       this.isFinalSubmitEnabled = false;
+    //     }
+    //   });
+
+
+    // });
+
+    this.qdeHttp.mandatoryDocsApi(parseInt(this.applicationId)).subscribe(res => {
+      var button = res['ProcessVariables']['applicationStatus']
+      var butEnDis = res['ProcessVariables']['status']
+      this.butMes = res['ProcessVariables']['description']
+    
       //Change Status in accordance to the ID Corresponding to QDE Completed in DB
-      if(butRes >= 5) {
+      if(button >= 5) {
         // Show Final Button
         this.isQdeSubmitButton = false;
-        if(butRes == 27 || butRes == 29) {
+        if(button == 27 || button == 29) {
           // Show QDE Button
           this.isFinalSubmitButton = true;
+          this.isFinalSubmitEnabled = true;
         }
       }
       else {
         // Show QDE Button
         this.isQdeSubmitButton = true;
-      }
-
-      button.application.applicants.some(element => {
-
-        if(element.documents != null) {
-          
-          // element.documents.forEach(el => {
-
-            //For Qde Submit button
-            if(this.isQdeSubmitButton) {
-              if(element['incomeDetails']['incomeConsider'] != null && [true, false].includes(element['incomeDetails']['incomeConsider'])) {
-                if(element.documents.filter(el => el['documentCategory'] == '1' || el['documentCategory'] == '3' || el['documentCategory'] == '84').length == 3) {
-                  this.isQdeSubmitEnabled = true;
-                } else {
-                  this.isQdeSubmitEnabled = false;
-                  this.isDocNotUploadModal = true;
-                }
-              } else {
-                this.isQdeSubmitEnabled = false;
-                this.isDocNotUploadModal = true;
-              }
-            }
-            else {
-              //For final Submit button
-              if(element['incomeDetails']['incomeConsider'] == true) {
-                if( element.documents.filter(el => el['documentCategory'] == '1' || el['documentCategory'] == '3' || el['documentCategory'] =='5' || el['documentCategory'] == '84' || el['documentCategory'] == '85').length == 6) {
-                  this.isFinalSubmitEnabled = true;
-                }
-                else {
-                  this.isFinalSubmitEnabled = false;
-                  return true;
-                }
-              }
-              else if(element['incomeDetails']['incomeConsider'] == false) {
-                if(element.documents.filter(el => el['documentCategory'] == '1' || el['documentCategory'] == '3' || el['documentCategory'] == '84').length == 3) {
-                  this.isFinalSubmitEnabled = true;
-                } else {
-                  this.isFinalSubmitEnabled = false;
-                  return true;
-                }
-              } else {
-                this.isFinalSubmitEnabled = false;
-              }
-              
-            }
-
-        } else {
-          this.isQdeSubmitEnabled = false;
-          this.isFinalSubmitEnabled = false;
+        if(butEnDis == true){
+          this.isQdeSubmitEnabled = true;
         }
-      });
-
-
-    });
+        else{
+          this.isQdeSubmitEnabled = false;
+          this.isDocNotUploadModal = true;
+        }
+      }
+    },
+     err => {});
 
     this.commonDataService.setIsMainTabEnabled(false);
   }

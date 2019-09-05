@@ -381,7 +381,7 @@
                               <p class="note">For applicant {{selectedApplicantName}}</p>
                           </div>
                         </div>
-                        <div class="swiper-slide" *ngIf="selectedLoanPurpose && ['16', '17'].includes(selectedLoanPurpose.value)">
+                        <div class="swiper-slide">
                           <div class="title-wrap">
                               <h4 class="title">Select existing<span class="cm-line-break"></span>loan provider</h4>
                               <p class="note">For Applicant {{selectedApplicantName}}</p>
@@ -454,7 +454,7 @@
                           </form>
                         </div>
 
-                    <div class="swiper-slide" *ngIf="selectedLoanPurpose && ['16', '17'].includes(selectedLoanPurpose.value)">
+                    <div class="swiper-slide">
                       <form class="bs-form" #loanProvider="ngForm"
                       (ngSubmit)="submitExistingLoanProvider(loanProvider, existingLoan2)">
                         <div class="form-wrap">
