@@ -880,6 +880,10 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.goToNextSlide(swiperInstance);
   }
 
+  RegExp(param) {
+    return RegExp(param);
+  }
+
   submitLiveLoans(form: NgForm, swiperInstance?: Swiper ) {
 
     if(this.isTBMLoggedIn) {

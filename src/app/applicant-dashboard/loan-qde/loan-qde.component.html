@@ -316,7 +316,7 @@
                             <label for="proprty-pin">Property pincode</label>
 
                             <div class="redalert" *ngIf="RegExp(regexPattern.sameDigit).test(propertyPincode.value)">
-                                {{errors.loanDetails.pinCode.wrong}}</div>
+                                {{errors.loanDetails.property.pinCode.wrong}}</div>
                             <div *ngIf="(propertyPincode.touched || propertyPincode.dirty) && propertyPincode.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="propertyPincode.errors?.required">{{errors.loanDetails.property.pinCode.required}}</div> -->
                               <div *ngIf="propertyPincode.errors?.pattern">{{errors.loanDetails.property.pinCode.invalid}}</div>
