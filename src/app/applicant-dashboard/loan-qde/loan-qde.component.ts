@@ -62,11 +62,13 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
           },
           propertyArea:{
             required:"Property Area is Mandatory",
-            invalid:"Property Area is not valid"
+            invalid:"Property Area is not valid",
+            
           },
           pinCode: {
             required: "Property Pincode is Mandatory",
-            invalid: "Property Pincode is not valid"
+            invalid: "Property Pincode is not valid",
+            wrong: "Please provide valid pincode"
          },
           addressLineOne: {
             required: "Property Address line 1 is Mandatory",

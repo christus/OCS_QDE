@@ -85,6 +85,7 @@ export const errors: any = {
     pinCode: {
       required: "Pincode is mandatory",
       invalid: "Invalid/Incomplete Pincode",
+      wrong: "Please provide valid pincode"
      
     },
     stateOrCity: {
@@ -149,7 +150,8 @@ export const errors: any = {
     },
     pinCode: {
       required: "Pincode is mandatory",
-      invalid: "Invalid/Incomplete Pincode"
+      invalid: "Invalid/Incomplete Pincode",
+      wrong: "Please provide valid pincode"
     },
     landMark: {
       invalid: "Land mark is not valid"
@@ -206,7 +208,8 @@ export const errors: any = {
     },
     pinCode: {
       required: "Pincode is mandatory",
-      invalid: "Invalid/Incomplete Pincode"
+      invalid: "Invalid/Incomplete Pincode",
+      wrong: "Please provide valid pincode"
     },
     stateOrCity: {
       required: "State Name / City Name is mandatory",
@@ -223,7 +226,8 @@ export const errors: any = {
     },
     pinCode: {
       required: "Pincode is mandatory",
-      invalid: "Invalid/Incomplete Pincode"
+      invalid: "Invalid/Incomplete Pincode",
+      wrong: "Please provide valid pincode"
     },
     stateOrCity: {
       required: "State Name / City Name is mandatory",

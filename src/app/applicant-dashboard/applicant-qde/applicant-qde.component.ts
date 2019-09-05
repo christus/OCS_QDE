@@ -70,7 +70,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     amount:"^[\\d]{0,10}([.][0-9]{0,4})?",
     email:"^\\w+([\.-]?\\w+)*@\\w+([\.-]?\\w+)*(\\.\\w{2,10})+$",
     revenue:"^[\\d]{0,10}([.][0-9]{0,4})?",
-    sameDigit: '^0{10}|1{10}|2{10}|3{10}|4{10}|5{10}|6{10}|7{10}|8{10}|9{10}$'
+    sameDigit: '^0{6,10}|1{6,10}|2{6,10}|3{6,10}|4{6,10}|5{6,10}|6{6,10}|7{6,10}|8{6,10}|9{6,10}$'
 
     // revenue:"^[\\d]{0,14}([.][0-9]{0,4})?"
    
@@ -338,6 +338,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.qdeService.resetQde();
     this.tabName = this.fragments[0];
     this.page = 1;
+    
 
     this.dobYears = Array.from(Array(100).keys()).map((val, index) => {
       let v = (this.YYYY17YearsAgo - index)+"";
@@ -1003,6 +1004,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.checkPanValidSub=this.qdeHttp.checkPanValid(this.qdeService.getFilteredJson({actualPanNumber: form.value.pan})).subscribe((response) => {
 
         if(response["ProcessVariables"]["status"] == true && response['ProcessVariables']['isValidPan'] == true) { // Boolean to check from nsdl website whether pan is valid or not 
+
 
           this.qde.application.applicants[this.applicantIndex].pan.panVerified = this.isValidPan = response['ProcessVariables']['isValidPan'];
   

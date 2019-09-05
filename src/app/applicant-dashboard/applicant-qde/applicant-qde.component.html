@@ -828,7 +828,8 @@
                               (blur)="onPinCodeChange($event, 'communicationAddress')"
                               pattern="{{regexPattern.pinCode}}" />
                             <label for="pincode" tabindex="3">Pincode</label>
-
+                            <div class="redalert" *ngIf="RegExp(regexPattern.sameDigit).test(commPinCode.value)">
+                                {{errors.commAddress.pinCode.wrong}}</div>
                             <div *ngIf="(commPinCode.touched || commPinCode.dirty) && commPinCode.invalid"
                               class="invalid-feedback">
                               <!-- <div *ngIf="commPinCode.errors?.required">{{errors.commAddress.pinCode.required}}</div> -->
@@ -895,6 +896,9 @@
                                 [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.zipcode"
                                 minlength="6" maxlength="6" pattern="{{regexPattern.pinCode}}" required />
                               <label for="per-pincode" tabindex="8">Pincode</label>
+
+                              <div class="redalert" *ngIf="RegExp(regexPattern.sameDigit).test(pZipcode.value)">
+                                  {{errors.commAddress.pinCode.wrong}}</div>
                               <div *ngIf="(pZipcode.touched || pZipcode.dirty) && pZipcode.invalid"
                                 class="invalid-feedback">
                                 <!-- <div *ngIf="pZipcode.errors?.required">{{errors.commAddress.pinCode.required}}</div> -->
@@ -1614,6 +1618,8 @@
                               pattern="{{regexPattern.pinCode}}" />
                             <label for="offPincode">Pincode</label>
 
+                            <div class="redalert" *ngIf="RegExp(regexPattern.sameDigit).test(pinCode.value)">
+                            {{errors.officialCorrespondence.pinCode.wrong}}</div>
                             <div *ngIf="pinCode.touched && pinCode.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="pinCode.errors?.required">{{errors.officialCorrespondence.pinCode.required}}</div> -->
                               <div *ngIf="pinCode.errors?.pattern">{{errors.officialCorrespondence.pinCode.invalid}}
@@ -2168,6 +2174,8 @@
                               pattern="{{regexPattern.pinCode}}" />
                             <label for="regoffPincode">Pincode</label>
 
+                            <div class="redalert" *ngIf="RegExp(regexPattern.sameDigit).test(regAddrPinCode.value)">
+                                {{errors.registeredAddress.pinCode.wrong}}</div>
                             <div *ngIf="regAddrPinCode.touched && regAddrPinCode.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="regAddrPinCode.errors?.required">{{errors.registeredAddress.pinCode.required}}</div> -->
                               <div *ngIf="regAddrPinCode.errors?.pattern">{{errors.registeredAddress.pinCode.invalid}}
@@ -2274,6 +2282,8 @@
                               fieldFill />
                             <label for="pincode01">Pincode</label>
 
+                            <div class="redalert" *ngIf="RegExp(regexPattern.sameDigit).test(corpPincode.value)">
+                                {{errors.corporateAddress.pinCode.wrong}}</div>
                             <div *ngIf="corpPincode.touched  && corpPincode.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="corpPincode.errors?.required">{{errors.corporateAddress.pinCode.required}}</div> -->
                               <div *ngIf="corpPincode.errors?.pattern">{{errors.corporateAddress.pinCode.invalid}}</div>
