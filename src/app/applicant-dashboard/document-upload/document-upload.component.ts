@@ -599,7 +599,7 @@ export class DocumentUploadComponent implements OnInit {
 
       } else {
         // Throw Invalid Pan Error
-        alert(JSON.parse(data["response"]));
+        // alert(JSON.parse(data["response"]));
       }
     });
   }
@@ -911,7 +911,7 @@ export class DocumentUploadComponent implements OnInit {
       },
       error => {
         console.log("Error : ", error);
-        alert(error.error.message);
+       // alert(error.error.message);
       }
     );
   }

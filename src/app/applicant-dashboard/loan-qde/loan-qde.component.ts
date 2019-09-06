@@ -540,12 +540,13 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
     } else {
       //switching to existing loan
        this.qde.application.loanDetails.propertyType.propertyIdentified = value;
-       if(this.selectedLoanPurpose.value != "17") {
-        this.router.navigate(['/references', this.qde.application.applicationId])
-      } else {
-        this.tabSwitch(this.propertyNoSwitchTab);
+       this.tabSwitch(this.propertyNoSwitchTab);
+       //  if(this.selectedLoanPurpose.value != "17") {
+      //   this.router.navigate(['/references', this.qde.application.applicationId])
+      // } else {
+      //   this.tabSwitch(this.propertyNoSwitchTab);
        
-      }
+      // }
     }
   }
 
@@ -1009,25 +1010,28 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   proceedToExistingLoanEligible() {
     this.isClssEligibleModal = false;
-       if(this.selectedLoanPurpose.value != "17") {
-        this.router.navigate(['/references', this.qde.application.applicationId])
-      } else {
-        // this.tabSwitch(this.propertyNoSwitchTab);
-        this.router.navigate([], {queryParams: { tabName: this.fragments[2], page: 0 }});
+    // this.tabSwitch(this.propertyNoSwitchTab);
+    this.router.navigate([], {queryParams: { tabName: this.fragments[2], page: 0 }});
+      //  if(this.selectedLoanPurpose.value != "17") {
+      //   this.router.navigate(['/references', this.qde.application.applicationId])
+      // } else {
+      //   // this.tabSwitch(this.propertyNoSwitchTab);
+      //   this.router.navigate([], {queryParams: { tabName: this.fragments[2], page: 0 }});
        
-      }
+      // }
   }
   proceedToExistingLoanNotEligible() {
     this.isClssNotEligibleModal = false;
-    if(this.selectedLoanPurpose.value != "17") {
-     this.router.navigate(['/references', this.qde.application.applicationId])
-   } else {
-     //this.tabSwitch(this.propertyNoSwitchTab, 0);
+    this.router.navigate([], {queryParams: { tabName: this.fragments[2], page: 0 }});
+  //   if(this.selectedLoanPurpose.value != "17") {
+  //    this.router.navigate(['/references', this.qde.application.applicationId])
+  //  } else {
+    //  this.tabSwitch(this.propertyNoSwitchTab);
 
-     this.router.navigate([], {queryParams: { tabName: this.fragments[2], page: 0 }});
+  //    this.router.navigate([], {queryParams: { tabName: this.fragments[2], page: 0 }});
 
     
-   }
+  //  }
   }
 
   onCrossModal(){

@@ -141,7 +141,7 @@
                                         #applicationRefNo="ngModel"
                                         fieldFill
                                         required />
-                                        <label for="ref-no" tabindex="0">Application Reference No</label>
+                                        <label for="ref-no" tabindex="0">Application Form No</label>
                                         <!-- <div class="redalert" *ngIf="RegExp(regexPattern.sameDigit).test(applicationRefNo.value)">
                                             {{errors.applicationReferenceNo.wrong}}</div> -->
                                         <div *ngIf="applicationRefNo.touched && applicationRefNo.invalid " class="invalid-feedback">
@@ -1621,7 +1621,7 @@
                             <div class="redalert" *ngIf="RegExp(regexPattern.sameDigit).test(pinCode.value)">
                             {{errors.officialCorrespondence.pinCode.wrong}}</div>
                             <div *ngIf="pinCode.touched && pinCode.invalid" class="invalid-feedback">
-                              <!-- <div *ngIf="pinCode.errors?.required">{{errors.officialCorrespondence.pinCode.required}}</div> -->
+                              <div *ngIf="pinCode.errors?.required">{{errors.officialCorrespondence.pinCode.required}}</div>
                               <div *ngIf="pinCode.errors?.pattern">{{errors.officialCorrespondence.pinCode.invalid}}
                               </div>
                             </div>
@@ -1636,7 +1636,7 @@
                             <label for="offCityState">City/State</label>
 
                             <div *ngIf="offCityState.touched && offCityState.invalid" class="invalid-feedback">
-                              <!-- <div *ngIf="offCityState.errors?.required">{{errors.officialCorrespondence.stateOrCity.required}}</div> -->
+                              <div *ngIf="offCityState.errors?.required">{{errors.officialCorrespondence.stateOrCity.required}}</div>
                               <div *ngIf="offCityState.errors?.pattern">
                                 {{errors.officialCorrespondence.stateOrCity.invalid}}</div>
                             </div>
@@ -1649,7 +1649,7 @@
                                 fieldFill />
                               <label for="std03">STD</label>
                               <div *ngIf="stdCode.touched && stdCode.invalid" class="invalid-feedback">
-                                <!-- <div *ngIf="stdCode.errors?.required">{{errors.officialCorrespondence.stdCode.required}}</div> -->
+                                <div *ngIf="stdCode.errors?.required">{{errors.officialCorrespondence.stdCode.required}}</div>
                                 <div *ngIf="stdCode.errors?.pattern">{{errors.officialCorrespondence.stdCode.invalid}}
                                 </div>
                               </div>
@@ -1663,7 +1663,7 @@
                                 [(ngModel)]="officialCorrespondencePhoneNumber" />
                               <label for="res-no03">Office number</label>
                               <div *ngIf="offStdNumber.touched && offStdNumber.invalid" class="invalid-feedback">
-                                <!-- <div *ngIf="offStdNumber.errors?.required">{{errors.officialCorrespondence.phoneNumber.required}}</div> -->
+                                <div *ngIf="offStdNumber.errors?.required">{{errors.officialCorrespondence.phoneNumber.required}}</div>
                                 <div *ngIf="offStdNumber.errors?.pattern">
                                   {{errors.officialCorrespondence.phoneNumber.invalid}}</div>
                               </div>
@@ -1678,7 +1678,7 @@
                             <label for="off-email">Office email ID</label>
 
                             <div *ngIf="officeEmail.touched && officeEmail.invalid" class="invalid-feedback">
-                              <!-- <div *ngIf="officeEmail.errors?.required">{{errors.officialCorrespondence.email.required}}</div> -->
+                              <div *ngIf="officeEmail.errors?.required">{{errors.officialCorrespondence.email.required}}</div>
                               <div *ngIf="officeEmail.errors?.pattern">{{errors.officialCorrespondence.email.invalid}}
                               </div>
                             </div>
@@ -1895,7 +1895,7 @@
                                         #applicationRefNoNonInd="ngModel"
                                         fieldFill
                                         required />
-                                        <label for="ref-no-nonind">Application Reference No</label>
+                                        <label for="ref-no-nonind">Application Form No</label>
                                         <!-- <div class="redalert" *ngIf="RegExp(regexPattern.sameDigit).test(applicationRefNoNonInd.value)">
                                             {{errors.applicationReferenceNo.wrong}}</div> -->
                                             <div *ngIf="applicationRefNoNonInd.touched && applicationRefNoNonInd.invalid " class="invalid-feedback">
