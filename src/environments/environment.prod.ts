@@ -1,6 +1,6 @@
 export const environment = {
-  version: "1.7.5",
-  buildDate: "5-9-2019",
+  version: "1.7.6",
+  buildDate: "6-9-2019",
   production: true,
   projectId: '5928d30eac7811e9a1670242ac110002', //developement
 
@@ -291,7 +291,7 @@ export const environment = {
   password: "icici@123",
   appiyoDrive: "/d/drive/upload/",
   driveLocation: "/d/drive/docs/",
-  ocsHost: "http://192.168.1.108/ocs",
+  ocsHost: "/ocs",
  // host: "http://192.168.1.108/appiyo",
   //host: "/ProcessStore",
   host:  "/appiyo",
