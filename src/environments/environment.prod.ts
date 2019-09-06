@@ -291,8 +291,8 @@ export const environment = {
   password: "icici@123",
   appiyoDrive: "/d/drive/upload/",
   driveLocation: "/d/drive/docs/",
-  ocsHost: "/ocs",
-  //host: "http://192.168.1.108/appiyo",
+  ocsHost: "http://192.168.1.108/ocs",
+ // host: "http://192.168.1.108/appiyo",
   //host: "/ProcessStore",
   host:  "/appiyo",
   pdfLocation: "/d/download/pdf?"

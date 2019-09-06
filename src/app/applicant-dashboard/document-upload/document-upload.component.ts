@@ -855,6 +855,7 @@ export class DocumentUploadComponent implements OnInit {
     if (!this.collateralProofDoc[this.applicantIndex]) {
       // this.goToNextSlide(slider);
       // this.tabSwitch(tabIndex);
+      this.isDocUploadRouteModal = true;
       return;
     }
 
