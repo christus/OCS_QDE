@@ -307,6 +307,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   isTBMLoggedIn: boolean;
   isApplicantRouteModal: boolean = false;
 
+  isApplicantPinModal: boolean = false;
+
   isDuplicateModalShown: boolean = false;
   duplicates: Array<Applicant> = [];
   dobYears: Array<Item>;
@@ -1560,6 +1562,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           if(result.city != null && result.state != null && result.city != "" && result.state != "") {
             this.commCityState = result.city +" "+ result.state;
           }else {
+              this.isApplicantPinModal = true;
             // alert("Pin code not available / enter proper pincode");
           }
 
@@ -3073,6 +3076,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onCrossModal(){
     this.isApplicantRouteModal = false;
+    this.isApplicantPinModal = false;
   }
 
   closeDuplicateModal() {

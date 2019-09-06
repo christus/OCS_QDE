@@ -561,6 +561,20 @@
               </div>
       </div>
   </div>
+
+  <div class="overlay" [ngClass]="{'active': loanPinCodeModal}"></div>
+  <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': loanPinCodeModal}">
+    <!-- <a class="modal-close" href="javascript:void(0);" (click)="onBackOTP()"><span class="icon icon-close"></span></a> -->
+    <a class="modal-close" (click)="onCrossModal()"><span class="icon icon-close"></span></a>
+    <div class="modal-body">
+      <h1 class="center">Please enter proper pincode !</h1>
+      <div class="btn-wrap">
+        <button class="btn btn-border" (click)="loanPinCodeModal = false">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+
 </main>
 
 <div class="overlay"></div>

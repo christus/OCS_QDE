@@ -305,6 +305,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   isDuplicateModalShown: boolean = false;
   isCoApplicantRouteModal: boolean = false;
 
+  isCoApplicantPinModal:boolean = false;
+
   duplicates: Array<Applicant> = [];
   dobYears: Array<Item>;
   YYYY17YearsAgo = (new Date().getFullYear() - 17);
@@ -1342,6 +1344,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             this.commCityState = result.city +" "+ result.state;
           }else {
             // alert("Pin code not available / enter proper pincode");
+              this.isCoApplicantPinModal = true;
           }
 
           this.qde.application.applicants[this.coApplicantIndex][screenName].zipcodeId = result.zipcodeId;
@@ -3272,6 +3275,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
   onCrossModal(){
     this.isCoApplicantRouteModal = false;
+    this.isCoApplicantPinModal = false;
   }
 
   keyUpPanNumber(event: Event) {

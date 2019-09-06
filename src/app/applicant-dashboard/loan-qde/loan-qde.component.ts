@@ -243,6 +243,8 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
   isClssEligibleModal:boolean = false;
   isClssNotEligibleModal:boolean = false;
 
+  loanPinCodeModal:boolean = false;
+
   allApplicantsItem: Array<Item> = [];
   selectedApplicant: Item = {key: '', value: ''};
   selectedApplicantName: string;
@@ -782,7 +784,10 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
           this.cityState = result.city + " " + result.state;
         }
       } else {
-        alert("Pin code not available / enter proper pincode");
+        //alert("Pin code not available / enter proper pincode");
+        this.loanPinCodeModal = true;
+
+        this.cityState = "";
       }
     });
   }
@@ -1036,6 +1041,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onCrossModal(){
     this.isLoanRouteModal = false;
+    this.loanPinCodeModal = false;
   }
   
   /*******************************************
