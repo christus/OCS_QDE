@@ -1674,13 +1674,15 @@
                               id="off-email" required
                               [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.officeEmailId"
                               pattern="{{regexPattern.email}}" tabindex="8" #officeEmail="ngModel" fieldFill
-                              name="officeEmail" />
+                              name="officeEmail" (ngModelChange)="onOfficialCorsEmailChange($event, officeEmail)"/>
                             <label for="off-email">Office email ID</label>
 
                             <div *ngIf="officeEmail.touched && officeEmail.invalid" class="invalid-feedback">
                               <div *ngIf="officeEmail.errors?.required">{{errors.officialCorrespondence.email.required}}</div>
-                              <div *ngIf="officeEmail.errors?.pattern">{{errors.officialCorrespondence.email.invalid}}
+                              <div *ngIf="officeEmail.errors.invalidDomain">{{errors.officialCorrespondence.email.invalidDomain}}
                               </div>
+                              <div *ngIf="officeEmail.errors?.pattern">{{errors.officialCorrespondence.email.invalid}}
+                                </div>  
                             </div>
                           </div>
 

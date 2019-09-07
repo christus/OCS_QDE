@@ -228,6 +228,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   days: Array<Item>;
   months: Array<Item>;
   years: Array<Item>;
+  unOfficialEmails: Array<Item>;
   assessmentMethodology: Array<any>;
   selectedTitle: Item;
   selectedReligion: Item;
@@ -240,6 +241,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   selectedMotherTitle: Item;
   selectedQualification: Item;
   selectedConstitution: Item;
+  
 
   selectedDocType: Item;
   selectedConstitutions: Item;
@@ -459,6 +461,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.genders = lov.LOVS.gender;
       this.constitutions = lov.LOVS.constitution;
       this.assessmentMethodology = lov.LOVS.assessment_methodology;
+      this.unOfficialEmails =  lov.LOVS.un_official_emails;
+
+
+      
+
       //hardcoded
       //this.birthPlace = [{"key": "Chennai", "value": "1"},{"key": "Mumbai", "value": "2"},{"key": "Delhi", "value": "3"}];
       // List of Values for Date
@@ -506,6 +513,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         this.cds.setReadOnlyForm(false);
       }
     });
+
+
+
 
     this.paramsSub=this.route.params.subscribe((params) => {
 
@@ -3157,6 +3167,20 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onCrossCatgModal(){
     this.isCategoryModal = false
+  }
+
+
+  onOfficialCorsEmailChange(value, officeEmail) {
+    const emailId = value;
+    const domain = emailId.split("@")[1];
+    this.unOfficialEmails.forEach(function(value){
+      console.log("unOfficialEmails",value["key"]);
+      if(value["key"] == domain) {
+        console.log("Invalid email");
+        officeEmail.control.setErrors({'invalidDomain': true});
+        return;
+      }
+    });
   }
 
 }

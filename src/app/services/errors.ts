@@ -170,7 +170,8 @@ export const errors: any = {
     },
     email: {
       required: "Office Email Id is mandatory",
-      invalid: "Invalid Email Id"
+      invalid: "Invalid Email Id",
+      invalidDomain: "Invalid Domain"
     }
   },
   

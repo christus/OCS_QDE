@@ -2111,13 +2111,16 @@
                                                         tabindex="8"
                                                         fieldFill
                                                         spellcheck="false"
+                                                        (ngModelChange)="onOfficialCorsEmailChange($event, officeEmail)"
                                                         name="officeEmail" />
                                                       <label for="off-email">Office email ID</label>
                 
                                                       <div *ngIf="officeEmail.touched && officeEmail.invalid" class="invalid-feedback">
                                                           <!-- <div *ngIf="officeEmail.errors?.required">{{errors.officialCorrespondence.email.required}}</div> -->
                                                           <div *ngIf="officeEmail.errors?.pattern">{{errors.officialCorrespondence.email.invalid}}</div>
-                                                      </div>
+                                                          <div *ngIf="officeEmail.errors?.invalidDomain">{{errors.officialCorrespondence.email.invalidDomain}}
+                                                          </div>                              
+                                                        </div>
                                                   </div>
                   
                                               </div>
