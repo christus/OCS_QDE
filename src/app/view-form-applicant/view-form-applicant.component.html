@@ -376,7 +376,7 @@
                             fieldFill
                             name="cityState"
                             [(ngModel)]="addressCityState"
-                            pattern="^[0-9A-Za-z,_#]+$" />
+                            pattern="^[0-9A-Za-z,_#]+$" disabled/>
 
                     <label for="cityStat">City/State</label>
 
@@ -492,6 +492,7 @@
                           required
                           fieldFill
                           name="cityState"
+                          disabled
                           [(ngModel)]="permAddressCityState"
                           pattern="^[0-9A-Za-z,_#]+$" />
 
@@ -924,6 +925,7 @@
                               [(ngModel)]="officialCorrespondenceCityState"
                               #offCityState="ngModel"
                               name="cityState"
+                              disabled
                               pattern="^[0-9A-Za-z,_#]+$">
                       <label for="offCityState1" >City/State</label>
 
@@ -1114,6 +1116,7 @@
                                     [(ngModel)]="registeredAddressCityState"
                                     name="cityState"
                                     fieldFill
+                                    disabled
                                     spellcheck="false" />
                                     <label for="regAddrCityStat">City/State</label>
                               </div>
@@ -1184,6 +1187,7 @@
                                           [(ngModel)]="corporateAddressCityState"
                                           name="corpCityState"
                                           fieldFill
+                                          disabled
                                           spellcheck="false" />
                                     <label for="city-state013">City/State</label>
 
