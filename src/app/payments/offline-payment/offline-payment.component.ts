@@ -115,6 +115,8 @@ export class OfflinePaymentComponent implements OnInit {
   loanProviderList: Array<any>;
   isChequeProceedModal:boolean = false;
   isOnlineProceedModal:boolean = false;
+  isPaymentFailedModal:boolean = false;
+  public butMes: string;
 
 
   fragments = ["offlinepayment1", "offlinepayment2"];
@@ -265,13 +267,17 @@ export class OfflinePaymentComponent implements OnInit {
   this.qdeHttp.loginFee(parseInt(this.applicationId)).subscribe(res => {
     this.totalFee = res['ProcessVariables']['totalAmount'];
     this.qdeHttp.paymentGateway(this.applicationId,""+this.totalFee).subscribe(res => {
+      console.log("Payment gateway",res);
+      this.butMes = res['ProcessVariables']['errorMessage']
       if(res['ProcessVariables']['status'] == true){
         console.log('hi',(res['ProcessVariables']['status']));
         this.isOnlineProceedModal = true;
       }
+      else{
+        this.isPaymentFailedModal = true;
+      }
     });
   });
-  console.log("Payment gateway");
  
 }
 

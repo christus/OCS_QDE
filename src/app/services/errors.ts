@@ -250,8 +250,8 @@ export const errors: any = {
   },
   revenueDetails: {
     revenue:{
-      required: "revenue is mandatory",
-      invalid: "revenue is not valid"
+      required: "Receipt/Gross turnover is mandatory",
+      invalid: "Receipt/Gross turnover is not valid"
     },
     annualNetincome:{
       required:"Annual Net Profit is mandatory",

@@ -192,8 +192,8 @@
                                                   id="pan-form"
                                                   #panNumberForm="ngForm"
                                                   (ngSubmit)="submitPanNumber(panNumberForm, panSlider2)">
-                                                  <div class="form-wrap">
-                                                    <div class="form-group last typ-optional" style="margin-bottom: 40px;">
+                                                  <div class="form-wrap" style="overflow-y: hidden">
+                                                    <div class="form-group last typ-optional" style="margin-bottom: 40px; overflow-y: hidden">
                                                         <input [readonly]="isReadOnly"  type="text"
                                                                 class="form-control"
                                                                 [(ngModel)]="qde.application.applicants[coApplicantIndex].pan.panNumber"
@@ -881,8 +881,8 @@
                                               <div class="btn-wrap">
                                                     <button class="btn btn-primary"
                                                             type="submit"
-                                                            [ngClass]="{'disabled': (!contactForm.valid || RegExp(regexPattern.sameDigit).test(mobileNumber.value) || RegExp(regexPattern.sameDigit).test(altMobileNo.value))}"
-                                                            [disabled]="!contactForm.valid || RegExp(regexPattern.sameDigit).test(mobileNumber.value) || RegExp(regexPattern.sameDigit).test(altMobileNo.value)">Next
+                                                            [ngClass]="{'disabled': (!contactForm.valid)|| (altMobileNo.value == mobileNumber.value) || (alternateEmailId.value == preferEmailId.value) || (residenceNumber.value == alternateResidenceNumber2.value) || RegExp(regexPattern.sameDigit).test(mobileNumber.value) || RegExp(regexPattern.sameDigit).test(altMobileNo.value)}"
+                                                            [disabled]="!contactForm.valid || (altMobileNo.value == mobileNumber.value) || (alternateEmailId.value == preferEmailId.value) || (residenceNumber.value == alternateResidenceNumber2.value) || RegExp(regexPattern.sameDigit).test(mobileNumber.value) || RegExp(regexPattern.sameDigit).test(altMobileNo.value)">Next
                                                     </button>
                                               </div>
                                           </form>
