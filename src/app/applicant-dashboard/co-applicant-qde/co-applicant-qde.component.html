@@ -2217,7 +2217,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="btn-wrap">
-                                                    <button type="submit" class="btn btn-primary" [disabled]="isTBMLoggedIn" [ngClass]="{'disabled': isTBMLoggedIn}">Save</button>
+                                                    <button type="submit" class="btn btn-primary" [disabled]="!incomeDetailsForm2.valid || isTBMLoggedIn" [ngClass]="{'disabled': (!incomeDetailsForm2.valid || isTBMLoggedIn)}">Save</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -2353,7 +2353,7 @@
                                           <form class="bs-form" *ngIf="!isTabDisabled"
                                                 #panNumberForm2="ngForm"
                                                 (ngSubmit)="submitOrgPanNumber(panNumberForm2, panSlider4)">
-                                              <div class="form-wrap">
+                                              <div class="form-wrap" style="overflow: hidden;">
                                                   <div class="form-group last typ-optional">
                                                       <input [readonly]="isReadOnly"  type="text"
                                                               class="form-control"
@@ -3145,7 +3145,7 @@
                                                 </div>
                                                 </div>
                                                 <div class="btn-wrap">
-                                                    <button type="submit" class="btn btn-primary" [disabled]="isTBMLoggedIn" [ngClass]="{'disabled': isTBMLoggedIn}">Save</button>
+                                                    <button type="submit" class="btn btn-primary" [disabled]="!incomeDetailsForm4.valid || isTBMLoggedIn" [ngClass]="{'disabled': (!incomeDetailsForm4.valid || isTBMLoggedIn)}">Save</button>
                                                 </div>
                                             </form>
                                         </div>

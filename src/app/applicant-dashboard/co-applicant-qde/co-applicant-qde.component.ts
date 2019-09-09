@@ -2951,8 +2951,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       this.qde.application.applicants[this.coApplicantIndex].contactDetails.mobileNumber = mobileNumber;
       this.qde.application.applicants[this.coApplicantIndex].contactDetails.preferredEmailId = emailId;
       const applicationId = this.qde.application.applicationId;
-  
-      const applicantId = this.qde.application.applicationId;
+      const applicantId = this.qde.application.applicants[this.coApplicantIndex].applicantId;
       this.sendOTPAPISub = this.qdeHttp.sendOTPAPI(mobileNumber, applicantId, applicationId, isAlternateNumber,emailId).subscribe(res => {
         if(res['ProcessVariables']['status'] == true) {
           this.inOTP = true;

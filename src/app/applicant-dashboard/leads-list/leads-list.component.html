@@ -41,7 +41,6 @@
     <tab tabTitle="NEW LEADS">
       <ul *ngFor="let detail of newLeadsDetails">
         <li>
-            <a [routerLink]="detail.url" [queryParams]="detail['queryParams']" class="lead-action">
             <ul class="bs-lead-card">
                 <li>
                     <span class="initials">AK</span>
@@ -55,7 +54,6 @@
                     <span class="value">{{detail.mobileNumber}}</span>
                 </li>
             </ul>
-          </a>
         </li>
     </ul>
     </tab>

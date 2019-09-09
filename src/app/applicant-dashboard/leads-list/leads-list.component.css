@@ -263,3 +263,6 @@ a, a:visited {
 .typ-connector {
   padding: 0 0 0 5.47vw;
 }
+.initials {
+  display: none!important;
+}
