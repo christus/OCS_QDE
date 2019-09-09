@@ -1419,8 +1419,9 @@
                             <span class="control-title">Total Work Experience</span>
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="number"
                               name="totalExperienceYear" class="form-control" tabindex="5"
+                              oninput="this.value=this.value.slice(0,this.maxLength)"
                               [(ngModel)]="qde.application.applicants[applicantIndex].occupation.totalWorkExperience"
-                              maxlength="2" oninput="this.value=this.value.slice(0,this.maxLength)"
+                              maxlength="2" 
                               #totalExperienceYear="ngModel" required />
 
                             <ng5-slider class="commSlider" tabindex="6"
