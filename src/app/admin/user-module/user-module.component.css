@@ -25,3 +25,30 @@
     float: left;
     margin-bottom: 1vw;
 } */
+
+.table-user {
+    width: 80%;
+    float: left;
+}
+.table-activity {
+    width: 18%;
+    float: left;
+    margin-left: 2%;
+}
+.pagination {
+    width: 80%;
+    display: block;
+    clear: both;
+    text-align: center;
+    margin: 0px 0;
+}
+.selectbox {
+    background: 0 0;
+    border-radius: 0;
+    font-size: 1.0vw;
+    line-height: 2.35vw;
+    color: #999;
+    font-family: zurich-light;
+    padding: 0;
+    margin: 10px 0 0 10px;
+}

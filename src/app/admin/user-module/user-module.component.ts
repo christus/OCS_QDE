@@ -34,7 +34,8 @@ export class UserModuleComponent implements OnInit {
   ngOnInit() {
     let data = {};
     data["currentPage"] = 1;
-    //data["roleId"]
+    data["roleId"] = 1; // initial hardcoded to set filters/ SA is choosen as default
+    this.filterData = 1;
     this.getAdminUsers(data);
 
     this.getRoleName();

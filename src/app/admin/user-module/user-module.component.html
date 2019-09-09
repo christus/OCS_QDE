@@ -1,7 +1,7 @@
 <div class="selectBox form-field-el">
     <label class="controltitle">Search By User Role</label>
-    <select class="form-control" (change)=changeRole($event.target.value)>
-        <option  [ngValue]="null" >Choose your branch</option>
+    <select class="form-control selectbox" (change)=changeRole($event.target.value)>
+        <!-- <option  [ngValue]="null" >Choose your branch</option> -->
         <option *ngFor="let item of rolesList" [ngValue]="item" value={{item.roleId}} >
             {{item.roleName}}
         </option>
@@ -10,7 +10,7 @@
 </div>
 
 <div class="list">
-  <table class="table table-striped- table-bordered table-hover table-checkable">
+  <table class="table table-striped- table-bordered table-hover table-checkable table-user">
       <thead>
         <tr>
           <th>ID</th>
@@ -38,14 +38,13 @@
         </tr>											
       </tbody>
     </table>
-  <pagination-controls  (pageChange)="pageChanged($event)"  ></pagination-controls>
-
-  <table class="table table-striped- table-bordered table-hover table-checkable">
-    <thead><th>Activity</th></thead>
-    <tbody>
-      <tr *ngFor="let item of activityList">
-          <td>{{item}}</td>
-      </tr>
-    </tbody>
-  </table>
+    <table class="table table-striped- table-bordered table-hover table-checkable table-activity">
+      <thead><th>Activity</th></thead>
+      <tbody>
+        <tr *ngFor="let item of activityList">
+            <td>{{item}}</td>
+        </tr>
+      </tbody>
+    </table>
 </div>
+<pagination-controls  (pageChange)="pageChanged($event)" class="pagination"  ></pagination-controls>
