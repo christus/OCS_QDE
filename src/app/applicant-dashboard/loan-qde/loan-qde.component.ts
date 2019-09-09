@@ -100,7 +100,8 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
     pinCode: "^[1-9][0-9]{5}$",
     address: "^[0-9A-Za-z, _&'/#]+$",
     tenure: "^[0-9]{1,2}$",
-    sameDigit: '^0{6,10}|1{6,10}|2{6,10}|3{6,10}|4{6,10}|5{6,10}|6{6,10}|7{6,10}|8{6,10}|9{6,10}$'
+    sameDigit: '^0{6,10}|1{6,10}|2{6,10}|3{6,10}|4{6,10}|5{6,10}|6{6,10}|7{6,10}|8{6,10}|9{6,10}$',
+    cityState: "^$"
 
   };
   // regexPattern = {
@@ -766,6 +767,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.qdeHttp.getCityAndState(zipCode).subscribe(response => {
       // console.log(JSON.parse(response["ProcessVariables"]["response"]));
       var result = JSON.parse(response["ProcessVariables"]["response"]);
+      
 
       if (result.city && result.state) {
 
@@ -788,6 +790,14 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
         this.loanPinCodeModal = true;
 
         this.cityState = "";
+
+        this.qde.application.loanDetails.property.state = "";
+
+        this.qde.application.loanDetails.property.city = "";
+
+        this.qde.application.loanDetails.property.cityId = null;
+
+        this.qde.application.loanDetails.property.stateId = null;
       }
     });
   }
