@@ -544,7 +544,6 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     TabsComponent,
     LeadsHeaderComponent,
     LeadsSidebarComponent,
-    AddMoreDocComponent,
   ],
   imports: [
     BrowserModule,

@@ -841,7 +841,7 @@
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                               id="cityState" required
                               [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.cityState"
-                              name="cityState" #commCityState="ngModel" fieldFill pattern="{{regexPattern.address}}" />
+                              name="cityState" #commCityState="ngModel" fieldFill pattern="{{regexPattern.address}}" disabled/>
 
                             <label for="cityState" tabindex="4">City/State</label>
 
@@ -1632,7 +1632,7 @@
                               id="offCityState" required readonly
                               [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.cityState"
                               #offCityState="ngModel" name="cityState" tabindex="5" fieldFill
-                              pattern="{{regexPattern.address}}">
+                              pattern="{{regexPattern.address}}" disabled>
                             <label for="offCityState">City/State</label>
 
                             <div *ngIf="offCityState.touched && offCityState.invalid" class="invalid-feedback">
@@ -2188,7 +2188,7 @@
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                               id="regAddrCityState" required tabindex="4"
                               [(ngModel)]="qde.application.applicants[applicantIndex].registeredAddress.cityState"
-                              #regAddrCityState="ngModel" name="cityState" fieldFill readonly
+                              #regAddrCityState="ngModel" name="cityState" fieldFill readonly disabled
                               pattern="{{regexPattern.address}}">
                             <label for="regAddrCityState">City/State</label>
 
@@ -2296,7 +2296,7 @@
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                               id="city-state01" required tabindex="5"
                               [(ngModel)]="qde.application.applicants[applicantIndex].corporateAddress.cityState"
-                              #corpCityState="ngModel" name="corpCityState" fieldFill readonly
+                              #corpCityState="ngModel" name="corpCityState" fieldFill readonly disabled
                               pattern="{{regexPattern.address}}" />
                             <label for="city-state01">City/State</label>
 
