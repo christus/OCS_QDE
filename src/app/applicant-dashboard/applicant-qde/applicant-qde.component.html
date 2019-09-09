@@ -1399,6 +1399,7 @@
                             <span class="control-title">Years in current employment/business</span>
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="number"
                               name="numberOfYearsInCurrentCompany" id="no-yrs" class="form-control"
+                              oninput="this.value=this.value.slice(0,this.maxLength)"
                               [(ngModel)]="qde.application.applicants[applicantIndex].occupation.numberOfYearsInCurrentCompany"
                               tabindex="3" maxlength="2" min="1" max="40" #numberOfYearsInCurrentCompany="ngModel"
                               required />
