@@ -385,7 +385,8 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
           
           this.qde = result;
           this.qdeService.setQde(result);
-          
+          this.cds.setactiveTab(screenPages['loanDetails']);
+
           /****************************************************************************
           * If Loan Amount is present show qde screen (false) else show product screen
           ****************************************************************************/

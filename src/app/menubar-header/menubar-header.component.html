@@ -32,28 +32,28 @@
             </div>
         </div>
         <ul class="main-nav" *ngIf="isMenuBarShown">
-            <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <li [ngClass]="{'active': activeTab==screenPages['applicantDetails']}">
                 <a  *ngIf="applicationId == null" routerLink="/applicant" [ngClass]="{'disabled': !isMainTabEnabled}">Applicant Details</a>
                 <a  *ngIf="applicationId != null" [routerLink]="['/applicant', applicationId]" [ngClass]="{'disabled': !isMainTabEnabled}">Applicant Details</a>
             </li>
-            <li routerLinkActive="active">
+            <li [ngClass]="{'active': activeTab==screenPages['coApplicantDetails']}">
                 <a *ngIf="applicationId == null" [ngClass]="{'disabled': !isMainTabEnabled}">Co-Applicant Details</a>
                 <a [routerLink]="['/applicant', applicationId, 'co-applicant']"  [ngClass]="{'disabled': !isMainTabEnabled}" *ngIf="applicationId != null && coApplicantIndex == null">Co-Applicant Details</a>
                 <a [routerLink]="['/applicant', applicationId, '/co-applicant', coApplicantIndex]"  [ngClass]="{'disabled': !isMainTabEnabled}" *ngIf="applicationId != null && coApplicantIndex != null">Co-Applicant Details</a>
             </li>
-            <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <li [ngClass]="{'active': activeTab==screenPages['loanDetails']}">
                 <a *ngIf="applicationId == null" [ngClass]="{'disabled': !isMainTabEnabled}">Loan Details</a>
                 <a [routerLink]="['/loan', applicationId]" *ngIf="applicationId != null" [ngClass]="{'disabled': !isMainTabEnabled}">Loan Details</a>
             </li>
-            <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <li [ngClass]="{'active': activeTab==screenPages['references']}">
                 <a *ngIf="applicationId == null" [ngClass]="{'disabled': !isMainTabEnabled}">References</a>
                 <a [routerLink]="['/references', applicationId]" *ngIf="applicationId != null" [ngClass]="{'disabled': !isMainTabEnabled}">References</a>
             </li>
-            <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <li [ngClass]="{'active': activeTab==screenPages['documentUploads']}">
                 <a *ngIf="applicationId == null"  [ngClass]="{'disabled': !isMainTabEnabled}">Document Uploads</a>
                 <a [routerLink]="['/document-uploads', applicationId]" *ngIf="applicationId != null  && applicantId != null" >Document Uploads</a>
             </li>
-            <li routerLinkActive="active">
+            <li [ngClass]="{'active': activeTab==screenPages['payments']}">
                 <a *ngIf="applicationId == null">Payments</a>
                 <a [routerLink]="['/payments/offline-payments', applicationId]" *ngIf="applicationId != null">Payments</a>
                 <!-- <a routerLink="/payments/offline-payments">Payments</a> -->

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { screenPages } from '../app.constants';
 
 @Injectable({
   providedIn: 'root'
@@ -140,6 +141,15 @@ export class CommonDataService {
 
   setIsTBMLoggedIn(data: boolean) {
    this.isTBMLoggedIn$.next(data);
+  }
+
+
+  activeTab$: BehaviorSubject<string> = new BehaviorSubject<string>(screenPages['applicantDetails']);
+  public activeTab = this.activeTab$.asObservable();
+
+
+  setactiveTab(data: string) {
+   this.activeTab$.next(data);
   }
 
   enableTabsIfStatus1(status) {

@@ -529,6 +529,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             var result = JSON.parse(response["ProcessVariables"]["response"]);
             console.log("Get ", result);
             this.qde = result;
+            this.cds.setactiveTab(screenPages['coApplicantDetails']);
             this.qdeService.setQde(result);
             this.coApplicantsForDashboard = result.application.applicants.filter(v => v.isMainApplicant == false);
             this.cds.enableTabsIfStatus1(this.qde.application.status);

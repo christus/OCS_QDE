@@ -14,6 +14,7 @@ import { QdeHttpService } from 'src/app/services/qde-http.service';
 import { QdeService } from 'src/app/services/qde.service';
 import { CommonDataService } from 'src/app/services/common-data.service';
 import { Subscription } from 'rxjs';
+import { screenPages } from 'src/app/app.constants';
 
 
 interface Item {
@@ -232,6 +233,8 @@ export class ReferencesQdeComponent implements OnInit {
       if (applicationId) {
         this.qdeHttp.getQdeData(applicationId).subscribe(response => {
           let result = JSON.parse(response["ProcessVariables"]["response"]);
+
+          this.cds.setactiveTab(screenPages['references']);
 
           if (!result.application.references  || Object.keys(result.application.references).length === 0) {
             result.application.references = {

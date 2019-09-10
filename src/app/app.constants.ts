@@ -27,5 +27,8 @@ export const statuses = {
 export const screenPages = {
     "applicantDetails": "ApplicantDetails",
     "coApplicantDetails": "CoApplicantDetails",
-    "loanDetails": 'LoanDetails'
+    "loanDetails": "LoanDetails",
+    "references": "References",
+    "documentUploads": "DocumentUploads",
+    "payments": "Payments"
 }

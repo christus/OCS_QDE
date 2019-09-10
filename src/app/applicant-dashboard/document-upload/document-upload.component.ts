@@ -15,6 +15,7 @@ import Qde from 'src/app/models/qde.model';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { CommonDataService } from 'src/app/services/common-data.service';
 import { Subscription } from 'rxjs';
+import { screenPages } from '../../app.constants';
 
 interface Item {
   key: string;
@@ -244,6 +245,7 @@ export class DocumentUploadComponent implements OnInit {
 
         this.getQdeDataSub = this.qdeHttp.getQdeData(params.applicationId).subscribe(response => {
           var result = JSON.parse(response["ProcessVariables"]["response"]);
+          this.cds.setactiveTab(screenPages['documentUploads']);
           this.qdeService.setQde(result);
           var butRes = result.application.status;
           console.log("RESPONSEhgjfgjkfk ", butRes);

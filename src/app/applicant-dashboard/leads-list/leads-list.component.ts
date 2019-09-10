@@ -124,7 +124,7 @@ export class LeadsListComponent implements OnInit {
           this.newPendingApplicationDetails = res['ProcessVariables'].userDetails || [];
 
           this.newPendingApplicationDetails.forEach(el => {
-            el.url = this.getUrl(el['status'], el['leadId'], el['applicantId'], this.getRoles());
+            el.url = this.getUrl(el['status'], el['leadId'], el['applicantId'], this.getRoles(), el);
             if(el['auditTrialTabPage'] != null && el['auditTrialPageNumber'] != null) {
               el['queryParams'] = {
                 tabName : el['auditTrialTabPage'],
@@ -159,7 +159,7 @@ export class LeadsListComponent implements OnInit {
           this.newPendingPaymentDetails = res['ProcessVariables'].userDetails || [];
 
           this.newPendingPaymentDetails.forEach(el => {
-            el.url = this.getUrl(el['status'], el['leadId'], el['applicantId'], this.getRoles());
+            el.url = this.getUrl(el['status'], el['leadId'], el['applicantId'], this.getRoles(), el);
             if(el['auditTrialTabPage'] != null && el['auditTrialPageNumber'] != null) {
               el['queryParams'] = {
                 tabName : el['auditTrialTabPage'],
@@ -195,7 +195,7 @@ export class LeadsListComponent implements OnInit {
           this.newLeadsDetails = res['ProcessVariables'].userDetails || [];
 
           this.newLeadsDetails.forEach(el => {
-            el.url = this.getUrl(el['status'], el['leadId'], el['applicantId'], this.getRoles());
+            el.url = this.getUrl(el['status'], el['leadId'], el['applicantId'], this.getRoles(), el);
             if(el['auditTrialTabPage'] != null && el['auditTrialPageNumber'] != null) {
               el['queryParams'] = {
                 tabName : el['auditTrialTabPage'],
@@ -233,7 +233,7 @@ export class LeadsListComponent implements OnInit {
           this.userDetails = res['ProcessVariables'].userDetails || [];
 
           this.userDetails.forEach(el => {
-            el.url = this.getUrl(el['status'], el['leadId'], el['applicantId'], this.getRoles());
+            el.url = this.getUrl(el['status'], el['leadId'], el['applicantId'], this.getRoles(), el);
             if(el['auditTrialTabPage'] != null && el['auditTrialPageNumber'] != null) {
               el['queryParams'] = {
                 tabName : el['auditTrialTabPage'],
@@ -260,7 +260,7 @@ export class LeadsListComponent implements OnInit {
     );
   }
 
-  getUrl(status: string, applicationId?: string, applicantId?: string, roles?: Array<string>) {
+  getUrl(status: string, applicationId?: string, applicantId?: string, roles?: Array<string>, el ?: any) {
     if(roles.includes('TBM') || roles.includes('TMA')) {
       this.cds.setReadOnlyForm(true);
     } else {

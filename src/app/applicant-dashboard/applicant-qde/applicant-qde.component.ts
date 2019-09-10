@@ -541,6 +541,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
             this.qde = result;
             this.qdeService.setQde(result);
+            this.cds.setactiveTab(screenPages['applicantDetails']);
             this.applicantIndex = result.application.applicants.findIndex(v => v.isMainApplicant == true);
             this.cds.enableTabsIfStatus1(this.qde.application.status);
             this.tempOldPanNumber = result.application.applicants[this.applicantIndex].pan.panNumber;
@@ -551,15 +552,15 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
             // else if(this.qde.application.auditTrailDetails.screenPage == screenPages['loanDetails']){
             //   this.router.navigate(['/loanDetails/'+this.qde.application.applicationId]);
             // }
-            else{
-              if(this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
-                this.tabSwitch(0);
-              } else if(this.qde.application[this.applicantIndex].isIndividual == false) {
-                this.tabSwitch(10);
-              } else {
-                this.tabSwitch(0);
-              }
-            }
+            // else{
+            //   if(this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
+            //     this.tabSwitch(0);
+            //   } else if(this.qde.application[this.applicantIndex].isIndividual == false) {
+            //     this.tabSwitch(10);
+            //   } else {
+            //     this.tabSwitch(0);
+            //   }
+            // }
 
             try {
               // this.qde.application.applicationFormNumber = "ijijijjjjj"

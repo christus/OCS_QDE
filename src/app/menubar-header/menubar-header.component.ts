@@ -7,6 +7,8 @@ import Qde  from 'src/app/models/qde.model';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 
+import { screenPages } from '../app.constants';
+
 @Component({
   selector: 'app-menubar-header',
   templateUrl: './menubar-header.component.html',
@@ -14,6 +16,9 @@ import { Router } from '@angular/router';
 })
 export class MenubarHeaderComponent implements OnInit, OnDestroy {
   
+  readonly screenPages = screenPages;
+  activeTab: string;
+
   isMenuBarShown: boolean;
   isViewFormNameVisible: boolean;
   isViewFormVisible: boolean;
@@ -38,7 +43,7 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
   isEligibilityForReview: boolean = false;
   isEligibilityForReviewsSub: Subscription;
   isTBMLoggedIn: boolean = false;
-
+ 
   constructor(private utilService: UtilService,
               private commonDataService: CommonDataService,
               private _router: Router,
@@ -132,6 +137,10 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
 
     this.commonDataService.isTBMLoggedIn.subscribe(val => {
       this.isTBMLoggedIn = val;
+    });
+
+    this.commonDataService.activeTab.subscribe(val => {
+      this.activeTab = val;
     });
   }
 
