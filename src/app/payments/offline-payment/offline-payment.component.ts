@@ -46,7 +46,7 @@ export class OfflinePaymentComponent implements OnInit {
   regexPattern={
     name:"[A-Z|a-z]+$",
     ifsc:"[A-Z|a-z]{4}[0][\\d]{6}$",
-    chequeNo: "[\\d]{0,18}",
+    chequeNo: "[\\d]{0,6}",
     amount:"^[\\d]{0,10}([.][0-9]{0,4})?"
   }
   minValue: number = 1;

@@ -57,9 +57,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   regexPattern = {
     appRefNo:"^[A-Za-z0-9]+$",
+    stdCode: "^[0-9][0-9]*$",
     mobileNumber: "^[1-9][0-9]*$",
     name: "^[A-Za-z ]+$",
-    address : "^[0-9A-Za-z, _&'/#]+$",
+    address : "^[0-9A-Za-z, _&*#'/#\\-]+$",
     // cityState:"^[0-9A-Za-z, &'#]$",
     pinCode: "^[1-9][0-9]{5}$",
     // applicationRefNo : "",

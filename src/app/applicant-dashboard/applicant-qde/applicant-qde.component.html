@@ -185,7 +185,7 @@
                               pattern="{{regexPatternForDocType[parseInteger(selectedDocType.value) - 1].pattern}}"
                               maxlength="{{maxlength[parseInteger(selectedDocType.value) - 1]}}" fieldFill required />
                             <label for="docNumber" tabindex="3">Document Number</label>
-                            <h3 style="color:green;font-family: 'Zapf-Chancery', cursive;">hint for Document number:
+                            <h3 *ngIf="panDocNumber.invalid" style="color:green;font-family: 'Zapf-Chancery', cursive;">hint for Document number:
                               <b>{{regexPatternForDocType[parseInteger(selectedDocType.value) - 1].hint}}</b></h3>
                             <div *ngIf="panDocNumber.touched && panDocNumber.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="panDocNumber.errors?.required">{{errors.panDocumentNo.required}}</div> -->
@@ -631,7 +631,7 @@
                           <div class="residence-no">
                             <div class="form-group ">
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text"
-                                [(ngModel)]="residenceNumberStdCode" pattern="{{regexPattern.mobileNumber}}"
+                                [(ngModel)]="residenceNumberStdCode" pattern="{{regexPattern.stdCode}}"
                                 #residenceStdCode="ngModel" data-validation-attr="residenceno01" maxlength="5"
                                 minlength="0" name="residenceNumber1" class="form-control" fieldFill id="std" />
                               <label for="std" tabindex="9">STD</label>
@@ -670,7 +670,7 @@
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text"
                                 [(ngModel)]="alternateResidenceNumberStdCode" name="alternateResidenceNumberStd1"
                                 maxlength="5" #alternateResidenceNumberStd1="ngModel"
-                                pattern="{{regexPattern.mobileNumber}}" class="form-control" fieldFill id="altrstd">
+                                pattern="{{regexPattern.stdCode}}" class="form-control" fieldFill id="altrstd">
                               <label for="altrstd" tabindex="12">STD</label>
                               <div *ngIf="alternateResidenceNumberStd1.touched  && alternateResidenceNumberStd1.invalid"
                                 class="invalid-feedback">

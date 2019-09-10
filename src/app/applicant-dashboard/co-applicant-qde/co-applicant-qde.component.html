@@ -247,7 +247,7 @@
                                                                 spellcheck="false"
                                                                 required/>
                                                     <label for="docNumber" tabindex="2">Document Number</label>
-                                                    <h3 style="color:green;font-family: 'Zapf-Chancery', cursive;">hint for Document number: <b>{{regexPatternForDocType[parseInteger(selectedDocType.value) - 1].hint}}</b></h3>
+                                                    <h3 *ngIf="panDocNumber.invalid" style="color:green;font-family: 'Zapf-Chancery', cursive;">hint for Document number: <b>{{regexPatternForDocType[parseInteger(selectedDocType.value) - 1].hint}}</b></h3>
                                                     <div *ngIf="panDocNumber.touched && panDocNumber.invalid" class="invalid-feedback">
                                                       <!-- <div *ngIf="panDocNumber.errors?.required">{{errors.panDocumentNo.required}}</div> -->
                                                       <div *ngIf="panDocNumber.errors?.pattern">{{errors.panDocumentNo.invalid}}</div>
@@ -839,7 +839,7 @@
                                                                     maxlength="5"
                                                                     tabindex="12"
                                                                     #alternateResidenceNumberStd1="ngModel"
-                                                                    pattern="{{regexPattern.mobileNumber}}"
+                                                                    pattern="{{regexPattern.stdCode}}"
                                                                     class="form-control"
                                                                     fieldFill
                                                                     spellcheck="false"
@@ -2078,7 +2078,7 @@
                                                             maxlength="5"
                                                             tabindex="6"
                                                             spellcheck="false"
-                                                            pattern="{{regexPattern.mobileNumber}}"
+                                                            pattern="{{regexPattern.stdCode}}"
                                                             fieldFill />
                                                           <label for="std03">STD</label>
                                                           <div *ngIf="stdCode.touched && stdCode.invalid" class="invalid-feedback">
