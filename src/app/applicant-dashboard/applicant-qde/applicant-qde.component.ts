@@ -542,6 +542,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
             this.qde = result;
             this.qdeService.setQde(result);
+            this.cds.setStatus(result.application.status);
             this.cds.setactiveTab(screenPages['applicantDetails']);
             this.applicantIndex = result.application.applicants.findIndex(v => v.isMainApplicant == true);
             this.cds.enableTabsIfStatus1(this.qde.application.status);

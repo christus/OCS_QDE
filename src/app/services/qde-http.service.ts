@@ -2130,5 +2130,33 @@ createOrUpdatePersonalDetails(qde) {
     let uri = environment.host+'/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
     return this.http.post(uri, body.toString());
   }
+
+  omniDocsApi(applicationId: string) {
+    const processId = environment.api.omniDocs.processId;
+    const workflowId = environment.api.omniDocs.workflowId;
+    const projectId = environment.projectId;
+
+    const userName = environment.userName;
+    const password = environment.password;
+
+
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: {
+        applicationId: applicationId
+      },
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = new HttpParams().set(
+      'processVariables',
+      JSON.stringify(requestEntity)
+    );
+
+    let uri = environment.host+'/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.http.post(uri, body.toString());
+  }
+
 }
 

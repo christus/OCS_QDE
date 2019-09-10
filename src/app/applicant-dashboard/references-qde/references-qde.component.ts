@@ -235,7 +235,7 @@ export class ReferencesQdeComponent implements OnInit {
           let result = JSON.parse(response["ProcessVariables"]["response"]);
 
           this.cds.setactiveTab(screenPages['references']);
-
+          this.cds.setStatus(result.application.status);
           if (!result.application.references  || Object.keys(result.application.references).length === 0) {
             result.application.references = {
               referenceOne: {},

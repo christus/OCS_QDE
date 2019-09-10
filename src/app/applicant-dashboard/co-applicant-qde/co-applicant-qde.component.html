@@ -192,7 +192,7 @@
                                                   id="pan-form"
                                                   #panNumberForm="ngForm"
                                                   (ngSubmit)="submitPanNumber(panNumberForm, panSlider2)">
-                                                  <div class="form-wrap" style="overflow-y: hidden">
+                                                  <div class="form-wrap">
                                                     <div class="form-group last typ-optional" style="margin-bottom: 40px; overflow-y: hidden">
                                                         <input [readonly]="isReadOnly"  type="text"
                                                                 class="form-control"
@@ -206,7 +206,8 @@
                                                                 (keyup)="keyUpPanNumber($event)"
                                                                 #panNumber="ngModel"
                                                                 fieldFill
-                                                                spellcheck="false" />
+                                                                spellcheck="false" 
+                                                                required/>
                                                         <label for="pan-inpt" tabindex="1">Enter PAN</label>
                                                         <span class="optional">optional</span>
                                                         <div *ngIf="panNumber.touched && panNumber.invalid && panErrorCount < 3" class="invalid-feedback">
@@ -1067,8 +1068,8 @@
                                                                 #commCityState="ngModel"
                                                                 fieldFill   
                                                                 spellcheck="false"
-                                                                readonly    
-                                                                disabled              
+                                                                readonly 
+                                                                disabled                 
                                                                 pattern="{{regexPattern.address}}" />
                                                             
                                                             <label for="cityState">City/State</label>
@@ -2059,7 +2060,6 @@
                                                         fieldFill
                                                         spellcheck="false"
                                                         readonly
-                                                        disabled
                                                         pattern="{{regexPattern.address}}">
                                                         <label for="offCityState">City/State</label>
                   
@@ -2121,9 +2121,8 @@
                                                       <div *ngIf="officeEmail.touched && officeEmail.invalid" class="invalid-feedback">
                                                           <!-- <div *ngIf="officeEmail.errors?.required">{{errors.officialCorrespondence.email.required}}</div> -->
                                                           <div *ngIf="officeEmail.errors?.pattern">{{errors.officialCorrespondence.email.invalid}}</div>
-                                                          <div *ngIf="officeEmail.errors?.invalidDomain">{{errors.officialCorrespondence.email.invalidDomain}}
-                                                          </div>                              
-                                                        </div>
+                                                          <div *ngIf="officeEmail.errors?.invalidDomain">{{errors.officialCorrespondence.email.invalidDomain}}</div>
+                                                      </div>
                                                   </div>
                   
                                               </div>
@@ -2368,7 +2367,8 @@
                                                               #panNumber2="ngModel"
                                                               fieldFill
                                                               (keyup)="keyUpPanNumber($event)"
-                                                              spellcheck="false"/>
+                                                              spellcheck="false"
+                                                              required/>
                                                       <label for="pan-inpt2">Enter PAN</label>
                                                       <span class="optional">optional</span>
                                                       <div *ngIf="panNumber2.touched && panNumber2.invalid && panErrorCount < 3" class="invalid-feedback">
@@ -3207,7 +3207,7 @@
             </div>
         </div>
 
-
+        
         <div class="overlay" [ngClass]="{'active': isCoApplicantPinModal}"></div>
         <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isCoApplicantPinModal}">
             <!-- <a class="modal-close" href="javascript:void(0);" (click)="onBackOTP()"><span class="icon icon-close"></span></a> -->

@@ -249,6 +249,7 @@ export class DocumentUploadComponent implements OnInit {
           this.qdeService.setQde(result);
           var butRes = result.application.status;
           console.log("RESPONSEhgjfgjkfk ", butRes);
+          this.cds.setStatus(result.application.status);
 
           // if(butRes >= 5) {
           //   this.cds.setIsMainTabEnabled(false);

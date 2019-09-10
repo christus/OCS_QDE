@@ -285,6 +285,10 @@ export const environment = {
     "roleName" : {
       'workflowId': '8fdf0f40ca5911e9a0280242ac110002',
       'processId': '90003788ca5911e992030242ac110002'
+    },
+    "omniDocs" : {
+      'workflowId': 'd9e7a808926f11e982270242ac110002',
+      'processId': '605aa9d6b74a11e983250242ac110002'
     }
   },
   userName: "icici@icicibankltd.com",

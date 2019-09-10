@@ -384,6 +384,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
           console.log("loanType: ", this.loanType);
           
           this.qde = result;
+          this.cds.setStatus(result.application.status);
           this.qdeService.setQde(result);
           this.cds.setactiveTab(screenPages['loanDetails']);
 

@@ -5,7 +5,10 @@ import { QdeService } from '../services/qde.service';
 
 import Qde  from 'src/app/models/qde.model';
 import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { QdeHttpService } from '../services/qde-http.service';
+
+import { screenPages } from '../app.constants';
 
 import { screenPages } from '../app.constants';
 
@@ -43,11 +46,22 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
   isEligibilityForReview: boolean = false;
   isEligibilityForReviewsSub: Subscription;
   isTBMLoggedIn: boolean = false;
- 
+  isFinalSubmitEnabled: boolean = false;
+  isPaymentsDisabled: boolean = true;
+
   constructor(private utilService: UtilService,
               private commonDataService: CommonDataService,
               private _router: Router,
-              private qdeService:QdeService) {
+              private qdeService:QdeService,
+              private qdehttpService: QdeHttpService,
+              private route: ActivatedRoute,) {
+    
+                this.route.params.subscribe(val => {
+      this.applicationId = val.applicationId;
+      // this.applicantId = this.qde.application.applicants.find(v => v.applicantId == val.applicantId).applicantId;
+      this.applicantId = val.applicantId;
+    });
+
     this.commonDataService.isViewFormNameShown.subscribe((value) => {
       this.isViewFormNameShown = value;
     });
@@ -142,10 +156,24 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
     this.commonDataService.activeTab.subscribe(val => {
       this.activeTab = val;
     });
+    this.commonDataService.status.subscribe(val => {
+      if(val == 15) {
+        this.isFinalSubmitEnabled = true;
+      }
+      else if(val >= 20) {
+        this.isFinalSubmitEnabled = false;
+      }
+      else{
+        this.isFinalSubmitEnabled = false;
+      }
+
+      this.isPaymentsDisabled = val == 15 ? false: true;
+      console.log("Dude: ", val);
+      console.log("isPaymentsDisabled: ",this.isPaymentsDisabled);
+    });
   }
 
   ngOnInit() {
-    
   }
 
   setApplicantName(qde) {
@@ -171,4 +199,5 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
       this.isEligibilityForReviewsSub.unsubscribe();
     }
   }
+
 }

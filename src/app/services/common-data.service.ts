@@ -152,6 +152,14 @@ export class CommonDataService {
    this.activeTab$.next(data);
   }
 
+  status$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  public status = this.status$.asObservable();
+
+
+  setStatus(data: number) {
+   this.status$.next(data);
+  }
+
   enableTabsIfStatus1(status) {
     if(status >= 5) {
       this.setIsMainTabEnabled(false);

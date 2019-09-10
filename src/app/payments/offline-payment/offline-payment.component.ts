@@ -142,6 +142,7 @@ export class OfflinePaymentComponent implements OnInit {
     this.qdeService.setQde(JSON.parse(this.route.snapshot.data['qde']['ProcessVariables']['response']));
     this.qdeService.qdeSource.subscribe(value => {
       this.applicationId = value.application.applicationId;
+      this.commonDataService.changeApplicationId(value.application.applicationId);
       this.ocsNumber = value.application.ocsNumber;
       this.qde = value;
     });

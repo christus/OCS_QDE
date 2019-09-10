@@ -53,10 +53,10 @@
                 <a *ngIf="applicationId == null"  [ngClass]="{'disabled': !isMainTabEnabled}">Document Uploads</a>
                 <a [routerLink]="['/document-uploads', applicationId]" *ngIf="applicationId != null  && applicantId != null" >Document Uploads</a>
             </li>
-            <li [ngClass]="{'active': activeTab==screenPages['payments']}">
-                <a *ngIf="applicationId == null">Payments</a>
-                <a [routerLink]="['/payments/offline-payments', applicationId]" *ngIf="applicationId != null">Payments</a>
-                <!-- <a routerLink="/payments/offline-payments">Payments</a> -->
+            <li [ngClass]="{'active': activeTab==screenPages['payments'], 'disabled': isPaymentsDisabled}">
+                <a *ngIf="applicationId == null" [ngClass]="{'disabled': (isFinalSubmitEnabled)}">Payments</a>
+                <a *ngIf="applicationId != null && !isPaymentsDisabled" [ngClass]="{'disabled': (!isFinalSubmitEnabled)}" [routerLink]="['/payments/offline-payments', applicationId]">Payments</a>
+                <a *ngIf="applicationId != null && isPaymentsDisabled">Payments</a>
             </li>
         </ul>
         <!-- header end -->

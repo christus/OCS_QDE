@@ -735,7 +735,6 @@ export class ViewFormComponent implements OnInit, OnDestroy {
         // Show Final Button
         this.isQdeSubmitButton = false;
         if(button == 27 || button == 29) {
-          // Show QDE Button
           this.isFinalSubmitButton = true;
           this.isFinalSubmitEnabled = true;
         }
@@ -966,8 +965,15 @@ export class ViewFormComponent implements OnInit, OnDestroy {
         if(res["ProcessVariables"]['responseApplicationId'] == "") {
           alert("Mandatory fields missing.");
         } else {
-          this.qdeHttp.setStatusApi(this.applicationId, statuses["DDE Submitted"]).subscribe(res => {}, err => {});
-          alert("APS ID generated successfully with ID "+res["ProcessVariables"]['responseApplicationId']);
+          this.qdeHttp.omniDocsApi(this.applicationId).subscribe(res=>{
+            if(res["ProcessVariables"]["status"] == true){
+              this.qdeHttp.setStatusApi(this.applicationId, statuses["DDE Submitted"]).subscribe(res => {}, err => {});
+              alert("APS ID generated successfully with ID "+res["ProcessVariables"]['responseApplicationId']);
+            }
+            else{
+              return
+            }
+          })
         }
       } else {
         // Throw Invalid Pan Error
