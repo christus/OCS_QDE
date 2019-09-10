@@ -863,6 +863,9 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
       this.qde.application.applicants.find(v => v.applicantId == this.selectedApplicant.value).existingLoans.loanProvider = this.selectedLoanProvider.value+"";
   
+      this.qde.application.applicants.find(v => v.applicantId == this.selectedApplicant.value).existingLoans.monthlyEmi = parseInt(this.monthlyEmiValue+''.split(',').join(''));
+
+      
       this.qdeHttp
         .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
         .subscribe(
@@ -871,15 +874,16 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
             let result = response['ProcessVariables']['response'];
 
             if (response["ProcessVariables"]["status"]) {
-              this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['loanDetails']).subscribe(auditRes => {
-                if(auditRes['ProcessVariables']['status'] == true) {
-                  this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
-                  this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
-                  this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
-                  this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
-                }
-              });
+              // this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['loanDetails']).subscribe(auditRes => {
+              //   if(auditRes['ProcessVariables']['status'] == true) {
+              //     this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+              //     this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+              //     this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+              //     this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
+              //   }
+              // });
               this.goToNextSlide(swiperInstance);
+              this.isLoanRouteModal = true
             } else {
               // Throw Invalid Pan Error
             }

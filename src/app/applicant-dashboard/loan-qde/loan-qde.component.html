@@ -405,7 +405,7 @@
 
                     <!-- Select an applicant for Existing Loan -->
                     <div class="swiper-slide">
-                      <form class="bs-form" (ngSubmit)="submitAnApplicantForExistingLoan(selectApplicantForExistingLoanForm, existingLoan2)" #selectApplicantForExistingLoanForm="ngForm">
+                      <form class="bs-form" #selectApplicantForExistingLoanForm="ngForm" (ngSubmit)="submitAnApplicantForExistingLoan(selectApplicantForExistingLoanForm, existingLoan2)" >
                         <div class="form-wrap">
                           <div class="form-group">
                             <kendo-dropdownlist [readonly]="isTBMLoggedIn" 
@@ -433,8 +433,10 @@
                                     <span class="control-title">Live Loans</span>
                                     <input type="number"
                                             name="liveLoansNumber"
+                                            oninput="this.value=this.value.slice(0,this.maxLength)"
+                                            maxLength = 1
                                             class="form-control"
-                                            [ngModel]="liveLoan"
+                                            [(ngModel)]="liveLoan"
                                             (ngModelChange)="valuechange($event, 1)" />
                                     <ng5-slider class="commSlider"
                                                 [(value)]="liveLoan"
@@ -458,6 +460,8 @@
                       <form class="bs-form" #loanProvider="ngForm"
                       (ngSubmit)="submitExistingLoanProvider(loanProvider, existingLoan2)">
                         <div class="form-wrap">
+
+
                           <div class="form-group">
                             <span class="control-title">Loan provider</span>
                             <kendo-dropdownlist [readonly]="isTBMLoggedIn" 
@@ -469,12 +473,35 @@
                                                 [(ngModel)]="selectedLoanProvider">
                             </kendo-dropdownlist>
                           </div>
+
+                          <div class="form-group inr typ-optional">
+                              <input [readonly]="isTBMLoggedIn" type="text" class="form-control" id="monthly-emi"
+                                ngModel
+                                #monthlyEmi = "ngModel"
+                                [(ngModel)]="monthlyEmiValue"
+                                fieldFill
+                                name="monthlyEmi" pattern="^[0-9]*$"/>
+  
+                              <label for="monthly-emi">Monthly EMI</label>
+                              <span class="optional">optional</span>
+                              <div class="redalert" *ngIf="monthlyEmi.touched && monthlyEmi.valid && !isValidNumber(monthlyEmi.value)">{{errors.loanDetails.existingLoans.monthlyEmi.invalid}}</div>
+                              <div *ngIf="(monthlyEmi.touched || monthlyEmi.dirty) && monthlyEmi.invalid" class="invalid-feedback">
+                                <!-- <div *ngIf="monthlyEmi.errors?.required">{{errors.loanDetails.existingLoans.monthlyEmi.required}}</div> -->
+                                <!-- <div *ngIf="monthlyEmi.errors?.pattern">{{errors.loanDetails.existingLoans.monthlyEmi.invalid}}</div> -->
+                              </div>
+  
+                              <span class="addon">
+                                <span class="icon icon-inr"></span>
+                              </span>
+                              <span class="in-word"></span>
+                          </div>
+
                         </div>
                 
                         <div class="btn-wrap">
                           <button type="submit" class="btn btn-primary" 
                           [ngClass]="{'disabled': !loanProvider.valid}"
-                          [disabled]="!loanProvider.valid">Next</button>
+                          [disabled]="!loanProvider.valid">Save</button>
                         </div>
                       </form>
                     </div>
