@@ -20,7 +20,7 @@
 
               <div class="lhs">
                 <div class="swiper-container form-swiper " 
-                [swiper]="lhsConfig" 
+                [swiper]="lhsConfig"
                 #reference1="ngxSwiper">
                   <div class="swiper-wrapper">
                     <div class="swiper-slide">
@@ -45,14 +45,15 @@
                 [swiper]="rhsConfig"
                   (slidePrevTransitionStart)="slidePrevTransitionStart(reference1)"
                   (slideNextTransitionStart)="slideNextTransitionStart(reference1)"
-                  #reference1="ngxSwiper">
+                  #swiperS="ngxSwiper"
+                  #reference2="ngxSwiper">
                   <div class="swiper-wrapper">
                     <div class="swiper-slide">
 
                       <form class="bs-form"
                       id="relationship-form"
                       #refRelationship1="ngForm"
-                      (ngSubmit)="submitRelationWithApplicant1(refRelationship1, reference1)">
+                      (ngSubmit)="submitRelationWithApplicant1(refRelationship1, reference2)">
                         <div class="form-wrap">
                           <div class="form-group">
                             <span class="control-title">Relationship</span>
@@ -205,7 +206,7 @@
             <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(refRelationship1)"></a>
             <div class="lyt-tabs">
               <div class="lhs">
-              <div class="swiper-container form-swiper">
+              <div class="swiper-container form-swiper" [swiper]="lhsConfig" #reference3="ngxSwiper">
                 <div class="swiper-wrapper">
                   <div class="swiper-slide">
                     <div class="title-wrap">
@@ -226,10 +227,11 @@
               </div>
               <div class="rhs">
                 <div class="swiper-container form-swiper"
-                [swiper]="rhsConfig"
-                  (slidePrevTransitionStart)="slidePrevTransitionStart(reference1)"
-                  (slideNextTransitionStart)="slideNextTransitionStart(reference1)"
-                  #reference2="ngxSwiper">
+                  [swiper]="rhsConfig"
+                  #swiperS="ngxSwiper"
+                  (slidePrevTransitionStart)="slidePrevTransitionStart(reference3)"
+                  (slideNextTransitionStart)="slideNextTransitionStart(reference3)"
+                  #reference4="ngxSwiper">
                 <div class="swiper-wrapper">
                   <div class="swiper-slide">
 
@@ -237,7 +239,7 @@
                     <form class="bs-form"
                       id="relationship-form"
                       #ref2Relationship="ngForm"
-                      (ngSubmit)="submitRelationWithApplicant2(ref2Relationship, reference2)">
+                      (ngSubmit)="submitRelationWithApplicant2(ref2Relationship, reference4)">
                       <div class="form-wrap">
                         <div class="form-group">
                           <span class="control-title">Relationship</span>
