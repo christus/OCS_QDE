@@ -1606,6 +1606,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       //  event.preventDefault();
 
+      console.log("form && !form.valid: ", form && !form.valid); 
       if (form && !form.valid) {
         return;
       }

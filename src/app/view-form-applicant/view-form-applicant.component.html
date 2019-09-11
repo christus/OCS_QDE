@@ -417,20 +417,7 @@
 
       <!-- Permanent Address -->
       <div class="bs-form" *ngIf="!qde.application.applicants[applicantIndex].communicationAddress.permanentAddress">
-        <div class="row">
-            <div class="col-6">
-                <div class="form-group">
-                    <span class="control-title">Residential status</span>
-                    <kendo-dropdownlist class="form-control"
-                                    [data]="residences" 
-                                    textField="key"
-                                    valueField="value"
-                                    name="residentialStatus"
-                                    [(ngModel)]="permSelectedResidence">
-                    </kendo-dropdownlist>
-                </div>
-            </div>
-        </div>
+        
         <div class="row">
             <div class="col-12">
                 <div class="form-group">

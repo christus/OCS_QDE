@@ -49,7 +49,7 @@ export class Declaration2Component implements OnInit {
   // }
 
   acceptBtn() {
-    this.qdeHttp.setStatusApi(this.applicationId, this.applicationStatus).subscribe(res => {}, err => {});
+    // this.qdeHttp.setStatusApi(this.applicationId, this.applicationStatus).subscribe(res => {}, err => {});
 
     var data = {
       "smsAlerts": true,

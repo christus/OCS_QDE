@@ -89,7 +89,6 @@
                         [selectedCategory]="selectedCategory[applicantIndex]"
                         [selectedOccupation]="selectedOccupation[applicantIndex]"
                         [selectedResidence]="selectedResidence[applicantIndex]"
-                        [permSelectedResidence]="permSelectedResidence[applicantIndex]"
                         [selectedSpouseTitle]="selectedSpouseTitle[applicantIndex]"
                         [selectedFatherTitle]="selectedFatherTitle[applicantIndex]"
                         [selectedMotherTitle]="selectedMotherTitle[applicantIndex]"
@@ -100,7 +99,7 @@
                         [docType]="docType"
                         [selectedAssesmentMethodology]="selectedAssesmentMethodology[applicantIndex]"
                         [isIncomplete]="isIncomplete">
-                    </app-view-form-applicant>
+                        </app-view-form-applicant>
                         <div class="btn-wrap">
                             <button type="submit" class="btn btn-primary" (click)="tabSwitch(1)">Continue</button>
                         </div>
@@ -163,7 +162,6 @@
                   [selectedCategory]="selectedCategory[c]"
                   [selectedOccupation]="selectedOccupation[c]"
                   [selectedResidence]="selectedResidence[c]"
-                  [permSelectedResidence]="permSelectedResidence[c]"
                   [selectedSpouseTitle]="selectedSpouseTitle[c]"
                   [selectedFatherTitle]="selectedFatherTitle[c]"
                   [selectedMotherTitle]="selectedMotherTitle[c]"
@@ -982,8 +980,8 @@
                   </div>
           </div>
       </div>
-      <div class="overlay" [ngClass]="{'active': isDocNotUploadModal}"></div>
-      <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isDocNotUploadModal}">
+      <div class="overlay" [ngClass]="{'active': isDocNotUploadModa}"></div>
+      <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isDocNotUploadModa}">
           <!-- <a class="modal-close" (click)="onCrossModal()"><span class="icon icon-close"></span></a> -->
           <div class="modal-body">
               <h1 class="center">{{butMes}}</h1>

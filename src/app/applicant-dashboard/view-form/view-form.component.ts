@@ -130,7 +130,9 @@ export class ViewFormComponent implements OnInit, OnDestroy {
   selectedCategory: Array<Item> = [];
   selectedOccupation: Array<Item> = [];
   selectedResidence: Array<Item> = [];
+
   permSelectedResidence: Array<Item> = [];
+
   selectedSpouseTitle: Array<Item> = [];
   selectedFatherTitle: Array<Item> = [];
   selectedMotherTitle: Array<Item> = [];
@@ -650,6 +652,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
   isFinalSubmitButton: boolean = false;
   isQdeSubmitEnabled: boolean = false; 
   isFinalSubmitEnabled: boolean = false;
+
   submitButtonChange() {
 
     // this.qdeHttp.getQdeData(parseInt(this.applicationId)).subscribe(res => {
@@ -794,24 +797,24 @@ export class ViewFormComponent implements OnInit, OnDestroy {
       this.selectedSpouseTitle.push(this.titles[0]);
       this.selectedFatherTitle.push(this.maleTitles[0]);
       this.selectedMotherTitle.push(this.femaleTitles[0]);
-      console.log(".selectedQualification: ", this.selectedQualification);
       this.selectedQualification.push(this.qualifications[0]);
       this.selectedGender.push(this.genders[0]);
       this.selectedConstitution.push(this.constitutions[0]);
       this.selectedDocType.push(this.docType[0]);
       this.selectedAssesmentMethodology.push(this.assessmentMethodology[0]);
 
+      
       // Personal Details Title
+      // alert(eachApplicant.personalDetails.title);
       if( ! isNaN(parseInt(eachApplicant.personalDetails.title)) ) {
-        this.selectedTitle.push(this.titles[(parseInt(eachApplicant.personalDetails.title))-1]);
+        this.selectedTitle[i] = this.titles.find(v => v.value == eachApplicant.personalDetails.title);
       }
-
+      
       // Personal Details Day
       let eachDob: {day: Item, month: Item, year: Item} = {day:{key:'DD',value:'DD'},month:{key:'MM',value:'MM'},year:{key:'YYYY',value:'YYYY'}};
       if( ! isNaN(parseInt(eachApplicant.personalDetails.dob.split('/')[2])) ) {
         eachDob.day = this.days[parseInt(eachApplicant.personalDetails.dob.split('/')[2])];
       }
-      
 
       // Personal Details Month
       if( ! isNaN(parseInt(eachApplicant.personalDetails.dob.split('/')[1])) ) {
@@ -860,43 +863,43 @@ export class ViewFormComponent implements OnInit, OnDestroy {
 
       // Constitution
       if( ! isNaN(parseInt(eachApplicant.organizationDetails.constitution)) ) {
-        this.selectedConstitution[i] = (this.constitutions[(parseInt(eachApplicant.organizationDetails.constitution))-1]);
+        this.selectedConstitution[i] = (this.constitutions.find(v => v.value == eachApplicant.organizationDetails.constitution));
       }
       
       // Communication address
       if( ! isNaN(parseInt(eachApplicant.communicationAddress.residentialStatus)) ) {
-        this.selectedResidence[i] = (this.residences[(parseInt(eachApplicant.communicationAddress.residentialStatus)) - 1]);
+        this.selectedResidence[i] = (this.residences.find(v => v.value == eachApplicant.communicationAddress.residentialStatus));
       }
 
-      // Permanent address
+      // // Permanent address
       if( ! isNaN(parseInt(eachApplicant.permanentAddress.residentialStatus)) ) {
         this.permSelectedResidence[i] = (this.residences[(parseInt(eachApplicant.permanentAddress.residentialStatus)) - 1]);
       }
 
       if( ! isNaN(parseInt(eachApplicant.maritalStatus.status)) ) {
-        this.selectedMaritialStatus[i] = (this.maritals[(parseInt(eachApplicant.maritalStatus.status))-1]);
+        this.selectedMaritialStatus[i] = (this.maritals.find(v => v.value == eachApplicant.maritalStatus.status));
       }
 
       if( ! isNaN(parseInt(eachApplicant.maritalStatus.spouseTitle)) ) {
-          this.selectedSpouseTitle[i] = (this.titles[(parseInt(eachApplicant.maritalStatus.spouseTitle))-1]);
+          this.selectedSpouseTitle[i] = (this.titles.find(v => v.value == eachApplicant.maritalStatus.spouseTitle));
       }
 
       if( ! isNaN(parseInt(eachApplicant.familyDetails.fatherTitle)) ) {
-        this.selectedFatherTitle [i] = (this.titles[(parseInt(eachApplicant.familyDetails.fatherTitle))-1]);
+        this.selectedFatherTitle [i] = (this.titles.find(v => v.value == eachApplicant.familyDetails.fatherTitle));
       }
 
       if( ! isNaN(parseInt(eachApplicant.familyDetails.motherTitle)) ) {
-        this.selectedMotherTitle[i] = (this.titles[(parseInt(eachApplicant.familyDetails.motherTitle))-1]);
+        this.selectedMotherTitle[i] = (this.titles.find(v => v.value == eachApplicant.familyDetails.motherTitle));
       }
 
       // Other
       if( ! isNaN(parseInt(eachApplicant.other.religion)) ) {
-        this.selectedReligion[i] = (this.religions[(parseInt(eachApplicant.other.religion))-1]);
+        this.selectedReligion[i] = (this.religions.find(v => v.value == eachApplicant.other.religion));
       }
 
       // Category
       if( ! isNaN(parseInt(eachApplicant.other.category)) ) {
-        this.selectedCategory [i] = (this.categories[(parseInt(eachApplicant.other.category))-1]);
+        this.selectedCategory [i] = (this.categories.find(v => v.value == eachApplicant.other.category));
       }
 
       // Occupation details
@@ -905,9 +908,9 @@ export class ViewFormComponent implements OnInit, OnDestroy {
       }
 
       // Assesment methodology
-      console.log("assessmentMethodology: ", this.assessmentMethodology[(parseInt(eachApplicant.incomeDetails.assessmentMethodology))-1]);
+      // console.log("assessmentMethodology: ", this.assessmentMethodology[(parseInt(eachApplicant.incomeDetails.assessmentMethodology))-1]);
       if( ! isNaN(parseInt(eachApplicant.incomeDetails.assessmentMethodology)) ) {
-        this.selectedAssesmentMethodology[i] = (this.assessmentMethodology[(parseInt(eachApplicant.incomeDetails.assessmentMethodology))-1]);
+        this.selectedAssesmentMethodology[i] = (this.assessmentMethodology.find(v => v.value == eachApplicant.incomeDetails.assessmentMethodology));
       }
 
       this.initializeVariables(eachApplicant);
