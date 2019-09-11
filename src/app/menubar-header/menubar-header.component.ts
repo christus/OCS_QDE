@@ -10,6 +10,7 @@ import { QdeHttpService } from '../services/qde-http.service';
 
 import { screenPages } from '../app.constants';
 
+
 @Component({
   selector: 'app-menubar-header',
   templateUrl: './menubar-header.component.html',

@@ -5,6 +5,7 @@ import { NgForm } from '@angular/forms';
 import Qde from 'src/app/models/qde.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { QdeService } from 'src/app/services/qde.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-online-summary',
@@ -25,19 +26,51 @@ export class OnlineSummaryComponent implements OnInit {
               private commonDataService: CommonDataService,
               private qdeService: QdeService
   ) { 
-    this.commonDataService.changeMenuBarShown(true);
-    this.commonDataService.changeViewFormVisible(true);
-    this.commonDataService.changeLogoutVisible(true);
-    this.commonDataService.changeHomeVisible(true);
-
+    this.commonDataService.changeMenuBarShown(false);
+    this.commonDataService.changeViewFormVisible(false);
+    this.commonDataService.changeLogoutVisible(false);
+    this.commonDataService.changeHomeVisible(false);
 
     this.route.params.subscribe(v => {
       this.applicationId = v.applicationId;
     });
+
+    const data = {
+      email: environment.userName,
+      password: environment.password
+    };
+    
+    this.qdeHttp.authenticate(data).subscribe(
+      res => {
+        console.log("response");
+        console.log("login-response: ",res);
+        this.commonDataService.setLogindata(data);
+        localStorage.setItem("token", res["token"] ? res["token"] : "");
+
+        this.qdeHttp.getQdeData(parseInt(this.applicationId)).subscribe(response => {
+          
+          this.qdeService.qdeSource.subscribe(val => {
+            this.qde = val;
+          });
+
+          var result = JSON.parse(response["ProcessVariables"]["response"]);
+
+          this.qdeService.setQde(result);
+  
+          this.submitEligibility();
+        });
+
+      },
+      error => {
+        console.log(error);
+      }
+    );
+    
+
+   
   }
 
   ngOnInit() {
-    this.submitEligibility();
   }
 
 firstName:string;
@@ -48,6 +81,7 @@ loginFee:number;
 taxFee:number;
 taxPercent:number;
 totalFee:number;
+paymentGatewayUrl:string;
 
 
 submitEligibility() {
@@ -63,7 +97,14 @@ submitEligibility() {
      this.taxFee = res['ProcessVariables']['taxAmount'];
      this.taxPercent = res['ProcessVariables']['taxPercentage']
      this.totalFee = res['ProcessVariables']['totalAmount'];
+
+     this.paymentGatewayUrl = res['ProcessVariables']['paymentGatewayURL'];
   });
+}
+
+proceedToPayment() {
+  window.open(this.paymentGatewayUrl, '_blank');
+
 }
 // submitPaymentForm(form: NgForm) {
 //   console.log("Payment gateway")

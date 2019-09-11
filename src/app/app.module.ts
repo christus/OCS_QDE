@@ -294,7 +294,15 @@ const appRoutes: Routes = [
           listOfValues: ListOfValuesResolverService,
           qde: GetQdeDataResolverService
         }
-      }
+      },
+      {
+        path: 'online-summary/:applicationId',
+        component: OnlineSummaryComponent,
+        resolve: {
+          listOfValues: ListOfValuesResolverService,
+          qde: GetQdeDataResolverService
+        }
+      },
     ]
   },
   {
@@ -339,6 +347,10 @@ const appRoutes: Routes = [
   {
     path: "static/icici-terms/auto-login/:applicationId/:applicantId",
     component: IciciTermsComponent
+  },
+  {
+    path: "static/payments/online-summary/:applicationId",
+    component: OnlineSummaryComponent,
   },
   {
     path: 'review-eligibility/:applicationId',
