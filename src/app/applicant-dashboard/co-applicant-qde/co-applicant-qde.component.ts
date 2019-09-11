@@ -2406,6 +2406,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
     if(event == true) {
       this.qde.application.applicants[this.coApplicantIndex].corporateAddress.corporateAddress = this.qde.application.applicants[this.coApplicantIndex].registeredAddress.registeredAddress;
+      this.qde.application.applicants[this.coApplicantIndex].corporateAddress.landMark = this.qde.application.applicants[this.coApplicantIndex].registeredAddress.landMark;
       this.qde.application.applicants[this.coApplicantIndex].corporateAddress.zipcode = this.qde.application.applicants[this.coApplicantIndex].registeredAddress.zipcode;
    
       this.qde.application.applicants[this.coApplicantIndex].corporateAddress.city = this.qde.application.applicants[this.coApplicantIndex].registeredAddress.city;
