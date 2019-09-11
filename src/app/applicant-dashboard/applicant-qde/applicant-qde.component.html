@@ -185,11 +185,10 @@
                               pattern="{{regexPatternForDocType[parseInteger(selectedDocType.value) - 1].pattern}}"
                               maxlength="{{maxlength[parseInteger(selectedDocType.value) - 1]}}" fieldFill required />
                             <label for="docNumber" tabindex="3">Document Number</label>
-                            <h3 *ngIf="panDocNumber.invalid" style="color:green;font-family: 'Zapf-Chancery', cursive;">hint for Document number:
-                              <b>{{regexPatternForDocType[parseInteger(selectedDocType.value) - 1].hint}}</b></h3>
                             <div *ngIf="panDocNumber.touched && panDocNumber.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="panDocNumber.errors?.required">{{errors.panDocumentNo.required}}</div> -->
-                              <div *ngIf="panDocNumber.errors?.pattern">{{errors.panDocumentNo.invalid}}</div>
+                              <div *ngIf="panDocNumber.errors?.pattern">{{errors.panDocumentNo.invalid}} - hint for Document number:
+                                <b>{{regexPatternForDocType[parseInteger(selectedDocType.value) - 1].hint}}</b></div>
                             </div>
                             <!-- <image-upload [url]="imageUrl" [headers]="myHeaders"></image-upload> -->
                           </div>
