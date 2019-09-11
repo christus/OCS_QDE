@@ -48,6 +48,11 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
   isFinalSubmitEnabled: boolean = false;
   isPaymentsDisabled: boolean = true;
 
+  firstName: string;
+  lastName: string;
+  nameOfOrganization:string;
+  ocsNumber:string;
+
   constructor(private utilService: UtilService,
               private commonDataService: CommonDataService,
               private _router: Router,
@@ -94,6 +99,11 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
       this.coApplicantIndex = val;
     });
 
+    this.commonDataService.applicantName.subscribe(val => {
+      this.applicantName = val;
+      console.log("applicantName: ", this.applicantName);
+    });
+
     // this.qde = qdeService.getQde();
 
     // this.applicantName = this.qde.application.applicants[0].personalDetails.firstName;
@@ -101,6 +111,8 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
  
     this.qdeService.qdeSource.subscribe(v => {
       this.qde = v;
+
+     
 
       // Find an applicant
       const applicants = this.qde.application.applicants;
@@ -118,13 +130,24 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
       if(index == -1) {
         this.applicantName = "";
       } else {
-        if(this.qde.application.applicants[index].personalDetails.firstName != "") {
-          this.applicantName = "Application for "+this.qde.application.applicants[index].personalDetails.firstName +" "+ this.qde.application.applicants[index].personalDetails.lastName;
+        if(this.qde.application.applicants[index].personalDetails.firstName != "" ) {
+          this.applicantName = "Application for "+this.qde.application.applicants[index].personalDetails.firstName || this.applicantName+" "+ this.qde.application.applicants[index].personalDetails.lastName;
         } else {
-          this.applicantName = "Application for "+this.qde.application.applicants[index].organizationDetails.nameOfOrganization;
+          this.applicantName = "Application for "+this.qde.application.applicants[index].organizationDetails.nameOfOrganization || this.nameOfOrganization;
         }
-        this.referenceNumber = this.qde.application.ocsNumber;
+
+        this.referenceNumber = this.qde.application.ocsNumber || this.applicationId;
+        return;
       }
+
+
+      // if(this.applicantName.length != 0) {
+      //   this.applicantName = "Application for "+this.applicantName;
+      //   this.referenceNumber = this.qde.application.ocsNumber || this.applicationId;
+      //   return;
+      // }
+     
+
     });
 
     this.commonDataService.isMainTabEnabled.subscribe(val => {
@@ -178,6 +201,22 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
   setApplicantName(qde) {
     this.applicantName = this.qde.application.applicants[0].personalDetails.firstName;
     console.log("this.applicantName", this.applicantName);
+  }
+
+
+  setApplicationName(firstName, lastName, nameOfOrganization, ocsNumber){
+
+    this.firstName = firstName;
+    this.lastName = firstName;
+    this.nameOfOrganization = nameOfOrganization;
+    this.ocsNumber = ocsNumber;
+
+    // if(firstName && lastName) {
+    //   this.applicantName = "Application for "+ firstName +" "+ lastName;
+    // } else {
+    //   this.applicantName = "Application for "+ nameOfOrganization;
+    // }
+    // this.referenceNumber = referenceNumber;
   }
 
   logout() {

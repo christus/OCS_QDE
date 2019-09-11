@@ -90,3 +90,27 @@
     color: #949494;
     padding: .47vw 1.56vw;
 }
+.lyt-box .cont .desc p {
+    margin-bottom: 15px;
+    font-family: zurich;
+    color: #444;
+}
+.lyt-box .cont p {
+    font-family: zurich-light;
+    font-size: 1.56vw;
+    line-height: 1.72vw;
+    color: #999;
+}
+.lyt-box .cont .desc {
+    display: block;
+    overflow: hidden;
+    margin: 10px 0 0;
+    text-align: center;
+}
+.lyt-box .cont .desc.typ2 p:last-child {
+    font-family: zurich-bold;
+    color: #444;
+}
+.lyt-box .cont .desc.typ2 p {
+    margin-bottom: 7px;
+}

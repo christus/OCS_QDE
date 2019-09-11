@@ -5583,6 +5583,29 @@ img {
 .rounded-radio .bs-radio {
 	height: 2.5vw;
 }
+
+.lyt-box .title-desc .box-subtitle {
+    display: block;
+    margin-bottom: 13px;
+    font-size: 1.88vw;
+    font-family: zurich-bold;
+    color: #444;
+}
+
+.lyt-box .thumb-icon.typ-fail {
+    background: url(/assets/images/thumb-fail.png) no-repeat;
+}
+
+.lyt-box .thumb-icon {
+    width: 120px;
+    height: 120px;
+    position: absolute;
+    top: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: url(/assets/images/thumb.png) no-repeat;
+}
+
 /*** Modifications for Tablets***/
 
 

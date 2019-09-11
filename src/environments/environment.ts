@@ -120,9 +120,13 @@ export const environment = {
       'workflowId': '83ab8a8ca16911e9b1900242ac110003',
       'processId': '7230e902a21b11e9b52d0242ac110002'
     },
+    // "paymentReconUpload": {
+    //   'workflowId': '83c3fd7ea16911e99a8f0242ac110003',
+    //   'processId': '83c3fd7ea16911e99a8f0242ac110003'
+    // },
     "paymentReconUpload": {
-      'workflowId': '83c3fd7ea16911e99a8f0242ac110003',
-      'processId': '83c3fd7ea16911e99a8f0242ac110003'
+      'workflowId': 'f144eee2927f11e982270242ac110002',
+      'processId': 'f17089c6927f11e982270242ac110002'
     },
     "duplicateApplicantCheck": {
       'workflowId': '471f4154a3a211e9abab0242ac110002',

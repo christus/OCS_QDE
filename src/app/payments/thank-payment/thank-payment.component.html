@@ -1,7 +1,8 @@
 <app-menubar-header></app-menubar-header>
 <main>
   <div class="main">
-      <div class="lyt-box typ2">
+      
+        <div *ngIf="!showError" class="lyt-box typ2">
           <span class="box-icon">
               <img src="assets/images/thumb.png" alt="logo">
           </span>
@@ -9,15 +10,42 @@
               <h3 class="box-title">Payment Successful!</h3>
               <!-- <p class="desc">Your payment is successful. Now click <b>Proceed</b> to check you eligibility.</p> -->
               <!-- <p>{{queryParams}}</p> -->
-              <h3> Reference no: {{uniqueRefNo}}</h3>
+              <p class="box-subtitle"> Login Fee Received!</p>
+
+                <div class="cont typ-center">
+
+                    <div class="desc">
+                        <!-- <p>You need to follow the below three steps to submit your application form!</p> -->
+                        <p>
+                            The payment receipt has been sent on your registered email address
+                        </p>
+                    </div>
+                    <div class="desc typ2">
+                        <p>Please wait while we fetch your </p>
+                        <p>
+                            PROVISIONAL ELIGIBILITY…
+                        </p>
+                    </div>
+                </div>
+
           </div>
+          
           <!-- <div class="cont">
               
               <div class="btn-wrap">
                   <button class="btn btn-border typ2">Proceed</button>
               </div>
           </div> -->
-      </div>
+        </div>
+
+        <div  *ngIf="showError" class="lyt-box typ2">
+            <span class="thumb-icon typ-fail"></span>
+            <div class="title-desc typ-center">
+                <h3 class="box-title">OOPS!</h3>
+                <p class="box-subtitle">{{message}}</p>
+            </div>
+        </div>
+
       <span class="cm-breath"></span>
   </div>
 </main>

@@ -16,6 +16,10 @@ export class ThankPaymentComponent implements OnInit {
   // applicantId: string;
 
   uniqueRefNo: string;
+  message:string
+  showError: boolean;
+  applicationId:string;
+  userName:string;
 
   queryParams: string;
   constructor( private route: ActivatedRoute,
@@ -28,6 +32,8 @@ export class ThankPaymentComponent implements OnInit {
     this.commonDataService.changeViewFormVisible(false);
     this.commonDataService.changeLogoutVisible(false);
     this.commonDataService.changeHomeVisible(false);
+
+    this.commonDataService.changeViewFormNameVisible(true)
     
     // this.qdeService.qdeSource.subscribe(val => {
 
@@ -39,7 +45,21 @@ export class ThankPaymentComponent implements OnInit {
     // });
     this.route.queryParams.subscribe(val => {
       console.log('Query params: ', this.queryParams);
-      this.uniqueRefNo = (val["uniqueRefNo"] == "-1") ? "Failure": val["uniqueRefNo"];
+
+      this.commonDataService.changeApplicationId(val["ocsReferenceNo"]);
+      // this.commonDataService.changeApplicantName("christusvalerian");
+
+
+
+      this.uniqueRefNo = (val["uniqueRefNo"] == "-1") ? "FAILURE": val["uniqueRefNo"];
+     
+      if(this.uniqueRefNo != "FAILURE") {
+        this.message = "Reference no:"+ this.uniqueRefNo
+        this.showError = false;
+      }else {
+        this.message = val["message"];
+        this.showError = true;
+      }
       this.queryParams = JSON.stringify(val);
       // this.qdeHttp.executePaymentWF(this.queryParams).subscribe(response => {
       //   if (
@@ -56,6 +76,9 @@ export class ThankPaymentComponent implements OnInit {
       //     }
       //   }
       // });
+
+
+
     });
   }
 

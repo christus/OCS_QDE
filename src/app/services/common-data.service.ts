@@ -168,4 +168,11 @@ export class CommonDataService {
     }
   }
 
+  applicantName$: BehaviorSubject<string> = new BehaviorSubject<string>("");
+  public applicantName = this.applicantName$.asObservable();
+  
+  changeApplicantName(val: string) {
+    this.applicantName$.next(val);
+  }
+
 }
