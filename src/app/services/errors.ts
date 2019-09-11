@@ -121,7 +121,9 @@ export const errors: any = {
   },
 
   other: {
-
+    specifyReligion: {
+      invalid: "Invalid Religion / Number and Special Characters not allowed"
+    }
   },
 
   occupationDetails : {

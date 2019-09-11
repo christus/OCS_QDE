@@ -1292,8 +1292,13 @@
                           <div class="form-group" *ngIf="selectedReligion.value == '6'"
                             [ngClass]="{'hidden': (selectedReligion.value != '6')}">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
+                            pattern="{{regexPattern.name}}" #specifyReligion = "ngModel"
                               tabindex="2" [(ngModel)]="otherReligion" name="religionName" fieldFill id="religion-name">
                             <label for="religion-name">Specify other religion</label>
+                            <div *ngIf="specifyReligion.touched && specifyReligion.invalid" class="invalid-feedback">
+                                
+                              <div *ngIf="specifyReligion.errors?.pattern">{{errors.other.specifyReligion.invalid}}</div>
+                          </div>
                           </div>
                           <div class="form-group">
                             <span class="control-title">Category</span>
