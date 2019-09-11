@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Renderer2, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Renderer2, AfterViewInit, ViewChildren, QueryList } from '@angular/core';
 
 
 import * as Swiper from "swiper/dist/js/swiper.js";
@@ -27,7 +27,7 @@ interface Item {
   templateUrl: "./references-qde.component.html",
   styleUrls: ["./references-qde.component.css"]
 })
-export class ReferencesQdeComponent implements OnInit {
+export class ReferencesQdeComponent implements OnInit, AfterViewInit {
   value: number = 0;
 
   minValue: number = 1;
@@ -184,6 +184,16 @@ export class ReferencesQdeComponent implements OnInit {
   isEligibilityForReviewsSub: Subscription;
   isTBMLoggedIn: boolean;
 
+  // Only RHS Sliders
+  @ViewChildren('swiperS') swiperS$: QueryList<Swiper>;
+  swiperSliders: Array<Swiper> = [];
+  swiperSlidersSub: Subscription;
+
+  tabName: string;
+  page: number;
+  auditTrialApiSub: Subscription;
+  fragmentSub: Subscription;
+
   constructor(
     private renderer: Renderer2,
     private route: ActivatedRoute,
@@ -201,6 +211,7 @@ export class ReferencesQdeComponent implements OnInit {
     this.route.params.subscribe(params => {
       if(params['applicationId'] != null) {
         this.applicationId = params['applicationId'];
+        this.cds.changeApplicationId(params['applicationId']);
         if(JSON.parse(localStorage.getItem('roles')).includes('TBM')) {
           this.cds.setReadOnlyForm(true);
         } else {
@@ -234,8 +245,17 @@ export class ReferencesQdeComponent implements OnInit {
         this.qdeHttp.getQdeData(applicationId).subscribe(response => {
           let result = JSON.parse(response["ProcessVariables"]["response"]);
 
-          this.cds.setactiveTab(screenPages['references']);
+          
           this.cds.setStatus(result.application.status);
+          this.cds.setactiveTab(screenPages['references']);
+          
+          this.qde = result;
+          this.applicantIndex = this.qde.application.applicants.findIndex(v => v.isMainApplicant == true);
+
+          if(this.qde.application.auditTrailDetails.screenPage == screenPages['references']) {
+            this.goToExactPageAndTab(this.qde.application.auditTrailDetails.tabPage, this.qde.application.auditTrailDetails.pageNumber);
+          }
+
           if (!result.application.references  || Object.keys(result.application.references).length === 0) {
             result.application.references = {
               referenceOne: {},
@@ -282,7 +302,7 @@ export class ReferencesQdeComponent implements OnInit {
           this.selectedAddressLineTwo2 =
             result.application.references.referenceTwo.addressLineTwo || "";
 
-          this.qde = result;
+
           this.cds.enableTabsIfStatus1(this.qde.application.status);
           this.qde.application.applicationId = applicationId;
 
@@ -307,17 +327,37 @@ export class ReferencesQdeComponent implements OnInit {
       }
     });
 
-    this.route.fragment.subscribe(fragment => {
-      let localFragment = fragment;
+    // this.route.fragment.subscribe(fragment => {
+    //   let localFragment = fragment;
 
-      if (fragment == null) {
-        localFragment = "reference1";
+    //   if (fragment == null) {
+    //     localFragment = "reference1";
+    //   }
+
+    //   // Replace Fragments in url
+    //   if (this.fragments.includes(localFragment)) {
+    //     this.tabSwitch(this.fragments.indexOf(localFragment));
+    //   }
+    // });
+
+    this.fragmentSub = this.route.queryParams.subscribe(val => {
+
+      if(val['tabName'] && val['tabName'] != '') {
+        this.tabName = this.fragments.includes(val['tabName']) ? val['tabName'].toString(): this.fragments[0];
+        this.activeTab = this.fragments.findIndex(v => v == val['tabName']);
+
+        this.applicantIndividual = (this.activeTab >= 10) ? false: true;
       }
 
-      // Replace Fragments in url
-      if (this.fragments.includes(localFragment)) {
-        this.tabSwitch(this.fragments.indexOf(localFragment));
+      if(val['page'] && val['page'] != '') {
+        this.page = (val && val['page'] != null && parseInt(val['page']) != NaN && parseInt(val['page']) >= 1) ? parseInt(val['page']): 1;
       }
+
+      console.log("Fragment & QueryParams: ", this.tabName, this.page);
+      // Here in this condition, fragment and page number will be appropriate
+      // if(this.fragment && this.page > -1) {
+      //   alert(this.fragment+" "+this.page);
+      // }
     });
 
 
@@ -343,8 +383,6 @@ export class ReferencesQdeComponent implements OnInit {
     });
   }
 
-  ngAfterViewInit() {}
-
   valuechange(newValue) {
     console.log(newValue);
     this.value = newValue;
@@ -355,11 +393,9 @@ export class ReferencesQdeComponent implements OnInit {
    * @param swiperInstance RHS Swiper Instance
    */
   goToNextSlide(swiperInstance: Swiper, form?: NgForm) {
-    if (form && !form.valid) {
-      return;
-    }
-    // Create ngModel of radio button in future
     swiperInstance.nextSlide();
+    this.page++;
+    this.router.navigate([], {queryParams: { tabName: this.tabName, page: this.page }});
   }
 
   /**
@@ -375,8 +411,9 @@ export class ReferencesQdeComponent implements OnInit {
    * @param swiperInstance RHS Swiper Instance
    */
   goToPrevSlide(swiperInstance: Swiper) {
-    // Create ngModel of radio button in future
     swiperInstance.prevSlide();
+    this.page--;
+    this.router.navigate([], {queryParams: { tabName: this.tabName, page: this.page }});
   }
 
   /**
@@ -387,18 +424,18 @@ export class ReferencesQdeComponent implements OnInit {
     swiperInstance.prevSlide();
   }
 
-  tabSwitch(tabIndex?: number) {
+  tabSwitch(tabIndex?: number, fromQde ?: boolean) {
+
     // Check for invalid tabIndex
-    if (tabIndex < this.fragments.length) {
-      this.router.navigate([], { fragment: this.fragments[tabIndex] });
+    if(tabIndex < this.fragments.length) {
 
-      this.activeTab = tabIndex;
+      let t = fromQde ? this.page: 1;
 
-      if (tabIndex == 9) {
-        this.applicantIndividual = false;
-      } else if (tabIndex == 0) {
-        this.applicantIndividual = true;
+      if(this.swiperSliders && this.swiperSliders.length > 0) {
+        this.swiperSliders[tabIndex].setIndex(this.page-1);
       }
+
+      this.router.navigate([], {queryParams: { tabName: this.fragments[tabIndex], page: t }});
     }
   }
 
@@ -442,15 +479,24 @@ export class ReferencesQdeComponent implements OnInit {
         .subscribe(
           response => {
             // If successful
-            if (
-              response["Error"] === "0" &&
-              response["ProcessVariables"]["status"]
-            ) {
+            if (response["ProcessVariables"]["status"]) {
+
+              console.log(">>>",response['ProcessVariables']['status']);
+              console.log('this.page: ', this.page);
+              console.log('this.tabName: ', this.tabName);
+
+              this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
+                if(auditRes['ProcessVariables']['status'] == true) {
+                  this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                  this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                  this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                  this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
+
+                  this.goToNextSlide(swiperInstance);
+                }
+              });
+
               this.referenceId1 = this.qde.application.references.referenceOne.referenceId;
-              console.log(
-                this.qde.application.references.referenceOne.relationShip
-              );
-              this.goToNextSlide(swiperInstance);
             } else {
               alert(response["ErrorMessage"]);
             }
@@ -493,9 +539,16 @@ export class ReferencesQdeComponent implements OnInit {
               response["Error"] === "0" &&
               response["ProcessVariables"]["status"]
             ) {
-              console.log(
-                this.qde.application.references.referenceOne.relationShip
-              );
+              this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
+                if(auditRes['ProcessVariables']['status'] == true) {
+                  this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                  this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                  this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                  this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
+
+                  this.goToNextSlide(swiperInstance);
+                }
+              });
               this.tabSwitch(1);
             } else {
               alert(response["ErrorMessage"]);
@@ -535,7 +588,16 @@ export class ReferencesQdeComponent implements OnInit {
             ) {
               this.referenceId2 = this.qde.application.references.referenceTwo.referenceId;
               // console.log(this.qde.application.references.referenceOne.relationShip);
-              this.goToNextSlide(swiperInstance);
+              this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
+                if(auditRes['ProcessVariables']['status'] == true) {
+                  this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                  this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                  this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                  this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
+
+                  this.goToNextSlide(swiperInstance);
+                }
+              });
             } else {
               alert(response["ErrorMessage"]);
             }
@@ -587,10 +649,17 @@ export class ReferencesQdeComponent implements OnInit {
               response["Error"] === "0" &&
               response["ProcessVariables"]["status"]
             ) {
-              console.log(
-                this.qde.application.references.referenceOne.relationShip
-              );
-              this.isReferenceRouteModal = true;
+              
+              this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
+                if(auditRes['ProcessVariables']['status'] == true) {
+                  this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                  this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                  this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                  this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
+
+                  this.isReferenceRouteModal = true;
+                }
+              });
             } else {
               alert(response["ErrorMessage"]);
             }
@@ -606,5 +675,29 @@ export class ReferencesQdeComponent implements OnInit {
     }
   }
 
-  temp;
+  ngAfterViewInit() {
+
+    if(this.route.snapshot.params['tabName'] == null) {
+      this.tabName = this.fragments[0];
+    }
+
+    if(this.route.snapshot.params['page'] == null) {
+      this.page = 1;
+    }
+
+    this.swiperSlidersSub = this.swiperS$.changes.subscribe(v => {
+      this.swiperSliders = v._results;
+      if(this.swiperSliders && this.swiperSliders.length > 0) {
+        this.swiperSliders[this.activeTab].setIndex(this.page-1);
+      }
+
+    });
+  }
+
+  goToExactPageAndTab(tabPage: string, pageNumber: number) {
+    let index = this.fragments.findIndex(v => v == tabPage) != -1 ? this.fragments.findIndex(v => v == tabPage) : 0;
+    this.tabName = tabPage;
+    this.page = pageNumber;
+    this.tabSwitch(index, true);
+  }
 }

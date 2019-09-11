@@ -282,7 +282,6 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.cds.changeLogoutVisible(true);
     this.cds.changeHomeVisible(true);
 
-
     this.route.params.subscribe(params => {
       if (params.applicantId != null && params.applicantId != undefined) {
         this.applicantId = params.applicantId;
@@ -387,6 +386,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
           this.cds.setStatus(result.application.status);
           this.qdeService.setQde(result);
           this.cds.setactiveTab(screenPages['loanDetails']);
+          this.cds.changeApplicationId(this.qde.application.applicationId);
 
           /****************************************************************************
           * If Loan Amount is present show qde screen (false) else show product screen
