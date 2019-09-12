@@ -265,9 +265,10 @@ export class OfflinePaymentComponent implements OnInit {
 
   totalFee:number;
   submitPaymentForm() {
-  this.qdeHttp.loginFee(parseInt(this.applicationId)).subscribe(res => {
-    this.totalFee = res['ProcessVariables']['totalAmount'];
-    this.qdeHttp.paymentGateway(this.applicationId,""+this.totalFee).subscribe(res => {
+  // this.qdeHttp.loginFee(parseInt(this.applicationId)).subscribe(res => {
+  //   this.totalFee = res['ProcessVariables']['totalAmount'];
+    // this.qdeHttp.paymentGateway(this.applicationId,""+this.totalFee).subscribe(res => {
+    this.qdeHttp.paymentGateway(this.applicationId).subscribe(res => {
       console.log("Payment gateway",res);
       this.butMes = res['ProcessVariables']['errorMessage']
       if(res['ProcessVariables']['status'] == true){
@@ -278,7 +279,7 @@ export class OfflinePaymentComponent implements OnInit {
         this.isPaymentFailedModal = true;
       }
     });
-  });
+  // });
  
 }
 
