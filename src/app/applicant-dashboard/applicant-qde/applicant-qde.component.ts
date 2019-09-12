@@ -57,7 +57,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   regexPattern = {
     appRefNo:"^[A-Za-z0-9]+$",
-    stdCode: "^[0-9][0-9]*$",
+    stdCode: "^[0][0-9]*$",
     mobileNumber: "^[1-9][0-9]*$",
     name: "^[A-Za-z ]+$",
     address : "^[0-9A-Za-z, _&*#'/#\\-]+$",
@@ -1330,8 +1330,15 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
             }
           });
 
-          let maleTitles = ['1','10'];
-          let femaleTitles = ['2','3','15','16'];
+          let maleTitles = [];
+          for(let i = 0; i < this.maleTitles.length; i++) {
+            maleTitles.push(this.maleTitles[i].value);
+            console.log("maleTiteles:"+ maleTitles);
+          }
+          let femaleTitles = [];
+          for(let i = 0; i < this.femaleTitles.length; i++) {
+            femaleTitles.push(this.femaleTitles[i].value);
+          }
           console.log("this.selectedTitle: ", this.selectedTitle);
           console.log("this.maleTitles: ", maleTitles.find(v => v == this.selectedTitle.value));
           console.log("this.femaleTiles: ", femaleTitles.find(v => v == this.selectedTitle.value));

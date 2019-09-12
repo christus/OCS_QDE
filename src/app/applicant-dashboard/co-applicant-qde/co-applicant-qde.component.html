@@ -786,7 +786,7 @@
                                                       <div class="form-group">
                                                           <input [readonly]="isReadOnly"    type="text"
                                                                     [(ngModel)]="residenceNumberStdCode"
-                                                                    pattern="{{regexPattern.mobileNumber}}"
+                                                                    pattern="{{regexPattern.stdCode}}"
                                                                     #residenceStdCode="ngModel"
                                                                     maxlength="5"
                                                                     minlength="0"
@@ -1651,7 +1651,7 @@
                                               <div class="form-group">
                                                   <span class="control-title">Religion</span>
                                                   <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
-                                                    [data]="religions" 
+                                                    [data]="religions"
                                                     textField="key"
                                                     valueField="value"
                                                     tabindex="1"
@@ -1664,7 +1664,7 @@
                                               </div>
                                               <div class="form-group" *ngIf="selectedReligion.value == '6'" [ngClass]="{'hidden': (selectedReligion.value != '6')}">
                                                   <input [readonly]="isReadOnly" type="text" class="form-control" 
-                                                  pattern="{{regexPattern.name}}" #specifyReligion="ngModel"
+                                                  pattern="{{regexPattern.name}}" #specifyReligion="ngModel" required
                                                   [(ngModel)]="otherReligion" name="religionName" fieldFill id="religion-name">
                                                   <label for="religion-name">Specify other religion</label>
                                                   <div *ngIf="specifyReligion.touched && specifyReligion.invalid" class="invalid-feedback">
@@ -2099,7 +2099,7 @@
                                                                   name="offStdNumber"
                                                                   fieldFill
                                                                   tabindex="7"
-                                                                  maxlength="8"
+                                                                  maxlength="10"
                                                                   spellcheck="false"
                                                                   pattern="{{regexPattern.mobileNumber}}"
                                                                   [(ngModel)]="officialCorrespondencePhoneNumber" />
@@ -2881,7 +2881,7 @@
                                                                   maxlength="5"
                                                                   required
                                                                   id="caStd"
-                                                                  pattern="{{regexPattern.mobileNumber}}"
+                                                                  pattern="{{regexPattern.stdCode}}"
                                                                   required/>
                                                           <label for="caStd">STD</label>
                                                           <div *ngIf="stdNumber.touched  && stdNumber.invalid" class="invalid-feedback">
@@ -2901,7 +2901,7 @@
                                                                   spellcheck="false"
                                                                   #phoneNumber="ngModel"
                                                                   pattern="{{regexPattern.mobileNumber}}"
-                                                                   maxlength="8" 
+                                                                   maxlength="10" 
                                                                   data-validation-attr="residenceno" 
                                                                   required/>
                                                           <label for="ca-res-no">Office number</label>

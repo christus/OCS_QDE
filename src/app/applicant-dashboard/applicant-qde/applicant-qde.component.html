@@ -1292,7 +1292,7 @@
                           <div class="form-group" *ngIf="selectedReligion.value == '6'"
                             [ngClass]="{'hidden': (selectedReligion.value != '6')}">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                            pattern="{{regexPattern.name}}" #specifyReligion = "ngModel"
+                            pattern="{{regexPattern.name}}" #specifyReligion = "ngModel" required
                               tabindex="2" [(ngModel)]="otherReligion" name="religionName" fieldFill id="religion-name">
                             <label for="religion-name">Specify other religion</label>
                             <div *ngIf="specifyReligion.touched && specifyReligion.invalid" class="invalid-feedback">
@@ -1651,7 +1651,7 @@
                             <div class="form-group">
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                                 id="std03" required [(ngModel)]="officialCorrespondenceStdCode" #stdCode="ngModel"
-                                tabindex="6" name="stdCode" maxlength="5" pattern="{{regexPattern.mobileNumber}}"
+                                tabindex="6" name="stdCode" maxlength="5" pattern="{{regexPattern.stdCode}}"
                                 fieldFill />
                               <label for="std03">STD</label>
                               <div *ngIf="stdCode.touched && stdCode.invalid" class="invalid-feedback">
@@ -1664,7 +1664,7 @@
                             <div class="form-group">
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                                 id="res-no03" data-validation-attr="residenceno" required #offStdNumber="ngModel"
-                                name="offStdNumber" fieldFill tabindex="7" maxlength="8"
+                                name="offStdNumber" fieldFill tabindex="7" maxlength="10"
                                 pattern="{{regexPattern.mobileNumber}}"
                                 [(ngModel)]="officialCorrespondencePhoneNumber" />
                               <label for="res-no03">Office number</label>
@@ -2317,7 +2317,7 @@
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text"
                                 [(ngModel)]="corporateAddressStdCode" name="stdNumber" class="form-control"
                                 #stdNumber="ngModel" tabindex="6" fieldFill maxlength="5" required id="caStd"
-                                pattern="{{regexPattern.mobileNumber}}" required />
+                                pattern="{{regexPattern.stdCode}}" required />
                               <label for="caStd">STD</label>
                               <div *ngIf="stdNumber.touched  && stdNumber.invalid" class="invalid-feedback">
                                 <!-- <div *ngIf="stdNumber.errors?.required">{{errors.corporateAddress.stdNumber.required}}</div> -->
@@ -2329,7 +2329,7 @@
                             <div class="form-group">
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                                 [(ngModel)]="corporateAddressPhoneNumber" name="phoneNumber" id="ca-res-no" tabindex="7"
-                                fieldFill #phoneNumber="ngModel" pattern="{{regexPattern.mobileNumber}}" maxlength="8"
+                                fieldFill #phoneNumber="ngModel" pattern="{{regexPattern.mobileNumber}}" maxlength="10"
                                 data-validation-attr="residenceno" required />
                               <label for="ca-res-no">Office number</label>
                               <div *ngIf="phoneNumber.touched  && phoneNumber.invalid" class="invalid-feedback">

@@ -51,7 +51,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
   regexPattern = {
     mobileNumber: "^[1-9][0-9]*$",
-    stdCode: "^[0-9][0-9]*$",
+    stdCode: "^[0][0-9]*$",
     name: "^[A-Za-z, ]+$",
     address : "^[0-9A-Za-z, -_&*#'/#\\-]+$",
     // cityState:"^[0-9A-Za-z, &'#]$",
@@ -1122,6 +1122,25 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                     this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
+
+        let maleTitles = [];
+        for(let i = 0; i < this.maleTitles.length; i++) {
+          maleTitles.push(this.maleTitles[i].value);
+          console.log("maleTiteles:"+ maleTitles);
+        }
+        let femaleTitles = [];
+        for(let i = 0; i < this.femaleTitles.length; i++) {
+          femaleTitles.push(this.femaleTitles[i].value);
+        }
+        console.log("this.selectedTitle: ", this.selectedTitle);
+        console.log("this.maleTitles: ", maleTitles.find(v => v == this.selectedTitle.value));
+        console.log("this.femaleTiles: ", femaleTitles.find(v => v == this.selectedTitle.value));
+        if(maleTitles.find(v => v == this.selectedTitle.value) != null) {
+          this.qde.application.applicants[this.coApplicantIndex].personalDetails.gender = '1';
+        }
+        else if(femaleTitles.find(v => v == this.selectedTitle.value) != null) {
+          this.qde.application.applicants[this.coApplicantIndex].personalDetails.gender = '2';
+        }
           this.goToNextSlide(swiperInstance);
         } else {
           // Throw Invalid Pan Error
@@ -1149,7 +1168,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                     this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                     this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
           }
-        });        
+        });  
+        
+        
         this.goToNextSlide(swiperInstance);
       } else {
         // Throw Invalid Pan Error
