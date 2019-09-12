@@ -1,5 +1,5 @@
 import { environment } from 'src/environments/environment';
-import { Component, OnInit,  ViewChild, ElementRef, Renderer2, AfterViewInit, HostListener } from '@angular/core';
+import { Component, OnInit,  ViewChild, ElementRef, Renderer2, AfterViewInit, HostListener, ViewChildren, QueryList } from '@angular/core';
 
 import * as Swiper from "swiper/dist/js/swiper.js";
 // import { Select2Component } from 'ng2-select2';
@@ -36,7 +36,7 @@ enum DocumentCategory {
   templateUrl: "./document-upload.component.html",
   styleUrls: ["./document-upload.component.css"]
 })
-export class DocumentUploadComponent implements OnInit {
+export class DocumentUploadComponent implements OnInit, AfterViewInit {
 
   isMobile:boolean;
   
@@ -184,6 +184,16 @@ export class DocumentUploadComponent implements OnInit {
   applicantIndex: number = 0;
   applicantId: string;
 
+    // Only RHS Sliders
+  @ViewChildren('swiperS') swiperS$: QueryList<Swiper>;
+  swiperSliders: Array<Swiper> = [];
+  swiperSlidersSub: Subscription;
+
+  tabName: string;
+  page: number;
+  auditTrialApiSub: Subscription;
+  fragmentSub: Subscription;
+
   constructor(
     private renderer: Renderer2,
     private route: ActivatedRoute,
@@ -232,6 +242,7 @@ export class DocumentUploadComponent implements OnInit {
     if (this.route.snapshot.data.listOfValues) {
       const lov = JSON.parse(this.route.snapshot.data.listOfValues["ProcessVariables"].lovs);
 
+      console.log("LOVS: ", lov);
       this.documentCategory = lov.LOVS.document_category;
     }
 
@@ -245,11 +256,11 @@ export class DocumentUploadComponent implements OnInit {
 
         this.getQdeDataSub = this.qdeHttp.getQdeData(params.applicationId).subscribe(response => {
           var result = JSON.parse(response["ProcessVariables"]["response"]);
+          this.cds.setStatus(result.application.status);
           this.cds.setactiveTab(screenPages['documentUploads']);
+          this.qde = result;
           this.qdeService.setQde(result);
           var butRes = result.application.status;
-          console.log("RESPONSEhgjfgjkfk ", butRes);
-          this.cds.setStatus(result.application.status);
 
           // if(butRes >= 5) {
           //   this.cds.setIsMainTabEnabled(false);
@@ -258,8 +269,18 @@ export class DocumentUploadComponent implements OnInit {
           //   this.cds.setIsMainTabEnabled(true);
           // }
 
-          this.qde = result;
-          this.qdeService.setQde(this.qde);
+          /***********************************************
+          * Check if route is appropriate with Applicants
+          * If not then redirect to Dashboard
+          ***********************************************/
+
+          if(this.qde.application.auditTrailDetails.screenPage == screenPages['documentUploads']) {
+            this.goToExactPageAndTab(result.application.auditTrailDetails.tabPage, result.application.auditTrailDetails.pageNumber);
+            // this.router.navigate(['/document-uploads', result.application.applicationId, 'applicant', this.qde.application.auditTrailDetails.applicantId], {queryParams: {tabName: this.qde.application.auditTrailDetails.tabPage, page: this.qde.application.auditTrailDetails.pageNumber}});
+          } else {
+            this.router.navigate(['/document-uploads', result.application.applicationId], {queryParams: {tabName: this.fragments[0], page: 1}});
+          }
+          
 
           if(result != null) {
             this.applicantIndex = result.application.applicants.findIndex(v => v.applicantId == this.applicantId);
@@ -303,18 +324,39 @@ export class DocumentUploadComponent implements OnInit {
       this.isTBMLoggedIn = val;
     });
 
-    this.route.fragment.subscribe(fragment => {
+    // this.route.fragment.subscribe(fragment => {
 
-      let localFragment = fragment;
+    //   let localFragment = fragment;
 
-      if (fragment == null || (!this.fragments.includes(fragment))) {
-        localFragment = "aadhar";
+    //   if (fragment == null || (!this.fragments.includes(fragment))) {
+    //     localFragment = "aadhar";
+    //   }
+
+    //   // Replace Fragments in url
+    //   if (this.fragments.includes(localFragment)) {
+    //     this.tabSwitch(this.fragments.indexOf(localFragment));
+    //   }
+    // });
+
+
+    this.fragmentSub = this.route.queryParams.subscribe(val => {
+
+      if(val['tabName'] && val['tabName'] != '') {
+        this.tabName = this.fragments.includes(val['tabName']) ? val['tabName'].toString(): this.fragments[0];
+        this.activeTab = this.fragments.findIndex(v => v == val['tabName']);
+
+        this.applicantIndividual = (this.activeTab >= 10) ? false: true;
       }
 
-      // Replace Fragments in url
-      if (this.fragments.includes(localFragment)) {
-        this.tabSwitch(this.fragments.indexOf(localFragment));
+      if(val['page'] && val['page'] != '') {
+        this.page = (val && val['page'] != null && parseInt(val['page']) != NaN && parseInt(val['page']) >= 1) ? parseInt(val['page']): 1;
       }
+
+      console.log("Fragment & QueryParams: ", this.tabName, this.page);
+      // Here in this condition, fragment and page number will be appropriate
+      // if(this.fragment && this.page > -1) {
+      //   alert(this.fragment+" "+this.page);
+      // }
     });
 
 
@@ -334,8 +376,6 @@ export class DocumentUploadComponent implements OnInit {
 
   }
 
-  ngAfterViewInit() {}
-
   valuechange(newValue) {
     console.log(newValue);
     this.value = newValue;
@@ -346,11 +386,9 @@ export class DocumentUploadComponent implements OnInit {
    * @param swiperInstance RHS Swiper Instance
    */
   goToNextSlide(swiperInstance: Swiper, form?: NgForm) {
-    if (form && !form.valid) {
-      return;
-    }
-    // Create ngModel of radio button in future
     swiperInstance.nextSlide();
+    this.page++;
+    this.router.navigate([], {queryParams: { tabName: this.tabName, page: this.page }});
   }
 
   /**
@@ -366,8 +404,9 @@ export class DocumentUploadComponent implements OnInit {
    * @param swiperInstance RHS Swiper Instance
    */
   goToPrevSlide(swiperInstance: Swiper) {
-    // Create ngModel of radio button in future
     swiperInstance.prevSlide();
+    this.page--;
+    this.router.navigate([], {queryParams: { tabName: this.tabName, page: this.page }});
   }
 
   /**
@@ -378,26 +417,35 @@ export class DocumentUploadComponent implements OnInit {
     swiperInstance.prevSlide();
   }
 
-  tabSwitch(tabIndex?: number) {
+  tabSwitch(tabIndex?: number, fromQde ?: boolean) {
 
     if(tabIndex == 0) {
       this.isTabDisabled = true;
-    } else {
-      this.isTabDisabled = false;
+    }
+
+    // Check for invalid tabIndex
+    // if (tabIndex < this.fragments.length) {
+
+    //   console.log(tabIndex);
+    //   this.router.navigate([], { fragment: this.fragments[tabIndex] });
+
+    //   this.activeTab = tabIndex;
+
+    //   if (tabIndex === 9) {
+    //     this.applicantIndividual = false;
+    //   } else if (tabIndex === 0) {
+    //     this.applicantIndividual = true;
+    //   }
+    // }
+
+    let t = fromQde ? this.page: 1;
+
+    if(this.swiperSliders && this.swiperSliders.length > 0) {
+      this.swiperSliders[tabIndex].setIndex(this.page-1);
     }
     // Check for invalid tabIndex
-    if (tabIndex < this.fragments.length) {
-
-      console.log(tabIndex);
-      this.router.navigate([], { fragment: this.fragments[tabIndex] });
-
-      this.activeTab = tabIndex;
-
-      if (tabIndex === 9) {
-        this.applicantIndividual = false;
-      } else if (tabIndex === 0) {
-        this.applicantIndividual = true;
-      }
+    if(tabIndex < this.fragments.length) {
+      this.router.navigate([], {queryParams: { tabName: this.fragments[tabIndex], page: t }});
     }
   }
 
@@ -451,7 +499,7 @@ export class DocumentUploadComponent implements OnInit {
   /************************
   * Customer Photo Next(Submit)
   ************************/
-  handleCustomerPhoto(slider) {
+  handleCustomerPhoto(slider ?: Swiper) {
 
     let tabIndex = 2;
     if (!this.photoProofDoc[this.applicantIndex]) {
@@ -962,9 +1010,10 @@ export class DocumentUploadComponent implements OnInit {
       response => {
         const processVariables = response["ProcessVariables"];
         if (response["Error"] === "0" && processVariables["status"]) {
-          console.log("getApplicableDocuments: ", response);
-
+          
           const res = JSON.parse(processVariables["response"]);
+
+          console.log("getApplicableDocuments: ", response);
 
           /******************************
           * Default Values for dropdowns
@@ -1071,17 +1120,9 @@ export class DocumentUploadComponent implements OnInit {
   selectAnApplicant(applicationId, mainApplicantId, index) {
     this.applicantIndex = index;
     this.isTabDisabled = false;
-    console.log("Applicant:::", this.qde.application.applicants[this.applicantIndex]);
-    console.log("idProofDocumnetType: ", this.idProofDocumnetType);
-    this.router.navigate(['/document-uploads/'+applicationId+'/applicant/'+mainApplicantId], {fragment: "aadhar1"});
+    // this.router.navigate(['/document-uploads/'+applicationId+'/applicant/'+mainApplicantId], {queryParams: {tabName: this.fragments[1], page: 1}});
+    this.tabSwitch(1);
   }
-
-  // selectAnApplicant(applicationId, mainApplicantId, index) {
-    
-  //   this.router.navigate(['/document-uploads/'+applicationId+'/co-applicant/'+mainApplicantId], {fragment: "aadhar1"});
-  // }
-
-  temp;
 
   loadDocuments(documents: Array<any>, index: number) {
 
@@ -1179,4 +1220,21 @@ export class DocumentUploadComponent implements OnInit {
     this.isDocUploadRouteModal = false
   }
 
+  ngAfterViewInit() {
+    this.swiperSlidersSub = this.swiperS$.changes.subscribe(v => {
+      this.swiperSliders = v._results;
+      if(this.swiperSliders && this.swiperSliders.length > 0) {
+        this.swiperSliders[this.activeTab].setIndex(this.page-1);
+      }
+
+    });
+  }
+
+  goToExactPageAndTab(tabPage: string, pageNumber: number) {
+    let index = this.fragments.findIndex(v => v == tabPage) != -1 ? this.fragments.findIndex(v => v == tabPage) : 0;
+    this.tabName = tabPage;
+    this.page = pageNumber;
+    this.tabSwitch(index, true);
+    // alert(this.coApplicantIndex);
+  }
 }

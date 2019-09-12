@@ -29,7 +29,6 @@
             </ul>
           
               <!-- Upload Documents -->
-
               <div class="tabs-contents" #tabContents>
                 <div class="tab-content" [ngClass]="{'active': (activeTab == 0)}">
                         <a [routerLink]="['/references', applicationId]" fragment="reference2" class="back-btn"></a>
@@ -37,7 +36,7 @@
                         <div class="lhs">
                             <div  class="swiper-container form-swiper"
                                   [swiper]="lhsConfig"
-                                  #panSlider1="ngxSwiper">
+                                  #dashboardSlider1="ngxSwiper">
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide">
                                         <div class="title-wrap">
@@ -50,9 +49,10 @@
                             <div class="rhs">
                                 <div class="swiper-container form-swiper"
                                       [swiper]="rhsConfig"
-                                      (slidePrevTransitionStart)="slidePrevTransitionStart(panSlider1)"
-                                      (slideNextTransitionStart)="slideNextTransitionStart(panSlider1)"
-                                      #panSlider2="ngxSwiper">
+                                      (slidePrevTransitionStart)="slidePrevTransitionStart(dashboardSlider1)"
+                                      (slideNextTransitionStart)="slideNextTransitionStart(dashboardSlider1)"
+                                      #swiperS="ngxSwiper"
+                                      #dashboardSlider2="ngxSwiper">
                                     <div class="swiper-wrapper">
                                         <div class="swiper-slide">
                                             <form class="bs-form">
@@ -69,7 +69,9 @@
                                                         (click)="selectAnApplicant(applicationId, applicant.applicantId, i)"
                                                         type="radio" name="doc-upload"/>
                                                         <label for="applicant-radio">
-                                                            <span class="desc-text"><span>{{i>0 ? 'Co-': ''}}Applicant</span>{{ i>0 ? i: ""}}</span>
+                                                            <span class="desc-text">
+                                                                {{applicant.isIndividual ? applicant?.personalDetails?.firstName ? applicant.personalDetails.firstName+" "+applicant.personalDetails.lastName: 'Applicant': (applicant?.organizationDetails?.nameOfOrganization ? applicant?.organizationDetails?.nameOfOrganization: 'Applicant') }}
+                                                            </span>
                                                             <!-- <span class="icon icon-close"></span> -->
                                                         </label>
                                                     </div>
@@ -85,13 +87,13 @@
 
                 <!-- Customer Photo -->
 
-                <div class="tab-content" [ngClass]="{'active': (activeTab == 1)}" *ngIf="!isTabDisabled">
-                <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(panSlider2)"></a>
+                <div class="tab-content" [ngClass]="{'active': (activeTab == 1)}">
+                <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(dashboardSlider2)"></a>
                 <div class="lyt-tabs">
                     <div class="lhs">
                         <div  class="swiper-container form-swiper"
                                 [swiper]="lhsConfig"
-                                #panSlider1="ngxSwiper"></div>
+                                #customerPhotoSlider1="ngxSwiper"></div>
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide">
                                     <div class="title-wrap">
@@ -103,16 +105,19 @@
                     <div class="rhs">
                         <div  class="swiper-container form-swiper"
                         [swiper]="rhsConfig"
-                        #panSlider2="ngxSwiper">
+                        (slidePrevTransitionStart)="slidePrevTransitionStart(customerPhotoSlider1)"
+                        (slideNextTransitionStart)="slideNextTransitionStart(customerPhotoSlider1)"
+                        #swiperS="ngxSwiper"
+                        #customerPhotoSlider2="ngxSwiper">
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide">
-                                    <form class="bs-form">
+                                    <form class="bs-form" *ngIf="!isTabDisabled">
                                         <div class="form-wrap">
 
                                         <div *ngIf="isMobile">
 
                                             <div *ngIf="photoProofId[applicantIndex]" else photoProof>
-                                                <div *ngIf="photoProofId[applicantIndex]" class="bs-file" >
+                                                <div *ngIf="photoProofId[applicantIndex]" class="bs-file">
                                                         <secured-image [src]="photoProofId[applicantIndex]"></secured-image>
                                                     <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setCustomerPhoto')">Retake</button>
                                                 </div>
@@ -157,7 +162,7 @@
 
                                         </div>
                                         <div class="btn-wrap">
-                                            <button type="button" (click)="handleCustomerPhoto(panSlider1)" class="btn btn-primary">Next</button>
+                                            <button type="button" (click)="handleCustomerPhoto(customerPhotoSlider2)" class="btn btn-primary">Next</button>
                                         </div>
                                     </form>
                                 </div>
@@ -169,7 +174,7 @@
 
                 <!-- ID Proof -->
 
-                  <div class="tab-content" [ngClass]="{'active': (activeTab == 2)}" *ngIf="!isTabDisabled">
+                  <div class="tab-content" [ngClass]="{'active': (activeTab == 2)}">
                     <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(aadharSlider2)"></a>
                     <div class="lyt-tabs">
                         <div class="lhs">
@@ -195,10 +200,11 @@
                                   [swiper]="rhsConfig"
                                   (slidePrevTransitionStart)="slidePrevTransitionStart(aadharSlider1)"
                                   (slideNextTransitionStart)="slideNextTransitionStart(aadharSlider1)"
+                                  #swiperS="ngxSwiper"
                                   #aadharSlider2="ngxSwiper">
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide">
-                                        <form class="bs-form">
+                                        <form class="bs-form" *ngIf="!isTabDisabled">
                                             <div class="form-wrap">
                                                 <div class="form-group">
                                                     <span class="control-title">Select a Document Type</span>
@@ -217,7 +223,7 @@
                                         </form>
                                     </div>
                                     <div class="swiper-slide">
-                                        <form class="bs-form">
+                                        <form class="bs-form" *ngIf="!isTabDisabled">
                                             <div class="form-wrap">
                                                 
                                                 <div *ngIf="isMobile">
@@ -358,6 +364,7 @@
                               [swiper]="rhsConfig"
                               (slidePrevTransitionStart)="slidePrevTransitionStart(addressSlider1)"
                               (slideNextTransitionStart)="slideNextTransitionStart(addressSlider1)"
+                              #swiperS="ngxSwiper"
                               #addressSlider2="ngxSwiper">
                                 <div class="swiper-wrapper">
                                   <div class="swiper-slide">
@@ -446,8 +453,8 @@
 
                   <!-- Income Proof -->
 
-                  <div class="tab-content" [ngClass]="{'active': (activeTab == 4)}" *ngIf="!isTabDisabled">
-                      <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(incomeSlider2)"></a>
+                  <div class="tab-content" [ngClass]="{'active': (activeTab == 4)}">
+                      <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(addressSlider2)"></a>
                       <div class="lyt-tabs">
                           <div class="lhs">
                               <div  class="swiper-container form-swiper"
@@ -472,10 +479,11 @@
                               [swiper]="rhsConfig"
                               (slidePrevTransitionStart)="slidePrevTransitionStart(incomeSlider1)"
                               (slideNextTransitionStart)="slideNextTransitionStart(incomeSlider1)"
+                              #swiperS="ngxSwiper"
                               #incomeSlider2="ngxSwiper">
                                 <div class="swiper-wrapper">
                                   <div class="swiper-slide">
-                                    <form class="bs-form">
+                                    <form class="bs-form" *ngIf="!isTabDisabled">
                                         <div class="form-wrap">
                                             <div class="form-group">
                                                 <span class="control-title">Select a Document Type</span>
@@ -495,7 +503,7 @@
                                     </form>
                                   </div>
                                   <div class="swiper-slide">
-                                      <form class="bs-form">
+                                      <form class="bs-form" *ngIf="!isTabDisabled">
                                           <div class="form-wrap">
 
                                             <div *ngIf="isMobile">
@@ -560,7 +568,7 @@
 
                   <!-- Banking -->
 
-                  <div class="tab-content" [ngClass]="{'active': (activeTab == 5)}" *ngIf="!isTabDisabled">
+                  <div class="tab-content" [ngClass]="{'active': (activeTab == 5)}">
                       <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(bankingSlider2)"></a>
                       <div class="lyt-tabs">
                           <div class="lhs">
@@ -586,10 +594,11 @@
                               [swiper]="rhsConfig"
                               (slidePrevTransitionStart)="slidePrevTransitionStart(bankingSlider1)"
                               (slideNextTransitionStart)="slideNextTransitionStart(bankingSlider1)"
+                              #swiperS="ngxSwiper"
                               #bankingSlider2="ngxSwiper">
                                 <div class="swiper-wrapper">
                                   <div class="swiper-slide">
-                                    <form class="bs-form">
+                                    <form class="bs-form" *ngIf="!isTabDisabled">
                                         <div class="form-wrap">
                                             <div class="form-group">
                                                 <span class="control-title">Select a Document Type</span>
@@ -609,7 +618,7 @@
                                     </form>
                                   </div>
                                   <div class="swiper-slide">
-                                      <form class="bs-form">
+                                      <form class="bs-form" *ngIf="!isTabDisabled">
                                           <div class="form-wrap">
 
                                             <div *ngIf="isMobile">
@@ -677,7 +686,7 @@
 
                   <!-- Collateral -->
 
-                  <div class="tab-content" [ngClass]="{'active': (activeTab == 6)}" *ngIf="!isTabDisabled">
+                  <div class="tab-content" [ngClass]="{'active': (activeTab == 6)}">
                       <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(collateralSlider2)"></a>
                       <div class="lyt-tabs">
                           <div class="lhs">
@@ -703,10 +712,11 @@
                               [swiper]="rhsConfig"
                               (slidePrevTransitionStart)="slidePrevTransitionStart(collateralSlider1)"
                               (slideNextTransitionStart)="slideNextTransitionStart(collateralSlider1)"
+                              #swiperS="ngxSwiper"
                               #collateralSlider2="ngxSwiper">
                                 <div class="swiper-wrapper">
                                   <div class="swiper-slide">
-                                    <form class="bs-form">
+                                    <form class="bs-form" *ngIf="!isTabDisabled">
                                         <div class="form-wrap">
                                             <div class="form-group">
                                                 <span class="control-title">Select a Document Type</span>
@@ -726,7 +736,7 @@
                                     </form>
                                   </div>
                                   <div class="swiper-slide">
-                                      <form class="bs-form">
+                                      <form class="bs-form" *ngIf="!isTabDisabled">
                                           <div class="form-wrap">
 
                                             <div *ngIf="isMobile">
