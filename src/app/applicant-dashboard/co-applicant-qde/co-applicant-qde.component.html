@@ -105,7 +105,7 @@
                                                           <label for="applicant-radio">
                                                               <span class="icon icon-close"></span>
                                                           </label>
-                                                          <span class="desc-text">{{i+1}} | <span>Co-Applicant</span></span>
+                                                          <span class="desc-text">{{i+1}} | <span>{{coApp.isIndividual ? coApp?.personalDetails?.firstName ? coApp.personalDetails.firstName+" "+coApp.personalDetails.lastName: 'Co-Applicant': (coApp?.organizationDetails?.nameOfOrganization ? coApp?.organizationDetails?.nameOfOrganization: 'Co-Applicant') }}</span></span>
                                                       </div>
               
                                                   </div>

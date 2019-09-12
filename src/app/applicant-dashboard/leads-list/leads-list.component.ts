@@ -3,7 +3,7 @@ import { QdeHttpService } from 'src/app/services/qde-http.service';
 import { UtilService } from 'src/app/services/util.service';
 import { from } from 'rxjs';
 import { CommonDataService } from 'src/app/services/common-data.service';
-import { statuses } from '../../app.constants';
+import { statuses, screenPages } from '../../app.constants';
 import { TabsComponent } from './tabs/tabs.component';
 
 export interface UserDetails {
@@ -272,8 +272,19 @@ export class LeadsListComponent implements OnInit {
 
     if(statuses[status] == "1") {
       this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
-      
-      return "/applicant/"+applicationId;
+
+      if(screenPages['applicantDetails'] == el['auditTrialScreenPage']) {
+        return '/applicant/'+applicationId;
+      } else if(screenPages['coApplicantDetails'] == el['auditTrialScreenPage']) {
+        el['queryParams'] = {tabName: 'dashboard', page:1};
+        return '/applicant/'+applicationId+'/co-applicant';
+      } else if(screenPages['loanDetails'] == el['auditTrialScreenPage']) {
+        return '/loan/'+applicationId;
+      } else if(screenPages['references'] == el['auditTrialScreenPage']) {
+        return '/references/'+applicationId;
+      } else if(screenPages['documentUploads'] == el['auditTrialScreenPage']) {
+        return '/document-uploads/'+applicationId;
+      }
     } 
     else if(statuses[status] == "5") {
       this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
