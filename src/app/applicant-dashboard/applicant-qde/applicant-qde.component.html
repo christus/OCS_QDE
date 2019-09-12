@@ -645,7 +645,7 @@
                             <div class="form-group typ-optional">
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                                 id="res-no" [(ngModel)]="residenceNumberPhoneNumber"
-                                pattern="{{regexPattern.mobileNumber}}" maxlength="10" #residenceNumber="ngModel"
+                                pattern="{{regexPattern.mobileNumber}}" maxlength="8" #residenceNumber="ngModel"
                                 name="residenceNumber2" value="{{residenceNumber.phoneNumber}}"
                                 data-validation-attr="residenceno" fieldFill />
                               <label for="res-no" tabindex="10">Residence number</label>
@@ -682,7 +682,7 @@
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                                 [(ngModel)]="alternateResidenceNumberPhoneNumber" #alternateResidenceNumber2="ngModel"
                                 name="alternateResidenceNumber2" id="altr-res-no"
-                                value="{{residenceNumber.phoneNumber}}" maxlength="10" fieldFill
+                                value="{{residenceNumber.phoneNumber}}" maxlength="8" fieldFill
                                 pattern="{{regexPattern.mobileNumber}}" data-validation-attr="residenceno01" />
                               <label for="altr-res-no" tabindex="13">Residence number</label>
                               <span class="optional">Optional</span>
