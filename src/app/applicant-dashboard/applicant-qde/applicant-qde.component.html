@@ -727,7 +727,7 @@
                 <div class="form-wrap1">
                   <div class="form-group otp_input_len">
                     <input [readonly]="isTBMLoggedIn" type="text" class="form-control" id="otp" name="otp"
-                      [(ngModel)]="otp" fieldFill>
+                      [(ngModel)]="otp" maxlength="4" fieldFill>
                     <label for="otp">OTP</label>
                     <span><b>{{timeLeft}} Seconds Left...</b></span>
                     <span *ngIf="isDisabled">
@@ -1683,7 +1683,7 @@
                               name="officeEmail" (ngModelChange)="onOfficialCorsEmailChange($event, officeEmail)"/>
                             <label for="off-email">Office email ID</label>
 
-                            <div *ngIf="officeEmail.touched && officeEmail.invalid" class="invalid-feedback">
+                            <div *ngIf="(officeEmail.untouched || officeEmail.touched) && officeEmail.invalid" class="invalid-feedback">
                               <div *ngIf="officeEmail.errors?.required">{{errors.officialCorrespondence.email.required}}</div>
                               <div *ngIf="officeEmail.errors.invalidDomain">{{errors.officialCorrespondence.email.invalidDomain}}
                               </div>
@@ -2345,7 +2345,7 @@
                               [(ngModel)]="qde.application.applicants[applicantIndex].corporateAddress.officeEmailId"
                               name="officeEmailId" #ofcEmail="ngModel" fieldFill />
                             <label for="ofc-email">Office email ID</label>
-                            <div *ngIf="ofcEmail.touched && ofcEmail.invalid" class="invalid-feedback">
+                            <div *ngIf="(ofcEmail.untouched || ofcEmail.touched) && ofcEmail.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="ofcEmail.errors?.required">{{errors.corporateAddress.ofcEmail.required}}</div> -->
                               <div *ngIf="ofcEmail.errors?.pattern">{{errors.corporateAddress.ofcEmail.invalid}}</div>
                             </div>

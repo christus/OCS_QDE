@@ -63,7 +63,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     address : "^[0-9A-Za-z, _&*#'/#\\-]+$",
     // cityState:"^[0-9A-Za-z, &'#]$",
     pinCode: "^[1-9][0-9]{5}$",
-    // applicationRefNo : "",
+    otp: "^[0-9]$",
     panInd:"[A-Z]{3}(P)[A-Z]{1}[0-9]{4}[A-Z]{1}",
     panNonInd:"[A-Z]{5}[0-9]{4}[A-Z]{1}",
     // amount:"[0-9]{0,17}\.[0-9]{1,4}?$",

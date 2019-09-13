@@ -55,6 +55,9 @@ export const errors: any = {
       sameNumber: "Mobile numbers are same, please use different numbers",
       wrong: "Please provide valid mobile number"
     },
+    otp:{
+      invalid:"Invalid OTP"
+    },
     stdCode: {
       required: "Std Code is mandatory",
       invalid: "Invalid STD code"

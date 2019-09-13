@@ -909,6 +909,7 @@
                                         type="text" class="form-control" 
                                         id="otp" 
                                         name="otp" 
+                                        maxlength="4"
                                         [(ngModel)]="otp"
                                         fieldFill>
                                         <label for="otp">OTP</label>
@@ -2064,7 +2065,7 @@
                                                         name="cityState"
                                                         fieldFill
                                                         spellcheck="false"
-                                                        readonly
+                                                        readonly disabled
                                                         pattern="{{regexPattern.address}}">
                                                         <label for="offCityState">City/State</label>
                   
@@ -2123,7 +2124,7 @@
                                                         name="officeEmail" />
                                                       <label for="off-email">Office email ID</label>
                 
-                                                      <div *ngIf="officeEmail.touched && officeEmail.invalid" class="invalid-feedback">
+                                                      <div *ngIf="(officeEmail.untouched || officeEmail.touched) && officeEmail.invalid" class="invalid-feedback">
                                                           <!-- <div *ngIf="officeEmail.errors?.required">{{errors.officialCorrespondence.email.required}}</div> -->
                                                           <div *ngIf="officeEmail.errors?.pattern">{{errors.officialCorrespondence.email.invalid}}</div>
                                                           <div *ngIf="officeEmail.errors?.invalidDomain">{{errors.officialCorrespondence.email.invalidDomain}}</div>
@@ -2925,7 +2926,7 @@
                                                                 spellcheck="false"
                                                                  />                                      
                                                     <label for="ofc-email" *ngIf="ofcEmail.value==''">Office email ID</label>
-                                                      <div *ngIf="ofcEmail.touched && ofcEmail.invalid" class="invalid-feedback">
+                                                      <div *ngIf="(ofcEmail.untouched || ofcEmail.touched) && ofcEmail.invalid" class="invalid-feedback">
                                                           <!-- <div *ngIf="ofcEmail.errors?.required">{{errors.corporateAddress.ofcEmail.required}}</div> -->
                                                           <div *ngIf="ofcEmail.errors?.pattern">{{errors.corporateAddress.ofcEmail.invalid}}</div>
                                                       </div>
