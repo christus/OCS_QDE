@@ -3035,12 +3035,12 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   validateOTP(form: NgForm) {
     console.log("Payment gateway");
     const mobileNumber = this.qde.application.applicants[this.coApplicantIndex].contactDetails.mobileNumber;
-    const applicantId = this.qde.application.applicationId;
+    const applicantId = this.qde.application.applicants[this.coApplicantIndex].applicantId;
     const otp = form.value.otp;
     const applicationId = this.qde.application.applicationId;
+    const emailId = this.qde.application.applicants[this.coApplicantIndex].contactDetails.preferredEmailId;
 
-
-    this.validateOTPAPISub = this.qdeHttp.validateOTPAPI(mobileNumber, applicantId, applicationId, otp, this.isAlternateStatus).subscribe(res => {
+    this.validateOTPAPISub = this.qdeHttp.validateOTPAPI(mobileNumber, applicantId, applicationId, otp, this.isAlternateStatus, emailId).subscribe(res => {
       if(res['ProcessVariables']['status'] == true) {
         this.otp = "";
         alert("OTP verified successfully");

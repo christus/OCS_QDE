@@ -713,7 +713,7 @@ createOrUpdatePersonalDetails(qde) {
     return this.http.post(uri, body.toString());
   }
 
-  validateOTPAPI(mobileNumber, applicantId, applicationId, otp, isAlternateNumber) {
+  validateOTPAPI(mobileNumber, applicantId, applicationId, otp, isAlternateNumber, emailId) {
     const processId = environment.api.validateOTP.processId;
     const workflowId = environment.api.validateOTP.workflowId;
     const projectId = environment.projectId;
@@ -729,7 +729,8 @@ createOrUpdatePersonalDetails(qde) {
         "phoneNumber": mobileNumber,
         "applicationId": applicationId,
         "otp": otp,
-        "isAlternateNumber":  isAlternateNumber
+        "isAlternateNumber":  isAlternateNumber,
+        "emailId" : emailId
       },
       workflowId: workflowId,
       projectId: projectId

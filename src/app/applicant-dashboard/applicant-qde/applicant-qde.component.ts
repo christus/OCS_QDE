@@ -2645,10 +2645,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     const mobileNumber = this.qde.application.applicants[this.applicantIndex].contactDetails.mobileNumber;
     const applicantId = this.qde.application.applicants[this.applicantIndex].applicantId;
     const applicationId = this.qde.application.applicationId;
-
+    const emailId = this.qde.application.applicants[this.applicantIndex].contactDetails.preferredEmailId;
     const otp = form.value.otp;
 
-    this.validateOTPAPISub = this.qdeHttp.validateOTPAPI(mobileNumber, applicantId, applicationId, otp, this.isAlternateStatus).subscribe(res => {
+    this.validateOTPAPISub = this.qdeHttp.validateOTPAPI(mobileNumber, applicantId, applicationId, otp, this.isAlternateStatus, emailId).subscribe(res => {
       // if(res['ProcessVariables']['isPaymentSuccessful'] == true) {
       //   this.showSuccessModal = true;
       //   this.emiAmount = res['ProcessVariables']['emi'];
