@@ -329,6 +329,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   swiperSliders: Array<Swiper> = [];
   swiperSlidersSub: Subscription;
 
+  isErrorModal: boolean;
+  errorMessage: string;
+
   constructor(private renderer: Renderer2,
               private route: ActivatedRoute,
               private router: Router,
@@ -853,6 +856,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
       this.initializeVariables();
+          }, error => {
+            this.isErrorModal = true;
+            this.errorMessage = "Something went wrong, please again later.";
           });
         // }
       }
@@ -1092,6 +1098,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           this.qde.application.applicants[this.applicantIndex].pan.panVerified = false;
           this.isValidPan = false;
         }
+      }, error => {
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       });
     }
     // Only create HFC API when PAN is already valid and not touched
@@ -1118,7 +1127,13 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
                 this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                 this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
+              } else {
+                this.isErrorModal = true;
+                this.errorMessage = "Something went wrong, please again later.";
               }
+            }, error => {
+              this.isErrorModal = true;
+              this.errorMessage = "Something went wrong, please again later.";
             });
 
             let applicationId = result['application']['applicationId'];
@@ -1126,7 +1141,13 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
               if(response["ProcessVariables"]["status"] == true) { 
                 // this.cds.changePanSlide(true);
                 this.router.navigate(['/applicant/'+this.qde.application.applicationId]);
+              } else {
+                this.isErrorModal = true;
+                this.errorMessage = "Something went wrong, please again later.";
               }
+            }, error => {
+              this.isErrorModal = true;
+              this.errorMessage = "Something went wrong, please again later.";
             });
 
           }else {
@@ -1141,11 +1162,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
         } else {
           this.panErrorCount++;
-          // Throw Invalid Pan Error
+          this.isErrorModal = true;
+          this.errorMessage = "Something went wrong, please again later.";  
         }
       }, (error) => {
-        // alert("error"+error);
-        // Throw Request Failure Error
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       });
     }
 
@@ -1237,7 +1259,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
               this.isValidPan = false;
               this.qde.application.applicants[this.applicantIndex].pan.panVerified = false;
             }
-        });
+        }, error => {
+          this.isErrorModal = true;
+          this.errorMessage = "Something went wrong, please again later."
+;        });
       } else {
         this.createOrUpdatePanDetailsSub2=this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
           // If successfull
@@ -1277,12 +1302,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
             }
           } else {
             this.panErrorCount++;
-            // Throw Invalid Pan Error
+            this.isErrorModal = true;
+            this.errorMessage = "Something went wrong, please again later.";
           }
         }, (error) => {
-          console.log('error ', error);
-          // alert("error"+error);
-          // Throw Request Failure Error
+          this.isErrorModal = true;
+          this.errorMessage = "Something went wrong, please again later.";
         });
       }
 
@@ -1350,11 +1375,13 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           }
           this.goToNextSlide(swiperInstance);
         } else {
-          // Throw Invalid Pan Error
-        }
+          this.isErrorModal = true;
+          this.errorMessage = "Something went wrong, please again later."
+;        }
       }, (error) => {
-        console.log("response : ", error);
-      });
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later."
+;      });
     }
     
   }
@@ -1378,10 +1405,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         });
         this.goToNextSlide(swiperInstance);
       } else {
-        // Throw Invalid Pan Error
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       }
     }, (error) => {
-      console.log("response : ", error);
+      this.isErrorModal = true;
+      this.errorMessage = "Something went wrong, please again later.";
     });
     
   }
@@ -1409,11 +1438,13 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           this.goToNextSlide(swiperInstance);
           console.log(response['ProcessVariables']['response']);
         } else {
-          // Throw Invalid Pan Error
+          this.isErrorModal = true;
+          this.errorMessage = "Something went wrong, please again later.";
         }
       }, (error) => {
-        console.log("response : ", error);
-      });
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later."
+;      });
     }
     
   }
@@ -1447,10 +1478,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           });
           this.goToNextSlide(swiperInstance);
         } else {
-          // Throw Invalid Pan Error
+          this.isErrorModal = true;
+          this.errorMessage = "Something went wrong, please again later.";
         }
       }, (error) => {
-        console.log("response : ", error);
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       });
     }
     
@@ -1496,7 +1529,13 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
               this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
               this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
               this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
+            } else {
+              this.isErrorModal = true;
+              this.errorMessage = "Something went wrong, please again later.";
             }
+          }, error => {
+            this.isErrorModal = true;
+            this.errorMessage = "Something went wrong, please again later.";
           });
           this.qdeHttp.duplicateApplicantCheck(this.qde.application.applicants[this.applicantIndex].applicantId).subscribe(res => {
             
@@ -1509,13 +1548,21 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
                   this.openDuplicateModal();
                 }
               }
+            } else {
+              this.isErrorModal = true;
+              this.errorMessage = "Something went wrong, please again later.";
             }
+          }, error => {
+            this.isErrorModal = true;
+            this.errorMessage = "Something went wrong, please again later.";
           });
         } else {
-          // Throw Invalid Pan Error
+          this.isErrorModal = true;
+          this.errorMessage = "Something went wrong, please again later.";
         }
       }, (error) => {
-        console.log("response : ", error);
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       });
     }
   }
@@ -1559,10 +1606,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           });
           this.tabSwitch(3);
         } else {
-          // Throw Invalid Pan Error
+          this.isErrorModal = true;
+          this.errorMessage = "Something went wrong, please again later.";
         }
       }, (error) => {
-        console.log("response : ", error);
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       });
   
     }
@@ -1596,10 +1645,17 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           this.qde.application.applicants[this.applicantIndex][screenName].cityState = this.commCityState || "";  
         }
         else if(response['Error'] == '1') {
-          // alert("Invalid Pin");
+          this.isErrorModal = true;
+          this.errorMessage = "Something went wrong, please again later.";
+        } else {
+          this.isErrorModal = true;
+          this.errorMessage = "Something went wrong, please again later.";
         }
 
-     });
+     }, error => {
+      this.isErrorModal = true;
+      this.errorMessage = "Something went wrong, please again later."
+;     });
   }
   //-------------------------------------------------------------
 
@@ -1654,10 +1710,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           });
           this.tabSwitch(4);
         } else {
-          // Throw Invalid Pan Error
+          this.isErrorModal = true;
+          this.errorMessage = "Something went wrong, please again later.";
         }
       }, (error) => {
-        console.log("response : ", error);
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       });
     }
 
@@ -1704,11 +1762,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
             this.tabSwitch(5);
           }
         } else {
-          // Throw Invalid Pan Error
+          this.isErrorModal = true;
+          this.errorMessage = "Something went wrong, please again later.";
         }
       }, (error) => {
-        console.log("response : ", error);
-        //this.goToNextSlide(swiperInstance);
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       });
     }
   }
@@ -1738,11 +1797,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           });
           this.goToNextSlide(swiperInstance);
         } else {
-          // Throw Invalid Pan Error
+          this.isErrorModal = true;
+          this.errorMessage = "Something went wrong, please again later.";
         }
       }, (error) => {
-        console.log("response : ", error);
-       // alert("error"+error.);
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       });
   
     }
@@ -1778,11 +1838,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
             this.tabSwitch(5);
           }
         } else {
-          // Throw Invalid Pan Error
+          this.isErrorModal = true;
+          this.errorMessage = "Something went wrong, please again later.";
         }
       }, (error) => {
-        console.log("response : ", error);
-        // alert("error"+error);
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       });
   
     }
@@ -1811,11 +1872,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         if(response["ProcessVariables"]["status"]) {
           this.tabSwitch(5);
         } else {
-          // Throw Invalid Pan Error
+          this.isErrorModal = true;
+          this.errorMessage = "Something went wrong, please again later.";
         }
       }, (error) => {
-        console.log("response : ", error);
-          this.tabSwitch(5);
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       });
     }
   }
@@ -1852,10 +1914,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           });
           this.goToNextSlide(swiperInstance);
         } else {
-          // Throw Invalid Pan Error
+          this.isErrorModal = true;
+          this.errorMessage = "Something went wrong, please again later.";
         }
       }, (error) => {
-        console.log("response : ", error);
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       });
   
     }
@@ -1891,10 +1955,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           });
           this.tabSwitch(6);
         } else {
-          // Throw Invalid Pan Error
+          this.isErrorModal = true;
+          this.errorMessage = "Something went wrong, please again later.";
         }
       }, (error) => {
-        console.log("response : ", error);
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       });
     }
 
@@ -1939,11 +2005,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           });
           this.tabSwitch(7);
         } else {
-          // Throw Invalid Pan Error
+          this.isErrorModal = true;
+          this.errorMessage = "Something went wrong, please again later.";
         }
       }, (error) => {
-        console.log("response : ", error);
-        // alert("error"+error);
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       });
     }
 
@@ -2033,10 +2100,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           }
           
         } else {
-          // Throw Invalid Pan Error
+          this.isErrorModal = true;
+          this.errorMessage = "Something went wrong, please again later.";
         }
       }, (error) => {
-        console.log("response : ", error);
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       });
   
     }
@@ -2085,10 +2154,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           });
           this.tabSwitch(9);
         } else {
-          // Throw Invalid Pan Error
+          this.isErrorModal = true;
+          this.errorMessage = "Something went wrong, please again later.";
         }
       }, (error) => {
-        console.log("response : ", error);
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       });
     }
   }
@@ -2141,10 +2212,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           // this.tabSwitch(12);
         
         } else {
-          // Throw Invalid Pan Error
+          this.isErrorModal = true;
+          this.errorMessage = "Something went wrong, please again later.";
         }
       }, (error) => {
-        console.log("response : ", error);
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       });
     }
   }
@@ -2200,10 +2273,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           });
           this.tabSwitch(13);
         } else {
-          // Throw Invalid Pan Error
+          this.isErrorModal = true;
+          this.errorMessage = "Something went wrong, please again later.";
         }
       }, (error) => {
-        console.log("response : ", error);
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       });
     }
   }
@@ -2252,10 +2327,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           });
           this.tabSwitch(14);
         } else {
-          // Throw Invalid Pan Error
+          this.isErrorModal = true;
+          this.errorMessage = "Something went wrong, please again later.";
         }
       }, (error) => {
-        console.log("response : ", error);
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       });
     }
   }
@@ -2292,10 +2369,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           });
           this.tabSwitch(15);
         } else {
-          // Throw Invalid Pan Error
+          this.isErrorModal = true;
+          this.errorMessage = "Something went wrong, please again later.";
         }
       }, (error) => {
-        console.log("response : ", error);
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       });
     }
   }
@@ -2336,10 +2415,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           // Show Proceed Modal
           this.isApplicantRouteModal = true;
         } else {
-          // Throw Invalid Pan Error
+          this.isErrorModal = true;
+          this.errorMessage = "Something went wrong, please again later.";
         }
       }, (error) => {
-        console.log("response : ", error);
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       });
   
     }
@@ -2374,10 +2455,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           // this.router.navigate(['/applicant', this.qde.application.applicationId, 'co-applicant'], {fragment: 'dashboard'} );
           this.goToNextSlide(swiperInstance);
         } else {
-          // Throw Invalid Pan Error
+          this.isErrorModal = true;
+          this.errorMessage = "Something went wrong, please again later.";
         }
       }, (error) => {
-        console.log("response : ", error);
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       });
   
     }
@@ -2412,10 +2495,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           // this.router.navigate(['/applicant', this.qde.application.applicationId, 'co-applicant'], {fragment: 'dashboard'} );
           this.goToNextSlide(swiperInstance);
         } else {
-          // Throw Invalid Pan Error
+          this.isErrorModal = true;
+          this.errorMessage = "Something went wrong, please again later.";
         }
       }, (error) => {
-        console.log("response : ", error);
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       });
   
     }
@@ -2490,10 +2575,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
             this.tabSwitch(9);
           }
         } else {
-          // Throw Invalid Pan Error
+          this.isErrorModal = true;
+          this.errorMessage = "Something went wrong, please again later.";
         }
       }, (error) => {
-        console.log("response : ", error);
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       });
     }
   }
@@ -2511,7 +2598,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.qde.application.applicants[this.applicantIndex].incomeDetails.incomeConsider = (value == 1) ? true : false;
 
       console.log(">>>", this.qde.application.applicants[this.applicantIndex].incomeDetails);
-  
+
       this.createOrUpdatePersonalDetailsSub23 = this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successfull
         if(response["ProcessVariables"]["status"]) {
@@ -2530,10 +2617,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
             this.isApplicantRouteModal = true;
           }
         } else {
-          // Throw Invalid Pan Error
+          this.isErrorModal = true;
+          this.errorMessage = "Something went wrong, please again later.";
         }
       }, (error) => {
-        console.log("response : ", error);
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       });
     }
   }
@@ -2562,14 +2651,16 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     let nick = to.getAttribute('nick').split(".");
     to.getAttribute('nick').split(".").forEach((val, i) => {
       if(val == 'day' || val == 'month' || val == 'year') {
-        this[(nick[i-1])][val].value = event.value;
+
+        // this[(nick[i-1])][val].value = event.value;
         return;
       } else {
         if(i == (to.getAttribute('nick').split(".").length-1)) {
           whichSelectQde[val] = event.value;
           return;
         }
-        whichSelectQde = whichSelectQde[val]
+
+        whichSelectQde = whichSelectQde[val];
       }
     });
     
@@ -2629,7 +2720,13 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       if(res['ProcessVariables']['status'] == true) {
         this.inOTP = true;
         this.isAlternateStatus =  false;
+      } else {
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       }
+     }, error => {
+      this.isErrorModal = true;
+      this.errorMessage = "Something went wrong, please again later.";
      });
      this.timeout();
   }
@@ -2669,6 +2766,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       }else {
         alert("Enter valid OTP");
       }
+     }, error => {
+      this.isErrorModal = true;
+      this.errorMessage = "Something went wrong, please again later.";
      });
   }
 
@@ -2982,6 +3082,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           if(response["ProcessVariables"]["status"] == true) {
             // alert("Switch to tab 1");
             this.tabSwitch(1);
+          } else {
+            this.isErrorModal = true;
+            this.errorMessage = "Something went wrong, please again later.";
           }
         });
       } else {
@@ -3098,6 +3201,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   onCrossModal(){
     this.isApplicantRouteModal = false;
     this.isApplicantPinModal = false;
+    this.isErrorModal = false;
   }
 
   closeDuplicateModal() {
@@ -3121,7 +3225,13 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       // If successful
       if(response["ProcessVariables"]["status"]) {
         this.closeDuplicateModal();
+      } else {
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       }
+    }, error => {
+      this.isErrorModal = true;
+      this.errorMessage = "Something went wrong, please again later.";
     });
   }
 
@@ -3176,7 +3286,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  onCrossCatgModal(){
+  onCrossCatgModal() {
     this.isCategoryModal = false
   }
 

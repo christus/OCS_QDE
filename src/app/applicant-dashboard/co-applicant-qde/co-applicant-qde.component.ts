@@ -2342,7 +2342,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     let nick = to.getAttribute('nick').split(".");
     to.getAttribute('nick').split(".").forEach((val, i) => {
       if(val == 'day' || val == 'month' || val == 'year') {
-        this[key][val].value = event.value;
+        // this[key][val].value = event.value;
         return;
       } else {
         if(i == (to.getAttribute('nick').split(".").length-1)) {
