@@ -441,7 +441,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
     let t = fromQde ? this.page: 1;
 
     if(this.swiperSliders && this.swiperSliders.length > 0) {
-      this.swiperSliders[tabIndex].setIndex(this.page-1);
+      this.swiperSliders[tabIndex].setIndex(t-1);
     }
     // Check for invalid tabIndex
     if(tabIndex < this.fragments.length) {
@@ -968,7 +968,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
     );
   }
 
-  uploadToOmni(documentInfo: any, tabIndex: number, slider) {
+  uploadToOmni(documentInfo: any, tabIndex: number, slider: Swiper) {
     this.qdeHttp.uploadToOmni(documentInfo).subscribe(
       response => {
         if (
@@ -983,11 +983,12 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
             this.isDocUploadRouteModal = true;
             return;
           }
-          if (slider) {
-            this.goToNextSlide(slider);
-          }
+          // if (slider) {
+          //   this.goToNextSlide(slider);
+          // } else {
+          this.tabSwitch(tabIndex);
+          // }
 
-          this.tabSwitch(tabIndex); // Need to be enabled for tab switch
         } else {
           if (response["ErrorMessage"]) {
             console.log("Response: " + response["ErrorMessage"]);
