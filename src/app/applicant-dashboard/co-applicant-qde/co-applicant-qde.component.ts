@@ -978,7 +978,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         //  response["ProcessVariables"]["status"] = true; // Comment while deploying if service is enabled false
   
           if(response["ProcessVariables"]["status"] && response['ProcessVariables']['isValidPan'] == true) { // Boolean to check from nsdl website whether pan is valid or not 
-  
+                        
             this.qde.application.applicants[this.coApplicantIndex].pan.panVerified = true;
   
             this.createOrUpdatePanDetailsSub2 = this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
@@ -2356,11 +2356,19 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   selectCoApplicant(applicationId, index) {
+    
     if( this.qde.application.auditTrailDetails.screenPage == screenPages['coApplicantDetails'] &&
         this.qde.application.auditTrailDetails.applicantId == parseInt(this.qde.application.applicants[index].applicantId)) {
-      this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant/'+index], {queryParams: { tabName: this.qde.application.auditTrailDetails.tabPage, page: this.qde.application.auditTrailDetails.pageNumber }});
+        
+      this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant/'+index],
+        {queryParams: { tabName: this.qde.application.auditTrailDetails.tabPage,
+          page: this.qde.application.auditTrailDetails.pageNumber }});
     } else {
-      this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant/'+index], {queryParams: { tabName: this.fragments[1], page: this.page }});
+      console.log("else  part of id ", this.fragments);
+      this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant/'+index],
+     
+       {queryParams: { tabName: this.fragments[index], page: this.page }});
+      
     }
   }
 

@@ -58,9 +58,9 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
   constructor(private utilService: UtilService,
               private commonDataService: CommonDataService,
               private _router: Router,
-              private qdeService:QdeService,
+              private qdeService: QdeService,
               private qdehttpService: QdeHttpService,
-              private route: ActivatedRoute,) {
+              private route: ActivatedRoute) {
     
                 this.route.params.subscribe(val => {
       this.applicationId = val.applicationId;
@@ -136,9 +136,13 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
         this.applicantName = "";
       } else {
         if(this.qde.application.applicants[index].personalDetails.firstName != "" ) {
-          this.applicantName = "Application for "+this.qde.application.applicants[index].personalDetails.firstName || this.applicantName+" "+ this.qde.application.applicants[index].personalDetails.lastName;
+          this.applicantName = "Application for "+ this.qde.application.applicants[index].personalDetails.firstName + " "
+          +" " + this.qde.application.applicants[index].personalDetails.middleName + " "
+           + this.qde.application.applicants[index].personalDetails.lastName;
         } else {
-          this.applicantName = "Application for "+this.qde.application.applicants[index].organizationDetails.nameOfOrganization || this.nameOfOrganization;
+          this.applicantName = "Application for "+ this.qde.application.applicants[index].organizationDetails.nameOfOrganization
+          || this.nameOfOrganization;
+         
         }
 
         this.referenceNumber = this.qde.application.ocsNumber || this.applicationId;
@@ -198,9 +202,15 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
       console.log("Dude: ", val);
       console.log("isPaymentsDisabled: ",this.isPaymentsDisabled);
     });
+    const appId = this.route.snapshot.params;
+    console.log("qutery Perams in constor ", appId);
   }
 
   ngOnInit() {
+    console.log("on init in menu header");
+    const appId = this.route.snapshot.params;
+    console.log("qutery Perams ", appId);
+    // this.setApplicantName();
   }
 
   setApplicantName(qde) {
@@ -209,10 +219,12 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
   }
 
 
+  
+
   setApplicationName(firstName, lastName, nameOfOrganization, ocsNumber){
 
     this.firstName = firstName;
-    this.lastName = firstName;
+    this.lastName = lastName;
     this.nameOfOrganization = nameOfOrganization;
     this.ocsNumber = ocsNumber;
 

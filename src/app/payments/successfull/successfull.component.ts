@@ -33,7 +33,7 @@ export class SuccessfullComponent implements OnInit {
     });
 
   }
-  backScreen(){
+  backScreen() {
     this.location.back();
   }
 
