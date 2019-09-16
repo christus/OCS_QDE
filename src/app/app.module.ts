@@ -118,6 +118,7 @@ import { TabComponent } from './applicant-dashboard/leads-list/tabs/tab.componen
 import { TabsComponent } from './applicant-dashboard/leads-list/tabs/tabs.component';
 import { LeadsHeaderComponent } from './applicant-dashboard/leads-list/leads-header/leads-header.component';
 import { LeadsSidebarComponent } from './applicant-dashboard/leads-list/leads-sidebar/leads-sidebar.component';
+import { EligibilityClearedComponent } from './payments/eligibility-cleared/eligibility-cleared.component';
 
 
 
@@ -341,6 +342,10 @@ const appRoutes: Routes = [
       {
         path: 'thankpayment',
         component: ThankPaymentComponent
+      },
+      {
+        path: 'cleared-eligibility/:applicationId',
+        component: EligibilityClearedComponent
       }
     ]
   },
@@ -556,6 +561,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     TabsComponent,
     LeadsHeaderComponent,
     LeadsSidebarComponent,
+    EligibilityClearedComponent
   ],
   imports: [
     BrowserModule,
