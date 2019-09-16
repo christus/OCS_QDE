@@ -1,0 +1,47 @@
+.lyt-home .lhs .lhs-inner-wrap .icon-thumb {
+    width: 9.38vw;
+    height: 9.38vw;   
+    /* margin-bottom: 1.56vw; */
+    display: inline-block;
+    background-size: cover;
+}
+.lyt-home .lhs .lhs-inner-wrap .text {
+    display: block;
+    font-size: 2.81vw;
+    line-height: 3.13vw;
+    color: #444;
+    font-family: zurich-bold;
+}
+.lyt-home .lhs .lhs-inner-wrap {
+    display: block;
+    text-align: right;
+    width: 100%;
+    padding-right: 7.03vw;
+}
+
+
+.lyt-home .rhs .rhs-inner-wrap .para {
+    display: block;
+    font-size: 22px;
+    color: #444;
+    font-family: zurich-light;
+    margin-bottom: 10px;
+} 
+
+ 
+ .checkgroup-label{
+    color: black;
+    font-size: 30px;
+    }
+
+      .bs-checkbox{
+        margin-top: -20px;
+        margin-bottom: -100px;
+        display:  inherit;
+      }
+      .backbtn{
+        cursor: pointer;
+      }
+     
+
+      

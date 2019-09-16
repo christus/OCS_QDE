@@ -120,6 +120,11 @@ import { LeadsHeaderComponent } from './applicant-dashboard/leads-list/leads-hea
 import { LeadsSidebarComponent } from './applicant-dashboard/leads-list/leads-sidebar/leads-sidebar.component';
 import { EligibilityClearedComponent } from './payments/eligibility-cleared/eligibility-cleared.component';
 import { EligibilityNotClearedComponent } from './payments/eligibility-not-cleared/eligibility-not-cleared.component';
+import { PaymentSuccessfullComponent } from './payments/payment-successfull/payment-successfull.component';
+import { SuccessfullComponent } from './payments/successfull/successfull.component';
+import { EditErrorMessageComponent } from './admin/edit-error-message/edit-error-message.component';
+import { ErrorHandlingMessageComponent } from './admin/error-handling-message/error-handling-message.component';
+
 
 
 
@@ -179,7 +184,11 @@ const appRoutes: Routes = [
           listOfValues: ListOfValuesResolverService
           // qde: GetQdeDataResolverService,
         }
-      }
+      },
+      {
+        path: "sucessfull/:applicationId",
+        component: SuccessfullComponent
+      },
     ]
   },
   // {
@@ -376,9 +385,13 @@ const appRoutes: Routes = [
   {
     path: 'review-eligibility/:applicationId',
     component: ReviewEligibilityComponent
+  },  
+  {
+    path: "paymentsucessfull",
+    component: PaymentSuccessfullComponent
   },
   {
-    path: 'collateralDoc',
+    path: '',
     component: CollateralComponent
   },
   {
@@ -499,8 +512,17 @@ const appRoutes: Routes = [
         component: AdminEachLovComponent,
         resolve: {
           eachLovs: AdminGetEachLovResolverService
-        }
+        }        
+      },
+      {
+        path: 'errorHandle',
+        component: ErrorHandlingMessageComponent
+      },
+      {
+        path: 'erroredit/:errorCode',
+        component: EditErrorMessageComponent
       }
+
     ]
   },
   { path: "**", component: PageNotFoundComponent }
@@ -578,8 +600,12 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     LeadsHeaderComponent,
     LeadsSidebarComponent,
     EligibilityClearedComponent,
-    EligibilityNotClearedComponent
-    
+    EligibilityNotClearedComponent,
+    PaymentSuccessfullComponent,
+    SuccessfullComponent,
+    EditErrorMessageComponent,
+    ErrorHandlingMessageComponent,
+
   ],
   imports: [
     BrowserModule,

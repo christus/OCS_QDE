@@ -1,22 +1,31 @@
-<div class="admin-wrapper">
-    <div class="admin-sidebar">
-        <div class="admin-logo-wrapper">
-            <img src="assets/images/logo.svg" alt="" />
+<div class="bs-header" data-nav="dashboard">
+    <div class="admin-wrapper">
+        <!-- header start -->
+        <div class="sec-nav">
+            <div class="logo">
+                <h1>
+                    <a routerLink="/admin/lovs">
+                        <img src="assets/images/logo.svg" alt="logo" class="img-responsive" />
+                    </a>
+                </h1>
+            </div>
+            <div class="right-panel">
+                <a (click)="logout()" *ngIf="isLogoutVisible" class="space btn btn-default logout">Logout</a>            
+            </div>
+        </div>       
+    <!-- header end -->    
+    <!-- admin sidebar -->
+        <div class="admin-sidebar">            
+            <a class="admin-sidebar-links" routerLink="/admin/lovs">LOVs</a>
+            <a class="admin-sidebar-links" routerLink="/admin/ops-module">Ops Module</a>
+            <a class="admin-sidebar-links" routerLink="/admin/user-module">User Module</a>
+            <a class="admin-sidebar-links" routerLink="/admin/add-user">Add user</a>
+            <a class="admin-sidebar-links" routerLink="/admin/errorHandle">Error Handling Message</a>
         </div>
-        <a class="admin-sidebar-links" routerLink="/admin/lovs">LOVs</a>
-        <a class="admin-sidebar-links" routerLink="/admin/ops-module">Ops Module</a>
-        <a class="admin-sidebar-links" routerLink="/admin/user-module">User Module</a>
-        <a class="admin-sidebar-links" routerLink="/admin/add-user">Add user</a>
-
+        <!-- admin Dashboard -->
+        <div class="admin-dashboard">           
+            <router-outlet></router-outlet>
+        </div>
+                
     </div>
-    
-    <div class="admin-dashboard">
-        <h1 class="title">User: Admin         
-            <span>
-                <button class="btn btn-default pull-right" (click)="logout()">Logout</button>
-            </span>
-        </h1>
-        <router-outlet></router-outlet>
-    </div>
-            
 </div>

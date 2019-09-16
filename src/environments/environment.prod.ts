@@ -293,7 +293,23 @@ export const environment = {
     "omniDocs" : {
       'workflowId': 'd9e7a808926f11e982270242ac110002',
       'processId': '605aa9d6b74a11e983250242ac110002'
-    }
+    },
+    "getApplicationStatus" : {
+      'workflowId': '1d41cd0a8c4311e982270242ac110002',
+      'processId': '653e21a6d48e11e981c20242ac110002'
+    },
+    "getErrorIdMessage" :{
+      'workflowId': 'a6a43e0ccfc311e9a3b50242ac110002',
+      'processId': 'cec4fac0d46411e9bed10242ac110002'
+    },
+    "getErrorMessage" : {
+      'workflowId': 'a6a43e0ccfc311e9a3b50242ac110002',
+      'processId': 'be09a9cad08f11e99b810242ac110002'
+    },
+    "updateErrorMessage" :{
+      'workflowId': 'a6a43e0ccfc311e9a3b50242ac110002',
+      'processId': 'a6c2d402cfc311e99a490242ac110002'
+    },
   },
   userName: "icici@icicibankltd.com",
   password: "icici@123",

@@ -1,0 +1,24 @@
+<h1 class="title">Error Message Handling</h1>
+
+<div class="list">
+    <table class="table table-striped- table-bordered table-hover table-checkable">
+        <thead>
+          <tr>
+            <th>Error Code</th>
+            <th>Module</th>
+            <th>Description</th>
+            <th>Error Message</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of collection | paginate: { itemsPerPage: perPage, currentPage: currentPage, totalItems: totalItems  }">
+            <td><a [routerLink]= "['/admin/erroredit', item.errorCode]">{{item.errorCode}}</a></td>
+            <td>{{item.module}}</td>
+            <td>{{item.description}}</td>
+            <td>{{item.errorMessage}}</td>
+          </tr>											
+        </tbody>
+      </table>
+</div>
+<pagination-controls  (pageChange)="pageChanged($event)" class="pagination"></pagination-controls>

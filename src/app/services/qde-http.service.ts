@@ -2158,6 +2158,90 @@ createOrUpdatePersonalDetails(qde) {
     let uri = environment.host+'/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
     return this.http.post(uri, body.toString());
   }
+  getApplicationStatus(data) {
+    // console.log("get Error Id Handal Service Call",data);
+      const processId = environment.api.getApplicationStatus.processId;
+    const workflowId = environment.api.getApplicationStatus.workflowId;
+    const projectId = environment.projectId;
 
-}
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: data,
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = new HttpParams().set(
+      'processVariables',
+      JSON.stringify(requestEntity)
+    );
+
+    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.http.post(uri, body.toString());
+
+  }
+  getErrorHandlingMessage(data) {
+    const processId = environment.api.getErrorMessage.processId;
+    const workflowId = environment.api.getErrorMessage.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: data,
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = new HttpParams().set(
+      'processVariables',
+      JSON.stringify(requestEntity)
+    );
+
+    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.http.post(uri, body.toString());
+
+  }
+  getErrorIdHandlingMessage(data) {
+    const processId = environment.api.getErrorIdMessage.processId;
+    const workflowId = environment.api.getErrorIdMessage.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: data,
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = new HttpParams().set(
+      'processVariables',
+      JSON.stringify(requestEntity)
+    );
+
+    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.http.post(uri, body.toString());
+  }
+  updateErrorHandlingMessage(errorData){
+    const processId = environment.api.updateErrorMessage.processId;
+    const workflowId = environment.api.updateErrorMessage.workflowId;
+    const projectId = environment.projectId;
+
+    let requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: errorData,
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = new HttpParams().set(
+      'processVariables',
+      JSON.stringify(requestEntity)
+    );
+  
+    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.http.post(uri, body.toString());
+  }
+  }
+
+
 

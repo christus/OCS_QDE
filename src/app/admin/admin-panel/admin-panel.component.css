@@ -4,8 +4,8 @@
 }
 
 .admin-sidebar {
-    width: 20%;
-    position: fixed;
+    width: 15%;
+    /* position: fixed; */
     float: left;
     background: #e66e23;
     height: 100vh;
@@ -30,11 +30,11 @@
     width: auto;
     margin-left: 20%;
     font-size: 16px;
-    padding: 0 30px 15px 30px;
+    padding: 20px 30px 15px 30px;
     overflow-y: auto;
     height: 100vh;
     /* position: fixed; */
-    margin-left: 19%;
+    margin-left: 1%;
     
 }
 
@@ -50,4 +50,7 @@
 }
 .pull-right {
     float: right;
+}
+.sec-nav{
+    box-shadow: 1px 1px 10px 0 #ccc;
 }
