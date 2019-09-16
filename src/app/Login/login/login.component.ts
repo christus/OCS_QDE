@@ -7,6 +7,7 @@ import { UtilService } from 'src/app/services/util.service';
 import {CommonDataService} from 'src/app/services/common-data.service'
 
 
+
 @Component({
   selector: "app-login",
   templateUrl: "./login.component.html",
@@ -51,9 +52,12 @@ export class LoginComponent implements OnInit, AfterViewInit {
       this.roleLogin();
     },
     error => {
-      this.sessionMessage = error['error']['message'] ;
-      //this.sessionMessage = "An active session with these credential's does exists, please logout the existing session" ;
+
+      this.sessionMessage = error['error']['message'];
       this.activeSessionExists = error['error']["activeSessionExists"];
+      if(this.activeSessionExists){
+        this.sessionMessage = "An active session with these credential's does exists, please logout the existing session";
+      }      
     });
     // this.qdeService.authenticate(data).subscribe(
     //   res => {
