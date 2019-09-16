@@ -91,6 +91,8 @@ export class EligibilityClearedComponent implements OnInit {
         alert("Server is Down!!!");
       }
     });
+
+
   }
 
   

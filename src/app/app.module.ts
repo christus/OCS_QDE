@@ -126,8 +126,6 @@ import { EditErrorMessageComponent } from './admin/edit-error-message/edit-error
 import { ErrorHandlingMessageComponent } from './admin/error-handling-message/error-handling-message.component';
 
 
-
-
 const appRoutes: Routes = [
   { path: "", redirectTo: "leads", pathMatch: "full" },
   { path: "login", component: LoginComponent },
@@ -605,7 +603,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     SuccessfullComponent,
     EditErrorMessageComponent,
     ErrorHandlingMessageComponent,
-
+    EligibilityClearedComponent
   ],
   imports: [
     BrowserModule,
