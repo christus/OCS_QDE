@@ -971,7 +971,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
     );
   }
 
-  uploadToOmni(documentInfo: any, tabIndex: number, slider: Swiper) {
+  uploadToOmni(documentInfo: any, tabIndex: number, slider) {
     this.qdeHttp.uploadToOmni(documentInfo).subscribe(
       response => {
         if (
@@ -1220,7 +1220,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
     this.isDocUploadRouteModal = false;
   }
   moreDocUpload(){
-    this.router.navigate(['/document-uploads', this.qde.application.applicationId])
+    this.router.navigate(['/document-uploads', this.qde.application.applicationId], {queryParams: {tabName: this.fragments[0], page: 1}})
     this.isDocUploadRouteModal = false
   }
 
