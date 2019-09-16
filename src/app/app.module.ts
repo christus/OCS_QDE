@@ -119,6 +119,7 @@ import { TabsComponent } from './applicant-dashboard/leads-list/tabs/tabs.compon
 import { LeadsHeaderComponent } from './applicant-dashboard/leads-list/leads-header/leads-header.component';
 import { LeadsSidebarComponent } from './applicant-dashboard/leads-list/leads-sidebar/leads-sidebar.component';
 import { EligibilityClearedComponent } from './payments/eligibility-cleared/eligibility-cleared.component';
+import { EligibilityNotClearedComponent } from './payments/eligibility-not-cleared/eligibility-not-cleared.component';
 
 
 
@@ -346,9 +347,24 @@ const appRoutes: Routes = [
       {
         path: 'cleared-eligibility/:applicationId',
         component: EligibilityClearedComponent
+      },
+      {
+        path: 'not-cleared-eligibility/:applicationId',
+        component: EligibilityNotClearedComponent
       }
+      
     ]
   },
+
+  {
+    path: "static/payments/cleared-eligibility/:applicationId",
+    component: EligibilityClearedComponent
+  },
+  {
+    path: "static/payments/not-cleared-eligibility/:applicationId",
+    component: EligibilityNotClearedComponent
+  },
+
   {
     path: "static/icici-terms/auto-login/:applicationId/:applicantId",
     component: IciciTermsComponent
@@ -561,7 +577,9 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     TabsComponent,
     LeadsHeaderComponent,
     LeadsSidebarComponent,
-    EligibilityClearedComponent
+    EligibilityClearedComponent,
+    EligibilityNotClearedComponent
+    
   ],
   imports: [
     BrowserModule,
