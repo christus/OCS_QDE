@@ -43,6 +43,7 @@ export class DocumentAssessmentDoccatDoctypeComponent implements OnInit {
       this.perPage = parseInt(res['perPage']);
       this.totalElements = res['totalPages'] * this.perPage;
 
+      console.log('documentmapping: ', res['documentMapping']);
       this.data = this.data.concat(res['documentMapping']);
     }
   }
@@ -74,10 +75,10 @@ export class DocumentAssessmentDoccatDoctypeComponent implements OnInit {
   }
 
 
-  // changeRadio(event, index) {
-  //   this.financialApplicant = event.target.value == '1' ? '1': '0';
-  //   // console.log(this.lovs[index]);
-  // }
+  changeRadio(event, index) {
+    this.data[index].financialApplicant = event.target.value == '1' ? '1': '0';
+    // console.log(this.lovs[index]);
+  }
 
   assessmentChanged(event) {
     console.log(">>>>", event);
@@ -132,12 +133,15 @@ export class DocumentAssessmentDoccatDoctypeComponent implements OnInit {
   submitForm(form: NgForm) {
     let dude = form.value;
 
+    console.log(form.value);
+
     dude = {
       userId: this.userId,
       assessmentId: dude.assessmentId,
       docCategoryId: dude.docCategoryId,
       docTypeId: dude.docTypeId,
       profileId: dude.profileId,
+      financialApplicant: dude.financialApplicant,
       tableName: this.tableName
     };
 
@@ -145,10 +149,10 @@ export class DocumentAssessmentDoccatDoctypeComponent implements OnInit {
       if(res["ProcessVariables"]['status'] == true) {
         this.refresh();
       } else {
-        alert('Something went wrong');
+        alert('Something went wrong.');
       }
     }, err => {
-      alert('Something went wrong');
+      alert('Something went wrong.');
     });
   }
 
@@ -162,6 +166,7 @@ export class DocumentAssessmentDoccatDoctypeComponent implements OnInit {
         this.perPage = parseInt(response['perPage']);
         this.totalElements = response['totalPages'] * this.perPage;
   
+        console.log('response documentMapping: ', response['documentMapping']);      
         this.data = this.data.concat(response['documentMapping']);
       }
     }, err => {
@@ -170,7 +175,8 @@ export class DocumentAssessmentDoccatDoctypeComponent implements OnInit {
   }
 
   loadMore() {
-    this.qdeHttp.adminDocumentProfile((this.currentPage+1), this.perPage).subscribe(res => {
+    this.currentPage++;
+    this.qdeHttp.adminDocumentProfile((this.currentPage), this.perPage).subscribe(res => {
       if(res['ProcessVariables']['status'] == true) {
         let response = res['ProcessVariables'];
   
@@ -178,11 +184,18 @@ export class DocumentAssessmentDoccatDoctypeComponent implements OnInit {
         this.totalPages = parseInt(response['totalPages']);
         this.perPage = parseInt(response['perPage']);
         this.totalElements = response['totalPages'] * this.perPage;
+
+        console.log("currentPage: ",this.currentPage);
+        console.log("totalPages: ",this.totalPages);
   
         this.data = this.data.concat(response['documentMapping']);
+      } else {
+        alert('Something went wrong.');
+        this.currentPage--;
       }
     }, err => {
-
+      alert('Something went wrong.');
+      this.currentPage--;
     });
   }
 
@@ -197,7 +210,8 @@ export class DocumentAssessmentDoccatDoctypeComponent implements OnInit {
       docTypeId: this.data[index].docTypeId+"",
       profileId: this.data[index].profileId+"",
       id: this.data[index]['id'],
-      tableName: this.tableName
+      tableName: this.tableName,
+      financialApplicant: this.data[index].financialApplicant
     };
 
     this.qdeHttp.adminUpdateDocumentProfile(dude).subscribe(res => {

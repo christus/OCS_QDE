@@ -285,7 +285,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
           if(result != null) {
             this.applicantIndex = result.application.applicants.findIndex(v => v.applicantId == this.applicantId);
           }
-    
+
           const applicants = this.qde.application.applicants;
 
           this.recurvLovCalls(applicants);
@@ -503,7 +503,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
 
     let tabIndex = 2;
     if (!this.photoProofDoc[this.applicantIndex]) {
-      this.goToNextSlide(slider);
+      // this.goToNextSlide(slider);
       this.tabSwitch(tabIndex);
       return;
     }
@@ -686,7 +686,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
     const tabIndex = 4;
     
     if (!this.addressProofDoc[this.applicantIndex]) {
-      this.goToNextSlide(slider);
+      // this.goToNextSlide(slider);
       this.tabSwitch(tabIndex);
       return;
     }
@@ -752,7 +752,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
     const tabIndex = 5;
 
     if (!this.incomeProofDoc[this.applicantIndex]) {
-      this.goToNextSlide(slider);
+      // this.goToNextSlide(slider);
       this.tabSwitch(tabIndex);
       return;
     }
@@ -826,7 +826,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
     const tabIndex = 6;
 
     if (!this.bankingProofDoc[this.applicantIndex]) {
-      this.goToNextSlide(slider);
+      // this.goToNextSlide(slider);
       this.tabSwitch(tabIndex);
       return;
     }

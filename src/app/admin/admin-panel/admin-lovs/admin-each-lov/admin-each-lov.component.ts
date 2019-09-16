@@ -14,6 +14,7 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
   // previousLength: number;
   tableName: string;
   isApplicantTitle: boolean;
+  isDocumentCategory: boolean;
 
   @ViewChildren('lovsElements') lovsElements: QueryList<ElementRef>;
 
@@ -24,6 +25,7 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
     this.route.params.subscribe(v => {
       this.tableName = v['eachLovName']
       this.isApplicantTitle = this.tableName == 'applicant_title' ? true: false;
+      this.isDocumentCategory = this.tableName == 'document_category' ? true: false;
     });
 
     let response = this.route.snapshot.data['eachLovs']['ProcessVariables'];
@@ -41,7 +43,8 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
             id: v['id'],
             male: v['male'],
             female: v['female'],
-            tableName: this.tableName
+            tableName: this.tableName,
+            isRequired: v['isRequired']
           }
         });
       } else {
@@ -164,6 +167,10 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
     }
   }
 
+  changeIsRequired(n: string, index) {
+    this.lovs[index].isRequired = (n=='1') ? '1': '0';
+  }
+
   refresh() {
     this.qdeHttp.adminLoadMoreLovs(this.tableName).subscribe(res => {
       if(res['ProcessVariables']['status'] == true) {
@@ -179,7 +186,8 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
               id: v['id'],
               male: v['male'],
               female: v['female'],
-              tableName: this.tableName
+              tableName: this.tableName,
+              isRequired: v['isRequired']
             }
           });
         } else {
