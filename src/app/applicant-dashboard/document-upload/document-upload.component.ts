@@ -749,7 +749,10 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
   * Income Proof Next(Submit)
   ***************************/
   handleIncomeProof(slider) {
-    const tabIndex = 5;
+    const tabIndex = 6;
+    if(this.qde.application.applicants[this.applicantIndex].incomeDetails.incomeConsider) {
+      const tabIndex = 5;
+    }
 
     if (!this.incomeProofDoc[this.applicantIndex]) {
       // this.goToNextSlide(slider);
