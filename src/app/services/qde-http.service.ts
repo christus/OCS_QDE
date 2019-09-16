@@ -1567,6 +1567,7 @@ createOrUpdatePersonalDetails(qde) {
       stateId : lovs.stateId!=null ? lovs.stateId: null,
       zone : lovs.zone != null ? lovs.zone: null,
       cityId : lovs.cityId!=null ? lovs.cityId: null,
+      isRequired : lovs.isRequired!=null ? lovs.isRequired: null
     });
     console.log(obj);
 
@@ -1833,15 +1834,16 @@ createOrUpdatePersonalDetails(qde) {
     const workflowId  = environment.api.adminDocumentProfile.workflowId;
     const projectId   = environment.projectId;
   
-    let dude = this.qdeService.getFilteredJson({
+    let dude = {
       userId: localStorage.getItem('userId'),
       currentPage: currentPage ? currentPage: null,
       perPage: perPage ? perPage: null
-    });
+    };
+
 
     let qdeRequestEntity: RequestEntity = {
       processId: processId,
-      ProcessVariables: {},
+      ProcessVariables: dude,
       workflowId: workflowId,
       projectId: projectId
     };
