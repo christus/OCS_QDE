@@ -267,6 +267,9 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
   swiperSlidersSub: Subscription;
   auditTrialApiSub: Subscription;
 
+  isErrorModal:boolean;
+  errorMessage:string;
+
   constructor(
     private renderer: Renderer2,
     private route: ActivatedRoute,
@@ -504,6 +507,9 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
           this.selectedApplicant = this.allApplicantsItem[0];
           this.selectedApplicantIndex = this.qde.application.applicants.findIndex(v => v.applicantId == this.selectedApplicant.value);
           this.selectedApplicantName = this.qde.application.applicants[this.selectedApplicantIndex].personalDetails ? `${this.qde.application.applicants[this.selectedApplicantIndex].personalDetails['firstName']} ${this.qde.application.applicants[this.selectedApplicantIndex].personalDetails['lastName']}`: '';
+        }, error => {
+          this.isErrorModal = true;
+          this.errorMessage = "Something went wrong, please again later.";
         });
       } else {
         this.qde = this.qdeService.defaultValue;
@@ -699,14 +705,17 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
                   this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                   this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
                 }
+              }, error => {
+                this.isErrorModal = true;
+                this.errorMessage = "Something went wrong, please again later.";
               });
                 this.tabSwitch(1);              
             } else {
               // Throw Invalid Pan Error
             }
-          },
-          error => {
-            console.log("response : ", error);
+          }, error => {
+            this.isErrorModal = true;
+            this.errorMessage = "Something went wrong, please again later.";
           }
         );
   
@@ -750,14 +759,17 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
                   this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                   this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
                 }
+              }, error => {
+                this.isErrorModal = true;
+                this.errorMessage = "Something went wrong, please again later.";
               });
               this.goToNextSlide(swiperInstance);
             } else {
               // Throw Invalid Pan Error
             }
-          },
-          error => {
-            console.log("response : ", error);
+          }, error => {
+            this.isErrorModal = true;
+            this.errorMessage = "Something went wrong, please again later.";
           }
         );
     }
@@ -801,6 +813,9 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
         this.qde.application.loanDetails.property.stateId = null;
       }
+    }, error => {
+      this.isErrorModal = true;
+      this.errorMessage = "Something went wrong, please again later.";
     });
   }
 
@@ -837,14 +852,17 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
                   this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                   this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
                 }
+              }, error => {
+                this.isErrorModal = true;
+                this.errorMessage = "Something went wrong, please again later.";
               });
               this.clssProbabilityCheck();
             } else {
               // Throw Invalid Pan Error
             }
-          },
-          error => {
-            console.log("response : ", error);
+          }, error => {
+            this.isErrorModal = true;
+            this.errorMessage = "Something went wrong, please again later.";
           }
         );
     }
@@ -883,15 +901,18 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
               //     this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
               //     this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
               //   }
-              // });
+              // }, error => {
+      //   this.isErrorModal = true;
+      //   this.errorMessage = "Something went wrong, please again later.";
+      // });
               this.goToNextSlide(swiperInstance);
               this.isLoanRouteModal = true
             } else {
               // Throw Invalid Pan Error
             }
-          },
-          error => {
-            console.log("response : ", error);
+          }, error => {
+            this.isErrorModal = true;
+            this.errorMessage = "Something went wrong, please again later.";
           }
         );
     }
@@ -942,6 +963,9 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
                     this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                     this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
                   }
+                }, error => {
+                  this.isErrorModal = true;
+                  this.errorMessage = "Something went wrong, please again later.";
                 });
                 this.goToNextSlide(swiperInstance);
               }else{                
@@ -951,9 +975,9 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
             } else {
               // Throw Invalid Pan Error
             }
-          },
-          error => {
-            console.log("response : ", error);
+          }, error => {
+            this.isErrorModal = true;
+            this.errorMessage = "Something went wrong, please again later.";
           }
         );
     }
@@ -988,14 +1012,17 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
                   this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                   this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
                 }
+              }, error => {
+                this.isErrorModal = true;
+                this.errorMessage = "Something went wrong, please again later.";
               });
               this.isLoanRouteModal = true
             } else {
               // Throw Invalid Pan Error
             }
-          },
-          error => {
-            console.log("response : ", error);
+          }, error => {
+            this.isErrorModal = true;
+            this.errorMessage = "Something went wrong, please again later.";
           }
         );
     }
@@ -1009,9 +1036,9 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
         } else {
           this.isClssNotEligibleModal = true;
         }
-      },
-      error => {
-        console.log("response : ", error);
+      }, error => {
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       }
     );
   }
@@ -1091,6 +1118,9 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
       } else {
         this.selectedLoanPurpose = this.loanpurposes[0];
       }
+    }, error => {
+      this.isErrorModal = true;
+      this.errorMessage = "Something went wrong, please again later.";
     });
   }
 
@@ -1101,7 +1131,15 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
         this.allClssAreas = res['ProcessVariables']['townNames'] ? res['ProcessVariables']['townNames']: []
         console.log("CLSSArea: ", this.allClssAreas);
       }
-    }, err => {});
+    }, error => {
+      this.isErrorModal = true;
+      this.errorMessage = "Something went wrong, please again later.";
+    });
+  }
+
+  moreLoanObligation(){
+    this.tabSwitch(2);
+    this.isLoanRouteModal = false;
   }
 
   selectClssArea(c) {

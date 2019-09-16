@@ -299,7 +299,11 @@ export const environment = {
     "omniDocs" : {
       'workflowId': 'd9e7a808926f11e982270242ac110002',
       'processId': '605aa9d6b74a11e983250242ac110002'
-    }
+    },
+    "chequeDetails" : {
+      'workflowId': 'b969b1908dd111e982270242ac110002',
+      'processId': 'b981f6928dd111e982270242ac110002'
+    },
   },
   userName: "icici@icicibankltd.com",
   password: "icici@123",

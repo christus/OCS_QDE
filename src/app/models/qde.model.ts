@@ -292,3 +292,11 @@ export interface LeadCreate {
     loanAmount ?: number;
     loanType ?: number;
 }
+
+export interface ChequeDetails {
+    chequeDrawn ?: string;
+    bankName ?: number;
+    ifscCode ?: string;
+    chequeNumber ?: number;
+    amount ?: number;
+}

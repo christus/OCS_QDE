@@ -126,20 +126,20 @@
                                   #aadharSlider2="ngxSwiper">
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide">
-                                        <form class="bs-form" id="spouse-form">
-                                      <div class="form-wrap">
+                                      <form class="bs-form" #chequeForm="ngForm" (ngSubmit)="chequeDetails(chequeForm)">
+                                        <div class="form-wrap">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" id="Cheque-drawn"
+                                                <input type="text" class="form-control" id="chequeDrawn"
                                                 spellcheck="false"
                                                 required
-                                                name="checkDrawnTo"
                                                 #paymentCheckDrawnTo="ngModel"
-                                                ngModel
+                                                [(ngModel)]="chequeDrawn"
+                                                name="checkDrawnTo"
                                                 pattern="{{regexPattern.name}}"
                                                 fieldFill>
-                                                <label for="Cheque-drawn">Cheque drawn to</label>
+                                                <label for="chequeDrawn">Cheque drawn to</label>
                                                 <div *ngIf="(paymentCheckDrawnTo.touched || paymentCheckDrawnTo.dirty) && paymentCheckDrawnTo.invalid" class="invalid-feedback">
-                                                    <div *ngIf="paymentCheckDrawnTo.errors?.pattern">{{errors.payment.offline.chequeDrawn.invalid}}</div>
+                                                    <div *ngIf="paymentCheckDrawnTo?.errors?.pattern">{{errors.payment.offline.chequeDrawn.invalid}}</div>
                                                </div>
                                             </div>
                                             <div class="form-group">
@@ -156,8 +156,7 @@
                                                [data]="loanProviderList" 
                                                textField="key" 
                                                valueField="value"
-                                               [valuePrimitive]="true" 
-                                               [(ngModel)]="selectedLoanProvider">
+                                               [(ngModel)]="bankName">
                                              </kendo-dropdownlist>
                                             </div>
                                             <div class="form-group">
@@ -166,14 +165,14 @@
                                                 maxlength="11"
                                                 required
                                                 name="ifsc"
-                                                #ifscCode="ngModel"
-                                                ngModel
+                                                #ifscCode1="ngModel"
+                                                [(ngModel)]="ifscCode"
                                                 pattern="{{regexPattern.ifsc}}"
                                                 fieldFill>
                                                 <label for="ifsc-code">IFSC Code</label>
                                                
-                                                <div *ngIf="(ifscCode.touched || ifscCode.dirty) && ifscCode.invalid" class="invalid-feedback">
-                                                   <div *ngIf="ifscCode.errors?.pattern">{{errors.payment.offline.ifscCode.invalid}}</div>
+                                                <div *ngIf="(ifscCode1.touched || ifscCode1.dirty) && ifscCode1.invalid" class="invalid-feedback">
+                                                   <div *ngIf="ifscCode1?.errors?.pattern">{{errors.payment.offline.ifscCode.invalid}}</div>
                                               </div>
                                             </div>
 
@@ -184,13 +183,13 @@
                                                 minlength="0"
                                                 maxlength="6"
                                                 name="chequeNo"
-                                                #chequeNumber="ngModel"
-                                                ngModel
+                                                #chequeNumber1="ngModel"
+                                                [(ngModel)]="chequeNumber"
                                                 pattern="{{regexPattern.chequeNo}}"
                                                 fieldFill>
                                                 <label for="cheque-number">Cheque number</label>
-                                                <div *ngIf="(chequeNumber.touched || chequeNumber.dirty) && chequeNumber.invalid" class="invalid-feedback">
-                                                     <div *ngIf="chequeNumber.errors?.pattern">{{errors.payment.offline.chequeNumber.invalid}}</div>
+                                                <div *ngIf="(chequeNumber1.touched || chequeNumber1.dirty) && chequeNumber1.invalid" class="invalid-feedback">
+                                                     <div *ngIf="chequeNumber1?.errors?.pattern">{{errors.payment.offline.chequeNumber.invalid}}</div>
                                                 </div>
                                             </div>
                                             <div class="form-group inr">
@@ -201,9 +200,9 @@
                                                 minlength="0"
                                                 maxlength="15"
                                                 #paymentAmountOffline="ngModel"
-                                                ngModel
+                                                [(ngModel)]="amount"
                                                 pattern="{{regexPattern.amount}}"
-                                                fieldFill>
+                                                fieldFill />
                                                
                                                 <label for="amount">Amount (in Rupees)</label>
                                                 <span class="addon">
@@ -211,15 +210,14 @@
                                                 </span>
                                                 <span class="in-word"></span>
                                                 <div *ngIf="(paymentAmountOffline.touched || paymentAmountOffline.dirty) && paymentAmountOffline.invalid" class="invalid-feedback">
-                                                    <div *ngIf="paymentAmountOffline.errors?.pattern">{{errors.payment.offline.amount.invalid}}</div>
+                                                    <div *ngIf="paymentAmountOffline?.errors?.pattern">{{errors.payment.offline.amount.invalid}}</div>
                                                 </div>
                                             </div>
                                         </div>
                                       <div class="btn-wrap">
                                           <button   class="btn btn-primary"
                                           [disabled]="false"
-                                          [ngClass]="{'disabled': false}"
-                                           (click)="offline()">Submit</button>
+                                          [ngClass]="{'disabled': false}">Submit</button>
                                       </div>
                                     </form>
                                     </div>                              
@@ -266,4 +264,15 @@
                         </div>
                 </div>
             </div>
+            <!-- <div class="overlay" [ngClass]="{'active': isErrorModal}"></div>
+            <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isErrorModal}"> -->
+                <!-- <a class="modal-close" href="javascript:void(0);" (click)="onBackOTP()"><span class="icon icon-close"></span></a> -->
+                <!-- <a class="modal-close" (click)="onCrossModal()"><span class="icon icon-close"></span></a> -->
+                <!-- <div class="modal-body">
+                <h1>{{sessionMessage}}</h1>
+                <div class="btn-wrap">
+                    <button class="btn btn-border" (click)="isErrorModal = false">Cancel</button>
+                </div>
+                </div>
+            </div> -->
     </main>

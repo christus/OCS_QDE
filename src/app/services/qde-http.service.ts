@@ -2159,5 +2159,27 @@ createOrUpdatePersonalDetails(qde) {
     return this.http.post(uri, body.toString());
   }
 
+  chequeDetailsSave(data){
+    const processId = environment.api.chequeDetails.processId;
+    const workflowId = environment.api.chequeDetails.workflowId;
+    const projectId = environment.projectId;
+
+
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: data,
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = new HttpParams().set(
+      'processVariables',
+      JSON.stringify(requestEntity)
+    );
+  
+    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.http.post(uri, body);
+  }
+
 }
 
