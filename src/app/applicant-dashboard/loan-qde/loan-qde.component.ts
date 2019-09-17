@@ -737,6 +737,9 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
         return;
       }
   
+
+     
+
       this.qde.application.loanDetails.propertyType = {
         propertyIdentified: this.isPropertyIdentified,
         propertyType: this.selectedPropertyType,
@@ -1138,9 +1141,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   moreLoanObligation(){
-    //this.tabSwitch(2);
-    this.router.navigate([], {queryParams: { tabName: this.fragments[2], page: 0 }});
-
+    this.goToExactPageAndTab(this.fragments[2], 1);
     this.isLoanRouteModal = false;
   }
 

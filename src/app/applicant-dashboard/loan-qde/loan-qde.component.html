@@ -217,12 +217,12 @@
                                   id="propertyClssArea" 
                                   name="propertyClssArea"
                                   #propertyClss="ngModel"
-                                  [(ngModel)]="propertyClssLabel"
+                                  [(ngModel)]="propertyClssValue"
                                   pattern="^[0-9a-zA-Z _'@$%!~^+,/*#&().-]+$"
                                   (input)="clssSearchArea($event)"
                                   fieldFill
                                   required >
-                                  <label for="propertyClssArea">Property CLSS area</label>
+                                  <label for="propertyClssArea" style="margin-top:-38px;" >Property CLSS area</label>
                                   <span class="optional" style="font-size: 1vw">Type to search</span>
                                   <div *ngIf="(propertyClss.touched || propertyClss.dirty) && propertyClss.invalid" class="invalid-feedback">
                                     <!-- <div *ngIf="propertyClss.errors?.required">{{errors.loanDetails.property.propertyClss.required}}</div> -->
@@ -240,7 +240,7 @@
                                   type="text"
                                   class="form-control"
                                   id="pro-add-line2" 
-                                  name="propertyAreaInSqFeets"
+                                  name="propertyAreaInSqFFeets"
                                   #propertyArea="ngModel"
                                   [(ngModel)]="propertyAreaValue"
                                   pattern="{{regexPattern.mobileNumber}}"
