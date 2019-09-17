@@ -765,7 +765,15 @@ export class QdeService {
           emailId : "",
           loanAmount : null,
           loanType : null
-        }
+
+        },
+        // chequeDetails: {
+        //   chequeDrawn : "",
+        //   bankName : null,
+        //   ifscCode : "",
+        //   chequeNumber : null,
+        //   amount : null
+        // }
       }
     });
   }

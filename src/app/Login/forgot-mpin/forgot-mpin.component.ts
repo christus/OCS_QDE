@@ -1,3 +1,4 @@
+import { environment } from 'src/environments/environment';
 import { Component, OnInit } from '@angular/core';
 
 import { Router } from '@angular/router';
@@ -36,19 +37,41 @@ export class ForgotMPINComponent implements OnInit {
 
     console.log("UserName", this.userName);
 
-    var empId = this.userName + "@icici.com";
+    let appiyoAuthdata = {
+      'email': environment.userName,
+      'password': environment.password,
+      'longTimeToken': "true"
+    }  
 
-    var data = {
-      empId : empId,
-      uuid: this.uuID
-    };
-
-    this.qdeService.resetMpin(data).subscribe(
+   this.qdeService.longLiveAuthenticate(appiyoAuthdata).subscribe(
       res => {
-        console.log("move to confirm pin");
-        this.router.navigate(["/ConfirmPin", {"EmpId": empId} ]);
+        console.log("response");
+        console.log("login-response: ",res);
+
+        localStorage.setItem("token", res["token"] ? res["token"] : "");
+
+
+        var empId = this.userName + environment.iciciDomainExt;
+
+        var data = {
+          empId : empId,
+          uuid: this.uuID
+        };
+
+        this.qdeService.resetMpin(data).subscribe(
+          res => {
+            console.log("move to confirm pin");
+            this.router.navigate(["/ConfirmPin", {"EmpId": empId} ]);
+          },
+          error => {
+            console.log(error);
+          }
+        );
+
       },
       error => {
+        console.log("error-response");
+
         console.log(error);
       }
     );
