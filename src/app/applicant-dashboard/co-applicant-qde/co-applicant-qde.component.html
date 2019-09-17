@@ -69,7 +69,7 @@
                                         <div class="swiper-wrapper">
                                             <div class="swiper-slide">
                                               <div class="title-wrap">
-                                                  <h4 class="title">Co-Applicant's<span class="cm-line-break"></span>list</h4>
+                                                  <h4 class="title">List of<span class="cm-line-break"></span>Co-applicants</h4>
                                               </div>
                                             </div>
                                         </div>
@@ -1428,9 +1428,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="btn-wrap">
-                                                    <button   type="submit"
-                                                              class="btn btn-primary"
-                                                      >Next
+                                                    <button   type="submit"[ngClass]="{'disabled': (!spouseEarningAmtForm.valid)}"
+                                                    [disabled]="!spouseEarningAmtForm.valid" class="btn btn-primary">Next
                                                     </button>
                                                 </div>
                                             </form>
@@ -3234,6 +3233,17 @@
             <h1 class="center">Please enter proper pincode !</h1>
             <div class="btn-wrap">
                 <button class="btn btn-border" (click)="isCoApplicantPinModal = false">Cancel</button>
+            </div>
+            </div>
+        </div>
+        <div class="overlay" [ngClass]="{'active': isErrorModal}"></div>
+        <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isErrorModal}">
+            <!-- <a class="modal-close" href="javascript:void(0);" (click)="onBackOTP()"><span class="icon icon-close"></span></a> -->
+            <a class="modal-close" (click)="onCrossModal()"><span class="icon icon-close"></span></a>
+            <div class="modal-body">
+            <h1>{{errorMessage}}</h1>
+            <div class="btn-wrap">
+                <button class="btn btn-border" (click)="isErrorModal = false">Cancel</button>
             </div>
             </div>
         </div>

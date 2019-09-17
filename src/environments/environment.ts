@@ -300,6 +300,10 @@ export const environment = {
       'workflowId': 'd9e7a808926f11e982270242ac110002',
       'processId': '605aa9d6b74a11e983250242ac110002'
     },
+    "chequeDetails" : {
+      'workflowId': 'b969b1908dd111e982270242ac110002',
+      'processId': 'b981f6928dd111e982270242ac110002'
+    },
     "getApplicationStatus" : {
       'workflowId': '1d41cd0a8c4311e982270242ac110002',
       'processId': '653e21a6d48e11e981c20242ac110002'
@@ -316,12 +320,12 @@ export const environment = {
       'workflowId': 'a6a43e0ccfc311e9a3b50242ac110002',
       'processId': 'a6c2d402cfc311e99a490242ac110002'
     },
-
   },
   userName: "icici@icicibankltd.com",
   password: "icici@123",
   appiyoDrive: "/d/drive/upload/",
   host: "http://192.168.1.108/appiyo",
+  iciciDomainExt: "@icicibankltd.com",
   ocsHost: "http://192.168.1.108/ocs",
   // host: "http://182.156.249.170/appiyo",
   //host: "https://ihfcmobileuat.icicihfc.com/appiyo",

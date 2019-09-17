@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import Qde from 'src/app/models/qde.model';
 import { CommonDataService } from 'src/app/services/common-data.service';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
+import { statuses } from '../../app.constants';
+import { UtilService } from '../../services/util.service';
 
 @Component({
   selector: 'app-proceed-to-review-form',
@@ -20,7 +22,8 @@ export class ProceedToReviewFormComponent implements OnInit {
               private commonDataService: CommonDataService, 
               private qdehttpService: QdeHttpService,
               private qdeService: QdeService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private utilService: UtilService,) {
 
     this.qdeService.qdeSource.subscribe(val => {
       this.qde = val;
@@ -28,6 +31,15 @@ export class ProceedToReviewFormComponent implements OnInit {
 
     console.log("this.route.snapshot.data['qde']", this.route.snapshot.data['qde']);
     this.qdeService.setQde(JSON.parse(this.route.snapshot.data['qde']['ProcessVariables']['response']));
+
+    const status = JSON.parse(this.route.snapshot.data['qde']['ProcessVariables']['response']).application.status;
+
+    if(status == statuses['Terms and conditions accepted']) {
+      alert("Terms and condition already accepted");
+      this.utilService.clearCredentials();
+      return;
+    }
+
 
     this.route.params.subscribe(val => {
       this.applicationId = val.applicationId;

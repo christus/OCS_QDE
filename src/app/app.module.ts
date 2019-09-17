@@ -129,7 +129,7 @@ import { ErrorHandlingMessageComponent } from './admin/error-handling-message/er
 const appRoutes: Routes = [
   { path: "", redirectTo: "leads", pathMatch: "full" },
   { path: "login", component: LoginComponent },
-  { path: "loginWithPin",  component: LoginWithMPINComponent, canActivate: [AuthGuard] },
+  { path: "loginWithPin",  component: LoginWithMPINComponent},
   { path: "ConfirmPin", component: EnterMPINComponent },
   { path: "forgotPin", component: ForgotMPINComponent },
   { path: "setPin", component: SetMpinComponent },

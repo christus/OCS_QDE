@@ -3,6 +3,7 @@ import { QdeHttpService } from 'src/app/services/qde-http.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
+import { UtilService } from '../../services/util.service';
 
 
 @Component({
@@ -15,8 +16,9 @@ export class SetMpinComponent implements OnInit {
   userName = "";
   uuID:string;
 
-  constructor(private router: Router, private qdeService: QdeHttpService, private uniqueDeviceID: UniqueDeviceID ) { 
-
+  constructor(private router: Router, private qdeService: QdeHttpService, private uniqueDeviceID: UniqueDeviceID,
+    private utilService: UtilService ) { 
+      this.utilService.clearCredentials();
   }
 
   ngOnInit() {
@@ -37,7 +39,7 @@ export class SetMpinComponent implements OnInit {
 
     console.log("UserName", this.userName);
 
-    var empId = this.userName + "@icici.com";
+    var empId = this.userName + "@icicibankltd.com";
 
     var data = {
       empId : empId,

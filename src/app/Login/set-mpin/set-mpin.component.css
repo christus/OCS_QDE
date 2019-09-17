@@ -1,3 +1,6 @@
 .lyt-login {
 	position: absolute;
 }
+.overflow_hidden {
+	overflow: hidden;
+}

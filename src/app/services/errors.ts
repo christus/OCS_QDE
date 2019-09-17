@@ -112,7 +112,7 @@ export const errors: any = {
     },
     salaryAmount: {
       required: "Salary Amount is mandatory",
-      invalid: "Alphabets and and Special Characters not allowed"
+      invalid: "Invalid Amount / Alphabets and Special Characters not allowed"
     }
   },
 

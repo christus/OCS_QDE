@@ -194,6 +194,9 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
   auditTrialApiSub: Subscription;
   fragmentSub: Subscription;
 
+  isErrorModal:boolean; 
+  errorMessage:string;
+
   constructor(
     private renderer: Renderer2,
     private route: ActivatedRoute,
@@ -307,6 +310,9 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
           this.qde.application.applicationId = applicationId;
 
           this.qdeService.setQde(this.qde);
+        }, error => {
+          this.isErrorModal = true;
+          this.errorMessage = "Something went wrong, please again later.";
         });
       } else {
         this.qde = this.qdeService.getQde();
@@ -494,16 +500,18 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
 
                   this.goToNextSlide(swiperInstance);
                 }
+              }, error => {
+                this.isErrorModal = true;
+                this.errorMessage = "Something went wrong, please again later.";
               });
 
               this.referenceId1 = this.qde.application.references.referenceOne.referenceId;
             } else {
               alert(response["ErrorMessage"]);
             }
-          },
-          error => {
-            console.log("response : ", error);
-            alert(error["ErrorMessage"]);
+          }, error => {
+            this.isErrorModal = true;
+            this.errorMessage = "Something went wrong, please again later.";
           }
         );
   
@@ -548,15 +556,17 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
 
                   this.goToNextSlide(swiperInstance);
                 }
+              }, error => {
+                this.isErrorModal = true;
+                this.errorMessage = "Something went wrong, please again later.";
               });
               this.tabSwitch(1);
             } else {
               alert(response["ErrorMessage"]);
             }
-          },
-          error => {
-            alert(error["ErrorMessage"]);
-            console.log("response : ", error);
+          }, error => {
+            this.isErrorModal = true;
+            this.errorMessage = "Something went wrong, please again later.";
           }
         );
   
@@ -597,14 +607,16 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
 
                   this.goToNextSlide(swiperInstance);
                 }
+              }, error => {
+                this.isErrorModal = true;
+                this.errorMessage = "Something went wrong, please again later.";
               });
             } else {
               alert(response["ErrorMessage"]);
             }
-          },
-          error => {
-            alert(error["ErrorMessage"]);
-            console.log("response : ", error);
+          }, error => {
+            this.isErrorModal = true;
+            this.errorMessage = "Something went wrong, please again later.";
           }
         );
   
@@ -659,14 +671,16 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
 
                   this.isReferenceRouteModal = true;
                 }
+              }, error => {
+                this.isErrorModal = true;
+                this.errorMessage = "Something went wrong, please again later.";
               });
             } else {
               alert(response["ErrorMessage"]);
             }
-          },
-          error => {
-            alert(error["ErrorMessage"]);
-            console.log("response : ", error);
+          }, error => {
+            this.isErrorModal = true;
+            this.errorMessage = "Something went wrong, please again later.";
           }
         );
   

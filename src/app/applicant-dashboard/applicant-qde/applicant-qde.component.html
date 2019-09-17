@@ -1,4 +1,4 @@
-<main>
+ <main>
   <div class="main">
     <div class="lyt-home">
       <div class="tabs">
@@ -258,7 +258,7 @@
                   <div class="swiper-wrapper">
                     <div class="swiper-slide">
                       <div class="title-wrap">
-                        <h4 class="title">Enter Applicant’s <span class="cm-line-break"></span>status</h4>
+                        <h4 class="title">Select Applicant’s <span class="cm-line-break"></span>residential status</h4>
                       </div>
                     </div>
                     <div class="swiper-slide">
@@ -1117,7 +1117,8 @@
                           </div>
                         </div>
                         <div class="btn-wrap">
-                          <button type="submit" class="btn btn-primary">Next
+                          <button type="submit" [ngClass]="{'disabled': (!spouseEarningAmtForm.valid)}"
+                          [disabled]="!spouseEarningAmtForm.valid"  class="btn btn-primary">Next
                           </button>
                         </div>
                       </form>
@@ -1138,7 +1139,7 @@
                   <div class="swiper-wrapper">
                     <div class="swiper-slide">
                       <div class="title-wrap">
-                        <h4 class="title">Enter Applicant’s <span class="cm-line-break"></span>family details</h4>
+                        <h4 class="title">Enter details of <span class="cm-line-break"></span>Applicant’s family</h4>
                         <!-- <p class="note">Family details are required to evaluate
                                               <span class="cm-line-break">credit-worthiness of the main applicant & for </span>
                                               <span class="cm-line-break">other regulatory purposes.</span>
@@ -1147,7 +1148,7 @@
                     </div>
                     <div class="swiper-slide">
                       <div class="title-wrap">
-                        <h4 class="title">Enter Applicant’s <span class="cm-line-break"></span>family details</h4>
+                        <h4 class="title">Enter details of <span class="cm-line-break"></span>Applicant’s family</h4>
                         <!-- <p class="note">Family details are required to evaluate
                                               <span class="cm-line-break">credit-worthiness of the main applicant & for </span>
                                               <span class="cm-line-break">other regulatory purposes.</span>
@@ -1356,8 +1357,8 @@
                   <div class="swiper-wrapper">
                     <div class="swiper-slide">
                       <div class="title-wrap">
-                        <h4 class="title">Enter Applicant’s <span class="cm-line-break"></span>current occupation <span
-                            class="cm-line-break"></span>details</h4>
+                        <h4 class="title">Enter details of <span class="cm-line-break"></span>Applicant’s current <span
+                            class="cm-line-break"></span>occupation</h4>
                         <p class="note">We may need this details for regulatory
                           <span class="cm-line-break">purposes.</span>
                         </p>
@@ -1455,7 +1456,7 @@
                           </div>
 
                           <div *ngIf="selectedOccupation.value == 10" class="form-group last">
-                              <span class="control-title">Do you recieve pension?</span>
+                              <span class="control-title">Do you receive pension?</span>
                           </div>
                             <div *ngIf="selectedOccupation.value == 10" class="radio-wrap rounded-radio">
                               <div class="bs-radio typ-normal">

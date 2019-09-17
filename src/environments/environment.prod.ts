@@ -1,6 +1,6 @@
 export const environment = {
   version: "1.7.7",
-  buildDate: "16-9-2019",
+  buildDate: "17-9-2019",
   production: true,
   projectId: '5928d30eac7811e9a1670242ac110002', //developement
 
@@ -294,6 +294,10 @@ export const environment = {
       'workflowId': 'd9e7a808926f11e982270242ac110002',
       'processId': '605aa9d6b74a11e983250242ac110002'
     },
+    "chequeDetails" : {
+      'workflowId': 'b969b1908dd111e982270242ac110002',
+      'processId': 'b981f6928dd111e982270242ac110002'
+    },
     "getApplicationStatus" : {
       'workflowId': '1d41cd0a8c4311e982270242ac110002',
       'processId': '653e21a6d48e11e981c20242ac110002'
@@ -313,13 +317,14 @@ export const environment = {
   },
   userName: "icici@icicibankltd.com",
   password: "icici@123",
+  iciciDomainExt: "@icicibankltd.com",
   appiyoDrive: "/d/drive/upload/",
   driveLocation: "/d/drive/docs/",
   ocsHost: "/ocs",
- // host: "http://192.168.1.108/appiyo",
+  host: "http://192.168.1.108/appiyo",
   //host: "/ProcessStore",
-  host:  "/appiyo",
-  pdfLocation: "/d/download/pdf?"
+ // host:  "/appiyo",
+  pdfLocation: "/d/download/pdf?",
   //host: "https://ihfcmobileuat.icicihfc.com/appiyo"
   //host: "https://103.87.42.117/appiyo"
   //host:"http://www.twixor.in/appiyo"

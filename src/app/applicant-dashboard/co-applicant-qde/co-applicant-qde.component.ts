@@ -59,8 +59,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     otp: "^[0-9]+$",
     panInd:"[A-Z]{3}(P)[A-Z]{1}[0-9]{4}[A-Z]{1}",
     panNonInd:"[A-Z]{5}[0-9]{4}[A-Z]{1}",
-    amount:"^[\\d]{0,10}([.][0-9]{0,4})?",
-    revenue:"^[\\d]{0,10}([.][0-9]{0,4})?",
+    amount:"^[1-9][\\d]{0,10}([.][0-9]{0,4})?",
+    revenue:"^[1-9][\\d]{0,10}([.][0-9]{0,4})?",
     email:"^\\w+([\.-]?\\w+)*@\\w+([\.-]?\\w+)*(\\.\\w{2,10})+$",
     sameDigit: '^0{6,10}|1{6,10}|2{6,10}|3{6,10}|4{6,10}|5{6,10}|6{6,10}|7{6,10}|8{6,10}|9{6,10}$'
     // revenue:"^[0-9]{0,17}\.[0-9]{1,4}?$"
@@ -329,6 +329,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   auditTrialApiSub: Subscription;
   swiperSliders: Array<Swiper> = [];
   swiperSlidersSub: Subscription;
+
+  isErrorModal:boolean;
+  errorMessage:string;
 
   constructor(private renderer: Renderer2,
               private route: ActivatedRoute,
@@ -662,6 +665,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
 
             this.prefillData(params);
+          }, error => {
+            this.isErrorModal = true;
+            this.errorMessage = "Something went wrong, please again later.";
           });
         // }
       }
@@ -860,6 +866,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                     this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                     this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
                   }
+                }, error => {
+                  this.isErrorModal = true;
+                  this.errorMessage = "Something went wrong, please again later.";
                 });
                 // isApplicantPresent = applicants[this.applicantIndex].hasOwnProperty('applicantId');
                 // this.qde.application.applicants[this.coApplicantIndex].applicantId =  applicants[this.coApplicantIndex]["applicantId"];
@@ -872,6 +881,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                     // this.cds.changePanSlide(true);
                     this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant/'+this.coApplicantIndex], { queryParams: { tabName: this.fragments[2], page: 1 }});
                   }
+                }, error => {
+                  this.isErrorModal = true;
+                  this.errorMessage = "Something went wrong, please again later.";
                 });
     
               } else {
@@ -883,14 +895,16 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
               // Throw Invalid Pan Error
               }
             }, (error) => {
-              console.log('error ', error);
-              // alert("error"+error);
-              // Throw Request Failure Error
+              this.isErrorModal = true;
+              this.errorMessage = "Something went wrong, please again later.";
             });
         } else {
             this.qde.application.applicants[this.coApplicantIndex].pan.panVerified = false;
             this.isValidPan = false;
           }
+        }, error => {
+          this.isErrorModal = true;
+          this.errorMessage = "Something went wrong, please again later.";
         });
       }
       // When Pan Not Verified
@@ -915,6 +929,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                     this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                     this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
                 }
+              } , error => {
+                this.isErrorModal = true;
+                this.errorMessage = "Something went wrong, please again later.";
               });
 
               // isApplicantPresent = applicants[this.applicantIndex].hasOwnProperty('applicantId');
@@ -928,6 +945,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                   // this.cds.changePanSlide(true);
                   this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant/'+this.coApplicantIndex], { queryParams: { tabName: this.fragments[2], page: 1 }});
                 }
+              }, error => {
+                this.isErrorModal = true;
+                this.errorMessage = "Something went wrong, please again later.";
               });
   
             } else {
@@ -938,10 +958,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             this.panErrorCount++;
             // Throw Invalid Pan Error
             }
-          }, (error) => {
-            console.log('error ', error);
-            // alert("error"+error);
-            // Throw Request Failure Error
+          },  (error) => {
+            this.isErrorModal = true;
+            this.errorMessage = "Something went wrong, please again later.";
           });
       }
 
@@ -1036,6 +1055,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             this.isValidPan = false;
             this.qde.application.applicants[this.coApplicantIndex].pan.panVerified = false;
           }
+        } , error => {
+          this.isErrorModal = true;
+          this.errorMessage = "Something went wrong, please again later.";
         });
       } else {
         this.createOrUpdatePanDetailsSub2 = this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
@@ -1080,10 +1102,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             this.panErrorCount++;
             // Throw Invalid Pan Error
           }
-        }, (error) => {
-          console.log('error ', error);
-          // alert("error"+error);
-          // Throw Request Failure Error
+        },  (error) => {
+          this.isErrorModal = true;
+          this.errorMessage = "Something went wrong, please again later.";
         });
       }
     }
@@ -1125,6 +1146,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                     this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                     this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
+          }, error => {
+            this.isErrorModal = true;
+            this.errorMessage = "Something went wrong, please again later.";
           });
 
         let maleTitles = [];
@@ -1150,7 +1174,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
           // Throw Invalid Pan Error
         }
       }, (error) => {
-        console.log("response : ", error);
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       });
   
     }
@@ -1172,6 +1197,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                     this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                     this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
           }
+        } , error => {
+          this.isErrorModal = true;
+          this.errorMessage = "Something went wrong, please again later.";
         });  
         
         
@@ -1180,7 +1208,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         // Throw Invalid Pan Error
       }
     }, (error) => {
-      console.log("response : ", error);
+      this.isErrorModal = true;
+      this.errorMessage = "Something went wrong, please again later.";
     });
     
   }
@@ -1204,6 +1233,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                     this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                     this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
+          } , error => {
+            this.isErrorModal = true;
+            this.errorMessage = "Something went wrong, please again later.";
           });
           this.goToNextSlide(swiperInstance);
           console.log(response['ProcessVariables']['response']);
@@ -1211,7 +1243,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
           // Throw Invalid Pan Error
         }
       }, (error) => {
-        console.log("response : ", error);
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       });
     }
     
@@ -1244,13 +1277,17 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                     this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                     this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
+          } , error => {
+            this.isErrorModal = true;
+            this.errorMessage = "Something went wrong, please again later.";
           });
           this.goToNextSlide(swiperInstance);
         } else {
           // Throw Invalid Pan Error
         }
-      }, (error) => {
-        console.log("response : ", error);
+      },  (error) => {
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       });
     }
     
@@ -1297,6 +1334,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                     this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                     this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
+          } , error => {
+            this.isErrorModal = true;
+            this.errorMessage = "Something went wrong, please again later.";
           });
           this.qdeHttp.duplicateApplicantCheck(this.qde.application.applicants[this.coApplicantIndex].applicantId).subscribe(res => {
             
@@ -1310,12 +1350,16 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                 }
               }
             }
+          } , error => {
+            this.isErrorModal = true;
+            this.errorMessage = "Something went wrong, please again later.";
           });
         } else {
           // Throw Invalid Pan Error
         }
       }, (error) => {
-        console.log("response : ", error);
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       });
     }
   }
@@ -1354,13 +1398,17 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                     this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                     this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
+          }, error => {
+            this.isErrorModal = true;
+            this.errorMessage = "Something went wrong, please again later.";
           });
           this.tabSwitch(4);
         } else {
           // Throw Invalid Pan Error
         }
       }, (error) => {
-        console.log("response : ", error);
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       });
   
     }
@@ -1395,7 +1443,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
           // alert("Invalid Pin");
         }
 
-     });
+     } , error => {
+      this.isErrorModal = true;
+      this.errorMessage = "Something went wrong, please again later.";
+    });
   }
   //-------------------------------------------------------------
   
@@ -1446,13 +1497,17 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                     this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                     this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
+          }, error => {
+            this.isErrorModal = true;
+            this.errorMessage = "Something went wrong, please again later.";
           });
           this.tabSwitch(5);
         } else {
           // Throw Invalid Pan Error
         }
-      }, (error) => {
-        console.log("response : ", error);
+      }, error => {
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       });
     }
   }
@@ -1492,6 +1547,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                     this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                     this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
               }
+            }, error => {
+              this.isErrorModal = true;
+              this.errorMessage = "Something went wrong, please again later.";
             });
             this.goToNextSlide(swiperInstance);
           } else {
@@ -1501,8 +1559,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
           // Throw Invalid Pan Error
         }
       }, (error) => {
-        console.log("response : ", error);
-        //this.goToNextSlide(swiperInstance);
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       });
     }
 
@@ -1531,14 +1589,17 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                     this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                     this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
+          } , error => {
+            this.isErrorModal = true;
+            this.errorMessage = "Something went wrong, please again later.";
           });
           this.goToNextSlide(swiperInstance);
         } else {
           // Throw Invalid Pan Error
         }
-      }, (error) => {
-        console.log("response : ", error);
-       // alert("error"+error.);
+      },  (error) => {
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       });
   
     }
@@ -1566,6 +1627,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                     this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                     this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
+          } , error => {
+            this.isErrorModal = true;
+            this.errorMessage = "Something went wrong, please again later.";
           });
           if(value == 1) {
             this.goToNextSlide(swiperInstance);
@@ -1576,8 +1640,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
           // Throw Invalid Pan Error
         }
       }, (error) => {
-        console.log("response : ", error);
-        // alert("error"+error);
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       });
     }
 
@@ -1611,14 +1675,17 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                     this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                     this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
+          }, error => {
+            this.isErrorModal = true;
+            this.errorMessage = "Something went wrong, please again later.";
           });
           this.tabSwitch(6);
         } else {
           // Throw Invalid Pan Error
         }
-      }, (error) => {
-        console.log("response : ", error);
-        // this.tabSwitch(7);
+      },  (error) => {
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       });
     }
 
@@ -1653,13 +1720,17 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                     this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                     this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
+          }, error => {
+            this.isErrorModal = true;
+            this.errorMessage = "Something went wrong, please again later.";
           });
           this.goToNextSlide(swiperInstance);
         } else {
           // Throw Invalid Pan Error
         }
-      }, (error) => {
-        console.log("response : ", error);
+      },  (error) => {
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       });
   
     }
@@ -1692,13 +1763,17 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                     this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                     this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
+          }, error => {
+            this.isErrorModal = true;
+            this.errorMessage = "Something went wrong, please again later.";
           });
           this.tabSwitch(7);
         } else {
           // Throw Invalid Pan Error
         }
       }, (error) => {
-        console.log("response : ", error);
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       });
     }
 
@@ -1739,14 +1814,17 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                     this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                     this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
+          } , error => {
+            this.isErrorModal = true;
+            this.errorMessage = "Something went wrong, please again later.";
           });
           this.tabSwitch(8);
         } else {
           // Throw Invalid Pan Error
         }
       }, (error) => {
-        console.log("response : ", error);
-        // alert("error"+error);
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       });
     }
 
@@ -1819,6 +1897,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                     this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                     this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
+          } , error => {
+            this.isErrorModal = true;
+            this.errorMessage = "Something went wrong, please again later.";
           });
           
           /*********************************************************************************************************
@@ -1833,8 +1914,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         } else {
           // Throw Invalid Pan Error
         }
-      }, (error) => {
-        console.log("response : ", error);
+      },  (error) => {
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       });
     }
 
@@ -1885,13 +1967,17 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                     this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                     this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
+          }, error => {
+            this.isErrorModal = true;
+            this.errorMessage = "Something went wrong, please again later.";
           });
           this.tabSwitch(10);
         } else {
           // Throw Invalid Pan Error
         }
       }, (error) => {
-        console.log("response : ", error);
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       });
     }
   }
@@ -1925,6 +2011,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                     this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                     this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
+          }, error => {
+            this.isErrorModal = true;
+            this.errorMessage = "Something went wrong, please again later.";
           });
           let result = this.parseJson(response["ProcessVariables"]["response"]);
           this.qdeHttp.duplicateApplicantCheck(this.qde.application.applicants[this.coApplicantIndex].applicantId).subscribe(res => {
@@ -1939,12 +2028,16 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                 }
               }
             }
+          }, error => {
+            this.isErrorModal = true;
+            this.errorMessage = "Something went wrong, please again later.";
           });
         } else {
           // Throw Invalid Pan Error
         }
       }, (error) => {
-        console.log("response : ", error);
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       });
     }
   }
@@ -1987,13 +2080,17 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                     this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                     this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
+          }, error => {
+            this.isErrorModal = true;
+            this.errorMessage = "Something went wrong, please again later.";
           });
           this.tabSwitch(14);
         } else {
           // Throw Invalid Pan Error
         }
-      }, (error) => {
-        console.log("response : ", error);
+      },(error) => {
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       });
     }
   }
@@ -2037,13 +2134,17 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                     this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                     this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
+          }, error => {
+            this.isErrorModal = true;
+            this.errorMessage = "Something went wrong, please again later.";
           });
           this.tabSwitch(15);
         } else {
           // Throw Invalid Pan Error
         }
       }, (error) => {
-        console.log("response : ", error);
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       });
     }
   }
@@ -2078,6 +2179,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                     this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                     this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
+          }, error => {
+            this.isErrorModal = true;
+            this.errorMessage = "Something went wrong, please again later.";
           });
           this.tabSwitch(16);
         } else {
@@ -2122,6 +2226,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                     this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                     this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
+          }, error => {
+            this.isErrorModal = true;
+            this.errorMessage = "Something went wrong, please again later.";
           });
           
           this.isCoApplicantRouteModal = true;
@@ -2130,8 +2237,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         } else {
           // Throw Invalid Pan Error
         }
-      }, (error) => {
-        console.log("response : ", error);
+      }, error => {
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       });
   
     }
@@ -2160,6 +2268,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
               this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
               this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
+          }, error => {
+            this.isErrorModal = true;
+            this.errorMessage = "Something went wrong, please again later.";
           });
           this.isCoApplicantRouteModal = true;
           // this.router.navigate(['/applicant', this.qde.application.applicationId, 'co-applicant'], {fragment: 'dashboard'} );
@@ -2167,8 +2278,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         } else {
           // Throw Invalid Pan Error
         }
-      }, (error) => {
-        console.log("response : ", error);
+      }, error => {
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       });
   
     }
@@ -2199,6 +2311,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                     this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                     this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
+          }, error => {
+            this.isErrorModal = true;
+            this.errorMessage = "Something went wrong, please again later.";
           });
 
           this.isCoApplicantRouteModal = true;
@@ -2207,8 +2322,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         else {
           // Throw Invalid Pan Error
         }
-      }, (error) => {
-        console.log("response : ", error);
+      }, error => {
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       });
   
     }
@@ -2269,6 +2385,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                     this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                     this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
+          }, error => {
+            this.isErrorModal = true;
+            this.errorMessage = "Something went wrong, please again later.";
           });
 
           if(this.qde.application.applicants[this.coApplicantIndex].incomeDetails.incomeConsider) {
@@ -2279,8 +2398,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         } else {
           // Throw Invalid Pan Error
         }
-      }, (error) => {
-        console.log("response : ", error);
+      }, error => {
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       });
     }
   }
@@ -2310,6 +2430,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                     this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                     this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
+          }, error => {
+            this.isErrorModal = true;
+            this.errorMessage = "Something went wrong, please again later.";
           });
 
           if(value == 1) {
@@ -2321,8 +2444,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         } else {
           // Throw Invalid Pan Error
         }
-      }, (error) => {
-        console.log("response : ", error);
+      }, error => {
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       });
     }
   }
@@ -3007,7 +3131,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         // else if(res['ProcessVariables']['isPaymentSuccessful'] == false) {
         //   this.showErrorModal = true;
         // }
-       });
+       }, error => {
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
+      });
        this.timeout();
     } else {
       alert("Email id and Mobile number is mandatory for verification");
@@ -3040,7 +3167,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         this.inOTP = true;
         this.isAlternateStatus =  false;
       }
-     });
+     }, error => {
+      this.isErrorModal = true;
+      this.errorMessage = "Something went wrong, please again later.";
+    });
      this.timeout();
   }
   onBackOTP() {
@@ -3070,7 +3200,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       }else {
         alert("Enter valid OTP");
       }
-     });
+     }, error => {
+      this.isErrorModal = true;
+      this.errorMessage = "Something went wrong, please again later.";
+    });
   }
 
   allowOnlyNumbers() {
@@ -3114,6 +3247,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             // alert("Switch to tab 1");
             this.tabSwitch(1);
           }
+        }, error => {
+          this.isErrorModal = true;
+          this.errorMessage = "Something went wrong, please again later.";
         });
       } else {
         // Throw Invalid Pan Error
@@ -3211,9 +3347,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         } else {
           console.log(response["ErrorMessage"]);
         }
-      },
-      error => {
-        console.log("Error : ", error);
+      }, error => {
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       }
     );
 
@@ -3249,6 +3385,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       if(response["ProcessVariables"]["status"]) {       
         this.closeDuplicateModal();
       }
+    }, error => {
+      this.isErrorModal = true;
+      this.errorMessage = "Something went wrong, please again later.";
     });
   }
 

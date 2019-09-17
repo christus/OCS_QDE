@@ -140,7 +140,7 @@ export class LeadsListComponent implements OnInit {
           this.cds.setIsTBMLoggedIn(this.isTBMLoggedIn);
         } else if (res['login_required'] && res['login_required'] === true) {
           this.utilService.clearCredentials();
-          alert(res['message']);
+          // alert(res['message']);
         } else {
           alert(res['ErrorMessage']);
         }
@@ -175,7 +175,7 @@ export class LeadsListComponent implements OnInit {
           this.cds.setIsTBMLoggedIn(this.isTBMLoggedIn);
         } else if (res['login_required'] && res['login_required'] === true) {
           this.utilService.clearCredentials();
-          alert(res['message']);
+          // alert(res['message']);
         } else {
           alert(res['ErrorMessage']);
         }
@@ -211,7 +211,7 @@ export class LeadsListComponent implements OnInit {
           this.cds.setIsTBMLoggedIn(this.isTBMLoggedIn);
         } else if (res['login_required'] && res['login_required'] === true) {
           this.utilService.clearCredentials();
-          alert(res['message']);
+          // alert(res['message']);
         } else {
           alert(res['ErrorMessage']);
         }
@@ -249,7 +249,7 @@ export class LeadsListComponent implements OnInit {
           this.cds.setIsTBMLoggedIn(this.isTBMLoggedIn);
         } else if (res['login_required'] && res['login_required'] === true) {
           this.utilService.clearCredentials();
-          alert(res['message']);
+          // alert(res['message']);
         } else {
           alert(res['ErrorMessage']);
         }

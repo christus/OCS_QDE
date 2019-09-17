@@ -194,6 +194,9 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
   auditTrialApiSub: Subscription;
   fragmentSub: Subscription;
 
+  isErrorModal:boolean;
+  errorMessage:string;
+
   constructor(
     private renderer: Renderer2,
     private route: ActivatedRoute,
@@ -294,6 +297,9 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
           this.cds.changeApplicationId(this.qde.application.applicationId);
           this.cds.enableTabsIfStatus1(this.qde.application.status);
 
+        }, error => {
+          this.isErrorModal = true;
+          this.errorMessage = "Something went wrong, please again later.";
         });
       }
 
@@ -963,15 +969,14 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
         } else {
           console.log(alert["message"]);
         }
-      },
-      error => {
-        console.log("Error : ", error);
-       // alert(error.error.message);
+      }, error => {
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       }
     );
   }
 
-  uploadToOmni(documentInfo: any, tabIndex: number, slider) {
+  uploadToOmni(documentInfo: any, tabIndex: number, slider?: Swiper) {
     this.qdeHttp.uploadToOmni(documentInfo).subscribe(
       response => {
         if (
@@ -1001,9 +1006,9 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
             );
           }
         }
-      },
-      error => {
-        console.log("Error : ", error);
+      }, error => {
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       }
     );
   }
@@ -1050,9 +1055,9 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
             console.log("Response: " + response["ProcessVariables"]["errorMessage"]);
           }
         }
-      },
-      error => {
-        console.log("Error : ", error);
+      }, error => {
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
       }
     );
   }
