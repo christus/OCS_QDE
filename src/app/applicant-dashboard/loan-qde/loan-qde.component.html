@@ -65,7 +65,7 @@
                             #amountRequired = "ngModel"
                             name="amountRequired"
                             fieldFill
-                            pattern="^[0-9]*$"
+                            pattern="^[1-9][0-9]*$"
                             (input)="checkNumberLessThan50k($event)">
     
                           <label for="amt-require">Amount required</label>
@@ -480,7 +480,7 @@
                                 #monthlyEmi = "ngModel"
                                 [(ngModel)]="monthlyEmiValue"
                                 fieldFill
-                                name="monthlyEmi" pattern="^[0-9]*$"/>
+                                name="monthlyEmi" pattern="^[1-9][0-9]*$"/>
   
                               <label for="monthly-emi">Monthly EMI</label>
                               <span class="optional">optional</span>
@@ -518,7 +518,7 @@
                               #monthlyEmi = "ngModel"
                               [(ngModel)]="monthlyEmiValue"
                               fieldFill
-                              name="monthlyEmi" pattern="^[0-9]*$"/>
+                              name="monthlyEmi" pattern="^[1-9][0-9]*$"/>
 
                             <label for="monthly-emi">Monthly EMI</label>
                             <span class="optional">optional</span>

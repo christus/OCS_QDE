@@ -35,8 +35,9 @@
     }
 
       .bs-checkbox{
-        margin-top: -20px;
-        margin-bottom: -100px;
+        margin-bottom: -70px;
+        margin-top: 10px;
+        /* margin: 0 1.95vw; */
         display:  inherit;
       }
       .backbtn{
