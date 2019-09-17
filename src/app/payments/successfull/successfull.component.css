@@ -44,4 +44,14 @@
       }
      
 
+
+      .bs-checkbox {
+       
+        vertical-align: top;
+        /* margin: 0 1.95vw; */
+        width: 100%;
+        text-align: left
+      }
+      
+     
       
