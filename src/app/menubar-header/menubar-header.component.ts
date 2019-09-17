@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { QdeHttpService } from '../services/qde-http.service';
 
-import { screenPages } from '../app.constants';
+import { screenPages, statuses } from '../app.constants';
 
 
 @Component({
@@ -32,11 +32,13 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
   isViewFormNameShown: boolean;
   isHomeVisible: boolean;
   paymentActive: boolean;
+  applicantBtnStatus: boolean;
   // isViewFormVisible: boolean;
   // isLogoutVisible: boolean;
   // applicantId: string;
 
   public applicantName: string;
+  
 
   referenceNumber: string;
   qde:Qde;
@@ -56,9 +58,9 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
   constructor(private utilService: UtilService,
               private commonDataService: CommonDataService,
               private _router: Router,
-              private qdeService:QdeService,
+              private qdeService: QdeService,
               private qdehttpService: QdeHttpService,
-              private route: ActivatedRoute,) {
+              private route: ActivatedRoute) {
     
                 this.route.params.subscribe(val => {
       this.applicationId = val.applicationId;
@@ -87,22 +89,22 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
     });
     
     // this.commonDataService.paymentActive.subscribe((value) => {
-    //   this.paymentActive = value;
-    // });
-
-    this.commonDataService.applicationId.subscribe(val => {
-      this.applicationId = val;
-      console.log("applicationId: ", this.applicationId);
-    });
-
-    this.commonDataService.coApplicantIndex.subscribe(val => {
-      this.coApplicantIndex = val;
-    });
-
-    this.commonDataService.applicantName.subscribe(val => {
-      this.applicantName = val;
-      console.log("applicantName: ", this.applicantName);
-    });
+    //   this.paymentActive = value; 
+    // }); 
+ 
+    this.commonDataService.applicationId.subscribe(val => { 
+      this.applicationId = val; 
+      console.log("applicationId: ", this.applicationId); 
+    }); 
+ 
+    this.commonDataService.coApplicantIndex.subscribe(val => { 
+      this.coApplicantIndex = val; 
+    }); 
+ 
+    this.commonDataService.applicantName.subscribe(val => { 
+      this.applicantName = val; 
+      console.log("applicantName: ", this.applicantName); 
+    }); 
 
     // this.qde = qdeService.getQde();
 
@@ -112,7 +114,10 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
     this.qdeService.qdeSource.subscribe(v => {
       this.qde = v;
 
-     
+      console.log("Apllication status", this.qde);
+
+
+      this.applicantBtnStatus = (this.qde.application.status == parseInt(statuses['Login Fee Paid']) ? true: false) ;
 
       // Find an applicant
       const applicants = this.qde.application.applicants;
@@ -131,9 +136,13 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
         this.applicantName = "";
       } else {
         if(this.qde.application.applicants[index].personalDetails.firstName != "" ) {
-          this.applicantName = "Application for "+this.qde.application.applicants[index].personalDetails.firstName || this.applicantName+" "+ this.qde.application.applicants[index].personalDetails.lastName;
+          this.applicantName = "Application for "+ this.qde.application.applicants[index].personalDetails.firstName + " "
+          +" " + this.qde.application.applicants[index].personalDetails.middleName + " "
+           + this.qde.application.applicants[index].personalDetails.lastName;
         } else {
-          this.applicantName = "Application for "+this.qde.application.applicants[index].organizationDetails.nameOfOrganization || this.nameOfOrganization;
+          this.applicantName = "Application for "+ this.qde.application.applicants[index].organizationDetails.nameOfOrganization
+          || this.nameOfOrganization;
+         
         }
 
         this.referenceNumber = this.qde.application.ocsNumber || this.applicationId;
@@ -193,9 +202,15 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
       console.log("Dude: ", val);
       console.log("isPaymentsDisabled: ",this.isPaymentsDisabled);
     });
+    const appId = this.route.snapshot.params;
+    console.log("qutery Perams in constor ", appId);
   }
 
   ngOnInit() {
+    console.log("on init in menu header");
+    const appId = this.route.snapshot.params;
+    console.log("qutery Perams ", appId);
+    // this.setApplicantName();
   }
 
   setApplicantName(qde) {
@@ -204,10 +219,12 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
   }
 
 
+  
+
   setApplicationName(firstName, lastName, nameOfOrganization, ocsNumber){
 
     this.firstName = firstName;
-    this.lastName = firstName;
+    this.lastName = lastName;
     this.nameOfOrganization = nameOfOrganization;
     this.ocsNumber = ocsNumber;
 
@@ -235,6 +252,18 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     if(this.isEligibilityForReviewsSub != null) {
       this.isEligibilityForReviewsSub.unsubscribe();
+    }
+  }
+
+  statusViewPage(appId) {
+
+
+    let status = this.qde.application.status;
+
+    if(status  ==  parseInt(statuses['Login Fee Paid']) ) {
+      //this._router.navigate(["/paymentsucessfull"]);
+    }else {
+      this._router.navigate(["/applicant/sucessfull/", this.applicationId]);
     }
   }
 

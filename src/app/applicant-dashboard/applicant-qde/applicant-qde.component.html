@@ -527,7 +527,7 @@
                             </span>
                             <div *ngIf="(preferEmailId.touched || preferEmailId.dirty) && preferEmailId.invalid"
                               class="invalid-feedback">
-                              <!-- <div *ngIf="preferEmailId.errors?.required">{{errors.contactDetails.preferedEmail.required}}</div> -->
+                              <div *ngIf="preferEmailId.errors?.required">{{errors.contactDetails.preferedEmail.required}}</div>
                               <div *ngIf="preferEmailId.errors?.pattern">{{errors.contactDetails.preferedEmail.invalid}}
                               </div>
                             </div>
@@ -632,27 +632,29 @@
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text"
                                 [(ngModel)]="residenceNumberStdCode" pattern="{{regexPattern.stdCode}}"
                                 #residenceStdCode="ngModel" data-validation-attr="residenceno01" maxlength="5"
-                                minlength="0" name="residenceNumber1" class="form-control" fieldFill id="std" />
+                                minlength="3" name="residenceNumber1" class="form-control" fieldFill id="std" />
                               <label for="std" tabindex="9">STD</label>
                               <div *ngIf="residenceStdCode.touched && residenceStdCode.invalid"
                                 class="invalid-feedback">
                                 <!-- <div *ngIf="residenceStdCode.errors?.required">{{errors.contactDetails.stdCode.required}}</div> -->
-                                <div *ngIf="residenceStdCode.errors?.pattern">{{errors.contactDetails.stdCode.invalid}}
-                                </div>
+                                <div *ngIf="residenceStdCode.errors?.pattern || residenceStdCode.errors?.minlength">{{errors.contactDetails.stdCode.invalid}}</div>
+                                <!-- <div *ngIf="residenceStdCode.errors?.minlength">{{errors.contactDetails.stdCode.invalid}}</div> -->
                               </div>
                             </div>
                             <span class="seperator">-</span>
                             <div class="form-group typ-optional">
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                                 id="res-no" [(ngModel)]="residenceNumberPhoneNumber"
-                                pattern="{{regexPattern.mobileNumber}}" maxlength="8" #residenceNumber="ngModel"
+                                pattern="{{regexPattern.mobileNumber}}" minlength="4" maxlength="8" #residenceNumber="ngModel"
                                 name="residenceNumber2" value="{{residenceNumber.phoneNumber}}"
                                 data-validation-attr="residenceno" fieldFill />
                               <label for="res-no" tabindex="10">Residence number</label>
                               <span class="optional">Optional</span>
                               <div *ngIf="residenceNumber.touched  && residenceNumber.invalid" class="invalid-feedback">
-                                <div *ngIf="residenceNumber.errors?.pattern">
+                                <div *ngIf="residenceNumber.errors?.pattern || residenceNumber.errors?.minlength">
                                   {{errors.contactDetails.residenceNumber.invalid}}</div>
+                                <!-- <div *ngIf="residenceNumber.errors?.minlength">
+                                  {{errors.contactDetails.residenceNumber.invalid}}</div> -->
                                 <!-- <div *ngIf="residenceNumber.errors?.required">{{errors.contactDetails.residenceNumber.required}}</div> -->
                               </div>
                               <!-- <div class="invalid-feedback"
@@ -668,28 +670,32 @@
                             <div class="form-group">
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text"
                                 [(ngModel)]="alternateResidenceNumberStdCode" name="alternateResidenceNumberStd1"
-                                maxlength="5" #alternateResidenceNumberStd1="ngModel"
+                                minlength="3" maxlength="5" #alternateResidenceNumberStd1="ngModel"
                                 pattern="{{regexPattern.stdCode}}" class="form-control" fieldFill id="altrstd">
                               <label for="altrstd" tabindex="12">STD</label>
                               <div *ngIf="alternateResidenceNumberStd1.touched  && alternateResidenceNumberStd1.invalid"
                                 class="invalid-feedback">
-                                <div *ngIf="alternateResidenceNumberStd1.errors?.pattern">
+                                <div *ngIf="alternateResidenceNumberStd1.errors?.pattern || alternateResidenceNumberStd1.errors?.minlength">
                                   {{errors.contactDetails.alternateResidenceNumberStd1.invalid}}</div>
+                                <!-- <div *ngIf="alternateResidenceNumberStd1.errors?.minlength">
+                                  {{errors.contactDetails.alternateResidenceNumberStd1.invalid}}</div> -->
                               </div>
                             </div>
                             <span class="seperator">-</span>
                             <div class="form-group typ-optional">
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                                 [(ngModel)]="alternateResidenceNumberPhoneNumber" #alternateResidenceNumber2="ngModel"
-                                name="alternateResidenceNumber2" id="altr-res-no"
+                                name="alternateResidenceNumber2" id="altr-res-no" minlength="4"
                                 value="{{residenceNumber.phoneNumber}}" maxlength="8" fieldFill
                                 pattern="{{regexPattern.mobileNumber}}" data-validation-attr="residenceno01" />
                               <label for="altr-res-no" tabindex="13">Residence number</label>
                               <span class="optional">Optional</span>
                               <div *ngIf="alternateResidenceNumber2.touched  && alternateResidenceNumber2.invalid"
                                 class="invalid-feedback">
-                                <div *ngIf="alternateResidenceNumber2.errors?.pattern">
+                                <div *ngIf="alternateResidenceNumber2.errors?.pattern || alternateResidenceNumber2.errors?.minlength">
                                   {{errors.contactDetails.alternateResidenceNumber1.invalid}}</div>
+                                <!-- <div *ngIf="alternateResidenceNumber2.errors?.minlength">
+                                  {{errors.contactDetails.alternateResidenceNumber1.invalid}}</div> -->
                               </div>
                               <div class="invalid-feedback"
                                 *ngIf="(alternateResidenceNumber2.value != '' && alternateResidenceNumber2.touched && residenceNumber.value == alternateResidenceNumber2.value)">
@@ -727,8 +733,12 @@
                 <div class="form-wrap1">
                   <div class="form-group otp_input_len">
                     <input [readonly]="isTBMLoggedIn" type="text" class="form-control" id="otp" name="otp"
-                      [(ngModel)]="otp" fieldFill>
+                      [(ngModel)]="otp" maxlength="4" #otpValue="ngModel" pattern="{{regexPattern.otp}}" fieldFill>
                     <label for="otp">OTP</label>
+                    <div *ngIf="(otpValue.touched || otpValue.dirty) && otpValue.invalid"
+                    class="invalid-feedback">
+                    <div *ngIf="otpValue.errors?.pattern">{{errors.contactDetails.otp.invalid}}</div>
+                  </div>
                     <span><b>{{timeLeft}} Seconds Left...</b></span>
                     <span *ngIf="isDisabled">
                       <a href="javascript:void(0);" (click)="resendOTP()">
@@ -1292,7 +1302,7 @@
                           <div class="form-group" *ngIf="selectedReligion.value == '6'"
                             [ngClass]="{'hidden': (selectedReligion.value != '6')}">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                            pattern="{{regexPattern.name}}" #specifyReligion = "ngModel" required
+                            pattern="{{regexPattern.name}}" #specifyReligion = "ngModel" required maxlength="10"
                               tabindex="2" [(ngModel)]="otherReligion" name="religionName" fieldFill id="religion-name">
                             <label for="religion-name">Specify other religion</label>
                             <div *ngIf="specifyReligion.touched && specifyReligion.invalid" class="invalid-feedback">
@@ -1651,27 +1661,29 @@
                             <div class="form-group">
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                                 id="std03" required [(ngModel)]="officialCorrespondenceStdCode" #stdCode="ngModel"
-                                tabindex="6" name="stdCode" maxlength="5" pattern="{{regexPattern.stdCode}}"
+                                tabindex="6" name="stdCode" minlength="3" maxlength="5" pattern="{{regexPattern.stdCode}}"
                                 fieldFill />
                               <label for="std03">STD</label>
                               <div *ngIf="stdCode.touched && stdCode.invalid" class="invalid-feedback">
                                 <div *ngIf="stdCode.errors?.required">{{errors.officialCorrespondence.stdCode.required}}</div>
-                                <div *ngIf="stdCode.errors?.pattern">{{errors.officialCorrespondence.stdCode.invalid}}
-                                </div>
+                                <div *ngIf="stdCode.errors?.pattern || stdCode.errors?.minlength">{{errors.officialCorrespondence.stdCode.invalid}}</div>
+                                <!-- <div *ngIf="stdCode.errors?.minlength">{{errors.officialCorrespondence.stdCode.invalid}}</div> -->
                               </div>
                             </div>
-                            <span class="seperator">-</span>
+                            <span class="seperator">-</span> 
                             <div class="form-group">
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                                 id="res-no03" data-validation-attr="residenceno" required #offStdNumber="ngModel"
-                                name="offStdNumber" fieldFill tabindex="7" maxlength="10"
+                                name="offStdNumber" fieldFill tabindex="7" minlength="4" maxlength="10"
                                 pattern="{{regexPattern.mobileNumber}}"
                                 [(ngModel)]="officialCorrespondencePhoneNumber" />
                               <label for="res-no03">Office number</label>
                               <div *ngIf="offStdNumber.touched && offStdNumber.invalid" class="invalid-feedback">
                                 <div *ngIf="offStdNumber.errors?.required">{{errors.officialCorrespondence.phoneNumber.required}}</div>
-                                <div *ngIf="offStdNumber.errors?.pattern">
+                                <div *ngIf="offStdNumber.errors?.pattern || offStdNumber.errors?.minlength">
                                   {{errors.officialCorrespondence.phoneNumber.invalid}}</div>
+                                <!-- <div *ngIf="offStdNumber.errors?.required">
+                                  {{errors.officialCorrespondence.phoneNumber.required}}</div> -->
                               </div>
                             </div>
                           </div>
@@ -1683,8 +1695,8 @@
                               name="officeEmail" (ngModelChange)="onOfficialCorsEmailChange($event, officeEmail)"/>
                             <label for="off-email">Office email ID</label>
 
-                            <div *ngIf="officeEmail.touched && officeEmail.invalid" class="invalid-feedback">
-                              <div *ngIf="officeEmail.errors?.required">{{errors.officialCorrespondence.email.required}}</div>
+                            <div *ngIf="(officeEmail.untouched || officeEmail.touched) && officeEmail.invalid" class="invalid-feedback">
+                              <!-- <div *ngIf="officeEmail.errors?.required">{{errors.officialCorrespondence.email.required}}</div> -->
                               <div *ngIf="officeEmail.errors.invalidDomain">{{errors.officialCorrespondence.email.invalidDomain}}
                               </div>
                               <div *ngIf="officeEmail.errors?.pattern">{{errors.officialCorrespondence.email.invalid}}
@@ -2316,26 +2328,26 @@
                             <div class="form-group">
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text"
                                 [(ngModel)]="corporateAddressStdCode" name="stdNumber" class="form-control"
-                                #stdNumber="ngModel" tabindex="6" fieldFill maxlength="5" required id="caStd"
+                                #stdNumber="ngModel" tabindex="6" fieldFill minlength="3" maxlength="5" required id="caStd"
                                 pattern="{{regexPattern.stdCode}}" required />
                               <label for="caStd">STD</label>
                               <div *ngIf="stdNumber.touched  && stdNumber.invalid" class="invalid-feedback">
-                                <!-- <div *ngIf="stdNumber.errors?.required">{{errors.corporateAddress.stdNumber.required}}</div> -->
-                                <div *ngIf="stdNumber.errors?.pattern">{{errors.corporateAddress.stdNumber.invalid}}
-                                </div>
+                                <div *ngIf="stdNumber.errors?.required">{{errors.corporateAddress.stdNumber.required}}</div>
+                                <div *ngIf="stdNumber.errors?.pattern || stdNumber.errors?.minlength">{{errors.corporateAddress.stdNumber.invalid}}</div>
+                                <!-- <div *ngIf="stdNumber.errors?.minlength">{{errors.corporateAddress.stdNumber.invalid}}</div> -->
                               </div>
                             </div>
                             <span class="seperator">-</span>
                             <div class="form-group">
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                                 [(ngModel)]="corporateAddressPhoneNumber" name="phoneNumber" id="ca-res-no" tabindex="7"
-                                fieldFill #phoneNumber="ngModel" pattern="{{regexPattern.mobileNumber}}" maxlength="10"
+                                fieldFill #phoneNumber="ngModel" pattern="{{regexPattern.mobileNumber}}" minlength="4" maxlength="10"
                                 data-validation-attr="residenceno" required />
                               <label for="ca-res-no">Office number</label>
                               <div *ngIf="phoneNumber.touched  && phoneNumber.invalid" class="invalid-feedback">
-                                <!-- <div *ngIf="phoneNumber.errors?.required">{{errors.corporateAddress.phoneNumber.required}}</div> -->
-                                <div *ngIf="phoneNumber.errors?.pattern">{{errors.corporateAddress.phoneNumber.invalid}}
-                                </div>
+                                <div *ngIf="phoneNumber.errors?.required">{{errors.corporateAddress.phoneNumber.required}}</div>
+                                <div *ngIf="phoneNumber.errors?.pattern || phoneNumber.errors?.minlength">{{errors.corporateAddress.phoneNumber.invalid}}</div>
+                                <!-- <div *ngIf="phoneNumber.errors?.minlength">{{errors.corporateAddress.phoneNumber.invalid}}</div> -->
                               </div>
                             </div>
                           </div>
@@ -2345,7 +2357,7 @@
                               [(ngModel)]="qde.application.applicants[applicantIndex].corporateAddress.officeEmailId"
                               name="officeEmailId" #ofcEmail="ngModel" fieldFill />
                             <label for="ofc-email">Office email ID</label>
-                            <div *ngIf="ofcEmail.touched && ofcEmail.invalid" class="invalid-feedback">
+                            <div *ngIf="(ofcEmail.untouched || ofcEmail.touched) && ofcEmail.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="ofcEmail.errors?.required">{{errors.corporateAddress.ofcEmail.required}}</div> -->
                               <div *ngIf="ofcEmail.errors?.pattern">{{errors.corporateAddress.ofcEmail.invalid}}</div>
                             </div>

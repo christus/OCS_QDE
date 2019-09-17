@@ -1,0 +1,40 @@
+<h1 class="title">Error Message Handling</h1>
+<div class="error-message-container">
+    <form   autocomplete="off" (submit)="handleErrorMessage(errorMessagesText)">
+
+       <div>
+      
+        <div class="inputBox form-field-el">
+           <label class="inputText">Error Code</label>
+           <label class="form-control inputText" >{{errorCode}}</label>
+                
+        </div>
+        <div class="inputBox form-field-el">
+                <label for="" class="inputText">Module</label>
+                <label class="form-control inputText" >{{module}}</label>
+             
+        </div>
+         <div class="inputBox form-field-el">
+                <label for="" class="inputText">Description</label>
+                <label class="form-control inputText" >{{description}}</label>            
+            
+        </div>
+        <div class="inputBox form-field-el">
+            <label for="" class="inputText">Error Message</label>
+            <div style="border: ridge;float: right;margin-left:300px;margin-top: -30px;">
+                <span class="form-control" style="font-size:20px">&#9998;
+                <label (click)="textEnable()" style="cursor: pointer;color: blue">Edit</label></span>    
+    <textarea  class="form-control" id="errorMessages"  [(ngModel)]="errorMessagesText"  name="errorMessages" autocomplete="nope"
+    #errorMessages="ngModel" [disabled]="textDisable" ></textarea>
+            </div>
+        </div>
+      <br>
+       
+        <div class="inputBox form-field-el">      
+            <button type="submit" class="btn btn-default"   
+            [ngClass]="{'disabled': (!errorMessages.dirty )}" > Submit</button>            
+        </div>        
+        <div class="redalert error-msg">{{errorMsg}}</div>
+      </div>
+    </form> 
+</div>

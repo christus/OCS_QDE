@@ -118,7 +118,12 @@ import { TabComponent } from './applicant-dashboard/leads-list/tabs/tab.componen
 import { TabsComponent } from './applicant-dashboard/leads-list/tabs/tabs.component';
 import { LeadsHeaderComponent } from './applicant-dashboard/leads-list/leads-header/leads-header.component';
 import { LeadsSidebarComponent } from './applicant-dashboard/leads-list/leads-sidebar/leads-sidebar.component';
-
+import { EligibilityClearedComponent } from './payments/eligibility-cleared/eligibility-cleared.component';
+import { EligibilityNotClearedComponent } from './payments/eligibility-not-cleared/eligibility-not-cleared.component';
+import { PaymentSuccessfullComponent } from './payments/payment-successfull/payment-successfull.component';
+import { SuccessfullComponent } from './payments/successfull/successfull.component';
+import { EditErrorMessageComponent } from './admin/edit-error-message/edit-error-message.component';
+import { ErrorHandlingMessageComponent } from './admin/error-handling-message/error-handling-message.component';
 
 
 const appRoutes: Routes = [
@@ -177,7 +182,11 @@ const appRoutes: Routes = [
           listOfValues: ListOfValuesResolverService
           // qde: GetQdeDataResolverService,
         }
-      }
+      },
+      {
+        path: "sucessfull/:applicationId",
+        component: SuccessfullComponent
+      },
     ]
   },
   // {
@@ -341,9 +350,28 @@ const appRoutes: Routes = [
       {
         path: 'thankpayment',
         component: ThankPaymentComponent
+      },
+      {
+        path: 'cleared-eligibility/:applicationId',
+        component: EligibilityClearedComponent
+      },
+      {
+        path: 'not-cleared-eligibility/:applicationId',
+        component: EligibilityNotClearedComponent
       }
+      
     ]
   },
+
+  {
+    path: "static/payments/cleared-eligibility/:applicationId",
+    component: EligibilityClearedComponent
+  },
+  {
+    path: "static/payments/not-cleared-eligibility/:applicationId",
+    component: EligibilityNotClearedComponent
+  },
+
   {
     path: "static/icici-terms/auto-login/:applicationId/:applicantId",
     component: IciciTermsComponent
@@ -355,9 +383,13 @@ const appRoutes: Routes = [
   {
     path: 'review-eligibility/:applicationId',
     component: ReviewEligibilityComponent
+  },  
+  {
+    path: "paymentsucessfull",
+    component: PaymentSuccessfullComponent
   },
   {
-    path: 'collateralDoc',
+    path: '',
     component: CollateralComponent
   },
   {
@@ -478,8 +510,17 @@ const appRoutes: Routes = [
         component: AdminEachLovComponent,
         resolve: {
           eachLovs: AdminGetEachLovResolverService
-        }
+        }        
+      },
+      {
+        path: 'errorHandle',
+        component: ErrorHandlingMessageComponent
+      },
+      {
+        path: 'erroredit/:errorCode',
+        component: EditErrorMessageComponent
       }
+
     ]
   },
   { path: "**", component: PageNotFoundComponent }
@@ -556,6 +597,13 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     TabsComponent,
     LeadsHeaderComponent,
     LeadsSidebarComponent,
+    EligibilityClearedComponent,
+    EligibilityNotClearedComponent,
+    PaymentSuccessfullComponent,
+    SuccessfullComponent,
+    EditErrorMessageComponent,
+    ErrorHandlingMessageComponent,
+    EligibilityClearedComponent
   ],
   imports: [
     BrowserModule,

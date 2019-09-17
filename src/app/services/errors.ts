@@ -55,21 +55,32 @@ export const errors: any = {
       sameNumber: "Mobile numbers are same, please use different numbers",
       wrong: "Please provide valid mobile number"
     },
+    otp:{
+      invalid:"Invalid OTP"
+    },
     stdCode: {
       required: "Std Code is mandatory",
-      invalid: "Invalid STD code"
+      invalid: "Invalid STD code",
+      // minlength: "STD is not valid"
     },
     alternateResidenceNumberStd1:{
-      invalid: "Invalid STD code"
+      invalid: "Invalid STD code",
+      // minlength: "STD is not valid"
     },
     residenceNumber: {
       required: "Residence number is mandatory",
+      // minlength: "Residence number is not valid",
       invalid: "Invalid Residence number/Alphabets and Special Characters not allowed",
       sameNumber: "Residence numbers are same. Please use different number",
       sameNumberMobile: "Numbers are same. Please use different number"
     },
     alternateResidenceNumber1:{
-      invalid:"Invalid Residence number/Alphabets and Special Characters not allowed"
+      invalid:"Invalid Residence number/Alphabets and Special Characters not allowed",
+      // minlength: "Residence number is not valid"
+    },
+    alternateResidenceNumber2:{
+      invalid:"Invalid Residence number/Alphabets and Special Characters not allowed",
+      // minlength: "Residence number is not valid"
     }
   },
 

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
-import { CommonDataService } from 'src/app/services/common-data.service';
 import { QdeService } from 'src/app/services/qde.service';
 import Qde from 'src/app/models/qde.model';
 
@@ -20,20 +19,20 @@ export class ThankPaymentComponent implements OnInit {
   showError: boolean;
   applicationId:string;
   userName:string;
+  referenceNumber:string;
 
   queryParams: string;
   constructor( private route: ActivatedRoute,
               private router: Router,
               private qdeHttp: QdeHttpService,
-              private commonDataService: CommonDataService,
               private qdeService: QdeService) {
       
-    this.commonDataService.changeMenuBarShown(false);
-    this.commonDataService.changeViewFormVisible(false);
-    this.commonDataService.changeLogoutVisible(false);
-    this.commonDataService.changeHomeVisible(false);
+    // this.commonDataService.changeMenuBarShown(false);
+    // this.commonDataService.changeViewFormVisible(false);
+    // this.commonDataService.changeLogoutVisible(false);
+    // this.commonDataService.changeHomeVisible(false);
 
-    this.commonDataService.changeViewFormNameVisible(true)
+    // this.commonDataService.changeViewFormNameVisible(true)
     
     // this.qdeService.qdeSource.subscribe(val => {
 
@@ -46,7 +45,9 @@ export class ThankPaymentComponent implements OnInit {
     this.route.queryParams.subscribe(val => {
       console.log('Query params: ', this.queryParams);
 
-      this.commonDataService.changeApplicationId(val["ocsReferenceNo"]);
+      this.referenceNumber = val["ocsReferenceNo"] || "";
+      this.userName = val["applicantName"] || "";
+
       // this.commonDataService.changeApplicantName("christusvalerian");
 
 
@@ -61,23 +62,6 @@ export class ThankPaymentComponent implements OnInit {
         this.showError = true;
       }
       this.queryParams = JSON.stringify(val);
-      // this.qdeHttp.executePaymentWF(this.queryParams).subscribe(response => {
-      //   if (
-      //     response["Error"] === "0" &&
-      //     response["ProcessVariables"]["status"] ) {
-      //       let applicationId = response["ProcessVariables"]["applicationId"];
-
-      //       this.uniqueRefNo = response["ProcessVariables"]["uniqueRefNo"];
-      //       let applicationStatus = "20";
-      //       this.setStatus(applicationId, applicationStatus);
-      //   } else {
-      //     if (response["ErrorMessage"]) {
-      //       alert(response["ErrorMessage"]);
-      //     }
-      //   }
-      // });
-
-
 
     });
   }

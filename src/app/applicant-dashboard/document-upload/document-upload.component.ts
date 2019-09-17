@@ -288,7 +288,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
           if(result != null) {
             this.applicantIndex = result.application.applicants.findIndex(v => v.applicantId == this.applicantId);
           }
-    
+
           const applicants = this.qde.application.applicants;
 
           this.recurvLovCalls(applicants);
@@ -447,7 +447,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
     let t = fromQde ? this.page: 1;
 
     if(this.swiperSliders && this.swiperSliders.length > 0) {
-      this.swiperSliders[tabIndex].setIndex(this.page-1);
+      this.swiperSliders[tabIndex].setIndex(t-1);
     }
     // Check for invalid tabIndex
     if(tabIndex < this.fragments.length) {
@@ -692,7 +692,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
     const tabIndex = 4;
     
     if (!this.addressProofDoc[this.applicantIndex]) {
-      this.goToNextSlide(slider);
+      // this.goToNextSlide(slider);
       this.tabSwitch(tabIndex);
       return;
     }
@@ -755,10 +755,13 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
   * Income Proof Next(Submit)
   ***************************/
   handleIncomeProof(slider) {
-    const tabIndex = 5;
+    const tabIndex = 6;
+    if(this.qde.application.applicants[this.applicantIndex].incomeDetails.incomeConsider) {
+      const tabIndex = 5;
+    }
 
     if (!this.incomeProofDoc[this.applicantIndex]) {
-      this.goToNextSlide(slider);
+      // this.goToNextSlide(slider);
       this.tabSwitch(tabIndex);
       return;
     }
@@ -832,7 +835,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
     const tabIndex = 6;
 
     if (!this.bankingProofDoc[this.applicantIndex]) {
-      this.goToNextSlide(slider);
+      // this.goToNextSlide(slider);
       this.tabSwitch(tabIndex);
       return;
     }
@@ -988,11 +991,12 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
             this.isDocUploadRouteModal = true;
             return;
           }
-          if (slider) {
-            this.goToNextSlide(slider);
-          }
+          // if (slider) {
+          //   this.goToNextSlide(slider);
+          // } else {
+          this.tabSwitch(tabIndex);
+          // }
 
-          this.tabSwitch(tabIndex); // Need to be enabled for tab switch
         } else {
           if (response["ErrorMessage"]) {
             console.log("Response: " + response["ErrorMessage"]);
@@ -1221,7 +1225,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
     this.isDocUploadRouteModal = false;
   }
   moreDocUpload(){
-    this.router.navigate(['/document-uploads', this.qde.application.applicationId])
+    this.router.navigate(['/document-uploads', this.qde.application.applicationId], {queryParams: {tabName: this.fragments[0], page: 1}})
     this.isDocUploadRouteModal = false
   }
 

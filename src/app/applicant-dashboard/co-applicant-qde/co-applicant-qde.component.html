@@ -683,7 +683,7 @@
                                                           </a> alternate email id
                                                         </span>
                                                         <div *ngIf="(preferEmailId.touched || preferEmailId.dirty) && preferEmailId.invalid" class="invalid-feedback">
-                                                          <!-- <div *ngIf="preferEmailId.errors?.required">{{errors.contactDetails.preferedEmail.required}}</div> -->
+                                                          <div *ngIf="preferEmailId.errors?.required">{{errors.contactDetails.preferedEmail.required}}</div>
                                                           <div *ngIf="preferEmailId.errors?.pattern">{{errors.contactDetails.preferedEmail.invalid}}</div>
                                                         </div>
                                                   </div>
@@ -789,7 +789,7 @@
                                                                     pattern="{{regexPattern.stdCode}}"
                                                                     #residenceStdCode="ngModel"
                                                                     maxlength="5"
-                                                                    minlength="0"
+                                                                    minlength="3"
                                                                     name="residenceNumber1"
                                                                     class="form-control"
                                                                     fieldFill
@@ -799,7 +799,8 @@
                                                             <label for="std">STD</label>
                                                             <div *ngIf="residenceStdCode.touched && residenceStdCode.invalid" class="invalid-feedback">
                                                                 <!-- <div *ngIf="residenceStdCode.errors?.required">{{errors.contactDetails.stdCode.required}}</div> -->
-                                                                <div *ngIf="residenceStdCode.errors?.pattern">{{errors.contactDetails.stdCode.invalid}}</div>
+                                                                <div *ngIf="residenceStdCode.errors?.pattern || residenceStdCode.errors?.minlength">
+                                                                    {{errors.contactDetails.stdCode.invalid}}</div>
                                                             </div>
                                                       </div>
                                                       <span class="seperator">-</span>
@@ -809,7 +810,7 @@
                                                                     id="res-no"
                                                                     [(ngModel)]="residenceNumberPhoneNumber"
                                                                     pattern="{{regexPattern.mobileNumber}}"
-                                                                    maxlength="8"
+                                                                    minlength="4" maxlength="8"
                                                                     #residenceNumber="ngModel"
                                                                     name="residenceNumber2"
                                                                     value="{{residenceNumber.phoneNumber}}"
@@ -820,8 +821,8 @@
                                                           <label for="res-no">Residence number</label>
                                                           <span class="optional">Optional</span>
                                                           <div *ngIf="residenceNumber.touched  && residenceNumber.invalid" class="invalid-feedback">
-                                                            <div *ngIf="residenceNumber.errors?.pattern">{{errors.contactDetails.residenceNumber.invalid}}</div>
-                                                            <!-- <div *ngIf="residenceNumber.errors?.required">{{errors.contactDetails.residenceNumber.required}}</div> -->
+                                                            <div *ngIf="residenceNumber.errors?.pattern || residenceNumber.errors?.minlength">
+                                                                {{errors.contactDetails.residenceNumber.invalid}}</div>                                                            <!-- <div *ngIf="residenceNumber.errors?.required">{{errors.contactDetails.residenceNumber.required}}</div> -->
                                                           </div>
                                                       </div>
                                                       <span class="alternate-data" *ngIf="!isAlternateResidenceNumber">
@@ -836,7 +837,7 @@
                                                           <input [readonly]="isReadOnly"    type="text"
                                                                     [(ngModel)]="alternateResidenceNumberStdCode"
                                                                     name="alternateResidenceNumberStd1"
-                                                                    maxlength="5"
+                                                                    minlength="3" maxlength="5"
                                                                     tabindex="12"
                                                                     #alternateResidenceNumberStd1="ngModel"
                                                                     pattern="{{regexPattern.stdCode}}"
@@ -846,7 +847,8 @@
                                                                     id="altrstd">
                                                           <label for="altrstd" >STD</label>
                                                           <div *ngIf="alternateResidenceNumberStd1.touched  && alternateResidenceNumberStd1.invalid" class="invalid-feedback">
-                                                            <div *ngIf="alternateResidenceNumberStd1.errors?.pattern">{{errors.contactDetails.alternateResidenceNumberStd1.invalid}}</div>
+                                                            <div *ngIf="alternateResidenceNumberStd1.errors?.pattern || alternateResidenceNumberStd1.errors?.minlength">
+                                                                {{errors.contactDetails.alternateResidenceNumberStd1.invalid}}</div>
                                                         </div>
                                                       </div>
                                                       <span class="seperator">-</span>
@@ -859,14 +861,16 @@
                                                                     id="altr-res-no"
                                                                     fieldFill
                                                                     tabindex="13"
-                                                                    maxlength="8" 
+                                                                    minlength="4" maxlength="8" 
                                                                     spellcheck="false"
                                                                     pattern="{{regexPattern.mobileNumber}}"
                                                                     data-validation-attr="residenceno01" />
                                                           <label for="altr-res-no">Residence number</label>
                                                           <span class="optional">Optional</span>
                                                           <div *ngIf="alternateResidenceNumber2.touched  && alternateResidenceNumber2.invalid" class="invalid-feedback">
-                                                            <div *ngIf="alternateResidenceNumber2.errors?.pattern">{{errors.contactDetails.alternateResidenceNumber2.invalid}}</div>
+                                                            <div *ngIf="alternateResidenceNumber2.errors?.pattern || alternateResidenceNumber2.errors?.minlength">
+                                                                {{errors.contactDetails.alternateResidenceNumber2.invalid}}</div>
+                                                        
                                                         </div>
                                                         <div  class="invalid-feedback" *ngIf="(alternateResidenceNumber2.value != '' && alternateResidenceNumber2.touched && residenceNumber.value == alternateResidenceNumber2.value)">{{errors.contactDetails.residenceNumber.sameNumber}}</div>
                                                         </div>
@@ -909,9 +913,16 @@
                                         type="text" class="form-control" 
                                         id="otp" 
                                         name="otp" 
+                                        #otpValue="ngModel"
+                                        pattern="{{regexPattern.otp}}"
+                                        maxlength="4"
                                         [(ngModel)]="otp"
                                         fieldFill>
                                         <label for="otp">OTP</label>
+                                        <div *ngIf="(otpValue.touched || otpValue.dirty) && otpValue.invalid"
+                                            class="invalid-feedback">
+                                        <div *ngIf="otpValue.errors?.pattern">{{errors.contactDetails.otp.invalid}}</div>
+                                        </div>
                                         <span><b>{{timeLeft}} Seconds Left...</b></span>
                                         <span *ngIf="isDisabled">
                                         <a href="javascript:void(0);" (click)="resendOTP()">
@@ -1664,7 +1675,7 @@
                                               </div>
                                               <div class="form-group" *ngIf="selectedReligion.value == '6'" [ngClass]="{'hidden': (selectedReligion.value != '6')}">
                                                   <input [readonly]="isReadOnly" type="text" class="form-control" 
-                                                  pattern="{{regexPattern.name}}" #specifyReligion="ngModel" required
+                                                  pattern="{{regexPattern.name}}" #specifyReligion="ngModel" required maxlength="10"
                                                   [(ngModel)]="otherReligion" name="religionName" fieldFill id="religion-name">
                                                   <label for="religion-name">Specify other religion</label>
                                                   <div *ngIf="specifyReligion.touched && specifyReligion.invalid" class="invalid-feedback">
@@ -2064,7 +2075,7 @@
                                                         name="cityState"
                                                         fieldFill
                                                         spellcheck="false"
-                                                        readonly
+                                                        readonly disabled
                                                         pattern="{{regexPattern.address}}">
                                                         <label for="offCityState">City/State</label>
                   
@@ -2080,7 +2091,7 @@
                                                             [(ngModel)]="officialCorrespondenceStdCode"
                                                             #stdCode="ngModel"
                                                             name="stdCode"
-                                                            maxlength="5"
+                                                            minlength="3" maxlength="5"
                                                             tabindex="6"
                                                             spellcheck="false"
                                                             pattern="{{regexPattern.stdCode}}"
@@ -2088,7 +2099,7 @@
                                                           <label for="std03">STD</label>
                                                           <div *ngIf="stdCode.touched && stdCode.invalid" class="invalid-feedback">
                                                             <!-- <div *ngIf="stdCode.errors?.required">{{errors.officialCorrespondence.stdCode.required}}</div> -->
-                                                            <div *ngIf="stdCode.errors?.pattern">{{errors.officialCorrespondence.stdCode.invalid}}</div>
+                                                            <div *ngIf="stdCode.errors?.pattern || stdCode.errors?.minlength">{{errors.officialCorrespondence.stdCode.invalid}}</div>
                                                         </div>
                                                       </div>
                                                       <span class="seperator">-</span>
@@ -2099,14 +2110,15 @@
                                                                   name="offStdNumber"
                                                                   fieldFill
                                                                   tabindex="7"
-                                                                  maxlength="10"
+                                                                  minlength="4" maxlength="10"
                                                                   spellcheck="false"
                                                                   pattern="{{regexPattern.mobileNumber}}"
                                                                   [(ngModel)]="officialCorrespondencePhoneNumber" />
                                                           <label  for="res-no03">Office number</label>
                                                           <div *ngIf="offStdNumber.touched && offStdNumber.invalid" class="invalid-feedback">
                                                               <!-- <div *ngIf="offStdNumber.errors?.required">{{errors.officialCorrespondence.phoneNumber.required}}</div> -->
-                                                              <div *ngIf="offStdNumber.errors?.pattern">{{errors.officialCorrespondence.phoneNumber.invalid}}</div>
+                                                              <div *ngIf="offStdNumber.errors?.pattern || offStdNumber.errors?.minlength">
+                                                                  {{errors.officialCorrespondence.phoneNumber.invalid}}</div>
                                                           </div>
                                                       </div>
                                                   </div>
@@ -2123,7 +2135,7 @@
                                                         name="officeEmail" />
                                                       <label for="off-email">Office email ID</label>
                 
-                                                      <div *ngIf="officeEmail.touched && officeEmail.invalid" class="invalid-feedback">
+                                                      <div *ngIf="(officeEmail.untouched || officeEmail.touched) && officeEmail.invalid" class="invalid-feedback">
                                                           <!-- <div *ngIf="officeEmail.errors?.required">{{errors.officialCorrespondence.email.required}}</div> -->
                                                           <div *ngIf="officeEmail.errors?.pattern">{{errors.officialCorrespondence.email.invalid}}</div>
                                                           <div *ngIf="officeEmail.errors?.invalidDomain">{{errors.officialCorrespondence.email.invalidDomain}}</div>
@@ -2878,15 +2890,16 @@
                                                                   fieldFill
                                                                   tabindex="6"
                                                                   spellcheck="false"
-                                                                  maxlength="5"
+                                                                  minlength="3" maxlength="5"
                                                                   required
                                                                   id="caStd"
                                                                   pattern="{{regexPattern.stdCode}}"
                                                                   required/>
                                                           <label for="caStd">STD</label>
                                                           <div *ngIf="stdNumber.touched  && stdNumber.invalid" class="invalid-feedback">
-                                                            <!-- <div *ngIf="stdNumber.errors?.required">{{errors.corporateAddress.stdNumber.required}}</div> -->
-                                                            <div *ngIf="stdNumber.errors?.pattern">{{errors.corporateAddress.stdNumber.invalid}}</div>
+                                                            <div *ngIf="stdNumber.errors?.required">{{errors.corporateAddress.stdNumber.required}}</div>
+                                                            <div *ngIf="stdNumber.errors?.pattern || stdNumber.errors?.minlength">
+                                                                {{errors.corporateAddress.stdNumber.invalid}}</div>
                                                         </div>
                                                       </div>
                                                       <span class="seperator">-</span>
@@ -2901,13 +2914,13 @@
                                                                   spellcheck="false"
                                                                   #phoneNumber="ngModel"
                                                                   pattern="{{regexPattern.mobileNumber}}"
-                                                                   maxlength="10" 
+                                                                  minlength="4" maxlength="10" 
                                                                   data-validation-attr="residenceno" 
                                                                   required/>
                                                           <label for="ca-res-no">Office number</label>
                                                           <div *ngIf="phoneNumber.touched  && phoneNumber.invalid" class="invalid-feedback">
-                                                            <!-- <div *ngIf="phoneNumber.errors?.required">{{errors.corporateAddress.phoneNumber.required}}</div> -->
-                                                            <div *ngIf="phoneNumber.errors?.pattern">{{errors.corporateAddress.phoneNumber.invalid}}</div>
+                                                            <div *ngIf="phoneNumber.errors?.required">{{errors.corporateAddress.phoneNumber.required}}</div>
+                                                            <div *ngIf="phoneNumber.errors?.pattern || phoneNumber.errors?.minlength">{{errors.corporateAddress.phoneNumber.invalid}}</div>
                                                         </div>
                                                       </div>
                                                   </div>
@@ -2925,7 +2938,7 @@
                                                                 spellcheck="false"
                                                                  />                                      
                                                     <label for="ofc-email" *ngIf="ofcEmail.value==''">Office email ID</label>
-                                                      <div *ngIf="ofcEmail.touched && ofcEmail.invalid" class="invalid-feedback">
+                                                      <div *ngIf="(ofcEmail.untouched || ofcEmail.touched) && ofcEmail.invalid" class="invalid-feedback">
                                                           <!-- <div *ngIf="ofcEmail.errors?.required">{{errors.corporateAddress.ofcEmail.required}}</div> -->
                                                           <div *ngIf="ofcEmail.errors?.pattern">{{errors.corporateAddress.ofcEmail.invalid}}</div>
                                                       </div>

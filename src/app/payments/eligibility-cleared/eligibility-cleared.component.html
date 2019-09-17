@@ -1,0 +1,56 @@
+  <header>
+      <div class="bs-header" data-nav="dashboard">
+          <div class="sec-nav">
+              <div class="logo">
+                  <h1>
+                      <a><img src="assets/images/logo.svg" alt="logo" class="img-responsive"></a>
+                  </h1>
+              </div>
+              <div class="right-panel">
+                <div class="right-panel">
+                  <h3 class="for-user">Application for <span class="user-name">{{userName}}</span>
+                    <h5 class="for-user header_reference_no" ><span class="user-name">{{ocsNumber}}</span></h5>
+
+                    <h5 class="for-user header_reference_no" ><span class="user-name">{{referenceNumber}}</span></h5>
+                  </h3>         
+                </div>
+              </div>
+          </div>
+      </div>
+  </header>
+  <main>
+      <div class="main">
+          <div class="lyt-box typ2">
+              <span class="thumb-icon"></span>
+              <div class="title-desc typ-center">
+                  <h3 class="box-title">Payment Successful!</h3>
+                  <p class="desc typ2">You have cleared the provisional eligibility check for the loan amount requested </p>
+              </div>
+              <div class="cont typ-center">
+
+                  <div class="desc">
+                      <p>Kindly note this clearance is based on the information provided and actual sanction amount is subject to further verification and process.</p>
+
+                  </div>
+
+                  <div class="info-box-wrap">
+                      <span class="tag">Your Provisional Eligibility is</span>
+                      <div class="info-wrap">
+                          <span class="info">
+                                      Loan: <span class="cm-bold">₹{{eligibleAmount}}</span>
+                          </span>
+                          <span class="info">
+                                      
+                                      EMI: <span class="cm-bold">₹{{emiAmount}}</span>
+                          </span>
+
+                      </div>
+                  </div>
+
+              </div>
+          </div>
+          <span class="cm-breath"></span>
+      </div>
+
+      
+  </main>

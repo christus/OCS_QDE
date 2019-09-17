@@ -13,6 +13,7 @@
        <th>Value</th>
        <th>Edit</th>
        <th *ngIf="isApplicantTitle">Male/Female</th>
+       <th *ngIf="isDocumentCategory">Is Mandatory</th>
        <th [ngStyle]="{textAlign: 'center'}">Delete</th>
      </tr>
    </thead>
@@ -36,6 +37,13 @@
           <input (change)="changeGender(2, i)" type="radio" class="genders" [checked]="(l.male == false && l.female == true)" name="gender" *ngIf="!l.isEdit" /><label [ngClass]="{'displayNun': !(l.male == false && l.female == true), 'displayInlineBlock': !l.isEdit}">Female</label>
           <br *ngIf="!l.isEdit" />
           <input (change)="changeGender(3, i)" type="radio" class="genders" [checked]="(l.male == true && l.female == true)" name="gender" *ngIf="!l.isEdit" /><label [ngClass]="{'displayNun': !(l.male == true && l.female == true), 'displayInlineBlock': !l.isEdit}">Both</label>
+        </form>
+      </td>
+      <td *ngIf="isDocumentCategory">
+        <form>
+          <input (change)="changeIsRequired('1', i)" type="radio" class="genders" [checked]="(l.isRequired == '1')" name="gender" *ngIf="!l.isEdit" /><label [ngClass]="{'displayNun': !(l.isRequired == '1'), 'displayInlineBlock': !l.isEdit}">Yes</label>
+          <br *ngIf="!l.isEdit" />
+          <input (change)="changeIsRequired('0', i)" type="radio" class="genders" [checked]="(l.isRequired == '0')" name="gender" *ngIf="!l.isEdit" /><label [ngClass]="{'displayNun': !(l.isRequired == '0'), 'displayInlineBlock': !l.isEdit}">No</label>
         </form>
       </td>
        <td [ngStyle]="{textAlign: 'center'}">

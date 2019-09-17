@@ -1,0 +1,41 @@
+.lyt-home .lhs .lhs-inner-wrap {
+    display: block;
+    text-align: right;
+    width: 100%;
+    padding-right: 7.03vw;
+}
+
+.lyt-home .lhs .lhs-inner-wrap .text {
+    display: block;
+    font-size: 2.81vw;
+    line-height: 3.13vw;
+    color: #444;
+    font-family: zurich-bold;
+}
+
+.lyt-home .rhs .rhs-inner-wrap {
+    display: block;
+    text-align: left;
+    padding: 0 2.34vw;
+}
+.lyt-home .lhs .lhs-inner-wrap .icon-thumb {
+    /* width: 9.38vw;
+    height: 9.38vw;    */
+    margin-bottom: 1.56vw;
+    display: inline-block;
+    background-size: cover;
+}
+.lyt-home .rhs .rhs-inner-wrap .para {
+    display: block;
+    font-size: 14px;
+    color: #444;
+    font-family: zurich-light;
+    margin-bottom: 10px;
+}
+.lyt-home .rhs .rhs-inner-wrap .desc p {
+    font-size: 14px;
+    line-height: 20px;
+    color: #444;
+    margin-bottom: 10px;
+    font-family: zurich-light;
+}

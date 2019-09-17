@@ -60,10 +60,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     stdCode: "^[0][0-9]*$",
     mobileNumber: "^[1-9][0-9]*$",
     name: "^[A-Za-z ]+$",
-    address : "^[0-9A-Za-z, _&*#'/#\\-]+$",
+    address : "^[0-9A-Za-z, _&*#'/\\-]+$",
     // cityState:"^[0-9A-Za-z, &'#]$",
     pinCode: "^[1-9][0-9]{5}$",
-    // applicationRefNo : "",
+    otp: "^[0-9]+$",
     panInd:"[A-Z]{3}(P)[A-Z]{1}[0-9]{4}[A-Z]{1}",
     panNonInd:"[A-Z]{5}[0-9]{4}[A-Z]{1}",
     // amount:"[0-9]{0,17}\.[0-9]{1,4}?$",
@@ -2548,16 +2548,19 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   incomeConsiderYesNoIndividual(value, swiperInstance ?: Swiper) {
+    console.log("click Yes in occupation Details");
     if(this.isTBMLoggedIn) {
       if(this.qde.application.applicants[this.applicantIndex].incomeDetails.incomeConsider) {
         this.tabSwitch(8);
       } else {
         this.tabSwitch(9);
       }
-    } else {
+    } 
+    else {
       this.qde.application.applicants[this.applicantIndex].incomeDetails.incomeConsider = (value == 1) ? true : false;
-  
-      this.createOrUpdatePersonalDetailsSub23 = this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
+      console.log("click Yes in occupation Details in else part");
+      this.createOrUpdatePersonalDetailsSub23 = this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).
+      subscribe((response) => {
         // If successfull
         if(response["ProcessVariables"]["status"]) {
           this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
