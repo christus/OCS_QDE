@@ -51,6 +51,7 @@ export class AuthInterceptor implements HttpInterceptor {
             if (response && response["login_required"]) {
               if(this.router.url.search('auto-login') == -1) {
                 this.utilService.clearCredentials();
+                alert(response['message']);
               }
             }
             return event;

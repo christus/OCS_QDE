@@ -1138,7 +1138,9 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   moreLoanObligation(){
-    this.tabSwitch(2);
+    //this.tabSwitch(2);
+    this.router.navigate([], {queryParams: { tabName: this.fragments[2], page: 0 }});
+
     this.isLoanRouteModal = false;
   }
 
