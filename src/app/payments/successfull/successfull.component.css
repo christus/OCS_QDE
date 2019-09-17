@@ -20,23 +20,17 @@
 }
 
 
-.lyt-home .rhs .rhs-inner-wrap .para {
-    display: block;
-    font-size: 22px;
-    color: #444;
-    font-family: zurich-light;
-    margin-bottom: 10px;
-} 
 
- 
- .checkgroup-label{
+
+
+ /* .checkgroup-label{
     color: black;
     font-size: 30px;
-    }
+    } */
 
       .bs-checkbox{
-        margin-top: -20px;
-        margin-bottom: -100px;
+        margin-top: -2vw;
+        margin-bottom: -5vw;
         display:  inherit;
       }
       .backbtn{
@@ -44,14 +38,70 @@
       }
      
 
-
+/* 
       .bs-checkbox {
-       
+        transform : scale(1.1);
         vertical-align: top;
-        /* margin: 0 1.95vw; */
+        padding: 20px;
+        
         width: 100%;
         text-align: left
       }
-      
+       */
      
-      
+
+      .lyt-home .rhs .rhs-inner-wrap .checkbox-wrap .checkgroup-label {
+        display: block;
+        font-size: 1.5vw;
+        font-family: zurich-bold;        
+    }
+
+    .lyt-home .rhs .rhs-inner-wrap .checkbox-wrap .checkbox-group {
+      display: block;     
+  }
+  .checkbox-wrap .checkbox-group {
+      display: inline-block;
+      vertical-align: middle;
+      position: relative;
+     
+  }
+  .checkbox-wrap {
+    display: block;
+    position: relative;  
+}
+.lyt-home .rhs .rhs-inner-wrap {
+  display: block;
+  text-align: left;
+  padding: 0 2.34vw;
+}
+lyt-home .rhs {
+  display: inherit;
+  align-items: center;
+  justify-content: center;
+  width: 66%;
+  position: relative;
+}
+
+
+.lyt-home .rhs .rhs-inner-wrap .para {
+  display: block;
+  font-size: 1.5vw;
+  color: #444;
+  font-family: zurich-light;
+  
+} 
+
+.lyt-home .rhs .rhs-inner-wrap .checkbox-wrap .checkbox-group label span {
+  transform: scale(1.5);
+}
+.lyt-home .rhs .rhs-inner-wrap .checkbox-wrap .checkbox-group label {
+  font-size:1.5vw;
+  color: #a1a1a1;
+  
+}
+.bs-checkbox input[type=checkbox]:checked+label:after {
+  content: 'a';
+  font-family: icicihfc;
+  position: absolute;
+  left: 0.5vw;
+}
