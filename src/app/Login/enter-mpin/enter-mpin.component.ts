@@ -47,7 +47,7 @@ export class EnterMPINComponent implements OnInit {
     var mPIN = this.mPin;
 
     var data = {
-      userName: this.empId + "@icici.com",
+      userName: this.empId,
       mPin: this.mPin
     }
 

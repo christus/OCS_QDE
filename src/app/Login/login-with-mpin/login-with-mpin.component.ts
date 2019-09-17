@@ -1,6 +1,8 @@
+import { environment } from './../../../environments/environment.prod';
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
+import { CommonDataService } from '../../services/common-data.service';
 
 
 @Component({
@@ -25,7 +27,12 @@ export class LoginWithMPINComponent implements OnInit {
 
 
   constructor(private router: Router,
-    private qdeService: QdeHttpService) { }
+    private qdeService: QdeHttpService,
+  
+    private commonDataService: CommonDataService) {
+
+      console.log("loginwithmpin");
+     }
 
   ngOnInit() {
   }
@@ -54,22 +61,46 @@ export class LoginWithMPINComponent implements OnInit {
     this.mPin = this.mPin1+this.mPin2+this.mPin3+this.mPin4
     console.log("UserName", this.userName +" "+ "Password", this.mPin );
 
-    var data = {
-      userName: this.userName + "@icici.com",
-      mPin: this.mPin
+    let appiyoAuthdata = {
+      'email': environment.userName,
+      'password': environment.password,
+      'longTimeToken': "true"
     }
 
-    this.qdeService.loginMpin(data).subscribe(
+    this.commonDataService.setLogindata(appiyoAuthdata);
+
+  
+    this.qdeService.longLiveAuthenticate(appiyoAuthdata).subscribe(
       res => {
-        console.log("ROLE LOGIN: ", res['ProcessVariables']['roleName']);
-        localStorage.setItem("userId", res["ProcessVariables"]["userId"]);
-        localStorage.setItem('roles', JSON.stringify(res["ProcessVariables"]["roleName"]));
-        // this.roleLogin();
-        localStorage.setItem("firstTime", "true");
-        
-        this.router.navigate(["/leads"]);
+        console.log("response");
+        console.log("login-response: ",res);
+
+        localStorage.setItem("token", res["token"] ? res["token"] : "");
+
+        var data = {
+          userName: this.userName + environment.iciciDomainExt,
+          mPin: this.mPin
+        }
+    
+        this.qdeService.loginMpin(data).subscribe(
+          res => {
+            console.log("ROLE LOGIN: ", res['ProcessVariables']['roleName']);
+            localStorage.setItem("userId", res["ProcessVariables"]["userId"]);
+            localStorage.setItem('roles', JSON.stringify(res["ProcessVariables"]["roleName"]));
+            this.roleLogin();
+            localStorage.setItem("firstTime", "true");
+            
+            this.router.navigate(["/leads"]);
+          },
+          error => {
+            console.log(error);
+          }
+        );
+
       },
       error => {
+        console.log("error-response");
+
         console.log(error);
       }
     );
@@ -80,9 +111,17 @@ export class LoginWithMPINComponent implements OnInit {
   roleLogin() {
     this.qdeService.roleLogin().subscribe(
       res => {
-        console.log("ROLE LOGIN: ", res['ProcessVariables']['roleName']);
-        localStorage.setItem("userId", res["ProcessVariables"]["userId"]);
-        localStorage.setItem('roles', JSON.stringify(res["ProcessVariables"]["roleName"]));
+        console.log("ROLE Name: ", res);
+        let roleName = JSON.stringify(res["ProcessVariables"]["roleName"]);
+        // localStorage.setItem("userId", res["ProcessVariables"]["userId"]);
+        // localStorage.setItem('roles', roleName);
+
+        if(roleName.includes("Admin")) {
+          this.router.navigate(["/admin/lovs"]);
+          //this.router.navigate(["/user-module"]);
+          return;
+        }
+
         this.router.navigate(["/leads"]);
       },
       error => {
