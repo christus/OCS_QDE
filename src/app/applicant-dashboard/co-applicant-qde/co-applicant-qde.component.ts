@@ -248,7 +248,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   
   // panslideSub: Subscription;
   // panslide2Sub: Subscription;
-  qdeSourceSub: Subscription;
+  // qdeSourceSub: Subscription;
   applicationIdSub: Subscription;
   fragmentSub: Subscription;
   paramsSub: Subscription;
@@ -379,11 +379,13 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     // });
 
     this.applicationIdSub = this.cds.applicationId.subscribe(val => {
-      this.applicationId = val;
-      if(JSON.parse(localStorage.getItem('roles')).includes('TBM')) {
-        this.cds.setReadOnlyForm(true);
-      } else {
-        this.cds.setReadOnlyForm(false);
+      if(val != '' && val != null) {
+        this.applicationId = val;
+        if(JSON.parse(localStorage.getItem('roles')).includes('TBM')) {
+          this.cds.setReadOnlyForm(true);
+        } else {
+          this.cds.setReadOnlyForm(false);
+        }
       }
     });
 
@@ -516,10 +518,6 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
     this.paramsSub = this.route.params.subscribe((params) => {
 
-      console.log('PARAMS................................');
-
-      this.cds.changeApplicationId(params.applicationId);
-
       console.log("params ", params);
 
       // Make an http request to get the required qde data and set using setQde
@@ -529,144 +527,148 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
         // If not coming from leads dashboard
         // if(this.qdeService.getQde().application.applicationId == "" || this.qdeService.getQde().application.applicationId == null) {
-          this.getQdeDataSub = this.qdeHttp.getQdeData(params.applicationId).subscribe(response => {
-            console.log("RESPONSE ", response);
-            var result = JSON.parse(response["ProcessVariables"]["response"]);
-            console.log("Get ", result);
-            this.qde = result;
-            this.cds.setStatus(result.application.status);
-            this.cds.setactiveTab(screenPages['coApplicantDetails']);
-            this.qdeService.setQde(result);
-            this.coApplicantsForDashboard = result.application.applicants.filter(v => v.isMainApplicant == false);
-            this.cds.enableTabsIfStatus1(this.qde.application.status);
 
-            // TO BE REMOVED
-            // this.qdeService.setQde(result);
-
-            /***********************************************
-            * Check if route is appropriate with Applicants
-            * If not then redirect to Dashboard
-            ***********************************************/
-            if(result.application.applicants.length <= params.coApplicantIndex) {
-              this.router.navigate(['/applicant', result.application.applicationId, 'co-applicant'], {queryParams: {tabName: this.fragments[0], page: 1}});
-            }
-
-            if(params['coApplicantIndex'] && this.qde.application.auditTrailDetails.screenPage == screenPages['coApplicantDetails']) {
-              if(this.qde.application.auditTrailDetails.applicantId == parseInt(this.qde.application.applicants[params.coApplicantIndex].applicantId)) {
-                this.coApplicantIndex = result.application.applicants.findIndex(v => v.applicantId == this.qde.application.auditTrailDetails.applicantId);
-                this.router.navigate(['/appplicant', this.qde.application.applicationId, 'co-applicant', params.coApplicantIndex]);
-                this.goToExactPageAndTab(result.application.auditTrailDetails.tabPage, result.application.auditTrailDetails.pageNumber);
+        // Only load once
+          if((this.qde.application.applicationId == null || this.qde.application.applicationId == '') && this.qde.application.applicationId != params.applicationId) {
+            console.log(">>>>>>>>>>>>>>>>>>>>>>", this.qde.application.applicationId);
+            console.log(params.applicationId);
+            this.getQdeDataSub = this.qdeHttp.getQdeData(params.applicationId).subscribe(response => {
+              var result = JSON.parse(response["ProcessVariables"]["response"]);
+              this.qde = result;
+              console.log("this.qde.application.applicationId: ",this.qde.application.applicationId);
+              this.cds.setStatus(result.application.status);
+              this.cds.setactiveTab(screenPages['coApplicantDetails']);
+              this.qdeService.setQde(result);
+              this.coApplicantsForDashboard = result.application.applicants.filter(v => v.isMainApplicant == false);
+              this.cds.enableTabsIfStatus1(this.qde.application.status);
+  
+              // TO BE REMOVED
+              // this.qdeService.setQde(result);
+  
+              /***********************************************
+              * Check if route is appropriate with Applicants
+              * If not then redirect to Dashboard
+              ***********************************************/
+              if(result.application.applicants.length <= params.coApplicantIndex) {
+                this.router.navigate(['/applicant', result.application.applicationId, 'co-applicant'], {queryParams: {tabName: this.fragments[0], page: 1}});
+              }
+  
+              if(params['coApplicantIndex'] && this.qde.application.auditTrailDetails.screenPage == screenPages['coApplicantDetails']) {
+                if(this.qde.application.auditTrailDetails.applicantId == parseInt(this.qde.application.applicants[params.coApplicantIndex].applicantId)) {
+                  this.coApplicantIndex = result.application.applicants.findIndex(v => v.applicantId == this.qde.application.auditTrailDetails.applicantId);
+                  this.router.navigate(['/appplicant', this.qde.application.applicationId, 'co-applicant', params.coApplicantIndex]);
+                  this.goToExactPageAndTab(result.application.auditTrailDetails.tabPage, result.application.auditTrailDetails.pageNumber);
+                } else {
+                  this.tabSwitch(0);  
+                }
+  
               } else {
-                this.tabSwitch(0);  
+                // If audit trail isnt of applicant details page
+                this.tabSwitch(0);
               }
-
-            } else {
-              // If audit trail isnt of applicant details page
-              this.tabSwitch(0);
-            }
-
-            try {
-              if(result.application.applicants[this.coApplicantIndex].communicationAddress != null) {
-                
-                this.commCityState = result.application.applicants[this.coApplicantIndex].communicationAddress.city + " "+ result.application.applicants[this.coApplicantIndex].communicationAddress.state;
-                this.qde.application.applicants[this.coApplicantIndex].communicationAddress.city = result.application.applicants[this.coApplicantIndex].communicationAddress.city;
-                this.qde.application.applicants[this.coApplicantIndex].communicationAddress.state = result.application.applicants[this.coApplicantIndex].communicationAddress.state;
-                this.qde.application.applicants[this.coApplicantIndex].communicationAddress.cityState = this.commCityState;
-                this.qde.application.applicants[this.coApplicantIndex].communicationAddress.zipcodeId = result.application.applicants[this.coApplicantIndex].communicationAddress.zipcodeId;
-                this.qde.application.applicants[this.coApplicantIndex].communicationAddress.stateId = result.application.applicants[this.coApplicantIndex].communicationAddress.stateId;
-                this.qde.application.applicants[this.coApplicantIndex].communicationAddress.cityId = result.application.applicants[this.coApplicantIndex].communicationAddress.cityId;
-              }
-            } catch(e) {}
-            try {
-              if(result.application.applicants[this.coApplicantIndex].permanentAddress != null) {
   
-                this.commCityState = result.application.applicants[this.coApplicantIndex].permanentAddress.city + " "+ result.application.applicants[this.coApplicantIndex].permanentAddress.state;
-                this.qde.application.applicants[this.coApplicantIndex].permanentAddress.city = result.application.applicants[this.coApplicantIndex].permanentAddress.city;
-                this.qde.application.applicants[this.coApplicantIndex].permanentAddress.state = result.application.applicants[this.coApplicantIndex].permanentAddress.state;
-                this.qde.application.applicants[this.coApplicantIndex].permanentAddress.cityState = this.commCityState;
-                this.qde.application.applicants[this.coApplicantIndex].permanentAddress.zipcodeId = result.application.applicants[this.coApplicantIndex].permanentAddress.zipcodeId;
-                this.qde.application.applicants[this.coApplicantIndex].permanentAddress.stateId = result.application.applicants[this.coApplicantIndex].permanentAddress.stateId;
-                this.qde.application.applicants[this.coApplicantIndex].permanentAddress.cityId = result.application.applicants[this.coApplicantIndex].permanentAddress.cityId;
-  
-              
-              }
-            } catch(e) {}
-            try {
-              if(result.application.applicants[this.coApplicantIndex].residentialAddress != null) {
-  
-  
-                this.commCityState = result.application.applicants[this.coApplicantIndex].residentialAddress.city + " "+ result.application.applicants[this.coApplicantIndex].residentialAddress.state;
-                this.qde.application.applicants[this.coApplicantIndex].residentialAddress.city = result.application.applicants[this.coApplicantIndex].residentialAddress.city;
-                this.qde.application.applicants[this.coApplicantIndex].residentialAddress.state = result.application.applicants[this.coApplicantIndex].residentialAddress.state;
-                this.qde.application.applicants[this.coApplicantIndex].residentialAddress.cityState = this.commCityState;
-                this.qde.application.applicants[this.coApplicantIndex].residentialAddress.zipcodeId = result.application.applicants[this.coApplicantIndex].residentialAddress.zipcodeId;
-                this.qde.application.applicants[this.coApplicantIndex].residentialAddress.stateId = result.application.applicants[this.coApplicantIndex].residentialAddress.stateId;
-                this.qde.application.applicants[this.coApplicantIndex].residentialAddress.cityId = result.application.applicants[this.coApplicantIndex].residentialAddress.cityId;
+              try {
+                if(result.application.applicants[this.coApplicantIndex].communicationAddress != null) {
+                  
+                  this.commCityState = result.application.applicants[this.coApplicantIndex].communicationAddress.city + " "+ result.application.applicants[this.coApplicantIndex].communicationAddress.state;
+                  this.qde.application.applicants[this.coApplicantIndex].communicationAddress.city = result.application.applicants[this.coApplicantIndex].communicationAddress.city;
+                  this.qde.application.applicants[this.coApplicantIndex].communicationAddress.state = result.application.applicants[this.coApplicantIndex].communicationAddress.state;
+                  this.qde.application.applicants[this.coApplicantIndex].communicationAddress.cityState = this.commCityState;
+                  this.qde.application.applicants[this.coApplicantIndex].communicationAddress.zipcodeId = result.application.applicants[this.coApplicantIndex].communicationAddress.zipcodeId;
+                  this.qde.application.applicants[this.coApplicantIndex].communicationAddress.stateId = result.application.applicants[this.coApplicantIndex].communicationAddress.stateId;
+                  this.qde.application.applicants[this.coApplicantIndex].communicationAddress.cityId = result.application.applicants[this.coApplicantIndex].communicationAddress.cityId;
+                }
+              } catch(e) {}
+              try {
+                if(result.application.applicants[this.coApplicantIndex].permanentAddress != null) {
     
-              }
-            } catch(e) {}
-            try {
-              if(result.application.applicants[this.coApplicantIndex].officialCorrespondence != null) {
+                  this.commCityState = result.application.applicants[this.coApplicantIndex].permanentAddress.city + " "+ result.application.applicants[this.coApplicantIndex].permanentAddress.state;
+                  this.qde.application.applicants[this.coApplicantIndex].permanentAddress.city = result.application.applicants[this.coApplicantIndex].permanentAddress.city;
+                  this.qde.application.applicants[this.coApplicantIndex].permanentAddress.state = result.application.applicants[this.coApplicantIndex].permanentAddress.state;
+                  this.qde.application.applicants[this.coApplicantIndex].permanentAddress.cityState = this.commCityState;
+                  this.qde.application.applicants[this.coApplicantIndex].permanentAddress.zipcodeId = result.application.applicants[this.coApplicantIndex].permanentAddress.zipcodeId;
+                  this.qde.application.applicants[this.coApplicantIndex].permanentAddress.stateId = result.application.applicants[this.coApplicantIndex].permanentAddress.stateId;
+                  this.qde.application.applicants[this.coApplicantIndex].permanentAddress.cityId = result.application.applicants[this.coApplicantIndex].permanentAddress.cityId;
+    
+                
+                }
+              } catch(e) {}
+              try {
+                if(result.application.applicants[this.coApplicantIndex].residentialAddress != null) {
+    
+    
+                  this.commCityState = result.application.applicants[this.coApplicantIndex].residentialAddress.city + " "+ result.application.applicants[this.coApplicantIndex].residentialAddress.state;
+                  this.qde.application.applicants[this.coApplicantIndex].residentialAddress.city = result.application.applicants[this.coApplicantIndex].residentialAddress.city;
+                  this.qde.application.applicants[this.coApplicantIndex].residentialAddress.state = result.application.applicants[this.coApplicantIndex].residentialAddress.state;
+                  this.qde.application.applicants[this.coApplicantIndex].residentialAddress.cityState = this.commCityState;
+                  this.qde.application.applicants[this.coApplicantIndex].residentialAddress.zipcodeId = result.application.applicants[this.coApplicantIndex].residentialAddress.zipcodeId;
+                  this.qde.application.applicants[this.coApplicantIndex].residentialAddress.stateId = result.application.applicants[this.coApplicantIndex].residentialAddress.stateId;
+                  this.qde.application.applicants[this.coApplicantIndex].residentialAddress.cityId = result.application.applicants[this.coApplicantIndex].residentialAddress.cityId;
+      
+                }
+              } catch(e) {}
+              try {
+                if(result.application.applicants[this.coApplicantIndex].officialCorrespondence != null) {
+    
+                  this.commCityState = result.application.applicants[this.coApplicantIndex].officialCorrespondence.city + " "+ result.application.applicants[this.coApplicantIndex].officialCorrespondence.state;
+                  this.qde.application.applicants[this.coApplicantIndex].officialCorrespondence.city = result.application.applicants[this.coApplicantIndex].officialCorrespondence.city;
+                  this.qde.application.applicants[this.coApplicantIndex].officialCorrespondence.state = result.application.applicants[this.coApplicantIndex].officialCorrespondence.state;
+                  this.qde.application.applicants[this.coApplicantIndex].officialCorrespondence.cityState = this.commCityState;
+                  this.qde.application.applicants[this.coApplicantIndex].officialCorrespondence.zipcodeId = result.application.applicants[this.coApplicantIndex].officialCorrespondence.zipcodeId;
+                  this.qde.application.applicants[this.coApplicantIndex].officialCorrespondence.stateId = result.application.applicants[this.coApplicantIndex].officialCorrespondence.stateId;
+                  this.qde.application.applicants[this.coApplicantIndex].officialCorrespondence.cityId = result.application.applicants[this.coApplicantIndex].officialCorrespondence.cityId;
+                }
+              } catch(e) {}
+              try {
+                if(result.application.applicants[this.coApplicantIndex].organizationDetails != null) {
+                  this.qde.application.applicants[this.coApplicantIndex].organizationDetails = result.application.applicants[this.coApplicantIndex].organizationDetails;
+                }
+              } catch(e) {}
+              try {
+                if(result.application.applicants[this.coApplicantIndex].registeredAddress != null) {
+    
+                  this.commCityState = result.application.applicants[this.coApplicantIndex].registeredAddress.city + " "+ result.application.applicants[this.coApplicantIndex].registeredAddress.state;
+                  this.qde.application.applicants[this.coApplicantIndex].registeredAddress.city = result.application.applicants[this.coApplicantIndex].registeredAddress.city;
+                  this.qde.application.applicants[this.coApplicantIndex].registeredAddress.state = result.application.applicants[this.coApplicantIndex].registeredAddress.state;
+                  this.qde.application.applicants[this.coApplicantIndex].registeredAddress.cityState = this.commCityState;
+                  this.qde.application.applicants[this.coApplicantIndex].registeredAddress.zipcodeId = result.application.applicants[this.coApplicantIndex].registeredAddress.zipcodeId;
+                  this.qde.application.applicants[this.coApplicantIndex].registeredAddress.stateId = result.application.applicants[this.coApplicantIndex].registeredAddress.stateId;
+                  this.qde.application.applicants[this.coApplicantIndex].registeredAddress.cityId = result.application.applicants[this.coApplicantIndex].registeredAddress.cityId;
+                }
+              } catch(e) {}
+              
+              try {
+                if(result.application.applicants[this.coApplicantIndex].corporateAddress != null) {
+    
+                  this.commCityState = result.application.applicants[this.coApplicantIndex].corporateAddress.city + " "+ result.application.applicants[this.coApplicantIndex].corporateAddress.state;
+                  this.qde.application.applicants[this.coApplicantIndex].corporateAddress.city = result.application.applicants[this.coApplicantIndex].corporateAddress.city;
+                  this.qde.application.applicants[this.coApplicantIndex].corporateAddress.state = result.application.applicants[this.coApplicantIndex].corporateAddress.state;
+                  this.qde.application.applicants[this.coApplicantIndex].corporateAddress.cityState = this.commCityState;
+                  this.qde.application.applicants[this.coApplicantIndex].corporateAddress.zipcodeId = result.application.applicants[this.coApplicantIndex].corporateAddress.zipcodeId;
+                  this.qde.application.applicants[this.coApplicantIndex].corporateAddress.stateId = result.application.applicants[this.coApplicantIndex].corporateAddress.stateId;
+                  this.qde.application.applicants[this.coApplicantIndex].corporateAddress.cityId = result.application.applicants[this.coApplicantIndex].corporateAddress.cityId;
+                }
+              } catch(e) {}
   
-                this.commCityState = result.application.applicants[this.coApplicantIndex].officialCorrespondence.city + " "+ result.application.applicants[this.coApplicantIndex].officialCorrespondence.state;
-                this.qde.application.applicants[this.coApplicantIndex].officialCorrespondence.city = result.application.applicants[this.coApplicantIndex].officialCorrespondence.city;
-                this.qde.application.applicants[this.coApplicantIndex].officialCorrespondence.state = result.application.applicants[this.coApplicantIndex].officialCorrespondence.state;
-                this.qde.application.applicants[this.coApplicantIndex].officialCorrespondence.cityState = this.commCityState;
-                this.qde.application.applicants[this.coApplicantIndex].officialCorrespondence.zipcodeId = result.application.applicants[this.coApplicantIndex].officialCorrespondence.zipcodeId;
-                this.qde.application.applicants[this.coApplicantIndex].officialCorrespondence.stateId = result.application.applicants[this.coApplicantIndex].officialCorrespondence.stateId;
-                this.qde.application.applicants[this.coApplicantIndex].officialCorrespondence.cityId = result.application.applicants[this.coApplicantIndex].officialCorrespondence.cityId;
-              }
-            } catch(e) {}
-            try {
-              if(result.application.applicants[this.coApplicantIndex].organizationDetails != null) {
-                this.qde.application.applicants[this.coApplicantIndex].organizationDetails = result.application.applicants[this.coApplicantIndex].organizationDetails;
-              }
-            } catch(e) {}
-            try {
-              if(result.application.applicants[this.coApplicantIndex].registeredAddress != null) {
+              try{
+                if(result.application.applicants[this.coApplicantIndex].pan.fileName != null){
+                  this.idPanFileName = result.application.applicants[this.coApplicantIndex].pan.fileName;
+                }
+              }catch(e) {}  
+              
+              try{
+                if(result.application.applicants[this.coApplicantIndex].pan.fileSize != null){
+                  this.idPanFileSize = result.application.applicants[this.coApplicantIndex].pan.fileSize;
+                }
+              }catch(e) {}  
   
-                this.commCityState = result.application.applicants[this.coApplicantIndex].registeredAddress.city + " "+ result.application.applicants[this.coApplicantIndex].registeredAddress.state;
-                this.qde.application.applicants[this.coApplicantIndex].registeredAddress.city = result.application.applicants[this.coApplicantIndex].registeredAddress.city;
-                this.qde.application.applicants[this.coApplicantIndex].registeredAddress.state = result.application.applicants[this.coApplicantIndex].registeredAddress.state;
-                this.qde.application.applicants[this.coApplicantIndex].registeredAddress.cityState = this.commCityState;
-                this.qde.application.applicants[this.coApplicantIndex].registeredAddress.zipcodeId = result.application.applicants[this.coApplicantIndex].registeredAddress.zipcodeId;
-                this.qde.application.applicants[this.coApplicantIndex].registeredAddress.stateId = result.application.applicants[this.coApplicantIndex].registeredAddress.stateId;
-                this.qde.application.applicants[this.coApplicantIndex].registeredAddress.cityId = result.application.applicants[this.coApplicantIndex].registeredAddress.cityId;
-              }
-            } catch(e) {}
-            
-            try {
-              if(result.application.applicants[this.coApplicantIndex].corporateAddress != null) {
   
-                this.commCityState = result.application.applicants[this.coApplicantIndex].corporateAddress.city + " "+ result.application.applicants[this.coApplicantIndex].corporateAddress.state;
-                this.qde.application.applicants[this.coApplicantIndex].corporateAddress.city = result.application.applicants[this.coApplicantIndex].corporateAddress.city;
-                this.qde.application.applicants[this.coApplicantIndex].corporateAddress.state = result.application.applicants[this.coApplicantIndex].corporateAddress.state;
-                this.qde.application.applicants[this.coApplicantIndex].corporateAddress.cityState = this.commCityState;
-                this.qde.application.applicants[this.coApplicantIndex].corporateAddress.zipcodeId = result.application.applicants[this.coApplicantIndex].corporateAddress.zipcodeId;
-                this.qde.application.applicants[this.coApplicantIndex].corporateAddress.stateId = result.application.applicants[this.coApplicantIndex].corporateAddress.stateId;
-                this.qde.application.applicants[this.coApplicantIndex].corporateAddress.cityId = result.application.applicants[this.coApplicantIndex].corporateAddress.cityId;
-              }
-            } catch(e) {}
-
-            try{
-              if(result.application.applicants[this.coApplicantIndex].pan.fileName != null){
-                this.idPanFileName = result.application.applicants[this.coApplicantIndex].pan.fileName;
-              }
-            }catch(e) {}  
-            
-            try{
-              if(result.application.applicants[this.coApplicantIndex].pan.fileSize != null){
-                this.idPanFileSize = result.application.applicants[this.coApplicantIndex].pan.fileSize;
-              }
-            }catch(e) {}  
-
-
-            this.prefillData(params);
-          }, error => {
-            this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please again later.";
-          });
-        // }
+              this.prefillData(params);
+            }, error => {
+              this.isErrorModal = true;
+              this.errorMessage = "Something went wrong, please again later.";
+            });
+          }
       }
 
 
@@ -2979,9 +2981,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   ngOnDestroy() {
-      if(this.qdeSourceSub != null){
-      this.qdeSourceSub.unsubscribe();
-      }
+      // if(this.qdeSourceSub != null){
+      // this.qdeSourceSub.unsubscribe();
+      // }
       if(this.applicationIdSub != null){
         this.applicationIdSub.unsubscribe();
         }
@@ -3363,7 +3365,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   submitDuplicateApplicant(form: NgForm) {
     let tempApplicant = this.qde.application.applicants[this.coApplicantIndex];
     let newApplicantToBeReplaced = this.duplicates.find(e => e.applicantId == form.value.selectDuplicateApplicant);
+    console.log("tempApplicant: ", tempApplicant);
+    console.log("newApplicantToBeReplaced: ", newApplicantToBeReplaced);
     this.qde.application.applicants[this.coApplicantIndex] = this.qdeService.getModifiedObject(tempApplicant, newApplicantToBeReplaced);
+    console.log("NEW:::", this.qde.application.applicants[this.coApplicantIndex]);
     this.qde.application.applicants[this.coApplicantIndex].applicantId = tempApplicant.applicantId;
     this.qde.application.applicants[this.coApplicantIndex].isMainApplicant = tempApplicant.isMainApplicant;
 

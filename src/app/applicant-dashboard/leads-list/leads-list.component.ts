@@ -58,6 +58,9 @@ export class LeadsListComponent implements OnInit {
 
   constructor(private service: QdeHttpService, private utilService: UtilService, private cds: CommonDataService) {
 
+    this.cds.setactiveTab(screenPages['applicantDetails']);
+    this.cds.changeApplicationId(null);
+ 
     this.days = Array.from(Array(31).keys()).map((val, index) => {
       let v = ((index+1) < 10) ? "0"+(index+1) : (index+1)+"";
       return {key: v, value: v};

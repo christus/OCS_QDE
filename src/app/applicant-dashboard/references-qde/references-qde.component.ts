@@ -205,6 +205,9 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
     private qdeService: QdeService,
     private cds: CommonDataService
   ) {
+
+    this.qde = this.qdeService.defaultValue;
+
     this.cds.changeMenuBarShown(true);
     this.cds.changeViewFormVisible(true);
     this.cds.changeLogoutVisible(true);
@@ -491,7 +494,7 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
               console.log('this.page: ', this.page);
               console.log('this.tabName: ', this.tabName);
 
-              this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
+              this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['references']).subscribe(auditRes => {
                 if(auditRes['ProcessVariables']['status'] == true) {
                   this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
                   this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
@@ -547,7 +550,7 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
               response["Error"] === "0" &&
               response["ProcessVariables"]["status"]
             ) {
-              this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
+              this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['references']).subscribe(auditRes => {
                 if(auditRes['ProcessVariables']['status'] == true) {
                   this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
                   this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
@@ -598,7 +601,7 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
             ) {
               this.referenceId2 = this.qde.application.references.referenceTwo.referenceId;
               // console.log(this.qde.application.references.referenceOne.relationShip);
-              this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
+              this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['references']).subscribe(auditRes => {
                 if(auditRes['ProcessVariables']['status'] == true) {
                   this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
                   this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
@@ -662,7 +665,7 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
               response["ProcessVariables"]["status"]
             ) {
               
-              this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
+              this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['references']).subscribe(auditRes => {
                 if(auditRes['ProcessVariables']['status'] == true) {
                   this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
                   this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];

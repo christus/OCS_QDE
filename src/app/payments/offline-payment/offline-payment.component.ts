@@ -12,7 +12,7 @@ import { CommonDataService } from 'src/app/services/common-data.service';
 import { QdeService } from 'src/app/services/qde.service';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
 import { Subscription } from 'rxjs';
-import { statuses } from '../../app.constants';
+import { statuses, screenPages } from '../../app.constants';
 
 @Component({
   selector: 'app-offline-payment',
@@ -139,6 +139,8 @@ export class OfflinePaymentComponent implements OnInit {
     private qdeService: QdeService,
     private qdeHttp: QdeHttpService,
   ) {
+    this.commonDataService.setactiveTab(screenPages['payments']);
+
     this.commonDataService.changeMenuBarShown(true);
     this.commonDataService.changeViewFormNameVisible(true);
     this.commonDataService.changeViewFormVisible(true);

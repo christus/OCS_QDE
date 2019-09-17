@@ -165,13 +165,12 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
 
   fragments = [
     "dashboard",
-    "aadhar1",
-    "photo",
-    "aadhar2",
-    "address",
-    "income",
-    "banking",
-    "collateral"
+    "customerproof",
+    "idproof",
+    "addressproof",
+    "incomeproof",
+    "bankingproof",
+    "collateralproof"
   ];
 
   isReadOnly: boolean = false;
@@ -197,6 +196,8 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
   isErrorModal:boolean;
   errorMessage:string;
 
+  isSubmitDisabled: boolean = true;
+
   constructor(
     private renderer: Renderer2,
     private route: ActivatedRoute,
@@ -205,6 +206,8 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
     private deviceService: DeviceDetectorService,
     private qdeService: QdeService,
     private cds: CommonDataService) {
+
+    this.qde = this.qdeService.defaultValue;
 
       this.cds.changeMenuBarShown(true);
       this.cds.changeViewFormVisible(true);
@@ -425,7 +428,9 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
 
   tabSwitch(tabIndex?: number, fromQde ?: boolean) {
 
-    if(tabIndex == 0) {
+    let modifiedTabIndex = tabIndex;
+
+    if(modifiedTabIndex == 0) {
       this.isTabDisabled = true;
     }
 
@@ -445,13 +450,36 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
     // }
 
     let t = fromQde ? this.page: 1;
+    // Any applicant should not land on banking if income consider is No
+    if(modifiedTabIndex == 5) {
+      if(this.qde.application.applicants[this.applicantIndex].incomeDetails.incomeConsider == false) {
+        modifiedTabIndex++;
+      }
+    }
+
+    if(modifiedTabIndex == 6) {
+      this.qdeHttp.mandatoryDocsApi(parseInt(this.applicationId)).subscribe(res => {
+        if(res['ProcessVariables']['status']) {
+          this.isSubmitDisabled = false;
+        } else {
+          this.isSubmitDisabled = true;
+          this.isErrorModal = true;
+          this.errorMessage = res['ProcessVariables']['description'];
+        }
+      },
+      err => {
+        this.isSubmitDisabled=true;
+        this.isErrorModal=true;
+        this.errorMessage = 'Something went wrong.';
+      });
+    }
 
     if(this.swiperSliders && this.swiperSliders.length > 0) {
-      this.swiperSliders[tabIndex].setIndex(t-1);
+      this.swiperSliders[modifiedTabIndex].setIndex(t-1);
     }
     // Check for invalid tabIndex
-    if(tabIndex < this.fragments.length) {
-      this.router.navigate([], {queryParams: { tabName: this.fragments[tabIndex], page: t }});
+    if(modifiedTabIndex < this.fragments.length) {
+      this.router.navigate([], {queryParams: { tabName: this.fragments[modifiedTabIndex], page: t }});
     }
   }
 
@@ -461,8 +489,12 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
         // Go to Previous Slide
         this.goToPrevSlide(swiperInstance);
       } else {
-        // Go To Previous Tab
-        this.tabSwitch(this.activeTab - 1);
+        // Go To Previous Tab. If income consider is No then to Address Proof instead of Banking
+        if(this.qde.application.applicants[this.applicantIndex].incomeDetails.incomeConsider == false && this.activeTab == 6) {
+          this.tabSwitch(this.activeTab - 2);
+        } else {
+          this.tabSwitch(this.activeTab - 1);
+        }
       }
     }
   }

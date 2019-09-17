@@ -59,10 +59,9 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
               private commonDataService: CommonDataService,
               private _router: Router,
               private qdeService: QdeService,
-              private qdehttpService: QdeHttpService,
               private route: ActivatedRoute) {
-    
-                this.route.params.subscribe(val => {
+
+    this.route.params.subscribe(val => {
       this.applicationId = val.applicationId;
       // this.applicantId = this.qde.application.applicants.find(v => v.applicantId == val.applicantId).applicantId;
       this.applicantId = val.applicantId;
