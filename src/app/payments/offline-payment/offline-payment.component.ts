@@ -24,6 +24,12 @@ export class OfflinePaymentComponent implements OnInit {
   
   value: number = 0;
 
+  chequeDrawn: string;
+  bankName: number;
+  ifscCode: string;
+  chequeNumber: number;
+  amount: number;
+
   errors = {  
     payment:{
       offline:{
@@ -117,6 +123,7 @@ export class OfflinePaymentComponent implements OnInit {
   isOnlineProceedModal:boolean = false;
   isPaymentFailedModal:boolean = false;
   public butMes: string;
+  sessionMessage="";
 
 
   fragments = ["offlinepayment1", "offlinepayment2"];
@@ -254,10 +261,27 @@ export class OfflinePaymentComponent implements OnInit {
 
 
   
-  offline(){
-    // Another APi call to submit offline payment details
-    this.qdeHttp.setStatusApi(this.applicationId, statuses['Cheque Received']).subscribe(res => {}, err => {});
-    this.isChequeProceedModal = true;
+  chequeDetails(form:NgForm){
+
+    
+    let data = {
+      chequeDrawn: form.value.checkDrawnTo,
+      bankName: parseInt(form.value.loanProvider.value),
+      ifscCode: form.value.ifsc,
+      chequeNumber: parseInt(form.value.chequeNo),
+      amount: parseInt(form.value.amount)
+    }
+
+    this.qdeHttp.chequeDetailsSave(data).subscribe(res => {
+      console.log(res,"baba dhamya")
+      if(res['ProcessVariables']['status'] == true) {
+        this.isChequeProceedModal = true;
+        this.qdeHttp.setStatusApi(this.applicationId, statuses['Cheque Received']).subscribe(res => {}, err => {});
+      }
+      else{
+        this.sessionMessage = res['ProcessVariables']['errorMessage']
+      }
+    });
 
   }
 
