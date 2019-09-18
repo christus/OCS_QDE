@@ -562,6 +562,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                   this.tabSwitch(0);  
                 }
   
+              } else {
+                this.tabSwitch(0);
               }
   
               try {
