@@ -3218,25 +3218,33 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   submitDuplicateApplicant(form: NgForm) {
     let tempApplicant = this.qde.application.applicants[this.applicantIndex];
-    let newApplicantToBeReplaced = this.duplicates.find(e => e.applicantId == form.value.selectDuplicateApplicant);
-    this.qde.application.applicants[this.applicantIndex] = this.qdeService.getModifiedObject(tempApplicant, newApplicantToBeReplaced);
-    this.qde.application.applicants[this.applicantIndex].applicantId = tempApplicant.applicantId;
-    this.qde.application.applicants[this.applicantIndex].isMainApplicant = tempApplicant.isMainApplicant;
-    this.qdeService.setQde(this.qde);
+    let selectedApplication = this.duplicates.find(e => e.applicantId == form.value.selectDuplicateApplicant);
+    let applicationId = Number( selectedApplication["applicationId"]);
+    this.getQdeDataSub = this.qdeHttp.getQdeData(applicationId).subscribe(data => {
+      // console.log("Applicationin get " ,JSON.parse(data["ProcessVariables"]["response"])["application"]["applicants"] );    
+        let duplicates: any = JSON.parse(data["ProcessVariables"]["response"])["application"]["applicants"] ;
+        let newApplicantToBeReplaced = duplicates.find(e => e.applicantId == form.value.selectDuplicateApplicant);
+        this.qde.application.applicants[this.applicantIndex] = this.qdeService.getModifiedObject(tempApplicant, newApplicantToBeReplaced);
+        this.qde.application.applicants[this.applicantIndex].applicantId = tempApplicant.applicantId;
+        this.qde.application.applicants[this.applicantIndex].isMainApplicant = tempApplicant.isMainApplicant;
 
-    this.createOrUpdatePersonalDetailsSub5=this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
-      // If successful
-      if(response["ProcessVariables"]["status"]) {
-        this.closeDuplicateModal();
-      } else {
-        this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
-      }
-    }, error => {
-      this.isErrorModal = true;
-      this.errorMessage = "Something went wrong, please again later.";
+        this.qdeService.setQde(this.qde);
+
+        this.createOrUpdatePersonalDetailsSub5=this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).
+          subscribe((response) => {
+          // If successful
+            if(response["ProcessVariables"]["status"]) {
+              this.closeDuplicateModal();
+            } else {
+              this.isErrorModal = true;
+              this.errorMessage = "Something went wrong, please again later.";
+            }
+          }, error => {
+            this.isErrorModal = true;
+            this.errorMessage = "Something went wrong, please again later.";
+          });
     });
-  }
+}
 
   // @ViewChild('commSlider') commSlider: ElementRef;
 

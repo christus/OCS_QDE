@@ -3369,23 +3369,32 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   submitDuplicateApplicant(form: NgForm) {
    
     let tempApplicant = this.qde.application.applicants[this.coApplicantIndex];
-    
-    let newApplicantToBeReplaced = this.duplicates.find(e => e.applicantId == form.value.selectDuplicateApplicant);
-    this.qde.application.applicants[this.coApplicantIndex] = this.qdeService.getModifiedObject(tempApplicant, newApplicantToBeReplaced);
-    this.qde.application.applicants[this.coApplicantIndex].applicantId = tempApplicant.applicantId;
-    this.qde.application.applicants[this.coApplicantIndex].isMainApplicant = tempApplicant.isMainApplicant;
-    // this.qdeService.setQde(this.qde);    
-    this.createOrUpdatePersonalDetailsSub5=this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).
-          subscribe((response) => {
-      // If successful      
-      if(response["ProcessVariables"]["status"]) {       
-        this.closeDuplicateModal();
-      }
-    }, error => {
-      this.isErrorModal = true;
-      this.errorMessage = "Something went wrong, please again later.";
-    });
-  }
+    let selectedApplication = this.duplicates.find(e => e.applicantId == form.value.selectDuplicateApplicant);
+  // console.log("Selected Application new " , selectedApplication["applicationId"]);
+    let applicationId = Number( selectedApplication["applicationId"]);
+    this.getQdeDataSub = this.qdeHttp.getQdeData(applicationId).subscribe(data => {
+    // console.log("Applicationin get " ,JSON.parse(data["ProcessVariables"]["response"])["application"]["applicants"] );    
+      let duplicates: any = JSON.parse(data["ProcessVariables"]["response"])["application"]["applicants"] ;
+      let newApplicantToBeReplaced = duplicates.find(e => e.applicantId == form.value.selectDuplicateApplicant);
+      // console.log("new application in data suub " , newApplicantToBeReplaced);
+      this.qde.application.applicants[this.coApplicantIndex] = this.qdeService.getModifiedObject(tempApplicant, newApplicantToBeReplaced);
+      this.qde.application.applicants[this.coApplicantIndex].applicantId = tempApplicant.applicantId;
+      this.qde.application.applicants[this.coApplicantIndex].isMainApplicant = tempApplicant.isMainApplicant;
+      this.qdeService.setQde(this.qde);    
+      this.createOrUpdatePersonalDetailsSub5=this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).
+            subscribe((response) => {
+        // If successful      
+        if(response["ProcessVariables"]["status"]) {  
+
+          this.closeDuplicateModal();
+        }
+      }, error => {
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
+      });
+  });
+}
+
 
   currentAddressFromMainApplicant(event: boolean) {
     this.qde.application.applicants[this.coApplicantIndex].communicationAddress.currentAddFromApp = event;
