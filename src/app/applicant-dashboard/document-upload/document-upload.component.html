@@ -789,7 +789,7 @@
 
                                           </div>
                                           <div class="btn-wrap">
-                                              <button type="button" class="btn btn-primary" (click)="handleCollateralProof(collateralSlider2)">Submit</button>
+                                              <button type="button" class="btn btn-primary" (click)="handleCollateralProof(collateralSlider2)" [ngClass]="{'disabled': isSubmitDisabled}">Submit</button>
                                           </div>
                                       </form>
                                   </div>

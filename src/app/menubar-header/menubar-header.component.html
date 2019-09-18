@@ -39,8 +39,8 @@
             </li>
             <li [ngClass]="{'active': activeTab==screenPages['coApplicantDetails']}">
                 <a *ngIf="applicationId == null" [ngClass]="{'disabled': !isMainTabEnabled}">Co-Applicant Details</a>
-                <a [routerLink]="['/applicant', applicationId, 'co-applicant']"  [ngClass]="{'disabled': !isMainTabEnabled}" *ngIf="applicationId != null && coApplicantIndex == null">Co-Applicant Details</a>
-                <a [routerLink]="['/applicant', applicationId, '/co-applicant', coApplicantIndex]"  [ngClass]="{'disabled': !isMainTabEnabled}" *ngIf="applicationId != null && coApplicantIndex != null">Co-Applicant Details</a>
+                <a [routerLink]="['/applicant', applicationId, 'co-applicant']" [queryParams]="{tabName: 'dashboard', page: 1}" [ngClass]="{'disabled': !isMainTabEnabled}" *ngIf="applicationId != null && coApplicantIndex == null">Co-Applicant Details</a>
+                <a [routerLink]="['/applicant', applicationId, '/co-applicant', coApplicantIndex]" [ngClass]="{'disabled': !isMainTabEnabled}" *ngIf="applicationId != null && coApplicantIndex != null">Co-Applicant Details</a>
             </li>
             <li [ngClass]="{'active': activeTab==screenPages['loanDetails']}">
                 <a *ngIf="applicationId == null" [ngClass]="{'disabled': !isMainTabEnabled}">Loan Details</a>
