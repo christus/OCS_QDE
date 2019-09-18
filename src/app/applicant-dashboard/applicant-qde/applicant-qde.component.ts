@@ -2453,7 +2453,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           });
           this.isApplicantRouteModal = true;
           // this.router.navigate(['/applicant', this.qde.application.applicationId, 'co-applicant'], {fragment: 'dashboard'} );
-          this.goToNextSlide(swiperInstance);
+          //this.goToNextSlide(swiperInstance);
         } else {
           this.isErrorModal = true;
           this.errorMessage = "Something went wrong, please again later.";
@@ -2493,7 +2493,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           this.isApplicantRouteModal = true;
           // alert("Applicant's application successfully submitted");
           // this.router.navigate(['/applicant', this.qde.application.applicationId, 'co-applicant'], {fragment: 'dashboard'} );
-          this.goToNextSlide(swiperInstance);
+          //this.goToNextSlide(swiperInstance);
         } else {
           this.isErrorModal = true;
           this.errorMessage = "Something went wrong, please again later.";

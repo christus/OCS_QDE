@@ -5640,6 +5640,7 @@ img {
 		top: 25vw;
 	}
 	
+	
 }
 
 .mpinForm {
@@ -5699,6 +5700,15 @@ img {
 
 	.mobile .bs-file label span {
 		display: none;
+	}
+
+	.mobile .tabs .tabs-contents {
+		height: calc(100vh - 1px);
+		position: relative
+	}
+
+	.mobile .bs-form .form-group.filled label {
+		transform: translateY(-31px) scale(.4) !important;
 	}
 }
 

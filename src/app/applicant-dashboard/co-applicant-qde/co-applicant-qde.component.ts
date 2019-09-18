@@ -2272,7 +2272,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
           });
           this.isCoApplicantRouteModal = true;
           // this.router.navigate(['/applicant', this.qde.application.applicationId, 'co-applicant'], {fragment: 'dashboard'} );
-          this.goToNextSlide(swiperInstance);
+          //this.goToNextSlide(swiperInstance);
         } else {
           // Throw Invalid Pan Error
         }
@@ -2315,7 +2315,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
           });
 
           this.isCoApplicantRouteModal = true;
-          this.goToNextSlide(swiperInstance);
+         // this.goToNextSlide(swiperInstance);
         } 
         else {
           // Throw Invalid Pan Error
