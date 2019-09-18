@@ -8,7 +8,6 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { Options } from "ng5-slider";
 import { NgForm } from "@angular/forms";
 import { QdeHttpService } from 'src/app/services/qde-http.service';
-import { callbackify } from 'util';
 import { QdeService } from 'src/app/services/qde.service';
 import Qde from 'src/app/models/qde.model';
 
@@ -787,9 +786,9 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
   * Income Proof Next(Submit)
   ***************************/
   handleIncomeProof(slider) {
-    const tabIndex = 6;
+    let tabIndex = 6;
     if(this.qde.application.applicants[this.applicantIndex].incomeDetails.incomeConsider) {
-      const tabIndex = 5;
+      tabIndex = 5;
     }
 
     if (!this.incomeProofDoc[this.applicantIndex]) {
