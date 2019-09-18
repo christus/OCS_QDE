@@ -812,7 +812,8 @@ export class QdeService {
   getModifiedObject(current, mew) {
 
     let temp;
-
+    console.log("current Value : ", current);
+    console.log("new Value : ", mew);
     if(current && current.constructor == Object) {
       temp = {};
       if(mew != null) {
@@ -834,7 +835,7 @@ export class QdeService {
     } else {
       temp = mew ? mew: current;
     }
-  
+    console.log("return Value : ", temp);
     return temp;
   }
 }

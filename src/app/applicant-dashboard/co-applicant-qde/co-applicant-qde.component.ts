@@ -379,14 +379,13 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     // });
 
     this.applicationIdSub = this.cds.applicationId.subscribe(val => {
-      if(val != '' && val != null) {
-        this.applicationId = val;
-        if(JSON.parse(localStorage.getItem('roles')).includes('TBM')) {
-          this.cds.setReadOnlyForm(true);
-        } else {
-          this.cds.setReadOnlyForm(false);
-        }
+
+      if(JSON.parse(localStorage.getItem('roles')).includes('TBM')) {
+        this.cds.setReadOnlyForm(true);
+      } else {
+        this.cds.setReadOnlyForm(false);
       }
+
     });
 
     // this.fragmentSub = this.route.fragment.subscribe((fragment) => {
@@ -459,7 +458,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       this.femaleTitles = lov.LOVS.female_applicant_title;
       // this.docType = lov.LOVS.document_type;
       // Hardcoded values as per requirement
-      this.docType = [{key: "Passport", value:"1"},{key: "Driving License", value:"2"},{key: "Voter's Identity Card", value:"3"},{key: "Aadhaar Card", value:"4"},{key: "NREGA Job Card", value:"5"},{key: "CKYC KIN", value:"6"},{key: "Aadhaar Token", value:"7"}]
+      this.docType = [{key: "Passport", value:"1"},{key: "Driving License", value:"2"},{key: "Voter's Identity Card", value:"3"},
+                      {key: "Aadhaar Card", value:"4"},{key: "NREGA Job Card", value:"5"},{key: "CKYC KIN", value:"6"},
+                      {key: "Aadhaar Token", value:"7"}]
       this.maritals = lov.LOVS.maritial_status;
       this.relationships = lov.LOVS.relationship;
       this.loanpurposes = lov.LOVS.loan_purpose;
@@ -530,12 +531,11 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
         // Only load once
           if((this.qde.application.applicationId == null || this.qde.application.applicationId == '') && this.qde.application.applicationId != params.applicationId) {
-            console.log(">>>>>>>>>>>>>>>>>>>>>>", this.qde.application.applicationId);
-            console.log(params.applicationId);
+
             this.getQdeDataSub = this.qdeHttp.getQdeData(params.applicationId).subscribe(response => {
               var result = JSON.parse(response["ProcessVariables"]["response"]);
               this.qde = result;
-              console.log("this.qde.application.applicationId: ",this.qde.application.applicationId);
+              this.applicationId = this.qde.application.applicationId;
               this.cds.setStatus(result.application.status);
               this.cds.setactiveTab(screenPages['coApplicantDetails']);
               this.qdeService.setQde(result);
@@ -552,7 +552,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
               if(result.application.applicants.length <= params.coApplicantIndex) {
                 this.router.navigate(['/applicant', result.application.applicationId, 'co-applicant'], {queryParams: {tabName: this.fragments[0], page: 1}});
               }
-  
+
               if(params['coApplicantIndex'] && this.qde.application.auditTrailDetails.screenPage == screenPages['coApplicantDetails']) {
                 if(this.qde.application.auditTrailDetails.applicantId == parseInt(this.qde.application.applicants[params.coApplicantIndex].applicantId)) {
                   this.coApplicantIndex = result.application.applicants.findIndex(v => v.applicantId == this.qde.application.auditTrailDetails.applicantId);
@@ -562,9 +562,6 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                   this.tabSwitch(0);  
                 }
   
-              } else {
-                // If audit trail isnt of applicant details page
-                this.tabSwitch(0);
               }
   
               try {
@@ -1292,6 +1289,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     
   }
   private ageError=false;
+
   submitDobDetails(form: NgForm, swiperInstance ?: Swiper) {
     if(this.isTBMLoggedIn) {
       this.tabSwitch(3);
@@ -1313,15 +1311,19 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         this.ageError=false;
       }
   
-      this.qde.application.applicants[this.coApplicantIndex].personalDetails.dob = form.value.year.value+'-'+form.value.month.value+'-'+form.value.day.value;
+      this.qde.application.applicants[this.coApplicantIndex].personalDetails.dob = form.value.year.value+'-'+
+            form.value.month.value+'-'+form.value.day.value;
       this.qde.application.applicants[this.coApplicantIndex].personalDetails.birthPlace = form.value.birthPlace;
   
       console.log(this.qde.application.applicants[this.coApplicantIndex]);
   
-      this.createOrUpdatePersonalDetailsSub5 = this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
+      this.createOrUpdatePersonalDetailsSub5 = this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
+            .subscribe((response) => {
         // If successful
         if(response["ProcessVariables"]["status"]) {
-          this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.coApplicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['coApplicantDetails']).subscribe(auditRes => {
+          this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'],
+               this.qde['application']['applicants'][this.coApplicantIndex]['applicantId']+"", this.page, 
+                  this.tabName, screenPages['coApplicantDetails']).subscribe(auditRes => {
             if(auditRes['ProcessVariables']['status'] == true) {
                     this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
                     this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
@@ -3363,18 +3365,18 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   submitDuplicateApplicant(form: NgForm) {
+   
     let tempApplicant = this.qde.application.applicants[this.coApplicantIndex];
+    
     let newApplicantToBeReplaced = this.duplicates.find(e => e.applicantId == form.value.selectDuplicateApplicant);
-    console.log("tempApplicant: ", tempApplicant);
-    console.log("newApplicantToBeReplaced: ", newApplicantToBeReplaced);
     this.qde.application.applicants[this.coApplicantIndex] = this.qdeService.getModifiedObject(tempApplicant, newApplicantToBeReplaced);
-    console.log("NEW:::", this.qde.application.applicants[this.coApplicantIndex]);
     this.qde.application.applicants[this.coApplicantIndex].applicantId = tempApplicant.applicantId;
     this.qde.application.applicants[this.coApplicantIndex].isMainApplicant = tempApplicant.isMainApplicant;
-
-    this.createOrUpdatePersonalDetailsSub5=this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
-      // If successful
-      if(response["ProcessVariables"]["status"]) {
+    // this.qdeService.setQde(this.qde);    
+    this.createOrUpdatePersonalDetailsSub5=this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).
+          subscribe((response) => {
+      // If successful      
+      if(response["ProcessVariables"]["status"]) {       
         this.closeDuplicateModal();
       }
     }, error => {
