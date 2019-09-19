@@ -933,17 +933,19 @@
                           </div>
                           <div class="radio-wrap rounded-radio">
                             <div class="bs-radio typ-normal">
-                              <input [readonly]="isTBMLoggedIn" type="radio" name="prefredMail" [value]="1" fieldFill
+                              <input [readonly]="isTBMLoggedIn" id="current-add-mail" type="radio" name="prefredMail" [value]="1" fieldFill
                                 [checked]="qde.application.applicants[applicantIndex].communicationAddress.preferedMailingAddress == true"
-                                id="current-add-mail" />
+                                (click)="submitPreferedMail(true)"
+                                 />
                               <label for="current-add-mail" tabindex="10">
                                 Current Address
                               </label>
                             </div>
                             <div class="bs-radio typ-normal">
-                              <input [readonly]="isTBMLoggedIn" type="radio" name="prefredMail" [value]="2" fieldFill
+                              <input [readonly]="isTBMLoggedIn" id="permanent-add-mail"  type="radio" name="prefredMail" [value]="2" fieldFill
                                 [checked]="qde.application.applicants[applicantIndex].communicationAddress.preferedMailingAddress == false"
-                                id="permanent-add-mail" />
+                                (click)="submitPreferedMail(false)"
+                                />
                               <label for="permanent-add-mail" tabindex="11">
                                 Permanent Address
                               </label>
@@ -1491,8 +1493,7 @@
                                 [(ngModel)]="qde.application.applicants[applicantIndex].occupation.pensionAmount"
                                 #annualPensionIncome1="ngModel" name="annualFamilyIncome" tabindex="9" fieldFill
                                 maxlength="10" pattern="{{regexPattern.amount}}" required />
-                              <label for="annualPensionIncome1" style="margin-top: -28px;">
-                                Pension Amount<span class="lakhs"></span></label>
+                              <label for="annualPensionIncome1" style="margin-top: -28px;">Pension Amount<span class="lakhs"></span></label>
                               <span class="addon">
                                 <span class="icon icon-inr"></span>
                               </span>

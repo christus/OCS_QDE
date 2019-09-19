@@ -169,6 +169,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   officialCorrespondenceStdCode: string = "";
   officialCorrespondencePhoneNumber: string = "";
 
+  preferedMailingAddress:boolean;
+
   commCityState:string = "";
   // zipCityStateID:string = "";
 
@@ -710,7 +712,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
               }
             } catch(e) {}
      
-      
+
       // Document Type
       if( ! isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].pan.docType)) ) {
         // this.selectedDocType = this.docType[(parseInt(this.qde.application.applicants[this.applicantIndex].pan.docType))-1];
@@ -947,7 +949,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   tabSwitch(tabIndex ?: number, fromQde ?: boolean) {
 
     // Check for invalid tabIndex
-    if(tabIndex < this.fragments.length) {
+    if(tabIndex < this.fragments.length && tabIndex != -1) {
 
       let t = fromQde ? this.page: 1;
 
@@ -974,7 +976,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         // When income consider is true, official correspondence will be hidden
         if(this.activeTab == 9 && this.qde.application.applicants[this.applicantIndex].incomeDetails.incomeConsider == false) {
           this.tabSwitch(this.activeTab - 2);
-        } else {
+        }else if(this.activeTab == 10){
+          return;
+        }else {
           this.tabSwitch(this.activeTab - 1);
         }
       }
@@ -1710,7 +1714,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.qde.application.applicants[this.applicantIndex].communicationAddress.stateId = this.qde.application.applicants[this.applicantIndex].communicationAddress.stateId;
       this.qde.application.applicants[this.applicantIndex].communicationAddress.numberOfYearsInCurrentResidence =  form.value.numberOfYearsInCurrentResidence;
       this.qde.application.applicants[this.applicantIndex].communicationAddress.permanentAddress = form.value.permanentAddress;
-      this.qde.application.applicants[this.applicantIndex].communicationAddress.preferedMailingAddress =  (form.value.prefredMail == 1) ? true: false;
+      this.qde.application.applicants[this.applicantIndex].communicationAddress.preferedMailingAddress =  this.preferedMailingAddress;
 
 
       this.qde.application.applicants[this.applicantIndex].permanentAddress.addressLineOne = form.value.pAddressLineOne;
@@ -1745,6 +1749,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       });
     }
 
+  }
+
+  submitPreferedMail(flag) {
+    this.preferedMailingAddress = flag;
   }
 
 
