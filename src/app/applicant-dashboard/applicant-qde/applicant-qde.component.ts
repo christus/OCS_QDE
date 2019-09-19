@@ -6,7 +6,7 @@ import * as Swiper from 'swiper/dist/js/swiper.js';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Options } from 'ng5-slider';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormArray } from '@angular/forms';
 
 import Qde from 'src/app/models/qde.model';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
@@ -713,7 +713,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       
       // Document Type
       if( ! isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].pan.docType)) ) {
-        this.selectedDocType = this.docType[(parseInt(this.qde.application.applicants[this.applicantIndex].pan.docType))-1];
+        // this.selectedDocType = this.docType[(parseInt(this.qde.application.applicants[this.applicantIndex].pan.docType))-1];
+        this.selectedDocType = this.getSelectedValue(this.qde.application.applicants[this.applicantIndex].pan.docType, this.docType);
+
       } 
 
       // Personal Details Title
@@ -762,39 +764,48 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       // Constitution
       if( ! isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].organizationDetails.constitution)) ) {
         console.log('c', this.qde.application.applicants[this.applicantIndex].organizationDetails.constitution);
-        this.selectedConstitution = this.constitutions[(parseInt(this.qde.application.applicants[this.applicantIndex].organizationDetails.constitution))-1];
+        // this.selectedConstitution = this.constitutions[(parseInt(this.qde.application.applicants[this.applicantIndex].organizationDetails.constitution))-1];
+        this.selectedConstitution = this.getSelectedValue(this.qde.application.applicants[this.applicantIndex].organizationDetails.constitution, this.constitutions);
+
         console.log(this.selectedConstitution);
       }
       
       // Communication address
       if( ! isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].communicationAddress.residentialStatus)) ) {
-        this.selectedResidence = this.maritals[(parseInt(this.qde.application.applicants[this.applicantIndex].communicationAddress.residentialStatus)) - 1];
+        //this.selectedResidence = this.residences[(parseInt(this.qde.application.applicants[this.applicantIndex].communicationAddress.residentialStatus)) - 1];
+        this.selectedResidence = this.getSelectedValue(this.qde.application.applicants[this.applicantIndex].communicationAddress.residentialStatus, this.residences);
       }
 
       if( ! isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].maritalStatus.status)) ) {
-        this.selectedMaritialStatus = this.maritals[(parseInt(this.qde.application.applicants[this.applicantIndex].maritalStatus.status))-1];
+        // this.selectedMaritialStatus = this.maritals[(parseInt(this.qde.application.applicants[this.applicantIndex].maritalStatus.status))-1];
+        this.selectedMaritialStatus = this.getSelectedValue(this.qde.application.applicants[this.applicantIndex].maritalStatus.status, this.maritals);
       }
 
       if( ! isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].maritalStatus.spouseTitle)) ) {
-          this.selectedSpouseTitle = this.titles[(parseInt(this.qde.application.applicants[this.applicantIndex].maritalStatus.spouseTitle))-1];
+          // this.selectedSpouseTitle = this.titles[(parseInt(this.qde.application.applicants[this.applicantIndex].maritalStatus.spouseTitle))-1];
+          this.selectedSpouseTitle = this.getSelectedValue(this.qde.application.applicants[this.applicantIndex].maritalStatus.spouseTitle, this.titles);
       }
 
       if( ! isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].familyDetails.fatherTitle)) ) {
-        this.selectedFatherTitle  = this.maleTitles[(parseInt(this.qde.application.applicants[this.applicantIndex].familyDetails.fatherTitle))-1];
+        // this.selectedFatherTitle  = this.maleTitles[(parseInt(this.qde.application.applicants[this.applicantIndex].familyDetails.fatherTitle))-1];
+        this.selectedFatherTitle = this.getSelectedValue(this.qde.application.applicants[this.applicantIndex].familyDetails.fatherTitle, this.maleTitles);
       }
 
       if( ! isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].familyDetails.motherTitle)) ) {
-        this.selectedMotherTitle = this.femaleTitles[(parseInt(this.qde.application.applicants[this.applicantIndex].familyDetails.motherTitle))-1];
+        // this.selectedMotherTitle = this.femaleTitles[(parseInt(this.qde.application.applicants[this.applicantIndex].familyDetails.motherTitle))-1];
+        this.selectedMotherTitle = this.getSelectedValue(this.qde.application.applicants[this.applicantIndex].familyDetails.motherTitle, this.femaleTitles);
       }
 
       // Other
       if( ! isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].other.religion)) ) {
-        this.selectedReligion = this.religions[(parseInt(this.qde.application.applicants[this.applicantIndex].other.religion))-1];
+        // this.selectedReligion = this.religions[(parseInt(this.qde.application.applicants[this.applicantIndex].other.religion))-1];
+        this.selectedReligion =  this.getSelectedValue(this.qde.application.applicants[this.applicantIndex].other.religion, this.religions);
       }
 
       // Category
       if( ! isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].other.category)) ) {
-        this.selectedCategory  = this.categories[(parseInt(this.qde.application.applicants[this.applicantIndex].other.category))-1];
+        // this.selectedCategory  = this.categories[(parseInt(this.qde.application.applicants[this.applicantIndex].other.category))-1];
+        this.selectedCategory = this.getSelectedValue(this.qde.application.applicants[this.applicantIndex].other.category, this.categories);
       }
 
       // Occupation details
@@ -998,6 +1009,21 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }
     return titles[0];
+  }
+
+
+  getSelectedValue(selectVal , array) {
+
+    let arr = JSON.parse(JSON.stringify(array));
+    let selectedSalutationObj = {};
+    for(let key in arr) {
+      let salutationObj = arr[key];
+      if(salutationObj["value"] == selectVal ) {
+        return salutationObj;
+      }
+    }
+    return arr[0];
+
   }
   
   submitPanNumber(form: NgForm, swiperInstance ?: Swiper) {
@@ -1261,8 +1287,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
             }
         }, error => {
           this.isErrorModal = true;
-          this.errorMessage = "Something went wrong, please again later."
-;        });
+          this.errorMessage = "Something went wrong, please again later.";
+        });
       } else {
         this.createOrUpdatePanDetailsSub2=this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
           // If successfull
@@ -2557,6 +2583,43 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     } 
     else {
+
+      const incomeIsConsider = this.qde.application.applicants[this.applicantIndex].incomeDetails.incomeConsider;
+
+      if((incomeIsConsider == true? 1:2) != value) {
+        if(!incomeIsConsider) {
+
+          this.qde.application.applicants[this.applicantIndex].incomeDetails = {
+            annualFamilyIncome: "",
+            monthlyExpenditure: "",
+            incomeConsider: null,
+            puccaHouse: null
+          };
+  
+          this.qde.application.applicants[this.applicantIndex].officialCorrespondence= {
+            addressLineOne: "",
+            addressLineTwo: "",
+            landMark: "",
+            zipcode: "",
+            city: "",
+            state: "",
+            officeNumber: "",
+            officeEmailId: "",
+            cityState: "",
+            zipCityStateID: ""
+          };
+  
+          this.officialCorrespondencePhoneNumber = "";
+          this.officialCorrespondenceStdCode = "";
+         
+        }else {
+          this.qde.application.applicants[this.applicantIndex].incomeDetails = {
+            incomeConsider: null,
+            assessmentMethodology: "",
+          };
+        }
+      }
+
       this.qde.application.applicants[this.applicantIndex].incomeDetails.incomeConsider = (value == 1) ? true : false;
       console.log("click Yes in occupation Details in else part");
       this.createOrUpdatePersonalDetailsSub23 = this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).
@@ -2571,6 +2634,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
               this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
+
+
           
           if(this.qde.application.applicants[this.applicantIndex].incomeDetails.incomeConsider) {
             this.tabSwitch(8);
@@ -2598,6 +2663,45 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       this.goToNextSlide(swiperInstance);
     } else {
+
+        const incomeIsConsider = this.qde.application.applicants[this.applicantIndex].incomeDetails.incomeConsider;
+
+        if((incomeIsConsider == true? 1:2) != value) {
+          if(!incomeIsConsider) {
+  
+            this.qde.application.applicants[this.applicantIndex].incomeDetails = {
+              annualFamilyIncome: "",
+              monthlyExpenditure: "",
+              incomeConsider: null,
+              puccaHouse: null
+            };
+    
+            this.qde.application.applicants[this.applicantIndex].officialCorrespondence= {
+              addressLineOne: "",
+              addressLineTwo: "",
+              landMark: "",
+              zipcode: "",
+              city: "",
+              state: "",
+              officeNumber: "",
+              officeEmailId: "",
+              cityState: "",
+              zipCityStateID: ""
+            };
+    
+            this.officialCorrespondencePhoneNumber = "";
+            this.officialCorrespondenceStdCode = "";
+            
+          }else {
+            this.qde.application.applicants[this.applicantIndex].incomeDetails = {
+              incomeConsider: null,
+              assessmentMethodology: "",
+            };
+          }
+        }
+
+
+
       this.qde.application.applicants[this.applicantIndex].incomeDetails.incomeConsider = (value == 1) ? true : false;
 
       console.log(">>>", this.qde.application.applicants[this.applicantIndex].incomeDetails);

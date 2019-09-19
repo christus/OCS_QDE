@@ -819,6 +819,21 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     return titles[0];
   }
 
+
+  getSelectedValue(selectVal , array) {
+
+    let arr = JSON.parse(JSON.stringify(array));
+    let selectedSalutationObj = {};
+    for(let key in arr) {
+      let salutationObj = arr[key];
+      if(salutationObj["value"] == selectVal ) {
+        return salutationObj;
+      }
+    }
+    return arr[0];
+
+  }
+
   submitPanNumber(form: NgForm, swiperInstance ?: Swiper) {
     if(this.isTBMLoggedIn) {
       this.tabSwitch(2);
@@ -2376,6 +2391,43 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         this.tabSwitch(10);
       }
     } else {
+
+      const incomeIsConsider = this.qde.application.applicants[this.coApplicantIndex].incomeDetails.incomeConsider;
+
+      if((incomeIsConsider == true? 1:2) != value) {
+        if(!incomeIsConsider) {
+
+          this.qde.application.applicants[this.coApplicantIndex].incomeDetails = {
+            annualFamilyIncome: "",
+            monthlyExpenditure: "",
+            incomeConsider: null,
+            puccaHouse: null
+          };
+  
+          this.qde.application.applicants[this.coApplicantIndex].officialCorrespondence= {
+            addressLineOne: "",
+            addressLineTwo: "",
+            landMark: "",
+            zipcode: "",
+            city: "",
+            state: "",
+            officeNumber: "",
+            officeEmailId: "",
+            cityState: "",
+            zipCityStateID: ""
+          };
+  
+          this.officialCorrespondencePhoneNumber = "";
+          this.officialCorrespondenceStdCode = "";
+          
+        }else {
+          this.qde.application.applicants[this.coApplicantIndex].incomeDetails = {
+            incomeConsider: null,
+            assessmentMethodology: "",
+          };
+        }
+      }
+
       this.qde.application.applicants[this.coApplicantIndex].incomeDetails.incomeConsider = (value == 1) ? true : false;
 
   
@@ -2393,6 +2445,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             this.isErrorModal = true;
             this.errorMessage = "Something went wrong, please again later.";
           });
+
+          
 
           if(this.qde.application.applicants[this.coApplicantIndex].incomeDetails.incomeConsider) {
             this.tabSwitch(9);
@@ -2419,6 +2473,44 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         this.isCoApplicantRouteModal = true;
       }
     } else {
+
+      const incomeIsConsider = this.qde.application.applicants[this.coApplicantIndex].incomeDetails.incomeConsider;
+
+      if((incomeIsConsider == true? 1:2) != value) {
+        if(!incomeIsConsider) {
+
+          this.qde.application.applicants[this.coApplicantIndex].incomeDetails = {
+            annualFamilyIncome: "",
+            monthlyExpenditure: "",
+            incomeConsider: null,
+            puccaHouse: null
+          };
+  
+          this.qde.application.applicants[this.coApplicantIndex].officialCorrespondence= {
+            addressLineOne: "",
+            addressLineTwo: "",
+            landMark: "",
+            zipcode: "",
+            city: "",
+            state: "",
+            officeNumber: "",
+            officeEmailId: "",
+            cityState: "",
+            zipCityStateID: ""
+          };
+  
+          this.officialCorrespondencePhoneNumber = "";
+          this.officialCorrespondenceStdCode = "";
+         
+        }else {
+          this.qde.application.applicants[this.coApplicantIndex].incomeDetails = {
+            incomeConsider: null,
+            assessmentMethodology: "",
+          };
+        }
+      }
+
+
       this.qde.application.applicants[this.coApplicantIndex].incomeDetails.incomeConsider = (value == 1) ? true : false;
 
       console.log(">>>", this.qde.application.applicants[this.coApplicantIndex].incomeDetails);
@@ -2438,6 +2530,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             this.isErrorModal = true;
             this.errorMessage = "Something went wrong, please again later.";
           });
+
 
           if(value == 1) {
             this.goToNextSlide(swiperInstance);
@@ -2621,7 +2714,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
       // Document Type
       if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].pan.docType)) ) {
-        this.selectedDocType = this.docType[(parseInt(this.qde.application.applicants[this.coApplicantIndex].pan.docType))-1];
+        // this.selectedDocType = this.docType[(parseInt(this.qde.application.applicants[this.coApplicantIndex].pan.docType))-1];
+        this.selectedDocType = this.getSelectedValue(this.qde.application.applicants[this.coApplicantIndex].pan.docType, this.docType);
+
       } 
 
 
@@ -2671,39 +2766,52 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       // Constitution
       if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].organizationDetails.constitution)) ) {
         console.log('c', this.qde.application.applicants[this.coApplicantIndex].organizationDetails.constitution);
-        this.selectedConstitution = this.constitutions[(parseInt(this.qde.application.applicants[this.coApplicantIndex].organizationDetails.constitution))-1];
-        console.log(this.selectedConstitution);
+        // this.selectedConstitution = this.constitutions[(parseInt(this.qde.application.applicants[this.coApplicantIndex].organizationDetails.constitution))-1];
+        // console.log(this.selectedConstitution);
+
+        this.selectedConstitution = this.getSelectedValue(this.qde.application.applicants[this.coApplicantIndex].organizationDetails.constitution, this.constitutions);
+
       }
       
       // Communication address
       if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].communicationAddress.residentialStatus)) ) {
-        this.selectedResidence = this.residences[(parseInt(this.qde.application.applicants[this.coApplicantIndex].communicationAddress.residentialStatus)) - 1];
+        // this.selectedResidence = this.residences[(parseInt(this.qde.application.applicants[this.coApplicantIndex].communicationAddress.residentialStatus)) - 1];
+        this.selectedResidence = this.getSelectedValue(this.qde.application.applicants[this.coApplicantIndex].communicationAddress.residentialStatus, this.residences);
+
       }
 
       if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].maritalStatus.status)) ) {
-        this.selectedMaritialStatus = this.maritals[(parseInt(this.qde.application.applicants[this.coApplicantIndex].maritalStatus.status))-1];
+        // this.selectedMaritialStatus = this.maritals[(parseInt(this.qde.application.applicants[this.coApplicantIndex].maritalStatus.status))-1];
+        this.selectedMaritialStatus = this.getSelectedValue(this.qde.application.applicants[this.coApplicantIndex].maritalStatus.status, this.maritals);
+
       }
 
       if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].maritalStatus.spouseTitle)) ) {
-          this.selectedSpouseTitle = this.titles[(parseInt(this.qde.application.applicants[this.coApplicantIndex].maritalStatus.spouseTitle))-1];
+        // this.selectedSpouseTitle = this.titles[(parseInt(this.qde.application.applicants[this.coApplicantIndex].maritalStatus.spouseTitle))-1];
+        this.selectedSpouseTitle = this.getSelectedValue(this.qde.application.applicants[this.coApplicantIndex].maritalStatus.spouseTitle, this.titles);
+
       }
 
       if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].familyDetails.fatherTitle)) ) {
-        this.selectedFatherTitle  = this.titles[(parseInt(this.qde.application.applicants[this.coApplicantIndex].familyDetails.fatherTitle))-1];
+        // this.selectedFatherTitle  = this.titles[(parseInt(this.qde.application.applicants[this.coApplicantIndex].familyDetails.fatherTitle))-1];
+        this.selectedFatherTitle = this.getSelectedValue(this.qde.application.applicants[this.coApplicantIndex].familyDetails.fatherTitle, this.maleTitles);
       }
 
       if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].familyDetails.motherTitle)) ) {
-        this.selectedMotherTitle = this.titles[(parseInt(this.qde.application.applicants[this.coApplicantIndex].familyDetails.motherTitle))-1];
+        // this.selectedMotherTitle = this.titles[(parseInt(this.qde.application.applicants[this.coApplicantIndex].familyDetails.motherTitle))-1];
+        this.selectedMotherTitle = this.getSelectedValue(this.qde.application.applicants[this.coApplicantIndex].familyDetails.motherTitle, this.femaleTitles);
       }
 
       // Other
       if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].other.religion)) ) {
-        this.selectedReligion = this.religions[(parseInt(this.qde.application.applicants[this.coApplicantIndex].other.religion))-1];
+        // this.selectedReligion = this.religions[(parseInt(this.qde.application.applicants[this.coApplicantIndex].other.religion))-1];
+        this.selectedReligion =  this.getSelectedValue(this.qde.application.applicants[this.coApplicantIndex].other.religion, this.religions);
       }
 
       // Category
       if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].other.category)) ) {
-        this.selectedCategory  = this.categories[(parseInt(this.qde.application.applicants[this.coApplicantIndex].other.category))-1];
+        // this.selectedCategory  = this.categories[(parseInt(this.qde.application.applicants[this.coApplicantIndex].other.category))-1];
+        this.selectedCategory = this.getSelectedValue(this.qde.application.applicants[this.coApplicantIndex].other.category, this.categories);
       }
 
       // Occupation details
@@ -2714,7 +2822,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       // Assesment methodology
       console.log("AM: ", this.assessmentMethodology);
       if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].incomeDetails.assessmentMethodology)) ) {
-        this.selectedAssesmentMethodology = this.assessmentMethodology[(parseInt(this.qde.application.applicants[this.coApplicantIndex].incomeDetails.assessmentMethodology))-1];
+        // this.selectedAssesmentMethodology = this.assessmentMethodology[(parseInt(this.qde.application.applicants[this.coApplicantIndex].incomeDetails.assessmentMethodology))-1];
+        this.selectedAssesmentMethodology = this.assessmentMethodology.find(v => v.value == this.qde.application.applicants[this.coApplicantIndex].incomeDetails.assessmentMethodology);
+
       }
 
       try {

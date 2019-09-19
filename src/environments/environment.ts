@@ -116,18 +116,31 @@ export const environment = {
       'workflowId': '471f4154a3a211e9abab0242ac110002',
       'processId': '473800cca3a211e989e10242ac110002'
     },
-    "paymentRecon": {
+
+
+    "paymentReconDownload": {
+      'workflowId': '83ab8a8ca16911e9b1900242ac110003',
+      'processId': '315870bad84111e99d440242ac110002'
+    },
+    "paymentNonReconDownload" : {
       'workflowId': '83ab8a8ca16911e9b1900242ac110003',
       'processId': '7230e902a21b11e9b52d0242ac110002'
     },
-    // "paymentReconUpload": {
-    //   'workflowId': '83c3fd7ea16911e99a8f0242ac110003',
-    //   'processId': '83c3fd7ea16911e99a8f0242ac110003'
-    // },
+    "paymentOfflineDownload": {
+      'workflowId': '57459ecc8cfd11e982270242ac110002',
+      'processId': '575dd3d48cfd11e982270242ac110002'
+    },
     "paymentReconUpload": {
+      'workflowId': '83ab8a8ca16911e9b1900242ac110003',
+      'processId': '83c3fd7ea16911e99a8f0242ac110003'
+    },
+    "offlinePaymentUpload" : { 
       'workflowId': 'f144eee2927f11e982270242ac110002',
       'processId': 'f17089c6927f11e982270242ac110002'
     },
+
+
+
     "duplicateApplicantCheck": {
       'workflowId': '471f4154a3a211e9abab0242ac110002',
       'processId': '473800cca3a211e989e10242ac110002'

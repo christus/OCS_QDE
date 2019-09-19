@@ -21,11 +21,23 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              { "glob": "**/*", "input": "./META-INF/", "output": "./META-INF/" },
-              { "glob": "**/*", "input": "./WEB-INF/", "output": "./WEB-INF/" }
+              {
+                "glob": "**/*",
+                "input": "./META-INF/",
+                "output": "./META-INF/"
+              },
+              {
+                "glob": "**/*",
+                "input": "./WEB-INF/",
+                "output": "./WEB-INF/"
+              }
             ],
             "styles": [
-              "src/styles.css"            ],
+              {
+                "input": "node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+              },
+              "src/styles.css"
+            ],
             "scripts": [
               "./node_modules/jquery/dist/jquery.min.js"
             ]
@@ -75,6 +87,9 @@
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "styles": [
+              {
+                "input": "node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+              },
               "src/assets/css/fonts.css",
               "src/styles.css"
             ],

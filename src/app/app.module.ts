@@ -85,6 +85,10 @@ import { SetMpinComponent } from './Login/set-mpin/set-mpin.component';
 import { ReviewEligibilityComponent } from './applicant-dashboard/review-eligibility/review-eligibility.component';
 import { ThankPaymentEligibiltyComponent } from './payments/thank-payment-eligibilty/thank-payment-eligibilty.component';
 import { OpsModuleComponent } from './admin/ops-module/ops-module.component';
+
+import { OnlinePaymentComponent } from './admin/online-payment/online-payment.component';
+import { CheckPaymentComponent } from './admin/check-payment/check-payment.component';
+
 import { NumberFormatDirective } from './directives/number-format.directive';
 
 import { UserModuleComponent } from './admin/user-module/user-module.component';
@@ -124,6 +128,10 @@ import { PaymentSuccessfullComponent } from './payments/payment-successfull/paym
 import { SuccessfullComponent } from './payments/successfull/successfull.component';
 import { EditErrorMessageComponent } from './admin/edit-error-message/edit-error-message.component';
 import { ErrorHandlingMessageComponent } from './admin/error-handling-message/error-handling-message.component';
+import { from } from 'rxjs';
+import {  MatDatepickerModule, MatNativeDateModule } from '@angular/material';
+import { MatFormFieldModule } from '@angular/material';
+import { MatInputModule } from '@angular/material';
 
 
 const appRoutes: Routes = [
@@ -574,6 +582,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     SetMpinComponent,
     ReviewEligibilityComponent,
     OpsModuleComponent,
+    OnlinePaymentComponent,
+    CheckPaymentComponent,
     UserModuleComponent,
     AdminPanelComponent,
     NumberFormatDirective,
@@ -619,8 +629,11 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     DeviceDetectorModule.forRoot(),
     NgxUiLoaderModule,
     NgxPaginationModule,
-    ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'})
-    
+    ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   providers: [
     ListOfValuesResolverService,

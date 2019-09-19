@@ -374,8 +374,71 @@ createOrUpdatePersonalDetails(qde) {
   }
 
   documentsPaymentReconCSV(data: any) {
-    const processId = environment.api.paymentRecon.processId;
-    const workflowId = environment.api.paymentRecon.workflowId;
+    const processId = environment.api.paymentReconDownload.processId;
+    const workflowId = environment.api.paymentReconDownload.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      ProcessVariables: data,
+      processId: processId,
+      workflowId: workflowId,
+      projectId: projectId,
+    };
+
+    const body = new HttpParams().set(
+      "processVariables",
+      JSON.stringify(requestEntity)
+    );
+
+    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.http.post(uri, body.toString());
+  }
+
+  documentsPaymentNonReconCSV(data: any) {
+    const processId = environment.api.paymentNonReconDownload.processId;
+    const workflowId = environment.api.paymentNonReconDownload.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      ProcessVariables: data,
+      processId: processId,
+      workflowId: workflowId,
+      projectId: projectId,
+    };
+
+    const body = new HttpParams().set(
+      "processVariables",
+      JSON.stringify(requestEntity)
+    );
+
+    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.http.post(uri, body.toString());
+  }
+
+  downloadOfflinePayment(data: any) {
+    const processId = environment.api.paymentOfflineDownload.processId;
+    const workflowId = environment.api.paymentOfflineDownload.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      ProcessVariables: data,
+      processId: processId,
+      workflowId: workflowId,
+      projectId: projectId,
+    };
+
+    const body = new HttpParams().set(
+      "processVariables",
+      JSON.stringify(requestEntity)
+    );
+
+    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.http.post(uri, body.toString());
+  }
+
+  uploadOfflinePayment(data: any) {
+    const processId = environment.api.offlinePaymentUpload.processId;
+    const workflowId = environment.api.offlinePaymentUpload.workflowId;
     const projectId = environment.projectId;
 
     const requestEntity: RequestEntity = {
