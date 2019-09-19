@@ -530,6 +530,17 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
       this.photoProofFileName[this.applicantIndex] = this.photoProofDoc[this.applicantIndex]["name"];
     }
 
+    this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['documentUploads']).subscribe(auditRes => {
+      if(auditRes['ProcessVariables']['status'] == true) {
+                this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
+      }
+    } , error => {
+      this.isErrorModal = true;
+      this.errorMessage = "Something went wrong, please again later.";
+    });
 
   }
 
@@ -604,6 +615,17 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
       this.idProofFileName[this.applicantIndex] = this.idProofDoc[this.applicantIndex]["name"];
     }
 
+    this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['documentUploads']).subscribe(auditRes => {
+      if(auditRes['ProcessVariables']['status'] == true) {
+                this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
+      }
+    } , error => {
+      this.isErrorModal = true;
+      this.errorMessage = "Something went wrong, please again later.";
+    });
   }
 
   /************************
@@ -714,6 +736,18 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
       this.addressProofFileSize[this.applicantIndex] = size;
       this.addressProofFileName[this.applicantIndex] = this.addressProofDoc[this.applicantIndex]["name"];
     }
+
+    this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['documentUploads']).subscribe(auditRes => {
+      if(auditRes['ProcessVariables']['status'] == true) {
+                this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
+      }
+    } , error => {
+      this.isErrorModal = true;
+      this.errorMessage = "Something went wrong, please again later.";
+    });
   }
 
   /************************
@@ -780,6 +814,18 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
       this.incomeProofFileSize[this.applicantIndex] = size;
       this.incomeProofFileName[this.applicantIndex] = this.incomeProofDoc[this.applicantIndex]["name"];
     }
+
+    this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['documentUploads']).subscribe(auditRes => {
+      if(auditRes['ProcessVariables']['status'] == true) {
+                this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
+      }
+    } , error => {
+      this.isErrorModal = true;
+      this.errorMessage = "Something went wrong, please again later.";
+    });
   }
 
   /***************************
@@ -857,6 +903,18 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
       this.bankProofFileName[this.applicantIndex] = this.bankingProofDoc[this.applicantIndex]["name"];
     }
 
+    this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['documentUploads']).subscribe(auditRes => {
+      if(auditRes['ProcessVariables']['status'] == true) {
+                this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
+      }
+    } , error => {
+      this.isErrorModal = true;
+      this.errorMessage = "Something went wrong, please again later.";
+    });
+
   }
 
   /****************************
@@ -930,6 +988,18 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
       this.collateralProofFileSize[this.applicantIndex] = size;
       this.collateralProofFileName[this.applicantIndex] = this.collateralProofDoc[this.applicantIndex]["name"];
     }
+
+    this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['documentUploads']).subscribe(auditRes => {
+      if(auditRes['ProcessVariables']['status'] == true) {
+                this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
+      }
+    } , error => {
+      this.isErrorModal = true;
+      this.errorMessage = "Something went wrong, please again later.";
+    });
   }
 
   /*******************************
