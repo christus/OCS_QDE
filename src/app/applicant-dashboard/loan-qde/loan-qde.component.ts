@@ -546,12 +546,64 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   changePropertyIdentified(swiperInstance: Swiper, value: boolean) {
+
+    const currentPropertyStatus = this.qde.application.loanDetails.propertyType.propertyIdentified;
     if(value) {
+
+      // If user changed to "NO"
+      if(!currentPropertyStatus) {
+       
+
+        this.qde.application.loanDetails.propertyType.propertyIdentified = false;
+        this.qde.application.loanDetails.propertyType.propertyType = "";
+        this.qde.application.loanDetails.propertyType.propertyClss = "";
+        this.qde.application.loanDetails.propertyType.propertyArea = null;
+        
+
+        this.qde.application.loanDetails.property.zipcodeId = null;
+        this.qde.application.loanDetails.property.zipcode = null;
+        this.qde.application.loanDetails.property.addressLineOne = "";
+        this.qde.application.loanDetails.property.addressLineTwo = "";
+        this.qde.application.loanDetails.property.cityId = null;
+        this.qde.application.loanDetails.property.city = "";
+        this.qde.application.loanDetails.property.stateId = null;
+        this.qde.application.loanDetails.property.state = "";
+
+
+        this.selectedPropertyType = "";
+        this.propertyClssValue = "";
+        this.propertyAreaValue = null;
+
+        this.propertyPincodeValue = null;
+        this.propertyPincodeId = null;
+        this.addressLineOneValue =  "";
+        this.addressLineTwoValue =  "";
+        this.cityId = null;
+        this.city = "";
+        this.stateId = null;
+        this.state =  "";
+        this.cityState =  "";
+
+
+
+
+        this.qdeService.setQde(this.qde);
+
+      }
+
       this.goToNextSlide(swiperInstance);
+
     } else {
       //switching to existing loan
        this.qde.application.loanDetails.propertyType.propertyIdentified = value;
+       
        this.tabSwitch(this.propertyNoSwitchTab);
+
+      // If user changed to "YES"
+      if(currentPropertyStatus) {
+        // this.qde.application.loanDetails.propertyType
+        console.log("applicant", false);
+      }
        //  if(this.selectedLoanPurpose.value != "17") {
       //   this.router.navigate(['/references', this.qde.application.applicationId])
       // } else {

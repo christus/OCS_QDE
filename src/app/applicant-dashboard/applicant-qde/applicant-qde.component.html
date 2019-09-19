@@ -1479,13 +1479,14 @@
                               </div>
                             </div>
 
-                            <div *ngIf="selectedOccupation.value == 10 && qde.application.applicants[applicantIndex].occupation.pensioner == true" class="form-group inr">
+                            <div *ngIf="selectedOccupation.value == 10 && qde.application.applicants[applicantIndex].occupation.pensioner == true" class="form-group inr" style="margin-top: 100px;" >
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                                 id="annualPensionIncome1"
                                 [(ngModel)]="qde.application.applicants[applicantIndex].occupation.pensionAmount"
                                 #annualPensionIncome1="ngModel" name="annualFamilyIncome" tabindex="9" fieldFill
                                 maxlength="10" pattern="{{regexPattern.amount}}" required />
-                              <label for="annualPensionIncome1">Pension Amount<span class="lakhs"></span></label>
+                              <label for="annualPensionIncome1" style="margin-top: -28px;">
+                                Pension Amount<span class="lakhs"></span></label>
                               <span class="addon">
                                 <span class="icon icon-inr"></span>
                               </span>
