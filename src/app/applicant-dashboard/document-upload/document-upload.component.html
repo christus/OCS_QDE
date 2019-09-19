@@ -132,7 +132,7 @@
 
                                             <div *ngIf="!photoProofFileName[applicantIndex]" class="bs-file">
                                                 <input [readonly]="isTBMLoggedIn" type="file" class="form-control" (change)="setCustomerPhoto($event.target.files)" >
-                                                <label for="file"><span>Click photo of Customer</span></label>
+                                                <label for="file"><span>Click to photo / Upload document</span></label>
                                                 <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setCustomerPhoto')">open camera</button>
                                             </div>
 
@@ -142,7 +142,7 @@
 
                                                 <div class="bs-file">
                                                     <input [readonly]="isTBMLoggedIn" id="clickCustomerPhoto1" type="file" class="form-control" (change)="setCustomerPhoto($event.target.files)" >
-                                                    <label for="clickCustomerPhoto1"><span>Click photo of Customer</span></label>
+                                                    <label for="clickCustomerPhoto1"><span>Click to photo / Upload document</span></label>
                                                 </div>
 
                                                 <div (click)="openLink(photoProofId[applicantIndex])" class="doc_file_name_size" *ngIf="photoProofFileName[applicantIndex]">
@@ -232,7 +232,7 @@
                                                         <div *ngIf="idProofId[applicantIndex]" class="bs-file" >
                                                             <secured-image [src]="idProofId[applicantIndex]"></secured-image>
                                                             <input [readonly]="isTBMLoggedIn" type="file" class="form-control" (change)="setIdProof($event.target.files, applicantIndex)" >
-                                                            <label for="file"><span>Click photo of Id proof</span></label>
+                                                            <label for="file"><span>Click to photo / Upload document</span></label>
                                                             <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setIdProof')">Retake</button>
                                                         </div>
                                                     </div>
@@ -247,7 +247,7 @@
 
                                                     <div *ngIf="!idProofId[applicantIndex]"  class="bs-file">
                                                         <input [readonly]="isTBMLoggedIn" type="file" class="form-control" (change)="setIdProof($event.target.files, applicantIndex)" >
-                                                        <label for="file"><span>Click photo of Id proof</span></label>
+                                                        <label for="file"><span>Click to photo / Upload document</span></label>
                                                         <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setIdProof')">open camera</button>
                                                     </div>
 
@@ -257,7 +257,7 @@
 
                                                     <div class="bs-file">
                                                         <input [readonly]="isTBMLoggedIn" type="file" class="form-control" id="idProofId" (change)="setIdProof($event.target.files, applicantIndex)" >
-                                                        <label for="idProofId"><span>Click photo of Id proof</span></label>
+                                                        <label for="idProofId"><span>Click to photo / Upload document</span></label>
                                                     </div>
                                                     
 
@@ -409,7 +409,7 @@
 
                                                 <div *ngIf="!addressProofFileName[applicantIndex]" class="bs-file">
                                                     <input [readonly]="isTBMLoggedIn" type="file" class="form-control" (change)="setAddressProof($event.target.files)" >
-                                                    <label for="file"><span>Click photo of Address Proof</span></label>
+                                                    <label for="file"><span>Click to photo / Upload document</span></label>
                                                     <button class="btn btn-primary" (click)="openCamera('setAddressProof')">open camera</button>
                                                 </div>
 
@@ -421,7 +421,7 @@
 
                                                 <div class="bs-file">
                                                     <input [readonly]="isTBMLoggedIn" type="file" id="addressProofID" class="form-control" (change)="setAddressProof($event.target.files)" >
-                                                    <label for="addressProofID"><span>Click photo of Address Proof</span></label>
+                                                    <label for="addressProofID"><span>Click to photo / Upload document</span></label>
                                                 </div>
 
                                                 <div class="doc_file_name_size" *ngIf="addressProofFileName[applicantIndex]">
@@ -525,7 +525,7 @@
 
                                                 <div *ngIf="!incomeProofFileName[applicantIndex]" class="bs-file">
                                                   <input [readonly]="isTBMLoggedIn" type="file" class="form-control" (change)="setIncomeProof($event.target.files)" >
-                                                  <label for="file"><span>Click photo of Id proof</span></label>
+                                                  <label for="file"><span>Click to photo / Upload document</span></label>
                                                   <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setIncomeProof')">open camera</button>
                                                 </div>
 
@@ -535,7 +535,7 @@
 
                                                 <div class="bs-file">
                                                     <input [readonly]="isTBMLoggedIn" type="file" class="form-control" id="incomeProofID" (change)="setIncomeProof($event.target.files)" >
-                                                    <label for="incomeProofID"><span>Click photo of Id proof</span></label>
+                                                    <label for="incomeProofID"><span>Click to photo / Upload document</span></label>
                                                 </div>
           
                                                 <div class="doc_file_name_size" *ngIf="incomeProofFileName[applicantIndex]">
@@ -640,7 +640,7 @@
 
                                                 <div *ngIf="!bankProofFileName[applicantIndex]" class="bs-file">
                                                   <input [readonly]="isTBMLoggedIn" type="file" class="form-control" (change)="setBankingProof($event.target.files)" >
-                                                  <label for="file"><span>Click photo of Banking Proof</span></label>
+                                                  <label for="file"><span>Click to photo / Upload document</span></label>
                                                   <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setBankingProof')">open camera</button>
                                                 </div>
 
@@ -650,7 +650,7 @@
 
                                                 <div class="bs-file">
                                                     <input [readonly]="isTBMLoggedIn" type="file" id="bankingProofID" class="form-control" (change)="setBankingProof($event.target.files)" >
-                                                    <label for="bankingProofID"><span>Click photo of Banking Proof</span></label>
+                                                    <label for="bankingProofID"><span>Click to photo / Upload document</span></label>
                                                 </div>
 
                                                 <div class="doc_file_name_size" *ngIf="bankProofFileName[applicantIndex]">
@@ -758,7 +758,7 @@
 
                                                 <div *ngIf="!collateralProofFileName[applicantIndex]" class="bs-file">
                                                   <input [readonly]="isTBMLoggedIn" type="file" class="form-control" (change)="setCollateralProof($event.target.files)" >
-                                                  <label for="file"><span>Click photo of Collateral</span></label>
+                                                  <label for="file"><span>Click to photo / Upload document</span></label>
                                                   <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setCollateralProof')">open camera</button>
                                                 </div>
 
@@ -768,7 +768,7 @@
 
                                                 <div class="bs-file">
                                                     <input [readonly]="isTBMLoggedIn" id="collateralProofID" type="file" class="form-control" (change)="setCollateralProof($event.target.files)" >
-                                                    <label for="collateralProofID"><span>Click photo of Collateral</span></label>
+                                                    <label for="collateralProofID"><span>Click to photo / Upload document</span></label>
                                                 </div>
 
 

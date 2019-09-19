@@ -3209,6 +3209,11 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         
   }
 
+
+  editMobileNO(){
+    this.qde.application.applicants[this.coApplicantIndex].contactDetails.isMobileOTPverified = false;
+
+  }
   inOTP: boolean = false;
   backOTP: boolean = false;
 

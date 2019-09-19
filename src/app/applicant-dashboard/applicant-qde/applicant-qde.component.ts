@@ -35,7 +35,7 @@ interface Item {
 export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   isMobile:any;
-
+  isOtpVerified
   capacitor= {
     DEBUG: false
   };
@@ -331,7 +331,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   isErrorModal: boolean;
   errorMessage: string;
-
+  
   constructor(private renderer: Renderer2,
               private route: ActivatedRoute,
               private router: Router,
@@ -2773,6 +2773,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     
   }
 
+  editMobileNO(){
+    this.qde.application.applicants[this.applicantIndex].contactDetails.isMobileOTPverified = false;
+
+  }
 
   inOTP: boolean = false;
 
@@ -2798,6 +2802,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         }
        });
        this.timeout();
+   
     } else {
       alert("Email id and Mobile number is mandatory for verification");
     }
@@ -2844,6 +2849,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.stopInterval(); 
   }
 
+  
   validateOTP(form: NgForm) {
     console.log("Payment gateway");
     const mobileNumber = this.qde.application.applicants[this.applicantIndex].contactDetails.mobileNumber;

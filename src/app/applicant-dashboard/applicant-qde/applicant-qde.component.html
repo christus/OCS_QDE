@@ -527,7 +527,7 @@
                             </span>
                             <div *ngIf="(preferEmailId.touched || preferEmailId.dirty) && preferEmailId.invalid"
                               class="invalid-feedback">
-                              <div *ngIf="preferEmailId.errors?.required">{{errors.contactDetails.preferedEmail.required}}</div>
+                              <!-- <div *ngIf="preferEmailId.errors?.required">{{errors.contactDetails.preferedEmail.required}}</div> -->
                               <div *ngIf="preferEmailId.errors?.pattern">{{errors.contactDetails.preferedEmail.invalid}}
                               </div>
                             </div>
@@ -562,21 +562,27 @@
                           <div class="form-group typ-mob">
 
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="tel" class="form-control"
-                              id="mob-no" minlength="10" maxlength="10" im-insert="true"
+                              id="mob-no" minlength="10" maxlength="10" im-insert="true" 
+                              [disabled]="qde.application.applicants[applicantIndex].contactDetails.isMobileOTPverified"
                               [(ngModel)]="qde.application.applicants[applicantIndex].contactDetails.mobileNumber"
                               name="mobileNumber" #mobileNumber="ngModel" pattern="{{regexPattern.mobileNumber}}"
                               fieldFill required />
 
                             <label for="mob-no" tabindex="5">Mobile number</label>
                             <span class="optional">10 digit</span>
-                            <a *ngIf="!qde.application.applicants[applicantIndex].contactDetails.isMobileOTPverified"
-                              href="javascript:void(0);" class="sent-otp modal-init" data-target="sent-otp-modal"><span
-                                class="text" (click)="submitOTP(contactForm, false)">Send OTP</span><span
-                                class="icon icon-tick"></span></a>
+                            <button type="button" *ngIf="!qde.application.applicants[applicantIndex].contactDetails.isMobileOTPverified"
+                              href="javascript:void(0);" class="sent-otp modal-init" 
+                              [disabled]="!mobileNumber.valid" data-target="sent-otp-modal"
+                               (click)="submitOTP(contactForm, false)">Send OTP<span
+                                class="icon icon-tick"></span></button>
                             <a *ngIf="qde.application.applicants[applicantIndex].contactDetails.isMobileOTPverified"
-                              href="javascript:void(0);" class="sent-otp modal-init send-otp-disable"
-                              data-target="sent-otp-modal"><span class="text">Send OTP</span><span
-                                class="icon icon-tick"></span></a>
+                              href="javascript:void(0);" class="sent-otp modal-init"
+                              data-target="sent-otp-modal" (click)="editMobileNO()">Edit&nbsp;<span 
+                              *ngIf="qde.application.applicants[applicantIndex].contactDetails.isMobileOTPverified"
+                               style=" font-size: 15px;color: green">verified</span><span
+                                class="icon icon-tick"></span></a> 
+                                
+
                             <span class="alternate-data" *ngIf="!isAlternateMobileNumber">
                               <a href="javascript:void(0);" class="alter-btn" tabindex="6"
                                 (click)="addRemoveMobileNumberField()">+ Add</a> alternate Mobile number
@@ -1639,7 +1645,7 @@
                             <div class="redalert" *ngIf="RegExp(regexPattern.sameDigit).test(pinCode.value)">
                             {{errors.officialCorrespondence.pinCode.wrong}}</div>
                             <div *ngIf="pinCode.touched && pinCode.invalid" class="invalid-feedback">
-                              <div *ngIf="pinCode.errors?.required">{{errors.officialCorrespondence.pinCode.required}}</div>
+                              <!-- <div *ngIf="pinCode.errors?.required">{{errors.officialCorrespondence.pinCode.required}}</div> -->
                               <div *ngIf="pinCode.errors?.pattern">{{errors.officialCorrespondence.pinCode.invalid}}
                               </div>
                             </div>
@@ -1654,7 +1660,7 @@
                             <label for="offCityState">City/State</label>
 
                             <div *ngIf="offCityState.touched && offCityState.invalid" class="invalid-feedback">
-                              <div *ngIf="offCityState.errors?.required">{{errors.officialCorrespondence.stateOrCity.required}}</div>
+                              <!-- <div *ngIf="offCityState.errors?.required">{{errors.officialCorrespondence.stateOrCity.required}}</div> -->
                               <div *ngIf="offCityState.errors?.pattern">
                                 {{errors.officialCorrespondence.stateOrCity.invalid}}</div>
                             </div>
@@ -1667,7 +1673,7 @@
                                 fieldFill />
                               <label for="std03">STD</label>
                               <div *ngIf="stdCode.touched && stdCode.invalid" class="invalid-feedback">
-                                <div *ngIf="stdCode.errors?.required">{{errors.officialCorrespondence.stdCode.required}}</div>
+                                <!-- <div *ngIf="stdCode.errors?.required">{{errors.officialCorrespondence.stdCode.required}}</div> -->
                                 <div *ngIf="stdCode.errors?.pattern || stdCode.errors?.minlength">{{errors.officialCorrespondence.stdCode.invalid}}</div>
                                 <!-- <div *ngIf="stdCode.errors?.minlength">{{errors.officialCorrespondence.stdCode.invalid}}</div> -->
                               </div>
@@ -1681,7 +1687,7 @@
                                 [(ngModel)]="officialCorrespondencePhoneNumber" />
                               <label for="res-no03">Office number</label>
                               <div *ngIf="offStdNumber.touched && offStdNumber.invalid" class="invalid-feedback">
-                                <div *ngIf="offStdNumber.errors?.required">{{errors.officialCorrespondence.phoneNumber.required}}</div>
+                                <!-- <div *ngIf="offStdNumber.errors?.required">{{errors.officialCorrespondence.phoneNumber.required}}</div> -->
                                 <div *ngIf="offStdNumber.errors?.pattern || offStdNumber.errors?.minlength">
                                   {{errors.officialCorrespondence.phoneNumber.invalid}}</div>
                                 <!-- <div *ngIf="offStdNumber.errors?.required">
@@ -2335,7 +2341,7 @@
                                 pattern="{{regexPattern.stdCode}}" required />
                               <label for="caStd">STD</label>
                               <div *ngIf="stdNumber.touched  && stdNumber.invalid" class="invalid-feedback">
-                                <div *ngIf="stdNumber.errors?.required">{{errors.corporateAddress.stdNumber.required}}</div>
+                                <!-- <div *ngIf="stdNumber.errors?.required">{{errors.corporateAddress.stdNumber.required}}</div> -->
                                 <div *ngIf="stdNumber.errors?.pattern || stdNumber.errors?.minlength">{{errors.corporateAddress.stdNumber.invalid}}</div>
                                 <!-- <div *ngIf="stdNumber.errors?.minlength">{{errors.corporateAddress.stdNumber.invalid}}</div> -->
                               </div>
@@ -2348,7 +2354,7 @@
                                 data-validation-attr="residenceno" required />
                               <label for="ca-res-no">Office number</label>
                               <div *ngIf="phoneNumber.touched  && phoneNumber.invalid" class="invalid-feedback">
-                                <div *ngIf="phoneNumber.errors?.required">{{errors.corporateAddress.phoneNumber.required}}</div>
+                                <!-- <div *ngIf="phoneNumber.errors?.required">{{errors.corporateAddress.phoneNumber.required}}</div> -->
                                 <div *ngIf="phoneNumber.errors?.pattern || phoneNumber.errors?.minlength">{{errors.corporateAddress.phoneNumber.invalid}}</div>
                                 <!-- <div *ngIf="phoneNumber.errors?.minlength">{{errors.corporateAddress.phoneNumber.invalid}}</div> -->
                               </div>

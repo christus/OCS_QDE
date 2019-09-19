@@ -4033,7 +4033,9 @@ img {
 	color: #f58220;
 	font-family: zurich-bold;
 	letter-spacing: .5px;
-	z-index: 1
+	z-index: 1;
+	background: none;
+    border: none;
 }
 
 .bs-form .form-group.typ-mob .sent-otp .icon {

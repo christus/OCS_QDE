@@ -242,9 +242,6 @@ visibility: visible;
     font-size: 1.2vw;
 }
 
-.send-otp-disable {
-    color: gray !important;
-}
 
 .otp_input_len{
     width: 28.55vw;
