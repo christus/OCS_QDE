@@ -279,13 +279,14 @@ export class LeadsListComponent implements OnInit {
       if(screenPages['applicantDetails'] == el['auditTrialScreenPage']) {
         return '/applicant/'+applicationId;
       } else if(screenPages['coApplicantDetails'] == el['auditTrialScreenPage']) {
-        el['queryParams'] = {tabName: 'dashboard', page:1};
+        el['queryParams'] = {tabName: 'dashboard', page: 1};
         return '/applicant/'+applicationId+'/co-applicant';
       } else if(screenPages['loanDetails'] == el['auditTrialScreenPage']) {
         return '/loan/'+applicationId;
       } else if(screenPages['references'] == el['auditTrialScreenPage']) {
         return '/references/'+applicationId;
       } else if(screenPages['documentUploads'] == el['auditTrialScreenPage']) {
+        el['queryParams'] = {tabName: 'dashboard', page: 1};
         return '/document-uploads/'+applicationId;
       }
     } 

@@ -196,6 +196,9 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
   errorMessage:string;
 
   isSubmitDisabled: boolean = true;
+  
+  previousUrl: string;
+
 
   constructor(
     private renderer: Renderer2,
@@ -255,54 +258,63 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
     this.route.params.subscribe(params => {
       // Make an http request to get the required qde data and set using setQde
       if (params.applicationId != null) {
-        
+
         this.applicantId = params['applicantId'];
         
 
-        this.getQdeDataSub = this.qdeHttp.getQdeData(params.applicationId).subscribe(response => {
-          var result = JSON.parse(response["ProcessVariables"]["response"]);
-          this.cds.setStatus(result.application.status);
-          this.cds.setactiveTab(screenPages['documentUploads']);
-          this.qde = result;
-          this.qdeService.setQde(result);
-          var butRes = result.application.status;
+          this.getQdeDataSub = this.qdeHttp.getQdeData(params.applicationId).subscribe(response => {
+            var result = JSON.parse(response["ProcessVariables"]["response"]);
+            this.cds.setStatus(result.application.status);
+            this.cds.setactiveTab(screenPages['documentUploads']);
+            this.qde = result;
+            this.qdeService.setQde(result);
+            var butRes = result.application.status;
+            this.applicationId = this.qde.application.applicationId;
+  
+            // if(butRes >= 5) {
+            //   this.cds.setIsMainTabEnabled(false);
+            // }
+            // else{
+            //   this.cds.setIsMainTabEnabled(true);
+            // }
+  
+            /***********************************************
+            * Check if route is appropriate with Applicants
+            * If not then redirect to Dashboard
+            ***********************************************/
 
-          // if(butRes >= 5) {
-          //   this.cds.setIsMainTabEnabled(false);
-          // }
-          // else{
-          //   this.cds.setIsMainTabEnabled(true);
-          // }
+            if(params.applicantId && this.qde.application.auditTrailDetails.screenPage == screenPages['documentUploads']) {
+              if(this.qde.application.auditTrailDetails.applicantId != null) {
+                this.goToExactPageAndTab(result.application.auditTrailDetails.tabPage, result.application.auditTrailDetails.pageNumber, true);
+              } else {
+                this.goToExactPageAndTab(this.tabName, this.page, true);
+              }
+            } else {
+              this.tabSwitch(0);
+            }
 
-          /***********************************************
-          * Check if route is appropriate with Applicants
-          * If not then redirect to Dashboard
-          ***********************************************/
+            // else {
+            //   this.tabSwitch(0);
+            // }
+  
+            if(result != null) {
+              this.applicantIndex = result.application.applicants.findIndex(v => v.applicantId == this.applicantId);
+            }
+  
+            const applicants = this.qde.application.applicants;
+  
+            this.recurvLovCalls(applicants);
 
-          if(this.qde.application.auditTrailDetails.screenPage == screenPages['documentUploads']) {
-            this.goToExactPageAndTab(result.application.auditTrailDetails.tabPage, result.application.auditTrailDetails.pageNumber);
-            // this.router.navigate(['/document-uploads', result.application.applicationId, 'applicant', this.qde.application.auditTrailDetails.applicantId], {queryParams: {tabName: this.qde.application.auditTrailDetails.tabPage, page: this.qde.application.auditTrailDetails.pageNumber}});
-          } else {
-            this.router.navigate(['/document-uploads', result.application.applicationId], {queryParams: {tabName: this.fragments[0], page: 1}});
-          }
-          
+            this.cds.changeApplicationId(this.qde.application.applicationId);
+            this.cds.enableTabsIfStatus1(this.qde.application.status);
+  
+          }, error => {
+            this.isErrorModal = true;
+            this.errorMessage = "Something went wrong, please again later.";
+          });
 
-          if(result != null) {
-            this.applicantIndex = result.application.applicants.findIndex(v => v.applicantId == this.applicantId);
-          }
 
-          const applicants = this.qde.application.applicants;
 
-          this.recurvLovCalls(applicants);
-
-          this.applicationId = this.qde.application.applicationId;
-          this.cds.changeApplicationId(this.qde.application.applicationId);
-          this.cds.enableTabsIfStatus1(this.qde.application.status);
-
-        }, error => {
-          this.isErrorModal = true;
-          this.errorMessage = "Something went wrong, please again later.";
-        });
       }
 
 
@@ -361,10 +373,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
       }
 
       console.log("Fragment & QueryParams: ", this.tabName, this.page);
-      // Here in this condition, fragment and page number will be appropriate
-      // if(this.fragment && this.page > -1) {
-      //   alert(this.fragment+" "+this.page);
-      // }
+
     });
 
 
@@ -431,6 +440,8 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
 
     if(modifiedTabIndex == 0) {
       this.isTabDisabled = true;
+    } else {
+      this.isTabDisabled = false;
     }
 
     // Check for invalid tabIndex
@@ -449,6 +460,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
     // }
 
     let t = fromQde ? this.page: 1;
+
     // Any applicant should not land on banking if income consider is No
     if(modifiedTabIndex == 5) {
       if(this.qde.application.applicants[this.applicantIndex].incomeDetails.incomeConsider == false) {
@@ -476,9 +488,18 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
     if(this.swiperSliders && this.swiperSliders.length > 0) {
       this.swiperSliders[modifiedTabIndex].setIndex(t-1);
     }
+
     // Check for invalid tabIndex
     if(modifiedTabIndex < this.fragments.length) {
-      this.router.navigate([], {queryParams: { tabName: this.fragments[modifiedTabIndex], page: t }});
+      if(modifiedTabIndex == 0) {
+        this.router.navigate(['/document-uploads/'+this.applicationId], {queryParams: {tabName: this.fragments[0], page: 1}});
+      } else {
+        // if(fromQde) {
+        //   // this.router.navigate(['/document-uploads/'+this.applicationId+'/applicant/'+this.qde.application.applicants[this.applicantIndex].applicantId], {queryParams: { tabName: this.fragments[this.tabName], page: t }});
+        // } else {
+          this.router.navigate([], {queryParams: {tabName: this.fragments[modifiedTabIndex], page: t}});
+        // }
+      }
     }
   }
 
@@ -1229,7 +1250,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
 
   selectAnApplicant(applicationId, mainApplicantId, index) {
     this.applicantIndex = index;
-    this.isTabDisabled = false;
+    // this.isTabDisabled = false;
     // this.router.navigate(['/document-uploads/'+applicationId+'/applicant/'+mainApplicantId], {queryParams: {tabName: this.fragments[1], page: 1}});
     this.tabSwitch(1);
   }
@@ -1336,15 +1357,13 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
       if(this.swiperSliders && this.swiperSliders.length > 0) {
         this.swiperSliders[this.activeTab].setIndex(this.page-1);
       }
-
     });
   }
 
-  goToExactPageAndTab(tabPage: string, pageNumber: number) {
+  goToExactPageAndTab(tabPage: string, pageNumber: number, fromQde: boolean) {
     let index = this.fragments.findIndex(v => v == tabPage) != -1 ? this.fragments.findIndex(v => v == tabPage) : 0;
     this.tabName = tabPage;
     this.page = pageNumber;
-    this.tabSwitch(index, true);
-    // alert(this.coApplicantIndex);
+    this.tabSwitch(index, fromQde);
   }
 }
