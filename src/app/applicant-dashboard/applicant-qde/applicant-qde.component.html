@@ -577,12 +577,13 @@
                                 class="icon icon-tick"></span></button>
                             <a *ngIf="qde.application.applicants[applicantIndex].contactDetails.isMobileOTPverified"
                               href="javascript:void(0);" class="sent-otp modal-init"
-                              data-target="sent-otp-modal" (click)="editMobileNO()">Edit&nbsp;<span 
-                              *ngIf="qde.application.applicants[applicantIndex].contactDetails.isMobileOTPverified"
-                               style=" font-size: 15px;color: green">verified</span><span
+                              data-target="sent-otp-modal" (click)="editMobileNO()">Edit<span
                                 class="icon icon-tick"></span></a> 
-                                
+                            <span 
+                                *ngIf="qde.application.applicants[applicantIndex].contactDetails.isMobileOTPverified"
+                                 style=" font-size: 15px;color: green">verified</span>
 
+                                 
                             <span class="alternate-data" *ngIf="!isAlternateMobileNumber">
                               <a href="javascript:void(0);" class="alter-btn" tabindex="6"
                                 (click)="addRemoveMobileNumberField()">+ Add</a> alternate Mobile number
@@ -715,8 +716,14 @@
                         </div>
                         <div class="btn-wrap">
                           <button class="btn btn-primary" type="submit"
-                            [ngClass]="{'disabled': (!contactForm.valid) || (altMobileNo.value == mobileNumber.value) || (alternateEmailId.value == preferEmailId.value) || RegExp(regexPattern.sameDigit).test(mobileNumber.value) || RegExp(regexPattern.sameDigit).test(altMobileNo.value)}"
-                            [disabled]="!contactForm.valid || (altMobileNo.value == mobileNumber.value) || (alternateEmailId.value == preferEmailId.value) || RegExp(regexPattern.sameDigit).test(mobileNumber.value) || RegExp(regexPattern.sameDigit).test(altMobileNo.value)">Next
+                            [ngClass]="{'disabled': (!contactForm.valid) || (altMobileNo.value == mobileNumber.value) || 
+                            (alternateEmailId.value == preferEmailId.value) || RegExp(regexPattern.sameDigit).test(mobileNumber.value) 
+                            || RegExp(regexPattern.sameDigit).test(altMobileNo.value) || 
+                            (!qde.application.applicants[applicantIndex].contactDetails.isMobileOTPverified)}"
+                            [disabled]="!contactForm.valid || (altMobileNo.value == mobileNumber.value) || 
+                            (alternateEmailId.value == preferEmailId.value) || RegExp(regexPattern.sameDigit).test(mobileNumber.value) 
+                            || RegExp(regexPattern.sameDigit).test(altMobileNo.value) || 
+                            (!qde.application.applicants[applicantIndex].contactDetails.isMobileOTPverified)">Next
                           </button>
                         </div>
                       </form>
