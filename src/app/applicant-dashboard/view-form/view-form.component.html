@@ -198,7 +198,7 @@
                                         required
                                         ngModel
                                         pattern="^[A-Za-z]*$"
-                                        [(ngModel)]="qde?.application.loanDetails.loanAmount.amountRequired"
+                                        [(ngModel)]="qde?.application.loanDetails.loanAmount.amountRequired"    
                                         #amountRequired = "ngModel"
                                         name="amountRequired"
                                         fieldFill>
@@ -287,7 +287,6 @@
                                                   [data]="propertyTypes" 
                                                   textField="key" 
                                                   valueField="value"
-                                                  [valuePrimitive]="true" 
                                                   [(ngModel)]="selectedPropertyType">
                                                 </kendo-dropdownlist>
                                         </div>
@@ -401,7 +400,7 @@
                   </div> -->
                   <div class="bs-card">
                       <h3 class="card-title">Existing Loan Obligations</h3>
-                      <form action="" class="bs-form">
+                      <form action="" class="bs-form" *ngFor="let q of qde?.application?.applicants;let i=index;">
                           <!-- <div class="row">
                               <div class="col-12">
                                   <div class="form-group">
@@ -418,14 +417,7 @@
                           <div class="row">
                             <div class="col-12">
                                 <div class="form-group typ-range">
-                                    <kendo-dropdownlist
-                                                class="form-control"
-                                                name="selectApplicant"
-                                                [data]="allApplicantsItem" 
-                                                textField="key" 
-                                                valueField="value" 
-                                                [(ngModel)]="selectedApplicant">
-                                    </kendo-dropdownlist>
+                                    {{applicantNameForLoanDetails[i]}}
                                 </div>
                             </div>
                         </div>
@@ -433,10 +425,9 @@
                               <div class="col-12">
                                   <div class="form-group typ-range">
                                       <span class="subtitle">Existing live loans</span>
-                                      <input type="text" class="form-control" id="live-Loan"
+                                      <input type="text" class="form-control"
                                         required
-                                        #monthlyEmi = "ngModel"
-                                        [(ngModel)]="liveLoan"
+                                        [(ngModel)]="q['liveLoan']"
                                         fieldFill
                                         name="liveLoan">
                                       <span class="yr-text">Loans</span>
@@ -448,14 +439,7 @@
                                   <div class="col-12">
                                       <div class="form-group">
                                           <span class="control-title">Existing loan provider</span>
-                                          <kendo-dropdownlist 
-                                            class="form-control" 
-                                            name="loanProvider" 
-                                            [data]="loanProviderList" 
-                                            textField="key" 
-                                            valueField="value"
-                                            [(ngModel)]="selectedLoanProvider">
-                                            </kendo-dropdownlist>
+                                          <input type="text" class="form-control" />
                                       </div>
                                   </div>
                               </div>
@@ -474,9 +458,7 @@
                                       <div class="form-group inr filled">
                                             <input type="text" class="form-control" id="monthly-emi"
                                             required
-                                            ngModel
-                                            #monthlyEmi = "ngModel"
-                                            [(ngModel)]="monthlyEmiValue"
+                                            [(ngModel)]="q['monthlyEmi']"
                                             fieldFill
                                             name="monthlyEmi">                                          
                                             <label for="ex-emi">Existing monthly EMI</label>
@@ -486,6 +468,7 @@
                                           <span class="in-word"></span>
                                       </div>
                                   </div>
+
                               </div>
                           </div>
                       </form>
@@ -685,7 +668,7 @@
                                   <div class="col-12">
                                       <div class="form-group">
                                             <input type="text" class="form-control" id="ref2-add2"
-                                            name="addressLineTwo" 
+                                            name="addressLineTwo"
                                             ngModel 
                                             #refTwoAddressLineTwo="ngModel"
                                             required

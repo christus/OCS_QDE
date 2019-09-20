@@ -176,7 +176,6 @@ export class ViewFormComponent implements OnInit, OnDestroy {
 
   allApplicantsItem: Array<Item> = [];
   liveLoan: Array<string>;
-  selectedApplicantIndex: number = 0;
 
   docType: Array<any> = [];
   selectedAssesmentMethodology: Array<Item> = [];
@@ -216,6 +215,8 @@ export class ViewFormComponent implements OnInit, OnDestroy {
   maxEMI: number;
 
   getElibilityReviewSub: Subscription;
+
+  applicantNameForLoanDetails: Array<string>;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -546,9 +547,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
           this.qdeService.setQde(this.qde);
           this.valuechange(this.qde.application.tenure);
 
-          this.selectedApplicant = this.allApplicantsItem[0];
-          this.selectedApplicantIndex = this.qde.application.applicants.findIndex(v => v.applicantId == this.selectedApplicant.value);
-          this.selectedApplicantName = this.qde.application.applicants[this.selectedApplicantIndex].personalDetails ? `${this.qde.application.applicants[this.selectedApplicantIndex].personalDetails['firstName']} ${this.qde.application.applicants[this.selectedApplicantIndex].personalDetails['lastName']}`: '';
+          this.applicantNameForLoanDetails = this.qde.application.applicants.map(e => e.personalDetails ? `${e.personalDetails['firstName']} ${e.personalDetails['lastName']}`: '');
         });
       } else {
         this.qde = this.qdeService.getQde();
@@ -1091,8 +1090,8 @@ export class ViewFormComponent implements OnInit, OnDestroy {
         this.selectedLoanPurpose = this.loanpurposes[0];
       }
     }, error => {
-      this.isErrorModal = true;
-      this.errorMessage = "Something went wrong, please again later.";
+      // this.isErrorModal = true;
+      // this.errorMessage = "Something went wrong, please again later.";
     });
   }
 }
