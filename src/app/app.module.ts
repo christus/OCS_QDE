@@ -129,9 +129,6 @@ import { SuccessfullComponent } from './payments/successfull/successfull.compone
 import { EditErrorMessageComponent } from './admin/edit-error-message/edit-error-message.component';
 import { ErrorHandlingMessageComponent } from './admin/error-handling-message/error-handling-message.component';
 import { from } from 'rxjs';
-import {  MatDatepickerModule, MatNativeDateModule } from '@angular/material';
-import { MatFormFieldModule } from '@angular/material';
-import { MatInputModule } from '@angular/material';
 
 
 const appRoutes: Routes = [
@@ -622,11 +619,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     DeviceDetectorModule.forRoot(),
     NgxUiLoaderModule,
     NgxPaginationModule,
-    ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatFormFieldModule,
-    MatInputModule
+    ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'})
+  
   ],
   providers: [
     ListOfValuesResolverService,

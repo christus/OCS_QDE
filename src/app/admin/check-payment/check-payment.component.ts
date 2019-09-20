@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { QdeHttpService } from '../../services/qde-http.service';
-import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-check-payment',
@@ -246,13 +245,4 @@ export class CheckPaymentComponent implements OnInit {
     myReader.readAsDataURL(file);
   }
 
-  onStart(type: string, event: MatDatepickerInputEvent<Date>) {
-    this.startDate = event.value;
-    console.log(this.startDate)
-  }
-
-  onEnd(type: string, event: MatDatepickerInputEvent<Date>) {
-    this.endDate = event.value;
-    console.log(this.endDate)
-  }
 }
