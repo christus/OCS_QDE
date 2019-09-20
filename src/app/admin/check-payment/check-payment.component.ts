@@ -64,12 +64,18 @@ export class CheckPaymentComponent implements OnInit {
 
 
   getFormattedDate(date) {
-    let year = date.getFullYear();
-    let month = date.getMonth() + 1;
-    month = month < 10 ? '0' + month : '' + month; // ('' + month) for string result
-    let day = date.getDate();
-    day = day < 10 ? '0' + day : '' + day; // ('' + month) for string result
-    let formattedDate = year + '/' + month + '/' + day;
+    console.log("in date conversion " + date);
+
+    let dateFormat = date.toString();
+    let replace = /\-/gi;
+    let formattedDate =dateFormat.replace(replace,"/")
+    // let year = dateFormat.getFullYear();
+    // let month = dateFormat.getMonth() + 1;
+    // let month1 = month < 10 ? '0' + month.toString() : '' + month.toString(); // ('' + month) for string result
+    // let day = date.getDate();
+    // day = day < 10 ? '0' + day : '' + day; // ('' + month) for string result
+    // let formattedDate = year + '/' + month1 + '/' + day;
+    console.log("final Value "+ formattedDate);
     return formattedDate;
   }
 

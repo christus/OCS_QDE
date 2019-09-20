@@ -29,18 +29,14 @@
 
     <!--Tabs 2 Download cheque payment starts-->
     <div id="offtab2" class="tab-slider--body" *ngSwitchCase="'offtab2'">
-
-        <mat-form-field class="startDateEl">
-            <input matInput [matDatepicker]="startPicker" placeholder="From date" [(ngModel)]="startDate" (dateInput)="onStart('input', $event)" (dateChange)="onStart('change', $event)">
-            <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
-            <mat-datepicker #startPicker></mat-datepicker>
-          </mat-form-field>
-
-          <mat-form-field class="endDateEl">
-            <input matInput [matDatepicker]="endPicker" placeholder="To date" [(ngModel)]="endDate" (dateInput)="onEnd('input', $event)" (dateChange)="onEnd('change', $event)">
-            <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
-            <mat-datepicker #endPicker></mat-datepicker>
-          </mat-form-field>
+         <!-- <span>From date</span> -->
+         <br>
+         <label for="startDate" class="inputText">From date</label>
+          <input type="date" [(ngModel)]="startDate" placeholder="From date" class="dataPicker">
+          <br>
+          <br>
+          <span>To date</span>
+          <input type="date" [(ngModel)]="endDate" placeholder="From date" class="dataPicker">
 
       <h2>Download CSV for Cheque payment</h2>
       <input type="submit" (click)="downloadCSV()" class="btn btn-default">
