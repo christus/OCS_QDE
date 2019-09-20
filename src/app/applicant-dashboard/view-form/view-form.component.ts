@@ -117,8 +117,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
   loanpurposes: Array<any>;
   propertyTypes: Array<any>;
   loanProviderList: Array<any>;
-  liveLoan = 0;
-  monthlyEmiValue: number;
+  monthlyEmiValue: Array<number>;
 
   days: Array<Item>;
   months: Array<Item>;
@@ -174,6 +173,10 @@ export class ViewFormComponent implements OnInit, OnDestroy {
 
   referenceId1: number;
   referenceId2: number;
+
+  allApplicantsItem: Array<Item> = [];
+  liveLoan: Array<string>;
+  selectedApplicantIndex: number = 0;
 
   docType: Array<any> = [];
   selectedAssesmentMethodology: Array<Item> = [];
@@ -393,6 +396,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
     if(this.route.snapshot.data.listOfValues) {
       const lov = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs);
 
+      console.log('LOVS:', lov);
       this.loanpurposes = lov.LOVS.loan_purpose;
       this.loanType = lov.LOVS.loan_type;
       this.propertyTypes = lov.LOVS.property_type;
@@ -426,16 +430,17 @@ export class ViewFormComponent implements OnInit, OnDestroy {
           let result = JSON.parse(response["ProcessVariables"]["response"]);
 
           // All hardcoded value need to removed
-          this.selectedLoanType =
-            result.application.loanDetails.loanAmount.loanType ||
-            this.loanType[0].value;
-          this.selectedLoanPurpose =
-            result.application.loanDetails.loanAmount.loanPurpose ||
-            this.loanpurposes[0].value;
+          // this.selectedLoanType =
+          //   result.application.loanDetails.loanAmount.loanType ||
+          //   this.loanType[0].value;
+          // this.selectedLoanPurpose =
+          //   result.application.loanDetails.loanAmount.loanPurpose ||
+          //   this.loanpurposes[0].value;
 
           if (!result.application.loanDetails.propertyType) {
             result.application.loanDetails.propertyType = {}; //This line need to be removed
           }
+
 
           this.selectedPropertyType =
             result.application.loanDetails.propertyType.propertyType ||
@@ -472,15 +477,22 @@ export class ViewFormComponent implements OnInit, OnDestroy {
           // if (!result.application.loanDetails.existingLoans) {
           //   result.application.loanDetails.existingLoans = {}; //This line need to be removed
           // }
-          this.selectedLoanProvider =
-            result.application.loanDetails.existingLoans.loanProvider ||
-            this.loanProviderList[0].value;
+          // this.selectedLoanProvider =
+          //   result.application.loanDetails.existingLoans.loanProvider ||
+          //   this.loanProviderList[0].value;
 
-          this.liveLoan =
-            result.application.loanDetails.existingLoans.liveLoan || 0;
+          // this.liveLoan =
+          //   result.application.loanDetails.existingLoans.liveLoan || 0;
 
-          this.monthlyEmiValue =
-            result.application.loanDetails.existingLoans.monthlyEmi || "";
+          // this.monthlyEmiValue =
+          //   result.application.loanDetails.existingLoans.monthlyEmi || "";
+          console.log("loanpurposes: ",this.loanpurposes);
+          console.log("loanProviderList: ", this.loanProviderList);
+          this.selectedLoanProvider = result.application.applicants[0].existingLoans.loanProvider != '' ? this.loanProviderList.find(v => v.value == result.application.applicants[0].existingLoans.loanProvider) : this.loanProviderList[0];
+          
+          this.liveLoan = result.application.applicants[0].existingLoans ? result.application.applicants[0].existingLoans.liveLoan ? result.application.applicants[0].existingLoans.liveLoan :0 :0;
+
+          this.monthlyEmiValue = result.application.applicants[0].existingLoans ? result.application.applicants[0].existingLoans.monthlyEmi ? result.application.applicants[0].existingLoans.monthlyEmi+'' :'' :'';
 
             if (!result.application.references  || Object.keys(result.application.references).length === 0) {
               result.application.references = {
@@ -533,6 +545,10 @@ export class ViewFormComponent implements OnInit, OnDestroy {
 
           this.qdeService.setQde(this.qde);
           this.valuechange(this.qde.application.tenure);
+
+          this.selectedApplicant = this.allApplicantsItem[0];
+          this.selectedApplicantIndex = this.qde.application.applicants.findIndex(v => v.applicantId == this.selectedApplicant.value);
+          this.selectedApplicantName = this.qde.application.applicants[this.selectedApplicantIndex].personalDetails ? `${this.qde.application.applicants[this.selectedApplicantIndex].personalDetails['firstName']} ${this.qde.application.applicants[this.selectedApplicantIndex].personalDetails['lastName']}`: '';
         });
       } else {
         this.qde = this.qdeService.getQde();
@@ -873,7 +889,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
 
       // // Permanent address
       if( ! isNaN(parseInt(eachApplicant.permanentAddress.residentialStatus)) ) {
-        this.permSelectedResidence[i] = (this.residences[(parseInt(eachApplicant.permanentAddress.residentialStatus)) - 1]);
+        this.permSelectedResidence[i] = (this.residences.find(v => v.value == eachApplicant.permanentAddress.residentialStatus));
       }
 
       if( ! isNaN(parseInt(eachApplicant.maritalStatus.status)) ) {
@@ -930,6 +946,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
     this.addressCityState.push(eachApplicant.communicationAddress.city + '/'+ eachApplicant.communicationAddress.state);
     this.permAddressCityState.push(eachApplicant.permanentAddress.city + '/'+ eachApplicant.permanentAddress.state);
     console.log("addressCityState: " ,this.addressCityState);
+    console.log("permselgfdghc",this.permSelectedResidence)
     this.otherReligion.push(eachApplicant.other.religion == '6' ? eachApplicant.other.religion : '');
 
     this.registeredAddressCityState.push(eachApplicant.registeredAddress.city +'/'+ eachApplicant.registeredAddress.state);
@@ -968,9 +985,9 @@ export class ViewFormComponent implements OnInit, OnDestroy {
         if(res["ProcessVariables"]['responseApplicationId'] == "") {
           alert("Mandatory fields missing.");
         } else {
-          this.qdeHttp.omniDocsApi(this.applicationId).subscribe(res=>{
-            if(res["ProcessVariables"]["status"] == true){
-              this.qdeHttp.setStatusApi(this.applicationId, statuses["DDE Submitted"]).subscribe(res => {}, err => {});
+          this.qdeHttp.omniDocsApi(this.applicationId).subscribe(res1=>{
+            if(res1["ProcessVariables"]["status"] == true){
+              this.qdeHttp.setStatusApi(this.applicationId, statuses["DDE Submitted"]).subscribe(res2 => {}, err => {});
               alert("APS ID generated successfully with ID "+res["ProcessVariables"]['responseApplicationId']);
             }
             else{
@@ -1061,5 +1078,21 @@ export class ViewFormComponent implements OnInit, OnDestroy {
       ret[json[key]] = key;
     }
     return ret;
+  }
+
+  
+  setLoanPurposes(loanType: string, data ?: string) {
+    this.qdeHttp.getLoanPurposeFromLoanType({loanType: loanType}).subscribe(res => {
+      this.loanpurposes = res['ProcessVariables']['loanPurposeLov'];
+      console.log("loanpurposes: ", this.loanpurposes);
+      if(data) {
+        this.selectedLoanPurpose = this.loanpurposes.find(v => v.value == data) || this.loanpurposes[0];
+      } else {
+        this.selectedLoanPurpose = this.loanpurposes[0];
+      }
+    }, error => {
+      this.isErrorModal = true;
+      this.errorMessage = "Something went wrong, please again later.";
+    });
   }
 }

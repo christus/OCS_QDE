@@ -1726,6 +1726,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
       console.log(this.qde.application.applicants[this.applicantIndex].communicationAddress);
+      console.log(this.qde.application.applicants[this.applicantIndex].permanentAddress);
 
       this.createOrUpdatePersonalDetailsSub7=this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful

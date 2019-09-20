@@ -332,6 +332,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
     if(this.route.snapshot.data.listOfValues) {
       const lov = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs);
+      console.log('LOVS: ', lov);
       this.titles = lov.LOVS.applicant_title;
 
       // this.loanpurposes = lov.LOVS.loan_purpose;
@@ -1163,7 +1164,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.setLoanPurposes(lt.value);
   }
-  
+
   setLoanPurposes(loanType: string, data ?: string) {
     this.qdeHttp.getLoanPurposeFromLoanType({loanType: loanType}).subscribe(res => {
       this.loanpurposes = res['ProcessVariables']['loanPurposeLov'];

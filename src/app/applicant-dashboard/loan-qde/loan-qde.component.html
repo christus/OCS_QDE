@@ -489,7 +489,7 @@
                                 <!-- <div *ngIf="monthlyEmi.errors?.required">{{errors.loanDetails.existingLoans.monthlyEmi.required}}</div> -->
                                 <!-- <div *ngIf="monthlyEmi.errors?.pattern">{{errors.loanDetails.existingLoans.monthlyEmi.invalid}}</div> -->
                               </div>
-  
+
                               <span class="addon">
                                 <span class="icon icon-inr"></span>
                               </span>
@@ -562,7 +562,7 @@
           <h1 class="center">Loan Details has been successfully saved!</h1>
           <p>Do you want to add more existing loan obligations?</p>
               <div class="btn-wrap">
-                  <button class="btn btn-border" (click)="moreLoanObligation()">Yes</button>
+                  <button class="btn btn-border" (click)="onBackButtonClick(selectApplicantForExistingLoanForm)">Yes</button>
                   <button class="btn btn-border" [routerLink]="['/references', qde.application.applicationId]">No</button>
               </div>
       </div>

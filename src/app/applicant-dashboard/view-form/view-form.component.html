@@ -400,7 +400,7 @@
                       </form>
                   </div> -->
                   <div class="bs-card">
-                      <h3 class="card-title">Existing Loan</h3>
+                      <h3 class="card-title">Existing Loan Obligations</h3>
                       <form action="" class="bs-form">
                           <!-- <div class="row">
                               <div class="col-12">
@@ -415,6 +415,20 @@
                                   </div>
                               </div>
                           </div> -->
+                          <div class="row">
+                            <div class="col-12">
+                                <div class="form-group typ-range">
+                                    <kendo-dropdownlist
+                                                class="form-control"
+                                                name="selectApplicant"
+                                                [data]="allApplicantsItem" 
+                                                textField="key" 
+                                                valueField="value" 
+                                                [(ngModel)]="selectedApplicant">
+                                    </kendo-dropdownlist>
+                                </div>
+                            </div>
+                        </div>
                           <div class="row">
                               <div class="col-12">
                                   <div class="form-group typ-range">
@@ -440,7 +454,6 @@
                                             [data]="loanProviderList" 
                                             textField="key" 
                                             valueField="value"
-                                            [valuePrimitive]="true" 
                                             [(ngModel)]="selectedLoanProvider">
                                             </kendo-dropdownlist>
                                       </div>

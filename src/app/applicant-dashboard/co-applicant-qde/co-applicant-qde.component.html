@@ -208,7 +208,7 @@
                                                                 spellcheck="false" 
                                                                 required/>
                                                         <label for="pan-inpt" tabindex="1">Enter PAN</label>
-                                                        <span class="optional">optional</span>
+                                                        <!-- <span class="optional">optional</span> -->
                                                         <div *ngIf="panNumber.touched && panNumber.invalid && panErrorCount < 3" class="invalid-feedback">
                                                             <!-- <div *ngIf="panNumber.errors?.required">{{errors.panNumber.required}}</div> -->
                                                             <div *ngIf="panNumber.errors?.pattern ? true : false">{{errors.pan.invalid}}</div>
@@ -2394,7 +2394,7 @@
                                                               spellcheck="false"
                                                               required/>
                                                       <label for="pan-inpt2">Enter PAN</label>
-                                                      <span class="optional">optional</span>
+                                                      <!-- <span class="optional">optional</span> -->
                                                       <div *ngIf="panNumber2.touched && panNumber2.invalid && panErrorCount < 3" class="invalid-feedback">
                                                           <!-- <div *ngIf="panNumber2.errors?.required">{{errors.pan.required}}</div> -->
                                                           <div *ngIf="panNumber2.errors?.pattern ? true : false">{{errors.pan.invalidNonInd}}</div>

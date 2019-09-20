@@ -275,7 +275,6 @@ export class OfflinePaymentComponent implements OnInit {
     }
 
     this.qdeHttp.chequeDetailsSave(data).subscribe(res => {
-      console.log(res,"baba dhamya")
       if(res['ProcessVariables']['status'] == true) {
         this.isChequeProceedModal = true;
         this.qdeHttp.setStatusApi(this.applicationId, statuses['Cheque Received']).subscribe(res => {}, err => {});
@@ -286,7 +285,6 @@ export class OfflinePaymentComponent implements OnInit {
     });
 
   }
-
 
 
   totalFee:number;
