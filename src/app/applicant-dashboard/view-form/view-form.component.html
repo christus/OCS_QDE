@@ -220,7 +220,6 @@
                                         [data]="loanType" 
                                         textField="key"
                                         valueField="value"
-                                        [valuePrimitive]="true"
                                         [(ngModel)]="selectedLoanType">
                                         </kendo-dropdownlist>
                                   </div>
@@ -236,7 +235,6 @@
                                         [data]="loanpurposes" 
                                         textField="key"
                                         valueField="value"
-                                        [valuePrimitive]="true"
                                         [(ngModel)]="selectedLoanPurpose">
                                     </kendo-dropdownlist>
                                     </div>
@@ -275,9 +273,9 @@
                                   </div>
                               </div>
                           </div>
-                          <div class="inner-card">
+                          <div class="inner-card" *ngIf="isPropertyIdentified == true">
                               <h4 class="inner-title">Property address</h4>
-                              <div class="row">
+                              <div class="row" *ngIf="selectedPropertyType">
                                     <div class="col-12">
                                         <div class="form-group">
                                                 <span class="control-title">Property type</span>
@@ -294,7 +292,7 @@
                                 </div> 
                                 <div class="row">
                                         <div class="col-12">
-                                            <div class="form-group">
+                                            <div class="form-group" *ngIf="propertyClssValue">
                                                 <input ngModel 
                                                     type="text" 
                                                     class="form-control" 
@@ -310,7 +308,7 @@
                                 </div> 
                                 <div class="row">
                                             <div class="col-12">
-                                                <div class="form-group">
+                                                <div class="form-group" *ngIf="propertyAreaValue">
                                                         <input ngModel type="number" class="form-control" id="pro-add-line2" 
                                                         name="propertyAreaInSqFeets"
                                                         #propertyArea="ngModel"
@@ -323,7 +321,7 @@
                                 </div>
                               <div class="row">
                                   <div class="col-12">
-                                      <div class="form-group">
+                                      <div class="form-group" *ngIf="addressLineOneValue">
                                             <input type="text" class="form-control"
                                             id="add-line1"
                                             required
@@ -338,7 +336,7 @@
                               </div>
                               <div class="row">
                                   <div class="col-12">
-                                      <div class="form-group">
+                                      <div class="form-group" *ngIf="addressLineTwoValue">
                                             <input type="text" class="form-control" id="add-line2"
                                             required
                                             ngModel
@@ -352,7 +350,7 @@
                               </div>
                               <div class="row">
                                   <div class="col-6">
-                                      <div class="form-group filled">
+                                      <div class="form-group filled" *ngIf="propertyPincodeValue">
                                             <input type="text" class="form-control" id="proprty-pin"
                                             required
                                             ngModel
@@ -367,7 +365,7 @@
                                       </div>
                                   </div>
                                   <div class="col-6">
-                                      <div class="form-group">
+                                      <div class="form-group" *ngIf="cityState">
                                             <input type="text" class="form-control" id="pro-city2"
                                             required
                                             ngModel
@@ -400,7 +398,7 @@
                   </div> -->
                   <div class="bs-card">
                       <h3 class="card-title">Existing Loan Obligations</h3>
-                      <form action="" class="bs-form" *ngFor="let q of qde?.application?.applicants;let i=index;">
+                      <form action="" class="bs-form" *ngFor="let q of qde.application.applicants;let i=index;">
                           <!-- <div class="row">
                               <div class="col-12">
                                   <div class="form-group">
@@ -414,23 +412,17 @@
                                   </div>
                               </div>
                           </div> -->
-                          <div class="row">
-                            <div class="col-12">
-                                <div class="form-group typ-range">
-                                    {{applicantNameForLoanDetails[i]}}
-                                </div>
-                            </div>
-                        </div>
+                          
                           <div class="row">
                               <div class="col-12">
                                   <div class="form-group typ-range">
-                                      <span class="subtitle">Existing live loans</span>
+                                      <span class="subtitle">Existing live loans of {{applicantNameForLoanDetails[i]}}</span>
                                       <input type="text" class="form-control"
                                         required
-                                        [(ngModel)]="q['liveLoan']"
+                                        [(ngModel)]="q['existingLoans']['liveLoan']"
                                         fieldFill
                                         name="liveLoan">
-                                      <span class="yr-text">Loans</span>
+                                      <span class="yr-text">Live Loans</span>
                                   </div>
                               </div>
                           </div>
@@ -439,7 +431,15 @@
                                   <div class="col-12">
                                       <div class="form-group">
                                           <span class="control-title">Existing loan provider</span>
-                                          <input type="text" class="form-control" />
+                                          <kendo-dropdownlist 
+                                          class="form-control" 
+                                          name="propertyTypes1jk" 
+                                          [data]="loanProviderList" 
+                                          textField="key" 
+                                          valueField="value"
+                                          [(ngModel)]="selectedLoanProvider[i]">
+                                        </kendo-dropdownlist>
+                                          <!-- <input type="text" [(ngModel)]="q['existingLoans']['loanProvider']" class="form-control" /> -->
                                       </div>
                                   </div>
                               </div>
@@ -458,7 +458,7 @@
                                       <div class="form-group inr filled">
                                             <input type="text" class="form-control" id="monthly-emi"
                                             required
-                                            [(ngModel)]="q['monthlyEmi']"
+                                            [(ngModel)]="q['existingLoans']['monthlyEmi']"
                                             fieldFill
                                             name="monthlyEmi">                                          
                                             <label for="ex-emi">Existing monthly EMI</label>

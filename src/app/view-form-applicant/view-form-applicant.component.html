@@ -245,7 +245,7 @@
                        -->
                   </div>
                   <div class="residence-no">
-                      <div class="form-group">
+                      <div class="form-group" *ngIf="residenceNumberStdCode">
                         <input readonly="true"   type="text"
                                 required
                                 fieldFill
@@ -256,8 +256,8 @@
                     <label for="st">STD</label>
                   
                       </div>
-                      <span class="seperator">-</span>
-                      <div class="form-group">
+                      <span class="seperator" *ngIf="residenceNumberStdCode">-</span>
+                      <div class="form-group" *ngIf="residenceNumberPhoneNumber">
                         <input readonly="true"   type="text"
                                 class="form-control"
                                 id="res-no"
@@ -268,7 +268,7 @@
                           
                       </div>
                   </div>
-                  <div class="residence-no" *ngIf="qde.application.applicants[applicantIndex].contactDetails.alternateResidenceNumber != ''">
+                  <div class="residence-no" *ngIf="alternateResidenceNumberStdCode">
                     <div class="form-group">
                         <input readonly="true"     type="text"
                                   [(ngModel)]="alternateResidenceNumberStdCode"
@@ -278,8 +278,8 @@
                                   id="altrstd">
                         <label for="altrst">STD</label>
                     </div>
-                    <span class="seperator">-</span>
-                    <div class="form-group">
+                    <span class="seperator" *ngIf="alternateResidenceNumberStdCode">-</span>
+                    <div class="form-group" *ngIf="alternateResidenceNumberPhoneNumber">
                         <input readonly="true"     type="text"
                                   class="form-control"
                                   [(ngModel)]="alternateResidenceNumberPhoneNumber"
@@ -831,8 +831,9 @@
           </div>
       </div>
   </div>
- 
-  <div class="bs-card" *ngIf="qde.application.applicants[applicantIndex].isIndividual" [ngClass]="{'incomplete': isIncomplete.officialCorrespondence}">
+
+
+  <div class="bs-card" *ngIf="qde.application.applicants[applicantIndex].isIndividual == true && qde.application.applicants[applicantIndex].incomeDetails.incomeConsider == true" [ngClass]="{'incomplete': isIncomplete.officialCorrespondence}">
       <h3 class="card-title">Official correspondance</h3>
       <div class="bs-form">
           <div class="row">

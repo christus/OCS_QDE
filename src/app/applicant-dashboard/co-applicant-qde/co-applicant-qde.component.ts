@@ -2361,11 +2361,11 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   }
   changeIsIndividual(value, swiperInstance ?: Swiper) {
     if(value == 1) {
-      console.log("VALUE1: ", value);
+
       this.goToNextSlide(swiperInstance);
       this.qde.application.applicants[this.coApplicantIndex].isIndividual = true;
     } else {
-      console.log("VALUE2: ", value)
+      this.qde.application.applicants[this.applicantIndex].incomeDetails.incomeConsider = null;
       this.tabSwitch(11);
       this.qde.application.applicants[this.coApplicantIndex].isIndividual = false;
     }

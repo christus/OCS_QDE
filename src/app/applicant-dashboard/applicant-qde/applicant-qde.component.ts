@@ -2566,6 +2566,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.qde.application.applicants[this.applicantIndex].isIndividual = true;
     } else {
       this.qde.application.applicants[this.applicantIndex].isIndividual = false;
+      this.qde.application.applicants[this.applicantIndex].incomeDetails.incomeConsider = null;
       this.router.navigate([], {queryParams: { tabName: this.fragments[10], page: 1}});
     }
   }
