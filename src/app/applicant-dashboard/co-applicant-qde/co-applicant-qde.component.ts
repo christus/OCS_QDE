@@ -563,7 +563,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                 }
   
               } else {
-                this.tabSwitch(0);
+                if(params['coApplicantIndex'] == null) {
+                  this.tabSwitch(0);
+                }
               }
   
               try {
@@ -763,7 +765,11 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     }
     // Check for invalid tabIndex
     if(tabIndex < this.fragments.length) {
-      this.router.navigate([], {queryParams: { tabName: this.fragments[tabIndex], page: t }});
+      if(tabIndex == 0) {
+        this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant'], {queryParams: { tabName: this.fragments[tabIndex], page: t }});  
+      } else {
+        this.router.navigate([], {queryParams: { tabName: this.fragments[tabIndex], page: t }});
+      }
     }
   }
 
@@ -2583,7 +2589,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     if( this.qde.application.auditTrailDetails.screenPage == screenPages['coApplicantDetails'] &&
         this.qde.application.auditTrailDetails.applicantId == parseInt(this.qde.application.applicants[index].applicantId)) {
         
-      this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant/'+index],
+      this.router.navigate(['/applicant/'+applicationId+'/co-applicant/'+index],
         {queryParams: { tabName: this.qde.application.auditTrailDetails.tabPage,
           page: this.qde.application.auditTrailDetails.pageNumber }});
     } else {

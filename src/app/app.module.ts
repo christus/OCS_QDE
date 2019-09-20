@@ -249,13 +249,6 @@ const appRoutes: Routes = [
         resolve: {
           listOfValues: ListOfValuesResolverService
         }
-      },
-      {
-        path: ":applicationId/co-applicant/:applicantId",
-        component: DocumentUploadComponent,
-        resolve: {
-          listOfValues: ListOfValuesResolverService
-        }
       }
     ]
   },

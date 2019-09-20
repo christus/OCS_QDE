@@ -66,7 +66,7 @@
 
                                                     <div class="bs-radio typ-doc" *ngFor="let applicant of qde.application.applicants; let i=index;">
                                                         <input [readonly]="isTBMLoggedIn"
-                                                        (click)="selectAnApplicant(applicationId, applicant.applicantId, i)"
+                                                        (click)="selectAnApplicant(qde.application.applicationId, applicant.applicantId, i)"
                                                         type="radio" name="doc-upload"/>
                                                         <label for="applicant-radio">
                                                             <span class="desc-text">
