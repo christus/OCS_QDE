@@ -192,7 +192,7 @@
                                                   #panNumberForm="ngForm"
                                                   (ngSubmit)="submitPanNumber(panNumberForm, panSlider2)">
                                                   <div class="form-wrap">
-                                                    <div class="form-group last typ-optional" style="margin-bottom: 40px; overflow-y: hidden">
+                                                    <div class="form-group last typ-optional" style="margin-bottom: 40px; ">
                                                         <input [readonly]="isReadOnly"  type="text"
                                                                 class="form-control"
                                                                 [(ngModel)]="qde.application.applicants[coApplicantIndex].pan.panNumber"
@@ -737,9 +737,12 @@
                                                       (click)="submitOTP(contactForm, false)">Send OTP<span class="icon icon-tick"></span></button>
                                                       <a *ngIf="qde.application.applicants[coApplicantIndex].contactDetails.isMobileOTPverified" 
                                                       href="javascript:void(0);"   class="sent-otp modal-init " 
-                                                      data-target="sent-otp-modal" (click)="editMobileNO()">Edit&nbsp;<span 
+                                                      data-target="sent-otp-modal" (click)="editMobileNO()">Edit<span class="icon icon-tick"></span></a>
+                                                      <span 
                                                       *ngIf="qde.application.applicants[coApplicantIndex].contactDetails.isMobileOTPverified"
-                                                       style=" font-size: 15px;color: green">verified</span><span class="icon icon-tick"></span></a>
+                                                       style=" font-size: 15px;color: green">verified</span>
+
+
                                                       <span class="alternate-data" *ngIf="!isAlternateMobileNumber">
               
                                                         <a  href="javascript:void(0);"
@@ -829,7 +832,8 @@
                                                           <span class="optional">Optional</span>
                                                           <div *ngIf="residenceNumber.touched  && residenceNumber.invalid" class="invalid-feedback">
                                                             <div *ngIf="residenceNumber.errors?.pattern || residenceNumber.errors?.minlength">
-                                                                {{errors.contactDetails.residenceNumber.invalid}}</div>                                                            <!-- <div *ngIf="residenceNumber.errors?.required">{{errors.contactDetails.residenceNumber.required}}</div> -->
+                                                                {{errors.contactDetails.residenceNumber.invalid}}</div>                                                           
+                                                                 <!-- <div *ngIf="residenceNumber.errors?.required">{{errors.contactDetails.residenceNumber.required}}</div> -->
                                                           </div>
                                                       </div>
                                                       <span class="alternate-data" *ngIf="!isAlternateResidenceNumber">
@@ -892,8 +896,14 @@
                                               <div class="btn-wrap">
                                                     <button class="btn btn-primary"
                                                             type="submit"
-                                                            [ngClass]="{'disabled': (!contactForm.valid)|| (altMobileNo.value == mobileNumber.value) || (alternateEmailId.value == preferEmailId.value) || RegExp(regexPattern.sameDigit).test(mobileNumber.value) || RegExp(regexPattern.sameDigit).test(altMobileNo.value)}"
-                                                            [disabled]="!contactForm.valid || (altMobileNo.value == mobileNumber.value) || (alternateEmailId.value == preferEmailId.value) || RegExp(regexPattern.sameDigit).test(mobileNumber.value) || RegExp(regexPattern.sameDigit).test(altMobileNo.value)">Next
+                                                            [ngClass]="{'disabled': (!contactForm.valid)|| (altMobileNo.value == mobileNumber.value) || 
+                                                            (alternateEmailId.value == preferEmailId.value) || RegExp(regexPattern.sameDigit).test(mobileNumber.value) 
+                                                            || RegExp(regexPattern.sameDigit).test(altMobileNo.value) || 
+                                                            (!qde.application.applicants[coApplicantIndex].contactDetails.isMobileOTPverified)}"
+                                                            [disabled]="!contactForm.valid || (altMobileNo.value == mobileNumber.value) || 
+                                                            (alternateEmailId.value == preferEmailId.value) || RegExp(regexPattern.sameDigit).test(mobileNumber.value) 
+                                                            || RegExp(regexPattern.sameDigit).test(altMobileNo.value) || 
+                                                            (!qde.application.applicants[coApplicantIndex].contactDetails.isMobileOTPverified)">Next
                                                     </button>
                                               </div>
                                           </form>
@@ -924,6 +934,7 @@
                                         pattern="{{regexPattern.otp}}"
                                         maxlength="4"
                                         [(ngModel)]="otp"
+                                        required
                                         fieldFill>
                                         <label for="otp">OTP</label>
                                         <div *ngIf="(otpValue.touched || otpValue.dirty) && otpValue.invalid"
@@ -3192,7 +3203,7 @@
         <div class="overlay" [ngClass]="{'active': isDuplicateModalShown}"></div>
         <div class="bs-modal" id="duplicate-modal" [ngClass]="{'active': isDuplicateModalShown}">
             <div class="modal-body duplicate-modal-body">
-                <h1 class="duplicate-title">Duplicate Entries Found</h1>
+                <h1 class="duplicate-title">Matching Entries Found</h1>
                 <form (ngSubmit)="submitDuplicateApplicant(duplicateApplicantForm)" #duplicateApplicantForm="ngForm">
                     <div class="duplicate-table">
                         <div class="duplicate-table-heading">
