@@ -509,7 +509,7 @@
         </div>
     </div>
   </div>
-  <div class="bs-card" *ngIf="qde.application.applicants[applicantIndex].isIndividual" [ngClass]="{'incomplete': isIncomplete.maritalStatus}">
+  <div class="bs-card" [ngClass]="{'incomplete': isIncomplete.maritalStatus}">
       <h3 class="card-title">Marital Status</h3>
       <div class="bs-form">
           <div class="row">
@@ -526,7 +526,7 @@
                   </div>
               </div>
           </div>
-          <div class="inner-card" *ngIf="selectedMaritialStatus == 2">
+          <div class="inner-card" *ngIf="qde.application.applicants[applicantIndex].maritalStatus.firstName">
               <h4 class="inner-title">Spouse details</h4>
               <div class="row">
                   <div class="col-3">
@@ -584,7 +584,7 @@
                         </div>
                   </div>
               </div> -->
-              <div class="row">
+              <div class="row" *ngIf="qde.application.applicants[applicantIndex].maritalStatus.amount">
                   <div class="col-6">
                       <h5 class="subtitle">Annual income of spouse</h5>
                       <div class="form-group inr">
@@ -770,7 +770,7 @@
           </div>
           <div class="row">
               <div class="col-12">
-                  <div class="form-group filled" *ngIf="qde.application.applicants[applicantIndex].occupation.companyName">
+                  <div class="form-group filled"  *ngIf="selectedOccupation.value != '9' && selectedOccupation.value != '10' && selectedOccupation.value != '18'">
                         <input readonly="true"  type="text" class="form-control"
                         required
                         fieldFill
@@ -787,7 +787,7 @@
           </div>
           <div class="row">
               <div class="col-12">
-                  <div class="form-group typ-range" *ngIf="qde.application.applicants[applicantIndex].occupation.numberOfYearsInCurrentCompany">
+                  <div class="form-group typ-range"  *ngIf="selectedOccupation.value != '9' && selectedOccupation.value != '10' && selectedOccupation.value != '18'">
                       <span class="subtitle">Years in current employment/business</span>
                       <input readonly="true"  type="number"
                             name="numberOfYearsInCurrentCompany"
@@ -811,7 +811,7 @@
           </div>
           <div class="row">
               <div class="col-12">
-                  <div class="form-group typ-range" *ngIf="qde.application.applicants[applicantIndex].occupation.totalWorkExperience">
+                  <div class="form-group typ-range"  *ngIf="selectedOccupation.value != '9' && selectedOccupation.value != '10' && selectedOccupation.value != '18'">
                       <span class="subtitle">Total work experience</span>
                       <input readonly="true"  type="number"
                       name="totalExperienceYear"
@@ -829,11 +829,53 @@
                   </div>
               </div>
           </div>
+          <div class="row">
+                <div class="col-12" *ngIf="selectedOccupation.value == 10">
+                    <h5 class="subtitle">Do you recieve pension</h5>
+                    <div class="bs-radio">
+                        <input spellcheck="false" type="radio" name="pensioner" [value]="1"
+                            [checked]="qde.application.applicants[applicantIndex].occupation.pensioner == true"
+                            fieldFill id="pensionerIdYes1" />
+                        <label for="pensionerIdYes1">
+                            Yes
+                        </label>
+                    </div>
+                    <div class="bs-radio">
+                            <input spellcheck="false" type="radio" name="pensioner"
+                            [value]="2" id="pensionerIdNo1"
+                            [checked]="qde.application.applicants[applicantIndex].occupation.pensioner == false"
+                            fieldFill />
+                        <label for="pensionerIdNo1">
+                            No
+                        </label>
+                    </div>
+                </div>
+            </div>
+          <div class="row">
+            <div class="col-4">
+                    <div class="form-group inr" *ngIf="selectedOccupation.value == 10 && qde.application.applicants[applicantIndex].occupation.pensioner == true">
+                            <input type="text" class="form-control" id="revenue"
+                            [(ngModel)]="qde.application.applicants[applicantIndex].occupation.pensionAmount"
+                            name="revenue"
+                            fieldFill
+                            spellcheck="false"
+                            required />
+                            <label for="revenu">Pension Amount</label>
+
+
+                            <span class="addon">
+                                <span class="icon icon-inr"></span>
+                            </span>
+                            <span class="in-word"></span>
+                        </div>
+            </div>
+        </div>
       </div>
   </div>
 
 
-  <div class="bs-card" *ngIf="qde.application.applicants[applicantIndex].isIndividual == true && qde.application.applicants[applicantIndex].incomeDetails.incomeConsider == true" [ngClass]="{'incomplete': isIncomplete.officialCorrespondence}">
+  <!-- <div class="bs-card" *ngIf="qde.application.applicants[applicantIndex].isIndividual == true && qde.application.applicants[applicantIndex].incomeDetails.incomeConsider == true" [ngClass]="{'incomplete': isIncomplete.officialCorrespondence}"> -->
+    <div class="bs-card" *ngIf="qde.application.applicants[applicantIndex].officialCorrespondence.addressLineOne">
       <h3 class="card-title">Official correspondance</h3>
       <div class="bs-form">
           <div class="row">
