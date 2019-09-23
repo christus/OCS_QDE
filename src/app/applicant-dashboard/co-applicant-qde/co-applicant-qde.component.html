@@ -715,12 +715,12 @@
                                                   </div>
                 
                                                   <div class="form-group typ-mob">
-                                                      <input [readonly]="isReadOnly" type="tel" class="form-control" id="mob-no"
+                                                      <input [readonly]="isReadOnly || qde.application.applicants[coApplicantIndex].contactDetails.isMobileOTPverified" type="tel" class="form-control" id="mob-no"
                                                         maxlength="10" im-insert="true"
                                                         minlength="10"
                                                         tabindex="5"
                                                         [(ngModel)]="qde.application.applicants[coApplicantIndex].contactDetails.mobileNumber"
-                                                        [disabled]="qde.application.applicants[coApplicantIndex].contactDetails.isMobileOTPverified"
+                                                        
                                                         name="mobileNumber"
                                                         #mobileNumber="ngModel"
                                                         pattern="{{regexPattern.mobileNumber}}"
@@ -3265,5 +3265,19 @@
                 <button class="btn btn-border" (click)="isErrorModal = false">Cancel</button>
             </div>
             </div>
+        </div>
+
+        <div class="overlay" [ngClass]="{'active': changeIsIndividualStatus}"></div>
+        <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': changeIsIndividualStatus}">
+            <!-- <a class="modal-close" href="javascript:void(0);" (click)="onBackOTP()"><span class="icon icon-close"></span></a> -->
+            <!-- <a class="modal-close" (click)="resetIndividualData()"><span class="icon icon-close">Yes</span></a> -->
+            <div class="modal-body">
+            <h1 class="center">Are You Sure to Change Applicant Pan Status!</h1>
+            <h2 class="center">if you click yes All Application Data's are Reset</h2>
+            <div class="btn-wrap">
+                <button class="btn btn-border" (click)="resetIndividualData('yes',panSlider2)">Yes</button>
+                <button class="btn btn-border" (click)="resetIndividualData('no',panSlider2)">No</button>
+            </div>
+            </div>    
         </div>
     </main>

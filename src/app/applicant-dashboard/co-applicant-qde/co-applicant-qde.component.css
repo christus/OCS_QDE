@@ -335,11 +335,11 @@ visibility: visible;
 .duplicate-table-data .duplicate-table-col {
     font-size: 1.2vw;
 }
-
-
-
-
-
+input[type="text"]:invalid
+ {
+    
+    /* font-size: 0.8vh; */
+  }
 
 
 
