@@ -80,7 +80,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   minValue: number = 1;
 
   options: Options = {
-    floor: 0,
+    floor: 1,
     ceil: 100,
     // step: 1,
     // showTicksValues: false,
@@ -973,10 +973,13 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         // Go to Previous Slide
         this.goToPrevSlide(swiperInstance);
       } else {
+
         // When income consider is true, official correspondence will be hidden
         if(this.activeTab == 9 && this.qde.application.applicants[this.applicantIndex].incomeDetails.incomeConsider == false) {
           this.tabSwitch(this.activeTab - 2);
-        }else if(this.activeTab == 10){
+        }else if(this.activeTab == 10 || this.activeTab == 0){
+          this.goToPrevSlide(swiperInstance);
+          this.tabSwitch(0);
           return;
         }else {
           this.tabSwitch(this.activeTab - 1);
@@ -2556,18 +2559,120 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   parseInteger(value:any):number {
     return parseInt(value);
   }
-
+  
+  changeIsIndividualStatus: boolean = false;
+  beferoStatus: boolean = false;
 
   changeIsIndividual(value, swiperInstance ?: Swiper) {
-    
+    this.beferoStatus = this.qde.application.applicants[this.applicantIndex].isIndividual;
     if(value == 1) {
-      this.goToNextSlide(swiperInstance);
-      this.qde.application.applicants[this.applicantIndex].isIndividual = true;
+      console.log("current status before" , this.qde.application.applicants[this.applicantIndex].isIndividual);
+        if (this.beferoStatus == false){
+          this.qde.application.applicants[this.applicantIndex].isIndividual = true;
+          this.changeIsIndividualStatus = true;
+          console.log("current status before",this.changeIsIndividualStatus);
+        }
+        else{
+          this.goToNextSlide(swiperInstance);
+          this.qde.application.applicants[this.applicantIndex].isIndividual = true;
+        }
+        
     } else {
+      console.log("current status before" , this.qde.application.applicants[this.applicantIndex].isIndividual)
+      if (this.beferoStatus == true){
+        this.qde.application.applicants[this.applicantIndex].isIndividual = false;
+        this.changeIsIndividualStatus = true;
+      }
+      else{
+        this.qde.application.applicants[this.applicantIndex].isIndividual = false;
+        this.router.navigate([], {queryParams: { tabName: this.fragments[10], page: 1}});
+      }
+      
+      // this.router.navigate([], {queryParams: { tabName: this.fragments[10], page: 1}});
+    }
+    return this.beferoStatus;
+  }
+
+  resetIndividualData(btnValue,swiperInstance ?: Swiper) {    
+    
+    this.changeIsIndividualStatus = false
+    let currentPanValue = this.beferoStatus;
+   
+    
+    let applicationId =  this.route.snapshot.params["applicationId"];
+
+    let applicantId =this.qde.application.applicants[this.applicantIndex].applicantId;
+    
+     if (btnValue=="yes" && currentPanValue == true) {
+      console.log("inside yes click and ", btnValue); 
+        
+        let data = {          
+          "userId": parseInt(localStorage.getItem("userId")),
+          "applicantId": applicantId,
+          "docType": 1,
+          "applicationId": Number(applicationId)
+        };
+   
+        //flash exiting dataresetIn
+        this.qdeHttp.flashExitingData(data).subscribe(
+          data =>{            
+            // console.log(JSON.parse(data["ProcessVariables"]["response"])["application"])
+            this.qde.application = JSON.parse(data["ProcessVariables"]["response"])["application"];
+            this.qdeService.setQde(this.qde);
+            this.auditTrial(applicationId,applicantId,1,"pan1","ApplicantDetails");           
+            this.qde.application.applicants[this.applicantIndex].isIndividual = false;
+            this.router.navigate([], {queryParams: { tabName: this.fragments[10], page: 1}});
+          } 
+        );    
+        
+
+    }else if (btnValue=="yes" && currentPanValue == false){
+      console.log("inside no click and ", btnValue);
+  
+      let data = {          
+        "userId": parseInt(localStorage.getItem("userId")),
+        "applicantId": applicantId,
+        "docType": 1,
+        "applicationId": Number(applicationId)
+      };
+   
+       //flash exiting dataresetIn
+      this.qdeHttp.flashExitingData(data).subscribe(
+        data =>{          
+
+          this.qde.application = JSON.parse(data["ProcessVariables"]["response"])["application"]; 
+          this.qdeService.setQde(this.qde);         
+          this.auditTrial(applicationId,applicantId,2,"pan1","ApplicantDetails");
+          this.qde.application.applicants[this.applicantIndex].isIndividual = true;
+          this.goToNextSlide(swiperInstance);
+        } 
+      );      
+
+    } else if ( btnValue=="no" && currentPanValue==false){
       this.qde.application.applicants[this.applicantIndex].isIndividual = false;
+      this.auditTrial(applicationId,applicantId,1,"pan1","ApplicantDetails");
       this.router.navigate([], {queryParams: { tabName: this.fragments[10], page: 1}});
     }
+    else if(btnValue=="no" && currentPanValue==true)
+    {
+      this.qde.application.applicants[this.applicantIndex].isIndividual = true;
+      this.auditTrial(applicationId,applicantId,2,"pan1","ApplicantDetails");
+      this.goToNextSlide(swiperInstance);
+    }
+    
   }
+
+
+  auditTrial(applicationId: string, applicantId: string, pageNumber: number, tabPage: string, screenPage: string){
+  this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(applicationId,applicantId,pageNumber,tabPage,screenPage).subscribe(auditRes => {
+    if(auditRes['ProcessVariables']['status'] == true) {
+      this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+      this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+      this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+      this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
+    }
+  });
+}
 
   changeResidentialNon(value, swiperInstance ?: Swiper) {
     this.qde.application.applicants[this.applicantIndex].personalDetails.applicantStatus = value;
@@ -2891,6 +2996,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.isErrorModal = true;
       this.errorMessage = "Something went wrong, please again later.";
      });
+  }
+  editMobileNo(){
+
+    this.qde.application.applicants[this.applicantIndex].contactDetails.isMobileOTPverified = false;
   }
 
   changeApplicantStatus(value, swiperInstance ?: Swiper) {

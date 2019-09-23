@@ -562,7 +562,8 @@
                           <div class="form-group typ-mob">
 
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="tel" class="form-control"
-                              id="mob-no" minlength="10" maxlength="10" im-insert="true" 
+
+                              id="mob-no" minlength="10" maxlength="10" im-insert="true"  
                               [disabled]="qde.application.applicants[applicantIndex].contactDetails.isMobileOTPverified"
                               [(ngModel)]="qde.application.applicants[applicantIndex].contactDetails.mobileNumber"
                               name="mobileNumber" #mobileNumber="ngModel" pattern="{{regexPattern.mobileNumber}}"
@@ -2599,7 +2600,7 @@
   <div class="overlay" [ngClass]="{'active': isDuplicateModalShown}"></div>
   <div class="bs-modal" id="duplicate-modal" [ngClass]="{'active': isDuplicateModalShown}">
     <div class="modal-body duplicate-modal-body">
-      <h1 class="duplicate-title">Duplicate Entries Found</h1>
+      <h1 class="duplicate-title">Matching Entries Found</h1>
       <form (ngSubmit)="submitDuplicateApplicant(duplicateApplicantForm)" #duplicateApplicantForm="ngForm">
         <div class="duplicate-table">
           <div class="duplicate-table-heading">
@@ -2666,6 +2667,20 @@
       <h1>{{errorMessage}}</h1>
       <div class="btn-wrap">
         <button class="btn btn-border" (click)="isErrorModal = false">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay" [ngClass]="{'active': changeIsIndividualStatus}"></div>
+  <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': changeIsIndividualStatus}">
+    <!-- <a class="modal-close" href="javascript:void(0);" (click)="onBackOTP()"><span class="icon icon-close"></span></a> -->
+    <!-- <a class="modal-close" (click)="resetIndividualData()"><span class="icon icon-close">Yes</span></a> -->
+    <div class="modal-body">
+      <h1 class="center">Are You Sure to Change Applicant Pan Status!</h1>
+      <h2 class="center">if you click yes All Application Data's are Reset</h2>
+      <div class="btn-wrap">
+        <button class="btn btn-border" (click)="resetIndividualData('yes',panSlider2)">Yes</button>
+        <button class="btn btn-border" (click)="resetIndividualData('no',panSlider2)">No</button>
       </div>
     </div>
   </div>

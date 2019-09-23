@@ -333,6 +333,10 @@ export const environment = {
       'workflowId': 'a6a43e0ccfc311e9a3b50242ac110002',
       'processId': 'a6c2d402cfc311e99a490242ac110002'
     },
+    "flashExitingData" :{
+      'workflowId': '99cad862dac211e9a4f70242ac110002',
+      'processId': '99e5af3edac211e9929c0242ac110002'
+    },
   },
   userName: "icici@icicibankltd.com",
   password: "icici@123",
