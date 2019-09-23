@@ -1729,6 +1729,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
       console.log(this.qde.application.applicants[this.applicantIndex].communicationAddress);
+      console.log(this.qde.application.applicants[this.applicantIndex].permanentAddress);
 
       this.createOrUpdatePersonalDetailsSub7=this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful
@@ -2650,6 +2651,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
     } else if ( btnValue=="no" && currentPanValue==false){
       this.qde.application.applicants[this.applicantIndex].isIndividual = false;
+      this.qde.application.applicants[this.applicantIndex].incomeDetails.incomeConsider = null;
       this.auditTrial(applicationId,applicantId,1,"pan1","ApplicantDetails");
       this.router.navigate([], {queryParams: { tabName: this.fragments[10], page: 1}});
     }

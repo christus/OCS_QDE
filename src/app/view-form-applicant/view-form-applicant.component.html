@@ -182,7 +182,7 @@
 
                       
                   </div>
-                  <div class="form-group" [ngClass]="{'typ-alternative': !isAlternateEmailId}">
+                  <div class="form-group" *ngIf="qde.application.applicants[applicantIndex].contactDetails.alternateEmailId">
                       <input readonly="true"     type="email"
                                 class="form-control"
                                 id="alternate-email"
@@ -225,7 +225,7 @@
 
                       
                   </div>
-                  <div class="form-group" [ngClass]="{'typ-alternative': !isAlternateMobileNumber}">
+                  <div class="form-group" *ngIf="qde.application.applicants[applicantIndex].contactDetails.alternateMobileNumber">
 
                       <input readonly="true"     type="text"
                                 class="form-control"
@@ -245,7 +245,7 @@
                        -->
                   </div>
                   <div class="residence-no">
-                      <div class="form-group">
+                      <div class="form-group" *ngIf="residenceNumberStdCode">
                         <input readonly="true"   type="text"
                                 required
                                 fieldFill
@@ -256,8 +256,8 @@
                     <label for="st">STD</label>
                   
                       </div>
-                      <span class="seperator">-</span>
-                      <div class="form-group">
+                      <span class="seperator" *ngIf="residenceNumberStdCode">-</span>
+                      <div class="form-group" *ngIf="residenceNumberPhoneNumber">
                         <input readonly="true"   type="text"
                                 class="form-control"
                                 id="res-no"
@@ -268,7 +268,7 @@
                           
                       </div>
                   </div>
-                  <div class="residence-no" *ngIf="qde.application.applicants[applicantIndex].contactDetails.alternateResidenceNumber != ''">
+                  <div class="residence-no" *ngIf="alternateResidenceNumberStdCode">
                     <div class="form-group">
                         <input readonly="true"     type="text"
                                   [(ngModel)]="alternateResidenceNumberStdCode"
@@ -278,8 +278,8 @@
                                   id="altrstd">
                         <label for="altrst">STD</label>
                     </div>
-                    <span class="seperator">-</span>
-                    <div class="form-group">
+                    <span class="seperator" *ngIf="alternateResidenceNumberStdCode">-</span>
+                    <div class="form-group" *ngIf="alternateResidenceNumberPhoneNumber">
                         <input readonly="true"     type="text"
                                   class="form-control"
                                   [(ngModel)]="alternateResidenceNumberPhoneNumber"
@@ -396,7 +396,7 @@
                   </div>
               </div>
           </div>
-          <div class="row">
+          <!-- <div class="row">
               <div class="col-12">
                   <div class="form-group typ-range">
                       <span class="subtitle">Number of years in current residence</span>
@@ -412,7 +412,7 @@
                         
                   </div>
               </div>
-          </div>
+          </div> -->
       </div>
 
       <!-- Permanent Address -->
@@ -427,8 +427,8 @@
                           fieldFill
                           [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.addressLineOne"
                           pattern="^[0-9A-Za-z,_#\s]+$"
-                          name="addressLineOne"
-                          #address1="ngModel"
+                          name="addressLineOne1"
+                          #address11="ngModel"
                           required />
 
                     
@@ -447,8 +447,8 @@
                           fieldFill
                           [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.addressLineTwo"
                           pattern="^[0-9A-Za-z,_#\s]+$"
-                          name="addressLineTwo"
-                          #address2="ngModel"
+                          name="addressLineTwo2"
+                          #address22="ngModel"
                           required>
 
                     <label for="address22" >Address line 2</label>
@@ -498,7 +498,7 @@
                               name="numberOfYearsInCurrentResidence"
                               class="form-control"
                               fieldFill
-                              [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.numberOfYearsInCurrentResidence"
+                              [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.numberOfYearsInCurrentResidence"
                               min=0
                               max=90
                               #numberOfYearsInCurrentResidence="ngModel"
@@ -509,7 +509,7 @@
         </div>
     </div>
   </div>
-  <div class="bs-card" *ngIf="qde.application.applicants[applicantIndex].isIndividual" [ngClass]="{'incomplete': isIncomplete.maritalStatus}">
+  <div class="bs-card" [ngClass]="{'incomplete': isIncomplete.maritalStatus}">
       <h3 class="card-title">Marital Status</h3>
       <div class="bs-form">
           <div class="row">
@@ -526,8 +526,8 @@
                   </div>
               </div>
           </div>
-          <div class="inner-card">
-              <h4 class="inner-title">Enter spouse details</h4>
+          <div class="inner-card" *ngIf="qde.application.applicants[applicantIndex].maritalStatus.firstName">
+              <h4 class="inner-title">Spouse details</h4>
               <div class="row">
                   <div class="col-3">
                       <div class="form-group">
@@ -584,9 +584,9 @@
                         </div>
                   </div>
               </div> -->
-              <div class="row">
+              <div class="row" *ngIf="qde.application.applicants[applicantIndex].maritalStatus.amount">
                   <div class="col-6">
-                      <h5 class="subtitle">Enter annual income of spouse</h5>
+                      <h5 class="subtitle">Annual income of spouse</h5>
                       <div class="form-group inr">
                             <input readonly="true"  type="text"
                             class="form-control"
@@ -770,7 +770,7 @@
           </div>
           <div class="row">
               <div class="col-12">
-                  <div class="form-group filled">
+                  <div class="form-group filled"  *ngIf="selectedOccupation.value != '9' && selectedOccupation.value != '10' && selectedOccupation.value != '18'">
                         <input readonly="true"  type="text" class="form-control"
                         required
                         fieldFill
@@ -787,7 +787,7 @@
           </div>
           <div class="row">
               <div class="col-12">
-                  <div class="form-group typ-range">
+                  <div class="form-group typ-range"  *ngIf="selectedOccupation.value != '9' && selectedOccupation.value != '10' && selectedOccupation.value != '18'">
                       <span class="subtitle">Years in current employment/business</span>
                       <input readonly="true"  type="number"
                             name="numberOfYearsInCurrentCompany"
@@ -811,7 +811,7 @@
           </div>
           <div class="row">
               <div class="col-12">
-                  <div class="form-group typ-range">
+                  <div class="form-group typ-range"  *ngIf="selectedOccupation.value != '9' && selectedOccupation.value != '10' && selectedOccupation.value != '18'">
                       <span class="subtitle">Total work experience</span>
                       <input readonly="true"  type="number"
                       name="totalExperienceYear"
@@ -829,15 +829,58 @@
                   </div>
               </div>
           </div>
+          <div class="row">
+                <div class="col-12" *ngIf="selectedOccupation.value == 10">
+                    <h5 class="subtitle">Do you recieve pension</h5>
+                    <div class="bs-radio">
+                        <input spellcheck="false" type="radio" name="pensioner" [value]="1"
+                            [checked]="qde.application.applicants[applicantIndex].occupation.pensioner == true"
+                            fieldFill id="pensionerIdYes1" />
+                        <label for="pensionerIdYes1">
+                            Yes
+                        </label>
+                    </div>
+                    <div class="bs-radio">
+                            <input spellcheck="false" type="radio" name="pensioner"
+                            [value]="2" id="pensionerIdNo1"
+                            [checked]="qde.application.applicants[applicantIndex].occupation.pensioner == false"
+                            fieldFill />
+                        <label for="pensionerIdNo1">
+                            No
+                        </label>
+                    </div>
+                </div>
+            </div>
+          <div class="row">
+            <div class="col-4">
+                    <div class="form-group inr" *ngIf="selectedOccupation.value == 10 && qde.application.applicants[applicantIndex].occupation.pensioner == true">
+                            <input type="text" class="form-control" id="revenue"
+                            [(ngModel)]="qde.application.applicants[applicantIndex].occupation.pensionAmount"
+                            name="revenue"
+                            fieldFill
+                            spellcheck="false"
+                            required />
+                            <label for="revenu">Pension Amount</label>
+
+
+                            <span class="addon">
+                                <span class="icon icon-inr"></span>
+                            </span>
+                            <span class="in-word"></span>
+                        </div>
+            </div>
+        </div>
       </div>
   </div>
- 
-  <div class="bs-card" *ngIf="qde.application.applicants[applicantIndex].isIndividual" [ngClass]="{'incomplete': isIncomplete.officialCorrespondence}">
+
+
+  <!-- <div class="bs-card" *ngIf="qde.application.applicants[applicantIndex].isIndividual == true && qde.application.applicants[applicantIndex].incomeDetails.incomeConsider == true" [ngClass]="{'incomplete': isIncomplete.officialCorrespondence}"> -->
+    <div class="bs-card" *ngIf="qde.application.applicants[applicantIndex].officialCorrespondence.addressLineOne">
       <h3 class="card-title">Official correspondance</h3>
       <div class="bs-form">
           <div class="row">
               <div class="col-12">
-                  <div class="form-group">
+                  <div class="form-group" *ngIf="qde.application.applicants[applicantIndex].officialCorrespondence.addressLineOne">
                         <input readonly="true"   type="text"
                         class="form-control"
                         id="ofcAddOne"
@@ -855,7 +898,7 @@
           </div>
           <div class="row">
               <div class="col-12">
-                  <div class="form-group">
+                  <div class="form-group" *ngIf="qde.application.applicants[applicantIndex].officialCorrespondence.addressLineTwo">
                         <input readonly="true"   type="text"
                                 class="form-control"
                                 id="ofcAddTwo"
@@ -872,7 +915,7 @@
           </div>
           <div class="row">
               <div class="col-12">
-                  <div class="form-group">
+                  <div class="form-group" *ngIf="qde.application.applicants[applicantIndex].officialCorrespondence.landMark">
                         <input readonly="true"   type="text"
                                 class="form-control"
                                 id="offLandmark"
@@ -889,7 +932,7 @@
           </div>
           <div class="row">
               <div class="col-6">
-                  <div class="form-group filled">
+                  <div class="form-group filled" *ngIf="qde.application.applicants[applicantIndex].officialCorrespondence.zipcode">
                         <input readonly="true"  type="text" class="form-control"
                               id="offPincode"
                               fieldFill
@@ -904,7 +947,7 @@
                   </div>
               </div>
               <div class="col-6">
-                  <div class="form-group">
+                  <div class="form-group" *ngIf="officialCorrespondenceCityState">
                         <input readonly="true"  type="text" class="form-control"
                               id="offCityState"
                               required
@@ -923,7 +966,7 @@
           <div class="row">
               <div class="col-6">
                   <div class="residence-no">
-                      <div class="form-group">
+                      <div class="form-group"*ngIf="officialCorrespondenceStdCode">
                             <input readonly="true"  type="number" class="form-control" id="std03"
                             required
                             fieldFill
@@ -933,8 +976,8 @@
                             <label for="std031">STD</label>
                           
                       </div>
-                      <span class="seperator">-</span>
-                      <div class="form-group">
+                      <span class="seperator" *ngIf="officialCorrespondencePhoneNumber">-</span>
+                      <div class="form-group" *ngIf="officialCorrespondencePhoneNumber">
                             <input readonly="true"   type="text" class="form-control" id="res-no03" data-validation-attr="residenceno"
                             required
                             fieldFill
@@ -951,7 +994,7 @@
                   </div>
               </div>
               <div class="col-6">
-                  <div class="form-group">
+                  <div class="form-group" *ngIf="qde.application.applicants[applicantIndex].officialCorrespondence.officeEmailId">
                         <input readonly="true"  type="email"
                               class="form-control"
                               id="off-email"
@@ -1217,7 +1260,7 @@
               </div>
               <div class="row last">
                   <div class="col-6">
-                          <div class="form-group last">
+                          <div class="form-group last" *ngIf="qde.application.applicants[applicantIndex].corporateAddress.officeEmailId">
                                   <input    type="email"
                                             class="form-control"
                                             id="ofc-email"
@@ -1241,7 +1284,7 @@
           <div class="bs-form">
               <div class="row">
                   <div class="col-4">
-                          <div class="form-group inr">
+                          <div class="form-group inr" *ngIf="qde.application.applicants[applicantIndex].revenueDetails.revenue">
                                   <input type="text" class="form-control" id="revenue"
                                   [(ngModel)]="qde.application.applicants[applicantIndex].revenueDetails.revenue"
                                   name="revenue"
@@ -1260,7 +1303,7 @@
               </div>
               <div class="row">
                   <div class="col-4">
-                          <div class="form-group inr">
+                          <div class="form-group inr" *ngIf="qde.application.applicants[applicantIndex].revenueDetails.annualNetIncome">
                                   <input type="text" class="form-control" id="net-income"
                                   required
                                   [(ngModel)]="qde.application.applicants[applicantIndex].revenueDetails.annualNetIncome"
@@ -1305,7 +1348,7 @@
     <div class="bs-form">
         <div class="row">
             <div class="col-12">
-                <div class="form-group inr filled">
+                <div class="form-group inr filled" *ngIf="qde.application.applicants[applicantIndex].incomeDetails.annualFamilyIncome">
                     <input type="text" class="form-control"
                         id="annualFamilyIncome1"
                         [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.annualFamilyIncome"
@@ -1323,7 +1366,7 @@
         </div>
         <div class="row">
               <div class="col-12">
-                  <div class="form-group inr">
+                  <div class="form-group inr" *ngIf="qde.application.applicants[applicantIndex].incomeDetails.monthlyExpenditure">
                           <input type="text" class="form-control" 
                           id="monthlyExpenditure2"
                           [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.monthlyExpenditure"
@@ -1341,7 +1384,7 @@
           </div>
         <div class="row">
             <div class="col-12">
-                <div class="form-group inr">
+                <div class="form-group inr" *ngIf="qde.application.applicants[applicantIndex].incomeDetails.monthlyIncome">
                     <input type="text" class="form-control" 
                                 id="monthlyIncome1"
                                 [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.monthlyIncome"
@@ -1359,7 +1402,7 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <div class="form-group">
+                <div class="form-group" *ngIf="selectedAssesmentMethodology">
                     <span class="control-title">Assessment Methodology</span>
                     <kendo-dropdownlist class="form-control"
                         [data]="assessmentMethodology" 

@@ -332,6 +332,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
     if(this.route.snapshot.data.listOfValues) {
       const lov = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs);
+      console.log('LOVS: ', lov);
       this.titles = lov.LOVS.applicant_title;
 
       // this.loanpurposes = lov.LOVS.loan_purpose;
@@ -671,18 +672,19 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   tabSwitch(tabIndex ?: number, fromQde ?: boolean) {
 
+    let modifiedTabIndex = tabIndex;
     // Check for invalid tabIndex
-    if(tabIndex < this.fragments.length) {
+    if(modifiedTabIndex < this.fragments.length) {
 
-      let t = fromQde ? this.page: 1;
+      let t = (fromQde) ? (modifiedTabIndex == 2) ? 1 : this.page: 1;
 
       if(this.swiperSliders && this.swiperSliders.length > 0) {
-        this.swiperSliders[tabIndex].setIndex(this.page-1);
+        this.swiperSliders[modifiedTabIndex].setIndex(t-1);
       }
 
       // It should not allow to go to any other tabs if applicationId is not present
       // if(this.applicantIndex != null && this.qde.application.applicationId != null && this.qde.application.applicationId != '') {
-      this.router.navigate([], {queryParams: { tabName: this.fragments[tabIndex], page: t }});
+      this.router.navigate([], {queryParams: { tabName: this.fragments[modifiedTabIndex], page: t }});
       // }
 
       // this.router.navigate([], { fragment: this.fragments[tabIndex]});
@@ -1024,7 +1026,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
                 });
                 this.goToNextSlide(swiperInstance);
               }else{                
-                alert("Loan detail process is completed.")
+                this.isLoanRouteModal = true;
               }
             
             } else {
@@ -1114,7 +1116,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
   proceedToExistingLoanEligible() {
     this.isClssEligibleModal = false;
     // this.tabSwitch(this.propertyNoSwitchTab);
-    this.router.navigate([], {queryParams: { tabName: this.fragments[2], page: 0 }});
+    this.router.navigate([], {queryParams: { tabName: this.fragments[2], page: 1 }});
       //  if(this.selectedLoanPurpose.value != "17") {
       //   this.router.navigate(['/references', this.qde.application.applicationId])
       // } else {
@@ -1125,13 +1127,13 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   proceedToExistingLoanNotEligible() {
     this.isClssNotEligibleModal = false;
-    this.router.navigate([], {queryParams: { tabName: this.fragments[2], page: 0 }});
+    this.router.navigate([], {queryParams: { tabName: this.fragments[2], page: 1 }});
   //   if(this.selectedLoanPurpose.value != "17") {
   //    this.router.navigate(['/references', this.qde.application.applicationId])
   //  } else {
     //  this.tabSwitch(this.propertyNoSwitchTab);
 
-  //    this.router.navigate([], {queryParams: { tabName: this.fragments[2], page: 0 }});
+  //    this.router.navigate([], {queryParams: { tabName: this.fragments[2], page: 1 }});
 
     
   //  }
@@ -1163,7 +1165,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.setLoanPurposes(lt.value);
   }
-  
+
   setLoanPurposes(loanType: string, data ?: string) {
     this.qdeHttp.getLoanPurposeFromLoanType({loanType: loanType}).subscribe(res => {
       this.loanpurposes = res['ProcessVariables']['loanPurposeLov'];
@@ -1192,10 +1194,10 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  moreLoanObligation(){
-    this.goToExactPageAndTab(this.fragments[2], 1);
-    this.isLoanRouteModal = false;
-  }
+  // moreLoanObligation(){
+  //   this.goToExactPageAndTab(this.fragments[2], 1);
+  //   this.isLoanRouteModal = false;
+  // }
 
   selectClssArea(c) {
     this.propertyClssLabel = c.label;
@@ -1232,5 +1234,15 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
     if(this.swiperSlidersSub != null) {
       this.swiperSlidersSub.unsubscribe();
     }
+  }
+
+  moreLoanObligation(n: boolean) {
+    this.isLoanRouteModal = false;
+    if(n) {
+      this.tabSwitch(2);
+    } else {
+      this.router.navigate(['/references', this.qde.application.applicationId]);
+    }
+    
   }
 }

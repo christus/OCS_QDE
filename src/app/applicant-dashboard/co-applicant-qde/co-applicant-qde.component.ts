@@ -2359,6 +2359,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   parseInteger(value:any):number {
     return parseInt(value);
   }
+
   changeIsIndividual(value, swiperInstance ?: Swiper) {
     this.beferoStatus = this.qde.application.applicants[this.coApplicantIndex].isIndividual;
     if(value == 1) {
@@ -2465,7 +2466,6 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     }
     
   }
-
 
   auditTrial(applicationId: string, applicantId: string, pageNumber: number, tabPage: string, screenPage: string){
   this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(applicationId,applicantId,pageNumber,tabPage,screenPage).subscribe(auditRes => {

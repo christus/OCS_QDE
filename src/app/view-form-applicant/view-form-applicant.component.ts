@@ -70,7 +70,7 @@ export class ViewFormApplicantComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(">>>>> ", this.selectedTitle);
+    console.log("QDE in View form applicant: ", this.qde);
   }
 
 }
