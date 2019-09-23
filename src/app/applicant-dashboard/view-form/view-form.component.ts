@@ -757,14 +757,14 @@ export class ViewFormComponent implements OnInit, OnDestroy {
       }
       else {
         // Show QDE Button
-        // this.isQdeSubmitButton = true;
-        // if(butEnDis == true){
-        //   this.isQdeSubmitEnabled = true;
-        // }
-        // else{
-        //   this.isQdeSubmitEnabled = false;
-        //   this.isDocNotUploadModal = true;
-        // }
+        this.isQdeSubmitButton = true;
+        if(butEnDis == true){
+          this.isQdeSubmitEnabled = true;
+        }
+        else{
+          this.isQdeSubmitEnabled = false;
+          this.isDocNotUploadModal = true;
+        }
       }
     },
      err => {});
