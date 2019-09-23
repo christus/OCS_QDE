@@ -1026,7 +1026,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
                 });
                 this.goToNextSlide(swiperInstance);
               }else{                
-                alert("Loan detail process is completed.")
+                this.isLoanRouteModal = true;
               }
             
             } else {
