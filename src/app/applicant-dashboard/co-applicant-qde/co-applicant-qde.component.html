@@ -715,12 +715,12 @@
                                                   </div>
                 
                                                   <div class="form-group typ-mob">
-                                                      <input [readonly]="isReadOnly" type="tel" class="form-control" id="mob-no"
+                                                      <input [readonly]="isReadOnly || qde.application.applicants[coApplicantIndex].contactDetails.isMobileOTPverified" type="tel" class="form-control" id="mob-no"
                                                         maxlength="10" im-insert="true"
                                                         minlength="10"
                                                         tabindex="5"
                                                         [(ngModel)]="qde.application.applicants[coApplicantIndex].contactDetails.mobileNumber"
-                                                        [disabled]="qde.application.applicants[coApplicantIndex].contactDetails.isMobileOTPverified"
+                                                        
                                                         name="mobileNumber"
                                                         #mobileNumber="ngModel"
                                                         pattern="{{regexPattern.mobileNumber}}"

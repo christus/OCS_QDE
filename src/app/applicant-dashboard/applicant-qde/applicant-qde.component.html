@@ -561,10 +561,9 @@
 
                           <div class="form-group typ-mob">
 
-                            <input [readonly]="isTBMLoggedIn" spellcheck="false" type="tel" class="form-control"
-
-                              id="mob-no" minlength="10" maxlength="10" im-insert="true"  
-                              [disabled]="qde.application.applicants[applicantIndex].contactDetails.isMobileOTPverified"
+                            <input [readonly]="isTBMLoggedIn || qde.application.applicants[applicantIndex].contactDetails.isMobileOTPverified" 
+                              spellcheck="false" type="tel" class="form-control"
+                              id="mob-no" minlength="10" maxlength="10" im-insert="true" 
                               [(ngModel)]="qde.application.applicants[applicantIndex].contactDetails.mobileNumber"
                               name="mobileNumber" #mobileNumber="ngModel" pattern="{{regexPattern.mobileNumber}}"
                               fieldFill required />
