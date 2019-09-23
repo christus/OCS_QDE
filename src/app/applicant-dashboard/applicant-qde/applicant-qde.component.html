@@ -156,7 +156,7 @@
                               id="pan-inpt" minlength="10" maxlength="10" pattern="{{regexPattern.panInd}}" name="pan"
                               (keyup)="keyUpPanNumber($event)" #panNumber="ngModel" fieldFill required/>
                             <label for="pan-inpt" tabindex="1">Enter PAN</label>
-                            <span class="optional">optional</span>
+                            <!-- <span class="optional">optional</span> -->
                             <div *ngIf="panNumber.touched && panNumber.invalid && panErrorCount < 3"
                               class="invalid-feedback">
                               <!-- <div *ngIf="panNumber.errors?.required">{{errors.panNumber.required}}</div> -->
@@ -1948,7 +1948,7 @@
                               (ngModelChange)="qde.application.applicants[applicantIndex].pan.panNumber = $event.toUpperCase()"
                               (keyup)="keyUpPanNumber($event)" name="pan" #panNumber2="ngModel" fieldFill required/>
                             <label for="pan-inpt2">Enter PAN</label>
-                            <span class="optional">optional</span>
+                            <!-- <span class="optional">optional</span> -->
                             <div *ngIf="panNumber2.touched && panNumber2.invalid && panErrorCount < 3"
                               class="invalid-feedback">
                               <!-- <div *ngIf="panNumber2.errors?.required">{{errors.pan.required}}</div> -->

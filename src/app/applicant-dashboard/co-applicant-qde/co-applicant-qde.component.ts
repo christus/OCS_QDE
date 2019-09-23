@@ -2360,16 +2360,123 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     return parseInt(value);
   }
   changeIsIndividual(value, swiperInstance ?: Swiper) {
+    this.beferoStatus = this.qde.application.applicants[this.coApplicantIndex].isIndividual;
     if(value == 1) {
-      console.log("VALUE1: ", value);
-      this.goToNextSlide(swiperInstance);
-      this.qde.application.applicants[this.coApplicantIndex].isIndividual = true;
+      if (this.beferoStatus == false){
+        this.qde.application.applicants[this.coApplicantIndex].isIndividual = true;
+        this.changeIsIndividualStatus = true;
+        console.log("current status before",this.changeIsIndividualStatus);
+      }
+      else{
+        this.goToNextSlide(swiperInstance);
+        this.qde.application.applicants[this.coApplicantIndex].isIndividual = true;
+      }
+      // console.log("VALUE1: ", value);
+      // this.goToNextSlide(swiperInstance);
+      // this.qde.application.applicants[this.coApplicantIndex].isIndividual = true;
     } else {
       console.log("VALUE2: ", value)
-      this.tabSwitch(11);
-      this.qde.application.applicants[this.coApplicantIndex].isIndividual = false;
+      console.log("current status before" , this.qde.application.applicants[this.coApplicantIndex].isIndividual)
+      if (this.beferoStatus == true){
+        this.qde.application.applicants[this.coApplicantIndex].isIndividual = false;
+        this.changeIsIndividualStatus = true;
+      }
+      else{
+        this.qde.application.applicants[this.coApplicantIndex].isIndividual = false;
+        this.tabSwitch(11);        
+      }
+      // this.tabSwitch(11);
+      // this.qde.application.applicants[this.coApplicantIndex].isIndividual = false;
     }
   }
+
+  
+  changeIsIndividualStatus: boolean = false;
+  beferoStatus: boolean = false;
+
+  resetIndividualData(btnValue,swiperInstance ?: Swiper) {    
+    
+    this.changeIsIndividualStatus = false
+    let currentPanValue = this.beferoStatus;
+   
+    
+    let applicationId =  this.route.snapshot.params["applicationId"];
+
+    let applicantId =this.qde.application.applicants[this.coApplicantIndex].applicantId;
+    
+     if (btnValue=="yes" && currentPanValue == true) {
+      console.log("inside yes click and ", btnValue); 
+        
+          let data = {          
+            "userId": parseInt(localStorage.getItem("userId")),
+            "applicantId": applicantId,
+            "docType": 1,
+            "applicationId": Number(applicationId)
+          };
+    
+          //flash exiting dataresetIn
+          this.qdeHttp.flashExitingData(data).subscribe(
+            data =>{            
+              // console.log(JSON.parse(data["ProcessVariables"]["response"])["application"])
+              this.qde.application = JSON.parse(data["ProcessVariables"]["response"])["application"];
+              this.qdeService.setQde(this.qde);
+              this.auditTrial(applicationId,applicantId,1,"pan1",screenPages['coApplicantDetails']);           
+              this.tabSwitch(11);
+              this.qde.application.applicants[this.coApplicantIndex].isIndividual = false;
+            } 
+          );    
+        
+
+    }else if (btnValue=="yes" && currentPanValue == false){
+      console.log("inside no click and ", btnValue);
+  
+        let data = {          
+          "userId": parseInt(localStorage.getItem("userId")),
+          "applicantId": applicantId,
+          "docType": 1,
+          "applicationId": Number(applicationId)
+        };
+    
+        //flash exiting dataresetIn
+
+        this.qdeHttp.flashExitingData(data).subscribe(
+          data =>{          
+
+            this.qde.application = JSON.parse(data["ProcessVariables"]["response"])["application"]; 
+            this.qdeService.setQde(this.qde);         
+            this.auditTrial(applicationId,applicantId,2,"pan1",screenPages['coApplicantDetails']);
+            this.goToNextSlide(swiperInstance);
+            this.qde.application.applicants[this.coApplicantIndex].isIndividual = true;
+          } 
+        );      
+
+    } else if ( btnValue=="no" && currentPanValue==false){
+      
+        this.auditTrial(applicationId,applicantId,1,"pan1",screenPages['coApplicantDetails']);
+        this.tabSwitch(11);
+        this.qde.application.applicants[this.coApplicantIndex].isIndividual = false;
+    }
+    else if(btnValue=="no" && currentPanValue==true)
+    {
+      
+        this.qde.application.applicants[this.coApplicantIndex].isIndividual = true;
+        this.auditTrial(applicationId,applicantId,2,"pan1",screenPages['coApplicantDetails']);
+        this.goToNextSlide(swiperInstance);
+    }
+    
+  }
+
+
+  auditTrial(applicationId: string, applicantId: string, pageNumber: number, tabPage: string, screenPage: string){
+  this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(applicationId,applicantId,pageNumber,tabPage,screenPage).subscribe(auditRes => {
+    if(auditRes['ProcessVariables']['status'] == true) {
+      this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+      this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+      this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+      this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
+    }
+  });
+}
 
   changeResidentialNon(value, swiperInstance ?: Swiper) {
     this.qde.application.applicants[this.coApplicantIndex].personalDetails.applicantStatus = value;
