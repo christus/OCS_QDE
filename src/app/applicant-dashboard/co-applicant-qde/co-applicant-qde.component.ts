@@ -532,7 +532,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         // Only load once
           if((this.qde.application.applicationId == null || this.qde.application.applicationId == '') && this.qde.application.applicationId != params.applicationId) {
 
-            this.getQdeDataSub = this.qdeHttp.getQdeData(params.applicationId).subscribe(response => {
+            
+              this.getQdeDataSub = this.qdeHttp.getQdeData(params.applicationId).subscribe(response => {
               var result = JSON.parse(response["ProcessVariables"]["response"]);
               this.qde = result;
               this.applicationId = this.qde.application.applicationId;
@@ -558,9 +559,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                   this.coApplicantIndex = result.application.applicants.findIndex(v => v.applicantId == this.qde.application.auditTrailDetails.applicantId);
                   this.router.navigate(['/appplicant', this.qde.application.applicationId, 'co-applicant', params.coApplicantIndex]);
                   this.goToExactPageAndTab(result.application.auditTrailDetails.tabPage, result.application.auditTrailDetails.pageNumber);
-                } else {
-                  this.tabSwitch(0);  
                 }
+                // else {
+                //   this.tabSwitch(0);
+                // }
   
               } else {
                 if(params['coApplicantIndex'] == null) {
@@ -669,6 +671,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
               this.isErrorModal = true;
               this.errorMessage = "Something went wrong, please again later.";
             });
+            
           }
       }
 
