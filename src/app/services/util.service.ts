@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { DeviceDetectorService } from 'ngx-device-detector';
 
@@ -15,7 +15,7 @@ export class UtilService {
   constructor(private router: Router, private http: HttpClient,
     private qdehttpService: QdeHttpService,
     private deviceService: DeviceDetectorService) { 
-    this.isMobile = this.deviceService.isMobile() ;
+    this.isMobile = environment.isMobile;
     this.qdehttpService = qdehttpService;
   }
 
@@ -28,11 +28,7 @@ export class UtilService {
     return loggedIn;
   }
 
-  logout() {
-    let uri = environment.host + "/account/logout";
-    return this.http.get(uri);
-  }
-
+  
   clearCredentials() {
     localStorage.removeItem('token');
 
@@ -51,6 +47,8 @@ export class UtilService {
     
    let isFirstTime = localStorage.getItem("firstTime");
 
+   console.log("isFirstTime", isFirstTime);
+
    if(isFirstTime == null) {
 
     let data = {
@@ -58,6 +56,8 @@ export class UtilService {
       'password': environment.password,
       'longTimeToken': "true"
     }
+
+    console.log("data", isFirstTime);
   
     this.qdehttpService.longLiveAuthenticate(data).subscribe(
       res => {
@@ -81,4 +81,5 @@ export class UtilService {
 
     this.router.navigate(['/loginWithPin']);
   }
+  
 }

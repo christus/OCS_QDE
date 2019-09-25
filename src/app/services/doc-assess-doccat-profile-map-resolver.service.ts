@@ -4,11 +4,13 @@ import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 import { HttpParams, HttpClient } from '@angular/common/http';
 import RequestEntity from '../models/request-entity.model';
 import { environment } from 'src/environments/environment';
+import { QdeHttpService } from './qde-http.service';
 
 @Injectable()
 export class DocAssessDoccatProfileMapResolverService implements Resolve<Observable<any>> {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+    private qdeHttp: QdeHttpService) { }
 
   resolve(_route: ActivatedRouteSnapshot): any {
     const processId   = environment.api.adminDocumentProfile.processId;
@@ -29,15 +31,15 @@ export class DocAssessDoccatProfileMapResolverService implements Resolve<Observa
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      "processVariables",
+    const body = {
+      'processVariables':
       JSON.stringify(qdeRequestEntity)
-    );
+    };
 
     let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
-    return this.http.post(
+    return this.qdeHttp.callPost(
       uri,
-      body.toString()
+      body
     );
   }
 }

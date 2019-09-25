@@ -102,10 +102,10 @@ table { border-collapse: collapse; }
 
 .ellipsis {
     height: 20px;
-    width: 399px;
+    /* width: 399px; */
     padding: 0;
     overflow: hidden;
-    display: inline-block;
+    /* display: inline-block; */
     margin: 0 5px 0 5px;
     text-overflow: ellipsis;
     white-space: nowrap;

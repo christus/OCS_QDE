@@ -18,9 +18,9 @@ import { MenubarHeaderComponent } from '../../menubar-header/menubar-header.comp
 import { environment } from 'src/environments/environment';
 
 import { File } from '@ionic-native/file/ngx';
-import { DeviceDetectorService } from 'ngx-device-detector';
 
 import { screenPages } from '../../app.constants';
+import { UtilService } from '../../services/util.service';
 
 interface Item {
   key: string,
@@ -340,8 +340,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
               private qdeHttp: QdeHttpService,
               private qdeService: QdeService,
               private cds:CommonDataService,
-              private file: File,
-              private deviceService: DeviceDetectorService) {
+              private utilService: UtilService,
+              private file: File) {
 
    this.qde = this.qdeService.defaultValue;
 
@@ -356,14 +356,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     this.dobYears.unshift({key: 'YYYY', value: 'YYYY'});
 
-    this.isMobile = this.deviceService.isMobile() ;
+    this.isMobile = environment.isMobile;
 
     this.cds.changeMenuBarShown(true);
     this.cds.changeViewFormVisible(true);
     this.cds.changeLogoutVisible(true);
     this.cds.changeHomeVisible(true);
-
-    const isMobile = this.deviceService.isMobile();
             
     // this.panslideSub = this.cds.panslide.subscribe(val => {
     //   this.panslide = val;

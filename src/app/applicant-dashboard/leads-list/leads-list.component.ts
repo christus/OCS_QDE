@@ -102,7 +102,8 @@ export class LeadsListComponent implements OnInit {
     return this.utilService.clearCredentials();
   }
   logout() {
-    this.utilService.logout().subscribe(
+
+    this.service.logout().subscribe(
       res => {
       },
       error => {
@@ -110,6 +111,8 @@ export class LeadsListComponent implements OnInit {
     );
     this.utilService.clearCredentials();
   }
+
+  
 
 
   ngOnInit() {}

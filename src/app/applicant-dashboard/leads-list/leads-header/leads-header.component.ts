@@ -1,3 +1,4 @@
+import { QdeHttpService } from './../../../services/qde-http.service';
 import { Component, OnInit } from '@angular/core';
 
 import { UtilService } from 'src/app/services/util.service';
@@ -14,7 +15,8 @@ export class LeadsHeaderComponent implements OnInit {
 
   isLogoutVisible: boolean;
 
-  constructor(private utilService: UtilService, 
+  constructor(private utilService: UtilService,
+              private http: QdeHttpService,
               private cds: CommonDataService) {
 
      this.cds.isLogoutVisible.subscribe((value) => {
@@ -28,8 +30,9 @@ export class LeadsHeaderComponent implements OnInit {
   clearCredentials() {
     return this.utilService.clearCredentials();
   }
+  
   logout() {
-    this.utilService.logout().subscribe(
+    this.http.logout().subscribe(
       res => {
       },
       error => {

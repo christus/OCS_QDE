@@ -342,6 +342,7 @@ export const environment = {
   //host: "/ProcessStore",
   host:  "/appiyo",
   pdfLocation: "/d/download/pdf?",
+  isMobile: false
   //host: "https://ihfcmobileuat.icicihfc.com/appiyo"
   //host: "https://103.87.42.117/appiyo"
   //host:"http://www.twixor.in/appiyo"

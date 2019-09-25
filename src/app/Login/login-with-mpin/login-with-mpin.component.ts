@@ -62,7 +62,7 @@ export class LoginWithMPINComponent implements OnInit {
     console.log("UserName", this.userName +" "+ "Password", this.mPin );
 
     let appiyoAuthdata = {
-      'email': environment.userName,
+      'email': environment.userName.trim(),
       'password': environment.password,
       'longTimeToken': "true"
     }

@@ -19,9 +19,9 @@ import { Subscription } from 'rxjs';
 import { errors } from '../../services/errors';
 import { environment } from 'src/environments/environment.prod';
 
-import { DeviceDetectorService } from 'ngx-device-detector';
 
 import { screenPages } from '../../app.constants';
+import { UtilService } from '../../services/util.service';
 
 interface Item {
   key: string,
@@ -339,11 +339,11 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
               private qdeHttp: QdeHttpService,
               private qdeService: QdeService,
               private cds: CommonDataService,
-              private deviceService: DeviceDetectorService) {
+              private utilService: UtilService) {
     
     this.qde = this.qdeService.defaultValue;
 
-    this.isMobile = this.deviceService.isMobile() ;
+    this.isMobile = environment.isMobile;
 
     this.cds.changeMenuBarShown(true);
     this.cds.changeViewFormVisible(true);

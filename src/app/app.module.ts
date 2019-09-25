@@ -130,6 +130,9 @@ import { EditErrorMessageComponent } from './admin/edit-error-message/edit-error
 import { ErrorHandlingMessageComponent } from './admin/error-handling-message/error-handling-message.component';
 import { from } from 'rxjs';
 
+import { HTTP } from '@ionic-native/http/ngx';
+import { QdeHttpService } from './services/qde-http.service';
+
 
 const appRoutes: Routes = [
   { path: "", redirectTo: "leads", pathMatch: "full" },
@@ -649,6 +652,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     GeneralLovsService,
     ClssChecklistResolverService,
     LoanTypePurposeMapResolverService,
+    HTTP,
     DocAssessDoccatProfileMapResolverService
   ],
   bootstrap: [AppComponent]

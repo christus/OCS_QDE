@@ -1,3 +1,4 @@
+import { QdeHttpService } from './../../services/qde-http.service';
 import { UtilService } from 'src/app/services/util.service';
 import { Component, OnInit } from '@angular/core';
 import { CommonDataService } from 'src/app/services/common-data.service';
@@ -12,6 +13,7 @@ export class AdminPanelComponent implements OnInit {
   isLogoutVisible: boolean;
 
   constructor(private utilService: UtilService, 
+              private http: QdeHttpService,
               private cds: CommonDataService) {
 
      this.cds.isLogoutVisible.subscribe((value) => {
@@ -26,7 +28,7 @@ export class AdminPanelComponent implements OnInit {
     return this.utilService.clearCredentials();
   }
   logout() {
-    this.utilService.logout().subscribe(
+    this.http.logout().subscribe(
       res => {
       },
       error => {

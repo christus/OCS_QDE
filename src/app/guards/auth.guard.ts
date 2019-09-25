@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { UtilService } from '../services/util.service';
-import { DeviceDetectorService } from 'ngx-device-detector';
+import { environment } from '../../environments/environment';
 
 
 @Injectable({
@@ -12,8 +12,8 @@ export class AuthGuard implements CanActivate {
 
   isMobile:any;
 
-  constructor(private router: Router, private utilService: UtilService, private deviceService: DeviceDetectorService) {
-    this.isMobile = this.deviceService.isMobile() ;
+  constructor(private router: Router, private utilService: UtilService) {
+    this.isMobile = environment.isMobile;
   }
 
   canActivate(

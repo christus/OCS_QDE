@@ -1,12 +1,13 @@
 import { Component, OnInit, Renderer2, ElementRef, Inject } from '@angular/core';
 import { Plugins, AppState } from '@capacitor/core';
 
-import { DeviceDetectorService } from 'ngx-device-detector';
-
 import { Keyboard } from '@ionic-native/keyboard/ngx';
 
 
 import { NativeKeyboard } from '@ionic-native/native-keyboard/ngx';
+import { UtilService } from './services/util.service';
+import { environment } from '../environments/environment';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 
 
@@ -21,11 +22,13 @@ export class AppComponent implements OnInit{
 
   title = 'OCS-QDE';
 
-  constructor(private deviceService: DeviceDetectorService,
+  constructor(private utilService: UtilService,
     private keyboard: Keyboard,
     private renderer: Renderer2,
-    nativeKeyboard: NativeKeyboard){
-    this.isMobile = this.deviceService.isMobile() ;
+    nativeKeyboard: NativeKeyboard,
+    private deviceService: DeviceDetectorService){
+    this.isMobile = this.checkIsMobile();
+
     if(this.isMobile){
       this.renderer.addClass(document.body, 'mobile');
     }
@@ -76,4 +79,10 @@ export class AppComponent implements OnInit{
     });
   
   }
+
+  checkIsMobile() {
+    environment.isMobile = true;
+    return environment.isMobile;
+  }
+
 }
