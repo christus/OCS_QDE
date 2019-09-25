@@ -1317,12 +1317,12 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
     const data = {
       isFinanceApplicant: incomeDetails.incomeConsider,
       assessmentId: parseInt(incomeDetails.assessmentMethodology, 10),
-      profileId: profileId
+      profileId: profileId,
+      applicantType: applicants[index].isIndividual == true ? 1: 2
     };
 
     console.log("isFinanceApplicant: ", data);
 
-    
     this.getApplicableDocuments(data, (applicants[index]['documents'] != null) ? applicants[index]['documents'] : [], index);
 
     // Ends here

@@ -427,9 +427,9 @@
                               </div>
                           </div>
                           <div class="inner-card">
-                              <div class="row">
+                              <div class="row" *ngIf="selectedLoanPurpose && ['16', '17'].includes(selectedLoanPurpose.value)">
                                   <div class="col-12">
-                                      <div class="form-group" *ngIf="selectedLoanPurpose && ['16', '17'].includes(selectedLoanPurpose.value)">
+                                      <div class="form-group">
                                           <span class="control-title">Existing loan provider</span>
                                           <kendo-dropdownlist 
                                           class="form-control" 
