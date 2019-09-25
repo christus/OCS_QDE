@@ -511,7 +511,6 @@ export class ViewFormComponent implements OnInit, OnDestroy {
           //     this.applicantName = "Application for "+this.qde.application.applicants[index].personalDetails.firstName +" "+ this.qde.application.applicants[index].personalDetails.lastName;
           //   }
           // }
-
           this.applicantIndex = this.qde.application.applicants.find(val => val.isMainApplicant==true) != undefined ? this.qde.application.applicants.findIndex(val => val.isMainApplicant == true): 0;
     
           this.coApplicantIndexes = this.qde.application.applicants.map((e, i) => e.isMainApplicant == false ? i : null).filter((e) => e != null);
