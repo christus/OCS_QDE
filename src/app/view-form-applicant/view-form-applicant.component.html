@@ -1014,7 +1014,7 @@
   </div>
 
   <!-- Non Inidividual -->
-  <div class="bs-card" *ngIf="!qde.application.applicants[applicantIndex].isIndividual" [ngClass]="{'incomplete': isIncomplete.personalDetails}">
+  <div class="bs-card" *ngIf="qde.application.applicants[applicantIndex].isIndividual == false" [ngClass]="{'incomplete': isIncomplete.personalDetails}">
           <h3 class="card-title">Organization Details</h3>
           <div class="bs-form">
               <div class="row">
@@ -1156,7 +1156,7 @@
           </div>
   </div>
 
-  <div class="bs-card" *ngIf="!qde.application.applicants[applicantIndex].isIndividual" [ngClass]="{'incomplete': isIncomplete.personalDetails}">
+  <div class="bs-card" *ngIf="qde.application.applicants[applicantIndex].isIndividual == false" [ngClass]="{'incomplete': isIncomplete.personalDetails}">
           <h3 class="card-title">Corporate Address</h3>
           <div class="bs-form">
               <div class="row">

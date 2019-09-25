@@ -195,7 +195,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
                 'review-eligibility'
   ];
 
-  applicantIndex: number;
+  applicantIndex: number = 0;
   coApplicantIndexes: Array<number> = [];
 
   qde: Qde;
@@ -224,8 +224,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
               private commonDataService: CommonDataService,
               private qdeService: QdeService) {
 
-                console.log("RESPONSE: ", JSON.parse(this.route.snapshot.data['qde']['ProcessVariables']['response']));
-    this.qdeService.setQde(JSON.parse(this.route.snapshot.data['qde']['ProcessVariables']['response']));
+    this.qde = this.qdeService.defaultValue;
 
     this.commonDataService.changeMenuBarShown(false);
     this.commonDataService.changeViewFormVisible(false);
@@ -482,8 +481,6 @@ export class ViewFormComponent implements OnInit, OnDestroy {
             this.selectedAddressLineTwo2 =
               result.application.references.referenceTwo.addressLineTwo || "";
 
-          this.qde = result;
-          this.qde.application.applicationId = applicationId;
 
           this.qdeService.setQde(this.qde);
           this.valuechange(this.qde.application.tenure);
@@ -507,21 +504,24 @@ export class ViewFormComponent implements OnInit, OnDestroy {
           
           let index = this.qde.application.applicants.findIndex(val => val.isMainApplicant == true);
           
-          if(index == -1) {
-            this.applicantName = "";
-          } else {
-            if(this.qde.application.applicants[index].personalDetails.firstName != "") {
-              this.applicantName = "Application for "+this.qde.application.applicants[index].personalDetails.firstName +" "+ this.qde.application.applicants[index].personalDetails.lastName;
-            }
-          }
+          // if(index == -1) {
+          //   this.applicantName = "";
+          // } else {
+          //   if(this.qde.application.applicants[index].personalDetails.firstName != "") {
+          //     this.applicantName = "Application for "+this.qde.application.applicants[index].personalDetails.firstName +" "+ this.qde.application.applicants[index].personalDetails.lastName;
+          //   }
+          // }
+
           this.applicantIndex = this.qde.application.applicants.find(val => val.isMainApplicant==true) != undefined ? this.qde.application.applicants.findIndex(val => val.isMainApplicant == true): 0;
-          console.log(this.applicantIndex);
     
+          this.coApplicantIndexes = this.qde.application.applicants.map((e, i) => e.isMainApplicant == false ? i : null).filter((e) => e != null);
+
+          // console.log(this.coApplicantIndexes);
           this.qde.application.applicants.forEach((el, ind) => {
     
-            if(el.isMainApplicant == false) {
-              this.coApplicantIndexes.push(ind);
-            }
+            // if(el.isMainApplicant == false) {
+            //   this.coApplicantIndexes.push(ind);
+            // }
     
             // this.isIncomplete.push(this.checkIncompleteFields(el.applicantId));
             this.isIncomplete.push({
@@ -539,12 +539,14 @@ export class ViewFormComponent implements OnInit, OnDestroy {
           });          
         
           this.prefillData();
+          this.submitButtonChange();
         });
       } else {
         this.qde = this.qdeService.getQde();
       }
+
     });
-    this.submitButtonChange();
+    
   }
 
   setApplicantName(qde) {

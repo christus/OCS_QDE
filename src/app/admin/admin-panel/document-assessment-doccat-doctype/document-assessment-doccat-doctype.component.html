@@ -28,8 +28,18 @@
         <option *ngFor="let c of profiles;" [value]="c.id">{{c.description}}</option>
       </select>
 
+      <label>Is Financial Applicant</label>
+      <br/>
       <input [(ngModel)]="financialApplicant" value="1" type="radio" class="genders" name="financialApplicant" /><label>Yes</label>
       <input [(ngModel)]="financialApplicant" value="0" type="radio" class="genders" name="financialApplicant" /><label>No</label>
+
+      <br/>
+      <br/>
+
+      <label>Is Individual/Non-Individual</label>
+      <br/>
+      <input [(ngModel)]="applicantType" value="1" type="radio" class="genders" name="applicantType" /><label>Individual</label>
+      <input [(ngModel)]="applicantType" value="2" type="radio" class="genders" name="applicantType" /><label>Non-Individual</label>
 
       <br/>
 
@@ -60,6 +70,7 @@
         <th>Document Type</th>
         <th>Profile</th>
         <th>Financial Applicant</th>
+        <th>Applicant Type</th>
         <th>Edit</th>
         <th>Delete</th>
       </tr>
@@ -90,7 +101,15 @@
         <td>
           <form>
             <input (click)="changeRadio($event, i)" value="1" [checked]="d.financialApplicant == true" type="radio" class="genders" name="financialApplicant" /><label>Yes</label>
+            <br/>
             <input (click)="changeRadio($event, i)" value="0" [checked]="d.financialApplicant == false" type="radio" class="genders" name="financialApplicant" /><label>No</label>
+          </form>
+        </td>
+        <td>
+          <form>
+            <input (click)="changeIsIndividual($event, i)" value="1" [checked]="d.applicantTypeId == '1'" type="radio" class="genders" name="isIndividual" /><label>Individual</label>
+            <br/>
+            <input (click)="changeIsIndividual($event, i)" value="2" [checked]="d.applicantTypeId == '2'" type="radio" class="genders" name="isIndividual" /><label>Non-Individual</label>
           </form>
         </td>
         <td>
