@@ -69,8 +69,18 @@
                                                         (click)="selectAnApplicant(qde.application.applicationId, applicant.applicantId, i)"
                                                         type="radio" name="doc-upload"/>
                                                         <label for="applicant-radio">
-                                                            <span class="desc-text">
-                                                                {{applicant.isIndividual ? applicant?.personalDetails?.firstName ? applicant.personalDetails.firstName+" "+applicant.personalDetails.lastName: 'Applicant': (applicant?.organizationDetails?.nameOfOrganization ? applicant?.organizationDetails?.nameOfOrganization: 'Applicant') }}
+                                                            <span class="desc-text">                                                                
+                                                                <!-- {{applicant.isIndividual ? applicant?.personalDetails?.firstName ? applicant.personalDetails.firstName+" "+applicant.personalDetails.lastName: 'Applicant': (applicant?.organizationDetails?.nameOfOrganization ? applicant?.organizationDetails?.nameOfOrganization: 'Applicant') }} -->
+
+                                                                {{i==0?applicant.isIndividual ? applicant?.personalDetails?.firstName ? 
+                                                                    applicant.personalDetails.firstName+" "+applicant.personalDetails.lastName: 
+                                                                    'Applicant': (applicant?.organizationDetails?.nameOfOrganization ? applicant?.organizationDetails?.nameOfOrganization: 'Applicant'):
+                                                                    applicant.isIndividual ? applicant?.personalDetails?.firstName ? 
+                                                                    applicant.personalDetails.firstName+" "+applicant.personalDetails.lastName: 
+                                                                    'Co-Applicant':applicant?.organizationDetails?.nameOfOrganization ? applicant?.organizationDetails?.nameOfOrganization: 'Co-Applicant'
+                                                                 }} 
+                                                                
+                                                                <!-- {{i==0?applicant.isIndividual?'Applicant':'coApplicants':'coapp'}} -->
                                                             </span>
                                                             <!-- <span class="icon icon-close"></span> -->
                                                         </label>
