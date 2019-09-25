@@ -125,7 +125,7 @@
                       </form>
                     </div>
                     <div class="swiper-slide">
-                      <form class="bs-form" id="pan-form" #panNumberForm="ngForm"
+                      <form class="bs-form" id="pan-form" #panNumberForm="ngForm" autocomplete="off"
                         (ngSubmit)="submitPanNumber(panNumberForm, panSlider2)">
                         <div class="form-wrap">
                             <div class="form-group last" style="margin-bottom: 60px;">
@@ -139,7 +139,7 @@
                                         name="applicationFormNo"
                                         (keyup)="keyUpPanNumber($event)"
                                         #applicationRefNo="ngModel"
-                                        fieldFill
+                                        fieldFill autocomplete="off"
                                         required />
                                         <label for="ref-no" tabindex="0">Application Form No</label>
                                         <!-- <div class="redalert" *ngIf="RegExp(regexPattern.sameDigit).test(applicationRefNo.value)">
@@ -154,7 +154,7 @@
                               [(ngModel)]="qde.application.applicants[applicantIndex].pan.panNumber"
                               (ngModelChange)="qde.application.applicants[applicantIndex].pan.panNumber = $event.toUpperCase()"
                               id="pan-inpt" minlength="10" maxlength="10" pattern="{{regexPattern.panInd}}" name="pan"
-                              (keyup)="keyUpPanNumber($event)" #panNumber="ngModel" fieldFill required/>
+                              (keyup)="keyUpPanNumber($event)" #panNumber="ngModel" fieldFill autocomplete="off" required/>
                             <label for="pan-inpt" tabindex="1">Enter PAN</label>
                             <!-- <span class="optional">optional</span> -->
                             <div *ngIf="panNumber.touched && panNumber.invalid && panErrorCount < 3"
@@ -180,10 +180,10 @@
                           </div>
                           <div class="form-group">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              [(ngModel)]="qde.application.applicants[applicantIndex].pan.docNumber" id="docNumber"
+                              [(ngModel)]="qde.application.applicants[applicantIndex].pan.docNumber" id="docNumber" 
                               oninput="this.value = this.value.toUpperCase()" name="docNumber" #panDocNumber="ngModel"
                               pattern="{{regexPatternForDocType[parseInteger(selectedDocType.value) - 1].pattern}}"
-                              maxlength="{{maxlength[parseInteger(selectedDocType.value) - 1]}}" fieldFill required />
+                              maxlength="{{maxlength[parseInteger(selectedDocType.value) - 1]}}" fieldFill  autocomplete="off" required />
                             <label for="docNumber" tabindex="3">Document Number</label>
                             <div *ngIf="panDocNumber.touched && panDocNumber.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="panDocNumber.errors?.required">{{errors.panDocumentNo.required}}</div> -->
@@ -314,7 +314,7 @@
                       </form>
                     </div>
                     <div class="swiper-slide">
-                      <form class="bs-form" id="personal-form" #nameForm="ngForm"
+                      <form class="bs-form" id="personal-form" #nameForm="ngForm" autocomplete="off"
                         (ngSubmit)="submitNameDetails(nameForm, pdSlider2)">
                         <div class="form-wrap">
                           <div class="form-group">
@@ -332,7 +332,7 @@
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                               id="name"
                               [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.firstName"
-                              name="firstName" #firstName="ngModel" fieldFill required
+                              name="firstName" #firstName="ngModel" fieldFill required autocomplete="off"
                               tabindex="2"
                               pattern="{{regexPattern.name}}" />
                             <label for="name">First name</label>
@@ -344,7 +344,7 @@
                           </div>
                           <div class="form-group typ-optional">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="middleName" name="middleName"
+                              id="middleName" name="middleName" autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.middleName"
                               pattern="{{regexPattern.name}}" fieldFill #middleName="ngModel" tabindex="3" />
                             <label for="middleName">Middle name</label>
@@ -360,7 +360,7 @@
 
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                               [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.lastName"
-                              name="lastName" #lastName="ngModel" id="lastName" fieldFill
+                              name="lastName" #lastName="ngModel" id="lastName" fieldFill autocomplete="off"
                               pattern="{{regexPattern.name}}" required tabindex="4" />
                             <label for="lastName">Last name</label>
                             <div *ngIf="(lastName.touched || lastName.dirty) && lastName.invalid"
@@ -414,7 +414,7 @@
                       </form>
                     </div>
                     <div class="swiper-slide">
-                      <form class="bs-form" #dobForm="ngForm" (ngSubmit)="submitDobDetails(dobForm, pdSlider2)">
+                      <form class="bs-form" #dobForm="ngForm" autocomplete="off" (ngSubmit)="submitDobDetails(dobForm, pdSlider2)">
                         <div class="form-wrap">
                           <div class="form-group typ-select">
                             <span class="control-title">Date of Birth</span>
@@ -455,7 +455,7 @@
                             <label for="birthPlace" tabindex="1">Birth place</label>
 
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="birthPlace" name="birthPlace"
+                              id="birthPlace" name="birthPlace" autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.birthPlace"
                               pattern="{{regexPattern.name}}" fieldFill #birthPlace="ngModel" required />
                             <label for="birthPlace">Birth place</label>
@@ -508,13 +508,13 @@
                   (slideNextTransitionStart)="slideNextTransitionStart(cdSlider1)" #cdSlider2="ngxSwiper">
                   <div class="swiper-wrapper">
                     <div class="swiper-slide">
-                      <form class="bs-form" id="contact-form" #contactForm="ngForm"
+                      <form class="bs-form" id="contact-form" #contactForm="ngForm" autocomplete="off" 
                         (ngSubmit)="submitContactDetails(contactForm)">
                         <div class="form-wrap">
                           <div class="form-group" [ngClass]="{'prefer': isAlternateEmailId}">
 
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="email" class="form-control"
-                              id="pref-email" data-validation-attr="email"
+                              id="pref-email" data-validation-attr="email" autocomplete="off" 
                               [(ngModel)]="qde.application.applicants[applicantIndex].contactDetails.preferredEmailId"
                               name="preferEmailId" #preferEmailId="ngModel" pattern="{{regexPattern.email}}" fieldFill
                               required />
@@ -535,7 +535,7 @@
                           <div class="form-group transOpacity500ms fadeOut"
                             [ngClass]="{'typ-alternative': !isAlternateEmailId, 'fadeIn': isAlternateEmailId}">
 
-                            <input [readonly]="isTBMLoggedIn" spellcheck="false" type="email" class="form-control"
+                            <input [readonly]="isTBMLoggedIn" spellcheck="false" type="email" class="form-control" autocomplete="off"
                               id="alter-email" data-validation-attr="email01" pattern="{{regexPattern.email}}"
                               [(ngModel)]="qde.application.applicants[applicantIndex].contactDetails.alternateEmailId"
                               name="alternateEmailId" #alternateEmailId="ngModel" fieldFill />
@@ -562,7 +562,7 @@
                           <div class="form-group typ-mob">
 
                             <input [readonly]="isTBMLoggedIn || qde.application.applicants[applicantIndex].contactDetails.isMobileOTPverified" 
-                              spellcheck="false" type="tel" class="form-control"
+                              spellcheck="false" type="tel" class="form-control" autocomplete="off"
                               id="mob-no" minlength="10" maxlength="10" im-insert="true" 
                               [(ngModel)]="qde.application.applicants[applicantIndex].contactDetails.mobileNumber"
                               name="mobileNumber" #mobileNumber="ngModel" pattern="{{regexPattern.mobileNumber}}"
@@ -582,7 +582,8 @@
                             <span 
                                 *ngIf="qde.application.applicants[applicantIndex].contactDetails.isMobileOTPverified"
                                  style=" font-size: 15px;color: green">verified</span>
-
+                            <span  *ngIf="mobileNumber.valid && !qde.application.applicants[applicantIndex].contactDetails.isMobileOTPverified"
+                            class="invalid-feedback">Need to Verify</span>
                                  
                             <span class="alternate-data" *ngIf="!isAlternateMobileNumber">
                               <a href="javascript:void(0);" class="alter-btn" tabindex="6"
@@ -606,7 +607,7 @@
 
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" minlength="10" type="tel"
                               class="form-control" id="alter-mob" data-validation-attr="mobileno01" maxlength="10"
-                              im-insert="true"
+                              im-insert="true" autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].contactDetails.alternateMobileNumber"
                               name="alternateMobileNumber" #altMobileNo="ngModel" fieldFill
                               pattern="{{regexPattern.mobileNumber}}" />
@@ -636,7 +637,7 @@
 
                           <div class="residence-no">
                             <div class="form-group ">
-                              <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text"
+                              <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" autocomplete="off"
                                 [(ngModel)]="residenceNumberStdCode" pattern="{{regexPattern.stdCode}}"
                                 #residenceStdCode="ngModel" data-validation-attr="residenceno01" maxlength="5"
                                 minlength="3" name="residenceNumber1" class="form-control" fieldFill id="std" />
@@ -651,7 +652,7 @@
                             <span class="seperator">-</span>
                             <div class="form-group typ-optional">
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                                id="res-no" [(ngModel)]="residenceNumberPhoneNumber"
+                                id="res-no" [(ngModel)]="residenceNumberPhoneNumber"autocomplete="off"
                                 pattern="{{regexPattern.mobileNumber}}" minlength="4" maxlength="8" #residenceNumber="ngModel"
                                 name="residenceNumber2" value="{{residenceNumber.phoneNumber}}"
                                 data-validation-attr="residenceno" fieldFill />
@@ -675,7 +676,7 @@
                           </div>
                           <div class="residence-no" [ngClass]="{'typ-alternative': !isAlternateResidenceNumber}">
                             <div class="form-group">
-                              <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text"
+                              <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" autocomplete="off"
                                 [(ngModel)]="alternateResidenceNumberStdCode" name="alternateResidenceNumberStd1"
                                 minlength="3" maxlength="5" #alternateResidenceNumberStd1="ngModel"
                                 pattern="{{regexPattern.stdCode}}" class="form-control" fieldFill id="altrstd">
@@ -693,7 +694,7 @@
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                                 [(ngModel)]="alternateResidenceNumberPhoneNumber" #alternateResidenceNumber2="ngModel"
                                 name="alternateResidenceNumber2" id="altr-res-no" minlength="4"
-                                value="{{residenceNumber.phoneNumber}}" maxlength="8" fieldFill
+                                value="{{residenceNumber.phoneNumber}}" maxlength="8" fieldFill autocomplete="off"
                                 pattern="{{regexPattern.mobileNumber}}" data-validation-attr="residenceno01" />
                               <label for="altr-res-no" tabindex="13">Residence number</label>
                               <span class="optional">Optional</span>
@@ -742,10 +743,10 @@
               <h1 class="center">Verify OTP to continue</h1>
               <!-- <p class="desc typ2">You have cleared the provisional eligibility check for the loan amount requested. Kindly note this clearance is based on the information provided and actual sanction amount is subject to further verification and process. We need more time to process your eligibility. </p>
                         <p class="cm-thin">Thank you for your loan application. Our representative will contact you shortly</p> -->
-              <form class="bs-form" id="spouse-form" #isValidOTP="ngForm">
+              <form class="bs-form" id="spouse-form" autocomplete="off" #isValidOTP="ngForm">
                 <div class="form-wrap1">
                   <div class="form-group otp_input_len">
-                    <input [readonly]="isTBMLoggedIn" type="text" class="form-control" id="otp" name="otp"
+                    <input [readonly]="isTBMLoggedIn" type="text" class="form-control" id="otp" name="otp" autocomplete="off"
                       [(ngModel)]="otp" maxlength="4" #otpValue="ngModel" pattern="{{regexPattern.otp}}" fieldFill>
                     <label for="otp">OTP</label>
                     <div *ngIf="(otpValue.touched || otpValue.dirty) && otpValue.invalid"
@@ -795,7 +796,7 @@
                   (slideNextTransitionStart)="slideNextTransitionStart(commSlider1)" #commSlider2="ngxSwiper">
                   <div class="swiper-wrapper">
                     <div class="swiper-slide">
-                      <form class="bs-form" id="communication-form" #communicationForm="ngForm"
+                      <form class="bs-form" id="communication-form" #communicationForm="ngForm" autocomplete="off"
                         (ngSubmit)="submitCommunicationAddressDetails(communicationForm)">
                         <div class="form-wrap">
                           <h1 class="sub-heading" style="text-align: left ; margin-bottom: 12px">Current Address</h1>
@@ -815,7 +816,7 @@
                               id="address1"
                               [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.addressLineOne"
                               pattern="{{regexPattern.address}}" name="addressLineOne" #address1="ngModel" fieldFill
-                              required />
+                              required autocomplete="off" />
 
                             <div *ngIf="(address1.touched || address1.dirty) && address1.invalid"
                               class="invalid-feedback">
@@ -829,7 +830,7 @@
 
                           <div class="form-group typ-optional">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="address2"
+                              id="address2" autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.addressLineTwo"
                               pattern="{{regexPattern.address}}" name="addressLineTwo" #address2="ngModel" fieldFill />
 
@@ -844,7 +845,7 @@
 
                           <div class="form-group">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="pincode" required
+                              id="pincode" required autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.zipcode"
                               name="pinCode" #commPinCode="ngModel" maxlength="6" fieldFill
                               (blur)="onPinCodeChange($event, 'communicationAddress')"
@@ -861,7 +862,7 @@
                           <div class="form-group">
 
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="cityState" required
+                              id="cityState" required autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.cityState"
                               name="cityState" #commCityState="ngModel" fieldFill pattern="{{regexPattern.address}}" disabled/>
 
@@ -888,7 +889,7 @@
                             <div class="form-group">
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                                 id="per-address1" name="pAddressLineOne" #pAddress1="ngModel"
-                                pattern="{{regexPattern.address}}" fieldFill
+                                pattern="{{regexPattern.address}}" fieldFill autocomplete="off"
                                 [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.addressLineOne"
                                 required />
                               <label for="per-address1" tabindex="6">Address line 1</label>
@@ -901,7 +902,7 @@
                             <div class="form-group typ-optional">
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                                 id="per-address2" name="pAddressLineTwo" #pAddress2="ngModel" fieldFill
-                                pattern="{{regexPattern.address}}"
+                                pattern="{{regexPattern.address}}" autocomplete="off"
                                 [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.addressLineTwo" />
                               <label for="per-address2" tabindex="7">Address line 2</label>
                               <span class="optional">optional</span>
@@ -913,7 +914,7 @@
                             </div>
                             <div class="form-group">
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                                id="per-pincode" name="pZipcode" #pZipcode="ngModel"
+                                id="per-pincode" name="pZipcode" #pZipcode="ngModel" autocomplete="off"
                                 (blur)="onPinCodeChange($event, 'permanentAddress')" fieldFill
                                 [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.zipcode"
                                 minlength="6" maxlength="6" pattern="{{regexPattern.pinCode}}" required />
@@ -930,7 +931,7 @@
                             </div>
                             <div class="form-group">
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                                id="per-cityState" name="commCityState" #commCityState1="ngModel" fieldFill readonly
+                                id="per-cityState" name="commCityState" #commCityState1="ngModel" fieldFill readonly autocomplete="off"
                                 [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.cityState" disabled>
                               <label for="per-cityState" tabindex="9">City/State</label>
                             </div>
@@ -960,7 +961,7 @@
                           </div>
                           <div class="form-group typ-range">
                             <span class="control-title">Number of years in current residence</span>
-                            <input [readonly]="isTBMLoggedIn" spellcheck="false" type="number"
+                            <input [readonly]="isTBMLoggedIn" spellcheck="false" type="number" autocomplete="off"
                               name="numberOfYearsInCurrentResidence" class="form-control mob_current_residence"
                               [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.numberOfYearsInCurrentResidence"
                               tabindex="12" min="0" max="50" maxlength="2"
@@ -1051,7 +1052,7 @@
                       </form>
                     </div>
                     <div class="swiper-slide">
-                      <form class="bs-form" #spouseForm="ngForm"
+                      <form class="bs-form" #spouseForm="ngForm" autocomplete="off"
                         (ngSubmit)="submitSpouseName(spouseForm, maritalSlider2)">
                         <div class="form-wrap">
                           <div class="form-group">
@@ -1069,7 +1070,7 @@
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                               [(ngModel)]="qde.application.applicants[applicantIndex].maritalStatus.firstName"
                               #spouseName="ngModel" tabindex="2" name="firstName" pattern="{{regexPattern.name}}"
-                              id="spouse-name" fieldFill required />
+                              id="spouse-name" fieldFill required  autocomplete="off"/>
                             <label for="spouse-name">First name</label>
 
                             <div *ngIf="(spouseName.touched || spouseName.dirty) && spouseName.invalid"
@@ -1109,13 +1110,13 @@
                       </form>
                     </div>
                     <div class="swiper-slide">
-                      <form class="bs-form" #spouseEarningAmtForm="ngForm"
+                      <form class="bs-form" #spouseEarningAmtForm="ngForm" autocomplete="off"
                         (ngSubmit)="submitSpouseEarningAmt(spouseEarningAmtForm, maritalSlider2)">
                         <div class="form-wrap">
                           <div class="form-group inr typ-optional">
 
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="amount" tabindex="1"
+                              id="amount" tabindex="1" autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].maritalStatus.amount"
                               #amount="ngModel" name="amount" maxlength="16" fieldFill
                               pattern="{{regexPattern.amount}}" />
@@ -1180,13 +1181,13 @@
                   (slideNextTransitionStart)="slideNextTransitionStart(familySlider1)" #familySlider2="ngxSwiper">
                   <div class="swiper-wrapper">
                     <div class="swiper-slide">
-                      <form class="bs-form" #familyForm1="ngForm"
+                      <form class="bs-form" #familyForm1="ngForm" autocomplete="off"
                         (ngSubmit)="submitFamilyForm1(familyForm1, familySlider2)">
                         <div class="form-wrap">
                           <div class="form-group typ-range">
                             <span class="control-title">Enter number of dependents</span>
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="number" name="numberOfDependents"
-                              min="0" max="6" tabindex="1" maxlength="1"
+                              min="0" max="6" tabindex="1" maxlength="1" autocomplete="off"
                               oninput="this.value=this.value.slice(0,this.maxLength)" class="depen-width form-control"
                               [(ngModel)]="qde.application.applicants[applicantIndex].familyDetails.numberOfDependents" />
                             <ng5-slider class="commSlider"
@@ -1203,7 +1204,7 @@
                     </div>
                     <div class="swiper-slide">
 
-                      <form class="bs-form" #familyForm2="ngForm"
+                      <form class="bs-form" #familyForm2="ngForm" autocomplete="off"
                         (ngSubmit)="submitFamilyForm2(familyForm2, familySlider2)">
                         <div class="form-wrap">
                           <div class="form-group">
@@ -1220,7 +1221,7 @@
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                               id="father-name" required
                               [(ngModel)]="qde.application.applicants[applicantIndex].familyDetails.fatherName"
-                              #fatherName="ngModel" tabindex="2" name="fatherName" fieldFill
+                              #fatherName="ngModel" tabindex="2" name="fatherName" fieldFill autocomplete="off"
                               pattern="{{regexPattern.name}}" />
                             <label for="father-name">Father's name</label>
                             <div *ngIf="fatherName.touched && fatherName.invalid" class="invalid-feedback">
@@ -1239,7 +1240,7 @@
                           </div>
                           <div class="form-group">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="mother-name" tabindex="4" required
+                              id="mother-name" tabindex="4" required autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].familyDetails.motherName"
                               #motherName="ngModel" name="motherName" fieldFill pattern="{{regexPattern.name}}" />
                             <label for="mother-name">Mother's name</label>
@@ -1250,7 +1251,7 @@
                           </div>
                           <div class="form-group">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="maiden-name" required tabindex="5"
+                              id="maiden-name" required tabindex="5" autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].familyDetails.motherMaidenName"
                               #motherMaiden="ngModel" name="motherMaidenName" fieldFill
                               pattern="{{regexPattern.name}}" />
@@ -1305,7 +1306,7 @@
                   (slideNextTransitionStart)="slideNextTransitionStart(otherSlider1)" #otherSlider2="ngxSwiper">
                   <div class="swiper-wrapper">
                     <div class="swiper-slide">
-                      <form class="bs-form" #otherForm="ngForm" (ngSubmit)="submitOtherForm(otherForm)">
+                      <form class="bs-form" #otherForm="ngForm" autocomplete="off" (ngSubmit)="submitOtherForm(otherForm)">
                         <div class="form-wrap">
                           <div class="form-group">
                             <span class="control-title">Religion</span>
@@ -1318,7 +1319,7 @@
                           <div class="form-group" *ngIf="selectedReligion.value == '6'"
                             [ngClass]="{'hidden': (selectedReligion.value != '6')}">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                            pattern="{{regexPattern.name}}" #specifyReligion = "ngModel" required maxlength="10"
+                            pattern="{{regexPattern.name}}" #specifyReligion = "ngModel" required maxlength="10" autocomplete="off"
                               tabindex="2" [(ngModel)]="otherReligion" name="religionName" fieldFill id="religion-name">
                             <label for="religion-name">Specify other religion</label>
                             <div *ngIf="specifyReligion.touched && specifyReligion.invalid" class="invalid-feedback">
@@ -1395,7 +1396,7 @@
                   #occupationSlider2="ngxSwiper">
                   <div class="swiper-wrapper">
                     <div class="swiper-slide">
-                      <form class="bs-form" #occupationForm="ngForm"
+                      <form class="bs-form" #occupationForm="ngForm" autocomplete="off"
                         (ngSubmit)="submitOccupationDetails(occupationForm, occupationSlider2)">
                         <div class="form-wrap">
                           <div class="form-group">
@@ -1410,7 +1411,7 @@
                           </div>
                           <div class="form-group"
                             *ngIf="selectedOccupation.value != '9' && selectedOccupation.value != '10' && selectedOccupation.value != '18'">
-                            <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
+                            <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control" autocomplete="off"
                               required [(ngModel)]="qde.application.applicants[applicantIndex].occupation.companyName"
                               pattern="{{regexPattern.name}}" tabindex="2" name="companyName" #companyName="ngModel"
                               fieldFill id="companyName" />
@@ -1427,7 +1428,7 @@
                           <div class="form-group typ-range"
                             *ngIf="selectedOccupation.value != '9' && selectedOccupation.value != '10' && selectedOccupation.value != '18'">
                             <span class="control-title">Years in current employment/business</span>
-                            <input [readonly]="isTBMLoggedIn" spellcheck="false" type="number"
+                            <input [readonly]="isTBMLoggedIn" spellcheck="false" type="number" autocomplete="off"
                               name="numberOfYearsInCurrentCompany" id="no-yrs" class="form-control"
                               oninput="this.value=this.value.slice(0,this.maxLength)"
                               [(ngModel)]="qde.application.applicants[applicantIndex].occupation.numberOfYearsInCurrentCompany"
@@ -1448,7 +1449,7 @@
                             *ngIf="selectedOccupation.value != '9' && selectedOccupation.value != '10' && selectedOccupation.value != '18'">
                             <span class="control-title">Total Work Experience</span>
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="number"
-                              name="totalExperienceYear" class="form-control" tabindex="5"
+                              name="totalExperienceYear" class="form-control" tabindex="5" autocomplete="off"
                               oninput="this.value=this.value.slice(0,this.maxLength)"
                               [(ngModel)]="qde.application.applicants[applicantIndex].occupation.totalWorkExperience"
                               maxlength="2" 
@@ -1496,7 +1497,7 @@
 
                             <div *ngIf="selectedOccupation.value == 10 && qde.application.applicants[applicantIndex].occupation.pensioner == true" class="form-group inr" style="margin-top: 100px;" >
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                                id="annualPensionIncome1"
+                                id="annualPensionIncome1" autocomplete="off"
                                 [(ngModel)]="qde.application.applicants[applicantIndex].occupation.pensionAmount"
                                 #annualPensionIncome1="ngModel" name="annualFamilyIncome" tabindex="9" fieldFill
                                 maxlength="10" pattern="{{regexPattern.amount}}" required />
@@ -1595,12 +1596,12 @@
                   (slideNextTransitionStart)="slideNextTransitionStart(offCorSlider1)" #offCorSlider2="ngxSwiper">
                   <div class="swiper-wrapper">
                     <div class="swiper-slide">
-                      <form class="bs-form" #officialCorrespondenceForm="ngForm"
+                      <form class="bs-form" #officialCorrespondenceForm="ngForm" autocomplete="off"
                         (ngSubmit)="submitOfficialCorrespondence(officialCorrespondenceForm)">
                         <div class="form-wrap">
                           <div class="form-group">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="ofcAddOne"
+                              id="ofcAddOne" autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.addressLineOne"
                               pattern="{{regexPattern.address}}" tabindex="1" name="ofcA1" #ofcA1="ngModel" fieldFill
                               required />
@@ -1615,7 +1616,7 @@
 
                           <div class="form-group typ-optional">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="ofcAddTwo"
+                              id="ofcAddTwo" autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.addressLineTwo"
                               pattern="{{regexPattern.address}}" name="ofcA2" tabindex="2" #ofcA2="ngModel" fieldFill />
                             <label for="ofcAddTwo">Office address line2</label>
@@ -1629,7 +1630,7 @@
 
                           <div class="form-group typ-optional">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="offLandmark"
+                              id="offLandmark" autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.landMark"
                               name="landMark" fieldFill tabindex="3" pattern="{{regexPattern.address}}"
                               #landMark="ngModel" />
@@ -1643,7 +1644,7 @@
                           </div>
                           <div class="form-group typ-optional">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="offPincode" required
+                              id="offPincode" required autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.zipcode"
                               #pinCode="ngModel" name="pinCode" tabindex="4" minlength="6" maxlength="6" fieldFill
                               (blur)="onPinCodeChange($event, 'officialCorrespondence')"
@@ -1661,7 +1662,7 @@
                           </div>
                           <div class="form-group typ-optional">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="offCityState" required readonly
+                              id="offCityState" required readonly autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.cityState"
                               #offCityState="ngModel" name="cityState" tabindex="5" fieldFill
                               pattern="{{regexPattern.address}}" disabled>
@@ -1678,7 +1679,7 @@
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                                 id="std03" required [(ngModel)]="officialCorrespondenceStdCode" #stdCode="ngModel"
                                 tabindex="6" name="stdCode" minlength="3" maxlength="5" pattern="{{regexPattern.stdCode}}"
-                                fieldFill />
+                                fieldFill autocomplete="off"/>
                               <label for="std03">STD</label>
                               <div *ngIf="stdCode.touched && stdCode.invalid" class="invalid-feedback">
                                 <!-- <div *ngIf="stdCode.errors?.required">{{errors.officialCorrespondence.stdCode.required}}</div> -->
@@ -1690,7 +1691,7 @@
                             <div class="form-group">
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                                 id="res-no03" data-validation-attr="residenceno" required #offStdNumber="ngModel"
-                                name="offStdNumber" fieldFill tabindex="7" minlength="4" maxlength="10"
+                                name="offStdNumber" fieldFill tabindex="7" minlength="4" maxlength="10" autocomplete="off"
                                 pattern="{{regexPattern.mobileNumber}}"
                                 [(ngModel)]="officialCorrespondencePhoneNumber" />
                               <label for="res-no03">Office number</label>
@@ -1705,7 +1706,7 @@
                           </div>
                           <div class="form-group typ-optional">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="email" class="form-control"
-                              id="off-email" required
+                              id="off-email" required autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.officeEmailId"
                               pattern="{{regexPattern.email}}" tabindex="8" #officeEmail="ngModel" fieldFill
                               name="officeEmail" (ngModelChange)="onOfficialCorsEmailChange($event, officeEmail)"/>
@@ -1770,12 +1771,12 @@
 
                     <div class="swiper-slide"
                       *ngIf="qde?.application?.applicants[applicantIndex]?.incomeDetails?.incomeConsider == true">
-                      <form class="bs-form" #incomeConsiderFormInd="ngForm"
+                      <form class="bs-form" #incomeConsiderFormInd="ngForm" autocomplete="off"
                         (ngSubmit)="submitMonthlyIncomeIndividual(incomeConsiderFormInd, incomeSliderIndividual2)">
                         <div class="form-wrap">
                           <div class="form-group inr">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="monthlyIncome1" tabindex="1"
+                              id="monthlyIncome1" tabindex="1" autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.monthlyIncome"
                               #monthlyIncome1="ngModel" fieldFill maxlength="10" pattern="{{regexPattern.amount}}"
                               name="monthlyIncome" required />
@@ -1810,7 +1811,7 @@
                         <div class="form-wrap">
                           <div class="form-group inr">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="annualFamilyIncome1"
+                              id="annualFamilyIncome1" autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.annualFamilyIncome"
                               #annualFamilyIncome1="ngModel" name="annualFamilyIncome" tabindex="1" fieldFill
                               maxlength="10" pattern="{{regexPattern.amount}}" required />
@@ -1829,7 +1830,7 @@
                           </div>
                           <div class="form-group inr">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="monthlyExpenditure1"
+                              id="monthlyExpenditure1" autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.monthlyExpenditure"
                               #monthlyExpenditure1="ngModel" pattern="{{regexPattern.amount}}" name="monthlyExpenditure"
                               tabindex="2" maxlength="10" fieldFill required />
@@ -1912,12 +1913,12 @@
                   (slideNextTransitionStart)="slideNextTransitionStart(panSlider3)" #panSlider4="ngxSwiper">
                   <div class="swiper-wrapper">
                     <div class="swiper-slide">
-                      <form class="bs-form" #panNumberForm2="ngForm"
+                      <form class="bs-form" #panNumberForm2="ngForm" autocomplete="off"
                         (ngSubmit)="submitOrgPanNumber(panNumberForm2, panSlider4)">
                         <div class="form-wrap" style="overflow: hidden;">
                             <div class="form-group last" style="margin-bottom: 60px;">
                                 <input [readonly]="isTBMLoggedIn" spellcheck="false"
-                                        type="text"
+                                        type="text"  autocomplete="off"
                                         class="form-control"
                                         [(ngModel)]="qde.application.applicationFormNumber"
                                         (ngModelChange)="qde.application.applicationFormNumber = $event.toUpperCase()" 
@@ -1940,7 +1941,7 @@
                           <div class="form-group last typ-optional">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                               [(ngModel)]="qde.application.applicants[applicantIndex].pan.panNumber" tabindex="1"
-                              id="pan-inpt2" minlength="10" maxlength="10" pattern="{{regexPattern.panNonInd}}"
+                              id="pan-inpt2" minlength="10" maxlength="10" pattern="{{regexPattern.panNonInd}}" autocomplete="off"
                               (ngModelChange)="qde.application.applicants[applicantIndex].pan.panNumber = $event.toUpperCase()"
                               (keyup)="keyUpPanNumber($event)" name="pan" #panNumber2="ngModel" fieldFill required/>
                             <label for="pan-inpt2">Enter PAN</label>
@@ -1974,7 +1975,7 @@
                                             </div>
                                             <div class="form-group">
                                               <input [readonly]="isTBMLoggedIn" spellcheck="false"
-                                                    type="text"
+                                                    type="text" autocomplete="off"
                                                     class="form-control"
                                                     [(ngModel)]="qde.application.applicants[applicantIndex].pan.docNumber"
                                                     id="docNumber2"
@@ -2076,12 +2077,12 @@
                   (slideNextTransitionStart)="slideNextTransitionStart(orgSlider1)" #orgSlider2="ngxSwiper">
                   <div class="swiper-wrapper">
                     <div class="swiper-slide">
-                      <form class="bs-form" #organizationForm="ngForm"
+                      <form class="bs-form" #organizationForm="ngForm" autocomplete="off"
                         (ngSubmit)="submitOrganizationDetails(organizationForm)">
                         <div class="form-wrap">
                           <div class="form-group">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="org-name" tabindex="1" pattern="{{regexPattern.name}}"
+                              id="org-name" tabindex="1" pattern="{{regexPattern.name}}" autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].organizationDetails.nameOfOrganization"
                               #orgName="ngModel" name="orgName" fieldFill required />
                             <label for="org-name">Name of Organization</label>
@@ -2169,12 +2170,12 @@
                   (slideNextTransitionStart)="slideNextTransitionStart(regSlider1)" #regSlider2="ngxSwiper">
                   <div class="swiper-wrapper">
                     <div class="swiper-slide">
-                      <form class="bs-form" #registeredAddressForm="ngForm"
+                      <form class="bs-form" #registeredAddressForm="ngForm" autocomplete="off"
                         (ngSubmit)="submitRegisteredAddress(registeredAddressForm)">
                         <div class="form-wrap">
                           <div class="form-group">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="reg-add"
+                              id="reg-add" autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].registeredAddress.registeredAddress"
                               pattern="{{regexPattern.address}}" name="regAdd" #regAdd="ngModel" tabindex="1" fieldFill
                               required />
@@ -2187,7 +2188,7 @@
                           </div>
                           <div class="form-group typ-optional">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              name="landmark" tabindex="2" #landmark01="ngModel" fieldFill
+                              name="landmark" tabindex="2" #landmark01="ngModel" fieldFill autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].registeredAddress.landMark"
                               id="landmark" pattern="{{regexPattern.address}}" />
 
@@ -2201,7 +2202,7 @@
                           </div>
                           <div class="form-group typ-optional">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="regoffPincode" required tabindex="3"
+                              id="regoffPincode" required tabindex="3" autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].registeredAddress.zipcode"
                               #regAddrPinCode="ngModel" name="pinCode" minlength="6" maxlength="6" fieldFill
                               (blur)="onPinCodeChange($event, 'registeredAddress')"
@@ -2218,7 +2219,7 @@
                           </div>
                           <div class="form-group last">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="regAddrCityState" required tabindex="4"
+                              id="regAddrCityState" required tabindex="4" autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].registeredAddress.cityState"
                               #regAddrCityState="ngModel" name="cityState" fieldFill readonly disabled
                               pattern="{{regexPattern.address}}">
@@ -2268,7 +2269,7 @@
                   (slideNextTransitionStart)="slideNextTransitionStart(corporateSlider1)" #corporateSlider2="ngxSwiper">
                   <div class="swiper-wrapper">
                     <div class="swiper-slide">
-                      <form class="bs-form" #corporateAddressForm="ngForm"
+                      <form class="bs-form" #corporateAddressForm="ngForm" autocomplete="off"
                         (ngSubmit)="submitCorporateAddress(corporateAddressForm)">
                         <div class="form-wrap">
                             <div class="bs-checkbox typ-withForm" *ngIf="qde.application.applicants[applicantIndex].registeredAddress.registeredAddress != '' && qde.application.applicants[applicantIndex].registeredAddress.zipcode != '' && qde.application.applicants[applicantIndex].registeredAddress.cityState != ''">
@@ -2284,7 +2285,7 @@
                             </div>
                           <div class="form-group">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="corp-add" tabindex="2"
+                              id="corp-add" tabindex="2" autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].corporateAddress.corporateAddress"
                               pattern="{{regexPattern.address}}" name="corpAddress" #corpAddress="ngModel" fieldFill
                               required />
@@ -2296,7 +2297,7 @@
                             </div>
                           </div>
                           <div class="form-group typ-optional">
-                            <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text"
+                            <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].corporateAddress.landMark"
                               tabindex="3" name="landmark" #landmark="ngModel" class="form-control" fieldFill
                               pattern="{{regexPattern.address}}" id="landmark01" />
@@ -2309,7 +2310,7 @@
                           </div>
                           <div class="form-group">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="pincode01"
+                              id="pincode01" autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].corporateAddress.zipcode"
                               tabindex="4" pattern="{{regexPattern.pinCode}}" name="pincode" minlength="6" maxlength="6"
                               required #corpPincode="ngModel" (blur)="onPinCodeChange($event, 'corporateAddress')"
@@ -2326,7 +2327,7 @@
                           </div>
                           <div class="form-group">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="city-state01" required tabindex="5"
+                              id="city-state01" required tabindex="5" autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].corporateAddress.cityState"
                               #corpCityState="ngModel" name="corpCityState" fieldFill readonly disabled
                               pattern="{{regexPattern.address}}" />
@@ -2340,7 +2341,7 @@
                           </div>
                           <div class="residence-no">
                             <div class="form-group">
-                              <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text"
+                              <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" autocomplete="off"
                                 [(ngModel)]="corporateAddressStdCode" name="stdNumber" class="form-control"
                                 #stdNumber="ngModel" tabindex="6" fieldFill minlength="3" maxlength="5" required id="caStd"
                                 pattern="{{regexPattern.stdCode}}" required />
@@ -2353,7 +2354,7 @@
                             </div>
                             <span class="seperator">-</span>
                             <div class="form-group">
-                              <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
+                              <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control" autocomplete="off"
                                 [(ngModel)]="corporateAddressPhoneNumber" name="phoneNumber" id="ca-res-no" tabindex="7"
                                 fieldFill #phoneNumber="ngModel" pattern="{{regexPattern.mobileNumber}}" minlength="4" maxlength="10"
                                 data-validation-attr="residenceno" required />
@@ -2367,7 +2368,7 @@
                           </div>
                           <div class="form-group last">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="email" class="form-control"
-                              tabindex="8" id="ofc-email" required pattern="{{regexPattern.email}}"
+                              tabindex="8" id="ofc-email" required pattern="{{regexPattern.email}}" autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].corporateAddress.officeEmailId"
                               name="officeEmailId" #ofcEmail="ngModel" fieldFill />
                             <label for="ofc-email">Office email ID</label>
@@ -2414,11 +2415,12 @@
                   (slideNextTransitionStart)="slideNextTransitionStart(revenueSlider1)" #revenueSlider2="ngxSwiper">
                   <div class="swiper-wrapper">
                     <div class="swiper-slide">
-                      <form class="bs-form" #revenueForm="ngForm" (ngSubmit)="submitRevenueDetails(revenueForm)">
+                      <form class="bs-form" #revenueForm="ngForm" autocomplete="off" 
+                      (ngSubmit)="submitRevenueDetails(revenueForm)">
                         <div class="form-wrap">
                           <div class="form-group inr">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="revenue"
+                              id="revenue" autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].revenueDetails.revenue"
                               #revenue="ngModel" name="revenue" maxlength="15" fieldFill tabindex="1"
                               pattern="{{regexPattern.revenue}}" required />
@@ -2435,7 +2437,7 @@
                           </div>
                           <div class="form-group inr">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" maxlength="15" type="text"
-                              class="form-control" id="net-income" required
+                              class="form-control" id="net-income" required autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].revenueDetails.annualNetIncome"
                               fieldFill tabindex="2" #annualNetincome="ngModel" name="annualNetIncome"
                               pattern="{{regexPattern.revenue}}" />
@@ -2539,12 +2541,12 @@
                     </div>
 
                     <div class="swiper-slide">
-                      <form class="bs-form" #incomeDetailsForm4="ngForm"
+                      <form class="bs-form" #incomeDetailsForm4="ngForm" autocomplete="off"
                         (ngSubmit)="submitMonthlyIncomeNonIndividual(incomeDetailsForm4, incomeConsiderSliderNonIndividual2)">
                         <div class="form-wrap">
                           <div class="form-group inr">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="monthlyIncome2" maxlength="10"
+                              id="monthlyIncome2" maxlength="10" autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.monthlyIncome"
                               #monthlyIncome2="ngModel" fieldFill tabindex="1" pattern="{{regexPattern.amount}}"
                               name="monthlyIncome" required />
