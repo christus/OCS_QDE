@@ -871,7 +871,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.initializeVariables();
           }, error => {
             this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please again later.";
+            this.errorMessage = "Something went wrong, please try again later.";
           });
         // }
       }
@@ -1133,7 +1133,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       }, error => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       });
     }
     // Only create HFC API when PAN is already valid and not touched
@@ -1162,11 +1162,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
               } else {
                 this.isErrorModal = true;
-                this.errorMessage = "Something went wrong, please again later.";
+                this.errorMessage = "Something went wrong, please try again later.";
               }
             }, error => {
               this.isErrorModal = true;
-              this.errorMessage = "Something went wrong, please again later.";
+              this.errorMessage = "Something went wrong, please try again later.";
             });
 
             let applicationId = result['application']['applicationId'];
@@ -1176,11 +1176,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
                 this.router.navigate(['/applicant/'+this.qde.application.applicationId]);
               } else {
                 this.isErrorModal = true;
-                this.errorMessage = "Something went wrong, please again later.";
+                this.errorMessage = "Something went wrong, please try again later.";
               }
             }, error => {
               this.isErrorModal = true;
-              this.errorMessage = "Something went wrong, please again later.";
+              this.errorMessage = "Something went wrong, please try again later.";
             });
 
           }else {
@@ -1196,11 +1196,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         } else {
           this.panErrorCount++;
           this.isErrorModal = true;
-          this.errorMessage = "Something went wrong, please again later.";  
+          this.errorMessage = "Something went wrong, please try again later.";  
         }
       }, (error) => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       });
     }
 
@@ -1294,7 +1294,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
             }
         }, error => {
           this.isErrorModal = true;
-          this.errorMessage = "Something went wrong, please again later.";
+          this.errorMessage = "Something went wrong, please try again later.";
         });
       } else {
         this.createOrUpdatePanDetailsSub2=this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
@@ -1336,11 +1336,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           } else {
             this.panErrorCount++;
             this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please again later.";
+            this.errorMessage = "Something went wrong, please try again later.";
           }
         }, (error) => {
           this.isErrorModal = true;
-          this.errorMessage = "Something went wrong, please again later.";
+          this.errorMessage = "Something went wrong, please try again later.";
         });
       }
 
@@ -1409,11 +1409,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           this.goToNextSlide(swiperInstance);
         } else {
           this.isErrorModal = true;
-          this.errorMessage = "Something went wrong, please again later."
+          this.errorMessage = "Something went wrong, please try again later."
 ;        }
       }, (error) => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later."
+        this.errorMessage = "Something went wrong, please try again later."
 ;      });
     }
     
@@ -1439,11 +1439,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         this.goToNextSlide(swiperInstance);
       } else {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       }
     }, (error) => {
       this.isErrorModal = true;
-      this.errorMessage = "Something went wrong, please again later.";
+      this.errorMessage = "Something went wrong, please try again later.";
     });
     
   }
@@ -1472,11 +1472,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           console.log(response['ProcessVariables']['response']);
         } else {
           this.isErrorModal = true;
-          this.errorMessage = "Something went wrong, please again later.";
+          this.errorMessage = "Something went wrong, please try again later.";
         }
       }, (error) => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later."
+        this.errorMessage = "Something went wrong, please try again later."
 ;      });
     }
     
@@ -1512,11 +1512,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           this.goToNextSlide(swiperInstance);
         } else {
           this.isErrorModal = true;
-          this.errorMessage = "Something went wrong, please again later.";
+          this.errorMessage = "Something went wrong, please try again later.";
         }
       }, (error) => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       });
     }
     
@@ -1564,11 +1564,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
               this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             } else {
               this.isErrorModal = true;
-              this.errorMessage = "Something went wrong, please again later.";
+              this.errorMessage = "Something went wrong, please try again later.";
             }
           }, error => {
             this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please again later.";
+            this.errorMessage = "Something went wrong, please try again later.";
           });
           this.qdeHttp.duplicateApplicantCheck(this.qde.application.applicants[this.applicantIndex].applicantId).subscribe(res => {
             
@@ -1583,19 +1583,19 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
               }
             } else {
               this.isErrorModal = true;
-              this.errorMessage = "Something went wrong, please again later.";
+              this.errorMessage = "Something went wrong, please try again later.";
             }
           }, error => {
             this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please again later.";
+            this.errorMessage = "Something went wrong, please try again later.";
           });
         } else {
           this.isErrorModal = true;
-          this.errorMessage = "Something went wrong, please again later.";
+          this.errorMessage = "Something went wrong, please try again later.";
         }
       }, (error) => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       });
     }
   }
@@ -1640,11 +1640,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           this.tabSwitch(3);
         } else {
           this.isErrorModal = true;
-          this.errorMessage = "Something went wrong, please again later.";
+          this.errorMessage = "Something went wrong, please try again later.";
         }
       }, (error) => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       });
   
     }
@@ -1679,15 +1679,15 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         }
         else if(response['Error'] == '1') {
           this.isErrorModal = true;
-          this.errorMessage = "Something went wrong, please again later.";
+          this.errorMessage = "Something went wrong, please try again later.";
         } else {
           this.isErrorModal = true;
-          this.errorMessage = "Something went wrong, please again later.";
+          this.errorMessage = "Something went wrong, please try again later.";
         }
 
      }, error => {
       this.isErrorModal = true;
-      this.errorMessage = "Something went wrong, please again later."
+      this.errorMessage = "Something went wrong, please try again later."
 ;     });
   }
   //-------------------------------------------------------------
@@ -1745,11 +1745,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           this.tabSwitch(4);
         } else {
           this.isErrorModal = true;
-          this.errorMessage = "Something went wrong, please again later.";
+          this.errorMessage = "Something went wrong, please try again later.";
         }
       }, (error) => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       });
     }
 
@@ -1801,11 +1801,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           }
         } else {
           this.isErrorModal = true;
-          this.errorMessage = "Something went wrong, please again later.";
+          this.errorMessage = "Something went wrong, please try again later.";
         }
       }, (error) => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       });
     }
   }
@@ -1836,11 +1836,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           this.goToNextSlide(swiperInstance);
         } else {
           this.isErrorModal = true;
-          this.errorMessage = "Something went wrong, please again later.";
+          this.errorMessage = "Something went wrong, please try again later.";
         }
       }, (error) => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       });
   
     }
@@ -1877,11 +1877,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           }
         } else {
           this.isErrorModal = true;
-          this.errorMessage = "Something went wrong, please again later.";
+          this.errorMessage = "Something went wrong, please try again later.";
         }
       }, (error) => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       });
   
     }
@@ -1911,11 +1911,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           this.tabSwitch(5);
         } else {
           this.isErrorModal = true;
-          this.errorMessage = "Something went wrong, please again later.";
+          this.errorMessage = "Something went wrong, please try again later.";
         }
       }, (error) => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       });
     }
   }
@@ -1953,11 +1953,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           this.goToNextSlide(swiperInstance);
         } else {
           this.isErrorModal = true;
-          this.errorMessage = "Something went wrong, please again later.";
+          this.errorMessage = "Something went wrong, please try again later.";
         }
       }, (error) => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       });
   
     }
@@ -1994,11 +1994,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           this.tabSwitch(6);
         } else {
           this.isErrorModal = true;
-          this.errorMessage = "Something went wrong, please again later.";
+          this.errorMessage = "Something went wrong, please try again later.";
         }
       }, (error) => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       });
     }
 
@@ -2044,11 +2044,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           this.tabSwitch(7);
         } else {
           this.isErrorModal = true;
-          this.errorMessage = "Something went wrong, please again later.";
+          this.errorMessage = "Something went wrong, please try again later.";
         }
       }, (error) => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       });
     }
 
@@ -2139,11 +2139,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           
         } else {
           this.isErrorModal = true;
-          this.errorMessage = "Something went wrong, please again later.";
+          this.errorMessage = "Something went wrong, please try again later.";
         }
       }, (error) => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       });
   
     }
@@ -2193,11 +2193,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           this.tabSwitch(9);
         } else {
           this.isErrorModal = true;
-          this.errorMessage = "Something went wrong, please again later.";
+          this.errorMessage = "Something went wrong, please try again later.";
         }
       }, (error) => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       });
     }
   }
@@ -2251,11 +2251,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         
         } else {
           this.isErrorModal = true;
-          this.errorMessage = "Something went wrong, please again later.";
+          this.errorMessage = "Something went wrong, please try again later.";
         }
       }, (error) => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       });
     }
   }
@@ -2312,11 +2312,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           this.tabSwitch(13);
         } else {
           this.isErrorModal = true;
-          this.errorMessage = "Something went wrong, please again later.";
+          this.errorMessage = "Something went wrong, please try again later.";
         }
       }, (error) => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       });
     }
   }
@@ -2366,11 +2366,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           this.tabSwitch(14);
         } else {
           this.isErrorModal = true;
-          this.errorMessage = "Something went wrong, please again later.";
+          this.errorMessage = "Something went wrong, please try again later.";
         }
       }, (error) => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       });
     }
   }
@@ -2408,11 +2408,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           this.tabSwitch(15);
         } else {
           this.isErrorModal = true;
-          this.errorMessage = "Something went wrong, please again later.";
+          this.errorMessage = "Something went wrong, please try again later.";
         }
       }, (error) => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       });
     }
   }
@@ -2454,11 +2454,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           this.isApplicantRouteModal = true;
         } else {
           this.isErrorModal = true;
-          this.errorMessage = "Something went wrong, please again later.";
+          this.errorMessage = "Something went wrong, please try again later.";
         }
       }, (error) => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       });
   
     }
@@ -2494,11 +2494,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           //this.goToNextSlide(swiperInstance);
         } else {
           this.isErrorModal = true;
-          this.errorMessage = "Something went wrong, please again later.";
+          this.errorMessage = "Something went wrong, please try again later.";
         }
       }, (error) => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       });
   
     }
@@ -2534,11 +2534,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           //this.goToNextSlide(swiperInstance);
         } else {
           this.isErrorModal = true;
-          this.errorMessage = "Something went wrong, please again later.";
+          this.errorMessage = "Something went wrong, please try again later.";
         }
       }, (error) => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       });
   
     }
@@ -2759,11 +2759,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           }
         } else {
           this.isErrorModal = true;
-          this.errorMessage = "Something went wrong, please again later.";
+          this.errorMessage = "Something went wrong, please try again later.";
         }
       }, (error) => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       });
     }
   }
@@ -2840,11 +2840,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           }
         } else {
           this.isErrorModal = true;
-          this.errorMessage = "Something went wrong, please again later.";
+          this.errorMessage = "Something went wrong, please try again later.";
         }
       }, (error) => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       });
     }
   }
@@ -2949,11 +2949,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         this.isAlternateStatus =  false;
       } else {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       }
      }, error => {
       this.isErrorModal = true;
-      this.errorMessage = "Something went wrong, please again later.";
+      this.errorMessage = "Something went wrong, please try again later.";
      });
      this.timeout();
   }
@@ -2996,7 +2996,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       }
      }, error => {
       this.isErrorModal = true;
-      this.errorMessage = "Something went wrong, please again later.";
+      this.errorMessage = "Something went wrong, please try again later.";
      });
   }
   editMobileNo(){
@@ -3316,7 +3316,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
             this.tabSwitch(1);
           } else {
             this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please again later.";
+            this.errorMessage = "Something went wrong, please try again later.";
           }
         });
       } else {
@@ -3466,11 +3466,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
               this.closeDuplicateModal();
             } else {
               this.isErrorModal = true;
-              this.errorMessage = "Something went wrong, please again later.";
+              this.errorMessage = "Something went wrong, please try again later.";
             }
           }, error => {
             this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please again later.";
+            this.errorMessage = "Something went wrong, please try again later.";
           });
     });
 }

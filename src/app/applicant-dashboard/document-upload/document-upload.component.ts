@@ -310,7 +310,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
   
           }, error => {
             this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please again later.";
+            this.errorMessage = "Something went wrong, please try again later.";
           });
 
 
@@ -560,7 +560,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
       }
     } , error => {
       this.isErrorModal = true;
-      this.errorMessage = "Something went wrong, please again later.";
+      this.errorMessage = "Something went wrong, please try again later.";
     });
 
   }
@@ -645,7 +645,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
       }
     } , error => {
       this.isErrorModal = true;
-      this.errorMessage = "Something went wrong, please again later.";
+      this.errorMessage = "Something went wrong, please try again later.";
     });
   }
 
@@ -767,7 +767,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
       }
     } , error => {
       this.isErrorModal = true;
-      this.errorMessage = "Something went wrong, please again later.";
+      this.errorMessage = "Something went wrong, please try again later.";
     });
   }
 
@@ -845,7 +845,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
       }
     } , error => {
       this.isErrorModal = true;
-      this.errorMessage = "Something went wrong, please again later.";
+      this.errorMessage = "Something went wrong, please try again later.";
     });
   }
 
@@ -933,7 +933,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
       }
     } , error => {
       this.isErrorModal = true;
-      this.errorMessage = "Something went wrong, please again later.";
+      this.errorMessage = "Something went wrong, please try again later.";
     });
 
   }
@@ -1019,7 +1019,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
       }
     } , error => {
       this.isErrorModal = true;
-      this.errorMessage = "Something went wrong, please again later.";
+      this.errorMessage = "Something went wrong, please try again later.";
     });
   }
 
@@ -1093,7 +1093,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
         }
       }, error => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       }
     );
   }
@@ -1130,7 +1130,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
         }
       }, error => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       }
     );
   }
@@ -1179,7 +1179,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
         }
       }, error => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       }
     );
   }
