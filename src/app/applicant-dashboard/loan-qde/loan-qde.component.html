@@ -54,13 +54,13 @@
                   (slideNextTransitionStart)="slideNextTransitionStart(loanAmountSlider1)" #loanAmountSlider2="ngxSwiper">
                   <div class="swiper-wrapper">
                     <div class="swiper-slide">
-                    <form class="bs-form" id="personal-form"
+                    <form class="bs-form" id="personal-form" autocomplete="off"
                     #loanAmount="ngForm"
                     (ngSubmit)="submitLoanAmount(loanAmount)">
                       <div class="form-wrap">
                         <div class="form-group inr">
                           <input [readonly]="isTBMLoggedIn" type="text" class="form-control" id="amt-require"
-                            required
+                            required autocomplete="off"
                             [(ngModel)]="qde?.application.loanDetails.loanAmount.amountRequired"
                             #amountRequired = "ngModel"
                             name="amountRequired"
@@ -111,7 +111,7 @@
                           <span class="control-title">Loan tenure (in years)</span>
                           <input [readonly]="isTBMLoggedIn" type="number" class="form-control" id="no-yrs"
                             required
-                            ngModel
+                            ngModel autocomplete="off"
                             #loanTenure = "ngModel"
                             min="0"
                             max="30"
@@ -193,7 +193,7 @@
                       </form>
                     </div>
                     <div class="swiper-slide">
-                      <form class="bs-form"
+                      <form class="bs-form" autocomplete="off"
                       #propertyType="ngForm"
                       (ngSubmit)="updatePropertyType(propertyType, property2)">
                           <div class="form-wrap">
@@ -237,7 +237,7 @@
                                 </div>
                               <div class="form-group">
                                   <input [readonly]="isTBMLoggedIn"
-                                  type="text"
+                                  type="text" autocomplete="off"
                                   class="form-control"
                                   id="pro-add-line2" 
                                   name="propertyAreaInSqFFeets"
@@ -261,13 +261,13 @@
                       </form>
                   </div>
                     <div class="swiper-slide">
-                      <form class="bs-form" #submitProperty="ngForm"
+                      <form class="bs-form" #submitProperty="ngForm" autocomplete="off"
                       (ngSubmit)="submitPropertyDetail(submitProperty, property2)">
                         <div class="form-wrap">
                           <div class="form-group">
                             <input [readonly]="isTBMLoggedIn" type="text" class="form-control"
                             id="add-line1"
-                            required
+                            required autocomplete="off"
                             ngModel
                             #proaddressLineOne="ngModel"
                             [(ngModel)]="addressLineOneValue"
@@ -286,7 +286,7 @@
                           <div class="form-group typ-optional">
                             <input [readonly]="isTBMLoggedIn" type="text" class="form-control" id="add-line2"
                               ngModel
-                              #addressLineTwo = "ngModel"
+                              #addressLineTwo = "ngModel" autocomplete="off"
 							                fieldFill
                               [(ngModel)]="addressLineTwoValue"
                               name="addressLineTwo"
@@ -304,7 +304,7 @@
                             <input [readonly]="isTBMLoggedIn" type="text" class="form-control" id="proprty-pin"
                             required
                             ngModel
-                            #propertyPincode = "ngModel"
+                            #propertyPincode = "ngModel" autocomplete="off"
                             [(ngModel)]="propertyPincodeValue"
                             minlength="6"
                             maxlength="6"
@@ -328,7 +328,7 @@
                             <input [readonly]="isTBMLoggedIn" type="text" class="form-control" id="pro-city2"
                               required
                               ngModel
-                              #cityOrState = "ngModel"
+                              #cityOrState = "ngModel" autocomplete="off"
                               [(ngModel)] = "cityState"
 							                fieldFill
                               name="cityOrState"
@@ -405,7 +405,8 @@
 
                     <!-- Select an applicant for Existing Loan -->
                     <div class="swiper-slide">
-                      <form class="bs-form" #selectApplicantForExistingLoanForm="ngForm" (ngSubmit)="submitAnApplicantForExistingLoan(selectApplicantForExistingLoanForm, existingLoan2)" >
+                      <form class="bs-form" #selectApplicantForExistingLoanForm="ngForm" 
+                      (ngSubmit)="submitAnApplicantForExistingLoan(selectApplicantForExistingLoanForm, existingLoan2)" >
                         <div class="form-wrap">
                           <div class="form-group">
                             <kendo-dropdownlist [readonly]="isTBMLoggedIn" 
@@ -425,13 +426,13 @@
                     </div>
 
                       <div class="swiper-slide">
-                          <form class="bs-form" #liveLoansForm="ngForm" 
+                          <form class="bs-form" #liveLoansForm="ngForm" autocomplete="off"
                           (ngSubmit)="submitLiveLoans(liveLoansForm, existingLoan2)">
                             <div class="form-wrap">
                               <div class="form-group">
                                 <div class="form-group typ-range">
                                     <span class="control-title">Live Loans</span>
-                                    <input type="number"
+                                    <input type="number" autocomplete="off"
                                             name="liveLoansNumber"
                                             oninput="this.value=this.value.slice(0,this.maxLength)"
                                             maxLength = 1
@@ -457,7 +458,7 @@
                         </div>
 
                     <div class="swiper-slide" *ngIf="selectedLoanPurpose && ['16', '17'].includes(selectedLoanPurpose.value)">
-                      <form class="bs-form" #loanProvider="ngForm"
+                      <form class="bs-form" #loanProvider="ngForm" autocomplete="off"
                       (ngSubmit)="submitExistingLoanProvider(loanProvider, existingLoan2)">
                         <div class="form-wrap">
 
@@ -476,7 +477,7 @@
 
                           <div class="form-group inr typ-optional">
                               <input [readonly]="isTBMLoggedIn" type="text" class="form-control" id="monthly-emi"
-                                ngModel
+                                ngModel autocomplete="off"
                                 #monthlyEmi = "ngModel"
                                 [(ngModel)]="monthlyEmiValue"
                                 fieldFill
@@ -508,13 +509,13 @@
 
 
                     <div class="swiper-slide">
-                      <form class="bs-form"
+                      <form class="bs-form" autocomplete="off"
                       #monthlyEmiForm="ngForm"
                       (ngSubmit)="submitMonthlyEmi(monthlyEmiForm, existingLoan2)">
                         <div class="form-wrap">
                           <div class="form-group inr typ-optional">
                             <input [readonly]="isTBMLoggedIn" type="text" class="form-control" id="monthly-emi"
-                              ngModel
+                              ngModel autocomplete="off"
                               #monthlyEmi = "ngModel"
                               [(ngModel)]="monthlyEmiValue"
                               fieldFill

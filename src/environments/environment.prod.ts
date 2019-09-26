@@ -4,7 +4,7 @@ export const environment = {
   production: true,
   projectId: '5928d30eac7811e9a1670242ac110002', //developement
 
- // projectId: '3209f7ea7ba811e982270242ac110002', //production
+  //projectId: '3209f7ea7ba811e982270242ac110002', //production
 
   status: {
     QDECREATED: "1"

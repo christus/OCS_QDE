@@ -5662,6 +5662,16 @@ img {
     top: 15px;
 }
 
+.disable-text-selection {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+
 
 @media only screen and (max-width: 1000px) {  
 	.mobile .leadList table td {
@@ -5720,12 +5730,13 @@ img {
 
 	.mobile .bs-form .form-group.filled label {
 		transform: translateY(-31px) scale(.4) !important;
-	}
 
+/* 
 	.mobile .bs-file {
 		position: relative;
 		width: 31.25vw;
 		height: 31.25vw;
 		margin: 0 auto;
+	} */
 	}
 }

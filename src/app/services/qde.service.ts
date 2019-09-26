@@ -187,7 +187,13 @@ export class QdeService {
               documentName: "",
               documentSize: null
             }
-          ]
+          ],
+          existingLoans: {
+            loanProvider: "",
+            liveLoan: null,
+            numberOfYears: null,
+            monthlyEmi: null
+          }
         }
       ],
       loanDetails: {

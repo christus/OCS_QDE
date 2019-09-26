@@ -257,7 +257,7 @@ const appRoutes: Routes = [
     component: ViewFormComponent,
     resolve: {
       listOfValues: ListOfValuesResolverService,
-      qde: GetQdeDataResolverService,
+      // qde: GetQdeDataResolverService,
     }
   },
   {

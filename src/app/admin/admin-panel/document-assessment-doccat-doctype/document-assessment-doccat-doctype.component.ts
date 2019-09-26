@@ -29,6 +29,7 @@ export class DocumentAssessmentDoccatDoctypeComponent implements OnInit {
   perPage: number = 1000;
   totalElements: number;
   financialApplicant: string;
+  applicantType: string;
 
   data: Array<any> = [];
 
@@ -142,7 +143,8 @@ export class DocumentAssessmentDoccatDoctypeComponent implements OnInit {
       docTypeId: dude.docTypeId,
       profileId: dude.profileId,
       financialApplicant: dude.financialApplicant,
-      tableName: this.tableName
+      tableName: this.tableName,
+      applicantType: parseInt(dude.applicantType)
     };
 
     this.qdeHttp.adminUpdateDocumentProfile(dude).subscribe(res => {
@@ -211,7 +213,8 @@ export class DocumentAssessmentDoccatDoctypeComponent implements OnInit {
       profileId: this.data[index].profileId+"",
       id: this.data[index]['id'],
       tableName: this.tableName,
-      financialApplicant: this.data[index].financialApplicant
+      financialApplicant: this.data[index].financialApplicant,
+      applicantType: parseInt(this.data[index].applicantTypeId)
     };
 
     this.qdeHttp.adminUpdateDocumentProfile(dude).subscribe(res => {
@@ -235,5 +238,9 @@ export class DocumentAssessmentDoccatDoctypeComponent implements OnInit {
         this.refresh();
       });
     } 
+  }
+
+  changeIsIndividual(event, index) {
+    this.data[index].applicantTypeId = event.target.value == '1' ? '1': '2';
   }
 }

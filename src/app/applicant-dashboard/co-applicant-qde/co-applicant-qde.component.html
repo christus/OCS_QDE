@@ -187,14 +187,14 @@
                                             </form>
                                         </div>
                                         <div class="swiper-slide">
-                                            <form class="bs-form" *ngIf="!isTabDisabled"
+                                            <form class="bs-form" *ngIf="!isTabDisabled" autocomplete="off"
                                                   id="pan-form"
-                                                  #panNumberForm="ngForm"
+                                                  #panNumberForm="ngForm" 
                                                   (ngSubmit)="submitPanNumber(panNumberForm, panSlider2)">
                                                   <div class="form-wrap">
                                                     <div class="form-group last typ-optional" style="margin-bottom: 40px; ">
                                                         <input [readonly]="isReadOnly"  type="text"
-                                                                class="form-control"
+                                                                class="form-control" autocomplete="off"
                                                                 [(ngModel)]="qde.application.applicants[coApplicantIndex].pan.panNumber"
                                                                 id="pan-inpt"
                                                                 minlength="10"
@@ -237,7 +237,7 @@
                                                       <input [readonly]="isReadOnly"    type="text"
                                                                 class="form-control"
                                                                 [(ngModel)]="qde.application.applicants[coApplicantIndex].pan.docNumber"
-                                                                id="docNumber"
+                                                                id="docNumber" autocomplete="off"
                                                                 name="docNumber"
                                                                 #panDocNumber="ngModel"
                                                                 oninput="this.value = this.value.toUpperCase()"
@@ -389,9 +389,9 @@
                                             </form>
                                           </div>
                                           <div class="swiper-slide">
-                                              <form   class="bs-form" *ngIf="!isTabDisabled"
+                                              <form   class="bs-form" *ngIf="!isTabDisabled" autocomplete="off"
                                                       id="personal-form"
-                                                      #nameForm="ngForm"
+                                                      #nameForm="ngForm" 
                                                       (ngSubmit)="submitNameDetails(nameForm, pdSlider2)">
                                                   <div class="form-wrap">
                                                         <div class="form-group">
@@ -425,7 +425,7 @@
                                                       </div>
                                                       <div class="form-group">
       
-                                                        <input [readonly]="isReadOnly"  type="text"
+                                                        <input [readonly]="isReadOnly"  type="text" autocomplete="off"
                                                                 class="form-control"
                                                                 id="name"
                                                                 [(ngModel)]="qde.application.applicants[coApplicantIndex].personalDetails.firstName"
@@ -443,9 +443,9 @@
                                                         </div>
                                                       </div>
                                                       <div class="form-group typ-optional">
-                                                        <input [readonly]="isReadOnly" type="text"
+                                                        <input [readonly]="isReadOnly" type="text" autocomplete="off"
                                                               class="form-control"
-                                                              id="middleName"
+                                                              id="middleName" 
                                                               name="middleName"
                                                               tabindex="3"
                                                               [(ngModel)]="qde.application.applicants[coApplicantIndex].personalDetails.middleName"
@@ -462,13 +462,13 @@
                                                       </div>
                                                       <div class="form-group">
       
-                                                        <input [readonly]="isReadOnly"    type="text"
+                                                        <input [readonly]="isReadOnly"    type="text" autocomplete="off"
                                                                   class="form-control" 
                                                                   [(ngModel)]="qde.application.applicants[coApplicantIndex].personalDetails.lastName" 
                                                                   name="lastName" 
                                                                   #lastName="ngModel" 
                                                                   id="lastName"
-                                                                  tabindex="4"
+                                                                  tabindex="4" autocomplete="off"
                                                                   fieldFill
                                                                   spellcheck="false"
                                                                   pattern="{{regexPattern.name}}"
@@ -506,7 +506,7 @@
                                               </form>
                                           </div>
                                           <div class="swiper-slide">
-                                              <form   class="bs-form" *ngIf="!isTabDisabled"
+                                              <form   class="bs-form" *ngIf="!isTabDisabled" 
                                                       #qualificationForm="ngForm"
                                                       (ngSubmit)="submitQualificationDetails(qualificationForm, pdSlider2)">
                                                   <div class="form-wrap">
@@ -535,7 +535,8 @@
                                               </form>
                                           </div>
                                           <div class="swiper-slide">
-                                              <form class="bs-form" *ngIf="!isTabDisabled" #dobForm="ngForm" (ngSubmit)="submitDobDetails(dobForm, pdSlider2)">
+                                              <form class="bs-form" *ngIf="!isTabDisabled" #dobForm="ngForm" autocomplete="off" 
+                                              (ngSubmit)="submitDobDetails(dobForm, pdSlider2)">
                                                   <div class="form-wrap">
                                                       <div class="form-group typ-select">
                                                           <span class="control-title">Date of Birth</span>
@@ -590,7 +591,7 @@
                                                       <div class="form-group">                                                 
                                                         
                                                             <input [readonly]="isReadOnly" spellcheck="false"
-                                                              type="text"
+                                                              type="text" autocomplete="off"
                                                               class="form-control"
                                                               id="birthPlace"
                                                               name="birthPlace"
@@ -653,7 +654,7 @@
                                     #cdSlider2="ngxSwiper">
                                     <div class="swiper-wrapper">
                                         <div class="swiper-slide">
-                                          <form class="bs-form" *ngIf="!isTabDisabled"
+                                          <form class="bs-form" *ngIf="!isTabDisabled" autocomplete="off"
                                                 id="contact-form"
                                                 #contactForm="ngForm"
                                                 (ngSubmit)="submitContactDetails(contactForm)">
@@ -662,11 +663,11 @@
                 
                                                       <input [readonly]="isReadOnly" type="email"
                                                             class="form-control"
-                                                            id="pref-email"
+                                                            id="pref-email" autocomplete="off"
                                                             data-validation-attr="email"
                                                             [(ngModel)]="qde.application.applicants[coApplicantIndex].contactDetails.preferredEmailId"
                                                             name="preferEmailId"
-                                                            #preferEmailId="ngModel"
+                                                            #preferEmailId="ngModel" 
                                                             tabindex="1"
                                                             pattern="{{regexPattern.email}}"
                                                             spellcheck="false"
@@ -687,7 +688,7 @@
                                                         </div>
                                                   </div>
                                                   <div class="form-group" [ngClass]="{'typ-alternative': !isAlternateEmailId}">
-                                                      <input [readonly]="isReadOnly" type="email"
+                                                      <input [readonly]="isReadOnly" type="email" autocomplete="off"
                                                             class="form-control"
                                                             id="alter-email"
                                                             data-validation-attr="email01"
@@ -720,7 +721,7 @@
                                                         minlength="10"
                                                         tabindex="5"
                                                         [(ngModel)]="qde.application.applicants[coApplicantIndex].contactDetails.mobileNumber"
-                                                        
+                                                        autocomplete="off"
                                                         name="mobileNumber"
                                                         #mobileNumber="ngModel"
                                                         pattern="{{regexPattern.mobileNumber}}"
@@ -741,6 +742,9 @@
                                                       <span 
                                                       *ngIf="qde.application.applicants[coApplicantIndex].contactDetails.isMobileOTPverified"
                                                        style=" font-size: 15px;color: green">verified</span>
+                                                       <span 
+                                                       *ngIf="mobileNumber.valid && !qde.application.applicants[coApplicantIndex].contactDetails.isMobileOTPverified"
+                                                       class="invalid-feedback">Need to Verify</span>
 
 
                                                       <span class="alternate-data" *ngIf="!isAlternateMobileNumber">
@@ -764,7 +768,7 @@
                                                   <div class="form-group typ-mob" [ngClass]="{'typ-alternative': !isAlternateMobileNumber}">
                 
                                                       <input [readonly]="isReadOnly" type="tel" class="form-control" id="alter-mob" data-validation-attr="mobileno01" 
-                                                        maxlength="10" im-insert="true"
+                                                        maxlength="10" im-insert="true" autocomplete="off"
                                                         minlength="10"
                                                         tabindex="7"
                                                         [(ngModel)]="qde.application.applicants[coApplicantIndex].contactDetails.alternateMobileNumber"
@@ -794,7 +798,7 @@
                 
                                                   <div class="residence-no">
                                                       <div class="form-group">
-                                                          <input [readonly]="isReadOnly"    type="text"
+                                                          <input [readonly]="isReadOnly"    type="text" autocomplete="off"
                                                                     [(ngModel)]="residenceNumberStdCode"
                                                                     pattern="{{regexPattern.stdCode}}"
                                                                     #residenceStdCode="ngModel"
@@ -815,7 +819,7 @@
                                                       </div>
                                                       <span class="seperator">-</span>
                                                       <div class="form-group typ-optional">
-                                                          <input [readonly]="isReadOnly"    type="text"
+                                                          <input [readonly]="isReadOnly"    type="text" autocomplete="off"
                                                                     class="form-control"
                                                                     id="res-no"
                                                                     [(ngModel)]="residenceNumberPhoneNumber"
@@ -845,7 +849,7 @@
                                                   </div>
                                                   <div class="residence-no" [ngClass]="{'typ-alternative': !isAlternateResidenceNumber}">
                                                       <div class="form-group">
-                                                          <input [readonly]="isReadOnly"    type="text"
+                                                          <input [readonly]="isReadOnly"    type="text" autocomplete="off"
                                                                     [(ngModel)]="alternateResidenceNumberStdCode"
                                                                     name="alternateResidenceNumberStd1"
                                                                     minlength="3" maxlength="5"
@@ -864,7 +868,7 @@
                                                       </div>
                                                       <span class="seperator">-</span>
                                                       <div class="form-group typ-optional">
-                                                          <input [readonly]="isReadOnly"    type="text"
+                                                          <input [readonly]="isReadOnly"    type="text" autocomplete="off"
                                                                     class="form-control"
                                                                     [(ngModel)]="alternateResidenceNumberPhoneNumber"
                                                                     #alternateResidenceNumber2="ngModel"
@@ -922,12 +926,12 @@
                             <h1 class="center">Verify OTP to continue</h1>
                             <!-- <p class="desc typ2">You have cleared the provisional eligibility check for the loan amount requested. Kindly note this clearance is based on the information provided and actual sanction amount is subject to further verification and process. We need more time to process your eligibility. </p>
                             <p class="cm-thin">Thank you for your loan application. Our representative will contact you shortly</p> -->
-                            <form class="bs-form" id="spouse-form"
+                            <form class="bs-form" id="spouse-form" autocomplete="off"
                             #isValidOTP="ngForm">
                                 <div class="form-wrap1">
                                     <div class="form-group otp_input_len">
                                         <input [readonly]="isReadOnly" 
-                                        type="text" class="form-control" 
+                                        type="text" class="form-control"  autocomplete="off"
                                         id="otp" 
                                         name="otp" 
                                         #otpValue="ngModel"
@@ -990,7 +994,7 @@
                                         #commSlider2="ngxSwiper">
                                     <div class="swiper-wrapper">
                                         <div class="swiper-slide">
-                                          <form   class="bs-form" *ngIf="!isTabDisabled"
+                                          <form   class="bs-form" *ngIf="!isTabDisabled" autocomplete="off"
                                               id="communication-form"
                                                   #communicationForm="ngForm"
                                                   (ngSubmit)="submitCommunicationAddressDetails(communicationForm)">
@@ -1023,7 +1027,7 @@
                                                   </div>
                                                   <div class="form-group">
                   
-                                                      <input [readonly]="isReadOnly"  type="text"
+                                                      <input [readonly]="isReadOnly"  type="text" autocomplete="off"
                                                               class="form-control"
                                                               id="address1"
                                                               tabindex="2"
@@ -1045,7 +1049,7 @@
                                                   </div>
                   
                                                   <div class="form-group typ-optional">
-                                                      <input [readonly]="isReadOnly" type="text" class="form-control" id="address2"
+                                                      <input [readonly]="isReadOnly" type="text" class="form-control" id="address2" autocomplete="off"
                                                         [(ngModel)]="qde.application.applicants[coApplicantIndex].communicationAddress.addressLineTwo"
                                                         pattern="{{regexPattern.address}}"
                                                         name="addressLineTwo"
@@ -1063,7 +1067,7 @@
                                                   </div>
                   
                                                   <div class="form-group">
-                                                      <input [readonly]="isReadOnly"    type="text"
+                                                      <input [readonly]="isReadOnly"    type="text" autocomplete="off"
                                                                 class="form-control"
                                                                 id="pincode"
                                                                 required
@@ -1086,7 +1090,7 @@
                                                   </div>
                                                   <div class="form-group">
                   
-                                                      <input [readonly]="isReadOnly"    type="text"
+                                                      <input [readonly]="isReadOnly"    type="text" autocomplete="off"
                                                                 class="form-control"
                                                                 id="cityState"
                                                                 required
@@ -1132,8 +1136,8 @@
                                                       </div>
                                                           <div class="form-group">
                                                               <input [readonly]="isReadOnly" type="text" class="form-control" id="per-address1"
-                                                              name="pAddressLineOne"
-                                                              #pAddress1="ngModel"
+                                                              name="pAddressLineOne" autocomplete="off"
+                                                              #pAddress1="ngModel" 
                                                               pattern="{{regexPattern.address}}"
                                                               fieldFill
                                                               tabindex="7"
@@ -1148,7 +1152,7 @@
                                                           </div>
                                                           <div class="form-group typ-optional">
                                                               <input [readonly]="isReadOnly" type="text" class="form-control" id="per-address2"
-                                                              name="pAddressLineTwo"
+                                                              name="pAddressLineTwo" autocomplete="off"
                                                               #pAddress2="ngModel"
                                                               fieldFill
                                                               tabindex="8"
@@ -1164,7 +1168,7 @@
                                                               </div>
                                                           </div>
                                                           <div class="form-group">
-                                                              <input [readonly]="isReadOnly"    type="text"
+                                                              <input [readonly]="isReadOnly"    type="text" autocomplete="off"
                                                                         class="form-control"
                                                                         id="per-pincode"
                                                                         name="pZipcode"
@@ -1190,7 +1194,7 @@
                                                           </div>
                                                           <div class="form-group">
                                                               <input [readonly]="isReadOnly" type="text" class="form-control" 
-                                                              id="per-cityState"
+                                                              id="per-cityState" autocomplete="off"
                                                               name="commCityState"
                                                               #commCitystate="ngModel"
                                                               tabindex="10"
@@ -1232,7 +1236,7 @@
                                                       </div>
                                                   <div class="form-group typ-range">
                                                       <span class="control-title">Number of years in current residence</span>
-                                                      <input [readonly]="isReadOnly" type="number"
+                                                      <input [readonly]="isReadOnly" type="number" autocomplete="off"
                                                               name="numberOfYearsInCurrentResidence"
                                                               class="form-control"
                                                               [(ngModel)]="qde.application.applicants[coApplicantIndex].communicationAddress.numberOfYearsInCurrentResidence"
@@ -1310,7 +1314,7 @@
                                       #maritalSlider2="ngxSwiper">
                                     <div class="swiper-wrapper">
                                         <div class="swiper-slide">
-                                            <form class="bs-form" *ngIf="!isTabDisabled"
+                                            <form class="bs-form" *ngIf="!isTabDisabled" autocomplete="off"
                                                   #maritalStatusForm="ngForm"
                                                   (ngSubmit)="submitMaritalStatus(maritalStatusForm, maritalSlider2)">
                                                 <div class="form-wrap">
@@ -1339,7 +1343,7 @@
                                             </form>
                                         </div>
                                         <div class="swiper-slide">
-                                            <form class="bs-form" *ngIf="!isTabDisabled"
+                                            <form class="bs-form" *ngIf="!isTabDisabled" autocomplete="off"
                                                   #spouseForm="ngForm"
                                                   (ngSubmit)="submitSpouseName(spouseForm, maritalSlider2)">
                                                 <div class="form-wrap">
@@ -1360,7 +1364,7 @@
                                                     </div>
                                                     <div class="form-group">
     
-                                                        <input [readonly]="isReadOnly" type="text"
+                                                        <input [readonly]="isReadOnly" type="text" autocomplete="off"
                                                           class="form-control" 
                                                           [(ngModel)]="qde.application.applicants[coApplicantIndex].maritalStatus.firstName"
                                                           #spouseName="ngModel"
@@ -1417,13 +1421,13 @@
                                             </form>
                                         </div>
                                         <div class="swiper-slide">
-                                            <form class="bs-form" *ngIf="!isTabDisabled"
+                                            <form class="bs-form" *ngIf="!isTabDisabled" autocomplete="off"
                                                   #spouseEarningAmtForm="ngForm"
                                                   (ngSubmit)="submitSpouseEarningAmt(spouseEarningAmtForm, maritalSlider2)">
                                                 <div class="form-wrap">
                                                     <div class="form-group inr typ-optional">
       
-                                                      <input [readonly]="isReadOnly" type="text"
+                                                      <input [readonly]="isReadOnly" type="text" autocomplete="off"
                                                               class="form-control"
                                                               id="amount"
                                                               tabindex="1"
@@ -1502,13 +1506,13 @@
                                     #familySlider2="ngxSwiper">
                                   <div class="swiper-wrapper">
                                       <div class="swiper-slide">
-                                          <form   class="bs-form" *ngIf="!isTabDisabled"
+                                          <form   class="bs-form" *ngIf="!isTabDisabled" autocomplete="off"
                                                   #familyForm1="ngForm"
                                                   (ngSubmit)="submitFamilyForm1(familyForm1, familySlider2)">
                                               <div class="form-wrap">
                                                   <div class="form-group typ-range">
                                                       <span class="control-title">Enter number of dependents</span>
-                                                      <input [readonly]="isReadOnly"  type="number"
+                                                      <input [readonly]="isReadOnly"  type="number" autocomplete="off"
                                                               name="numberOfDependents"
                                                               tabindex="1"
                                                               min=0
@@ -1532,7 +1536,7 @@
                                       </div>
                                       <div class="swiper-slide">
       
-                                          <form class="bs-form" *ngIf="!isTabDisabled" 
+                                          <form class="bs-form" *ngIf="!isTabDisabled" autocomplete="off"
                                           #familyForm2="ngForm" 
                                           (ngSubmit)="submitFamilyForm2(familyForm2, familySlider2)">
                                               <div class="form-wrap">
@@ -1552,7 +1556,7 @@
                                                       </kendo-dropdownlist>
                                                   </div>
                                                   <div class="form-group">
-                                                      <input [readonly]="isReadOnly"  type="text"
+                                                      <input [readonly]="isReadOnly"  type="text" autocomplete="off"
                                                               class="form-control"
                                                               id="father-name"
                                                               required
@@ -1584,7 +1588,7 @@
                                                     </kendo-dropdownlist>
                                                   </div>
                                                   <div class="form-group">
-                                                      <input [readonly]="isReadOnly" type="text"
+                                                      <input [readonly]="isReadOnly" type="text" autocomplete="off"
                                                               class="form-control"
                                                               id="mother-name"
                                                               required
@@ -1602,7 +1606,7 @@
                                                       </div>
                                                   </div>
                                                   <div class="form-group">
-                                                      <input [readonly]="isReadOnly"    type="text"
+                                                      <input [readonly]="isReadOnly"    type="text" autocomplete="off"
                                                                 class="form-control"
                                                                 id="maiden-name"
                                                                 required
@@ -1672,7 +1676,7 @@
                                 #otherSlider2="ngxSwiper">
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide">
-                                      <form   class="bs-form" *ngIf="!isTabDisabled"
+                                      <form  class="bs-form" *ngIf="!isTabDisabled" autocomplete="off"
                                               #otherForm="ngForm"
                                               (ngSubmit)="submitOtherForm(otherForm)">
                                           <div class="form-wrap">
@@ -1691,7 +1695,7 @@
                                                   </kendo-dropdownlist>
                                               </div>
                                               <div class="form-group" *ngIf="selectedReligion.value == '6'" [ngClass]="{'hidden': (selectedReligion.value != '6')}">
-                                                  <input [readonly]="isReadOnly" type="text" class="form-control" 
+                                                  <input [readonly]="isReadOnly" type="text" class="form-control" autocomplete="off"
                                                   pattern="{{regexPattern.name}}" #specifyReligion="ngModel" required maxlength="10"
                                                   [(ngModel)]="otherReligion" name="religionName" fieldFill id="religion-name">
                                                   <label for="religion-name">Specify other religion</label>
@@ -1782,7 +1786,7 @@
                                 #occupationSlider2="ngxSwiper">
                                     <div class="swiper-wrapper">
                                         <div class="swiper-slide">
-                                          <form   class="bs-form" *ngIf="!isTabDisabled"
+                                          <form   class="bs-form" *ngIf="!isTabDisabled" autocomplete="off"
                                                   #occupationForm="ngForm"
                                                   (ngSubmit)="submitOccupationDetails(occupationForm, occupationSlider2)">
                                               <div class="form-wrap">
@@ -1803,7 +1807,7 @@
                                                   </div>
                                                   <div class="form-group" *ngIf="selectedOccupation.value != '9' && selectedOccupation.value != '10' && selectedOccupation.value != '18'">
                                                       <input [readonly]="isReadOnly" type="text"
-                                                            class="form-control"
+                                                            class="form-control"autocomplete="off"
                                                               required
                                                               tabindex="2"
                                                               [(ngModel)]="qde.application.applicants[coApplicantIndex].occupation.companyName"
@@ -1823,7 +1827,7 @@
                                                   </div>
                                                   <div class="form-group typ-range"  *ngIf="selectedOccupation.value != '9' && selectedOccupation.value != '10' && selectedOccupation.value != '18'">
                                                       <span class="control-title">Years in current employment/business</span>
-                                                      <input [readonly]="isReadOnly" type="number"
+                                                      <input [readonly]="isReadOnly" type="number" autocomplete="off"
                                                               name="numberOfYearsInCurrentCompany"
                                                               id="no-yrs"
                                                               tabindex="3"
@@ -1848,7 +1852,7 @@
                                                   </div>
                                                   <div class="form-group typ-range" *ngIf="selectedOccupation.value != '9' && selectedOccupation.value != '10' && selectedOccupation.value != '18'">
                                                       <span class="control-title">Total Work Experience</span>
-                                                      <input [readonly]="isReadOnly" type="number"
+                                                      <input [readonly]="isReadOnly" type="number" autocomplete="off"
                                                               name="totalExperienceYear"
                                                               class="form-control"
                                                               tabindex="5"
@@ -1898,7 +1902,7 @@
                       
                                                   <div *ngIf="selectedOccupation.value == 10 && qde.application.applicants[coApplicantIndex].occupation.pensioner == true" class="form-group inr">
                                                     <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                                                      id="annualPensionIncome1"
+                                                      id="annualPensionIncome1" autocomplete="off"
                                                       [(ngModel)]="qde.application.applicants[coApplicantIndex].occupation.pensionAmount"
                                                       #annualPensionIncome1="ngModel" name="annualFamilyIncome" tabindex="9" fieldFill
                                                       maxlength="10" pattern="{{regexPattern.amount}}" required />
@@ -1998,12 +2002,12 @@
                                     #offCor2="ngxSwiper">
                                     <div class="swiper-wrapper">
                                         <div class="swiper-slide">
-                                          <form   class="bs-form" *ngIf="!isTabDisabled"
+                                          <form   class="bs-form" *ngIf="!isTabDisabled" autocomplete="off"
                                                   #officialCorrespondenceForm="ngForm"
                                                   (ngSubmit)="submitOfficialCorrespondence(officialCorrespondenceForm)">
                                               <div class="form-wrap">
                                                   <div class="form-group">
-                                                      <input [readonly]="isReadOnly"  type="text"
+                                                      <input [readonly]="isReadOnly"  type="text" autocomplete="off"
                                                               class="form-control"
                                                               id="ofcAddOne"
                                                               [(ngModel)]="qde.application.applicants[coApplicantIndex].officialCorrespondence.addressLineOne"
@@ -2024,7 +2028,7 @@
                   
                                                   <div class="form-group typ-optional">
                                                       <input [readonly]="isReadOnly" type="text" class="form-control"
-                                                        id="ofcAddTwo"
+                                                        id="ofcAddTwo" autocomplete="off"
                                                         tabindex="2"
                                                         [(ngModel)]="qde.application.applicants[coApplicantIndex].officialCorrespondence.addressLineTwo"
                                                         pattern="{{regexPattern.address}}"
@@ -2042,7 +2046,7 @@
                   
                                                   <div class="form-group typ-optional">
                                                       <input [readonly]="isReadOnly" type="text" class="form-control"
-                                                        id="offLandmark"
+                                                        id="offLandmark" autocomplete="off"
                                                         [(ngModel)]="qde.application.applicants[coApplicantIndex].officialCorrespondence.landMark"
                                                         name="landMark"
                                                         fieldFill
@@ -2058,7 +2062,7 @@
                                                       </div>
                                                   </div>
                                                   <div class="form-group typ-optional">
-                                                      <input [readonly]="isReadOnly" type="text"
+                                                      <input [readonly]="isReadOnly" type="text" autocomplete="off"
                                                             class="form-control"
                                                             id="offPincode"
                                                             required
@@ -2084,7 +2088,7 @@
                                                   </div>
                                                   <div class="form-group typ-optional">
                                                       <input [readonly]="isReadOnly" type="text" class="form-control"
-                                                        id="offCityState"
+                                                        id="offCityState" autocomplete="off"
                                                         required
                                                         tabindex="5"
                                                         [(ngModel)]="qde.application.applicants[coApplicantIndex].officialCorrespondence.cityState"
@@ -2104,7 +2108,7 @@
                                                   <div class="residence-no">
                                                       <div class="form-group">
                                                           <input [readonly]="isReadOnly" type="text" class="form-control" id="std03"
-                                                            required
+                                                            required autocomplete="off"
                                                             [(ngModel)]="officialCorrespondenceStdCode"
                                                             #stdCode="ngModel"
                                                             name="stdCode"
@@ -2122,7 +2126,7 @@
                                                       <span class="seperator">-</span>
                                                       <div class="form-group">
                                                           <input [readonly]="isReadOnly"  type="text" class="form-control" id="res-no03" data-validation-attr="residenceno"
-                                                                  required
+                                                                  required autocomplete="off"
                                                                   #offStdNumber="ngModel"
                                                                   name="offStdNumber"
                                                                   fieldFill
@@ -2141,7 +2145,7 @@
                                                   </div>
                                                   <div class="form-group typ-optional">
                                                       <input [readonly]="isReadOnly" type="email" class="form-control" id="off-email"
-                                                        required
+                                                        required autocomplete="off"
                                                         [(ngModel)]="qde.application.applicants[coApplicantIndex].officialCorrespondence.officeEmailId"
                                                         pattern="{{regexPattern.email}}"
                                                         #officeEmail="ngModel"
@@ -2210,12 +2214,12 @@
                                   <div class="swiper-wrapper">
 
                                         <div class="swiper-slide" *ngIf="qde?.application?.applicants[coApplicantIndex]?.incomeDetails?.incomeConsider == true">
-                                            <form class="bs-form" *ngIf="!isTabDisabled" 
+                                            <form class="bs-form" *ngIf="!isTabDisabled" autocomplete="off"
                                             #incomeDetailsForm2="ngForm" (ngSubmit)="submitMonthlyIncomeIndividual(incomeDetailsForm2, incomeSliderIndividual2)">
                                                 <div class="form-wrap">
                                                     <div class="form-group inr">
                                                         <input [readonly]="isReadOnly" type="text" class="form-control" 
-                                                        tabindex="1"
+                                                        tabindex="1" autocomplete="off"
                                                         id="monthlyIncome1"
                                                         [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.monthlyIncome"
                                                         #monthlyIncome1="ngModel"
@@ -2257,12 +2261,12 @@
                                         </div>
 
                                         <div class="swiper-slide">
-                                        <form class="bs-form" *ngIf="!isTabDisabled"
+                                        <form class="bs-form" *ngIf="!isTabDisabled" autocomplete="off"
                                             #annualIncomeForm="ngForm" (ngSubmit)="submitAnnualFamilyIncomeIndividual(annualIncomeForm, incomeSliderIndividual2)">
                                             <div class="form-wrap">
                                                 <div class="form-group inr">
                                                         <input [readonly]="isReadOnly" type="text" class="form-control"
-                                                        id="annualFamilyIncome1"
+                                                        id="annualFamilyIncome1" autocomplete="off"
                                                         [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.annualFamilyIncome"
                                                         #annualFamilyIncome1="ngModel"
                                                         name="annualFamilyIncome"
@@ -2283,7 +2287,7 @@
                                                 </div>
                                                     <div class="form-group inr">
                                                         <input [readonly]="isReadOnly" type="text" class="form-control" 
-                                                        id="monthlyExpenditure1"
+                                                        id="monthlyExpenditure1" autocomplete="off"
                                                         [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.monthlyExpenditure"
                                                         #monthlyExpenditure1="ngModel"
                                                         pattern="{{regexPattern.amount}}"
@@ -2384,13 +2388,13 @@
                                     #panSlider4="ngxSwiper">
                                   <div class="swiper-wrapper">
                                       <div class="swiper-slide">
-                                          <form class="bs-form" *ngIf="!isTabDisabled"
+                                          <form class="bs-form" *ngIf="!isTabDisabled" autocomplete="off"
                                                 #panNumberForm2="ngForm"
                                                 (ngSubmit)="submitOrgPanNumber(panNumberForm2, panSlider4)">
                                               <div class="form-wrap" style="overflow: hidden;">
                                                   <div class="form-group last typ-optional">
                                                       <input [readonly]="isReadOnly"  type="text"
-                                                              class="form-control"
+                                                              class="form-control" autocomplete="off"
                                                               [(ngModel)]="qde.application.applicants[coApplicantIndex].pan.panNumber"
                                                               id="pan-inpt2"
                                                               tabindex="1"
@@ -2536,11 +2540,11 @@
                               <div class="swiper-wrapper">
                                   <div class="swiper-slide">
                                     <form   class="bs-form" *ngIf="!isTabDisabled"
-                                            #organizationForm="ngForm"
+                                            #organizationForm="ngForm" autocomplete="off"
                                             (ngSubmit)="submitOrganizationDetails(organizationForm)">
                                           <div class="form-wrap">
                                           <div class="form-group">
-                                              <input [readonly]="isReadOnly" type="text"
+                                              <input [readonly]="isReadOnly" type="text" autocomplete="off"
                                                       class="form-control" 
                                                       id="org-name" 
                                                       pattern="{{regexPattern.name}}"
@@ -2676,11 +2680,12 @@
                                 #regSlider2="ngxSwiper">
                                     <div class="swiper-wrapper">
                                         <div class="swiper-slide">
-                                          <form class="bs-form" *ngIf="!isTabDisabled" #registeredAddressForm="ngForm" (ngSubmit)="submitRegisteredAddress(registeredAddressForm)">
+                                          <form class="bs-form" *ngIf="!isTabDisabled" #registeredAddressForm="ngForm" autocomplete="off"
+                                          (ngSubmit)="submitRegisteredAddress(registeredAddressForm)">
                                               <div class="form-wrap">
                                                   <div class="form-group">
                                                       <input [readonly]="isReadOnly"    type="text"
-                                                                class="form-control"
+                                                                class="form-control" autocomplete="off"
                                                                 id="reg-add"
                                                                 [(ngModel)]="qde.application.applicants[coApplicantIndex].registeredAddress.registeredAddress"
                                                                 pattern="{{regexPattern.address}}"
@@ -2698,7 +2703,7 @@
                                                       </div>
                                                   </div>
                                                   <div class="form-group typ-optional">
-                                                      <input [readonly]="isReadOnly"  type="text"
+                                                      <input [readonly]="isReadOnly"  type="text" autocomplete="off"
                                                               class="form-control"
                                                               name="landmark"
                                                               tabindex="2"
@@ -2716,7 +2721,7 @@
                                                     </div>
                                                   </div>
                                                   <div class="form-group typ-optional">
-                                                        <input [readonly]="isReadOnly"  type="text"
+                                                        <input [readonly]="isReadOnly"  type="text" autocomplete="off"
                                                                 class="form-control"
                                                                 id="regoffPincode"
                                                                 required
@@ -2741,7 +2746,7 @@
                                                     </div>
                                                     <div class="form-group last">
                                                         <input [readonly]="isReadOnly" type="text" class="form-control"
-                                                          id="regAddrCityState"
+                                                          id="regAddrCityState" autocomplete="off"
                                                           required
                                                           tabindex="4"
                                                           [(ngModel)]="qde.application.applicants[coApplicantIndex].registeredAddress.cityState"
@@ -2801,7 +2806,7 @@
                                 #corporateSlider2="ngxSwiper">
                                     <div class="swiper-wrapper">
                                         <div class="swiper-slide">
-                                          <form   class="bs-form" *ngIf="!isTabDisabled"
+                                          <form   class="bs-form" *ngIf="!isTabDisabled" autocomplete="off"
                                                   #corporateAddressForm="ngForm"
                                                   (ngSubmit)="submitCorporateAddress(corporateAddressForm)" >
                                               <div class="form-wrap">
@@ -2818,7 +2823,7 @@
                                                         </div>
                                                   <div class="form-group">
                                                       <input [readonly]="isReadOnly"    type="text"
-                                                                class="form-control"
+                                                                class="form-control" autocomplete="off"
                                                                 id="corp-add"
                                                                 tabindex="2"
                                                                 [(ngModel)]="qde.application.applicants[coApplicantIndex].corporateAddress.corporateAddress"
@@ -2836,7 +2841,7 @@
                                                       </div>
                                                   </div>
                                                   <div class="form-group typ-optional">
-                                                      <input [readonly]="isReadOnly"  type="text"
+                                                      <input [readonly]="isReadOnly"  type="text" autocomplete="off"
                                                               [(ngModel)]="qde.application.applicants[coApplicantIndex].corporateAddress.landMark"
                                                               name="landmark"
                                                               #landmark="ngModel"
@@ -2853,7 +2858,7 @@
                                                     </div>
                                                   </div>
                                                   <div class="form-group">
-                                                      <input [readonly]="isReadOnly"  type="text"
+                                                      <input [readonly]="isReadOnly"  type="text" autocomplete="off"
                                                               class="form-control"
                                                               id="pincode01" 
                                                               [(ngModel)]="qde.application.applicants[coApplicantIndex].corporateAddress.zipcode"
@@ -2878,7 +2883,7 @@
                   
                                                   </div>
                                                   <div class="form-group">
-                                                      <input [readonly]="isReadOnly"  type="text"
+                                                      <input [readonly]="isReadOnly"  type="text" autocomplete="off"
                                                               class="form-control"
                                                               id="city-state01" 
                                                               required
@@ -2900,7 +2905,7 @@
                                                   </div>
                                                   <div class="residence-no">
                                                       <div class="form-group">
-                                                          <input [readonly]="isReadOnly"  type="text"
+                                                          <input [readonly]="isReadOnly"  type="text" autocomplete="off"
                                                                   [(ngModel)]="corporateAddressStdCode"
                                                                   name="stdNumber"
                                                                   class="form-control"
@@ -2922,7 +2927,7 @@
                                                       </div>
                                                       <span class="seperator">-</span>
                                                       <div class="form-group">
-                                                          <input [readonly]="isReadOnly"  type="text"
+                                                          <input [readonly]="isReadOnly"  type="text" autocomplete="off"
                                                                   class="form-control"
                                                                   [(ngModel)]="corporateAddressPhoneNumber"
                                                                   name="phoneNumber"
@@ -2943,7 +2948,7 @@
                                                       </div>
                                                   </div>
                                                   <div class="form-group last">
-                                                      <input [readonly]="isReadOnly"    type="email"
+                                                      <input [readonly]="isReadOnly"    type="email" autocomplete="off"
                                                                 class="form-control"
                                                                 id="ofc-email"
                                                                 required
@@ -3004,12 +3009,13 @@
                                 #revenueSlider2="ngxSwiper">
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide">
-                                      <form class="bs-form" *ngIf="!isTabDisabled" #revenueForm="ngForm" (ngSubmit)="submitRevenueDetails(revenueForm)">
+                                      <form class="bs-form" *ngIf="!isTabDisabled" #revenueForm="ngForm" autocomplete="off"
+                                      (ngSubmit)="submitRevenueDetails(revenueForm)">
                                           <div class="form-wrap">
                                               <div class="form-group inr">
                                                   <input [readonly]="isReadOnly" type="text" class="form-control" id="revenue"
                                                   [(ngModel)]="qde.application.applicants[coApplicantIndex].revenueDetails.revenue"
-                                                  #revenue="ngModel"
+                                                  #revenue="ngModel" autocomplete="off"
                                                   name="revenue"
                                                   maxlength="15"
                                                   fieldFill
@@ -3030,7 +3036,7 @@
                                               </div>
                                               <div class="form-group inr">
                                                   <input [readonly]="isReadOnly" type="text" class="form-control" id="net-income"
-                                                  required
+                                                  required autocomplete="off"
                                                   [(ngModel)]="qde.application.applicants[coApplicantIndex].revenueDetails.annualNetIncome"
                                                   fieldFill
                                                   maxlength="15"
@@ -3140,12 +3146,12 @@
                                         </div>
 
                                         <div class="swiper-slide">
-                                            <form class="bs-form" *ngIf="!isTabDisabled" 
+                                            <form class="bs-form" *ngIf="!isTabDisabled" autocomplete="off"
                                                     #incomeDetailsForm4="ngForm" (ngSubmit)="submitMonthlyIncomeNonIndividual(incomeDetailsForm4, incomeConsiderSliderNonIndividual2)">
                                                 <div class="form-wrap">
                                                     <div class="form-group inr">
                                                         <input [readonly]="isReadOnly" type="text" class="form-control" 
-                                                        id="monthlyIncome2"
+                                                        id="monthlyIncome2" autocomplete="off"
                                                         [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.monthlyIncome"
                                                         #monthlyIncome2="ngModel"
                                                         fieldFill
@@ -3272,7 +3278,7 @@
             <!-- <a class="modal-close" href="javascript:void(0);" (click)="onBackOTP()"><span class="icon icon-close"></span></a> -->
             <!-- <a class="modal-close" (click)="resetIndividualData()"><span class="icon icon-close">Yes</span></a> -->
             <div class="modal-body">
-            <h1 class="center">Are You Sure to Change Applicant PAN Status!</h1>
+            <h1 class="center">Are You Sure to Change Applicant Pan Status!</h1>
             <h2 class="center">if you click yes All Application Data's are Reset</h2>
             <div class="btn-wrap">
                 <button class="btn btn-border" (click)="resetIndividualData('yes',panSlider2)">Yes</button>

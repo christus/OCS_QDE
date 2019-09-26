@@ -69,10 +69,10 @@
                   <h4 class="title">Create New Lead</h4>
                   <!-- <p class="desc">The below lead will be sent to Vikas bhalla, bhandup west</p> -->
                   <p class="desc">Fill up the form to create new lead</p>
-                  <form #leadForm="ngForm" class="bs-form" (ngSubmit)="leadSaveConnector(leadForm)">
+                  <form #leadForm="ngForm" class="bs-form" autocomplete="off" (ngSubmit)="leadSaveConnector(leadForm)">
                     <div class="form-group">
                         <input spellcheck="false" type="text" class="form-control"
-                          id="name" minlength="2"
+                          id="name" minlength="2" autocomplete="off"
                           [(ngModel)]="qde.application.leadCreate.name"
                           pattern="{{regexPattern.firstName}}"
                           name="firstName" #fName="ngModel" fieldFill required/>
@@ -86,7 +86,7 @@
                     </div>
                     <div class="form-group">
                         <input spellcheck="false" type="text" class="form-control"
-                          id="mobNumber"
+                          id="mobNumber" autocomplete="off"
                           [(ngModel)]="qde.application.leadCreate.mobileNumber"
                           #phNumber="ngModel" minlength="10" maxlength="10"
                           pattern="{{regexPattern.mobileNumber}}"
@@ -103,7 +103,7 @@
                     </div>
                     <div class="form-group">
                         <input spellcheck="false" type="text" class="form-control"
-                          id="address"
+                          id="address" autocomplete="off"
                           [(ngModel)]="qde.application.leadCreate.address"
                           pattern="{{regexPattern.address}}" minlength="2"
                           name="addresss" #addresss="ngModel" fieldFill required/>
@@ -117,7 +117,7 @@
                     </div>
                     <div class="form-group">
                         <input spellcheck="false" type="text" class="form-control"
-                          id="zipcode"
+                          id="zipcode" autocomplete="off"
                           [(ngModel)]="qde.application.leadCreate.zipcode"
                           pattern="{{regexPattern.pincode}}" maxlength="6" minlength="6"
                           name="pincode" #pincode="ngModel" fieldFill required/>
@@ -130,7 +130,7 @@
                     </div>
                     <div class="form-group">
                         <input spellcheck="false" type="text" class="form-control"
-                          id="emailId"
+                          id="emailId" autocomplete="off"
                           [(ngModel)]="qde.application.leadCreate.emailId"
                           name="email" #email="ngModel" 
                           pattern="{{regexPattern.email}}" 
@@ -144,7 +144,7 @@
                     </div>
                     <div class="form-group">
                         <input spellcheck="false" type="text" class="form-control"
-                          id="loanAmt"
+                          id="loanAmt" autocomplete="off"
                           [(ngModel)]="qde.application.leadCreate.loanAmount"
                           name="loanAmount" 
                           #loanAmount="ngModel" 

@@ -195,7 +195,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
                 'review-eligibility'
   ];
 
-  applicantIndex: number;
+  applicantIndex: number = 0;
   coApplicantIndexes: Array<number> = [];
 
   qde: Qde;
@@ -223,74 +223,17 @@ export class ViewFormComponent implements OnInit, OnDestroy {
               private qdeHttp: QdeHttpService,
               private commonDataService: CommonDataService,
               private qdeService: QdeService) {
-    this.qdeService.setQde(JSON.parse(this.route.snapshot.data['qde']['ProcessVariables']['response']));
+
+    this.qde = this.qdeService.defaultValue;
 
     this.commonDataService.changeMenuBarShown(false);
     this.commonDataService.changeViewFormVisible(false);
     this.commonDataService.changeLogoutVisible(true);
     this.commonDataService.changeHomeVisible(true);
 
-
-    this.qdeService.qdeSource.subscribe(val => {
-      this.qde = val;
-
-      console.log('QDE: ', this.qde);
-
-      // this.commonDataService.changeApplicationId(this.qde.application.applicationId);
-
-      this.applicationId = this.qde.application.applicationId;
-      this.ocsNumber = this.qde.application.ocsNumber;
-
-      console.log(">>>", this.applicationId+"");
-
-      this.qdeService.qdeSource.subscribe(v => {
-        this.qde = v;
   
-        // Find an applicant
-        const applicants = this.qde.application.applicants;
-        for (const applicant of applicants) {
-          if (applicant["isMainApplicant"]) {
-            this.applicantId = applicant["applicantId"];
-            break;
-          }
-        }
-  
-        // console.log("this.applicantName", this.qde.application.applicants[0].personalDetails.firstName);
-        
-        let index = v.application.applicants.findIndex(val => val.isMainApplicant == true);
-        
-        if(index == -1) {
-          this.applicantName = "";
-        } else {
-          if(this.qde.application.applicants[0].personalDetails.firstName != "") {
-            this.applicantName = "Application for "+this.qde.application.applicants[index].personalDetails.firstName +" "+ this.qde.application.applicants[index].personalDetails.lastName;
-          }
-        }
-      });
-      this.applicantIndex = this.qde.application.applicants.find(val => val.isMainApplicant==true) != undefined ? this.qde.application.applicants.findIndex(val => val.isMainApplicant == true): 0;
-      console.log(this.applicantIndex);
-
-      val.application.applicants.forEach((el, index) => {
-
-        if(el.isMainApplicant == false) {
-          this.coApplicantIndexes.push(index);
-        }
-
-        // this.isIncomplete.push(this.checkIncompleteFields(el.applicantId));
-        this.isIncomplete.push({
-          pan: false,
-          personalDetails: false,
-          contactDetails: false,
-          communicationAddress: false,
-          maritalStatus: false,
-          familyDetails: false,
-          other: false,
-          occupation: false,
-          officialCorrespondence: false,
-          incomeDetails: false
-        });
-      });
-    });
+      
+    
     console.log(">>", JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs));
     if(this.route.snapshot.data.listOfValues != null && this.route.snapshot.data.listOfValues != undefined) {
 
@@ -341,7 +284,6 @@ export class ViewFormComponent implements OnInit, OnDestroy {
     console.log('Co-Applicant Indexes: ', this.coApplicantIndexes);
     console.log('IsIncomplete: ', this.isIncomplete);
 
-    this.prefillData();
 
     // For hiding Edit Button
     this.commonDataService.isReadOnlyForm.subscribe(val => {
@@ -539,19 +481,71 @@ export class ViewFormComponent implements OnInit, OnDestroy {
             this.selectedAddressLineTwo2 =
               result.application.references.referenceTwo.addressLineTwo || "";
 
-          this.qde = result;
-          this.qde.application.applicationId = applicationId;
 
           this.qdeService.setQde(this.qde);
           this.valuechange(this.qde.application.tenure);
 
           this.applicantNameForLoanDetails = this.qde.application.applicants.map(e => e.isIndividual ? e.personalDetails ? `${e.personalDetails['firstName']} ${e.personalDetails['lastName']}`: '' : e.organizationDetails.nameOfOrganization);
+        
+          // pasted qdesource
+          this.applicationId = this.qde.application.applicationId;
+          this.ocsNumber = this.qde.application.ocsNumber;
+    
+          // Find an applicant
+          const applicants = this.qde.application.applicants;
+          for (const applicant of applicants) {
+            if (applicant["isMainApplicant"]) {
+              this.applicantId = applicant["applicantId"];
+              break;
+            }
+          }
+    
+          // console.log("this.applicantName", this.qde.application.applicants[0].personalDetails.firstName);
+          
+          let index = this.qde.application.applicants.findIndex(val => val.isMainApplicant == true);
+          
+          // if(index == -1) {
+          //   this.applicantName = "";
+          // } else {
+          //   if(this.qde.application.applicants[index].personalDetails.firstName != "") {
+          //     this.applicantName = "Application for "+this.qde.application.applicants[index].personalDetails.firstName +" "+ this.qde.application.applicants[index].personalDetails.lastName;
+          //   }
+          // }
+          this.applicantIndex = this.qde.application.applicants.find(val => val.isMainApplicant==true) != undefined ? this.qde.application.applicants.findIndex(val => val.isMainApplicant == true): 0;
+    
+          this.coApplicantIndexes = this.qde.application.applicants.map((e, i) => e.isMainApplicant == false ? i : null).filter((e) => e != null);
+
+          // console.log(this.coApplicantIndexes);
+          this.qde.application.applicants.forEach((el, ind) => {
+    
+            // if(el.isMainApplicant == false) {
+            //   this.coApplicantIndexes.push(ind);
+            // }
+    
+            // this.isIncomplete.push(this.checkIncompleteFields(el.applicantId));
+            this.isIncomplete.push({
+              pan: false,
+              personalDetails: false,
+              contactDetails: false,
+              communicationAddress: false,
+              maritalStatus: false,
+              familyDetails: false,
+              other: false,
+              occupation: false,
+              officialCorrespondence: false,
+              incomeDetails: false
+            });
+          });          
+        
+          this.prefillData();
+          this.submitButtonChange();
         });
       } else {
         this.qde = this.qdeService.getQde();
       }
+
     });
-    this.submitButtonChange();
+    
   }
 
   setApplicantName(qde) {

@@ -15,7 +15,8 @@
         </ul>
         <div class="tabs-contents" #tabContents>
           <div class="tab-content" [ngClass]="{'active': (activeTab == 0)}">
-              <a [routerLink]="['/loan', applicationId]" fragment="existingLoan" class="back-btn"></a>
+              <!-- <a [routerLink]="['/loan', applicationId]" fragment="existingLoan" class="back-btn" ></a> -->
+              <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(reference2)"></a>
             <div class="lyt-tabs">
 
               <div class="lhs">
@@ -86,7 +87,7 @@
 
 
                       <form class="bs-form"
-                      #ref1Detail="ngForm" 
+                      #ref1Detail="ngForm"  autocomplete="off"
                       (ngSubmit)="submitReference1Detail(ref1Detail, reference2)">
                         <div class="form-wrap">
                           <div class="form-group">
@@ -107,7 +108,7 @@
                           <div class="form-group">
                             <input [readonly]="isReadOnly" type="text" class="form-control"
                             required
-                            ngModel
+                            ngModel autocomplete="off"
                             name="fullName" 
                             id="ref1-name"
                             pattern="{{regexPattern.name}}"
@@ -126,7 +127,7 @@
                           </div>
                           <div class="form-group">
                             <input [readonly]="isReadOnly" type="text" class="form-control"
-                            required 
+                            required  autocomplete="off"
                             id="ref1-mobile"  
                             name="mobileNumber"
                             minlength="10"
@@ -151,7 +152,7 @@
 
                           <div class="form-group">
                             <input [readonly]="isReadOnly" type="text" class="form-control" id="ref1-add1"  
-                            required
+                            required autocomplete="off"
                             name="addressLineOne" 
                             ngModel
                             spellcheck="false"
@@ -169,7 +170,7 @@
                           </div>
                           <div class="form-group typ-optional">
                             <input [readonly]="isReadOnly" type="text" class="form-control" id="ref1-add2" 
-                            name="addressLineTwo" 
+                            name="addressLineTwo"  autocomplete="off"
                             ngModel
                             spellcheck="false"
                             fieldFill
@@ -203,7 +204,7 @@
           </div>
 
           <div class="tab-content" [ngClass]="{'active': (activeTab == 1)}">
-            <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(refRelationship1)"></a>
+            <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(reference4)"></a>
             <div class="lyt-tabs">
               <div class="lhs">
               <div class="swiper-container form-swiper" [swiper]="lhsConfig" #reference3="ngxSwiper">
@@ -270,8 +271,8 @@
 
 
                     <form class="bs-form"
-                      #ref2Detail="ngForm" 
-                      (ngSubmit)="submitReference2Detail(ref2Detail, reference2)">
+                      #ref2Detail="ngForm" autocomplete="off"
+                      (ngSubmit)="submitReference2Detail(ref2Detail, reference4)">
                         <div class="form-wrap">
                           <div class="form-group">
                             <span class="control-title">Title</span>
@@ -291,7 +292,7 @@
                           <div class="form-group">
                             <input [readonly]="isReadOnly" type="text" class="form-control"
                             ngModel
-                            name="fullName" 
+                            name="fullName"  autocomplete="off"
                             id="ref2-name"
                             #refTwoFullName="ngModel"
                             pattern="{{regexPattern.name}}"
@@ -307,7 +308,7 @@
                           </div>
                           <div class="form-group">
                             <input [readonly]="isReadOnly" type="text" class="form-control" id="ref2-mobile" 
-                            name="mobileNumber"  
+                            name="mobileNumber"  autocomplete="off"
                             ngModel 
                             minlength="10"
                             maxlength="10"
@@ -331,7 +332,7 @@
                           <div class="form-group">
                             <input [readonly]="isReadOnly" type="text" class="form-control" id="ref2-add1"
                               name="addressLineOne"
-                              ngModel
+                              ngModel autocomplete="off"
                               #refTwoAddressLineOne="ngModel"
                               pattern="{{regexPattern.address}}"
                               required
@@ -349,7 +350,7 @@
 
                           <div class="form-group typ-optional">
                             <input [readonly]="isReadOnly" type="text" class="form-control" id="ref2-add2"
-                             name="addressLineTwo" 
+                             name="addressLineTwo" autocomplete="off"
                              ngModel 
                              #refTwoAddressLineTwo="ngModel"
                              pattern="{{regexPattern.address}}"

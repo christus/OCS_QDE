@@ -449,13 +449,18 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
   }
 
   onBackButtonClick(swiperInstance?: Swiper) {
-    if (this.activeTab > 0) {
+    if (this.activeTab > -1) {
       if (swiperInstance != null && swiperInstance.getIndex() > 0) {
         // Go to Previous Slide
         this.goToPrevSlide(swiperInstance);
       } else {
         // Go To Previous Tab
+        if(this.activeTab == 0){
+          this.router.navigate(['/loan/'+ this.applicationId]);
+        }
+        else{
         this.tabSwitch(this.activeTab - 1);
+        }
       }
     }
   }
