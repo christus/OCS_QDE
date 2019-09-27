@@ -356,6 +356,10 @@ export const environment = {
     "assessmentListForProfileApplicantType": {
       'workflowId': '0705a6c4810311e982270242ac110002',
       'processId': '29a0c746e11511e995dc0242ac110002'
+    },
+    "checkOccupationType" :{
+      'workflowId': '82ce648ae10c11e9b7730242ac110002',
+      'processId': '82ed99d6e10c11e9b3d00242ac110002'
     }
   },
   userName: "icici@icicibankltd.com",

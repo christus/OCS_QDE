@@ -942,7 +942,8 @@
                           <div class="radio-wrap rounded-radio">
                             <div class="bs-radio typ-normal">
                               <input [readonly]="isTBMLoggedIn" id="current-add-mail" type="radio" name="prefredMail" [value]="1" fieldFill
-                                [checked]="qde.application.applicants[applicantIndex].communicationAddress.preferedMailingAddress == true"
+                                [checked]="qde.application.applicants[applicantIndex].communicationAddress.preferedMailingAddress == true ||
+                                qde.application.applicants[applicantIndex].communicationAddress.preferedMailingAddress == null"
                                 (click)="submitPreferedMail(true)"
                                  />
                               <label for="current-add-mail" tabindex="10">
@@ -1460,9 +1461,9 @@
                               (valueChange)="checkOccupationDetailsYears($event)" [options]="experienceOptions">
                             </ng5-slider>
 
-                            <!-- <div *ngIf="(totalExperienceYear.touched || totalExperienceYear.dirty) && totalExperienceYear.invalid" class="invalid-feedback">
-                                                    <div *ngIf="totalExperienceYear.errors?.required">{{errors.occupationDetails.totalExp.required}}</div>
-                                                  </div> -->
+                          <!-- <div *ngIf="(totalExperienceYear.touched || totalExperienceYear.dirty) && totalExperienceYear.invalid" class="invalid-feedback">
+                                <div *ngIf="totalExperienceYear.errors?.required">{{errors.occupationDetails.totalExp.required}}</div>
+                                </div> -->
 
                             <div class="invalid-feedback">
                               <div *ngIf="expError == false"></div>

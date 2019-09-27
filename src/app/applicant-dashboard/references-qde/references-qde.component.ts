@@ -315,7 +315,7 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
           this.qdeService.setQde(this.qde);
         }, error => {
           this.isErrorModal = true;
-          this.errorMessage = "Something went wrong, please again later.";
+          this.errorMessage = "Something went wrong, please try again later.";
         });
       } else {
         this.qde = this.qdeService.getQde();
@@ -510,7 +510,7 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
                 }
               }, error => {
                 this.isErrorModal = true;
-                this.errorMessage = "Something went wrong, please again later.";
+                this.errorMessage = "Something went wrong, please try again later.";
               });
 
               this.referenceId1 = this.qde.application.references.referenceOne.referenceId;
@@ -519,7 +519,7 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
             }
           }, error => {
             this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please again later.";
+            this.errorMessage = "Something went wrong, please try again later.";
           }
         );
   
@@ -566,7 +566,7 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
                 }
               }, error => {
                 this.isErrorModal = true;
-                this.errorMessage = "Something went wrong, please again later.";
+                this.errorMessage = "Something went wrong, please try again later.";
               });
               this.tabSwitch(1);
             } else {
@@ -574,7 +574,7 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
             }
           }, error => {
             this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please again later.";
+            this.errorMessage = "Something went wrong, please try again later.";
           }
         );
   
@@ -617,14 +617,14 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
                 }
               }, error => {
                 this.isErrorModal = true;
-                this.errorMessage = "Something went wrong, please again later.";
+                this.errorMessage = "Something went wrong, please try again later.";
               });
             } else {
               alert(response["ErrorMessage"]);
             }
           }, error => {
             this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please again later.";
+            this.errorMessage = "Something went wrong, please try again later.";
           }
         );
   
@@ -681,14 +681,14 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
                 }
               }, error => {
                 this.isErrorModal = true;
-                this.errorMessage = "Something went wrong, please again later.";
+                this.errorMessage = "Something went wrong, please try again later.";
               });
             } else {
               alert(response["ErrorMessage"]);
             }
           }, error => {
             this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please again later.";
+            this.errorMessage = "Something went wrong, please try again later.";
           }
         );
   
