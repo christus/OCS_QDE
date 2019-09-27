@@ -132,6 +132,7 @@ import { from } from 'rxjs';
 
 import { HTTP } from '@ionic-native/http/ngx';
 import { QdeHttpService } from './services/qde-http.service';
+import { MobileService } from './services/mobile-constant.service';
 
 
 const appRoutes: Routes = [
@@ -653,7 +654,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     ClssChecklistResolverService,
     LoanTypePurposeMapResolverService,
     HTTP,
-    DocAssessDoccatProfileMapResolverService
+    DocAssessDoccatProfileMapResolverService,
+    MobileService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,3 +1,4 @@
+import { MobileService } from './../../services/mobile-constant.service';
 import { environment } from 'src/environments/environment';
 import { Component, OnInit,  ViewChild, ElementRef, Renderer2, AfterViewInit, HostListener, ViewChildren, QueryList } from '@angular/core';
 
@@ -207,7 +208,8 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
     private qdeHttp: QdeHttpService,
     private qdeService: QdeService,
     private utilService: UtilService,
-    private cds: CommonDataService) {
+    private cds: CommonDataService,
+    private mobileService: MobileService) {
 
     this.qde = this.qdeService.defaultValue;
 
@@ -241,7 +243,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
 
-    this.isMobile = environment.isMobile;
+    this.isMobile = this.mobileService.isMobile;
 
     console.log("isMovile onInit", this.isMobile);
 

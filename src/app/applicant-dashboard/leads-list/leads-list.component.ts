@@ -101,6 +101,7 @@ export class LeadsListComponent implements OnInit {
   clearCredentials() {
     return this.utilService.clearCredentials();
   }
+  
   logout() {
 
     this.service.logout().subscribe(

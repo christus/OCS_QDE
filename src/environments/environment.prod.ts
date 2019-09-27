@@ -340,10 +340,10 @@ export const environment = {
   ocsHost: "/ocs",
   //host: "http://192.168.1.108/appiyo",
   //host: "/ProcessStore",
-  host:  "/appiyo",
+  //host:  "/appiyo",
   pdfLocation: "/d/download/pdf?",
-  isMobile: false
-  //host: "https://ihfcmobileuat.icicihfc.com/appiyo"
+  isMobile: false,
+  host: "https://ihfcmobileuat.icicihfc.com/appiyo"
   //host: "https://103.87.42.117/appiyo"
   //host:"http://www.twixor.in/appiyo"
 };

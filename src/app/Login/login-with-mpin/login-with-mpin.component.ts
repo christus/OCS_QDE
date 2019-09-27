@@ -46,8 +46,15 @@ export class LoginWithMPINComponent implements OnInit {
     this.values = event.target.value;
     console.log(this.values);
 
-    let element = event.srcElement.nextElementSibling; // get the sibling element
+    let element;
 
+    console.log(event.keyCode);
+    
+    if(event.code == "Backspace" || event.keyCode == 8){
+      element = event.srcElement.previousElementSibling; // get the sibling element
+    }else {
+      element = event.srcElement.nextElementSibling; // get the sibling element
+    }
 
     if (this.values.length <= maxlength) {
       if (this.input)
@@ -59,10 +66,10 @@ export class LoginWithMPINComponent implements OnInit {
 
   login() {
     this.mPin = this.mPin1+this.mPin2+this.mPin3+this.mPin4
-    console.log("UserName", this.userName +" "+ "Password", this.mPin );
+    console.log("UserName", this.userName+" "+ "Password", this.mPin );
 
     let appiyoAuthdata = {
-      'email': environment.userName.trim(),
+      'email': environment.userName,
       'password': environment.password,
       'longTimeToken': "true"
     }
@@ -78,7 +85,7 @@ export class LoginWithMPINComponent implements OnInit {
         localStorage.setItem("token", res["token"] ? res["token"] : "");
 
         var data = {
-          userName: this.userName + environment.iciciDomainExt,
+          userName: this.userName.trim() + environment.iciciDomainExt,
           mPin: this.mPin
         }
     

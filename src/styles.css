@@ -5730,13 +5730,30 @@ img {
 
 	.mobile .bs-form .form-group.filled label {
 		transform: translateY(-31px) scale(.4) !important;
+	}
 
-/* 
-	.mobile .bs-file {
+
+	/*.mobile .bs-file {
 		position: relative;
 		width: 31.25vw;
 		height: 31.25vw;
 		margin: 0 auto;
 	} */
+
+	.mobile .lyt-home .lhs:after {
+		top: 20% !important;
+		transform: translateY(-25%) !important;
+	}
+
+	.mobile .lhs .swiper-container{
+		top: 0;
+	}
+
+	.mobile .rhs .swiper-container{
+		top: 5%;
+	}
+
+	.mobile .bs-form .form-wrap{
+		width: 74%;
 	}
 }

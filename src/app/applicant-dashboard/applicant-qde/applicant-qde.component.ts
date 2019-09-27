@@ -21,6 +21,7 @@ import { File } from '@ionic-native/file/ngx';
 
 import { screenPages } from '../../app.constants';
 import { UtilService } from '../../services/util.service';
+import { MobileService } from '../../services/mobile-constant.service';
 
 interface Item {
   key: string,
@@ -341,7 +342,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
               private qdeService: QdeService,
               private cds:CommonDataService,
               private utilService: UtilService,
-              private file: File) {
+              private file: File,
+              private mobileService: MobileService) {
 
    this.qde = this.qdeService.defaultValue;
 
@@ -355,9 +357,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       return {key: v, value: v};
     });
     this.dobYears.unshift({key: 'YYYY', value: 'YYYY'});
-
-    this.isMobile = environment.isMobile;
-
+   
+    this.isMobile = this.mobileService.isMobile;
     this.cds.changeMenuBarShown(true);
     this.cds.changeViewFormVisible(true);
     this.cds.changeLogoutVisible(true);

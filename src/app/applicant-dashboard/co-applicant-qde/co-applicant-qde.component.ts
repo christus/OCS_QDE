@@ -22,6 +22,7 @@ import { environment } from 'src/environments/environment.prod';
 
 import { screenPages } from '../../app.constants';
 import { UtilService } from '../../services/util.service';
+import { MobileService } from '../../services/mobile-constant.service';
 
 interface Item {
   key: string,
@@ -339,11 +340,13 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
               private qdeHttp: QdeHttpService,
               private qdeService: QdeService,
               private cds: CommonDataService,
-              private utilService: UtilService) {
+              private utilService: UtilService,
+              private mobileService: MobileService) {
     
     this.qde = this.qdeService.defaultValue;
 
-    this.isMobile = environment.isMobile;
+    
+    this.isMobile = this.mobileService.isMobile;
 
     this.cds.changeMenuBarShown(true);
     this.cds.changeViewFormVisible(true);

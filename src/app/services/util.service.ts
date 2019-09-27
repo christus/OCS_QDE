@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { DeviceDetectorService } from 'ngx-device-detector';
 
 import { QdeHttpService } from 'src/app/services/qde-http.service';
+import { MobileService } from './mobile-constant.service';
 
 
 
@@ -14,8 +15,10 @@ export class UtilService {
 
   constructor(private router: Router, private http: HttpClient,
     private qdehttpService: QdeHttpService,
-    private deviceService: DeviceDetectorService) { 
-    this.isMobile = environment.isMobile;
+    private mobileService: MobileService) { 
+    this.isMobile = this.mobileService.isMobile;
+
+    console.log("isMobile-utils", this.isMobile);
     this.qdehttpService = qdehttpService;
   }
 
@@ -35,8 +38,9 @@ export class UtilService {
     if(this.isMobile) {
       this.navigateToLoginWithMpin();
       return;
+    }else {
+      this.navigateToLogin();
     }   
-    this.navigateToLogin();
   }
 
   navigateToLogin() {

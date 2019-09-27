@@ -1,3 +1,4 @@
+import { MobileService } from './mobile-constant.service';
 import { Injectable } from '@angular/core';
 import Qde from '../models/qde.model';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
@@ -13,6 +14,7 @@ import { QdeService } from '../services/qde.service';
 
 import { HTTP } from '@ionic-native/http/ngx';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 
 
@@ -32,7 +34,9 @@ export class QdeHttpService {
   private camera: Camera,
   private transfer: FileTransfer,
   private qdeService: QdeService,
-  private httpIonic: HTTP) {
+  private httpIonic: HTTP,
+  private mobileService: MobileService,
+  private ngxService: NgxUiLoaderService) {
 
     this.commonDataService.loginData.subscribe(result => {
       console.log("login: ", result);
@@ -2379,11 +2383,24 @@ createOrUpdatePersonalDetails(qde) {
 
   callGet(url) {
     if(this.isMobile) {
-      const headers = {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'authentication-token':  localStorage.getItem('token') ? localStorage.getItem('token') : '',
-      };
-      this.httpIonic.get(url, {}, headers);
+
+      const obs = new Observable((observer) => {
+        const headers = {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'authentication-token':  localStorage.getItem('token') ? localStorage.getItem('token') : '',
+        };
+        this.httpIonic.get(url, {}, headers).then(result => {
+          const data = JSON.parse(result.data);
+          observer.next(data);
+          observer.complete();
+        }).catch(error => {
+          observer.error(error);
+          observer.complete();
+        });
+        
+      });
+
+      return obs;
     }else {
       return this.http.get(url);
     }
@@ -2391,7 +2408,8 @@ createOrUpdatePersonalDetails(qde) {
 
 
   callPost(url: string, requestEntity: any, options?:any) {
-    this.isMobile = environment.isMobile;
+    this.isMobile = this.mobileService.isMobile;
+    
 
     // this.isMobile = true;
 
@@ -2404,6 +2422,8 @@ createOrUpdatePersonalDetails(qde) {
 
     if(this.isMobile) {
 
+      this.ngxService.start();
+
       const obs = new Observable((observer) => {
 
         this.httpIonic.setSSLCertMode("nocheck");
@@ -2415,9 +2435,11 @@ createOrUpdatePersonalDetails(qde) {
           const data = JSON.parse(result.data);
           observer.next(data);
           observer.complete();
+          this.ngxService.stop();
         }).catch(error => {
           observer.error(error);
           observer.complete();
+          this.ngxService.stop();
         });
         
       });

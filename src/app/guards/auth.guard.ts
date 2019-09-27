@@ -3,6 +3,7 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from
 import { Observable } from 'rxjs';
 import { UtilService } from '../services/util.service';
 import { environment } from '../../environments/environment';
+import { MobileService } from '../services/mobile-constant.service';
 
 
 @Injectable({
@@ -12,8 +13,9 @@ export class AuthGuard implements CanActivate {
 
   isMobile:any;
 
-  constructor(private router: Router, private utilService: UtilService) {
-    this.isMobile = environment.isMobile;
+  constructor(private router: Router, private utilService: UtilService,
+    private mobileService: MobileService) {
+    this.isMobile = this.mobileService.isMobile;
   }
 
   canActivate(

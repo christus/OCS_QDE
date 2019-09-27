@@ -68,8 +68,13 @@ export class EnterMPINComponent implements OnInit {
     this.values = event.target.value;
     console.log(this.values);
 
-    let element = event.srcElement.nextElementSibling; // get the sibling element
-
+    let element;
+    
+    if(event.code == "Backspace" || event.keyCode == 8){
+      element = event.srcElement.previousElementSibling; // get the sibling element
+    }else {
+      element = event.srcElement.nextElementSibling; // get the sibling element
+    }
 
     if (this.values.length <= maxlength) {
       if (this.input)
@@ -78,7 +83,6 @@ export class EnterMPINComponent implements OnInit {
         element.blur();
     }
   }
-
 
   resendPin(){
 

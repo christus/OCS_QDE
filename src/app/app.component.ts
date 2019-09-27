@@ -8,6 +8,7 @@ import { NativeKeyboard } from '@ionic-native/native-keyboard/ngx';
 import { UtilService } from './services/util.service';
 import { environment } from '../environments/environment';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { MobileService } from './services/mobile-constant.service';
 
 
 
@@ -26,12 +27,13 @@ export class AppComponent implements OnInit{
     private keyboard: Keyboard,
     private renderer: Renderer2,
     nativeKeyboard: NativeKeyboard,
-    private deviceService: DeviceDetectorService){
-    this.isMobile = this.checkIsMobile();
+    private deviceService: DeviceDetectorService,
+    private mobileService: MobileService) { 
+      this.isMobile = this.mobileService.isMobile;
 
-    if(this.isMobile){
-      this.renderer.addClass(document.body, 'mobile');
-    }
+      if(this.isMobile){
+        this.renderer.addClass(document.body, 'mobile');
+      }
   }
 
   ngOnInit() {
@@ -79,10 +81,5 @@ export class AppComponent implements OnInit{
     });
   
   }
-
-  checkIsMobile() {
-    environment.isMobile = true;
-    return environment.isMobile;
-  }
-
+  
 }
