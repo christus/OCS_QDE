@@ -169,7 +169,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   officialCorrespondenceStdCode: string = "";
   officialCorrespondencePhoneNumber: string = "";
 
-  preferedMailingAddress:boolean;
+  preferedMailingAddress:boolean = true;
 
   commCityState:string = "";
   // zipCityStateID:string = "";
@@ -1717,8 +1717,13 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.qde.application.applicants[this.applicantIndex].communicationAddress.stateId = this.qde.application.applicants[this.applicantIndex].communicationAddress.stateId;
       this.qde.application.applicants[this.applicantIndex].communicationAddress.numberOfYearsInCurrentResidence =  form.value.numberOfYearsInCurrentResidence;
       this.qde.application.applicants[this.applicantIndex].communicationAddress.permanentAddress = form.value.permanentAddress;
-      this.qde.application.applicants[this.applicantIndex].communicationAddress.preferedMailingAddress =  this.preferedMailingAddress;
-
+      if(this.preferedMailingAddress == undefined || this.preferedMailingAddress == null){
+        this.preferedMailingAddress = true
+        this.qde.application.applicants[this.applicantIndex].communicationAddress.preferedMailingAddress =  this.preferedMailingAddress;
+      }
+      else{
+        this.qde.application.applicants[this.applicantIndex].communicationAddress.preferedMailingAddress =  this.preferedMailingAddress;
+      }
 
       this.qde.application.applicants[this.applicantIndex].permanentAddress.addressLineOne = form.value.pAddressLineOne;
       this.qde.application.applicants[this.applicantIndex].permanentAddress.addressLineTwo = form.value.pAddressLineTwo;

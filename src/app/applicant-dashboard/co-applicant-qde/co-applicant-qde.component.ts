@@ -1500,14 +1500,21 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       this.qde.application.applicants[this.coApplicantIndex].communicationAddress.stateId = this.qde.application.applicants[this.coApplicantIndex].communicationAddress.stateId+"";
       this.qde.application.applicants[this.coApplicantIndex].communicationAddress.permanentAddress = form.value.permanentAddress;
 
-
       this.qde.application.applicants[this.coApplicantIndex].permanentAddress.addressLineOne = form.value.pAddressLineOne+"";
       this.qde.application.applicants[this.coApplicantIndex].permanentAddress.addressLineTwo = form.value.pAddressLineTwo+"";
       this.qde.application.applicants[this.coApplicantIndex].permanentAddress.zipcodeId = this.qde.application.applicants[this.coApplicantIndex].permanentAddress.zipcodeId+"";
       this.qde.application.applicants[this.coApplicantIndex].permanentAddress.cityId = this.qde.application.applicants[this.coApplicantIndex].permanentAddress.cityId+"";
       this.qde.application.applicants[this.coApplicantIndex].permanentAddress.stateId = this.qde.application.applicants[this.coApplicantIndex].permanentAddress.stateId+"";
       this.qde.application.applicants[this.coApplicantIndex].permanentAddress.numberOfYearsInCurrentResidence = form.value.numberOfYearsInCurrentResidence+"";
-      
+
+      if(this.qde.application.applicants[this.coApplicantIndex].permanentAddress.preferedMailingAddress == undefined ||
+        this.qde.application.applicants[this.coApplicantIndex].permanentAddress.preferedMailingAddress == null){
+        this.qde.application.applicants[this.coApplicantIndex].permanentAddress.preferedMailingAddress = true;
+      }
+      // else{
+      //   this.qde.application.applicants[this.applicantIndex].permanentAddress.preferedMailingAddress =  this.preferedMailingAddress;
+      // }
+
       console.log(this.qde.application.applicants[this.coApplicantIndex].communicationAddress);
 
       this.createOrUpdatePersonalDetailsSub7 = this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
@@ -2746,6 +2753,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   makePermanentAddressSame(event: boolean) {
+    this.selectOneAddr(2);
     this.qde.application.applicants[this.coApplicantIndex].communicationAddress.permanentAddress = event;
 
     if(event == true) {
@@ -3658,9 +3666,17 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     }
     // this.isCurrentAddressFromMainApplicant = false;
   }
-
+  selectOneAddr(fromValue){
+    if (fromValue==1){
+      this.qde.application.applicants[this.coApplicantIndex].communicationAddress.permanentAddress=false;
+    }
+    else{
+      this.qde.application.applicants[this.coApplicantIndex].communicationAddress.permanentAddFromApp=false;
+    }
+  }
 
   permanentAddressFromMainApplicant(event: boolean) {
+    this.selectOneAddr(1);
     this.qde.application.applicants[this.coApplicantIndex].communicationAddress.permanentAddFromApp = event;
     if(event == true){
     this.qde.application.applicants[this.coApplicantIndex].permanentAddress.addressLineOne = this.qde.application.applicants.find(v => v.isMainApplicant == true).permanentAddress.addressLineOne;
