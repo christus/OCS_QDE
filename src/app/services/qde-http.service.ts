@@ -2350,4 +2350,26 @@ createOrUpdatePersonalDetails(qde) {
     return this.http.post(uri, body);
   }
 
+  checkOccupationType(data){
+    const processId = environment.api.checkOccupationType.processId;
+    const workflowId = environment.api.checkOccupationType.workflowId;
+    const projectId = environment.projectId;
+
+
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: data,
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = new HttpParams().set(
+      'processVariables',
+      JSON.stringify(requestEntity)
+    );
+  
+    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.http.post(uri, body);
+  }
+
 }
