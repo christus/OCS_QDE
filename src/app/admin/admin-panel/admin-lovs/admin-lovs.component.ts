@@ -23,6 +23,7 @@ export class AdminLovsComponent implements OnInit, AfterViewInit {
       this.adminLovs.push({description: 'Document Profile', value: 'document_profile'});
       this.adminLovs.push({description: 'Loan Master', value: 'loan_master'});
       this.adminLovs.push({description: 'Login Fee', value: 'login_fee'});
+      this.adminLovs.push({description: 'Applicant Relationship Mapping', value: 'applicant_relationship_mapping'});
 
       this.filteredLovs = this.adminLovs;
     } else {

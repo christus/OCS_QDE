@@ -1421,30 +1421,44 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //-------------------------------------------------------------
   submitResidentialNon(value, swiperInstance ?: Swiper) {
-
-    this.qde.application.applicants[this.applicantIndex].personalDetails.applicantStatus = value;
-
-
-    this.createOrUpdatePersonalDetailsSub2=this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
-      // If successful
-      if(response["ProcessVariables"]["status"]) {
-        this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
-          if(auditRes['ProcessVariables']['status'] == true) {
-            this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
-            this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
-            this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
-            this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
-          }
-        });
-        this.goToNextSlide(swiperInstance);
+    alert(this.isTBMLoggedIn);
+    if(this.isTBMLoggedIn) {
+      if(value == 1) {
+        this.qde.application.applicants[this.applicantIndex].personalDetails.applicantStatus = "1";
       } else {
+        this.qde.application.applicants[this.applicantIndex].personalDetails.applicantStatus = "2";
+      }
+      this.goToNextSlide(swiperInstance);
+    } else {
+
+      
+      this.qde.application.applicants[this.applicantIndex].personalDetails.applicantStatus = value;
+
+      this.createOrUpdatePersonalDetailsSub2=this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
+        // If successful
+        if(response["ProcessVariables"]["status"]) {
+          this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
+            if(auditRes['ProcessVariables']['status'] == true) {
+              this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+              this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+              this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+              this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
+              this.goToNextSlide(swiperInstance);
+            }
+          });
+        } else {
+          this.isErrorModal = true;
+          this.errorMessage = "Something went wrong, please again later.";
+        }
+      }, (error) => {
         this.isErrorModal = true;
         this.errorMessage = "Something went wrong, please again later.";
-      }
-    }, (error) => {
-      this.isErrorModal = true;
-      this.errorMessage = "Something went wrong, please again later.";
-    });
+      });
+    }
+    
+
+
+    
     
   }
 
@@ -3004,16 +3018,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.qde.application.applicants[this.applicantIndex].contactDetails.isMobileOTPverified = false;
   }
 
-  changeApplicantStatus(value, swiperInstance ?: Swiper) {
-    if(!this.isTBMLoggedIn) {
-      if(value == 1) {
-        this.qde.application.applicants[this.applicantIndex].personalDetails.applicantStatus = "1";
-      } else {
-        this.qde.application.applicants[this.applicantIndex].personalDetails.applicantStatus = "2";
-      }
-    }
-    this.goToNextSlide(swiperInstance);
-  }
+  // changeApplicantStatus(value, swiperInstance ?: Swiper) {
+    
+  // }
 
 
 

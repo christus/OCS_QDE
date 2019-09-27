@@ -65,12 +65,12 @@
     <thead>
       <tr>
         <th style="width:60px;">Sr No.</th>
+        <th>Applicant Type</th>
         <th>Assessment</th>
         <th>Document Category</th>
         <th>Document Type</th>
         <th>Profile</th>
         <th>Financial Applicant</th>
-        <th>Applicant Type</th>
         <th>Edit</th>
         <th>Delete</th>
       </tr>
@@ -78,6 +78,13 @@
     <tbody>
       <tr *ngFor="let d of data;let i=index;">
         <td style="width:60px;">{{i+1}}</td>
+        <td>
+          <form>
+            <input (click)="changeIsIndividual($event, i)" value="1" [checked]="d.applicantTypeId == '1'" type="radio" class="genders" name="isIndividual" /><label>Individual</label>
+            <br/>
+            <input (click)="changeIsIndividual($event, i)" value="2" [checked]="d.applicantTypeId == '2'" type="radio" class="genders" name="isIndividual" /><label>Non-Individual</label>
+          </form>
+        </td>
         <td>
           <select name="assessment" [ngModel]="d.assessmentId" (ngModelChange)="tableAssessmentChanged($event, i)">
             <option *ngFor="let c of assessments;" [value]="c.id">{{c.description}}</option>
@@ -103,13 +110,6 @@
             <input (click)="changeRadio($event, i)" value="1" [checked]="d.financialApplicant == true" type="radio" class="genders" name="financialApplicant" /><label>Yes</label>
             <br/>
             <input (click)="changeRadio($event, i)" value="0" [checked]="d.financialApplicant == false" type="radio" class="genders" name="financialApplicant" /><label>No</label>
-          </form>
-        </td>
-        <td>
-          <form>
-            <input (click)="changeIsIndividual($event, i)" value="1" [checked]="d.applicantTypeId == '1'" type="radio" class="genders" name="isIndividual" /><label>Individual</label>
-            <br/>
-            <input (click)="changeIsIndividual($event, i)" value="2" [checked]="d.applicantTypeId == '2'" type="radio" class="genders" name="isIndividual" /><label>Non-Individual</label>
           </form>
         </td>
         <td>

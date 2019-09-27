@@ -337,6 +337,22 @@ export const environment = {
       'workflowId': '99cad862dac211e9a4f70242ac110002',
       'processId': '99e5af3edac211e9929c0242ac110002'
     },
+    "adminApplicantRelationship": {
+      'workflowId': '3c5a465adeb311e9821f0242ac110002',
+      'processId': 'fee20736decb11e99bf10242ac110002'
+    },
+    "adminUpdateApplicantRelationship": {
+      'workflowId': '3c5a465adeb311e9821f0242ac110002',
+      'processId': '3c723bd4deb311e9b8de0242ac110002'
+    },
+    "applicantRelationship": {
+      'workflowId': '',
+      'processId': ''
+    },
+    "getApplicantRelationships": {
+      'workflowId': 'ce7466e6dec311e9a0b20242ac110002',
+      'processId': 'cec7c4d0dec311e994980242ac110002'
+    }
   },
   userName: "icici@icicibankltd.com",
   password: "icici@123",
