@@ -2439,5 +2439,30 @@ createOrUpdatePersonalDetails(qde) {
     );
   }
 
-   
+  assessmentListForProfileApplicantType(applicantType : string) {
+    const processId   = environment.api.assessmentListForProfileApplicantType.processId;
+    const workflowId  = environment.api.assessmentListForProfileApplicantType.workflowId;
+    const projectId   = environment.projectId;
+
+    let qdeRequestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: {
+        userId: parseInt(localStorage.getItem('userId')),
+        applicantType: applicantType
+      },
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = new HttpParams().set(
+      "processVariables",
+      JSON.stringify(qdeRequestEntity)
+    );
+
+    let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
+    return this.http.post(
+      uri,
+      body.toString()
+    );   
+  }  
 }

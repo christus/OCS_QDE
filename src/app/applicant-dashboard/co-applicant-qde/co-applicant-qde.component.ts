@@ -13,8 +13,6 @@ import { QdeHttpService } from 'src/app/services/qde-http.service';
 import { QdeService } from 'src/app/services/qde.service';
 
 import { CommonDataService } from '../../services/common-data.service';
-import { ItemsList } from '@ng-select/ng-select/ng-select/items-list';
-import { findLocaleData } from '@angular/common/src/i18n/locale_data_api';
 import { Subscription } from 'rxjs';
 import { errors } from '../../services/errors';
 import { environment } from 'src/environments/environment.prod';
@@ -439,10 +437,14 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       this.applicantIndividual = (this.activeTab >= 11) ? false: true;
 
       console.log("Fragment & QueryParams: ", this.tabName, this.page);
-      // Here in this condition, fragment and page number will be appropriate
-      // if(this.fragment && this.page > -1) {
-      //   alert(this.fragment+" "+this.page);
-      // }
+      if(this.tabName == this.fragments[10] || this.tabName == this.fragments[16]) {
+        this.qdeHttp.assessmentListForProfileApplicantType(this.qde.application.applicants[this.coApplicantIndex].isIndividual ? '1': '2').subscribe(res => {
+          this.assessmentMethodology = res['ProcessVariables']['AssessementList'].map(e => ({key: e.id, value: e.value}));
+        }, err => {
+          this.isErrorModal = true;
+          this.errorMessage = 'Something went wrong.';
+        });
+      }
     });
   }
 
@@ -777,6 +779,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     if(this.swiperSliders && this.swiperSliders.length > 0) {
       this.swiperSliders[tabIndex].setIndex(this.page-1);
     }
+
     // Check for invalid tabIndex
     if(tabIndex < this.fragments.length) {
       if(tabIndex == 0) {
@@ -3813,13 +3816,21 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         this.titles = this.applicantRelationships[0].applicantTitles.map(v => ({key: v.applicantTitle, value: v.applicantTitleId}));
         this.selectedTitle = this.titles[0];
 
-        // this.genders = 
-        if(this.qde.application.applicants[coApplicantIndex].personalDetails.relationShip) {
-          this.selectedRelationship = this.relationships.find(v => v.value == this.qde.application.applicants[coApplicantIndex].personalDetails.relationShip).value;
-          this.titles = this.applicantRelationships.find(v => v.relationShipId == this.selectedRelationship).applicantTitles.map(v => ({key: v.applicantTitle, value: v.applicantTitleId}));
-          this.selectedTitle = this.titles.find(v => v.value == this.qde.application.applicants[coApplicantIndex].personalDetails.title);
-        } else {
-          this.selectedRelationship = this.relationships[0].value;
+
+        if(this.qde.application.applicants[coApplicantIndex].isIndividual == true) {
+          if(this.qde.application.applicants[coApplicantIndex].personalDetails.relationShip) {
+            this.selectedRelationship = this.relationships.find(v => v.value == this.qde.application.applicants[coApplicantIndex].personalDetails.relationShip).value;
+            this.titles = this.applicantRelationships.find(v => v.relationShipId == this.selectedRelationship).applicantTitles.map(v => ({key: v.applicantTitle, value: v.applicantTitleId}));
+            this.selectedTitle = this.titles.find(v => v.value == this.qde.application.applicants[coApplicantIndex].personalDetails.title);
+          } else {
+            this.selectedRelationship = this.relationships[0].value;
+          }
+        } else if(this.qde.application.applicants[coApplicantIndex].isIndividual == false) {
+          if(this.qde.application.applicants[coApplicantIndex].organizationDetails.relationShip) {
+            this.selectedRelationship = this.relationships.find(v => v.value == this.qde.application.applicants[coApplicantIndex].organizationDetails.relationShip).value;
+          } else {
+            this.selectedRelationship = this.relationships[0].value;
+          }
         }
       } else {
         this.isErrorModal = true;

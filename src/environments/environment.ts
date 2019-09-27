@@ -352,6 +352,10 @@ export const environment = {
     "getApplicantRelationships": {
       'workflowId': 'ce7466e6dec311e9a0b20242ac110002',
       'processId': 'cec7c4d0dec311e994980242ac110002'
+    },
+    "assessmentListForProfileApplicantType": {
+      'workflowId': '0705a6c4810311e982270242ac110002',
+      'processId': '29a0c746e11511e995dc0242ac110002'
     }
   },
   userName: "icici@icicibankltd.com",

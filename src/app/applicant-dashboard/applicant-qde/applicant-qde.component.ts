@@ -431,10 +431,15 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       }
 
       console.log("Fragment & QueryParams: ", this.tabName, this.page);
-      // Here in this condition, fragment and page number will be appropriate
-      // if(this.fragment && this.page > -1) {
-      //   alert(this.fragment+" "+this.page);
-      // }
+
+      if(this.tabName == this.fragments[9] || this.tabName == this.fragments[15]) {
+        this.qdeHttp.assessmentListForProfileApplicantType(this.qde.application.applicants[this.applicantIndex].isIndividual ? '1': '2').subscribe(res => {
+          this.assessmentMethodology = res['ProcessVariables']['AssessementList'].map(e => ({key: e.id, value: e.value}));
+        }, err => {
+          this.isErrorModal = true;
+          this.errorMessage = 'Something went wrong.';
+        });
+      }
     });
     
     this.cds.isTBMLoggedIn.subscribe(val => {
