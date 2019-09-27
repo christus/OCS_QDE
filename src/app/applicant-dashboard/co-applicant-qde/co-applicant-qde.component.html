@@ -2253,6 +2253,7 @@
                                                             #assessmentMethodology1
                                                             (selectionChange)="selectValueChanged($event, assessmentMethodology1.hostElement)"
                                                             [(ngModel)]="selectedAssesmentMethodology"></kendo-dropdownlist>
+                                                        <span class="redalert" *ngIf="assessmentMethodology && assessmentMethodology.length <= 0">Assessment methodology not applicable</span>
                                                     </div>
                                                 </div>
                                                 <div class="btn-wrap">

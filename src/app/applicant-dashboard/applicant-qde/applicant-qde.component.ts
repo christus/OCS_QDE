@@ -433,8 +433,18 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       console.log("Fragment & QueryParams: ", this.tabName, this.page);
 
       if(this.tabName == this.fragments[9] || this.tabName == this.fragments[15]) {
-        this.qdeHttp.assessmentListForProfileApplicantType(this.qde.application.applicants[this.applicantIndex].isIndividual ? '1': '2').subscribe(res => {
-          this.assessmentMethodology = res['ProcessVariables']['AssessementList'].map(e => ({key: e.id, value: e.value}));
+        this.qdeHttp.assessmentListForProfileApplicantType(this.qde.application.applicants[this.applicantIndex].isIndividual ? '1': '2', this.qde.application.applicants[this.applicantIndex].occupation.occupationType).subscribe(res => {
+          if(res['ProcessVariables']['AssessementList']) {
+            this.assessmentMethodology = res['ProcessVariables']['AssessementList'].map(e => ({key: e.id, value: e.value}));
+            if(this.qde && this.qde.application.applicants[this.applicantIndex].incomeDetails.assessmentMethodology) {
+              this.assessmentMethodology.find(e => e.value == this.qde.application.applicants[this.applicantIndex].incomeDetails.assessmentMethodology);
+            } else {
+              this.selectedAssesmentMethodology = this.assessmentMethodology[0];
+            }
+          } else {
+            this.assessmentMethodology = [];
+            this.selectedAssesmentMethodology = null;
+          }
         }, err => {
           this.isErrorModal = true;
           this.errorMessage = 'Something went wrong.';

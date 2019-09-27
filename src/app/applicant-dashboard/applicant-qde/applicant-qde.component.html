@@ -1793,6 +1793,7 @@
                           <div class="form-group">
                             <span class="control-title">Assessment methodology</span>
                             <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control" [data]="assessmentMethodology" tabindex="2" textField="key" valueField="value" name="assessmentMethodology" nick="incomeDetails.assessmentMethodology" #assessmentMethodology1 (selectionChange)="selectValueChanged($event, assessmentMethodology1.hostElement)" [(ngModel)]="selectedAssesmentMethodology"></kendo-dropdownlist>
+                            <span class="redalert" *ngIf="assessmentMethodology && assessmentMethodology.length <= 0">Assessment methodology not applicable</span>
                           </div>
                         </div>
                         <div class="btn-wrap">

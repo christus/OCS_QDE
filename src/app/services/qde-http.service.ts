@@ -2439,17 +2439,22 @@ createOrUpdatePersonalDetails(qde) {
     );
   }
 
-  assessmentListForProfileApplicantType(applicantType : string) {
+  assessmentListForProfileApplicantType(applicantType : string, profileId: string) {
     const processId   = environment.api.assessmentListForProfileApplicantType.processId;
     const workflowId  = environment.api.assessmentListForProfileApplicantType.workflowId;
     const projectId   = environment.projectId;
 
+    let dude = {
+      userId: parseInt(localStorage.getItem('userId')),
+      applicantType: applicantType
+    };
+
+    if(profileId) {
+      dude['profileId'] = profileId;
+    } 
     let qdeRequestEntity: RequestEntity = {
       processId: processId,
-      ProcessVariables: {
-        userId: parseInt(localStorage.getItem('userId')),
-        applicantType: applicantType
-      },
+      ProcessVariables: dude,
       workflowId: workflowId,
       projectId: projectId
     };
