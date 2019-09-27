@@ -510,7 +510,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
           this.selectedApplicantName = this.qde.application.applicants[this.selectedApplicantIndex].personalDetails ? `${this.qde.application.applicants[this.selectedApplicantIndex].personalDetails['firstName']} ${this.qde.application.applicants[this.selectedApplicantIndex].personalDetails['lastName']}`: '';
         }, error => {
           this.isErrorModal = true;
-          this.errorMessage = "Something went wrong, please again later.";
+          this.errorMessage = "Something went wrong, please try again later.";
         });
       } else {
         this.qde = this.qdeService.defaultValue;
@@ -761,7 +761,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
                 }
               }, error => {
                 this.isErrorModal = true;
-                this.errorMessage = "Something went wrong, please again later.";
+                this.errorMessage = "Something went wrong, please try again later.";
               });
                 this.tabSwitch(1);              
             } else {
@@ -769,7 +769,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
             }
           }, error => {
             this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please again later.";
+            this.errorMessage = "Something went wrong, please try again later.";
           }
         );
   
@@ -818,7 +818,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
                 }
               }, error => {
                 this.isErrorModal = true;
-                this.errorMessage = "Something went wrong, please again later.";
+                this.errorMessage = "Something went wrong, please try again later.";
               });
               this.goToNextSlide(swiperInstance);
             } else {
@@ -826,7 +826,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
             }
           }, error => {
             this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please again later.";
+            this.errorMessage = "Something went wrong, please try again later.";
           }
         );
     }
@@ -872,7 +872,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     }, error => {
       this.isErrorModal = true;
-      this.errorMessage = "Something went wrong, please again later.";
+      this.errorMessage = "Something went wrong, please try again later.";
     });
   }
 
@@ -911,7 +911,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
                 }
               }, error => {
                 this.isErrorModal = true;
-                this.errorMessage = "Something went wrong, please again later.";
+                this.errorMessage = "Something went wrong, please try again later.";
               });
               this.clssProbabilityCheck();
             } else {
@@ -919,7 +919,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
             }
           }, error => {
             this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please again later.";
+            this.errorMessage = "Something went wrong, please try again later.";
           }
         );
     }
@@ -960,7 +960,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
               //   }
               // }, error => {
       //   this.isErrorModal = true;
-      //   this.errorMessage = "Something went wrong, please again later.";
+      //   this.errorMessage = "Something went wrong, please try again later.";
       // });
               this.goToNextSlide(swiperInstance);
               this.isLoanRouteModal = true
@@ -969,7 +969,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
             }
           }, error => {
             this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please again later.";
+            this.errorMessage = "Something went wrong, please try again later.";
           }
         );
     }
@@ -1022,7 +1022,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
                   }
                 }, error => {
                   this.isErrorModal = true;
-                  this.errorMessage = "Something went wrong, please again later.";
+                  this.errorMessage = "Something went wrong, please try again later.";
                 });
                 this.goToNextSlide(swiperInstance);
               }else{                
@@ -1034,7 +1034,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
             }
           }, error => {
             this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please again later.";
+            this.errorMessage = "Something went wrong, please try again later.";
           }
         );
     }
@@ -1071,7 +1071,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
                 }
               }, error => {
                 this.isErrorModal = true;
-                this.errorMessage = "Something went wrong, please again later.";
+                this.errorMessage = "Something went wrong, please try again later.";
               });
               this.isLoanRouteModal = true
             } else {
@@ -1079,7 +1079,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
             }
           }, error => {
             this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please again later.";
+            this.errorMessage = "Something went wrong, please try again later.";
           }
         );
     }
@@ -1095,7 +1095,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       }, error => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       }
     );
   }
@@ -1177,7 +1177,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     }, error => {
       this.isErrorModal = true;
-      this.errorMessage = "Something went wrong, please again later.";
+      this.errorMessage = "Something went wrong, please try again later.";
     });
   }
 
@@ -1190,7 +1190,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     }, error => {
       this.isErrorModal = true;
-      this.errorMessage = "Something went wrong, please again later.";
+      this.errorMessage = "Something went wrong, please try again later.";
     });
   }
 
