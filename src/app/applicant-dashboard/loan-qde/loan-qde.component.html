@@ -77,7 +77,7 @@
                           <!-- <div class="redalert" *ngIf="amountRequired.touched && amountRequired.invalid">{{errors.loanDetails.loanAmount.amount.minamount}}</div> -->
                           <div class="invalid-feedback">
                             <div *ngIf="amountRequired.touched && isNumberLessThan50k">{{errors.loanDetails.loanAmount.amount.minamount}}</div>
-                            <div *ngIf="amountRequired.touched && amountRequired.errors?.required">{{errors.loanDetails.loanAmount.amount.required}}</div>
+                            <!-- <div *ngIf="amountRequired.touched && amountRequired.errors?.required">{{errors.loanDetails.loanAmount.amount.required}}</div> -->
                             <div *ngIf="amountRequired.errors?.pattern">{{errors.loanDetails.loanAmount.amount.invalid}}</div>
                           </div>
     
@@ -222,7 +222,7 @@
                                   (input)="clssSearchArea($event)"
                                   fieldFill
                                   required >
-                                  <label for="propertyClssArea" style="margin-top:-38px;" >Property CLSS area</label>
+                                  <label for="propertyClssArea" >Property CLSS area</label>
                                   <span class="optional" style="font-size: 1vw">Type to search</span>
                                   <div *ngIf="(propertyClss.touched || propertyClss.dirty) && propertyClss.invalid" class="invalid-feedback">
                                     <!-- <div *ngIf="propertyClss.errors?.required">{{errors.loanDetails.property.propertyClss.required}}</div> -->

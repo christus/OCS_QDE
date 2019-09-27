@@ -207,7 +207,7 @@
                                                                 fieldFill
                                                                 spellcheck="false" 
                                                                 required/>
-                                                        <label for="pan-inpt" tabindex="1">Enter PAN</label>
+                                                        <label for="pan-inpt" tabindex="1" class="panlabel">Enter PAN</label>
                                                         <!-- <span class="optional">optional</span> -->
                                                         <div *ngIf="panNumber.touched && panNumber.invalid && panErrorCount < 3" class="invalid-feedback">
                                                             <!-- <div *ngIf="panNumber.errors?.required">{{errors.panNumber.required}}</div> -->
@@ -1123,7 +1123,7 @@
                                                       <label for="permanentAddress"><span>Current Address is Permanent Address</span></label>
                                                   </div>
                                                   <div class="permanent-add-wrap">
-                                                      <h1 class="sub-heading" style="text-align: left; margin-bottom: 12px">Permanent Address</h1>
+                                                      <h1 class="sub-heading" style="text-align: left; margin-bottom: 32px">Permanent Address</h1>
                                                       <br>
                                                       <div class="bs-checkbox typ-withForm" *ngIf="isPermanentAddressFromMainApplicant">
                                                               <input [readonly]="isReadOnly"  type="checkbox"
@@ -1923,7 +1923,7 @@
                                                   
                                               </div>
                   
-                                              <div *ngIf="selectedOccupation.value == 9 || selectedOccupation.value == 10 || selectedOccupation.value == 18" class="btn-wrap">
+                                              <div  class="btn-wrap">
                                                 <button type="submit"
                                                         [ngClass]="{'disabled': !occupationForm.valid || expError}"
                                                         [disabled]="(!occupationForm.valid || expError)" 
@@ -1931,14 +1931,14 @@
                                                     Next
                                                 </button>
                                             </div>
-                                              <div *ngIf="selectedOccupation.value != 9 && selectedOccupation.value != 10 && selectedOccupation.value != 18" class="btn-wrap">
+                                              <!-- <div *ngIf="selectedOccupation.value != 9 && selectedOccupation.value != 10 && selectedOccupation.value != 18" class="btn-wrap">
                                                   <button type="submit"
                                                           [ngClass]="{'disabled': !occupationForm.valid || expError}"
                                                           [disabled]="(!occupationForm.valid || expError)" 
                                                           class="btn btn-primary">
                                                       Next
                                                   </button>
-                                              </div>
+                                              </div> -->
                                           </form>
                                           </div>
 

@@ -783,8 +783,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         // Go to Previous Slide
         this.goToPrevSlide(swiperInstance);
       } else {
-        // Go To Previous Tab
-        if(this.activeTab == 11){
+        if(this.activeTab == 10 && this.qde.application.applicants[this.coApplicantIndex].incomeDetails.incomeConsider == false) {
+          this.tabSwitch(this.activeTab - 2);
+        }else if(this.activeTab == 11){
           this.tabSwitch(0);
         }
         else{
@@ -1862,9 +1863,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
     if(this.isTBMLoggedIn) {
       /*********************************************************************************************************
-      * If Salaried, Self Employed Professional, Self Employed Business, Retired then only show income consider
+      * If Salaried, Self Employed Professional, Self Employed Business then only show income consider
       *********************************************************************************************************/
-     if(['2','5','8','10'].includes(this.selectedOccupation.value.toString())) {
+     if(['2','5','8'].includes(this.selectedOccupation.value.toString())) {
         // this.isApplicantRouteModal = true
         this.goToNextSlide(swiperInstance);
       } else {
@@ -1887,24 +1888,24 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   
       this.qde.application.applicants[this.coApplicantIndex].occupation.occupationType = this.selectedOccupation.value.toString();
 
-      if(['2','5','8','10'].includes(this.selectedOccupation.value.toString())) {
+      if(['2','5','8'].includes(this.selectedOccupation.value.toString())) {
         this.qde.application.applicants[this.coApplicantIndex].occupation.companyName = form.value.companyName;
       }
   
-      if(['2','5','8','10'].includes(this.selectedOccupation.value.toString())) {
+      if(['2','5','8'].includes(this.selectedOccupation.value.toString())) {
         this.qde.application.applicants[this.coApplicantIndex].occupation.numberOfYearsInCurrentCompany = form.value.numberOfYearsInCurrentCompany;
       } else {
         this.qde.application.applicants[this.coApplicantIndex].occupation.numberOfYearsInCurrentCompany = 0;
       }
   
-      if(['2','5','8','10'].includes(this.selectedOccupation.value.toString())) {
+      if(['2','5','8'].includes(this.selectedOccupation.value.toString())) {
         this.qde.application.applicants[this.coApplicantIndex].occupation.totalWorkExperience = form.value.totalExperienceYear;
       } else {
         this.qde.application.applicants[this.coApplicantIndex].occupation.totalWorkExperience = 0;
       }
 
-      // Housewife and non-working
-      if(['9','18'].includes(this.selectedOccupation.value.toString())) {
+      // Housewife and non-working and Retired
+      if(['9','10','18'].includes(this.selectedOccupation.value.toString())) {
         this.qde.application.applicants[this.coApplicantIndex].incomeDetails.incomeConsider = false;
       }
   
@@ -1925,9 +1926,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
           });
           
           /*********************************************************************************************************
-          * If Salaried, Self Employed Professional, Self Employed Business, Retired then only show income consider
+          * If Salaried, Self Employed Professional, Self Employed Business then only show income consider
           *********************************************************************************************************/
-          if(['2','5','8','10'].includes(this.selectedOccupation.value.toString())) {
+          if(['2','5','8'].includes(this.selectedOccupation.value.toString())) {
             // this.isApplicantRouteModal = true
             this.goToNextSlide(swiperInstance);
           } else {
@@ -3419,7 +3420,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     this.validateOTPAPISub = this.qdeHttp.validateOTPAPI(mobileNumber, applicantId, applicationId, otp, this.isAlternateStatus, emailId).subscribe(res => {
       if(res['ProcessVariables']['status'] == true) {
         this.otp = "";
-        alert("OTP verified successfully");
+        // alert("OTP verified successfully");
         if(this.isAlternateStatus) {
           this.qde.application.applicants[this.coApplicantIndex].contactDetails.isAlternateOTPverified = true;
         }else {
