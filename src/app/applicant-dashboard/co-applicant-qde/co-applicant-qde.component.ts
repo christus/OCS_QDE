@@ -82,7 +82,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     // value: 0
   };
   employementOptions: Options = {
-    floor: 1,
+    floor: 0,
     ceil: 40,
     // step: 5,
     // showTicksValues: false,
@@ -93,7 +93,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     }
   };
   experienceOptions: Options = {
-    floor: 1,
+    floor: 0,
     ceil: 40,
     // step: 5,
     // showTicksValues: false,
@@ -333,6 +333,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
   isErrorModal:boolean;
   errorMessage:string;
+  isOfficialCorrs: boolean;
 
   constructor(private renderer: Renderer2,
               private route: ActivatedRoute,
@@ -672,7 +673,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
               this.prefillData(params);
             }, error => {
               this.isErrorModal = true;
-              this.errorMessage = "Something went wrong, please again later.";
+              this.errorMessage = "Something went wrong, please try again later.";
             });
             
           }
@@ -786,8 +787,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         // Go to Previous Slide
         this.goToPrevSlide(swiperInstance);
       } else {
-        // Go To Previous Tab
-        if(this.activeTab == 11){
+        if(this.activeTab == 10 && this.qde.application.applicants[this.coApplicantIndex].incomeDetails.incomeConsider == false) {
+          this.tabSwitch(this.activeTab - 2);
+        }else if(this.activeTab == 11){
           this.tabSwitch(0);
         }
         else{
@@ -893,7 +895,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                   }
                 }, error => {
                   this.isErrorModal = true;
-                  this.errorMessage = "Something went wrong, please again later.";
+                  this.errorMessage = "Something went wrong, please try again later.";
                 });
                 // isApplicantPresent = applicants[this.applicantIndex].hasOwnProperty('applicantId');
                 // this.qde.application.applicants[this.coApplicantIndex].applicantId =  applicants[this.coApplicantIndex]["applicantId"];
@@ -908,7 +910,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                   }
                 }, error => {
                   this.isErrorModal = true;
-                  this.errorMessage = "Something went wrong, please again later.";
+                  this.errorMessage = "Something went wrong, please try again later.";
                 });
     
               } else {
@@ -921,7 +923,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
               }
             }, (error) => {
               this.isErrorModal = true;
-              this.errorMessage = "Something went wrong, please again later.";
+              this.errorMessage = "Something went wrong, please try again later.";
             });
         } else {
             this.qde.application.applicants[this.coApplicantIndex].pan.panVerified = false;
@@ -929,7 +931,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
           }
         }, error => {
           this.isErrorModal = true;
-          this.errorMessage = "Something went wrong, please again later.";
+          this.errorMessage = "Something went wrong, please try again later.";
         });
       }
       // When Pan Not Verified
@@ -956,7 +958,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                 }
               } , error => {
                 this.isErrorModal = true;
-                this.errorMessage = "Something went wrong, please again later.";
+                this.errorMessage = "Something went wrong, please try again later.";
               });
 
               // isApplicantPresent = applicants[this.applicantIndex].hasOwnProperty('applicantId');
@@ -972,7 +974,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                 }
               }, error => {
                 this.isErrorModal = true;
-                this.errorMessage = "Something went wrong, please again later.";
+                this.errorMessage = "Something went wrong, please try again later.";
               });
   
             } else {
@@ -985,7 +987,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             }
           },  (error) => {
             this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please again later.";
+            this.errorMessage = "Something went wrong, please try again later.";
           });
       }
 
@@ -1082,7 +1084,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
           }
         } , error => {
           this.isErrorModal = true;
-          this.errorMessage = "Something went wrong, please again later.";
+          this.errorMessage = "Something went wrong, please try again later.";
         });
       } else {
         this.createOrUpdatePanDetailsSub2 = this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
@@ -1129,7 +1131,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
           }
         },  (error) => {
           this.isErrorModal = true;
-          this.errorMessage = "Something went wrong, please again later.";
+          this.errorMessage = "Something went wrong, please try again later.";
         });
       }
     }
@@ -1173,7 +1175,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             }
           }, error => {
             this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please again later.";
+            this.errorMessage = "Something went wrong, please try again later.";
           });
 
         let maleTitles = [];
@@ -1200,7 +1202,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         }
       }, (error) => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       });
   
     }
@@ -1224,7 +1226,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
           }
         } , error => {
           this.isErrorModal = true;
-          this.errorMessage = "Something went wrong, please again later.";
+          this.errorMessage = "Something went wrong, please try again later.";
         });  
         
         
@@ -1234,7 +1236,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       }
     }, (error) => {
       this.isErrorModal = true;
-      this.errorMessage = "Something went wrong, please again later.";
+      this.errorMessage = "Something went wrong, please try again later.";
     });
     
   }
@@ -1260,7 +1262,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             }
           } , error => {
             this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please again later.";
+            this.errorMessage = "Something went wrong, please try again later.";
           });
           this.goToNextSlide(swiperInstance);
           console.log(response['ProcessVariables']['response']);
@@ -1269,7 +1271,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         }
       }, (error) => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       });
     }
     
@@ -1304,7 +1306,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             }
           } , error => {
             this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please again later.";
+            this.errorMessage = "Something went wrong, please try again later.";
           });
           this.goToNextSlide(swiperInstance);
         } else {
@@ -1312,7 +1314,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         }
       },  (error) => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       });
     }
     
@@ -1361,7 +1363,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             }
           } , error => {
             this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please again later.";
+            this.errorMessage = "Something went wrong, please try again later.";
           });
           this.qdeHttp.duplicateApplicantCheck(this.qde.application.applicants[this.coApplicantIndex].applicantId).subscribe(res => {
             
@@ -1377,14 +1379,14 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             }
           } , error => {
             this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please again later.";
+            this.errorMessage = "Something went wrong, please try again later.";
           });
         } else {
           // Throw Invalid Pan Error
         }
       }, (error) => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       });
     }
   }
@@ -1425,7 +1427,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             }
           }, error => {
             this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please again later.";
+            this.errorMessage = "Something went wrong, please try again later.";
           });
           this.tabSwitch(4);
         } else {
@@ -1433,7 +1435,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         }
       }, (error) => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       });
   
     }
@@ -1470,7 +1472,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
      } , error => {
       this.isErrorModal = true;
-      this.errorMessage = "Something went wrong, please again later.";
+      this.errorMessage = "Something went wrong, please try again later.";
     });
   }
   //-------------------------------------------------------------
@@ -1502,14 +1504,21 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       this.qde.application.applicants[this.coApplicantIndex].communicationAddress.stateId = this.qde.application.applicants[this.coApplicantIndex].communicationAddress.stateId+"";
       this.qde.application.applicants[this.coApplicantIndex].communicationAddress.permanentAddress = form.value.permanentAddress;
 
-
       this.qde.application.applicants[this.coApplicantIndex].permanentAddress.addressLineOne = form.value.pAddressLineOne+"";
       this.qde.application.applicants[this.coApplicantIndex].permanentAddress.addressLineTwo = form.value.pAddressLineTwo+"";
       this.qde.application.applicants[this.coApplicantIndex].permanentAddress.zipcodeId = this.qde.application.applicants[this.coApplicantIndex].permanentAddress.zipcodeId+"";
       this.qde.application.applicants[this.coApplicantIndex].permanentAddress.cityId = this.qde.application.applicants[this.coApplicantIndex].permanentAddress.cityId+"";
       this.qde.application.applicants[this.coApplicantIndex].permanentAddress.stateId = this.qde.application.applicants[this.coApplicantIndex].permanentAddress.stateId+"";
       this.qde.application.applicants[this.coApplicantIndex].permanentAddress.numberOfYearsInCurrentResidence = form.value.numberOfYearsInCurrentResidence+"";
-      
+
+      if(this.qde.application.applicants[this.coApplicantIndex].permanentAddress.preferedMailingAddress == undefined ||
+        this.qde.application.applicants[this.coApplicantIndex].permanentAddress.preferedMailingAddress == null){
+        this.qde.application.applicants[this.coApplicantIndex].permanentAddress.preferedMailingAddress = true;
+      }
+      // else{
+      //   this.qde.application.applicants[this.applicantIndex].permanentAddress.preferedMailingAddress =  this.preferedMailingAddress;
+      // }
+
       console.log(this.qde.application.applicants[this.coApplicantIndex].communicationAddress);
 
       this.createOrUpdatePersonalDetailsSub7 = this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
@@ -1524,7 +1533,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             }
           }, error => {
             this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please again later.";
+            this.errorMessage = "Something went wrong, please try again later.";
           });
           this.tabSwitch(5);
         } else {
@@ -1532,7 +1541,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         }
       }, error => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       });
     }
   }
@@ -1574,7 +1583,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
               }
             }, error => {
               this.isErrorModal = true;
-              this.errorMessage = "Something went wrong, please again later.";
+              this.errorMessage = "Something went wrong, please try again later.";
             });
             this.goToNextSlide(swiperInstance);
           } else {
@@ -1585,7 +1594,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         }
       }, (error) => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       });
     }
 
@@ -1616,7 +1625,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             }
           } , error => {
             this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please again later.";
+            this.errorMessage = "Something went wrong, please try again later.";
           });
           this.goToNextSlide(swiperInstance);
         } else {
@@ -1624,7 +1633,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         }
       },  (error) => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       });
   
     }
@@ -1654,7 +1663,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             }
           } , error => {
             this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please again later.";
+            this.errorMessage = "Something went wrong, please try again later.";
           });
           if(value == 1) {
             this.goToNextSlide(swiperInstance);
@@ -1666,7 +1675,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         }
       }, (error) => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       });
     }
 
@@ -1702,7 +1711,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             }
           }, error => {
             this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please again later.";
+            this.errorMessage = "Something went wrong, please try again later.";
           });
           this.tabSwitch(6);
         } else {
@@ -1710,7 +1719,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         }
       },  (error) => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       });
     }
 
@@ -1747,7 +1756,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             }
           }, error => {
             this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please again later.";
+            this.errorMessage = "Something went wrong, please try again later.";
           });
           this.goToNextSlide(swiperInstance);
         } else {
@@ -1755,7 +1764,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         }
       },  (error) => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       });
   
     }
@@ -1790,7 +1799,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             }
           }, error => {
             this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please again later.";
+            this.errorMessage = "Something went wrong, please try again later.";
           });
           this.tabSwitch(7);
         } else {
@@ -1798,7 +1807,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         }
       }, (error) => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       });
     }
 
@@ -1841,7 +1850,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             }
           } , error => {
             this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please again later.";
+            this.errorMessage = "Something went wrong, please try again later.";
           });
           this.tabSwitch(8);
         } else {
@@ -1849,7 +1858,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         }
       }, (error) => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       });
     }
 
@@ -1865,14 +1874,31 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
     if(this.isTBMLoggedIn) {
       /*********************************************************************************************************
-      * If Salaried, Self Employed Professional, Self Employed Business, Retired then only show income consider
+      * If Salaried, Self Employed Professional, Self Employed Business then only show income consider
       *********************************************************************************************************/
-     if(['2','5','8','10'].includes(this.selectedOccupation.value.toString())) {
-        // this.isApplicantRouteModal = true
-        this.goToNextSlide(swiperInstance);
-      } else {
-        this.tabSwitch(10);
-      }
+      let data = {
+        profileId : this.selectedOccupation.value.toString()
+      };
+
+      this.qdeHttp.checkOccupationType(data).subscribe((response) =>{
+        
+        if(response["ProcessVariables"]["status"]) {
+          this.isOfficialCorrs = response["ProcessVariables"]["incomeConsider"];
+        }
+
+        if(this.isOfficialCorrs) {
+          // this.isApplicantRouteModal = true
+          this.goToNextSlide(swiperInstance);
+        } else {
+          this.tabSwitch(10);
+        }
+
+
+      }, (error) => {
+        // this.isErrorModal = true;
+        // this.errorMessage = "Something went wrong, please again later.";
+      });
+      
     } else {
       if (form && !form.valid) {
         return;
@@ -1886,63 +1912,80 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       // }else{
       //   this.expError=false;
       // }
-      
-  
-      this.qde.application.applicants[this.coApplicantIndex].occupation.occupationType = this.selectedOccupation.value.toString();
 
-      if(['2','5','8','10'].includes(this.selectedOccupation.value.toString())) {
-        this.qde.application.applicants[this.coApplicantIndex].occupation.companyName = form.value.companyName;
-      }
-  
-      if(['2','5','8','10'].includes(this.selectedOccupation.value.toString())) {
-        this.qde.application.applicants[this.coApplicantIndex].occupation.numberOfYearsInCurrentCompany = form.value.numberOfYearsInCurrentCompany;
-      } else {
-        this.qde.application.applicants[this.coApplicantIndex].occupation.numberOfYearsInCurrentCompany = 0;
-      }
-  
-      if(['2','5','8','10'].includes(this.selectedOccupation.value.toString())) {
-        this.qde.application.applicants[this.coApplicantIndex].occupation.totalWorkExperience = form.value.totalExperienceYear;
-      } else {
-        this.qde.application.applicants[this.coApplicantIndex].occupation.totalWorkExperience = 0;
-      }
+      let data = {
+        profileId : this.selectedOccupation.value.toString()
+      };
+      this.qdeHttp.checkOccupationType(data).subscribe((response) =>{
 
-      // Housewife and non-working
-      if(['9','18'].includes(this.selectedOccupation.value.toString())) {
-        this.qde.application.applicants[this.coApplicantIndex].incomeDetails.incomeConsider = false;
-      }
-  
-  
-      this.createOrUpdatePersonalDetailsSub15 = this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
-        // If successful
+
         if(response["ProcessVariables"]["status"]) {
-          this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.coApplicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['coApplicantDetails']).subscribe(auditRes => {
-            if(auditRes['ProcessVariables']['status'] == true) {
-                    this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
-                    this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
-                    this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
-                    this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
+          this.isOfficialCorrs = response["ProcessVariables"]["incomeConsider"];
+        }
+
+
+        this.qde.application.applicants[this.coApplicantIndex].occupation.occupationType = this.selectedOccupation.value.toString();
+
+        if(this.isOfficialCorrs) {
+          this.qde.application.applicants[this.coApplicantIndex].occupation.companyName = form.value.companyName;
+        }
+    
+        if(this.isOfficialCorrs) {
+          this.qde.application.applicants[this.coApplicantIndex].occupation.numberOfYearsInCurrentCompany = form.value.numberOfYearsInCurrentCompany;
+        } else {
+          this.qde.application.applicants[this.coApplicantIndex].occupation.numberOfYearsInCurrentCompany = 0;
+        }
+    
+        if(this.isOfficialCorrs) {
+          this.qde.application.applicants[this.coApplicantIndex].occupation.totalWorkExperience = form.value.totalExperienceYear;
+        } else {
+          this.qde.application.applicants[this.coApplicantIndex].occupation.totalWorkExperience = 0;
+        }
+  
+        // Housewife and non-working
+        if(!this.isOfficialCorrs) {
+          this.qde.application.applicants[this.coApplicantIndex].incomeDetails.incomeConsider = false;
+        }
+    
+        this.createOrUpdatePersonalDetailsSub15=this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
+          // If successful
+          if(response["ProcessVariables"]["status"]) {
+            this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.coApplicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
+              if(auditRes['ProcessVariables']['status'] == true) {
+                this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
+              }
+            });
+  
+            /*********************************************************************************************************
+            * If Salaried, Self Employed Professional, Self Employed Business, Retired then only show income consider
+            *********************************************************************************************************/
+            if(this.isOfficialCorrs) {
+              // this.isApplicantRouteModal = true
+              this.goToNextSlide(swiperInstance);
+            } else {
+              this.tabSwitch(10);
             }
-          } , error => {
+            
+          } else {
             this.isErrorModal = true;
             this.errorMessage = "Something went wrong, please again later.";
-          });
-          
-          /*********************************************************************************************************
-          * If Salaried, Self Employed Professional, Self Employed Business, Retired then only show income consider
-          *********************************************************************************************************/
-          if(['2','5','8','10'].includes(this.selectedOccupation.value.toString())) {
-            // this.isApplicantRouteModal = true
-            this.goToNextSlide(swiperInstance);
-          } else {
-            this.tabSwitch(10);
           }
-        } else {
-          // Throw Invalid Pan Error
-        }
-      },  (error) => {
-        this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        }, (error) => {
+          this.isErrorModal = true;
+          this.errorMessage = "Something went wrong, please again later.";
+        });
+
+      }, (error) => {
+        // this.isErrorModal = true;
+        // this.errorMessage = "Something went wrong, please again later.";
       });
+
+      
+  
+     
     }
 
   }
@@ -1994,7 +2037,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             }
           }, error => {
             this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please again later.";
+            this.errorMessage = "Something went wrong, please try again later.";
           });
           this.tabSwitch(10);
         } else {
@@ -2002,7 +2045,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         }
       }, (error) => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       });
     }
   }
@@ -2038,7 +2081,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             }
           }, error => {
             this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please again later.";
+            this.errorMessage = "Something went wrong, please try again later.";
           });
           let result = this.parseJson(response["ProcessVariables"]["response"]);
           this.qdeHttp.duplicateApplicantCheck(this.qde.application.applicants[this.coApplicantIndex].applicantId).subscribe(res => {
@@ -2055,14 +2098,14 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             }
           }, error => {
             this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please again later.";
+            this.errorMessage = "Something went wrong, please try again later.";
           });
         } else {
           // Throw Invalid Pan Error
         }
       }, (error) => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       });
     }
   }
@@ -2107,7 +2150,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             }
           }, error => {
             this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please again later.";
+            this.errorMessage = "Something went wrong, please try again later.";
           });
           this.tabSwitch(14);
         } else {
@@ -2115,7 +2158,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         }
       },(error) => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       });
     }
   }
@@ -2161,7 +2204,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             }
           }, error => {
             this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please again later.";
+            this.errorMessage = "Something went wrong, please try again later.";
           });
           this.tabSwitch(15);
         } else {
@@ -2169,7 +2212,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         }
       }, (error) => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       });
     }
   }
@@ -2206,7 +2249,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             }
           }, error => {
             this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please again later.";
+            this.errorMessage = "Something went wrong, please try again later.";
           });
           this.tabSwitch(16);
         } else {
@@ -2253,7 +2296,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             }
           }, error => {
             this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please again later.";
+            this.errorMessage = "Something went wrong, please try again later.";
           });
           
           this.isCoApplicantRouteModal = true;
@@ -2264,7 +2307,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         }
       }, error => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       });
   
     }
@@ -2295,7 +2338,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             }
           }, error => {
             this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please again later.";
+            this.errorMessage = "Something went wrong, please try again later.";
           });
           this.isCoApplicantRouteModal = true;
           // this.router.navigate(['/applicant', this.qde.application.applicationId, 'co-applicant'], {fragment: 'dashboard'} );
@@ -2305,7 +2348,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         }
       }, error => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       });
   
     }
@@ -2338,7 +2381,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             }
           }, error => {
             this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please again later.";
+            this.errorMessage = "Something went wrong, please try again later.";
           });
 
           this.isCoApplicantRouteModal = true;
@@ -2349,7 +2392,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         }
       }, error => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       });
   
     }
@@ -2556,7 +2599,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             }
           }, error => {
             this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please again later.";
+            this.errorMessage = "Something went wrong, please try again later.";
           });
 
           
@@ -2571,7 +2614,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         }
       }, error => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       });
     }
   }
@@ -2641,7 +2684,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             }
           }, error => {
             this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please again later.";
+            this.errorMessage = "Something went wrong, please try again later.";
           });
 
 
@@ -2656,7 +2699,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         }
       }, error => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       });
     }
   }
@@ -2748,6 +2791,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   makePermanentAddressSame(event: boolean) {
+    this.selectOneAddr(2);
     this.qde.application.applicants[this.coApplicantIndex].communicationAddress.permanentAddress = event;
 
     if(event == true) {
@@ -3365,11 +3409,12 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         // }
        }, error => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       });
        this.timeout();
     } else {
-      alert("Email id and Mobile number is mandatory for verification");
+      this.isErrorModal = true;
+      this.errorMessage = "Email id and Mobile number is mandatory for verification";
     }
 
   }
@@ -3401,7 +3446,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       }
      }, error => {
       this.isErrorModal = true;
-      this.errorMessage = "Something went wrong, please again later.";
+      this.errorMessage = "Something went wrong, please try again later.";
     });
      this.timeout();
   }
@@ -3422,7 +3467,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     this.validateOTPAPISub = this.qdeHttp.validateOTPAPI(mobileNumber, applicantId, applicationId, otp, this.isAlternateStatus, emailId).subscribe(res => {
       if(res['ProcessVariables']['status'] == true) {
         this.otp = "";
-        alert("OTP verified successfully");
+        // alert("OTP verified successfully");
         if(this.isAlternateStatus) {
           this.qde.application.applicants[this.coApplicantIndex].contactDetails.isAlternateOTPverified = true;
         }else {
@@ -3434,7 +3479,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       }
      }, error => {
       this.isErrorModal = true;
-      this.errorMessage = "Something went wrong, please again later.";
+      this.errorMessage = "Something went wrong, please try again later.";
     });
   }
 
@@ -3481,7 +3526,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
           }
         }, error => {
           this.isErrorModal = true;
-          this.errorMessage = "Something went wrong, please again later.";
+          this.errorMessage = "Something went wrong, please try again later.";
         });
       } else {
         // Throw Invalid Pan Error
@@ -3581,7 +3626,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         }
       }, error => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       }
     );
 
@@ -3624,7 +3669,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         }
       }, error => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please again later.";
+        this.errorMessage = "Something went wrong, please try again later.";
       });
   });
 }
@@ -3660,9 +3705,17 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     }
     // this.isCurrentAddressFromMainApplicant = false;
   }
-
+  selectOneAddr(fromValue){
+    if (fromValue==1){
+      this.qde.application.applicants[this.coApplicantIndex].communicationAddress.permanentAddress=false;
+    }
+    else{
+      this.qde.application.applicants[this.coApplicantIndex].communicationAddress.permanentAddFromApp=false;
+    }
+  }
 
   permanentAddressFromMainApplicant(event: boolean) {
+    this.selectOneAddr(1);
     this.qde.application.applicants[this.coApplicantIndex].communicationAddress.permanentAddFromApp = event;
     if(event == true){
     this.qde.application.applicants[this.coApplicantIndex].permanentAddress.addressLineOne = this.qde.application.applicants.find(v => v.isMainApplicant == true).permanentAddress.addressLineOne;

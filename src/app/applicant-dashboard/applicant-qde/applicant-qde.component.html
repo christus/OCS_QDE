@@ -155,7 +155,7 @@
                               (ngModelChange)="qde.application.applicants[applicantIndex].pan.panNumber = $event.toUpperCase()"
                               id="pan-inpt" minlength="10" maxlength="10" pattern="{{regexPattern.panInd}}" name="pan"
                               (keyup)="keyUpPanNumber($event)" #panNumber="ngModel" fieldFill autocomplete="off" required/>
-                            <label for="pan-inpt" tabindex="1">Enter PAN</label>
+                            <label for="pan-inpt" tabindex="1" class="panlabel">Enter PAN</label>
                             <!-- <span class="optional">optional</span> -->
                             <div *ngIf="panNumber.touched && panNumber.invalid && panErrorCount < 3"
                               class="invalid-feedback">
@@ -885,7 +885,7 @@
                                 Address</span></label>
                           </div>
                           <div class="permanent-add-wrap">
-                            <h1 class="sub-heading" style="text-align: left; margin-bottom: 12px">Permanent Address</h1>
+                            <h1 class="sub-heading" style="text-align: left; margin-bottom: 32px">Permanent Address</h1>
                             <div class="form-group">
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                                 id="per-address1" name="pAddressLineOne" #pAddress1="ngModel"
@@ -942,7 +942,8 @@
                           <div class="radio-wrap rounded-radio">
                             <div class="bs-radio typ-normal">
                               <input [readonly]="isTBMLoggedIn" id="current-add-mail" type="radio" name="prefredMail" [value]="1" fieldFill
-                                [checked]="qde.application.applicants[applicantIndex].communicationAddress.preferedMailingAddress == true"
+                                [checked]="qde.application.applicants[applicantIndex].communicationAddress.preferedMailingAddress == true ||
+                                qde.application.applicants[applicantIndex].communicationAddress.preferedMailingAddress == null"
                                 (click)="submitPreferedMail(true)"
                                  />
                               <label for="current-add-mail" tabindex="10">
@@ -1460,9 +1461,9 @@
                               (valueChange)="checkOccupationDetailsYears($event)" [options]="experienceOptions">
                             </ng5-slider>
 
-                            <!-- <div *ngIf="(totalExperienceYear.touched || totalExperienceYear.dirty) && totalExperienceYear.invalid" class="invalid-feedback">
-                                                    <div *ngIf="totalExperienceYear.errors?.required">{{errors.occupationDetails.totalExp.required}}</div>
-                                                  </div> -->
+                          <!-- <div *ngIf="(totalExperienceYear.touched || totalExperienceYear.dirty) && totalExperienceYear.invalid" class="invalid-feedback">
+                                <div *ngIf="totalExperienceYear.errors?.required">{{errors.occupationDetails.totalExp.required}}</div>
+                                </div> -->
 
                             <div class="invalid-feedback">
                               <div *ngIf="expError == false"></div>
@@ -1501,7 +1502,7 @@
                                 [(ngModel)]="qde.application.applicants[applicantIndex].occupation.pensionAmount"
                                 #annualPensionIncome1="ngModel" name="annualFamilyIncome" tabindex="9" fieldFill
                                 maxlength="10" pattern="{{regexPattern.amount}}" required />
-                              <label for="annualPensionIncome1" style="margin-top: -28px;">Pension Amount<span class="lakhs"></span></label>
+                              <label for="annualPensionIncome1">Pension Amount<span class="lakhs"></span></label>
                               <span class="addon">
                                 <span class="icon icon-inr"></span>
                               </span>
@@ -1515,26 +1516,23 @@
                               </div>
                             </div>
 
-
-
                         </div>
 
                         <div
-                          *ngIf="selectedOccupation.value == 9 || selectedOccupation.value == 10 || selectedOccupation.value == 18"
                           class="btn-wrap">
                           <button type="submit" [ngClass]="{'disabled': !occupationForm.valid || expError}"
                             [disabled]="(!occupationForm.valid || expError)" class="btn btn-primary">
                             Next
                           </button>
                         </div>
-                        <div
+                        <!-- <div
                           *ngIf="selectedOccupation.value != 9 && selectedOccupation.value != 10 && selectedOccupation.value != 18"
                           class="btn-wrap">
                           <button type="submit" [ngClass]="{'disabled': !occupationForm.valid || expError}"
                             [disabled]="(!occupationForm.valid || expError)" class="btn btn-primary">
                             Next
                           </button>
-                        </div>
+                        </div> -->
                       </form>
                     </div>
 

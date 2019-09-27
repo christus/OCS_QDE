@@ -106,7 +106,7 @@ export class QdeService {
             numberOfYearsInCurrentResidence: "",
             permanentAddress: null,
             permanentAddFromApp: null,
-            preferedMailingAddress: null
+            preferedMailingAddress: true
           },
           residentialAddress: {
             residentialStatus: "",
@@ -621,7 +621,7 @@ export class QdeService {
               numberOfYearsInCurrentResidence: "",
               permanentAddress: null,
               permanentAddFromApp: null,
-              preferedMailingAddress: null
+              preferedMailingAddress: true
             },
             residentialAddress: {
               residentialStatus: "",

@@ -331,6 +331,10 @@ export const environment = {
       'workflowId': '99cad862dac211e9a4f70242ac110002',
       'processId': '99e5af3edac211e9929c0242ac110002'
     },
+    "checkOccupationType" :{
+      'workflowId': '82ce648ae10c11e9b7730242ac110002',
+      'processId': '82ed99d6e10c11e9b3d00242ac110002'
+    },
   },
   userName: "icici@icicibankltd.com",
   password: "icici@123",
