@@ -2066,9 +2066,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       // this.tabSwitch(8);
 
       /*********************************************************************************************************
-      * If Salaried, Self Employed Professional, Self Employed Business, Retired then only show income consider
+      * If Salaried, Self Employed Professional, Self Employed Business then only show income consider
       *********************************************************************************************************/
-      if(['2','5','8','10'].includes(this.selectedOccupation.value.toString())) {
+      if(['2','5','8'].includes(this.selectedOccupation.value.toString())) {
         // this.isApplicantRouteModal = true
         this.goToNextSlide(swiperInstance);
       } else {
@@ -2094,24 +2094,24 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   
       this.qde.application.applicants[this.applicantIndex].occupation.occupationType = this.selectedOccupation.value.toString();
 
-      if(['2','5','8','10'].includes(this.selectedOccupation.value.toString())) {
+      if(['2','5','8'].includes(this.selectedOccupation.value.toString())) {
         this.qde.application.applicants[this.applicantIndex].occupation.companyName = form.value.companyName;
       }
   
-      if(['2','5','8','10'].includes(this.selectedOccupation.value.toString())) {
+      if(['2','5','8'].includes(this.selectedOccupation.value.toString())) {
         this.qde.application.applicants[this.applicantIndex].occupation.numberOfYearsInCurrentCompany = form.value.numberOfYearsInCurrentCompany;
       } else {
         this.qde.application.applicants[this.applicantIndex].occupation.numberOfYearsInCurrentCompany = 0;
       }
   
-      if(['2','5','8','10'].includes(this.selectedOccupation.value.toString())) {
+      if(['2','5','8'].includes(this.selectedOccupation.value.toString())) {
         this.qde.application.applicants[this.applicantIndex].occupation.totalWorkExperience = form.value.totalExperienceYear;
       } else {
         this.qde.application.applicants[this.applicantIndex].occupation.totalWorkExperience = 0;
       }
 
-      // Housewife and non-working
-      if(['9','18'].includes(this.selectedOccupation.value.toString())) {
+      // Housewife and non-working and Retired
+      if(['9','10','18'].includes(this.selectedOccupation.value.toString())) {
         this.qde.application.applicants[this.applicantIndex].incomeDetails.incomeConsider = false;
       }
   
@@ -2128,9 +2128,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           });
 
           /*********************************************************************************************************
-          * If Salaried, Self Employed Professional, Self Employed Business, Retired then only show income consider
+          * If Salaried, Self Employed Professional, Self Employed Business then only show income consider
           *********************************************************************************************************/
-          if(['2','5','8','10'].includes(this.selectedOccupation.value.toString())) {
+          if(['2','5','8'].includes(this.selectedOccupation.value.toString())) {
             // this.isApplicantRouteModal = true
             this.goToNextSlide(swiperInstance);
           } else {
@@ -2984,7 +2984,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
      // }
       if(res['ProcessVariables']['status'] == true) {
         this.otp = "";
-        alert("OTP verified successfully");
+        // alert("OTP verified successfully");
         if(this.isAlternateStatus) {
           this.qde.application.applicants[this.applicantIndex].contactDetails.isAlternateOTPverified = true;
         }else {
