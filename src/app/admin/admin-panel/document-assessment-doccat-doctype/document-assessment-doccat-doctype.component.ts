@@ -45,7 +45,7 @@ export class DocumentAssessmentDoccatDoctypeComponent implements OnInit {
       this.totalElements = res['totalPages'] * this.perPage;
 
       console.log('documentmapping: ', res['documentMapping']);
-      this.data = this.data.concat(res['documentMapping']);
+      this.data = res['documentMapping'];
     }
   }
 
@@ -169,7 +169,7 @@ export class DocumentAssessmentDoccatDoctypeComponent implements OnInit {
         this.totalElements = response['totalPages'] * this.perPage;
   
         console.log('response documentMapping: ', response['documentMapping']);      
-        this.data = this.data.concat(response['documentMapping']);
+        this.data = response['documentMapping'];
       }
     }, err => {
 

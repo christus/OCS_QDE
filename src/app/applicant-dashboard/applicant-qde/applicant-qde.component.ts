@@ -432,10 +432,25 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       }
 
       console.log("Fragment & QueryParams: ", this.tabName, this.page);
-      // Here in this condition, fragment and page number will be appropriate
-      // if(this.fragment && this.page > -1) {
-      //   alert(this.fragment+" "+this.page);
-      // }
+
+      if(this.tabName == this.fragments[9] || this.tabName == this.fragments[15]) {
+        this.qdeHttp.assessmentListForProfileApplicantType(this.qde.application.applicants[this.applicantIndex].isIndividual ? '1': '2', this.qde.application.applicants[this.applicantIndex].occupation.occupationType).subscribe(res => {
+          if(res['ProcessVariables']['AssessementList']) {
+            this.assessmentMethodology = res['ProcessVariables']['AssessementList'].map(e => ({key: e.id, value: e.value}));
+            if(this.qde && this.qde.application.applicants[this.applicantIndex].incomeDetails.assessmentMethodology) {
+              this.assessmentMethodology.find(e => e.value == this.qde.application.applicants[this.applicantIndex].incomeDetails.assessmentMethodology);
+            } else {
+              this.selectedAssesmentMethodology = this.assessmentMethodology[0];
+            }
+          } else {
+            this.assessmentMethodology = [];
+            this.selectedAssesmentMethodology = null;
+          }
+        }, err => {
+          this.isErrorModal = true;
+          this.errorMessage = 'Something went wrong.';
+        });
+      }
     });
     
     this.cds.isTBMLoggedIn.subscribe(val => {
@@ -1422,31 +1437,40 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //-------------------------------------------------------------
   submitResidentialNon(value, swiperInstance ?: Swiper) {
-
-    this.qde.application.applicants[this.applicantIndex].personalDetails.applicantStatus = value;
-
-
-    this.createOrUpdatePersonalDetailsSub2=this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
-      // If successful
-      if(response["ProcessVariables"]["status"]) {
-        this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
-          if(auditRes['ProcessVariables']['status'] == true) {
-            this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
-            this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
-            this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
-            this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
-          }
-        });
-        this.goToNextSlide(swiperInstance);
+    alert(this.isTBMLoggedIn);
+    if(this.isTBMLoggedIn) {
+      if(value == 1) {
+        this.qde.application.applicants[this.applicantIndex].personalDetails.applicantStatus = "1";
       } else {
-        this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please try again later.";
+        this.qde.application.applicants[this.applicantIndex].personalDetails.applicantStatus = "2";
       }
-    }, (error) => {
-      this.isErrorModal = true;
-      this.errorMessage = "Something went wrong, please try again later.";
-    });
-    
+      this.goToNextSlide(swiperInstance);
+    } else {
+
+      
+      this.qde.application.applicants[this.applicantIndex].personalDetails.applicantStatus = value;
+
+      this.createOrUpdatePersonalDetailsSub2=this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
+        // If successful
+        if(response["ProcessVariables"]["status"]) {
+          this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
+            if(auditRes['ProcessVariables']['status'] == true) {
+              this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+              this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+              this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+              this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
+              this.goToNextSlide(swiperInstance);
+            }
+          });
+        } else {
+          this.isErrorModal = true;
+          this.errorMessage = "Something went wrong, please again later.";
+        }
+      }, (error) => {
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please again later.";
+      });
+    }
   }
 
   submitGenderDetails(value, swiperInstance ?: Swiper) {
@@ -3037,16 +3061,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.qde.application.applicants[this.applicantIndex].contactDetails.isMobileOTPverified = false;
   }
 
-  changeApplicantStatus(value, swiperInstance ?: Swiper) {
-    if(!this.isTBMLoggedIn) {
-      if(value == 1) {
-        this.qde.application.applicants[this.applicantIndex].personalDetails.applicantStatus = "1";
-      } else {
-        this.qde.application.applicants[this.applicantIndex].personalDetails.applicantStatus = "2";
-      }
-    }
-    this.goToNextSlide(swiperInstance);
-  }
+  // changeApplicantStatus(value, swiperInstance ?: Swiper) {
+    
+  // }
 
 
 

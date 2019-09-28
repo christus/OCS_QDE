@@ -50,6 +50,7 @@ export interface Applicant {
     incomeDetails ?: IncomeDetail; // New fields added
     documents ?: Array<any>;
     existingLoans ?: ExistingLoan;
+    applicantRelationships ?: Array<any>; // For Application Purpose, Backend aint using this
 }
 
 export interface MaritalStatus {
@@ -161,6 +162,7 @@ export interface OrganizationDetail {
     nameOfOrganization ?: string;
     dateOfIncorporation ?: string;
     constitution ?: string;
+    relationShip ?: string;
 }
 
 export interface RegisteredAddress {

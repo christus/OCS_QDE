@@ -129,6 +129,8 @@ import { SuccessfullComponent } from './payments/successfull/successfull.compone
 import { EditErrorMessageComponent } from './admin/edit-error-message/edit-error-message.component';
 import { ErrorHandlingMessageComponent } from './admin/error-handling-message/error-handling-message.component';
 import { from } from 'rxjs';
+import { RelationshipMappingComponent } from './admin/admin-panel/relationship-mapping/relationship-mapping.component';
+import { ApplicationRelationshipResolverService } from './services/application-relationship-resolver.service';
 
 
 const appRoutes: Routes = [
@@ -191,7 +193,7 @@ const appRoutes: Routes = [
       {
         path: "sucessfull/:applicationId",
         component: SuccessfullComponent
-      },
+      }
     ]
   },
   // {
@@ -504,11 +506,18 @@ const appRoutes: Routes = [
         }
       },
       {
+        path: 'lovs/applicant_relationship_mapping',
+        component: RelationshipMappingComponent,
+        resolve: {
+          relationshipMaster: ApplicationRelationshipResolverService
+        }
+      },
+      {
         path: 'lovs/:eachLovName',
         component: AdminEachLovComponent,
         resolve: {
           eachLovs: AdminGetEachLovResolverService
-        }        
+        }
       },
       {
         path: 'errorHandle',
@@ -518,7 +527,6 @@ const appRoutes: Routes = [
         path: 'erroredit/:errorCode',
         component: EditErrorMessageComponent
       }
-
     ]
   },
   { path: "**", component: PageNotFoundComponent }
@@ -603,7 +611,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     SuccessfullComponent,
     EditErrorMessageComponent,
     ErrorHandlingMessageComponent,
-    EligibilityClearedComponent
+    EligibilityClearedComponent,
+    RelationshipMappingComponent
   ],
   imports: [
     BrowserModule,
@@ -649,7 +658,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     GeneralLovsService,
     ClssChecklistResolverService,
     LoanTypePurposeMapResolverService,
-    DocAssessDoccatProfileMapResolverService
+    DocAssessDoccatProfileMapResolverService,
+    ApplicationRelationshipResolverService
   ],
   bootstrap: [AppComponent]
 })

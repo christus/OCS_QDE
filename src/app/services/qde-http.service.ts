@@ -2369,6 +2369,126 @@ createOrUpdatePersonalDetails(qde) {
     );
   
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.http.post(uri, body);   
+  }
+
+  adminApplicantRelationship() {
+    const processId   = environment.api.adminApplicantRelationship.processId;
+    const workflowId  = environment.api.adminApplicantRelationship.workflowId;
+    const projectId   = environment.projectId;
+
+    // let tableName = _route.params['eachLovName'];
+
+    let qdeRequestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: {
+        // tableName: tableName,
+        userId: parseInt(localStorage.getItem('userId')),
+        // currentPage: _route.queryParams['currentPage'] ? parseInt(_route.queryParams['currentPage']): 1,
+        // perPage: _route.queryParams['perPage'] ? parseInt(_route.queryParams['perPage']): 10,
+      },
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = new HttpParams().set(
+      "processVariables",
+      JSON.stringify(qdeRequestEntity)
+    );
+
+    let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
+    return this.http.post(
+      uri,
+      body.toString()
+    );
+  }
+
+
+  /**
+   * 
+   * @param mainApplicant 
+   * @param coApplicant If coApplicant is an empty string, then its for reference relationship
+   */
+  getApplicantRelationships(mainApplicant: string, coApplicant: string) {
+    const processId   = environment.api.getApplicantRelationships.processId;
+    const workflowId  = environment.api.getApplicantRelationships.workflowId;
+    const projectId   = environment.projectId;
+
+    // let tableName = _route.params['eachLovName'];
+
+    let qdeRequestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: {
+        userId: parseInt(localStorage.getItem('userId')),
+        mainApplicant: mainApplicant,
+        coApplicant: coApplicant
+      },
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = new HttpParams().set(
+      "processVariables",
+      JSON.stringify(qdeRequestEntity)
+    );
+
+    let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
+    return this.http.post(
+      uri,
+      body.toString()
+    );
+  }
+
+  assessmentListForProfileApplicantType(applicantType : string, profileId: string) {
+    const processId   = environment.api.assessmentListForProfileApplicantType.processId;
+    const workflowId  = environment.api.assessmentListForProfileApplicantType.workflowId;
+    const projectId   = environment.projectId;
+
+    let dude = {
+      userId: parseInt(localStorage.getItem('userId')),
+      applicantType: applicantType
+    };
+
+    if(profileId) {
+      dude['profileId'] = profileId;
+    } 
+    let qdeRequestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: dude,
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = new HttpParams().set(
+      "processVariables",
+      JSON.stringify(qdeRequestEntity)
+    );
+
+    let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
+    return this.http.post(
+      uri,
+      body.toString()
+    );
+  }
+
+  adminUpdateApplicantRelationship(data) {
+    const processId = environment.api.adminUpdateApplicantRelationship.processId;
+    const workflowId = environment.api.adminUpdateApplicantRelationship.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: data,
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = new HttpParams().set(
+      'processVariables',
+      JSON.stringify(requestEntity)
+    );
+  
+    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
     return this.http.post(uri, body);
   }
 

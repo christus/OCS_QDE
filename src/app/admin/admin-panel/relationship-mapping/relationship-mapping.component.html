@@ -1,0 +1,105 @@
+<a class="editsavebtn" routerLink="/admin/lovs">Go Back</a>
+<h1 class="lov-heading">{{tableName.split('_').join(' ')}}</h1>
+<button type="button" class="editsavebtn" (click)="add()">{{isAdd ? 'Close': 'Add New'}}</button>
+<!-- <input type="text" class="lov-search" #searchInp placeholder="Search" tabindex="1" (input)="search($event)" /> -->
+
+<div class="add-form" *ngIf="isAdd">
+  <form (ngSubmit)="submitForm(addForm)" #addForm="ngForm">
+
+    <div class="admin-col-half">
+      <label>Main Applicant</label>
+      <br/>
+      <br/>
+
+      <input [(ngModel)]="mainApplicant" value="1" type="radio" class="genders" name="mainApplicant" /><label>Individual</label>
+      <input [(ngModel)]="mainApplicant" value="2" type="radio" class="genders" name="mainApplicant" /><label>Non-Individual</label>
+
+      <br/>
+      <br/>
+
+      <label>Co-Applicant</label>
+      <br/>
+      <input [(ngModel)]="coApplicant" value="1" type="radio" class="genders" name="coApplicant" /><label>Individual</label>
+      <input [(ngModel)]="coApplicant" value="2" type="radio" class="genders" name="coApplicant" /><label>Non-Individual</label>
+
+      <br/>
+      <br/>
+      <label for="relationship">Select Relationship</label>
+      <select id="relationship" name="relationship" [ngModel]="selectedRelationship.id" (ngModelChange)="relationshipChanged($event)">
+        <option *ngFor="let z of relationships;" [value]="z.id">{{z.description}}</option>
+      </select>
+
+      <br/>
+      <label for="applicantTitle">Select Applicant Title</label>
+      <select id="applicantTitle" name="applicantTitle" [ngModel]="selectedApplicantTitle.id" (ngModelChange)="applicantTitleChanged($event)">
+        <option *ngFor="let c of applicantTitles;" [value]="c.id">{{c.description}}</option>
+      </select>
+
+
+
+      <br/>
+
+      <button type="submit" class="saveBtn">Save</button>
+    </div>
+
+  </form>
+</div>
+
+<!-- <input type="text" class="lov-search" placeholder="Search" (input)="search($event)" /> -->
+<div class="zipcode-table-wrapper">
+
+  <table class="zipcode-table">
+    <thead>
+      <tr>
+        <th style="width:60px;">Sr No.</th>
+        <th>Main Applicant</th>
+        <th>Co-Applicant</th>
+        <th>Relationship</th>
+        <th>Salutation</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let d of data;let i=index;">
+        <td style="width:60px;">{{i+1}}</td>
+        <td>
+          <form>
+            <input value="1" (click)="changeMainApplicant($event, i)" [checked]="d['mainApplicantId'] == '1'" type="radio" class="genders" name="mainApplicant" /><label>Individual</label>
+            <br/>
+            <input value="2" (click)="changeMainApplicant($event, i)" [checked]="d['mainApplicantId'] == '2'" type="radio" class="genders" name="mainApplicant" /><label>Non-Individual</label>
+          </form>
+        </td>
+        <td>
+          <form>
+            <input value="1" (click)="changeCoApplicant($event, i)" [checked]="d['coApplicantId'] == '1'" type="radio" class="genders" name="coApplicant" /><label>Individual</label>
+            <br/>
+            <input value="2" (click)="changeCoApplicant($event, i)" [checked]="d['coApplicantId'] == '2'" type="radio" class="genders" name="coApplicant" /><label>Non-Individual</label>
+          </form>
+        </td>
+        <td>
+          <select name="relationship" [ngModel]="d.relationshipId" (ngModelChange)="tableRelationshipChanged($event, i)">
+            <option *ngFor="let c of relationships;" [value]="c.id">{{c.description}}</option>
+          </select>
+        </td>
+        <td>
+          <select name="applicantTitle" [ngModel]="d.applicantTitleId" (ngModelChange)="tableApplicantTitleChanged($event, i)">
+            <option *ngFor="let c of applicantTitles;" [value]="c.id">{{c.description}}</option>
+          </select>
+        </td>
+        <td>
+          <button type="button" class="editsavebtn" (click)="update(i)">Save</button>
+        </td>
+        <td>
+          <button type="button" class="editsavebtn" (click)="delete(i)">Delete</button>
+        </td>
+      </tr>
+      <tr>
+        <td><button type="button" class="editsavebtn" *ngIf="currentPage != totalPages" (click)="loadMore()">Load More</button></td>
+      </tr>
+    </tbody>
+  </table>
+
+  
+
+</div>
