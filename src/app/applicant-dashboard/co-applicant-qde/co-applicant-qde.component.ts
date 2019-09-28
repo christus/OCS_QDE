@@ -442,22 +442,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
       console.log("Fragment & QueryParams: ", this.tabName, this.page);
       if(this.tabName == this.fragments[10] || this.tabName == this.fragments[16]) {
-        this.qdeHttp.assessmentListForProfileApplicantType(this.qde.application.applicants[this.coApplicantIndex].isIndividual ? '1': '2', this.qde.application.applicants[this.coApplicantIndex].occupation.occupationType).subscribe(res => {
-          if(res['ProcessVariables']['AssessementList']) {
-            this.assessmentMethodology = res['ProcessVariables']['AssessementList'].map(e => ({key: e.id, value: e.value}));
-            if(this.qde && this.qde.application.applicants[this.coApplicantIndex].incomeDetails.assessmentMethodology) {
-              this.assessmentMethodology.find(e => e.value == this.qde.application.applicants[this.coApplicantIndex].incomeDetails.assessmentMethodology);
-            } else {
-              this.selectedAssesmentMethodology = this.assessmentMethodology[0];
-            }
-          } else {
-            this.assessmentMethodology = [];
-            this.selectedAssesmentMethodology = null;
-          }
-        }, err => {
-          this.isErrorModal = true;
-          this.errorMessage = 'Something went wrong.';
-        });
+        this.setAssessmentMethodology();
       }
     });
   }
@@ -540,6 +525,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       console.log("params ", params);
       if(params.coApplicantIndex != null) {
         this.coApplicantIndex = params.coApplicantIndex;
+        this.setAssessmentMethodology();
       }
 
       // Make an http request to get the required qde data and set using setQde
@@ -700,6 +686,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             });
             
           }
+          
       }
 
 
@@ -2357,10 +2344,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       }
   
       this.qde.application.applicants[this.coApplicantIndex].incomeDetails.monthlyIncome = form.value.monthlyIncome;
-      this.qde.application.applicants[this.coApplicantIndex].incomeDetails.assessmentMethodology = this.selectedAssesmentMethodology['value'];
-  
+      this.qde.application.applicants[this.coApplicantIndex].incomeDetails.assessmentMethodology = this.selectedAssesmentMethodology ? this.selectedAssesmentMethodology['value'] : null;
+
       console.log("ID: ", this.qde.application.applicants[this.coApplicantIndex].incomeDetails);
-  
+
       this.createOrUpdatePersonalDetailsSub22 = this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successfull
         if(response["ProcessVariables"]["status"]) {
@@ -2400,7 +2387,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       }
   
       this.qde.application.applicants[this.coApplicantIndex].incomeDetails.monthlyIncome = form.value.monthlyIncome;
-      this.qde.application.applicants[this.coApplicantIndex].incomeDetails.assessmentMethodology = this.selectedAssesmentMethodology['value'];
+      this.qde.application.applicants[this.coApplicantIndex].incomeDetails.assessmentMethodology = this.selectedAssesmentMethodology ? this.selectedAssesmentMethodology['value']: null;
   
       console.log("ID: ", this.qde.application.applicants[this.coApplicantIndex].incomeDetails);
   
@@ -3905,5 +3892,26 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       this.isErrorModal = true;
       this.errorMessage = 'Something went wrong.';
     });
+  }
+
+  setAssessmentMethodology() {
+    if(this.qde.application.applicationId != null) {
+      this.qdeHttp.assessmentListForProfileApplicantType(this.qde.application.applicants[this.coApplicantIndex].isIndividual ? '1': '2', this.qde.application.applicants[this.coApplicantIndex].occupation.occupationType).subscribe(res => {
+        if(res['ProcessVariables']['AssessementList']) {
+          this.assessmentMethodology = res['ProcessVariables']['AssessementList'].map(e => ({key: e.id, value: e.value}));
+          if(this.qde && this.qde.application.applicants[this.coApplicantIndex].incomeDetails.assessmentMethodology) {
+            this.assessmentMethodology.find(e => e.value == this.qde.application.applicants[this.coApplicantIndex].incomeDetails.assessmentMethodology);
+          } else {
+            this.selectedAssesmentMethodology = this.assessmentMethodology[0];
+          }
+        } else {
+          this.assessmentMethodology = [];
+          this.selectedAssesmentMethodology = null;
+        }
+      }, err => {
+        this.isErrorModal = true;
+        this.errorMessage = 'Something went wrong.';
+      });
+    }
   }
 }
