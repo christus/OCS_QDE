@@ -200,6 +200,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
   
   previousUrl: string;
 
+  lovs: Array<string>;
 
   constructor(
     private renderer: Renderer2,
@@ -253,6 +254,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
       const lov = JSON.parse(this.route.snapshot.data.listOfValues["ProcessVariables"].lovs);
 
       console.log("LOVS: ", lov);
+      this.lovs = lov;
       this.documentCategory = lov.LOVS.document_category;
     }
 
@@ -1310,16 +1312,27 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
     const applicantId = applicants[index]["applicantId"];
     this.driveLoc = environment.host + environment.driveLocation;
 
-
     const incomeDetails = applicants[index].incomeDetails;
-    let profileId = 1;
-    if (applicants[index].occupation.occupationType != "2") {
-      profileId = 2;
+
+    let profileId;
+    if(applicants[index].isIndividual) {
+      if(applicants[index].occupation) {
+        if(applicants[index].occupation.occupationType) {
+          profileId = applicants[index].occupation.occupationType
+        } else {
+          profileId = this.lovs['LOVS']['occupation'][0]['value'];
+        }
+      } else {
+        profileId = this.lovs['LOVS']['occupation'][0]['value'];
+      }
+    } else {
+      profileId = null;
     }
+
     const data = {
       isFinanceApplicant: incomeDetails.incomeConsider,
       assessmentId: parseInt(incomeDetails.assessmentMethodology, 10),
-      profileId: profileId,
+      profileId: profileId ? parseInt(profileId): null,
       applicantType: applicants[index].isIndividual == true ? 1: 2
     };
 
