@@ -4118,16 +4118,8 @@ img {
 .bs-form .form-wrap {
 	display: inline-block;
 	vertical-align: middle;
-<<<<<<< HEAD
-	padding: 1.41vw 4.69vw 0 0;
-	max-height: 28.81vw;
-||||||| merged common ancestors
-	padding: 1.41vw 4.69vw 0 0;
-	max-height: 32.81vw;
-=======
 	padding: 2.41vw 4.69vw 0 0;
 	max-height: 32.81vw;
->>>>>>> 9f6c5ea410290ca3b4244a7aa1f90812f36e4845
 	overflow-y: auto;
 	padding-left: 21px;
 	overflow-x: hidden !important;
@@ -5765,5 +5757,9 @@ img {
 
 	.mobile .bs-form .form-wrap{
 		width: 74%;
+	}
+
+	.mobile .width_80{
+		width: 80%;
 	}
 }
