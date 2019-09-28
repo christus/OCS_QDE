@@ -1324,7 +1324,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
         profileId = this.lovs['LOVS']['occupation'][0]['value'];
       }
     } else {
-      profileId = this.lovs['LOVS']['occupation'][0]['value'];
+      profileId = null;
     }
 
     const data = {
