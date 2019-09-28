@@ -1330,7 +1330,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
     const data = {
       isFinanceApplicant: incomeDetails.incomeConsider,
       assessmentId: parseInt(incomeDetails.assessmentMethodology, 10),
-      profileId: parseInt(profileId),
+      profileId: profileId ? parseInt(profileId): null,
       applicantType: applicants[index].isIndividual == true ? 1: 2
     };
 
