@@ -1436,7 +1436,6 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //-------------------------------------------------------------
   submitResidentialNon(value, swiperInstance ?: Swiper) {
-    alert(this.isTBMLoggedIn);
     if(this.isTBMLoggedIn) {
       if(value == 1) {
         this.qde.application.applicants[this.applicantIndex].personalDetails.applicantStatus = "1";

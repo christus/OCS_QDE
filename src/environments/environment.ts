@@ -345,10 +345,6 @@ export const environment = {
       'workflowId': '3c5a465adeb311e9821f0242ac110002',
       'processId': '3c723bd4deb311e9b8de0242ac110002'
     },
-    "applicantRelationship": {
-      'workflowId': '',
-      'processId': ''
-    },
     "getApplicantRelationships": {
       'workflowId': 'ce7466e6dec311e9a0b20242ac110002',
       'processId': 'cec7c4d0dec311e994980242ac110002'
