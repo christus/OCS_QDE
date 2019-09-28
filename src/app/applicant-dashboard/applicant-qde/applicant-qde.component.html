@@ -114,12 +114,12 @@
                             <label for="individual" tabindex="1"><span>Individual</span></label>
                           </div>
                           <div class="bs-radio">
-                            <input [readonly]="isTBMLoggedIn" spellcheck="false" type="radio" name="isIndividual"
+                            <input disabled="true" [readonly]="isTBMLoggedIn" spellcheck="false" type="radio" name="isIndividual"
                               id="non-individual" value="2" [disabled]="isTBMLoggedIn"
-                              [ngClass]="{'disabled': isTBMLoggedIn}"
+                              [ngClass]="{'disabled': (true || isTBMLoggedIn)}"
                               [checked]="qde.application.applicants[applicantIndex].isIndividual == false"
                               (click)="changeIsIndividual(2, panSlider2)" />
-                            <label for="non-individual" tabindex="2"><span>Non-Individual</span></label>
+                            <label for="non-individual" tabindex="2" disabled="true" class="disabled"><span>Non-Individual</span></label>
                           </div>
                         </div>
                       </form>
@@ -300,14 +300,14 @@
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="radio" name="income-consider"
                               id="yes-consider1" [value]="1"
                               [checked]="qde.application.applicants[applicantIndex].personalDetails.applicantStatus == '1'"
-                              (click)="changeApplicantStatus(1, pdSlider2)" class="not-usual" />
+                              (click)="submitResidentialNon(1, pdSlider2)" class="not-usual" />
                             <label for="yes-consider1" tabindex="1"><span>Resident</span></label>
                           </div>
                           <div class="bs-radio">
                             <input disabled [readonly]="isTBMLoggedIn" spellcheck="false" type="radio"
                               name="income-consider" id="no-consider1" class="not-usual" [value]="2"
                               [checked]="qde.application.applicants[applicantIndex].personalDetails.applicantStatus == '2'"
-                              (click)="changeApplicantStatus(2, pdSlider2)" />
+                              (click)="submitResidentialNon(2, pdSlider2)" />
                             <label for="no-consider1" tabindex="2"><span>Non Resident</span></label>
                           </div>
                         </div>
@@ -1794,6 +1794,7 @@
                           <div class="form-group">
                             <span class="control-title">Assessment methodology</span>
                             <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control" [data]="assessmentMethodology" tabindex="2" textField="key" valueField="value" name="assessmentMethodology" nick="incomeDetails.assessmentMethodology" #assessmentMethodology1 (selectionChange)="selectValueChanged($event, assessmentMethodology1.hostElement)" [(ngModel)]="selectedAssesmentMethodology"></kendo-dropdownlist>
+                            <span class="redalert" *ngIf="assessmentMethodology && assessmentMethodology.length <= 0">Assessment methodology not applicable</span>
                           </div>
                         </div>
                         <div class="btn-wrap">

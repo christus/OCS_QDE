@@ -585,20 +585,74 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
         this.state =  "";
         this.cityState =  "";
 
-
-
-
         this.qdeService.setQde(this.qde);
 
-      }
+        this.qdeHttp
+        .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
+        .subscribe(
+          response => {
+            // If successful
+            if (response["ProcessVariables"]["status"]) {
+              let result = response['ProcessVariables']['response'];
+              // console.log(this.qde.application.references.referenceOne.relationShip);
+              this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['loanDetails']).subscribe(auditRes => {
+                if(auditRes['ProcessVariables']['status'] == true) {
+                  this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                  this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                  this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                  this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
 
-      this.goToNextSlide(swiperInstance);
+                  this.goToNextSlide(swiperInstance);
+                }
+              }, error => {
+                this.isErrorModal = true;
+                this.errorMessage = "Something went wrong, please again later.";
+              });
+            } else {
+              // Throw Invalid Pan Error
+            }
+          }, error => {
+            this.isErrorModal = true;
+            this.errorMessage = "Something went wrong, please again later.";
+          }
+        );
+
+      }
 
     } else {
       //switching to existing loan
        this.qde.application.loanDetails.propertyType.propertyIdentified = value;
        
-       this.tabSwitch(this.propertyNoSwitchTab);
+       this.qdeHttp
+       .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
+       .subscribe(
+         response => {
+           // If successful
+           if (response["ProcessVariables"]["status"]) {
+             let result = response['ProcessVariables']['response'];
+             // console.log(this.qde.application.references.referenceOne.relationShip);
+             this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['loanDetails']).subscribe(auditRes => {
+               if(auditRes['ProcessVariables']['status'] == true) {
+                 this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                 this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                 this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                 this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
+
+                 this.tabSwitch(this.propertyNoSwitchTab);
+               }
+             }, error => {
+               this.isErrorModal = true;
+               this.errorMessage = "Something went wrong, please again later.";
+             });
+           } else {
+             // Throw Invalid Pan Error
+           }
+         }, error => {
+           this.isErrorModal = true;
+           this.errorMessage = "Something went wrong, please again later.";
+         }
+       );
+       
 
       // If user changed to "YES"
       if(currentPropertyStatus) {
