@@ -1,6 +1,6 @@
 export const environment = {
   version: "1.7.7",
-  buildDate: "23-9-2019",
+  buildDate: "28-9-2019",
   production: true,
   projectId: '5928d30eac7811e9a1670242ac110002', //developement
 
@@ -339,13 +339,17 @@ export const environment = {
       'workflowId': '3c5a465adeb311e9821f0242ac110002',
       'processId': '3c723bd4deb311e9b8de0242ac110002'
     },
-    "checkOccupationType" :{
-      'workflowId': '82ce648ae10c11e9b7730242ac110002',
-      'processId': '82ed99d6e10c11e9b3d00242ac110002'
+    "getApplicantRelationships": {
+      'workflowId': 'ce7466e6dec311e9a0b20242ac110002',
+      'processId': 'cec7c4d0dec311e994980242ac110002'
     },
     "assessmentListForProfileApplicantType": {
       'workflowId': '0705a6c4810311e982270242ac110002',
       'processId': '29a0c746e11511e995dc0242ac110002'
+    },
+    "checkOccupationType" :{
+      'workflowId': '82ce648ae10c11e9b7730242ac110002',
+      'processId': '82ed99d6e10c11e9b3d00242ac110002'
     }
   },
   userName: "icici@icicibankltd.com",
