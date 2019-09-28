@@ -1308,16 +1308,12 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
     const applicantId = applicants[index]["applicantId"];
     this.driveLoc = environment.host + environment.driveLocation;
 
-
     const incomeDetails = applicants[index].incomeDetails;
-    let profileId = 1;
-    if (applicants[index].occupation.occupationType != "2") {
-      profileId = 2;
-    }
+
     const data = {
       isFinanceApplicant: incomeDetails.incomeConsider,
       assessmentId: parseInt(incomeDetails.assessmentMethodology, 10),
-      profileId: profileId,
+      profileId: applicants[index].isIndividual ? applicants[index].occupation.occupationType : null,
       applicantType: applicants[index].isIndividual == true ? 1: 2
     };
 
