@@ -519,11 +519,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
     this.paramsSub = this.route.params.subscribe((params) => {
 
-      console.log("params ", params);
-      if(params.coApplicantIndex != null) {
-        this.coApplicantIndex = params.coApplicantIndex;
-        this.setAssessmentMethodology();
-      }
+      
 
       // Make an http request to get the required qde data and set using setQde
       if(params.applicationId != null) {
@@ -548,6 +544,12 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
               let applicantIndex = this.qde.application.applicants.findIndex(v => v.isMainApplicant == true);
               this.coApplicantsForDashboard = result.application.applicants.filter(v => v.isMainApplicant == false);
               this.cds.enableTabsIfStatus1(this.qde.application.status);
+
+
+              if(params.coApplicantIndex != null) {
+                this.coApplicantIndex = params.coApplicantIndex;
+                this.setAssessmentMethodology();
+              }
   
               // TO BE REMOVED
               // this.qdeService.setQde(result);
@@ -2028,18 +2030,14 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       // let cityId = zipCityStateID.split(',')[1];
       // let stateId = zipCityStateID.split(',')[2];
   
-  
-      this.qde.application.applicants[this.coApplicantIndex].officialCorrespondence = {
-        addressLineOne : form.value.ofcA1,
-        addressLineTwo : form.value.ofcA2,
-        landMark : form.value.landMark,
-        zipcodeId : this.qde.application.applicants[this.coApplicantIndex].officialCorrespondence.zipcodeId,
-        cityId : this.qde.application.applicants[this.coApplicantIndex].officialCorrespondence.cityId,
-        stateId : this.qde.application.applicants[this.coApplicantIndex].officialCorrespondence.stateId,
-        officeNumber : form.value.stdCode + '-'+ form.value.offStdNumber,
-        //officeNumber :  form.value.offStdNumber,
-        officeEmailId : form.value.officeEmail
-      };
+      this.qde.application.applicants[this.coApplicantIndex].officialCorrespondence.addressLineOne = form.value.ofcA1;
+      this.qde.application.applicants[this.coApplicantIndex].officialCorrespondence.addressLineTwo = form.value.ofcA2;
+      this.qde.application.applicants[this.coApplicantIndex].officialCorrespondence.landMark = form.value.landMark;
+      this.qde.application.applicants[this.coApplicantIndex].officialCorrespondence.zipcodeId = this.qde.application.applicants[this.coApplicantIndex].officialCorrespondence.zipcodeId;
+      this.qde.application.applicants[this.coApplicantIndex].officialCorrespondence.cityId = this.qde.application.applicants[this.coApplicantIndex].officialCorrespondence.cityId;
+      this.qde.application.applicants[this.coApplicantIndex].officialCorrespondence.stateId = this.qde.application.applicants[this.coApplicantIndex].officialCorrespondence.stateId;
+      this.qde.application.applicants[this.coApplicantIndex].officialCorrespondence.officeNumber = form.value.stdCode + '-'+ form.value.offStdNumber;
+      this.qde.application.applicants[this.coApplicantIndex].officialCorrespondence.officeEmailId = form.value.officeEmail;
   
       console.log("submitOfficialCorrespondence: ", this.qde.application.applicants[this.coApplicantIndex].officialCorrespondence);
   
@@ -3897,7 +3895,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         if(res['ProcessVariables']['AssessementList']) {
           this.assessmentMethodology = res['ProcessVariables']['AssessementList'].map(e => ({key: e.id, value: e.value}));
           if(this.qde && this.qde.application.applicants[this.coApplicantIndex].incomeDetails.assessmentMethodology) {
-            this.assessmentMethodology.find(e => e.value == this.qde.application.applicants[this.coApplicantIndex].incomeDetails.assessmentMethodology);
+            this.selectedAssesmentMethodology =  this.assessmentMethodology.find(e => e.value == this.qde.application.applicants[this.coApplicantIndex].incomeDetails.assessmentMethodology);
           } else {
             this.selectedAssesmentMethodology = this.assessmentMethodology[0];
           }
