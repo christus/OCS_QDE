@@ -1209,7 +1209,9 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
 
     let FileSize = size / 1024 / 1024; // in MB
     if (FileSize > 2) {
-        alert('File size exceeds 2 MB');
+        this.isErrorModal = true;
+        this.errorMessage = "File size exceeds 2 MB";
+
        // $(file).val(''); //for clearing with Jquery
        return null;
     } else {

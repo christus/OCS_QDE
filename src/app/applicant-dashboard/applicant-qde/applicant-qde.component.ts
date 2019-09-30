@@ -3034,8 +3034,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         }
         this.onBackOTP();
       }else {
-        alert("Enter valid OTP");
-      }
+        this.isErrorModal = true;
+        this.errorMessage = "Enter valid OTP";
+       }
      }, error => {
       this.isErrorModal = true;
       this.errorMessage = "Something went wrong, please try again later.";
