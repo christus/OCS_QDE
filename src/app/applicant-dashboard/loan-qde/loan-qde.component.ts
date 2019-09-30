@@ -602,12 +602,14 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
                   this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                   this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
 
-                  this.goToNextSlide(swiperInstance);
+                  //this.goToNextSlide(swiperInstance);
                 }
               }, error => {
                 this.isErrorModal = true;
                 this.errorMessage = "Something went wrong, please again later.";
               });
+
+              this.goToNextSlide(swiperInstance);
             } else {
               // Throw Invalid Pan Error
             }
@@ -617,6 +619,8 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
           }
         );
 
+      }else {
+        this.goToNextSlide(swiperInstance);
       }
 
     } else {
@@ -638,12 +642,14 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
                  this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                  this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
 
-                 this.tabSwitch(this.propertyNoSwitchTab);
+                
                }
              }, error => {
                this.isErrorModal = true;
                this.errorMessage = "Something went wrong, please again later.";
              });
+
+             this.tabSwitch(this.propertyNoSwitchTab);
            } else {
              // Throw Invalid Pan Error
            }
