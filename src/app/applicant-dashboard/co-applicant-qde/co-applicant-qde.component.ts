@@ -3493,7 +3493,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         }
         this.onBackOTP();
       }else {
-        alert("Enter valid OTP");
+        this.isErrorModal = true;
+        this.errorMessage = "Enter valid OTP"
       }
      }, error => {
       this.isErrorModal = true;
