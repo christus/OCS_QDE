@@ -122,53 +122,26 @@
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide">
                                     <form class="bs-form" *ngIf="!isTabDisabled">
-                                        <div class="form-wrap">
+                                        <div class="form-wrap form-wrap-img">
 
-                                        <div *ngIf="isMobile">
-
-                                            <div *ngIf="photoProofId[applicantIndex]" else photoProof>
-                                                <div *ngIf="photoProofId[applicantIndex]" class="bs-file">
-                                                        <secured-image [src]="photoProofId[applicantIndex]"></secured-image>
-                                                    <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setCustomerPhoto')">Retake</button>
-                                                </div>
-                                            </div>
-
-                                            <div *ngIf="!photoProofId[applicantIndex]" #photoProof>
-                                                <div *ngIf="photoProofFileName[applicantIndex]" class="bs-file">
-                                                    <img [src]="photoProofFileName[applicantIndex]" />
-                                                    <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setCustomerPhoto')">Retake</button>
-                                                </div>
-                                            </div>
-
-                                            <div *ngIf="!photoProofFileName[applicantIndex]" class="bs-file">
-                                                <input [readonly]="isTBMLoggedIn" type="file" class="form-control" (change)="setCustomerPhoto($event.target.files)" >
-                                                <label for="file"><span>Click to photo / Upload document</span></label>
-                                                <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setCustomerPhoto')">open camera</button>
-                                            </div>
-
-                                        </div>
-
-                                        <div  *ngIf="!isMobile">
-
+                                            <div class="image-wrapper-container">
                                                 <div class="bs-file">
-                                                    <input [readonly]="isTBMLoggedIn" id="clickCustomerPhoto1" type="file" class="form-control" (change)="setCustomerPhoto($event.target.files)" >
-                                                    <label for="clickCustomerPhoto1"><span>Click to photo / Upload document</span></label>
+                                                    <div *ngIf="!isMobile">
+                                                        <input  [readonly]="isTBMLoggedIn" id="clickCustomerPhoto1" type="file" class="form-control" (change)="setCustomerPhoto($event.target.files)" >
+                                                        <label for="clickCustomerPhoto1"><span>Click to photo / Upload document</span></label>
+                                                    </div>
+                                                    <div *ngIf="isMobile && !isTBMLoggedIn" (click)="openCamera('setCustomerPhoto')"  (change)="setCustomerPhoto($event.target.files)">
+                                                        <label for="clickCustomerPhoto1"><span>Click to photo / Upload document</span></label>    
+                                                    </div>
                                                 </div>
 
-                                                <div (click)="openLink(photoProofId[applicantIndex])" class="doc_file_name_size" *ngIf="photoProofFileName[applicantIndex]">
+                                                <div *ngIf="photoProofFileName[applicantIndex]" (click)="openLink(photoProofId[applicantIndex])" class="doc_file_name_size" >
                                                     <div>
                                                         <span class="ellipsis">{{photoProofFileName[applicantIndex]}} </span>
                                                         <span ng-switch-when="true">({{photoProofFileSize[applicantIndex]}})</span>
                                                     </div>
-                                                    <!-- <div ng-show="progressVisible">
-                                                        <div class="percent">{{progress}}%</div>
-                                                        <div class="progress-bar">
-                                                            <div class="uploaded" ng-style="{'width': progress+'%'}"></div>
-                                                        </div>
-                                                    </div> -->
-                                                </div>
-
-                                        </div>
+                                                </div>            
+                                            </div>
 
                                         </div>
                                         <div class="btn-wrap">
@@ -234,9 +207,9 @@
                                     </div>
                                     <div class="swiper-slide">
                                         <form class="bs-form" *ngIf="!isTabDisabled">
-                                            <div class="form-wrap">
+                                            <div class="form-wrap form-wrap-img">
                                                 
-                                                <div *ngIf="isMobile">
+                                                <!-- <div *ngIf="isMobile">
 
                                                     <div *ngIf="isMobile && idProofId[applicantIndex]" else idProof>
                                                         <div *ngIf="idProofId[applicantIndex]" class="bs-file" >
@@ -261,29 +234,26 @@
                                                         <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setIdProof')">open camera</button>
                                                     </div>
 
-                                                </div>
+                                                </div> -->
 
-                                                <div *ngIf="!isMobile">
-
+                                                <div class="image-wrapper-container">
                                                     <div class="bs-file">
-                                                        <input [readonly]="isTBMLoggedIn" type="file" class="form-control" id="idProofId" (change)="setIdProof($event.target.files, applicantIndex)" >
-                                                        <label for="idProofId"><span>Click to photo / Upload document</span></label>
+                                                        <div *ngIf="!isMobile">
+                                                            <input  [readonly]="isTBMLoggedIn" id="idProofId" type="file" class="form-control"  (change)="setIdProof($event.target.files, applicantIndex)" >
+                                                            <label for="idProofId"><span>Click to photo / Upload document</span></label>
+                                                        </div>
+                                                        <div *ngIf="isMobile && !isTBMLoggedIn" (click)="openCamera('setIdProof')"  
+                                                        (change)="setIdProof($event.target.files, applicantIndex)">
+                                                            <label for="idProofId"><span>Click to photo / Upload document</span></label>    
+                                                        </div>
                                                     </div>
-                                                    
-
-                                                    <div class="doc_file_name_size" *ngIf="idProofFileName[applicantIndex]">
+                                                
+                                                    <div *ngIf="idProofFileName[applicantIndex]"  class="doc_file_name_size" >
                                                         <div>
-                                                            <span class="ellipsis" >{{idProofFileName[applicantIndex]}} </span>
+                                                            <span class="ellipsis">{{idProofFileName[applicantIndex]}} </span>
                                                             <span ng-switch-when="true">({{idProofFileSize[applicantIndex]}})</span>
                                                         </div>
-                                                        <!-- <div ng-show="progressVisible">
-                                                            <div class="percent">{{progress}}%</div>
-                                                            <div class="progress-bar">
-                                                                <div class="uploaded" ng-style="{'width': progress+'%'}"></div>
-                                                            </div>
-                                                        </div> -->
                                                     </div>
-
                                                 </div>
 
                                             </div>
@@ -399,9 +369,9 @@
                                   </div>
                                   <div class="swiper-slide">
                                       <form class="bs-form">
-                                           <div class="form-wrap">
+                                           <div class="form-wrap form-wrap-img">
 
-                                            <div *ngIf="isMobile">
+                                            <!-- <div *ngIf="isMobile">
                                               
                                                 <div *ngIf="addressProofId[applicantIndex]" else addrProof>
                                                     <div *ngIf="addressProofId[applicantIndex]" class="bs-file" >
@@ -424,28 +394,27 @@
                                                 </div>
 
 
-                                            </div>
+                                            </div> -->
 
 
-                                            <div *ngIf="!isMobile">
-
+                                            <div class="image-wrapper-container">
                                                 <div class="bs-file">
-                                                    <input [readonly]="isTBMLoggedIn" type="file" id="addressProofID" class="form-control" (change)="setAddressProof($event.target.files)" >
-                                                    <label for="addressProofID"><span>Click to photo / Upload document</span></label>
+                                                    <div *ngIf="!isMobile">
+                                                        <input  [readonly]="isTBMLoggedIn" id="addressProofID" type="file" class="form-control"  (change)="setAddressProof($event.target.files, applicantIndex)" >
+                                                        <label for="addressProofID"><span>Click to photo / Upload document</span></label>
+                                                    </div>
+                                                    <div *ngIf="isMobile && !isTBMLoggedIn" (click)="openCamera('setAddressProof')"  
+                                                    (change)="setAddressProof($event.target.files, applicantIndex)">
+                                                        <label for="addressProofID"><span>Click to photo / Upload document</span></label>    
+                                                    </div>
                                                 </div>
-
-                                                <div class="doc_file_name_size" *ngIf="addressProofFileName[applicantIndex]">
+                                            
+                                                <div *ngIf="addressProofFileName[applicantIndex]"  class="doc_file_name_size" >
                                                     <div>
                                                         <span class="ellipsis">{{addressProofFileName[applicantIndex]}} </span>
                                                         <span ng-switch-when="true">({{addressProofFileSize[applicantIndex]}})</span>
                                                     </div>
-                                                    <!-- <div ng-show="progressVisible">
-                                                        <div class="percent">{{progress}}%</div>
-                                                        <div class="progress-bar">
-                                                            <div class="uploaded" ng-style="{'width': progress+'%'}"></div>
-                                                        </div>
-                                                    </div> -->
-                                                </div>
+                                                </div>            
                                             </div>
 
                                           </div>
@@ -514,9 +483,9 @@
                                   </div>
                                   <div class="swiper-slide">
                                       <form class="bs-form" *ngIf="!isTabDisabled">
-                                          <div class="form-wrap">
+                                          <div class="form-wrap form-wrap-img">
 
-                                            <div *ngIf="isMobile">
+                                            <!-- <div *ngIf="isMobile">
                                            
                                                 <div *ngIf="incomeProofId[applicantIndex]" else incomeProof>
                                                     <div *ngIf="incomeProofId[applicantIndex]" class="bs-file" >
@@ -539,29 +508,28 @@
                                                   <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setIncomeProof')">open camera</button>
                                                 </div>
 
-                                            </div>
+                                            </div> -->
 
-                                            <div *ngIf="!isMobile">
-
+                                            <div class="image-wrapper-container">
                                                 <div class="bs-file">
-                                                    <input [readonly]="isTBMLoggedIn" type="file" class="form-control" id="incomeProofID" (change)="setIncomeProof($event.target.files)" >
-                                                    <label for="incomeProofID"><span>Click to photo / Upload document</span></label>
+                                                    <div *ngIf="!isMobile">
+                                                        <input  [readonly]="isTBMLoggedIn" id="incomeProofID" type="file" class="form-control"  (change)="setIncomeProof($event.target.files, applicantIndex)" >
+                                                        <label for="incomeProofID"><span>Click to photo / Upload document</span></label>
+                                                    </div>
+                                                    <div *ngIf="isMobile && !isTBMLoggedIn" (click)="openCamera('setIncomeProof')"  
+                                                    (change)="setIncomeProof($event.target.files, applicantIndex)">
+                                                        <label for="incomeProofID"><span>Click to photo / Upload document</span></label>    
+                                                    </div>
                                                 </div>
-          
-                                                <div class="doc_file_name_size" *ngIf="incomeProofFileName[applicantIndex]">
+                                            
+                                                <div *ngIf="incomeProofFileName[applicantIndex]"  class="doc_file_name_size" >
                                                     <div>
                                                         <span class="ellipsis">{{incomeProofFileName[applicantIndex]}} </span>
                                                         <span ng-switch-when="true">({{incomeProofFileSize[applicantIndex]}})</span>
                                                     </div>
-                                                    <!-- <div ng-show="progressVisible">
-                                                        <div class="percent">{{progress}}%</div>
-                                                        <div class="progress-bar">
-                                                            <div class="uploaded" ng-style="{'width': progress+'%'}"></div>
-                                                        </div>
-                                                    </div> -->
-                                                </div>
-
-                                             </div>   
+                                                </div>            
+                                            </div>
+                                                  
 
                                           </div>
                                           <div class="btn-wrap">
@@ -629,9 +597,9 @@
                                   </div>
                                   <div class="swiper-slide">
                                       <form class="bs-form" *ngIf="!isTabDisabled">
-                                          <div class="form-wrap">
+                                          <div class="form-wrap form-wrap-img">
 
-                                            <div *ngIf="isMobile">
+                                            <!-- <div *ngIf="isMobile">
                                                 
                                                 <div *ngIf="bankProofId[applicantIndex]" else bankProof>
                                                     <div *ngIf="bankProofId[applicantIndex]" class="bs-file" >
@@ -654,28 +622,26 @@
                                                   <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setBankingProof')">open camera</button>
                                                 </div>
 
-                                            </div>
+                                            </div> -->
 
-                                            <div *ngIf="!isMobile">
-
+                                            <div class="image-wrapper-container">
                                                 <div class="bs-file">
-                                                    <input [readonly]="isTBMLoggedIn" type="file" id="bankingProofID" class="form-control" (change)="setBankingProof($event.target.files)" >
-                                                    <label for="bankingProofID"><span>Click to photo / Upload document</span></label>
+                                                    <div *ngIf="!isMobile">
+                                                        <input  [readonly]="isTBMLoggedIn" id="bankingProofID" type="file" class="form-control"  (change)="setBankingProof($event.target.files, applicantIndex)" >
+                                                        <label for="bankingProofID"><span>Click to photo / Upload document</span></label>
+                                                    </div>
+                                                    <div *ngIf="isMobile && !isTBMLoggedIn" (click)="openCamera('setBankingProof')"  
+                                                    (change)="setBankingProof($event.target.files, applicantIndex)">
+                                                        <label for="bankingProofID"><span>Click to photo / Upload document</span></label>    
+                                                    </div>
                                                 </div>
-
-                                                <div class="doc_file_name_size" *ngIf="bankProofFileName[applicantIndex]">
+                                            
+                                                <div *ngIf="bankProofFileName[applicantIndex]"  class="doc_file_name_size" >
                                                     <div>
                                                         <span class="ellipsis">{{bankProofFileName[applicantIndex]}} </span>
                                                         <span ng-switch-when="true">({{bankProofFileSize[applicantIndex]}})</span>
                                                     </div>
-                                                    <!-- <div ng-show="progressVisible">
-                                                        <div class="percent">{{progress}}%</div>
-                                                        <div class="progress-bar">
-                                                            <div class="uploaded" ng-style="{'width': progress+'%'}"></div>
-                                                        </div>
-                                                    </div> -->
-                                                </div>
-
+                                                </div>            
                                             </div>
 
                                            
@@ -747,55 +713,28 @@
                                   </div>
                                   <div class="swiper-slide">
                                       <form class="bs-form" *ngIf="!isTabDisabled">
-                                          <div class="form-wrap">
+                                          <div class="form-wrap form-wrap-img">
 
-                                            <div *ngIf="isMobile">
-
-                                                <div *ngIf="collateralProofId[applicantIndex]" else collateralProof>
-                                                    <div *ngIf="collateralProofId[applicantIndex]" class="bs-file" >
-                                                            <secured-image [src]="collateralProofId[applicantIndex]"></secured-image>
-                                                        <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setCollateralProof')">Retake</button>
+                                                <div class="image-wrapper-container">
+                                                    <div class="bs-file">
+                                                        <div *ngIf="!isMobile">
+                                                            <input  [readonly]="isTBMLoggedIn" id="collateralProofID" type="file" class="form-control"  (change)="setCollateralProof($event.target.files, applicantIndex)" >
+                                                            <label for="collateralProofID"><span>Click to photo / Upload document</span></label>
+                                                        </div>
+                                                        <div *ngIf="isMobile && !isTBMLoggedIn" (click)="openCamera('setCollateralProof')"  
+                                                        (change)="setCollateralProof($event.target.files, applicantIndex)">
+                                                            <label for="collateralProofID"><span>Click to photo / Upload document</span></label>    
+                                                        </div>
                                                     </div>
-                                                </div>
-
-
-                                                <div *ngIf="!collateralProofId[applicantIndex]" #collateralProof>
-                                                    <div *ngIf="!collateralProofId[applicantIndex]" class="bs-file">
-                                                        <img [src]="collateralProofFileName[applicantIndex]" />
-                                                        <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setCollateralProof')">Retake</button>
-                                                    </div>
-                                                </div>
-
-                                                <div *ngIf="!collateralProofFileName[applicantIndex]" class="bs-file">
-                                                  <input [readonly]="isTBMLoggedIn" type="file" class="form-control" (change)="setCollateralProof($event.target.files)" >
-                                                  <label for="file"><span>Click to photo / Upload document</span></label>
-                                                  <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera('setCollateralProof')">open camera</button>
-                                                </div>
-
-                                            </div>
-
-                                            <div *ngIf="!isMobile">
-
-                                                <div class="bs-file">
-                                                    <input [readonly]="isTBMLoggedIn" id="collateralProofID" type="file" class="form-control" (change)="setCollateralProof($event.target.files)" >
-                                                    <label for="collateralProofID"><span>Click to photo / Upload document</span></label>
-                                                </div>
-
-
-                                                <div class="doc_file_name_size" *ngIf="collateralProofFileName[applicantIndex]">
+                                                
+                                                    <div *ngIf="collateralProofFileName[applicantIndex]"  class="doc_file_name_size" >
                                                         <div>
                                                             <span class="ellipsis">{{collateralProofFileName[applicantIndex]}} </span>
                                                             <span ng-switch-when="true">({{collateralProofFileSize[applicantIndex]}})</span>
                                                         </div>
-                                                        <!-- <div ng-show="progressVisible">
-                                                            <div class="percent">{{progress}}%</div>
-                                                            <div class="progress-bar">
-                                                                <div class="uploaded" ng-style="{'width': progress+'%'}"></div>
-                                                            </div>
-                                                        </div> -->
+                                                    </div>            
                                                 </div>
-
-                                            </div>
+                                                    
 
                                           </div>
                                           <div class="btn-wrap">

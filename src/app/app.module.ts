@@ -132,6 +132,10 @@ import { from } from 'rxjs';
 import { RelationshipMappingComponent } from './admin/admin-panel/relationship-mapping/relationship-mapping.component';
 import { ApplicationRelationshipResolverService } from './services/application-relationship-resolver.service';
 
+import { HTTP } from '@ionic-native/http/ngx';
+import { QdeHttpService } from './services/qde-http.service';
+import { MobileService } from './services/mobile-constant.service';
+
 
 const appRoutes: Routes = [
   { path: "", redirectTo: "leads", pathMatch: "full" },
@@ -658,6 +662,9 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     GeneralLovsService,
     ClssChecklistResolverService,
     LoanTypePurposeMapResolverService,
+    HTTP,
+    DocAssessDoccatProfileMapResolverService,
+    MobileService,
     DocAssessDoccatProfileMapResolverService,
     ApplicationRelationshipResolverService
   ],

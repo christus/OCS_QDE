@@ -1,3 +1,4 @@
+import { MobileService } from './../../services/mobile-constant.service';
 import { environment } from 'src/environments/environment';
 import { Component, OnInit,  ViewChild, ElementRef, Renderer2, AfterViewInit, HostListener, ViewChildren, QueryList } from '@angular/core';
 
@@ -11,10 +12,10 @@ import { QdeHttpService } from 'src/app/services/qde-http.service';
 import { QdeService } from 'src/app/services/qde.service';
 import Qde from 'src/app/models/qde.model';
 
-import { DeviceDetectorService } from 'ngx-device-detector';
 import { CommonDataService } from 'src/app/services/common-data.service';
 import { Subscription } from 'rxjs';
 import { screenPages } from '../../app.constants';
+import { UtilService } from '../../services/util.service';
 
 interface Item {
   key: string;
@@ -206,9 +207,10 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private router: Router,
     private qdeHttp: QdeHttpService,
-    private deviceService: DeviceDetectorService,
     private qdeService: QdeService,
-    private cds: CommonDataService) {
+    private utilService: UtilService,
+    private cds: CommonDataService,
+    private mobileService: MobileService) {
 
     this.qde = this.qdeService.defaultValue;
 
@@ -242,7 +244,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
 
-    this.isMobile = this.deviceService.isMobile() ;
+    this.isMobile = this.mobileService.isMobile;
 
     console.log("isMovile onInit", this.isMobile);
 
@@ -745,7 +747,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
 
     if(this.isMobile) {
       this.addressProofDoc[this.applicantIndex] = files;
-      this.addressProofFileName[this.applicantIndex] = (<any>window).Ionic.WebView.convertFileSrc(this.addressProofDoc);
+      this.addressProofFileName[this.applicantIndex] = (<any>window).Ionic.WebView.convertFileSrc(this.addressProofDoc[this.applicantIndex]);
       this.addressProofFileSize[this.applicantIndex] = "";
       return;
     }
@@ -824,7 +826,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
   setIncomeProof(files: any) {
      if(this.isMobile) {
       this.incomeProofDoc[this.applicantIndex] = files;
-      this.incomeProofFileName[this.applicantIndex] = (<any>window).Ionic.WebView.convertFileSrc(this.incomeProofDoc);
+      this.incomeProofFileName[this.applicantIndex] = (<any>window).Ionic.WebView.convertFileSrc(this.incomeProofDoc[this.applicantIndex]);
       this.incomeProofFileSize[this.applicantIndex] = "";
       return;
     }
@@ -913,7 +915,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
   setBankingProof(files: any) {
      if(this.isMobile) {
       this.bankingProofDoc[this.applicantIndex] = files;
-      this.bankProofFileName[this.applicantIndex] = (<any>window).Ionic.WebView.convertFileSrc(this.bankingProofDoc);
+      this.bankProofFileName[this.applicantIndex] = (<any>window).Ionic.WebView.convertFileSrc(this.bankingProofDoc[this.applicantIndex]);
       this.bankProofFileSize[this.applicantIndex] = "";
       return;
     }
@@ -998,7 +1000,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
 
     if(this.isMobile) {
       this.collateralProofDoc[this.applicantIndex] = files;
-      this.collateralProofFileName[this.applicantIndex] = (<any>window).Ionic.WebView.convertFileSrc(this.collateralProofDoc);
+      this.collateralProofFileName[this.applicantIndex] = (<any>window).Ionic.WebView.convertFileSrc(this.collateralProofDoc[this.applicantIndex]);
       this.collateralProofFileSize[this.applicantIndex] = "";
       return;
     }

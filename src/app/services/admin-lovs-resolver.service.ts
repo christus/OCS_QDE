@@ -4,11 +4,13 @@ import { environment } from 'src/environments/environment';
 import { HttpParams, HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Resolve } from '@angular/router';
+import { QdeHttpService } from './qde-http.service';
 
 @Injectable()
 export class AdminLovsResolverService implements Resolve<Observable<any>> {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+    private qdeHttp: QdeHttpService) { }
 
   resolve(): any {
     const processId   = environment.api.adminListOfValues.processId;
@@ -24,15 +26,15 @@ export class AdminLovsResolverService implements Resolve<Observable<any>> {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      "processVariables",
+    const body = {
+      'processVariables':
       JSON.stringify(qdeRequestEntity)
-    );
+    };
 
     let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
-    return this.http.post(
+    return this.qdeHttp.callPost(
       uri,
-      body.toString()
+      body
     );
   }
 }

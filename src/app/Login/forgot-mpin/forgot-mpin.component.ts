@@ -51,7 +51,7 @@ export class ForgotMPINComponent implements OnInit {
         localStorage.setItem("token", res["token"] ? res["token"] : "");
 
 
-        var empId = this.userName + environment.iciciDomainExt;
+        var empId = this.userName.trim() + environment.iciciDomainExt;
 
         var data = {
           empId : empId,

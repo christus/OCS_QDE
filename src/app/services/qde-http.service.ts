@@ -1,15 +1,22 @@
+import { MobileService } from './mobile-constant.service';
 import { Injectable } from '@angular/core';
 import Qde from '../models/qde.model';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import RequestEntity from '../models/request-entity.model';
 import { environment } from '../../environments/environment';
-import { of } from 'rxjs';
+import { of, Observable } from 'rxjs';
 
 import {CommonDataService} from 'src/app/services/common-data.service';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { QdeService } from '../services/qde.service';
+
+import { HTTP } from '@ionic-native/http/ngx';
+import { DeviceDetectorService } from 'ngx-device-detector';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
+
+
 
 
 @Injectable({
@@ -19,21 +26,23 @@ export class QdeHttpService {
 
   userName:string = "";
   password:string = "";
+  isMobile:any;
 
 
   constructor(private http: HttpClient,
   private commonDataService: CommonDataService,
   private camera: Camera,
   private transfer: FileTransfer,
-  private qdeService: QdeService
-) {
+  private qdeService: QdeService,
+  private httpIonic: HTTP,
+  private mobileService: MobileService,
+  private ngxService: NgxUiLoaderService) {
 
     this.commonDataService.loginData.subscribe(result => {
       console.log("login: ", result);
        this.userName = result.email;
        this.password = result.password;
     });
-
   }
 
   /**
@@ -50,15 +59,15 @@ export class QdeHttpService {
       projectId: environment.projectId
     };
 
-    const body = new HttpParams().set(
-      'processVariables',
+    const body = {
+      'processVariables':
       JSON.stringify(qdeRequestEntity)
-    );
+    }
     
    let uri = environment.host + '/d/workflows/' + environment.api.save.workflowId + '/execute?projectId=' + environment.projectId;
-    return this.http.post(
+    return this.callPost(
       uri,
-      body.toString()
+      body
     );
   }
 
@@ -73,15 +82,15 @@ createOrUpdatePersonalDetails(qde) {
       projectId: environment.projectId
     };
 
-    const body = new HttpParams().set(
-      'processVariables',
+    const body = {
+      'processVariables':
       JSON.stringify(qdeRequestEntity)
-    );
+    }
 
     let uri = environment.host + '/d/workflows/' + environment.api.save.workflowId + '/execute?projectId=' + environment.projectId;
-    return this.http.post(
+    return this.callPost(
       uri,
-      body.toString()
+      body
     );
   }
 
@@ -96,59 +105,74 @@ createOrUpdatePersonalDetails(qde) {
       projectId: environment.projectId
     };
 
-    const body = new HttpParams().set(
-      'processVariables',
+    const body = {
+      'processVariables':
       JSON.stringify(qdeRequestEntity)
-    );
+    }
 
     let uri = environment.host + '/d/workflows/' + environment.api.save.workflowId + '/execute?projectId=' + environment.projectId;
-    return this.http.post(
+    return this.callPost(
       uri,
-      body.toString()
+      body
     );
   }
 
   authenticate(data: any) {
 
-    const body = new HttpParams()
-      .set('email', data.email)
-      .set('password', data.password)
+    // const body = new HttpParams()
+    //   .set('email', data.email)
+    //   .set('password', data.password)
+
+    const body = {
+      'email': data.email,
+      'password': data.password
+    };
 
     let uri = environment.host + '/account/login';
-    return this.http.post(uri, body);
+    return this.callPost(uri, body);
   }
 
   checkActiveSession(data: any) {
-    const body = new HttpParams()
-      .set('email', data.email)
-      .set('password', data.password)
-      .set('removeExistingSession', data.removeExistingSession)
-      .set('appId', data.appId)
+    // const body = new HttpParams()
+    //   .set('email', data.email)
+    //   .set('password', data.password)
+    //   .set('removeExistingSession', data.removeExistingSession)
+    //   .set('appId', data.appId)
+
+      const body = {
+        'email': data.email,
+        'password': data.password,
+        'removeExistingSession': data.removeExistingSession,
+        'appId': data.appId
+      };
+  
 
     let uri = environment.host + '/account/login';
-    return this.http.post(uri, body);
+    return this.callPost(uri, body);
   }
 
 
   longLiveAuthenticate(data: any) {
 
-    const body = new HttpParams()
-      .set('email', data.email)
-      .set('password', data.password)
-      .set('longTimeToken', "true");
+    const body = {
+      'email': data.email,
+      'password': data.password,
+      'longTimeToken': "true",
+    };
 
     let uri = environment.host + '/account/login';
-    return this.http.post(uri, body);
+    return this.callPost(uri, body, data);
   }
 
   duplicateLogin() {
 
-    const body = new HttpParams()
-      .set('email', "icici@icicibankltd.com")
-      .set('password', "icici@123");
+      const body = {
+        'email': environment.userName,
+        'password': environment.password,
+      };
 
     let uri = environment.host + '/account/login';
-    return this.http.post(uri, body);
+    return this.callPost(uri, body);
   }
   
   getLeads(search?: string, fromDay?: string, fromMonth?: string, fromYear?: string, toDay?: string, toMonth?: string, toYear?: string, assignedTo?: string, status?: string) {
@@ -171,13 +195,13 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      'processVariables',
+    const body = {
+      'processVariables':
       JSON.stringify(requestEntity)
-    );
+    }
   
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body);
+    return this.callPost(uri, body);
   }
 
   getNewLeads(search?: string, fromDay?: string, fromMonth?: string, fromYear?: string, toDay?: string, toMonth?: string, toYear?: string, assignedTo?: string, status?: string) {
@@ -199,13 +223,13 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      'processVariables',
+    const body = {
+      'processVariables':
       JSON.stringify(requestEntity)
-    );
+    };
   
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body);
+    return this.callPost(uri, body);
   }
 
   getQdeData(applicationId:number) {
@@ -225,13 +249,13 @@ createOrUpdatePersonalDetails(qde) {
 
     console.log("GETQDEDATA", requestEntity);
 
-    const body = new HttpParams().set(
-      'processVariables',
+    const body = {
+      'processVariables':
       JSON.stringify(requestEntity)
-    );
+    };
   
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body.toString());
+    return this.callPost(uri, body);
   }
 
   roleLogin() {
@@ -258,13 +282,13 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      'processVariables',
+    const body = {
+      'processVariables':
       JSON.stringify(requestEntity)
-    );
+    };
 
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body.toString());
+    return this.callPost(uri, body);
   }
 
   getCityAndState(zipcode) {
@@ -286,13 +310,13 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      'processVariables',
+    const body = {
+      'processVariables':
       JSON.stringify(requestEntity)
-    );
+    };
 
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body.toString());
+    return this.callPost(uri, body);
   }
 
   uploadToAppiyoDrive(fileToUpload: File) {
@@ -306,7 +330,7 @@ createOrUpdatePersonalDetails(qde) {
     const formData: FormData = new FormData();
     formData.append('files[]', fileToUpload, fileToUpload.name);
 
-    return this.http.post(uri, formData, headers);
+    return this.callPost(uri, formData, headers);
   }
 
   uploadToOmni(documentInfo: any) {
@@ -321,13 +345,13 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      "processVariables",
+    const body = {
+      "processVariables":
       JSON.stringify(requestEntity)
-    );
+    };
 
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body.toString());
+    return this.callPost(uri, body);
   }
 
 
@@ -343,13 +367,13 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      "processVariables",
+    const body = {
+      "processVariables":
       JSON.stringify(requestEntity)
-    );
+    };
 
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body.toString());
+    return this.callPost(uri, body);
   }
 
   getApplicableDocuments(data: any) {
@@ -364,13 +388,13 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      "processVariables",
+    const body = {
+      "processVariables":
       JSON.stringify(requestEntity)
-    );
+    };
 
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body.toString());
+    return this.callPost(uri, body);
   }
 
   documentsPaymentReconCSV(data: any) {
@@ -385,13 +409,13 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId,
     };
 
-    const body = new HttpParams().set(
-      "processVariables",
+    const body = {
+      "processVariables":
       JSON.stringify(requestEntity)
-    );
+    };
 
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body.toString());
+    return this.callPost(uri, body);
   }
 
   documentsPaymentNonReconCSV(data: any) {
@@ -406,13 +430,13 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId,
     };
 
-    const body = new HttpParams().set(
-      "processVariables",
+    const body = {
+      "processVariables":
       JSON.stringify(requestEntity)
-    );
+    };
 
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body.toString());
+    return this.callPost(uri, body);
   }
 
   downloadOfflinePayment(data: any) {
@@ -427,13 +451,13 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId,
     };
 
-    const body = new HttpParams().set(
-      "processVariables",
+    const body = {
+      "processVariables":
       JSON.stringify(requestEntity)
-    );
+    };
 
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body.toString());
+    return this.callPost(uri, body);
   }
 
   uploadOfflinePayment(data: any) {
@@ -448,13 +472,13 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId,
     };
 
-    const body = new HttpParams().set(
-      "processVariables",
+    const body = {
+      "processVariables":
       JSON.stringify(requestEntity)
-    );
+    };
 
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body.toString());
+    return this.callPost(uri, body);
   }
 
   uploadOnlinePaymentRecon(data: any) {
@@ -469,13 +493,13 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId,
     };
 
-    const body = new HttpParams().set(
-      "processVariables",
+    const body = {
+      "processVariables":
       JSON.stringify(requestEntity)
-    );
+    };
 
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body.toString());
+    return this.callPost(uri, body);
   }
 
   dummyGetApi(qde) {
@@ -528,13 +552,13 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      'processVariables',
+    const body = {
+      'processVariables':
       JSON.stringify(requestEntity)
-    );
+    };
 
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body.toString());
+    return this.callPost(uri, body);
   }
   else{
     return of(
@@ -603,13 +627,13 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      'processVariables',
+    const body = {
+      'processVariables':
       JSON.stringify(requestEntity)
-    );
+    };
 
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body.toString());
+    return this.callPost(uri, body);
   }
 
   else{
@@ -767,13 +791,13 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      'processVariables',
+    const body = {
+      'processVariables':
       JSON.stringify(requestEntity)
-    );
+    };
 
     let uri = environment.host+ '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body.toString());
+    return this.callPost(uri, body);
   }
 
   validateOTPAPI(mobileNumber, applicantId, applicationId, otp, isAlternateNumber, emailId) {
@@ -799,13 +823,13 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      'processVariables',
+    const body = {
+      'processVariables':
       JSON.stringify(requestEntity)
-    );
+    };
 
     let uri = environment.host+ '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body.toString());
+    return this.callPost(uri, body);
   }
 
   clssProbabilityCheck(applicationId: string) {
@@ -823,14 +847,14 @@ createOrUpdatePersonalDetails(qde) {
         projectId: projectId
       };
   
-      const body = new HttpParams().set(
-        'processVariables',
+      const body = {
+        'processVariables':
         JSON.stringify(requestEntity)
-      );
+      };
   
       let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
   
-      return this.http.post(uri, body.toString());
+      return this.callPost(uri, body);
     }
     else{
       return of(
@@ -888,13 +912,13 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      'processVariables',
+    const body = {
+      'processVariables':
       JSON.stringify(requestEntity)
-    );
+    };
 
     let uri = environment.host+'/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body.toString());
+    return this.callPost(uri, body);
   }
 
   setStatusApi(applicationId: string, status: string) {
@@ -916,13 +940,13 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      'processVariables',
+    const body = {
+      'processVariables':
       JSON.stringify(requestEntity)
-    );
+    };
 
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body.toString());
+    return this.callPost(uri, body);
   }
 
   updateTermsAndCondition(data) {
@@ -937,13 +961,13 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      'processVariables',
+    const body = {
+      'processVariables':
       JSON.stringify(requestEntity)
-    );
+    };
 
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body.toString());
+    return this.callPost(uri, body);
   }
 
   async takePicture() {
@@ -956,8 +980,7 @@ createOrUpdatePersonalDetails(qde) {
       encodingType: this.camera.EncodingType.PNG,
       targetWidth: 100,
       targetHeight: 100,
-      saveToPhotoAlbum: false,
-	    correctOrientation:true
+      saveToPhotoAlbum: false
     }
     
     return this.camera.getPicture(options);
@@ -1003,13 +1026,13 @@ createOrUpdatePersonalDetails(qde) {
 
     console.log("GET Login Fee", requestEntity);
 
-    const body = new HttpParams().set(
-      'processVariables',
+    const body = {
+      'processVariables':
       JSON.stringify(requestEntity)
-    );
+    };
   
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.put(uri, body.toString());
+    return this.callPost(uri, body);
   }
 
   apsApi(applicationId:string){
@@ -1029,13 +1052,13 @@ createOrUpdatePersonalDetails(qde) {
 
     console.log("GET APS", requestEntity);
 
-    const body = new HttpParams().set(
-      'processVariables',
+    const body = {
+      'processVariables':
       JSON.stringify(requestEntity)
-    );
+    };
   
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.put(uri, body.toString());
+    return this.callPost(uri, body);
   }
 
 
@@ -1059,13 +1082,13 @@ createOrUpdatePersonalDetails(qde) {
 
     console.log("GET APS", requestEntity);
 
-    const body = new HttpParams().set(
-      'processVariables',
+    const body = {
+      'processVariables':
       JSON.stringify(requestEntity)
-    );
+    };
   
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body.toString());
+    return this.callPost(uri, body);
   }
 
   resetMpin(data: any) {
@@ -1083,13 +1106,13 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      'processVariables',
+    const body = {
+      'processVariables':
       JSON.stringify(requestEntity)
-    );
+    };
   
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body.toString());
+    return this.callPost(uri, body);
   }
 
   loginMpin(data){
@@ -1108,13 +1131,13 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      'processVariables',
+    const body = {
+      'processVariables':
       JSON.stringify(requestEntity)
-    );
+    };
   
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body.toString());
+    return this.callPost(uri, body);
   }
 
   dummyGetEligibilityAPI(applicationId) {
@@ -1210,13 +1233,13 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      'processVariables',
+    const body = {
+      'processVariables':
       JSON.stringify(requestEntity)
-    );
+    };
   
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body.toString());
+    return this.callPost(uri, body);
   }
 
   executePaymentWF(data) {
@@ -1233,13 +1256,13 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      'processVariables',
+    const body = {
+      'processVariables':
       JSON.stringify(requestEntity)
-    );
+    };
   
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body.toString());
+    return this.callPost(uri, body);
   }
 
   /**Get list of users created */
@@ -1256,13 +1279,13 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      'processVariables',
+    const body = {
+      'processVariables':
       JSON.stringify(requestEntity)
-    );
+    };
   
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body.toString());
+    return this.callPost(uri, body);
   }
 
   /**
@@ -1281,11 +1304,11 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set('processVariables', JSON.stringify(requestEntity));
+    const body = {'processVariables': JSON.stringify(requestEntity)};
 
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
 
-    return this.http.post(uri, body.toString());
+    return this.callPost(uri, body);
 
 
   }
@@ -1304,13 +1327,13 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      'processVariables',
+    const body = {
+      'processVariables':
       JSON.stringify(requestEntity)
-    );
+    };
   
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body.toString());
+    return this.callPost(uri, body);
   }
 
   /** Pmay delete */
@@ -1327,13 +1350,13 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      'processVariables',
+    const body = {
+      'processVariables':
       JSON.stringify(requestEntity)
-    );
+    };
   
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body.toString());
+    return this.callPost(uri, body);
   }
 
   /**Pmay individual list */
@@ -1350,13 +1373,13 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      'processVariables',
+    const body = {
+      'processVariables':
       JSON.stringify(requestEntity)
-    );
+    };
   
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body.toString());
+    return this.callPost(uri, body);
   }
 
   /**Add pMay list */
@@ -1373,13 +1396,13 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      'processVariables',
+    const body = {
+      'processVariables':
       JSON.stringify(requestEntity)
-    );
+    };
   
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body.toString());
+    return this.callPost(uri, body);
   }
 
 
@@ -1397,13 +1420,13 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      'processVariables',
+    const body = {
+      'processVariables':
       JSON.stringify(requestEntity)
-    );
+    };
   
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body.toString());
+    return this.callPost(uri, body);
   }
 
   /**Get branch record */
@@ -1420,13 +1443,13 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      'processVariables',
+    const body = {
+      'processVariables':
       JSON.stringify(requestEntity)
-    );
+    };
   
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body.toString());
+    return this.callPost(uri, body);
   }
 
   /**Add branch record */
@@ -1443,13 +1466,13 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      'processVariables',
+    const body = {
+      'processVariables':
       JSON.stringify(requestEntity)
-    );
+    };
   
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body.toString());
+    return this.callPost(uri, body);
   }
 
   getAdminUser(data){
@@ -1464,13 +1487,13 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      'processVariables',
+    const body = {
+      'processVariables':
       JSON.stringify(requestEntity)
-    );
+    };
   
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body.toString());
+    return this.callPost(uri, body);
   }
 
   /** Save Admin user */
@@ -1487,13 +1510,13 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      'processVariables',
+    const body = {
+      'processVariables':
       JSON.stringify(requestEntity)
-    );
+    };
   
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body.toString());
+    return this.callPost(uri, body);
   }
 
 
@@ -1509,13 +1532,13 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      'processVariables',
+    const body = {
+      'processVariables':
       JSON.stringify(requestEntity)
-    );
+    };
   
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body.toString());
+    return this.callPost(uri, body);
   }
 
 
@@ -1535,13 +1558,13 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      'processVariables',
+    const body = {
+      'processVariables':
       JSON.stringify(requestEntity)
-    );
+    };
   
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body.toString());
+    return this.callPost(uri, body);
   }
 
 
@@ -1559,13 +1582,13 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      'processVariables',
+    const body = {
+      'processVariables':
       JSON.stringify(requestEntity)
-    );
+    };
   
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body.toString());
+    return this.callPost(uri, body);
   }
 
   /** Get zip lov */
@@ -1581,13 +1604,13 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      'processVariables',
+    const body = {
+      'processVariables':
       JSON.stringify(requestEntity)
-    );
+    };
   
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body.toString());
+    return this.callPost(uri, body);
   }
 
   /** Repoting to - search by key */
@@ -1604,13 +1627,13 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      'processVariables',
+    const body = {
+      'processVariables':
       JSON.stringify(requestEntity)
-    );
+    };
   
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body.toString());
+    return this.callPost(uri, body);
   }
 
   insertUpdateEachLovs(lovs: any) {
@@ -1641,13 +1664,13 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      'processVariables',
+    const body = {
+      'processVariables':
       JSON.stringify(requestEntity)
-    );
+    };
 
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body.toString());
+    return this.callPost(uri, body);
   }
 
   softDeleteLov(lovs: any) {
@@ -1668,13 +1691,13 @@ createOrUpdatePersonalDetails(qde) {
     };
 
 
-    const body = new HttpParams().set(
-      'processVariables',
+    const body = {
+      'processVariables':
       JSON.stringify(requestEntity)
-    );
+    };
   
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body.toString());
+    return this.callPost(uri, body);
   }
 
 
@@ -1703,15 +1726,15 @@ createOrUpdatePersonalDetails(qde) {
       delete qdeRequestEntity['ProcessVariables']['perPage'];
     }
 
-    const body = new HttpParams().set(
-      "processVariables",
+    const body = {
+      "processVariables":
       JSON.stringify(qdeRequestEntity)
-    );
+    };
 
     let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
-    return this.http.post(
+    return this.callPost(
       uri,
-      body.toString()
+      body
     );
   }
 
@@ -1730,15 +1753,15 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      "processVariables",
+    const body = {
+      "processVariables":
       JSON.stringify(qdeRequestEntity)
-    );
+    };
 
     let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
-    return this.http.post(
+    return this.callPost(
       uri,
-      body.toString()
+      body
     );
   }
 
@@ -1757,15 +1780,15 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      "processVariables",
+    const body = {
+      "processVariables":
       JSON.stringify(qdeRequestEntity)
-    );
+    };
 
     let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
-    return this.http.post(
+    return this.callPost(
       uri,
-      body.toString()
+      body
     );
   }
 
@@ -1781,15 +1804,15 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      "processVariables",
+    const body = {
+      "processVariables":
       JSON.stringify(qdeRequestEntity)
-    );
+    };
 
     let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
-    return this.http.post(
+    return this.callPost(
       uri,
-      body.toString()
+      body
     );
   }
 
@@ -1805,15 +1828,15 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      "processVariables",
+    const body = {
+      "processVariables":
       JSON.stringify(qdeRequestEntity)
-    );
+    };
 
     let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
-    return this.http.post(
+    return this.callPost(
       uri,
-      body.toString()
+      body
     );
   }
 
@@ -1830,15 +1853,15 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      "processVariables",
+    const body = {
+      "processVariables":
       JSON.stringify(qdeRequestEntity)
-    );
+    };
 
     let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
-    return this.http.post(
+    return this.callPost(
       uri,
-      body.toString()
+      body
     );
   }
 
@@ -1856,15 +1879,15 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
   
-    const body = new HttpParams().set(
-      "processVariables",
+    const body = {
+      "processVariables":
       JSON.stringify(qdeRequestEntity)
-    );
+    };
   
     let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
-    return this.http.post(
+    return this.callPost(
       uri,
-      body.toString()
+      body
     );
   }
 
@@ -1880,15 +1903,15 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
   
-    const body = new HttpParams().set(
-      "processVariables",
+    const body = {
+      "processVariables":
       JSON.stringify(qdeRequestEntity)
-    );
+    };
   
     let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
-    return this.http.post(
+    return this.callPost(
       uri,
-      body.toString()
+      body
     );
   }
 
@@ -1911,15 +1934,15 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
   
-    const body = new HttpParams().set(
-      "processVariables",
+    const body = {
+      "processVariables":
       JSON.stringify(qdeRequestEntity)
-    );
+    };
   
     let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
-    return this.http.post(
+    return this.callPost(
       uri,
-      body.toString()
+      body
     );
   }
 
@@ -1943,15 +1966,15 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
   
-    const body = new HttpParams().set(
-      "processVariables",
+    const body = {
+      "processVariables":
       JSON.stringify(qdeRequestEntity)
-    );
+    };
   
     let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
-    return this.http.post(
+    return this.callPost(
       uri,
-      body.toString()
+      body
     );
   }
 
@@ -1971,15 +1994,15 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
   
-    const body = new HttpParams().set(
-      "processVariables",
+    const body = {
+      "processVariables":
       JSON.stringify(qdeRequestEntity)
-    );
+    };
   
     let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
-    return this.http.post(
+    return this.callPost(
       uri,
-      body.toString()
+      body
     );
   }
 
@@ -2003,15 +2026,15 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
   
-    const body = new HttpParams().set(
-      "processVariables",
+    const body = {
+      "processVariables":
       JSON.stringify(qdeRequestEntity)
-    );
+    };
   
     let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
-    return this.http.post(
+    return this.callPost(
       uri,
-      body.toString()
+      body
     );
   }
 
@@ -2031,15 +2054,15 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
   
-    const body = new HttpParams().set(
-      "processVariables",
+    const body = {
+      "processVariables":
       JSON.stringify(qdeRequestEntity)
-    );
+    };
   
     let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
-    return this.http.post(
+    return this.callPost(
       uri,
-      body.toString()
+      body
     );
   }
 
@@ -2064,15 +2087,15 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
   
-    const body = new HttpParams().set(
-      "processVariables",
+    const body = {
+      "processVariables":
       JSON.stringify(qdeRequestEntity)
-    );
+    };
   
     let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
-    return this.http.post(
+    return this.callPost(
       uri,
-      body.toString()
+      body
     );
   }
 
@@ -2089,15 +2112,15 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
   
-    const body = new HttpParams().set(
-      "processVariables",
+    const body = {
+      "processVariables":
       JSON.stringify(qdeRequestEntity)
-    );
+    };
   
     let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
-    return this.http.post(
+    return this.callPost(
       uri,
-      body.toString()
+      body
     );
   }
   clssSearch(townName?:string){
@@ -2116,13 +2139,13 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      'processVariables',
+    const body = {
+      'processVariables':
       JSON.stringify(requestEntity)
-    );
+    };
   
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body);
+    return this.callPost(uri, body);
   }
 
   connectorLeadCreateSave(data){
@@ -2138,13 +2161,13 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      'processVariables',
+    const body = {
+      'processVariables':
       JSON.stringify(requestEntity)
-    );
+    };
   
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body);
+    return this.callPost(uri, body);
   }
 
   publicWrkFlowExecute(data){
@@ -2161,13 +2184,13 @@ createOrUpdatePersonalDetails(qde) {
       };
   
   
-      const body = new HttpParams().set(
-        'processVariables',
+      const body = {
+        'processVariables':
         JSON.stringify(requestEntity)
-      );
+      };
     
       let uri = environment.ocsHost + '/payments/appiyo/execute_workflow';
-      return this.http.post(uri, requestEntity);
+      return this.callPost(uri, requestEntity);
   }
 
   mandatoryDocsApi(applicationId: number) {
@@ -2188,13 +2211,13 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      'processVariables',
+    const body = {
+      'processVariables':
       JSON.stringify(requestEntity)
-    );
+    };
 
     let uri = environment.host+'/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body.toString());
+    return this.callPost(uri, body);
   }
 
   omniDocsApi(applicationId: string) {
@@ -2215,13 +2238,13 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      'processVariables',
+    const body = {
+      'processVariables':
       JSON.stringify(requestEntity)
-    );
+    };
 
     let uri = environment.host+'/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body.toString());
+    return this.callPost(uri, body);
   }
   getApplicationStatus(data) {
     // console.log("get Error Id Handal Service Call",data);
@@ -2236,13 +2259,13 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      'processVariables',
+    const body = {
+      'processVariables':
       JSON.stringify(requestEntity)
-    );
+    };
 
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body.toString());
+    return this.callPost(uri, body);
 
   }
   getErrorHandlingMessage(data) {
@@ -2257,13 +2280,13 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      'processVariables',
+    const body = {
+      'processVariables':
       JSON.stringify(requestEntity)
-    );
+    };
 
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body.toString());
+    return this.callPost(uri, body);
 
   }
   getErrorIdHandlingMessage(data) {
@@ -2278,13 +2301,13 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      'processVariables',
+    const body = {
+      'processVariables':
       JSON.stringify(requestEntity)
-    );
+    };
 
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body.toString());
+    return this.callPost(uri, body);
   }
   updateErrorHandlingMessage(errorData){
     const processId = environment.api.updateErrorMessage.processId;
@@ -2298,13 +2321,13 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      'processVariables',
+    const body = {
+      'processVariables':
       JSON.stringify(requestEntity)
-    );
+    };
   
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body.toString());
+    return this.callPost(uri, body);
   }
 
   chequeDetailsSave(data){
@@ -2320,14 +2343,16 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      'processVariables',
+    const body = {
+      'processVariables':
       JSON.stringify(requestEntity)
-    );
+    };
   
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body);
+    return this.callPost(uri, body);
   }
+
+
   flashExitingData(data){
     const processId = environment.api.flashExitingData.processId;
     const workflowId = environment.api.flashExitingData.workflowId;
@@ -2341,14 +2366,16 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      'processVariables',
+    const body = {
+      'processVariables':
       JSON.stringify(requestEntity)
-    );
+    };
   
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body);
+    return this.callPost(uri, body);
   }
+
+
 
   checkOccupationType(data){
     const processId = environment.api.checkOccupationType.processId;
@@ -2363,13 +2390,14 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      'processVariables',
+    const body = {
+      'processVariables':
       JSON.stringify(requestEntity)
-    );
+    };
   
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body);   
+    return this.callPost(uri, body);
+
   }
 
   adminApplicantRelationship() {
@@ -2391,13 +2419,15 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      "processVariables",
+   
+
+    const body = {
+      'processVariables':
       JSON.stringify(qdeRequestEntity)
-    );
+    };
 
     let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
-    return this.http.post(
+    return this.callPost(
       uri,
       body.toString()
     );
@@ -2427,13 +2457,13 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      "processVariables",
+    const body = {
+      'processVariables':
       JSON.stringify(qdeRequestEntity)
-    );
+    };
 
     let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
-    return this.http.post(
+    return this.callPost(
       uri,
       body.toString()
     );
@@ -2459,13 +2489,14 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      "processVariables",
+
+    const body = {
+      'processVariables':
       JSON.stringify(qdeRequestEntity)
-    );
+    };
 
     let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
-    return this.http.post(
+    return this.callPost(
       uri,
       body.toString()
     );
@@ -2483,13 +2514,94 @@ createOrUpdatePersonalDetails(qde) {
       projectId: projectId
     };
 
-    const body = new HttpParams().set(
-      'processVariables',
+
+    const body = {
+      'processVariables':
       JSON.stringify(requestEntity)
-    );
+    };
   
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.http.post(uri, body);
+    return this.callPost(uri, body);
   }
+
+
+  logout() {
+    let uri = environment.host + "/account/logout";
+    return this.callGet(uri);
+  }
+
+  callGet(url) {
+    if(this.isMobile) {
+
+      const obs = new Observable((observer) => {
+        const headers = {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'authentication-token':  localStorage.getItem('token') ? localStorage.getItem('token') : '',
+        };
+        this.httpIonic.get(url, {}, headers).then(result => {
+          const data = JSON.parse(result.data);
+          observer.next(data);
+          observer.complete();
+        }).catch(error => {
+          observer.error(error);
+          observer.complete();
+        });
+        
+      });
+
+      return obs;
+    }else {
+      return this.http.get(url);
+    }
+  }
+
+
+  callPost(url: string, requestEntity: any, options?:any) {
+    this.isMobile = this.mobileService.isMobile;
+    
+
+    // this.isMobile = true;
+
+    console.log(":data", requestEntity);
+
+    const headers = {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'authentication-token':  localStorage.getItem('token') ? localStorage.getItem('token') : '',
+    };
+
+    if(this.isMobile) {
+
+      this.ngxService.start();
+
+      const obs = new Observable((observer) => {
+
+        this.httpIonic.setSSLCertMode("nocheck");
+        
+        this.httpIonic.setDataSerializer("urlencoded");
+
+        console.log("post ********");
+        this.httpIonic.post(url, requestEntity, headers).then(result => {
+          const data = JSON.parse(result.data);
+          observer.next(data);
+          observer.complete();
+          this.ngxService.stop();
+        }).catch(error => {
+          observer.error(error);
+          observer.complete();
+          this.ngxService.stop();
+        });
+        
+      });
+
+      return obs;
+    } else {
+
+      const body = new HttpParams({ "fromObject": requestEntity});
+      
+      return this.http.post(url, body);
+    }
+
+  }
+
 
 }

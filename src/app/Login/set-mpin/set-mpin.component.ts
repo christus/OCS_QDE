@@ -39,7 +39,7 @@ export class SetMpinComponent implements OnInit {
 
     console.log("UserName", this.userName);
 
-    var empId = this.userName + "@icicibankltd.com";
+    var empId = this.userName.trim() + "@icicibankltd.com";
 
     var data = {
       empId : empId,
