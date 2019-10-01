@@ -2429,7 +2429,7 @@ createOrUpdatePersonalDetails(qde) {
     let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
     return this.callPost(
       uri,
-      body.toString()
+      body
     );
   }
 
@@ -2465,7 +2465,7 @@ createOrUpdatePersonalDetails(qde) {
     let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
     return this.callPost(
       uri,
-      body.toString()
+      body
     );
   }
 
@@ -2498,7 +2498,7 @@ createOrUpdatePersonalDetails(qde) {
     let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
     return this.callPost(
       uri,
-      body.toString()
+      body
     );
   }
 
