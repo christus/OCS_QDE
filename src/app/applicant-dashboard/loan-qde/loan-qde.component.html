@@ -272,7 +272,7 @@
                             #proaddressLineOne="ngModel"
                             [(ngModel)]="addressLineOneValue"
                             name="proaddressLineOne"
-                            fieldFill
+                            fieldFill maxlength="120"
                             pattern='{{regexPattern.address}}'/>
                       
                             <label for="add-line1">Property address line1</label>
@@ -287,7 +287,7 @@
                             <input [readonly]="isTBMLoggedIn" type="text" class="form-control" id="add-line2"
                               ngModel
                               #addressLineTwo = "ngModel" autocomplete="off"
-							                fieldFill
+							                fieldFill maxlength="120"
                               [(ngModel)]="addressLineTwoValue"
                               name="addressLineTwo"
                               pattern='{{regexPattern.address}}'/>

@@ -111,7 +111,7 @@
                             ngModel autocomplete="off"
                             name="fullName" 
                             id="ref1-name"
-                            pattern="{{regexPattern.name}}"
+                            pattern="{{regexPattern.name}}" maxlength="50"
                             #refOneFullName="ngModel"
                             spellcheck="false"
                             fieldFill 
@@ -156,7 +156,7 @@
                             name="addressLineOne" 
                             ngModel
                             spellcheck="false"
-                            fieldFill
+                            fieldFill maxlength="120"
                             pattern="{{regexPattern.address}}" 
                             #refOneAddressLineOne="ngModel"
                             [(ngModel)]="selectedAddressLineOne1">
@@ -173,7 +173,7 @@
                             name="addressLineTwo"  autocomplete="off"
                             ngModel
                             spellcheck="false"
-                            fieldFill
+                            fieldFill maxlength="120"
                             pattern="{{regexPattern.address}}" 
                             #refOneAddressLineTwo="ngModel"
                             [(ngModel)]="selectedAddressLineTwo1">
@@ -297,7 +297,7 @@
                             #refTwoFullName="ngModel"
                             pattern="{{regexPattern.name}}"
                             required
-                            spellcheck="false"
+                            spellcheck="false" maxlength="50"
                             fieldFill
                             [(ngModel)]="selectedName2">
                             <label for="ref2-name">Full name</label>
@@ -335,7 +335,7 @@
                               ngModel autocomplete="off"
                               #refTwoAddressLineOne="ngModel"
                               pattern="{{regexPattern.address}}"
-                              required
+                              required maxlength="120"
                               spellcheck="false"
                               fieldFill
                               [(ngModel)]="selectedAddressLineOne2">
@@ -355,7 +355,7 @@
                              #refTwoAddressLineTwo="ngModel"
                              pattern="{{regexPattern.address}}"
                              spellcheck="false"
-                             fieldFill
+                             fieldFill maxlength="120"
                              [(ngModel)]="selectedAddressLineTwo2">
                             <label for="ref2-add2">Address line2</label>
                             <span class="optional">optional</span>

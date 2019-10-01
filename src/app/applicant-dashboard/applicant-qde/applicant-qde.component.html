@@ -332,8 +332,8 @@
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                               id="name"
                               [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.firstName"
-                              name="firstName" #firstName="ngModel" fieldFill required autocomplete="off"
-                              tabindex="2"
+                              name="firstName"  #firstName="ngModel" fieldFill required autocomplete="off"
+                              tabindex="2" maxlength="50"
                               pattern="{{regexPattern.name}}" />
                             <label for="name">First name</label>
                             <div *ngIf="(firstName.touched || firstName.dirty) && firstName.invalid"
@@ -344,7 +344,7 @@
                           </div>
                           <div class="form-group typ-optional">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="middleName" name="middleName" autocomplete="off"
+                              id="middleName" name="middleName" autocomplete="off" maxlength="50"
                               [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.middleName"
                               pattern="{{regexPattern.name}}" fieldFill #middleName="ngModel" tabindex="3" />
                             <label for="middleName">Middle name</label>
@@ -360,7 +360,7 @@
 
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                               [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.lastName"
-                              name="lastName" #lastName="ngModel" id="lastName" fieldFill autocomplete="off"
+                              name="lastName" #lastName="ngModel" id="lastName" fieldFill autocomplete="off" maxlength="50"
                               pattern="{{regexPattern.name}}" required tabindex="4" />
                             <label for="lastName">Last name</label>
                             <div *ngIf="(lastName.touched || lastName.dirty) && lastName.invalid"
@@ -455,7 +455,7 @@
                             <label for="birthPlace" tabindex="1">Birth place</label>
 
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="birthPlace" name="birthPlace" autocomplete="off"
+                              id="birthPlace" name="birthPlace" autocomplete="off" maxlength="100"
                               [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.birthPlace"
                               pattern="{{regexPattern.name}}" fieldFill #birthPlace="ngModel" required />
                             <label for="birthPlace">Birth place</label>
@@ -514,7 +514,7 @@
                           <div class="form-group" [ngClass]="{'prefer': isAlternateEmailId}">
 
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="email" class="form-control"
-                              id="pref-email" data-validation-attr="email" autocomplete="off" 
+                              id="pref-email" data-validation-attr="email" autocomplete="off"  maxlength="100"
                               [(ngModel)]="qde.application.applicants[applicantIndex].contactDetails.preferredEmailId"
                               name="preferEmailId" #preferEmailId="ngModel" pattern="{{regexPattern.email}}" fieldFill
                               required />
@@ -536,7 +536,7 @@
                             [ngClass]="{'typ-alternative': !isAlternateEmailId, 'fadeIn': isAlternateEmailId}">
 
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="email" class="form-control" autocomplete="off"
-                              id="alter-email" data-validation-attr="email01" pattern="{{regexPattern.email}}"
+                              id="alter-email" data-validation-attr="email01" pattern="{{regexPattern.email}}" maxlength="100"
                               [(ngModel)]="qde.application.applicants[applicantIndex].contactDetails.alternateEmailId"
                               name="alternateEmailId" #alternateEmailId="ngModel" fieldFill />
 
@@ -813,7 +813,7 @@
                           <div class="form-group">
 
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="address1"
+                              id="address1" maxlength="120"
                               [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.addressLineOne"
                               pattern="{{regexPattern.address}}" name="addressLineOne" #address1="ngModel" fieldFill
                               required autocomplete="off" />
@@ -830,7 +830,7 @@
 
                           <div class="form-group typ-optional">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="address2" autocomplete="off"
+                              id="address2" autocomplete="off" maxlength="120"
                               [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.addressLineTwo"
                               pattern="{{regexPattern.address}}" name="addressLineTwo" #address2="ngModel" fieldFill />
 
@@ -888,7 +888,7 @@
                             <h1 class="sub-heading" style="text-align: left; margin-bottom: 32px">Permanent Address</h1>
                             <div class="form-group">
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                                id="per-address1" name="pAddressLineOne" #pAddress1="ngModel"
+                                id="per-address1" name="pAddressLineOne" #pAddress1="ngModel" maxlength="120"
                                 pattern="{{regexPattern.address}}" fieldFill autocomplete="off"
                                 [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.addressLineOne"
                                 required />
@@ -902,7 +902,7 @@
                             <div class="form-group typ-optional">
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                                 id="per-address2" name="pAddressLineTwo" #pAddress2="ngModel" fieldFill
-                                pattern="{{regexPattern.address}}" autocomplete="off"
+                                pattern="{{regexPattern.address}}" autocomplete="off" maxlength="120"
                                 [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.addressLineTwo" />
                               <label for="per-address2" tabindex="7">Address line 2</label>
                               <span class="optional">optional</span>
@@ -1007,7 +1007,7 @@
                     </div>
                     <div class="swiper-slide">
                       <div class="title-wrap">
-                        <h4 class="title">Select Applicant’s <span class="cm-line-break"></span>spouse's name</h4>
+                        <h4 class="title">Enter Applicant’s <span class="cm-line-break"></span>spouse's name</h4>
                       </div>
                     </div>
                     <div class="swiper-slide">
@@ -1069,7 +1069,7 @@
                           <div class="form-group">
 
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              [(ngModel)]="qde.application.applicants[applicantIndex].maritalStatus.firstName"
+                              [(ngModel)]="qde.application.applicants[applicantIndex].maritalStatus.firstName" maxlength="50"
                               #spouseName="ngModel" tabindex="2" name="firstName" pattern="{{regexPattern.name}}"
                               id="spouse-name" fieldFill required  autocomplete="off"/>
                             <label for="spouse-name">First name</label>
@@ -1222,7 +1222,7 @@
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                               id="father-name" required
                               [(ngModel)]="qde.application.applicants[applicantIndex].familyDetails.fatherName"
-                              #fatherName="ngModel" tabindex="2" name="fatherName" fieldFill autocomplete="off"
+                              #fatherName="ngModel" tabindex="2" name="fatherName" fieldFill autocomplete="off" maxlength="50"
                               pattern="{{regexPattern.name}}" />
                             <label for="father-name">Father's name</label>
                             <div *ngIf="fatherName.touched && fatherName.invalid" class="invalid-feedback">
@@ -1241,7 +1241,7 @@
                           </div>
                           <div class="form-group">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="mother-name" tabindex="4" required autocomplete="off"
+                              id="mother-name" tabindex="4" required autocomplete="off" maxlength="50"
                               [(ngModel)]="qde.application.applicants[applicantIndex].familyDetails.motherName"
                               #motherName="ngModel" name="motherName" fieldFill pattern="{{regexPattern.name}}" />
                             <label for="mother-name">Mother's name</label>
@@ -1254,7 +1254,7 @@
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                               id="maiden-name" required tabindex="5" autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].familyDetails.motherMaidenName"
-                              #motherMaiden="ngModel" name="motherMaidenName" fieldFill
+                              #motherMaiden="ngModel" name="motherMaidenName" fieldFill maxlength="50"
                               pattern="{{regexPattern.name}}" />
                             <label for="maiden-name">Mother's maiden name</label>
                             <div *ngIf="motherMaiden.touched && motherMaiden.invalid" class="invalid-feedback">
@@ -1413,7 +1413,7 @@
                           <div class="form-group"
                             *ngIf="selectedOccupation.value != '9' && selectedOccupation.value != '10' && selectedOccupation.value != '18'">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control" autocomplete="off"
-                              required [(ngModel)]="qde.application.applicants[applicantIndex].occupation.companyName"
+                              required [(ngModel)]="qde.application.applicants[applicantIndex].occupation.companyName" maxlength="50"
                               pattern="{{regexPattern.name}}" tabindex="2" name="companyName" #companyName="ngModel"
                               fieldFill id="companyName" />
                             <label for="companyName">Company name</label>
@@ -1602,7 +1602,7 @@
                               id="ofcAddOne" autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.addressLineOne"
                               pattern="{{regexPattern.address}}" tabindex="1" name="ofcA1" #ofcA1="ngModel" fieldFill
-                              required />
+                              required  maxlength="120"/>
                             <label for="ofcAddOne">Office address line1</label>
 
                             <div *ngIf="ofcA1.touched  && ofcA1.invalid" class="invalid-feedback">
@@ -1614,7 +1614,7 @@
 
                           <div class="form-group typ-optional">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="ofcAddTwo" autocomplete="off"
+                              id="ofcAddTwo" autocomplete="off" maxlength="120"
                               [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.addressLineTwo"
                               pattern="{{regexPattern.address}}" name="ofcA2" tabindex="2" #ofcA2="ngModel" fieldFill />
                             <label for="ofcAddTwo">Office address line2</label>
@@ -1630,7 +1630,7 @@
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                               id="offLandmark" autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.landMark"
-                              name="landMark" fieldFill tabindex="3" pattern="{{regexPattern.address}}"
+                              name="landMark" fieldFill tabindex="3" pattern="{{regexPattern.address}}" maxlength="100"
                               #landMark="ngModel" />
                             <label for="offLandmark">Landmark</label>
                             <span class="optional">optional</span>
@@ -1704,7 +1704,7 @@
                           </div>
                           <div class="form-group typ-optional">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="email" class="form-control"
-                              id="off-email" required autocomplete="off"
+                              id="off-email" required autocomplete="off" maxlength="100"
                               [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.officeEmailId"
                               pattern="{{regexPattern.email}}" tabindex="8" #officeEmail="ngModel" fieldFill
                               name="officeEmail" (ngModelChange)="onOfficialCorsEmailChange($event, officeEmail)"/>
@@ -2081,7 +2081,7 @@
                         <div class="form-wrap">
                           <div class="form-group">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="org-name" tabindex="1" pattern="{{regexPattern.name}}" autocomplete="off"
+                              id="org-name" tabindex="1" pattern="{{regexPattern.name}}" autocomplete="off" maxlength="50"
                               [(ngModel)]="qde.application.applicants[applicantIndex].organizationDetails.nameOfOrganization"
                               #orgName="ngModel" name="orgName" fieldFill required />
                             <label for="org-name">Name of Organization</label>
@@ -2174,7 +2174,7 @@
                         <div class="form-wrap">
                           <div class="form-group">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="reg-add" autocomplete="off"
+                              id="reg-add" autocomplete="off" maxlength="120"
                               [(ngModel)]="qde.application.applicants[applicantIndex].registeredAddress.registeredAddress"
                               pattern="{{regexPattern.address}}" name="regAdd" #regAdd="ngModel" tabindex="1" fieldFill
                               required />
@@ -2187,7 +2187,7 @@
                           </div>
                           <div class="form-group typ-optional">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              name="landmark" tabindex="2" #landmark01="ngModel" fieldFill autocomplete="off"
+                              name="landmark" tabindex="2" #landmark01="ngModel" fieldFill autocomplete="off" maxlength="100"
                               [(ngModel)]="qde.application.applicants[applicantIndex].registeredAddress.landMark"
                               id="landmark" pattern="{{regexPattern.address}}" />
 
@@ -2284,7 +2284,7 @@
                             </div>
                           <div class="form-group">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="corp-add" tabindex="2" autocomplete="off"
+                              id="corp-add" tabindex="2" autocomplete="off" maxlength="120"
                               [(ngModel)]="qde.application.applicants[applicantIndex].corporateAddress.corporateAddress"
                               pattern="{{regexPattern.address}}" name="corpAddress" #corpAddress="ngModel" fieldFill
                               required />
@@ -2299,7 +2299,7 @@
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].corporateAddress.landMark"
                               tabindex="3" name="landmark" #landmark="ngModel" class="form-control" fieldFill
-                              pattern="{{regexPattern.address}}" id="landmark01" />
+                              pattern="{{regexPattern.address}}" id="landmark01" maxlength="100"/>
                             <label for="landmark01">Landmark</label>
                             <span class="optional">optional</span>
                             <div *ngIf="(landmark.touched || landmark.dirty) && landmark.invalid"
@@ -2367,7 +2367,7 @@
                           </div>
                           <div class="form-group last">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="email" class="form-control"
-                              tabindex="8" id="ofc-email" required pattern="{{regexPattern.email}}" autocomplete="off"
+                              tabindex="8" id="ofc-email" required pattern="{{regexPattern.email}}" autocomplete="off" maxlength="100"
                               [(ngModel)]="qde.application.applicants[applicantIndex].corporateAddress.officeEmailId"
                               name="officeEmailId" #ofcEmail="ngModel" fieldFill />
                             <label for="ofc-email">Office email ID</label>

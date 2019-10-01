@@ -433,7 +433,7 @@
                                                                 name="firstName"
                                                                 tabindex="2"
                                                                 #firstName="ngModel" 
-                                                                fieldFill 
+                                                                fieldFill maxlength="50"
                                                                 spellcheck="false"
                                                                 required
                                                                 pattern="{{regexPattern.name}}" />
@@ -447,7 +447,7 @@
                                                         <input [readonly]="isReadOnly" type="text" autocomplete="off"
                                                               class="form-control"
                                                               id="middleName" 
-                                                              name="middleName"
+                                                              name="middleName" maxlength="50"
                                                               tabindex="3"
                                                               [(ngModel)]="qde.application.applicants[coApplicantIndex].personalDetails.middleName"
                                                               pattern="{{regexPattern.name}}"
@@ -467,7 +467,7 @@
                                                                   class="form-control" 
                                                                   [(ngModel)]="qde.application.applicants[coApplicantIndex].personalDetails.lastName" 
                                                                   name="lastName" 
-                                                                  #lastName="ngModel" 
+                                                                  #lastName="ngModel"  maxlength="50"
                                                                   id="lastName"
                                                                   tabindex="4" autocomplete="off"
                                                                   fieldFill
@@ -595,7 +595,7 @@
                                                               type="text" autocomplete="off"
                                                               class="form-control"
                                                               id="birthPlace"
-                                                              name="birthPlace"
+                                                              name="birthPlace" maxlength="100"
                                                               tabindex="4"
                                                               [(ngModel)]="qde.application.applicants[coApplicantIndex].personalDetails.birthPlace"
                                                               pattern="{{regexPattern.name}}"
@@ -667,7 +667,7 @@
                                                             id="pref-email" autocomplete="off"
                                                             data-validation-attr="email"
                                                             [(ngModel)]="qde.application.applicants[coApplicantIndex].contactDetails.preferredEmailId"
-                                                            name="preferEmailId"
+                                                            name="preferEmailId" maxlength="100"
                                                             #preferEmailId="ngModel" 
                                                             tabindex="1"
                                                             pattern="{{regexPattern.email}}"
@@ -693,7 +693,7 @@
                                                             class="form-control"
                                                             id="alter-email"
                                                             data-validation-attr="email01"
-                                                            tabindex="3"
+                                                            tabindex="3" maxlength="100"
                                                             [(ngModel)]="qde.application.applicants[coApplicantIndex].contactDetails.alternateEmailId"
                                                             name="alternateEmailId"
                                                             #alternateEmailId="ngModel"
@@ -1036,7 +1036,7 @@
                                                               pattern="{{regexPattern.address}}"
                                                               name="addressLineOne"
                                                               #address1="ngModel"
-                                                              fieldFill
+                                                              fieldFill maxlength="120"
                                                               spellcheck="false"
                                                               required />
                 
@@ -1055,7 +1055,7 @@
                                                         pattern="{{regexPattern.address}}"
                                                         name="addressLineTwo"
                                                         #address2="ngModel"
-                                                        fieldFill
+                                                        fieldFill maxlength="120"
                                                         tabindex="3"
                                                         spellcheck="false"/>
                   
@@ -1144,7 +1144,7 @@
                                                               name="pAddressLineOne" autocomplete="off"
                                                               #pAddress1="ngModel" 
                                                               pattern="{{regexPattern.address}}"
-                                                              fieldFill
+                                                              fieldFill maxlength="120"
                                                               tabindex="7"
                                                               spellcheck="false"
                                                               [(ngModel)]="qde.application.applicants[coApplicantIndex].permanentAddress.addressLineOne"
@@ -1159,7 +1159,7 @@
                                                               <input [readonly]="isReadOnly" type="text" class="form-control" id="per-address2"
                                                               name="pAddressLineTwo" autocomplete="off"
                                                               #pAddress2="ngModel"
-                                                              fieldFill
+                                                              fieldFill maxlength="120"
                                                               tabindex="8"
                                                               pattern="{{regexPattern.address}}"
                                                               spellcheck="false"
@@ -1295,7 +1295,7 @@
                                         </div>
                                         <div class="swiper-slide">
                                             <div class="title-wrap">
-                                                <h4 class="title">Select Co-Applicant's <span class="cm-line-break"></span>spouse's name</h4>
+                                                <h4 class="title">Enter Co-Applicant's <span class="cm-line-break"></span>spouse's name</h4>
                                             </div>
                                         </div>
                                         <div class="swiper-slide">
@@ -1376,7 +1376,7 @@
                                                           #spouseName="ngModel"
                                                           name="firstName"
                                                           pattern="{{regexPattern.name}}"
-                                                          tabindex="2"
+                                                          tabindex="2" maxlength="50"
                                                           id="spouse-name"
                                                           fieldFill
                                                           spellcheck="false"
@@ -1564,7 +1564,7 @@
                                                   <div class="form-group">
                                                       <input [readonly]="isReadOnly"  type="text" autocomplete="off"
                                                               class="form-control"
-                                                              id="father-name"
+                                                              id="father-name" maxlength="50"
                                                               required
                                                               [(ngModel)]="qde.application.applicants[coApplicantIndex].familyDetails.fatherName"
                                                               #fatherName="ngModel"
@@ -1603,7 +1603,7 @@
                                                               tabindex="4"
                                                               name="motherName"
                                                               fieldFill
-                                                              spellcheck="false"
+                                                              spellcheck="false" maxlength="50"
                                                               pattern="{{regexPattern.name}}" />
                                                             <label for="mother-name">Mother's name</label>
                                                       <div *ngIf="motherName.touched && motherName.invalid" class="invalid-feedback">
@@ -1619,7 +1619,7 @@
                                                                 tabindex="5"
                                                                 [(ngModel)]="qde.application.applicants[coApplicantIndex].familyDetails.motherMaidenName"
                                                                 #motherMaiden="ngModel"
-                                                                name="motherMaidenName"
+                                                                name="motherMaidenName" maxlength="50"
                                                                 fieldFill
                                                                 spellcheck="false"
                                                                 pattern="{{regexPattern.name}}" />
@@ -1776,7 +1776,7 @@
 
                                     <div class="swiper-slide">
                                         <div class="title-wrap">
-                                            <h4 class="title">Do Applicant’s <span class="cm-line-break"></span>income considered?</h4>
+                                            <h4 class="title">Do Co-Applicant’s <span class="cm-line-break"></span>income considered?</h4>
                                         </div>
                                     </div>
                                 </div>
@@ -2018,7 +2018,7 @@
                                                               id="ofcAddOne"
                                                               [(ngModel)]="qde.application.applicants[coApplicantIndex].officialCorrespondence.addressLineOne"
                                                               pattern="{{regexPattern.address}}"
-                                                              name="ofcA1"
+                                                              name="ofcA1" maxlength="120"
                                                               tabindex="1"
                                                               #ofcA1="ngModel"
                                                               fieldFill
@@ -2038,7 +2038,7 @@
                                                         tabindex="2"
                                                         [(ngModel)]="qde.application.applicants[coApplicantIndex].officialCorrespondence.addressLineTwo"
                                                         pattern="{{regexPattern.address}}"
-                                                        name="ofcA2"
+                                                        name="ofcA2" maxlength="120"
                                                         spellcheck="false"
                                                         #ofcA2="ngModel"
                                                         fieldFill/>
@@ -2058,7 +2058,7 @@
                                                         fieldFill
                                                         tabindex="3"
                                                         spellcheck="false"
-                                                        pattern="{{regexPattern.address}}"
+                                                        pattern="{{regexPattern.address}}" maxlength="100"
                                                         #landMark="ngModel" />
                                                       <label for="offLandmark">Landmark</label>
                                                       <span class="optional">optional</span>
@@ -2153,7 +2153,7 @@
                                                       <input [readonly]="isReadOnly" type="email" class="form-control" id="off-email"
                                                         required autocomplete="off"
                                                         [(ngModel)]="qde.application.applicants[coApplicantIndex].officialCorrespondence.officeEmailId"
-                                                        pattern="{{regexPattern.email}}"
+                                                        pattern="{{regexPattern.email}}" maxlength="100"
                                                         #officeEmail="ngModel"
                                                         tabindex="8"
                                                         fieldFill
@@ -2559,7 +2559,7 @@
                                                       [(ngModel)]="qde.application.applicants[coApplicantIndex].organizationDetails.nameOfOrganization"
                                                       #orgName="ngModel"
                                                       name="orgName"
-                                                      fieldFill
+                                                      fieldFill maxlength="50"
                                                       spellcheck="false"
                                                       required />
                                               <label for="org-name">Name of Organization</label>
@@ -2696,7 +2696,7 @@
                                                                 id="reg-add"
                                                                 [(ngModel)]="qde.application.applicants[coApplicantIndex].registeredAddress.registeredAddress"
                                                                 pattern="{{regexPattern.address}}"
-                                                                name="regAdd"
+                                                                name="regAdd" maxlength="120"
                                                                 tabindex="1"
                                                                 #regAdd="ngModel"
                                                                 fieldFill
@@ -2713,7 +2713,7 @@
                                                       <input [readonly]="isReadOnly"  type="text" autocomplete="off"
                                                               class="form-control"
                                                               name="landmark"
-                                                              tabindex="2"
+                                                              tabindex="2" maxlength="100"
                                                               #landmark01="ngModel"
                                                               fieldFill
                                                               spellcheck="false"
@@ -2832,7 +2832,7 @@
                                                       <input [readonly]="isReadOnly"    type="text"
                                                                 class="form-control" autocomplete="off"
                                                                 id="corp-add"
-                                                                tabindex="2"
+                                                                tabindex="2" maxlength="120"
                                                                 [(ngModel)]="qde.application.applicants[coApplicantIndex].corporateAddress.corporateAddress"
                                                                 pattern="{{regexPattern.address}}"
                                                                 name="corpAddress"
@@ -2853,7 +2853,7 @@
                                                               name="landmark"
                                                               #landmark="ngModel"
                                                               class="form-control"
-                                                              fieldFill
+                                                              fieldFill maxlength="100"
                                                               spellcheck="false"
                                                               tabindex="3"
                                                               pattern="{{regexPattern.address}}"
@@ -2962,7 +2962,7 @@
                                                                 tabindex="8"
                                                                 [(ngModel)]="qde.application.applicants[coApplicantIndex].corporateAddress.officeEmailId"
                                                                 name="officeEmailId"
-                                                                #ofcEmail="ngModel"
+                                                                #ofcEmail="ngModel" maxlength="100"
                                                                 fieldFill
                                                                 pattern="{{regexPattern.email}}"
                                                                 spellcheck="false"
@@ -3108,7 +3108,7 @@
                   
                                       <div class="swiper-slide">
                                         <div class="title-wrap">
-                                          <h4 class="title">Do Applicant’s <span class="cm-line-break"></span>income considered?</h4>
+                                          <h4 class="title">Do Co-Applicant’s <span class="cm-line-break"></span>income considered?</h4>
                                         </div>
                                       </div>
                   
