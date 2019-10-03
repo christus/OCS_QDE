@@ -1,0 +1,68 @@
+<app-leads-header></app-leads-header>
+<app-leads-sidebar></app-leads-sidebar>
+<div class="typ-connector">
+  <div class="typ-dash">
+    <ul class="tabs-head">
+      <li class="tab-link active" data-target="leads-tab"><a> Reports</a></li>
+    </ul>
+  <div style="margin-left: 5%; font-size:180%; margin-top: 5%">
+      <!-- <span>From date</span> -->
+      <div class="container">
+          <h2 style="margin-bottom:1%">Download reports based on Date</h2>
+        <div class="row">
+          <div class="col-3">
+            <label for="startDate" class="inputText">From date</label>
+            <input type="date" [(ngModel)]="startDate" placeholder="From date" class="dataPicker">
+          </div>
+          <div class="col-3">
+            <span>To date</span>
+            <input type="date" [(ngModel)]="endDate" placeholder="From date" class="dataPicker" (ngModelChange)="endDateMonthDiff($event)">
+            <div *ngIf="dateError.isError" class="redalert" style="color: red">
+            {{ dateError.errorMessage }}
+            </div>
+          </div>
+        </div>
+        <br>
+        <br>
+        <h2 style="margin-bottom:1%">Download reports based on Filters</h2>
+        <div class="row">
+          <div class="col-4">
+              <h2 class="title">Branch</h2>
+              <select name="branch" id="branch" class="js-select typ-two" (change)="changeBranch($event)">
+                  <option>--Select--</option>
+                  <option *ngFor="let branch of branchList" [value]="branch.value">{{branch.key}}</option>
+              </select>
+          </div>
+          <div class="col-4">
+              <h2 class="title">Status</h2>
+              <select name="status" id="status" class="js-select typ-two" (change)="changeStatus($event)">
+                  <option>--Select--</option>
+                  <option *ngFor="let status of statusList" [value]="status.value">{{status.key}}</option>
+              </select>
+          </div>
+          <div class="col-4">
+              <h2 class="title">User</h2>
+              <select name="user" id="user" class="js-select typ-two" (change)="changeUser($event)">
+                  <option>--Select--</option>
+                  <option *ngFor="let user of userList" [value]="user.value">{{user.key}}</option>
+              </select>
+          </div>
+        </div>
+        <h2 style="margin-bottom:1%; margin-top: 1%">Type of report</h2>
+        <div class="row">
+            <div class="col-4">
+                <select name="repType" id="repType" class="js-select typ-two" (change)="changeReport($event)">
+                    <option>--Select--</option>
+                    <option [value]="1">Login</option>
+                    <option [value]="2">Lead</option>
+                    <option [value]="3">Dump</option>
+                </select>
+            </div>
+        </div>
+      </div>
+      <h2 style="margin-top: 2%; margin-bottom:2%">Download Reports</h2>
+   <input type="submit" (click)="downloadReport()" class="btn btn-default">
+ </div>
+
+  </div>
+</div>

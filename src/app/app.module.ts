@@ -131,6 +131,7 @@ import { ErrorHandlingMessageComponent } from './admin/error-handling-message/er
 import { from } from 'rxjs';
 import { RelationshipMappingComponent } from './admin/admin-panel/relationship-mapping/relationship-mapping.component';
 import { ApplicationRelationshipResolverService } from './services/application-relationship-resolver.service';
+import { ReportsComponent } from './reports/reports.component';
 
 import { HTTP } from '@ionic-native/http/ngx';
 import { QdeHttpService } from './services/qde-http.service';
@@ -148,6 +149,12 @@ const appRoutes: Routes = [
   {
     path: "leads",
     component: LeadsListComponent,
+    canActivate: [AuthGuard],
+    canDeactivate: [ConfirmDeactivateGuard]
+  },
+  {
+    path: "reports",
+    component: ReportsComponent,
     canActivate: [AuthGuard],
     canDeactivate: [ConfirmDeactivateGuard]
   },
@@ -622,7 +629,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     ErrorHandlingMessageComponent,
     EligibilityClearedComponent,
     RelationshipMappingComponent,
-    AdminAuditTrialComponent
+    AdminAuditTrialComponent,
+    ReportsComponent
   ],
   imports: [
     BrowserModule,

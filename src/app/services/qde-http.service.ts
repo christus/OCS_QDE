@@ -460,6 +460,8 @@ createOrUpdatePersonalDetails(qde) {
     return this.callPost(uri, body);
   }
 
+  
+
   uploadOfflinePayment(data: any) {
     const processId = environment.api.offlinePaymentUpload.processId;
     const workflowId = environment.api.offlinePaymentUpload.workflowId;
@@ -2376,7 +2378,6 @@ createOrUpdatePersonalDetails(qde) {
   }
 
 
-
   checkOccupationType(data){
     const processId = environment.api.checkOccupationType.processId;
     const workflowId = environment.api.checkOccupationType.workflowId;
@@ -2399,6 +2400,7 @@ createOrUpdatePersonalDetails(qde) {
     return this.callPost(uri, body);
 
   }
+
 
   adminApplicantRelationship() {
     const processId   = environment.api.adminApplicantRelationship.processId;
@@ -2469,6 +2471,7 @@ createOrUpdatePersonalDetails(qde) {
     );
   }
 
+
   assessmentListForProfileApplicantType(applicantType : string, profileId: string) {
     const processId   = environment.api.assessmentListForProfileApplicantType.processId;
     const workflowId  = environment.api.assessmentListForProfileApplicantType.workflowId;
@@ -2498,7 +2501,7 @@ createOrUpdatePersonalDetails(qde) {
     let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
     return this.callPost(
       uri,
-      body
+      body.toString()
     );
   }
 
@@ -2646,5 +2649,66 @@ createOrUpdatePersonalDetails(qde) {
 
   }
 
+  downloadLeadDetails(data: any) {
+    const processId = environment.api.downloadLeads.processId;
+    const workflowId = environment.api.downloadLeads.workflowId;
+    const projectId = environment.projectId;
 
+    const requestEntity: RequestEntity = {
+      ProcessVariables: data,
+      processId: processId,
+      workflowId: workflowId,
+      projectId: projectId,
+    };
+
+    const body = {
+      "processVariables":
+      JSON.stringify(requestEntity)
+    };
+
+    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.callPost(uri, body);
+  }
+
+  downloadLoginDetails(data: any) {
+    const processId = environment.api.downloadLogin.processId;
+    const workflowId = environment.api.downloadLogin.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      ProcessVariables: data,
+      processId: processId,
+      workflowId: workflowId,
+      projectId: projectId,
+    };
+
+    const body = {
+      "processVariables":
+      JSON.stringify(requestEntity)
+    };
+
+    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.callPost(uri, body);
+  }
+
+  reportsFilters(data: any) {
+    const processId = environment.api.filtersForDownload.processId;
+    const workflowId = environment.api.filtersForDownload.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      ProcessVariables: data,
+      processId: processId,
+      workflowId: workflowId,
+      projectId: projectId,
+    };
+
+    const body = {
+      "processVariables":
+      JSON.stringify(requestEntity)
+    };
+
+    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.callPost(uri, body);
+  }
 }

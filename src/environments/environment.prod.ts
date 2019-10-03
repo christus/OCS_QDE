@@ -2,9 +2,9 @@ export const environment = {
   version: "1.7.9",
   buildDate: "3-10-2019",
   production: true,
-  projectId: '5928d30eac7811e9a1670242ac110002', //developement
+  //projectId: '5928d30eac7811e9a1670242ac110002', //developement
 
-  //projectId: '3209f7ea7ba811e982270242ac110002', //production
+  projectId: '3209f7ea7ba811e982270242ac110002', //production
 
   status: {
     QDECREATED: "1"
@@ -132,8 +132,6 @@ export const environment = {
       'workflowId': 'f144eee2927f11e982270242ac110002',
       'processId': 'f17089c6927f11e982270242ac110002'
     },
-    
-   
 
     "duplicateApplicantCheck": {
       'workflowId': '471f4154a3a211e9abab0242ac110002',
@@ -362,7 +360,19 @@ export const environment = {
     "usersLov": {
       'workflowId': '1afeb32ab8dd11e9a7520242ac110002',
       'processId': '1b175d3ab8dd11e988a00242ac110002'
-    }
+    },
+    "downloadLeads" : { 
+      'workflowId': '6f9d4872e37811e991630242ac110002',
+      'processId': '6fbc9484e37811e9b0470242ac110002'
+    },
+    "downloadLogin" : {
+      'workflowId': '4b639b98e41611e99a460242ac110002',
+      'processId': '4b702584e41611e9b36c0242ac110002'
+    },
+    "filtersForDownload": { 
+      'workflowId': '46111230e45011e9935a0242ac110002',
+      'processId': '462cc00ce45011e9abed0242ac110002'
+    },
   },
   userName: "icici@icicibankltd.com",
   password: "icici@123",
@@ -372,10 +382,11 @@ export const environment = {
   ocsHost: "/ocs",
   //host: "http://192.168.1.108/appiyo",
   //host: "/ProcessStore",
-  host:  "/appiyo",
+  //host:  "/appiyo",
   pdfLocation: "/d/download/pdf?",
   isMobile: false,
   //host: "https://ihfcmobileuat.icicihfc.com/appiyo"
+  host: "https://ihfcmobileuat.icicihfc.com/appiyo"
   //host: "https://103.87.42.117/appiyo"
   //host:"http://www.twixor.in/appiyo"
 };
