@@ -329,6 +329,7 @@ export class AdminAuditTrialComponent implements OnInit {
   selectedReportedTo(index, data) {
     console.log("clicked", data.userName);
 
+    this.selectBoxRef.nativeElement.querySelector('.reporting_to').classList.add('hide');
     // this.renderer.removeClass(this.reportingRef.nativeElement, 'active');
     console.log("reportingToList",this.reportingToList);
 

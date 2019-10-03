@@ -8,6 +8,7 @@
     width: 17.75vw;
     background: #eee;
     border: 1px solid #ccc;
+    box-shadow: 1px 1px 10px 0 #ccc;
 }
 
 li .item:active { 
@@ -46,7 +47,6 @@ li .item:active {
     border: 0;
     border-bottom: 1px solid #bbb;
     border-radius: 0;
-    width: 100%;
     font-size: 1.64vw;
     line-height: 2.35vw;
     color: #999;

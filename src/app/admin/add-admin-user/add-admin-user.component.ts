@@ -27,7 +27,7 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
 
 
   userRoles: Array<any>;
-  branch: Array<any>;
+  branches: Array<any>;
   formdata;
   reportingTo: string;
   reportingToStr: string;
@@ -51,7 +51,7 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
     mailId: new FormControl('', [Validators.required, Validators.email, Validators.pattern("[^ @]*@[^ @]*"), this.emailDomainValidator]),
     mobileNumber: new FormControl('', [Validators.required, Validators.maxLength(10), Validators.pattern('[6-9]\\d{9}')]),
     userRoleId: new FormControl('', [Validators.required]),
-    branchId: new FormControl('', [Validators.required]),
+    userBranchId: new FormControl('', [Validators.required]),
     reportingTo: new FormControl('', [Validators.required]),
     reportingToInp: new FormControl(''),
   });
@@ -83,7 +83,7 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
       this.mailId = val['mailId'];
       this.mobileNumber = val['mobileNumber'];
       this.userRoleId = val['userRoleId']; 
-      this.branchId = val['branchId']; 
+      this.userBranchId = val['userBranchId']; 
       this.reportingToInp = val['reportingToInp']; 
       this.reportingTo = val['reportingTo']; 
       
@@ -106,9 +106,12 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
 
     this.qdeHttp.adminGetUserLov({}).subscribe((response) => {
       var lov = JSON.parse(response['ProcessVariables'].lovs);
-      console.log("Lov", lov);
       this.userRoles = lov.LOVS.user_role;
-      this.branch = lov.LOVS.branch;
+      this.branches = lov.LOVS.branch;
+
+      console.log("this.userRoles", this.userRoles);
+      console.log("this.branch", this.branches);
+
     });
 
     this.route.params.subscribe(val => {
@@ -129,7 +132,7 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
             mailId: response['ProcessVariables']['emailId'] || "",
             mobileNumber: response['ProcessVariables']['mobileNumber'] || "",
             reportingTo: response['ProcessVariables']['reportingToUser'] || "",
-            branchId: response['ProcessVariables']['branchId'] || "",
+            userBranchId: response['ProcessVariables']['branchId'] || "",
             userRoleId: parseInt(response['ProcessVariables']['roleId']) || "",
             reportingToInp: response['ProcessVariables']['reportingTo'] || ""
           });
@@ -173,8 +176,8 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
         "password": this.formValue.password.value,
         "mobileNumber": this.formValue.mobileNumber.value,
         "mailId": this.formValue.mailId.value,
-        "roleId": parseInt(this.changeUserRole),
-        "branchId": parseInt(this.changeBranch),
+        "roleId": parseInt(this.changeUserRole()),
+        "branchId": parseInt(this.changeBranch()),
         "reportingTo": parseInt(this.formValue.reportingToInp.value),
         "userId": parseInt(localStorage.getItem("userId"))
       }
@@ -219,16 +222,19 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
 
 
   // Getter method to access formcontrols
-  get changeUserRole() {
-    console.log("change value", this.registerUser.get('userRoleId').value.value);
-    return this.registerUser.get('userRoleId').value.value;
+  changeUserRole() {
+    console.log("change value", this.registerUser.get('userRoleId').value);
+    return this.registerUser.get('userRoleId').value;
   }
 
-  get changeBranch() {
-    console.log("change branchId value", this.registerUser.get('branchId').value.value);
-    return this.registerUser.get('branchId').value.value;
+  changeBranch() {
+    console.log("change branchId value", this.registerUser.get('userBranchId').value);
+    return this.registerUser.get('userBranchId').value;
   }
 
+  set userBranchId(val) {
+    console.log("br: " + val.key + "-" + val.value);
+  }
   items: Array<string> = [''];
 
 
@@ -298,7 +304,7 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
       "mobile": this.formValue.mobileNumber.value,
       "mailId": this.formValue.mailId.value,
       "roleId": parseInt(this.formValue.userRoleId.value),
-      "branchId":  parseInt(this.formValue.branchId.value),
+      "branchId":  parseInt(this.formValue.userBranchId.value),
       "reportingTo": parseInt(this.formValue.reportingToInp.value)
 
     }

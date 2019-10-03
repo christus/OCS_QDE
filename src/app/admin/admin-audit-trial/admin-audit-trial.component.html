@@ -16,13 +16,13 @@
         <label for="reportingTo" class="">Select User:</label>
         <input type="text" id="reportingTo" [(ngModel)]="reportingToStr"  (input)="filterLeads($event)" class="form-control"  fieldFill/>
         <input type="hidden" class="form-control"  [(ngModel)]="reportingToInp" hidden   #reportingTo/>
-        <span class="reporting_to hide">
+        <div class="reporting_to hide">
             <ul>
                 <li #reportingTo class="item" id="{{i.userId}}"  (click)="selectedReportedTo(in, i)" *ngFor="let i of filteredItems;let in=index;">
                     {{i.userName}}
                 </li>
             </ul>                
-        </span>
+        </div>
         <div *ngIf="reportingTo.errors" >
             <!-- <div class="redalert" *ngIf="formValue.reportingTo.errors.required"> required</div> -->
         </div>          
