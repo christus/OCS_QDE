@@ -13,9 +13,9 @@
     </div>
 
     <div class="inputBox form-field-el reportingToBlock"  #selectBox>
-        <label for="reportingTo" class="">Select User:</label>
+        <label for="reportingTo" class="">Type user id:</label>
         <input type="text" id="reportingTo" [(ngModel)]="reportingToStr"  (input)="filterLeads($event)" class="form-control"  fieldFill/>
-        <input type="hidden" class="form-control"  [(ngModel)]="reportingToInp" hidden   #reportingTo/>
+        <input type="hidden" class="form-control" hidden #reportingTo/>
         <div class="reporting_to hide">
             <ul>
                 <li #reportingTo class="item" id="{{i.userId}}"  (click)="selectedReportedTo(in, i)" *ngFor="let i of filteredItems;let in=index;">

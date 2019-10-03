@@ -110,22 +110,32 @@ export class AdminAuditTrialComponent implements OnInit {
 
     if(this.ocsNumberStr || this.userId ) {
 
-      const startDate = (!this.startDate? "": this.getFormattedDate(this.startDate));
-      const endDate = (!this.endDate? "": this.getFormattedDate(this.startDate)); 
+      const isValid = this.validateFromToDate(this.startDate, this.endDate);
 
+     
 
+      
       if(this.userId && !this.startDate && !this.endDate) {
         this.errorMsg = errors.adminAuditTrail.dataRequired;
-        this.resetForm();
+        // this.resetForm();
         return;
       }
+
+      if(isValid) {
+        const startDate = (!this.startDate? "": this.getFormattedDate(this.startDate));
+        const endDate = (!this.endDate? "": this.getFormattedDate(this.startDate)); 
+      }else {
+        this.errorMsg = errors.adminAuditTrail.dateRangeError;
+        return;
+      }
+
       const ocs = this.ocsNumberStr || "";
       const auditUserId = this.userId;
       var data = {
         userId: auditUserId,
         "Submit" : "",
-        "fromDate" : startDate,
-        "toDate" : endDate,
+        "fromDate" : this.startDate,
+        "toDate" : this.endDate,
         "ocsNumber": ocs
       }
       this.qdeHttp.downloadAuditTrail(data).subscribe(
@@ -163,6 +173,7 @@ export class AdminAuditTrialComponent implements OnInit {
     this.ocsNumberStr = "";
     this.startDate = undefined;
     this.endDate = undefined;
+    this.reportingToStr = "";
   }
 
   uploadOfflinePayment(callback) {
@@ -311,6 +322,7 @@ export class AdminAuditTrialComponent implements OnInit {
   items: Array<string> = [''];
 
   search(event) {
+    
     if (event.target.value != '') {
       this.filteredItems = this.items.filter(v => {
         if (v.toLowerCase().trim().search(event.target.value.toLowerCase().trim()) >= 0) {
@@ -357,11 +369,21 @@ export class AdminAuditTrialComponent implements OnInit {
       this.qdeHttp.usersLovList(input).subscribe((response) => {
         console.log("Reporting", response);
         let usersList = response['ProcessVariables'].userList;
-        this.filteredItems = usersList;
+        if(usersList) {
+          this.filteredItems = usersList;
+        }else {
+          this.selectBoxRef.nativeElement.querySelector('.reporting_to').classList.add('hide');
+        }
       });
 
     }, 1000);
 
+  }
+
+  validateFromToDate(fromDate, toDate){
+    if ((Date.parse(fromDate) <= Date.parse(toDate))) {
+      return true;
+    }
   }
 
 }

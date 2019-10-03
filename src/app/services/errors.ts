@@ -274,10 +274,10 @@ export const errors: any = {
       required: "Gross Turnover is mandatory",
       invalid: "Invalid Gross Turnover"
     }
-    
   },
   adminAuditTrail: {
     allFieldrequired: "Enter OCS number or select user to get audit trail.",
-    dataRequired: "From date and To date are mandatory"
+    dataRequired: "From date and To date are mandatory",
+    dateRangeError: "To date should be greater than From date"
   }
 };
