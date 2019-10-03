@@ -275,5 +275,9 @@ export const errors: any = {
       invalid: "Invalid Gross Turnover"
     }
     
+  },
+  adminAuditTrail: {
+    allFieldrequired: "Enter OCS number or select user to get audit trail.",
+    dataRequired: "From date and To date are mandatory"
   }
 };

@@ -135,6 +135,7 @@ import { ApplicationRelationshipResolverService } from './services/application-r
 import { HTTP } from '@ionic-native/http/ngx';
 import { QdeHttpService } from './services/qde-http.service';
 import { MobileService } from './services/mobile-constant.service';
+import { AdminAuditTrialComponent } from './admin/admin-audit-trial/admin-audit-trial.component';
 
 
 const appRoutes: Routes = [
@@ -530,6 +531,10 @@ const appRoutes: Routes = [
       {
         path: 'erroredit/:errorCode',
         component: EditErrorMessageComponent
+      },
+      {
+        path: 'auditTrail',
+        component: AdminAuditTrialComponent
       }
     ]
   },
@@ -616,7 +621,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     EditErrorMessageComponent,
     ErrorHandlingMessageComponent,
     EligibilityClearedComponent,
-    RelationshipMappingComponent
+    RelationshipMappingComponent,
+    AdminAuditTrialComponent
   ],
   imports: [
     BrowserModule,

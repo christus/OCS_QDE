@@ -354,6 +354,14 @@ export const environment = {
     "checkOccupationType" :{
       'workflowId': '82ce648ae10c11e9b7730242ac110002',
       'processId': '82ed99d6e10c11e9b3d00242ac110002'
+    },
+    "downloadAuditTrail": {
+      'workflowId': '6d02a184e41811e987550242ac110002',
+      'processId': '6d1b4b1ce41811e9aaf90242ac110002'
+    },
+    "usersLov": {
+      'workflowId': '1afeb32ab8dd11e9a7520242ac110002',
+      'processId': '1b175d3ab8dd11e988a00242ac110002'
     }
   },
   userName: "icici@icicibankltd.com",

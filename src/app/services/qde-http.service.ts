@@ -2530,6 +2530,49 @@ createOrUpdatePersonalDetails(qde) {
     return this.callGet(uri);
   }
 
+  downloadAuditTrail(data: any){
+    const processId = environment.api.downloadAuditTrail.processId;
+    const workflowId = environment.api.downloadAuditTrail.workflowId;
+
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      ProcessVariables: data,
+      processId: processId,
+      workflowId: workflowId,
+      projectId: projectId,
+    };
+
+    const body = {
+      "processVariables":
+      JSON.stringify(requestEntity)
+    };
+
+    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.callPost(uri, body);
+  }
+
+  usersLovList(data: any) {
+    const processId = environment.api.usersLov.processId;
+    const workflowId = environment.api.usersLov.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      ProcessVariables: data,
+      processId: processId,
+      workflowId: workflowId,
+      projectId: projectId,
+    };
+
+    const body = {
+      "processVariables":
+      JSON.stringify(requestEntity)
+    };
+
+    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.callPost(uri, body);
+  }
+
   callGet(url) {
     if(this.isMobile) {
 

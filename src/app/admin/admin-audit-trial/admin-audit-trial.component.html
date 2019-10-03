@@ -1,0 +1,52 @@
+<h1 class="title">Audit Trail</h1>
+<br>
+<h2>Download CSV for Audit Trail</h2>
+<br>
+<div class="container">
+ 
+
+    <div class="inputBox form-field-el">
+        <label for="ocsNumber" class="inputText">OCS number:</label>
+        <input type="text" id="ocsNumber"  [(ngModel)]="ocsNumberStr"  class="form-control" fieldFill/>
+        <!-- <div *ngIf="ocsNumber.errors" >
+        </div> -->
+    </div>
+
+    <div class="inputBox form-field-el reportingToBlock"  #selectBox>
+        <label for="reportingTo" class="">Select User:</label>
+        <input type="text" id="reportingTo" [(ngModel)]="reportingToStr"  (input)="filterLeads($event)" class="form-control"  fieldFill/>
+        <input type="hidden" class="form-control"  [(ngModel)]="reportingToInp" hidden   #reportingTo/>
+        <span class="reporting_to hide">
+            <ul>
+                <li #reportingTo class="item" id="{{i.userId}}"  (click)="selectedReportedTo(in, i)" *ngFor="let i of filteredItems;let in=index;">
+                    {{i.userName}}
+                </li>
+            </ul>                
+        </span>
+        <div *ngIf="reportingTo.errors" >
+            <!-- <div class="redalert" *ngIf="formValue.reportingTo.errors.required"> required</div> -->
+        </div>          
+    </div>
+   
+    <!--Tabs 2 Download cheque payment starts-->
+    <div class="tab-slider--body">
+         <!-- <span>From date</span> -->
+         <br>
+         <label  class="inputText start_date">From date</label>
+          <input type="date" [(ngModel)]="startDate" placeholder="From date" class="dataPicker" [value]="startDate | date:'yyyy-MM-dd'">
+          <br>
+          <br>
+          <label class="to_date">To date</label>
+          <input type="date" [(ngModel)]="endDate" placeholder="From date" class="dataPicker" [value]="endDate | date:'yyyy-MM-dd'">
+    </div>
+
+    <br>
+    <br>
+    <input type="submit" (click)="downloadCSV()" class="btn btn-default">
+
+    <div class="redalert error-msg">{{errorMsg}}</div>
+
+
+    <!--Tabs 2 Download cheque payment ends-->  
+
+</div>
