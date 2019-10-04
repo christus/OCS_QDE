@@ -1,0 +1,40 @@
+.typ-dash .tabs-head {
+    justify-content: left;
+    border-bottom: 1px solid rgba(0,74,128,.2);
+    margin: 0 1.56vw;
+    padding: 0 3.91vw 0 0;
+  }
+  .typ-dash .tabs-head .tab-link a {
+    display: inline-block;
+    padding-bottom: 1.17vw;
+    font-size: 1.41vw;
+    text-transform: capitalize;
+    color: #004a80;
+    font-family: zurich-bold;
+    line-height: 1.88vw;
+    position: relative;
+  }
+
+  .typ-connector {
+    padding: 0 0 0 5.47vw;
+  }
+  /* .selectBox {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+    color: rgba(153, 153, 153, .4);
+    font-family: zurich-light;
+    font-size: 1.64vw;
+    line-height: 2.35vw;
+    transition: -webkit-transform .4s ease-in;
+    transition: transform .4s ease-in;
+    transition: transform .4s ease-in, -webkit-transform .4s ease-in;
+    -webkit-transform-origin: left;
+    transform-origin: left;
+    width: 100%;
+    right: 0;
+    display: block;
+} */

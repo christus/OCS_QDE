@@ -140,7 +140,6 @@ export const environment = {
     },
 
 
-
     "duplicateApplicantCheck": {
       'workflowId': '471f4154a3a211e9abab0242ac110002',
       'processId': '473800cca3a211e989e10242ac110002'
@@ -364,7 +363,23 @@ export const environment = {
     "usersLov": {
       'workflowId': '1afeb32ab8dd11e9a7520242ac110002',
       'processId': '1b175d3ab8dd11e988a00242ac110002'
-    }
+    },
+    "downloadLeads" : { 
+      'workflowId': '6f9d4872e37811e991630242ac110002',
+      'processId': '6fbc9484e37811e9b0470242ac110002'
+    },
+    "downloadLogin" : {
+      'workflowId': '4b639b98e41611e99a460242ac110002',
+      'processId': '4b702584e41611e9b36c0242ac110002'
+    },
+    "downloadDump" : {
+      'workflowId': '154273f0e44c11e9abed0242ac110002',
+      'processId': '155b02bce44c11e987550242ac110002'
+    },
+    "filtersForDownload": { 
+      'workflowId': '46111230e45011e9935a0242ac110002',
+      'processId': '462cc00ce45011e9abed0242ac110002'
+    },
   },
   userName: "icici@icicibankltd.com",
   password: "icici@123",

@@ -302,3 +302,8 @@ export interface ChequeDetails {
     chequeNumber ?: number;
     amount ?: number;
 }
+
+export interface Item {
+    key: string;
+    value: string;
+}
