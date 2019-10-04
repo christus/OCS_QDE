@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { QdeHttpService } from '../services/qde-http.service';
+import { Item } from '../models/qde.model';
 
 @Component({
   selector: 'app-reports',
@@ -18,6 +19,7 @@ export class ReportsComponent implements OnInit {
   statusId: string;
   userId: string;
   reportId: string;
+  selectedUser: string;
 
   constructor(private qdeHttp: QdeHttpService) { }
 
@@ -25,11 +27,12 @@ export class ReportsComponent implements OnInit {
     this.filterValues()
   }
   
+
   downloadLead() {
     const startDate = this.getFormattedDate(this.startDate);
     const endDate = this.getFormattedDate(this.endDate);
     var data = {
-    //  userId: parseInt(localStorage.getItem("userId")),
+      // userId: parseInt(localStorage.getItem("userId")),
       "Submit" : "",
       "fromDate" : startDate,
       "toDate" : endDate,
@@ -43,7 +46,11 @@ export class ReportsComponent implements OnInit {
           response["Error"] === "0" &&
           response["ProcessVariables"]["status"]) {
             // alert("Uploaded Successfully!");
-            this.readBase64Content(response)
+            // const moreReports = response["ProcessVariables"]["more"]
+            // for (;moreReports == true;) {
+            //   this.readBase64Content(response)
+            // }
+              this.readBase64Content(response)
         } else {
           if (response["ErrorMessage"]) {
             console.log("Response: " + response["ErrorMessage"]);
@@ -99,6 +106,43 @@ export class ReportsComponent implements OnInit {
     );
   }
 
+  downloadDump() {
+    const startDate = this.getFormattedDate(this.startDate);
+    const endDate = this.getFormattedDate(this.endDate);
+    var data = {
+    //  userId: parseInt(localStorage.getItem("userId")),
+      "Submit" : "",
+      "fromDate" : startDate,
+      "toDate" : endDate,
+      "applicationStatus": this.statusId,
+      "branch" : this.branchId,
+      "userId" : this.userId
+    }
+    this.qdeHttp.downloadDumpDetails(data).subscribe(
+      response => {
+        if (
+          response["Error"] === "0" &&
+          response["ProcessVariables"]["status"]) {
+            // alert("Uploaded Successfully!");
+            this.readBase64Content(response)
+        } else {
+          if (response["ErrorMessage"]) {
+            console.log("Response: " + response["ErrorMessage"]);
+          } else if (response["ProcessVariables"]["errorMessage"]) {
+            console.log(
+              "Response: " + response["ProcessVariables"]["errorMessage"]
+            );
+            this.errorMsg = response["ProcessVariables"]["errorMessage"];
+          }
+        }
+      },
+      error => {
+        console.log("Error : ", error);
+        this.errorMsg = error;
+      }
+    );
+  }
+
   downloadReport(){
     if(this.reportId == "1"){
       this.downloadLogin();
@@ -109,6 +153,7 @@ export class ReportsComponent implements OnInit {
       console.log("Download lead Report")
     }
     else if(this.reportId == "3"){
+      this.downloadDump();
       console.log("Download dump report. API is not there")
     }
     else{
@@ -178,13 +223,34 @@ export class ReportsComponent implements OnInit {
 
   endDateMonthDiff(value){
     const startDate = this.getFormattedDate(this.startDate);
-    const endDate = this.getFormattedDate(value);
-    console.log("papareddy",endDate)
-    console.log("badapapareddy",startDate)
-    if(endDate<startDate){
-      this.dateError={isError:true,errorMessage:"End Date cannot come before the start date"};
+    if(this.endDate != null){
+      var endDate = this.getFormattedDate(this.endDate);
     }
-    console.log("sabsebadapapareddy",this.dateError)
+    else{
+      return
+    }
+    var tempStartDate = new Date(startDate);
+    var tempEndDate = new Date(endDate);
+    var Difference_In_Time = tempEndDate.getTime() - tempStartDate.getTime();
+    var Difference_In_Days = Difference_In_Time / (1000 * 60 * 60 * 24);
+
+    if(endDate < startDate){
+      this.dateError = {isError:true, errorMessage:"End Date cannot come before the start date"};
+    }
+    else{
+      if (Difference_In_Days < 30 && Difference_In_Days > 0) {
+        // The selected time is less than 30 days from now
+        this.dateError = {isError:false, errorMessage:""};
+      }
+      else if (Difference_In_Days > 30) {
+        // The selected time is more than 30 days from now
+        this.dateError = {isError:true, errorMessage:"Difference between Start date and End date should be less than or equal to 30 Days"};
+      }
+      else{
+         // -Exact- same timestamps.
+        this.dateError = {isError:false, errorMessage:""};
+      }
+    }
   }
 
   filterValues(){
@@ -192,9 +258,10 @@ export class ReportsComponent implements OnInit {
       userId: parseInt(localStorage.getItem("userId")),
     }
     this.qdeHttp.reportsFilters(data).subscribe(response=>{
-      this.branchList = response["ProcessVariables"]["branchList"]
-      this.statusList = response["ProcessVariables"]["statusList"]
-      this.userList = response["ProcessVariables"]["userList"]
+      this.branchList = response["ProcessVariables"]["branchList"];
+      this.statusList = response["ProcessVariables"]["statusList"];
+      this.userList = response["ProcessVariables"]["userList"];
+      this.changeUser(localStorage.getItem("userId"));
     })
 
   }
@@ -208,7 +275,18 @@ export class ReportsComponent implements OnInit {
   }
 
   changeUser(el){
-    this.userId = el.currentTarget.value;
+    
+    // if(el.currentTarget.value != "0"){
+    //   this.userId = el.currentTarget.value;
+    // }
+    // else{
+    //   this.userId = localStorage.getItem("userId")
+    // }
+    
+  //  this.userId = this.selectedUser ? localStorage.getItem('userId') ? localStorage.getItem('userId'): null: this.selectedUser;
+
+    this.userId = el;
+    console.log("UserId", this.userId)
   }
 
   changeReport(el){

@@ -2691,6 +2691,27 @@ createOrUpdatePersonalDetails(qde) {
     return this.callPost(uri, body);
   }
 
+  downloadDumpDetails(data: any) {
+    const processId = environment.api.downloadDump.processId;
+    const workflowId = environment.api.downloadDump.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      ProcessVariables: data,
+      processId: processId,
+      workflowId: workflowId,
+      projectId: projectId,
+    };
+
+    const body = {
+      "processVariables":
+      JSON.stringify(requestEntity)
+    };
+
+    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.callPost(uri, body);
+  }
+
   reportsFilters(data: any) {
     const processId = environment.api.filtersForDownload.processId;
     const workflowId = environment.api.filtersForDownload.workflowId;

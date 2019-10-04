@@ -372,6 +372,10 @@ export const environment = {
       'workflowId': '4b639b98e41611e99a460242ac110002',
       'processId': '4b702584e41611e9b36c0242ac110002'
     },
+    "downloadDump" : {
+      'workflowId': '154273f0e44c11e9abed0242ac110002',
+      'processId': '155b02bce44c11e987550242ac110002'
+    },
     "filtersForDownload": { 
       'workflowId': '46111230e45011e9935a0242ac110002',
       'processId': '462cc00ce45011e9abed0242ac110002'
