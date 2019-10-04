@@ -102,20 +102,31 @@ export class AdminAuditTrialComponent implements OnInit {
   }
 
   downloadCSV() {
-
+    this.errorMsg = "";
     console.log("ocs"+this.ocsNumberStr);
     console.log("ouserIdcs"+this.userId);
     console.log("startDate"+this.startDate);
     console.log("endadtae"+this.endDate);
 
+    if(this.ocsNumberStr && !(this.ocsNumberStr.length > 16)){
+        this.errorMsg = errors.adminAuditTrail.ocsMinLength;
+        this.ocsNumberStr = null;
+        return;
+    }
+
     if(this.ocsNumberStr || this.userId ) {
 
+      let difference:number = this.monthDiff(this.startDate, this.endDate);
+
+      if(difference >= 31) {
+        this.errorMsg = errors.adminAuditTrail.dateRange;
+        return;
+      }
+
       const isValid = this.validateFromToDate(this.startDate, this.endDate);
-
-     
-
       
-      if(this.userId && !this.startDate && !this.endDate) {
+     if(this.userId) {
+      if(!this.startDate && !this.endDate) {
         this.errorMsg = errors.adminAuditTrail.dataRequired;
         // this.resetForm();
         return;
@@ -128,7 +139,8 @@ export class AdminAuditTrialComponent implements OnInit {
         this.errorMsg = errors.adminAuditTrail.dateRangeError;
         return;
       }
-
+     }
+     
       const ocs = this.ocsNumberStr || "";
       const auditUserId = this.userId;
       var data = {
@@ -145,7 +157,8 @@ export class AdminAuditTrialComponent implements OnInit {
             response["ProcessVariables"]["status"]) {
               // alert("Uploaded Successfully!");
               this.resetForm();
-              this.readBase64Content(response)
+              let more =  response["ProcessVariables"]["more"];
+              this.readBase64Content(response);
           } else {
             if (response["ErrorMessage"]) {
               console.log("Response: " + response["ErrorMessage"]);
@@ -168,12 +181,45 @@ export class AdminAuditTrialComponent implements OnInit {
     }
   }
 
+  // downloadPagination(data){
+  //   this.qdeHttp.downloadAuditTrail(data).subscribe(
+  //     response => {
+  //       if (
+  //         response["Error"] === "0" &&
+  //         response["ProcessVariables"]["status"]) {
+  //           // alert("Uploaded Successfully!");
+  //           let more =  response["ProcessVariables"]["more"];
+  //           if(more) {
+  //             data["sent"] =  response["ProcessVariables"]["sent"];
+  //             this.downloadPagination(data);
+  //           }
+  //           this.readBase64Content(response);
+  //       } else {
+  //         if (response["ErrorMessage"]) {
+  //           console.log("Response: " + response["ErrorMessage"]);
+  //         } else if (response["ProcessVariables"]["errorMessage"]) {
+  //           console.log(
+  //             "Response: " + response["ProcessVariables"]["errorMessage"]
+  //           );
+  //           this.errorMsg = response["ProcessVariables"]["errorMessage"];
+  //         }
+  //       }
+  //     },
+  //     error => {
+  //       console.log("Error : ", error);
+  //       this.errorMsg = error;
+  //       this.resetForm();
+  //     }
+  //   );
+  // }
+
   resetForm() {
-    this.userId = "";
-    this.ocsNumberStr = "";
+    this.userId = null;
+    this.ocsNumberStr = null;
     this.startDate = undefined;
     this.endDate = undefined;
-    this.reportingToStr = "";
+    this.reportingToStr = null;
+    this.errorMsg = null;
   }
 
   uploadOfflinePayment(callback) {
@@ -385,6 +431,13 @@ export class AdminAuditTrialComponent implements OnInit {
       return true;
     }
   }
+
+  monthDiff(d1, d2) {
+    const diffTime = Math.abs(Date.parse((d2)) - Date.parse(d1));
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+    console.log(diffDays);
+    return diffDays;
+}
 
 }
 

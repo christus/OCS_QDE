@@ -278,6 +278,9 @@ export const errors: any = {
   adminAuditTrail: {
     allFieldrequired: "Enter OCS number or select user to get audit trail.",
     dataRequired: "From date and To date are mandatory",
-    dateRangeError: "To date should be greater than From date"
+    dateRangeError: "To date should be greater than From date",
+    ocsMinLength: "Minimum 16 character required",
+    userIdLength: "Minimum 6 character required",
+    dateRange: "Start and end date should have difference of one month"
   }
 };
