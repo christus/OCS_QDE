@@ -258,6 +258,9 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
     this.registerUser.patchValue({ reportingTo: data.userName });
     this.registerUser.patchValue({ reportingToInp: data.userId });
 
+    this.selectBoxRef.nativeElement.querySelector('.reporting_to').classList.add('hide');
+
+
     // this.renderer.removeClass(this.reportingRef.nativeElement, 'active');
     console.log("reportingToList",this.reportingToList);
     this.reportingToList.forEach(v => {
