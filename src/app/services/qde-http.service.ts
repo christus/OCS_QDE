@@ -330,7 +330,13 @@ createOrUpdatePersonalDetails(qde) {
     const formData: FormData = new FormData();
     formData.append('files[]', fileToUpload, fileToUpload.name);
 
-    return this.callPost(uri, formData, headers);
+    if(this.isMobile) {
+      return this.callPost(uri, formData, headers);
+    }else {
+      return this.http.post(uri, formData, headers);
+    }
+
+   
   }
 
   uploadToOmni(documentInfo: any) {
@@ -2501,7 +2507,7 @@ createOrUpdatePersonalDetails(qde) {
     let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
     return this.callPost(
       uri,
-      body.toString()
+      body
     );
   }
 
