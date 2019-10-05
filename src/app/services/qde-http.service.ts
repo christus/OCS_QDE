@@ -2276,6 +2276,73 @@ createOrUpdatePersonalDetails(qde) {
     return this.callPost(uri, body);
 
   }
+  getApplications(data) {
+    // console.log("get Error Id Handal Service Call",data);
+      const processId = environment.api.getApplications.processId;
+    const workflowId = environment.api.getApplications.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: data,
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = {
+      'processVariables':
+      JSON.stringify(requestEntity)
+    };
+
+    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.callPost(uri, body);
+
+  }
+
+  reAssignApplications(data) {
+    // console.log("get Error Id Handal Service Call",data);
+      const processId = environment.api.reAssignApplications.processId;
+    const workflowId = environment.api.reAssignApplications.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: data,
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = {
+      'processVariables':
+      JSON.stringify(requestEntity)
+    };
+
+    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.callPost(uri, body);
+
+  }
+  getUserList(data) {
+    // console.log("get Error Id Handal Service Call",data);
+      const processId = environment.api.getUsers.processId;
+    const workflowId = environment.api.getUsers.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: data,
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = {
+      'processVariables':
+      JSON.stringify(requestEntity)
+    };
+
+    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.callPost(uri, body);
+
+  }
   getErrorHandlingMessage(data) {
     const processId = environment.api.getErrorMessage.processId;
     const workflowId = environment.api.getErrorMessage.workflowId;

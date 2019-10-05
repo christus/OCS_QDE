@@ -1,0 +1,176 @@
+<!-- <script>
+    var presentDate = new Date();
+
+$(function () {
+		var datepicker = $('#AppointmentDate').kendoDatePicker({
+    		value: presentDate,
+        min: presentDate,
+        month: {
+        	empty: '<div class="k-state-disabled">#= data.value #</div>'
+        }
+    }).data('kendoDatePicker');
+});
+</script> -->
+
+<app-leads-header></app-leads-header>
+<app-leads-sidebar></app-leads-sidebar>
+
+<div class="typ-connector">
+<div class="fixed-top">
+<div class="typ-dash">
+  <ul class="tabs-head">
+    <li class="tab-link active" data-target="leads-tab"><a>Re-Assign </a></li>
+    <!-- Logins -->
+  </ul>  
+      
+</div>
+<div class="form-wrap">
+    <div class="form-group">
+    <div class="row">
+            <div class="col-4">
+        <span class="control-title">From Assignee*</span>
+        <kendo-autocomplete
+        class="form-control kendo-list"
+            [data]="data"
+            [valueField]="'key'"
+            [filterable]="true"
+            (filterChange)="handleFilter($event)"
+            [(ngModel)]="fromAssign"
+            (ngModelChange)="dataChanged($event,1)" 
+            [placeholder]="'e.g. Andorra'"
+            [value]="'value'">
+            
+        </kendo-autocomplete>
+    </div>
+<!-- {{fromAssign}} -->
+   
+    </div>
+    <!-- <div class="row">        
+        <div class="col-4">
+            <div class="inputBox form-field-el">      
+                    <button type="submit" class="btn btn-default"> Submit</button>            
+            </div> 
+        </div>        
+        
+    </div> -->
+</div>
+
+
+
+<div class="form-group">
+      
+    <ul *ngFor="let detail of applictionList | paginate: { itemsPerPage: perPage, currentPage: currentPage, totalItems: totalItems }; let i=index">
+            <li>
+             <a class="lead-action">
+
+              <ul class="bs-lead-card">
+                  <li>
+                      <span class="name">Application At</span>
+                      <span class="value">{{detail.userName}}</span></li>
+                  <li>
+                      <span class="name">firstName</span>
+                      <span class="value">{{detail.firstName}} </span>
+                  </li>
+                  <li>
+                      <span class="name">lastName</span>
+                      <span class="value">{{detail.lastName}}</span>
+                  </li>
+                  <li>
+                      <span class="name">loanAmount</span>
+                      <span class="value">{{detail.loanAmount}}</span>
+                  </li>
+                  <li>
+                    <span class="name">loanType</span>
+                    <span class="value">{{detail.loanType}}</span>
+                </li>
+                <li>
+                    <div class="bs-checkbox" style="top: -.5vw;">
+                        <input   type="checkbox" id="termsCheck{{i}}" name="termsCheck{{i}}"
+                        (change)="changeCheckbox(i)"  #termsCheck{{i}}/>
+                        <label for="termsCheck{{i}}"></label>
+                    </div>
+                </li>
+              </ul>
+            </a>
+          </li>
+      </ul>
+      <pagination-controls  (pageChange)="pageChanged($event)" class="pagination" *ngIf="totalItems>0"></pagination-controls>
+    </div>
+   
+    <div class="form-group">
+        <div class="row">
+            <div class="col-4">
+                    <span class="control-title">To Assignee*</span>
+                    <kendo-autocomplete
+                    class="form-control kendo-list"
+                        [data]="filteredSource"
+                        [valueField]="'key'"
+                        [filterable]="true"
+                        (filterChange)="handleFilter1($event)"
+                        [(ngModel)]="toAssign"
+                        (ngModelChange)="dataChanged($event,2)" 
+                        [placeholder]="'e.g. Andorra'" >
+                    </kendo-autocomplete>
+                </div>
+            
+            <div class="col-4 ">
+                <span class="control-title" style="margin-left: 9.5vw;">Select All</span>
+                <div class="bs-checkbox" style="left: -4.5vw;
+                top: .8vw;">            
+                    <input class="form-control" type="checkbox" id="selectAll" name="selectAll" (change)="changeCheckbox()"/>
+                    <label for="selectAll" ></label>                    
+                </div>       
+            </div>
+    <div class="col-4">
+            <span class="control-title">Effect From*</span>
+            <!-- <input type="date" class="form-control"  style="margin-top: 1.1vw;" id="effectFrom" name="effectFrom" [(ngModel)]="effectFromDate"> -->
+            <kendo-datepicker  class="form-control kendo-list kendo-date" style="font-size: 1.28vw;"
+            [min]="min"       
+            [(ngModel)]="effectFromDate"
+            [format]="'dd/MM/yyyy'"
+            
+            #effectFrom="ngModel">
+            </kendo-datepicker>
+            <!-- <label for="AppointmentDate">Disabled Past Dates (Grayed Out): </label>
+            <input id="AppointmentDate" name="AppointmentDate" /> -->
+    </div>   
+        
+    </div>
+    <div class="row">        
+        <div class="col-4 inputBox form-field-el">
+            <span class="control-title">Reason To Change*</span>         
+                <textarea  class="form-control" id="reasonToChange"  [(ngModel)]="reasonToChangeText"  name="reasonToChange" 
+                autocomplete="nope" style="width: 873px;height: 111px;"
+                    #reasonToChange="ngModel" required></textarea>
+            </div>
+            <div>
+            
+             
+            </div>
+            </div>
+    <span class="name control-title">*Fields are Mandatory</span>
+    <div class="right-panel" style="padding: 2vw">
+        <button type="button" class="btn btn-default"  [ngClass]="{'disabled': (!effectFrom.valid && !effectFrom.untouched)}"
+        [disabled]="!effectFrom.valid && !effectFrom.untouched" (click)="changeApllication(reasonToChangeText,effectFromDate);"> Submit</button>       
+    <!-- {{effectFrom.valid }}
+    {{effectFrom.touched}}
+    {{effectFrom.invalid}}
+{{effectFrom.dirty}}
+    {{effectFrom.valid || !effectFrom.untouched}} -->
+    </div>
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="overlay" [ngClass]="{'active': isErrorModal}"></div>
+        <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isErrorModal}">            
+            <!-- <a class="modal-close"><span class="icon icon-close"></span></a> -->
+            <div class="modal-body">
+            <h1>{{errorMessage}}</h1>
+            <div class="btn-wrap">
+                <button class="btn btn-border" (click)="isErrorModal = false">Cancel</button>
+            </div>
+            </div>
+  </div>

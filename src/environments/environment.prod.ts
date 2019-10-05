@@ -313,6 +313,19 @@ export const environment = {
       'workflowId': '1d41cd0a8c4311e982270242ac110002',
       'processId': '653e21a6d48e11e981c20242ac110002'
     },
+    "getApplications" : {
+      'workflowId': 'acd78f24cf0311e991e50242ac110002',
+      'processId': '9747382ce5aa11e9910c0242ac110002'
+    },  
+    "reAssignApplications" : {
+      'workflowId': 'acd78f24cf0311e991e50242ac110002',
+      'processId': 'aceffe2ecf0311e9829f0242ac110002'
+    }, 
+    "getUsers" : {
+      'workflowId': '46111230e45011e9935a0242ac110002',
+      'processId': '462cc00ce45011e9abed0242ac110002'
+    },
+    
     "getErrorIdMessage" :{
       'workflowId': 'a6a43e0ccfc311e9a3b50242ac110002',
       'processId': 'cec4fac0d46411e9bed10242ac110002'

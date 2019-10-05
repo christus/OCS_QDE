@@ -37,9 +37,10 @@
     "@ionic-native/unique-device-id": "^5.9.0",
     "@ng-select/ng-select": "^2.19.0",
     "@ngx-translate/core": "^9.1.1",
+    "@progress/kendo-angular-dateinputs": "^3.7.4",
     "@progress/kendo-angular-dropdowns": "3.5.4",
-    "@progress/kendo-angular-l10n": "1.4.1",
-    "@progress/kendo-theme-default": "3.6.1",
+    "@progress/kendo-angular-l10n": "^1.1.0",
+    "@progress/kendo-theme-default": "latest",
     "@trademe/ng-defer-load": "^3.0.1",
     "add": "^2.0.6",
     "angular-dropdown-component": "^1.0.8",
@@ -60,8 +61,9 @@
     "ngx-swiper-wrapper": "^7.2.1",
     "ngx-ui-loader": "^7.2.2",
     "rxjs": "~6.2.0",
-    "rxjs-compat": "^6.5.2",
-    "zone.js": "~0.8.26"
+    "rxjs-compat": "^6.0.0",
+    "zone.js": "~0.8.26",
+    "@progress/kendo-angular-intl": "^1.4.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.13.9",

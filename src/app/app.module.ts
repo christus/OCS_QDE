@@ -8,6 +8,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgModule, Component } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DropDownsModule } from "@progress/kendo-angular-dropdowns";
+import { DateInputsModule } from "@progress/kendo-angular-dateinputs";
 
 // Plugins
 import { SwiperModule } from 'ngx-swiper-wrapper';
@@ -137,6 +138,7 @@ import { HTTP } from '@ionic-native/http/ngx';
 import { QdeHttpService } from './services/qde-http.service';
 import { MobileService } from './services/mobile-constant.service';
 import { AdminAuditTrialComponent } from './admin/admin-audit-trial/admin-audit-trial.component';
+import { ReassignComponent } from './reassign/reassign.component';
 
 
 const appRoutes: Routes = [
@@ -155,6 +157,12 @@ const appRoutes: Routes = [
   {
     path: "reports",
     component: ReportsComponent,
+    canActivate: [AuthGuard],
+    canDeactivate: [ConfirmDeactivateGuard]
+  },
+  {
+    path: "re-assign",
+    component: ReassignComponent,
     canActivate: [AuthGuard],
     canDeactivate: [ConfirmDeactivateGuard]
   },
@@ -630,7 +638,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     EligibilityClearedComponent,
     RelationshipMappingComponent,
     AdminAuditTrialComponent,
-    ReportsComponent
+    ReportsComponent,
+    ReassignComponent
   ],
   imports: [
     BrowserModule,
@@ -642,10 +651,12 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     Ng5SliderModule,
     HttpClientModule,
     DropDownsModule,
+    DateInputsModule,
     ImageUploadModule.forRoot(),
     DeviceDetectorModule.forRoot(),
     NgxUiLoaderModule,
     NgxPaginationModule,
+    
     ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'})
   
   ],
