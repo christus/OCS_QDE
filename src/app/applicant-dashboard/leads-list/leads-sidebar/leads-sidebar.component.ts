@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CommonDataService } from 'src/app/services/common-data.service';
 
 @Component({
   selector: 'app-leads-sidebar',
@@ -9,11 +10,20 @@ import { Router } from '@angular/router';
 export class LeadsSidebarComponent implements OnInit {
 
   viewMode: string = '' ;
-
-  constructor(private router: Router) { }
+  userRole: any = [];
+  isTBMLoggedIn: boolean ;
+  constructor(private router: Router,
+              private cds: CommonDataService) {
+                this.isTBMLoggedIn = this.getRoles().includes('TBM') || this.getRoles().includes('ZBM');
+                }
 
   ngOnInit() {
     console.log("page init call");
+    
+     this.userRole = localStorage.getItem("roles");
+
+    
+     console.log("userRole ", this.userRole);
     // this.viewMode = "tab2";
   }
   pageNavigation(pageValue) {
@@ -27,5 +37,8 @@ export class LeadsSidebarComponent implements OnInit {
       this.viewMode = pageValue;
       console.log("page click call", this.viewMode);
     }
+  }
+  getRoles(): Array<string> {
+    return JSON.parse(localStorage.getItem("roles"));
   }
 }

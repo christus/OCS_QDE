@@ -220,6 +220,23 @@ h4.h5 {
 	margin: 0;
 	text-align: center;
 }
+textarea {
+  resize: none;
+  width: 28vw;
+  height: 4vw;
+  
+}
+.invalid-feedback {
+	font-size: .94vw;
+	line-height: 1.09vw;
+	font-family: zurich-bold;
+    letter-spacing: .5px;
+    color:red;
+}
+kendo-datepicker{
+  font-size: 1.8vw;
+}
+
 /* left: 0;
 top: 0; */
   

@@ -41,6 +41,9 @@ $(function () {
             [value]="'value'">
             
         </kendo-autocomplete>
+        <div *ngIf = "validFromAssignee" class="invalid-feedback">
+            Select Valid From Assignee
+        </div>
     </div>
 <!-- {{fromAssign}} -->
    
@@ -86,7 +89,11 @@ $(function () {
                 <li>
                     <div class="bs-checkbox" style="top: -.5vw;">
                         <input   type="checkbox" id="termsCheck{{i}}" name="termsCheck{{i}}"
-                        (change)="changeCheckbox(i)"  #termsCheck{{i}}/>
+                        (change)="changeCheckbox(i)"  #termsCheck{{i}}
+                        [ngClass]="{'disabled': (selectAllCheck)}"
+                        [disabled]="selectAllCheck"
+                        [checked]="selectAllCheck"
+                        />
                         <label for="termsCheck{{i}}"></label>
                     </div>
                 </li>
@@ -111,14 +118,19 @@ $(function () {
                         (ngModelChange)="dataChanged($event,2)" 
                         [placeholder]="'e.g. Andorra'" >
                     </kendo-autocomplete>
+                    <div *ngIf = "validToAssignee" class="invalid-feedback">
+                        Select Valid To Assignee
+                    </div>
                 </div>
             
             <div class="col-4 ">
                 <span class="control-title" style="margin-left: 9.5vw;">Select All</span>
                 <div class="bs-checkbox" style="left: -4.5vw;
                 top: .8vw;">            
-                    <input class="form-control" type="checkbox" id="selectAll" name="selectAll" (change)="changeCheckbox()"/>
-                    <label for="selectAll" ></label>                    
+                    <input class="form-control" type="checkbox" id="selectAll" name="selectAll" (change)="changeCheckbox(selectAllCheck)" 
+                    [(ngModel)]="selectAllCheck" [disabled]="!totalItems"/>
+                    <label for="selectAll" ></label>
+                                    
                 </div>       
             </div>
     <div class="col-4">
@@ -131,8 +143,9 @@ $(function () {
             
             #effectFrom="ngModel">
             </kendo-datepicker>
-            <!-- <label for="AppointmentDate">Disabled Past Dates (Grayed Out): </label>
-            <input id="AppointmentDate" name="AppointmentDate" /> -->
+            <div *ngIf ="!effectFrom.valid" class="invalid-feedback">
+                Select Valid Date
+            </div>
     </div>   
         
     </div>
@@ -140,15 +153,14 @@ $(function () {
         <div class="col-4 inputBox form-field-el">
             <span class="control-title">Reason To Change*</span>         
                 <textarea  class="form-control" id="reasonToChange"  [(ngModel)]="reasonToChangeText"  name="reasonToChange" 
-                autocomplete="nope" style="width: 873px;height: 111px;"
+                autocomplete="nope"
                     #reasonToChange="ngModel" required></textarea>
             </div>
-            <div>
-            
+            <div>           
              
             </div>
             </div>
-    <span class="name control-title">*Fields are Mandatory</span>
+    <span class="name control-title">Note: *Fields are Mandatory</span>
     <div class="right-panel" style="padding: 2vw">
         <button type="button" class="btn btn-default"  [ngClass]="{'disabled': (!effectFrom.valid && !effectFrom.untouched)}"
         [disabled]="!effectFrom.valid && !effectFrom.untouched" (click)="changeApllication(reasonToChangeText,effectFromDate);"> Submit</button>       
@@ -168,9 +180,9 @@ $(function () {
         <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isErrorModal}">            
             <!-- <a class="modal-close"><span class="icon icon-close"></span></a> -->
             <div class="modal-body">
-            <h1>{{errorMessage}}</h1>
+            <h1>{{errorMessage}}</h1>            
+            </div>
             <div class="btn-wrap">
-                <button class="btn btn-border" (click)="isErrorModal = false">Cancel</button>
+                <button class="btn btn-border" (click)="isErrorModal = false">OK</button>
             </div>
-            </div>
-  </div>
+        </div>

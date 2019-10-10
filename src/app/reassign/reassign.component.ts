@@ -3,6 +3,7 @@ import { QdeService } from "../services/qde.service";
 import { QdeHttpService } from "../services/qde-http.service";
 import { v } from "@angular/core/src/render3";
 import { indexDebugNode } from "@angular/core/src/debug/debug_node";
+import { CommonDataService } from "../services/common-data.service";
 
 @Component({
   selector: "app-reassign",
@@ -36,6 +37,9 @@ export class ReassignComponent implements OnInit {
   fromAssignId: number;
   toAssignId: number;
   selectAllStatus: boolean = false;
+  selectAllCheck: boolean = false;
+  validFromAssignee: boolean = false;
+  validToAssignee: boolean = false;
   public applications: Array<string> = [];
   public source: Array<UserDetails> = [];
   // = ["Albania", "Andorra", "Armenia", "Austria", "Azerbaijan"];
@@ -47,7 +51,8 @@ export class ReassignComponent implements OnInit {
   // public max: Date = new Date(2002, 2, 10);
   // public value: Date = new Date(2001, 2, 10);
 
-  constructor(private qdeHttp: QdeHttpService) {
+  constructor(private qdeHttp: QdeHttpService,
+              private cds:  CommonDataService) {
     const userId = localStorage.getItem("userId");
     let data = {"userId": userId };
     this.getUserList(data);
@@ -61,7 +66,7 @@ export class ReassignComponent implements OnInit {
     this.filteredSource = this.source1.slice();
     this.fromAssignId = null;
     this.toAssignId = null;
- 
+       
 
   }
 
@@ -126,45 +131,65 @@ getUserList(data){
      this.filteredSource = this.source1.filter((s) => s.key.toLowerCase().indexOf(value.toLowerCase()) !== -1);
     }
 
-    dataChanged(event,fromId) {
-
-      if (event != null || event != undefined) {
-        const userID = this.source.find(mysearchValue => mysearchValue.key === event).value;
-                console.log("fassignee change vaglue ", userID);
-                this.selectedAssign =  userID.toString();
-                this.source1 = this.source.filter((item) => { return item.key != event });
-                 if (fromId == 1){
-                   this.fromAssignId = Number(this.selectedAssign);
-                    this.getApplications(this.selectedAssign,1);
-                    this.applications = [];
-                 } else if (fromId == 2) {
-                   this.toAssignId = Number(this.selectedAssign);
-                 }
-        
-      }
-      else {
+  dataChanged(event,fromId) {
+      const selectedUser = this.source.find(myUser => myUser.key === event);
+      if (selectedUser) {
+        console.log("selected User ", selectedUser);
+            if (event != null || event != undefined) {
+              const userID = this.source.find(mysearchValue => mysearchValue.key === event).value;
+                      console.log("fassignee change vaglue ", userID);
+                      this.selectedAssign =  userID.toString();
+                      this.source1 = this.source.filter((item) => { return item.key != event });
+                      if (fromId == 1) {
+                        this.fromAssignId = Number(this.selectedAssign);
+                          this.getApplications(this.selectedAssign,1);
+                          this.applications = [];
+                          this.validFromAssignee = false;
+                      } else if (fromId == 2) {
+                        this.toAssignId = Number(this.selectedAssign);
+                        this.validToAssignee = false;
+                      }
+            } else {
+              this.applictionList = [];
+            }
+            console.log("fassignee change value ", event);
+           
+      } else {
+        this.isErrorModal = true;
+        if (fromId == 1) {
+          this.errorMessage = "Select Any Valid From Assignee";
+          this.validFromAssignee = true;
+        }
+        else if ( fromId == 2) {
+          this.errorMessage = "Select Any Valid To Assignee";
+          this.validToAssignee = true;
+        }        
         this.applictionList = [];
+        this.totalItems = 0;
       }
-      console.log("fassignee change value ", event);
+
   }
 
 
-  changeCheckbox(index?) {
+  changeCheckbox(index?: number) {
       console.log("index vlaue ");
-      const arrarLength = this.applictionList.length;
-      if (index == null || undefined) {
-        this.selectAllStatus = true;
-        
-        this.applications = [];
-      } else {
-        this.selectAllStatus = false;
-        this.applications.push(this.applictionList[index]["applicationId"]);
-
-        console.log("aray lengh ", arrarLength , index, this.applictionList[index]["applicationId"] ,this.applications );
-      }
-    
-  
-
+      if (!this.selectAllCheck && index > 0) {
+        const arrarLength = this.applictionList.length;
+        if (index == null || undefined) {
+          this.selectAllStatus = this.selectAllCheck;
+          this.applications = [];
+          console.log("select All Check Value ", this.selectAllCheck);
+        } else {
+          this.selectAllStatus = this.selectAllCheck;
+          this.applications.push(this.applictionList[index]["applicationId"]);
+          console.log("aray lengh ", arrarLength , index, this.applictionList[index]["applicationId"] ,this.applications );
+        }
+      } 
+      // else {
+      //   this.isErrorModal = true;
+      //   this.errorMessage = "Select Any From Assignee and Select Any Application";
+      //   this.selectAllCheck = false;
+      // }
   }
   pageChanged(value) {
     // data["currentPage"] = value;
@@ -174,15 +199,15 @@ getUserList(data){
 
   changeApllication(resonTochange, effectFromDate) {
     const userID = localStorage.getItem("userId");
-if (this.toAssignId === null || this.toAssignId === undefined || this.reasonToChangeText == null || 
+if (this.toAssignId === null || this.toAssignId === undefined || this.reasonToChangeText == null ||
   this.reasonToChangeText == "" || this.reasonToChangeText == undefined) {
   this.isErrorModal = true;
-  this.errorMessage = "Mandatory fileds are Require"
+  this.errorMessage = "Mandatory fields are Require";
 } else if ((this.fromAssignId === null || this.fromAssignId === undefined ) && (this.applictionList.length == 0) ){
 
   this.isErrorModal = true;
-  this.errorMessage = "Select Any From Assignee Name"
-} else if (this.selectAllStatus=false){
+  this.errorMessage = "Select Any From Assignee Name";
+} else if (this.selectAllStatus = false) {
   if(this.applications.length == 0  || this.applications.length == undefined ){
     this.isErrorModal = true;
     this.errorMessage = "Select Any Apllication to Assign Other";
@@ -215,11 +240,13 @@ if (this.toAssignId === null || this.toAssignId === undefined || this.reasonToCh
                   this.toAssignId = null;
                   this.fromAssignId = null;
                   this.reasonToChangeText = null;
-                  this.effectFromDate =null;
+                  this.effectFromDate = null;
                   this.applications = [];
                   this.applictionList = [];
                   this.toAssign = null;
-                  this.fromAssign = null; 
+                  this.fromAssign = null;
+                  this.selectAllCheck = false;
+                  this.totalItems = 0;
               } else {
                 if (response["ErrorMessage"]) {
                   console.log("Response: " + response["ErrorMessage"]);
@@ -230,7 +257,7 @@ if (this.toAssignId === null || this.toAssignId === undefined || this.reasonToCh
                   this.errorMessage = response["ProcessVariables"]["errorMessage"];
                 }
               }
-            
+
 
     });
 
