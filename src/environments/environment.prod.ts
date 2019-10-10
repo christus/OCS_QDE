@@ -1,10 +1,10 @@
 export const environment = {
   version: "1.7.9",
-  buildDate: "3-10-2019",
+  buildDate: "5-10-2019",
   production: true,
-  //projectId: '5928d30eac7811e9a1670242ac110002', //developement
+  projectId: '5928d30eac7811e9a1670242ac110002', //developement
 
-  projectId: '3209f7ea7ba811e982270242ac110002', //production
+  //projectId: '3209f7ea7ba811e982270242ac110002', //production
 
   status: {
     QDECREATED: "1"
@@ -399,11 +399,11 @@ export const environment = {
   ocsHost: "/ocs",
   //host: "http://192.168.1.108/appiyo",
   //host: "/ProcessStore",
-  //host:  "/appiyo",
+  host:  "/appiyo",
   pdfLocation: "/d/download/pdf?",
   isMobile: false,
   //host: "https://ihfcmobileuat.icicihfc.com/appiyo"
-  host: "https://ihfcmobileuat.icicihfc.com/appiyo"
+  //host: "https://ihfcmobileuat.icicihfc.com/appiyo"
   //host: "https://103.87.42.117/appiyo"
   //host:"http://www.twixor.in/appiyo"
 };

@@ -108,7 +108,7 @@ export class AdminAuditTrialComponent implements OnInit {
     console.log("startDate"+this.startDate);
     console.log("endadtae"+this.endDate);
 
-    if(this.ocsNumberStr && !(this.ocsNumberStr.length > 16)){
+    if(this.ocsNumberStr && !(this.ocsNumberStr.length >= 16)){
         this.errorMsg = errors.adminAuditTrail.ocsMinLength;
         this.ocsNumberStr = null;
         return;
