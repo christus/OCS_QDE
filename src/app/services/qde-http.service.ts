@@ -331,7 +331,7 @@ createOrUpdatePersonalDetails(qde) {
     formData.append('files[]', fileToUpload, fileToUpload.name);
 
     if(this.isMobile) {
-      return this.callPost(uri, formData, headers);
+      return this.callPost(uri, formData, headers);      
     }else {
       return this.http.post(uri, formData, headers);
     }
@@ -995,6 +995,8 @@ createOrUpdatePersonalDetails(qde) {
   }
 
   uploadFile(fileName, imageURI) {
+
+    let trustAllHosts = true;
     
     const fileTransfer: FileTransferObject = this.transfer.create();
 
@@ -1010,10 +1012,11 @@ createOrUpdatePersonalDetails(qde) {
         localStorage.getItem('token') ? localStorage.getItem('token') : ''
       }
     }
+    
 
     console.log("FileUploadOptions", fileTransfer);
   
-    return fileTransfer.upload(imageURI, encodeURI(environment.host + environment.appiyoDrive) , options)
+    return fileTransfer.upload(imageURI, encodeURI(environment.host + environment.appiyoDrive) , options, true)
   
   }
 
