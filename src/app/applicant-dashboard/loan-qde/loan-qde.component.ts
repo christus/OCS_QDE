@@ -895,45 +895,58 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
   onPinCodeChange(event) {
     console.log(event.target.value);
     let zipCode = event.target.value;
-    this.qdeHttp.getCityAndState(zipCode).subscribe(response => {
-      // console.log(JSON.parse(response["ProcessVariables"]["response"]));
-      var result = JSON.parse(response["ProcessVariables"]["response"]);
-      
 
-      if (result.city && result.state) {
+    if(zipCode.length !=0) {
+      this.qdeHttp.getCityAndState(zipCode).subscribe(response => {
+        // console.log(JSON.parse(response["ProcessVariables"]["response"]));
+        var result = JSON.parse(response["ProcessVariables"]["response"]);
+        
 
-        this.qde.application.loanDetails.property.zipcodeId = result.zipcodeId;
-        this.qde.application.loanDetails.property.stateId = result.stateId;
-        this.qde.application.loanDetails.property.cityId = result.cityId;
+        if (result.city && result.state) {
 
-        this.qde.application.loanDetails.property.city = result.city;
-        this.qde.application.loanDetails.property.state = result.state;
-        this.qde.application.loanDetails.property.zipcode = zipCode;
+          this.qde.application.loanDetails.property.zipcodeId = result.zipcodeId;
+          this.qde.application.loanDetails.property.stateId = result.stateId;
+          this.qde.application.loanDetails.property.cityId = result.cityId;
 
-        this.city = result.city;
-        this.state = result.state;
+          this.qde.application.loanDetails.property.city = result.city;
+          this.qde.application.loanDetails.property.state = result.state;
+          this.qde.application.loanDetails.property.zipcode = zipCode;
 
-        if(result.city != null && result.state != null && result.city != "" && result.state != "") {
-          this.cityState = result.city + " " + result.state;
+          this.city = result.city;
+          this.state = result.state;
+
+          if(result.city != null && result.state != null && result.city != "" && result.state != "") {
+            this.cityState = result.city + " " + result.state;
+          }
+        } else {
+          //alert("Pin code not available / enter proper pincode");
+          this.loanPinCodeModal = true;
+
+          this.cityState = "";
+
+          this.qde.application.loanDetails.property.state = "";
+
+          this.qde.application.loanDetails.property.city = "";
+
+          this.qde.application.loanDetails.property.cityId = null;
+
+          this.qde.application.loanDetails.property.stateId = null;
         }
-      } else {
-        //alert("Pin code not available / enter proper pincode");
-        this.loanPinCodeModal = true;
+      }, error => {
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please try again later.";
+      });
+    }else {
+      this.cityState = "";
 
-        this.cityState = "";
+      this.qde.application.loanDetails.property.state = "";
 
-        this.qde.application.loanDetails.property.state = "";
+      this.qde.application.loanDetails.property.city = "";
 
-        this.qde.application.loanDetails.property.city = "";
+      this.qde.application.loanDetails.property.cityId = null;
 
-        this.qde.application.loanDetails.property.cityId = null;
-
-        this.qde.application.loanDetails.property.stateId = null;
-      }
-    }, error => {
-      this.isErrorModal = true;
-      this.errorMessage = "Something went wrong, please try again later.";
-    });
+      this.qde.application.loanDetails.property.stateId = null;
+    }
   }
 
   submitPropertyDetail(form: NgForm, swiperInstance?: Swiper) {

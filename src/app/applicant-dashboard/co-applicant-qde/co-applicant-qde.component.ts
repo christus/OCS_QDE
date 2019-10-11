@@ -1467,36 +1467,48 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   onPinCodeChange(event, screenName) {
     console.log(event.target.value);
      let zipCode= event.target.value
-     this.getCityAndStateSub = this.qdeHttp.getCityAndState(zipCode).subscribe((response) => {
 
-        if(response['Error'] == '0') {
-          var result = JSON.parse(response["ProcessVariables"]["response"]);
+     if(zipCode.length !=0) {
+        this.getCityAndStateSub = this.qdeHttp.getCityAndState(zipCode).subscribe((response) => {
 
-          this.commCityState = "";
-  
-          if(result.city != null && result.state != null && result.city != "" && result.state != "") {
-            this.commCityState = result.city +" "+ result.state;
-          }else {
-            // alert("Pin code not available / enter proper pincode");
-              this.isCoApplicantPinModal = true;
-          }
+            if(response['Error'] == '0') {
+              var result = JSON.parse(response["ProcessVariables"]["response"]);
 
-          this.qde.application.applicants[this.coApplicantIndex][screenName].zipcodeId = result.zipcodeId;
-          this.qde.application.applicants[this.coApplicantIndex][screenName].stateId = result.stateId;
-          this.qde.application.applicants[this.coApplicantIndex][screenName].cityId = result.cityId;
-          this.qde.application.applicants[this.coApplicantIndex][screenName].city = result.city;
-          this.qde.application.applicants[this.coApplicantIndex][screenName].state = result.state;
-          this.qde.application.applicants[this.coApplicantIndex][screenName].cityState = this.commCityState || "";
-          console.log('city: ', result.city);
-        }
-        else if(response['Error'] == '1') {
-          // alert("Invalid Pin");
-        }
+              this.commCityState = "";
+      
+              if(result.city != null && result.state != null && result.city != "" && result.state != "") {
+                this.commCityState = result.city +" "+ result.state;
+              }else {
+                // alert("Pin code not available / enter proper pincode");
+                  this.isCoApplicantPinModal = true;
+              }
 
-     } , error => {
-      this.isErrorModal = true;
-      this.errorMessage = "Something went wrong, please try again later.";
-    });
+              this.qde.application.applicants[this.coApplicantIndex][screenName].zipcodeId = result.zipcodeId;
+              this.qde.application.applicants[this.coApplicantIndex][screenName].stateId = result.stateId;
+              this.qde.application.applicants[this.coApplicantIndex][screenName].cityId = result.cityId;
+              this.qde.application.applicants[this.coApplicantIndex][screenName].city = result.city;
+              this.qde.application.applicants[this.coApplicantIndex][screenName].state = result.state;
+              this.qde.application.applicants[this.coApplicantIndex][screenName].cityState = this.commCityState || "";
+              console.log('city: ', result.city);
+            }
+            else if(response['Error'] == '1') {
+              // alert("Invalid Pin");
+            }
+
+        } , error => {
+          this.isErrorModal = true;
+          this.errorMessage = "Something went wrong, please try again later.";
+      });
+    }else {
+      this.qde.application.applicants[this.coApplicantIndex][screenName].zipcodeId = "";
+      this.qde.application.applicants[this.coApplicantIndex][screenName].stateId = "";
+      this.qde.application.applicants[this.coApplicantIndex][screenName].cityId = "";
+
+
+      this.qde.application.applicants[this.coApplicantIndex][screenName].city = "";
+      this.qde.application.applicants[this.coApplicantIndex][screenName].state = "";
+      this.qde.application.applicants[this.coApplicantIndex][screenName].cityState = "";
+    }
   }
   //-------------------------------------------------------------
   

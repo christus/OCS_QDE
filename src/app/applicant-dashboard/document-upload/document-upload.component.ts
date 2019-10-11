@@ -1096,8 +1096,10 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
           console.log(alert["message"]);
         }
       }, error => {
-        this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please try again later.";
+        if(error.error.message) {
+          this.isErrorModal = true;
+          this.errorMessage = error.error.message;
+        }
       }
     );
   }
@@ -1134,7 +1136,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
         }
       }, error => {
         this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please try again later.";
+        this.errorMessage = error.message;
       }
     );
   }

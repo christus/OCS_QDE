@@ -1664,41 +1664,52 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     console.log(event.target.value);
      let zipCode= event.target.value
 
-     this.getCityAndStateSub=this.qdeHttp.getCityAndState(zipCode).subscribe((response) => {
+      if(zipCode.length !=0) {
+        this.getCityAndStateSub=this.qdeHttp.getCityAndState(zipCode).subscribe((response) => {
 
-        if(response['Error'] == '0') {
-          var result = JSON.parse(response["ProcessVariables"]["response"]);
+          if(response['Error'] == '0') {
+            var result = JSON.parse(response["ProcessVariables"]["response"]);
 
-          this.commCityState = "";
-  
-          if(result.city != null && result.state != null && result.city != "" && result.state != "") {
-            this.commCityState = result.city +" "+ result.state;
-          }else {
-              this.isApplicantPinModal = true;
-            // alert("Pin code not available / enter proper pincode");
+            this.commCityState = "";
+    
+            if(result.city != null && result.state != null && result.city != "" && result.state != "") {
+              this.commCityState = result.city +" "+ result.state;
+            }else {
+                this.isApplicantPinModal = true;
+              // alert("Pin code not available / enter proper pincode");
+            }
+
+            this.qde.application.applicants[this.applicantIndex][screenName].zipcodeId = result.zipcodeId;
+            this.qde.application.applicants[this.applicantIndex][screenName].stateId = result.stateId;
+            this.qde.application.applicants[this.applicantIndex][screenName].cityId = result.cityId;
+    
+    
+            this.qde.application.applicants[this.applicantIndex][screenName].city = result.city;
+            this.qde.application.applicants[this.applicantIndex][screenName].state = result.state;
+            this.qde.application.applicants[this.applicantIndex][screenName].cityState = this.commCityState || "";  
+          }
+          else if(response['Error'] == '1') {
+            this.isErrorModal = true;
+            this.errorMessage = "Something went wrong, please try again later.";
+          } else {
+            this.isErrorModal = true;
+            this.errorMessage = "Something went wrong, please try again later.";
           }
 
-          this.qde.application.applicants[this.applicantIndex][screenName].zipcodeId = result.zipcodeId;
-          this.qde.application.applicants[this.applicantIndex][screenName].stateId = result.stateId;
-          this.qde.application.applicants[this.applicantIndex][screenName].cityId = result.cityId;
-  
-  
-          this.qde.application.applicants[this.applicantIndex][screenName].city = result.city;
-          this.qde.application.applicants[this.applicantIndex][screenName].state = result.state;
-          this.qde.application.applicants[this.applicantIndex][screenName].cityState = this.commCityState || "";  
-        }
-        else if(response['Error'] == '1') {
-          this.isErrorModal = true;
-          this.errorMessage = "Something went wrong, please try again later.";
-        } else {
-          this.isErrorModal = true;
-          this.errorMessage = "Something went wrong, please try again later.";
-        }
+      }, error => {
+        this.isErrorModal = true;
+        this.errorMessage = "Something went wrong, please try again later.";
+      });
+    }else {
+      this.qde.application.applicants[this.applicantIndex][screenName].zipcodeId = "";
+      this.qde.application.applicants[this.applicantIndex][screenName].stateId = "";
+      this.qde.application.applicants[this.applicantIndex][screenName].cityId = "";
 
-     }, error => {
-      this.isErrorModal = true;
-      this.errorMessage = "Something went wrong, please try again later."
-;     });
+
+      this.qde.application.applicants[this.applicantIndex][screenName].city = "";
+      this.qde.application.applicants[this.applicantIndex][screenName].state = "";
+      this.qde.application.applicants[this.applicantIndex][screenName].cityState = "";
+    }
   }
   //-------------------------------------------------------------
 
