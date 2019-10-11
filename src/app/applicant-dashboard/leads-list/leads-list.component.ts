@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { QdeHttpService } from 'src/app/services/qde-http.service';
-import { UtilService } from 'src/app/services/util.service';
-import { from } from 'rxjs';
-import { CommonDataService } from 'src/app/services/common-data.service';
-import { statuses, screenPages } from '../../app.constants';
-import { TabsComponent } from './tabs/tabs.component';
+import { Component, OnInit } from "@angular/core";
+import { QdeHttpService } from "src/app/services/qde-http.service";
+import { UtilService } from "src/app/services/util.service";
+import { from } from "rxjs";
+import { CommonDataService } from "src/app/services/common-data.service";
+import { statuses, screenPages } from "../../app.constants";
+import { TabsComponent } from "./tabs/tabs.component";
 
 export interface UserDetails {
   "amountEligible": number;
@@ -20,16 +20,16 @@ interface Item {
 }
 
 @Component({
-  selector: 'app-leads-list',
-  templateUrl: './leads-list.component.html',
-  styleUrls: ['./leads-list.component.css']
+  selector: "app-leads-list",
+  templateUrl: "./leads-list.component.html",
+  styleUrls: ["./leads-list.component.css"]
 })
 export class LeadsListComponent implements OnInit {
 
   days: Array<Item>;
   months: Array<Item>;
   years: Array<Item>;
-  assignedToList: Array<Item> = [{key: 'SA', value: 'SA'}, {key: 'SA', value: 'SM'}];
+  assignedToList: Array<Item> = [{key: "SA", value: "SA"}, {key: "SA", value: "SM"}];
 
   YYYY: number = new Date().getFullYear();
 
@@ -58,33 +58,33 @@ export class LeadsListComponent implements OnInit {
 
   constructor(private service: QdeHttpService, private utilService: UtilService, private cds: CommonDataService) {
 
-    this.cds.setactiveTab(screenPages['applicantDetails']);
+    this.cds.setactiveTab(screenPages["applicantDetails"]);
     this.cds.changeApplicationId(null);
  
     this.days = Array.from(Array(31).keys()).map((val, index) => {
       let v = ((index+1) < 10) ? "0"+(index+1) : (index+1)+"";
       return {key: v, value: v};
     });
-    this.days.unshift({key: 'DD', value: 'DD'});
+    this.days.unshift({key: "DD", value: "DD"});
 
     this.months = Array.from(Array(12).keys()).map((val, index) => {
       let v = ((index+1) < 10) ? "0"+(index+1) : (index+1)+"";
       return {key: v, value: v};
     });
-    this.months.unshift({key: 'MM', value: 'MM'});
+    this.months.unshift({key: "MM", value: "MM"});
 
     this.years = Array.from(Array(100).keys()).map((val, index) => {
       let v = (this.YYYY - index)+"";
       return {key: v, value: v};
     });
-    this.years.unshift({key: 'YYYY', value: 'YYYY'});
+    this.years.unshift({key: "YYYY", value: "YYYY"});
 
-    this.fromDay = {key: 'DD', value: 'DD'};
-    this.fromMonth = {key: 'MM', value: 'MM'};
-    this.fromYear = {key: 'YYYY', value: 'YYYY'};
-    this.toDay = {key: 'DD', value: 'DD'};
-    this.toMonth = {key: 'MM', value: 'MM'};
-    this.toYear = {key: 'YYYY', value: 'YYYY'};
+    this.fromDay = {key: "DD", value: "DD"};
+    this.fromMonth = {key: "MM", value: "MM"};
+    this.fromYear = {key: "YYYY", value: "YYYY"};
+    this.toDay = {key: "DD", value: "DD"};
+    this.toMonth = {key: "MM", value: "MM"};
+    this.toYear = {key: "YYYY", value: "YYYY"};
 
     this.assignedTo = this.assignedToList[0];
 
@@ -123,33 +123,37 @@ export class LeadsListComponent implements OnInit {
   }
 
   getPendingApplication() {
+    const startDate = new Date();
+    console.log("PendingApplication Api Call: Start Date & Time ", startDate, startDate.getMilliseconds());
        this.service.getLeads(this.searchTxt, this.fromDay.value, this.fromMonth.value, this.fromYear.value, this.toDay.value, this.toMonth.value, this.toYear.value, "", this.pendingAppStatus).subscribe(
       res => {
+        const endDate = new Date();
+        console.log("PendingApplication Api Call: End Date & Time ", endDate, endDate.getMilliseconds());
         console.log(res);
 
-        if (res['Error'] && res['Error'] == 0) {
-          this.newPendingApplicationDetails = res['ProcessVariables'].userDetails || [];
+        if (res["Error"] && res["Error"] == 0) {
+          this.newPendingApplicationDetails = res["ProcessVariables"].userDetails || [];
 
           this.newPendingApplicationDetails.forEach(el => {
-            el.url = this.getUrl(el['status'], el['leadId'], el['applicantId'], this.getRoles(), el);
-            if(el['auditTrialTabPage'] != null && el['auditTrialPageNumber'] != null) {
-              el['queryParams'] = {
-                tabName : el['auditTrialTabPage'],
-                page : el['auditTrialPageNumber'],
+            el.url = this.getUrl(el["status"], el["leadId"], el["applicantId"], this.getRoles(), el);
+            if(el["auditTrialTabPage"] != null && el["auditTrialPageNumber"] != null) {
+              el["queryParams"] = {
+                tabName : el["auditTrialTabPage"],
+                page : el["auditTrialPageNumber"],
               }
             } else {
-              el['queryParams'] = null;
+              el["queryParams"] = null;
             }
           });
 
           this.cds.setIsEligibilityForReviews(this.isEligibilityForReviews);
-          this.isTBMLoggedIn = this.getRoles().includes('TBM') || this.getRoles().includes('TMA');
+          this.isTBMLoggedIn = this.getRoles().includes("TBM") || this.getRoles().includes("TMA");
           this.cds.setIsTBMLoggedIn(this.isTBMLoggedIn);
-        } else if (res['login_required'] && res['login_required'] === true) {
+        } else if (res["login_required"] && res["login_required"] === true) {
           this.utilService.clearCredentials();
           // alert(res['message']);
         } else {
-          alert(res['ErrorMessage']);
+          alert(res["ErrorMessage"]);
         }
       },
       error => {
@@ -158,33 +162,38 @@ export class LeadsListComponent implements OnInit {
     );
   }
   getPendingPayment() {
-    this.service.getLeads(this.searchTxt, this.fromDay.value, this.fromMonth.value, this.fromYear.value, this.toDay.value, this.toMonth.value, this.toYear.value, "", this.pendingPaymentStatus).subscribe(
+    const startDate = new Date();
+    console.log("PendingPayment Api Call: Start Date & Time ", startDate, startDate.getMilliseconds());
+    this.service.getLeads(this.searchTxt, this.fromDay.value, this.fromMonth.value, this.fromYear.value, 
+      this.toDay.value, this.toMonth.value, this.toYear.value, "", this.pendingPaymentStatus).subscribe(
       res => {
+        const endDate = new Date();
+        console.log("PendingPayment Api Call: End Date & Time ", endDate, endDate.getMilliseconds());
         console.log(res);
 
-        if (res['Error'] && res['Error'] == 0) {
-          this.newPendingPaymentDetails = res['ProcessVariables'].userDetails || [];
+        if (res["Error"] && res["Error"] == 0) {
+          this.newPendingPaymentDetails = res["ProcessVariables"].userDetails || [];
 
           this.newPendingPaymentDetails.forEach(el => {
-            el.url = this.getUrl(el['status'], el['leadId'], el['applicantId'], this.getRoles(), el);
-            if(el['auditTrialTabPage'] != null && el['auditTrialPageNumber'] != null) {
-              el['queryParams'] = {
-                tabName : el['auditTrialTabPage'],
-                page : el['auditTrialPageNumber'],
+            el.url = this.getUrl(el["status"], el["leadId"], el["applicantId"], this.getRoles(), el);
+            if(el["auditTrialTabPage"] != null && el["auditTrialPageNumber"] != null) {
+              el["queryParams"] = {
+                tabName : el["auditTrialTabPage"],
+                page : el["auditTrialPageNumber"],
               }
             } else {
-              el['queryParams'] = null;
+              el["queryParams"] = null;
             }
           });
 
           this.cds.setIsEligibilityForReviews(this.isEligibilityForReviews);
-          this.isTBMLoggedIn = this.getRoles().includes('TBM') || this.getRoles().includes('TMA');
+          this.isTBMLoggedIn = this.getRoles().includes("TBM") || this.getRoles().includes("TMA");
           this.cds.setIsTBMLoggedIn(this.isTBMLoggedIn);
-        } else if (res['login_required'] && res['login_required'] === true) {
+        } else if (res["login_required"] && res["login_required"] === true) {
           this.utilService.clearCredentials();
           // alert(res['message']);
         } else {
-          alert(res['ErrorMessage']);
+          alert(res["ErrorMessage"]);
         }
       },
       error => {
@@ -194,33 +203,38 @@ export class LeadsListComponent implements OnInit {
   }
 
   getNewLeads() {
-    this.service.getNewLeads(this.searchTxt, this.fromDay.value, this.fromMonth.value, this.fromYear.value, this.toDay.value, this.toMonth.value, this.toYear.value).subscribe(
+    const startDate = new Date();
+    console.log("New Leads Api Call: Start Date & Time ", startDate, startDate.getMilliseconds());
+    this.service.getNewLeads(this.searchTxt, this.fromDay.value, this.fromMonth.value, this.fromYear.value, 
+      this.toDay.value, this.toMonth.value, this.toYear.value).subscribe(
       res => {
+        const endDate = new Date();
+        console.log("New Leads Api Call: End Date & Time ", endDate, endDate.getMilliseconds());
         console.log(res);
 
-        if (res['Error'] && res['Error'] == 0) {
-          this.newLeadsDetails = res['ProcessVariables'].userDetails || [];
+        if (res["Error"] && res["Error"] == 0) {
+          this.newLeadsDetails = res["ProcessVariables"].userDetails || [];
 
           this.newLeadsDetails.forEach(el => {
-            el.url = this.getUrl(el['status'], el['leadId'], el['applicantId'], this.getRoles(), el);
-            if(el['auditTrialTabPage'] != null && el['auditTrialPageNumber'] != null) {
-              el['queryParams'] = {
-                tabName : el['auditTrialTabPage'],
-                page : el['auditTrialPageNumber'],
+            el.url = this.getUrl(el["status"], el["leadId"], el["applicantId"], this.getRoles(), el);
+            if(el["auditTrialTabPage"] != null && el["auditTrialPageNumber"] != null) {
+              el["queryParams"] = {
+                tabName : el["auditTrialTabPage"],
+                page : el["auditTrialPageNumber"],
               }
             } else {
-              el['queryParams'] = null;
+              el["queryParams"] = null;
             }
           });
 
           this.cds.setIsEligibilityForReviews(this.isEligibilityForReviews);
-          this.isTBMLoggedIn = this.getRoles().includes('TBM') || this.getRoles().includes('TMA');
+          this.isTBMLoggedIn = this.getRoles().includes("TBM") || this.getRoles().includes("TMA");
           this.cds.setIsTBMLoggedIn(this.isTBMLoggedIn);
-        } else if (res['login_required'] && res['login_required'] === true) {
+        } else if (res["login_required"] && res["login_required"] === true) {
           this.utilService.clearCredentials();
           // alert(res['message']);
         } else {
-          alert(res['ErrorMessage']);
+          alert(res["ErrorMessage"]);
         }
       },
       error => {
@@ -232,33 +246,39 @@ export class LeadsListComponent implements OnInit {
   
 
   getFilteredLeads() {
-    this.service.getLeads(this.searchTxt, this.fromDay.value, this.fromMonth.value, this.fromYear.value, this.toDay.value, this.toMonth.value, this.toYear.value,"", this.allStatus).subscribe(
+    const startDate = new Date();
+    console.log("FilteredLeads Api Call: Start Date & Time ",startDate, startDate.getMilliseconds());
+    this.service.getLeads(this.searchTxt, this.fromDay.value, this.fromMonth.value, this.fromYear.value, 
+      this.toDay.value, this.toMonth.value, this.toYear.value,"", this.allStatus).subscribe(
       res => {
+        const endDate = new Date();
+        console.log("FilteredLeads Api Call: End Date & Time ", endDate, endDate.getMilliseconds());
+        
         console.log(res);
 
-        if (res['Error'] && res['Error'] == 0) {
-          this.userDetails = res['ProcessVariables'].userDetails || [];
+        if (res["Error"] && res["Error"] == 0) {
+          this.userDetails = res["ProcessVariables"].userDetails || [];
 
           this.userDetails.forEach(el => {
-            el.url = this.getUrl(el['status'], el['leadId'], el['applicantId'], this.getRoles(), el);
-            if(el['auditTrialTabPage'] != null && el['auditTrialPageNumber'] != null) {
-              el['queryParams'] = {
-                tabName : el['auditTrialTabPage'],
-                page : el['auditTrialPageNumber'],
+            el.url = this.getUrl(el["status"], el["leadId"], el["applicantId"], this.getRoles(), el);
+            if(el["auditTrialTabPage"] != null && el["auditTrialPageNumber"] != null) {
+              el["queryParams"] = {
+                tabName : el["auditTrialTabPage"],
+                page : el["auditTrialPageNumber"],
               }
             } else {
-              el['queryParams'] = null;
+              el["queryParams"] = null;
             }
           });
 
           this.cds.setIsEligibilityForReviews(this.isEligibilityForReviews);
-          this.isTBMLoggedIn = this.getRoles().includes('TBM') || this.getRoles().includes('TMA');
+          this.isTBMLoggedIn = this.getRoles().includes("TBM") || this.getRoles().includes("TMA");
           this.cds.setIsTBMLoggedIn(this.isTBMLoggedIn);
-        } else if (res['login_required'] && res['login_required'] === true) {
+        } else if (res["login_required"] && res["login_required"] === true) {
           this.utilService.clearCredentials();
           // alert(res['message']);
         } else {
-          alert(res['ErrorMessage']);
+          alert(res["ErrorMessage"]);
         }
       },
       error => {
@@ -268,7 +288,7 @@ export class LeadsListComponent implements OnInit {
   }
 
   getUrl(status: string, applicationId?: string, applicantId?: string, roles?: Array<string>, el ?: any) {
-    if(roles.includes('TBM') || roles.includes('TMA')) {
+    if(roles.includes("TBM") || roles.includes("TMA")) {
       this.cds.setReadOnlyForm(true);
     } else {
       this.cds.setReadOnlyForm(false);
@@ -280,18 +300,18 @@ export class LeadsListComponent implements OnInit {
     if(statuses[status] == "1") {
       this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
 
-      if(screenPages['applicantDetails'] == el['auditTrialScreenPage']) {
-        return '/applicant/'+applicationId;
-      } else if(screenPages['coApplicantDetails'] == el['auditTrialScreenPage']) {
-        el['queryParams'] = {tabName: 'dashboard', page: 1};
-        return '/applicant/'+applicationId+'/co-applicant';
-      } else if(screenPages['loanDetails'] == el['auditTrialScreenPage']) {
-        return '/loan/'+applicationId;
-      } else if(screenPages['references'] == el['auditTrialScreenPage']) {
-        return '/references/'+applicationId;
-      } else if(screenPages['documentUploads'] == el['auditTrialScreenPage']) {
-        el['queryParams'] = {tabName: 'dashboard', page: 1};
-        return '/document-uploads/'+applicationId;
+      if(screenPages["applicantDetails"] == el["auditTrialScreenPage"]) {
+        return "/applicant/"+applicationId;
+      } else if(screenPages["coApplicantDetails"] == el["auditTrialScreenPage"]) {
+        el["queryParams"] = {tabName: "dashboard", page: 1};
+        return "/applicant/"+applicationId+"/co-applicant";
+      } else if(screenPages["loanDetails"] == el["auditTrialScreenPage"]) {
+        return "/loan/"+applicationId;
+      } else if(screenPages["references"] == el["auditTrialScreenPage"]) {
+        return "/references/"+applicationId;
+      } else if(screenPages["documentUploads"] == el["auditTrialScreenPage"]) {
+        el["queryParams"] = {tabName: "dashboard", page: 1};
+        return "/document-uploads/"+applicationId;
       }
     } 
     else if(statuses[status] == "5") {
@@ -332,7 +352,7 @@ export class LeadsListComponent implements OnInit {
     } 
     else if(statuses[status] == "26") {
 
-      if(roles.includes('TBM') || roles.includes('TMA')) {
+      if(roles.includes("TBM") || roles.includes("TMA")) {
 
         this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: true});
       } else {
@@ -388,6 +408,6 @@ export class LeadsListComponent implements OnInit {
   }
 
   getRoles(): Array<string> {
-    return JSON.parse(localStorage.getItem('roles'));
+    return JSON.parse(localStorage.getItem("roles"));
   }
 }

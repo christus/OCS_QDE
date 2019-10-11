@@ -38,6 +38,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   login() {
+    const startDate = new Date();
+    console.log("Login Api Call: User Id ", this.userName, " Start Date & Time ", startDate, startDate.getMilliseconds());
     const data = {
       email: this.userName.trim().toLowerCase()+ "@icicibankltd.com",
       password: this.password.trim(),
@@ -46,7 +48,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
     };
 
     this.qdeService.checkActiveSession(data).subscribe(res => {
-      console.log('hfgrhjgfc',res);
+      const endDate = new Date();
+    console.log("Login Api Call: User Id ", this.userName, " End Date & Time ", endDate, endDate.getMilliseconds());
+      // console.log('hfgrhjgfc',res);
       this.commonDataService.setLogindata(data);
       localStorage.setItem("token", res["token"] ? res["token"] : "");
       this.roleLogin();
