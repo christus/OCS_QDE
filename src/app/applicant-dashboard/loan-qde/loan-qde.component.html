@@ -113,7 +113,7 @@
                             required
                             ngModel autocomplete="off"
                             #loanTenure = "ngModel"
-                            min="0"
+                            min="1"
                             max="30"
                             maxlength="2"
                             oninput="this.value=this.value.slice(0,this.maxLength)"
@@ -274,7 +274,7 @@
                             name="proaddressLineOne"
                             fieldFill maxlength="120"
                             pattern='{{regexPattern.address}}'/>
-                      
+                            <div *ngIf="addressLineOneValue?.length == 120" class="invalid-feedback">Maximum Character Exceeds</div>
                             <label for="add-line1">Property address line1</label>
 
                             <div *ngIf="(proaddressLineOne.touched || proaddressLineOne.dirty) && proaddressLineOne.invalid" class="invalid-feedback">
@@ -291,6 +291,8 @@
                               [(ngModel)]="addressLineTwoValue"
                               name="addressLineTwo"
                               pattern='{{regexPattern.address}}'/>
+                              
+                              <div *ngIf="addressLineTwoValue?.length == 120" class="invalid-feedback">Maximum Character Exceeds</div>
 
                             <label for="add-line2">Property address line2</label>
                             <span class="optional">optional</span>

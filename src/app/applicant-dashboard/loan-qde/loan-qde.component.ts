@@ -96,10 +96,10 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
     mobileNumber: "^[1-9][0-9]*$",
     amount: "^[\\d]{0,14}([.][0-9]{0,4})?",
     minAmount: "[5-9][0-9]{4}|[1-9]\d{5,}",
-    name: "/^[a-zA-Z ]*$/",
+    name: "/^[a-zA-Z ]{0,49}$/",
     pinCode: "^[1-9][0-9]{5}$",
-    address: "^[0-9A-Za-z, _&'/#\\-]+$",
-    tenure: "^[0-9]{1,2}$",
+    address: "^[0-9A-Za-z, _&'/#\\-]{0,119}$",
+    tenure: "^[1-9][0-9]{1,2}$",
     sameDigit: '^0{6,10}|1{6,10}|2{6,10}|3{6,10}|4{6,10}|5{6,10}|6{6,10}|7{6,10}|8{6,10}|9{6,10}$',
     cityState: "^$"
 
@@ -122,7 +122,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   minValue: number = 1;
   options: Options = {
-    floor: 0,
+    floor: 1,
     ceil: 30,
     // step: 5,
     // showTicksValues: false,

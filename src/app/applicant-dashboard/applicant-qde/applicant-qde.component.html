@@ -155,7 +155,7 @@
                               (ngModelChange)="qde.application.applicants[applicantIndex].pan.panNumber = $event.toUpperCase()"
                               id="pan-inpt" minlength="10" maxlength="10" pattern="{{regexPattern.panInd}}" name="pan"
                               (keyup)="keyUpPanNumber($event)" #panNumber="ngModel" fieldFill autocomplete="off" required/>
-                            <label for="pan-inpt" tabindex="1" class="panlabel">Enter PAN</label>
+                            <label for="pan-inpt" tabindex="1">Enter PAN</label>
                             <!-- <span class="optional">optional</span> -->
                             <div *ngIf="panNumber.touched && panNumber.invalid && panErrorCount < 3"
                               class="invalid-feedback">
@@ -336,6 +336,8 @@
                               tabindex="2" maxlength="50"
                               pattern="{{regexPattern.name}}" />
                             <label for="name">First name</label>
+                            
+                            <div *ngIf="(qde.application.applicants[applicantIndex].personalDetails.firstName)?.length == 50" class="invalid-feedback">Maximum Character Exceeds</div>
                             <div *ngIf="(firstName.touched || firstName.dirty) && firstName.invalid"
                               class="invalid-feedback">
                               <!-- <div *ngIf="firstName.errors?.required">{{errors.personalDetails.firstName.required}}</div> -->
@@ -348,6 +350,8 @@
                               [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.middleName"
                               pattern="{{regexPattern.name}}" fieldFill #middleName="ngModel" tabindex="3" />
                             <label for="middleName">Middle name</label>
+
+                            <div *ngIf="(qde.application.applicants[applicantIndex].personalDetails.middleName)?.length == 50" class="invalid-feedback">Maximum Character Exceeds</div>
 
                             <span class="optional">Optional</span>
                             <div *ngIf="(middleName.touched || middleName.dirty) && middleName.invalid"
@@ -363,6 +367,9 @@
                               name="lastName" #lastName="ngModel" id="lastName" fieldFill autocomplete="off" maxlength="50"
                               pattern="{{regexPattern.name}}" required tabindex="4" />
                             <label for="lastName">Last name</label>
+
+                            <div *ngIf="(qde.application.applicants[applicantIndex].personalDetails.lastName)?.length == 50" class="invalid-feedback">Maximum Character Exceeds</div>
+
                             <div *ngIf="(lastName.touched || lastName.dirty) && lastName.invalid"
                               class="invalid-feedback">
                               <!-- <div *ngIf="lastName.errors?.required">{{errors.personalDetails.lastName.required}}</div> -->
@@ -457,8 +464,11 @@
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                               id="birthPlace" name="birthPlace" autocomplete="off" maxlength="100"
                               [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.birthPlace"
-                              pattern="{{regexPattern.name}}" fieldFill #birthPlace="ngModel" required />
+                              pattern="{{regexPattern.birthPlace}}" fieldFill #birthPlace="ngModel" required />
                             <label for="birthPlace">Birth place</label>
+
+                            <div *ngIf="(qde.application.applicants[applicantIndex].personalDetails.birthPlace)?.length == 100" class="invalid-feedback">Maximum Character Exceeds</div>
+
                             <div *ngIf="(birthPlace.touched || birthPlace.dirty) && birthPlace.invalid"
                               class="invalid-feedback">
                               <div *ngIf="birthPlace.errors?.pattern">{{errors.personalDetails.birthPlace.invalid}}
@@ -519,6 +529,8 @@
                               name="preferEmailId" #preferEmailId="ngModel" pattern="{{regexPattern.email}}" fieldFill
                               required />
 
+                              <div *ngIf="(qde.application.applicants[applicantIndex].contactDetails.preferredEmailId)?.length == 100" class="invalid-feedback">Maximum Character Exceeds</div>
+
                             <label for="pref-email" tabindex="1">Preferred email ID</label>
                             <span class="alternate-data" *ngIf="!isAlternateEmailId">
                               <a href="javascript:void(0);" class="alter-btn" tabindex="2"
@@ -539,6 +551,7 @@
                               id="alter-email" data-validation-attr="email01" pattern="{{regexPattern.email}}" maxlength="100"
                               [(ngModel)]="qde.application.applicants[applicantIndex].contactDetails.alternateEmailId"
                               name="alternateEmailId" #alternateEmailId="ngModel" fieldFill />
+                              <div *ngIf="(qde.application.applicants[applicantIndex].contactDetails.alternateEmailId)?.length == 100" class="invalid-feedback">Maximum Character Exceeds</div>
 
                             <label for="alter-email" tabindex="3">Alternate email ID</label>
                             <span class="alternate-data">
@@ -720,10 +733,14 @@
                             [ngClass]="{'disabled': (!contactForm.valid) || (altMobileNo.value == mobileNumber.value) || 
                             (alternateEmailId.value == preferEmailId.value) || RegExp(regexPattern.sameDigit).test(mobileNumber.value) 
                             || RegExp(regexPattern.sameDigit).test(altMobileNo.value) || 
+                            ((qde.application.applicants[applicantIndex].contactDetails.preferredEmailId)?.length == 100) ||
+                            (qde.application.applicants[applicantIndex].contactDetails.alternateEmailId)?.length == 100 ||
                             (!qde.application.applicants[applicantIndex].contactDetails.isMobileOTPverified)}"
                             [disabled]="!contactForm.valid || (altMobileNo.value == mobileNumber.value) || 
                             (alternateEmailId.value == preferEmailId.value) || RegExp(regexPattern.sameDigit).test(mobileNumber.value) 
                             || RegExp(regexPattern.sameDigit).test(altMobileNo.value) || 
+                            ((qde.application.applicants[applicantIndex].contactDetails.preferredEmailId)?.length == 100) ||
+                            (qde.application.applicants[applicantIndex].contactDetails.alternateEmailId)?.length == 100 ||
                             (!qde.application.applicants[applicantIndex].contactDetails.isMobileOTPverified)">Next
                           </button>
                         </div>
@@ -818,6 +835,8 @@
                               pattern="{{regexPattern.address}}" name="addressLineOne" #address1="ngModel" fieldFill
                               required autocomplete="off" />
 
+                              <div *ngIf="(qde.application.applicants[applicantIndex].communicationAddress.addressLineOne)?.length == 120" class="invalid-feedback">Maximum Character Exceeds</div>
+
                             <div *ngIf="(address1.touched || address1.dirty) && address1.invalid"
                               class="invalid-feedback">
                               <!-- <div *ngIf="address1.errors?.required">{{errors.commAddress.address1.required}}</div> -->
@@ -833,6 +852,8 @@
                               id="address2" autocomplete="off" maxlength="120"
                               [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.addressLineTwo"
                               pattern="{{regexPattern.address}}" name="addressLineTwo" #address2="ngModel" fieldFill />
+
+                              <div *ngIf="(qde.application.applicants[applicantIndex].communicationAddress.addressLineTwo)?.length == 120" class="invalid-feedback">Maximum Character Exceeds</div>
 
                             <label for="address2" tabindex="2">Address line 2</label>
                             <span class="optional">optional</span>
@@ -892,6 +913,9 @@
                                 pattern="{{regexPattern.address}}" fieldFill autocomplete="off"
                                 [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.addressLineOne"
                                 required />
+
+                                <div *ngIf="(qde.application.applicants[applicantIndex].permanentAddress.addressLineOne)?.length == 120" class="invalid-feedback">Maximum Character Exceeds</div>
+
                               <label for="per-address1" tabindex="6">Address line 1</label>
                               <div *ngIf="(pAddress1.touched || pAddress1.dirty) && pAddress1.invalid"
                                 class="invalid-feedback">
@@ -905,6 +929,9 @@
                                 pattern="{{regexPattern.address}}" autocomplete="off" maxlength="120"
                                 [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.addressLineTwo" />
                               <label for="per-address2" tabindex="7">Address line 2</label>
+
+                              <div *ngIf="(qde.application.applicants[applicantIndex].permanentAddress.addressLineTwo)?.length == 120" class="invalid-feedback">Maximum Character Exceeds</div>
+
                               <span class="optional">optional</span>
                               <div *ngIf="(pAddress2.touched || pAddress2.dirty) && pAddress2.invalid"
                                 class="invalid-feedback">
@@ -1074,6 +1101,8 @@
                               id="spouse-name" fieldFill required  autocomplete="off"/>
                             <label for="spouse-name">First name</label>
 
+                            <div *ngIf="(qde.application.applicants[applicantIndex].maritalStatus.firstName)?.length == 50" class="invalid-feedback">Maximum Character Exceeds</div>
+
                             <div *ngIf="(spouseName.touched || spouseName.dirty) && spouseName.invalid"
                               class="invalid-feedback">
                               <!-- <div *ngIf="spouseName.errors?.required">{{errors.maritialStatus.spouseName.required}}</div> -->
@@ -1225,6 +1254,9 @@
                               #fatherName="ngModel" tabindex="2" name="fatherName" fieldFill autocomplete="off" maxlength="50"
                               pattern="{{regexPattern.name}}" />
                             <label for="father-name">Father's name</label>
+
+                            <div *ngIf="(qde.application.applicants[applicantIndex].familyDetails.fatherName)?.length == 50" class="invalid-feedback">Maximum Character Exceeds</div>
+
                             <div *ngIf="fatherName.touched && fatherName.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="fatherName.errors?.required">{{errors.familyDetails.fatherName.required}}</div> -->
                               <div *ngIf="fatherName.errors?.pattern">{{errors.familyDetails.fatherName.invalid}}</div>
@@ -1245,6 +1277,9 @@
                               [(ngModel)]="qde.application.applicants[applicantIndex].familyDetails.motherName"
                               #motherName="ngModel" name="motherName" fieldFill pattern="{{regexPattern.name}}" />
                             <label for="mother-name">Mother's name</label>
+
+                            <div *ngIf="(qde.application.applicants[applicantIndex].familyDetails.motherName)?.length == 50" class="invalid-feedback">Maximum Character Exceeds</div>
+
                             <div *ngIf="motherName.touched && motherName.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="motherName.errors?.required">{{errors.familyDetails.motherName.required}}</div> -->
                               <div *ngIf="motherName.errors?.pattern">{{errors.familyDetails.motherName.invalid}}</div>
@@ -1257,6 +1292,9 @@
                               #motherMaiden="ngModel" name="motherMaidenName" fieldFill maxlength="50"
                               pattern="{{regexPattern.name}}" />
                             <label for="maiden-name">Mother's maiden name</label>
+
+                            <div *ngIf="(qde.application.applicants[applicantIndex].familyDetails.motherMaidenName)?.length == 50" class="invalid-feedback">Maximum Character Exceeds</div>
+
                             <div *ngIf="motherMaiden.touched && motherMaiden.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="motherMaiden.errors?.required">{{errors.familyDetails.motherMaiden.required}}</div> -->
                               <div *ngIf="motherMaiden.errors?.pattern">{{errors.familyDetails.motherMaiden.invalid}}
@@ -1320,9 +1358,11 @@
                           <div class="form-group" *ngIf="selectedReligion.value == '6'"
                             [ngClass]="{'hidden': (selectedReligion.value != '6')}">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                            pattern="{{regexPattern.name}}" #specifyReligion = "ngModel" required maxlength="10" autocomplete="off"
+                            pattern="{{regexPattern.name}}" #specifyReligion = "ngModel" required maxlength="25" autocomplete="off"
                               tabindex="2" [(ngModel)]="otherReligion" name="religionName" fieldFill id="religion-name">
                             <label for="religion-name">Specify other religion</label>
+                            <div *ngIf="otherReligion?.length == 25" class="invalid-feedback">Maximum Character Exceeds</div>
+
                             <div *ngIf="specifyReligion.touched && specifyReligion.invalid" class="invalid-feedback">
                                 
                               <div *ngIf="specifyReligion.errors?.pattern">{{errors.other.specifyReligion.invalid}}</div>
@@ -1339,8 +1379,8 @@
                         </div>
 
                         <div class="btn-wrap">
-                          <button type="submit" [ngClass]="{'disabled': (!otherForm.valid)}"
-                            [disabled]="!otherForm.valid" class="btn btn-primary">Next</button>
+                          <button type="submit" [ngClass]="{'disabled': (!otherForm.valid) || otherReligion?.length == 25}"
+                            [disabled]="!otherForm.valid || otherReligion?.length == 25" class="btn btn-primary">Next</button>
                         </div>
                       </form>
                     </div>
@@ -1417,6 +1457,8 @@
                               pattern="{{regexPattern.name}}" tabindex="2" name="companyName" #companyName="ngModel"
                               fieldFill id="companyName" />
                             <label for="companyName">Company name</label>
+
+                            <div *ngIf="(qde.application.applicants[applicantIndex].occupation.companyName)?.length == 50" class="invalid-feedback">Maximum Character Exceeds</div>
 
                             <div *ngIf="(companyName.touched || companyName.dirty) && companyName.invalid"
                               class="invalid-feedback">
@@ -1605,6 +1647,8 @@
                               required  maxlength="120"/>
                             <label for="ofcAddOne">Office address line1</label>
 
+                            <div *ngIf="(qde.application.applicants[applicantIndex].officialCorrespondence.addressLineOne)?.length == 120" class="invalid-feedback">Maximum Character Exceeds</div>
+
                             <div *ngIf="ofcA1.touched  && ofcA1.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="ofcA1.errors?.required">{{errors.officialCorrespondence.address1.required}}</div> -->
                               <div *ngIf="ofcA1.errors?.pattern">{{errors.officialCorrespondence.address1.invalid}}
@@ -1618,6 +1662,9 @@
                               [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.addressLineTwo"
                               pattern="{{regexPattern.address}}" name="ofcA2" tabindex="2" #ofcA2="ngModel" fieldFill />
                             <label for="ofcAddTwo">Office address line2</label>
+
+                            <div *ngIf="(qde.application.applicants[applicantIndex].officialCorrespondence.addressLineTwo)?.length == 120" class="invalid-feedback">Maximum Character Exceeds</div>
+
                             <span class="optional">optional</span>
                             <div *ngIf="ofcA2.touched && ofcA2.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="ofcA2.errors?.required">{{errors.officialCorrespondence.address2.required}}</div> -->
@@ -1630,10 +1677,12 @@
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                               id="offLandmark" autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.landMark"
-                              name="landMark" fieldFill tabindex="3" pattern="{{regexPattern.address}}" maxlength="100"
+                              name="landMark" fieldFill tabindex="3" pattern="{{regexPattern.landmark}}" maxlength="100"
                               #landMark="ngModel" />
                             <label for="offLandmark">Landmark</label>
                             <span class="optional">optional</span>
+
+                            <div *ngIf="(qde.application.applicants[applicantIndex].officialCorrespondence.landMark)?.length == 100" class="invalid-feedback">Maximum Character Exceeds</div>
 
                             <div *ngIf="landMark.touched && landMark.invalid" class="invalid-feedback">
                               <div *ngIf="landMark.errors?.pattern">{{errors.officialCorrespondence.address2.invalid}}
@@ -1710,6 +1759,8 @@
                               name="officeEmail" (ngModelChange)="onOfficialCorsEmailChange($event, officeEmail)"/>
                             <label for="off-email">Office email ID</label>
 
+                            <div *ngIf="(qde.application.applicants[applicantIndex].officialCorrespondence.officeEmailId)?.length == 100" class="invalid-feedback">Maximum Character Exceeds</div>
+
                             <div *ngIf="(officeEmail.untouched || officeEmail.touched) && officeEmail.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="officeEmail.errors?.required">{{errors.officialCorrespondence.email.required}}</div> -->
                               <div *ngIf="officeEmail.errors.invalidDomain">{{errors.officialCorrespondence.email.invalidDomain}}
@@ -1723,8 +1774,8 @@
 
                         <div class="btn-wrap">
                           <button type="submit" class="btn btn-primary"
-                            [ngClass]="{'disabled': (!officialCorrespondenceForm.valid)}"
-                            [disabled]="!officialCorrespondenceForm.valid">Next
+                            [ngClass]="{'disabled': (!officialCorrespondenceForm.valid) || (qde.application.applicants[applicantIndex].officialCorrespondence.officeEmailId)?.length == 100}"
+                            [disabled]="!officialCorrespondenceForm.valid || (qde.application.applicants[applicantIndex].officialCorrespondence.officeEmailId)?.length == 100">Next
                           </button>
                         </div>
                       </form>
@@ -2086,6 +2137,8 @@
                               #orgName="ngModel" name="orgName" fieldFill required />
                             <label for="org-name">Name of Organization</label>
 
+                            <div *ngIf="(qde.application.applicants[applicantIndex].organizationDetails.nameOfOrganization)?.length == 50" class="invalid-feedback">Maximum Character Exceeds</div>
+
                             <div *ngIf="(orgName.touched || orgName.dirty) && orgName.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="orgName.errors?.required">{{errors.organizationDetails.orgName.required}}</div> -->
                               <div *ngIf="orgName.errors?.pattern">{{errors.organizationDetails.orgName.invalid}}</div>
@@ -2180,6 +2233,8 @@
                               required />
                             <label for="reg-add">Registered Address</label>
 
+                            <div *ngIf="(qde.application.applicants[applicantIndex].registeredAddress.registeredAddress)?.length == 120" class="invalid-feedback">Maximum Character Exceeds</div>
+
                             <div *ngIf="(regAdd.touched || regAdd.dirty) && regAdd.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="regAdd.errors?.required">{{errors.registeredAddress.address.required}}</div> -->
                               <div *ngIf="regAdd.errors?.pattern">{{errors.registeredAddress.address.invalid}}</div>
@@ -2189,7 +2244,9 @@
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                               name="landmark" tabindex="2" #landmark01="ngModel" fieldFill autocomplete="off" maxlength="100"
                               [(ngModel)]="qde.application.applicants[applicantIndex].registeredAddress.landMark"
-                              id="landmark" pattern="{{regexPattern.address}}" />
+                              id="landmark" pattern="{{regexPattern.landmark}}" />
+
+                              <div *ngIf="(qde.application.applicants[applicantIndex].registeredAddress.landMark)?.length == 100" class="invalid-feedback">Maximum Character Exceeds</div>
 
                             <label for="landmark">Landmark</label>
                             <span class="optional">optional</span>
@@ -2290,6 +2347,8 @@
                               required />
                             <label for="corp-add">Corporate Address</label>
 
+                            <div *ngIf="(qde.application.applicants[applicantIndex].corporateAddress.corporateAddress)?.length == 120" class="invalid-feedback">Maximum Character Exceeds</div>
+
                             <div *ngIf="corpAddress.touched  && corpAddress.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="corpAddress.errors?.required">{{errors.corporateAddress.address.required}}</div> -->
                               <div *ngIf="corpAddress.errors?.pattern">{{errors.corporateAddress.address.invalid}}</div>
@@ -2299,9 +2358,12 @@
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].corporateAddress.landMark"
                               tabindex="3" name="landmark" #landmark="ngModel" class="form-control" fieldFill
-                              pattern="{{regexPattern.address}}" id="landmark01" maxlength="100"/>
+                              pattern="{{regexPattern.landmark}}" id="landmark01" maxlength="100"/>
                             <label for="landmark01">Landmark</label>
                             <span class="optional">optional</span>
+
+                            <div *ngIf="(qde.application.applicants[applicantIndex].corporateAddress.landMark)?.length == 100" class="invalid-feedback">Maximum Character Exceeds</div>
+
                             <div *ngIf="(landmark.touched || landmark.dirty) && landmark.invalid"
                               class="invalid-feedback">
                               <div *ngIf="landmark.errors?.pattern">{{errors.corporateAddress.landMark.invalid}}</div>
@@ -2371,6 +2433,9 @@
                               [(ngModel)]="qde.application.applicants[applicantIndex].corporateAddress.officeEmailId"
                               name="officeEmailId" #ofcEmail="ngModel" fieldFill />
                             <label for="ofc-email">Office email ID</label>
+
+                            <div *ngIf="(qde.application.applicants[applicantIndex].corporateAddress.officeEmailId)?.length == 100" class="invalid-feedback">Maximum Character Exceeds</div>
+
                             <div *ngIf="(ofcEmail.untouched || ofcEmail.touched) && ofcEmail.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="ofcEmail.errors?.required">{{errors.corporateAddress.ofcEmail.required}}</div> -->
                               <div *ngIf="ofcEmail.errors?.pattern">{{errors.corporateAddress.ofcEmail.invalid}}</div>
@@ -2380,8 +2445,8 @@
                         </div>
                         <div class="btn-wrap">
                           <button type="submit" class="btn btn-primary"
-                            [ngClass]="{'disabled': (!corporateAddressForm.valid)}"
-                            [disabled]="!corporateAddressForm.valid">Next</button>
+                            [ngClass]="{'disabled': (!corporateAddressForm.valid) || (qde.application.applicants[applicantIndex].corporateAddress.officeEmailId)?.length == 100}"
+                            [disabled]="!corporateAddressForm.valid || (qde.application.applicants[applicantIndex].corporateAddress.officeEmailId)?.length == 100">Next</button>
                         </div>
                       </form>
                     </div>

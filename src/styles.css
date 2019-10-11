@@ -3862,13 +3862,14 @@ img {
 	transition: width .4s ease-in;
 	background: #f58220
 }
-.bs-form .form-group.filled .panlabel{ margin-top: -20px}
+
 .bs-form .form-group.filled label {
 	transform: translateY(-35px) scale(.4);
 	color: #444;
 	font-family: zurich-bold;
 	font-size: 2.34vw;
-	margin-top: -15px;
+	/* margin-top: -15px; */
+	margin-top: -25px;
 }
 
 .bs-form .form-group.filled:after {

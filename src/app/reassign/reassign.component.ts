@@ -171,7 +171,7 @@ getUserList(data){
   }
 
 
-  changeCheckbox(index?: number) {
+  changeCheckbox(index?) {
       console.log("index vlaue ");
       if (!this.selectAllCheck && index > 0) {
         const arrarLength = this.applictionList.length;
