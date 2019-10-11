@@ -2772,8 +2772,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    // let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    // return this.callPost(uri, body);
   }
 
   downloadDumpDetails(data: any) {
