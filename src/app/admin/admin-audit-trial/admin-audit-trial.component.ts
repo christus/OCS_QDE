@@ -3,6 +3,7 @@ import { QdeHttpService } from '../../services/qde-http.service';
 
 import {ViewChild, ElementRef} from '@angular/core';
 import { errors } from '../../services/errors';
+import { environment } from '../../../environments/environment';
 
 
 @Component({
@@ -142,7 +143,7 @@ export class AdminAuditTrialComponent implements OnInit {
      }
      
       const ocs = this.ocsNumberStr || "";
-      const auditUserId = this.userId;
+      const auditUserId = this.userId || "";
       var data = {
         userId: auditUserId,
         "Submit" : "",
@@ -150,68 +151,23 @@ export class AdminAuditTrialComponent implements OnInit {
         "toDate" : this.endDate,
         "ocsNumber": ocs
       }
-      this.qdeHttp.downloadAuditTrail(data).subscribe(
-        response => {
-          if (
-            response["Error"] === "0" &&
-            response["ProcessVariables"]["status"]) {
-              // alert("Uploaded Successfully!");
-              this.resetForm();
-              let more =  response["ProcessVariables"]["more"];
-              this.readBase64Content(response);
-          } else {
-            if (response["ErrorMessage"]) {
-              console.log("Response: " + response["ErrorMessage"]);
-            } else if (response["ProcessVariables"]["errorMessage"]) {
-              console.log(
-                "Response: " + response["ProcessVariables"]["errorMessage"]
-              );
-              this.errorMsg = response["ProcessVariables"]["errorMessage"];
-            }
-          }
-        },
-        error => {
-          console.log("Error : ", error);
-          this.errorMsg = error;
-          this.resetForm();
-        }
-      );
+
+
+
+
+      let url = environment.host +
+              environment.csvLocation + 
+              '&content_var=attachmentContent&filename=leads.csv&more_flag_var=more&processVariables={"processId":"'
+              + environment.api.downloadAuditTrail.processId + '"'
+              + ',"ProcessVariables":{"fromDate":"' + "" + this.startDate + '","toDate":"' + "" + this.endDate + '","userId":"' + "" + auditUserId+ '", "ocsNumber":"' + ocs + '"}'
+              + ',"workflowId":"' + environment.api.downloadAuditTrail.workflowId + '"'
+              + ',"projectId":"' + environment.projectId + '"}';
+      window.open(url,'_blank');
+
     }else{
       this.errorMsg = errors.adminAuditTrail.allFieldrequired;
     }
   }
-
-  // downloadPagination(data){
-  //   this.qdeHttp.downloadAuditTrail(data).subscribe(
-  //     response => {
-  //       if (
-  //         response["Error"] === "0" &&
-  //         response["ProcessVariables"]["status"]) {
-  //           // alert("Uploaded Successfully!");
-  //           let more =  response["ProcessVariables"]["more"];
-  //           if(more) {
-  //             data["sent"] =  response["ProcessVariables"]["sent"];
-  //             this.downloadPagination(data);
-  //           }
-  //           this.readBase64Content(response);
-  //       } else {
-  //         if (response["ErrorMessage"]) {
-  //           console.log("Response: " + response["ErrorMessage"]);
-  //         } else if (response["ProcessVariables"]["errorMessage"]) {
-  //           console.log(
-  //             "Response: " + response["ProcessVariables"]["errorMessage"]
-  //           );
-  //           this.errorMsg = response["ProcessVariables"]["errorMessage"];
-  //         }
-  //       }
-  //     },
-  //     error => {
-  //       console.log("Error : ", error);
-  //       this.errorMsg = error;
-  //       this.resetForm();
-  //     }
-  //   );
-  // }
 
   resetForm() {
     this.userId = null;

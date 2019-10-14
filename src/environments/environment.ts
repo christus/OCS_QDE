@@ -405,6 +405,7 @@ export const environment = {
   // host: "http://182.156.249.170/appiyo",
   //host: "https://ihfcmobileuat.icicihfc.com/appiyo",
   driveLocation: "/d/drive/docs/",
+  csvLocation: "/d/download/csv?",
   isMobile: false
   //host: ""
 
