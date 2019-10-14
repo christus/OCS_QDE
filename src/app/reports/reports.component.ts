@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { QdeHttpService } from '../services/qde-http.service';
 import { Item } from '../models/qde.model';
+import { environment } from 'src/environments/environment.prod';
 
 @Component({
   selector: 'app-reports',
@@ -20,7 +21,13 @@ export class ReportsComponent implements OnInit {
   userId: string;
   reportId: string;
   selectedUser: string;
+  selectedStatus: string;
+  selectedBranch: string;
+  offset: number = 0;
+  base64:string = "";
 
+
+  
   constructor(private qdeHttp: QdeHttpService) { }
 
   ngOnInit() {
@@ -31,120 +38,191 @@ export class ReportsComponent implements OnInit {
   downloadLead() {
     const startDate = this.getFormattedDate(this.startDate);
     const endDate = this.getFormattedDate(this.endDate);
-    var data = {
-      // userId: parseInt(localStorage.getItem("userId")),
-      "Submit" : "",
-      "fromDate" : startDate,
-      "toDate" : endDate,
-      "applicationStatus": this.statusId,
-      "branch" : this.branchId,
-      "userId" : this.userId
-    }
-    this.qdeHttp.downloadLeadDetails(data).subscribe(
-      response => {
-        if (
-          response["Error"] === "0" &&
-          response["ProcessVariables"]["status"]) {
-            // alert("Uploaded Successfully!");
-            // const moreReports = response["ProcessVariables"]["more"]
-            // for (;moreReports == true;) {
-            //   this.readBase64Content(response)
-            // }
-              this.readBase64Content(response)
-        } else {
-          if (response["ErrorMessage"]) {
-            console.log("Response: " + response["ErrorMessage"]);
-          } else if (response["ProcessVariables"]["errorMessage"]) {
-            console.log(
-              "Response: " + response["ProcessVariables"]["errorMessage"]
-            );
-            this.errorMsg = response["ProcessVariables"]["errorMessage"];
-          }
-        }
-      },
-      error => {
-        console.log("Error : ", error);
-        this.errorMsg = error;
-      }
-    );
+    // var data = {
+    //   // userId: parseInt(localStorage.getItem("userId")),
+    //   "fromDate" : startDate,
+    //   "toDate" : endDate,
+    //   "applicationStatus": this.statusId,
+    //   "branch" : this.branchId,
+    //   "userId" : this.userId
+    // }
+    // this.qdeHttp.downloadLeadDetails(data).subscribe(
+    //   response => {
+    //     if (
+    //       response["Error"] === "0" &&
+    //       response["ProcessVariables"]["status"]) {
+    //         // alert("Uploaded Successfully!");
+    //         // const moreReports = response["ProcessVariables"]["more"]
+    //         // for (;moreReports == true;) {
+    //         //   this.readBase64Content(response)
+    //         // }
+    //           this.readBase64Content(response)
+    //     } else {
+    //       if (response["ErrorMessage"]) {
+    //         console.log("Response: " + response["ErrorMessage"]);
+    //       } else if (response["ProcessVariables"]["errorMessage"]) {
+    //         console.log(
+    //           "Response: " + response["ProcessVariables"]["errorMessage"]
+    //         );
+    //         this.errorMsg = response["ProcessVariables"]["errorMessage"];
+    //       }
+    //     }
+    //   },
+    //   error => {
+    //     console.log("Error : ", error);
+    //     this.errorMsg = error;
+    //   }
+    // );
+
+    //Local Server
+
+    let url = environment.host +
+              environment.csvLocation + 
+              '&content_var=attachmentContent&filename=leads.csv&more_flag_var=more&processVariables={"processId":"'
+              + environment.api.downloadLeads.processId + '"'
+              + ',"ProcessVariables":{"fromDate":"' + "" + startDate + '","toDate":"' + "" + endDate + '","userId":"' + "" + this.userId + '"}'
+              + ',"workflowId":"' + environment.api.downloadLeads.workflowId + '"'
+              + ',"projectId":"' + environment.api.downloadLeads.projectId + '"}';
+    window.open(url,'_blank');
+
+    //Production Server
+
+    // let url = environment.host +
+    //           environment.csvLocation + 
+    //           '&content_var=attachmentContent&filename=leads.csv&more_flag_var=more&processVariables={"processId":"'
+    //           + environment.api.downloadLeads.processId + '"'
+    //           + ',"ProcessVariables":{"fromDate":"' + "" + startDate + '","toDate":"' + "" + endDate + '","userId":"' + "" + this.userId + '"}'
+    //           + ',"workflowId":"' + environment.api.downloadLeads.workflowId + '"'
+    //           + ',"projectId":"' + environment.api.downloadLeads.projectId + '"}';
+    // window.open(url,'_blank');
+
+    console.log("Leads Url",url)
   }
 
   downloadLogin() {
     const startDate = this.getFormattedDate(this.startDate);
     const endDate = this.getFormattedDate(this.endDate);
-    var data = {
-    //  userId: parseInt(localStorage.getItem("userId")),
-      "Submit" : "",
-      "fromDate" : startDate,
-      "toDate" : endDate,
-      "applicationStatus": this.statusId,
-      "branch" : this.branchId,
-      "userId" : this.userId
-    }
-    this.qdeHttp.downloadLoginDetails(data).subscribe(
-      response => {
-        if (
-          response["Error"] === "0" &&
-          response["ProcessVariables"]["status"]) {
-            // alert("Uploaded Successfully!");
-            this.readBase64Content(response)
-        } else {
-          if (response["ErrorMessage"]) {
-            console.log("Response: " + response["ErrorMessage"]);
-          } else if (response["ProcessVariables"]["errorMessage"]) {
-            console.log(
-              "Response: " + response["ProcessVariables"]["errorMessage"]
-            );
-            this.errorMsg = response["ProcessVariables"]["errorMessage"];
-          }
-        }
-      },
-      error => {
-        console.log("Error : ", error);
-        this.errorMsg = error;
-      }
-    );
+    // var data = {
+    // //  userId: parseInt(localStorage.getItem("userId")),
+    //   "fromDate" : startDate,
+    //   "toDate" : endDate,
+    //   "applicationStatus": this.statusId,
+    //   "branch" : this.branchId,
+    //   "userId" : this.userId,
+    //   "sent" : this.offset,
+    // }
+    // this.qdeHttp.downloadLoginDetails(data).subscribe(
+    //   response => {
+    //     if (
+    //       response["Error"] === "0" &&
+    //       response["ProcessVariables"]["status"]) {
+    //         // alert("Uploaded Successfully!");
+    //         let moreStatus = response["ProcessVariables"]["more"];
+    //         this.readBase64Content(response,moreStatus)
+    //     } else {
+    //       if (response["ErrorMessage"]) {
+    //         console.log("Response: " + response["ErrorMessage"]);
+    //       } else if (response["ProcessVariables"]["errorMessage"]) {
+    //         console.log(
+    //           "Response: " + response["ProcessVariables"]["errorMessage"]
+    //         );
+    //         this.errorMsg = response["ProcessVariables"]["errorMessage"];
+    //       }
+    //     }
+    //   },
+    //   error => {
+    //     console.log("Error : ", error);
+    //     this.errorMsg = error;
+    //   }
+    // );
+
+      //Local Server
+
+      let url = environment.host +
+            environment.csvLocation + 
+            '&content_var=attachmentContent&filename=login.csv&more_flag_var=more&processVariables={"processId":"'
+            + environment.api.downloadLogin.processId + '"'
+            + ',"ProcessVariables":{"fromDate":"' + "" + startDate + '","toDate":"' + "" + endDate + '","userId":"' + "" + this.userId + '"}'
+            + ',"workflowId":"' + environment.api.downloadLogin.workflowId + '"'
+            + ',"projectId":"' + environment.api.downloadLogin.projectId + '"}';
+      window.open(url,'_blank');
+
+      //Production Server
+
+      // let url = environment.host +
+      //           environment.csvLocation + 
+      //           '&content_var=attachmentContent&filename=login.csv&more_flag_var=more&processVariables={"processId":"'
+      //           + environment.api.downloadLogin.processId + '"'
+      //           + ',"ProcessVariables":{"fromDate":"' + "" + startDate + '","toDate":"' + "" + endDate + '","userId":"' + "" + this.userId + '"}'
+      //           + ',"workflowId":"' + environment.api.downloadLogin.workflowId + '"'
+      //           + ',"projectId":"' + environment.api.downloadLogin.projectId + '"}';
+      // window.open(url,'_blank');
+
+      console.log("Login Url",url)
   }
 
   downloadDump() {
     const startDate = this.getFormattedDate(this.startDate);
     const endDate = this.getFormattedDate(this.endDate);
-    var data = {
-    //  userId: parseInt(localStorage.getItem("userId")),
-      "Submit" : "",
-      "fromDate" : startDate,
-      "toDate" : endDate,
-      "applicationStatus": this.statusId,
-      "branch" : this.branchId,
-      "userId" : this.userId
-    }
-    this.qdeHttp.downloadDumpDetails(data).subscribe(
-      response => {
-        if (
-          response["Error"] === "0" &&
-          response["ProcessVariables"]["status"]) {
-            // alert("Uploaded Successfully!");
-            this.readBase64Content(response)
-        } else {
-          if (response["ErrorMessage"]) {
-            console.log("Response: " + response["ErrorMessage"]);
-          } else if (response["ProcessVariables"]["errorMessage"]) {
-            console.log(
-              "Response: " + response["ProcessVariables"]["errorMessage"]
-            );
-            this.errorMsg = response["ProcessVariables"]["errorMessage"];
-          }
-        }
-      },
-      error => {
-        console.log("Error : ", error);
-        this.errorMsg = error;
-      }
-    );
+    // var data = {
+    // //  userId: parseInt(localStorage.getItem("userId")),
+    //   "fromDate" : startDate,
+    //   "toDate" : endDate,
+    //   "applicationStatus": Number(this.statusId),
+    //   "branch" : this.branchId,
+    //   "userId" : this.userId
+    // }
+    // this.qdeHttp.downloadDumpDetails(data).subscribe(
+    //   response => {
+    //     if (
+    //       response["Error"] === "0" &&
+    //       response["ProcessVariables"]["status"]) {
+    //         // alert("Uploaded Successfully!");
+    //         // this.readBase64Content(response);
+    //     } else {
+    //       if (response["ErrorMessage"]) {
+    //         console.log("Response: " + response["ErrorMessage"]);
+    //       } else if (response["ProcessVariables"]["errorMessage"]) {
+    //         console.log(
+    //           "Response: " + response["ProcessVariables"]["errorMessage"]
+    //         );
+    //         this.errorMsg = response["ProcessVariables"]["errorMessage"];
+    //       }
+    //     }
+    //   },
+    //   error => {
+    //     console.log("Error : ", error);
+    //     this.errorMsg = error;
+    //   }
+    // );
+      //Local Server
+
+      let url = environment.host +
+            environment.csvLocation + 
+            '&content_var=attachmentContent&filename=applicationDump.csv&more_flag_var=more&processVariables={"processId":"'
+            + environment.api.downloadDump.processId + '"'
+            + ',"ProcessVariables":{"fromDate":"' + "" + startDate + '","toDate":"' + "" + endDate + '","applicationStatus":' + "" + Number(this.statusId) + ',"userId":"' + "" + this.userId + '"}'
+            + ',"workflowId":"' + environment.api.downloadDump.workflowId + '"'
+            + ',"projectId":"' + environment.api.downloadDump.projectId + '"}';
+      window.open(url,'_blank');
+
+      //Production Server
+
+      // let url = environment.host +
+      //           environment.csvLocation + 
+      //           '&content_var=attachmentContent&filename=applicationDump.csv&more_flag_var=more&processVariables={"processId":"'
+      //           + environment.api.downloadDump.processId + '"'
+      //           + ',"ProcessVariables":{"fromDate":"' + "" + startDate + '","toDate":"' + "" + endDate + '","applicationStatus":' + "" + Number(this.statusId) + ',"userId":"' + "" + this.userId + '"}'
+      //           + ',"workflowId":"' + environment.api.downloadDump.workflowId + '"'
+      //           + ',"projectId":"' + environment.api.downloadDump.projectId + '"}';
+      // window.open(url,'_blank');
+
+      console.log("Dump Url",url)
   }
 
   downloadReport(){
     if(this.reportId == "1"){
+      // this.base64 = null;
       this.downloadLogin();
       console.log("Download login Report")
     }
@@ -153,8 +231,9 @@ export class ReportsComponent implements OnInit {
       console.log("Download lead Report")
     }
     else if(this.reportId == "3"){
+      // this.base64 = null;
       this.downloadDump();
-      console.log("Download dump report. API is not there")
+      console.log("Download dump report")
     }
     else{
       console.log("Not a valid report")
@@ -164,29 +243,39 @@ export class ReportsComponent implements OnInit {
 
   getFormattedDate(date) {
     console.log("in date conversion " + date);
-
-    let dateFormat = date.toString();
-    let replace = /\-/gi;
-    let formattedDate =dateFormat.replace(replace,"/")
-    // let year = dateFormat.getFullYear();
-    // let month = dateFormat.getMonth() + 1;
-    // let month1 = month < 10 ? '0' + month.toString() : '' + month.toString(); // ('' + month) for string result
-    // let day = date.getDate();
-    // day = day < 10 ? '0' + day : '' + day; // ('' + month) for string result
-    // let formattedDate = year + '/' + month1 + '/' + day;
-    console.log("final Value "+ formattedDate);
+    let dateFormat = date;
+    // let dateFormat = date.toString();
+    // let replace = /\-/gi;
+    // let formattedDate =dateFormat.replace(replace,"/")
+    let year = dateFormat.getFullYear();
+    let month = dateFormat.getMonth() + 1;
+    let month1 = month < 10 ? '0' + month.toString() : '' + month.toString(); // ('' + month) for string result
+    let day = date.getDate();
+    day = day < 10 ? '0' + day : '' + day; // ('' + month) for string result
+    let formattedDate = year + '-' + month1 + '-' + day;
+    console.log("final Value " + formattedDate);
     return formattedDate;
   }
 
-  readBase64Content(response) {
+  readBase64Content(response, moreStatus) {
     // Base64 url of image trimmed one without data:image/png;base64
 
     const attachment =  response["ProcessVariables"]["attachment"];
-    const base64 = attachment["content"];
+    let base64 = attachment["content"];
+    if (moreStatus == true){
+      base64 = attachment["content"];
+    }
+    else{
+      base64 =   base64.concat(attachment["content"]);
+    }
+    // const base64 = attachment["content"];
+    console.log("content type ",typeof(attachment["content"]));
+
+    
     const mime = attachment["mime"];
     const fileName = attachment["name"];
     let that = this;
-
+    console.log("connent values ", base64 );
 
       var saveData = (function () {
         const a: HTMLElement = document.createElement("a");
@@ -222,7 +311,7 @@ export class ReportsComponent implements OnInit {
   }
 
   endDateMonthDiff(value){
-    const startDate = this.getFormattedDate(this.startDate);
+    var startDate = this.getFormattedDate(this.startDate);
     if(this.endDate != null){
       var endDate = this.getFormattedDate(this.endDate);
     }
@@ -234,7 +323,7 @@ export class ReportsComponent implements OnInit {
     var Difference_In_Time = tempEndDate.getTime() - tempStartDate.getTime();
     var Difference_In_Days = Difference_In_Time / (1000 * 60 * 60 * 24);
 
-    if(endDate < startDate){
+    if(this.endDate < this.startDate){
       this.dateError = {isError:true, errorMessage:"End Date cannot come before the start date"};
     }
     else{
@@ -267,11 +356,13 @@ export class ReportsComponent implements OnInit {
   }
 
   changeBranch(el){
+    console.log("Branch",el)
     this.branchId = el.currentTarget.value;
   }
 
   changeStatus(el){
-    this.statusId = el.currentTarget.value; 
+    console.log("Status",el)
+    this.statusId = el; 
   }
 
   changeUser(el){
@@ -284,7 +375,6 @@ export class ReportsComponent implements OnInit {
     // }
     
   //  this.userId = this.selectedUser ? localStorage.getItem('userId') ? localStorage.getItem('userId'): null: this.selectedUser;
-
     this.userId = el;
     console.log("UserId", this.userId)
   }

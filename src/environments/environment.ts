@@ -378,15 +378,18 @@ export const environment = {
     },
     "downloadLeads" : { 
       'workflowId': '6f9d4872e37811e991630242ac110002',
-      'processId': '6fbc9484e37811e9b0470242ac110002'
+      'processId': '6fbc9484e37811e9b0470242ac110002',
+      'projectId': 'ff8e364e6fce11e98754782bcb8f3845'
     },
     "downloadLogin" : {
       'workflowId': '4b639b98e41611e99a460242ac110002',
-      'processId': '4b702584e41611e9b36c0242ac110002'
+      'processId': '4b702584e41611e9b36c0242ac110002',
+      'projectId': 'ff8e364e6fce11e98754782bcb8f3845'
     },
     "downloadDump" : {
       'workflowId': '154273f0e44c11e9abed0242ac110002',
-      'processId': '155b02bce44c11e987550242ac110002'
+      'processId': '155b02bce44c11e987550242ac110002',
+      'projectId': 'ff8e364e6fce11e98754782bcb8f3845'
     },
     "filtersForDownload": { 
       'workflowId': '46111230e45011e9935a0242ac110002',

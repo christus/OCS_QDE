@@ -140,7 +140,6 @@ $(function () {
             [min]="min"       
             [(ngModel)]="effectFromDate"
             [format]="'dd/MM/yyyy'"
-            
             #effectFrom="ngModel">
             </kendo-datepicker>
             <div *ngIf ="!effectFrom.valid" class="invalid-feedback">
