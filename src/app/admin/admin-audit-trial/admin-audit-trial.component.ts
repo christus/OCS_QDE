@@ -130,6 +130,32 @@ export class AdminAuditTrialComponent implements OnInit {
         }
     }
 
+    if(this.ocsNumberStr && this.userId ) {
+
+      const ocs = this.ocsNumberStr || "";
+      const auditUserId = this.userId || "";
+      var data = {
+        userId: auditUserId,
+        "Submit" : "",
+        "fromDate" : this.startDate,
+        "toDate" : this.endDate,
+        "ocsNumber": ocs
+      }
+  
+      let url = environment.host +
+              environment.csvLocation + 
+              '&content_var=attachmentContent&filename=leads.csv&more_flag_var=more&processVariables={"processId":"'
+              + environment.api.downloadAuditTrail.processId + '"'
+              + ',"ProcessVariables":{"fromDate":"' + "" + this.startDate + '","toDate":"' + "" + this.endDate + '","userId":"' + "" + auditUserId+ '", "ocsNumber":"' + ocs + '"}'
+              + ',"workflowId":"' + environment.api.downloadAuditTrail.workflowId + '"'
+              + ',"projectId":"' + environment.projectId + '"}';
+      window.open(url,'_blank');
+  
+      this.resetForm();
+
+      return;
+    }
+
     if(this.ocsNumberStr || this.userId ) {
 
       if(this.userId) {
@@ -167,22 +193,34 @@ export class AdminAuditTrialComponent implements OnInit {
           return;
         }
 
+      }else {
+        const ocs = this.ocsNumberStr || "";
+        const auditUserId = this.userId || "";
+        var data = {
+          userId: auditUserId,
+          "Submit" : "",
+          "fromDate" : this.startDate,
+          "toDate" : this.endDate,
+          "ocsNumber": ocs
+          }
+        
+        let url = environment.host +
+        environment.csvLocation + 
+        '&content_var=attachmentContent&filename=leads.csv&more_flag_var=more&processVariables={"processId":"'
+        + environment.api.downloadAuditTrail.processId + '"'
+        + ',"ProcessVariables":{"fromDate":"' + "" + this.startDate + '","toDate":"' + "" + this.endDate + '","userId":"' + "" + auditUserId+ '", "ocsNumber":"' + ocs + '"}'
+        + ',"workflowId":"' + environment.api.downloadAuditTrail.workflowId + '"'
+        + ',"projectId":"' + environment.projectId + '"}';
+
+        window.open(url,'_blank');
+
+        this.resetForm();
       } 
 
     }else{
       this.errorMsg = errors.adminAuditTrail.allFieldrequired;
       return;
     }
-
-    let url = environment.host +
-              environment.csvLocation + 
-              '&content_var=attachmentContent&filename=leads.csv&more_flag_var=more&processVariables={"processId":"'
-              + environment.api.downloadAuditTrail.processId + '"'
-              + ',"ProcessVariables":{"fromDate":"' + "" + this.startDate + '","toDate":"' + "" + this.endDate + '","userId":"' + "" + auditUserId+ '", "ocsNumber":"' + ocs + '"}'
-              + ',"workflowId":"' + environment.api.downloadAuditTrail.workflowId + '"'
-              + ',"projectId":"' + environment.projectId + '"}';
-    window.open(url,'_blank');
-
   }
 
   resetForm() {
