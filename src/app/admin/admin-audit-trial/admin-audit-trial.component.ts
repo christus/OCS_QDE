@@ -111,7 +111,6 @@ export class AdminAuditTrialComponent implements OnInit {
 
     if(this.ocsNumberStr && !(this.ocsNumberStr.length >= 16)){
         this.errorMsg = errors.adminAuditTrail.ocsMinLength;
-        this.ocsNumberStr = null;
         return;
     }
 

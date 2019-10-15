@@ -2679,12 +2679,23 @@ createOrUpdatePersonalDetails(qde) {
 
 
   callPost(url: string, requestEntity: any, options?:any) {
+    var that = this;
+
     this.isMobile = this.mobileService.isMobile;
 
+    const currentHref = window.location.href;
+
+    const arrUrl = ["/static/", "/payments/"];
+
+    arrUrl.forEach(function(url) {
+      if(url.indexOf(currentHref)){
+        that.isMobile = false;
+        return;
+      }
+    });
 
     // this.isMobile = true;
 
-    console.log(":data", requestEntity);
 
     const headers = {
         'Content-Type': 'application/x-www-form-urlencoded',

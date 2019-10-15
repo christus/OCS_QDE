@@ -39,21 +39,23 @@ export class SetMpinComponent implements OnInit {
 
     console.log("UserName", this.userName);
 
-    var empId = this.userName.trim() + "@icicibankltd.com";
+    if(this.userName) {
+      var empId = this.userName.trim() + "@icicibankltd.com";
 
-    var data = {
-      empId : empId,
-      uuid: this.uuID
-    };
-    this.qdeService.resetMpin(data).subscribe(
-      res => {
-        console.log("move to confirm pin");
-        this.router.navigate(["/ConfirmPin", {"EmpId": empId} ]);
-      },
-      error => {
-        console.log(error);
-      }
-    );
+      var data = {
+        empId : empId,
+        uuid: this.uuID
+      };
+      this.qdeService.resetMpin(data).subscribe(
+        res => {
+          console.log("move to confirm pin");
+          this.router.navigate(["/ConfirmPin", {"EmpId": empId} ]);
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
   }
 
 }

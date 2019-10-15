@@ -282,5 +282,9 @@ export const errors: any = {
     ocsMinLength: "Minimum 16 character required",
     userIdLength: "Minimum 6 character required",
     dateRange: "Start and end date should have difference of one month"
+  },
+
+  loginWithMpin: {
+   invalidCredentials: "Please enter valid credentials"
   }
 };

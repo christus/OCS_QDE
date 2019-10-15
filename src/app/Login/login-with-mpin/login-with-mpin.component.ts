@@ -3,6 +3,7 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
 import { CommonDataService } from '../../services/common-data.service';
+import { errors } from '../../services/errors';
 
 
 @Component({
@@ -22,6 +23,11 @@ export class LoginWithMPINComponent implements OnInit {
   mPin2 = "";
   mPin3 = "";
   mPin4 = "";
+
+  loginError = false;
+
+  errorMsg = "";
+  
 
   @ViewChild('mPin') input:ElementRef; 
 
@@ -76,42 +82,45 @@ export class LoginWithMPINComponent implements OnInit {
 
     this.commonDataService.setLogindata(appiyoAuthdata);
 
+    if(this.userName && this.mPin) {
+      this.qdeService.longLiveAuthenticate(appiyoAuthdata).subscribe(
+        res => {
+          console.log("response");
+          console.log("login-response: ",res);
   
-    this.qdeService.longLiveAuthenticate(appiyoAuthdata).subscribe(
-      res => {
-        console.log("response");
-        console.log("login-response: ",res);
-
-        localStorage.setItem("token", res["token"] ? res["token"] : "");
-
-        var data = {
-          userName: this.userName.trim() + environment.iciciDomainExt,
-          mPin: this.mPin
-        }
-    
-        this.qdeService.loginMpin(data).subscribe(
-          res => {
-            console.log("ROLE LOGIN: ", res['ProcessVariables']['roleName']);
-            localStorage.setItem("userId", res["ProcessVariables"]["userId"]);
-            localStorage.setItem('roles', JSON.stringify(res["ProcessVariables"]["roleName"]));
-            this.roleLogin();
-            localStorage.setItem("firstTime", "true");
-            
-            this.router.navigate(["/leads"]);
-          },
-          error => {
-            console.log(error);
+          localStorage.setItem("token", res["token"] ? res["token"] : "");
+  
+          var data = {
+            userName: this.userName.trim() + environment.iciciDomainExt,
+            mPin: this.mPin
           }
-        );
-
-      },
-      error => {
-        console.log("error-response");
-
-        console.log(error);
-      }
-    );
-
+      
+          this.qdeService.loginMpin(data).subscribe(
+            res => {
+              console.log("ROLE LOGIN: ", res['ProcessVariables']['roleName']);
+              localStorage.setItem("userId", res["ProcessVariables"]["userId"]);
+              localStorage.setItem('roles', JSON.stringify(res["ProcessVariables"]["roleName"]));
+              this.roleLogin();
+              localStorage.setItem("firstTime", "true");
+              
+              this.router.navigate(["/leads"]);
+            },
+            error => {
+              console.log(error);
+            }
+          );
+  
+        },
+        error => {
+          console.log("error-response");
+  
+          console.log(error);
+        }
+      );
+    }else {
+      this.loginError = true;
+      this.errorMsg = errors.loginWithMpin.invalidCredentials;
+    }
   }
 
 
