@@ -115,58 +115,64 @@ export class AdminAuditTrialComponent implements OnInit {
         return;
     }
 
-    if(this.ocsNumberStr || this.userId ) {
+    if(this.ocsNumberStr && this.userId) {
+      this.startDate = undefined;
+      this.endDate = undefined;
+    }else if(this.ocsNumberStr || this.userId ) {
 
-      let difference:number = this.monthDiff(this.startDate, this.endDate);
+      if(this.userId) {
 
-      if(difference >= 31) {
-        this.errorMsg = errors.adminAuditTrail.dateRange;
-        return;
-      }
+        let difference:number = this.monthDiff(this.startDate, this.endDate);
 
-      const isValid = this.validateFromToDate(this.startDate, this.endDate);
-      
-     if(this.userId) {
-      if(!this.startDate && !this.endDate) {
-        this.errorMsg = errors.adminAuditTrail.dataRequired;
-        // this.resetForm();
-        return;
-      }
+        if(difference >= 31) {
+          this.errorMsg = errors.adminAuditTrail.dateRange;
+          return;
+        }
 
-      if(isValid) {
-        const startDate = (!this.startDate? "": this.getFormattedDate(this.startDate));
-        const endDate = (!this.endDate? "": this.getFormattedDate(this.startDate)); 
-      }else {
-        this.errorMsg = errors.adminAuditTrail.dateRangeError;
-        return;
-      }
-     }
-     
-      const ocs = this.ocsNumberStr || "";
-      const auditUserId = this.userId || "";
-      var data = {
-        userId: auditUserId,
-        "Submit" : "",
-        "fromDate" : this.startDate,
-        "toDate" : this.endDate,
-        "ocsNumber": ocs
-      }
+        if(!this.startDate && !this.endDate) {
+          this.errorMsg = errors.adminAuditTrail.dataRequired;
+          // this.resetForm();
+          return;
+        }
+
+        const isValid = this.validateFromToDate(this.startDate, this.endDate);
 
 
+        if(isValid) {
+          const startDate = (!this.startDate? "": this.getFormattedDate(this.startDate));
+          const endDate = (!this.endDate? "": this.getFormattedDate(this.startDate)); 
+        }else {
+          this.errorMsg = errors.adminAuditTrail.dateRangeError;
+          return;
+        }
 
-
-      let url = environment.host +
-              environment.csvLocation + 
-              '&content_var=attachmentContent&filename=leads.csv&more_flag_var=more&processVariables={"processId":"'
-              + environment.api.downloadAuditTrail.processId + '"'
-              + ',"ProcessVariables":{"fromDate":"' + "" + this.startDate + '","toDate":"' + "" + this.endDate + '","userId":"' + "" + auditUserId+ '", "ocsNumber":"' + ocs + '"}'
-              + ',"workflowId":"' + environment.api.downloadAuditTrail.workflowId + '"'
-              + ',"projectId":"' + environment.projectId + '"}';
-      window.open(url,'_blank');
+      } 
 
     }else{
       this.errorMsg = errors.adminAuditTrail.allFieldrequired;
     }
+
+
+    const ocs = this.ocsNumberStr || "";
+    const auditUserId = this.userId || "";
+    var data = {
+      userId: auditUserId,
+      "Submit" : "",
+      "fromDate" : this.startDate,
+      "toDate" : this.endDate,
+      "ocsNumber": ocs
+    }
+
+    let url = environment.host +
+            environment.csvLocation + 
+            '&content_var=attachmentContent&filename=leads.csv&more_flag_var=more&processVariables={"processId":"'
+            + environment.api.downloadAuditTrail.processId + '"'
+            + ',"ProcessVariables":{"fromDate":"' + "" + this.startDate + '","toDate":"' + "" + this.endDate + '","userId":"' + "" + auditUserId+ '", "ocsNumber":"' + ocs + '"}'
+            + ',"workflowId":"' + environment.api.downloadAuditTrail.workflowId + '"'
+            + ',"projectId":"' + environment.projectId + '"}';
+    window.open(url,'_blank');
+
+    this.resetForm();
   }
 
   resetForm() {
