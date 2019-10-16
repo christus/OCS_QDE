@@ -337,6 +337,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   isErrorModal: boolean;
   errorMessage: string;
   isOfficialCorrs: boolean;
+
+  applicantType:string;
   
   constructor(private renderer: Renderer2,
               private route: ActivatedRoute,
@@ -448,6 +450,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   // panslide2: boolean;
 
   ngOnInit() {
+
     console.log(">>", JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs));
     if(this.route.snapshot.data.listOfValues != null && this.route.snapshot.data.listOfValues != undefined) {
 
@@ -470,6 +473,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.constitutions = lov.LOVS.constitution;
       this.assessmentMethodology = lov.LOVS.assessment_methodology;
       this.unOfficialEmails =  lov.LOVS.un_official_emails;
+      console.log("data slice error: ",lov.LOVS.religion);
 
 
       
@@ -499,12 +503,13 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
       this.selectedTitle = this.titles[0];
       this.selectedReligion = this.religions[0];
+      console.log("selected religion data slice error: ", this.selectedReligion);
       this.selectedMaritialStatus = this.maritals[0];
       this.selectedCategory = this.categories[0];
-      this.selectedOccupation = this.occupations[0];
       this.selectedResidence = this.residences[0];
       this.selectedSpouseTitle = this.titles[0];
       this.selectedFatherTitle = this.maleTitles[0];
+      this.selectedOccupation = this.occupations[0];
       this.selectedMotherTitle = this.femaleTitles[0]
       this.selectedQualification = this.qualifications[0];
       this.selectedConstitution = this.constitutions[0];
@@ -554,6 +559,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
             this.applicantIndex = result.application.applicants.findIndex(v => v.isMainApplicant == true);
             this.cds.enableTabsIfStatus1(this.qde.application.status);
             this.tempOldPanNumber = result.application.applicants[this.applicantIndex].pan.panNumber;
+
+            this.loadOccupationTypeLovs(this.qde.application.applicants[this.applicantIndex].occupation.occupationType);
 
             if(this.qde.application.auditTrailDetails.screenPage == screenPages['applicantDetails']) {
               this.goToExactPageAndTab(this.qde.application.auditTrailDetails.tabPage, this.qde.application.auditTrailDetails.pageNumber);
@@ -813,9 +820,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       }
 
       // Occupation details
-      if( ! isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].occupation.occupationType)) ) {
-        this.selectedOccupation = this.occupations.find(e => e.value == this.qde.application.applicants[this.applicantIndex].occupation.occupationType);
-      }
+      // if( ! isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].occupation.occupationType)) ) {
+        // this.selectedOccupation = this.occupations.find(e => e.value == this.qde.application.applicants[this.applicantIndex].occupation.occupationType);
+      //   this.selectedTitle = this.getSelectedValue(this.qde.application.applicants[this.applicantIndex].occupation.occupationType,this.occupations);
+      // }
 
       // Assesment methodology
       console.log("AM: ", this.assessmentMethodology);
@@ -1036,6 +1044,20 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     return arr[0];
 
   }
+
+  // getOccupationValue(occupation:string) {
+
+  //   let occupations = JSON.parse(JSON.stringify(this.occupations));
+  //   let selectedOccupationObj = {};
+  //   for(let id in occupations) {
+  //     let occupationObj = occupations[id];
+  //     if(occupationObj["value"] == occupation ) {
+  //       return occupationObj;
+  //     }
+  //   }
+  //   return occupations[0];
+
+  // }
   
   submitPanNumber(form: NgForm, swiperInstance ?: Swiper) {
     if(this.isTBMLoggedIn) {
@@ -2645,6 +2667,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       
       // this.router.navigate([], {queryParams: { tabName: this.fragments[10], page: 1}});
     }
+
+    this.loadOccupationTypeLovs();
     return this.beferoStatus;
   }
 
@@ -2922,24 +2946,22 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   //   });
   // }
 
-  selectValueChanged(event, to) {
+
+  selectValueChanged(event, to, key) {
     let whichSelectQde = this.qde.application.applicants[this.applicantIndex];
     let nick = to.getAttribute('nick').split(".");
     to.getAttribute('nick').split(".").forEach((val, i) => {
       if(val == 'day' || val == 'month' || val == 'year') {
-
-        // this[(nick[i-1])][val].value = event.value;
+        // this[key][val].value = event.value;
         return;
       } else {
         if(i == (to.getAttribute('nick').split(".").length-1)) {
           whichSelectQde[val] = event.value;
           return;
         }
-
-        whichSelectQde = whichSelectQde[val];
+        whichSelectQde = whichSelectQde[val]
       }
     });
-    
   }
 
   editMobileNO(){
@@ -3173,6 +3195,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.selectedReligion = this.religions[0];
     this.selectedMaritialStatus = this.maritals[0];
     this.selectedCategory = this.categories[0];
+    // this.selectedOccupation = this.selectedOccupation[0];
     this.selectedOccupation = this.occupations[0];
     this.selectedResidence = this.residences[0];
     this.selectedSpouseTitle = this.titles[0];
@@ -3612,5 +3635,28 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         this.errorMessage = 'Something went wrong.';
       });
     }
+  }
+
+  loadOccupationTypeLovs(occupationType ?: string) {
+    let occupationData = {
+      userId: parseInt(localStorage.getItem("userId")),
+      applicantType: this.qde.application.applicants[this.applicantIndex].isIndividual == true ? 1: 2,
+    };
+  
+    this.qdeHttp.getOccupationLov(occupationData).subscribe(response => {
+      this.occupations = JSON.parse(response["ProcessVariables"]["response"])['occupation'];
+      console.log("Occupation Type",this.occupations);
+
+      if(occupationType != null) {
+        this.selectedOccupation = this.occupations.some(v => v.value == occupationType) ? this.occupations.find(v => v.value == occupationType): this.occupations[0];
+      } else {
+        this.selectedOccupation = this.occupations[0];
+      }
+      // this.selectedOccupation = this.occupations["occupation"]
+      console.log("Select Occupation Type",this.selectedOccupation)
+    }, err => {
+      this.isErrorModal = true;
+        this.errorMessage = 'Something went wrong.';
+    });
   }
 }

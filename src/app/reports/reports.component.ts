@@ -74,8 +74,6 @@ export class ReportsComponent implements OnInit {
     //   }
     // );
 
-    //Local Server
-
     let url = environment.host +
               environment.csvLocation + 
               '&content_var=attachmentContent&filename=leads.csv&more_flag_var=more&processVariables={"processId":"'
@@ -84,60 +82,16 @@ export class ReportsComponent implements OnInit {
               + ',"workflowId":"' + environment.api.downloadLeads.workflowId + '"'
               + ',"projectId":"' + environment.api.downloadLeads.projectId + '"}';
     window.open(url,'_blank');
+    // this.qdeHttp.callGet(url).subscribe(response => {
+    //   console.log("Leads Url",response)
+    // });
 
-    //Production Server
-
-    // let url = environment.host +
-    //           environment.csvLocation + 
-    //           '&content_var=attachmentContent&filename=leads.csv&more_flag_var=more&processVariables={"processId":"'
-    //           + environment.api.downloadLeads.processId + '"'
-    //           + ',"ProcessVariables":{"fromDate":"' + "" + startDate + '","toDate":"' + "" + endDate + '","userId":"' + "" + this.userId + '"}'
-    //           + ',"workflowId":"' + environment.api.downloadLeads.workflowId + '"'
-    //           + ',"projectId":"' + environment.api.downloadLeads.projectId + '"}';
-    // window.open(url,'_blank');
-
-    console.log("Leads Url",url)
   }
 
   downloadLogin() {
     const startDate = this.getFormattedDate(this.startDate);
     const endDate = this.getFormattedDate(this.endDate);
-    // var data = {
-    // //  userId: parseInt(localStorage.getItem("userId")),
-    //   "fromDate" : startDate,
-    //   "toDate" : endDate,
-    //   "applicationStatus": this.statusId,
-    //   "branch" : this.branchId,
-    //   "userId" : this.userId,
-    //   "sent" : this.offset,
-    // }
-    // this.qdeHttp.downloadLoginDetails(data).subscribe(
-    //   response => {
-    //     if (
-    //       response["Error"] === "0" &&
-    //       response["ProcessVariables"]["status"]) {
-    //         // alert("Uploaded Successfully!");
-    //         let moreStatus = response["ProcessVariables"]["more"];
-    //         this.readBase64Content(response,moreStatus)
-    //     } else {
-    //       if (response["ErrorMessage"]) {
-    //         console.log("Response: " + response["ErrorMessage"]);
-    //       } else if (response["ProcessVariables"]["errorMessage"]) {
-    //         console.log(
-    //           "Response: " + response["ProcessVariables"]["errorMessage"]
-    //         );
-    //         this.errorMsg = response["ProcessVariables"]["errorMessage"];
-    //       }
-    //     }
-    //   },
-    //   error => {
-    //     console.log("Error : ", error);
-    //     this.errorMsg = error;
-    //   }
-    // );
-
-      //Local Server
-
+   
       let url = environment.host +
             environment.csvLocation + 
             '&content_var=attachmentContent&filename=login.csv&more_flag_var=more&processVariables={"processId":"'
@@ -147,57 +101,14 @@ export class ReportsComponent implements OnInit {
             + ',"projectId":"' + environment.api.downloadLogin.projectId + '"}';
       window.open(url,'_blank');
 
-      //Production Server
-
-      // let url = environment.host +
-      //           environment.csvLocation + 
-      //           '&content_var=attachmentContent&filename=login.csv&more_flag_var=more&processVariables={"processId":"'
-      //           + environment.api.downloadLogin.processId + '"'
-      //           + ',"ProcessVariables":{"fromDate":"' + "" + startDate + '","toDate":"' + "" + endDate + '","userId":"' + "" + this.userId + '"}'
-      //           + ',"workflowId":"' + environment.api.downloadLogin.workflowId + '"'
-      //           + ',"projectId":"' + environment.api.downloadLogin.projectId + '"}';
-      // window.open(url,'_blank');
-
       console.log("Login Url",url)
   }
 
   downloadDump() {
     const startDate = this.getFormattedDate(this.startDate);
     const endDate = this.getFormattedDate(this.endDate);
-    // var data = {
-    // //  userId: parseInt(localStorage.getItem("userId")),
-    //   "fromDate" : startDate,
-    //   "toDate" : endDate,
-    //   "applicationStatus": Number(this.statusId),
-    //   "branch" : this.branchId,
-    //   "userId" : this.userId
-    // }
-    // this.qdeHttp.downloadDumpDetails(data).subscribe(
-    //   response => {
-    //     if (
-    //       response["Error"] === "0" &&
-    //       response["ProcessVariables"]["status"]) {
-    //         // alert("Uploaded Successfully!");
-    //         // this.readBase64Content(response);
-    //     } else {
-    //       if (response["ErrorMessage"]) {
-    //         console.log("Response: " + response["ErrorMessage"]);
-    //       } else if (response["ProcessVariables"]["errorMessage"]) {
-    //         console.log(
-    //           "Response: " + response["ProcessVariables"]["errorMessage"]
-    //         );
-    //         this.errorMsg = response["ProcessVariables"]["errorMessage"];
-    //       }
-    //     }
-    //   },
-    //   error => {
-    //     console.log("Error : ", error);
-    //     this.errorMsg = error;
-    //   }
-    // );
-      //Local Server
 
-      let url = environment.host +
+    let url = environment.host +
             environment.csvLocation + 
             '&content_var=attachmentContent&filename=applicationDump.csv&more_flag_var=more&processVariables={"processId":"'
             + environment.api.downloadDump.processId + '"'
@@ -205,17 +116,6 @@ export class ReportsComponent implements OnInit {
             + ',"workflowId":"' + environment.api.downloadDump.workflowId + '"'
             + ',"projectId":"' + environment.api.downloadDump.projectId + '"}';
       window.open(url,'_blank');
-
-      //Production Server
-
-      // let url = environment.host +
-      //           environment.csvLocation + 
-      //           '&content_var=attachmentContent&filename=applicationDump.csv&more_flag_var=more&processVariables={"processId":"'
-      //           + environment.api.downloadDump.processId + '"'
-      //           + ',"ProcessVariables":{"fromDate":"' + "" + startDate + '","toDate":"' + "" + endDate + '","applicationStatus":' + "" + Number(this.statusId) + ',"userId":"' + "" + this.userId + '"}'
-      //           + ',"workflowId":"' + environment.api.downloadDump.workflowId + '"'
-      //           + ',"projectId":"' + environment.api.downloadDump.projectId + '"}';
-      // window.open(url,'_blank');
 
       console.log("Dump Url",url)
   }

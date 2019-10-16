@@ -1,4 +1,4 @@
- <main>
+<main>
   <div class="main">
     <div class="lyt-home">
       <div class="tabs">
@@ -205,7 +205,6 @@
                               <form class="bs-form" >
                                   <div class="form-wrap">
                                       <div *ngIf="isMobile">
-
                                           <div *ngIf="panImage" class="bs-file">
                                               <img [src]="panImage" />
                                               <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera()">Retake</button>
@@ -216,10 +215,8 @@
                                               <label tabindex="5" for="file"><span>click photo of PAN card</span></label>
                                               <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera()">open camera</button>
                                           </div>
-
                                       </div>
                                       <div *ngIf="!isMobile">
-
                                           <div class="bs-file">
                                               <input type="file" [readonly]="isTBMLoggedIn" class="form-control" (change)="setPanProof($event.target.files)" >
                                               <label for="file"><span>Click photo of Id proof</span></label>
@@ -231,7 +228,6 @@
                                                   <span ng-switch-when="true">({{idPanFileSize}})</span>
                                               </div>
                                           </div>
-
                                       </div>  
                                       
                                   </div>
@@ -2070,10 +2066,8 @@
                                                     <label tabindex="5" for="file"><span>click photo of PAN card</span></label>
                                                     <button *ngIf="isMobile" class="btn btn-primary" (click)="openCamera()">open camera</button>
                                                 </div>
-
                                             </div>
                                             <div *ngIf="!isMobile">
-
                                                 <div class="bs-file">
                                                     <input type="file" [readonly]="isTBMLoggedIn" class="form-control" (change)="setPanProof($event.target.files)" >
                                                     <label for="file"><span>Click photo of Id proof</span></label>
@@ -2085,9 +2079,7 @@
                                                         <span ng-switch-when="true">({{idPanFileSize}})</span>
                                                     </div>
                                                 </div>
-
                                             </div>  
-
                                         </div>
                                         <div class="btn-wrap">
                                             <button  *ngIf="isMobile" class="btn btn-primary" (click)="sendPanImage(imageURI)">Next</button>

@@ -550,6 +550,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
               this.coApplicantsForDashboard = result.application.applicants.filter(v => v.isMainApplicant == false);
               this.cds.enableTabsIfStatus1(this.qde.application.status);
 
+              this.loadOccupationTypeLovs(this.qde.application.applicants[this.coApplicantIndex].occupation.occupationType);
 
               if(params.coApplicantIndex != null) {
                 this.coApplicantIndex = params.coApplicantIndex;
@@ -2473,7 +2474,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       // this.qde.application.applicants[this.coApplicantIndex].isIndividual = false;
     }
 
-    
+    this.loadOccupationTypeLovs();
   }
 
   
@@ -3926,5 +3927,28 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         this.errorMessage = 'Something went wrong.';
       });
     }
+  }
+
+  loadOccupationTypeLovs(occupationType ?: string) {
+    let occupationData = {
+      userId: parseInt(localStorage.getItem("userId")),
+      applicantType: this.qde.application.applicants[this.coApplicantIndex].isIndividual == true ? 1: 2,
+    };
+  
+    this.qdeHttp.getOccupationLov(occupationData).subscribe(response => {
+      this.occupations = JSON.parse(response["ProcessVariables"]["response"])['occupation'];
+      console.log("Occupation Type",this.occupations);
+
+      if(occupationType != null) {
+        this.selectedOccupation = this.occupations.some(v => v.value == occupationType) ? this.occupations.find(v => v.value == occupationType): this.occupations[0];
+      } else {
+        this.selectedOccupation = this.occupations[0];
+      }
+      // this.selectedOccupation = this.occupations["occupation"]
+      console.log("Select Occupation Type",this.selectedOccupation)
+    }, err => {
+      this.isErrorModal = true;
+        this.errorMessage = 'Something went wrong.';
+    });
   }
 }
