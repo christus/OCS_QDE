@@ -29,9 +29,10 @@
 
           </ul>
           <div class="content tabs-contents">
-            <div class="btn-wrap back-btn-wrap">
+            <div class="btn-wrap back-btn-wrap" *ngIf="disableEdit">
                  <!-- <button (click)="onBackButtonClick()" class="btn btn-default back">back</button> -->
-                 <a href="javascript:void(0);"  class="back-btn" [routerLink]="['/applicant', applicationId]"></a>
+                 
+                 <a href="javascript:void(0);"  class="back-btn" [routerLink]="['/applicant', applicationId]" ></a>
             </div>
               <div class="tab-content active" [ngClass]="{'active': (activeTab == 0)}">
                   <h2 class="title">Enter applicant details</h2>
@@ -39,7 +40,7 @@
                     <!-- *ngIf="qde.application.applicants[applicantIndex].isIndividual == true" -->
                     
                     <div class="btn-wrap edit-btn-wrap">
-                        <button [routerLink]="['/applicant', applicationId]" class="btn btn-default edit">Edit</button>
+                        <button [routerLink]="['/applicant', applicationId]" class="btn btn-default edit"  [ngClass]="{'disabled': (!disableEdit)}">Edit</button>
                         <button (click)="downloadPdf()" class="btn btn-default download">Download</button>
                     </div>
 
@@ -111,7 +112,7 @@
                   <h2 class="title">Enter co-applicant details</h2>
                   
                   <div class="btn-wrap edit-btn-wrap">
-                    <button [routerLink]="['/applicant', applicationId, 'co-applicant']" class="btn btn-default edit">Edit</button>
+                    <button [routerLink]="['/applicant', applicationId, 'co-applicant']"   class="btn btn-default edit" [ngClass]="{'disabled': (!disableEdit)}">Edit</button>
                   </div>
                   <form   #coApplicantIndividualForm="ngForm">
 
@@ -185,7 +186,7 @@
               <div class="tab-content" [ngClass]="{'active': (activeTab == 2)}">
                  
                 <div class="btn-wrap edit-btn-wrap">
-                    <button [routerLink]="['/loan', applicationId]" class="btn btn-default edit">Edit</button>
+                    <button [routerLink]="['/loan', applicationId]" class="btn btn-default edit"  [ngClass]="{'disabled': (!disableEdit)}">Edit</button>
                   </div>  
                 <h2 class="title">Enter loan details</h2>
                   <div class="bs-card">
@@ -484,7 +485,7 @@
 
                
                 <div class="btn-wrap edit-btn-wrap">
-                    <button [routerLink]="['/references', applicationId]" class="btn btn-default edit">Edit</button>
+                    <button [routerLink]="['/references', applicationId]" class="btn btn-default edit"  [ngClass]="{'disabled': (!disableEdit)}">Edit</button>
                   </div>  
                 <h2 class="title">Enter reference details</h2>
                   <div class="bs-card">

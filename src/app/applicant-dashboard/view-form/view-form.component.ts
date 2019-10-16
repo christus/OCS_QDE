@@ -182,6 +182,8 @@ export class ViewFormComponent implements OnInit, OnDestroy {
   isViewFormModal:boolean = false;
   monthsInChar: Array<string> = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'AUG', 'NOV', 'DEC'];
 
+  disableEdit:boolean = false;
+
   @ViewChild('tabContents') tabContents: ElementRef;
 
   applicantIndividual:boolean = true;
@@ -539,6 +541,11 @@ export class ViewFormComponent implements OnInit, OnDestroy {
         
           this.prefillData();
           this.submitButtonChange();
+
+          if(this.qde.application) {
+            this.disableEdit = ((this.qde.application.status < 5)? true: false);
+          }
+
         });
       } else {
         this.qde = this.qdeService.getQde();
@@ -1097,5 +1104,9 @@ export class ViewFormComponent implements OnInit, OnDestroy {
       // this.isErrorModal = true;
       // this.errorMessage = "Something went wrong, please try again later.";
     });
+  }
+
+  checkDisableEdit() {
+
   }
 }

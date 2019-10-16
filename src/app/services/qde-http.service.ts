@@ -2688,7 +2688,7 @@ createOrUpdatePersonalDetails(qde) {
     const arrUrl = ["/static/", "/payments/thankpayment"];
 
     arrUrl.forEach(function(url) {
-      if(url.includes(currentHref)){
+      if(currentHref.includes(url)){
         that.isMobile = false;
         console.log("From mobile request....");
         return;
