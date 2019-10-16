@@ -28,7 +28,7 @@
                 <a *ngIf="isViewFormVisible && applicationId == null" class="space btn btn-default view-form">View Form</a>
                 
                 <a [routerLink]="['/view-form', applicationId]" *ngIf="isViewFormVisible && applicationId != null" class="btn btn-default view-form">View Form</a>
-                <a *ngIf="isViewFormNameShown"  [ngClass]="{'disabled': applicantBtnStatus}" class="btn btn-default logout" (click)="statusViewPage(applicationId)" >Status</a>
+                <a *ngIf="isHomeVisible"  [ngClass]="{'disabled': applicantBtnStatus}" class="btn btn-default logout" (click)="statusViewPage(applicationId)" >Status</a>
                 <a (click)="logout()" *ngIf="isLogoutVisible" class="space btn btn-default logout">Logout</a>
             </div>
         </div>

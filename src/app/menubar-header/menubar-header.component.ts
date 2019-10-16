@@ -144,7 +144,7 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
          
         }
 
-        this.referenceNumber = this.qde.application.ocsNumber || this.applicationId;
+        this.referenceNumber = this.qde.application.ocsNumber;
         return;
       }
 

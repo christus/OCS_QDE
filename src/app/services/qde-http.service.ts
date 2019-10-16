@@ -2685,11 +2685,12 @@ createOrUpdatePersonalDetails(qde) {
 
     const currentHref = window.location.href;
 
-    const arrUrl = ["/static/", "/payments/"];
+    const arrUrl = ["/static/", "/payments/thankpayment"];
 
     arrUrl.forEach(function(url) {
-      if(url.indexOf(currentHref)){
+      if(url.includes(currentHref)){
         that.isMobile = false;
+        console.log("From mobile request....");
         return;
       }
     });
