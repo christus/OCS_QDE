@@ -2829,4 +2829,26 @@ createOrUpdatePersonalDetails(qde) {
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
     return this.callPost(uri, body);
   }
+
+  getOccupationLov(data: any) {
+    const processId = environment.api.getOccupationLov.processId;
+    const workflowId = environment.api.getOccupationLov.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      ProcessVariables: data,
+      processId: processId,
+      workflowId: workflowId,
+      projectId: projectId,
+    };
+
+    const body = {
+      "processVariables":
+      JSON.stringify(requestEntity)
+    };
+
+    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.callPost(uri, body);
+  }
+
 }

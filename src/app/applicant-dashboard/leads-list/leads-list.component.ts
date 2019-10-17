@@ -147,7 +147,7 @@ export class LeadsListComponent implements OnInit {
           });
 
           this.cds.setIsEligibilityForReviews(this.isEligibilityForReviews);
-          this.isTBMLoggedIn = this.getRoles().includes("TBM") || this.getRoles().includes("TMA");
+          // this.isTBMLoggedIn = this.getRoles().includes("TBM") || this.getRoles().includes("TMA");
           this.cds.setIsTBMLoggedIn(this.isTBMLoggedIn);
         } else if (res["login_required"] && res["login_required"] === true) {
           this.utilService.clearCredentials();
@@ -187,7 +187,7 @@ export class LeadsListComponent implements OnInit {
           });
 
           this.cds.setIsEligibilityForReviews(this.isEligibilityForReviews);
-          this.isTBMLoggedIn = this.getRoles().includes("TBM") || this.getRoles().includes("TMA");
+          // this.isTBMLoggedIn = this.getRoles().includes("TBM") || this.getRoles().includes("TMA");
           this.cds.setIsTBMLoggedIn(this.isTBMLoggedIn);
         } else if (res["login_required"] && res["login_required"] === true) {
           this.utilService.clearCredentials();
@@ -228,7 +228,7 @@ export class LeadsListComponent implements OnInit {
           });
 
           this.cds.setIsEligibilityForReviews(this.isEligibilityForReviews);
-          this.isTBMLoggedIn = this.getRoles().includes("TBM") || this.getRoles().includes("TMA");
+          // this.isTBMLoggedIn = this.getRoles().includes("TBM") || this.getRoles().includes("TMA");
           this.cds.setIsTBMLoggedIn(this.isTBMLoggedIn);
         } else if (res["login_required"] && res["login_required"] === true) {
           this.utilService.clearCredentials();
@@ -272,7 +272,7 @@ export class LeadsListComponent implements OnInit {
           });
 
           this.cds.setIsEligibilityForReviews(this.isEligibilityForReviews);
-          this.isTBMLoggedIn = this.getRoles().includes("TBM") || this.getRoles().includes("TMA");
+          // this.isTBMLoggedIn = this.getRoles().includes("TBM") || this.getRoles().includes("TMA");
           this.cds.setIsTBMLoggedIn(this.isTBMLoggedIn);
         } else if (res["login_required"] && res["login_required"] === true) {
           this.utilService.clearCredentials();

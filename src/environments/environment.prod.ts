@@ -393,6 +393,10 @@ export const environment = {
       'workflowId': '46111230e45011e9935a0242ac110002',
       'processId': '462cc00ce45011e9abed0242ac110002'
     },
+    "getOccupationLov": { 
+      'workflowId': 'd6a7a3d8ee6711e99c870242ac110002',
+      'processId': 'd6c0505eee6711e98e850242ac110002'
+    },
   },
   userName: "icici@icicibankltd.com",
   password: "icici@123",
@@ -407,7 +411,7 @@ export const environment = {
   csvLocation: "/d/download/csv?",
   isMobile: false,
   //host: "https://ihfcmobileuat.icicihfc.com/appiyo"
-  // csvhost: "http://192.168.1.108/appiyo",
+  //csvhost: "http://192.168.1.108/appiyo",
   //host: "https://103.87.42.117/appiyo"
   //host:"http://www.twixor.in/appiyo"
 };
