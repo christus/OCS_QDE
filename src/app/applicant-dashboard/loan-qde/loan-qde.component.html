@@ -235,6 +235,7 @@
                                     </li>
                                   </ul>
                                 </div>
+
                               <div class="form-group">
                                   <input [readonly]="isTBMLoggedIn"
                                   type="text" autocomplete="off"
@@ -255,8 +256,8 @@
                           </div>
                           <div class="btn-wrap">
                               <button type="submit" class="btn btn-primary "
-                              [ngClass]="{'disabled': !propertyType.valid}"
-                              [disabled]="!propertyType.valid">Next</button>
+                              [ngClass]="{'disabled': !propertyType.valid || propertyClssValue != tempClssArea}"
+                              [disabled]="propertyType.invalid || propertyClssValue != tempClssArea">Next</button>
                           </div>
                       </form>
                   </div>

@@ -253,7 +253,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   isLoanProductPage: boolean;
 
-  allClssAreas: Array<any>;
+  allClssAreas: Array<any> = [];
   isNumberLessThan50k: boolean;
 
   fragmentSub: Subscription;
@@ -269,6 +269,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   isErrorModal:boolean;
   errorMessage:string;
+  tempClssArea: string;
 
   constructor(
     private renderer: Renderer2,
@@ -1275,6 +1276,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
   selectClssArea(c) {
     this.propertyClssLabel = c.label;
     this.propertyClssValue = c.value;
+    this.tempClssArea = this.propertyClssValue;
     this.allClssAreas = [];
   }
 

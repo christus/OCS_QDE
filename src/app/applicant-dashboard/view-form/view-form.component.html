@@ -265,12 +265,12 @@
                               <div class="col-12">
                                   <h5 class="subtitle">Have you identified property?</h5>
                                   <div class="bs-radio">
-                                      <input readonly="true" id="pro-ye" type="radio" name="pro-id" [value]=true [(ngModel)]="isPropertyIdentified">
+                                      <input disabled="true" class="disabled" readonly="true" id="pro-ye" type="radio" name="pro-id" [value]=true [(ngModel)]="isPropertyIdentified">
                                      <label for="pro-yes"><span>Yes</span></label>
                                   </div>
                                   <div class="bs-radio">
-                                      <input readonly="true" id="pro-n" type="radio" name="pro-id" [value]=false [(ngModel)]="isPropertyIdentified">
-                                      <label for="pro-no"><span>No</span></label>
+                                      <input disabled="true" class="disabled" readonly="true" id="pro-n" type="radio" name="pro-id" [value]=false [(ngModel)]="isPropertyIdentified">
+                                      <label for="pro-no" disabled="true" class="disabled"><span>No</span></label>
                                   </div>
                               </div>
                           </div>
