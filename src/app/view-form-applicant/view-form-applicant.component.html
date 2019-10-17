@@ -833,7 +833,7 @@
                 <div class="col-12">
                     <h5 class="subtitle">Do you recieve pension</h5>
                     <div class="bs-radio">
-                        <input spellcheck="false" type="radio" name="pensioner" [value]="1"
+                        <input disabled="true" class="disabled" spellcheck="false" type="radio" name="pensioner" [value]="1"
                             [checked]="qde.application.applicants[applicantIndex].occupation.pensioner == true"
                             fieldFill id="pensionerIdYes1" />
                         <label for="pensionerIdYes1">
@@ -841,7 +841,7 @@
                         </label>
                     </div>
                     <div class="bs-radio">
-                            <input spellcheck="false" type="radio" name="pensioner"
+                            <input disabled="true" class="disabled" spellcheck="false" type="radio" name="pensioner"
                             [value]="2" id="pensionerIdNo1"
                             [checked]="qde.application.applicants[applicantIndex].occupation.pensioner == false"
                             fieldFill />
