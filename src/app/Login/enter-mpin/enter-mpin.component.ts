@@ -104,7 +104,9 @@ export class EnterMPINComponent implements OnInit {
 
     this.qdeService.resetMpin(data).subscribe(
       res => {
-        alert("mPIN successfully resent");
+        if (res["ProcessVariables"]["status"]) {
+          alert("mPIN successfully resent");
+        }
       },
       error => {
         console.log(error);

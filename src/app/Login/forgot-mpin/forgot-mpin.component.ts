@@ -60,8 +60,10 @@ export class ForgotMPINComponent implements OnInit {
 
         this.qdeService.resetMpin(data).subscribe(
           res => {
-            console.log("move to confirm pin");
-            this.router.navigate(["/ConfirmPin", {"EmpId": empId} ]);
+            if (res["ProcessVariables"]["status"]) {
+              console.log("move to confirm pin");
+              this.router.navigate(["/ConfirmPin", {"EmpId": empId} ]);
+            }
           },
           error => {
             console.log(error);

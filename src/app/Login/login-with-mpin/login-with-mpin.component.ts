@@ -97,13 +97,15 @@ export class LoginWithMPINComponent implements OnInit {
       
           this.qdeService.loginMpin(data).subscribe(
             res => {
-              console.log("ROLE LOGIN: ", res['ProcessVariables']['roleName']);
-              localStorage.setItem("userId", res["ProcessVariables"]["userId"]);
-              localStorage.setItem('roles', JSON.stringify(res["ProcessVariables"]["roleName"]));
-              this.roleLogin();
-              localStorage.setItem("firstTime", "true");
-              
-              this.router.navigate(["/leads"]);
+              if (res["ProcessVariables"]["status"]) {
+                console.log("ROLE LOGIN: ", res['ProcessVariables']['roleName']);
+                localStorage.setItem("userId", res["ProcessVariables"]["userId"]);
+                localStorage.setItem('roles', JSON.stringify(res["ProcessVariables"]["roleName"]));
+                this.roleLogin();
+                localStorage.setItem("firstTime", "true");
+                
+                this.router.navigate(["/leads"]);
+              }
             },
             error => {
               console.log(error);
