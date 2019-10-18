@@ -828,7 +828,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       // Assesment methodology
       console.log("AM: ", this.assessmentMethodology);
       if( ! isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].incomeDetails.assessmentMethodology)) ) {
-        this.selectedAssesmentMethodology = this.assessmentMethodology.find(v => v.value == this.qde.application.applicants[this.applicantIndex].incomeDetails.assessmentMethodology);
+        // this.selectedAssesmentMethodology = this.assessmentMethodology.find(v => v.value == this.qde.application.applicants[this.applicantIndex].incomeDetails.assessmentMethodology);
+         this.selectedAssesmentMethodology = this.getSelectedValue(this.qde.application.applicants[this.applicantIndex].incomeDetails.assessmentMethodology, this.assessmentMethodology);
       }
 
       /******************************************************************************
