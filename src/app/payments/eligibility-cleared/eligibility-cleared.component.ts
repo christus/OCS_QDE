@@ -75,6 +75,9 @@ export class EligibilityClearedComponent implements OnInit {
  
   }
 
+  isEligible : boolean = false;
+  isNotEligible : boolean = false;
+  isUnderReview :boolean = false;
 
   submitEligibility() {
     this.qdeHttp.cibilDetails(this.ocsNumber).subscribe(res => {
@@ -82,10 +85,13 @@ export class EligibilityClearedComponent implements OnInit {
         console.log("res: ", res['ProcessVariables'].toLowerCase);
         this.emiAmount = parseInt(res['ProcessVariables']['emi']);
         this.eligibleAmount = parseInt(res['ProcessVariables']['eligibilityAmount']);
+        this.isEligible = true;
       }
       else if(res['ProcessVariables']['checkEligibility'].toLowerCase() == 'no'){
+        this.isNotEligible = true;
       }
       else if(res['ProcessVariables']['checkEligibility'].toLowerCase() == 'review'){
+        this.isUnderReview = true;
       }
       else{
         alert("Server is Down!!!");

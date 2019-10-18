@@ -33,7 +33,7 @@
 
                   </div>
 
-                  <div class="info-box-wrap">
+                  <div class="info-box-wrap" *ngIf="isEligible">
                       <span class="tag">Your Provisional Eligibility is</span>
                       <div class="info-wrap">
                           <span class="info">
@@ -46,6 +46,34 @@
 
                       </div>
                   </div>
+
+                  <div class="info-box-wrap" *ngIf="isNotEligible">
+                    <span class="tag">You have not cleared your eligibility. Our representative will contact you soon</span>
+                    <!-- <div class="info-wrap">
+                        <span class="info">
+                                    Loan: <span class="cm-bold">₹{{eligibleAmount}}</span>
+                        </span>
+                        <span class="info">
+                                    
+                                    EMI: <span class="cm-bold">₹{{emiAmount}}</span>
+                        </span>
+
+                    </div> -->
+                </div>
+
+                <div class="info-box-wrap" *ngIf="isUnderReview">
+                    <span class="tag">Your eligibility is under review</span>
+                    <!-- <div class="info-wrap">
+                        <span class="info">
+                                    Loan: <span class="cm-bold">₹{{eligibleAmount}}</span>
+                        </span>
+                        <span class="info">
+                                    
+                                    EMI: <span class="cm-bold">₹{{emiAmount}}</span>
+                        </span>
+
+                    </div> -->
+                </div>
 
               </div>
           </div>

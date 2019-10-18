@@ -3010,16 +3010,16 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       }
 
       // Occupation details
-      if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].occupation.occupationType)) ) {
-        this.selectedOccupation = this.occupations.find(e => e.value == this.qde.application.applicants[this.coApplicantIndex].occupation.occupationType);
-      }
+      // if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].occupation.occupationType)) ) {
+      //   this.selectedOccupation = this.occupations.find(e => e.value == this.qde.application.applicants[this.coApplicantIndex].occupation.occupationType);
+      // }
 
       // Assesment methodology
       console.log("AM: ", this.assessmentMethodology);
       if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].incomeDetails.assessmentMethodology)) ) {
         // this.selectedAssesmentMethodology = this.assessmentMethodology[(parseInt(this.qde.application.applicants[this.coApplicantIndex].incomeDetails.assessmentMethodology))-1];
-        this.selectedAssesmentMethodology = this.assessmentMethodology.find(v => v.value == this.qde.application.applicants[this.coApplicantIndex].incomeDetails.assessmentMethodology);
-
+        // this.selectedAssesmentMethodology = this.assessmentMethodology.find(v => v.value == this.qde.application.applicants[this.coApplicantIndex].incomeDetails.assessmentMethodology);
+         this.selectedAssesmentMethodology = this.getSelectedValue(this.qde.application.applicants[this.coApplicantIndex].incomeDetails.assessmentMethodology, this.assessmentMethodology);
       }
 
       // try {

@@ -788,10 +788,19 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
             this.selectedResidence = this.getSelectedValue(this.qde.application.applicants[this.applicantIndex].communicationAddress.residentialStatus, this.residences);
           }
 
+<<<<<<< HEAD
+      // Assesment methodology
+      console.log("AM: ", this.assessmentMethodology);
+      if( ! isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].incomeDetails.assessmentMethodology)) ) {
+        // this.selectedAssesmentMethodology = this.assessmentMethodology.find(v => v.value == this.qde.application.applicants[this.applicantIndex].incomeDetails.assessmentMethodology);
+         this.selectedAssesmentMethodology = this.getSelectedValue(this.qde.application.applicants[this.applicantIndex].incomeDetails.assessmentMethodology, this.assessmentMethodology);
+      }
+=======
           if (!isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].maritalStatus.status))) {
             // this.selectedMaritialStatus = this.maritals[(parseInt(this.qde.application.applicants[this.applicantIndex].maritalStatus.status))-1];
             this.selectedMaritialStatus = this.getSelectedValue(this.qde.application.applicants[this.applicantIndex].maritalStatus.status, this.maritals);
           }
+>>>>>>> master
 
           if (!isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].maritalStatus.spouseTitle))) {
             // this.selectedSpouseTitle = this.titles[(parseInt(this.qde.application.applicants[this.applicantIndex].maritalStatus.spouseTitle))-1];
