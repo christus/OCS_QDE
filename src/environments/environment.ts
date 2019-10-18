@@ -12,9 +12,10 @@ export const environment = {
   },
   projectId: '5928d30eac7811e9a1670242ac110002', //developement
 
- // projectId: '3209f7ea7ba811e982270242ac110002', //production
+  //projectId: '3209f7ea7ba811e982270242ac110002', //production
 
- //projectId: 'ff8e364e6fce11e98754782bcb8f3845',
+  // projectId: 'ff8e364e6fce11e98754782bcb8f3845',
+
   api: {
     'dashboard': {
       'workflowId': '050f5c82789a11e982270242ac110002',
@@ -410,7 +411,8 @@ export const environment = {
   //host: "https://ihfcmobileuat.icicihfc.com/appiyo",
   driveLocation: "/d/drive/docs/",
   csvLocation: "/d/download/csv?",
-  isMobile: false
+  isMobile: false,
+  mobileExtenstion: "@icicibankltd.com"
   //host: ""
 
 };

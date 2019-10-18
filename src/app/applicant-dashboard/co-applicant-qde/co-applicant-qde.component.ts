@@ -144,6 +144,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   isDisabled: boolean = false;
   interval;
   timeLeft : number = 180;
+  isOTPExpired:boolean = false;
+  isOTPEmpty: boolean = true;
 
   activeTab: number = 0;
   dob: {day: Item, month: Item, year: Item} = { day: {key: "DD", value: "DD"}, month: {key: "MM", value: "MM"}, year: {key: "YYYY", value: "YYYY"} };
@@ -3470,6 +3472,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   resendOTP() {
+    this.isOTPExpired=false;
+    this.isOTPEmpty=true;
+    this.otp="";
     this.stopInterval();
     const mobileNumber = this.qde.application.applicants[this.coApplicantIndex].contactDetails.mobileNumber ;
     const emailId = this.qde.application.applicants[this.coApplicantIndex].contactDetails.preferredEmailId;
@@ -3488,8 +3493,19 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   }
   onBackOTP() {
     console.log("Back button pressed")
-    this.inOTP = false; 
+    this.inOTP = false;
+    this.otp=""; 
+    this.isOTPExpired = false;
+    this.isOTPEmpty=true;
     this.stopInterval();
+  }
+
+  checkOTPEmpty(){
+    if(this.otp=="" || this.otp.length<4){
+      this.isOTPEmpty=true;
+    }else{
+      this.isOTPEmpty=false;
+    }
   }
 
   validateOTP(form: NgForm) {
@@ -3499,8 +3515,12 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     const otp = form.value.otp;
     const applicationId = this.qde.application.applicationId;
     const emailId = this.qde.application.applicants[this.coApplicantIndex].contactDetails.preferredEmailId;
-
-    this.validateOTPAPISub = this.qdeHttp.validateOTPAPI(mobileNumber, applicantId, applicationId, otp, this.isAlternateStatus, emailId).subscribe(res => {
+    if(this.timeLeft == 0){
+      this.isOTPExpired = true;
+      this.otp="";
+      this.isOTPEmpty=true;
+    }else{
+        this.validateOTPAPISub = this.qdeHttp.validateOTPAPI(mobileNumber, applicantId, applicationId, otp, this.isAlternateStatus, emailId).subscribe(res => {
       if(res['ProcessVariables']['status'] == true) {
         this.otp = "";
         // alert("OTP verified successfully");
@@ -3518,6 +3538,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       this.isErrorModal = true;
       this.errorMessage = "Something went wrong, please try again later.";
     });
+  }
   }
 
   allowOnlyNumbers() {

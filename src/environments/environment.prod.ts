@@ -1,10 +1,12 @@
 export const environment = {
   version: "1.7.9",
-  buildDate: "16-10-2019",
+  buildDate: "17-10-2019",
   production: true,
   projectId: '5928d30eac7811e9a1670242ac110002', //developement
 
   //projectId: '3209f7ea7ba811e982270242ac110002', //production
+
+  //projectId: 'ff8e364e6fce11e98754782bcb8f3845', // UAT Development
 
   status: {
     QDECREATED: "1"
@@ -404,12 +406,13 @@ export const environment = {
   appiyoDrive: "/d/drive/upload/",
   driveLocation: "/d/drive/docs/",
   ocsHost: "/ocs",
-  //host: "http://192.168.1.108/appiyo",
+  host: "http://192.168.1.108/appiyo",
   //host: "/ProcessStore",
-  host:  "/appiyo",
+  //host:  "/appiyo",
   pdfLocation: "/d/download/pdf?",
   csvLocation: "/d/download/csv?",
   isMobile: false,
+  mobileExtenstion: "@icicibankltd.com"
   //host: "https://ihfcmobileuat.icicihfc.com/appiyo"
   //csvhost: "http://192.168.1.108/appiyo",
   //host: "https://103.87.42.117/appiyo"

@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
 import { UtilService } from '../../services/util.service';
+import { environment } from '../../../environments/environment';
 
 
 @Component({
@@ -40,7 +41,7 @@ export class SetMpinComponent implements OnInit {
     console.log("UserName", this.userName);
 
     if(this.userName) {
-      var empId = this.userName.trim() + "@icicibankltd.com";
+      var empId = this.userName.trim() + environment.mobileExtenstion;
 
       var data = {
         empId : empId,

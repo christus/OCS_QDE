@@ -760,7 +760,7 @@
                 <div class="form-wrap1">
                   <div class="form-group otp_input_len">
                     <input [readonly]="isTBMLoggedIn" type="text" class="form-control" id="otp" name="otp" autocomplete="off"
-                      [(ngModel)]="otp" maxlength="4" #otpValue="ngModel" pattern="{{regexPattern.otp}}" fieldFill>
+                      [(ngModel)]="otp" maxlength="4" #otpValue="ngModel" pattern="{{regexPattern.otp}}" fieldFill (input)="checkOTPEmpty()">
                     <label for="otp">OTP</label>
                     <div *ngIf="(otpValue.touched || otpValue.dirty) && otpValue.invalid"
                     class="invalid-feedback">
@@ -772,11 +772,16 @@
                         <div class="pull-right resend_otp_size">Resend OTP</div>
                       </a>
                     </span>
+                    <br><br>
+                    <span *ngIf="isOTPExpired" class="invalid-feedback">OTP Expired. Kindly resend
+                    OTP</span>
                   </div>
                 </div>
                 <div class="btn-wrap">
-                  <button class="btn btn-border" style='margin-right:16px' [disabled]="isTBMLoggedIn"
-                    [ngClass]="{'disabled': isTBMLoggedIn}" (click)="validateOTP(isValidOTP)">Verify</button>
+                  <button class="btn btn-border" style='margin-right:16px' [disabled]="isOTPEmpty"
+                  [ngClass]="{'disabled': isOTPEmpty}" [disabled]="isOTPExpired"
+                  [ngClass]="{'disabled': isOTPExpired}" [disabled]="isTBMLoggedIn"
+                  [ngClass]="{'disabled': isTBMLoggedIn}" (click)="validateOTP(isValidOTP)">Verify</button>
                   <button class="btn btn-border" style='margin-right:16px' [disabled]="isTBMLoggedIn"
                     [ngClass]="{'disabled': isTBMLoggedIn}" (click)="onBackOTP()">Cancel</button>
                 </div>
