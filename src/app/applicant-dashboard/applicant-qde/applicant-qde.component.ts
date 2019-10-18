@@ -2947,7 +2947,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   // }
 
 
-  selectValueChanged(event, to, key) {
+  selectValueChanged(event, to, key?) {
     let whichSelectQde = this.qde.application.applicants[this.applicantIndex];
     let nick = to.getAttribute('nick').split(".");
     to.getAttribute('nick').split(".").forEach((val, i) => {

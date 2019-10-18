@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { QdeHttpService } from 'src/app/services/qde-http.service';
 import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
+import { environment } from '../../../environments/environment';
 
 
 
@@ -94,7 +95,7 @@ export class EnterMPINComponent implements OnInit {
     ).catch((error: any) => console.log(error));   
 
 
-    var empId = this.empId + "@icici.com";
+    var empId = this.empId;
 
     var data = {
       empId : empId,
