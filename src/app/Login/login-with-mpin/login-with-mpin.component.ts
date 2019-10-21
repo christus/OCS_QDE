@@ -34,11 +34,11 @@ export class LoginWithMPINComponent implements OnInit {
 
   constructor(private router: Router,
     private qdeService: QdeHttpService,
-  
     private commonDataService: CommonDataService) {
 
       console.log("loginwithmpin");
-     }
+  }
+     
 
   ngOnInit() {
   }
@@ -101,10 +101,12 @@ export class LoginWithMPINComponent implements OnInit {
                 console.log("ROLE LOGIN: ", res['ProcessVariables']['roleName']);
                 localStorage.setItem("userId", res["ProcessVariables"]["userId"]);
                 localStorage.setItem('roles', JSON.stringify(res["ProcessVariables"]["roleName"]));
-                this.roleLogin();
                 localStorage.setItem("firstTime", "true");
-                
+                this.roleLogin();   
                 this.router.navigate(["/leads"]);
+              }else if(res['ProcessVariables']['errorMessage']){
+                this.loginError = true;
+                this.errorMsg = res['ProcessVariables']['errorMessage'];
               }
             },
             error => {
@@ -129,18 +131,25 @@ export class LoginWithMPINComponent implements OnInit {
   roleLogin() {
     this.qdeService.roleLogin().subscribe(
       res => {
-        console.log("ROLE Name: ", res);
-        let roleName = JSON.stringify(res["ProcessVariables"]["roleName"]);
-        // localStorage.setItem("userId", res["ProcessVariables"]["userId"]);
-        // localStorage.setItem('roles', roleName);
+        if (res["ProcessVariables"]["status"]) {
+          console.log("ROLE Name: ", res);
 
-        if(roleName.includes("Admin")) {
-          this.router.navigate(["/admin/lovs"]);
-          //this.router.navigate(["/user-module"]);
-          return;
+          
+          let roleName = JSON.stringify(res["ProcessVariables"]["roleName"]);
+          // localStorage.setItem("userId", res["ProcessVariables"]["userId"]);
+          // localStorage.setItem('roles', roleName);
+
+          if(roleName.includes("Admin")) {
+            this.router.navigate(["/admin/lovs"]);
+            //this.router.navigate(["/user-module"]);
+            return;
+          }
+
+          //this.router.navigate(["/leads"]);
+        }else if(res['ProcessVariables']['errorMessage']){
+          this.errorMsg = (res['ProcessVariables']['errorMessage']);
+          this.loginError = true;
         }
-
-        this.router.navigate(["/leads"]);
       },
       error => {
         console.log(error);

@@ -31,3 +31,15 @@
           </form>
       </div>
   </div>
+</div>
+
+<div class="overlay" [ngClass]="{'active': logError}"></div>
+<div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': logError}">
+<!-- <a class="modal-close" href="javascript:void(0);" (click)="onBackOTP()"><span class="icon icon-close"></span></a> -->
+<div class="modal-body">
+    <h1 class="center">{{errorMsg}}</h1>
+    <div class="btn-wrap">
+    <button class="btn btn-border" (click)="logError = false">Cancel</button>
+    </div>
+</div>
+</div>

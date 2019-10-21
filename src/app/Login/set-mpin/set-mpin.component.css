@@ -4,3 +4,7 @@
 .overflow_hidden {
 	overflow: hidden;
 }
+
+.bs-form .form-group.filled label {
+	margin-top: 20px !important;
+}

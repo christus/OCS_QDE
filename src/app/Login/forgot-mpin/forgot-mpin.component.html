@@ -13,7 +13,7 @@
       <form class="bs-form width_80">
           <div class="form-wrap">
               <div class="form-group last overflow_hidden">
-                  <input type="text" class="form-control" id="emp-id" name="userName"  [(ngModel)]="userName" fieldFill>
+                  <input type="text" class="form-control" id="emp-id" name="userName"  [(ngModel)]="userName" oninput="this.value = this.value.toUpperCase()" fieldFill>
                   <label for="emp-id" >Employee ID</label>
               </div>
           </div>
@@ -22,4 +22,15 @@
           </div>
       </form>
   </div>
+</div>
+
+<div class="overlay" [ngClass]="{'active': logError}"></div>
+<div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': logError}">
+<!-- <a class="modal-close" href="javascript:void(0);" (click)="onBackOTP()"><span class="icon icon-close"></span></a> -->
+<div class="modal-body">
+    <h1 class="center">{{errorMsg}}</h1>
+    <div class="btn-wrap">
+    <button class="btn btn-border" (click)="logError = false">Cancel</button>
+    </div>
+</div>
 </div>

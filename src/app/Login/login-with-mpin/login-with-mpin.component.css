@@ -1,3 +1,7 @@
 .lyt-login {
 	position: absolute;
 }
+
+.bs-form .form-group.filled label {
+	margin-top: 0px !important;
+}

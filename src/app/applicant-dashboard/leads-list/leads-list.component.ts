@@ -1,3 +1,5 @@
+import { Router } from '@angular/router';
+import { MobileService } from './../../services/mobile-constant.service';
 import { Component, OnInit } from "@angular/core";
 import { QdeHttpService } from "src/app/services/qde-http.service";
 import { UtilService } from "src/app/services/util.service";
@@ -55,8 +57,23 @@ export class LeadsListComponent implements OnInit {
   newLeadsStatus: string = "5";
   pendingAppStatus: string = "pendingApplication";
   pendingPaymentStatus: string = "pendingPayment";
+  isMobile:boolean;
 
-  constructor(private service: QdeHttpService, private utilService: UtilService, private cds: CommonDataService) {
+  constructor(private service: QdeHttpService, private utilService: UtilService, private cds: CommonDataService, 
+    private mobileService: MobileService,
+    private router: Router) {
+    this.isMobile = this.mobileService.isMobile;
+    if(this.isMobile) {
+      let isFirstTime = localStorage.getItem("firstTime");
+      console.log("on reload of application -leads", isFirstTime);
+
+      if(isFirstTime == null) {
+        this.router.navigate(['/setPin']);
+        return;
+      }
+
+    }
+
 
     this.cds.setactiveTab(screenPages["applicantDetails"]);
     this.cds.changeApplicationId(null);

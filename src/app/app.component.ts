@@ -30,7 +30,7 @@ export class AppComponent implements OnInit{
     private deviceService: DeviceDetectorService,
     private mobileService: MobileService) { 
       this.isMobile = this.mobileService.isMobile;
-
+      
       if(this.isMobile){
         this.renderer.addClass(document.body, 'mobile');
       }

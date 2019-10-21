@@ -16,6 +16,8 @@ export class SetMpinComponent implements OnInit {
 
   userName = "";
   uuID:string;
+  errorMsg:string;
+  loginError:boolean;
 
   constructor(private router: Router, private qdeService: QdeHttpService, private uniqueDeviceID: UniqueDeviceID,
     private utilService: UtilService ) { 
@@ -52,6 +54,9 @@ export class SetMpinComponent implements OnInit {
           if (res["ProcessVariables"]["status"]) {
             console.log("move to confirm pin");
             this.router.navigate(["/ConfirmPin", {"EmpId": empId} ]);
+          }else if(res['ProcessVariables']['errorMessage']){
+            this.errorMsg = (res['ProcessVariables']['errorMessage']);
+            this.loginError = true;
           }
         },
         error => {

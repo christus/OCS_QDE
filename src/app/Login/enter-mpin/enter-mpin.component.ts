@@ -25,6 +25,10 @@ export class EnterMPINComponent implements OnInit {
 
   values = '';
 
+  logError = false;
+
+  errorMsg = "";
+
   @ViewChild('mPin') input:ElementRef; 
 
 
@@ -54,8 +58,13 @@ export class EnterMPINComponent implements OnInit {
 
     this.qdeService.loginMpin(data).subscribe(
       res => {
+        if (res["ProcessVariables"]["status"]) {
         console.log("move to confirm pin");
         this.router.navigate(["/loginWithPin"]);
+        }else if(res['ProcessVariables']['errorMessage']){
+          this.logError = true;
+          this.errorMsg = res['ProcessVariables']['errorMessage'];
+        }
       },
       error => {
         console.log(error);
@@ -105,7 +114,11 @@ export class EnterMPINComponent implements OnInit {
     this.qdeService.resetMpin(data).subscribe(
       res => {
         if (res["ProcessVariables"]["status"]) {
-          alert("mPIN successfully resent");
+          this.logError = true;
+          this.errorMsg = "mPIN successfully resent";
+        }else if(res['ProcessVariables']['errorMessage']){
+          this.logError = true;
+          this.errorMsg = res['ProcessVariables']['errorMessage'];
         }
       },
       error => {

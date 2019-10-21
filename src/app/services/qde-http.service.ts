@@ -2716,6 +2716,7 @@ createOrUpdatePersonalDetails(qde) {
         console.log("post ********");
         this.httpIonic.post(url, requestEntity, headers).then(result => {
           const data = JSON.parse(result.data);
+          console.log("~~~***Response***~~~", data);
           observer.next(data);
           observer.complete();
           this.ngxService.stop();
@@ -2723,6 +2724,7 @@ createOrUpdatePersonalDetails(qde) {
           observer.error(error);
           observer.complete();
           this.ngxService.stop();
+          console.log("~~~***Response error***~~~", error);
         });
 
       });
