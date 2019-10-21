@@ -1,7 +1,9 @@
 <h1 class="title">Error Message Handling</h1>
-
+&nbsp; &nbsp;<input type="text" class="search" placeholder="Search" (input)="search($event)" />
+<br><br>
+<div *ngIf="!searchNotFound">
 <div class="list">
-    <table class="table table-striped- table-bordered table-hover table-checkable">
+    <table class="admin-table">
         <thead>
           <tr>
             <th>Error Code</th>
@@ -22,3 +24,5 @@
       </table>
 </div>
 <pagination-controls  (pageChange)="pageChanged($event)" class="pagination"></pagination-controls>
+</div>
+<span *ngIf="searchNotFound" class="notfound">No results found</span>											

@@ -2367,6 +2367,27 @@ createOrUpdatePersonalDetails(qde) {
     return this.callPost(uri, body);
 
   }
+  searchErrorHandlingMessage(data) {
+    const processId = environment.api.getErrorMessage.processId;
+    const workflowId = environment.api.getErrorMessage.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: data,
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = {
+      'processVariables':
+      JSON.stringify(requestEntity)
+    };
+
+    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    return this.callPost(uri, body);
+
+  }
   getErrorIdHandlingMessage(data) {
     const processId = environment.api.getErrorIdMessage.processId;
     const workflowId = environment.api.getErrorIdMessage.workflowId;

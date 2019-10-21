@@ -34,7 +34,28 @@
     float: right;
 }
 .title {
-    border-bottom: 1px solid #ddd;
-    font-size: 5vh;
-    padding: 1.1vh 0;
+    display: inline-block;
+    margin-left: 15px;
+    margin-right: 15px;
+    vertical-align: middle;
+}
+
+.gobackbtn {
+    background: #e66e23;
+    border: none;
+    padding: 4px 10px;
+    color: #fff;
+    box-shadow: 1px 1px 3px 0 #333;
+    margin-left: 15px;
+    margin-right: 15px;
+    vertical-align: middle;
+}
+
+.gobackbtn:hover,
+.gobackbtn:focus {
+    box-shadow: none;
+}
+
+.gobackbtn:active {
+    box-shadow: inset 1px 1px 3px 0 #333;
 }

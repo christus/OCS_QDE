@@ -16,6 +16,7 @@ export class ErrorHandlingMessageComponent implements OnInit {
   perPage: string;
   filterData: number;
   enableLoadMore: boolean;
+  searchNotFound: boolean= false;
   constructor( private qdeHttp: QdeHttpService ) { }
 
   ngOnInit() {
@@ -25,6 +26,7 @@ export class ErrorHandlingMessageComponent implements OnInit {
     this.getErrorHandlingMessage(data);
   }
   getErrorHandlingMessage(data) {
+    this.searchNotFound=false;
         this.qdeHttp.getErrorHandlingMessage(data).subscribe((response) =>{
      console.log("errormsg:",response);
  
@@ -44,5 +46,39 @@ export class ErrorHandlingMessageComponent implements OnInit {
   data["currentPage"] = value;
   this.getErrorHandlingMessage(data);
 }
-
+search(searchEvent){
+  var searchVal:string = searchEvent.target.value;
+  if(searchVal==""){
+    let data = {};
+    data["currentPage"] = 1;
+    this.filterData = 1;
+    this.getErrorHandlingMessage(data);
+  }else if(searchVal){
+    /*var searchRes = this.collection.filter(function(val){
+      return val.errorMessage.toLowerCase().includes(searchVal.toLowerCase());
+    });
+    */
+    let data = {};
+    data["currentPage"] = 1;
+    data["searchKey"]=searchVal;
+    this.filterData = 1;
+    this.qdeHttp.searchErrorHandlingMessage(data).subscribe((response) =>{
+      console.log("errormsg:",response);
+      if(response!=""){
+        this.collection = response['ProcessVariables'].errorDetails;
+        this.totalPages = response['ProcessVariables'].totalPages;
+          this.from = response['ProcessVariables'].from;
+          this.currentPage = response['ProcessVariables'].currentPage;
+          this.perPage = response['ProcessVariables'].perPage;
+          this.totalItems = parseInt(this.totalPages) * parseInt(this.perPage);
+          if (this.currentPage == this.totalPages) {
+            this.enableLoadMore = false;
+          }
+        }else{
+        this.searchNotFound=true;
+        this.collection=null;
+      }
+    });
+    }
+  }
 }
