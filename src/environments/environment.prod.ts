@@ -1,10 +1,10 @@
 export const environment = {
   version: "1.8.0",
-  buildDate: "18-10-2019",
+  buildDate: "22-10-2019",
   production: true,
-  //projectId: '5928d30eac7811e9a1670242ac110002', //developement
+  projectId: '5928d30eac7811e9a1670242ac110002', //developement
 
-  projectId: '3209f7ea7ba811e982270242ac110002', //production
+  // projectId: '3209f7ea7ba811e982270242ac110002', //production
 
   //projectId: 'ff8e364e6fce11e98754782bcb8f3845', // UAT Development
 
@@ -414,6 +414,8 @@ export const environment = {
   isMobile: false,
   mobileExtenstion: "@icicibankltd.com",
  // host: "https://ihfcmobileuat.icicihfc.com/appiyo"
+  aesPublicKey: 'MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJ+GJdSSEeaNFBLqyfM3DIOgQgWCwJ0INfeZZV7ITsLeuA7Yd02rrkYGIix1IWvoebWVmzhncUepYxHwK1ARCdUCAwEAAQ=='
+  //host: "https://ihfcmobileuat.icicihfc.com/appiyo"
   //csvhost: "http://192.168.1.108/appiyo",
   //host: "https://103.87.42.117/appiyo"
   //host:"http://www.twixor.in/appiyo"

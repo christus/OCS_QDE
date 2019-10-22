@@ -59,7 +59,8 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
               private commonDataService: CommonDataService,
               private _router: Router,
               private qdeService: QdeService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private qdehttp: QdeHttpService) {
 
     this.route.params.subscribe(val => {
       this.applicationId = val.applicationId;
@@ -236,7 +237,14 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
   }
 
   logout() {
+    this.qdehttp.logout().subscribe(
+      res => {
+      },
+      error => {
+      }
+    );
     this.utilService.clearCredentials();
+   
 
     // this.utilService.logout().subscribe(
     //   res => {

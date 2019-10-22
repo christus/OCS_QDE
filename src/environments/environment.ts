@@ -412,7 +412,8 @@ export const environment = {
   driveLocation: "/d/drive/docs/",
   csvLocation: "/d/download/csv?",
   isMobile: false,
-  mobileExtenstion: "@icicibankltd.com"
+  mobileExtenstion: "@icicibankltd.com",
+  aesPublicKey: 'MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJ+GJdSSEeaNFBLqyfM3DIOgQgWCwJ0INfeZZV7ITsLeuA7Yd02rrkYGIix1IWvoebWVmzhncUepYxHwK1ARCdUCAwEAAQ=='
   //host: ""
 
 };
