@@ -53,7 +53,7 @@
         <div class="selectBox form-field-el">
             <label class="controltitle">User role</label>
             <select class="form-control" formControlName="userRoleId" >
-                <option [ngValue]="null" disabled>Choose your role</option>
+                <!-- <option disabled>Choose your role</option> -->
                 <option *ngFor="let userRole of userRoles" value={{userRole.value}}>
                     {{userRole.key}}
                 </option>
