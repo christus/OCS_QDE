@@ -1012,9 +1012,9 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
       //   loanProvider: this.selectedLoanProvider
       // };
 
-      this.qde.application.applicants.find(v => v.applicantId == this.selectedApplicant.value).existingLoans.loanProvider = this.selectedLoanProvider.value+"";
+      this.qde.application.applicants[this.selectedApplicantIndex].existingLoans.loanProvider = this.selectedLoanProvider.value? this.selectedLoanProvider.value+"": this.selectedLoanProvider+"";
   
-      this.qde.application.applicants.find(v => v.applicantId == this.selectedApplicant.value).existingLoans.monthlyEmi = parseInt(this.monthlyEmiValue+''.split(',').join(''));
+      this.qde.application.applicants[this.selectedApplicantIndex].existingLoans.monthlyEmi = parseInt(this.monthlyEmiValue+''.split(',').join(''));
 
       
       this.qdeHttp
@@ -1053,6 +1053,15 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.selectedApplicantIndex = this.qde.application.applicants.findIndex(v => v.applicantId == this.selectedApplicant.value);
     let s = this.qde.application.applicants.find(v => v.applicantId == this.selectedApplicant.value);
     this.selectedApplicantName = s.personalDetails ? `${s.personalDetails['firstName']} ${s.personalDetails['lastName']}`: '';
+   
+    this.liveLoan =  this.qde.application.applicants[this.selectedApplicantIndex].existingLoans? this.qde.application.applicants[this.selectedApplicantIndex].existingLoans.liveLoan: 0 ;
+    
+
+    this.selectedLoanProvider = this.qde.application.applicants[this.selectedApplicantIndex].existingLoans.loanProvider != '' ?  this.loanProviderList.find(v => v.value == this.qde.application.applicants[this.selectedApplicantIndex].existingLoans.loanProvider)    : this.loanProviderList[0];
+
+    console.log("slected loan provider", this.qde.application.applicants[this.selectedApplicantIndex].existingLoans.loanProvider);
+    this.monthlyEmiValue = this.qde.application.applicants[this.selectedApplicantIndex].existingLoans ? this.qde.application.applicants[this.selectedApplicantIndex].existingLoans.monthlyEmi ? this.qde.application.applicants[this.selectedApplicantIndex].existingLoans.monthlyEmi+'' :'' :'';
+
     this.goToNextSlide(swiperInstance);
   }
 
@@ -1073,10 +1082,13 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
       //   liveLoan: this.liveLoan
       // };
 
-      this.qde.application.applicants.find(v => v.applicantId == this.selectedApplicant.value).existingLoans = {
-        liveLoan: form.value.liveLoansNumber
-      };
+      // this.qde.application.applicants.find(v => v.applicantId == this.selectedApplicant.value).existingLoans = {
+      //   liveLoan: form.value.liveLoansNumber
+      // };
 
+      this.qde.application.applicants.find(v => v.applicantId == this.selectedApplicant.value).existingLoans.liveLoan = form.value.liveLoansNumber;
+
+      
       this.qdeHttp
         .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
         .subscribe(

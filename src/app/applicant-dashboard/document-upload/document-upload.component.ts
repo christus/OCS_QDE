@@ -1,3 +1,4 @@
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { MobileService } from './../../services/mobile-constant.service';
 import { environment } from 'src/environments/environment';
 import { Component, OnInit,  ViewChild, ElementRef, Renderer2, AfterViewInit, HostListener, ViewChildren, QueryList } from '@angular/core';
@@ -210,7 +211,8 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
     private qdeService: QdeService,
     private utilService: UtilService,
     private cds: CommonDataService,
-    private mobileService: MobileService) {
+    private mobileService: MobileService,
+    private ngxService: NgxUiLoaderService) {
 
     this.qde = this.qdeService.defaultValue;
 
@@ -707,7 +709,9 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
 
     const applicantId = this.qde.application.applicants[this.applicantIndex].applicantId.toString();
 
-    let fileName = this.qde.application.applicationId + "-" + applicantId + "-" + new Date().getTime()
+    let fileName = this.qde.application.applicationId + "-" + applicantId + "-" + new Date().getTime();
+
+    this.ngxService.start();
 
     this.qdeHttp.uploadFile(fileName, image).then((data) => {
       
@@ -732,9 +736,12 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
 
         this.uploadToOmni(documentInfo, tabIndex, slider);
 
+        this.ngxService.stop();
+
       } else {
         // Throw Invalid Pan Error
         // alert(JSON.parse(data["response"]));
+        this.ngxService.stop();
       }
     });
   }

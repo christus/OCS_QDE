@@ -150,6 +150,7 @@ createOrUpdatePersonalDetails(qde) {
 
 
     let uri = environment.host + '/account/v3/login';    
+    // let uri = environment.host + '/account/login_ne';
     return this.callPost(uri, body);
   }
 
@@ -159,7 +160,7 @@ createOrUpdatePersonalDetails(qde) {
     const body = {
       'email': data.email,
       'password': data.password,
-      'longTimeToken': "true",
+      'longTimeToken': true,
     };
 
     let uri = environment.host + '/account/v3/login';
@@ -2737,9 +2738,8 @@ createOrUpdatePersonalDetails(qde) {
 
         this.httpIonic.setDataSerializer("urlencoded");
 
-        console.log("post ********");
-        
-        
+        console.log("post requestEntity********", requestEntity);
+
         this.httpIonic.post(url, requestEntity, headers).then(result => {
           const data = JSON.parse(result.data);
           console.log("~~~***Response***~~~", data);
