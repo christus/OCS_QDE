@@ -199,7 +199,7 @@ export class ClssChecklistComponent implements OnInit {
   // }
 
   refresh() {
-    // this.qdeHttp.adminLoadMoreLovs().subscribe(res => {
+    // this.qdeHttp.adminLoadMoreLovs(this.tableName).subscribe(res => {
     //   if(res['ProcessVariables']['status'] == true) {
     //     this.tempLovs = this.lovs = res['ProcessVariables']['valueDescription'].map((v, i) => {
 
@@ -218,6 +218,13 @@ export class ClssChecklistComponent implements OnInit {
     // }, err => {
 
     // });
+  }
+
+  search(event) {
+    this.qdeHttp.adminClssSearch(event.target.value).subscribe(response => {
+      console.log("mamam",response)
+      this.lovs = response["ProcessVariables"]["clssDetailsList"]
+    });
   }
 
   changeRadio(event, keyName, index) {

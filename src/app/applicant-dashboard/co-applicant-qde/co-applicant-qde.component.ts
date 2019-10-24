@@ -444,11 +444,12 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
       this.applicantIndividual = (this.activeTab >= 11) ? false: true;
 
-      console.log("Fragment & QueryParams: ", this.tabName, this.page);
-      if(this.tabName == this.fragments[10] || this.tabName == this.fragments[16]) {
-        this.setAssessmentMethodology();
-      }
+    
     });
+    console.log("Fragment & QueryParams: ", this.tabName, this.page);
+    if(this.tabName == this.fragments[10] || this.tabName == this.fragments[16]) {
+      this.setAssessmentMethodology();
+    }
   }
 
   ngOnInit() {
@@ -527,10 +528,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     this.paramsSub = this.route.params.subscribe((params) => {
 
       
-      if(params.coApplicantIndex != null) {
-        this.coApplicantIndex = params.coApplicantIndex;
-        this.setAssessmentMethodology();
-      }
+      
       // Make an http request to get the required qde data and set using setQde
       if(params.applicationId != null) {
 
@@ -559,7 +557,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
               this.loadOccupationTypeLovs(this.qde.application.applicants[this.coApplicantIndex].occupation.occupationType);
 
-              
+              if(params.coApplicantIndex != null) {
+                this.coApplicantIndex = params.coApplicantIndex;
+                this.setAssessmentMethodology();
+              }
   
               // TO BE REMOVED
               // this.qdeService.setQde(result);
@@ -697,6 +698,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
           }
           
       }
+      
 
 
       if(params['applicationId'] != null) {
@@ -3933,6 +3935,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
   setAssessmentMethodology() {
     if(this.qde.application.applicationId != null) {
+      console.log("qde vlaue ",this.qde.application.applicants);
+      console.log("is individula", this.qde.application.applicants[this.coApplicantIndex].isIndividual);
       this.qdeHttp.assessmentListForProfileApplicantType(this.qde.application.applicants[this.coApplicantIndex].isIndividual ? '1': '2', this.qde.application.applicants[this.coApplicantIndex].occupation.occupationType).subscribe(res => {
         if(res['ProcessVariables']['AssessementList']) {
           this.assessmentMethodology = res['ProcessVariables']['AssessementList'].map(e => ({key: e.id, value: e.value}));

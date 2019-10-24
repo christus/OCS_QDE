@@ -2021,6 +2021,37 @@ createOrUpdatePersonalDetails(qde) {
     );
   }
 
+  adminSearchAllLoginFee(data: any) {
+    const processId   = environment.api.adminGetAllLoginFee.processId;
+    const workflowId  = environment.api.adminGetAllLoginFee.workflowId;
+    const projectId   = environment.projectId;
+
+    let dude = this.qdeService.getFilteredJson({
+      userId: localStorage.getItem('userId')
+    });
+
+    let qdeRequestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: {
+        userId: parseInt(localStorage.getItem('userId')),
+        searchKey: data
+      },
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = {
+      "processVariables":
+      JSON.stringify(qdeRequestEntity)
+    };
+
+    let uri = environment.host + "/d/workflows/" + workflowId + "/v2/execute?projectId=" + projectId;
+    return this.callPost(
+      uri,
+      body
+    );
+  }
+
   adminUpdateLoginFee(data) {
     const processId   = environment.api.adminUpdateLoginFee.processId;
     const workflowId  = environment.api.adminUpdateLoginFee.workflowId;
@@ -2064,6 +2095,37 @@ createOrUpdatePersonalDetails(qde) {
         userId: localStorage.getItem('userId'),
         currentPage: currentPage ? currentPage: null,
         perPage: perPage ? perPage: null
+      },
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = {
+      "processVariables":
+      JSON.stringify(qdeRequestEntity)
+    };
+
+    let uri = environment.host + "/d/workflows/" + workflowId + "/v2/execute?projectId=" + projectId;
+    return this.callPost(
+      uri,
+      body
+    );
+  }
+
+  adminSearchAllLoanMaster(data: any) {
+    const processId   = environment.api.adminGetAllLoanMaster.processId;
+    const workflowId  = environment.api.adminGetAllLoanMaster.workflowId;
+    const projectId   = environment.projectId;
+
+    let dude = this.qdeService.getFilteredJson({
+      userId: localStorage.getItem('userId')
+    });
+
+    let qdeRequestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: {
+        userId: localStorage.getItem('userId'),
+        searchKey: data
       },
       workflowId: workflowId,
       projectId: projectId
@@ -2564,6 +2626,40 @@ createOrUpdatePersonalDetails(qde) {
     );
   }
 
+  adminApplicantRelationshipSearch(data:any) {
+    const processId   = environment.api.adminApplicantRelationship.processId;
+    const workflowId  = environment.api.adminApplicantRelationship.workflowId;
+    const projectId   = environment.projectId;
+
+    // let tableName = _route.params['eachLovName'];
+
+    let qdeRequestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: {
+        // tableName: tableName,
+        userId: parseInt(localStorage.getItem('userId')),
+        searchKey: data
+        // currentPage: _route.queryParams['currentPage'] ? parseInt(_route.queryParams['currentPage']): 1,
+        // perPage: _route.queryParams['perPage'] ? parseInt(_route.queryParams['perPage']): 10,
+      },
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+
+
+    const body = {
+      'processVariables':
+      JSON.stringify(qdeRequestEntity)
+    };
+
+    let uri = environment.host + "/d/workflows/" + workflowId + "/v2/execute?projectId=" + projectId;
+    return this.callPost(
+      uri,
+      body
+    );
+  }
+
 
   /**
    *
@@ -2917,6 +3013,33 @@ createOrUpdatePersonalDetails(qde) {
 
     let uri = environment.host + '/d/workflows/' + workflowId + '/v2/execute?projectId=' + projectId;
     return this.callPost(uri, body);
+  }
+
+  adminClssSearch(data: any) {
+    const processId = environment.api.adminCLSSGet.processId;
+    const workflowId = environment.api.adminCLSSGet.workflowId;
+    const projectId = environment.projectId;
+
+    let qdeRequestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: {
+        userId: parseInt(localStorage.getItem('userId')),
+        searchKey: data
+      },
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = {
+      'processVariables':
+      JSON.stringify(qdeRequestEntity)
+    };
+
+    let uri = environment.host + "/d/workflows/" + workflowId + "/v2/execute?projectId=" + projectId;
+    return this.callPost(
+      uri,
+      body
+    );
   }
 
 }
