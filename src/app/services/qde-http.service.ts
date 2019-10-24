@@ -151,6 +151,7 @@ createOrUpdatePersonalDetails(qde) {
 
     let uri = environment.host + '/account/v3/login';    
     // let uri = environment.host + '/account/login_ne';
+    // let uri = environment.host + '/account/login';
     return this.callPost(uri, body);
   }
 

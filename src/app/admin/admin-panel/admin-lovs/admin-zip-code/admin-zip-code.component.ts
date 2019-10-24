@@ -170,7 +170,6 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
     this.qdeHttp.adminLoadMoreLovs(this.tableName, (this.currentPage+1), this.perPage).subscribe(res => {
       if(res['ProcessVariables']['status'] == true) {
         if(res['ProcessVariables']['valueDescription']) {
-
           this.data = this.data.concat(res['ProcessVariables']['valueDescription'].map(v => {
             return {
               userId: parseInt(localStorage.getItem('userId')),
@@ -286,25 +285,23 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
   }
 
   refresh() {
-    // let dude = {
-    //   userId : localStorage.getItem('userId'),
-    //   tableName: 'zipcode',
-    //   perPage: this.perPage
-    // };
+    let dude = {
+      userId : localStorage.getItem('userId'),
+      tableName: 'zipcode',
+      perPage: this.perPage
+    };
 
-    // console.log(this.searchInp);
-    // if(this.searchInp.nativeElement.value != '') {
-    //   dude['searchKey'] = this.searchInp.nativeElement.value;
-    // }
+    console.log(this.searchInp);
+    if(this.searchInp.nativeElement.value != '') {
+      dude['searchKey'] = this.searchInp.nativeElement.value;
+    }
 
-    this.qdeHttp.adminLoadMoreLovs(this.tableName, this.currentPage, this.perPage).subscribe(res => {
+    this.qdeHttp.adminZipCodeSearch(dude).subscribe(res => {
       if(res['ProcessVariables']['status'] == true) {
         if(res['ProcessVariables']['valueDescription']) {
   
-          this.data = res['ProcessVariables']['valueDescription'].map((v, i) => {
-            console.log("....", v);
+          this.data = res['ProcessVariables']['valueDescription'].map(v => {
             return {
-              srno: (this.data.length+1)+i,
               userId: parseInt(localStorage.getItem('userId')),
               tableName: this.tableName,
               cityId: v['cityId'],
