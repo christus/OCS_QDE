@@ -542,10 +542,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
             
               this.getQdeDataSub = this.qdeHttp.getQdeData(params.applicationId).subscribe(response => {
-              let result = JSON.parse(response["ProcessVariables"]["response"]);
-              console.log(" result ", result);
+              var result = JSON.parse(response["ProcessVariables"]["response"]);
               this.qde = result;
-              console.log("qde Value ",this.qde)
               this.applicationId = this.qde.application.applicationId;
               this.cds.setStatus(result.application.status);
               this.cds.setactiveTab(screenPages['coApplicantDetails']);

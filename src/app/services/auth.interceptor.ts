@@ -77,7 +77,7 @@ export class AuthInterceptor implements HttpInterceptor {
             event = event.clone({ body: JSON.parse(this.encrytionService.decryptResponse(event)) });
             // console.log("after Encryption: ", event.body);
           }
-          console.log("after Decryption: ",event.body);
+          console.log("after Decryption: " , event.body);
           const response = event.body;
           if (response && response["login_required"]) {
             if(this.router.url.search('auto-login') == -1) {
