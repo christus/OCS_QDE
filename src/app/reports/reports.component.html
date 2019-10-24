@@ -9,7 +9,7 @@
       <div style="margin-left: 5%; font-size:180%; margin-top: 5%">
         <!-- <span>From date</span> -->
         <div class="container">
-          <h2 style="margin-bottom:3%; margin-top: 3%">Type of report</h2>
+          <h2 style="margin-bottom:3%; margin-top: 3%; text-align: left">Type of report</h2>
           <div class="row">
               <div class="col-4">
                   <select name="repType" id="repType" class="form-control" (change)="changeReport($event)">
@@ -20,7 +20,7 @@
                   </select>
               </div>
           </div>
-          <h2 style="margin-bottom: 3%">Please select the dates</h2>
+          <h2 style="margin-bottom: 3%; margin-top: 3%; text-align: left">Please select the dates</h2>
           <div class="row">
             <div class="col-6">
               <label for="startDate" class="controltitle">From date</label>
@@ -32,6 +32,9 @@
               (ngModelChange)="endDateMonthDiff(startDate)"
               [format]="'dd/MM/yyyy'">
               </kendo-datepicker>
+               <div *ngIf ="!startDate" class="invalid-feedback">
+                Select Valid Date
+              </div>
             </div>
             <div class="col-6">
               <label for="endDate" class="controltitle">To date</label>
@@ -50,12 +53,12 @@
           </div>
           <br>
           <br>
-          <h2 style="margin-bottom:3%">Select the filter</h2>
+          <h2 style="margin-bottom:3%; margin-top: 3%; text-align: left">Select the filter</h2>
           <div class="row">
             <div class="col-6">
               <label class="controltitle">User</label>
-                <select class="form-control" name="user" id="user" [ngModel]="selectedUser" (ngModelChange)="changeUser($event)">
-                  <option [ngValue]="null" disabled>Choose User</option>
+                <select class="form-control" name="user" id="user" [(ngModel)]="selectedUser" (ngModelChange)="changeUser($event)">
+                  <option disabled>Choose User</option>
                   <option *ngFor="let user of userList" [value]="user.value">{{user.key}}</option>
                 </select>
             </div>

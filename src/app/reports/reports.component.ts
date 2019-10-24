@@ -251,6 +251,8 @@ export class ReportsComponent implements OnInit {
       this.statusList = response["ProcessVariables"]["statusList"];
       this.userList = response["ProcessVariables"]["userList"];
       this.changeUser(localStorage.getItem("userId"));
+      this.selectedUser = this.userList[0];
+      console.log("Selected user",this.selectedUser)
     })
 
   }

@@ -159,6 +159,26 @@ export class LoanMasterComponent implements OnInit {
     }
   }
 
+  search(event){
+    if(this.isLoanMaster) {
+      this.qdeHttp.adminSearchAllLoanMaster(event.target.value).subscribe(res => {
+        this.data = res['ProcessVariables']['loanMaster'];
+      }, err => {}
+      );
+    } 
+    else if(this.isLoginFee) {
+      this.qdeHttp.adminSearchAllLoginFee(event.target.value).subscribe(res => {
+        this.data = res['ProcessVariables']['loginFee'];
+        // this.currentPage = parseInt(res['ProcessVariables']['currentPage']);
+        // this.totalPages = parseInt(res['ProcessVariables']['totalPages']);
+        // this.perPage = parseInt(res['ProcessVariables']['perPage']);
+        // this.totalElements = parseInt(res['ProcessVariables']['totalPages']) * this.perPage;
+      }, err => {
+  
+      });
+    }
+  }
+
   refresh() {
     if(this.isLoanMaster) {
       this.qdeHttp.adminGetAllLoanMaster().subscribe(res => {

@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
 import { QdeService } from 'src/app/services/qde.service';
+import { Subscription } from 'rxjs';
 
 interface Item {
   key: string;
@@ -14,7 +15,7 @@ interface Item {
   templateUrl: './admin-zip-code.component.html',
   styleUrls: ['./admin-zip-code.component.css']
 })
-export class AdminZipCodeComponent implements OnInit {
+export class AdminZipCodeComponent implements OnInit, OnDestroy {
 
   tableName: string;
   userId: number;
@@ -57,16 +58,27 @@ export class AdminZipCodeComponent implements OnInit {
 
   @ViewChild('searchInp') searchInp: ElementRef;
 
-  constructor(private route: ActivatedRoute, private qdeHttp: QdeHttpService, private qdeService: QdeService) {
+  subs: Array<Subscription> = [];
+
+  constructor(private route: ActivatedRoute, private qdeHttp: QdeHttpService, private qdeService: QdeService, private router: Router) {
+
+    this.route.queryParams.subscribe(val => {
+      this.currentPage = val['currentPage'] ? val ['currentPage']: 1;
+      this.perPage = val['perPage'] ? val['perPage']: 10;
+
+      this.refresh();
+    });
+
     this.userId = parseInt(localStorage.getItem('userId'));
     this.tableName = 'zipcode';
 
     if(this.route.snapshot.data['eachLovs']['ProcessVariables']['status'] == true) {
       if(this.route.snapshot.data['eachLovs']['ProcessVariables']['valueDescription']) {
 
-        this.data = this.route.snapshot.data['eachLovs']['ProcessVariables']['valueDescription'].map(v => {
+        this.data = this.route.snapshot.data['eachLovs']['ProcessVariables']['valueDescription'].map((v, i) => {
           console.log("....", v);
           return {
+            srno: i+1,
             userId: parseInt(localStorage.getItem('userId')),
             tableName: this.tableName,
             cityId: v['cityId'],
@@ -138,7 +150,7 @@ export class AdminZipCodeComponent implements OnInit {
       dude = this.qdeService.getFilteredJson(dude);
     }
 
-    this.qdeHttp.insertUpdateEachLovs(dude).subscribe(res => {
+    this.subs.push(this.qdeHttp.insertUpdateEachLovs(dude).subscribe(res => {
       if(res['ProcessVariables']['status'] == true) {
         alert("ZipCode Saved Successfully!");
         this.isAdd = false;
@@ -147,7 +159,7 @@ export class AdminZipCodeComponent implements OnInit {
       }
     }, err => {
 
-    });
+    }));
   }
 
   counter(n: number) {
@@ -158,8 +170,7 @@ export class AdminZipCodeComponent implements OnInit {
     this.qdeHttp.adminLoadMoreLovs(this.tableName, (this.currentPage+1), this.perPage).subscribe(res => {
       if(res['ProcessVariables']['status'] == true) {
         if(res['ProcessVariables']['valueDescription']) {
-
-          this.data = res['ProcessVariables']['valueDescription'].map(v => {
+          this.data = this.data.concat(res['ProcessVariables']['valueDescription'].map(v => {
             return {
               userId: parseInt(localStorage.getItem('userId')),
               tableName: this.tableName,
@@ -173,7 +184,7 @@ export class AdminZipCodeComponent implements OnInit {
               zone: v['zone'],
               zoneName: v['zoneName']
             }
-          });
+          }));
   
           this.tempData = this.data;
   
@@ -265,7 +276,7 @@ export class AdminZipCodeComponent implements OnInit {
         // console.log(res['ProcessVariables']);
         if(res['ProcessVariables']['status'] == true) {
           alert('Deleted Successfully!');
-          this.refresh();
+          this.router.navigate([], {queryParams: {currentPage: this.currentPage, perPage: this.perPage}})
         } else {
           alert('Something went wrong');
         }
@@ -274,50 +285,49 @@ export class AdminZipCodeComponent implements OnInit {
   }
 
   refresh() {
-    // let dude = {
-    //   userId : localStorage.getItem('userId'),
-    //   tableName: 'zipcode',
-    //   perPage: this.perPage
-    // };
+    let dude = {
+      userId : localStorage.getItem('userId'),
+      tableName: 'zipcode',
+      perPage: this.perPage
+    };
 
-    // console.log(this.searchInp);
-    // if(this.searchInp.nativeElement.value != '') {
-    //   dude['searchKey'] = this.searchInp.nativeElement.value;
-    // }
+    console.log(this.searchInp);
+    if(this.searchInp.nativeElement.value != '') {
+      dude['searchKey'] = this.searchInp.nativeElement.value;
+    }
 
-    // this.qdeHttp.adminZipCodeSearch(dude).subscribe(res => {
-    //   if(res['ProcessVariables']['status'] == true) {
-    //     if(res['ProcessVariables']['valueDescription']) {
+    this.qdeHttp.adminZipCodeSearch(dude).subscribe(res => {
+      if(res['ProcessVariables']['status'] == true) {
+        if(res['ProcessVariables']['valueDescription']) {
   
-    //       this.data = res['ProcessVariables']['valueDescription'].map(v => {
-    //         console.log("....", v);
-    //         return {
-    //           userId: parseInt(localStorage.getItem('userId')),
-    //           tableName: this.tableName,
-    //           cityId: v['cityId'],
-    //           cityName: v['cityName'],
-    //           value: v['value'],
-    //           description: v['description'],
-    //           id: v['id'] ? v['id'] : null,
-    //           stateId: v['stateId'],
-    //           stateName: v['stateName'],
-    //           zone: v['zone'],
-    //           zoneName: v['zoneName']
-    //         }
-    //       });
+          this.data = res['ProcessVariables']['valueDescription'].map(v => {
+            return {
+              userId: parseInt(localStorage.getItem('userId')),
+              tableName: this.tableName,
+              cityId: v['cityId'],
+              cityName: v['cityName'],
+              value: v['value'],
+              description: v['description'],
+              id: v['id'] ? v['id'] : null,
+              stateId: v['stateId'],
+              stateName: v['stateName'],
+              zone: v['zone'],
+              zoneName: v['zoneName']
+            }
+          });
 
-    //       this.currentPage = parseInt(res['ProcessVariables']['currentPage']);
-    //       this.totalPages = parseInt(res['ProcessVariables']['totalPages']);
-    //       this.perPage = parseInt(res['ProcessVariables']['perPage']);
-    //       this.totalElements = res['ProcessVariables']['totalPages'] * this.perPage;
-    //       // this.perPageCount = Math.ceil(this.totalElements/this.perPage);
-    //     } else {
-    //       alert('No Data Present');
-    //     }
-    //   } else {
-    //     alert('No Data Present');
-    //   }
-    // });
+          this.currentPage = parseInt(res['ProcessVariables']['currentPage']);
+          this.totalPages = parseInt(res['ProcessVariables']['totalPages']);
+          this.perPage = parseInt(res['ProcessVariables']['perPage']);
+          this.totalElements = res['ProcessVariables']['totalPages'] * this.perPage;
+          // this.perPageCount = Math.ceil(this.totalElements/this.perPage);
+        } else {
+          alert('No Data Present');
+        }
+      } else {
+        alert('No Data Present');
+      }
+    });
 
     this.data = this.tempData;
   }
@@ -338,9 +348,9 @@ export class AdminZipCodeComponent implements OnInit {
         if(res['ProcessVariables']['status'] == true) {
           if(res['ProcessVariables']['valueDescription']) {
 
-            this.data = res['ProcessVariables']['valueDescription'].map(v => {
-              console.log("<<<<", v);
+            this.data = res['ProcessVariables']['valueDescription'].map((v, i) => {
               return {
+                srno: i+1,
                 userId: parseInt(localStorage.getItem('userId')),
                 tableName: this.tableName,
                 cityId: v['cityId'],
@@ -369,5 +379,9 @@ export class AdminZipCodeComponent implements OnInit {
     } else {
       this.data = this.tempData;
     }
+  }
+
+  ngOnDestroy() {
+    this.subs.forEach(e => {if(e) e.unsubscribe()});
   }
 }

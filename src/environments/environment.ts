@@ -412,8 +412,13 @@ export const environment = {
   driveLocation: "/d/drive/docs/",
   csvLocation: "/d/download/csv?",
   isMobile: false,
-  mobileExtenstion: "@icicibankltd.com"
-  //host: ""
+  mobileExtenstion: "@icicibankltd.com",
+  // tslint:disable-next-line: max-line-length
+  // tslint:disable-next-line: quotemark
+  // tslint:disable-next-line: max-line-length
+  aesPublicKey: 'MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJ+GJdSSEeaNFBLqyfM3DIOgQgWCwJ0INfeZZV7ITsLeuA7Yd02rrkYGIix1IWvoebWVmzhncUepYxHwK1ARCdUCAwEAAQ==',
+  encryptionType: true // Ecryption
+  // host: ""
 
 };
 

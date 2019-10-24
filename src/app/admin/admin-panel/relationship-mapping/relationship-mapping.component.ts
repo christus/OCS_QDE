@@ -167,6 +167,13 @@ export class RelationshipMappingComponent implements OnInit {
     });
   }
 
+  search(event){
+    this.qdeHttp.adminApplicantRelationshipSearch(event.target.value).subscribe(response => {
+      console.log("mama",response)
+      this.data = response['ProcessVariables']['mappingList'];
+    });
+  }
+
   refresh() {
     this.qdeHttp.adminApplicantRelationship().subscribe(res => {
       if(res['ProcessVariables']['status'] == true) {

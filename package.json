@@ -43,6 +43,7 @@
     "@progress/kendo-angular-l10n": "^1.1.0",
     "@progress/kendo-theme-default": "^4.3.3",
     "@trademe/ng-defer-load": "^3.0.1",
+    "@types/sjcl": "^1.0.28",
     "add": "^2.0.6",
     "angular-dropdown-component": "^1.0.8",
     "angular2-image-upload": "^1.0.0-rc.2",
@@ -54,6 +55,7 @@
     "cordova-plugin-keyboard": "^1.2.0",
     "cordova-plugin-uniquedeviceid": "^1.3.2",
     "core-js": "^2.5.4",
+    "crypto-js": "^3.1.9-1",
     "dvolland-cordova-plugin-file-transfer": "^1.5.2-dev-dv",
     "jquery": "^3.4.1",
     "ng5-slider": "^1.1.14",
@@ -63,6 +65,7 @@
     "ngx-ui-loader": "^7.2.2",
     "rxjs": "~6.2.0",
     "rxjs-compat": "^6.0.0",
+    "sjcl": "^1.0.8",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {
@@ -85,5 +88,8 @@
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",
     "typescript": "~2.9.2"
+  },
+  "browser": {
+    "crypto": false
   }
 }

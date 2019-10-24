@@ -181,7 +181,7 @@
                                                             [checked]="qde.application.applicants[coApplicantIndex].isIndividual == false"
                                                             (click)="changeIsIndividual(2, panSlider2)" />
                                                     <label for="non-individual"><span>Non-Individual</span></label>
-                                                </div>
+                                                </div>                                               
                                             </div>
                                         </form>
                                     </div>
@@ -252,6 +252,7 @@
                                                 </div>
                                                 <!-- <image-upload [url]="imageUrl" [headers]="myHeaders"></image-upload> -->
                                             </div>
+                                            
                                                 </div>
 
                                             <div class="btn-wrap">
@@ -424,26 +425,26 @@
                                                           </kendo-dropdownlist>
                                                       </div>
                                                   </div>
-                                                  <div class="form-group">
-  
+                                                  <div class="form-group">  
                                                     <input [readonly]="isReadOnly"  type="text" autocomplete="off"
                                                             class="form-control"
-                                                            id="name"
+                                                            id="firstName"
                                                             [(ngModel)]="qde.application.applicants[coApplicantIndex].personalDetails.firstName"
                                                             name="firstName"
                                                             tabindex="2"
-                                                            #firstName="ngModel" 
                                                             fieldFill maxlength="50"
                                                             spellcheck="false"
                                                             required
-                                                            pattern="{{regexPattern.name}}" />
+                                                            pattern="{{regexPattern.name}}"
+                                                            #firstName="ngModel"  />
                                                             <div *ngIf="(qde.application.applicants[coApplicantIndex].personalDetails.firstName)?.length == 50" class="invalid-feedback">Maximum Character Exceeds</div>
 
-                                                          <label for="name">First name</label>
+                                                          <label for="firstName">First name</label>
                                                     <div *ngIf="(firstName.touched || firstName.dirty) && firstName.invalid" class="invalid-feedback">
                                                         <!-- <div *ngIf="firstName.errors?.required">{{errors.personalDetails.firstName.required}}</div> -->
                                                         <div *ngIf="firstName.errors?.pattern">{{errors.personalDetails.firstName.invalid}}</div>
                                                     </div>
+                                                   
                                                   </div>
                                                   <div class="form-group typ-optional">
                                                     <input [readonly]="isReadOnly" type="text" autocomplete="off"
@@ -1857,7 +1858,7 @@
                                                     [(ngModel)]="selectedOccupation">
                                                   </kendo-dropdownlist>
                                               </div>
-                                              <div class="form-group" *ngIf="selectedOccupation.value != '9' && selectedOccupation.value != '10' && selectedOccupation.value != '18'">
+                                              <div class="form-group" *ngIf="selectedOccupation.value != '6' && selectedOccupation.value != '7' && selectedOccupation.value != '10' && selectedOccupation.value != '14'">
                                                   <input [readonly]="isReadOnly" type="text"
                                                         class="form-control"autocomplete="off"
                                                           required
@@ -1877,7 +1878,7 @@
                                                   </div>
               
                                               </div>
-                                              <div class="form-group typ-range"  *ngIf="selectedOccupation.value != '9' && selectedOccupation.value != '10' && selectedOccupation.value != '18'">
+                                              <div class="form-group typ-range"  *ngIf="selectedOccupation.value != '6' && selectedOccupation.value != '7' && selectedOccupation.value != '10' && selectedOccupation.value != '14'">
                                                   <span class="control-title">Years in current employment/business</span>
                                                   <input [readonly]="isReadOnly" type="number" autocomplete="off"
                                                           name="numberOfYearsInCurrentCompany"
@@ -1902,7 +1903,7 @@
                                                   
               
                                               </div>
-                                              <div class="form-group typ-range" *ngIf="selectedOccupation.value != '9' && selectedOccupation.value != '10' && selectedOccupation.value != '18'">
+                                              <div class="form-group typ-range" *ngIf="selectedOccupation.value != '6' && selectedOccupation.value != '7' && selectedOccupation.value != '10' && selectedOccupation.value != '14'">
                                                   <span class="control-title">Total Work Experience</span>
                                                   <input [readonly]="isReadOnly" type="number" autocomplete="off"
                                                           name="totalExperienceYear"
@@ -1975,7 +1976,7 @@
                                               
                                           </div>
               
-                                          <div  class="btn-wrap">
+                                          <div *ngIf="selectedOccupation.value != '6' && selectedOccupation.value != '7' && selectedOccupation.value != '10' && selectedOccupation.value != '14'" class="btn-wrap">
                                             <button type="submit"
                                                     [ngClass]="{'disabled': !occupationForm.valid || expError}"
                                                     [disabled]="(!occupationForm.valid || expError)" 
@@ -1983,6 +1984,15 @@
                                                 Next
                                             </button>
                                         </div>
+                                        <div *ngIf="selectedOccupation.value == '6' || selectedOccupation.value == '7' || selectedOccupation.value == '10' || selectedOccupation.value == '14'"
+                                        class="btn-wrap">
+                                          <button type="submit" [ngClass]="{'disabled': !occupationForm.valid || expError}"
+                                            [disabled]="(!occupationForm.valid || expError)" class="btn btn-primary"
+                                            (click)="incomeConsiderYesNoIndividual(2, occupationSlider2)"
+                                            [value]="2">
+                                            Next
+                                          </button>
+                                        </div>                
                                           <!-- <div *ngIf="selectedOccupation.value != 9 && selectedOccupation.value != 10 && selectedOccupation.value != 18" class="btn-wrap">
                                               <button type="submit"
                                                       [ngClass]="{'disabled': !occupationForm.valid || expError}"

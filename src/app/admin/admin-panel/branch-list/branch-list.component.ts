@@ -58,6 +58,32 @@ export class BranchListComponent implements OnInit {
     });
   }
 
+  search(event) {
+    var data = {
+      "userId": parseInt(localStorage.getItem("userId")),
+      "searchKey": event.target.value
+    }
+    this.qdeHttp.getBranchList(data).subscribe(response => {
+      this.collection = response['ProcessVariables'].branchDetails;
+      this.totalPages = response['ProcessVariables'].totalPages;
+      this.from = response['ProcessVariables'].from;
+      this.currentPage = response['ProcessVariables'].currentPage;
+      this.perPage = response['ProcessVariables'].perPage;
+      this.totalItems = parseInt(this.totalPages) * parseInt(this.perPage);
+      if(this.currentPage == this.totalPages) {
+        this.enableLoadMore = false;
+      }
+      console.log(this.collection);
+    });
+  }
+
+  refresh(){
+     let data = {};
+    data["currentPage"] = 1;
+
+    this.getBranchList(data);
+  }
+
   delete(id){
     console.log("Pmay id", id);
 

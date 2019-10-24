@@ -34,7 +34,7 @@ export class AdminGetEachLovResolverService implements Resolve<Observable<any>> 
       JSON.stringify(qdeRequestEntity)
     };
 
-    let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
+    let uri = environment.host + "/d/workflows/" + workflowId + "/v2/execute?projectId=" + projectId;
     return this.qdeHttp.callPost(
       uri,
       body

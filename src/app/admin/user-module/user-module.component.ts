@@ -93,6 +93,7 @@ export class UserModuleComponent implements OnInit {
   }
 
   pageChanged(value){
+    console.log("bla,bloa",value)
     let data = {};
     data["currentPage"] = value;
     data["roleId"] = this.filterData;

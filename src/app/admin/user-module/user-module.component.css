@@ -12,7 +12,7 @@
     vertical-align: top;
     border-top: 1px solid #ebedf2;
     border: 1px solid #ebedf2;
-    text-align: center
+    text-align: center;
 }
 .table thead th,
 .table thead td {
@@ -27,8 +27,7 @@
 } */
 
 .table-user {
-    width: 80%;
-    float: left;
+    width: 100%;
 }
 .table-activity {
     width: 18%;
@@ -36,7 +35,7 @@
     margin-left: 2%;
 }
 .pagination {
-    width: 80%;
+    width: 100%;
     display: block;
     clear: both;
     text-align: center;
