@@ -329,7 +329,7 @@ export class LeadsListComponent implements OnInit {
       this.cds.setReadOnlyForm(false);
     }
 
-    console.log("status", status);
+    // console.log("status", status);
 
 
     if(statuses[status] == "1") {

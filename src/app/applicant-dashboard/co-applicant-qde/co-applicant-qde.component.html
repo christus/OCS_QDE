@@ -182,6 +182,7 @@
                                                             (click)="changeIsIndividual(2, panSlider2)" />
                                                     <label for="non-individual"><span>Non-Individual</span></label>
                                                 </div>
+                                               
                                             </div>
                                         </form>
                                     </div>
@@ -252,6 +253,7 @@
                                                 </div>
                                                 <!-- <image-upload [url]="imageUrl" [headers]="myHeaders"></image-upload> -->
                                             </div>
+                                            
                                                 </div>
 
                                             <div class="btn-wrap">
@@ -372,6 +374,7 @@
                                                             (click)="submitResidentialNon(1, pdSlider2)"
                                                             class="not-usual" />
                                                     <label for="yes-consider1"><span>Resident</span></label>
+                                                    
                                                 </div>
                                                 <div class="bs-radio">
                                                     <input [readonly]="isReadOnly" type="radio"
@@ -424,26 +427,26 @@
                                                           </kendo-dropdownlist>
                                                       </div>
                                                   </div>
-                                                  <div class="form-group">
-  
+                                                  <div class="form-group">  
                                                     <input [readonly]="isReadOnly"  type="text" autocomplete="off"
                                                             class="form-control"
-                                                            id="name"
+                                                            id="firstName"
                                                             [(ngModel)]="qde.application.applicants[coApplicantIndex].personalDetails.firstName"
                                                             name="firstName"
                                                             tabindex="2"
-                                                            #firstName="ngModel" 
                                                             fieldFill maxlength="50"
                                                             spellcheck="false"
                                                             required
-                                                            pattern="{{regexPattern.name}}" />
+                                                            pattern="{{regexPattern.name}}"
+                                                            #firstName="ngModel"  />
                                                             <div *ngIf="(qde.application.applicants[coApplicantIndex].personalDetails.firstName)?.length == 50" class="invalid-feedback">Maximum Character Exceeds</div>
 
-                                                          <label for="name">First name</label>
+                                                          <label for="firstName">First name</label>
                                                     <div *ngIf="(firstName.touched || firstName.dirty) && firstName.invalid" class="invalid-feedback">
                                                         <!-- <div *ngIf="firstName.errors?.required">{{errors.personalDetails.firstName.required}}</div> -->
                                                         <div *ngIf="firstName.errors?.pattern">{{errors.personalDetails.firstName.invalid}}</div>
                                                     </div>
+                                                   
                                                   </div>
                                                   <div class="form-group typ-optional">
                                                     <input [readonly]="isReadOnly" type="text" autocomplete="off"

@@ -283,7 +283,7 @@ export class QdeService {
   }
 
   setQde(qde: Qde): void {
-    this.qde = qde;
+    this.qde = qde;   
     this.qdeSource$.next(qde);
   }
 

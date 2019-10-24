@@ -156,8 +156,7 @@ getUserList(data){
                         }
                         
                       }
-            } 
-            else {
+            } else {
               if (fromId == 1) {
               this.applictionList = [];
               }
@@ -170,13 +169,12 @@ getUserList(data){
           this.errorMessage = "Select Any Valid From Assignee";
           this.validFromAssignee = true;
           this.applictionList = [];
+          this.totalItems = 0;
         }
         else if ( fromId == 2) {
           this.errorMessage = "Select Any Valid To Assignee";
           this.validToAssignee = true;
-        }        
-        
-        this.totalItems = 0;
+        }
       }
 
   }

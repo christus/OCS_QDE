@@ -527,7 +527,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     this.paramsSub = this.route.params.subscribe((params) => {
 
       
-
+      if(params.coApplicantIndex != null) {
+        this.coApplicantIndex = params.coApplicantIndex;
+        this.setAssessmentMethodology();
+      }
       // Make an http request to get the required qde data and set using setQde
       if(params.applicationId != null) {
 
@@ -541,8 +544,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
             
               this.getQdeDataSub = this.qdeHttp.getQdeData(params.applicationId).subscribe(response => {
-              var result = JSON.parse(response["ProcessVariables"]["response"]);
+              let result = JSON.parse(response["ProcessVariables"]["response"]);
+              console.log(" result ", result);
               this.qde = result;
+              console.log("qde Value ",this.qde)
               this.applicationId = this.qde.application.applicationId;
               this.cds.setStatus(result.application.status);
               this.cds.setactiveTab(screenPages['coApplicantDetails']);
@@ -554,10 +559,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
               this.loadOccupationTypeLovs(this.qde.application.applicants[this.coApplicantIndex].occupation.occupationType);
 
-              if(params.coApplicantIndex != null) {
-                this.coApplicantIndex = params.coApplicantIndex;
-                this.setAssessmentMethodology();
-              }
+              
   
               // TO BE REMOVED
               // this.qdeService.setQde(result);

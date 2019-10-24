@@ -23,11 +23,12 @@ export class AuthInterceptor implements HttpInterceptor {
 
     this.ngxService.start(); // start foreground spinner of the master loader with 'default' taskId
     let httpMethod = req.method;
-
+    console.log("before Encryption: ", req.body);
     let uri = environment.host + environment.appiyoDrive;
     if (!req.headers.has('Content-Type') && req.url !== uri) {
       // req = req.clone({ headers: req.headers.set('Content-Type', 'application/x-www-form-urlencoded') });
       if (httpMethod == "POST") {
+        if (environment.encryptionType == true) {        
         const encryption = this.encrytionService.encrypt(req.body, environment.aesPublicKey);
         req = req.clone(
           { setHeaders: encryption.headers,
@@ -35,10 +36,12 @@ export class AuthInterceptor implements HttpInterceptor {
             responseType: "text"
             }
           );
+        } else {
+          req = req.clone({ headers: req.headers.set('Content-Type', 'application/x-www-form-urlencoded') });
+        }
       } else if (httpMethod == "GET") {
         req = req.clone({ headers: req.headers.set('Content-Type', 'application/json') });
-      }
-      else  {
+      } else  {
         req = req.clone({ headers: req.headers.set('Content-Type', 'application/x-www-form-urlencoded') });
       }
     }
@@ -62,25 +65,25 @@ export class AuthInterceptor implements HttpInterceptor {
         if (event instanceof HttpResponse) {
 
           this.ngxService.stop(); // stop foreground spinner of the master loader with 'default' taskId
-
-          console.log("Response: " + event.body);
+       
 
           let responseValue = event.body;
           let typeOfbody = typeof(responseValue);
           console.log("type of response: ", typeOfbody);
+          // console.log("Response Value: " + event.body);
           // if (!responseValue["ok"])
           if (typeof(event.body)!= "object") {
             event = event.clone({ body: JSON.parse(this.encrytionService.decryptResponse(event)) });
-            console.log("response OK Vlue: ", responseValue["ok"], responseValue );
+            // console.log("after Encryption: ", event.body);
           }
-
-          console.log("Response: " + event.body);
+          console.log("after Decryption: " + JSON.stringify(event.body));
           const response = event.body;
           if (response && response["login_required"]) {
             if(this.router.url.search('auto-login') == -1) {
               this.utilService.clearCredentials();
               alert(response['message']);
             }
+            this.utilService.clearCredentials();
           }
           return event;
         }
