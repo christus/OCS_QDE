@@ -8,6 +8,7 @@ import { environment } from "src/environments/environment";
 import { NgxUiLoaderService } from "ngx-ui-loader"; // Import NgxUiLoaderService
 import { ActivatedRoute, Router } from "@angular/router";
 import { EncryptService } from "./encrypt.service";
+import { json } from "sjcl";
 
 
 export class AuthInterceptor implements HttpInterceptor {
@@ -76,7 +77,7 @@ export class AuthInterceptor implements HttpInterceptor {
             event = event.clone({ body: JSON.parse(this.encrytionService.decryptResponse(event)) });
             // console.log("after Encryption: ", event.body);
           }
-          console.log("after Decryption: " + JSON.stringify(event.body));
+          console.log("after Decryption: ",event.body);
           const response = event.body;
           if (response && response["login_required"]) {
             if(this.router.url.search('auto-login') == -1) {

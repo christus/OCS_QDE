@@ -1906,6 +1906,34 @@ createOrUpdatePersonalDetails(qde) {
     );
   }
 
+  adminLoanTypeSearch(data: any) {
+    const processId   = environment.api.adminLoanTypePurposeMap.processId;
+    const workflowId  = environment.api.adminLoanTypePurposeMap.workflowId;
+    const projectId   = environment.projectId;
+
+    let qdeRequestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: {
+        userId: parseInt(localStorage.getItem('userId')),
+        searchKey: data
+      },
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = {
+      'processVariables':
+      JSON.stringify(qdeRequestEntity)
+    };
+
+    let uri = environment.host + "/d/workflows/" + workflowId + "/v2/execute?projectId=" + projectId;
+    return this.callPost(
+      uri,
+      body
+    );
+  }
+
+
   adminUpdateDocumentProfile(data) {
     const processId   = environment.api.adminUpdateDocumentProfile.processId;
     const workflowId  = environment.api.adminUpdateDocumentProfile.workflowId;
