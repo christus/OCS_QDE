@@ -23,6 +23,7 @@ export class LoanMasterComponent implements OnInit {
 
   loanTypeData: Array<any>;
   selectedLoanTypeData: any;
+  searchKey:string = "";
 
   data: Array<any>;
   isAdd: boolean;
@@ -66,6 +67,10 @@ export class LoanMasterComponent implements OnInit {
         //   this.data = res['ProcessVariables']['loginFee'];
         // }
         this.data = res['ProcessVariables']['loanMaster'];
+        this.currentPage = parseInt(res['ProcessVariables']['currentPage']);
+        this.totalPages = parseInt(res['ProcessVariables']['totalPages']);
+        this.perPage = parseInt(res['ProcessVariables']['perPage']);
+        this.totalElements = parseInt(res['ProcessVariables']['totalPages']) * this.perPage;
       }, err => {
   
       });
@@ -161,6 +166,10 @@ export class LoanMasterComponent implements OnInit {
         //   this.data = res['ProcessVariables']['loginFee'];
         // }
         this.data = res['ProcessVariables']['loanMaster'];
+        this.currentPage = 1; 
+        this.totalPages = parseInt(res['ProcessVariables']['totalPages']);
+        this.perPage = parseInt(res['ProcessVariables']['perPage']);
+        this.totalElements = parseInt(res['ProcessVariables']['totalPages']) * this.perPage;
       }, err => {
   
       });
@@ -170,7 +179,7 @@ export class LoanMasterComponent implements OnInit {
         //   this.data = res['ProcessVariables']['loginFee'];
         // }
         this.data = res['ProcessVariables']['loginFee'];
-        this.currentPage = parseInt(res['ProcessVariables']['currentPage']);
+        this.currentPage = 1; 
         this.totalPages = parseInt(res['ProcessVariables']['totalPages']);
         this.perPage = parseInt(res['ProcessVariables']['perPage']);
         this.totalElements = parseInt(res['ProcessVariables']['totalPages']) * this.perPage;
@@ -253,5 +262,29 @@ export class LoanMasterComponent implements OnInit {
     }, err => {
 
     });    
+  }
+  pageChanged(value) {
+    if (this.isLoanMaster) {
+      this.qdeHttp.adminGetAllLoanMaster(value, this.perPage, this.searchKey).subscribe(res => {
+        this.data = res['ProcessVariables']['loanMaster'];
+        this.currentPage = value;
+        this.totalPages = parseInt(res['ProcessVariables']['totalPages']);
+        this.perPage = parseInt(res['ProcessVariables']['perPage']);
+        this.totalElements = parseInt(res['ProcessVariables']['totalPages']) * this.perPage;
+      }, err => {
+
+      });
+    } else if (this.isLoginFee) {
+      this.qdeHttp.adminGetAllLoginFee(value,this.perPage,this.searchKey).subscribe(res => {
+        this.data = res['ProcessVariables']['loginFee'];
+        this.currentPage = value;
+        this.totalPages = parseInt(res['ProcessVariables']['totalPages']);
+        this.perPage = parseInt(res['ProcessVariables']['perPage']);
+        this.totalElements = parseInt(res['ProcessVariables']['totalPages']) * this.perPage;
+
+      }, err => {
+  
+      });
+     }
   }
 }

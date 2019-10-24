@@ -25,10 +25,10 @@ export class RelationshipMappingComponent implements OnInit {
   selectedRelationship: any;
   selectedApplicantTitle: any;
 
-  // currentPage: number;
-  // totalPages: number;
-  // perPage: number = 1000;
-  // totalElements: number;
+  currentPage: number;
+  totalPages: number;
+  perPage: number;
+  totalElements: number;
   financialApplicant: string;
   applicantType: string;
 
@@ -42,11 +42,11 @@ export class RelationshipMappingComponent implements OnInit {
     this.tableName = 'applicant_relationship_mapping';
     if(this.route.snapshot.data['relationshipMaster']['ProcessVariables']['status'] == true) {
       let res = this.route.snapshot.data['relationshipMaster']['ProcessVariables'];
-
-      // this.currentPage = parseInt(res['currentPage']);
-      // this.totalPages = parseInt(res['totalPages']);
-      // this.perPage = parseInt(res['perPage']);
-      // this.totalElements = res['totalPages'] * this.perPage;
+      console.log(res);
+      this.currentPage = 1;
+      this.totalPages = parseInt(res['totalPages']);
+      this.perPage = parseInt(res['perPage']);
+      this.totalElements = res['totalPages'] * this.perPage;
 
       console.log('relationshipMaster: ', res['mappingList']);
       if(res['status'] == true) {

@@ -19,26 +19,11 @@
 }
 
 .pagination {
+    width: 80%;
     display: block;
+    clear: both;
     text-align: center;
-}
-
-.pagination-link {
-    display: inline-block;
-    padding: 8px 14px;
-    border: 1px dotted #ccc;
-    margin-right: 5px;
-    cursor: pointer;
-    text-decoration: none;
-    background: #e66e23;
-    color: #fff;
-}
-
-.pagination-link:hover,
-.pagination-link:focus {
-    background: #fff;
-    color: #333;
-    border: 1px dotted #333;
+    margin: 0px 0;
 }
 
 .zipcode-table {
@@ -106,7 +91,7 @@ form {
 tbody {
     display:block;
     height: 75vh;
-    overflow: scroll;
+    overflow: hidden;
 }
 thead, tbody tr {
     display:table;

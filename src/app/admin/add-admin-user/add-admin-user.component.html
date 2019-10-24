@@ -52,8 +52,8 @@
         </div>
         <div class="selectBox form-field-el">
             <label class="controltitle">User role</label>
-            <select class="form-control" formControlName="userRoleId" >
-                <option [ngValue]="null" disabled>Choose your role</option>
+            <select class="form-control" formControlName="userRoleId" [(ngModel)]="defaultSelectRole" >
+                <option [ngValue]="null" value="null" disabled>Choose your role</option>
                 <option *ngFor="let userRole of userRoles" value={{userRole.value}}>
                     {{userRole.key}}
                 </option>
@@ -64,8 +64,8 @@
         </div>
         <div class="selectBox form-field-el">
             <label class="controltitle">User branch</label>
-            <select class="form-control" formControlName="userBranchId">
-                <option  [ngValue]="null" disabled>Choose your branch</option>
+            <select class="form-control" formControlName="userBranchId" [(ngModel)]="defaultSelectBranch">
+                <option  [ngValue]="null" value="null" disabled>Choose your branch</option>
                 <option *ngFor="let br of branches" value={{br.value}} >
                     {{br.key}}
                 </option>

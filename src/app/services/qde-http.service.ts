@@ -1712,7 +1712,7 @@ createOrUpdatePersonalDetails(qde) {
   }
 
 
-  adminLoadMoreLovs(tableName: string, currentPage?: number, perPage?: number) {
+  adminLoadMoreLovs(tableName: string, currentPage?: number, perPage?: number, searchKey?:string) {
     const processId = environment.api.adminGetEachLov.processId;
     const workflowId = environment.api.adminGetEachLov.workflowId;
     const projectId = environment.projectId;
@@ -1723,7 +1723,8 @@ createOrUpdatePersonalDetails(qde) {
         tableName: tableName,
         userId: parseInt(localStorage.getItem('userId')),
         currentPage: currentPage ? currentPage: null,
-        perPage: perPage ? perPage: null
+        perPage: perPage ? perPage: null,
+        searchKey: searchKey ? searchKey: ""
       },
       workflowId: workflowId,
       projectId: projectId
@@ -1957,7 +1958,7 @@ createOrUpdatePersonalDetails(qde) {
     );
   }
 
-  adminGetAllLoginFee(currentPage ?: number, perPage ?: number) {
+  adminGetAllLoginFee(currentPage ?: number, perPage ?: number, searchKey?: string) {
     const processId   = environment.api.adminGetAllLoginFee.processId;
     const workflowId  = environment.api.adminGetAllLoginFee.workflowId;
     const projectId   = environment.projectId;
@@ -1971,7 +1972,8 @@ createOrUpdatePersonalDetails(qde) {
       ProcessVariables: {
         userId: parseInt(localStorage.getItem('userId')),
         currentPage: currentPage ? currentPage: 1,
-        perPage: perPage ? perPage: 100,
+        perPage: perPage ? perPage: 10,
+        searchKey: searchKey ? searchKey : ""
       },
       workflowId: workflowId,
       projectId: projectId
@@ -2017,7 +2019,7 @@ createOrUpdatePersonalDetails(qde) {
     );
   }
 
-  adminGetAllLoanMaster(currentPage ?: number, perPage ?: number) {
+  adminGetAllLoanMaster(currentPage ?: number, perPage ?: number, searchKey?:string) {
     const processId   = environment.api.adminGetAllLoanMaster.processId;
     const workflowId  = environment.api.adminGetAllLoanMaster.workflowId;
     const projectId   = environment.projectId;
@@ -2031,7 +2033,8 @@ createOrUpdatePersonalDetails(qde) {
       ProcessVariables: {
         userId: localStorage.getItem('userId'),
         currentPage: currentPage ? currentPage: null,
-        perPage: perPage ? perPage: null
+        perPage: perPage ? perPage: null,
+        searchKey: searchKey ? searchKey : ""
       },
       workflowId: workflowId,
       projectId: projectId

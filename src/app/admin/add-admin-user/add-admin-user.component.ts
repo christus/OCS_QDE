@@ -17,6 +17,8 @@ import {ViewChild, ElementRef} from '@angular/core';
 export class AddAdminUserComponent implements OnInit, AfterViewInit {
 
   reportingToInp: any;
+  defaultSelectBranch:string ="null";
+  defaultSelectRole:string="null";
   ngAfterViewInit(): void {
     console.log("After view init");
   }

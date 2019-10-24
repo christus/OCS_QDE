@@ -61,7 +61,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let d of data;let i=index;">
+      <tr *ngFor="let d of data | paginate: { itemsPerPage: perPage, currentPage: currentPage, totalItems: totalItems  };let i=index;">
         <td style="width:60px;">{{i+1}}</td>
         <td>
           <form>
@@ -103,3 +103,4 @@
   
 
 </div>
+<pagination-controls  (pageChange)="pageChanged($event)" class="pagination" autoHide="true" ></pagination-controls>

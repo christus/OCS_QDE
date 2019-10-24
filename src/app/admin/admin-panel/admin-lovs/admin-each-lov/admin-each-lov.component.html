@@ -1,6 +1,6 @@
 <a class="editsavebtn" routerLink="/admin/lovs">Go Back</a>
 <h1 class="lov-heading">{{tableName.split('_').join(' ') | titlecase}}</h1>
-<input type="text" class="lov-search" placeholder="Search" (input)="search($event)" />
+<input type="text" class="lov-search" placeholder="Search" [(ngModel)]="searchKey" (input)="search($event)" />
 <button type="button" class="editsavebtn" (click)="addNew()">Add New</button>
 <button type="button" class="editsavebtn" (click)="refresh()">Refresh Data</button>
 
@@ -18,7 +18,7 @@
      </tr>
    </thead>
    <tbody>
-     <tr *ngFor="let l of lovs;let i=index;">
+     <tr *ngFor="let l of lovs | paginate: { itemsPerPage: perPage, currentPage: currentPage, totalItems: totalItems  };let i=index;">
        <td>{{l.key}}</td>
        <td>
          <input type="text" #lovsElements placeholder="Description" [(ngModel)]="l.description" tabindex="1" [disabled]="l.isEdit" />
@@ -55,3 +55,4 @@
    </tbody>
  </table> 
 </div>
+<pagination-controls  (pageChange)="pageChanged($event)" class="pagination" autoHide="true" ></pagination-controls>
