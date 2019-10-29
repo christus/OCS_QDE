@@ -181,6 +181,7 @@ export class LoanMasterComponent implements OnInit {
 
   refresh() {
     if(this.isLoanMaster) {
+      this.searchKey="";
       this.qdeHttp.adminGetAllLoanMaster().subscribe(res => {
         // if(res['ProcessVariables']['loginFee']) {
         //   this.data = res['ProcessVariables']['loginFee'];

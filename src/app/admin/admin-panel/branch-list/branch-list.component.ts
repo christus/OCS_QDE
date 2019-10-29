@@ -25,6 +25,7 @@ export class BranchListComponent implements OnInit {
   perPage:string;
   errorMsg:string;
   enableLoadMore:boolean;
+  searchKey:string="";
 
 
   ngOnInit() {
@@ -78,6 +79,7 @@ export class BranchListComponent implements OnInit {
   }
 
   refresh(){
+    this.searchKey="";
      let data = {};
     data["currentPage"] = 1;
 
@@ -119,7 +121,7 @@ export class BranchListComponent implements OnInit {
   pageChanged(value){
     let data = {};
     data["currentPage"] = value;
-
+    data["searchKey"]= this.searchKey;
     this.getBranchList(data);
   }
 

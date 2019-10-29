@@ -49,7 +49,7 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
   data: Array<any> = [];
   selectedIndex: number;
   isAdd: boolean = false;
-
+  searchKey:string="";
   currentPage: number;
   perPage: number;
   totalPages: number;
@@ -167,7 +167,7 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
   }
 
   loadMore() {
-    this.qdeHttp.adminLoadMoreLovs(this.tableName, (this.currentPage+1), this.perPage).subscribe(res => {
+    this.qdeHttp.adminLoadMoreLovs(this.tableName, (this.currentPage+1), this.perPage,this.searchKey).subscribe(res => {
       if(res['ProcessVariables']['status'] == true) {
         if(res['ProcessVariables']['valueDescription']) {
           this.data = this.data.concat(res['ProcessVariables']['valueDescription'].map(v => {
@@ -290,11 +290,11 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
       tableName: 'zipcode',
       perPage: this.perPage
     };
-
+    this.searchKey="";
     console.log(this.searchInp);
-    if(this.searchInp.nativeElement.value != '') {
+    /*if(this.searchKey != '') {
       dude['searchKey'] = this.searchInp.nativeElement.value;
-    }
+    }*/
 
     this.qdeHttp.adminZipCodeSearch(dude).subscribe(res => {
       if(res['ProcessVariables']['status'] == true) {

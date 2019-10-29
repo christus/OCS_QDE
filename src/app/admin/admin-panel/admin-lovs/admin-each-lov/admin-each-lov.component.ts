@@ -192,6 +192,7 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
   }
 
   refresh() {
+    this.searchKey="";
     this.qdeHttp.adminLoadMoreLovs(this.tableName).subscribe(res => {
       if(res['ProcessVariables']['status'] == true) {
         if(res['ProcessVariables']['valueDescription'] && res['ProcessVariables']['valueDescription'].length > 0) {

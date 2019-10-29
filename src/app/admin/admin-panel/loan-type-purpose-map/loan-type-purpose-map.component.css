@@ -108,7 +108,7 @@ form {
 tbody {
     display:block;
     height: 75vh;
-    overflow: scroll;
+    overflow: hidden;
 }
 thead, tbody tr {
     display:table;

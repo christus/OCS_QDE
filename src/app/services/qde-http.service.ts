@@ -1958,7 +1958,7 @@ createOrUpdatePersonalDetails(qde) {
     );
   }
 
-  adminDocumentProfile(currentPage ?: number, perPage ?: number) {
+  adminDocumentProfile(currentPage ?: number, perPage ?: number,searchKey?:string) {
     const processId   = environment.api.adminDocumentProfile.processId;
     const workflowId  = environment.api.adminDocumentProfile.workflowId;
     const projectId   = environment.projectId;
@@ -1966,7 +1966,8 @@ createOrUpdatePersonalDetails(qde) {
     let dude = {
       userId: localStorage.getItem('userId'),
       currentPage: currentPage ? currentPage: null,
-      perPage: perPage ? perPage: null
+      perPage: perPage ? perPage: null,
+      searchKey: searchKey ? searchKey : ""
     };
 
 
@@ -2595,7 +2596,7 @@ createOrUpdatePersonalDetails(qde) {
   }
 
 
-  adminApplicantRelationship() {
+  adminApplicantRelationship(currentPage?:number,perPage?:number,searchKey?:string) {
     const processId   = environment.api.adminApplicantRelationship.processId;
     const workflowId  = environment.api.adminApplicantRelationship.workflowId;
     const projectId   = environment.projectId;
@@ -2607,8 +2608,9 @@ createOrUpdatePersonalDetails(qde) {
       ProcessVariables: {
         // tableName: tableName,
         userId: parseInt(localStorage.getItem('userId')),
-        // currentPage: _route.queryParams['currentPage'] ? parseInt(_route.queryParams['currentPage']): 1,
-        // perPage: _route.queryParams['perPage'] ? parseInt(_route.queryParams['perPage']): 10,
+        currentPage: currentPage ? currentPage: 1,
+        perPage: perPage ? perPage : 8,
+        searchKey: searchKey ? searchKey: ""
       },
       workflowId: workflowId,
       projectId: projectId

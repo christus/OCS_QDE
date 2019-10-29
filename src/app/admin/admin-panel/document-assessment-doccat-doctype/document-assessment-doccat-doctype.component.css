@@ -5,6 +5,7 @@
     padding: 4px 10px;
     color: #fff;
     box-shadow: 1px 1px 3px 0 #333;
+    vertical-align: middle;
 }
 
 .editsavebtn:active {
@@ -110,7 +111,7 @@ form {
 tbody {
     display:block;
     height: 75vh;
-    overflow: scroll;
+    overflow: hidden;
 }
 thead, tbody tr {
     display:table;
@@ -120,7 +121,7 @@ thead, tbody tr {
 
 .admin-table {
     width: 100%;
-    text-align: left;
+    text-align: center;
 }
 
 .admin-table thead tr th {

@@ -134,7 +134,7 @@ form {
 tbody {
     display:block;
     height: 75vh;
-    overflow: scroll;
+    overflow: hidden;
 }
 thead, tbody tr {
     display:table;
@@ -144,7 +144,7 @@ thead, tbody tr {
 
 .admin-table {
     width: 100%;
-    text-align: left;
+    text-align: center;
 }
 
 .admin-table thead tr th {

@@ -202,6 +202,9 @@ export class ClssChecklistComponent implements OnInit {
     this.qdeHttp.adminLoadMoreLovs().subscribe(res => {
       console.log("fhvkdjvbhfkd",res)
       this.lovs = res['ProcessVariables']['clssDetailsList']
+      for(var x in this.lovs){
+        this.lovs[x].isEdit=true;
+      }
       console.log("fhvkdjvbhfkd",this.lovs)
       //   console.log(v['aadhaarRequired']);
 
@@ -257,6 +260,9 @@ export class ClssChecklistComponent implements OnInit {
     this.qdeHttp.adminClssSearch(event.target.value).subscribe(response => {
       console.log("mamam",response)
       this.lovs = response["ProcessVariables"]["clssDetailsList"]
+      for(var x in this.lovs){
+        this.lovs[x].isEdit=true;
+      }
     });
   }
 

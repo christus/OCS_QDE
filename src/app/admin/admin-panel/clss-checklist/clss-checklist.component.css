@@ -2,7 +2,7 @@
     display:table;
     width:100%;
     table-layout:fixed;/* even columns width , fix width of table too*/
-    white-space: nowrap;
+    white-space: normal;
 }
 .tbody {
     display:block;
@@ -57,6 +57,7 @@
 }
 .table .td5vw {
     width: 5vw;
+    text-align: center;
 }
 
 .table .td input[type="text"] {

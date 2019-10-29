@@ -1,6 +1,6 @@
 <a class="editsavebtn" routerLink="/admin/lovs">Go Back</a>
-<h1 class="lov-heading">{{tableName.split('_').join(' ')}}</h1>
-<input type="text" class="lov-search" #searchInp placeholder="Search" tabindex="1" (input)="search($event)" />
+<h1 class="lov-heading">{{tableName.split('_').join(' ') | titlecase }}</h1>
+<input type="text" class="lov-search" #searchInp placeholder="Search" tabindex="1" (input)="search($event)" [(ngModel)]="searchKey" />
 <button type="button" class="editsavebtn" (click)="add()">{{isAdd ? 'Close': 'Add New'}}</button>
 <button type="button" class="editsavebtn" (click)="refresh()">Refresh Data</button>
 
@@ -46,7 +46,7 @@
 <!-- <input type="text" class="lov-search" placeholder="Search" (input)="search($event)" /> -->
 <div class="zipcode-table-wrapper">
 
-  <table class="zipcode-table">
+  <table class="admin-table">
     <thead>
       <tr>
         <th>Sr No.</th>
