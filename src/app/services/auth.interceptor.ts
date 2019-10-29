@@ -37,6 +37,8 @@ export class AuthInterceptor implements HttpInterceptor {
             responseType: "text"
             }
           );
+
+          console.log("req post", req);
         } else {
           req = req.clone({ headers: req.headers.set('Content-Type', 'application/x-www-form-urlencoded') });
         }

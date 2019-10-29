@@ -287,6 +287,7 @@ export class RelationshipMappingComponent implements OnInit {
   changeCoApplicant(event, index) {
     this.data[index].coApplicantId = event.target.value == '1' ? '1': '2';
   }
+
   pageChanged(value) {
     this.qdeHttp.adminApplicantRelationship(value, this.perPage, this.searchKey).subscribe(res => {
       if (res['ProcessVariables']['status'] == true) {

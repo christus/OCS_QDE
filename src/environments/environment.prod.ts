@@ -11,6 +11,12 @@ export const environment = {
   status: {
     QDECREATED: "1"
   },
+
+  apiVersion: {
+    login: "v3",
+    api: "v2"
+  },
+
   api: {
     'dashboard': {
       'workflowId': '050f5c82789a11e982270242ac110002',
@@ -406,9 +412,9 @@ export const environment = {
   appiyoDrive: "/d/drive/upload/",
   driveLocation: "/d/drive/docs/",
   ocsHost: "/ocs",
-  //host: "http://192.168.1.108/appiyo",
+  host: "http://192.168.1.108/appiyo",
   //host: "/ProcessStore",
-  host:  "/appiyo",
+  //host:  "/appiyo",
   pdfLocation: "/d/download/pdf?",
   csvLocation: "/d/download/csv?",
   isMobile: false,
@@ -416,7 +422,7 @@ export const environment = {
  // host: "https://ihfcmobileuat.icicihfc.com/appiyo"
   aesPublicKey: 'MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJ+GJdSSEeaNFBLqyfM3DIOgQgWCwJ0INfeZZV7ITsLeuA7Yd02rrkYGIix1IWvoebWVmzhncUepYxHwK1ARCdUCAwEAAQ==',
   // host: "https://ihfcmobileuat.icicihfc.com/appiyo",
-  encryptionType: true //Ecryption
+  encryptionType: true, //Ecryption
 
   //host: "https://ihfcmobileuat.icicihfc.com/appiyo"
   //csvhost: "http://192.168.1.108/appiyo",

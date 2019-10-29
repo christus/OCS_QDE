@@ -16,6 +16,11 @@ export const environment = {
 
   // projectId: 'ff8e364e6fce11e98754782bcb8f3845',
 
+  apiVersion: {
+    login: "v3/",
+    api: "v2/"
+  },
+
   api: {
     'dashboard': {
       'workflowId': '050f5c82789a11e982270242ac110002',
