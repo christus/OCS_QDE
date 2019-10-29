@@ -199,7 +199,7 @@ export class ClssChecklistComponent implements OnInit {
   // }
 
   refresh() {
-    this.qdeHttp.adminLoadMoreLovs().subscribe(res => {
+    this.qdeHttp.adminLoadMoreClss().subscribe(res => {
       console.log("fhvkdjvbhfkd",res)
       this.lovs = res['ProcessVariables']['clssDetailsList']
       for(var x in this.lovs){

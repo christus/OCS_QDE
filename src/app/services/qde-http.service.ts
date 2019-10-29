@@ -1716,7 +1716,45 @@ createOrUpdatePersonalDetails(qde) {
   }
 
 
-  adminLoadMoreLovs() {
+  adminLoadMoreLovs(tableName: string, currentPage?: number, perPage?: number, searchKey?:string) {
+    const processId = environment.api.adminGetEachLov.processId;
+    const workflowId = environment.api.adminGetEachLov.workflowId;
+    const projectId = environment.projectId;
+
+    let qdeRequestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: {
+        tableName: tableName,
+        userId: parseInt(localStorage.getItem('userId')),
+        currentPage: currentPage ? currentPage: null,
+        perPage: perPage ? perPage: null,
+        searchKey: searchKey ? searchKey: ""
+      },
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    if(qdeRequestEntity['ProcessVariables']['currentPage'] == null) {
+      delete qdeRequestEntity['ProcessVariables']['currentPage'];
+    }
+
+    if(qdeRequestEntity['ProcessVariables']['perPage'] == null) {
+      delete qdeRequestEntity['ProcessVariables']['perPage'];
+    }
+
+    const body = {
+      "processVariables":
+      JSON.stringify(qdeRequestEntity)
+    };
+
+    let uri = environment.host + "/d/workflows/" + workflowId + "/v2/execute?projectId=" + projectId;
+    return this.callPost(
+      uri,
+      body
+    );
+  }
+
+  adminLoadMoreClss() {
     const processId = environment.api.adminCLSSGet.processId;
     const workflowId = environment.api.adminCLSSGet.workflowId;
     const projectId = environment.projectId;
@@ -1724,10 +1762,7 @@ createOrUpdatePersonalDetails(qde) {
     let qdeRequestEntity: RequestEntity = {
       processId: processId,
       ProcessVariables: {
-        // tableName: tableName,
         userId: parseInt(localStorage.getItem('userId')),
-        // currentPage: currentPage ? currentPage: null,
-        // perPage: perPage ? perPage: null
       },
       workflowId: workflowId,
       projectId: projectId
