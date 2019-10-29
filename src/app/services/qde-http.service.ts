@@ -1716,19 +1716,18 @@ createOrUpdatePersonalDetails(qde) {
   }
 
 
-  adminLoadMoreLovs(tableName: string, currentPage?: number, perPage?: number, searchKey?:string) {
-    const processId = environment.api.adminGetEachLov.processId;
-    const workflowId = environment.api.adminGetEachLov.workflowId;
+  adminLoadMoreLovs() {
+    const processId = environment.api.adminCLSSGet.processId;
+    const workflowId = environment.api.adminCLSSGet.workflowId;
     const projectId = environment.projectId;
 
     let qdeRequestEntity: RequestEntity = {
       processId: processId,
       ProcessVariables: {
-        tableName: tableName,
+        // tableName: tableName,
         userId: parseInt(localStorage.getItem('userId')),
-        currentPage: currentPage ? currentPage: null,
-        perPage: perPage ? perPage: null,
-        searchKey: searchKey ? searchKey: ""
+        // currentPage: currentPage ? currentPage: null,
+        // perPage: perPage ? perPage: null
       },
       workflowId: workflowId,
       projectId: projectId

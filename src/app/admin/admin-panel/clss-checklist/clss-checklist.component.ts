@@ -199,25 +199,58 @@ export class ClssChecklistComponent implements OnInit {
   // }
 
   refresh() {
-    // this.qdeHttp.adminLoadMoreLovs(this.tableName).subscribe(res => {
-    //   if(res['ProcessVariables']['status'] == true) {
-    //     this.tempLovs = this.lovs = res['ProcessVariables']['valueDescription'].map((v, i) => {
+    this.qdeHttp.adminLoadMoreLovs().subscribe(res => {
+      console.log("fhvkdjvbhfkd",res)
+      this.lovs = res['ProcessVariables']['clssDetailsList']
+      console.log("fhvkdjvbhfkd",this.lovs)
+      //   console.log(v['aadhaarRequired']);
 
-    //       return {
-    //         userId: localStorage.getItem('userId'),
-    //         key: (i+1),
-    //         description: v['description'],
-    //         value: v['value'],
-    //         isEdit: true,
-    //         id: v['id'],
-    //         male: v['male'],
-    //         female: v['female'] 
-    //       }
-    //     });
-    //   }
-    // }, err => {
+      //   return {
+      //     userId: localStorage.getItem('userId'), // Ashwin told
+      //     aadhaarRequired: v['aadhaarRequired'],
+      //     clssId: parseInt(v['clssId']),
+      //     clssType: v['clssType'],
+      //     femaleOwnership: v['femaleOwnership'],
+      //     houseConstruction: v['houseConstruction'],
+      //     houseExtension: v['houseExtension'],
+      //     houseImprovement: v['houseImprovement'],
+      //     maximumAge: v['maximumAge'],
+      //     maximumIncomeInLakhs: v['maximumIncomeInLakhs'],
+      //     maximumLoanAmountInLakhs: v['maximumLoanAmountInLakhs'],
+      //     maximumTenureInMonths: v['maximumTenureInMonths'],
+      //     minimumAge: v['minimumAge'],
+      //     minimumIncomeInLakhs: v['minimumIncomeInLakhs'],
+      //     minimumLoanAmountInLakhs: v['minimumLoanAmountInLakhs'],
+      //     newHouse: v['newHouse'],
+      //     nonHousingProduct: v['nonHousingProduct'],
+      //     plotLoan: v['plotLoan'],
+      //     propertySizeInSquareMetre: v['propertySizeInSquareMetre'],
+      //     resaleHouse: v['resaleHouse'],
+      //     schemeBenefitsInYears: v['schemeBenefitsInYears'],
+      //     schemeBenefitsUptoInLakhs: v['schemeBenefitsUptoInLakhs'],
+      //     subsidyInterest: v['subsidyInterest'],
+      //     targetSegment: v['targetSegment'],
+      //     isEdit: true
+      //   };
+      // });
+      // if(res['ProcessVariables']['status'] == true) {
+      //   this.tempLovs = this.lovs = res['ProcessVariables']['valueDescription'].map((v, i) => {
 
-    // });
+      //     return {
+      //       userId: localStorage.getItem('userId'),
+      //       key: (i+1),
+      //       description: v['description'],
+      //       value: v['value'],
+      //       isEdit: true,
+      //       id: v['id'],
+      //       male: v['male'],
+      //       female: v['female'] 
+      //     }
+      //   });
+      // }
+    }, err => {
+
+    });
   }
 
   search(event) {
