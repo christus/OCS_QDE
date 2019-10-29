@@ -8,14 +8,11 @@ import { QdeHttpService } from "./qde-http.service";
 
 export default class HttpReq {
 
-    http:HttpClient;
 
-    constructor(public httpClient: HttpClient,
-        private qdeHttp: QdeHttpService){
-        this.http = httpClient;
+    constructor(private qdeHttp: QdeHttpService){
     }
 
-    callPost(url: string, body: any) {
-        return this.qdeHttp.callPost(url, body);
-    }
+    // callPost(url: string, body: any) {
+    //     return this.qdeHttp.callPost(url, body);
+    // }
 }
