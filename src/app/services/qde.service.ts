@@ -29,6 +29,7 @@ export class QdeService {
           isMainApplicant: true,
           isIndividual: null,
           partnerRelationship: "",
+          termsAndConditions: false,
           maritalStatus: {
             status: "",
             spouseTitle: "",

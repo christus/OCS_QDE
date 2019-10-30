@@ -146,13 +146,16 @@ getUserList(data){
                           this.applications = [];
                           this.validFromAssignee = false;
                       } else if (fromId == 2) {
+                        // const userID = this.source.find(mysearchValue => mysearchValue.key === event).value;
+                        this.selectedAssign =  userID.toString();
+                        this.toAssignId = Number(this.selectedAssign);
                         if (this.fromAssignId == this.toAssignId){
                           this.isErrorModal = true;
                           this.errorMessage = "Both Assignees are Same, It should Not Same";
                           this.validToAssignee = true;
                         } else {
                           this.toAssignId = Number(this.selectedAssign);
-                        this.validToAssignee = false;
+                          this.validToAssignee = false;
                         }
                         
                       }

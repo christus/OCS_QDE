@@ -32,6 +32,7 @@ export interface Applicant {
     isMainApplicant : boolean; /* Applicant / Co-Applicant: true/false */
     isIndividual ?: boolean; /* Individual / Non-individual: true/false */
     partnerRelationship ?: string;
+    termsAndConditions ?: boolean;
     maritalStatus ?: MaritalStatus;
     familyDetails ?: FamilyDetail;
     other ?: Other;

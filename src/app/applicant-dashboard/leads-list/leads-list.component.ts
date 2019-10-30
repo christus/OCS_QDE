@@ -102,11 +102,15 @@ export class LeadsListComponent implements OnInit {
     this.toYear = {key: "YYYY", value: "YYYY"};
 
     this.assignedTo = this.assignedToList[0];
-
+    if (localStorage.getItem("token") && localStorage.getItem("userId") ) {
     this.getFilteredLeads();
     this.getNewLeads();
     this.getPendingApplication();
     this.getPendingPayment();
+    } else {
+      this.utilService.clearCredentials();
+      return;
+    }
   }
 
   isloggedIn() {
