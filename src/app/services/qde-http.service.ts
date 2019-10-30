@@ -2989,7 +2989,7 @@ createOrUpdatePersonalDetails(qde) {
       });
 
       return obs;
-    }else {
+    } else {
       let addParameter: string = null;
       const uniqueId = Math.random().toString(36).substr(2, 9);
       console.log("uniqueId ", uniqueId);

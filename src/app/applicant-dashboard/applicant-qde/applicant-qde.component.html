@@ -331,7 +331,7 @@
                               name="firstName"  #firstName="ngModel" fieldFill required autocomplete="off"
                               tabindex="2" maxlength="50"
                               pattern="{{regexPattern.name}}" />
-                            <label for="name">First name</label>
+                            <label for="firstName">First name</label>
                             
                             <div *ngIf="(qde.application.applicants[applicantIndex].personalDetails.firstName)?.length == 50" class="invalid-feedback">Maximum Character Exceeds</div>
                             <div *ngIf="(firstName.touched || firstName.dirty) && firstName.invalid"

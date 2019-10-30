@@ -1,6 +1,6 @@
 export const environment = {
   version: "1.8.0",
-  buildDate: "24-10-2019",
+  buildDate: "30-10-2019",
   production: true,
   projectId: '5928d30eac7811e9a1670242ac110002', //developement
 
@@ -13,8 +13,8 @@ export const environment = {
   },
 
   apiVersion: {
-    login: "v3",
-    api: "v2"
+    login: "v3/",
+    api: "v2/"
   },
 
   api: {
