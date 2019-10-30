@@ -16,6 +16,11 @@ export const environment = {
 
   // projectId: 'ff8e364e6fce11e98754782bcb8f3845',
 
+  apiVersion: {
+    login: "v3/",
+    api: "v2/"
+  },
+
   api: {
     'dashboard': {
       'workflowId': '050f5c82789a11e982270242ac110002',
@@ -412,8 +417,13 @@ export const environment = {
   driveLocation: "/d/drive/docs/",
   csvLocation: "/d/download/csv?",
   isMobile: false,
-  mobileExtenstion: "@icicibankltd.com"
-  //host: ""
+  mobileExtenstion: "@icicibankltd.com",
+  // tslint:disable-next-line: max-line-length
+  // tslint:disable-next-line: quotemark
+  // tslint:disable-next-line: max-line-length
+  aesPublicKey: 'MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJ+GJdSSEeaNFBLqyfM3DIOgQgWCwJ0INfeZZV7ITsLeuA7Yd02rrkYGIix1IWvoebWVmzhncUepYxHwK1ARCdUCAwEAAQ==',
+  encryptionType: true // Ecryption
+  // host: ""
 
 };
 

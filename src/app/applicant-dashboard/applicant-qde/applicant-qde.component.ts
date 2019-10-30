@@ -737,7 +737,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
           // Personal Details Qualification (different because qualification isnt sending sequential value like 1,2,3)
           if (!isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].personalDetails.qualification))) {
-            console.log('this.qde.application.applicants[this.applicantIndex].personalDetails.qualification: ', this.qde.application.applicants[this.applicantIndex].personalDetails.qualification);
+            // console.log('this.qde.application.applicants[this.applicantIndex].personalDetails.qualification: ', this.qde.application.applicants[this.applicantIndex].personalDetails.qualification);
             // this.selectedQualification = this.qualifications[(parseInt(this.qde.application.applicants[this.applicantIndex].personalDetails.qualification))-1];
             this.selectedQualification = this.qualifications.find(e => e.value == this.qde.application.applicants[this.applicantIndex].personalDetails.qualification);
             console.log('selectedQualification: ', this.selectedQualification);

@@ -54,17 +54,12 @@ search(searchEvent){
     this.filterData = 1;
     this.getErrorHandlingMessage(data);
   }else if(searchVal){
-    /*var searchRes = this.collection.filter(function(val){
-      return val.errorMessage.toLowerCase().includes(searchVal.toLowerCase());
-    });
-    */
     let data = {};
-    data["currentPage"] = 1;
     data["searchKey"]=searchVal;
     this.filterData = 1;
     this.qdeHttp.searchErrorHandlingMessage(data).subscribe((response) =>{
       console.log("errormsg:",response);
-      if(response!=""){
+      if(response['ProcessVariables'].errorDetails!=null){
         this.collection = response['ProcessVariables'].errorDetails;
         this.totalPages = response['ProcessVariables'].totalPages;
           this.from = response['ProcessVariables'].from;

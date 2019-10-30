@@ -1,40 +1,35 @@
 <?xml version='1.0' encoding='utf-8'?>
-  <widget version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <access origin="*" />
   
   <feature name="CordovaHttpPlugin">
     <param name="android-package" value="com.silkimen.cordovahttp.CordovaHttpPlugin"/>
   </feature>
 
-
   <feature name="Camera">
     <param name="android-package" value="org.apache.cordova.camera.CameraLauncher"/>
   </feature>
 
-
   <feature name="Exit">
     <param name="android-package" value="im.ckk.cordova.exit.Exit"/>
   </feature>
-
 
   <feature name="File">
     <param name="android-package" value="org.apache.cordova.file.FileUtils"/>
     <param name="onload" value="true"/>
   </feature>
 
-
   <feature name="Keyboard">
     <param name="android-package" value="org.apache.cordova.labs.keyboard.Keyboard" onload="true"/>
   </feature>
-
 
   <feature name="UniqueDeviceID">
     <param name="android-package" value="hu.dpal.phonegap.plugins.UniqueDeviceID"/>
   </feature>
 
-
   <feature name="FileTransfer">
     <param name="android-package" value="org.apache.cordova.filetransfer.FileTransfer"/>
   </feature>
 
-  </widget>
+  
+</widget>

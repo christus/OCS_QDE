@@ -146,11 +146,23 @@ getUserList(data){
                           this.applications = [];
                           this.validFromAssignee = false;
                       } else if (fromId == 2) {
+                        // const userID = this.source.find(mysearchValue => mysearchValue.key === event).value;
+                        this.selectedAssign =  userID.toString();
                         this.toAssignId = Number(this.selectedAssign);
-                        this.validToAssignee = false;
+                        if (this.fromAssignId == this.toAssignId){
+                          this.isErrorModal = true;
+                          this.errorMessage = "Both Assignees are Same, It should Not Same";
+                          this.validToAssignee = true;
+                        } else {
+                          this.toAssignId = Number(this.selectedAssign);
+                          this.validToAssignee = false;
+                        }
+                        
                       }
             } else {
+              if (fromId == 1) {
               this.applictionList = [];
+              }
             }
             console.log("fassignee change value ", event);
            
@@ -159,13 +171,13 @@ getUserList(data){
         if (fromId == 1) {
           this.errorMessage = "Select Any Valid From Assignee";
           this.validFromAssignee = true;
+          this.applictionList = [];
+          this.totalItems = 0;
         }
         else if ( fromId == 2) {
           this.errorMessage = "Select Any Valid To Assignee";
           this.validToAssignee = true;
-        }        
-        this.applictionList = [];
-        this.totalItems = 0;
+        }
       }
 
   }
@@ -199,64 +211,68 @@ getUserList(data){
 
   changeApllication(resonTochange, effectFromDate) {
     const userID = localStorage.getItem("userId");
-if (this.toAssignId === null || this.toAssignId === undefined || this.reasonToChangeText == null ||
-  this.reasonToChangeText == "" || this.reasonToChangeText == undefined) {
-  this.isErrorModal = true;
-  this.errorMessage = "Mandatory fields are Require";
-} else if ((this.fromAssignId === null || this.fromAssignId === undefined ) && (this.applictionList.length == 0) ){
+    if (this.toAssignId === null || this.toAssignId === undefined || this.reasonToChangeText == null ||
+      this.reasonToChangeText == "" || this.reasonToChangeText == undefined) {
+      this.isErrorModal = true;
+      this.errorMessage = "Mandatory fields are Require";
+    } else if ((this.fromAssignId === null || this.fromAssignId === undefined ) && (this.applictionList.length == 0) ){
 
-  this.isErrorModal = true;
-  this.errorMessage = "Select Any From Assignee Name";
-} else if (this.selectAllStatus = false) {
-  if(this.applications.length == 0  || this.applications.length == undefined ){
-    this.isErrorModal = true;
-    this.errorMessage = "Select Any Apllication to Assign Other";
-}
+      this.isErrorModal = true;
+      this.errorMessage = "Select Any From Assignee Name";
+    } else if (this.selectAllStatus = false) {
+      if(this.applications.length == 0  || this.applications.length == undefined ){
+        this.isErrorModal = true;
+        this.errorMessage = "Select Any Apllication to Assign Other";
+    }
 
-} else if( !this.effectFromDate){
-  this.isErrorModal = true;
-  this.errorMessage = "Select Any Date For Effect From";
-} else {
+    } else if( !this.effectFromDate){
+      this.isErrorModal = true;
+      this.errorMessage = "Select Any Date For Effect From";
+    } else if (this.fromAssignId == this.toAssignId){
+      this.isErrorModal = true;
+      this.errorMessage = "Both Assignees are Same, It should Not Same";
+      this.validToAssignee = true;
+    } else {
 
- console.log("err daate" , this.effectFromDate);
+    console.log("err daate" , this.effectFromDate);
 
- let applicationCollection = this.applications.filter(function(elem, index, self) {
-  return index === self.indexOf(elem);
- });
-    const data = {
-      "userId":userID.toString(),
-      "reassignToId": this.toAssignId,
-      "reassignedReason": resonTochange.toString(),
-      "fromDate":  this.getFormattedDate(this.effectFromDate).toString(),
-      "reassignFromId": this.fromAssignId,
-       "applications": applicationCollection,
-        "selectAll": this.selectAllStatus
-    };
-    console.log("form submit call ", data );
-    this.qdeHttp.reAssignApplications(data).subscribe(response => {
-      if (  response["Error"] === "0" &&
-                response["ProcessVariables"]["status"]) {
-                  // alert("Uploaded Successfully!");
-                  this.toAssignId = null;
-                  this.fromAssignId = null;
-                  this.reasonToChangeText = null;
-                  this.effectFromDate = null;
-                  this.applications = [];
-                  this.applictionList = [];
-                  this.toAssign = null;
-                  this.fromAssign = null;
-                  this.selectAllCheck = false;
-                  this.totalItems = 0;
-              } else {
-                if (response["ErrorMessage"]) {
-                  console.log("Response: " + response["ErrorMessage"]);
-                } else if (response["ProcessVariables"]["errorMessage"]) {
-                  console.log(
-                    "Response: " + response["ProcessVariables"]["errorMessage"]
-                  );
-                  this.errorMessage = response["ProcessVariables"]["errorMessage"];
-                }
-              }
+    let applicationCollection = this.applications.filter(function(elem, index, self) {
+      return index === self.indexOf(elem);
+    });
+        const data = {
+          "userId":userID.toString(),
+          "reassignToId": this.toAssignId,
+          "reassignedReason": resonTochange.toString(),
+          "fromDate":  this.getFormattedDate(this.effectFromDate).toString(),
+          "reassignFromId": this.fromAssignId,
+          "applications": applicationCollection,
+            "selectAll": this.selectAllStatus
+        };
+        console.log("form submit call ", data );
+        this.qdeHttp.reAssignApplications(data).subscribe(response => {
+          if (  response["Error"] === "0" &&
+                    response["ProcessVariables"]["status"]) {
+                      // alert("Uploaded Successfully!");
+                      this.toAssignId = null;
+                      this.fromAssignId = null;
+                      this.reasonToChangeText = null;
+                      this.effectFromDate = null;
+                      this.applications = [];
+                      this.applictionList = [];
+                      this.toAssign = null;
+                      this.fromAssign = null;
+                      this.selectAllCheck = false;
+                      this.totalItems = 0;
+                  } else {
+                    if (response["ErrorMessage"]) {
+                      console.log("Response: " + response["ErrorMessage"]);
+                    } else if (response["ProcessVariables"]["errorMessage"]) {
+                      console.log(
+                        "Response: " + response["ProcessVariables"]["errorMessage"]
+                      );
+                      this.errorMessage = response["ProcessVariables"]["errorMessage"];
+                    }
+                  }
 
 
     });

@@ -1,6 +1,8 @@
 <a class="editsavebtn" routerLink="/admin/lovs">Go Back</a>
-<h1 class="lov-heading">{{tableName.split('_').join(' ')}}</h1>
+<h1 class="lov-heading">{{tableName.split('_').join(' ') | titlecase}}</h1>
+<input type="text" class="lov-search" #searchInp placeholder="Search" tabindex="1" (input)="search($event)" [(ngModel)]="searchKey" />
 <button type="button" class="editsavebtn" (click)="add()">{{isAdd ? 'Close': 'Add New'}}</button>
+<button type="button" class="editsavebtn" (click)="refresh()">Refresh Data</button>
 <!-- <input type="text" class="lov-search" #searchInp placeholder="Search" tabindex="1" (input)="search($event)" /> -->
 
 <div class="add-form" *ngIf="isAdd">
@@ -48,7 +50,7 @@
 <!-- <input type="text" class="lov-search" placeholder="Search" (input)="search($event)" /> -->
 <div class="zipcode-table-wrapper">
 
-  <table class="zipcode-table">
+  <table class="admin-table">
     <thead>
       <tr>
         <th style="width:60px;">Sr No.</th>
@@ -61,8 +63,8 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let d of data;let i=index;">
-        <td style="width:60px;">{{i+1}}</td>
+      <tr *ngFor="let d of data | paginate: { itemsPerPage: perPage, currentPage: currentPage, totalItems: totalElements  };let i=index;">
+        <td style="width:60px;">{{key[i]}}</td>
         <td>
           <form>
             <input value="1" (click)="changeMainApplicant($event, i)" [checked]="d['mainApplicantId'] == '1'" type="radio" class="genders" name="mainApplicant" /><label>Individual</label>
@@ -103,3 +105,4 @@
   
 
 </div>
+<pagination-controls  (pageChange)="pageChanged($event)" class="pagination" autoHide="true" ></pagination-controls>

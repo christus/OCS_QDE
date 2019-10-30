@@ -326,12 +326,12 @@
                           <div class="form-group">
 
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="name"
+                              id="firstName"
                               [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.firstName"
                               name="firstName"  #firstName="ngModel" fieldFill required autocomplete="off"
                               tabindex="2" maxlength="50"
                               pattern="{{regexPattern.name}}" />
-                            <label for="name">First name</label>
+                            <label for="firstName">First name</label>
                             
                             <div *ngIf="(qde.application.applicants[applicantIndex].personalDetails.firstName)?.length == 50" class="invalid-feedback">Maximum Character Exceeds</div>
                             <div *ngIf="(firstName.touched || firstName.dirty) && firstName.invalid"
@@ -1452,7 +1452,7 @@
                             </kendo-dropdownlist>
                           </div>
                           <div class="form-group"
-                            *ngIf="selectedOccupation.value != '9' && selectedOccupation.value != '10' && selectedOccupation.value != '18'">
+                            *ngIf="selectedOccupation.value != '6' && selectedOccupation.value != '7' && selectedOccupation.value != '10' && selectedOccupation.value != '14'">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control" autocomplete="off"
                               required [(ngModel)]="qde.application.applicants[applicantIndex].occupation.companyName" maxlength="50"
                               pattern="{{regexPattern.name}}" tabindex="2" name="companyName" #companyName="ngModel"
@@ -1470,7 +1470,7 @@
 
                           </div>
                           <div class="form-group typ-range"
-                            *ngIf="selectedOccupation.value != '9' && selectedOccupation.value != '10' && selectedOccupation.value != '18'">
+                          *ngIf="selectedOccupation.value != '6' && selectedOccupation.value != '7' && selectedOccupation.value != '10' && selectedOccupation.value != '14'">
                             <span class="control-title">Years in current employment/business</span>
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="number" autocomplete="off"
                               name="numberOfYearsInCurrentCompany" id="no-yrs" class="form-control"
@@ -1490,7 +1490,7 @@
 
                           </div>
                           <div class="form-group typ-range"
-                            *ngIf="selectedOccupation.value != '9' && selectedOccupation.value != '10' && selectedOccupation.value != '18'">
+                          *ngIf="selectedOccupation.value != '6' && selectedOccupation.value != '7' && selectedOccupation.value != '10' && selectedOccupation.value != '14'">
                             <span class="control-title">Total Work Experience</span>
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="number"
                               name="totalExperienceYear" class="form-control" tabindex="5" autocomplete="off"
@@ -1561,10 +1561,19 @@
 
                         </div>
 
-                        <div
+                        <div *ngIf="selectedOccupation.value != '6' && selectedOccupation.value != '7' && selectedOccupation.value != '10' && selectedOccupation.value != '14'"
                           class="btn-wrap">
                           <button type="submit" [ngClass]="{'disabled': !occupationForm.valid || expError}"
                             [disabled]="(!occupationForm.valid || expError)" class="btn btn-primary">
+                            Next
+                          </button>
+                        </div>
+                        <div *ngIf="selectedOccupation.value == '6' || selectedOccupation.value == '7' || selectedOccupation.value == '10' || selectedOccupation.value == '14'"
+                        class="btn-wrap">
+                          <button type="submit" [ngClass]="{'disabled': !occupationForm.valid || expError}"
+                            [disabled]="(!occupationForm.valid || expError)" class="btn btn-primary"
+                            (click)="incomeConsiderYesNoIndividual(2, occupationSlider2)"
+                            [value]="2">
                             Next
                           </button>
                         </div>

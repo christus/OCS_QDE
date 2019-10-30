@@ -17,6 +17,8 @@ import {ViewChild, ElementRef} from '@angular/core';
 export class AddAdminUserComponent implements OnInit, AfterViewInit {
 
   reportingToInp: any;
+  defaultSelectBranch:string ="null";
+  defaultSelectRole:string="null";
   ngAfterViewInit(): void {
     console.log("After view init");
   }
@@ -108,10 +110,11 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
       var lov = JSON.parse(response['ProcessVariables'].lovs);
       this.userRoles = lov.LOVS.user_role;
       this.branches = lov.LOVS.branch;
+      // this.selectedRoleType = this.userRoles[0].key;
 
       console.log("this.userRoles", this.userRoles);
       console.log("this.branch", this.branches);
-
+      // console.log("Selected role",this.selectedRoleType)
     });
 
     this.route.params.subscribe(val => {

@@ -25,6 +25,7 @@ export class BranchListComponent implements OnInit {
   perPage:string;
   errorMsg:string;
   enableLoadMore:boolean;
+  searchKey:string="";
 
 
   ngOnInit() {
@@ -56,6 +57,33 @@ export class BranchListComponent implements OnInit {
       }
       console.log(this.collection);
     });
+  }
+
+  search(event) {
+    var data = {
+      "userId": parseInt(localStorage.getItem("userId")),
+      "searchKey": event.target.value
+    }
+    this.qdeHttp.getBranchList(data).subscribe(response => {
+      this.collection = response['ProcessVariables'].branchDetails;
+      this.totalPages = response['ProcessVariables'].totalPages;
+      this.from = response['ProcessVariables'].from;
+      this.currentPage = response['ProcessVariables'].currentPage;
+      this.perPage = response['ProcessVariables'].perPage;
+      this.totalItems = parseInt(this.totalPages) * parseInt(this.perPage);
+      if(this.currentPage == this.totalPages) {
+        this.enableLoadMore = false;
+      }
+      console.log(this.collection);
+    });
+  }
+
+  refresh(){
+    this.searchKey="";
+     let data = {};
+    data["currentPage"] = 1;
+
+    this.getBranchList(data);
   }
 
   delete(id){
@@ -93,7 +121,7 @@ export class BranchListComponent implements OnInit {
   pageChanged(value){
     let data = {};
     data["currentPage"] = value;
-
+    data["searchKey"]= this.searchKey;
     this.getBranchList(data);
   }
 

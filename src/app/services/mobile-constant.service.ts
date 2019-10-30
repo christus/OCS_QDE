@@ -7,7 +7,7 @@ export class MobileService{
     isMobile:any;
     constructor(private deviceService: DeviceDetectorService){
        this.isMobile = this.deviceService.isMobile() ;
-        //this.isMobile = true ;
+        // this.isMobile = true ;
         console.log("isMobile-constant", this.isMobile);
     }
 }

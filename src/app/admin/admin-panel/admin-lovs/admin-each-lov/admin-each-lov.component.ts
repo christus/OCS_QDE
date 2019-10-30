@@ -15,6 +15,11 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
   tableName: string;
   isApplicantTitle: boolean;
   isDocumentCategory: boolean;
+  totalPages:string;
+  totalItems:number;
+  currentPage: string;
+  perPage:string;
+  searchKey:string="";
 
   @ViewChildren('lovsElements') lovsElements: QueryList<ElementRef>;
 
@@ -32,6 +37,13 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
 
     if(this.route.snapshot.data['eachLovs']['ProcessVariables']['status'] == true) {
       if(this.route.snapshot.data['eachLovs']['ProcessVariables']['valueDescription'] && this.route.snapshot.data['eachLovs']['ProcessVariables']['valueDescription'].length > 0 ) {
+        console.log(this.route.snapshot.data['eachLovs']['ProcessVariables']);
+        console.log(this.route.snapshot.data['eachLovs']['ProcessVariables']['perPage']);
+        console.log(this.route.snapshot.data['eachLovs']['ProcessVariables']['totalPages']);
+        this.perPage = this.route.snapshot.data['eachLovs']['ProcessVariables']['perPage'];
+        this.currentPage = this.route.snapshot.data['eachLovs']['ProcessVariables']['currentPage'];
+        this.totalPages = this.route.snapshot.data['eachLovs']['ProcessVariables']['totalPages'];
+        this.totalItems = parseInt(this.perPage)*parseInt(this.totalPages);
         this.tempLovs = this.lovs = this.route.snapshot.data['eachLovs']['ProcessVariables']['valueDescription'].map((v, i) => {
 
           return {
@@ -121,14 +133,22 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
     this.qdeHttp.adminZipCodeSearch(dude).subscribe(res => {
       if(res['ProcessVariables']['status'] == true) {
         if(res['ProcessVariables']['valueDescription']) {
-
-          this.lovs = res['ProcessVariables']['valueDescription'].map(v => {
+          console.log(res['ProcessVariables']['perPage']);
+          console.log(res['ProcessVariables']['currentPage']);
+          console.log(res['ProcessVariables']['totalPages']);
+          this.perPage = res['ProcessVariables']['perPage'];
+          this.currentPage = res['ProcessVariables']['currentPage'];
+          this.totalPages = res['ProcessVariables']['totalPages'];
+          this.totalItems = parseInt(this.perPage) * parseInt(this.totalPages);
+          this.lovs = res['ProcessVariables']['valueDescription'].map((v, i) => {
             return {
               userId: parseInt(localStorage.getItem('userId')),
+              key: (i+1),
               tableName: this.tableName,
               cityId: v['cityId'],
               cityName: v['cityName'],
               value: v['value'],
+              isEdit: true,
               description: v['description'],
               id: v['id'] ? v['id'] : null,
               stateId: v['stateId'],
@@ -172,9 +192,17 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
   }
 
   refresh() {
+    this.searchKey="";
     this.qdeHttp.adminLoadMoreLovs(this.tableName).subscribe(res => {
       if(res['ProcessVariables']['status'] == true) {
         if(res['ProcessVariables']['valueDescription'] && res['ProcessVariables']['valueDescription'].length > 0) {
+          console.log(res['ProcessVariables']['perPage']);
+          console.log(res['ProcessVariables']['currentPage']);
+          console.log(res['ProcessVariables']['totalPages']);
+          this.perPage = res['ProcessVariables']['perPage'];
+          this.currentPage = res['ProcessVariables']['currentPage'];
+          this.totalPages = res['ProcessVariables']['totalPages'];
+          this.totalItems = parseInt(this.perPage) * parseInt(this.totalPages);
           this.tempLovs = this.lovs = res['ProcessVariables']['valueDescription'].map((v, i) => {
 
             return {
@@ -198,4 +226,37 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
 
     });
   }
+  getData(data) {
+    this.qdeHttp.adminLoadMoreLovs(this.tableName, data, parseInt(this.perPage),this.searchKey).subscribe(res => {
+      if (res['ProcessVariables']['status'] == true) {
+        if (res['ProcessVariables']['valueDescription'] && res['ProcessVariables']['valueDescription'].length > 0) {
+          console.log(res['ProcessVariables']['perPage']);
+          console.log(res['ProcessVariables']['currentPage']);
+          console.log(res['ProcessVariables']['totalPages']);
+          this.perPage = res['ProcessVariables']['perPage'];
+          this.currentPage = data;
+          this.totalPages = res['ProcessVariables']['totalPages'];
+          this.totalItems = parseInt(this.perPage) * parseInt(this.totalPages);
+          this.tempLovs = this.lovs = res['ProcessVariables']['valueDescription'].map((v, i) => {
+            return {
+              userId: localStorage.getItem('userId'),
+              key: ((this.lovs.length*(data-1))+i+ 1),
+              description: v['description'],
+              value: v['value'],
+              isEdit: true,
+              id: v['id'],
+              male: v['male'],
+              female: v['female'],
+              tableName: this.tableName,
+              isRequired: v['isRequired']
+            }
+          });
+        }
+      }
+    })
+  }
+  pageChanged(value) {
+    let data =value;
+    this.getData(data);
+}
 }

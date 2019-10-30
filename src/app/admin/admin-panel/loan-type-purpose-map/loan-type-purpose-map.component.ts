@@ -132,6 +132,25 @@ export class LoanTypePurposeMapComponent implements OnInit {
     });
   }
 
+  search(event) {
+    this.qdeHttp.adminLoanTypeSearch(event.target.value).subscribe(response => {
+      // console.log("mamam",v)
+      this.data = response['ProcessVariables']['loanTypePurposeList'].map(v => {
+        return {
+          userId: this.userId,
+          tableName: this.tableName,
+          id: v['id'],
+          loanPurpose: v['loanPurpose'],
+          loanPurposeDescription: v['loanPurposeDescription'],
+          loanPurposeValue: v['loanPurposeValue'],
+          loanType: v['loanType'],
+          loanTypeDescription: v['loanTypeDescription'],
+          loanTypeValue: v['loanTypeValue']
+        }
+      });
+    });
+  }
+
   refresh() {
     this.qdeHttp.adminLoanTypePurposeMap().subscribe(res => {
       if(res['ProcessVariables']['loanTypePurposeList']) {

@@ -7,6 +7,7 @@ import { from } from "rxjs";
 import { CommonDataService } from "src/app/services/common-data.service";
 import { statuses, screenPages } from "../../app.constants";
 import { TabsComponent } from "./tabs/tabs.component";
+import { EncryptService } from "src/app/services/encrypt.service";
 
 export interface UserDetails {
   "amountEligible": number;
@@ -61,7 +62,7 @@ export class LeadsListComponent implements OnInit {
 
   constructor(private service: QdeHttpService, private utilService: UtilService, private cds: CommonDataService, 
     private mobileService: MobileService,
-    private router: Router) {
+    private router: Router, private encryptService: EncryptService) {
     this.isMobile = this.mobileService.isMobile;
     if(this.isMobile) {
       let isFirstTime = localStorage.getItem("firstTime");
@@ -70,11 +71,8 @@ export class LeadsListComponent implements OnInit {
       if(isFirstTime == null) {
         this.router.navigate(['/setPin']);
         return;
-      }
-
+      }  
     }
-
-
     this.cds.setactiveTab(screenPages["applicantDetails"]);
     this.cds.changeApplicationId(null);
  
@@ -104,11 +102,15 @@ export class LeadsListComponent implements OnInit {
     this.toYear = {key: "YYYY", value: "YYYY"};
 
     this.assignedTo = this.assignedToList[0];
-
+    if (localStorage.getItem("token") && localStorage.getItem("userId") ) {
     this.getFilteredLeads();
     this.getNewLeads();
     this.getPendingApplication();
     this.getPendingPayment();
+    } else {
+      this.utilService.clearCredentials();
+      return;
+    }
   }
 
   isloggedIn() {
@@ -170,7 +172,9 @@ export class LeadsListComponent implements OnInit {
           this.utilService.clearCredentials();
           // alert(res['message']);
         } else {
+          if (res["ErrorMessage"]) {
           alert(res["ErrorMessage"]);
+          }
         }
       },
       error => {
@@ -210,7 +214,10 @@ export class LeadsListComponent implements OnInit {
           this.utilService.clearCredentials();
           // alert(res['message']);
         } else {
-          alert(res["ErrorMessage"]);
+          if (res["ErrorMessage"]){
+            alert(res["ErrorMessage"]);
+          }
+          return;
         }
       },
       error => {
@@ -251,7 +258,9 @@ export class LeadsListComponent implements OnInit {
           this.utilService.clearCredentials();
           // alert(res['message']);
         } else {
+          if (res["ErrorMessage"]){
           alert(res["ErrorMessage"]);
+          }
         }
       },
       error => {
@@ -263,6 +272,7 @@ export class LeadsListComponent implements OnInit {
   
 
   getFilteredLeads() {
+    try{
     const startDate = new Date();
     console.log("FilteredLeads Api Call: Start Date & Time ",startDate, startDate.getMilliseconds());
     this.service.getLeads(this.searchTxt, this.fromDay.value, this.fromMonth.value, this.fromYear.value, 
@@ -270,9 +280,10 @@ export class LeadsListComponent implements OnInit {
       res => {
         const endDate = new Date();
         console.log("FilteredLeads Api Call: End Date & Time ", endDate, endDate.getMilliseconds());
-        
-        console.log(res);
-
+        // let decpty = this.encryptService.decryptResponse(res);
+        // console.log("dectypt ",decpty);
+        console.log("dectypt ",res);
+  
         if (res["Error"] && res["Error"] == 0) {
           this.userDetails = res["ProcessVariables"].userDetails || [];
 
@@ -295,13 +306,24 @@ export class LeadsListComponent implements OnInit {
           this.utilService.clearCredentials();
           // alert(res['message']);
         } else {
-          alert(res["ErrorMessage"]);
+
+          if (res["ErrorMessage"]) {
+           alert(res["ErrorMessage"]);
+          } else {
+            console.log("error ", res);
+            alert("Session expired. Please login");
+            this.utilService.clearCredentials();
+          }
+           return;
         }
       },
       error => {
         console.log(error);
       }
     );
+    } catch (ex) {
+      alert(ex.message);
+    }
   }
 
   getUrl(status: string, applicationId?: string, applicantId?: string, roles?: Array<string>, el ?: any) {
@@ -311,7 +333,7 @@ export class LeadsListComponent implements OnInit {
       this.cds.setReadOnlyForm(false);
     }
 
-    console.log("status", status);
+    // console.log("status", status);
 
 
     if(statuses[status] == "1") {

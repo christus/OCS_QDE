@@ -23,11 +23,13 @@ export class DocumentAssessmentDoccatDoctypeComponent implements OnInit {
   selectedDocumentCategory: any;
   selectedDocType: any;
   selectedProfile: any;
-
+  key: Array<number> = [];
   currentPage: number;
   totalPages: number;
-  perPage: number = 1000;
+  perPage: number;
   totalElements: number;
+  searchKey:string;
+  serialNo:number=1;
   financialApplicant: string;
   applicantType: string;
 
@@ -36,7 +38,7 @@ export class DocumentAssessmentDoccatDoctypeComponent implements OnInit {
   constructor(private qdeHttp: QdeHttpService, private route: ActivatedRoute) {
     this.userId = parseInt(localStorage.getItem('userId'));
     this.tableName = 'profile_assessment_docCategory_docType_map';
-    if(this.route.snapshot.data['eachLovs']['ProcessVariables']['status'] == true) {
+    /* if(this.route.snapshot.data['eachLovs']['ProcessVariables']['status'] == true) {
       let res = this.route.snapshot.data['eachLovs']['ProcessVariables'];
 
       this.currentPage = parseInt(res['currentPage']);
@@ -46,7 +48,26 @@ export class DocumentAssessmentDoccatDoctypeComponent implements OnInit {
 
       console.log('documentmapping: ', res['documentMapping']);
       this.data = res['documentMapping'];
-    }
+    } */
+    this.qdeHttp.adminDocumentProfile().subscribe(res => {
+      if(res['ProcessVariables']['status'] == true) {
+        let response = res['ProcessVariables'];
+  
+        this.currentPage = parseInt(response['currentPage']);
+        this.totalPages = parseInt(response['totalPages']);
+        this.perPage = parseInt(response['perPage']);
+        this.totalElements = response['totalPages'] * this.perPage;
+  
+        console.log('response documentMapping: ', response['documentMapping']);      
+        this.data = response['documentMapping'];
+        for(var i=0; i<this.data.length;i++){
+          this.key[i]=((this.perPage*(this.currentPage-1))+i+ 1);
+        }
+        
+      }
+    }, err => {
+
+    });
   }
 
   ngOnInit() {
@@ -159,6 +180,7 @@ export class DocumentAssessmentDoccatDoctypeComponent implements OnInit {
   }
 
   refresh() {
+    this.searchKey="";
     this.qdeHttp.adminDocumentProfile().subscribe(res => {
       if(res['ProcessVariables']['status'] == true) {
         let response = res['ProcessVariables'];
@@ -170,6 +192,9 @@ export class DocumentAssessmentDoccatDoctypeComponent implements OnInit {
   
         console.log('response documentMapping: ', response['documentMapping']);      
         this.data = response['documentMapping'];
+        for(var i=0; i<this.data.length;i++){
+          this.key[i]=((this.perPage*(this.currentPage-1))+i+ 1);
+        }
       }
     }, err => {
 
@@ -242,5 +267,59 @@ export class DocumentAssessmentDoccatDoctypeComponent implements OnInit {
 
   changeIsIndividual(event, index) {
     this.data[index].applicantTypeId = event.target.value == '1' ? '1': '2';
+  }
+  search(event){
+    this.qdeHttp.adminDocumentProfile(this.currentPage,this.perPage,event.target.value).subscribe(res => {
+      if(res['ProcessVariables']['status'] == true) {
+        let response = res['ProcessVariables'];
+  
+        this.currentPage = parseInt(response['currentPage']); ;
+        this.totalPages = parseInt(response['totalPages']);
+        this.perPage = parseInt(response['perPage']);
+        this.totalElements = this.totalPages * this.perPage;
+
+        console.log("currentPage: ",this.currentPage);
+        console.log("totalPages: ",this.totalPages);
+        if(response['documentMapping']){
+          this.data = response['documentMapping'];
+          for(var i=0; i<this.data.length;i++){
+            this.key[i]=((this.perPage*(this.currentPage-1))+i+ 1);
+          }
+        }else{
+          alert("No Data present further");
+        }
+        
+      } else {
+        alert('Something went wrong.');
+        this.currentPage--;
+      }
+    }, err => {
+      alert('Something went wrong.');
+      this.currentPage--;
+    });
+  }
+  
+  pageChanged(value){
+    this.qdeHttp.adminDocumentProfile(value,this.perPage,this.searchKey).subscribe(res => {
+      if(res['ProcessVariables']['status'] == true) {
+        let response = res['ProcessVariables'];
+  
+        this.currentPage = value;
+        this.totalPages = parseInt(response['totalPages']);
+        this.perPage = parseInt(response['perPage']);
+        this.totalElements = response['totalPages'] * this.perPage;
+        console.log(response['documentMapping']);
+          this.data = response['documentMapping'];
+          for(var i=0; i<this.data.length;i++){
+            this.key[i]=((this.perPage*(this.currentPage-1))+i+ 1);
+          }
+      } else {
+        alert('Something went wrong.');
+        this.currentPage--;
+      }
+    }, err => {
+      alert('Something went wrong.');
+      this.currentPage--;
+    });
   }
 }

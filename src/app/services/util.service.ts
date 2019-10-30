@@ -34,7 +34,8 @@ export class UtilService {
   
   clearCredentials() {
     localStorage.removeItem('token');
-
+    localStorage.removeItem('roles');
+    localStorage.removeItem('userId')
     if(this.isMobile) {
       this.navigateToLoginWithMpin();
       return;

@@ -1,9 +1,9 @@
+import { environment } from 'src/environments/environment';
 import { MobileService } from './mobile-constant.service';
 import { Injectable } from '@angular/core';
 import Qde from '../models/qde.model';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import RequestEntity from '../models/request-entity.model';
-import { environment } from '../../environments/environment';
 import { of, Observable } from 'rxjs';
 
 import {CommonDataService} from 'src/app/services/common-data.service';
@@ -15,8 +15,21 @@ import { QdeService } from '../services/qde.service';
 import { HTTP } from '@ionic-native/http/ngx';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { EncryptService } from './encrypt.service';
 
-
+export declare class myOptions {
+  method: any;
+  data?: any;
+  params?: {
+      [index: string]: string | number;
+  };
+  serializer?: 'json' | 'urlencoded' | 'utf8';
+  timeout?: number;
+  headers?: any;
+  filePath?: string | string[];
+  name?: string | string[];
+  responseType?: any;
+}
 
 
 @Injectable({
@@ -27,7 +40,8 @@ export class QdeHttpService {
   userName:string = "";
   password:string = "";
   isMobile:any;
-
+  ionicOption: myOptions;
+  sharedKsy = "MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJ+GJdSSEeaNFBLqyfM3DIOgQgWCwJ0INfeZZV7ITsLeuA7Yd02rrkYGIix1IWvoebWVmzhncUepYxHwK1ARCdUCAwEAAQ==";
 
   constructor(private http: HttpClient,
   private commonDataService: CommonDataService,
@@ -36,13 +50,24 @@ export class QdeHttpService {
   private qdeService: QdeService,
   private httpIonic: HTTP,
   private mobileService: MobileService,
-  private ngxService: NgxUiLoaderService) {
+  private ngxService: NgxUiLoaderService,
+  private encrytionService: EncryptService) {
 
     this.commonDataService.loginData.subscribe(result => {
       console.log("login: ", result);
        this.userName = result.email;
        this.password = result.password;
     });
+
+    this.isMobile = this.mobileService.isMobile;
+
+    if(this.isMobile) {
+      environment.apiVersion = {
+        login: "",
+        api: ""
+      }
+    }
+
   }
 
   /**
@@ -64,9 +89,9 @@ export class QdeHttpService {
       JSON.stringify(qdeRequestEntity)
     }
 
-   let uri = environment.host + '/d/workflows/' + environment.api.save.workflowId + '/execute?projectId=' + environment.projectId;
+   let uri = environment.host + '/d/workflows/' + environment.api.save.workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + environment.projectId;
     return this.callPost(
-      uri,
+      environment.api.save.workflowId, environment.projectId,
       body
     );
   }
@@ -87,9 +112,9 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(qdeRequestEntity)
     }
 
-    let uri = environment.host + '/d/workflows/' + environment.api.save.workflowId + '/execute?projectId=' + environment.projectId;
+    let uri = environment.host + '/d/workflows/' + environment.api.save.workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + environment.projectId;
     return this.callPost(
-      uri,
+      environment.api.save.workflowId, environment.projectId,
       body
     );
   }
@@ -110,9 +135,9 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(qdeRequestEntity)
     }
 
-    let uri = environment.host + '/d/workflows/' + environment.api.save.workflowId + '/execute?projectId=' + environment.projectId;
+    let uri = environment.host + '/d/workflows/' + environment.api.save.workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + environment.projectId;
     return this.callPost(
-      uri,
+      environment.api.save.workflowId, environment.projectId,
       body
     );
   }
@@ -128,8 +153,8 @@ createOrUpdatePersonalDetails(qde) {
       'password': data.password
     };
 
-    let uri = environment.host + '/account/login';
-    return this.callPost(uri, body);
+    let uri = environment.host + '/account/'+environment.apiVersion.login+'login';
+    return this.callPost(null, null, body, null, "login");
   }
 
   checkActiveSession(data: any) {
@@ -147,8 +172,10 @@ createOrUpdatePersonalDetails(qde) {
       };
 
 
-    let uri = environment.host + '/account/login_ne';
-    return this.callPost(uri, body);
+    let uri = environment.host + '/account/'+environment.apiVersion.login+'login';    
+    // let uri = environment.host + '/account/login_ne';
+    // let uri = environment.host + '/account/login';
+    return this.callPost(null, null, body, null, "login");
   }
 
 
@@ -160,8 +187,8 @@ createOrUpdatePersonalDetails(qde) {
       'longTimeToken': true,
     };
 
-    let uri = environment.host + '/account/login';
-    return this.callPost(uri, body, data);
+    let uri = environment.host + '/account/'+environment.apiVersion.login+'login';
+    return this.callPost(null, null, body, data, "login");
   }
 
   duplicateLogin() {
@@ -171,8 +198,8 @@ createOrUpdatePersonalDetails(qde) {
         'password': environment.password,
       };
 
-    let uri = environment.host + '/account/login';
-    return this.callPost(uri, body);
+    let uri = environment.host + '/account/'+environment.apiVersion.login+'login';
+    return this.callPost(null, null, body, null, "login");
   }
 
   getLeads(search?: string, fromDay?: string, fromMonth?: string, fromYear?: string, toDay?: string, toMonth?: string, toYear?: string, assignedTo?: string, status?: string) {
@@ -200,8 +227,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     }
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
   getNewLeads(search?: string, fromDay?: string, fromMonth?: string, fromYear?: string, toDay?: string, toMonth?: string, toYear?: string, assignedTo?: string, status?: string) {
@@ -228,8 +255,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
   getQdeData(applicationId:number) {
@@ -254,8 +281,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
   roleLogin() {
@@ -287,8 +314,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
   getCityAndState(zipcode) {
@@ -315,8 +342,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
   uploadToAppiyoDrive(fileToUpload: File) {
@@ -331,7 +358,7 @@ createOrUpdatePersonalDetails(qde) {
     formData.append('files[]', fileToUpload, fileToUpload.name);
 
     if(this.isMobile) {
-      return this.callPost(uri, formData, headers);
+      return this.callPost(null, null, formData, headers, "uploadAppiyoDrive");
     }else {
       return this.http.post(uri, formData, headers);
     }
@@ -356,8 +383,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
 
@@ -378,8 +405,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
   getApplicableDocuments(data: any) {
@@ -399,8 +426,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
   documentsPaymentReconCSV(data: any) {
@@ -420,8 +447,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
   documentsPaymentNonReconCSV(data: any) {
@@ -441,8 +468,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
   downloadOfflinePayment(data: any) {
@@ -462,8 +489,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
 
@@ -485,8 +512,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
   uploadOnlinePaymentRecon(data: any) {
@@ -506,8 +533,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
   dummyGetApi(qde) {
@@ -565,8 +592,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
   else{
     return of(
@@ -640,8 +667,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
   else{
@@ -804,8 +831,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host+ '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host+ '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
   validateOTPAPI(mobileNumber, applicantId, applicationId, otp, isAlternateNumber, emailId) {
@@ -836,8 +863,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host+ '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host+ '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
   clssProbabilityCheck(applicationId: string) {
@@ -860,9 +887,9 @@ createOrUpdatePersonalDetails(qde) {
         JSON.stringify(requestEntity)
       };
 
-      let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+      let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
 
-      return this.callPost(uri, body);
+      return this.callPost(workflowId, projectId, body);
     }
     else{
       return of(
@@ -925,8 +952,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host+'/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host+'/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
   setStatusApi(applicationId: string, status: string) {
@@ -953,8 +980,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
   updateTermsAndCondition(data) {
@@ -974,8 +1001,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
   async takePicture() {
@@ -1042,8 +1069,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
   apsApi(applicationId:string){
@@ -1068,8 +1095,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
 
@@ -1098,8 +1125,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
   resetMpin(data: any) {
@@ -1122,8 +1149,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
   loginMpin(data){
@@ -1147,8 +1174,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
   dummyGetEligibilityAPI(applicationId) {
@@ -1249,8 +1276,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
   executePaymentWF(data) {
@@ -1272,8 +1299,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
   /**Get list of users created */
@@ -1295,8 +1322,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
   /**
@@ -1317,9 +1344,9 @@ createOrUpdatePersonalDetails(qde) {
 
     const body = {'processVariables': JSON.stringify(requestEntity)};
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
 
-    return this.callPost(uri, body);
+    return this.callPost(workflowId, projectId, body);
 
 
   }
@@ -1343,8 +1370,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
   /** Pmay delete */
@@ -1366,8 +1393,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
   /**Pmay individual list */
@@ -1389,8 +1416,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
   /**Add pMay list */
@@ -1412,8 +1439,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
 
@@ -1436,8 +1463,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
   /**Get branch record */
@@ -1459,8 +1486,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
   /**Add branch record */
@@ -1482,8 +1509,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
   getAdminUser(data){
@@ -1503,8 +1530,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
   /** Save Admin user */
@@ -1526,8 +1553,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
 
@@ -1548,8 +1575,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
 
@@ -1574,8 +1601,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
 
@@ -1598,8 +1625,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
   /** Get zip lov */
@@ -1620,8 +1647,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
   /** Repoting to - search by key */
@@ -1643,8 +1670,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
   insertUpdateEachLovs(lovs: any) {
@@ -1680,8 +1707,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
   softDeleteLov(lovs: any) {
@@ -1707,12 +1734,12 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
 
-  adminLoadMoreLovs(tableName: string, currentPage?: number, perPage?: number) {
+  adminLoadMoreLovs(tableName: string, currentPage?: number, perPage?: number, searchKey?:string) {
     const processId = environment.api.adminGetEachLov.processId;
     const workflowId = environment.api.adminGetEachLov.workflowId;
     const projectId = environment.projectId;
@@ -1723,7 +1750,8 @@ createOrUpdatePersonalDetails(qde) {
         tableName: tableName,
         userId: parseInt(localStorage.getItem('userId')),
         currentPage: currentPage ? currentPage: null,
-        perPage: perPage ? perPage: null
+        perPage: perPage ? perPage: null,
+        searchKey: searchKey ? searchKey: ""
       },
       workflowId: workflowId,
       projectId: projectId
@@ -1742,9 +1770,42 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(qdeRequestEntity)
     };
 
-    let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
     return this.callPost(
-      uri,
+      workflowId, projectId,
+      body
+    );
+  }
+
+  adminLoadMoreClss() {
+    const processId = environment.api.adminCLSSGet.processId;
+    const workflowId = environment.api.adminCLSSGet.workflowId;
+    const projectId = environment.projectId;
+
+    let qdeRequestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: {
+        userId: parseInt(localStorage.getItem('userId')),
+      },
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    if(qdeRequestEntity['ProcessVariables']['currentPage'] == null) {
+      delete qdeRequestEntity['ProcessVariables']['currentPage'];
+    }
+
+    if(qdeRequestEntity['ProcessVariables']['perPage'] == null) {
+      delete qdeRequestEntity['ProcessVariables']['perPage'];
+    }
+
+    const body = {
+      "processVariables":
+      JSON.stringify(qdeRequestEntity)
+    };
+
+    let uri = environment.host + "/d/workflows/" + workflowId + "/v2/execute?projectId=" + projectId;
+    return this.callPost(
+      workflowId, projectId,
       body
     );
   }
@@ -1769,9 +1830,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(qdeRequestEntity)
     };
 
-    let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
     return this.callPost(
-      uri,
+      workflowId, projectId,
       body
     );
   }
@@ -1796,9 +1856,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(qdeRequestEntity)
     };
 
-    let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
     return this.callPost(
-      uri,
+      workflowId, projectId,
       body
     );
   }
@@ -1820,9 +1879,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(qdeRequestEntity)
     };
 
-    let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
     return this.callPost(
-      uri,
+      workflowId, projectId,
       body
     );
   }
@@ -1844,9 +1902,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(qdeRequestEntity)
     };
 
-    let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
     return this.callPost(
-      uri,
+      workflowId, projectId,
       body
     );
   }
@@ -1869,9 +1926,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(qdeRequestEntity)
     };
 
-    let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
     return this.callPost(
-      uri,
+      workflowId, projectId,
       body
     );
   }
@@ -1895,12 +1951,38 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(qdeRequestEntity)
     };
 
-    let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
     return this.callPost(
-      uri,
+      workflowId, projectId,
       body
     );
   }
+
+  adminLoanTypeSearch(data: any) {
+    const processId   = environment.api.adminLoanTypePurposeMap.processId;
+    const workflowId  = environment.api.adminLoanTypePurposeMap.workflowId;
+    const projectId   = environment.projectId;
+
+    let qdeRequestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: {
+        userId: parseInt(localStorage.getItem('userId')),
+        searchKey: data
+      },
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = {
+      'processVariables':
+      JSON.stringify(qdeRequestEntity)
+    };
+
+    return this.callPost(
+      workflowId, projectId,
+      body
+    );
+  }
+
 
   adminUpdateDocumentProfile(data) {
     const processId   = environment.api.adminUpdateDocumentProfile.processId;
@@ -1919,14 +2001,13 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(qdeRequestEntity)
     };
 
-    let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
     return this.callPost(
-      uri,
+      workflowId, projectId,
       body
     );
   }
 
-  adminDocumentProfile(currentPage ?: number, perPage ?: number) {
+  adminDocumentProfile(currentPage ?: number, perPage ?: number,searchKey?:string) {
     const processId   = environment.api.adminDocumentProfile.processId;
     const workflowId  = environment.api.adminDocumentProfile.workflowId;
     const projectId   = environment.projectId;
@@ -1934,7 +2015,8 @@ createOrUpdatePersonalDetails(qde) {
     let dude = {
       userId: localStorage.getItem('userId'),
       currentPage: currentPage ? currentPage: null,
-      perPage: perPage ? perPage: null
+      perPage: perPage ? perPage: null,
+      searchKey: searchKey ? searchKey : ""
     };
 
 
@@ -1950,14 +2032,13 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(qdeRequestEntity)
     };
 
-    let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
     return this.callPost(
-      uri,
+      workflowId, projectId,
       body
     );
   }
 
-  adminGetAllLoginFee(currentPage ?: number, perPage ?: number) {
+  adminGetAllLoginFee(currentPage ?: number, perPage ?: number, searchKey?: string) {
     const processId   = environment.api.adminGetAllLoginFee.processId;
     const workflowId  = environment.api.adminGetAllLoginFee.workflowId;
     const projectId   = environment.projectId;
@@ -1971,7 +2052,8 @@ createOrUpdatePersonalDetails(qde) {
       ProcessVariables: {
         userId: parseInt(localStorage.getItem('userId')),
         currentPage: currentPage ? currentPage: 1,
-        perPage: perPage ? perPage: 100,
+        perPage: perPage ? perPage: 10,
+        searchKey: searchKey ? searchKey : ""
       },
       workflowId: workflowId,
       projectId: projectId
@@ -1982,9 +2064,38 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(qdeRequestEntity)
     };
 
-    let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
     return this.callPost(
-      uri,
+      workflowId, projectId,
+      body
+    );
+  }
+
+  adminSearchAllLoginFee(data: any) {
+    const processId   = environment.api.adminGetAllLoginFee.processId;
+    const workflowId  = environment.api.adminGetAllLoginFee.workflowId;
+    const projectId   = environment.projectId;
+
+    let dude = this.qdeService.getFilteredJson({
+      userId: localStorage.getItem('userId')
+    });
+
+    let qdeRequestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: {
+        userId: parseInt(localStorage.getItem('userId')),
+        searchKey: data
+      },
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = {
+      "processVariables":
+      JSON.stringify(qdeRequestEntity)
+    };
+
+    return this.callPost(
+      workflowId, projectId,
       body
     );
   }
@@ -2010,14 +2121,13 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(qdeRequestEntity)
     };
 
-    let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
     return this.callPost(
-      uri,
+      workflowId, projectId,
       body
     );
   }
 
-  adminGetAllLoanMaster(currentPage ?: number, perPage ?: number) {
+  adminGetAllLoanMaster(currentPage ?: number, perPage ?: number, searchKey?:string) {
     const processId   = environment.api.adminGetAllLoanMaster.processId;
     const workflowId  = environment.api.adminGetAllLoanMaster.workflowId;
     const projectId   = environment.projectId;
@@ -2031,7 +2141,8 @@ createOrUpdatePersonalDetails(qde) {
       ProcessVariables: {
         userId: localStorage.getItem('userId'),
         currentPage: currentPage ? currentPage: null,
-        perPage: perPage ? perPage: null
+        perPage: perPage ? perPage: null,
+        searchKey: searchKey ? searchKey : ""
       },
       workflowId: workflowId,
       projectId: projectId
@@ -2042,9 +2153,38 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(qdeRequestEntity)
     };
 
-    let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
     return this.callPost(
-      uri,
+      workflowId, projectId,
+      body
+    );
+  }
+
+  adminSearchAllLoanMaster(data: any) {
+    const processId   = environment.api.adminGetAllLoanMaster.processId;
+    const workflowId  = environment.api.adminGetAllLoanMaster.workflowId;
+    const projectId   = environment.projectId;
+
+    let dude = this.qdeService.getFilteredJson({
+      userId: localStorage.getItem('userId')
+    });
+
+    let qdeRequestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: {
+        userId: localStorage.getItem('userId'),
+        searchKey: data
+      },
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = {
+      "processVariables":
+      JSON.stringify(qdeRequestEntity)
+    };
+
+    return this.callPost(
+      workflowId, projectId,
       body
     );
   }
@@ -2070,9 +2210,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(qdeRequestEntity)
     };
 
-    let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
     return this.callPost(
-      uri,
+      workflowId, projectId,
       body
     );
   }
@@ -2103,9 +2242,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(qdeRequestEntity)
     };
 
-    let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
     return this.callPost(
-      uri,
+      workflowId, projectId,
       body
     );
   }
@@ -2128,9 +2266,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(qdeRequestEntity)
     };
 
-    let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
     return this.callPost(
-      uri,
+      workflowId, projectId,
       body
     );
   }
@@ -2155,8 +2292,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
   connectorLeadCreateSave(data){
@@ -2177,8 +2314,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
   publicWrkFlowExecute(data){
@@ -2201,7 +2338,7 @@ createOrUpdatePersonalDetails(qde) {
       };
 
       let uri = environment.ocsHost + '/payments/appiyo/execute_workflow';
-      return this.callPost(uri, requestEntity);
+      return this.callPost(workflowId, projectId, requestEntity);
   }
 
   mandatoryDocsApi(applicationId: number) {
@@ -2227,8 +2364,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host+'/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host+'/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
   omniDocsApi(applicationId: string) {
@@ -2254,8 +2391,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host+'/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host+'/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
   getApplicationStatus(data) {
     // console.log("get Error Id Handal Service Call",data);
@@ -2275,8 +2412,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
 
   }
   getApplications(data) {
@@ -2297,8 +2434,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
 
   }
 
@@ -2320,8 +2457,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
 
   }
   getUserList(data) {
@@ -2342,8 +2479,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
 
   }
   getErrorHandlingMessage(data) {
@@ -2363,8 +2500,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
 
   }
   searchErrorHandlingMessage(data) {
@@ -2385,7 +2522,7 @@ createOrUpdatePersonalDetails(qde) {
     };
 
     let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    return this.callPost(workflowId, projectId, body);
 
   }
   getErrorIdHandlingMessage(data) {
@@ -2405,8 +2542,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
   updateErrorHandlingMessage(errorData){
     const processId = environment.api.updateErrorMessage.processId;
@@ -2425,8 +2562,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
   chequeDetailsSave(data){
@@ -2447,8 +2584,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
 
@@ -2470,8 +2607,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
 
@@ -2493,13 +2630,13 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
 
   }
 
 
-  adminApplicantRelationship() {
+  adminApplicantRelationship(currentPage?:number,perPage?:number,searchKey?:string) {
     const processId   = environment.api.adminApplicantRelationship.processId;
     const workflowId  = environment.api.adminApplicantRelationship.workflowId;
     const projectId   = environment.projectId;
@@ -2511,6 +2648,40 @@ createOrUpdatePersonalDetails(qde) {
       ProcessVariables: {
         // tableName: tableName,
         userId: parseInt(localStorage.getItem('userId')),
+        currentPage: currentPage ? currentPage: 1,
+        perPage: perPage ? perPage : 8,
+        searchKey: searchKey ? searchKey: ""
+      },
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+
+
+    const body = {
+      'processVariables':
+      JSON.stringify(qdeRequestEntity)
+    };
+
+    return this.callPost(
+      workflowId, projectId,
+      body
+    );
+  }
+
+  adminApplicantRelationshipSearch(data:any) {
+    const processId   = environment.api.adminApplicantRelationship.processId;
+    const workflowId  = environment.api.adminApplicantRelationship.workflowId;
+    const projectId   = environment.projectId;
+
+    // let tableName = _route.params['eachLovName'];
+
+    let qdeRequestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: {
+        // tableName: tableName,
+        userId: parseInt(localStorage.getItem('userId')),
+        searchKey: data
         // currentPage: _route.queryParams['currentPage'] ? parseInt(_route.queryParams['currentPage']): 1,
         // perPage: _route.queryParams['perPage'] ? parseInt(_route.queryParams['perPage']): 10,
       },
@@ -2525,9 +2696,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(qdeRequestEntity)
     };
 
-    let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
     return this.callPost(
-      uri,
+      workflowId, projectId,
       body
     );
   }
@@ -2561,9 +2731,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(qdeRequestEntity)
     };
 
-    let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
     return this.callPost(
-      uri,
+      workflowId, projectId,
       body
     );
   }
@@ -2595,9 +2764,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(qdeRequestEntity)
     };
 
-    let uri = environment.host + "/d/workflows/" + workflowId + "/execute?projectId=" + projectId;
     return this.callPost(
-      uri,
+      workflowId, projectId,
       body
     );
   }
@@ -2620,8 +2788,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
 
@@ -2648,8 +2816,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
   usersLovList(data: any) {
@@ -2669,8 +2837,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
   callGet(url) {
@@ -2678,7 +2846,8 @@ createOrUpdatePersonalDetails(qde) {
 
       const obs = new Observable((observer) => {
         const headers = {
-          'Content-Type': 'application/x-www-form-urlencoded',
+          // 'Content-Type': 'application/x-www-form-urlencoded',
+          'Content-Type': 'application/json',
           'authentication-token':  localStorage.getItem('token') ? localStorage.getItem('token') : '',
         };
         this.httpIonic.get(url, {}, headers).then(result => {
@@ -2698,9 +2867,22 @@ createOrUpdatePersonalDetails(qde) {
     }
   }
 
+  
 
-  callPost(url: string, requestEntity: any, options?:any) {
+  callPost(workflowId: string, projectId:string, requestEntity: any, options?:any, serviceType?:any ) {
     var that = this;
+
+    let url;
+
+    if(workflowId && projectId) {
+      url = environment.host + "/d/workflows/" + workflowId + "/" +environment.apiVersion.api+ "execute?projectId=" + projectId;
+    }else if(serviceType == "login") {
+      url = environment.host + '/account/' +environment.apiVersion.login+ 'login'
+    }else if(serviceType == "uploadAppiyoDrive") {
+      url = environment.host + environment.appiyoDrive;
+    }
+
+    
 
     this.isMobile = this.mobileService.isMobile;
 
@@ -2720,10 +2902,66 @@ createOrUpdatePersonalDetails(qde) {
 
 
     const headers = {
-        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Type': 'text/html',
         'authentication-token':  localStorage.getItem('token') ? localStorage.getItem('token') : '',
-    };
+    }; 
 
+    // if(this.isMobile) {
+
+      
+    //   this.ngxService.start();
+
+    //   const obs = new Observable((observer) => {
+
+    //     this.httpIonic.setSSLCertMode("nocheck");
+
+    //   //  this.httpIonic.setDataSerializer("utf8");
+
+    //     console.log("post requestEntity********", requestEntity);
+
+    //     let encryption = this.encrytionService.encrypt(JSON.stringify(requestEntity),environment.aesPublicKey);
+
+    //     // let optionsParam = {
+    //     //   method: 'post',
+    //     //   data: encryption.rawPayload,
+    //     //   headers: headers,
+    //     //   responseType: "text"
+    //     // }
+
+    //    this.ionicOption = {
+    //       method:'post',
+    //       data: encryption.rawPayload,
+    //       headers: encryption.headers,
+    //       responseType: "text"
+    //     };
+
+    //     console.log("req post", this.ionicOption);
+
+    //     console.log("post url********", url);
+
+    //     this.httpIonic.sendRequest(url, this.ionicOption).then(result => {
+
+    //     // this.httpIonic.post(url, encryptBody, headers).then(result => {
+
+    //       let decritedData = this.encrytionService.decryptResponse(result.data);
+    //       const data = JSON.parse(decritedData);
+
+
+    //       console.log("~~~***Response***~~~", data);
+    //       observer.next(data);
+    //       observer.complete();
+    //       this.ngxService.stop();
+    //     }).catch(error => {
+    //       observer.error(error);
+    //       observer.complete();
+    //       this.ngxService.stop();
+    //       console.log("~~~***Response error***~~~", error);
+    //     });
+
+    //   });
+
+    //   return obs;
+    // } 
     if(this.isMobile) {
 
       this.ngxService.start();
@@ -2755,7 +2993,10 @@ createOrUpdatePersonalDetails(qde) {
       let addParameter: string = null;
       const uniqueId = Math.random().toString(36).substr(2, 9);
       console.log("uniqueId ", uniqueId);
-      const body = new HttpParams({ "fromObject": requestEntity});
+      // const body = new HttpParams({ "fromObject": requestEntity});
+      let body = requestEntity
+      // let encryptBody = this.encrytionService.encrypt(JSON.stringify(requestEntity),environment.aesPublicKey);
+      // const body = encryptBody;
        const beforUrl = url;
     if (beforUrl.includes("?")) {
        addParameter = url+"&id="+uniqueId;
@@ -2764,7 +3005,15 @@ createOrUpdatePersonalDetails(qde) {
       console.log("url not parametter");
       addParameter = url+"?id="+uniqueId;
     }
+    if(addParameter.includes("execute?")) {
+      body = requestEntity["processVariables"];
+    } else if (addParameter.includes("login?")) {
+      body =JSON.stringify(requestEntity);
+    }
+    // let httpData = this.http.post(addParameter, body);
+    // let decritedData = this.encrytionService.decryptResponse(httpData);
       return this.http.post(addParameter, body);
+      // return httpData;
     }
 
   }
@@ -2786,8 +3035,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
   downloadLoginDetails(data: any) {
@@ -2807,8 +3056,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    // let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    // return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
   downloadDumpDetails(data: any) {
@@ -2828,8 +3077,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
   reportsFilters(data: any) {
@@ -2849,8 +3098,8 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
   getOccupationLov(data: any) {
@@ -2870,8 +3119,34 @@ createOrUpdatePersonalDetails(qde) {
       JSON.stringify(requestEntity)
     };
 
-    let uri = environment.host + '/d/workflows/' + workflowId + '/execute?projectId=' + projectId;
-    return this.callPost(uri, body);
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
+  }
+
+  adminClssSearch(data: any) {
+    const processId = environment.api.adminCLSSGet.processId;
+    const workflowId = environment.api.adminCLSSGet.workflowId;
+    const projectId = environment.projectId;
+
+    let qdeRequestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: {
+        userId: parseInt(localStorage.getItem('userId')),
+        searchKey: data
+      },
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = {
+      'processVariables':
+      JSON.stringify(qdeRequestEntity)
+    };
+
+    return this.callPost(
+      workflowId, projectId,
+      body
+    );
   }
 
 }

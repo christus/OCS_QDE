@@ -25,12 +25,14 @@ export class RelationshipMappingComponent implements OnInit {
   selectedRelationship: any;
   selectedApplicantTitle: any;
 
-  // currentPage: number;
-  // totalPages: number;
-  // perPage: number = 1000;
-  // totalElements: number;
+  currentPage: number;
+  totalPages: number;
+  perPage: number;
+  totalElements: number;
   financialApplicant: string;
   applicantType: string;
+  searchKey:string="";
+  key:Array<number>=[];
 
   data: Array<any> = [];
   applicantTitles: Array<any>;
@@ -42,19 +44,23 @@ export class RelationshipMappingComponent implements OnInit {
     this.tableName = 'applicant_relationship_mapping';
     if(this.route.snapshot.data['relationshipMaster']['ProcessVariables']['status'] == true) {
       let res = this.route.snapshot.data['relationshipMaster']['ProcessVariables'];
-
-      // this.currentPage = parseInt(res['currentPage']);
-      // this.totalPages = parseInt(res['totalPages']);
-      // this.perPage = parseInt(res['perPage']);
-      // this.totalElements = res['totalPages'] * this.perPage;
-
+      console.log(res);
+      this.currentPage = parseInt(res['currentPage']);
+      this.totalPages = parseInt(res['totalPages']);
+      this.perPage = parseInt(res['perPage']);
+      this.totalElements = res['totalPages'] * this.perPage;
+      console.log(this.currentPage,this.perPage,this.totalPages);
       console.log('relationshipMaster: ', res['mappingList']);
       if(res['status'] == true) {
         this.data = res['mappingList'];
+        for(var i=0; i<this.data.length;i++){
+          this.key[i]=((this.perPage*(this.currentPage-1))+i+ 1);
+        }
+        console.log(this.data);
       } else {
         alert('Something went wrong.');
       }
-    }
+     }
   }
 
   ngOnInit() {
@@ -167,19 +173,37 @@ export class RelationshipMappingComponent implements OnInit {
     });
   }
 
+  search(event){
+    this.qdeHttp.adminApplicantRelationshipSearch(event.target.value).subscribe(response => {
+      console.log("mama",response)
+      this.data = response['ProcessVariables']['mappingList'];
+      this.currentPage=response['ProcessVariables']['currentPage'];
+      this.perPage=response['ProcessVariables']['perPage'];
+      this.totalPages=response['ProcessVariables']['totalPages'];
+      this.totalElements=this.perPage*this.totalPages;
+      for(var i=0; i<this.data.length;i++){
+        this.key[i]=((this.perPage*(this.currentPage-1))+i+ 1);
+      }
+    });
+  }
+
   refresh() {
+    this.searchKey="";
     this.qdeHttp.adminApplicantRelationship().subscribe(res => {
       if(res['ProcessVariables']['status'] == true) {
         let response = res['ProcessVariables'];
   
-        // this.currentPage = parseInt(response['currentPage']);
-        // this.totalPages = parseInt(response['totalPages']);
-        // this.perPage = parseInt(response['perPage']);
-        // this.totalElements = response['totalPages'] * this.perPage;
+        this.currentPage = 1;
+        this.totalPages = parseInt(response['totalPages']);
+        this.perPage = parseInt(response['perPage']);
+        this.totalElements = response['totalPages'] * this.perPage;
   
         // console.log('response documentMapping: ', response);
         if(response['status'] == true) {
           this.data = response['mappingList'];
+          for(var i=0; i<this.data.length;i++){
+            this.key[i]=((this.perPage*(this.currentPage-1))+i+ 1);
+          }
         } else {
           alert('Something went wrong.');
         }
@@ -262,6 +286,30 @@ export class RelationshipMappingComponent implements OnInit {
 
   changeCoApplicant(event, index) {
     this.data[index].coApplicantId = event.target.value == '1' ? '1': '2';
+  }
+
+  pageChanged(value) {
+    this.qdeHttp.adminApplicantRelationship(value, this.perPage, this.searchKey).subscribe(res => {
+      if (res['ProcessVariables']['status'] == true) {
+        let response = res['ProcessVariables'];
+
+        this.currentPage = value;
+        this.totalPages = parseInt(response['totalPages']);
+        this.perPage = parseInt(response['perPage']);
+        this.totalElements = response['totalPages'] * this.perPage;
+
+        // console.log('response documentMapping: ', response);
+        if (response['status'] == true) {
+          this.data = response['mappingList'];
+          for(var i=0; i<this.data.length;i++){
+            this.key[i]=((this.perPage*(value-1))+i+ 1);
+          }
+        } else {
+          alert('Something went wrong.');
+        }
+      }
+    }, err => {
+    });
   }
 
 }

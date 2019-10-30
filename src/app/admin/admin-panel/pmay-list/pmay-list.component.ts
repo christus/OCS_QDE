@@ -26,6 +26,8 @@ export class PmayListComponent implements OnInit {
   perPage:string;
   errorMsg:string;
   enableLoadMore:boolean;
+  tableName:string = "pmay_list";
+  searchKey: string="";
 
   // paginationConfig =  { 
   //   itemsPerPage: 2, 
@@ -62,6 +64,37 @@ export class PmayListComponent implements OnInit {
       }
       console.log(this.collection);
     });
+  }
+
+  search(event) {
+    this.searchKey = event.target.value;
+    var data = {
+      "userId": parseInt(localStorage.getItem("userId")),
+      "searchKey": event.target.value
+    }
+    this.qdeHttp.getPmayList(data).subscribe(response => {
+      if(response['ProcessVariables'].pmayList==null){
+        alert("No data present further");
+      }else{
+      this.collection = response['ProcessVariables'].pmayList;
+      this.totalPages = response['ProcessVariables'].totalPages;
+      this.from = response['ProcessVariables'].from;
+      this.currentPage = response['ProcessVariables'].currentPage;
+      this.perPage = response['ProcessVariables'].perPage;
+      this.totalItems = parseInt(this.totalPages) * parseInt(this.perPage);
+      if(this.currentPage == this.totalPages) {
+        this.enableLoadMore = false;
+      }
+      console.log(this.collection);
+    }
+    });
+  }
+
+  refresh() {
+    this.searchKey="";
+    let data = {};
+    data["currentPage"] = 1;
+    this.getPmayList(data);
   }
 
   delete(id){

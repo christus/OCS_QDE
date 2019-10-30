@@ -29,6 +29,7 @@ export class QdeService {
           isMainApplicant: true,
           isIndividual: null,
           partnerRelationship: "",
+          termsAndConditions: false,
           maritalStatus: {
             status: "",
             spouseTitle: "",
@@ -283,7 +284,7 @@ export class QdeService {
   }
 
   setQde(qde: Qde): void {
-    this.qde = qde;
+    this.qde = qde;   
     this.qdeSource$.next(qde);
   }
 
