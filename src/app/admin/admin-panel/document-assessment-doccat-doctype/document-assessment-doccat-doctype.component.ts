@@ -71,7 +71,7 @@ export class DocumentAssessmentDoccatDoctypeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.qdeHttp.adminZipCodeSearch({userId: this.userId, tableName: 'assessment_methodology'}).subscribe(res => {
+    /*this.qdeHttp.adminZipCodeSearch({userId: this.userId, tableName: 'assessment_methodology'}).subscribe(res => {
       this.assessments = res['ProcessVariables']['valueDescription'];
       this.selectedAssessment = this.assessments[0];
     }, err => {
@@ -93,7 +93,23 @@ export class DocumentAssessmentDoccatDoctypeComponent implements OnInit {
       this.profiles = res['ProcessVariables']['valueDescription'];
       this.selectedProfile = this.profiles[0];
     }, err => {
-    });
+    });*/
+    this.qdeHttp.adminGetLov().subscribe(res=>{
+      this.assessments = JSON.parse(res['ProcessVariables']['lovs']).LOVS.assessment_methodology;
+      this.selectedAssessment = this.assessments[0];
+    },err => {});
+    this.qdeHttp.adminGetLov().subscribe(res=>{
+      this.documentCategories = JSON.parse(res['ProcessVariables']['lovs']).LOVS.document_category;
+      this.selectedDocumentCategory = this.documentCategories[0];
+    },err => {});
+    this.qdeHttp.adminGetLov().subscribe(res=>{
+      this.docTypes = JSON.parse(res['ProcessVariables']['lovs']).LOVS.document_type;
+      this.selectedDocType = this.docTypes[0];
+    },err => {});
+    this.qdeHttp.adminGetLov().subscribe(res=>{
+      this.profiles = JSON.parse(res['ProcessVariables']['lovs']).LOVS.occupation;
+      this.selectedProfile = this.profiles[0];
+    },err => {});
   }
 
 

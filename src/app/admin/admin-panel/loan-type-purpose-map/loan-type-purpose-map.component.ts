@@ -27,6 +27,12 @@ export class LoanTypePurposeMapComponent implements OnInit {
   userId: number;
   tableName: string;
   isAdd: boolean;
+  currentPage:number;
+  perPage:number;
+  totalElements:number;
+  totalPages:number;
+  key:Array<number> = [];
+  searchKey:string;
 
 
   constructor(private qdeHttp: QdeHttpService, private route: ActivatedRoute) {
@@ -54,34 +60,38 @@ export class LoanTypePurposeMapComponent implements OnInit {
         }
       });
 
-      // this.currentPage = parseInt(this.route.snapshot.data['eachLovs']['ProcessVariables']['currentPage']);
-      // this.totalPages = parseInt(this.route.snapshot.data['eachLovs']['ProcessVariables']['totalPages']);
-      // this.perPage = parseInt(this.route.snapshot.data['eachLovs']['ProcessVariables']['perPage']);
-      // this.totalElements = this.route.snapshot.data['eachLovs']['ProcessVariables']['totalPages'] * this.perPage;
+      this.currentPage = parseInt(this.route.snapshot.data['eachLovs']['ProcessVariables']['currentPage']);
+      this.totalPages = parseInt(this.route.snapshot.data['eachLovs']['ProcessVariables']['totalPages']);
+      this.perPage = parseInt(this.route.snapshot.data['eachLovs']['ProcessVariables']['perPage']);
+      this.totalElements = this.totalPages* this.perPage;
       // this.perPageCount = Math.ceil(this.totalElements/this.perPage);
+      for(var i=0; i<this.data.length;i++){
+        this.key[i]=((this.perPage*(this.currentPage-1))+i+ 1);
+      }
     } else {
       alert('No Data Present');
     }
     // } else {
     //   alert('No Data Present');
     // }
+  }
 
-
-    this.qdeHttp.adminLoadMoreLovs('loan_type').subscribe(res => {
+  ngOnInit() {
+    this.qdeHttp.adminGetLov().subscribe(res => {
       if(res['ProcessVariables']['status'] == true) {
-        this.loanTypeData = res['ProcessVariables']['valueDescription'];
+        var lov= JSON.parse(res['ProcessVariables']['lovs']);
+        this.loanTypeData = lov.LOVS.loan_type;
         this.selectedLoanTypeData = this.loanTypeData[0];
         console.log("loanTypeData: ", this.loanTypeData);
-
-
       }
     }, err => {
       alert('Something went wrong');
     });
 
-    this.qdeHttp.adminLoadMoreLovs('loan_purpose').subscribe(res => {
+    this.qdeHttp.adminGetLov().subscribe(res => {
       if(res['ProcessVariables']['status'] == true) {
-        this.loanPurposeData = res['ProcessVariables']['valueDescription'];
+        var lov= JSON.parse(res['ProcessVariables']['lovs']);
+        this.loanPurposeData = lov.LOVS.loan_purpose;
         this.selectedLoanPurposeData = this.loanPurposeData[0];
         console.log("loanPurposeData: ", this.loanPurposeData);
 
@@ -89,9 +99,6 @@ export class LoanTypePurposeMapComponent implements OnInit {
     }, err => {
       alert('Something went wrong');
     });
-  }
-
-  ngOnInit() {
   }
 
   add() {
@@ -148,10 +155,18 @@ export class LoanTypePurposeMapComponent implements OnInit {
           loanTypeValue: v['loanTypeValue']
         }
       });
+        this.currentPage = response['ProcessVariables']['currentPage'];
+        this.totalPages = response['ProcessVariables']['totalPages'];
+        this.perPage = response ['ProcessVariables']['perPage'];
+        this.totalElements = this.totalPages * this.perPage;
+        for(var i=0; i<this.data.length;i++){
+          this.key[i]=((this.perPage*(this.currentPage-1))+i+ 1);
+        }
     });
   }
 
   refresh() {
+    this.searchKey="";
     this.qdeHttp.adminLoanTypePurposeMap().subscribe(res => {
       if(res['ProcessVariables']['loanTypePurposeList']) {
 
@@ -170,10 +185,10 @@ export class LoanTypePurposeMapComponent implements OnInit {
           }
         });
 
-        // this.currentPage = parseInt(res['ProcessVariables']['currentPage']);
-        // this.totalPages = parseInt(res['ProcessVariables']['totalPages']);
-        // this.perPage = parseInt(res['ProcessVariables']['perPage']);
-        // this.totalElements = res['ProcessVariables']['totalPages'] * this.perPage;
+        this.currentPage = parseInt(res['ProcessVariables']['currentPage']);
+        this.totalPages = parseInt(res['ProcessVariables']['totalPages']);
+        this.perPage = parseInt(res['ProcessVariables']['perPage']);
+        this.totalElements = res['ProcessVariables']['totalPages'] * this.perPage;
         // this.perPageCount = Math.ceil(this.totalElements/this.perPage);
       } 
     }, err => {
@@ -227,5 +242,37 @@ export class LoanTypePurposeMapComponent implements OnInit {
         this.refresh();
       });
     } 
+  }
+  pageChanged(value){
+    this.qdeHttp.adminLoanTypePurposeMap(value,this.perPage,this.searchKey).subscribe(res => {
+      if(res['ProcessVariables']['loanTypePurposeList']) {
+        this.data = res['ProcessVariables']['loanTypePurposeList'].map(v => {
+          return {
+            userId: this.userId,
+            tableName: this.tableName,
+            id: v['id'],
+            loanPurpose: v['loanPurpose'],
+            loanPurposeDescription: v['loanPurposeDescription'],
+            loanPurposeValue: v['loanPurposeValue'],
+            loanType: v['loanType'],
+            loanTypeDescription: v['loanTypeDescription'],
+            loanTypeValue: v['loanTypeValue']
+          }
+        });
+        this.currentPage = value;
+        this.totalPages = parseInt(res['ProcessVariables']['totalPages']);
+        this.perPage = parseInt(res['ProcessVariables']['perPage']);
+        this.totalElements = this.totalPages * this.perPage;
+        for(var i=0; i<this.data.length;i++){
+          this.key[i]=((this.perPage*(this.currentPage-1))+i+ 1);
+        }
+      } else {
+        alert('Something went wrong.');
+        this.currentPage--;
+      }
+    }, err => {
+      alert('Something went wrong.');
+      this.currentPage--;
+    });
   }
 }

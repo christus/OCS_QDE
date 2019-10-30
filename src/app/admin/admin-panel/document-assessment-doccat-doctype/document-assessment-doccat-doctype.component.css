@@ -137,7 +137,9 @@ thead, tbody tr {
     padding-bottom: 8px;
     /* width: 200px; */
 }
-
+.admin-table tbody tr td form{
+    text-align: left;
+}
 
 .lov-search {
     border: 0;

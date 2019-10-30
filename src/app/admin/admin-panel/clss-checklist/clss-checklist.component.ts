@@ -38,6 +38,7 @@ interface CLSS {
 })
 export class ClssChecklistComponent implements OnInit {
 
+  searchKey:string;
   tempLovs: Array<CLSS>;
   // previousLength: number;
 
@@ -199,6 +200,7 @@ export class ClssChecklistComponent implements OnInit {
   // }
 
   refresh() {
+    this.searchKey=""
     this.qdeHttp.adminLoadMoreClss().subscribe(res => {
       console.log("fhvkdjvbhfkd",res)
       this.lovs = res['ProcessVariables']['clssDetailsList']

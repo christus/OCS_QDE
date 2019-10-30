@@ -1932,7 +1932,7 @@ createOrUpdatePersonalDetails(qde) {
     );
   }
 
-  adminLoanTypePurposeMap() {
+  adminLoanTypePurposeMap(currentPage ?: number, perPage ?: number,searchKey?:string) {
     const processId   = environment.api.adminLoanTypePurposeMap.processId;
     const workflowId  = environment.api.adminLoanTypePurposeMap.workflowId;
     const projectId   = environment.projectId;
@@ -1940,7 +1940,10 @@ createOrUpdatePersonalDetails(qde) {
     let qdeRequestEntity: RequestEntity = {
       processId: processId,
       ProcessVariables: {
-        userId: localStorage.getItem('userId')
+        userId: localStorage.getItem('userId'),
+        currentPage: currentPage ? currentPage: null,
+        perPage: perPage ? perPage: null,
+        searchKey: searchKey ? searchKey : ""
       },
       workflowId: workflowId,
       projectId: projectId
@@ -3147,6 +3150,29 @@ createOrUpdatePersonalDetails(qde) {
       workflowId, projectId,
       body
     );
+  }
+
+  adminGetLov(){
+    const processId = environment.api.adminGetLov.processId;
+    const workflowId = environment.api.adminGetLov.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: {
+    
+      },
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = {
+      'processVariables':
+      JSON.stringify(requestEntity)
+    };
+
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
   }
 
 }
