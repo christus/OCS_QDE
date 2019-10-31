@@ -65,17 +65,23 @@ export class RelationshipMappingComponent implements OnInit {
 
   ngOnInit() {
 
-    this.qdeHttp.adminZipCodeSearch({userId: this.userId, tableName: 'relationship'}).subscribe(res => {
-      this.relationships = res['ProcessVariables']['valueDescription'];
+    this.qdeHttp.adminGetLov().subscribe(res => {
+      if(res['ProcessVariables']['status'] == true) {
+      var lov= JSON.parse(res['ProcessVariables']['lovs']);
+      this.relationships = lov.LOVS.relationship;
       this.selectedRelationship = this.relationships[0];
       console.log("relationships: ",this.relationships);
+      }
     }, err => {
     });
 
-    this.qdeHttp.adminZipCodeSearch({userId: this.userId, tableName: 'applicant_title'}).subscribe(res => {
-      this.applicantTitles = res['ProcessVariables']['valueDescription'];
+    this.qdeHttp.adminGetLov().subscribe(res => {
+      if(res['ProcessVariables']['status'] == true) {
+      var lov= JSON.parse(res['ProcessVariables']['lovs']);  
+      this.applicantTitles = lov.LOVS.applicant_title;
       this.selectedApplicantTitle = this.applicantTitles[0];
       console.log("applicantTitles: ",this.applicantTitles);
+      }
     }, err => {
     });
 
