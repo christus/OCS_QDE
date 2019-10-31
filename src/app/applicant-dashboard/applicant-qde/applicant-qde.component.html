@@ -1446,12 +1446,12 @@
                             <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control" [data]="occupations"
                               textField="key" valueField="value" name="occupationType" tabindex="1"
                               nick="occupation.occupationType" #occupationType
-                              (selectionChange)="selectValueChanged($event, occupationType.hostElement)"
+                              (selectionChange)="selectValueChangedOccupation($event, occupationType.hostElement)"
                               [(ngModel)]="selectedOccupation">
                             </kendo-dropdownlist>
                           </div>
                           <div class="form-group"
-                            *ngIf="selectedOccupation.value != '6' && selectedOccupation.value != '7' && selectedOccupation.value != '10' && selectedOccupation.value != '14'">
+                            *ngIf="occupationRequired == true">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control" autocomplete="off"
                               required [(ngModel)]="qde.application.applicants[applicantIndex].occupation.companyName" maxlength="50"
                               pattern="{{regexPattern.name}}" tabindex="2" name="companyName" #companyName="ngModel"
@@ -1469,7 +1469,7 @@
 
                           </div>
                           <div class="form-group typ-range"
-                          *ngIf="selectedOccupation.value != '6' && selectedOccupation.value != '7' && selectedOccupation.value != '10' && selectedOccupation.value != '14'">
+                          *ngIf="occupationRequired == true">
                             <span class="control-title">Years in current employment/business</span>
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="number" autocomplete="off"
                               name="numberOfYearsInCurrentCompany" id="no-yrs" class="form-control"
@@ -1489,7 +1489,7 @@
 
                           </div>
                           <div class="form-group typ-range"
-                          *ngIf="selectedOccupation.value != '6' && selectedOccupation.value != '7' && selectedOccupation.value != '10' && selectedOccupation.value != '14'">
+                          *ngIf="occupationRequired == true">
                             <span class="control-title">Total Work Experience</span>
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="number"
                               name="totalExperienceYear" class="form-control" tabindex="5" autocomplete="off"
@@ -1560,14 +1560,14 @@
 
                         </div>
 
-                        <div *ngIf="selectedOccupation.value != '6' && selectedOccupation.value != '7' && selectedOccupation.value != '10' && selectedOccupation.value != '14'"
+                        <div  *ngIf="occupationRequired == true"
                           class="btn-wrap">
                           <button type="submit" [ngClass]="{'disabled': !occupationForm.valid || expError}"
                             [disabled]="(!occupationForm.valid || expError)" class="btn btn-primary">
                             Next
                           </button>
                         </div>
-                        <div *ngIf="selectedOccupation.value == '6' || selectedOccupation.value == '7' || selectedOccupation.value == '10' || selectedOccupation.value == '14'"
+                        <div  *ngIf="occupationRequired == false"
                         class="btn-wrap">
                           <button type="submit"
                             class="btn btn-primary"

@@ -319,6 +319,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
   isCurrentAddressFromMainApplicant: boolean = true;
   isPermanentAddressFromMainApplicant: boolean = true;
+  occupationRequired: boolean = true;
 
   isValidPan: boolean;
   tempOldPanNumber: string;
@@ -2784,6 +2785,12 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     });
   }
 
+  selectValueChangedOccupation(event) {
+    this.qdeHttp.occupationLovCompanyDetails(event.value).subscribe(response => {
+      this.occupationRequired = response["ProcessVariables"]["status"]
+    });
+  }
+
   selectCoApplicant(applicationId, index) {
     
     this.coApplicantIndex = index;
@@ -3973,6 +3980,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       }
       // this.selectedOccupation = this.occupations["occupation"]
       console.log("Select Occupation Type",this.selectedOccupation)
+      this.selectValueChangedOccupation(this.selectedOccupation)
     }, err => {
       this.isErrorModal = true;
         this.errorMessage = 'Something went wrong.';

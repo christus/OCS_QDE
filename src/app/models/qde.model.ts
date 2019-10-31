@@ -85,6 +85,7 @@ export interface Occupation {
     totalWorkExperience ?: number;
     pensioner?: boolean;
     pensionAmount?: number;
+    // occupationRequired?: boolean;
 }
 
 export interface Pan {

@@ -66,6 +66,7 @@ export class ViewFormApplicantComponent implements OnInit {
   @Input() isCoApplicant: boolean;
   @Input() applicationId: any;
   @Input() showEdit: boolean;
+  // @Input() occupationRequired: boolean;
 
   constructor() { }
 
