@@ -1,10 +1,10 @@
 export const environment = {
   version: "1.8.1",
-  buildDate: "30-10-2019",
+  buildDate: "31-10-2019",
   production: true,
-  // projectId: '5928d30eac7811e9a1670242ac110002', //developement
+  projectId: '5928d30eac7811e9a1670242ac110002', //developement
 
-  projectId: '3209f7ea7ba811e982270242ac110002', //production
+  // projectId: '3209f7ea7ba811e982270242ac110002', //production
 
   //projectId: 'ff8e364e6fce11e98754782bcb8f3845', // UAT Development
 
@@ -408,7 +408,15 @@ export const environment = {
     "checkCompanyDetails":{
       'workflowId': '16c6f24efbaa11e9b4290242ac110002',
       'processId' : '16e1cefcfbaa11e9949c0242ac110002'
-    }
+    },
+    "adminGetLov": {
+      'workflowId': '412f2232faff11e9b71e0242ac110002',
+      'processId' : '41481940faff11e9b5560242ac110002'
+    },
+    "uploadCSV": {
+      'workflowId': 'f17089c6927f11e982270242ac110002',
+      'processId' : '66145102ca6311e9bd540242ac110002'
+    },
   },
   userName: "icici@icicibankltd.com",
   password: "icici@123",
@@ -416,9 +424,9 @@ export const environment = {
   appiyoDrive: "/d/drive/upload/",
   driveLocation: "/d/drive/docs/",
   ocsHost: "/ocs",
-  // host: "http://192.168.1.108/appiyo",
+  host: "http://192.168.1.108/appiyo",
   //host: "/ProcessStore",
-  host:  "/appiyo",
+  // host:  "/appiyo",
   pdfLocation: "/d/download/pdf?",
   csvLocation: "/d/download/csv?",
   isMobile: false,

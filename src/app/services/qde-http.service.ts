@@ -2875,14 +2875,14 @@ createOrUpdatePersonalDetails(qde) {
   callPost(workflowId: string, projectId:string, requestEntity: any, options?:any, serviceType?:any ) {
     var that = this;
 
-    let url;
+    let setUrl;
 
     if(workflowId && projectId) {
-      url = environment.host + "/d/workflows/" + workflowId + "/" +environment.apiVersion.api+ "execute?projectId=" + projectId;
+      setUrl = environment.host + "/d/workflows/" + workflowId + "/" +environment.apiVersion.api+ "execute?projectId=" + projectId;
     }else if(serviceType == "login") {
-      url = environment.host + '/account/' +environment.apiVersion.login+ 'login'
+      setUrl = environment.host + '/account/' +environment.apiVersion.login+ 'login'
     }else if(serviceType == "uploadAppiyoDrive") {
-      url = environment.host + environment.appiyoDrive;
+      setUrl = environment.host + environment.appiyoDrive;
     }
 
     
@@ -2896,6 +2896,13 @@ createOrUpdatePersonalDetails(qde) {
     arrUrl.forEach(function(url) {
       if(currentHref.includes(url)){
         that.isMobile = false;
+        if(workflowId && projectId) {
+          setUrl = environment.host + "/d/workflows/" + workflowId + "/v2/execute?projectId=" + projectId;
+        } else if(serviceType == "login") {
+          setUrl = environment.host + '/account/v3/login'
+        } else if(serviceType == "uploadAppiyoDrive") {
+          setUrl = environment.host + environment.appiyoDrive;
+        }
         console.log("From mobile request....");
         return;
       }
@@ -2976,7 +2983,7 @@ createOrUpdatePersonalDetails(qde) {
         this.httpIonic.setDataSerializer("urlencoded");
 
         console.log("post requestEntity********", requestEntity);
-        this.httpIonic.post(url, requestEntity, headers).then(result => {
+        this.httpIonic.post(setUrl, requestEntity, headers).then(result => {
           const data = JSON.parse(result.data);
           console.log("~~~***Response***~~~", data);
           observer.next(data);
@@ -3000,13 +3007,13 @@ createOrUpdatePersonalDetails(qde) {
       let body = requestEntity
       // let encryptBody = this.encrytionService.encrypt(JSON.stringify(requestEntity),environment.aesPublicKey);
       // const body = encryptBody;
-       const beforUrl = url;
+       const beforUrl = setUrl;
     if (beforUrl.includes("?")) {
-       addParameter = url+"&id="+uniqueId;
+       addParameter = setUrl+"&id="+uniqueId;
        console.log("url have parametter", addParameter);
     } else {
       console.log("url not parametter");
-      addParameter = url+"?id="+uniqueId;
+      addParameter = setUrl+"?id="+uniqueId;
     }
     if(addParameter.includes("execute?")) {
       body = requestEntity["processVariables"];
