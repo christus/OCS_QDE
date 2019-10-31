@@ -1986,8 +1986,7 @@
                                         </div>
                                         <div *ngIf="selectedOccupation.value == '6' || selectedOccupation.value == '7' || selectedOccupation.value == '10' || selectedOccupation.value == '14'"
                                         class="btn-wrap">
-                                          <button type="submit" [ngClass]="{'disabled': !occupationForm.valid || expError}"
-                                            [disabled]="(!occupationForm.valid || expError)" class="btn btn-primary"
+                                          <button type="submit" class="btn btn-primary"
                                             (click)="incomeConsiderYesNoIndividual(2, occupationSlider2)"
                                             [value]="2">
                                             Next

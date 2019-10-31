@@ -446,10 +446,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
     
     });
-    console.log("Fragment & QueryParams: ", this.tabName, this.page);
-    if(this.tabName == this.fragments[10] || this.tabName == this.fragments[16]) {
-      this.setAssessmentMethodology();
-    }
+    
+   
   }
 
   ngOnInit() {
@@ -557,6 +555,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
               if(params.coApplicantIndex != null) {
                 this.coApplicantIndex = params.coApplicantIndex;
+                this.setAssessmentMethodology();
+              }
+              console.log("Fragment & QueryParams: ", this.tabName, this.page);
+              if(this.tabName == this.fragments[10] || this.tabName == this.fragments[16]) {
                 this.setAssessmentMethodology();
               }
   

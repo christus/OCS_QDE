@@ -202,12 +202,10 @@ export class ClssChecklistComponent implements OnInit {
   refresh() {
     this.searchKey=""
     this.qdeHttp.adminLoadMoreClss().subscribe(res => {
-      console.log("fhvkdjvbhfkd",res)
       this.lovs = res['ProcessVariables']['clssDetailsList']
       for(var x in this.lovs){
         this.lovs[x].isEdit=true;
       }
-      console.log("fhvkdjvbhfkd",this.lovs)
       //   console.log(v['aadhaarRequired']);
 
       //   return {
