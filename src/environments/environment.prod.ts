@@ -1,10 +1,10 @@
 export const environment = {
-  version: "1.8.0",
+  version: "1.8.1",
   buildDate: "30-10-2019",
   production: true,
-  projectId: '5928d30eac7811e9a1670242ac110002', //developement
+  // projectId: '5928d30eac7811e9a1670242ac110002', //developement
 
-  // projectId: '3209f7ea7ba811e982270242ac110002', //production
+  projectId: '3209f7ea7ba811e982270242ac110002', //production
 
   //projectId: 'ff8e364e6fce11e98754782bcb8f3845', // UAT Development
 
@@ -412,9 +412,9 @@ export const environment = {
   appiyoDrive: "/d/drive/upload/",
   driveLocation: "/d/drive/docs/",
   ocsHost: "/ocs",
-  host: "http://192.168.1.108/appiyo",
+  // host: "http://192.168.1.108/appiyo",
   //host: "/ProcessStore",
-  //host:  "/appiyo",
+  host:  "/appiyo",
   pdfLocation: "/d/download/pdf?",
   csvLocation: "/d/download/csv?",
   isMobile: false,

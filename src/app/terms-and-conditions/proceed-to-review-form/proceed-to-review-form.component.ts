@@ -29,7 +29,7 @@ export class ProceedToReviewFormComponent implements OnInit {
       this.qde = val;
     });
 
-    // console.log("this.route.snapshot.data['qde']", this.route.snapshot.data['qde']);
+    console.log("this.route.snapshot.data['qde']", this.route.snapshot.data['qde']);
     this.qdeService.setQde(JSON.parse(this.route.snapshot.data['qde']['ProcessVariables']['response']));
 
     const status = JSON.parse(this.route.snapshot.data['qde']['ProcessVariables']['response']).application.status;
