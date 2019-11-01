@@ -1854,11 +1854,11 @@
                                                     name="occupationType"
                                                     nick="occupation.occupationType"
                                                     #occupationType
-                                                    (selectionChange)="selectValueChanged($event, occupationType.hostElement)"
+                                                    (selectionChange)="selectValueChangedOccupation($event)"
                                                     [(ngModel)]="selectedOccupation">
                                                   </kendo-dropdownlist>
                                               </div>
-                                              <div class="form-group" *ngIf="selectedOccupation.value != '6' && selectedOccupation.value != '7' && selectedOccupation.value != '10' && selectedOccupation.value != '14'">
+                                              <div class="form-group" *ngIf="occupationRequired == true">
                                                   <input [readonly]="isReadOnly" type="text"
                                                         class="form-control"autocomplete="off"
                                                           required
@@ -1878,7 +1878,7 @@
                                                   </div>
               
                                               </div>
-                                              <div class="form-group typ-range"  *ngIf="selectedOccupation.value != '6' && selectedOccupation.value != '7' && selectedOccupation.value != '10' && selectedOccupation.value != '14'">
+                                              <div class="form-group typ-range"  *ngIf="occupationRequired == true">
                                                   <span class="control-title">Years in current employment/business</span>
                                                   <input [readonly]="isReadOnly" type="number" autocomplete="off"
                                                           name="numberOfYearsInCurrentCompany"
@@ -1903,7 +1903,7 @@
                                                   
               
                                               </div>
-                                              <div class="form-group typ-range" *ngIf="selectedOccupation.value != '6' && selectedOccupation.value != '7' && selectedOccupation.value != '10' && selectedOccupation.value != '14'">
+                                              <div class="form-group typ-range" *ngIf="occupationRequired == true">
                                                   <span class="control-title">Total Work Experience</span>
                                                   <input [readonly]="isReadOnly" type="number" autocomplete="off"
                                                           name="totalExperienceYear"
@@ -1976,7 +1976,7 @@
                                               
                                           </div>
               
-                                          <div *ngIf="selectedOccupation.value != '6' && selectedOccupation.value != '7' && selectedOccupation.value != '10' && selectedOccupation.value != '14'" class="btn-wrap">
+                                          <div *ngIf="occupationRequired == true" class="btn-wrap">
                                             <button type="submit"
                                                     [ngClass]="{'disabled': !occupationForm.valid || expError}"
                                                     [disabled]="(!occupationForm.valid || expError)" 
@@ -1984,10 +1984,9 @@
                                                 Next
                                             </button>
                                         </div>
-                                        <div *ngIf="selectedOccupation.value == '6' || selectedOccupation.value == '7' || selectedOccupation.value == '10' || selectedOccupation.value == '14'"
+                                        <div *ngIf="occupationRequired == false"
                                         class="btn-wrap">
-                                          <button type="submit" [ngClass]="{'disabled': !occupationForm.valid || expError}"
-                                            [disabled]="(!occupationForm.valid || expError)" class="btn btn-primary"
+                                          <button type="submit" class="btn btn-primary"
                                             (click)="incomeConsiderYesNoIndividual(2, occupationSlider2)"
                                             [value]="2">
                                             Next

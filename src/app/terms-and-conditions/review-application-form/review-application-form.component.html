@@ -166,7 +166,6 @@
                                           [data]="loanType" 
                                           textField="key"
                                           valueField="value"
-                                          [valuePrimitive]="true"
                                           [(ngModel)]="selectedLoanType">
                                           </kendo-dropdownlist>
                                     </div>
@@ -212,16 +211,16 @@
                                 <div class="col-12">
                                     <h5 class="subtitle">Have you identified property?</h5>
                                     <div class="bs-radio">
-                                        <input readonly="true"  type="radio" name="pro-id" [value]=true [(ngModel)]="isPropertyIdentified">
+                                        <input disabled="true" class="disabled" readonly="true"  type="radio" name="pro-id" [value]=true [(ngModel)]="isPropertyIdentified">
                                        <label for="pro-yes"><span>Yes</span></label>
                                     </div>
                                     <div class="bs-radio">
-                                        <input readonly="true"  type="radio" name="pro-id" [value]=false [(ngModel)]="isPropertyIdentified">
+                                        <input disabled="true" class="disabled" readonly="true"  type="radio" name="pro-id" [value]=false [(ngModel)]="isPropertyIdentified">
                                         <label for="pro-no"><span>No</span></label>
                                     </div>
                                 </div>
                             </div>
-                            <div class="inner-card">
+                            <div class="inner-card" *ngIf="isPropertyIdentified == true">
                                 <h4 class="inner-title">Property address</h4>
                                 <div class="row">
                                       <div class="col-12">
@@ -241,7 +240,7 @@
                                   </div> 
                                   <div class="row">
                                           <div class="col-12">
-                                              <div class="form-group">
+                                              <div class="form-group" *ngIf="propertyClssValue">
                                                   <input ngModel 
                                                       type="text" 
                                                       class="form-control" 
@@ -257,7 +256,7 @@
                                   </div> 
                                   <div class="row">
                                               <div class="col-12">
-                                                  <div class="form-group">
+                                                  <div class="form-group" *ngIf="propertyAreaValue">
                                                           <input ngModel type="number" class="form-control" id="pro-add-line2" 
                                                           name="propertyAreaInSqFeets"
                                                           #propertyArea="ngModel"
@@ -270,7 +269,7 @@
                                   </div>
                                 <div class="row">
                                     <div class="col-12">
-                                        <div class="form-group">
+                                        <div class="form-group" *ngIf="addressLineOneValue">
                                               <input type="text" class="form-control"
                                               id="add-line1"
                                               required
@@ -285,7 +284,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-12">
-                                        <div class="form-group">
+                                        <div class="form-group" *ngIf="addressLineTwoValue">
                                               <input type="text" class="form-control" id="add-line2"
                                               required
                                               ngModel
@@ -299,7 +298,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-6">
-                                        <div class="form-group filled">
+                                        <div class="form-group filled" *ngIf="propertyPincodeValue">
                                               <input type="text" class="form-control" id="proprty-pin"
                                               required
                                               ngModel
@@ -314,7 +313,7 @@
                                         </div>
                                     </div>
                                     <div class="col-6">
-                                        <div class="form-group">
+                                        <div class="form-group" *ngIf="cityState">
                                               <input type="text" class="form-control" id="pro-city2"
                                               required
                                               ngModel
@@ -346,8 +345,8 @@
                         </form>
                     </div> -->
                     <div class="bs-card">
-                        <h3 class="card-title">Existing Loan</h3>
-                        <form action="" class="bs-form">
+                        <h3 class="card-title">Existing Loan Obligations</h3>
+                        <form action="" class="bs-form" *ngFor="let q of qde.application.applicants;let i=index;">
                             <!-- <div class="row">
                                 <div class="col-12">
                                     <div class="form-group">
@@ -364,11 +363,11 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="form-group typ-range">
-                                        <span class="subtitle">Existing live loans</span>
+                                      <span class="subtitle">Existing live loans of {{applicantNameForLoanDetails[i]}}</span>
                                         <input type="text" class="form-control" id="live-Loan"
                                           required
                                           #monthlyEmi = "ngModel"
-                                          [(ngModel)]="liveLoan"
+                                          [(ngModel)]="q['existingLoans']['liveLoan']"
                                           fieldFill
                                           name="liveLoan">
                                         <span class="yr-text">Loans</span>
@@ -376,7 +375,7 @@
                                 </div>
                             </div>
                             <div class="inner-card">
-                                <div class="row">
+                                <div class="row" *ngIf="selectedLoanPurpose && ['16', '17'].includes(selectedLoanPurpose.value)">
                                     <div class="col-12">
                                         <div class="form-group">
                                             <span class="control-title">Existing loan provider</span>
@@ -387,7 +386,7 @@
                                               textField="key" 
                                               valueField="value"
                                               [valuePrimitive]="true" 
-                                              [(ngModel)]="selectedLoanProvider">
+                                              [(ngModel)]="selectedLoanProvider[i]">
                                               </kendo-dropdownlist>
                                         </div>
                                     </div>
@@ -409,7 +408,7 @@
                                               required
                                               ngModel
                                               #monthlyEmi = "ngModel"
-                                              [(ngModel)]="monthlyEmiValue"
+                                              [(ngModel)]="q['existingLoans']['monthlyEmi']"
                                               fieldFill
                                               name="monthlyEmi">                                          
                                               <label for="ex-emi">Existing monthly EMI</label>
@@ -510,7 +509,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-12">
-                                        <div class="form-group">
+                                        <div class="form-group typ-optional">
                                           <input type="text" class="form-control" id="ref1-add2" 
                                           required
                                           ngModel
@@ -519,6 +518,7 @@
                                           #refOneAddressLineTwo="ngModel"
                                           [(ngModel)]="selectedAddressLineTwo1">
                                             <label for="ref1-add2">Address line 2</label>
+                                            <span class="optional">Optional</span>
                                         </div>
                                     </div>
                                 </div>
@@ -607,7 +607,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-12">
-                                        <div class="form-group">
+                                        <div class="form-group typ-optional">
                                               <input type="text" class="form-control" id="ref2-add2"
                                               name="addressLineTwo" 
                                               ngModel 
@@ -616,6 +616,7 @@
                                               fieldFill
                                               [(ngModel)]="selectedAddressLineTwo2">
                                             <label for="ref2-add2">Address line 2</label>
+                                              <span class="optional">Optional</span>
                                         </div>
                                     </div>
                                 </div>

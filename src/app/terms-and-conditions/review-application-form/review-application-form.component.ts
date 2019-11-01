@@ -130,6 +130,8 @@ export class ReviewApplicationFormComponent implements OnInit {
   isIncomplete: Array<InCompleteFields> = [];
   monthsInChar: Array<string> = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'AUG', 'NOV', 'DEC'];
 
+  applicantNameForLoanDetails: Array<string> = [];
+
   constructor(private qdeService: QdeService,
               private route: ActivatedRoute,
               private qdeHttp: QdeHttpService) {
@@ -384,6 +386,7 @@ export class ReviewApplicationFormComponent implements OnInit {
           this.qde.application.applicationId = applicationId;
 
           this.qdeService.setQde(this.qde);
+          this.applicantNameForLoanDetails = this.qde.application.applicants.map(e => e.isIndividual ? e.personalDetails ? `${e.personalDetails['firstName']} ${e.personalDetails['lastName']}`: '' : e.organizationDetails.nameOfOrganization);
          // this.valuechange(this.qde.application.tenure);
         });
       } else {

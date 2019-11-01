@@ -63,7 +63,7 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
   userName:string;
   password:string;
   mailId:string;
-  mobileNumber:string;
+  mobileNumber:string;OnInit
   userRoleId:string;
   branchId:string;
 
@@ -236,7 +236,7 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
   }
 
   set userBranchId(val) {
-    console.log("br: " + val.key + "-" + val.value);
+    // console.log("br: " + val.key + "-" + val.value);
   }
   items: Array<string> = [''];
 

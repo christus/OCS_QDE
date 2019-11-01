@@ -64,12 +64,9 @@ export class AuthInterceptor implements HttpInterceptor {
   return next.handle(authReq).pipe(
     map(
       (event: HttpEvent<any>) => {
-        this.ngxService.stop();
+                
         if (event instanceof HttpResponse) {
-
-          this.ngxService.stop(); // stop foreground spinner of the master loader with 'default' taskId
-       
-
+          // this.ngxService.stop(); // stop foreground spinner of the master loader with 'default' taskId
           let responseValue = event.body;
           let typeOfbody = typeof(responseValue);
           console.log("type of response: ", typeOfbody);
@@ -88,8 +85,10 @@ export class AuthInterceptor implements HttpInterceptor {
             }
             this.utilService.clearCredentials();
           }
+          this.ngxService.stop();
           return event;
         }
+        this.ngxService.stop();
       },
       (err: any) => {
         if (err instanceof HttpErrorResponse) {
@@ -100,8 +99,10 @@ export class AuthInterceptor implements HttpInterceptor {
           this.ngxService.stop();
           alert("Error Message: " + err.message);
         }
+        this.ngxService.stop();
       }
-    )
+      
+    )    
   );
 }
 }

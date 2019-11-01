@@ -405,6 +405,18 @@ export const environment = {
       'workflowId': 'd6a7a3d8ee6711e99c870242ac110002',
       'processId': 'd6c0505eee6711e98e850242ac110002'
     },
+    "adminGetLov":{
+      'workflowId': '412f2232faff11e9b71e0242ac110002',
+      'processId' : '41481940faff11e9b5560242ac110002'
+    },
+    "uploadCSV":{
+      'workflowId': 'f17089c6927f11e982270242ac110002',
+      'processId' : '66145102ca6311e9bd540242ac110002'
+    },
+    "checkCompanyDetails":{
+      'workflowId': '16c6f24efbaa11e9b4290242ac110002',
+      'processId' : '16e1cefcfbaa11e9949c0242ac110002'
+    }
   },
   userName: "icici@icicibankltd.com",
   password: "icici@123",

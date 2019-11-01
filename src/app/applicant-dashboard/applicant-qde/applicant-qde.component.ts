@@ -341,6 +341,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   isOfficialCorrs: boolean;
 
   applicantType:string;
+  occupationRequired: boolean = true;
   
   constructor(private renderer: Renderer2,
     private route: ActivatedRoute,
@@ -2965,6 +2966,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
+  selectValueChangedOccupation(event) {
+    this.qdeHttp.occupationLovCompanyDetails(event.value).subscribe(response => {
+      this.occupationRequired = response["ProcessVariables"]["status"]
+    });
+  }
+
   editMobileNO() {
     this.qde.application.applicants[this.applicantIndex].contactDetails.isMobileOTPverified = false;
 
@@ -3673,6 +3680,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       // this.selectedOccupation = this.occupations["occupation"]
       console.log("Select Occupation Type",this.selectedOccupation)
+      this.selectValueChangedOccupation(this.selectedOccupation)
     }, err => {
       this.isErrorModal = true;
         this.errorMessage = 'Something went wrong.';

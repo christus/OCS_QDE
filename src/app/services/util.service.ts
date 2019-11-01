@@ -59,7 +59,7 @@ export class UtilService {
     let data = {
       'email': environment.userName,
       'password': environment.password,
-      'longTimeToken': "true"
+      'longTimeToken': true
     }
 
     console.log("data", isFirstTime);

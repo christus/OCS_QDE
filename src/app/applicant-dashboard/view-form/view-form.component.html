@@ -270,7 +270,7 @@
                                   </div>
                                   <div class="bs-radio">
                                       <input disabled="true" class="disabled" readonly="true" id="pro-n" type="radio" name="pro-id" [value]=false [(ngModel)]="isPropertyIdentified">
-                                      <label for="pro-no" disabled="true" class="disabled"><span>No</span></label>
+                                      <label for="pro-no"><span>No</span></label>
                                   </div>
                               </div>
                           </div>
@@ -501,10 +501,10 @@
                                           textField="key"
                                           valueField="value"
                                           name="relationShip"
-                                          [valuePrimitive]="true"
+                                          
                                           [(ngModel)]="selectedReferenceOne">
                                         </kendo-dropdownlist>
-            
+                                        <!-- [valuePrimitive]="true" -->
                                       </div>
                                   </div>
                               </div>
@@ -518,7 +518,7 @@
                                           textField="key" 
                                           valueField="value" 
                                           name="titles"
-                                          [valuePrimitive]="true" 
+                                           
                                           [(ngModel)]="selectedTiltle1">
                                         </kendo-dropdownlist>
                                     </div>
@@ -570,7 +570,7 @@
                               </div>
                               <div class="row">
                                   <div class="col-12">
-                                      <div class="form-group">
+                                      <div class="form-group typ-optional">
                                         <input type="text" class="form-control" id="ref1-add2" 
                                         required
                                         ngModel
@@ -579,6 +579,7 @@
                                         #refOneAddressLineTwo="ngModel"
                                         [(ngModel)]="selectedAddressLineTwo1">
                                           <label for="ref1-add22">Address line 2</label>
+                                          <span class="optional">Optional</span>
                                       </div>
                                   </div>
                               </div>
@@ -599,7 +600,7 @@
                                           textField="key"
                                           valueField="value"
                                           name="relationShip"
-                                          [valuePrimitive]="true"
+                                          
                                           [(ngModel)]="selectedReferenceTwo">
                                         </kendo-dropdownlist>
                                       </div>
@@ -615,7 +616,7 @@
                                             textField="key" 
                                             valueField="value" 
                                             name="titles"
-                                            [valuePrimitive]="true" 
+                                            
                                             [(ngModel)]="selectedTiltle2">
                                             </kendo-dropdownlist>
                                         </div>
@@ -667,7 +668,7 @@
                               </div>
                               <div class="row">
                                   <div class="col-12">
-                                      <div class="form-group">
+                                      <div class="form-group typ-optional">
                                             <input type="text" class="form-control" id="ref2-add2"
                                             name="addressLineTwo"
                                             ngModel 
@@ -676,6 +677,7 @@
                                             fieldFill
                                             [(ngModel)]="selectedAddressLineTwo2">
                                           <label for="ref2-add2jm">Address line 2</label>
+                                          <span class="optional">Optional</span>
                                       </div>
                                   </div>
                               </div>

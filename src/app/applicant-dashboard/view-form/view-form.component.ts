@@ -129,6 +129,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
   selectedCategory: Array<Item> = [];
   selectedOccupation: Array<Item> = [];
   selectedResidence: Array<Item> = [];
+  // occupationRequired: Array<Item> = [];
 
   permSelectedResidence: Array<Item> = [];
 
@@ -176,6 +177,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
 
   allApplicantsItem: Array<Item> = [];
   liveLoan: Array<string>;
+  // occupationRequired: boolean;
 
   docType: Array<any> = [];
   selectedAssesmentMethodology: Array<Item> = [];
@@ -928,6 +930,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
       }
 
       this.initializeVariables(eachApplicant);
+      // this.selectValueChangedOccupation(this.selectedOccupation[i])
     });
   }
 
@@ -1106,7 +1109,14 @@ export class ViewFormComponent implements OnInit, OnDestroy {
     });
   }
 
-  checkDisableEdit() {
+  // checkDisableEdit() {
 
-  }
+  // }
+  
+  // selectValueChangedOccupation(event) {
+  //   this.qdeHttp.occupationLovCompanyDetails(event.value).subscribe(response => {
+  //     this.qde.application.applicants[this.applicantIndex].occupation.occupationRequired = response["ProcessVariables"]["status"]
+  //     console.log("fjdhgfjkd",this.qde.application.applicants[this.applicantIndex].occupation.occupationRequired)
+  //   });
+  // }
 }
