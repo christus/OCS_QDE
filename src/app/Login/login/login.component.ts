@@ -6,6 +6,8 @@ import { UtilService } from 'src/app/services/util.service';
 
 import {CommonDataService} from 'src/app/services/common-data.service'
 import { EncryptService } from 'src/app/services/encrypt.service';
+import { CaptchaResolverService } from 'src/app/services/captcha-resolver.service';
+import { Observable } from 'rxjs';
 
 
 
@@ -18,11 +20,15 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   userName = "";
   password = "";
+  captchaText = "";
   activeSessionExists = false;
-  sessionMessage="";
-
+  sessionMessage = "";
+  catchaImage;
   version: string;
   buildDate: string;
+  catchaImageData;
+  oldRefId;
+  base64Data;
   sharedKsy = "MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJ+GJdSSEeaNFBLqyfM3DIOgQgWCwJ0INfeZZV7ITsLeuA7Yd02rrkYGIix1IWvoebWVmzhncUepYxHwK1ARCdUCAwEAAQ==";
 
   @ViewChild('userNameField') userNameField: ElementRef;
@@ -32,13 +38,21 @@ export class LoginComponent implements OnInit, AfterViewInit {
     private qdeService: QdeHttpService,
     private utilService: UtilService,
     private commonDataService: CommonDataService,
-    private encrytionService: EncryptService
-    
-  ) {}
+    private encrytionService: EncryptService,
+    private catchaDataService: CaptchaResolverService ,
+    private activeRout: ActivatedRoute
+  ) {
+    this.catchaImageData = this.activeRout.snapshot.data;
+    this.base64Data = this.catchaImageData["catchaImage"]["catchaImage"];
+  }
 
   ngOnInit() {
     this.version = environment.version;
     this.buildDate = environment.buildDate;
+    // this.catchaImage = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAAAyCAYAAAC+jCIaAAABc0lEQVR42u3bwRHCIBAFUOuxCbuw/xZSgTagkRBWdsk7/IOOyWSWl0BAbtu2vURG56YIApaAtVruj+fHqA1YQ0GBVQhWxsYDqzisrI0HElhgZYU1s4iZupxf1wJaEVjZGhCsRWF9a1ywwDrViJnGNyAtAitbo4IVCCuyCzgCa0bDghUEK3KM0XI+sBaEFT2AbTkPWAvDiuqe/g0ZrESwoordiwqsC8HqKfgZWLPn2CRouuFsQ/cc33ttGWBF1DX7ZC1YE2CN6AmyP0mndIU9x/5z/JcJVta35XSD916U1Qs+ElaFNcup0w1XGmz3YFkeVqUV/iqw9m7YT5+rvalOXdIBqw1WxsX59IvQV5p3OgJr76lVDtaK27UqXFvL99VucrASdIdggRUO6+iY1/YvsJqw7P0eLLBCYFV6iQIr+ZZ9sMAK2fFddesZWGCBtcof845CAQsssMASsAQsEbAELAFLBCwBS8ASsBRBwBKwBCyR0XkDjNqPBC5GlaIAAAAASUVORK5CYII=";
+    this.catchaImage = "data:image/png;base64," + this.base64Data;
+    this.oldRefId = this.catchaImageData["catchaImage"]["refId"];
+    console.log("catcha image in on init",  this.catchaImageData["catchaImage"]["catchaImage"]);
   }
 
   login() {
@@ -47,8 +61,10 @@ export class LoginComponent implements OnInit, AfterViewInit {
     const data = {
       email: this.userName.trim().toLowerCase()+ "@icicibankltd.com",
       password: this.password.trim(),
-      removeExistingSession: false,
-      appId: "OCS"
+      removeExistingSession: false,    
+      appId: "OCS",
+      refId: this.oldRefId,
+      captcha: this.captchaText
     };
     let token = localStorage.getItem("token");
 
@@ -66,22 +82,30 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
     },
     error => {
+      
       let getTypeOfError = error.length;
         if (!getTypeOfError){
           let getError = JSON.parse(this.decryptResponse( error));
+          // if (getError["message"]="Invalid captcha"){
+          //   this.sessionMessage = getError["message"];
+          //   this.activeSessionExists = getError["activeSessionExists"];
+            
+          // } else {
           this.sessionMessage = getError["message"];
           this.activeSessionExists = getError["activeSessionExists"];
+        // }
         } else {  
           this.sessionMessage = error['error']['message'];
           this.activeSessionExists = error['error']["activeSessionExists"]
         }
-      
+        this.generateCatchaImage();
       // let typeofError = typeof(getError);
       // console.log("get errors ",getError);
 ;
       if(this.activeSessionExists){
         this.sessionMessage = "An active session with these credential's does exists, please logout the existing session";
       }
+      
     });
     // this.qdeService.authenticate(data).subscribe(
     //   res => {
@@ -186,5 +210,19 @@ export class LoginComponent implements OnInit, AfterViewInit {
       return false;
     }
 
+  }
+  generateCatchaImage() {
+    let catchaImageData;
+    this.qdeService.generateCatchaImage(this.oldRefId).subscribe(res => {
+      // console.log("get catch response ", res);
+      this.base64Data = res["catchaImage"];
+     catchaImageData = res;
+     this.oldRefId = res["refId"];
+ 
+      this.catchaImage = "data:image/png;base64," + this.base64Data;
+      // console.log("cat data in  ", this.catchaImage);
+    });
+    // console.log("get catch response ", catchaImageData);
+  // return this.catchaImage;
   }
 }

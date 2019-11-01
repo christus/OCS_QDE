@@ -168,7 +168,9 @@ createOrUpdatePersonalDetails(qde) {
         'email': data.email,
         'password': data.password,
         'removeExistingSession': data.removeExistingSession,
-        'appId': data.appId
+        'appId': data.appId,
+        "refId": data.refId,
+      "captcha": data.captcha
       };
 
 
@@ -2887,6 +2889,8 @@ createOrUpdatePersonalDetails(qde) {
       reqEntity = JSON.stringify(requestEntity);
     }else if(serviceType == "uploadAppiyoDrive") {
       setUrl = environment.host + environment.appiyoDrive;
+    } else if(serviceType == "captcha") {
+      setUrl = environment.host + '/account/captcha/generate_catcha'
     }
 
     this.isMobile = this.mobileService.isMobile;
@@ -3160,6 +3164,15 @@ createOrUpdatePersonalDetails(qde) {
 
     let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
     return this.callPost(workflowId, projectId, body);
+  }
+
+  generateCatchaImage(oldRefId) {
+    let uri = environment.host + "/account/captcha/generate_catcha?oldRefId=" + oldRefId + environment.captchFormat;;
+    // let uri = environment.host + '/account/'+environment.apiVersion.login+'login'; 
+
+    // let uri = environment.host + '/account/login_ne';
+    // let uri = environment.host + '/account/login';
+    return this.http.get(uri);
   }
 
 }

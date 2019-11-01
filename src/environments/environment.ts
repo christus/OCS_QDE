@@ -17,7 +17,7 @@ export const environment = {
   // projectId: 'ff8e364e6fce11e98754782bcb8f3845',
 
   apiVersion: {
-    login: "v3/",
+    login: "v4/",
     api: "v2/"
   },
 
@@ -435,9 +435,9 @@ export const environment = {
   // tslint:disable-next-line: quotemark
   // tslint:disable-next-line: max-line-length
   aesPublicKey: 'MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJ+GJdSSEeaNFBLqyfM3DIOgQgWCwJ0INfeZZV7ITsLeuA7Yd02rrkYGIix1IWvoebWVmzhncUepYxHwK1ARCdUCAwEAAQ==',
-  encryptionType: true // Ecryption
+  encryptionType: true, // Ecryption
   // host: ""
-
+  captchFormat: "&width=200&height=50&bgr=255&bgg=255&bgb=255&bga=255&fontR=187&fontG=187&fontB=187&fontSize=30&captchaSize=5"
 };
 
 /*

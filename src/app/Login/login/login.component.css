@@ -17,3 +17,13 @@
 .margin_right {
 	margin-right: 15px;
 }
+.bs-form .form-group {
+margin-bottom: 2.08vw;
+}
+.captch{
+	border: solid;
+    padding-top: 1vw;
+    padding-left: 1vw;
+    /* padding-bottom: 1vw; */
+    border-color: rgba(187, 187, 187, 1);
+}
