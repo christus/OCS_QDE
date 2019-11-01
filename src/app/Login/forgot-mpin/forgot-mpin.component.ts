@@ -45,7 +45,7 @@ export class ForgotMPINComponent implements OnInit {
     let appiyoAuthdata = {
       'email': environment.userName,
       'password': environment.password,
-      'longTimeToken': "true"
+      'longTimeToken': true
     }  
 
    this.qdeService.longLiveAuthenticate(appiyoAuthdata).subscribe(

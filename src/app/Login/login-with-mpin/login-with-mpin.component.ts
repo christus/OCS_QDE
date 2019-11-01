@@ -77,7 +77,7 @@ export class LoginWithMPINComponent implements OnInit {
     let appiyoAuthdata = {
       'email': environment.userName,
       'password': environment.password,
-      'longTimeToken': "true"
+      'longTimeToken': true
     }
 
     this.commonDataService.setLogindata(appiyoAuthdata);

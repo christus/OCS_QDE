@@ -311,7 +311,7 @@ export class LeadsListComponent implements OnInit {
            alert(res["ErrorMessage"]);
           } else {
             console.log("error ", res);
-            alert("Session expired. Please login");
+            // alert("Session expired. Please login");
             this.utilService.clearCredentials();
           }
            return;

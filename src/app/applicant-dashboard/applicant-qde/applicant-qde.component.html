@@ -1446,7 +1446,7 @@
                             <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control" [data]="occupations"
                               textField="key" valueField="value" name="occupationType" tabindex="1"
                               nick="occupation.occupationType" #occupationType
-                              (selectionChange)="selectValueChangedOccupation($event, occupationType.hostElement)"
+                              (selectionChange)="selectValueChangedOccupation($event)"
                               [(ngModel)]="selectedOccupation">
                             </kendo-dropdownlist>
                           </div>
