@@ -62,6 +62,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
       this.commonDataService.setLogindata(data);
       localStorage.setItem("token", res["token"] ? res["token"] : "");
       this.roleLogin();
+      this.checkLogin();
+
     },
     error => {
       let getTypeOfError = error.length;
@@ -134,6 +136,31 @@ export class LoginComponent implements OnInit, AfterViewInit {
         this.router.navigate(["/leads"]);
       },
       error => {
+        console.log(error);
+      }
+    );
+  }
+
+  checkLogin() {
+    let data = {
+      'email': 'icici@icicibankltd.com',
+      'password': 'icici@123',
+      'longTimeToken': true
+    }
+  
+    this.qdeService.longLiveAuthenticate(data).subscribe(
+      res => {
+        console.log("response");
+        console.log("login-response: ",res);
+
+        localStorage.setItem("token", res["token"] ? res["token"] : "");
+
+        this.router.navigate(['/setPin']);
+
+      },
+      error => {
+        console.log("error-response");
+
         console.log(error);
       }
     );

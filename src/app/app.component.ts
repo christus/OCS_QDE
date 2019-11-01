@@ -61,22 +61,22 @@ export class AppComponent implements OnInit{
       // this.Keyboard.hideFormAccessoryBar(true);
 
 
-       window.addEventListener('keyboardDidShow', function () {
-          console.log("********KeyboardDid show");
-          document.activeElement.scrollIntoView();
-        });
+      //  window.addEventListener('keyboardDidShow', function () {
+      //     console.log("********KeyboardDid show");
+      //     // document.activeElement.scrollIntoView();
+      //   });
 
-      const scrollToTopFn = () => {
-        if (window["Keyboard"] && !window["Keyboard"].isVisible) {
-          window.scrollTo(0,0);
-          window.document.body.scrollTop = 0;
-        }
-      };
+      // const scrollToTopFn = () => {
+      //   if (window["Keyboard"] && !window["Keyboard"].isVisible) {
+      //     // window.scrollTo(0,0);
+      //     // window.document.body.scrollTop = 0;
+      //   }
+      // };
       
-      window.addEventListener('keyboardDidHide', () => {
-        console.log("********keyboardDidHide");
-        window.setTimeout(scrollToTopFn, 10);
-      });
+      // window.addEventListener('keyboardDidHide', () => {
+      //   console.log("********keyboardDidHide");
+      //   // window.setTimeout(scrollToTopFn, 10);
+      // });
 
     });
   

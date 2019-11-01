@@ -416,7 +416,8 @@ export const environment = {
     "checkCompanyDetails":{
       'workflowId': '16c6f24efbaa11e9b4290242ac110002',
       'processId' : '16e1cefcfbaa11e9949c0242ac110002'
-    }
+    },
+    
   },
   userName: "icici@icicibankltd.com",
   password: "icici@123",

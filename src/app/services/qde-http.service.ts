@@ -61,12 +61,12 @@ export class QdeHttpService {
 
     this.isMobile = this.mobileService.isMobile;
 
-    if(this.isMobile) {
-      environment.apiVersion = {
-        login: "",
-        api: ""
-      }
-    }
+    // if(this.isMobile) {
+    //   environment.apiVersion = {
+    //     login: "",
+    //     api: ""
+    //   }
+    // }
 
   }
 
@@ -2877,15 +2877,17 @@ createOrUpdatePersonalDetails(qde) {
 
     let setUrl;
 
+    let reqEntity;
+
     if(workflowId && projectId) {
       setUrl = environment.host + "/d/workflows/" + workflowId + "/" +environment.apiVersion.api+ "execute?projectId=" + projectId;
+      reqEntity = requestEntity["processVariables"];
     }else if(serviceType == "login") {
-      setUrl = environment.host + '/account/' +environment.apiVersion.login+ 'login'
+      setUrl = environment.host + '/account/' +environment.apiVersion.login+ 'login';
+      reqEntity = JSON.stringify(requestEntity);
     }else if(serviceType == "uploadAppiyoDrive") {
       setUrl = environment.host + environment.appiyoDrive;
     }
-
-    
 
     this.isMobile = this.mobileService.isMobile;
 
@@ -2908,84 +2910,39 @@ createOrUpdatePersonalDetails(qde) {
       }
     });
 
-    // this.isMobile = true;
-
-
-    const headers = {
-        'Content-Type': 'text/html',
-        'authentication-token':  localStorage.getItem('token') ? localStorage.getItem('token') : '',
-    }; 
-
-    // if(this.isMobile) {
-
-      
-    //   this.ngxService.start();
-
-    //   const obs = new Observable((observer) => {
-
-    //     this.httpIonic.setSSLCertMode("nocheck");
-
-    //   //  this.httpIonic.setDataSerializer("utf8");
-
-    //     console.log("post requestEntity********", requestEntity);
-
-    //     let encryption = this.encrytionService.encrypt(JSON.stringify(requestEntity),environment.aesPublicKey);
-
-    //     // let optionsParam = {
-    //     //   method: 'post',
-    //     //   data: encryption.rawPayload,
-    //     //   headers: headers,
-    //     //   responseType: "text"
-    //     // }
-
-    //    this.ionicOption = {
-    //       method:'post',
-    //       data: encryption.rawPayload,
-    //       headers: encryption.headers,
-    //       responseType: "text"
-    //     };
-
-    //     console.log("req post", this.ionicOption);
-
-    //     console.log("post url********", url);
-
-    //     this.httpIonic.sendRequest(url, this.ionicOption).then(result => {
-
-    //     // this.httpIonic.post(url, encryptBody, headers).then(result => {
-
-    //       let decritedData = this.encrytionService.decryptResponse(result.data);
-    //       const data = JSON.parse(decritedData);
-
-
-    //       console.log("~~~***Response***~~~", data);
-    //       observer.next(data);
-    //       observer.complete();
-    //       this.ngxService.stop();
-    //     }).catch(error => {
-    //       observer.error(error);
-    //       observer.complete();
-    //       this.ngxService.stop();
-    //       console.log("~~~***Response error***~~~", error);
-    //     });
-
-    //   });
-
-    //   return obs;
-    // } 
     if(this.isMobile) {
-
+      
       this.ngxService.start();
 
       const obs = new Observable((observer) => {
 
         this.httpIonic.setSSLCertMode("nocheck");
 
-        this.httpIonic.setDataSerializer("urlencoded");
+        console.log("post requestEntity********", reqEntity);
 
-        console.log("post requestEntity********", requestEntity);
-        this.httpIonic.post(setUrl, requestEntity, headers).then(result => {
-          const data = JSON.parse(result.data);
+        let encryption = this.encrytionService.encrypt(reqEntity, environment.aesPublicKey);
+    
+        this.ionicOption = {
+          method:'post',
+          data: encryption.rawPayload,
+          headers: encryption.headers,
+          serializer: 'utf8',
+          responseType: "text"
+        };
+
+        console.log("req post", this.ionicOption);
+
+        console.log("post url********", setUrl);
+
+        this.httpIonic.sendRequest(setUrl, this.ionicOption).then(result => {
+
+          console.log("result", result);
+          let decritedData = that.encrytionService.decryptMobileResponse(result);
+          console.log("decritedData", decritedData);
+          
+          const data = JSON.parse(decritedData);
           console.log("~~~***Response***~~~", data);
+
           observer.next(data);
           observer.complete();
           this.ngxService.stop();

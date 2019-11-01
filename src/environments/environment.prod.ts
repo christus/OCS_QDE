@@ -416,7 +416,8 @@ export const environment = {
     "uploadCSV": {
       'workflowId': 'f17089c6927f11e982270242ac110002',
       'processId' : '66145102ca6311e9bd540242ac110002'
-    },
+    }
+   
   },
   userName: "icici@icicibankltd.com",
   password: "icici@123",
@@ -424,9 +425,10 @@ export const environment = {
   appiyoDrive: "/d/drive/upload/",
   driveLocation: "/d/drive/docs/",
   ocsHost: "/ocs",
+
   //host: "http://192.168.1.108/appiyo",
   //host: "/ProcessStore",
-  // host:  "/appiyo",
+  //host:  "/appiyo",
   pdfLocation: "/d/download/pdf?",
   csvLocation: "/d/download/csv?",
   isMobile: false,
