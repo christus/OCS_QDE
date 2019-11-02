@@ -1,10 +1,10 @@
 export const environment = {
   version: "1.8.2",
-  buildDate: "31-10-2019",
+  buildDate: "01-11-2019",
   production: true,
-  // projectId: '5928d30eac7811e9a1670242ac110002', // developement
+  projectId: '5928d30eac7811e9a1670242ac110002', // developement
 
-  projectId: '3209f7ea7ba811e982270242ac110002', // production
+  // projectId: '3209f7ea7ba811e982270242ac110002', // production
 
   // projectId: 'ff8e364e6fce11e98754782bcb8f3845', // UAT Development
 
@@ -13,7 +13,7 @@ export const environment = {
   },
 
   apiVersion: {
-    login: "v3/",
+    login: "v4/",
     api: "v2/"
   },
 
@@ -426,9 +426,9 @@ export const environment = {
   appiyoDrive: "/d/drive/upload/",
   driveLocation: "/d/drive/docs/",
   ocsHost: "/ocs",
-  // host: "http://192.168.1.108/appiyo",
+  host: "http://192.168.1.108/appiyo",
   //host: "/ProcessStore",
-  host:  "/appiyo",
+  // host:  "/appiyo",
   pdfLocation: "/d/download/pdf?",
   csvLocation: "/d/download/csv?",
   isMobile: false,
@@ -437,7 +437,7 @@ export const environment = {
   aesPublicKey: 'MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJ+GJdSSEeaNFBLqyfM3DIOgQgWCwJ0INfeZZV7ITsLeuA7Yd02rrkYGIix1IWvoebWVmzhncUepYxHwK1ARCdUCAwEAAQ==',
   // host: "https://ihfcmobileuat.icicihfc.com/appiyo",
   encryptionType: true, //Ecryption
-  captchFormat: "&width=200&height=50&bgr=255&bgg=255&bgb=255&bga=255&fontR=187&fontG=187&fontB=187&fontSize=30&captchaSize=5"
+  captchFormat: "&width=200&height=50&bgr=255&bgg=255&bgb=255&bga=255&fontR=187&fontG=187&fontB=187&fontSize=28&captchaSize=5"
   //host: "https://ihfcmobileuat.icicihfc.com/appiyo"
   //csvhost: "http://192.168.1.108/appiyo",
   //host: "https://103.87.42.117/appiyo"
