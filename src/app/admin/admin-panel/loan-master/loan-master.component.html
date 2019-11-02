@@ -17,13 +17,13 @@
       <input *ngIf="isLoanMaster" id="baseAmount" type="text" [(ngModel)]="baseAmount" name="baseAmount" pattern="^[0-9]*$" />
 
       <label *ngIf="isLoginFee" for="baseFee">Base Fee</label>
-      <input id="baseFee" type="text" [(ngModel)]="baseFee" name="baseFee" pattern="^[0-9]*$" />
+      <input *ngIf="isLoginFee" id="baseFee" type="text" [(ngModel)]="baseFee" name="baseFee" pattern="^[0-9]*$" />
 
       <label *ngIf="isLoginFee" for="taxApplicable">Tax Applicable</label>
-      <input id="taxApplicable" type="text" [(ngModel)]="taxApplicable" name="taxApplicable" pattern="[0-9]+(\.[0-9]{0,2})?%?" />
+      <input *ngIf="isLoginFee" id="taxApplicable" type="text" [(ngModel)]="taxApplicable" name="taxApplicable" pattern="[0-9]+(\.[0-9]{0,2})?%?" />
 
       <label *ngIf="isLoginFee" for="variableFee">Variable Fee</label>
-      <input id="variableFee" type="text" [(ngModel)]="variableFee" name="variableFee" pattern="[0-9]+(\.[0-9]{0,2})?%?" />
+      <input *ngIf="isLoginFee" id="variableFee" type="text" [(ngModel)]="variableFee" name="variableFee" pattern="[0-9]+(\.[0-9]{0,2})?%?" />
 
       <label for="loan_type">Select Loan Type</label>
       <select id="loan_type" name="loanType" [ngModel]="selectedLoanTypeData.id" (ngModelChange)="loanTypeChanged($event)">
@@ -58,7 +58,7 @@
         <th *ngIf="isLoginFee">Tax Applicable</th>
         <th *ngIf="isLoginFee">Variable Fee</th>
         <th>Loan Type</th>
-        <th>Edit</th>
+        <th>Edit/Save</th>
         <th>Delete</th>
       </tr>
     </thead>

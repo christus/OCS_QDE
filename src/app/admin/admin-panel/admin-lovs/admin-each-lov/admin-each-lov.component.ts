@@ -20,6 +20,7 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
   currentPage: string;
   perPage:string;
   searchKey:string="";
+  key:Array<number>=[];
 
   @ViewChildren('lovsElements') lovsElements: QueryList<ElementRef>;
 
@@ -48,7 +49,6 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
 
           return {
             userId: localStorage.getItem('userId'),
-            key: (i+1),
             description: v['description'],
             value: v['value'],
             isEdit: true,
@@ -59,6 +59,9 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
             isRequired: v['isRequired']
           }
         });
+        for(var i=0; i<this.lovs.length;i++){
+          this.key[i]=((parseInt(this.perPage)*(parseInt(this.currentPage)-1))+i+ 1);
+        }
       } else {
         alert('No Data Found');
       }
@@ -83,9 +86,9 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
           console.log(this.lovs[index]);
           this.lovs[index].isEdit = true;
           this.lovs[index].id = res['ProcessVariables']['id'];
-        } else {
+        } else if(res['ProcessVariables']['errorMessage'] != "") {
           this.refresh();
-          alert('LOV could not be saved');
+          alert(res['ProcessVariables']['errorMessage']);
         }
       });
     } else {
@@ -143,7 +146,6 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
           this.lovs = res['ProcessVariables']['valueDescription'].map((v, i) => {
             return {
               userId: parseInt(localStorage.getItem('userId')),
-              key: (i+1),
               tableName: this.tableName,
               cityId: v['cityId'],
               cityName: v['cityName'],
@@ -157,7 +159,9 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
               zoneName: v['zoneName']
             }
           });
-
+          for(var i=0; i<this.lovs.length;i++){
+            this.key[i]=((parseInt(this.perPage)*(parseInt(this.currentPage)-1))+i+ 1);
+          }
         } else {
           alert('No Data Present Further');
         }
@@ -207,7 +211,6 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
 
             return {
               userId: localStorage.getItem('userId'),
-              key: (i+1),
               description: v['description'],
               value: v['value'],
               isEdit: true,
@@ -218,6 +221,9 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
               isRequired: v['isRequired']
             }
           });
+          for(var i=0; i<this.lovs.length;i++){
+            this.key[i]=((parseInt(this.perPage)*(parseInt(this.currentPage)-1))+i+ 1);
+          }
         } else {
           alert("No Data Found");
         }
@@ -240,7 +246,6 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
           this.tempLovs = this.lovs = res['ProcessVariables']['valueDescription'].map((v, i) => {
             return {
               userId: localStorage.getItem('userId'),
-              key: ((this.lovs.length*(data-1))+i+ 1),
               description: v['description'],
               value: v['value'],
               isEdit: true,
@@ -251,6 +256,9 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
               isRequired: v['isRequired']
             }
           });
+          for(var i=0; i<this.lovs.length;i++){
+            this.key[i]=((parseInt(this.perPage)*(data-1))+i+ 1);
+          }
         }
       }
     })

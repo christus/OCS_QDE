@@ -109,24 +109,26 @@ export class PmayListComponent implements OnInit {
     this.qdeHttp.deletePmayList(data).subscribe((response) => {
       if (response["Error"] === "0" &&
       response["ProcessVariables"]["status"]) {
-      //alert("Uploaded Successfully!");
-      delete this.collection[id];
+        delete this.collection[id];
+        alert("Deleted Successfully!");
     } else {
       if (response["ErrorMessage"]) {
         console.log("Response: " + response["ErrorMessage"]);
         this.errorMsg = response["ErrorMessage"];
+        alert(this.errorMsg);
       } else if (response["ProcessVariables"]["errorMessage"]) {
         console.log(
           "Response: " + response["ProcessVariables"]["errorMessage"]
         );
         this.errorMsg = response["ProcessVariables"]["errorMessage"];
+        alert(this.errorMsg);
       }
     }
   },
   error => {
     console.log("Error : ", error);
   });
-    
+    this.refresh();
   }
 
   pageChanged(value){

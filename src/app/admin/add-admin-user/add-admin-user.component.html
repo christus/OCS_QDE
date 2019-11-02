@@ -3,21 +3,21 @@
         <p class="redalert user-hint">*All Fields are Mandatory<br></p>
         <div class="inputBox form-field-el">
                 <label for="firstname" class="inputText">First name:</label>
-                <input type="text" id="firstname" class="form-control" [(ngModel)]="firstName" formControlName="firstName" fieldFill autocomplete="nope"/>
+                <input type="text" id="firstname" class="form-control" [(ngModel)]="firstName" formControlName="firstName" fieldFill autocomplete="nope" pattern={{regexPattern.name}}/>
                 <div *ngIf="formValue.firstName.errors" >
-                    <!-- <div class="redalert" *ngIf="formValue.firstName.errors.required"> required</div> -->
+                    <div class="redalert" *ngIf="formValue.firstName.errors.pattern"> Name cannot contain numbers / special characters </div>
                 </div>
         </div>
         <div class="inputBox form-field-el">
                 <label for="lastName" class="inputText">Last name:</label>
-                <input type="text" id="lastName"  [(ngModel)]="lastName"  class="form-control" fieldFill formControlName="lastName" autocomplete="nope"/>
+                <input type="text" id="lastName"  [(ngModel)]="lastName"  class="form-control" fieldFill formControlName="lastName" autocomplete="nope" pattern={{regexPattern.name}}/>
                 <div *ngIf="formValue.lastName.errors" >
-                    <!-- <div class="redalert" *ngIf="formValue.lastName.errors.required"> required</div> -->
+                        <div class="redalert" *ngIf="formValue.lastName.errors.pattern"> Name cannot contain numbers / special characters </div>
                 </div>
         </div>
          <div class="inputBox form-field-el">
                 <label for="userName" class="inputText">Employee Id:</label>
-            <input type="text" id="userName" [(ngModel)]="userName"  class="form-control trans-lower-case" fieldFill formControlName="userName" autocomplete="nope"/>
+            <input type="text" id="userName" [(ngModel)]="userName"  class="form-control trans-lower-case" fieldFill formControlName="userName" autocomplete="nope" pattern={{regexPattern.empId}}/>
             <div *ngIf="formValue.userName.errors" >
                 <!-- <div class="redalert"  *ngIf="formValue.userName.errors.required"> required</div> -->
             </div>
@@ -32,7 +32,7 @@
         </div>
        <div class="inputBox form-field-el">
             <label for="mailId" class="inputText">Email:</label>
-            <input type="text" id="mailId" [(ngModel)]="mailId"  class="form-control" fieldFill formControlName="mailId" autocomplete="nope"/>
+            <input type="text" id="mailId" [(ngModel)]="mailId"  class="form-control" fieldFill formControlName="mailId" autocomplete="nope" pattern={{regexPattern.email}}/>
             <div *ngIf="formValue.mailId.errors" >
                     <!-- <div class="redalert"  *ngIf="formValue.mailId.errors.required"> required</div> -->
                     <!-- <div class="redalert" *ngIf="formValue.mailId.errors.email"> Invalid email</div> -->
@@ -41,10 +41,10 @@
         </div>
         <div class="inputBox form-field-el">
             <label for="mobileNumber" class="inputText">Mobile number:</label>
-            <input type="number"  [(ngModel)]="mobileNumber"  class="form-control"  fieldFill
+            <input type="text"  [(ngModel)]="mobileNumber"  class="form-control"  fieldFill
             maxlength="10"
             (keypress)=_keyPress($event)
-            formControlName="mobileNumber" id="mobileNumber" />
+            formControlName="mobileNumber" id="mobileNumber" pattern={{regexPattern.mobileNumber}} />
             <div *ngIf="formValue.mobileNumber.errors" >
                 <!-- <div class="redalert"  *ngIf="formValue.mobileNumber.errors.required"> required</div> -->
                 <div class="redalert"  *ngIf="registerUser.get('mobileNumber').hasError('pattern')"> Invalid mobileNumber</div>
@@ -100,4 +100,13 @@
 
     
     </form> 
+</div>
+<div>
+    <button class="fileUpload" (click)="callFile()">Upload Connector / DMA List</button>
+    <input type="file" id="uploadCSV" accept=".csv" (change)="startUpload($event)" style="display: none;">
+    <button type="button" class="btn btn-default" [ngClass]="{'disabled': (!isFileSelected)}"
+        [disabled]="!isFileSelected" (click)="uploadCSVFile()"> Upload List</button>
+    <span style="font-family: zurich-light; font-size: 1.64vw; color: green;" *ngIf="isSuccessful"><br>&nbsp;<b>File Uploaded
+        successfully</b></span>
+    <span style="font-family: zurich-light; font-size: 1.64vw; color: red;" *ngIf="isFailed"><br>&nbsp;<b>{{errorMsg}}</b></span>
 </div>

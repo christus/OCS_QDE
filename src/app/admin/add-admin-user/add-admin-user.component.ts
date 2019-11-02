@@ -40,6 +40,17 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
   userId: number;
   updatebtn:boolean = false;
   errorMsg:string;
+  uploadCSVString: string;
+  selectedFile: File;
+  isFileSelected: boolean = false;
+  isSuccessful: boolean = false;
+  isFailed : boolean = false;
+  regexPattern = {
+    mobileNumber: "^[1-9][0-9]*$",
+    name: "^[-'a-zA-Z]",
+    email: "^\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b.",
+    empID: "^[1-9][0-9]*$"
+  }
 
 
 
@@ -356,6 +367,52 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
     }
     return null;
   }
-
-
+  startUpload(event){
+    this.selectedFile = event.target.files[0];
+    if(this.selectedFile.size!=0){
+      this.isFileSelected = true;
+    }else{
+      alert("No File selected");
+      this.isFileSelected=false;
+    }
+    this.getBase64(this.selectedFile);
+  }
+  getBase64(inputValue: any) {
+    var file:File = inputValue
+    var myReader:FileReader = new FileReader();
+    myReader.onloadend = (e) => {
+      this.uploadCSVString = myReader.result.substr(myReader.result.indexOf(',') + 1);;
+      console.log("result base64", this.uploadCSVString);
+    }
+    myReader.readAsDataURL(file);
+  }
+  uploadCSVFile(){
+    let name = this.selectedFile.name;
+    let size = this.selectedFile.size;
+    if(size!=0){
+      let documentInfo = {
+        userId: localStorage.getItem("userId"),
+        "attachment": {
+          "name": name,
+          "operation": "upload",
+          "content": this.uploadCSVString,
+          "mime": "text/csv",
+          "size": size
+        }
+      }
+      this.qdeHttp.uploadCSV(documentInfo).subscribe(res=>{
+        if(res['Error']==0){
+        this.isSuccessful=true;
+        this.isFileSelected=false;
+        }else{
+          this.isFailed=true;
+          this.errorMsg = res["ErrorMessage"];
+          this.isFileSelected=false;
+        }
+      })
+    }
+  }
+  callFile(){
+    document.getElementById("uploadCSV").click();  
+  }
 }
