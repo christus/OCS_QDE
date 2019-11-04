@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2, ElementRef, Inject } from '@angular/core';
+import { Component, OnInit, Renderer2, ElementRef, Inject, HostListener } from '@angular/core';
 import { Plugins, AppState } from '@capacitor/core';
 
 import { Keyboard } from '@ionic-native/keyboard/ngx';
@@ -25,7 +25,7 @@ export class AppComponent implements OnInit{
 
   constructor(private utilService: UtilService,
     private keyboard: Keyboard,
-    private renderer: Renderer2,
+    private el: ElementRef, private renderer: Renderer2,
     nativeKeyboard: NativeKeyboard,
     private deviceService: DeviceDetectorService,
     private mobileService: MobileService) { 
@@ -81,5 +81,15 @@ export class AppComponent implements OnInit{
     });
   
   }
-  
+
+  @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
+    console.log(event);
+
+    // element = event.srcElement.nextElementSibling;
+    if(event.code == "Tab") {
+      console.log("Tab key pressed", event);
+      event.preventDefault();     
+    }
+  }
+
 }

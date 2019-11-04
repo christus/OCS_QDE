@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
 import { FormGroup, FormControl } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 
 @Component({
@@ -16,15 +16,17 @@ export class SuccessfullComponent implements OnInit {
   reviewCheck;
   termsCheck;
   paymentCheck;
+  data;
   constructor(private qdeHttp: QdeHttpService,
+              private _router: Router,
               private activeRoute:  ActivatedRoute,
               private location: Location ) { }
 
   ngOnInit() {
     const routeVales = this.activeRoute.snapshot.params;
     // const data = { "applicationId": "15183" };
-    const data = { "applicationId": routeVales.applicationId };
-    this.qdeHttp.getApplicationStatus(data).subscribe(response => {
+    this.data = { "applicationId": routeVales.applicationId };
+    this.qdeHttp.getApplicationStatus(this.data).subscribe(response => {
       this.statusList = response;
       // console.log("status List in sucessfull " + JSON.stringify(response));
      this.reviewCheck = response["ProcessVariables"]["reviewForm"];
@@ -35,7 +37,8 @@ export class SuccessfullComponent implements OnInit {
 
   }
   backScreen() {
-    this.location.back();
+    // this.location.back();
+    this._router.navigate(["/applicant/", this.data.applicationId]);
   }
 
 }
