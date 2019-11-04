@@ -1990,13 +1990,13 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
           this.qde.application.applicants[this.coApplicantIndex].occupation.companyName = form.value.companyName;
         }
     
-        if(this.isOfficialCorrs) {
+        if(form.value.numberOfYearsInCurrentCompany != null) {
           this.qde.application.applicants[this.coApplicantIndex].occupation.numberOfYearsInCurrentCompany = form.value.numberOfYearsInCurrentCompany;
         } else {
           this.qde.application.applicants[this.coApplicantIndex].occupation.numberOfYearsInCurrentCompany = 0;
         }
     
-        if(this.isOfficialCorrs) {
+        if(form.value.totalExperienceYear != null) {
           this.qde.application.applicants[this.coApplicantIndex].occupation.totalWorkExperience = form.value.totalExperienceYear;
         } else {
           this.qde.application.applicants[this.coApplicantIndex].occupation.totalWorkExperience = 0;

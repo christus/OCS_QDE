@@ -2177,13 +2177,13 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           this.qde.application.applicants[this.applicantIndex].occupation.companyName = form.value.companyName;
         }
 
-        if (this.isOfficialCorrs) {
+        if (form.value.numberOfYearsInCurrentCompany != null) {
           this.qde.application.applicants[this.applicantIndex].occupation.numberOfYearsInCurrentCompany = form.value.numberOfYearsInCurrentCompany;
         } else {
           this.qde.application.applicants[this.applicantIndex].occupation.numberOfYearsInCurrentCompany = 0;
         }
 
-        if (this.isOfficialCorrs) {
+        if (form.value.totalExperienceYear != null) {
           this.qde.application.applicants[this.applicantIndex].occupation.totalWorkExperience = form.value.totalExperienceYear;
         } else {
           this.qde.application.applicants[this.applicantIndex].occupation.totalWorkExperience = 0;
