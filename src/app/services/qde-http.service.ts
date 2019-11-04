@@ -2881,10 +2881,16 @@ createOrUpdatePersonalDetails(qde) {
 
     let reqEntity;
 
+    this.isMobile = this.mobileService.isMobile;
+
+
     if(workflowId && projectId) {
       setUrl = environment.host + "/d/workflows/" + workflowId + "/" +environment.apiVersion.api+ "execute?projectId=" + projectId;
       reqEntity = requestEntity["processVariables"];
-    }else if(serviceType == "login") {
+    }else if(serviceType == "login" && this.isMobile) {
+      setUrl = environment.host + '/account/v3/login';
+      reqEntity = JSON.stringify(requestEntity);
+    }else if(serviceType == "login" && !this.isMobile) {
       setUrl = environment.host + '/account/' +environment.apiVersion.login+ 'login';
       reqEntity = JSON.stringify(requestEntity);
     }else if(serviceType == "uploadAppiyoDrive") {
@@ -2893,7 +2899,6 @@ createOrUpdatePersonalDetails(qde) {
       setUrl = environment.host + '/account/captcha/generate_catcha'
     }
 
-    this.isMobile = this.mobileService.isMobile;
 
     const currentHref = window.location.href;
 
