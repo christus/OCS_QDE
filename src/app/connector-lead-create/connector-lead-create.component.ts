@@ -41,7 +41,7 @@ export class ConnectorLeadCreateComponent implements OnInit {
     email:"^\\w+([\.-]?\\w+)*@\\w+([\.-]?\\w+)*(\\.\\w{2,10})+$",
     amount: "^[\\d]{0,14}([.][0-9]{0,4})?",
     sameDigit: '0{10}|1{10}|2{10}|3{10}|4{10}|5{10}|6{10}|7{10}|8{10}|9{10}'
-  }
+  };
   errors = {
     leadCreate :{
       firstName:{
@@ -74,7 +74,7 @@ export class ConnectorLeadCreateComponent implements OnInit {
         minamount: "Amount should be greater than or equal to Rs.50000",
       }
     }
-  }
+  };
 
   constructor(private route: ActivatedRoute,
     private router: Router,

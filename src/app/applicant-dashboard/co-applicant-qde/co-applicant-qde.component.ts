@@ -339,6 +339,18 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   isOfficialCorrs: boolean;
 
   applicantRelationships: Array<any>;
+  doNotSelectDefault: boolean = false;
+
+  public defaultItem: { key: string, value: number } = { key: "Select Title", value: null };
+  
+  // public defaultItem: Array<{ key: string, value: number, inStock: boolean }> = [
+  //   { key: "Select Title", value: null, inStock: false }
+  // ];
+
+  // public itemDisabled(itemArgs: { dataItem: string }) {
+  //   return !itemArgs.dataItem. ;
+  // }
+
 
   constructor(private renderer: Renderer2,
               private route: ActivatedRoute,
@@ -348,7 +360,6 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
               private cds: CommonDataService,
               private utilService: UtilService,
               private mobileService: MobileService) {
-    
     this.qde = this.qdeService.defaultValue;
 
     
@@ -507,7 +518,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
       // this.docType = [{"key": "Aadhar", "value": "1"},{"key": "Driving License", "value": "2"},{"key": "passport", "value": "3"}];
 
-      this.selectedTitle = this.titles[0];
+      this.selectedTitle = this.defaultItem;
       this.selectedReligion = this.religions[0];
       this.selectedMaritialStatus = this.maritals[0];
       this.selectedCategory = this.categories[0];
@@ -2382,9 +2393,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             this.isErrorModal = true;
             this.errorMessage = "Something went wrong, please try again later.";
           });
-          this.isCoApplicantRouteModal = true;
+          // this.isCoApplicantRouteModal = true;
           // this.router.navigate(['/applicant', this.qde.application.applicationId, 'co-applicant'], {fragment: 'dashboard'} );
-          //this.goToNextSlide(swiperInstance);
+          this.goToNextSlide(swiperInstance);
         } else {
           // Throw Invalid Pan Error
         }
@@ -3901,8 +3912,16 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   changeTitle(event) {
-    let t = this.applicantRelationships.find(v => v.relationShipId == this.selectedRelationship).applicantTitles.find(v => v.applicantTitleId == this.selectedTitle.value);
-    this.qde.application.applicants[this.coApplicantIndex].personalDetails.gender = t.genderId;
+    console.log("mamama",event)
+    if(event.value == null){
+      this.doNotSelectDefault = false;
+      return
+    }
+    else{
+      this.doNotSelectDefault = true;
+      let t = this.applicantRelationships.find(v => v.relationShipId == this.selectedRelationship).applicantTitles.find(v => v.applicantTitleId == this.selectedTitle.value);
+      this.qde.application.applicants[this.coApplicantIndex].personalDetails.gender = t.genderId;
+    }
   }
 
   setRelationship(mainApplicant: Applicant, coApplicantIndex: string | number) {

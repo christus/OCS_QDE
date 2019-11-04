@@ -1514,10 +1514,10 @@
                             </div>
                           </div>
 
-                          <div *ngIf="selectedOccupation.value == 10" class="form-group last">
+                          <div *ngIf="selectedOccupation.key == 'Retired'" class="form-group last">
                               <span class="control-title">Do you receive pension?</span>
                           </div>
-                            <div *ngIf="selectedOccupation.value == 10" class="radio-wrap rounded-radio">
+                            <div *ngIf="selectedOccupation.key == 'Retired'" class="radio-wrap rounded-radio">
                               <div class="bs-radio typ-normal">
                                 <input [readonly]="isTBMLoggedIn" spellcheck="false" type="radio" name="pensioner"
                                   [value]="1"
@@ -1538,7 +1538,7 @@
                               </div>
                             </div>
 
-                            <div *ngIf="selectedOccupation.value == 10 && qde.application.applicants[applicantIndex].occupation.pensioner == true" class="form-group inr" style="margin-top: 100px;" >
+                            <div *ngIf="selectedOccupation.key == 'Retired' && qde.application.applicants[applicantIndex].occupation.pensioner == true" class="form-group inr" style="margin-top: 100px;" >
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                                 id="annualPensionIncome1" autocomplete="off"
                                 [(ngModel)]="qde.application.applicants[applicantIndex].occupation.pensionAmount"
@@ -1639,7 +1639,6 @@
 
               </div>
               <div class="rhs">
-
                 <div class="swiper-container form-swiper" [swiper]="rhsConfig" #swiperS="ngxSwiper"
                   (slidePrevTransitionStart)="slidePrevTransitionStart(offCorSlider1)"
                   (slideNextTransitionStart)="slideNextTransitionStart(offCorSlider1)" #offCorSlider2="ngxSwiper">
@@ -1859,7 +1858,7 @@
                         </div>
                         <div class="btn-wrap">
                           <button type="submit" class="btn btn-primary" [disabled]="!incomeConsiderFormInd.valid || isTBMLoggedIn"
-                            [ngClass]="{'disabled': (!incomeConsiderFormInd.valid || isTBMLoggedIn)}">Save</button>
+                            [ngClass]="{'disabled': (!incomeConsiderFormInd.valid || isTBMLoggedIn)}">Next</button>
                         </div>
                       </form>
                     </div>

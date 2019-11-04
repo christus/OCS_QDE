@@ -150,6 +150,7 @@
                           #loanAmount="ngModel" 
                           fieldFill 
                           required
+                          pattern="{{regexPattern.amount}}"
                           (input)="checkNumberLessThan50k($event)"/>
                         <label for="loanAmt">Loan Amount</label>    
                         <div class="invalid-feedback">

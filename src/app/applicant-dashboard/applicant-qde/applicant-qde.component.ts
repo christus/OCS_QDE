@@ -2546,6 +2546,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.isTBMLoggedIn) {
       this.goToNextSlide(swiperInstance);
     } else {
+      event.preventDefault();
+
       if (form && !form.valid) {
         return;
       }
@@ -2566,9 +2568,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
               this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
-          this.isApplicantRouteModal = true;
+          // this.isApplicantRouteModal = true;
           // this.router.navigate(['/applicant', this.qde.application.applicationId, 'co-applicant'], {fragment: 'dashboard'} );
-          //this.goToNextSlide(swiperInstance);
+          this.goToNextSlide(swiperInstance);
         } else {
           this.isErrorModal = true;
           this.errorMessage = "Something went wrong, please try again later.";
