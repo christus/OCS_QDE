@@ -340,9 +340,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   errorMessage: string;
   isOfficialCorrs: boolean;
 
-  applicantType:string;
+  applicantType: string;
   occupationRequired: boolean = true;
-  
+
   constructor(private renderer: Renderer2,
     private route: ActivatedRoute,
     private router: Router,
@@ -476,7 +476,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.constitutions = lov.LOVS.constitution;
       this.assessmentMethodology = lov.LOVS.assessment_methodology;
       this.unOfficialEmails = lov.LOVS.un_official_emails;
-      console.log("data slice error: ",lov.LOVS.religion);
+      console.log("data slice error: ", lov.LOVS.religion);
 
 
 
@@ -563,7 +563,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           this.cds.enableTabsIfStatus1(this.qde.application.status);
           this.tempOldPanNumber = result.application.applicants[this.applicantIndex].pan.panNumber;
 
-            this.loadOccupationTypeLovs(this.qde.application.applicants[this.applicantIndex].occupation.occupationType);
+          this.loadOccupationTypeLovs(this.qde.application.applicants[this.applicantIndex].occupation.occupationType);
           if (this.qde.application.auditTrailDetails.screenPage == screenPages['applicantDetails']) {
             this.goToExactPageAndTab(this.qde.application.auditTrailDetails.tabPage, this.qde.application.auditTrailDetails.pageNumber);
           }
@@ -822,10 +822,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           }
 
           // Occupation details
-      // if( ! isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].occupation.occupationType)) ) {
-        // this.selectedOccupation = this.occupations.find(e => e.value == this.qde.application.applicants[this.applicantIndex].occupation.occupationType);
-      //   this.selectedTitle = this.getSelectedValue(this.qde.application.applicants[this.applicantIndex].occupation.occupationType,this.occupations);
-      // }
+          // if( ! isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].occupation.occupationType)) ) {
+          // this.selectedOccupation = this.occupations.find(e => e.value == this.qde.application.applicants[this.applicantIndex].occupation.occupationType);
+          //   this.selectedTitle = this.getSelectedValue(this.qde.application.applicants[this.applicantIndex].occupation.occupationType,this.occupations);
+          // }
 
           // Assesment methodology
           console.log("AM: ", this.assessmentMethodology);
@@ -965,14 +965,19 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     // Check for invalid tabIndex
     if (tabIndex < this.fragments.length && tabIndex != -1) {
 
-      let t = fromQde ? this.page : 1;
+      let t = fromQde ? this.page : 0;
 
       if (this.swiperSliders && this.swiperSliders.length > 0) {
-        this.swiperSliders[tabIndex].setIndex(this.page - 1);
+        if (t == 0){
+          this.swiperSliders[tabIndex].setIndex( t);
+        } else {
+          this.swiperSliders[tabIndex].setIndex(this.page - 1);
+        }        
       }
 
       // It should not allow to go to any other tabs if applicationId is not present
       if (this.applicantIndex != null && this.qde.application.applicationId != null && this.qde.application.applicationId != '') {
+     
         this.router.navigate([], { queryParams: { tabName: this.fragments[tabIndex], page: t } });
       }
 
@@ -1437,11 +1442,13 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         } else {
           this.isErrorModal = true;
           this.errorMessage = "Something went wrong, please try again later."
-;        }
+            ;
+        }
       }, (error) => {
         this.isErrorModal = true;
         this.errorMessage = "Something went wrong, please try again later."
-;      });
+          ;
+      });
     }
 
   }
@@ -1512,7 +1519,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       }, (error) => {
         this.isErrorModal = true;
         this.errorMessage = "Something went wrong, please try again later."
-;      });
+          ;
+      });
     }
 
   }
@@ -2120,7 +2128,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       * If Salaried, Self Employed Professional, Self Employed Business then only show income consider
       *********************************************************************************************************/
       let data = {
-        profileId: this.selectedOccupation.value.toString()
+        profileId: this.selectedOccupation.value.toString() 
       }
       this.qdeHttp.checkOccupationType(data).subscribe((response) => {
 
@@ -2568,9 +2576,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
               this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
-          // this.isApplicantRouteModal = true;
+          this.isApplicantRouteModal = true;
           // this.router.navigate(['/applicant', this.qde.application.applicationId, 'co-applicant'], {fragment: 'dashboard'} );
-          this.goToNextSlide(swiperInstance);
+          // this.goToNextSlide(swiperInstance);
         } else {
           this.isErrorModal = true;
           this.errorMessage = "Something went wrong, please try again later.";
@@ -2736,8 +2744,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.auditTrial(applicationId, applicantId, 1, "pan1", "ApplicantDetails");
       this.router.navigate([], { queryParams: { tabName: this.fragments[10], page: 1 } });
     }
-    else if(btnValue=="no" && currentPanValue==true)
-    {
+    else if (btnValue == "no" && currentPanValue == true) {
       this.qde.application.applicants[this.applicantIndex].isIndividual = true;
       this.auditTrial(applicationId, applicantId, 2, "pan1", "ApplicantDetails");
       this.goToNextSlide(swiperInstance);
@@ -3026,8 +3033,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   resendOTP() {
     this.isOTPExpired = false;
-    this.isOTPEmpty=true;
-    this.otp="";
+    this.isOTPEmpty = true;
+    this.otp = "";
     this.stopInterval();
     const mobileNumber = this.qde.application.applicants[this.applicantIndex].contactDetails.mobileNumber;
     const applicationId = this.qde.application.applicationId;
@@ -3053,15 +3060,15 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.otp = "";
     this.inOTP = false;
     this.isOTPExpired = false;
-    this.isOTPEmpty=true;
+    this.isOTPEmpty = true;
     this.stopInterval();
   }
 
-  checkOTPEmpty(){
-    if(this.otp=="" || this.otp.length<4){
-      this.isOTPEmpty=true;
-    }else{
-      this.isOTPEmpty=false;
+  checkOTPEmpty() {
+    if (this.otp == "" || this.otp.length < 4) {
+      this.isOTPEmpty = true;
+    } else {
+      this.isOTPEmpty = false;
     }
   }
 
@@ -3074,8 +3081,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     const otp = form.value.otp;
     if (this.timeLeft == 0) {
       this.isOTPExpired = true;
-      this.otp="";
-      this.isOTPEmpty=true;
+      this.otp = "";
+      this.isOTPEmpty = true;
     } else {
       this.validateOTPAPISub = this.qdeHttp.validateOTPAPI(mobileNumber, applicantId, applicationId, otp, this.isAlternateStatus, emailId).subscribe(res => {
         // if(res['ProcessVariables']['isPaymentSuccessful'] == true) {
@@ -3236,6 +3243,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   expError = false;
+
   checkOccupationDetailsYears(event: any) {
     console.log("numberOfYearsInCurrentCompany: ", this.qde.application.applicants[this.applicantIndex].occupation.numberOfYearsInCurrentCompany);
     console.log("totalWorkExperience: ", this.qde.application.applicants[this.applicantIndex].occupation.totalWorkExperience);
@@ -3665,27 +3673,27 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  loadOccupationTypeLovs(occupationType ?: string) {
+  loadOccupationTypeLovs(occupationType?: string) {
     let occupationData = {
       userId: parseInt(localStorage.getItem("userId")),
-      applicantType: this.qde.application.applicants[this.applicantIndex].isIndividual == true ? 1: 2,
+      applicantType: this.qde.application.applicants[this.applicantIndex].isIndividual == true ? 1 : 2,
     };
-  
+
     this.qdeHttp.getOccupationLov(occupationData).subscribe(response => {
       this.occupations = JSON.parse(response["ProcessVariables"]["response"])['occupation'];
-      console.log("Occupation Type",this.occupations);
+      console.log("Occupation Type", this.occupations);
 
-      if(occupationType != null) {
-        this.selectedOccupation = this.occupations.some(v => v.value == occupationType) ? this.occupations.find(v => v.value == occupationType): this.occupations[0];
+      if (occupationType != null) {
+        this.selectedOccupation = this.occupations.some(v => v.value == occupationType) ? this.occupations.find(v => v.value == occupationType) : this.occupations[0];
       } else {
         this.selectedOccupation = this.occupations[0];
       }
       // this.selectedOccupation = this.occupations["occupation"]
-      console.log("Select Occupation Type",this.selectedOccupation)
+      console.log("Select Occupation Type", this.selectedOccupation)
       this.selectValueChangedOccupation(this.selectedOccupation)
     }, err => {
       this.isErrorModal = true;
-        this.errorMessage = 'Something went wrong.';
+      this.errorMessage = 'Something went wrong.';
     });
   }
 }

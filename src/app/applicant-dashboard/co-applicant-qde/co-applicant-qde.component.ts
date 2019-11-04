@@ -798,10 +798,14 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       this.isTabDisabled = true;
     }
 
-    let t = fromQde ? this.page: 1;
+    let t = fromQde ? this.page: 0;
 
     if(this.swiperSliders && this.swiperSliders.length > 0) {
+      if (t == 0){
+        this.swiperSliders[tabIndex].setIndex( t);
+      } else {
       this.swiperSliders[tabIndex].setIndex(this.page-1);
+      }
     }
 
     // Check for invalid tabIndex
@@ -2393,9 +2397,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             this.isErrorModal = true;
             this.errorMessage = "Something went wrong, please try again later.";
           });
-          // this.isCoApplicantRouteModal = true;
+          this.isCoApplicantRouteModal = true;
           // this.router.navigate(['/applicant', this.qde.application.applicationId, 'co-applicant'], {fragment: 'dashboard'} );
-          this.goToNextSlide(swiperInstance);
+          // this.goToNextSlide(swiperInstance);
         } else {
           // Throw Invalid Pan Error
         }
