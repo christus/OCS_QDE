@@ -37,7 +37,7 @@ export class OfflinePaymentComponent implements OnInit {
           invalid: "Cheque drawn is not valid"
         },
         ifscCode:{
-          invalid : "Invalid IFSC Code"
+          invalid : "Invalid IFSC Code. Valid IFSC Code format is ABCD0123456"
         },
         chequeNumber:{
           invalid : "Invalid Cheque Number"
@@ -267,6 +267,7 @@ export class OfflinePaymentComponent implements OnInit {
 
     
     let data = {
+      applicationId: parseInt(this.applicationId),
       chequeDrawn: form.value.checkDrawnTo,
       bankName: parseInt(form.value.loanProvider.value),
       ifscCode: form.value.ifsc,

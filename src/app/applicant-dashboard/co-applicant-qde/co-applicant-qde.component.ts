@@ -52,6 +52,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     mobileNumber: "^[1-9][0-9]*$",
     stdCode: "^[0][0-9]*$",
     name: "^[A-Za-z ]{0,49}$",
+    organizationName: "^[0-9A-Za-z ]{0,49}$",
     birthPlace:"^[A-Za-z ]{0,99}$",
     address : "^[0-9A-Za-z, _&*#'/\\-]{0,119}$",
     landmark : "^[0-9A-Za-z, _&*#'/\\-]{0,99}$",
@@ -341,7 +342,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   applicantRelationships: Array<any>;
   doNotSelectDefault: boolean = false;
 
-  public defaultItem: { key: string, value: number } = { key: "Select Title", value: null };
+  // public defaultItem: { key: string, value: number } = { key: "Select Title", value: null };
   
   // public defaultItem: Array<{ key: string, value: number, inStock: boolean }> = [
   //   { key: "Select Title", value: null, inStock: false }
@@ -518,7 +519,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
       // this.docType = [{"key": "Aadhar", "value": "1"},{"key": "Driving License", "value": "2"},{"key": "passport", "value": "3"}];
 
-      this.selectedTitle = this.defaultItem;
+      this.selectedTitle = this.titles[0];
       this.selectedReligion = this.religions[0];
       this.selectedMaritialStatus = this.maritals[0];
       this.selectedCategory = this.categories[0];
@@ -3916,16 +3917,18 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   changeTitle(event) {
-    console.log("mamama",event)
-    if(event.value == null){
-      this.doNotSelectDefault = false;
-      return
-    }
-    else{
-      this.doNotSelectDefault = true;
       let t = this.applicantRelationships.find(v => v.relationShipId == this.selectedRelationship).applicantTitles.find(v => v.applicantTitleId == this.selectedTitle.value);
       this.qde.application.applicants[this.coApplicantIndex].personalDetails.gender = t.genderId;
-    }
+    // console.log("mamama",event)
+    // if(event.value == null){
+    //   this.doNotSelectDefault = false;
+    //   return
+    // }
+    // else{
+    //   this.doNotSelectDefault = true;
+    //   let t = this.applicantRelationships.find(v => v.relationShipId == this.selectedRelationship).applicantTitles.find(v => v.applicantTitleId == this.selectedTitle.value);
+    //   this.qde.application.applicants[this.coApplicantIndex].personalDetails.gender = t.genderId;
+    // }
   }
 
   setRelationship(mainApplicant: Applicant, coApplicantIndex: string | number) {

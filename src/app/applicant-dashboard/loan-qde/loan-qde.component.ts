@@ -48,6 +48,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
            required: "Loan Amount is Mandatory",
            invalid: "Invalid Loan Amount / Alphabets and special characters not allowed",
            minamount: "Amount should be greater than or equal to Rs.50000",
+           maxamount: "Amount should be less than or equal to Rs.1000000000",
          },
          tenure: {
            required: "Loan Tenure is Mandatory",
@@ -255,6 +256,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   allClssAreas: Array<any> = [];
   isNumberLessThan50k: boolean;
+  isNumberMoreThan100cr: boolean;
 
   fragmentSub: Subscription;
   tabName: string;
@@ -1292,12 +1294,15 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.allClssAreas = [];
   }
 
+  // 1000000000 = 100 crore
   checkNumberLessThan50k(event) {
     if(this.isValidNumber(event.target.value)) {
       let n = parseInt(this.getNumberWithoutCommaFormat(event.target.value));
       this.isNumberLessThan50k = (n < 50000);
+      this.isNumberMoreThan100cr = (n >= 1000000000);
     } else {
       this.isNumberLessThan50k = false;
+      this.isNumberMoreThan100cr = false;
     }
   }
 

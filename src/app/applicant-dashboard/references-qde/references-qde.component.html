@@ -5,7 +5,7 @@
     <div class="lyt-home">
       <div class="tabs">
         <ul class="tabs-head">
-          <li class="tab-link pending" [ngClass]="{'active': (activeTab == 0)}">
+          <li class="tab-link" [ngClass]="{'active': (activeTab == 0)}">
             <a href="javascript:void(0);" (click)="tabSwitch(0)">REFERENCE 1</a>
           </li>
           <li class="tab-link" [ngClass]="{'active': (activeTab == 1), 'hide': (!applicantIndividual)}">
@@ -33,7 +33,7 @@
                     </div>
                     <div class="swiper-slide">
                       <div class="title-wrap">
-                        <h4 class="title">Enter Reference 1's <span class="cm-line-break"></span>personal details</h4>
+                        <h4 class="title">Enter First Reference<span class="cm-line-break"></span>personal details</h4>
                         <p class="note">References are collected for regulatory purpose & must be individuals other than applicant or
                           co-applicant/s</p>
                       </div>
@@ -147,7 +147,7 @@
                             <div *ngIf="refOneMobileNumber.touched && refOneMobileNumber.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="refOneMobileNumber.errors?.required">{{errors.references.referenceOne.mobileNumber.required}}</div> -->
                               <div *ngIf="refOneMobileNumber.errors?.pattern">{{errors.references.referenceOne.mobileNumber.invalid}}</div>
-                              <div *ngIf="refOneMobileNumber.errors?.minlength">{{errors.references.referenceOne.mobileNumber.minlength}}</div> 
+                              <div *ngIf="refOneMobileNumber.errors?.minlength">{{errors.references.referenceOne.mobileNumber.minlength}}</div>
                             </div>
 
                           </div>
@@ -220,7 +220,7 @@
                   </div>
                   <div class="swiper-slide">
                     <div class="title-wrap">
-                      <h4 class="title">Enter Reference 2's <span class="cm-line-break"></span>personal details</h4>
+                      <h4 class="title">Enter Second Reference<span class="cm-line-break"></span>personal details</h4>
                       <p class="note">References are collected for regulatory purpose & must be individuals other than applicant or
                         co-applicant/s</p>
                     </div>
@@ -330,8 +330,11 @@
                             <div *ngIf="refTwoMobileNumber.touched && refTwoMobileNumber.invalid" class="invalid-feedback">
                                 <!-- <div *ngIf="refTwoMobileNumber.errors?.required">{{errors.references.referenceTwo.mobileNumber.required}}</div> -->
                                 <div *ngIf="refTwoMobileNumber.errors?.pattern">{{errors.references.referenceTwo.mobileNumber.invalid}}</div>
-                                <div *ngIf="refTwoMobileNumber.errors?.minlength">{{errors.references.referenceTwo.mobileNumber.minlength}}</div> 
-                              </div>
+                                <div *ngIf="refTwoMobileNumber.errors?.minlength">{{errors.references.referenceTwo.mobileNumber.minlength}}</div>  
+                            </div>
+                            <div class="invalid-feedback">
+                                <div *ngIf="refTwoMobileNumber.value == refOneMobileNumber.value">{{errors.references.referenceTwo.mobileNumber.sameNumber}}</div>
+                            </div>
 
                           </div>
                           <div class="form-group">
@@ -373,8 +376,8 @@
                         </div>
                         <div class="btn-wrap">
                           <button type="submit" class="btn btn-primary" 
-                          [ngClass]="{'disabled': !ref2Detail.valid}"
-                          [disabled]="!ref2Detail.valid">Save</button>
+                          [ngClass]="{'disabled': !ref2Detail.valid || (refOneMobileNumber.value == refTwoMobileNumber.value)}"
+                          [disabled]="!ref2Detail.valid || (refOneMobileNumber.value == refTwoMobileNumber.value)">Save</button>
                         </div>
                     </form>
 

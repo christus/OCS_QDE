@@ -1802,7 +1802,7 @@
                 <div class="swiper-container form-swiper" [swiper]="lhsConfig" #incomeSliderIndividual1="ngxSwiper">
                   <div class="swiper-wrapper">
                     <div class="swiper-slide"
-                      *ngIf="qde?.application?.applicants[applicantIndex]?.incomeDetails?.incomeConsider == true">
+                    *ngIf="qde?.application?.applicants[applicantIndex]?.incomeDetails?.incomeConsider == true">
                       <div class="title-wrap">
                         <h4 class="title">Applicant’s monthly<span class="cm-line-break"></span>income details</h4>
                       </div>
@@ -1827,7 +1827,7 @@
                   <div class="swiper-wrapper">
 
                     <div class="swiper-slide"
-                      *ngIf="qde?.application?.applicants[applicantIndex]?.incomeDetails?.incomeConsider == true">
+                    *ngIf="qde?.application?.applicants[applicantIndex]?.incomeDetails?.incomeConsider == true">
                       <form class="bs-form" #incomeConsiderFormInd="ngForm" autocomplete="off"
                         (ngSubmit)="submitMonthlyIncomeIndividual(incomeConsiderFormInd, incomeSliderIndividual2)">
                         <div class="form-wrap">
@@ -1865,7 +1865,7 @@
 
                     <div class="swiper-slide">
                       <form class="bs-form" #annualFamilyIncomeForm="ngForm"
-                        (ngSubmit)="submitAnnualFamilyIncome(annualFamilyIncomeForm)">
+                        (ngSubmit)="submitAnnualFamilyIncome(annualFamilyIncomeForm,incomeSliderIndividual2)">
                         <div class="form-wrap">
                           <div class="form-group inr">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
@@ -1929,6 +1929,14 @@
                             </div>
                           </div>
                         </div>
+                        <!-- <div class="btn-wrap"
+                        *ngIf="qde?.application?.applicants[applicantIndex]?.incomeDetails?.incomeConsider == true">
+                          <button type="submit" class="btn btn-primary"
+                            [ngClass]="{'disabled': !annualFamilyIncomeForm.valid || qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == null}"
+                            [disabled]="!annualFamilyIncomeForm.valid || qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == null">
+                            Next
+                          </button>
+                        </div> -->
                         <div class="btn-wrap">
                           <button type="submit" class="btn btn-primary"
                             [ngClass]="{'disabled': !annualFamilyIncomeForm.valid || qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == null}"
@@ -2136,7 +2144,7 @@
                         <div class="form-wrap">
                           <div class="form-group">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="org-name" tabindex="1" pattern="{{regexPattern.name}}" autocomplete="off" maxlength="50"
+                              id="org-name" tabindex="1" pattern="{{regexPattern.organizationName}}" autocomplete="off" maxlength="50"
                               [(ngModel)]="qde.application.applicants[applicantIndex].organizationDetails.nameOfOrganization"
                               #orgName="ngModel" name="orgName" fieldFill required />
                             <label for="org-name">Name of Organization</label>

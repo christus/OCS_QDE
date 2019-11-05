@@ -61,6 +61,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     stdCode: "^[0][0-9]*$",
     mobileNumber: "^[1-9][0-9]*$",
     name: "^[A-Za-z ]{0,49}$",
+    organizationName: "^[0-9A-Za-z ]{0,49}$",
     birthPlace: "^[A-Za-z ]{0,99}$",
     address: "^[0-9A-Za-z, _&*#'/\\-]{0,119}$",
     landmark: "^[0-9A-Za-z, _&*#'/\\-]{0,99}$",
@@ -2275,6 +2276,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
               this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
+          // this.router.navigate([], { queryParams: { tabName: 'income1', page: 0 } });
           this.tabSwitch(9);
         } else {
           this.isErrorModal = true;
@@ -2506,7 +2508,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   // Income Details
   //-----------------------------------------------------------------------
 
-  submitAnnualFamilyIncome(form: NgForm) {
+  submitAnnualFamilyIncome(form: NgForm, swiperInstance?: Swiper) {
     if (this.isTBMLoggedIn) {
       this.router.navigate(['/applicant', this.qde.application.applicants[this.applicantIndex].applicantId, 'co-applicant']);
     } else {
@@ -2536,7 +2538,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           });
 
           // Show Proceed Modal
-          this.isApplicantRouteModal = true;
+            this.isApplicantRouteModal = true;
         } else {
           this.isErrorModal = true;
           this.errorMessage = "Something went wrong, please try again later.";
@@ -2783,6 +2785,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         this.tabSwitch(8);
       } else {
         this.tabSwitch(9);
+        // this.router.navigate([], { queryParams: { tabName: 'income1', page: 0 } });
       }
     }
     else {
@@ -2844,6 +2847,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
               this.tabSwitch(8);
             } else {
               this.tabSwitch(9);
+              // this.router.navigate([], { queryParams: { tabName: 'income1', page: 0 } });
             }
           } else {
             this.isErrorModal = true;

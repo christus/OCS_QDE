@@ -344,7 +344,7 @@ const appRoutes: Routes = [
     path: "payments",
     component: PaymentsComponent,
     children: [
-      { path: '', redirectTo: "offline-payments", pathMatch: "full" },
+      { path: '', redirectTo: "offline-payments/:applicationId", pathMatch: "full" },
       {
         path: 'offline-payments/:applicationId',
         component: OfflinePaymentComponent,
