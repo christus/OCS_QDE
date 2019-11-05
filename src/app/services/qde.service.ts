@@ -568,8 +568,8 @@ export class QdeService {
             occupation: {
               occupationType: "",
               companyName: "",
-              numberOfYearsInCurrentCompany: null,
-              totalWorkExperience: null
+              numberOfYearsInCurrentCompany: 0,
+              totalWorkExperience: 0
             },
             pan: {
               panNumber: "",

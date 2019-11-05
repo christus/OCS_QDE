@@ -209,7 +209,7 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
         this.zones = res['ProcessVariables']['zoneList'];
 
         if(this.zones == null) {
-          this.zones = [{key:'No Data Available', value: '-1'}];
+          this.zones = [{key:'No Zones Available', value: '-1'}];
           this.selectedZone = this.zones[0];
         } else {
           this.selectedZone = this.zones[0];
@@ -226,7 +226,7 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
     this.selectedZone = this.zones.find(v => v.value == event);
 
     if(this.selectedZone.value == "-1") {
-      this.cities = [{key:'No Data Available', value: '-1'}];
+      this.cities = [{key:'No Cities Available', value: '-1'}];
       this.selectedCity = this.cities[0];
     } else {
       this.qdeHttp.adminGetCityFromZone(this.selectedZone.value).subscribe(res => {
@@ -234,7 +234,7 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
           this.cities = res['ProcessVariables']['cityList'];
           console.log("cities: ", this.cities);
           if(this.cities == null) {
-            this.cities = [{key:'No Data Available', value: '-1'}];
+            this.cities = [{key:'No Cities Available', value: '-1'}];
             this.selectedCity = this.cities[0];
           } else {
             this.selectedCity = this.cities[0];
@@ -251,7 +251,16 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
 
   cityChanged(event) {
     if(this.selectedZone.value != "-1") {
-      this.selectedCity = this.cities.find(v => v.value == event);
+      var result: Item = {'key':'','value':''};
+      for(var x in this.cities){
+        if(this.cities[x].value==event){
+          result.value = this.cities[x].value;
+          result.key=this.cities[x].key;
+        }
+      }
+      //this.selectedCity = this.cities.find(v => v.value == event);
+      this.selectedCity = result;
+      console.log(result);
     }
   }
 

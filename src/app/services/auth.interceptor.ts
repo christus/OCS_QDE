@@ -29,7 +29,9 @@ export class AuthInterceptor implements HttpInterceptor {
     if (!req.headers.has('Content-Type') && req.url !== uri) {
       // req = req.clone({ headers: req.headers.set('Content-Type', 'application/x-www-form-urlencoded') });
       if (httpMethod == "POST") {
-        if (environment.encryptionType == true) {        
+        if (environment.encryptionType == true) {   
+          
+        console.log("req.body", req.body);
         const encryption = this.encrytionService.encrypt(req.body, environment.aesPublicKey);
         req = req.clone(
           { setHeaders: encryption.headers,

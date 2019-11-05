@@ -416,6 +416,7 @@
                                                       <div class="form-group">   
                                                           <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
                                                             [data]="titles"
+                                                            [defaultItem]= "defaultItem"
                                                             tabindex="1"
                                                             textField="key"
                                                             valueField="value"
@@ -492,8 +493,8 @@
                                               <div class="btn-wrap">
                                                 <button   type="submit"
                                                           class="btn btn-primary"
-                                                          [ngClass]="{'disabled': (!nameForm.valid)}"
-                                                          [disabled]="!nameForm.valid">Next
+                                                          [ngClass]="{'disabled': (!nameForm.valid || !doNotSelectDefault)}"
+                                                          [disabled]="!nameForm.valid || !doNotSelectDefault">Next
                                                 </button>
                                               </div>
                                           </form>
@@ -1929,10 +1930,10 @@
                                                   </div>
               
                                               </div>
-                                              <div *ngIf="selectedOccupation.value == 10" class="form-group last">
+                                              <div *ngIf="selectedOccupation.key == 'Retired'" class="form-group last">
                                                 <span class="control-title">Do you recieve pension?</span>
                                             </div>
-                                              <div *ngIf="selectedOccupation.value == 10" class="radio-wrap rounded-radio">
+                                              <div *ngIf="selectedOccupation.key == 'Retired'" class="radio-wrap rounded-radio">
                                                 <div class="bs-radio typ-normal">
                                                   <input [readonly]="isTBMLoggedIn" spellcheck="false" type="radio" name="pensioner"
                                                     [value]="1"
@@ -1953,7 +1954,7 @@
                                                 </div>
                                               </div>
                   
-                                              <div *ngIf="selectedOccupation.value == 10 && qde.application.applicants[coApplicantIndex].occupation.pensioner == true" class="form-group inr">
+                                              <div *ngIf="selectedOccupation.key == 'Retired' && qde.application.applicants[coApplicantIndex].occupation.pensioner == true" class="form-group inr">
                                                 <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                                                   id="annualPensionIncome1" autocomplete="off"
                                                   [(ngModel)]="qde.application.applicants[coApplicantIndex].occupation.pensionAmount"

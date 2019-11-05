@@ -195,6 +195,7 @@ export class LoanMasterComponent implements OnInit {
   
       });
     } else if(this.isLoginFee) {
+      this.searchKey="";
       this.qdeHttp.adminGetAllLoginFee().subscribe(res => {
         // if(res['ProcessVariables']['loginFee']) {
         //   this.data = res['ProcessVariables']['loginFee'];

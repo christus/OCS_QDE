@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2, ElementRef, Inject } from '@angular/core';
+import { Component, OnInit, Renderer2, ElementRef, Inject, HostListener } from '@angular/core';
 import { Plugins, AppState } from '@capacitor/core';
 
 import { Keyboard } from '@ionic-native/keyboard/ngx';
@@ -25,7 +25,7 @@ export class AppComponent implements OnInit{
 
   constructor(private utilService: UtilService,
     private keyboard: Keyboard,
-    private renderer: Renderer2,
+    private el: ElementRef, private renderer: Renderer2,
     nativeKeyboard: NativeKeyboard,
     private deviceService: DeviceDetectorService,
     private mobileService: MobileService) { 
@@ -61,25 +61,35 @@ export class AppComponent implements OnInit{
       // this.Keyboard.hideFormAccessoryBar(true);
 
 
-       window.addEventListener('keyboardDidShow', function () {
-          console.log("********KeyboardDid show");
-          document.activeElement.scrollIntoView();
-        });
+      //  window.addEventListener('keyboardDidShow', function () {
+      //     console.log("********KeyboardDid show");
+      //     // document.activeElement.scrollIntoView();
+      //   });
 
-      const scrollToTopFn = () => {
-        if (window["Keyboard"] && !window["Keyboard"].isVisible) {
-          window.scrollTo(0,0);
-          window.document.body.scrollTop = 0;
-        }
-      };
+      // const scrollToTopFn = () => {
+      //   if (window["Keyboard"] && !window["Keyboard"].isVisible) {
+      //     // window.scrollTo(0,0);
+      //     // window.document.body.scrollTop = 0;
+      //   }
+      // };
       
-      window.addEventListener('keyboardDidHide', () => {
-        console.log("********keyboardDidHide");
-        window.setTimeout(scrollToTopFn, 10);
-      });
+      // window.addEventListener('keyboardDidHide', () => {
+      //   console.log("********keyboardDidHide");
+      //   // window.setTimeout(scrollToTopFn, 10);
+      // });
 
     });
   
   }
-  
+
+  @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
+    console.log(event);
+
+    // element = event.srcElement.nextElementSibling;
+    if(event.code == "Tab") {
+      console.log("Tab key pressed", event);
+      event.preventDefault();     
+    }
+  }
+
 }

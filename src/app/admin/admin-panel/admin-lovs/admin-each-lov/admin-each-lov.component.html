@@ -11,7 +11,7 @@
        <th>Key</th>
        <th>Description</th>
        <th>Value</th>
-       <th>Edit</th>
+       <th>Edit/Save</th>
        <th *ngIf="isApplicantTitle">Male/Female</th>
        <th *ngIf="isDocumentCategory">Is Mandatory</th>
        <th [ngStyle]="{textAlign: 'center'}">Delete</th>
@@ -19,7 +19,7 @@
    </thead>
    <tbody>
      <tr *ngFor="let l of lovs | paginate: { itemsPerPage: perPage, currentPage: currentPage, totalItems: totalItems  };let i=index;">
-       <td>{{l.key}}</td>
+       <td>{{key[i]}}</td>
        <td>
          <input type="text" #lovsElements placeholder="Description" [(ngModel)]="l.description" tabindex="1" [disabled]="l.isEdit" />
        </td>

@@ -139,11 +139,17 @@ import { QdeHttpService } from './services/qde-http.service';
 import { MobileService } from './services/mobile-constant.service';
 import { AdminAuditTrialComponent } from './admin/admin-audit-trial/admin-audit-trial.component';
 import { ReassignComponent } from './reassign/reassign.component';
+import { CaptchaResolverService } from './services/captcha-resolver.service';
 
 
 const appRoutes: Routes = [
   { path: "", redirectTo: "leads", pathMatch: "full" },
-  { path: "login", component: LoginComponent },
+  { path: "login",
+  component: LoginComponent,
+    resolve: {
+      catchaImage: CaptchaResolverService
+    }
+  },
   { path: "loginWithPin",  component: LoginWithMPINComponent},
   { path: "ConfirmPin", component: EnterMPINComponent },
   { path: "forgotPin", component: ForgotMPINComponent },
@@ -691,7 +697,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     DocAssessDoccatProfileMapResolverService,
     MobileService,
     DocAssessDoccatProfileMapResolverService,
-    ApplicationRelationshipResolverService
+    ApplicationRelationshipResolverService,
+    CaptchaResolverService
   ],
   bootstrap: [AppComponent]
 })

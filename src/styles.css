@@ -5733,6 +5733,7 @@ img {
 	}
 	.mobile .bs-form .form-group.filled label {
 		transform: translateY(-31px) scale(.4) !important;
+		margin-top: 0px !important;
 	}
 
 
@@ -5763,4 +5764,4 @@ img {
 	.mobile .width_80{
 		width: 80%;
 	}
-}
+}																																						

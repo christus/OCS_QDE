@@ -158,15 +158,15 @@ export class ViewFormComponent implements OnInit, OnDestroy {
   state: string;
   cityState:string;
 
-  selectedReferenceOne: any;
-  selectedTiltle1: string;
+  selectedReferenceOne: Array<Item> = [];
+  selectedTiltle1:  Array<Item> = [];
   selectedName1: string;
   selectedMobile1: string;
   selectedAddressLineOne1: string;
   selectedAddressLineTwo1: string;
 
-  selectedReferenceTwo: any;
-  selectedTiltle2: string;
+  selectedReferenceTwo:  Array<Item> = [];
+  selectedTiltle2:  Array<Item> = [];
   selectedName2: string;
   selectedMobile2: string;
   selectedAddressLineOne2: string;
@@ -389,6 +389,8 @@ export class ViewFormComponent implements OnInit, OnDestroy {
           this.selectedPropertyType = this.propertyTypes.find(v => v.value == result.application.loanDetails.propertyType.propertyType) || this.propertyTypes[0];
             // result.application.loanDetails.propertyType.propertyType ||
             // this.propertyTypes[0];
+
+          this.selectedReferenceOne = this.relationships.find(v => v.value == result.application.references.referenceOne.relationShip) || this.relationships[0];
 
 
           this.isPropertyIdentified =

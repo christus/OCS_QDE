@@ -213,7 +213,28 @@ _utf8_decode(e) {
           return false;
         }
     
-      }
+    }
+
+
+    decryptMobileResponse(event) {
+        var timestamp = event.headers["x-appiyo-ts"];
+        var randomkey = event.headers["x-appiyo-key"];
+        var responseHash = event.headers["x-appiyo-hash"];  
+        if (timestamp != null) {
+          try {
+            let decryption = this.decrypt(randomkey, timestamp, responseHash, event.data || event.error, environment.aesPublicKey);
+            return decryption;
+          }catch(e) {
+            console.log(e);
+          }
+          return null;
+    
+        } else {
+          return false;
+        }
+    }
+
+
 
 
 }

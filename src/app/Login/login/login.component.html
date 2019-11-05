@@ -16,10 +16,19 @@
                 <input type="text" #userNameField [(ngModel)]="userName" class="form-control" name="userName" id="emp-id" fieldFill  />
                 <label for="emp-id">Employee ID</label>
               </div>
-              <div class="form-group last">
+              <div class="form-group">
                 <input type="password" [(ngModel)]="password" class="form-control" name="password" id="password" fieldFill  />
                 <label for="password" >Password</label>
-              </div>              
+              </div>  
+              <!-- last             -->
+              <div class="form-group last" style="text-align: center;">
+               <img src = {{catchaImage}} class="captch"  >
+               <img src="assets/images/refresh.png" style="height: 5.5vw;" (click)="generateCatchaImage()" >
+              </div>
+              <div class="form-group last">
+                <input type="text"  #captchaImageText [(ngModel)]="captchaText" class="form-control" name="captchaText" id="catText" fieldFill  />
+                <label for="catText">Captcha Text</label>
+              </div>
               <div class="error-msg">
                 <span>{{sessionMessage}}</span>
             </div>

@@ -17,7 +17,7 @@ export class ReportsComponent implements OnInit {
   statusList: Array<any>;
   userList: Array<any>;
   branchId: string;
-  statusId: string;
+  statusId: string = "0";
   userId: string;
   reportId: string;
   selectedUser: string;
