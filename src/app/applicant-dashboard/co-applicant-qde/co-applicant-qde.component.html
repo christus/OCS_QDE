@@ -401,6 +401,7 @@
                                                             </select> -->
                                         
                                                             <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                                            
                                                             [data]="relationships" 
                                                             textField="key"
                                                             valueField="value"
@@ -415,8 +416,7 @@
                                                       <span class="control-title">Title</span>
                                                       <div class="form-group">   
                                                           <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
-                                                            [data]="titles"
-                                                            [defaultItem]= "defaultItem"
+                                                            [data]="titles"                                                            
                                                             tabindex="1"
                                                             textField="key"
                                                             valueField="value"
@@ -493,8 +493,8 @@
                                               <div class="btn-wrap">
                                                 <button   type="submit"
                                                           class="btn btn-primary"
-                                                          [ngClass]="{'disabled': (!nameForm.valid || !doNotSelectDefault)}"
-                                                          [disabled]="!nameForm.valid || !doNotSelectDefault">Next
+                                                          [ngClass]="{'disabled': (!nameForm.valid)}"
+                                                          [disabled]="!nameForm.valid">Next
                                                 </button>
                                               </div>
                                           </form>

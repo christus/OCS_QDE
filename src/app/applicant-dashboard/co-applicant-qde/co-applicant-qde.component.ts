@@ -342,7 +342,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   applicantRelationships: Array<any>;
   doNotSelectDefault: boolean = false;
 
-  // public defaultItem: { key: string, value: number } = { key: "Select Title", value: null };
+  // public defaultItem: { key: string, value: number } = { key: "Select item...", value: null };
   
   // public defaultItem: Array<{ key: string, value: number, inStock: boolean }> = [
   //   { key: "Select Title", value: null, inStock: false }

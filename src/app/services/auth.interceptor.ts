@@ -24,7 +24,9 @@ export class AuthInterceptor implements HttpInterceptor {
 
     this.ngxService.start(); // start foreground spinner of the master loader with 'default' taskId
     let httpMethod = req.method;
+    console.log("*************************************************");
     console.log("before Encryption: ", req.body);
+    console.log("*************************************************");
     let uri = environment.host + environment.appiyoDrive;
     if (!req.headers.has('Content-Type') && req.url !== uri) {
       // req = req.clone({ headers: req.headers.set('Content-Type', 'application/x-www-form-urlencoded') });
@@ -78,7 +80,9 @@ export class AuthInterceptor implements HttpInterceptor {
             event = event.clone({ body: JSON.parse(this.encrytionService.decryptResponse(event)) });
             // console.log("after Encryption: ", event.body);
           }
+          console.log("*************************************************");
           console.log("after Decryption: " , event.body);
+          console.log("*************************************************");
           const response = event.body;
           if (response && response["login_required"]) {
             if(this.router.url.search('auto-login') == -1) {

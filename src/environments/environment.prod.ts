@@ -1,10 +1,10 @@
 export const environment = {
-  version: "1.8.3",
-  buildDate: "04-11-2019",
+  version: "1.8.4",
+  buildDate: "05-11-2019",
   production: true,
-  // projectId: '5928d30eac7811e9a1670242ac110002', // developement
+  projectId: '5928d30eac7811e9a1670242ac110002', // developement
 
-  projectId: '3209f7ea7ba811e982270242ac110002', // production
+  // projectId: '3209f7ea7ba811e982270242ac110002', // production
 
   // projectId: 'ff8e364e6fce11e98754782bcb8f3845', // UAT Development
 
@@ -437,7 +437,7 @@ export const environment = {
   aesPublicKey: 'MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJ+GJdSSEeaNFBLqyfM3DIOgQgWCwJ0INfeZZV7ITsLeuA7Yd02rrkYGIix1IWvoebWVmzhncUepYxHwK1ARCdUCAwEAAQ==',
   // host: "https://ihfcmobileuat.icicihfc.com/appiyo",
   encryptionType: true, //Ecryption
-  captchFormat: "&width=300&height=80&bgr=255&bgg=255&bgb=255&bga=255&fontR=187&fontG=187&fontB=187&fontSize=60&captchaSize=5",
+  captchFormat: "&width=250&height=80&bgr=255&bgg=255&bgb=255&bga=255&fontR=187&fontG=187&fontB=187&fontSize=50&captchaSize=5"
   // host: "https://ihfcmobileuat.icicihfc.com/appiyo"
   //csvhost: "http://192.168.1.108/appiyo",
   //host: "https://103.87.42.117/appiyo"

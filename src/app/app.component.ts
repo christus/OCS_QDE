@@ -83,7 +83,7 @@ export class AppComponent implements OnInit{
   }
 
   @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
-    console.log(event);
+    // console.log(event);
 
     // element = event.srcElement.nextElementSibling;
     if(event.code == "Tab") {

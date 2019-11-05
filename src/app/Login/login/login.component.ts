@@ -239,4 +239,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
     });
     
   }
+  cancelProcess() {
+    this.activeSessionExists = false;
+    this.generateCatchaImage();
+  }
+ 
 }
