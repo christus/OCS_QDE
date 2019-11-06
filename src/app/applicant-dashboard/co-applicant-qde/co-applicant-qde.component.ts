@@ -814,11 +814,11 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       this.isTabDisabled = true;
     }
 
-    let t = fromQde ? this.page: 0;
+    let t = fromQde ? this.page: 1;
 
     if(this.swiperSliders && this.swiperSliders.length > 0) {
-      if (t == 0){
-        this.swiperSliders[tabIndex].setIndex( t);
+      if (t == 1 && !fromQde){
+        this.swiperSliders[tabIndex].setIndex(0);
       } else {
       this.swiperSliders[tabIndex].setIndex(this.page-1);
       }
@@ -912,6 +912,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       this.qde.application.applicants[this.coApplicantIndex].pan.docType = form.value.docTypeindividual.value;
       this.qde.application.applicants[this.coApplicantIndex].pan.docNumber = form.value.docNumber;
       if(this.isValidPan == false || this.isValidPan == null) {
+
         this.checkPanValidSub = this.qdeHttp.checkPanValid(this.qdeService.getFilteredJson({actualPanNumber: form.value.pan})).subscribe((response) => {
   
           // response["ProcessVariables"]["status"] = true; // Comment while deploying if service is enabled false
@@ -921,8 +922,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             this.qde.application.applicants[this.coApplicantIndex].pan.panVerified = this.isValidPan = response['ProcessVariables']['isValidPan'];
   
             let processVariables = response["ProcessVariables"];//need to check its needed for non individual
-            this.qde.application.applicants[this.coApplicantIndex].personalDetails.firstName = processVariables["firstName"];
-            this.qde.application.applicants[this.coApplicantIndex].personalDetails.lastName = processVariables["lastName"];
+            if (processVariables["firstName"] != "" && processVariables["lastName"] != ""){
+              this.qde.application.applicants[this.coApplicantIndex].personalDetails.firstName = processVariables["firstName"];
+              this.qde.application.applicants[this.coApplicantIndex].personalDetails.lastName = processVariables["lastName"];
+            }            
             if(processVariables["applicantTitleId"] > 0) {
               this.qde.application.applicants[this.coApplicantIndex].personalDetails.title  = processVariables["applicantTitleId"];
             }
@@ -2890,6 +2893,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       this.qde.application.applicants[this.coApplicantIndex].permanentAddress.cityState = this.qde.application.applicants[this.coApplicantIndex].communicationAddress.cityState;
       this.isPermanentAddressSame = true;
     } else {
+      this.isPermanentAddressSame = false;
       this.qde.application.applicants[this.coApplicantIndex].permanentAddress.addressLineOne = "";
       this.qde.application.applicants[this.coApplicantIndex].permanentAddress.addressLineTwo = "";
       this.qde.application.applicants[this.coApplicantIndex].permanentAddress.zipcode = "";

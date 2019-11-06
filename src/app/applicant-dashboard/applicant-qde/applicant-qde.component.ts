@@ -53,7 +53,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   panImage: String;
 
   imageURI: String;
-  isPermanentAdressSame: boolean = false;
+  isPermanentAddressSame: boolean = false;
 
   isTabDisabled: boolean;
   docName: boolean;
@@ -472,7 +472,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.titles = lov.LOVS.applicant_title;
       this.maleTitles = lov.LOVS.male_applicant_title;
       this.femaleTitles = lov.LOVS.female_applicant_title;
-      // this.docType = lov.LOVS.document_type;
+      // this.docType = lov.LOVS.pan_document_type;
       // Hardcoded values as per requirement
       this.docType = [{ key: "Passport", value: "1" }, { key: "Driving License", value: "2" }, { key: "Voter's Identity Card", value: "3" }, { key: "Aadhaar Card", value: "4" }, { key: "NREGA Job Card", value: "5" }, { key: "CKYC KIN", value: "6" }, { key: "Aadhaar Token", value: "7" }]
       this.maritals = lov.LOVS.maritial_status;
@@ -981,14 +981,14 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     // Check for invalid tabIndex
     if (tabIndex < this.fragments.length && tabIndex != -1) {
 
-      let t = fromQde ? this.page : 0;
+      let t = fromQde ? this.page : 1;
 
       if (this.swiperSliders && this.swiperSliders.length > 0) {
-        if (t == 0){
-          this.swiperSliders[tabIndex].setIndex( t);
+        if (t == 1 && !fromQde ) {
+          this.swiperSliders[tabIndex].setIndex( 0);
         } else {
           this.swiperSliders[tabIndex].setIndex(this.page - 1);
-        }        
+        }
       }
 
       // It should not allow to go to any other tabs if applicationId is not present
@@ -2313,8 +2313,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
               this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
-          // this.router.navigate([], { queryParams: { tabName: 'income1', page: 0 } });
-          this.tabSwitch(9);
+          this.router.navigate([], { queryParams: { tabName: 'income1', page: 1 } });
+          // this.tabSwitch(9,true);
         } else {
           this.isErrorModal = true;
           this.errorMessage = "Something went wrong, please try again later.";
@@ -2613,11 +2613,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
               this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
               this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
               this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
-              this.goToNextSlide(swiperInstance);
             }
           });
           this.isApplicantRouteModal = true;
           // this.router.navigate(['/applicant', this.qde.application.applicationId, 'co-applicant'], {fragment: 'dashboard'} );
+          // this.goToNextSlide(swiperInstance);
+          
         } else {
           this.isErrorModal = true;
           this.errorMessage = "Something went wrong, please try again later.";
@@ -3202,9 +3203,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.qde.application.applicants[this.applicantIndex].permanentAddress.zipcodeId = this.qde.application.applicants[this.applicantIndex].communicationAddress.zipcodeId;
       this.qde.application.applicants[this.applicantIndex].permanentAddress.stateId = this.qde.application.applicants[this.applicantIndex].communicationAddress.stateId;
       this.qde.application.applicants[this.applicantIndex].permanentAddress.cityId = this.qde.application.applicants[this.applicantIndex].communicationAddress.cityId;
-      this.isPermanentAdressSame=true;
+      this.isPermanentAddressSame=true;
 
     } else {
+      this.isPermanentAddressSame = false;
       this.qde.application.applicants[this.applicantIndex].permanentAddress.addressLineOne = "";
       this.qde.application.applicants[this.applicantIndex].permanentAddress.addressLineTwo = "";
       this.qde.application.applicants[this.applicantIndex].permanentAddress.zipcode = "";
