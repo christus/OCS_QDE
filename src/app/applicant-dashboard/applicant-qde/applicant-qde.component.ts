@@ -53,6 +53,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   panImage: String;
 
   imageURI: String;
+  isPermanentAdressSame: boolean = false;
 
   isTabDisabled: boolean;
   docName: boolean;
@@ -3201,7 +3202,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.qde.application.applicants[this.applicantIndex].permanentAddress.zipcodeId = this.qde.application.applicants[this.applicantIndex].communicationAddress.zipcodeId;
       this.qde.application.applicants[this.applicantIndex].permanentAddress.stateId = this.qde.application.applicants[this.applicantIndex].communicationAddress.stateId;
       this.qde.application.applicants[this.applicantIndex].permanentAddress.cityId = this.qde.application.applicants[this.applicantIndex].communicationAddress.cityId;
-
+      this.isPermanentAdressSame=true;
 
     } else {
       this.qde.application.applicants[this.applicantIndex].permanentAddress.addressLineOne = "";

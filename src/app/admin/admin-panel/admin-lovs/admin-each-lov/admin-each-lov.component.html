@@ -12,8 +12,8 @@
        <th>Description</th>
        <th>Value</th>
        <th>Edit/Save</th>
-       <th *ngIf="isApplicantTitle">Male/Female</th>
-       <th *ngIf="isDocumentCategory">Is Mandatory</th>
+      <th *ngIf="isApplicantTitle"><form>Male/Female</form></th>
+      <th *ngIf="isDocumentCategory"><form>Is Mandatory</form></th>
        <th [ngStyle]="{textAlign: 'center'}">Delete</th>
      </tr>
    </thead>
@@ -55,4 +55,15 @@
    </tbody>
  </table> 
 </div>
+<div class="overlay" [ngClass]="{'active': isErrorModal}"></div>
+  <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isErrorModal}">
+    <a class="modal-close" (click)="isErrorModal = false"><span class="icon icon-close"></span></a>
+    <div class="modal-body">
+      <h1>{{errorMsg}}</h1>
+      <br><br>
+      <div class="btn-wrap">
+        <button class="btn btn-border" (click)="isErrorModal = false">Close</button>
+      </div>
+    </div>
+  </div>
 <pagination-controls  (pageChange)="pageChanged($event)" class="pagination" autoHide="true" ></pagination-controls>

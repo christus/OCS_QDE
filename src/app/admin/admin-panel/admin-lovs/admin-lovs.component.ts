@@ -10,6 +10,8 @@ export class AdminLovsComponent implements OnInit, AfterViewInit {
 
   adminLovs: Array<any>;
   filteredLovs: Array<any>;
+  isErrorModal: boolean = false;
+  errorMsg: string;
 
   @ViewChild('searchInp') searchInp: ElementRef;
 
@@ -27,7 +29,9 @@ export class AdminLovsComponent implements OnInit, AfterViewInit {
 
       this.filteredLovs = this.adminLovs;
     } else {
-      alert('Could not Load Data.');
+      this.isErrorModal = true;
+      this.errorMsg = "Could not Load Data";
+      //alert('Could not Load Data.');
     }
   }
 
@@ -41,7 +45,7 @@ export class AdminLovsComponent implements OnInit, AfterViewInit {
   search(event) {
     if(event.target.value != '') {
       this.filteredLovs = this.adminLovs.filter(v => {
-        if(v.description.toLowerCase().trim().search(event.target.value.toLowerCase().trim()) >= 0) {
+        if(v.description.toLowerCase().trim().startsWith(event.target.value.toLowerCase().trim())) {
           return true;
         } else {
           return false;

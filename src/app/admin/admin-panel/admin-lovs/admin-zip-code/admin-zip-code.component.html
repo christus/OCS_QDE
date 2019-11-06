@@ -99,3 +99,14 @@
     </div>
   </div>
 </div>
+<div class="overlay" [ngClass]="{'active': isErrorModal}"></div>
+  <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isErrorModal}">
+    <a class="modal-close" (click)="isErrorModal = false"><span class="icon icon-close"></span></a>
+    <div class="modal-body">
+      <h1>{{errorMsg}}</h1>
+      <br><br>
+      <div class="btn-wrap">
+        <button class="btn btn-border" (click)="isErrorModal = false">Close</button>
+      </div>
+    </div>
+  </div>

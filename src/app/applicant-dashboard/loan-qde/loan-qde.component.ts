@@ -198,7 +198,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
   titles: Array<any>;
   maritals: Array<any>;
   relationships: Array<any>;
-  loanpurposes: Array<any>;
+  loanpurposes: Array<any>=[];
   categories: Array<any>;
   genders: Array<any>;
   constitutions: Array<any>;
@@ -244,6 +244,8 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
   isLoanRouteModal: boolean = false;
   isClssEligibleModal:boolean = false;
   isClssNotEligibleModal:boolean = false;
+  disableNo: number = null;
+  fullloanpurposes: Array<any>=[];
 
   loanPinCodeModal:boolean = false;
 
@@ -535,6 +537,16 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.qdeHttp.adminGetLov().subscribe(res => {
+      if(res['ProcessVariables']['status'] == true) {
+        var lov= JSON.parse(res['ProcessVariables']['lovs']);
+        this.fullloanpurposes = lov.LOVS.loan_purpose;
+        console.log("fullloanpurposes: ", this.fullloanpurposes);
+      }
+    }, error => {
+      this.isErrorModal = true;
+      this.errorMessage = "Something went wrong, please try again later.";
+    });
   }
 
   getApplicantTitle (salutation:string) {
@@ -791,7 +803,12 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
       }
 
       
-      console.log("selectedLoanPurpose: ", this.selectedLoanPurpose.value);
+      console.log("selectedLoanPurpose: ", this.selectedLoanPurpose);
+      if(this.selectedLoanPurpose.propIdentified){
+        this.disableNo = 1;
+      }else{
+        this.disableNo=null;
+      }
 
       this.qde.application.loanDetails.loanAmount = {
         amountRequired: parseInt(this.getNumberWithoutCommaFormat(form.value.amountRequired)),
@@ -1256,8 +1273,26 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   setLoanPurposes(loanType: string, data ?: string) {
     this.qdeHttp.getLoanPurposeFromLoanType({loanType: loanType}).subscribe(res => {
-      this.loanpurposes = res['ProcessVariables']['loanPurposeLov'];
-      console.log("loanpurposes: ", this.loanpurposes);
+      var temploanpurposes = res['ProcessVariables']['loanPurposeLov'];
+      console.log("see here first"+JSON.stringify(temploanpurposes));
+      if(this.fullloanpurposes.length!=0){
+        for(var x in this.fullloanpurposes){
+          for(var y in temploanpurposes){
+            if(temploanpurposes[y].value==this.fullloanpurposes[x].id){
+              temploanpurposes[y].propIdentified = this.fullloanpurposes[x].propIdentified;
+          }
+        }
+      }
+      this.loanpurposes = temploanpurposes;
+      console.log("see here"+JSON.stringify(this.loanpurposes));
+    }
+    if(this.loanpurposes.length!=0){
+      for(var x in this.loanpurposes){
+        if(this.loanpurposes[x].propIdentified){
+          this.isPropertyIdentified=true;
+        }
+      }
+    }
       if(data) {
         this.selectedLoanPurpose = this.loanpurposes.find(v => v.value == data) || this.loanpurposes[0];
       } else {

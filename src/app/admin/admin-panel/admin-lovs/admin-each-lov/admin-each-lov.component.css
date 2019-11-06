@@ -42,6 +42,9 @@
 .admin-table tbody tr td form {
     text-align: left;
 }
+.admin-table thead tr th form {
+    text-align: left;
+}
 
 .admin-lovs-wrapper .editLovBtn {
     background: transparent;

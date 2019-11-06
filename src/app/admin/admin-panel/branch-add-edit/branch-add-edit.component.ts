@@ -24,6 +24,8 @@ export class BranchAddEditComponent implements OnInit {
   filteredZipCodeItems: Array<string>;
   branchType:string;
   selectedItem: number;
+  defaultBranchType: number =null;
+  isErrorModal:boolean = false;
 
 
   Value:string;
@@ -40,6 +42,8 @@ export class BranchAddEditComponent implements OnInit {
 
   @ViewChild('selectBox') selectBoxRef: ElementRef;
   @ViewChild('selectBox2') selectBoxRef2: ElementRef;
+  @ViewChild('cityDropDown') cityDropDown: ElementRef;
+  @ViewChild('zipDropDown') zipDropDown: ElementRef;
 
 
 
@@ -139,7 +143,8 @@ export class BranchAddEditComponent implements OnInit {
     this.cityList.forEach(v => {
       this.renderer.removeClass(v.nativeElement, "active");
     })
-    this.renderer.addClass(this.cityList["_results"][index+1].nativeElement, 'active');
+    this.renderer.addClass(this.cityList["_results"][index].nativeElement, 'active');
+    this.renderer.setStyle(this.cityDropDown.nativeElement, 'display', 'none');
   }
 
   filterLeads(event) {
@@ -157,8 +162,12 @@ export class BranchAddEditComponent implements OnInit {
       let input = { "cityName": event.target.value.toLowerCase() };
       this.qdeHttp.adminGetCityLov(input).subscribe((response) => {
         console.log("cityName", response);
+        if(response['ProcessVariables']['status']){
         let cityList = response['ProcessVariables'].cityList;
         this.filteredItems = cityList;
+      }else{
+        this.renderer.setStyle(this.cityDropDown.nativeElement, 'display', 'none');
+      }
       });
 
     }, 1000);
@@ -179,8 +188,12 @@ export class BranchAddEditComponent implements OnInit {
       let input = { "zipcode": event.target.value.toLowerCase() };
       this.qdeHttp.adminGetZipLov(input).subscribe((response) => {
         console.log("cityName", response);
+        if(response['ProcessVariables']['status']){
         let zipcodeList = response['ProcessVariables'].zipcodeList;
         this.filteredZipCodeItems = zipcodeList;
+      }else{
+        this.renderer.setStyle(this.zipDropDown.nativeElement, 'display', 'none');
+      }
       });
 
     }, 1000);
@@ -196,7 +209,8 @@ export class BranchAddEditComponent implements OnInit {
     this.zipCodeList.forEach(v => {
       this.renderer.removeClass(v.nativeElement, "active");
     })
-    this.renderer.addClass(this.zipCodeList["_results"][index-1].nativeElement, 'active');
+    this.renderer.addClass(this.zipCodeList["_results"][index].nativeElement, 'active');
+    this.renderer.setStyle(this.zipDropDown.nativeElement, 'display', 'none');
   }
 
   
@@ -224,17 +238,21 @@ export class BranchAddEditComponent implements OnInit {
   
           if (response["Error"] === "0" &&
             response["ProcessVariables"]["status"]) {
-            //alert("Uploaded Successfully!");
+            this.isErrorModal = true;
+            this.errorMsg ="Branch created Successfully!"; 
+              //alert("Branch created Successfully!");
             this.registerUser.reset();
             this.router.navigate(['admin/lovs/branch_list']);
           } else {
             if (response["ErrorMessage"]) {
               console.log("Response: " + response["ErrorMessage"]);
+              this.isErrorModal = true;
               this.errorMsg = response["ErrorMessage"];
             } else if (response["ProcessVariables"]["errorMessage"]) {
               console.log(
                 "Response: " + response["ProcessVariables"]["errorMessage"]
               );
+              this.isErrorModal = true;
               this.errorMsg = response["ProcessVariables"]["errorMessage"];
             }
           }

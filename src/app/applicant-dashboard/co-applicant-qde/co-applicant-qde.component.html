@@ -1184,7 +1184,7 @@
                                                           tabindex="7"
                                                           spellcheck="false"
                                                           [(ngModel)]="qde.application.applicants[coApplicantIndex].permanentAddress.addressLineOne"
-                                                          required />
+                                                          required [disabled]="isPermanentAddressSame" />
                                                           <label for="per-address1">Address line 1</label>
 
                                                           <div *ngIf="(qde.application.applicants[coApplicantIndex].permanentAddress.addressLineOne)?.length == 120" class="invalid-feedback">Maximum Character Exceeds</div>
@@ -1202,7 +1202,7 @@
                                                           tabindex="8"
                                                           pattern="{{regexPattern.address}}"
                                                           spellcheck="false"
-                                                          [(ngModel)]="qde.application.applicants[coApplicantIndex].permanentAddress.addressLineTwo"/>
+                                                          [(ngModel)]="qde.application.applicants[coApplicantIndex].permanentAddress.addressLineTwo" [disabled]="isPermanentAddressSame"/>
             
                                                           <label for="per-address2">Address line 2</label>
 
@@ -1228,7 +1228,8 @@
                                                                     minlength="6"
                                                                     maxlength="6"
                                                                     pattern="{{regexPattern.pinCode}}"
-                                                                    required />
+                                                                    required
+                                                                    [disabled]="isPermanentAddressSame" />
                                                           <label for="per-pincode">Pincode</label>
 
                                                           <div class="redalert" *ngIf="RegExp(regexPattern.sameDigit).test(pZipcode.value)">
@@ -1248,7 +1249,8 @@
                                                           fieldFill
                                                           disabled
                                                           spellcheck="false"
-                                                          [(ngModel)]="qde.application.applicants[coApplicantIndex].permanentAddress.cityState">
+                                                          [(ngModel)]="qde.application.applicants[coApplicantIndex].permanentAddress.cityState"
+                                                          [disabled]="isPermanentAddressSame">
                                                           <label for="per-cityState">City/State</label>
                                                       </div>
                                                   </div>

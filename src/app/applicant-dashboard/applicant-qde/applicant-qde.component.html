@@ -919,7 +919,7 @@
                                 id="per-address1" name="pAddressLineOne" #pAddress1="ngModel" maxlength="120"
                                 pattern="{{regexPattern.address}}" fieldFill autocomplete="off"
                                 [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.addressLineOne"
-                                required />
+                                required [disabled]="isPermanentAdressSame" />
 
                                 <div *ngIf="(qde.application.applicants[applicantIndex].permanentAddress.addressLineOne)?.length == 120" class="invalid-feedback">Maximum Character Exceeds</div>
 
@@ -934,7 +934,7 @@
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                                 id="per-address2" name="pAddressLineTwo" #pAddress2="ngModel" fieldFill
                                 pattern="{{regexPattern.address}}" autocomplete="off" maxlength="120"
-                                [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.addressLineTwo" />
+                                [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.addressLineTwo" [disabled]="isPermanentAdressSame"/>
                               <label for="per-address2" tabindex="7">Address line 2</label>
 
                               <div *ngIf="(qde.application.applicants[applicantIndex].permanentAddress.addressLineTwo)?.length == 120" class="invalid-feedback">Maximum Character Exceeds</div>
@@ -951,7 +951,7 @@
                                 id="per-pincode" name="pZipcode" #pZipcode="ngModel" autocomplete="off"
                                 (blur)="onPinCodeChange($event, 'permanentAddress')" fieldFill
                                 [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.zipcode"
-                                minlength="6" maxlength="6" pattern="{{regexPattern.pinCode}}" required />
+                                minlength="6" maxlength="6" pattern="{{regexPattern.pinCode}}" required [disabled]="isPermanentAdressSame" />
                               <label for="per-pincode" tabindex="8">Pincode</label>
 
                               <div class="redalert" *ngIf="RegExp(regexPattern.sameDigit).test(pZipcode.value)">
@@ -966,7 +966,7 @@
                             <div class="form-group">
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                                 id="per-cityState" name="commCityState" #commCityState1="ngModel" fieldFill readonly autocomplete="off"
-                                [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.cityState" disabled>
+                                [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.cityState" disabled [disabled]="isPermanentAdressSame">
                               <label for="per-cityState" tabindex="9">City/State</label>
                             </div>
                           </div>

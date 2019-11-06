@@ -178,6 +178,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   isAlternateEmailId: boolean = false;
   isAlternateMobileNumber: boolean = false;
   isAlternateResidenceNumber: boolean = false;
+  isPermanentAddressSame: boolean = false;
   
   applicantIndividual: boolean = true;
   YYYY: number = new Date().getFullYear();
@@ -2887,7 +2888,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       this.qde.application.applicants[this.coApplicantIndex].permanentAddress.cityId = this.qde.application.applicants[this.coApplicantIndex].communicationAddress.cityId;
       this.qde.application.applicants[this.coApplicantIndex].permanentAddress.stateId = this.qde.application.applicants[this.coApplicantIndex].communicationAddress.stateId;
       this.qde.application.applicants[this.coApplicantIndex].permanentAddress.cityState = this.qde.application.applicants[this.coApplicantIndex].communicationAddress.cityState;
- 
+      this.isPermanentAddressSame = true;
     } else {
       this.qde.application.applicants[this.coApplicantIndex].permanentAddress.addressLineOne = "";
       this.qde.application.applicants[this.coApplicantIndex].permanentAddress.addressLineTwo = "";
@@ -2897,6 +2898,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       this.qde.application.applicants[this.coApplicantIndex].permanentAddress.zipcodeId = "";
       this.qde.application.applicants[this.coApplicantIndex].permanentAddress.cityId = "";
       this.qde.application.applicants[this.coApplicantIndex].permanentAddress.stateId = "";
+      this.qde.application.applicants[this.coApplicantIndex].permanentAddress.cityState = "";
     }
   }
 

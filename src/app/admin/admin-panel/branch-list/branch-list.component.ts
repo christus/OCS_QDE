@@ -26,6 +26,7 @@ export class BranchListComponent implements OnInit {
   errorMsg:string;
   enableLoadMore:boolean;
   searchKey:string="";
+  isErrorModal:boolean = false;
 
 
   ngOnInit() {
@@ -65,6 +66,7 @@ export class BranchListComponent implements OnInit {
       "searchKey": event.target.value
     }
     this.qdeHttp.getBranchList(data).subscribe(response => {
+      if(response['ProcessVariables']['status']){
       this.collection = response['ProcessVariables'].branchDetails;
       this.totalPages = response['ProcessVariables'].totalPages;
       this.from = response['ProcessVariables'].from;
@@ -75,6 +77,10 @@ export class BranchListComponent implements OnInit {
         this.enableLoadMore = false;
       }
       console.log(this.collection);
+    }else{
+      this.isErrorModal = true;
+      this.errorMsg = "No data present further";
+    }
     });
   }
 
@@ -100,14 +106,18 @@ export class BranchListComponent implements OnInit {
       response["ProcessVariables"]["status"]) {
       //alert("Uploaded Successfully!");
       delete this.collection[id];
+      this.isErrorModal = true;
+      this.errorMsg="Deleted successfully";
     } else {
       if (response["ErrorMessage"]) {
         console.log("Response: " + response["ErrorMessage"]);
+        this.isErrorModal = true;
         this.errorMsg = response["ErrorMessage"];
       } else if (response["ProcessVariables"]["errorMessage"]) {
         console.log(
           "Response: " + response["ProcessVariables"]["errorMessage"]
         );
+        this.isErrorModal = true;
         this.errorMsg = response["ProcessVariables"]["errorMessage"];
       }
     }

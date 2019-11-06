@@ -187,7 +187,7 @@
                             <label for="yes-property"><span>Yes</span></label>
                           </div>
                           <div class="bs-radio">
-                            <input [readonly]="isTBMLoggedIn" type="radio" name="no-property" [value]=false [(ngModel)]="isPropertyIdentified" (click)="changePropertyIdentified(property2, false)" />
+                            <input [readonly]="isTBMLoggedIn" type="radio" name="no-property" [value]=false [(ngModel)]="isPropertyIdentified" (click)="changePropertyIdentified(property2, false)" [attr.disabled]="disableNo" />
                             <label for="no-property"><span>No</span></label>
                           </div>
                         </div>

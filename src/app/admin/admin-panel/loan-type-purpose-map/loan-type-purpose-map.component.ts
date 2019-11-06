@@ -33,6 +33,8 @@ export class LoanTypePurposeMapComponent implements OnInit {
   totalPages:number;
   key:Array<number> = [];
   searchKey:string;
+  isErrorModal: boolean = false;
+  errorMsg: string;
 
 
   constructor(private qdeHttp: QdeHttpService, private route: ActivatedRoute) {
@@ -69,7 +71,9 @@ export class LoanTypePurposeMapComponent implements OnInit {
         this.key[i]=((this.perPage*(this.currentPage-1))+i+ 1);
       }
     } else {
-      alert('No Data Present');
+      this.isErrorModal = true;
+      this.errorMsg = "No Data present";
+      //alert('No Data Present');
     }
     // } else {
     //   alert('No Data Present');
@@ -85,7 +89,9 @@ export class LoanTypePurposeMapComponent implements OnInit {
         console.log("loanTypeData: ", this.loanTypeData);
       }
     }, err => {
-      alert('Something went wrong');
+      this.isErrorModal = true;
+      this.errorMsg = "Something went wrong";
+      //alert('Something went wrong');
     });
 
     this.qdeHttp.adminGetLov().subscribe(res => {
@@ -97,7 +103,9 @@ export class LoanTypePurposeMapComponent implements OnInit {
 
       }
     }, err => {
-      alert('Something went wrong');
+      this.isErrorModal = true;
+      this.errorMsg = "Something went wrong";
+      //alert('Something went wrong');
     });
   }
 
@@ -130,38 +138,50 @@ export class LoanTypePurposeMapComponent implements OnInit {
 
     this.qdeHttp.adminInsertUpdateLoanTypePurposeMap(dude).subscribe(res => {
       if(res["ProcessVariables"]['status'] == true) {
+        this.isErrorModal = true;
+        this.errorMsg = "Updated successfully";
         this.refresh();
       } else {
-        alert('Something went wrong');
+        this.isErrorModal = true;
+        this.errorMsg = "Something went wrong";
+        //alert('Something went wrong');
       }
     }, err => {
-      alert('Something went wrong');
+      this.isErrorModal = true;
+      this.errorMsg = "Something went wrong";
+      //alert('Something went wrong');
     });
   }
 
   search(event) {
     this.qdeHttp.adminLoanTypeSearch(event.target.value).subscribe(response => {
       // console.log("mamam",v)
-      this.data = response['ProcessVariables']['loanTypePurposeList'].map(v => {
-        return {
-          userId: this.userId,
-          tableName: this.tableName,
-          id: v['id'],
-          loanPurpose: v['loanPurpose'],
-          loanPurposeDescription: v['loanPurposeDescription'],
-          loanPurposeValue: v['loanPurposeValue'],
-          loanType: v['loanType'],
-          loanTypeDescription: v['loanTypeDescription'],
-          loanTypeValue: v['loanTypeValue']
-        }
-      });
-        this.currentPage = response['ProcessVariables']['currentPage'];
-        this.totalPages = response['ProcessVariables']['totalPages'];
-        this.perPage = response ['ProcessVariables']['perPage'];
-        this.totalElements = this.totalPages * this.perPage;
-        for(var i=0; i<this.data.length;i++){
-          this.key[i]=((this.perPage*(this.currentPage-1))+i+ 1);
-        }
+      if(response['ProcessVariables']['loanTypePurposeList']!=null){
+        this.data = response['ProcessVariables']['loanTypePurposeList'].map(v => {
+          return {
+            userId: this.userId,
+            tableName: this.tableName,
+            id: v['id'],
+            loanPurpose: v['loanPurpose'],
+            loanPurposeDescription: v['loanPurposeDescription'],
+            loanPurposeValue: v['loanPurposeValue'],
+            loanType: v['loanType'],
+            loanTypeDescription: v['loanTypeDescription'],
+            loanTypeValue: v['loanTypeValue']
+          }
+        });
+          this.currentPage = response['ProcessVariables']['currentPage'];
+          this.totalPages = response['ProcessVariables']['totalPages'];
+          this.perPage = response ['ProcessVariables']['perPage'];
+          this.totalElements = this.totalPages * this.perPage;
+          for(var i=0; i<this.data.length;i++){
+            this.key[i]=((this.perPage*(this.currentPage-1))+i+ 1);
+          }
+      }else{
+        this.isErrorModal = true;
+        this.errorMsg = "No data present further";
+        //alert("No data present further");
+      }   
     });
   }
 
@@ -192,7 +212,9 @@ export class LoanTypePurposeMapComponent implements OnInit {
         // this.perPageCount = Math.ceil(this.totalElements/this.perPage);
       } 
     }, err => {
-      alert('Something went wrong while reloading data.');
+      this.isErrorModal = true;
+      this.errorMsg = "Something went wrong while reloading data.";
+      //alert('Something went wrong while reloading data.');
     });
   }
 
@@ -211,10 +233,14 @@ export class LoanTypePurposeMapComponent implements OnInit {
       if(res["ProcessVariables"]['status'] == true) {
         this.refresh();
       } else {
-        alert('Something went wrong');
+        this.isErrorModal = true;
+        this.errorMsg = "Something went wrong";
+        //alert('Something went wrong');
       }
     }, err => {
-      alert('Something went wrong');
+        this.isErrorModal = true;
+        this.errorMsg = "Something went wrong";
+        //alert('Something went wrong');
     });
   }
 
@@ -239,6 +265,7 @@ export class LoanTypePurposeMapComponent implements OnInit {
     if(confirm("Are you sure?")) {
       this.qdeHttp.softDeleteLov(dude).subscribe(res => {
         // console.log(res['ProcessVariables']);
+        if(res["ProcessVariables"]["status"]){this.isErrorModal = true; this.errorMsg = "Deleted successfully"};
         this.refresh();
       });
     } 
@@ -267,11 +294,15 @@ export class LoanTypePurposeMapComponent implements OnInit {
           this.key[i]=((this.perPage*(this.currentPage-1))+i+ 1);
         }
       } else {
-        alert('Something went wrong.');
+        this.isErrorModal = true;
+        this.errorMsg = "Something went wrong";
+        //alert('Something went wrong');
         this.currentPage--;
       }
     }, err => {
-      alert('Something went wrong.');
+        this.isErrorModal = true;
+        this.errorMsg = "Something went wrong";
+        //alert('Something went wrong');
       this.currentPage--;
     });
   }

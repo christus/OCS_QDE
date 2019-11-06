@@ -14,6 +14,7 @@ export class PmayAddDetailsComponent implements OnInit {
   userId: number;
   errorMsg:string;
   updatebtn:boolean = false;
+  isErrorModal:boolean = false;
 
 
    
@@ -103,17 +104,21 @@ export class PmayAddDetailsComponent implements OnInit {
   
           if (response["Error"] === "0" &&
             response["ProcessVariables"]["status"]) {
+              this.isErrorModal = true;
+              this.errorMsg = "Added succesfully";
             //alert("Uploaded Successfully!");
             this.registerUser.reset();
             this.router.navigate(['admin/lovs/pmay_list']);
           } else {
             if (response["ErrorMessage"]) {
               console.log("Response: " + response["ErrorMessage"]);
+              this.isErrorModal = true;
               this.errorMsg = response["ErrorMessage"];
             } else if (response["ProcessVariables"]["errorMessage"]) {
               console.log(
                 "Response: " + response["ProcessVariables"]["errorMessage"]
               );
+              this.isErrorModal = true;
               this.errorMsg = response["ProcessVariables"]["errorMessage"];
             }
           }
@@ -149,17 +154,21 @@ export class PmayAddDetailsComponent implements OnInit {
   
           if (response["Error"] === "0" &&
             response["ProcessVariables"]["status"]) {
+              this.isErrorModal = true;
+              this.errorMsg = "Updated successfully";
             //alert("Uploaded Successfully!");
             this.registerUser.reset();
             this.router.navigate(['admin/user-module']);
           } else {
             if (response["ErrorMessage"]) {
               console.log("Response: " + response["ErrorMessage"]);
+              this.isErrorModal = true;
               this.errorMsg = response["ErrorMessage"];
             } else if (response["ProcessVariables"]["errorMessage"]) {
               console.log(
                 "Response: " + response["ProcessVariables"]["errorMessage"]
               );
+              this.isErrorModal = true;
               this.errorMsg = response["ProcessVariables"]["errorMessage"];
             }
           }

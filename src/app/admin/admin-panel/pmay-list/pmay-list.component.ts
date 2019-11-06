@@ -28,6 +28,7 @@ export class PmayListComponent implements OnInit {
   enableLoadMore:boolean;
   tableName:string = "pmay_list";
   searchKey: string="";
+  isErrorModal:boolean = false;
 
   // paginationConfig =  { 
   //   itemsPerPage: 2, 
@@ -74,7 +75,9 @@ export class PmayListComponent implements OnInit {
     }
     this.qdeHttp.getPmayList(data).subscribe(response => {
       if(response['ProcessVariables'].pmayList==null){
-        alert("No data present further");
+        this.isErrorModal = true;
+        this.errorMsg = "No data present further";
+        //alert("No data present further");
       }else{
       this.collection = response['ProcessVariables'].pmayList;
       this.totalPages = response['ProcessVariables'].totalPages;
@@ -110,18 +113,22 @@ export class PmayListComponent implements OnInit {
       if (response["Error"] === "0" &&
       response["ProcessVariables"]["status"]) {
         delete this.collection[id];
-        alert("Deleted Successfully!");
+        this.isErrorModal = true;
+        this.errorMsg = "Deleted Successfully";
+        //alert("Deleted Successfully!");
     } else {
       if (response["ErrorMessage"]) {
         console.log("Response: " + response["ErrorMessage"]);
+        this.isErrorModal = true;
         this.errorMsg = response["ErrorMessage"];
-        alert(this.errorMsg);
+        //alert(this.errorMsg);
       } else if (response["ProcessVariables"]["errorMessage"]) {
         console.log(
           "Response: " + response["ProcessVariables"]["errorMessage"]
         );
+        this.isErrorModal = true;
         this.errorMsg = response["ProcessVariables"]["errorMessage"];
-        alert(this.errorMsg);
+        //alert(this.errorMsg);
       }
     }
   },

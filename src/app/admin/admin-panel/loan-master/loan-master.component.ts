@@ -15,7 +15,8 @@ export class LoanMasterComponent implements OnInit {
   rateOfInterest: string;
   tableName: string;
   isLoanMaster: boolean;
-
+  isErrorModal: boolean = false;
+  errorMsg: string;
   isLoginFee: boolean;
   baseFee: number;
   taxApplicable: number;
@@ -58,7 +59,9 @@ export class LoanMasterComponent implements OnInit {
         this.selectedLoanTypeData = this.loanTypeData[0];
       }
     }, err => {
-      alert('Something went wrong');
+      this.isErrorModal = true;
+      this.errorMsg = "Something went wrong";
+      //alert('Something went wrong');
     });
 
     if(this.isLoanMaster) {
@@ -114,7 +117,9 @@ export class LoanMasterComponent implements OnInit {
 
   submitForm(form: NgForm) {
     if(form.invalid) {
-      alert('Please enter valid data');
+      this.isErrorModal = true;
+      this.errorMsg = "Please enter valid data";
+      //alert('Please enter valid data');
     }
 
     let dude = form.value;
@@ -141,20 +146,28 @@ export class LoanMasterComponent implements OnInit {
         if(res["ProcessVariables"]['status'] == true) {
           this.refresh();
         } else {
-          alert(res["ProcessVariables"]['errorMessage']);
+          this.isErrorModal = true;
+          this.errorMsg = res["ProcessVariables"]['errorMessage'];
+          //alert(res["ProcessVariables"]['errorMessage']);
         }
       }, err => {
-        alert('Something went wrong');
+        this.isErrorModal = true;
+        this.errorMsg = "Something went wrong";
+        //alert('Something went wrong');
       });
     } else if(this.isLoginFee) {
       this.qdeHttp.adminUpdateLoginFee(dude).subscribe(res => {
         if(res["ProcessVariables"]['status'] == true) {
           this.refresh();
         } else {
-          alert(res["ProcessVariables"]['errorMessage']);
+          this.isErrorModal = true;
+          this.errorMsg = res["ProcessVariables"]['errorMessage'];
+          //alert(res["ProcessVariables"]['errorMessage']);
         }
       }, err => {
-        alert('Something went wrong');
+        this.isErrorModal = true;
+        this.errorMsg = "Something went wrong";
+        //alert('Something went wrong');
       });
     }
   }
@@ -162,17 +175,27 @@ export class LoanMasterComponent implements OnInit {
   search(event){
     if(this.isLoanMaster) {
       this.qdeHttp.adminSearchAllLoanMaster(event.target.value).subscribe(res => {
+        if(res["ProcessVariables"]["status"]){
         this.data = res['ProcessVariables']['loanMaster'];
+      }else{
+        this.isErrorModal = true;
+        this.errorMsg = "No data present further";
+      }
       }, err => {}
       );
     } 
     else if(this.isLoginFee) {
       this.qdeHttp.adminSearchAllLoginFee(event.target.value).subscribe(res => {
+        if(res["ProcessVariables"]["status"]){
         this.data = res['ProcessVariables']['loginFee'];
         // this.currentPage = parseInt(res['ProcessVariables']['currentPage']);
         // this.totalPages = parseInt(res['ProcessVariables']['totalPages']);
         // this.perPage = parseInt(res['ProcessVariables']['perPage']);
         // this.totalElements = parseInt(res['ProcessVariables']['totalPages']) * this.perPage;
+      }else{
+        this.isErrorModal = true;
+        this.errorMsg = "No data present further";
+      }
       }, err => {
   
       });
@@ -241,20 +264,28 @@ export class LoanMasterComponent implements OnInit {
         if(res["ProcessVariables"]['status'] == true) {
           this.refresh();
         } else {
-          alert(res["ProcessVariables"]['errorMessage']);
+          this.isErrorModal = true;
+          this.errorMsg = res["ProcessVariables"]['errorMessage'];
+          //alert(res["ProcessVariables"]['errorMessage']);
         }
       }, err => {
-        alert('Something went wrong');
+        this.isErrorModal = true;
+        this.errorMsg = "Something went wrong";
+        //alert('Something went wrong');
       });
     } else if(this.isLoginFee) {
       this.qdeHttp.adminUpdateLoginFee(dude).subscribe(res => {
         if(res["ProcessVariables"]['status'] == true) {
           this.refresh();
         } else {
-          alert(res["ProcessVariables"]['errorMessage']);
+          this.isErrorModal = true;
+          this.errorMsg = res["ProcessVariables"]['errorMessage'];
+          //alert(res["ProcessVariables"]['errorMessage']);
         }
       }, err => {
-        alert('Something went wrong');
+        this.isErrorModal = true;
+        this.errorMsg = "Something went wrong";
+        //alert('Something went wrong');
       });
     }
   }
@@ -265,6 +296,7 @@ export class LoanMasterComponent implements OnInit {
     if(confirm("Are you sure?")) {
       this.qdeHttp.softDeleteLov(dude).subscribe(res => {
         // console.log(res['ProcessVariables']);
+        if(res["ProcessVariables"]["status"]){this.isErrorModal = true; this.errorMsg="Deleted Successfully";}
         this.refresh();
       });
     } 
@@ -294,7 +326,8 @@ export class LoanMasterComponent implements OnInit {
         this.perPage = parseInt(res['ProcessVariables']['perPage']);
         this.totalElements = parseInt(res['ProcessVariables']['totalPages']) * this.perPage;
       }, err => {
-
+        this.isErrorModal = true;
+        this.errorMsg = "Something went wrong";
       });
     } else if (this.isLoginFee) {
       this.qdeHttp.adminGetAllLoginFee(value,this.perPage,this.searchKey).subscribe(res => {
@@ -305,7 +338,8 @@ export class LoanMasterComponent implements OnInit {
         this.totalElements = parseInt(res['ProcessVariables']['totalPages']) * this.perPage;
 
       }, err => {
-  
+        this.isErrorModal = true;
+        this.errorMsg = "Something went wrong";
       });
      }
   }
