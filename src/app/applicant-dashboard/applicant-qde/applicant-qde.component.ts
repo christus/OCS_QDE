@@ -2576,11 +2576,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
               this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
               this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
               this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
+              this.goToNextSlide(swiperInstance);
             }
           });
-          this.isApplicantRouteModal = true;
+          // this.isApplicantRouteModal = true;
           // this.router.navigate(['/applicant', this.qde.application.applicationId, 'co-applicant'], {fragment: 'dashboard'} );
-          // this.goToNextSlide(swiperInstance);
         } else {
           this.isErrorModal = true;
           this.errorMessage = "Something went wrong, please try again later.";
