@@ -21,6 +21,9 @@ import { environment } from 'src/environments/environment.prod';
 import { screenPages } from '../../app.constants';
 import { UtilService } from '../../services/util.service';
 import { MobileService } from '../../services/mobile-constant.service';
+import { DatePipe } from '@angular/common';
+import { SelectionRangeEnd } from '@progress/kendo-angular-dateinputs';
+
 
 interface Item {
   key: string,
@@ -182,6 +185,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   // For Hide/Show tabs between Indi and Non indi
   applicantStatus:string = "" ;
 
+  dateofBirthKendo:Date;
+
   fragments = [ 'dashboard',
                 'pan1',
                 'personal',
@@ -342,6 +347,14 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   applicantRelationships: Array<any>;
   doNotSelectDefault: boolean = false;
 
+  focusedDate:Date;
+
+  focusIncorpDate:Date;
+
+  SelectionRangeEnd: SelectionRangeEnd;
+
+  range;
+
   // public defaultItem: { key: string, value: number } = { key: "Select item...", value: null };
   
   // public defaultItem: Array<{ key: string, value: number, inStock: boolean }> = [
@@ -360,6 +373,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
               private qdeService: QdeService,
               private cds: CommonDataService,
               private utilService: UtilService,
+              public datepipe: DatePipe,
               private mobileService: MobileService) {
     this.qde = this.qdeService.defaultValue;
 
@@ -1379,7 +1393,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       if (form && !form.valid) {
         return;
       }
-      const dateofbirth = form.value.year.value+'-'+form.value.month.value+'-'+form.value.day.value;
+      // const dateofbirth = form.value.year.value+'-'+form.value.month.value+'-'+form.value.day.value;
+
+      const dateofbirth = this.dateofBirthKendo;
+
       const d1:any = new Date(dateofbirth);
       const d2:any = new Date();
       var diff = d2 - d1 ;
@@ -2970,6 +2987,16 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         this.dob.year = this.years.find(val => this.qde.application.applicants[this.coApplicantIndex].personalDetails.dob.split('/')[0] == val.value);
       }
 
+      if(this.dob.year.value == "YYYY") {
+        this.focusedDate = new Date();
+      }else {
+        this.focusedDate = new Date(parseInt(this.dob.year.value.toString()), parseInt(this.dob.month.value.toString())-1, parseInt(this.dob.day.value.toString()));
+      }
+
+
+      console.log("focusedDate **", this.focusedDate);
+
+
       // Date of Incorporation Day
       if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].organizationDetails.dateOfIncorporation.split('/')[2])) ) {
         this.organizationDetails.day = this.days[parseInt(this.qde.application.applicants[this.coApplicantIndex].organizationDetails.dateOfIncorporation.split('/')[2])];
@@ -2984,6 +3011,15 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].organizationDetails.dateOfIncorporation.split('/')[0])) ) {
         this.organizationDetails.year = this.years.find(val => this.qde.application.applicants[this.coApplicantIndex].organizationDetails.dateOfIncorporation.split('/')[0] == val.value);
       }
+
+      if(this.organizationDetails.year.value == "YYYY") {
+        this.focusIncorpDate = new Date();
+      }else {
+        this.focusIncorpDate = new Date(parseInt(this.organizationDetails.year.value.toString()), parseInt(this.organizationDetails.month.value.toString())-1, parseInt(this.organizationDetails.day.value.toString())) ||  new Date();
+      }
+
+
+      console.log("focusedDate **", this.focusIncorpDate);
 
       // Constitution
       if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].organizationDetails.constitution)) ) {
@@ -4012,4 +4048,49 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         this.errorMessage = 'Something went wrong.';
     });
   }
+
+  onDateOfIncorpChange(value:Date) {
+
+    let latest_date = this.datepipe.transform(value, 'dd-MMM-yyyy');
+
+    if (new Date(latest_date) > new Date()) {
+      this.isErrorModal = true;
+      this.errorMessage = 'Selected date must not be greater than today date';
+      return;
+    }
+
+    let splitArr = latest_date.split('-');
+
+    let day = splitArr[0];
+
+    let month = splitArr[1].toUpperCase();
+
+    let year = splitArr[2]
+
+    this.organizationDetails =  { day: { key: day , value: day },
+      month: { key: month, value: month },
+      year: { key: year, value: year } 
+    }
+  }
+
+  onBirthDateChange(value: Date){
+
+
+    let latest_date = this.datepipe.transform(value, 'dd-MMM-yyyy');
+
+    let splitArr = latest_date.split('-');
+
+    let day = splitArr[0];
+
+    let month = splitArr[1].toUpperCase();
+
+    let year = splitArr[2]
+
+    this.dob =  { day: { key: day , value: day },
+      month: { key: month, value: month },
+      year: { key: year, value: year } 
+    }
+    
+  }
+
 }

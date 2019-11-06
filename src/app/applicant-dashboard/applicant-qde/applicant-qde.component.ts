@@ -22,6 +22,7 @@ import { File } from '@ionic-native/file/ngx';
 import { screenPages } from '../../app.constants';
 import { UtilService } from '../../services/util.service';
 import { MobileService } from '../../services/mobile-constant.service';
+import { DatePipe } from '@angular/common';
 
 interface Item {
   key: string,
@@ -195,6 +196,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   isIndividual: boolean = false;
   YYYY: number = new Date().getFullYear();
 
+  dateofBirthKendo:Date;
+  focusedDate: Date;
+
   applicantStatus: string = "";
 
   fragments = ['pan1',
@@ -352,6 +356,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     private cds: CommonDataService,
     private utilService: UtilService,
     private file: File,
+    public datepipe: DatePipe,
     private mobileService: MobileService) {
 
     this.qde = this.qdeService.defaultValue;
@@ -760,6 +765,15 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
             this.dob.year = this.years.find(val => this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split('/')[0] == val.value);
           }
 
+          if(this.dob.year.value == "YYYY") {
+            this.focusedDate = new Date();
+          }else {
+            this.focusedDate = new Date(parseInt(this.dob.year.value.toString()), parseInt(this.dob.month.value.toString())-1, parseInt(this.dob.day.value.toString()));
+          }
+
+
+          console.log("focusedDate **", this.focusedDate);
+          
           // Date of Incorporation Day
           if (!isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split('/')[2]))) {
             this.organizationDetails.day = this.days[parseInt(this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split('/')[2])];
@@ -1566,6 +1580,24 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   }
 
+  onBirthDateChange(value: Date){
+
+
+    let latest_date = this.datepipe.transform(value, 'dd-MMM-yyyy');
+
+    let splitArr = latest_date.split('-');
+
+    let day = splitArr[0];
+
+    let month = splitArr[1].toUpperCase();
+
+    let year = splitArr[2]
+
+    this.dob =  { day: { key: day , value: day },
+      month: { key: month, value: month },
+      year: { key: year, value: year } 
+    }
+  }
 
   ageError = false;
 
@@ -1580,7 +1612,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         return;
       }
 
-      const dateofbirth = form.value.year.value + '-' + form.value.month.value + '-' + form.value.day.value;
+      //const dateofbirth = form.value.year.value + '-' + form.value.month.value + '-' + form.value.day.value;
+
+      const dateofbirth = this.dateofBirthKendo;
+
+      console.log("dateofbirth", dateofbirth);
       const d1: any = new Date(dateofbirth);
       const d2: any = new Date();
       var diff = d2 - d1;

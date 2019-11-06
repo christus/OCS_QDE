@@ -551,9 +551,9 @@
                                                   <div class="form-group typ-select">
                                                       <span class="control-title">Date of Birth</span>
 
-                                                      <div class="row">
+                                                      <div class="row with_datepicker">
                                                         <div class="col4">
-                                                            <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                                            <kendo-dropdownlist [readonly] = "true" class="form-control"
                                                             [data]="days"
                                                             textField="key"
                                                             valueField="value"
@@ -567,7 +567,7 @@
                                                         </div>
     
                                                         <div class="col4">
-                                                            <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                                            <kendo-dropdownlist [readonly] = "true" class="form-control"
                                                             [data]="months"
                                                             textField="key"
                                                             valueField="value"
@@ -581,7 +581,7 @@
                                                         </div>
     
                                                         <div class="col4">
-                                                            <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                                            <kendo-dropdownlist [readonly] = "true" class="mob_personal_year form-control"
                                                             [data]="dobYears"
                                                             textField="key"
                                                             valueField="value"
@@ -594,6 +594,12 @@
                                                             </kendo-dropdownlist>
                                                         </div>
                                                     </div>
+                                                    <kendo-datepicker class="kendo_date_picker"
+                                                        (valueChange)="onBirthDateChange($event)"
+                                                        [focusedDate]="focusedDate"
+                                                        [(value)]="dateofBirthKendo" 
+                                                        [format]="'dd-MMM-yyyy'">
+                                                    </kendo-datepicker>
                                                     <div *ngIf="ageError" class="invalid-feedback">
                                                         <div *ngIf="ageError">Age should not be less than 18 years</div>
                                                       </div>
@@ -2639,9 +2645,9 @@
                                       </div>
                                       <div class="form-group typ-select">
                                           <span class="control-title">Date of Incorporation</span>
-                                          <div class="row">
+                                          <div class="row with_datepicker">
                                               <div class="col4">
-                                                  <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                                  <kendo-dropdownlist [readonly]="true" class="form-control"
                                                   [data]="days"
                                                   textField="key"
                                                   valueField="value"
@@ -2655,7 +2661,7 @@
                                               </div>
       
                                               <div class="col4">
-                                                  <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                                  <kendo-dropdownlist [readonly]="true" class="form-control"
                                                   [data]="months"
                                                   textField="key"
                                                   tabindex="3"
@@ -2669,7 +2675,7 @@
                                               </div>
       
                                               <div class="col4">
-                                                  <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                                  <kendo-dropdownlist [readonly]="true" class="form-control mob_personal_year"
                                                   [data]="years"
                                                   textField="key"
                                                   valueField="value"
@@ -2681,8 +2687,15 @@
                                                   [(ngModel)]="organizationDetails.year">
                                                   </kendo-dropdownlist>
                                               </div>
+                                                <kendo-datepicker class="kendo_date_picker"
+                                                    [focusedDate]="focusIncorpDate"
+                                                    (valueChange)="onDateOfIncorpChange($event)"
+                                                    [(value)]="dateofBirthKendo" 
+                                                    [format]="'dd-MMM-yyyy'">
+                                                </kendo-datepicker>
                                           </div>
                                       </div>
+
                                       <div class="form-group last">
                                           <span class="control-title">Constitution</span>
                                           <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"

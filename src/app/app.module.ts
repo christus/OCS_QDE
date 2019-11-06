@@ -140,6 +140,7 @@ import { MobileService } from './services/mobile-constant.service';
 import { AdminAuditTrialComponent } from './admin/admin-audit-trial/admin-audit-trial.component';
 import { ReassignComponent } from './reassign/reassign.component';
 import { CaptchaResolverService } from './services/captcha-resolver.service';
+import { DatePipe } from '@angular/common';
 
 
 const appRoutes: Routes = [
@@ -698,7 +699,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     MobileService,
     DocAssessDoccatProfileMapResolverService,
     ApplicationRelationshipResolverService,
-    CaptchaResolverService
+    CaptchaResolverService,
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })

@@ -353,3 +353,17 @@ input[type="text"]:invalid
 .bs-radio.typ-doc .desc-text span {
     font-size: 1.2vw;
 }
+
+.with_datepicker {
+    /* margin-bottom: -10px; */
+    width: 95%;
+}
+.kendo_date_picker{
+    width: 0px;
+    border: none;
+    margin-bottom: 99px;
+}
+.k-datepicker .k-dateinput, .k-datetimepicker .k-dateinput, .k-timepicker .k-dateinput {
+    width: 1%;
+    border-left: 1px solid #e6e6e6;
+}

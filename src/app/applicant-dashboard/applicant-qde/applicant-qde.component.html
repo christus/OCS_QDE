@@ -422,9 +422,9 @@
                           <div class="form-group typ-select">
                             <span class="control-title">Date of Birth</span>
 
-                            <div class="row">
+                            <div class="row with_datepicker">
                               <div class="col4">
-                                <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control" [data]="days"
+                                <kendo-dropdownlist  [readonly] = "true" class="form-control" [data]="days"
                                   textField="key" valueField="value" name="day" nick="personalDetails.day" tabindex="0"
                                   #dobDay (selectionChange)="selectValueChanged($event, dobDay.hostElement)"
                                   [(ngModel)]="dob.day">
@@ -432,7 +432,7 @@
                               </div>
 
                               <div class="col4">
-                                <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control" [data]="months"
+                                <kendo-dropdownlist   [readonly] = "true" class="form-control" [data]="months"
                                   textField="key" valueField="value" name="month" tabindex="0"
                                   nick="personalDetails.month" #dobMonth
                                   (selectionChange)="selectValueChanged($event, dobMonth.hostElement)"
@@ -441,7 +441,7 @@
                               </div>
 
                               <div class="col4">
-                                <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="mob_personal_year form-control"
+                                <kendo-dropdownlist  [readonly] = "true" class="mob_personal_year form-control"
                                   [data]="dobYears" textField="key" valueField="value" name="year" tabindex="0"
                                   nick="personalDetails.year" #dobYear
                                   (selectionChange)="selectValueChanged($event, dobYear.hostElement)"
@@ -449,6 +449,12 @@
                                 </kendo-dropdownlist>
                               </div>
                             </div>
+                            <kendo-datepicker class="kendo_date_picker"
+                              (valueChange)="onBirthDateChange($event)"
+                              [focusedDate]="focusedDate"
+                              [(value)]="dateofBirthKendo" 
+                              [format]="'dd-MMM-yyyy'">
+                            </kendo-datepicker>
                             <div *ngIf="ageError" class="invalid-feedback">
                               <div *ngIf="ageError">Age should not be less than 18 years</div>
                             </div>

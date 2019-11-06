@@ -5764,4 +5764,37 @@ img {
 	.mobile .width_80{
 		width: 80%;
 	}
-}																																						
+}
+
+.with_datepicker .k-i-arrow-60-down::before,
+.with_datepicker .k-i-arrow-s::before,
+.with_datepicker .k-i-sarrow-s::before,
+.with_datepicker .k-i-collapse::before,.with_datepicker .k-i-expand-s::before {
+    content: "\/" !important;
+    font-size: 90px;
+    line-height: 6px;
+}
+
+.mob_personal_year .k-i-arrow-60-down::before,
+.mob_personal_year .k-i-arrow-s::before,
+.mob_personal_year .k-i-sarrow-s::before,
+.mob_personal_year .k-i-collapse::before,.mob_personal_year .k-i-expand-s::before {
+	content: "" !important;
+}
+
+.with_datepicker .k-dateinput-wrap .k-input {
+	padding: 0;
+}
+
+.k-autocomplete .k-input, 
+.k-dateinput-wrap .k-input,
+ .k-dropdown-wrap .k-input,
+  .k-picker-wrap .k-input,
+   .k-multiselect-wrap .k-input, 
+.k-numeric-wrap .k-input{
+	padding: 0;
+}
+
+.k-icon {
+	font-size: 28px;
+}
