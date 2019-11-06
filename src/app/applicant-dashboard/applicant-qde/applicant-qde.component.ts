@@ -2615,7 +2615,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
               this.goToNextSlide(swiperInstance);
             }
           });
-          // this.isApplicantRouteModal = true;
+          this.isApplicantRouteModal = true;
           // this.router.navigate(['/applicant', this.qde.application.applicationId, 'co-applicant'], {fragment: 'dashboard'} );
         } else {
           this.isErrorModal = true;
