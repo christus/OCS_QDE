@@ -443,7 +443,7 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
       let t = fromQde ? this.page: 1;
 
       if(this.swiperSliders && this.swiperSliders.length > 0) {
-        this.swiperSliders[tabIndex].setIndex(this.page-1);
+        this.swiperSliders[tabIndex].setIndex(t-1);
       }
 
       this.router.navigate([], {queryParams: { tabName: this.fragments[tabIndex], page: t }});

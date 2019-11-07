@@ -31,9 +31,9 @@ export class AuthInterceptor implements HttpInterceptor {
     if (!req.headers.has('Content-Type') && req.url !== uri) {
       // req = req.clone({ headers: req.headers.set('Content-Type', 'application/x-www-form-urlencoded') });
       if (httpMethod == "POST") {
-        if (environment.encryptionType == true) {   
-          
-        console.log("req.body", req.body);
+        if (environment.encryptionType == true) {
+
+        // console.log("req.body", req.body);
         const encryption = this.encrytionService.encrypt(req.body, environment.aesPublicKey);
         req = req.clone(
           { setHeaders: encryption.headers,
@@ -70,24 +70,29 @@ export class AuthInterceptor implements HttpInterceptor {
       (event: HttpEvent<any>) => {
                 
         if (event instanceof HttpResponse) {
-          // this.ngxService.stop(); // stop foreground spinner of the master loader with 'default' taskId
+          this.ngxService.stop(); // stop foreground spinner of the master loader with 'default' taskId
           let responseValue = event.body;
           let typeOfbody = typeof(responseValue);
+          console.log("respose header in auth int ", event.headers.get("content-type"));
           console.log("type of response: ", typeOfbody);
-          // console.log("Response Value: " + event.body);
-          // if (!responseValue["ok"])
-          if (typeof(event.body)!= "object") {
+          
+          // console.log("Response Value: " + event.body);text/plain          
+          if (event.headers.get("content-type") == "text/plain") {
             event = event.clone({ body: JSON.parse(this.encrytionService.decryptResponse(event)) });
             // console.log("after Encryption: ", event.body);
           }
           console.log("*************************************************");
           console.log("after Decryption: " , event.body);
           console.log("*************************************************");
-          const response = event.body;
+          
+          let response = event.body;
+          if (event.headers.get("content-type") != "text/plain" && typeof(event.body) != "object") {
+            response = JSON.parse(event.body);
+          }
           if (response && response["login_required"]) {
             if(this.router.url.search('auto-login') == -1) {
               this.utilService.clearCredentials();
-              alert(response['message']);
+              // alert(response['message']);
             }
             this.utilService.clearCredentials();
           }

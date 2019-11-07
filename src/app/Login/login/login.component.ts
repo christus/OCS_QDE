@@ -66,6 +66,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
       this.sessionMessage = "Enter Captcha Text";
     } else {
       const startDate = new Date();
+      const userEmailId: string = this.userName.toLocaleLowerCase();
       console.log("Login Api Call: User Id ", this.userName, " Start Date & Time ", startDate, startDate.getMilliseconds());
       const data = {
         email: this.userName.trim().toLowerCase()+ "@icicibankltd.com",
@@ -73,8 +74,10 @@ export class LoginComponent implements OnInit, AfterViewInit {
         removeExistingSession: false,
         appId: "OCS",
         refId: this.oldRefId,
-        captcha: this.captchaText
+        captcha: this.captchaText,
+        useADAuth: userEmailId.startsWith("he")
       };
+      console.log("login Data: ",data);
       let token = localStorage.getItem("token");
 
       console.log("Login Encrytion", this.encrytionService.encrypt(JSON.stringify(data), this.sharedKsy));

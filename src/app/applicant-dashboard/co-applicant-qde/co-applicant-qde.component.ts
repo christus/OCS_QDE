@@ -124,7 +124,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   myHeaders: { [header: string]: string | string[] } = {
     'Content-Type': 'multipart/form-data',
   };
-
+  
   lhsConfig = {
     noSwiping: true,
     noSwipingClass: '',
@@ -496,8 +496,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       // this.docType = lov.LOVS.document_type;
       // Hardcoded values as per requirement
       this.docType = [{key: "Passport", value:"1"},{key: "Driving License", value:"2"},{key: "Voter's Identity Card", value:"3"},
-                      {key: "Aadhaar Card", value:"4"},{key: "NREGA Job Card", value:"5"},{key: "CKYC KIN", value:"6"},
-                      {key: "Aadhaar Token", value:"7"}]
+                      {key: "Aadhaar Card", value:"4"},{key: "NREGA Job Card", value:"5"}
+                      ]
       this.maritals = lov.LOVS.maritial_status;
       // this.relationships = lov.LOVS.relationship;
       this.loanpurposes = lov.LOVS.loan_purpose;
@@ -818,13 +818,12 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     }
 
     let t = fromQde ? this.page: 1;
-
     if(this.swiperSliders && this.swiperSliders.length > 0) {
-      if (t == 1 && !fromQde){
-        this.swiperSliders[tabIndex].setIndex(0);
-      } else {
+      // if (t == 1 && !fromQde){ 
+      //   this.swiperSliders[tabIndex].setIndex(0);
+      // } else {
       this.swiperSliders[tabIndex].setIndex(this.page-1);
-      }
+      // }
     }
 
     // Check for invalid tabIndex

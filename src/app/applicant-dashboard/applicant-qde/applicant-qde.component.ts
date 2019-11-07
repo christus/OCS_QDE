@@ -478,7 +478,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.femaleTitles = lov.LOVS.female_applicant_title;
       // this.docType = lov.LOVS.pan_document_type;
       // Hardcoded values as per requirement
-      this.docType = [{ key: "Passport", value: "1" }, { key: "Driving License", value: "2" }, { key: "Voter's Identity Card", value: "3" }, { key: "Aadhaar Card", value: "4" }, { key: "NREGA Job Card", value: "5" }, { key: "CKYC KIN", value: "6" }, { key: "Aadhaar Token", value: "7" }]
+      this.docType = [{ key: "Passport", value: "1" }, { key: "Driving License", value: "2" }, { key: "Voter's Identity Card", value: "3" }, { key: "Aadhaar Card", value: "4" }, { key: "NREGA Job Card", value: "5" }]
       this.maritals = lov.LOVS.maritial_status;
       this.relationships = lov.LOVS.relationship;
       this.loanpurposes = lov.LOVS.loan_purpose;

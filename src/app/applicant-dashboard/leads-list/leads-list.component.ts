@@ -8,6 +8,7 @@ import { CommonDataService } from "src/app/services/common-data.service";
 import { statuses, screenPages } from "../../app.constants";
 import { TabsComponent } from "./tabs/tabs.component";
 import { EncryptService } from "src/app/services/encrypt.service";
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 export interface UserDetails {
   "amountEligible": number;
@@ -62,7 +63,8 @@ export class LeadsListComponent implements OnInit {
 
   constructor(private service: QdeHttpService, private utilService: UtilService, private cds: CommonDataService, 
     private mobileService: MobileService,
-    private router: Router, private encryptService: EncryptService) {
+    private router: Router,
+    private ngxService: NgxUiLoaderService) {
     this.isMobile = this.mobileService.isMobile;
     if(this.isMobile) {
       let isFirstTime = localStorage.getItem("firstTime");
@@ -104,9 +106,9 @@ export class LeadsListComponent implements OnInit {
     this.assignedTo = this.assignedToList[0];
     if (localStorage.getItem("token") && localStorage.getItem("userId") ) {
     this.getFilteredLeads();
-    this.getNewLeads();
-    this.getPendingApplication();
-    this.getPendingPayment();
+    // this.getNewLeads();
+    // this.getPendingApplication();
+    // this.getPendingPayment();
     } else {
       this.utilService.clearCredentials();
       return;
@@ -135,194 +137,214 @@ export class LeadsListComponent implements OnInit {
   
 
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (localStorage.getItem("token") && localStorage.getItem("userId") ) {
+      // this.getFilteredLeads();
+      this.getNewLeads();
+      this.getPendingApplication();
+      this.getPendingPayment();
+      } else {
+        this.utilService.clearCredentials();
+        return;
+      }
+  }
 
   filterLeads(event: any) {
     this.getFilteredLeads();
   }
 
   getPendingApplication() {
-    const startDate = new Date();
-    console.log("PendingApplication Api Call: Start Date & Time ", startDate, startDate.getMilliseconds());
-       this.service.getLeads(this.searchTxt, this.fromDay.value, this.fromMonth.value, this.fromYear.value, this.toDay.value, this.toMonth.value, this.toYear.value, "", this.pendingAppStatus).subscribe(
-      res => {
-        const endDate = new Date();
-        console.log("PendingApplication Api Call: End Date & Time ", endDate, endDate.getMilliseconds());
-        console.log(res);
 
-        if (res["Error"] && res["Error"] == 0) {
-          this.newPendingApplicationDetails = res["ProcessVariables"].userDetails || [];
+    if(localStorage.getItem("token") && localStorage.getItem("userId")){
+        const startDate = new Date();
+        console.log("PendingApplication Api Call: Start Date & Time ", startDate, startDate.getMilliseconds());
+          this.service.getLeads(this.searchTxt, this.fromDay.value, this.fromMonth.value, this.fromYear.value, this.toDay.value, this.toMonth.value, this.toYear.value, "", this.pendingAppStatus).subscribe(
+          res => {
+            const endDate = new Date();
+            console.log("PendingApplication Api Call: End Date & Time ", endDate, endDate.getMilliseconds());
+            console.log(res);
 
-          this.newPendingApplicationDetails.forEach(el => {
-            el.url = this.getUrl(el["status"], el["leadId"], el["applicantId"], this.getRoles(), el);
-            if(el["auditTrialTabPage"] != null && el["auditTrialPageNumber"] != null) {
-              el["queryParams"] = {
-                tabName : el["auditTrialTabPage"],
-                page : el["auditTrialPageNumber"],
-              }
+            if (res["Error"] && res["Error"] == 0) {
+              this.newPendingApplicationDetails = res["ProcessVariables"].userDetails || [];
+
+              this.newPendingApplicationDetails.forEach(el => {
+                el.url = this.getUrl(el["status"], el["leadId"], el["applicantId"], this.getRoles(), el);
+                if(el["auditTrialTabPage"] != null && el["auditTrialPageNumber"] != null) {
+                  el["queryParams"] = {
+                    tabName : el["auditTrialTabPage"],
+                    page : el["auditTrialPageNumber"],
+                  }
+                } else {
+                  el["queryParams"] = null;
+                }
+              });
+
+              this.cds.setIsEligibilityForReviews(this.isEligibilityForReviews);
+              // this.isTBMLoggedIn = this.getRoles().includes("TBM") || this.getRoles().includes("TMA");
+              this.cds.setIsTBMLoggedIn(this.isTBMLoggedIn);
+            } else if (res["login_required"] && res["login_required"] === true) {
+              this.utilService.clearCredentials();
+              // alert(res['message']);
             } else {
-              el["queryParams"] = null;
+              if (res["ErrorMessage"]) {
+              alert(res["ErrorMessage"]);
+              }
             }
-          });
-
-          this.cds.setIsEligibilityForReviews(this.isEligibilityForReviews);
-          // this.isTBMLoggedIn = this.getRoles().includes("TBM") || this.getRoles().includes("TMA");
-          this.cds.setIsTBMLoggedIn(this.isTBMLoggedIn);
-        } else if (res["login_required"] && res["login_required"] === true) {
-          this.utilService.clearCredentials();
-          // alert(res['message']);
-        } else {
-          if (res["ErrorMessage"]) {
-          alert(res["ErrorMessage"]);
+          },
+          error => {
+            console.log(error);
           }
-        }
-      },
-      error => {
-        console.log(error);
+        );
       }
-    );
   }
   getPendingPayment() {
-    const startDate = new Date();
-    console.log("PendingPayment Api Call: Start Date & Time ", startDate, startDate.getMilliseconds());
-    this.service.getLeads(this.searchTxt, this.fromDay.value, this.fromMonth.value, this.fromYear.value, 
-      this.toDay.value, this.toMonth.value, this.toYear.value, "", this.pendingPaymentStatus).subscribe(
-      res => {
-        const endDate = new Date();
-        console.log("PendingPayment Api Call: End Date & Time ", endDate, endDate.getMilliseconds());
-        console.log(res);
+    if(localStorage.getItem("token") && localStorage.getItem("userId")){
+      const startDate = new Date();
+      console.log("PendingPayment Api Call: Start Date & Time ", startDate, startDate.getMilliseconds());
+      this.service.getLeads(this.searchTxt, this.fromDay.value, this.fromMonth.value, this.fromYear.value, 
+        this.toDay.value, this.toMonth.value, this.toYear.value, "", this.pendingPaymentStatus).subscribe(
+        res => {
+          const endDate = new Date();
+          console.log("PendingPayment Api Call: End Date & Time ", endDate, endDate.getMilliseconds());
+          console.log(res);
 
-        if (res["Error"] && res["Error"] == 0) {
-          this.newPendingPaymentDetails = res["ProcessVariables"].userDetails || [];
+          if (res["Error"] && res["Error"] == 0) {
+            this.newPendingPaymentDetails = res["ProcessVariables"].userDetails || [];
 
-          this.newPendingPaymentDetails.forEach(el => {
-            el.url = this.getUrl(el["status"], el["leadId"], el["applicantId"], this.getRoles(), el);
-            if(el["auditTrialTabPage"] != null && el["auditTrialPageNumber"] != null) {
-              el["queryParams"] = {
-                tabName : el["auditTrialTabPage"],
-                page : el["auditTrialPageNumber"],
+            this.newPendingPaymentDetails.forEach(el => {
+              el.url = this.getUrl(el["status"], el["leadId"], el["applicantId"], this.getRoles(), el);
+              if(el["auditTrialTabPage"] != null && el["auditTrialPageNumber"] != null) {
+                el["queryParams"] = {
+                  tabName : el["auditTrialTabPage"],
+                  page : el["auditTrialPageNumber"],
+                }
+              } else {
+                el["queryParams"] = null;
               }
-            } else {
-              el["queryParams"] = null;
+            });
+
+            this.cds.setIsEligibilityForReviews(this.isEligibilityForReviews);
+            // this.isTBMLoggedIn = this.getRoles().includes("TBM") || this.getRoles().includes("TMA");
+            this.cds.setIsTBMLoggedIn(this.isTBMLoggedIn);
+          } else if (res["login_required"] && res["login_required"] === true) {
+            this.utilService.clearCredentials();
+            // alert(res['message']);
+          } else {
+            if (res["ErrorMessage"]){
+              alert(res["ErrorMessage"]);
             }
-          });
-
-          this.cds.setIsEligibilityForReviews(this.isEligibilityForReviews);
-          // this.isTBMLoggedIn = this.getRoles().includes("TBM") || this.getRoles().includes("TMA");
-          this.cds.setIsTBMLoggedIn(this.isTBMLoggedIn);
-        } else if (res["login_required"] && res["login_required"] === true) {
-          this.utilService.clearCredentials();
-          // alert(res['message']);
-        } else {
-          if (res["ErrorMessage"]){
-            alert(res["ErrorMessage"]);
+            return;
           }
-          return;
+        },
+        error => {
+          console.log(error);
         }
-      },
-      error => {
-        console.log(error);
-      }
-    );
+      );
+    }
   }
-
   getNewLeads() {
-    const startDate = new Date();
-    console.log("New Leads Api Call: Start Date & Time ", startDate, startDate.getMilliseconds());
-    this.service.getNewLeads(this.searchTxt, this.fromDay.value, this.fromMonth.value, this.fromYear.value, 
-      this.toDay.value, this.toMonth.value, this.toYear.value).subscribe(
-      res => {
-        const endDate = new Date();
-        console.log("New Leads Api Call: End Date & Time ", endDate, endDate.getMilliseconds());
-        console.log(res);
+    if (localStorage.getItem("token") && localStorage.getItem("userId")) {
+      const startDate = new Date();
+      console.log("New Leads Api Call: Start Date & Time ", startDate, startDate.getMilliseconds());
+      this.service.getNewLeads(this.searchTxt, this.fromDay.value, this.fromMonth.value, this.fromYear.value, 
+        this.toDay.value, this.toMonth.value, this.toYear.value).subscribe(
+        res => {
+          const endDate = new Date();
+          console.log("New Leads Api Call: End Date & Time ", endDate, endDate.getMilliseconds());
+          console.log(res);
 
-        if (res["Error"] && res["Error"] == 0) {
-          this.newLeadsDetails = res["ProcessVariables"].userDetails || [];
+          if (res["Error"] && res["Error"] == 0) {
+            this.newLeadsDetails = res["ProcessVariables"].userDetails || [];
 
-          this.newLeadsDetails.forEach(el => {
-            el.url = this.getUrl(el["status"], el["leadId"], el["applicantId"], this.getRoles(), el);
-            if(el["auditTrialTabPage"] != null && el["auditTrialPageNumber"] != null) {
-              el["queryParams"] = {
-                tabName : el["auditTrialTabPage"],
-                page : el["auditTrialPageNumber"],
+            this.newLeadsDetails.forEach(el => {
+              el.url = this.getUrl(el["status"], el["leadId"], el["applicantId"], this.getRoles(), el);
+              if(el["auditTrialTabPage"] != null && el["auditTrialPageNumber"] != null) {
+                el["queryParams"] = {
+                  tabName : el["auditTrialTabPage"],
+                  page : el["auditTrialPageNumber"],
+                }
+              } else {
+                el["queryParams"] = null;
               }
-            } else {
-              el["queryParams"] = null;
+            });
+
+            this.cds.setIsEligibilityForReviews(this.isEligibilityForReviews);
+            // this.isTBMLoggedIn = this.getRoles().includes("TBM") || this.getRoles().includes("TMA");
+            this.cds.setIsTBMLoggedIn(this.isTBMLoggedIn);
+          } else if (res["login_required"] && res["login_required"] === true) {
+            this.utilService.clearCredentials();
+            // alert(res['message']);
+          } else {
+            if (res["ErrorMessage"]){
+            alert(res["ErrorMessage"]);
             }
-          });
-
-          this.cds.setIsEligibilityForReviews(this.isEligibilityForReviews);
-          // this.isTBMLoggedIn = this.getRoles().includes("TBM") || this.getRoles().includes("TMA");
-          this.cds.setIsTBMLoggedIn(this.isTBMLoggedIn);
-        } else if (res["login_required"] && res["login_required"] === true) {
-          this.utilService.clearCredentials();
-          // alert(res['message']);
-        } else {
-          if (res["ErrorMessage"]){
-          alert(res["ErrorMessage"]);
           }
+        },
+        error => {
+          console.log(error);
         }
-      },
-      error => {
-        console.log(error);
-      }
-    );
-  }
+      );
+    }
 
-  
+}
 
   getFilteredLeads() {
-    try{
-    const startDate = new Date();
-    console.log("FilteredLeads Api Call: Start Date & Time ",startDate, startDate.getMilliseconds());
-    this.service.getLeads(this.searchTxt, this.fromDay.value, this.fromMonth.value, this.fromYear.value, 
-      this.toDay.value, this.toMonth.value, this.toYear.value,"", this.allStatus).subscribe(
-      res => {
-        const endDate = new Date();
-        console.log("FilteredLeads Api Call: End Date & Time ", endDate, endDate.getMilliseconds());
-        // let decpty = this.encryptService.decryptResponse(res);
-        // console.log("dectypt ",decpty);
-        console.log("dectypt ",res);
-  
-        if (res["Error"] && res["Error"] == 0) {
-          this.userDetails = res["ProcessVariables"].userDetails || [];
+    try {
+      this.ngxService.start();
+      if(localStorage.getItem("token") && localStorage.getItem("userId")){
+        const startDate = new Date();
+        console.log("FilteredLeads Api Call: Start Date & Time ",startDate, startDate.getMilliseconds());
+        this.service.getLeads(this.searchTxt, this.fromDay.value, this.fromMonth.value, this.fromYear.value, 
+          this.toDay.value, this.toMonth.value, this.toYear.value,"", this.allStatus).subscribe(
+          res => {
+            const endDate = new Date();
+            console.log("FilteredLeads Api Call: End Date & Time ", endDate, endDate.getMilliseconds());
+            // let decpty = this.encryptService.decryptResponse(res);
+            // console.log("dectypt ",decpty);
+            console.log("dectypt ",res);
+      
+            if (res["Error"] && res["Error"] == 0) {
+              this.userDetails = res["ProcessVariables"].userDetails || [];
 
-          this.userDetails.forEach(el => {
-            el.url = this.getUrl(el["status"], el["leadId"], el["applicantId"], this.getRoles(), el);
-            if(el["auditTrialTabPage"] != null && el["auditTrialPageNumber"] != null) {
-              el["queryParams"] = {
-                tabName : el["auditTrialTabPage"],
-                page : el["auditTrialPageNumber"],
-              }
+              this.userDetails.forEach(el => {
+                el.url = this.getUrl(el["status"], el["leadId"], el["applicantId"], this.getRoles(), el);
+                if(el["auditTrialTabPage"] != null && el["auditTrialPageNumber"] != null) {
+                  el["queryParams"] = {
+                    tabName : el["auditTrialTabPage"],
+                    page : el["auditTrialPageNumber"],
+                  }
+                } else {
+                  el["queryParams"] = null;
+                }
+              });
+
+              this.cds.setIsEligibilityForReviews(this.isEligibilityForReviews);
+              // this.isTBMLoggedIn = this.getRoles().includes("TBM") || this.getRoles().includes("TMA");
+              this.cds.setIsTBMLoggedIn(this.isTBMLoggedIn);
+            } else if (res["login_required"] && res["login_required"] === true) {
+              this.utilService.clearCredentials();
+              // alert(res['message']);
             } else {
-              el["queryParams"] = null;
+
+              if (res["ErrorMessage"]) {
+              alert(res["ErrorMessage"]);
+              } else {
+                console.log("error ", res);
+                // alert("Session expired. Please login");
+                this.utilService.clearCredentials();
+              }
+              return;
             }
-          });
-
-          this.cds.setIsEligibilityForReviews(this.isEligibilityForReviews);
-          // this.isTBMLoggedIn = this.getRoles().includes("TBM") || this.getRoles().includes("TMA");
-          this.cds.setIsTBMLoggedIn(this.isTBMLoggedIn);
-        } else if (res["login_required"] && res["login_required"] === true) {
-          this.utilService.clearCredentials();
-          // alert(res['message']);
-        } else {
-
-          if (res["ErrorMessage"]) {
-           alert(res["ErrorMessage"]);
-          } else {
-            console.log("error ", res);
-            // alert("Session expired. Please login");
-            this.utilService.clearCredentials();
+          },
+          error => {
+            console.log(error);
           }
-           return;
-        }
-      },
-      error => {
-        console.log(error);
+        );
       }
-    );
     } catch (ex) {
       alert(ex.message);
+    } finally {
+      this.ngxService.stop();
     }
   }
 

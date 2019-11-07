@@ -54,10 +54,10 @@
         <div class="selectBox form-field-el">
             <label class="controltitle">User role</label>
             <select class="form-control" formControlName="userRoleId" [(ngModel)]="defaultSelectRole" >
-                <option [ngValue]="null" value="null" disabled>Chooswe your role</option>
-                <option *ngFor="let userRole of userRoles" value={{uwserRole.value}}>
-                    {{userRole.key}}w
-                </option>w
+                <option [ngValue]="null" value="null" disabled>Choose your role</option>
+                <option *ngFor="let userRole of userRoles" value={{userRole.value}}>
+                    {{userRole.key}}
+                </option>
             </select>
             <div *ngIf="formValue.userRoleId.errors" >
                 <!-- <div class="redalert" *ngIf="formValue.userRoleId.errors.required"> required</div> -->
