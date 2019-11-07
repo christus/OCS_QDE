@@ -58,22 +58,17 @@ export class AutoLogoutService {
 
     const isTokenAvailable = localStorage.getItem("token");
 
-    console.log("isTokenAvailable", isTokenAvailable);
-
     this.ngZone.run(() => {
       if (isTimeout && isTokenAvailable) {
         console.log(`Sie wurden automatisch nach ${MINUTES_UNITL_AUTO_LOGOUT} Minuten Inaktivität ausgeloggt.`);
 
         this.service.logout().subscribe(
-            res => {
-            },
-            error => {
-            }
-          );
+          res => {
+          },
+          error => {
+          }
+        );
         this.utilService.clearCredentials();
-
-
-        this.router.navigate(['login']);
       }
     });
   }

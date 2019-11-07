@@ -349,6 +349,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   applicantType: string;
   occupationRequired: boolean = true;
 
+
+  ageError:boolean = false;
+
+
   constructor(private renderer: Renderer2,
     private route: ActivatedRoute,
     private router: Router,
@@ -1583,6 +1587,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onBirthDateChange(value: Date){
 
+    this.ageError = false;
 
     let latest_date = this.datepipe.transform(value, 'dd-MMM-yyyy');
 
@@ -1598,9 +1603,24 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       month: { key: month, value: month },
       year: { key: year, value: year } 
     }
+
+     const dateofbirth = this.dateofBirthKendo;
+
+      console.log("dateofbirth", dateofbirth);
+      const d1: any = new Date(dateofbirth);
+      const d2: any = new Date();
+      var diff = d2 - d1;
+      var age = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
+      if (age < 18) {
+        this.ageError = true;
+        return;
+      } else {
+        this.ageError = false;
+      }
+
+
   }
 
-  ageError = false;
 
   submitDobDetails(form: NgForm, swiperInstance?: Swiper) {
     console.log("isTBMLoggedIn: ", this.isTBMLoggedIn);
@@ -3002,6 +3022,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   selectValueChanged(event, to, key?) {
     let whichSelectQde = this.qde.application.applicants[this.applicantIndex];
     let nick = to.getAttribute('nick').split(".");
+
     to.getAttribute('nick').split(".").forEach((val, i) => {
       if (val == 'day' || val == 'month' || val == 'year') {
 
@@ -3739,4 +3760,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.errorMessage = 'Something went wrong.';
     });
   }
+
+
+  doNothing(event) {
+    event.preventDefault();
+  }
+
 }

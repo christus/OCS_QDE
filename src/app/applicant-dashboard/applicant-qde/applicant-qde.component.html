@@ -424,7 +424,7 @@
 
                             <div class="row with_datepicker">
                               <div class="col4">
-                                <kendo-dropdownlist  [readonly] = "true" class="form-control" [data]="days"
+                                <kendo-dropdownlist   [readonly] = "true" class="form-control"
                                   textField="key" valueField="value" name="day" nick="personalDetails.day" tabindex="0"
                                   #dobDay (selectionChange)="selectValueChanged($event, dobDay.hostElement)"
                                   [(ngModel)]="dob.day">
@@ -432,7 +432,7 @@
                               </div>
 
                               <div class="col4">
-                                <kendo-dropdownlist   [readonly] = "true" class="form-control" [data]="months"
+                                <kendo-dropdownlist   [readonly] = "true" class="form-control"
                                   textField="key" valueField="value" name="month" tabindex="0"
                                   nick="personalDetails.month" #dobMonth
                                   (selectionChange)="selectValueChanged($event, dobMonth.hostElement)"
@@ -441,8 +441,8 @@
                               </div>
 
                               <div class="col4">
-                                <kendo-dropdownlist  [readonly] = "true" class="mob_personal_year form-control"
-                                  [data]="dobYears" textField="key" valueField="value" name="year" tabindex="0"
+                                <kendo-dropdownlist   [readonly] = "true" class="mob_personal_year form-control"
+                                  textField="key" valueField="value" name="year" tabindex="0"
                                   nick="personalDetails.year" #dobYear
                                   (selectionChange)="selectValueChanged($event, dobYear.hostElement)"
                                   [(ngModel)]="dob.year">

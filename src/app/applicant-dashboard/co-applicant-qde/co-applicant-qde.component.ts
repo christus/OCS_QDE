@@ -356,6 +356,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
   range;
 
+  ageError=false;
+
+
   // public defaultItem: { key: string, value: number } = { key: "Select item...", value: null };
   
   // public defaultItem: Array<{ key: string, value: number, inStock: boolean }> = [
@@ -1386,7 +1389,6 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     }
     
   }
-  private ageError=false;
 
   submitDobDetails(form: NgForm, swiperInstance ?: Swiper) {
     if(this.isTBMLoggedIn) {
@@ -4077,6 +4079,22 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       month: { key: month, value: month },
       year: { key: year, value: year } 
     }
+
+
+    const dateofbirth = this.dateofBirthKendo;
+
+    console.log("dateofbirth", dateofbirth);
+    const d1: any = new Date(dateofbirth);
+    const d2: any = new Date();
+    var diff = d2 - d1;
+    var age = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
+    if (age < 18) {
+      this.ageError = true;
+      return;
+    } else {
+      this.ageError = false;
+    }
+
   }
 
   onBirthDateChange(value: Date){
