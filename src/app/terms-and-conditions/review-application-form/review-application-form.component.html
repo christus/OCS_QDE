@@ -284,7 +284,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-12">
-                                        <div class="form-group" *ngIf="addressLineTwoValue">
+                                        <div class="form-group typ-optional" *ngIf="addressLineTwoValue">
                                               <input type="text" class="form-control" id="add-line2"
                                               required
                                               ngModel
@@ -293,6 +293,7 @@
                                               [(ngModel)]="addressLineTwoValue"
                                               name="addressLineTwo"/>
                                             <label for="prop-add2">Property address 2</label>
+                                            <span class="optional">optional</span>
                                         </div>
                                     </div>
                                 </div>
@@ -403,7 +404,7 @@
                                         </div>
                                     </div> -->
                                     <div class="col-6">
-                                        <div class="form-group inr filled">
+                                        <div class="form-group inr filled typ-optional">
                                               <input type="text" class="form-control" id="monthly-emi"
                                               required
                                               ngModel
@@ -412,6 +413,7 @@
                                               fieldFill
                                               name="monthlyEmi">                                          
                                               <label for="ex-emi">Existing monthly EMI</label>
+                                              <span class="optional">optional</span>
                                             <span class="addon">
                                                 <span class="icon icon-inr"></span>
                                             </span>

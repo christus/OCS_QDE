@@ -257,7 +257,7 @@
                   
                       </div>
                       <span class="seperator" *ngIf="residenceNumberStdCode">-</span>
-                      <div class="form-group" *ngIf="residenceNumberPhoneNumber">
+                      <div class="form-group typ-optional" *ngIf="residenceNumberPhoneNumber">
                         <input readonly="true"   type="text"
                                 class="form-control"
                                 id="res-no"
@@ -265,7 +265,7 @@
                                 [(ngModel)]="residenceNumberPhoneNumber"
                                 name="residenceNumber2" />
                           <label for="res-n" >Residence number</label>
-                          
+                          <span class="optional">optional</span>
                       </div>
                   </div>
                   <div class="residence-no" *ngIf="alternateResidenceNumberStdCode">
@@ -279,7 +279,7 @@
                         <label for="altrst">STD</label>
                     </div>
                     <span class="seperator" *ngIf="alternateResidenceNumberStdCode">-</span>
-                    <div class="form-group" *ngIf="alternateResidenceNumberPhoneNumber">
+                    <div class="form-group typ-optional" *ngIf="alternateResidenceNumberPhoneNumber">
                         <input readonly="true"     type="text"
                                   class="form-control"
                                   [(ngModel)]="alternateResidenceNumberPhoneNumber"
@@ -288,6 +288,7 @@
                                   id="altr-res-no"
                                   data-validation-attr="residenceno01" />
                         <label for="altr-res-n">Residence number</label>
+                        <span class="optional">optional</span>
                     </div>
                   </div>
               </div>
@@ -336,7 +337,7 @@
           </div>
           <div class="row">
               <div class="col-12">
-                  <div class="form-group">
+                  <div class="form-group typ-optional">
                     <input readonly="true"   type="text"
                             class="form-control"
                             id="address2"
@@ -348,7 +349,7 @@
                             required>
 
                       <label for="address22" >Address line 2</label>
-                      
+                      <span class="optional">optional</span>
                   </div>
               </div>
           </div>
@@ -440,7 +441,7 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <div class="form-group">
+                <div class="form-group typ-optional">
                   <input readonly="true"   type="text"
                           class="form-control"
                           id="address2"
@@ -452,7 +453,7 @@
                           required>
 
                     <label for="address22" >Address line 2</label>
-                    
+                    <span class="optional">optional</span>
                 </div>
             </div>
         </div>
@@ -587,7 +588,7 @@
               <div class="row" *ngIf="qde.application.applicants[applicantIndex].maritalStatus.amount">
                   <div class="col-6">
                       <h5 class="subtitle">Annual income of spouse</h5>
-                      <div class="form-group inr">
+                      <div class="form-group inr typ-optional">
                             <input readonly="true"  type="text"
                             class="form-control"
                             id="amount"
@@ -599,6 +600,7 @@
                             pattern="^-?\d*(\.\d+)?$" />
 
                             <label for="amount1">Amount </label>
+                            <span class="optional">optional</span>
                             <span class="addon">
                               <span class="icon icon-inr"></span>
                             </span>
@@ -898,7 +900,7 @@
           </div>
           <div class="row" *ngIf="qde.application.applicants[applicantIndex].officialCorrespondence.addressLineTwo">
               <div class="col-12">
-                  <div class="form-group">
+                  <div class="form-group typ-optional">
                         <input readonly="true"   type="text"
                                 class="form-control"
                                 id="ofcAddTwo"
@@ -909,7 +911,7 @@
                                 #ofcA2="ngModel"
                                 required />
                       <label for="ofcAddTwo1">Office address line2</label>
-
+                      <span class="optional">optional</span>
                   </div>
               </div>
           </div>
