@@ -64,7 +64,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
           propertyArea:{
             required:"Property Area is Mandatory",
             invalid:"Property Area is not valid",
-            
+            maxArea:"Property Area should not be more than 1 Lakh Sq foot"
           },
           pinCode: {
             required: "Property Pincode is Mandatory",
@@ -259,6 +259,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
   allClssAreas: Array<any> = [];
   isNumberLessThan50k: boolean;
   isNumberMoreThan100cr: boolean;
+  isAreaLessThan100k: boolean;
 
   fragmentSub: Subscription;
   tabName: string;
@@ -1329,15 +1330,27 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.allClssAreas = [];
   }
 
-  // 1000000000 = 100 crore
-  checkNumberLessThan50k(event) {
-    if(this.isValidNumber(event.target.value)) {
-      let n = parseInt(this.getNumberWithoutCommaFormat(event.target.value));
-      this.isNumberLessThan50k = (n < 50000);
-      this.isNumberMoreThan100cr = (n >= 1000000000);
-    } else {
+  checkAmountLimit(event) {
+    let n = parseInt(this.getNumberWithoutCommaFormat(event.target.value));
+    if(n < 50000){
+      this.isNumberLessThan50k = true;
+    }
+    else if(n >= 1000000001){
+      this.isNumberMoreThan100cr = true; 
+    }
+    else {
       this.isNumberLessThan50k = false;
       this.isNumberMoreThan100cr = false;
+    }
+  }
+
+  checkAreaLimit(event) {
+    let n = parseInt(this.getNumberWithoutCommaFormat(event.target.value));
+    if(n >= 100001){
+      this.isAreaLessThan100k = true;
+    }
+    else {
+      this.isAreaLessThan100k = false;
     }
   }
 

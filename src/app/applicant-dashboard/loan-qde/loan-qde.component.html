@@ -61,12 +61,13 @@
                         <div class="form-group inr">
                           <input [readonly]="isTBMLoggedIn" type="text" class="form-control" id="amt-require"
                             required autocomplete="off"
+                            maxlength="10"
                             [(ngModel)]="qde?.application.loanDetails.loanAmount.amountRequired"
                             #amountRequired = "ngModel"
                             name="amountRequired"
                             fieldFill
                             pattern="^[1-9][0-9]*$"
-                            (input)="checkNumberLessThan50k($event)">
+                            (input)="checkAmountLimit($event)">
     
                           <label for="amt-require">Amount required</label>
                           <span class="addon">
@@ -239,6 +240,7 @@
                               <div class="form-group">
                                   <input [readonly]="isTBMLoggedIn"
                                   type="text" autocomplete="off"
+                                  maxlength="6"
                                   class="form-control"
                                   id="pro-add-line2" 
                                   name="propertyAreaInSqFFeets"
@@ -246,11 +248,15 @@
                                   [(ngModel)]="propertyAreaValue"
                                   pattern="{{regexPattern.mobileNumber}}"
                                   fieldFill
+                                  (input)="checkAreaLimit($event)"
                                   required/>
                                   <label for="pro-add-line2">Property area in sq. fts.</label>
                                   <div *ngIf="(propertyArea.touched || propertyArea.dirty) && propertyArea.invalid" class="invalid-feedback">
                                     <!-- <div *ngIf="propertyArea.errors?.required">{{errors.loanDetails.property.propertyArea.required}}</div> -->
                                     <div *ngIf="propertyArea.errors?.pattern">{{errors.loanDetails.property.propertyArea.invalid}}</div>
+                                  </div>
+                                  <div class="invalid-feedback">
+                                    <div *ngIf="isAreaLessThan100k">{{errors.loanDetails.property.propertyArea.maxArea}}</div>
                                   </div>
                               </div>
                           </div>

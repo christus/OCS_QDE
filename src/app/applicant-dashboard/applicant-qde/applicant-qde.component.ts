@@ -63,7 +63,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     stdCode: "^[0][0-9]*$",
     mobileNumber: "^[1-9][0-9]*$",
     name: "^[A-Za-z ]{0,49}$",
-    organizationName: "^[0-9A-Za-z ]{0,49}$",
+    organizationName: "^[0-9A-Za-z, _&*#'/\\-@]{0,49}$",
     birthPlace: "^[A-Za-z ]{0,99}$",
     address: "^[0-9A-Za-z, _&*#'/\\-]{0,119}$",
     landmark: "^[0-9A-Za-z, _&*#'/\\-]{0,99}$",
