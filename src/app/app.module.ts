@@ -1,3 +1,4 @@
+import { AutoLogoutService } from './services/AutoLogoutService';
 import { CollateralComponent } from './applicant-dashboard/document-upload/collateral/collateral.component';
 import { BranchListComponent } from './admin/admin-panel/branch-list/branch-list.component';
 import { PmayListComponent } from './admin/admin-panel/pmay-list/pmay-list.component';
@@ -141,6 +142,7 @@ import { AdminAuditTrialComponent } from './admin/admin-audit-trial/admin-audit-
 import { ReassignComponent } from './reassign/reassign.component';
 import { CaptchaResolverService } from './services/captcha-resolver.service';
 import { DatePipe } from '@angular/common';
+
 
 
 const appRoutes: Routes = [
@@ -700,7 +702,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     DocAssessDoccatProfileMapResolverService,
     ApplicationRelationshipResolverService,
     CaptchaResolverService,
-    DatePipe
+    DatePipe,
+    AutoLogoutService
   ],
   bootstrap: [AppComponent]
 })

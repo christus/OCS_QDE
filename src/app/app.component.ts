@@ -9,6 +9,7 @@ import { UtilService } from './services/util.service';
 import { environment } from '../environments/environment';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { MobileService } from './services/mobile-constant.service';
+import { AutoLogoutService } from './services/AutoLogoutService';
 
 
 
@@ -28,6 +29,7 @@ export class AppComponent implements OnInit{
     private el: ElementRef, private renderer: Renderer2,
     nativeKeyboard: NativeKeyboard,
     private deviceService: DeviceDetectorService,
+    private autoLogout: AutoLogoutService,
     private mobileService: MobileService) { 
       this.isMobile = this.mobileService.isMobile;
       
