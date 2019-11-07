@@ -54,3 +54,9 @@
     color: #949494;
     padding: .47vw 1.56vw;
 }
+
+.form-control {
+    width: 100%;
+    touch-action: none;
+    pointer-events: none;
+}

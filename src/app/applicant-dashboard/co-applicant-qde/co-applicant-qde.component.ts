@@ -74,7 +74,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
   minValue: number = 1;
   options: Options = {
-    floor: 0,
+    floor: 1,
     ceil: 100,
     // step: 1,
     // showTicksValues: false,
