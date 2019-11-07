@@ -54,7 +54,8 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
             wrong: "please enter valid mobile number",
            required: "10 digit mobile number is mandatory",
            invalid: "Invalid Mobile Number",
-           minlength: "Mobile number must be 10 digits"
+           minlength: "Mobile number must be 10 digits",
+           sameNumber: "Mobile number is same as of second reference , please use different numbers",
           },
           addressLineOne: {
            required: "Address line One is Mandatory",

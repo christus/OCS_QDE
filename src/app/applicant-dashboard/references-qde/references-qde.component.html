@@ -149,6 +149,9 @@
                               <div *ngIf="refOneMobileNumber.errors?.pattern">{{errors.references.referenceOne.mobileNumber.invalid}}</div>
                               <div *ngIf="refOneMobileNumber.errors?.minlength">{{errors.references.referenceOne.mobileNumber.minlength}}</div>
                             </div>
+                            <div class="invalid-feedback">
+                                <div *ngIf="refOneMobileNumber.value == refTwoMobileNumber.value">{{errors.references.referenceOne.mobileNumber.sameNumber}}</div>
+                            </div>
 
                           </div>
 
@@ -191,8 +194,8 @@
                         </div>
                         <div class="btn-wrap">
                           <button type="submit" class="btn btn-primary"
-                          [ngClass]="{'disabled': !ref1Detail.valid}"
-                          [disabled]="!ref1Detail.valid">Next</button>
+                          [ngClass]="{'disabled': !ref1Detail.valid || (refOneMobileNumber.value == refTwoMobileNumber.value)}"
+                          [disabled]="!ref1Detail.valid || (refOneMobileNumber.value == refTwoMobileNumber.value)">Next</button>
                         </div>
                       </form>
 
@@ -262,7 +265,7 @@
                       </div>
                       <div class="btn-wrap">
                         <button type="submit" class="btn btn-primary"
-                          [ngClass]="{'disabled': !ref2Relationship.valid}"
+                          [ngClass]="{'disabled': !ref2Relationship.valid }"
                           [disabled]="!ref2Relationship.valid">Next</button>
                       </div>
                     </form>
