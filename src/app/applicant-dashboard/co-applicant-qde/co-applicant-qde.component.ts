@@ -74,7 +74,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
   minValue: number = 1;
   options: Options = {
-    floor: 1,
+    floor: 0,
     ceil: 100,
     // step: 1,
     // showTicksValues: false,
@@ -356,7 +356,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
   range;
 
-  ageError=false;
+  ageError:boolean = false;
 
 
   // public defaultItem: { key: string, value: number } = { key: "Select item...", value: null };
@@ -1120,7 +1120,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                   this.setStatusApiSub2 = this.qdeHttp.setStatusApi( applicationId, environment.status.QDECREATED).subscribe((response) => {
                     if(response["ProcessVariables"]["status"] == true) { 
                       // this.cds.changePanSlide2(true);
-                      this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant/'+this.coApplicantIndex], { queryParams: { tabName: this.fragments[11], page: 1 }});
+                      // this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant/'+this.coApplicantIndex], { queryParams: { tabName: this.fragments[11], page: 1 }});
+                      this.tabSwitch(12);
                     }
                   });
   
