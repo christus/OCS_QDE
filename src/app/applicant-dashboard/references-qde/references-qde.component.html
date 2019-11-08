@@ -150,7 +150,7 @@
                               <div *ngIf="refOneMobileNumber.errors?.minlength">{{errors.references.referenceOne.mobileNumber.minlength}}</div>
                             </div>
                             <div class="invalid-feedback">
-                                <div *ngIf="refOneMobileNumber.value == refTwoMobileNumber.value">{{errors.references.referenceOne.mobileNumber.sameNumber}}</div>
+                                <div *ngIf="refOneMobileNumber.touched && refOneMobileNumber.value == refTwoMobileNumber.value">{{errors.references.referenceOne.mobileNumber.sameNumber}}</div>
                             </div>
 
                           </div>
@@ -336,7 +336,7 @@
                                 <div *ngIf="refTwoMobileNumber.errors?.minlength">{{errors.references.referenceTwo.mobileNumber.minlength}}</div>  
                             </div>
                             <div class="invalid-feedback">
-                                <div *ngIf="refTwoMobileNumber.value == refOneMobileNumber.value">{{errors.references.referenceTwo.mobileNumber.sameNumber}}</div>
+                                <div *ngIf="refTwoMobileNumber.touched && refTwoMobileNumber.value == refOneMobileNumber.value">{{errors.references.referenceTwo.mobileNumber.sameNumber}}</div>
                             </div>
 
                           </div>

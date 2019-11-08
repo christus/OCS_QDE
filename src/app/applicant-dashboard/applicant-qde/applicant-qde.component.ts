@@ -2223,7 +2223,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       };
 
       this.qdeHttp.checkOccupationType(data).subscribe((response) => {
-
+        console.log("mainhudonfdnbhkdbsfkhgjkfhdjkghfrjkghfksdghkdfsyufk",response)
 
         if (response["ProcessVariables"]["status"]) {
           this.isOfficialCorrs = response["ProcessVariables"]["incomeConsider"];
