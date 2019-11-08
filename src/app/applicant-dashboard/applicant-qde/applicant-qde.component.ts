@@ -22,6 +22,7 @@ import { File } from '@ionic-native/file/ngx';
 import { screenPages } from '../../app.constants';
 import { UtilService } from '../../services/util.service';
 import { MobileService } from '../../services/mobile-constant.service';
+import { DatePipe } from '@angular/common';
 
 interface Item {
   key: string,
@@ -52,6 +53,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   panImage: String;
 
   imageURI: String;
+  isPermanentAddressSame: boolean = false;
 
   isTabDisabled: boolean;
   docName: boolean;
@@ -61,6 +63,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     stdCode: "^[0][0-9]*$",
     mobileNumber: "^[1-9][0-9]*$",
     name: "^[A-Za-z ]{0,49}$",
+    organizationName: "^[0-9A-Za-z, _&*#'/\\-@]{0,49}$",
     birthPlace: "^[A-Za-z ]{0,99}$",
     address: "^[0-9A-Za-z, _&*#'/\\-]{0,119}$",
     landmark: "^[0-9A-Za-z, _&*#'/\\-]{0,99}$",
@@ -193,6 +196,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   isIndividual: boolean = false;
   YYYY: number = new Date().getFullYear();
+
+  dateofBirthKendo:Date;
+  focusedDate: Date;
 
   applicantStatus: string = "";
 
@@ -343,6 +349,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   applicantType: string;
   occupationRequired: boolean = true;
 
+
+  ageError:boolean = false;
+
+
   constructor(private renderer: Renderer2,
     private route: ActivatedRoute,
     private router: Router,
@@ -351,6 +361,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     private cds: CommonDataService,
     private utilService: UtilService,
     private file: File,
+    public datepipe: DatePipe,
     private mobileService: MobileService) {
 
     this.qde = this.qdeService.defaultValue;
@@ -465,9 +476,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.titles = lov.LOVS.applicant_title;
       this.maleTitles = lov.LOVS.male_applicant_title;
       this.femaleTitles = lov.LOVS.female_applicant_title;
-      // this.docType = lov.LOVS.document_type;
+      // this.docType = lov.LOVS.pan_document_type;
       // Hardcoded values as per requirement
-      this.docType = [{ key: "Passport", value: "1" }, { key: "Driving License", value: "2" }, { key: "Voter's Identity Card", value: "3" }, { key: "Aadhaar Card", value: "4" }, { key: "NREGA Job Card", value: "5" }, { key: "CKYC KIN", value: "6" }, { key: "Aadhaar Token", value: "7" }]
+      this.docType = [{ key: "Passport", value: "1" }, { key: "Driving License", value: "2" }, { key: "Voter's Identity Card", value: "3" }, { key: "Aadhaar Card", value: "4" }, { key: "NREGA Job Card", value: "5" }]
       this.maritals = lov.LOVS.maritial_status;
       this.relationships = lov.LOVS.relationship;
       this.loanpurposes = lov.LOVS.loan_purpose;
@@ -759,6 +770,15 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
             this.dob.year = this.years.find(val => this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split('/')[0] == val.value);
           }
 
+          if(this.dob.year.value == "YYYY") {
+            this.focusedDate = new Date();
+          }else {
+            this.focusedDate = new Date(parseInt(this.dob.year.value.toString()), parseInt(this.dob.month.value.toString())-1, parseInt(this.dob.day.value.toString()));
+          }
+
+
+          console.log("focusedDate **", this.focusedDate);
+          
           // Date of Incorporation Day
           if (!isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split('/')[2]))) {
             this.organizationDetails.day = this.days[parseInt(this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split('/')[2])];
@@ -965,14 +985,14 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     // Check for invalid tabIndex
     if (tabIndex < this.fragments.length && tabIndex != -1) {
 
-      let t = fromQde ? this.page : 0;
+      let t = fromQde ? this.page : 1;
 
       if (this.swiperSliders && this.swiperSliders.length > 0) {
-        if (t == 0){
-          this.swiperSliders[tabIndex].setIndex( t);
+        if (t == 1 && !fromQde ) {
+          this.swiperSliders[tabIndex].setIndex( 0);
         } else {
           this.swiperSliders[tabIndex].setIndex(this.page - 1);
-        }        
+        }
       }
 
       // It should not allow to go to any other tabs if applicationId is not present
@@ -1565,8 +1585,42 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   }
 
+  onBirthDateChange(value: Date){
 
-  ageError = false;
+    this.ageError = false;
+
+    let latest_date = this.datepipe.transform(value, 'dd-MMM-yyyy');
+
+    let splitArr = latest_date.split('-');
+
+    let day = splitArr[0];
+
+    let month = splitArr[1].toUpperCase();
+
+    let year = splitArr[2]
+
+    this.dob =  { day: { key: day , value: day },
+      month: { key: month, value: month },
+      year: { key: year, value: year } 
+    }
+
+     const dateofbirth = this.dateofBirthKendo;
+
+      console.log("dateofbirth", dateofbirth);
+      const d1: any = new Date(dateofbirth);
+      const d2: any = new Date();
+      var diff = d2 - d1;
+      var age = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
+      if (age < 18) {
+        this.ageError = true;
+        return;
+      } else {
+        this.ageError = false;
+      }
+
+
+  }
+
 
   submitDobDetails(form: NgForm, swiperInstance?: Swiper) {
     console.log("isTBMLoggedIn: ", this.isTBMLoggedIn);
@@ -1579,7 +1633,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         return;
       }
 
-      const dateofbirth = form.value.year.value + '-' + form.value.month.value + '-' + form.value.day.value;
+      //const dateofbirth = form.value.year.value + '-' + form.value.month.value + '-' + form.value.day.value;
+
+      const dateofbirth = this.dateofBirthKendo;
+
+      console.log("dateofbirth", dateofbirth);
       const d1: any = new Date(dateofbirth);
       const d2: any = new Date();
       var diff = d2 - d1;
@@ -2275,7 +2333,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
               this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
-          this.tabSwitch(9);
+          this.router.navigate([], { queryParams: { tabName: 'income1', page: 1 } });
+          // this.tabSwitch(9,true);
         } else {
           this.isErrorModal = true;
           this.errorMessage = "Something went wrong, please try again later.";
@@ -2506,7 +2565,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   // Income Details
   //-----------------------------------------------------------------------
 
-  submitAnnualFamilyIncome(form: NgForm) {
+  submitAnnualFamilyIncome(form: NgForm, swiperInstance?: Swiper) {
     if (this.isTBMLoggedIn) {
       this.router.navigate(['/applicant', this.qde.application.applicants[this.applicantIndex].applicantId, 'co-applicant']);
     } else {
@@ -2536,7 +2595,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           });
 
           // Show Proceed Modal
-          this.isApplicantRouteModal = true;
+            this.isApplicantRouteModal = true;
         } else {
           this.isErrorModal = true;
           this.errorMessage = "Something went wrong, please try again later.";
@@ -2579,6 +2638,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           this.isApplicantRouteModal = true;
           // this.router.navigate(['/applicant', this.qde.application.applicationId, 'co-applicant'], {fragment: 'dashboard'} );
           // this.goToNextSlide(swiperInstance);
+          
         } else {
           this.isErrorModal = true;
           this.errorMessage = "Something went wrong, please try again later.";
@@ -2783,6 +2843,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         this.tabSwitch(8);
       } else {
         this.tabSwitch(9);
+        // this.router.navigate([], { queryParams: { tabName: 'income1', page: 0 } });
       }
     }
     else {
@@ -2844,6 +2905,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
               this.tabSwitch(8);
             } else {
               this.tabSwitch(9);
+              // this.router.navigate([], { queryParams: { tabName: 'income1', page: 0 } });
             }
           } else {
             this.isErrorModal = true;
@@ -2960,6 +3022,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   selectValueChanged(event, to, key?) {
     let whichSelectQde = this.qde.application.applicants[this.applicantIndex];
     let nick = to.getAttribute('nick').split(".");
+
     to.getAttribute('nick').split(".").forEach((val, i) => {
       if (val == 'day' || val == 'month' || val == 'year') {
 
@@ -3161,9 +3224,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.qde.application.applicants[this.applicantIndex].permanentAddress.zipcodeId = this.qde.application.applicants[this.applicantIndex].communicationAddress.zipcodeId;
       this.qde.application.applicants[this.applicantIndex].permanentAddress.stateId = this.qde.application.applicants[this.applicantIndex].communicationAddress.stateId;
       this.qde.application.applicants[this.applicantIndex].permanentAddress.cityId = this.qde.application.applicants[this.applicantIndex].communicationAddress.cityId;
-
+      this.isPermanentAddressSame=true;
 
     } else {
+      this.isPermanentAddressSame = false;
       this.qde.application.applicants[this.applicantIndex].permanentAddress.addressLineOne = "";
       this.qde.application.applicants[this.applicantIndex].permanentAddress.addressLineTwo = "";
       this.qde.application.applicants[this.applicantIndex].permanentAddress.zipcode = "";
@@ -3696,4 +3760,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.errorMessage = 'Something went wrong.';
     });
   }
+
+
+  doNothing(event) {
+    event.preventDefault();
+  }
+
 }

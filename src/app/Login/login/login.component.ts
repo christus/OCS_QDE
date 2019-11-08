@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     // this.catchaImage = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAAAyCAYAAAC+jCIaAAABc0lEQVR42u3bwRHCIBAFUOuxCbuw/xZSgTagkRBWdsk7/IOOyWSWl0BAbtu2vURG56YIApaAtVruj+fHqA1YQ0GBVQhWxsYDqzisrI0HElhgZYU1s4iZupxf1wJaEVjZGhCsRWF9a1ywwDrViJnGNyAtAitbo4IVCCuyCzgCa0bDghUEK3KM0XI+sBaEFT2AbTkPWAvDiuqe/g0ZrESwoordiwqsC8HqKfgZWLPn2CRouuFsQ/cc33ttGWBF1DX7ZC1YE2CN6AmyP0mndIU9x/5z/JcJVta35XSD916U1Qs+ElaFNcup0w1XGmz3YFkeVqUV/iqw9m7YT5+rvalOXdIBqw1WxsX59IvQV5p3OgJr76lVDtaK27UqXFvL99VucrASdIdggRUO6+iY1/YvsJqw7P0eLLBCYFV6iQIr+ZZ9sMAK2fFddesZWGCBtcof845CAQsssMASsAQsEbAELAFLBCwBS8ASsBRBwBKwBCyR0XkDjNqPBC5GlaIAAAAASUVORK5CYII=";
     this.catchaImage = "data:image/png;base64," + this.base64Data;
     this.oldRefId = this.catchaImageData["catchaImage"]["refId"];
-    console.log("catcha image in on init",  this.catchaImageData["catchaImage"]["catchaImage"]);
+    // console.log("catcha image in on init",  this.catchaImageData["catchaImage"]["catchaImage"]);
   }
 
   login() {
@@ -66,6 +66,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
       this.sessionMessage = "Enter Captcha Text";
     } else {
       const startDate = new Date();
+      const userEmailId: string = this.userName.toLocaleLowerCase();
       console.log("Login Api Call: User Id ", this.userName, " Start Date & Time ", startDate, startDate.getMilliseconds());
       const data = {
         email: this.userName.trim().toLowerCase()+ "@icicibankltd.com",
@@ -73,8 +74,10 @@ export class LoginComponent implements OnInit, AfterViewInit {
         removeExistingSession: false,
         appId: "OCS",
         refId: this.oldRefId,
-        captcha: this.captchaText
+        captcha: this.captchaText,
+        useADAuth: userEmailId.startsWith("he")
       };
+      console.log("login Data: ",data);
       let token = localStorage.getItem("token");
 
       console.log("Login Encrytion", this.encrytionService.encrypt(JSON.stringify(data), this.sharedKsy));
@@ -239,4 +242,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
     });
     
   }
+  cancelProcess() {
+    this.activeSessionExists = false;
+    this.generateCatchaImage();
+  }
+ 
 }

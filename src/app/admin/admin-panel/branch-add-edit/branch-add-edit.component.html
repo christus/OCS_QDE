@@ -1,20 +1,36 @@
 <button class="btn btn-default" routerLink="/admin/lovs/branch_list">Go Back</button><br><br>
+<span class="redalert">*All fields are mandatory</span>
 <form [formGroup]="registerUser" class="branch-edit" (ngSubmit)="onSubmit()"  autocomplete="off">
     <div class="inputBox form-field-el">
             <label for="Value" class="inputText">Value:</label>
-            <input type="text" id="Value" [(ngModel)]="Value" class="form-control" formControlName="Value" fieldFill autocomplete="nope"/> 
+            <input type="text" id="Value" [(ngModel)]="Value" class="form-control" formControlName="Value" fieldFill autocomplete="off" required/> 
+            <ng-container *ngIf="formValue.Value.errors">
+            <span class="redalert" *ngIf="formValue.Value.errors.required">Kindly provide value as it is mandatory</span>
+        </ng-container>
     </div>
     <div class="inputBox form-field-el">
             <label for="description" class="inputText">Description:</label>
-            <input type="text" id="description"  [(ngModel)]="description" class="form-control" fieldFill formControlName="description" autocomplete="nope"/>
+            <input type="text" id="description"  [(ngModel)]="description" class="form-control" fieldFill formControlName="description" autocomplete="off" required/>
+            <ng-container *ngIf="formValue.description.errors">
+                <span class="redalert" *ngIf="formValue.description.errors.required">Kindly provide description as it is
+                    mandatory</span>
+            </ng-container>
     </div>
      <div class="inputBox form-field-el">
         <label for="branchCode" class="inputText">Branch code:</label>
-        <input type="text" id="branchCode" class="form-control" [(ngModel)]="branchCode" fieldFill formControlName="branchCode" autocomplete="nope"/>
+        <input type="text" id="branchCode" class="form-control" [(ngModel)]="branchCode" fieldFill formControlName="branchCode" autocomplete="off" required/>
+        <ng-container *ngIf="formValue.branchCode.errors">
+                <span class="redalert" *ngIf="formValue.branchCode.errors.required">Kindly provide branchCode as it is
+                    mandatory</span>
+            </ng-container>
     </div>
     <div class="inputBox form-field-el">
         <label for="address" class="inputText">Address </label>
-        <input type="text" id="address"  class="form-control" [(ngModel)]="address" fieldFill formControlName="address" autocomplete="nope" />
+        <input type="text" id="address"  class="form-control" [(ngModel)]="address" fieldFill formControlName="address" autocomplete="off" required />
+        <ng-container *ngIf="formValue.address.errors">
+                <span class="redalert" *ngIf="formValue.address.errors.required">Kindly provide address as it is
+                    mandatory</span>
+            </ng-container>
     </div>
     <!-- <div class="inputBox">
         <label for="branchType" class="inputText">Branch type </label>
@@ -24,24 +40,36 @@
 
     <div class="selectBox form-field-el">
         <label class="controltitle">Branch type</label>
-        <select class="form-control" formControlName="branchType">
+        <select class="form-control" formControlName="branchType" [ngModel]="defaultBranchType" required>
             <option  [ngValue]="null" disabled>Choose branch type</option>
             <option value="Single Branch">Single Branch</option>
             <option value="Multi Branch">Multi Branch</option>
         </select>
+        <ng-container *ngIf="formValue.branchType.errors">
+                <span class="redalert" *ngIf="formValue.branchType.errors.required">Kindly provide branchType as it is
+                    mandatory</span>
+            </ng-container>
     </div>
 
 
     <div class="inputBox form-field-el">
         <label for="newFinnOneCode" class="inputText" >NewFinnOne code:</label>
-        <input type="text" id="newFinnOneCode"  [(ngModel)]="newFinnOneCode" class="form-control" fieldFill formControlName="newFinnOneCode" autocomplete="nope" />
+        <input type="text" id="newFinnOneCode"  [(ngModel)]="newFinnOneCode" class="form-control" fieldFill formControlName="newFinnOneCode" autocomplete="off" required />
+        <ng-container *ngIf="formValue.newFinnOneCode.errors">
+                <span class="redalert" *ngIf="formValue.newFinnOneCode.errors.required">Kindly provide newFinnOneCode as it is
+                    mandatory</span>
+            </ng-container>
     </div>
 
     <div class="inputBox form-field-el reportingToBlock" #selectBox>
         <label for="city" class="">City:</label>
-        <input type="text" id="city"   [(ngModel)]="city" (input)="filterLeads($event)" class="form-control"  formControlName="city" fieldFill  autocomplete="nope"/>
-        <input type="hidden" class="form-control" hidden   [(ngModel)]="cityInp"  formControlName="cityInp" #cityEl  autocomplete="nope"/>
-        <span class="reporting_to hide">
+        <input type="text" id="city"   [(ngModel)]="city" (input)="filterLeads($event)" class="form-control"  formControlName="city" fieldFill  autocomplete="off" required/>
+        <ng-container *ngIf="formValue.city.errors">
+                <span class="redalert" *ngIf="formValue.city.errors.required"><br>Kindly provide city as it is
+                    mandatory</span>
+            </ng-container>
+        <input type="hidden" class="form-control" hidden   [(ngModel)]="cityInp"  formControlName="cityInp" #cityEl  autocomplete="off"/>
+        <span class="reporting_to hide" #cityDropDown>
             <ul>
                 <li #city class="item" id="{{i.cityId}}"  (click)="selectedCity(in, i)" *ngFor="let i of filteredItems;let in=index;">
                     {{i.cityDescription}}
@@ -53,9 +81,13 @@
 
     <div class="inputBox form-field-el reportingToBlock reporting_to_margin" #selectBox2>
             <label for="zipCode" class="">Zip code:</label>
-            <input type="text" id="zipCode"  [(ngModel)]="zipCode" (input)="filteredZipItems($event)" class="form-control"  formControlName="zipCode" fieldFill  autocomplete="nope"/>
-            <input type="hidden" class="form-control" hidden  [(ngModel)]="zipCodeInp" formControlName="zipCodeInp" #zipCodeEl  autocomplete="nope"/>
-            <span class="reporting_to hide">
+            <input type="text" id="zipCode"  [(ngModel)]="zipCode" (input)="filteredZipItems($event)" class="form-control"  formControlName="zipCode" fieldFill  autocomplete="off" required/>
+            <ng-container *ngIf="formValue.zipCode.errors">
+                    <span class="redalert" *ngIf="formValue.zipCode.errors.required"><br>Kindly provide zipCode as it is
+                        mandatory</span>
+                </ng-container>
+            <input type="hidden" class="form-control" hidden  [(ngModel)]="zipCodeInp" formControlName="zipCodeInp" #zipCodeEl  autocomplete="off"/>
+            <span class="reporting_to hide" #zipDropDown>
                 <ul>
                     <li #zipCode class="item" id="{{i.zipcodeId}}"  (click)="selectedzipCode(in, i)" *ngFor="let i of filteredZipCodeItems;let in=index;">
                         {{i.zipcodeValue}}
@@ -65,7 +97,19 @@
         </div>
 
     <div class="inputBox form-field-el">
-        <button type="submit" class="btn btn-default" > Submit   </button>
+        <button type="submit" class="btn btn-default" [ngClass]="{'disabled': (!registerUser.valid)}" [disabled]="!registerUser.valid" > Submit   </button>
     </div> 
 
 </form>
+<div class="overlay" [ngClass]="{'active': isErrorModal}">
+    <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isErrorModal}">
+        <a class="modal-close" (click)="isErrorModal = false"><span class="icon icon-close"></span></a>
+        <div class="modal-body">
+            <h1>{{errorMsg}}</h1>
+            <br><br>
+            <div class="btn-wrap">
+                <button class="btn btn-border" (click)="isErrorModal = false">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

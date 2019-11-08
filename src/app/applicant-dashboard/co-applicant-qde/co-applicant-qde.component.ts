@@ -21,6 +21,9 @@ import { environment } from 'src/environments/environment.prod';
 import { screenPages } from '../../app.constants';
 import { UtilService } from '../../services/util.service';
 import { MobileService } from '../../services/mobile-constant.service';
+import { DatePipe } from '@angular/common';
+import { SelectionRangeEnd } from '@progress/kendo-angular-dateinputs';
+
 
 interface Item {
   key: string,
@@ -52,6 +55,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     mobileNumber: "^[1-9][0-9]*$",
     stdCode: "^[0][0-9]*$",
     name: "^[A-Za-z ]{0,49}$",
+    organizationName: "^[0-9A-Za-z, _&*#'/\\-@]{0,49}$",
     birthPlace:"^[A-Za-z ]{0,99}$",
     address : "^[0-9A-Za-z, _&*#'/\\-]{0,119}$",
     landmark : "^[0-9A-Za-z, _&*#'/\\-]{0,99}$",
@@ -70,7 +74,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
   minValue: number = 1;
   options: Options = {
-    floor: 0,
+    floor: 1,
     ceil: 100,
     // step: 1,
     // showTicksValues: false,
@@ -120,7 +124,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   myHeaders: { [header: string]: string | string[] } = {
     'Content-Type': 'multipart/form-data',
   };
-
+  
   lhsConfig = {
     noSwiping: true,
     noSwipingClass: '',
@@ -174,12 +178,15 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   isAlternateEmailId: boolean = false;
   isAlternateMobileNumber: boolean = false;
   isAlternateResidenceNumber: boolean = false;
+  isPermanentAddressSame: boolean = false;
   
   applicantIndividual: boolean = true;
   YYYY: number = new Date().getFullYear();
 
   // For Hide/Show tabs between Indi and Non indi
   applicantStatus:string = "" ;
+
+  dateofBirthKendo:Date;
 
   fragments = [ 'dashboard',
                 'pan1',
@@ -341,7 +348,18 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   applicantRelationships: Array<any>;
   doNotSelectDefault: boolean = false;
 
-  public defaultItem: { key: string, value: number } = { key: "Select Title", value: null };
+  focusedDate:Date;
+
+  focusIncorpDate:Date;
+
+  SelectionRangeEnd: SelectionRangeEnd;
+
+  range;
+
+  ageError:boolean = false;
+
+
+  // public defaultItem: { key: string, value: number } = { key: "Select item...", value: null };
   
   // public defaultItem: Array<{ key: string, value: number, inStock: boolean }> = [
   //   { key: "Select Title", value: null, inStock: false }
@@ -359,6 +377,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
               private qdeService: QdeService,
               private cds: CommonDataService,
               private utilService: UtilService,
+              public datepipe: DatePipe,
               private mobileService: MobileService) {
     this.qde = this.qdeService.defaultValue;
 
@@ -477,8 +496,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       // this.docType = lov.LOVS.document_type;
       // Hardcoded values as per requirement
       this.docType = [{key: "Passport", value:"1"},{key: "Driving License", value:"2"},{key: "Voter's Identity Card", value:"3"},
-                      {key: "Aadhaar Card", value:"4"},{key: "NREGA Job Card", value:"5"},{key: "CKYC KIN", value:"6"},
-                      {key: "Aadhaar Token", value:"7"}]
+                      {key: "Aadhaar Card", value:"4"},{key: "NREGA Job Card", value:"5"}
+                      ]
       this.maritals = lov.LOVS.maritial_status;
       // this.relationships = lov.LOVS.relationship;
       this.loanpurposes = lov.LOVS.loan_purpose;
@@ -518,7 +537,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
       // this.docType = [{"key": "Aadhar", "value": "1"},{"key": "Driving License", "value": "2"},{"key": "passport", "value": "3"}];
 
-      this.selectedTitle = this.defaultItem;
+      this.selectedTitle = this.titles[0];
       this.selectedReligion = this.religions[0];
       this.selectedMaritialStatus = this.maritals[0];
       this.selectedCategory = this.categories[0];
@@ -798,14 +817,13 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       this.isTabDisabled = true;
     }
 
-    let t = fromQde ? this.page: 0;
-
+    let t = fromQde ? this.page: 1;
     if(this.swiperSliders && this.swiperSliders.length > 0) {
-      if (t == 0){
-        this.swiperSliders[tabIndex].setIndex( t);
-      } else {
+      // if (t == 1 && !fromQde){ 
+      //   this.swiperSliders[tabIndex].setIndex(0);
+      // } else {
       this.swiperSliders[tabIndex].setIndex(this.page-1);
-      }
+      // }
     }
 
     // Check for invalid tabIndex
@@ -896,6 +914,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       this.qde.application.applicants[this.coApplicantIndex].pan.docType = form.value.docTypeindividual.value;
       this.qde.application.applicants[this.coApplicantIndex].pan.docNumber = form.value.docNumber;
       if(this.isValidPan == false || this.isValidPan == null) {
+
         this.checkPanValidSub = this.qdeHttp.checkPanValid(this.qdeService.getFilteredJson({actualPanNumber: form.value.pan})).subscribe((response) => {
   
           // response["ProcessVariables"]["status"] = true; // Comment while deploying if service is enabled false
@@ -905,8 +924,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             this.qde.application.applicants[this.coApplicantIndex].pan.panVerified = this.isValidPan = response['ProcessVariables']['isValidPan'];
   
             let processVariables = response["ProcessVariables"];//need to check its needed for non individual
-            this.qde.application.applicants[this.coApplicantIndex].personalDetails.firstName = processVariables["firstName"];
-            this.qde.application.applicants[this.coApplicantIndex].personalDetails.lastName = processVariables["lastName"];
+            if (processVariables["firstName"] != "" && processVariables["lastName"] != ""){
+              this.qde.application.applicants[this.coApplicantIndex].personalDetails.firstName = processVariables["firstName"];
+              this.qde.application.applicants[this.coApplicantIndex].personalDetails.lastName = processVariables["lastName"];
+            }            
             if(processVariables["applicantTitleId"] > 0) {
               this.qde.application.applicants[this.coApplicantIndex].personalDetails.title  = processVariables["applicantTitleId"];
             }
@@ -1098,7 +1119,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                   this.setStatusApiSub2 = this.qdeHttp.setStatusApi( applicationId, environment.status.QDECREATED).subscribe((response) => {
                     if(response["ProcessVariables"]["status"] == true) { 
                       // this.cds.changePanSlide2(true);
-                      this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant/'+this.coApplicantIndex], { queryParams: { tabName: this.fragments[11], page: 1 }});
+                      // this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant/'+this.coApplicantIndex], { queryParams: { tabName: this.fragments[11], page: 1 }});
+                      this.tabSwitch(12);
                     }
                   });
   
@@ -1367,7 +1389,6 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     }
     
   }
-  private ageError=false;
 
   submitDobDetails(form: NgForm, swiperInstance ?: Swiper) {
     if(this.isTBMLoggedIn) {
@@ -1378,7 +1399,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       if (form && !form.valid) {
         return;
       }
-      const dateofbirth = form.value.year.value+'-'+form.value.month.value+'-'+form.value.day.value;
+      // const dateofbirth = form.value.year.value+'-'+form.value.month.value+'-'+form.value.day.value;
+
+      const dateofbirth = this.dateofBirthKendo;
+
       const d1:any = new Date(dateofbirth);
       const d2:any = new Date();
       var diff = d2 - d1 ;
@@ -2869,8 +2893,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       this.qde.application.applicants[this.coApplicantIndex].permanentAddress.cityId = this.qde.application.applicants[this.coApplicantIndex].communicationAddress.cityId;
       this.qde.application.applicants[this.coApplicantIndex].permanentAddress.stateId = this.qde.application.applicants[this.coApplicantIndex].communicationAddress.stateId;
       this.qde.application.applicants[this.coApplicantIndex].permanentAddress.cityState = this.qde.application.applicants[this.coApplicantIndex].communicationAddress.cityState;
- 
+      this.isPermanentAddressSame = true;
     } else {
+      this.isPermanentAddressSame = false;
       this.qde.application.applicants[this.coApplicantIndex].permanentAddress.addressLineOne = "";
       this.qde.application.applicants[this.coApplicantIndex].permanentAddress.addressLineTwo = "";
       this.qde.application.applicants[this.coApplicantIndex].permanentAddress.zipcode = "";
@@ -2879,6 +2904,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       this.qde.application.applicants[this.coApplicantIndex].permanentAddress.zipcodeId = "";
       this.qde.application.applicants[this.coApplicantIndex].permanentAddress.cityId = "";
       this.qde.application.applicants[this.coApplicantIndex].permanentAddress.stateId = "";
+      this.qde.application.applicants[this.coApplicantIndex].permanentAddress.cityState = "";
     }
   }
 
@@ -2969,6 +2995,16 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         this.dob.year = this.years.find(val => this.qde.application.applicants[this.coApplicantIndex].personalDetails.dob.split('/')[0] == val.value);
       }
 
+      if(this.dob.year.value == "YYYY") {
+        this.focusedDate = new Date();
+      }else {
+        this.focusedDate = new Date(parseInt(this.dob.year.value.toString()), parseInt(this.dob.month.value.toString())-1, parseInt(this.dob.day.value.toString()));
+      }
+
+
+      console.log("focusedDate **", this.focusedDate);
+
+
       // Date of Incorporation Day
       if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].organizationDetails.dateOfIncorporation.split('/')[2])) ) {
         this.organizationDetails.day = this.days[parseInt(this.qde.application.applicants[this.coApplicantIndex].organizationDetails.dateOfIncorporation.split('/')[2])];
@@ -2983,6 +3019,15 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].organizationDetails.dateOfIncorporation.split('/')[0])) ) {
         this.organizationDetails.year = this.years.find(val => this.qde.application.applicants[this.coApplicantIndex].organizationDetails.dateOfIncorporation.split('/')[0] == val.value);
       }
+
+      if(this.organizationDetails.year.value == "YYYY") {
+        this.focusIncorpDate = new Date();
+      }else {
+        this.focusIncorpDate = new Date(parseInt(this.organizationDetails.year.value.toString()), parseInt(this.organizationDetails.month.value.toString())-1, parseInt(this.organizationDetails.day.value.toString())) ||  new Date();
+      }
+
+
+      console.log("focusedDate **", this.focusIncorpDate);
 
       // Constitution
       if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].organizationDetails.constitution)) ) {
@@ -3916,16 +3961,18 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   changeTitle(event) {
-    console.log("mamama",event)
-    if(event.value == null){
-      this.doNotSelectDefault = false;
-      return
-    }
-    else{
-      this.doNotSelectDefault = true;
       let t = this.applicantRelationships.find(v => v.relationShipId == this.selectedRelationship).applicantTitles.find(v => v.applicantTitleId == this.selectedTitle.value);
       this.qde.application.applicants[this.coApplicantIndex].personalDetails.gender = t.genderId;
-    }
+    // console.log("mamama",event)
+    // if(event.value == null){
+    //   this.doNotSelectDefault = false;
+    //   return
+    // }
+    // else{
+    //   this.doNotSelectDefault = true;
+    //   let t = this.applicantRelationships.find(v => v.relationShipId == this.selectedRelationship).applicantTitles.find(v => v.applicantTitleId == this.selectedTitle.value);
+    //   this.qde.application.applicants[this.coApplicantIndex].personalDetails.gender = t.genderId;
+    // }
   }
 
   setRelationship(mainApplicant: Applicant, coApplicantIndex: string | number) {
@@ -4009,4 +4056,65 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         this.errorMessage = 'Something went wrong.';
     });
   }
+
+  onDateOfIncorpChange(value:Date) {
+
+    let latest_date = this.datepipe.transform(value, 'dd-MMM-yyyy');
+
+    if (new Date(latest_date) > new Date()) {
+      this.isErrorModal = true;
+      this.errorMessage = 'Selected date must not be greater than today date';
+      return;
+    }
+
+    let splitArr = latest_date.split('-');
+
+    let day = splitArr[0];
+
+    let month = splitArr[1].toUpperCase();
+
+    let year = splitArr[2]
+
+    this.organizationDetails =  { day: { key: day , value: day },
+      month: { key: month, value: month },
+      year: { key: year, value: year } 
+    }
+
+
+    const dateofbirth = this.dateofBirthKendo;
+
+    console.log("dateofbirth", dateofbirth);
+    const d1: any = new Date(dateofbirth);
+    const d2: any = new Date();
+    var diff = d2 - d1;
+    var age = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
+    if (age < 18) {
+      this.ageError = true;
+      return;
+    } else {
+      this.ageError = false;
+    }
+
+  }
+
+  onBirthDateChange(value: Date){
+
+
+    let latest_date = this.datepipe.transform(value, 'dd-MMM-yyyy');
+
+    let splitArr = latest_date.split('-');
+
+    let day = splitArr[0];
+
+    let month = splitArr[1].toUpperCase();
+
+    let year = splitArr[2]
+
+    this.dob =  { day: { key: day , value: day },
+      month: { key: month, value: month },
+      year: { key: year, value: year } 
+    }
+    
+  }
+
 }

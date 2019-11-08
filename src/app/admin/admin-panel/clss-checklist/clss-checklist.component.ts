@@ -40,6 +40,8 @@ export class ClssChecklistComponent implements OnInit {
 
   searchKey:string;
   tempLovs: Array<CLSS>;
+  isErrorModal:boolean = false;
+  errorMsg: string;
   // previousLength: number;
 
   lovs: Array<CLSS>;
@@ -117,11 +119,15 @@ export class ClssChecklistComponent implements OnInit {
             this.lovs[i].isEdit = true;
           });
         } else {
-          alert("Please enter valid data. Server does'nt Accept Invalid entries");
+          this.isErrorModal = true;
+          this.errorMsg = "Please enter valid data. Server does not Accept Invalid entries";
+          //alert("Please enter valid data. Server does'nt Accept Invalid entries");
         }
       });
     } else {
-      alert("Please enter valid data.");
+      this.isErrorModal = true;
+      this.errorMsg = "Please enter valid data";
+      //alert("Please enter valid data.");
     }
 
     console.log(this.lovs[index]);
@@ -159,6 +165,10 @@ export class ClssChecklistComponent implements OnInit {
     if(confirm("Are you sure?")) {
       this.qdeHttp.softDeleteLov(dude).subscribe(res => {
         // console.log(res['ProcessVariables']);
+        if(res['ProcessVariables']['status']){
+          this.isErrorModal = true;
+          this.errorMsg = "Deleted successfully";
+        }
         this.refresh();
       });
       this.tempLovs = this.lovs;
@@ -259,10 +269,15 @@ export class ClssChecklistComponent implements OnInit {
   search(event) {
     this.qdeHttp.adminClssSearch(event.target.value).subscribe(response => {
       console.log("mamam",response)
+      if(response['ProcessVariables']['status']){
       this.lovs = response["ProcessVariables"]["clssDetailsList"]
       for(var x in this.lovs){
         this.lovs[x].isEdit=true;
       }
+    }else{
+      this.isErrorModal = true;
+      this.errorMsg = "No data present further";
+    }
     });
   }
 

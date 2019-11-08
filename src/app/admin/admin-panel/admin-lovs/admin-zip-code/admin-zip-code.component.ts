@@ -28,6 +28,8 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
   selectedCity: Item;
   description: string;
   value: string;
+  isErrorModal:boolean = false;
+  errorMsg: string;
 
   tempData: Array<any>;
 
@@ -101,10 +103,14 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
         this.totalElements = this.route.snapshot.data['eachLovs']['ProcessVariables']['totalPages'] * this.perPage;
         // this.perPageCount = Math.ceil(this.totalElements/this.perPage);
       } else {
-        alert('No Data Present');
+        this.isErrorModal = true;
+        this.errorMsg = "No Data Present";
+        //alert('No Data Present');
       }
     } else {
-      alert('No Data Present');
+        this.isErrorModal = true;
+        this.errorMsg = "No Data Present";
+        //alert('No Data Present');
     }
 
     // States
@@ -116,7 +122,9 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
       this.stateChanged(this.selectedState.value);
       console.log(this.selectedState)
     } else {
-      alert('No Data Present');
+        this.isErrorModal = true;
+        this.errorMsg = "No Data Present";
+        //alert('No Data Present');
     }
   }
 
@@ -152,10 +160,14 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
 
     this.subs.push(this.qdeHttp.insertUpdateEachLovs(dude).subscribe(res => {
       if(res['ProcessVariables']['status'] == true) {
-        alert("ZipCode Saved Successfully!");
+        this.isErrorModal = true;
+        this.errorMsg = "ZipCode Saved Successfully!";
+        //alert("ZipCode Saved Successfully!");
         this.isAdd = false;
       } else {
-        alert(res['ProcessVariables']['errorMessage']);
+        this.isErrorModal = true;
+        this.errorMsg = res['ProcessVariables']['errorMessage'];
+        //alert(res['ProcessVariables']['errorMessage']);
       }
     }, err => {
 
@@ -193,10 +205,14 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
           this.perPage = parseInt(res['ProcessVariables']['perPage']);
           this.totalElements = res['ProcessVariables']['totalPages'] * this.perPage;
         } else {
-          alert('No Data Present Further');
+          this.isErrorModal = true;
+          this.errorMsg = "No Data Present Further";
+          //alert('No Data Present Further');
         }
       } else {
-        alert('No Data Present Further');
+          this.isErrorModal = true;
+          this.errorMsg = "No Data Present Further";
+          //alert('No Data Present Further');
       }
     });
   }
@@ -216,7 +232,9 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
         }
         this.zoneChanged(this.selectedZone.value);
       } else {
-        alert('Something went wrong');
+          this.isErrorModal = true;
+          this.errorMsg = "Something went wrong";
+        //alert('Something went wrong');
       }
     });
   }
@@ -242,7 +260,9 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
           console.log("selectedCity: ", this.selectedCity);
           this.cityChanged(this.selectedCity.value);
         } else {
-          alert('Something went wrong');
+          this.isErrorModal = true;
+          this.errorMsg = "Something went wrong";
+        //alert('Something went wrong');
         }
       });
     }
@@ -284,10 +304,14 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
       this.qdeHttp.softDeleteLov(dude).subscribe(res => {
         // console.log(res['ProcessVariables']);
         if(res['ProcessVariables']['status'] == true) {
-          alert('Deleted Successfully!');
+          this.isErrorModal = true;
+          this.errorMsg = "Deleted Successfully!";
+          //alert('Deleted Successfully!');
           this.router.navigate([], {queryParams: {currentPage: this.currentPage, perPage: this.perPage}})
         } else {
-          alert('Something went wrong');
+          this.isErrorModal = true;
+          this.errorMsg = "Something went wrong";
+          //alert('Something went wrong');
         }
       });
     } 
@@ -331,10 +355,14 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
           this.totalElements = res['ProcessVariables']['totalPages'] * this.perPage;
           // this.perPageCount = Math.ceil(this.totalElements/this.perPage);
         } else {
-          alert('No Data Present');
+          this.isErrorModal = true;
+          this.errorMsg = "No Data Present";
+          //alert('No Data Present');
         }
       } else {
-        alert('No Data Present');
+          this.isErrorModal = true;
+          this.errorMsg = "No Data Present";
+          //alert('No Data Present');
       }
     });
 
@@ -379,10 +407,14 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
             this.perPage = parseInt(res['ProcessVariables']['perPage']);
             this.totalElements = res['ProcessVariables']['totalPages'] * this.perPage;
           } else {
-            alert('No Data Present Further');
+            this.isErrorModal = true;
+            this.errorMsg = "No Data Present Further";
+            //alert('No Data Present Further');
           }
         } else {
-          alert('No Data Present Further');
+            this.isErrorModal = true;
+            this.errorMsg = "No Data Present Further";
+            //alert('No Data Present Further');
         }
       });
     } else {

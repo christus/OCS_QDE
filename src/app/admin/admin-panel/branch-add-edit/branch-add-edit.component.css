@@ -133,3 +133,9 @@ select:-webkit-autofill:focus {
 .branch-edit {
     padding-top: 3vh;
 }
+.redalert {
+    color: red;
+    font-size: .94vw;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}

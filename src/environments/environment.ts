@@ -21,6 +21,8 @@ export const environment = {
     api: "v2/"
   },
 
+  logoutTime: 15,
+
   api: {
     'dashboard': {
       'workflowId': '050f5c82789a11e982270242ac110002',

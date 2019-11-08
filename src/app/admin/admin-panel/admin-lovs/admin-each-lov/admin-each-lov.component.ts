@@ -21,6 +21,9 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
   perPage:string;
   searchKey:string="";
   key:Array<number>=[];
+  lastKey: number;
+  isErrorModal: boolean = false;
+  errorMsg: string;
 
   @ViewChildren('lovsElements') lovsElements: QueryList<ElementRef>;
 
@@ -63,7 +66,8 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
           this.key[i]=((parseInt(this.perPage)*(parseInt(this.currentPage)-1))+i+ 1);
         }
       } else {
-        alert('No Data Found');
+        this.isErrorModal = true;
+        this.errorMsg='No Data Found';
       }
     }
   }
@@ -77,7 +81,9 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
     if(this.lovs[index].description != '' && this.lovs[index].value != '') {
 
       if(this.lovs[index].tableName == 'applicant_title' && (this.lovs[index].male == false && this.lovs[index].female == false)) {
-        alert("Please enter all values");
+        this.isErrorModal = true;
+        this.errorMsg='Please enter all values';
+        //alert("Please enter all values");
         this.refresh();
       }
 
@@ -88,19 +94,45 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
           this.lovs[index].id = res['ProcessVariables']['id'];
         } else if(res['ProcessVariables']['errorMessage'] != "") {
           this.refresh();
-          alert(res['ProcessVariables']['errorMessage']);
+          this.isErrorModal = true;
+          this.errorMsg=res['ProcessVariables']['errorMessage'];
+          //alert(res['ProcessVariables']['errorMessage']);
         }
       });
     } else {
       console.log(this.lovs[index]);
-      alert("Please enter all values");
+      this.isErrorModal = true;
+      this.errorMsg="Please enter all values";
+      //alert("Please enter all values");
       this.refresh();
     }
     this.tempLovs = this.lovs;
   }
 
   addNew() {
-    this.lovs.push({tableName: this.tableName, userId: localStorage.getItem('userId'), key: (this.lovs.length+1), description: '', value: '', isEdit: false, male: false, female: false});
+    this.lovs.push({tableName: this.tableName, userId: localStorage.getItem('userId'), description: '', value: '', isEdit: false, male: false, female: false});
+    this.qdeHttp.adminLoadMoreLovs(this.tableName, parseInt(this.totalPages), parseInt(this.perPage),this.searchKey).subscribe(res => {
+      if (res['ProcessVariables']['status'] == true) {
+        if (res['ProcessVariables']['valueDescription'] && res['ProcessVariables']['valueDescription'].length > 0) {
+          this.tempLovs = res['ProcessVariables']['valueDescription'].map((v, i) => {
+            return {
+              userId: localStorage.getItem('userId'),
+              description: v['description'],
+              value: v['value'],
+              isEdit: true,
+              id: v['id'],
+              male: v['male'],
+              female: v['female'],
+              tableName: this.tableName,
+              isRequired: v['isRequired']
+            }
+          });
+          this.lastKey = (parseInt(this.perPage)*(parseInt(this.totalPages)-1))+this.tempLovs.length+1;
+          console.log(this.lastKey);
+          this.key.push(this.lastKey);
+        }
+      }
+    })
   }
 
   ngAfterViewInit() {
@@ -163,10 +195,14 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
             this.key[i]=((parseInt(this.perPage)*(parseInt(this.currentPage)-1))+i+ 1);
           }
         } else {
-          alert('No Data Present Further');
+        this.isErrorModal = true;
+        this.errorMsg='No Data Present Further';
+          //alert('No Data Present Further');
         }
       } else {
-        alert('No Data Present Further');
+        this.isErrorModal = true;
+        this.errorMsg='No Data Present Further';
+          //alert('No Data Present Further');
       }
     });
   
@@ -225,7 +261,9 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
             this.key[i]=((parseInt(this.perPage)*(parseInt(this.currentPage)-1))+i+ 1);
           }
         } else {
-          alert("No Data Found");
+          this.isErrorModal = true;
+          this.errorMsg='No Data Found';
+          //alert("No Data Found");
         }
       }
     }, err => {

@@ -204,10 +204,9 @@
                                                             (keyup)="keyUpPanNumber($event)"
                                                             #panNumber="ngModel"
                                                             fieldFill
-                                                            spellcheck="false" 
-                                                            required/>
+                                                            spellcheck="false" />
                                                     <label for="pan-inpt" tabindex="1">Enter PAN</label>
-                                                    <!-- <span class="optional">optional</span> -->
+                                                    <span class="optional">optional</span>
                                                     <div *ngIf="panNumber.touched && panNumber.invalid && panErrorCount < 3" class="invalid-feedback">
                                                         <!-- <div *ngIf="panNumber.errors?.required">{{errors.panNumber.required}}</div> -->
                                                         <div *ngIf="panNumber.errors?.pattern ? true : false">{{errors.pan.invalid}}</div>
@@ -334,7 +333,7 @@
                                       </div>
                                       <div class="swiper-slide">
                                           <div class="title-wrap">
-                                              <h4 class="title">Select Co-Applicant's <span class="cm-line-break"></span>gender</h4>
+                                              <h4 class="title">Select Co-Applicant's<span class="cm-line-break"></span>gender</h4>
                                               <p class="note">Kindly enter the basic personal details of the main applicant</p>
                                           </div>
                                       </div>
@@ -401,6 +400,7 @@
                                                             </select> -->
                                         
                                                             <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                                            
                                                             [data]="relationships" 
                                                             textField="key"
                                                             valueField="value"
@@ -415,8 +415,7 @@
                                                       <span class="control-title">Title</span>
                                                       <div class="form-group">   
                                                           <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
-                                                            [data]="titles"
-                                                            [defaultItem]= "defaultItem"
+                                                            [data]="titles"                                                            
                                                             tabindex="1"
                                                             textField="key"
                                                             valueField="value"
@@ -493,8 +492,8 @@
                                               <div class="btn-wrap">
                                                 <button   type="submit"
                                                           class="btn btn-primary"
-                                                          [ngClass]="{'disabled': (!nameForm.valid || !doNotSelectDefault)}"
-                                                          [disabled]="!nameForm.valid || !doNotSelectDefault">Next
+                                                          [ngClass]="{'disabled': (!nameForm.valid)}"
+                                                          [disabled]="!nameForm.valid">Next
                                                 </button>
                                               </div>
                                           </form>
@@ -551,10 +550,9 @@
                                                   <div class="form-group typ-select">
                                                       <span class="control-title">Date of Birth</span>
 
-                                                      <div class="row">
+                                                      <div class="row with_datepicker">
                                                         <div class="col4">
-                                                            <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
-                                                            [data]="days"
+                                                            <kendo-dropdownlist [readonly] = "true" class="form-control"
                                                             textField="key"
                                                             valueField="value"
                                                             name="day"
@@ -567,8 +565,7 @@
                                                         </div>
     
                                                         <div class="col4">
-                                                            <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
-                                                            [data]="months"
+                                                            <kendo-dropdownlist [readonly] = "true" class="form-control"
                                                             textField="key"
                                                             valueField="value"
                                                             tabindex="2"
@@ -581,8 +578,7 @@
                                                         </div>
     
                                                         <div class="col4">
-                                                            <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
-                                                            [data]="dobYears"
+                                                            <kendo-dropdownlist [readonly] = "true" class="mob_personal_year form-control"
                                                             textField="key"
                                                             valueField="value"
                                                             tabindex="3"
@@ -594,6 +590,12 @@
                                                             </kendo-dropdownlist>
                                                         </div>
                                                     </div>
+                                                    <kendo-datepicker class="kendo_date_picker"
+                                                        (valueChange)="onBirthDateChange($event)"
+                                                        [focusedDate]="focusedDate"
+                                                        [(value)]="dateofBirthKendo" 
+                                                        [format]="'dd-MMM-yyyy'">
+                                                    </kendo-datepicker>
                                                     <div *ngIf="ageError" class="invalid-feedback">
                                                         <div *ngIf="ageError">Age should not be less than 18 years</div>
                                                       </div>
@@ -1178,7 +1180,8 @@
                                                           tabindex="7"
                                                           spellcheck="false"
                                                           [(ngModel)]="qde.application.applicants[coApplicantIndex].permanentAddress.addressLineOne"
-                                                          required />
+                                                          required 
+                                                          [readOnly]="qde.application.applicants[coApplicantIndex].communicationAddress.permanentAddress"/>
                                                           <label for="per-address1">Address line 1</label>
 
                                                           <div *ngIf="(qde.application.applicants[coApplicantIndex].permanentAddress.addressLineOne)?.length == 120" class="invalid-feedback">Maximum Character Exceeds</div>
@@ -1196,7 +1199,8 @@
                                                           tabindex="8"
                                                           pattern="{{regexPattern.address}}"
                                                           spellcheck="false"
-                                                          [(ngModel)]="qde.application.applicants[coApplicantIndex].permanentAddress.addressLineTwo"/>
+                                                          [(ngModel)]="qde.application.applicants[coApplicantIndex].permanentAddress.addressLineTwo" 
+                                                          [readOnly]="qde.application.applicants[coApplicantIndex].communicationAddress.permanentAddress"/>
             
                                                           <label for="per-address2">Address line 2</label>
 
@@ -1222,7 +1226,8 @@
                                                                     minlength="6"
                                                                     maxlength="6"
                                                                     pattern="{{regexPattern.pinCode}}"
-                                                                    required />
+                                                                    required
+                                                                    [readOnly]="qde.application.applicants[coApplicantIndex].communicationAddress.permanentAddress" />
                                                           <label for="per-pincode">Pincode</label>
 
                                                           <div class="redalert" *ngIf="RegExp(regexPattern.sameDigit).test(pZipcode.value)">
@@ -1242,7 +1247,8 @@
                                                           fieldFill
                                                           disabled
                                                           spellcheck="false"
-                                                          [(ngModel)]="qde.application.applicants[coApplicantIndex].permanentAddress.cityState">
+                                                          [(ngModel)]="qde.application.applicants[coApplicantIndex].permanentAddress.cityState"
+                                                          [readOnly]="qde.application.applicants[coApplicantIndex].communicationAddress.permanentAddress">
                                                           <label for="per-cityState">City/State</label>
                                                       </div>
                                                   </div>
@@ -2479,10 +2485,9 @@
                                                           #panNumber2="ngModel"
                                                           fieldFill
                                                           (keyup)="keyUpPanNumber($event)"
-                                                          spellcheck="false"
-                                                          required/>
+                                                          spellcheck="false"/>
                                                   <label for="pan-inpt2">Enter PAN</label>
-                                                  <!-- <span class="optional">optional</span> -->
+                                                  <span class="optional">optional</span>
                                                   <div *ngIf="panNumber2.touched && panNumber2.invalid && panErrorCount < 3" class="invalid-feedback">
                                                       <!-- <div *ngIf="panNumber2.errors?.required">{{errors.pan.required}}</div> -->
                                                       <div *ngIf="panNumber2.errors?.pattern ? true : false">{{errors.pan.invalidNonInd}}</div>
@@ -2620,7 +2625,7 @@
                                           <input [readonly]="isReadOnly" type="text" autocomplete="off"
                                                   class="form-control" 
                                                   id="org-name" 
-                                                  pattern="{{regexPattern.name}}"
+                                                  pattern="{{regexPattern.organizationName}}"
                                                   tabindex="1"
                                                   [(ngModel)]="qde.application.applicants[coApplicantIndex].organizationDetails.nameOfOrganization"
                                                   #orgName="ngModel"
@@ -2639,10 +2644,9 @@
                                       </div>
                                       <div class="form-group typ-select">
                                           <span class="control-title">Date of Incorporation</span>
-                                          <div class="row">
+                                          <div class="row with_datepicker">
                                               <div class="col4">
-                                                  <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
-                                                  [data]="days"
+                                                  <kendo-dropdownlist [readonly]="true" class="form-control"
                                                   textField="key"
                                                   valueField="value"
                                                   tabindex="2"
@@ -2655,8 +2659,7 @@
                                               </div>
       
                                               <div class="col4">
-                                                  <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
-                                                  [data]="months"
+                                                  <kendo-dropdownlist [readonly]="true" class="form-control"
                                                   textField="key"
                                                   tabindex="3"
                                                   valueField="value"
@@ -2669,8 +2672,7 @@
                                               </div>
       
                                               <div class="col4">
-                                                  <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
-                                                  [data]="years"
+                                                  <kendo-dropdownlist [readonly]="true" class="form-control mob_personal_year"
                                                   textField="key"
                                                   valueField="value"
                                                   name="year"
@@ -2681,8 +2683,15 @@
                                                   [(ngModel)]="organizationDetails.year">
                                                   </kendo-dropdownlist>
                                               </div>
+                                                <kendo-datepicker class="kendo_date_picker"
+                                                    [focusedDate]="focusIncorpDate"
+                                                    (valueChange)="onDateOfIncorpChange($event)"
+                                                    [(value)]="dateofBirthKendo" 
+                                                    [format]="'dd-MMM-yyyy'">
+                                                </kendo-datepicker>
                                           </div>
                                       </div>
+
                                       <div class="form-group last">
                                           <span class="control-title">Constitution</span>
                                           <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
@@ -3333,7 +3342,7 @@
             <h1 class="center">Co-Applicant has been successfully saved!</h1>
             <p>Do you want to add more Co-Applicants?</p>
             <div class="btn-wrap">
-                <button class="btn btn-border"  (click)="moreCoApp()">Yes</button>
+                <button class="btn btn-border"  style="margin-right: 1vw;" (click)="moreCoApp()">Yes</button>
                 <button class="btn btn-border"  [routerLink]="['/loan', qde.application.applicationId]">No</button>
             </div>
         </div>

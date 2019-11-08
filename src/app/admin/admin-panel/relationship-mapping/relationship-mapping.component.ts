@@ -33,7 +33,8 @@ export class RelationshipMappingComponent implements OnInit {
   applicantType: string;
   searchKey:string="";
   key:Array<number>=[];
-
+  isErrorModal: boolean = false;
+  errorMsg: string;
   data: Array<any> = [];
   applicantTitles: Array<any>;
   mainApplicant: string;
@@ -58,7 +59,9 @@ export class RelationshipMappingComponent implements OnInit {
         }
         console.log(this.data);
       } else {
-        alert('Something went wrong.');
+        this.isErrorModal = true;
+        this.errorMsg = "Something went wrong";
+        //alert('Something went wrong.');
       }
      }
   }
@@ -169,19 +172,26 @@ export class RelationshipMappingComponent implements OnInit {
 
     this.qdeHttp.adminUpdateApplicantRelationship(dude).subscribe(res => {
       if(res["ProcessVariables"]['status'] == true) {
+        this.isErrorModal = true;
+        this.errorMsg ="Updated successfully";
         this.refresh();
         this.isAdd = !this.isAdd;
       } else {
-        alert('Something went wrong.');
+        this.isErrorModal = true;
+        this.errorMsg = "Something went wrong";
+        //alert('Something went wrong.');
       }
     }, err => {
-      alert('Something went wrong.');
+        this.isErrorModal = true;
+        this.errorMsg = "Something went wrong";
+        //alert('Something went wrong.');
     });
   }
 
   search(event){
     this.qdeHttp.adminApplicantRelationshipSearch(event.target.value).subscribe(response => {
       console.log("mama",response)
+      if(response['ProcessVariables']['status']){
       this.data = response['ProcessVariables']['mappingList'];
       this.currentPage=response['ProcessVariables']['currentPage'];
       this.perPage=response['ProcessVariables']['perPage'];
@@ -190,6 +200,10 @@ export class RelationshipMappingComponent implements OnInit {
       for(var i=0; i<this.data.length;i++){
         this.key[i]=((this.perPage*(this.currentPage-1))+i+ 1);
       }
+    }else{
+      this.isErrorModal = true;
+      this.errorMsg = "No Data present further"
+    }
     });
   }
 
@@ -211,7 +225,9 @@ export class RelationshipMappingComponent implements OnInit {
             this.key[i]=((this.perPage*(this.currentPage-1))+i+ 1);
           }
         } else {
-          alert('Something went wrong.');
+          this.isErrorModal = true;
+          this.errorMsg = "Something went wrong";
+        //alert('Something went wrong.');
         }
       }
     }, err => {
@@ -259,12 +275,18 @@ export class RelationshipMappingComponent implements OnInit {
 
     this.qdeHttp.adminUpdateApplicantRelationship(dude).subscribe(res => {
       if(res["ProcessVariables"]['status'] == true) {
+        this.isErrorModal = true;
+        this.errorMsg = "Updated successfully";
         this.refresh();
       } else {
-        alert('Something went wrong');
+        this.isErrorModal = true;
+        this.errorMsg = "Something went wrong";
+        //alert('Something went wrong.');
       }
     }, err => {
-      alert('Something went wrong');
+        this.isErrorModal = true;
+        this.errorMsg = "Something went wrong";
+        //alert('Something went wrong.');
     });
   }
 
@@ -277,9 +299,13 @@ export class RelationshipMappingComponent implements OnInit {
       this.qdeHttp.softDeleteLov(dude).subscribe(res => {
         // console.log(res['ProcessVariables']);
         if(res['ProcessVariables']['status'] == true) {
+          this.isErrorModal = true;
+          this.errorMsg = "Deleted successfully";
           this.refresh();
         } else {
-          alert('Something went wrong.');
+          this.isErrorModal = true;
+          this.errorMsg = "Something went wrong";
+        //alert('Something went wrong.');
         }
       });
     } 
@@ -311,7 +337,9 @@ export class RelationshipMappingComponent implements OnInit {
             this.key[i]=((this.perPage*(value-1))+i+ 1);
           }
         } else {
-          alert('Something went wrong.');
+          this.isErrorModal = true;
+          this.errorMsg = "Something went wrong";
+        //alert('Something went wrong.');
         }
       }
     }, err => {

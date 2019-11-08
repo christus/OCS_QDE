@@ -25,5 +25,9 @@ margin-bottom: 2.08vw;
     /* padding-top: 1vw; */
     padding-left: 1vw;
     padding-bottom: 1vw;
-    border-color: rgba(187, 187, 187, 1);
+	border-color: rgba(187, 187, 187, 1);
+	border-width: thin;
+}
+.captch-group{
+	height: 6vw
 }

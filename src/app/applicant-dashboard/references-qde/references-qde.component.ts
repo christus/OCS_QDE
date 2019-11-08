@@ -54,7 +54,8 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
             wrong: "please enter valid mobile number",
            required: "10 digit mobile number is mandatory",
            invalid: "Invalid Mobile Number",
-           minlength: "Mobile number must be 10 digits"
+           minlength: "Mobile number must be 10 digits",
+           sameNumber: "Mobile number is same as of second reference , please use different numbers",
           },
           addressLineOne: {
            required: "Address line One is Mandatory",
@@ -75,7 +76,8 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
            wrong: "please enter valid mobile number",
           required: "10 digit mobile number is mandatory",
           invalid: "Invalid Mobile Number",
-          minlength: "Mobile number must be 10 digits"
+          minlength: "Mobile number must be 10 digits",
+          sameNumber: "Mobile number is same as of first reference , please use different numbers",
          },
          addressLineOne: {
           required: "Address line One is Mandatory",
@@ -441,7 +443,7 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
       let t = fromQde ? this.page: 1;
 
       if(this.swiperSliders && this.swiperSliders.length > 0) {
-        this.swiperSliders[tabIndex].setIndex(this.page-1);
+        this.swiperSliders[tabIndex].setIndex(t-1);
       }
 
       this.router.navigate([], {queryParams: { tabName: this.fragments[tabIndex], page: t }});

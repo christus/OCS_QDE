@@ -1,3 +1,4 @@
+import { AutoLogoutService } from './services/AutoLogoutService';
 import { CollateralComponent } from './applicant-dashboard/document-upload/collateral/collateral.component';
 import { BranchListComponent } from './admin/admin-panel/branch-list/branch-list.component';
 import { PmayListComponent } from './admin/admin-panel/pmay-list/pmay-list.component';
@@ -140,6 +141,8 @@ import { MobileService } from './services/mobile-constant.service';
 import { AdminAuditTrialComponent } from './admin/admin-audit-trial/admin-audit-trial.component';
 import { ReassignComponent } from './reassign/reassign.component';
 import { CaptchaResolverService } from './services/captcha-resolver.service';
+import { DatePipe } from '@angular/common';
+
 
 
 const appRoutes: Routes = [
@@ -344,7 +347,7 @@ const appRoutes: Routes = [
     path: "payments",
     component: PaymentsComponent,
     children: [
-      { path: '', redirectTo: "offline-payments", pathMatch: "full" },
+      { path: '', redirectTo: "offline-payments/:applicationId", pathMatch: "full" },
       {
         path: 'offline-payments/:applicationId',
         component: OfflinePaymentComponent,
@@ -698,7 +701,9 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     MobileService,
     DocAssessDoccatProfileMapResolverService,
     ApplicationRelationshipResolverService,
-    CaptchaResolverService
+    CaptchaResolverService,
+    DatePipe,
+    AutoLogoutService
   ],
   bootstrap: [AppComponent]
 })

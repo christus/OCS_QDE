@@ -21,9 +21,9 @@
                 <label for="password" >Password</label>
               </div>  
               <!-- last             -->
-              <div class="form-group last" style="text-align: center;">
-               <img src = {{catchaImage}} class="captch"  >
-               <img src="assets/images/refresh.png" style="height: 5.5vw;" (click)="generateCatchaImage()" >
+              <div class="form-group last" >
+               <img src = {{catchaImage}} class="captch captch-group"  >
+               <img src="assets/images/refresh.png" class="captch-group" (click)="generateCatchaImage()" >
               </div>
               <div class="form-group last">
                 <input type="text"  #captchaImageText [(ngModel)]="captchaText" class="form-control" name="captchaText" id="catText" fieldFill  />
@@ -50,7 +50,7 @@
       <p>Click Proceed to continue</p>
       <div class="btn-wrap">
         <button class="btn btn-border margin_right" (click)="removeExisitingSession()">Proceed</button>
-        <button class="btn btn-border" (click)="activeSessionExists = false">Cancel</button>
+        <button class="btn btn-border" (click)="cancelProcess()">Cancel</button>
       </div>
     </div>
   </div>

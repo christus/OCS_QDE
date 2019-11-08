@@ -18,7 +18,8 @@ export class DocumentAssessmentDoccatDoctypeComponent implements OnInit {
   documentCategories: Array<any>;
   docTypes: Array<any>;
   profiles: Array<any>;
-
+  isErrorModal:boolean = false;
+  errorMsg: string;
   selectedAssessment: any;
   selectedDocumentCategory: any;
   selectedDocType: any;
@@ -188,10 +189,14 @@ export class DocumentAssessmentDoccatDoctypeComponent implements OnInit {
       if(res["ProcessVariables"]['status'] == true) {
         this.refresh();
       } else {
-        alert('Something went wrong.');
+        this.isErrorModal = true;
+        this.errorMsg = "Something went wrong";
+        //alert('Something went wrong.');
       }
     }, err => {
-      alert('Something went wrong.');
+        this.isErrorModal = true;
+        this.errorMsg = "Something went wrong";
+        //alert('Something went wrong.');
     });
   }
 
@@ -233,11 +238,15 @@ export class DocumentAssessmentDoccatDoctypeComponent implements OnInit {
   
         this.data = this.data.concat(response['documentMapping']);
       } else {
-        alert('Something went wrong.');
+        this.isErrorModal = true;
+        this.errorMsg = "Something went wrong";
+        //alert('Something went wrong.');
         this.currentPage--;
       }
     }, err => {
-      alert('Something went wrong.');
+        this.isErrorModal = true;
+        this.errorMsg = "Something went wrong";
+        //alert('Something went wrong.');
       this.currentPage--;
     });
   }
@@ -262,10 +271,14 @@ export class DocumentAssessmentDoccatDoctypeComponent implements OnInit {
       if(res["ProcessVariables"]['status'] == true) {
         this.refresh();
       } else {
-        alert('Something went wrong');
+        this.isErrorModal = true;
+        this.errorMsg = "Something went wrong";
+        //alert('Something went wrong.');
       }
     }, err => {
-      alert('Something went wrong');
+        this.isErrorModal = true;
+        this.errorMsg = "Something went wrong";
+        //alert('Something went wrong.');
     });
   }
 
@@ -276,6 +289,7 @@ export class DocumentAssessmentDoccatDoctypeComponent implements OnInit {
     if(confirm("Are you sure?")) {
       this.qdeHttp.softDeleteLov(dude).subscribe(res => {
         // console.log(res['ProcessVariables']);
+        if(res["ProcessVariables"]["status"]){this.isErrorModal = true; this.errorMsg = "Deleted Successfully";}
         this.refresh();
       });
     } 
@@ -302,15 +316,21 @@ export class DocumentAssessmentDoccatDoctypeComponent implements OnInit {
             this.key[i]=((this.perPage*(this.currentPage-1))+i+ 1);
           }
         }else{
-          alert("No Data present further");
+          this.isErrorModal = true;
+          this.errorMsg = "No Data present further";
+          //alert("No Data present further");
         }
         
       } else {
-        alert('Something went wrong.');
+        this.isErrorModal = true;
+        this.errorMsg = "Something went wrong";
+        //alert('Something went wrong.');
         this.currentPage--;
       }
     }, err => {
-      alert('Something went wrong.');
+        this.isErrorModal = true;
+        this.errorMsg = "Something went wrong";
+        //alert('Something went wrong.');
       this.currentPage--;
     });
   }
@@ -330,11 +350,15 @@ export class DocumentAssessmentDoccatDoctypeComponent implements OnInit {
             this.key[i]=((this.perPage*(this.currentPage-1))+i+ 1);
           }
       } else {
-        alert('Something went wrong.');
+        this.isErrorModal = true;
+        this.errorMsg = "Something went wrong";
+        //alert('Something went wrong.');
         this.currentPage--;
       }
     }, err => {
-      alert('Something went wrong.');
+        this.isErrorModal = true;
+        this.errorMsg = "Something went wrong";
+        //alert('Something went wrong.');
       this.currentPage--;
     });
   }

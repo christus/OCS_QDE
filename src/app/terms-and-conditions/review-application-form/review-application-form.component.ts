@@ -103,15 +103,15 @@ export class ReviewApplicationFormComponent implements OnInit {
   state: string;
   cityState:string;
 
-  selectedReferenceOne: any;
-  selectedTiltle1: string;
+  selectedReferenceOne: Array<Item> = [];
+  selectedTiltle1: Array<Item> = [];
   selectedName1: string;
   selectedMobile1: string;
   selectedAddressLineOne1: string;
   selectedAddressLineTwo1: string;
 
-  selectedReferenceTwo: any;
-  selectedTiltle2: string;
+  selectedReferenceTwo: Array<Item> = [];
+  selectedTiltle2: Array<Item> = [];
   selectedName2: string;
   selectedMobile2: string;
   selectedAddressLineOne2: string;
@@ -123,7 +123,7 @@ export class ReviewApplicationFormComponent implements OnInit {
   docType: Array<any> = [];
   selectedAssesmentMethodology: Array<Item> = [];
 
-  applicantIndex: number;
+  applicantIndex: number = 0;
   coApplicantIndexes: Array<number> = [];
   YYYY: number = new Date().getFullYear();
 
@@ -141,11 +141,14 @@ export class ReviewApplicationFormComponent implements OnInit {
       this.qde = val;
 
       this.applicantIndex = val.application.applicants.findIndex(v => v.isMainApplicant == true) == -1 ? 0 : val.application.applicants.findIndex(v => v.isMainApplicant == true);
+      
+      this.coApplicantIndexes = this.qde.application.applicants.map((e, i) => e.isMainApplicant == false ? i : null).filter((e) => e != null);
+
       val.application.applicants.forEach((el, index) => {
   
-        if(el.isMainApplicant == false) {
-          this.coApplicantIndexes.push(index);
-        }
+        // if(el.isMainApplicant == false) {
+        //   this.coApplicantIndexes.push(index);
+        // }
   
         // this.isIncomplete.push(this.checkIncompleteFields(el.applicantId));
         this.isIncomplete.push({
@@ -227,7 +230,7 @@ export class ReviewApplicationFormComponent implements OnInit {
     if(this.route.snapshot.data.listOfValues) {
       const lov = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs);
 
-      this.loanpurposes = lov.LOVS.loan_purpose;
+      // this.loanpurposes = lov.LOVS.loan_purpose;
       this.loanType = lov.LOVS.loan_type;
       this.propertyTypes = lov.LOVS.property_type;
 
@@ -279,12 +282,16 @@ export class ReviewApplicationFormComponent implements OnInit {
           let result = JSON.parse(response["ProcessVariables"]["response"]);
 
           // All hardcoded value need to removed
-          this.selectedLoanType =
-            result.application.loanDetails.loanAmount.loanType ||
-            this.loanType[0].value;
-          this.selectedLoanPurpose =
-            result.application.loanDetails.loanAmount.loanPurpose ||
-            this.loanpurposes[0].value;
+          // this.selectedLoanType =
+          //   result.application.loanDetails.loanAmount.loanType ||
+          //   this.loanType[0].value;
+          // this.selectedLoanPurpose =
+          //   result.application.loanDetails.loanAmount.loanPurpose ||
+          //   this.loanpurposes[0].value;
+          this.loanType = this.loanType.slice(0, 3);
+          this.selectedLoanType = this.loanType.find(v => v.value == this.qde.application.loanDetails.loanAmount.loanType) || this.loanType[0];
+
+          this.setLoanPurposes(this.selectedLoanType['value'], this.qde.application.loanDetails.loanAmount.loanPurpose);
 
           if (!result.application.loanDetails.propertyType) {
             result.application.loanDetails.propertyType = {}; //This line need to be removed
@@ -431,7 +438,8 @@ export class ReviewApplicationFormComponent implements OnInit {
 
       // Personal Details Title
       if( ! isNaN(parseInt(eachApplicant.personalDetails.title)) ) {
-        this.selectedTitle.push(this.titles[(parseInt(eachApplicant.personalDetails.title))-1]);
+        // this.selectedTitle.push(this.titles[(parseInt(eachApplicant.personalDetails.title))-1]);
+        this.selectedTitle[i] = this.titles.find(v => v.value == eachApplicant.personalDetails.title);
       }
 
       // Personal Details Day
@@ -483,44 +491,53 @@ export class ReviewApplicationFormComponent implements OnInit {
 
       // Constitution
       if( ! isNaN(parseInt(eachApplicant.organizationDetails.constitution)) ) {
-        this.selectedConstitution[i] = (this.constitutions[(parseInt(eachApplicant.organizationDetails.constitution))-1]);
+        // this.selectedConstitution[i] = (this.constitutions[(parseInt(eachApplicant.organizationDetails.constitution))-1]);
+        this.selectedConstitution[i] = (this.constitutions.find(v => v.value == eachApplicant.organizationDetails.constitution));
       }
       
       // Communication address
       if( ! isNaN(parseInt(eachApplicant.communicationAddress.residentialStatus)) ) {
-        this.selectedResidence[i] = (this.residences[(parseInt(eachApplicant.communicationAddress.residentialStatus)) - 1]);
+        // this.selectedResidence[i] = (this.residences[(parseInt(eachApplicant.communicationAddress.residentialStatus)) - 1]);
+        this.selectedResidence[i] = (this.residences.find(v => v.value == eachApplicant.communicationAddress.residentialStatus));
       }
 
         // Permanent address
         if( ! isNaN(parseInt(eachApplicant.permanentAddress.residentialStatus)) ) {
-        this.permSelectedResidence[i] = (this.residences[(parseInt(eachApplicant.permanentAddress.residentialStatus)) - 1]);
+        // this.permSelectedResidence[i] = (this.residences[(parseInt(eachApplicant.permanentAddress.residentialStatus)) - 1]);
+        this.selectedResidence[i] = (this.residences.find(v => v.value == eachApplicant.permanentAddress.residentialStatus));
       }
   
 
       if( ! isNaN(parseInt(eachApplicant.maritalStatus.status)) ) {
-        this.selectedMaritialStatus[i] = (this.maritals[(parseInt(eachApplicant.maritalStatus.status))-1]);
+        // this.selectedMaritialStatus[i] = (this.maritals[(parseInt(eachApplicant.maritalStatus.status))-1]);
+        this.selectedMaritialStatus[i] = (this.maritals.find(v => v.value == eachApplicant.maritalStatus.status));
       }
 
       if( ! isNaN(parseInt(eachApplicant.maritalStatus.spouseTitle)) ) {
-          this.selectedSpouseTitle[i] = (this.titles[(parseInt(eachApplicant.maritalStatus.spouseTitle))-1]);
+          // this.selectedSpouseTitle[i] = (this.titles[(parseInt(eachApplicant.maritalStatus.spouseTitle))-1]);
+          this.selectedSpouseTitle[i] = (this.titles.find(v => v.value == eachApplicant.maritalStatus.spouseTitle));
       }
 
       if( ! isNaN(parseInt(eachApplicant.familyDetails.fatherTitle)) ) {
-        this.selectedFatherTitle [i] = (this.titles[(parseInt(eachApplicant.familyDetails.fatherTitle))-1]);
+        // this.selectedFatherTitle [i] = (this.titles[(parseInt(eachApplicant.familyDetails.fatherTitle))-1]);
+        this.selectedFatherTitle [i] = (this.titles.find(v => v.value == eachApplicant.familyDetails.fatherTitle));
       }
 
       if( ! isNaN(parseInt(eachApplicant.familyDetails.motherTitle)) ) {
-        this.selectedMotherTitle[i] = (this.titles[(parseInt(eachApplicant.familyDetails.motherTitle))-1]);
+        // this.selectedMotherTitle[i] = (this.titles[(parseInt(eachApplicant.familyDetails.motherTitle))-1]);
+        this.selectedMotherTitle[i] = (this.titles.find(v => v.value == eachApplicant.familyDetails.motherTitle));
       }
 
       // Other
       if( ! isNaN(parseInt(eachApplicant.other.religion)) ) {
-        this.selectedReligion[i] = (this.religions[(parseInt(eachApplicant.other.religion))-1]);
+        // this.selectedReligion[i] = (this.religions[(parseInt(eachApplicant.other.religion))-1]);
+        this.selectedReligion[i] = (this.religions.find(v => v.value == eachApplicant.other.religion));
       }
 
       // Category
       if( ! isNaN(parseInt(eachApplicant.other.category)) ) {
-        this.selectedCategory [i] = (this.categories[(parseInt(eachApplicant.other.category))-1]);
+        // this.selectedCategory [i] = (this.categories[(parseInt(eachApplicant.other.category))-1]);
+        this.selectedCategory [i] = (this.categories.find(v => v.value == eachApplicant.other.category));
       }
 
       // Occupation details
@@ -531,7 +548,8 @@ export class ReviewApplicationFormComponent implements OnInit {
       // Assesment methodology
       console.log("assessmentMethodology: ", this.assessmentMethodology[(parseInt(eachApplicant.incomeDetails.assessmentMethodology))-1]);
       if( ! isNaN(parseInt(eachApplicant.incomeDetails.assessmentMethodology)) ) {
-        this.selectedAssesmentMethodology[i] = (this.assessmentMethodology[(parseInt(eachApplicant.incomeDetails.assessmentMethodology))-1]);
+        // this.selectedAssesmentMethodology[i] = (this.assessmentMethodology[(parseInt(eachApplicant.incomeDetails.assessmentMethodology))-1]);
+        this.selectedAssesmentMethodology[i] = (this.assessmentMethodology.find(v => v.value == eachApplicant.incomeDetails.assessmentMethodology));
       }
 
       this.initializeVariables(eachApplicant);
@@ -587,6 +605,22 @@ export class ReviewApplicationFormComponent implements OnInit {
       } else {
         alert("Pin code not available / enter proper pincode")
       }
+    });
+  }
+
+  setLoanPurposes(loanType: string, data ?: string) {
+    this.qdeHttp.getLoanPurposeFromLoanType({loanType: loanType}).subscribe(res => {
+      this.loanpurposes = res['ProcessVariables']['loanPurposeLov'];
+      console.log("loanpurposes: ", this.loanpurposes);
+      if(data) {
+        this.selectedLoanPurpose = this.loanpurposes.find(v => v.value == data) || this.loanpurposes[0];
+      } else {
+        this.selectedLoanPurpose = this.loanpurposes[0];
+      }
+      console.log("selectedLoanPurpose: ", this.selectedLoanPurpose);
+    }, error => {
+      // this.isErrorModal = true;
+      // this.errorMessage = "Something went wrong, please try again later.";
     });
   }
 }

@@ -33,7 +33,7 @@
         </div>
        <div class="inputBox form-field-el">
             <label for="mailId" class="inputText">Email:</label>
-            <input type="text" id="mailId" [(ngModel)]="mailId"  class="form-control" fieldFill formControlName="mailId" autocomplete="nope" pattern={{regexPattern.email}}/>
+            <input type="text" id="mailId" [(ngModel)]="mailId"  class="form-control" fieldFill formControlName="mailId" autocomplete="nope"/>
             <div *ngIf="formValue.mailId.errors" >
                     <!-- <div class="redalert"  *ngIf="formValue.mailId.errors.required"> required</div> -->
                     <!-- <div class="redalert" *ngIf="formValue.mailId.errors.email"> Invalid email</div> -->
@@ -97,17 +97,26 @@
             [disabled]="!registerUser.valid" > Submit   </button>
         </div> 
 
-        <div class="redalert error-msg">{{errorMsg}}</div>
+       <!-- <div class="redalert error-msg">{{errorMsg}}</div> -->
 
     
     </form> 
 </div>
 <div>
     <button class="fileUpload" (click)="callFile()">Upload Connector / DMA List</button>
-    <input type="file" id="uploadCSV" accept=".csv" (change)="startUpload($event)" style="display: none;">
+    <input type="file" #uploadCSV accept=".csv" (change)="startUpload($event)" style="display: none;">
     <button type="button" class="btn btn-default" [ngClass]="{'disabled': (!isFileSelected)}"
         [disabled]="!isFileSelected" (click)="uploadCSVFile()"> Upload List</button>
-    <span style="font-family: zurich-light; font-size: 1.64vw; color: green;" *ngIf="isSuccessful"><br>&nbsp;<b>File Uploaded
-        successfully</b></span>
-    <span style="font-family: zurich-light; font-size: 1.64vw; color: red;" *ngIf="isFailed"><br>&nbsp;<b>{{errorMsg}}</b></span>
 </div>
+    <div class="overlay" [ngClass]="{'active': isErrorModal}">
+        <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isErrorModal}">
+            <a class="modal-close" (click)="isErrorModal = false"><span class="icon icon-close"></span></a>
+            <div class="modal-body">
+                <h1>{{errorMsg}}</h1>
+                <br><br>
+                <div class="btn-wrap">
+                    <button class="btn btn-border" (click)="isErrorModal = false">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>

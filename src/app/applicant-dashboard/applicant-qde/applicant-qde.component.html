@@ -422,9 +422,9 @@
                           <div class="form-group typ-select">
                             <span class="control-title">Date of Birth</span>
 
-                            <div class="row">
+                            <div class="row with_datepicker">
                               <div class="col4">
-                                <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control" [data]="days"
+                                <kendo-dropdownlist   [readonly] = "true" class="form-control"
                                   textField="key" valueField="value" name="day" nick="personalDetails.day" tabindex="0"
                                   #dobDay (selectionChange)="selectValueChanged($event, dobDay.hostElement)"
                                   [(ngModel)]="dob.day">
@@ -432,7 +432,7 @@
                               </div>
 
                               <div class="col4">
-                                <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control" [data]="months"
+                                <kendo-dropdownlist   [readonly] = "true" class="form-control"
                                   textField="key" valueField="value" name="month" tabindex="0"
                                   nick="personalDetails.month" #dobMonth
                                   (selectionChange)="selectValueChanged($event, dobMonth.hostElement)"
@@ -441,14 +441,20 @@
                               </div>
 
                               <div class="col4">
-                                <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="mob_personal_year form-control"
-                                  [data]="dobYears" textField="key" valueField="value" name="year" tabindex="0"
+                                <kendo-dropdownlist   [readonly] = "true" class="mob_personal_year form-control"
+                                  textField="key" valueField="value" name="year" tabindex="0"
                                   nick="personalDetails.year" #dobYear
                                   (selectionChange)="selectValueChanged($event, dobYear.hostElement)"
                                   [(ngModel)]="dob.year">
                                 </kendo-dropdownlist>
                               </div>
                             </div>
+                            <kendo-datepicker class="kendo_date_picker"
+                              (valueChange)="onBirthDateChange($event)"
+                              [focusedDate]="focusedDate"
+                              [(value)]="dateofBirthKendo" 
+                              [format]="'dd-MMM-yyyy'">
+                            </kendo-datepicker>
                             <div *ngIf="ageError" class="invalid-feedback">
                               <div *ngIf="ageError">Age should not be less than 18 years</div>
                             </div>
@@ -913,7 +919,9 @@
                                 id="per-address1" name="pAddressLineOne" #pAddress1="ngModel" maxlength="120"
                                 pattern="{{regexPattern.address}}" fieldFill autocomplete="off"
                                 [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.addressLineOne"
+                                [readOnly]="qde.application.applicants[applicantIndex].communicationAddress.permanentAddress"
                                 required />
+                                
 
                                 <div *ngIf="(qde.application.applicants[applicantIndex].permanentAddress.addressLineOne)?.length == 120" class="invalid-feedback">Maximum Character Exceeds</div>
 
@@ -928,7 +936,8 @@
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                                 id="per-address2" name="pAddressLineTwo" #pAddress2="ngModel" fieldFill
                                 pattern="{{regexPattern.address}}" autocomplete="off" maxlength="120"
-                                [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.addressLineTwo" />
+                                [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.addressLineTwo"
+                                [readOnly]="qde.application.applicants[applicantIndex].communicationAddress.permanentAddress"/>
                               <label for="per-address2" tabindex="7">Address line 2</label>
 
                               <div *ngIf="(qde.application.applicants[applicantIndex].permanentAddress.addressLineTwo)?.length == 120" class="invalid-feedback">Maximum Character Exceeds</div>
@@ -945,7 +954,8 @@
                                 id="per-pincode" name="pZipcode" #pZipcode="ngModel" autocomplete="off"
                                 (blur)="onPinCodeChange($event, 'permanentAddress')" fieldFill
                                 [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.zipcode"
-                                minlength="6" maxlength="6" pattern="{{regexPattern.pinCode}}" required />
+                                minlength="6" maxlength="6" pattern="{{regexPattern.pinCode}}" required 
+                                [readOnly]="qde.application.applicants[applicantIndex].communicationAddress.permanentAddress" />
                               <label for="per-pincode" tabindex="8">Pincode</label>
 
                               <div class="redalert" *ngIf="RegExp(regexPattern.sameDigit).test(pZipcode.value)">
@@ -960,7 +970,8 @@
                             <div class="form-group">
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                                 id="per-cityState" name="commCityState" #commCityState1="ngModel" fieldFill readonly autocomplete="off"
-                                [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.cityState" disabled>
+                                [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.cityState" disabled 
+                                [readOnly]="qde.application.applicants[applicantIndex].communicationAddress.permanentAddress">
                               <label for="per-cityState" tabindex="9">City/State</label>
                             </div>
                           </div>
@@ -1796,13 +1807,13 @@
           </div>
 
           <div class="tab-content" [ngClass]="{'active': (activeTab == 9)}">
-            <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(incomeSliderIndividual2)"></a>
+            <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(incomeSliderIndividual1)"></a>
             <div class="lyt-tabs mob_income_detail">
               <div class="lhs">
                 <div class="swiper-container form-swiper" [swiper]="lhsConfig" #incomeSliderIndividual1="ngxSwiper">
                   <div class="swiper-wrapper">
                     <div class="swiper-slide"
-                      *ngIf="qde?.application?.applicants[applicantIndex]?.incomeDetails?.incomeConsider == true">
+                    *ngIf="qde?.application?.applicants[applicantIndex]?.incomeDetails?.incomeConsider == true">
                       <div class="title-wrap">
                         <h4 class="title">Applicant’s monthly<span class="cm-line-break"></span>income details</h4>
                       </div>
@@ -1827,7 +1838,7 @@
                   <div class="swiper-wrapper">
 
                     <div class="swiper-slide"
-                      *ngIf="qde?.application?.applicants[applicantIndex]?.incomeDetails?.incomeConsider == true">
+                    *ngIf="qde?.application?.applicants[applicantIndex]?.incomeDetails?.incomeConsider == true">
                       <form class="bs-form" #incomeConsiderFormInd="ngForm" autocomplete="off"
                         (ngSubmit)="submitMonthlyIncomeIndividual(incomeConsiderFormInd, incomeSliderIndividual2)">
                         <div class="form-wrap">
@@ -1865,7 +1876,7 @@
 
                     <div class="swiper-slide">
                       <form class="bs-form" #annualFamilyIncomeForm="ngForm"
-                        (ngSubmit)="submitAnnualFamilyIncome(annualFamilyIncomeForm)">
+                        (ngSubmit)="submitAnnualFamilyIncome(annualFamilyIncomeForm,incomeSliderIndividual2)">
                         <div class="form-wrap">
                           <div class="form-group inr">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
@@ -1929,6 +1940,14 @@
                             </div>
                           </div>
                         </div>
+                        <!-- <div class="btn-wrap"
+                        *ngIf="qde?.application?.applicants[applicantIndex]?.incomeDetails?.incomeConsider == true">
+                          <button type="submit" class="btn btn-primary"
+                            [ngClass]="{'disabled': !annualFamilyIncomeForm.valid || qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == null}"
+                            [disabled]="!annualFamilyIncomeForm.valid || qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == null">
+                            Next
+                          </button>
+                        </div> -->
                         <div class="btn-wrap">
                           <button type="submit" class="btn btn-primary"
                             [ngClass]="{'disabled': !annualFamilyIncomeForm.valid || qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == null}"
@@ -2136,7 +2155,7 @@
                         <div class="form-wrap">
                           <div class="form-group">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="org-name" tabindex="1" pattern="{{regexPattern.name}}" autocomplete="off" maxlength="50"
+                              id="org-name" tabindex="1" pattern="{{regexPattern.organizationName}}" autocomplete="off" maxlength="50"
                               [(ngModel)]="qde.application.applicants[applicantIndex].organizationDetails.nameOfOrganization"
                               #orgName="ngModel" name="orgName" fieldFill required />
                             <label for="org-name">Name of Organization</label>

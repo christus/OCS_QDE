@@ -9,11 +9,11 @@
 
     <!--Tabs 1 Upload cheque payment starts-->
     <div id="offtab1" class="tab-slider--body" *ngSwitchCase="'offtab1'">
-      <h2>UPDATE PAYMENT</h2>
+      <h2>UPLOAD PAYMENT</h2>
 
       <div class="bs-file paymentUploadPicContainer">
           <input name="myFile" id="paymentUploadPic" type="file" class="form-control" (change)="setUploadDoc($event.target)" >
-          <label for="paymentUploadPic"><span>Upload Payment Photo</span></label>
+          <label for="paymentUploadPic"><span>Upload Payment</span></label>
       </div>
       <!-- <input type="submit" (click)="startUploadDoc()" class="btn btn-default"> -->
 
@@ -31,11 +31,11 @@
     <div id="offtab2" class="tab-slider--body" *ngSwitchCase="'offtab2'">
          <!-- <span>From date</span> -->
          <br>
-         <label for="startDate" class="inputText">From date</label>
+         <label for="startDate" class="inputText">From date</label>&nbsp;
           <input type="date" [(ngModel)]="startDate" placeholder="From date" class="dataPicker">
           <br>
           <br>
-          <span>To date</span>
+          <span>To date</span>&nbsp;&nbsp;&nbsp;
           <input type="date" [(ngModel)]="endDate" placeholder="From date" class="dataPicker">
 
       <h2>Download CSV for Cheque payment</h2>
