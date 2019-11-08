@@ -14,7 +14,7 @@ export class LeadsSidebarComponent implements OnInit {
   isTBMLoggedIn: boolean ;
   constructor(private router: Router,
               private cds: CommonDataService) {
-                this.isTBMLoggedIn = this.getRoles().includes('TBM') || this.getRoles().includes('ZBM');
+                this.isTBMLoggedIn = this.getRoles().includes('TBM') || this.getRoles().includes('ZBM') || this.getRoles().includes('TMA');
                 }
 
   ngOnInit() {

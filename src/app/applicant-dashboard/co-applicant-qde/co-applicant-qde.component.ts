@@ -358,7 +358,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
   ageError:boolean = false;
 
-
+  min: Date; // minimum date to date of birth amd non indu
+  maxDate : Date = new Date();
   // public defaultItem: { key: string, value: number } = { key: "Select item...", value: null };
   
   // public defaultItem: Array<{ key: string, value: number, inStock: boolean }> = [
@@ -582,7 +583,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
               this.coApplicantsForDashboard = result.application.applicants.filter(v => v.isMainApplicant == false);
               this.cds.enableTabsIfStatus1(this.qde.application.status);
 
-              this.loadOccupationTypeLovs(this.qde.application.applicants[this.coApplicantIndex].occupation.occupationType);
+              if(this.qde.application.applicants[this.coApplicantIndex]) {
+                this.loadOccupationTypeLovs(this.qde.application.applicants[this.coApplicantIndex].occupation.occupationType);
+              }
 
               if(params.coApplicantIndex != null) {
                 this.coApplicantIndex = params.coApplicantIndex;
@@ -754,9 +757,16 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     * Check for User and set isReadOnly=true to disable editing of fields
     ********************************************************************/
     this.cds.isReadOnlyForm.subscribe(val => {
-      this.isReadOnly = val;
-      this.options.readOnly = val;
+      this.isReadOnly = false;
+      this.options.readOnly = false;
     });
+     let today = new Date();
+    let day = today.getDate();
+    let month = today.getMonth() + 1;
+    let year = today.getFullYear() - 99;
+
+
+    this.min = new Date(year, month, day);
   }
 
   /**

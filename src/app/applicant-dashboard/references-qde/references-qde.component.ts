@@ -389,8 +389,8 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
     * Check for User and set isReadOnly=true to disable editing of fields
     ********************************************************************/
     this.cds.isReadOnlyForm.subscribe(val => {
-      this.isReadOnly = val;
-      this.options.readOnly = val;
+      this.isReadOnly = false;
+      this.options.readOnly = false;
     });
   }
 

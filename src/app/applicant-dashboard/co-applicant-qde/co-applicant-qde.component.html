@@ -592,6 +592,8 @@
                                                     </div>
                                                     <kendo-datepicker class="kendo_date_picker"
                                                         (valueChange)="onBirthDateChange($event)"
+                                                        [min] = min
+                                                        [max] = maxDate
                                                         [focusedDate]="focusedDate"
                                                         [(value)]="dateofBirthKendo" 
                                                         [format]="'dd-MMM-yyyy'">
@@ -1066,6 +1068,7 @@
                                                           #address1="ngModel"
                                                           fieldFill maxlength="120"
                                                           spellcheck="false"
+                                                          [readonly]="qde.application.applicants[coApplicantIndex].communicationAddress.currentAddFromApp"
                                                           required />
             
                                                           <div *ngIf="(qde.application.applicants[coApplicantIndex].communicationAddress.addressLineOne)?.length == 120" class="invalid-feedback">Maximum Character Exceeds</div>
@@ -1087,6 +1090,7 @@
                                                     #address2="ngModel"
                                                     fieldFill maxlength="120"
                                                     tabindex="3"
+                                                    [readonly]="qde.application.applicants[coApplicantIndex].communicationAddress.currentAddFromApp"
                                                     spellcheck="false"/>
               
                                                     <div *ngIf="(qde.application.applicants[coApplicantIndex].communicationAddress.addressLineTwo)?.length == 120" class="invalid-feedback">Maximum Character Exceeds</div>
@@ -1112,6 +1116,7 @@
                                                             tabindex="4"
                                                             spellcheck="false"
                                                             (blur)="onPinCodeChange($event, 'communicationAddress')" 
+                                                            [readonly]="qde.application.applicants[coApplicantIndex].communicationAddress.currentAddFromApp"
                                                             pattern="{{regexPattern.pinCode}}" />
                                                     <label for="pincode">Pincode</label>
                                                     <div class="redalert" *ngIf="RegExp(regexPattern.sameDigit).test(commPinCode.value)">
@@ -1134,7 +1139,8 @@
                                                             fieldFill   
                                                             spellcheck="false"
                                                             readonly 
-                                                            disabled                 
+                                                            disabled  
+                                                            [readonly]="qde.application.applicants[coApplicantIndex].communicationAddress.currentAddFromApp"               
                                                             pattern="{{regexPattern.address}}" />
                                                         
                                                         <label for="cityState">City/State</label>
@@ -1167,8 +1173,7 @@
                                                           (ngModelChange)="permanentAddressFromMainApplicant($event)"
                                                           [checked]="qde.application.applicants[this.coApplicantIndex].communicationAddress.permanentAddFromApp == true"
                                                           id="permanentAddFromApp"
-                                                          #permanentAddFromApp
-                                          />
+                                                          #permanentAddFromApp />
                                                   <label for="permanentAddFromApp"><span>Permanent Address From Main Applicant</span></label>
                                                   </div>
                                                       <div class="form-group">
@@ -1181,7 +1186,8 @@
                                                           spellcheck="false"
                                                           [(ngModel)]="qde.application.applicants[coApplicantIndex].permanentAddress.addressLineOne"
                                                           required 
-                                                          [readOnly]="qde.application.applicants[coApplicantIndex].communicationAddress.permanentAddress"/>
+                                                          [readOnly]="qde.application.applicants[coApplicantIndex].communicationAddress.permanentAddress || 
+                                                                        qde.application.applicants[this.coApplicantIndex].communicationAddress.permanentAddFromApp"/>
                                                           <label for="per-address1">Address line 1</label>
 
                                                           <div *ngIf="(qde.application.applicants[coApplicantIndex].permanentAddress.addressLineOne)?.length == 120" class="invalid-feedback">Maximum Character Exceeds</div>
@@ -1200,7 +1206,8 @@
                                                           pattern="{{regexPattern.address}}"
                                                           spellcheck="false"
                                                           [(ngModel)]="qde.application.applicants[coApplicantIndex].permanentAddress.addressLineTwo" 
-                                                          [readOnly]="qde.application.applicants[coApplicantIndex].communicationAddress.permanentAddress"/>
+                                                          [readOnly]="qde.application.applicants[coApplicantIndex].communicationAddress.permanentAddress || 
+                                                                        qde.application.applicants[this.coApplicantIndex].communicationAddress.permanentAddFromApp"/>
             
                                                           <label for="per-address2">Address line 2</label>
 
@@ -1227,7 +1234,8 @@
                                                                     maxlength="6"
                                                                     pattern="{{regexPattern.pinCode}}"
                                                                     required
-                                                                    [readOnly]="qde.application.applicants[coApplicantIndex].communicationAddress.permanentAddress" />
+                                                                    [readOnly]="qde.application.applicants[coApplicantIndex].communicationAddress.permanentAddress || 
+                                                                                    qde.application.applicants[this.coApplicantIndex].communicationAddress.permanentAddFromApp" />
                                                           <label for="per-pincode">Pincode</label>
 
                                                           <div class="redalert" *ngIf="RegExp(regexPattern.sameDigit).test(pZipcode.value)">
@@ -1248,7 +1256,8 @@
                                                           disabled
                                                           spellcheck="false"
                                                           [(ngModel)]="qde.application.applicants[coApplicantIndex].permanentAddress.cityState"
-                                                          [readOnly]="qde.application.applicants[coApplicantIndex].communicationAddress.permanentAddress">
+                                                          [readOnly]="qde.application.applicants[coApplicantIndex].communicationAddress.permanentAddress || 
+                                                                        qde.application.applicants[this.coApplicantIndex].communicationAddress.permanentAddFromApp">
                                                           <label for="per-cityState">City/State</label>
                                                       </div>
                                                   </div>
@@ -2686,6 +2695,8 @@
                                                 <kendo-datepicker class="kendo_date_picker"
                                                     [focusedDate]="focusIncorpDate"
                                                     (valueChange)="onDateOfIncorpChange($event)"
+                                                    [min] = min
+                                                    [max] =  maxDate
                                                     [(value)]="dateofBirthKendo" 
                                                     [format]="'dd-MMM-yyyy'">
                                                 </kendo-datepicker>

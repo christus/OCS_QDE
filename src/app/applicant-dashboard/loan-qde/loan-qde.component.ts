@@ -330,8 +330,8 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
     * Check for User and set isReadOnly=true to disable editing of fields
     ********************************************************************/
     this.cds.isReadOnlyForm.subscribe(val => {
-      this.isReadOnly = val;
-      this.options.readOnly = val;
+      this.isReadOnly = false;
+      this.options.readOnly = false;
     });
 
     // this.renderer.addClass(this.select2.selector.nativeElement, 'js-select');
@@ -527,8 +527,8 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
     * Check for User and set isReadOnly=true to disable editing of fields
     ********************************************************************/
     this.cds.isReadOnlyForm.subscribe(val => {
-      this.isReadOnly = val;
-      this.options.readOnly = val;
+      this.isReadOnly = false;
+      this.options.readOnly = false;
     });
 
     // this.qdeService.qdeSource.subscribe(val => {

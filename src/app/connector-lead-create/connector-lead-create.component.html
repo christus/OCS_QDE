@@ -145,6 +145,7 @@
                     <div class="form-group">
                         <input spellcheck="false" type="text" class="form-control"
                           id="loanAmt" autocomplete="off"
+                          maxlength="10"
                           [(ngModel)]="qde.application.leadCreate.loanAmount"
                           name="loanAmount" 
                           #loanAmount="ngModel" 
@@ -176,8 +177,8 @@
                         </div>
                       <div class="btn-wrap">
                           <button class="btn btn-primary"
-                          [ngClass]="{'disabled': (!leadForm.valid)|| isNumberLessThan50k}"
-                          [disabled]="!leadForm.valid || isNumberLessThan50k"
+                          [ngClass]="{'disabled': (!leadForm.valid)|| isNumberLessThan50k || isNumberMoreThan100cr}"
+                          [disabled]="!leadForm.valid || isNumberLessThan50k || isNumberMoreThan100cr"
                           >Submit</button>
                       </div>
                   </form>
