@@ -55,7 +55,7 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
            required: "10 digit mobile number is mandatory",
            invalid: "Invalid Mobile Number",
            minlength: "Mobile number must be 10 digits",
-           sameNumber: "Mobile number is same as of second reference , please use different numbers",
+           sameNumber: "Mobile number is same as of another reference , please use different numbers",
           },
           addressLineOne: {
            required: "Address line One is Mandatory",
@@ -77,7 +77,7 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
           required: "10 digit mobile number is mandatory",
           invalid: "Invalid Mobile Number",
           minlength: "Mobile number must be 10 digits",
-          sameNumber: "Mobile number is same as of first reference , please use different numbers",
+          sameNumber: "Mobile number is same as of another reference , please use different numbers",
          },
          addressLineOne: {
           required: "Address line One is Mandatory",
@@ -389,8 +389,8 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
     * Check for User and set isReadOnly=true to disable editing of fields
     ********************************************************************/
     this.cds.isReadOnlyForm.subscribe(val => {
-      this.isReadOnly = val;
-      this.options.readOnly = val;
+      this.isReadOnly = false;
+      this.options.readOnly = false;
     });
   }
 

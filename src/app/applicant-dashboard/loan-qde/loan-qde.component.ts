@@ -330,8 +330,8 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
     * Check for User and set isReadOnly=true to disable editing of fields
     ********************************************************************/
     this.cds.isReadOnlyForm.subscribe(val => {
-      this.isReadOnly = val;
-      this.options.readOnly = val;
+      this.isReadOnly = false;
+      this.options.readOnly = false;
     });
 
     // this.renderer.addClass(this.select2.selector.nativeElement, 'js-select');
@@ -527,8 +527,8 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
     * Check for User and set isReadOnly=true to disable editing of fields
     ********************************************************************/
     this.cds.isReadOnlyForm.subscribe(val => {
-      this.isReadOnly = val;
-      this.options.readOnly = val;
+      this.isReadOnly = false;
+      this.options.readOnly = false;
     });
 
     // this.qdeService.qdeSource.subscribe(val => {
@@ -538,16 +538,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.qdeHttp.adminGetLov().subscribe(res => {
-      if(res['ProcessVariables']['status'] == true) {
-        var lov= JSON.parse(res['ProcessVariables']['lovs']);
-        this.fullloanpurposes = lov.LOVS.loan_purpose;
-        console.log("fullloanpurposes: ", this.fullloanpurposes);
-      }
-    }, error => {
-      this.isErrorModal = true;
-      this.errorMessage = "Something went wrong, please try again later.";
-    });
+    
   }
 
   getApplicantTitle (salutation:string) {
@@ -1273,33 +1264,46 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   setLoanPurposes(loanType: string, data ?: string) {
-    this.qdeHttp.getLoanPurposeFromLoanType({loanType: loanType}).subscribe(res => {
-      var temploanpurposes = res['ProcessVariables']['loanPurposeLov'];
-      console.log("see here first"+JSON.stringify(temploanpurposes));
-      if(this.fullloanpurposes.length!=0){
-        for(var x in this.fullloanpurposes){
-          for(var y in temploanpurposes){
-            if(temploanpurposes[y].value==this.fullloanpurposes[x].id){
-              temploanpurposes[y].propIdentified = this.fullloanpurposes[x].propIdentified;
+    var that = this;
+    this.qdeHttp.adminGetLov().subscribe(res => {
+      if(res['ProcessVariables']['status'] == true) {
+        var lov= JSON.parse(res['ProcessVariables']['lovs']);
+        that.fullloanpurposes = lov.LOVS.loan_purpose;
+        console.log("fullloanpurposes: ", that.fullloanpurposes);
+
+        that.qdeHttp.getLoanPurposeFromLoanType({loanType: loanType}).subscribe(res => {
+          var temploanpurposes = res['ProcessVariables']['loanPurposeLov'];
+          console.log("see here first"+JSON.stringify(temploanpurposes));
+          if(that.fullloanpurposes.length!=0){
+            for(var x in that.fullloanpurposes){
+              for(var y in temploanpurposes){
+                if(temploanpurposes[y].value==that.fullloanpurposes[x].id){
+                  temploanpurposes[y].propIdentified = that.fullloanpurposes[x].propIdentified;
+              }
+            }
+          }
+          that.loanpurposes = temploanpurposes;
+          console.log("see here"+JSON.stringify(that.loanpurposes));
+        }
+        if(that.loanpurposes.length!=0){
+          for(var x in that.loanpurposes){
+            if(that.loanpurposes[x].propIdentified){
+              that.isPropertyIdentified=true;
+            }
           }
         }
-      }
-      this.loanpurposes = temploanpurposes;
-      console.log("see here"+JSON.stringify(this.loanpurposes));
-    }
-    if(this.loanpurposes.length!=0){
-      for(var x in this.loanpurposes){
-        if(this.loanpurposes[x].propIdentified){
-          this.isPropertyIdentified=true;
+        if(data) {
+          console.log("Definitely see here"+JSON.stringify(that.loanpurposes));
+          that.selectedLoanPurpose = that.loanpurposes.find(v => v.value == data) || that.loanpurposes[0];
+        } else {
+          that.selectedLoanPurpose = that.loanpurposes[0];
         }
-      }
+      }, error => {
+        that.isErrorModal = true;
+        that.errorMessage = "Something went wrong, please try again later.";
+      });
     }
-      if(data) {
-        this.selectedLoanPurpose = this.loanpurposes.find(v => v.value == data) || this.loanpurposes[0];
-      } else {
-        this.selectedLoanPurpose = this.loanpurposes[0];
-      }
-    }, error => {
+  }, error => {
       this.isErrorModal = true;
       this.errorMessage = "Something went wrong, please try again later.";
     });

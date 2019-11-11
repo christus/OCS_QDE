@@ -76,7 +76,7 @@
                           [(ngModel)]="qde.application.leadCreate.name"
                           pattern="{{regexPattern.firstName}}"
                           name="firstName" #fName="ngModel" fieldFill required/>
-                        <label for="name">First name</label>    
+                        <label for="name">Full name</label>    
                         <div *ngIf="(fName.touched || fName.dirty) && fName.invalid"
                                 class="invalid-feedback">
                              <div *ngIf="fName.errors?.required">{{errors.leadCreate.firstName.required}}</div>
@@ -145,16 +145,18 @@
                     <div class="form-group">
                         <input spellcheck="false" type="text" class="form-control"
                           id="loanAmt" autocomplete="off"
+                          maxlength="10"
                           [(ngModel)]="qde.application.leadCreate.loanAmount"
                           name="loanAmount" 
                           #loanAmount="ngModel" 
                           fieldFill 
                           required
                           pattern="{{regexPattern.amount}}"
-                          (input)="checkNumberLessThan50k($event)"/>
+                          (input)="checkAmountLimit($event)"/>
                         <label for="loanAmt">Loan Amount</label>    
                         <div class="invalid-feedback">
-                            <div *ngIf="loanAmount.touched && isNumberLessThan50k">{{errors.leadCreate.amount.minamount}}</div>
+                            <div *ngIf="isNumberLessThan50k">{{errors.leadCreate.amount.minamount}}</div>
+                            <div *ngIf="isNumberMoreThan100cr">{{errors.leadCreate.amount.maxamount}}</div>
                             <div *ngIf="loanAmount.touched && loanAmount.errors?.required">{{errors.leadCreate.amount.required}}</div>
                             <div *ngIf="loanAmount.errors?.pattern">{{errors.leadCreate.amount.invalid}}</div>
                         </div>
@@ -175,8 +177,8 @@
                         </div>
                       <div class="btn-wrap">
                           <button class="btn btn-primary"
-                          [ngClass]="{'disabled': (!leadForm.valid)|| isNumberLessThan50k}"
-                          [disabled]="!leadForm.valid || isNumberLessThan50k"
+                          [ngClass]="{'disabled': (!leadForm.valid)|| isNumberLessThan50k || isNumberMoreThan100cr}"
+                          [disabled]="!leadForm.valid || isNumberLessThan50k || isNumberMoreThan100cr"
                           >Submit</button>
                       </div>
                   </form>

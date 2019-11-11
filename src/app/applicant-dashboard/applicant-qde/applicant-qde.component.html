@@ -451,6 +451,8 @@
                             </div>
                             <kendo-datepicker class="kendo_date_picker"
                               (valueChange)="onBirthDateChange($event)"
+                              [min]= min
+                              [max] =  maxDate 
                               [focusedDate]="focusedDate"
                               [(value)]="dateofBirthKendo" 
                               [format]="'dd-MMM-yyyy'">

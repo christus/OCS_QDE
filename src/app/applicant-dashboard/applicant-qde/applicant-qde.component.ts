@@ -352,7 +352,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ageError:boolean = false;
 
-
+  min: Date; // minimum date to date of birth
+  maxDate : Date = new Date();
+  
   constructor(private renderer: Renderer2,
     private route: ActivatedRoute,
     private router: Router,
@@ -929,9 +931,17 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     * Check for User and set isReadOnly=true to disable editing of fields
     ********************************************************************/
     this.cds.isReadOnlyForm.subscribe(val => {
-      this.isReadOnly = val;
-      this.options.readOnly = val;
+      this.isReadOnly = false;
+      this.options.readOnly = false;
     });
+
+    let today = new Date();
+    let day = today.getDate();
+    let month = today.getMonth() + 1;
+    let year = today.getFullYear() - 99;
+
+
+    this.min = new Date(year, month, day);
   }
 
   /**
@@ -1614,6 +1624,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       if (age < 18) {
         this.ageError = true;
         return;
+      }else if (age >  99){
+        this.isErrorModal = true;
+        this.errorMessage = "Maximum age limit is 99.";
+        return;
       } else {
         this.ageError = false;
       }
@@ -1644,6 +1658,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       var age = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
       if (age < 18) {
         this.ageError = true;
+        return;
+      }else if (age >  99){
+        this.isErrorModal = true;
+        this.errorMessage = "Maximum age limit is 99.";
         return;
       } else {
         this.ageError = false;
@@ -2223,7 +2241,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       };
 
       this.qdeHttp.checkOccupationType(data).subscribe((response) => {
-
+        // console.log("mainhudonfdnbhkdbsfkhgjkfhdjkghfrjkghfksdghkdfsyufk",response)
 
         if (response["ProcessVariables"]["status"]) {
           this.isOfficialCorrs = response["ProcessVariables"]["incomeConsider"];

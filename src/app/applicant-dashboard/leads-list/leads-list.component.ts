@@ -206,8 +206,7 @@ export class LeadsListComponent implements OnInit {
         res => {
           const endDate = new Date();
           console.log("PendingPayment Api Call: End Date & Time ", endDate, endDate.getMilliseconds());
-          console.log(res);
-
+          // console.log(res);
           if (res["Error"] && res["Error"] == 0) {
             this.newPendingPaymentDetails = res["ProcessVariables"].userDetails || [];
 
@@ -251,7 +250,7 @@ export class LeadsListComponent implements OnInit {
         res => {
           const endDate = new Date();
           console.log("New Leads Api Call: End Date & Time ", endDate, endDate.getMilliseconds());
-          console.log(res);
+          // console.log(res);
 
           if (res["Error"] && res["Error"] == 0) {
             this.newLeadsDetails = res["ProcessVariables"].userDetails || [];

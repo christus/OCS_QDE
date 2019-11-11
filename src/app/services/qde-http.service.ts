@@ -164,20 +164,20 @@ createOrUpdatePersonalDetails(qde) {
     //   .set('removeExistingSession', data.removeExistingSession)
     //   .set('appId', data.appId)
 
-      const body = {
-        'email': data.email,
-        'password': data.password,
-        'removeExistingSession': data.removeExistingSession,
-        'appId': data.appId,
-        "refId": data.refId,
-      "captcha": data.captcha
-      };
+      // const body = {
+      //   'email': data.email,
+      //   'password': data.password,
+      //   'removeExistingSession': data.removeExistingSession,
+      //   'appId': data.appId,
+      //   "refId": data.refId,
+      // "captcha": data.captcha
+      // };
 
 
     let uri = environment.host + '/account/'+environment.apiVersion.login+'login';    
     // let uri = environment.host + '/account/login_ne';
     // let uri = environment.host + '/account/login';
-    return this.callPost(null, null, body, null, "login");
+    return this.callPost(null, null, data, null, "login");
   }
 
 

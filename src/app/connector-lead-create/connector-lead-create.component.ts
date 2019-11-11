@@ -28,6 +28,7 @@ export class ConnectorLeadCreateComponent implements OnInit {
   buildDate: string;
   isSuccessfulRouteModal: boolean;
   isNumberLessThan50k: boolean;
+  isNumberMoreThan100cr: boolean;
   sessionMessage="";
   firstName: string;
   qdeSourceSub: Subscription;
@@ -72,6 +73,7 @@ export class ConnectorLeadCreateComponent implements OnInit {
         required: "Loan Amount is Mandatory",
         invalid: "Invalid Loan Amount / Alphabets and special characters not allowed",
         minamount: "Amount should be greater than or equal to Rs.50000",
+        maxamount: "Amount should be less than or equal to Rs.1000000000",
       }
     }
   };
@@ -178,12 +180,17 @@ export class ConnectorLeadCreateComponent implements OnInit {
     return RegExp(param);
   }
 
-  checkNumberLessThan50k(event) {
-    if(this.isValidNumber(event.target.value)) {
-      let n = parseInt(this.getNumberWithoutCommaFormat(event.target.value));
-      this.isNumberLessThan50k = (n < 50000);
-    } else {
+  checkAmountLimit(event) {
+    let n = parseInt(this.getNumberWithoutCommaFormat(event.target.value));
+    if(n < 50000){
+      this.isNumberLessThan50k = true;
+    }
+    else if(n >= 1000000001){
+      this.isNumberMoreThan100cr = true; 
+    }
+    else {
       this.isNumberLessThan50k = false;
+      this.isNumberMoreThan100cr = false;
     }
   }
 
