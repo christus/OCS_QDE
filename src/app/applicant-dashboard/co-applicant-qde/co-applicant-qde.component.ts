@@ -1650,6 +1650,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       if(form.value.maritalStatus.value == "2") {
         this.goToNextSlide(swiperInstance);
       } else {
+        this.qde.application.applicants[this.coApplicantIndex].maritalStatus.spouseTitle = null;
+        this.qde.application.applicants[this.coApplicantIndex].maritalStatus.firstName = "";
+        this.qde.application.applicants[this.coApplicantIndex].maritalStatus.amount = null
         this.tabSwitch(6);
       }      
     } else {
@@ -1681,6 +1684,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             });
             this.goToNextSlide(swiperInstance);
           } else {
+            this.qde.application.applicants[this.coApplicantIndex].maritalStatus.spouseTitle = null;
+            this.qde.application.applicants[this.coApplicantIndex].maritalStatus.firstName = "";
+            this.qde.application.applicants[this.coApplicantIndex].maritalStatus.amount = null
             this.tabSwitch(6);
           }
         } else {
@@ -1739,6 +1745,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       if(value == 1) {
         this.goToNextSlide(swiperInstance);
       } else {
+        this.qde.application.applicants[this.coApplicantIndex].maritalStatus.amount = null;
         this.tabSwitch(6);
       }
     } else {
@@ -1762,6 +1769,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
           if(value == 1) {
             this.goToNextSlide(swiperInstance);
           } else {
+            this.qde.application.applicants[this.coApplicantIndex].maritalStatus.amount = null;
             this.tabSwitch(6);
           }
         } else {
@@ -3778,7 +3786,27 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   closeDuplicateModal() {
     this.isDuplicateModalShown = false;
     if(this.qde.application.applicants[this.coApplicantIndex].isIndividual == true) {
-      this.tabSwitch(3);
+      // if(this.qde.application.applicants[this.coApplicantIndex].contactDetails.alternateEmailId == ""){
+      //   this.addRemoveEmailField();
+      //   //To remove extra mobile number field
+      //   if(this.qde.application.applicants[this.coApplicantIndex].contactDetails.alternateMobileNumber == null){
+      //     this.addRemoveMobileNumberField();
+      //     //To remove extra phone number field
+      //     if(this.qde.application.applicants[this.coApplicantIndex].contactDetails.alternateResidenceNumber == "-"){
+      //       this.addRemoveResidenceNumberField();
+      //       this.tabSwitch(3); 
+      //     }
+      //     else{
+      //       this.tabSwitch(3); 
+      //     }
+      //   }
+      //   else{
+      //     this.tabSwitch(3);
+      //   }
+      // }
+      // else{
+        this.tabSwitch(3);
+      // }
     } else {
       this.tabSwitch(13);
     }

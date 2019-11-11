@@ -1904,6 +1904,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       if (form.value.maritalStatus.value == "2") {
         this.goToNextSlide(swiperInstance);
       } else {
+        this.qde.application.applicants[this.applicantIndex].maritalStatus.spouseTitle = null;
+        this.qde.application.applicants[this.applicantIndex].maritalStatus.firstName = "";
+        this.qde.application.applicants[this.applicantIndex].maritalStatus.amount = null
         this.tabSwitch(5);
       }
     } else {
@@ -1915,7 +1918,6 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.qde.application.applicants[this.applicantIndex].maritalStatus.status = form.value.maritalStatus.value;
 
 
-      console.log(this.qde.application.applicants[this.applicantIndex].maritalStatus);
       this.createOrUpdatePersonalDetailsSub8 = this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful
         if (response["ProcessVariables"]["status"]) {
@@ -1932,6 +1934,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           if (form.value.maritalStatus.value == "2") {
             this.goToNextSlide(swiperInstance);
           } else {
+            this.qde.application.applicants[this.applicantIndex].maritalStatus.spouseTitle = null;
+            this.qde.application.applicants[this.applicantIndex].maritalStatus.firstName = "";
+            this.qde.application.applicants[this.applicantIndex].maritalStatus.amount = null
             this.tabSwitch(5);
           }
         } else {
@@ -1988,6 +1993,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       if (value == 1) {
         this.goToNextSlide(swiperInstance);
       } else {
+        this.qde.application.applicants[this.applicantIndex].maritalStatus.amount = null;
         this.tabSwitch(5);
       }
     } else {
@@ -2008,6 +2014,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           if (value == 1) {
             this.goToNextSlide(swiperInstance);
           } else {
+            this.qde.application.applicants[this.applicantIndex].maritalStatus.amount = null;
             this.tabSwitch(5);
           }
         } else {
@@ -3629,7 +3636,28 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   closeDuplicateModal() {
     this.isDuplicateModalShown = false;
     if (this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
-      this.tabSwitch(2);
+      //To remove extra e-mail field
+      // if(this.qde.application.applicants[this.applicantIndex].contactDetails.alternateEmailId == ""){
+      //   this.addRemoveEmailField();
+      //   //To remove extra mobile number field
+      //   if(this.qde.application.applicants[this.applicantIndex].contactDetails.alternateMobileNumber == null){
+      //     this.addRemoveMobileNumberField();
+      //     //To remove extra phone number field
+      //     if(this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber == "-"){
+      //       this.addRemoveResidenceNumberField();
+      //       this.tabSwitch(2); 
+      //     }
+      //     else{
+      //       this.tabSwitch(2); 
+      //     }
+      //   }
+      //   else{
+      //     this.tabSwitch(2);
+      //   }
+      // }
+      // else{
+        this.tabSwitch(2);
+      // }
     } else {
       this.tabSwitch(12);
     }
