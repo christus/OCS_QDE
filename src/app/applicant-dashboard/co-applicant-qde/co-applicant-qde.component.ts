@@ -1129,8 +1129,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                   this.setStatusApiSub2 = this.qdeHttp.setStatusApi( applicationId, environment.status.QDECREATED).subscribe((response) => {
                     if(response["ProcessVariables"]["status"] == true) { 
                       // this.cds.changePanSlide2(true);
-                      // this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant/'+this.coApplicantIndex], { queryParams: { tabName: this.fragments[11], page: 1 }});
-                      this.tabSwitch(12);
+                      this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant/'+this.coApplicantIndex], { queryParams: { tabName: this.fragments[12], page: 1 }});
+                      // this.tabSwitch(12);
                     }
                   });
   
