@@ -17,6 +17,16 @@ export class CommonDataService {
     this.isMenuBarShown$.next(isMenuBarShown);
   }
 
+
+
+  showLogout$: BehaviorSubject<any> = new BehaviorSubject<boolean>(false);
+  public showLogout = this.showLogout$.asObservable();
+
+
+  setDialogData(data: boolean) {
+   this.showLogout$.next(data)
+  }
+
   // paymentActive$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
 
   // paymentActive = this.paymentActive$.asObservable();

@@ -1,3 +1,4 @@
+import { CommonDataService } from 'src/app/services/common-data.service';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpResponse, HttpErrorResponse } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { map, tap, first, catchError } from "rxjs/operators";
@@ -18,9 +19,12 @@ export class AuthInterceptor implements HttpInterceptor {
   private route: ActivatedRoute,
   private router: Router,
   private ngxService: NgxUiLoaderService,
-  private encrytionService: EncryptService) { }
+  private encrytionService: EncryptService,
+  private cds: CommonDataService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+
+    localStorage.setItem("login_required", "false");
 
     this.ngxService.start(); // start foreground spinner of the master loader with 'default' taskId
     let httpMethod = req.method;
@@ -89,8 +93,12 @@ export class AuthInterceptor implements HttpInterceptor {
           if (event.headers.get("content-type") != "text/plain" && typeof(event.body) != "object") {
             response = JSON.parse(event.body);
           }
+
           if (response && response["login_required"]) {
             if(this.router.url.search('auto-login') == -1) {
+
+              this.cds.setDialogData(true);
+              
               this.utilService.clearCredentials();
               // alert(response['message']);
             }

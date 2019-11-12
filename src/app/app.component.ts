@@ -1,4 +1,5 @@
-import { Component, OnInit, Renderer2, ElementRef, Inject, HostListener } from '@angular/core';
+import { CommonDataService } from 'src/app/services/common-data.service';
+import { Component, OnInit, Renderer2, ElementRef, Inject, HostListener, ViewChild, AfterViewInit } from '@angular/core';
 import { Plugins, AppState } from '@capacitor/core';
 
 import { Keyboard } from '@ionic-native/keyboard/ngx';
@@ -18,30 +19,56 @@ import { AutoLogoutService } from './services/AutoLogoutService';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit, AfterViewInit{
+
+  @ViewChild("myDiv") divView: ElementRef;
+
 
   isMobile:any;
 
   title = 'OCS-QDE';
 
+  isErrorModal:boolean = false;
+
+  errorMessage:String = "";
+
+  counter:number = 0;
+
+  showErrDialog;
+
+  isMenuBarShown:boolean;
+
+
+  
   constructor(private utilService: UtilService,
     private keyboard: Keyboard,
     private el: ElementRef, private renderer: Renderer2,
     nativeKeyboard: NativeKeyboard,
     private deviceService: DeviceDetectorService,
     private autoLogout: AutoLogoutService,
+    private cds: CommonDataService,
     private mobileService: MobileService) { 
       this.isMobile = this.mobileService.isMobile;
       
       if(this.isMobile){
         this.renderer.addClass(document.body, 'mobile');
       }
+
   }
 
   ngOnInit() {
+
+    var that = this;
+
+
+    console.log("isErrorModal", this.isErrorModal);
+
+   
+
     document.addEventListener('backbutton', () => {
       navigator["app"].exitApp();
    });
+
    document.addEventListener('deviceready', function() {
       console.log("Device ready");
 
@@ -81,7 +108,35 @@ export class AppComponent implements OnInit{
       // });
 
     });
+
+
+
+    this.cds.showLogout.subscribe((value) => {
+
+      this.showErrDialog = value;
+
+      console.log("this.showErrDialog", value);
+
+      if(this.divView.nativeElement.classList.contains('active')) {
+        // that.isErrorModal = false;
+        console.log("reqesut", "ngAfterview contains active");
+      }else {
+        this.isErrorModal = this.showErrDialog;
   
+        this.errorMessage = "Session expired please login again.";
+        console.log("reqesut", "ngAfterview not active");
+
+      }
+
+    });
+  
+  }
+
+
+  ngAfterViewInit() {
+   
+    var that = this;
+   
   }
 
   @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {

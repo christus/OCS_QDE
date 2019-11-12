@@ -23,7 +23,8 @@ export class ProceedToReviewFormComponent implements OnInit {
               private qdehttpService: QdeHttpService,
               private qdeService: QdeService,
               private route: ActivatedRoute,
-              private utilService: UtilService) {
+              private utilService: UtilService,
+              private router: Router) {
 
     this.qdeService.qdeSource.subscribe(val => {
       this.qde = val;
@@ -34,17 +35,16 @@ export class ProceedToReviewFormComponent implements OnInit {
 
     const status = JSON.parse(this.route.snapshot.data['qde']['ProcessVariables']['response']).application.status;
     this.applicantId = this.route.snapshot.params["applicantId"];
+    this.applicationId = this.route.snapshot.params["applicationId"];
     console.log("applicant ID  ", this.applicantId);
     const applicatonData = this.qde.application.applicants.find(v => v.applicantId == this.applicantId);
 
     console.log("application qde values ", this.qde.application);
     if(status == statuses['Terms and conditions accepted']) {
-      alert("Terms and condition already accepted");
-      this.utilService.clearCredentials();
+      this.router.navigate(['static/terms-and-conditions/thankt&c', this.applicationId, this.applicantId]);
       return;
     } else if (applicatonData["termsAndConditions"]) {
-       alert("Terms and condition already accepted");
-      this.utilService.clearCredentials();
+      this.router.navigate(['static/terms-and-conditions/thankt&c', this.applicationId, this.applicantId]);
       return;
     }
     

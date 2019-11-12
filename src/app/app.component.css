@@ -2,3 +2,15 @@
     padding: 4px 8px;
     height: calc(8px + 1.4285714286em);
 }
+
+.logout_dialog.bs-modal .btn-wrap {
+    margin-top: 40px !important;
+}
+
+.logout_dialog.bs-modal.active {
+    height: 250px !important;
+}
+
+.logout_dialog.bs-modal .modal-body {
+    padding: 1.91vw 0;
+}
