@@ -3662,15 +3662,15 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       // }
       // else{
 
-      if(this.qde.application.applicants[this.applicantIndex].contactDetails.alternateEmailId == "" && this.isAlternateEmailId == true){
-        this.addRemoveEmailField();
-      }
-      if(this.qde.application.applicants[this.applicantIndex].contactDetails.alternateMobileNumber == null && this.isAlternateMobileNumber == true){
-        this.addRemoveMobileNumberField();
-      }
-      if(this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber == "-" && this.isAlternateResidenceNumber == true){
-        this.addRemoveResidenceNumberField();
-      }
+      // if(this.qde.application.applicants[this.applicantIndex].contactDetails.alternateEmailId == "" || this.isAlternateEmailId == true){
+      //   this.addRemoveEmailField();
+      // }
+      // if(this.qde.application.applicants[this.applicantIndex].contactDetails.alternateMobileNumber == null || this.isAlternateMobileNumber == true){
+      //   this.addRemoveMobileNumberField();
+      // }
+      // if(this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber == "-" || this.isAlternateResidenceNumber == true){
+      //   this.addRemoveResidenceNumberField();
+      // }
       this.tabSwitch(2);
       // }
     } else {
