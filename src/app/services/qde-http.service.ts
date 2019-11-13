@@ -1693,7 +1693,8 @@ createOrUpdatePersonalDetails(qde) {
       stateId : lovs.stateId!=null ? lovs.stateId: null,
       zone : lovs.zone != null ? lovs.zone: null,
       cityId : lovs.cityId!=null ? lovs.cityId: null,
-      isRequired : lovs.isRequired!=null ? lovs.isRequired: null
+      isRequired : lovs.isRequired!=null ? lovs.isRequired: null,
+      reqBoolean : lovs.reqBoolean
     });
     console.log(obj);
 
@@ -1838,7 +1839,7 @@ createOrUpdatePersonalDetails(qde) {
     );
   }
 
-  adminGetCityFromZone(zoneId: string) {
+  adminGetCityFromZone(zoneId: string,stateId:string) {
     const processId = environment.api.adminGetCityFromZone.processId;
     const workflowId = environment.api.adminGetCityFromZone.workflowId;
     const projectId = environment.projectId;
@@ -1847,7 +1848,8 @@ createOrUpdatePersonalDetails(qde) {
       processId: processId,
       ProcessVariables: {
         userId: parseInt(localStorage.getItem('userId')),
-        zoneId: parseInt(zoneId)
+        zoneId: parseInt(zoneId),
+        stateId: parseInt(stateId)
       },
       workflowId: workflowId,
       projectId: projectId

@@ -246,6 +246,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   selectedConstitution: Item;
   selectedDocType: Item;
   preferredEmail: Array<Item>;
+  spouseTitles: Array<any>;
+
   docType: Array<any>;
   selectedAssesmentMethodology: Array<any>;
 
@@ -1331,6 +1333,20 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       this.goToNextSlide(swiperInstance);
     } else {
       this.qde.application.applicants[this.coApplicantIndex].personalDetails.gender = value;
+      if(this.qde.application.applicants[this.coApplicantIndex].personalDetails.gender == "1"){
+        this.spouseTitles = this.femaleTitles;
+        this.selectedSpouseTitle = this.spouseTitles[0];
+        console.log("spouse is female");
+      }else if(this.qde.application.applicants[this.coApplicantIndex].personalDetails.gender == "2"){
+        this.spouseTitles = this.maleTitles;
+        this.selectedSpouseTitle = this.spouseTitles[0];
+        console.log("spouse is male");
+      }else{
+        this.femaleTitles.push(this.maleTitles.find(v=>v.key=="Mr"));
+        this.spouseTitles = this.femaleTitles;
+        this.selectedSpouseTitle = this.spouseTitles[0];
+        console.log("spouse can be Either"+JSON.stringify(this.spouseTitles));
+      }
 
       console.log("FILT: ",this.qdeService.getFilteredJson(this.qde));
   
@@ -3076,7 +3092,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
       if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].maritalStatus.spouseTitle)) ) {
         // this.selectedSpouseTitle = this.titles[(parseInt(this.qde.application.applicants[this.coApplicantIndex].maritalStatus.spouseTitle))-1];
-        this.selectedSpouseTitle = this.getSelectedValue(this.qde.application.applicants[this.coApplicantIndex].maritalStatus.spouseTitle, this.titles);
+        this.selectedSpouseTitle = this.getSelectedValue(this.qde.application.applicants[this.coApplicantIndex].maritalStatus.spouseTitle, this.spouseTitles);
 
       }
 

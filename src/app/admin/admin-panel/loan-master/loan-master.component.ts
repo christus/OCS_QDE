@@ -112,7 +112,9 @@ export class LoanMasterComponent implements OnInit {
     this.isAdd = !this.isAdd;
 
     this.selectedLoanTypeData = this.loanTypeData[0];
-
+    if(this.isLoginFee){this.baseFee = this.variableFee = this.taxApplicable = null;}
+    if(this.isLoanMaster){this.rateOfInterest = this.baseAmount = null;}
+    this.refresh();
   }
 
   submitForm(form: NgForm) {
@@ -144,6 +146,8 @@ export class LoanMasterComponent implements OnInit {
     if(this.isLoanMaster) {
       this.qdeHttp.adminUpdateLoanMaster(dude).subscribe(res => {
         if(res["ProcessVariables"]['status'] == true) {
+          this.isErrorModal = true;
+          this.errorMsg = "Added Successfully";
           this.refresh();
         } else {
           this.isErrorModal = true;

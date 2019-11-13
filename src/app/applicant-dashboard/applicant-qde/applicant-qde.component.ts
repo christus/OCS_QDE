@@ -305,6 +305,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   panErrorCount: number = 0;
 
   otp: string;
+  spouseTitles: Array<any>;
 
   idPanDocumnetType: any;
   idPanFileName: string;
@@ -821,7 +822,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
           if (!isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].maritalStatus.spouseTitle))) {
             // this.selectedSpouseTitle = this.titles[(parseInt(this.qde.application.applicants[this.applicantIndex].maritalStatus.spouseTitle))-1];
-            this.selectedSpouseTitle = this.getSelectedValue(this.qde.application.applicants[this.applicantIndex].maritalStatus.spouseTitle, this.titles);
+            this.selectedSpouseTitle = this.getSelectedValue(this.qde.application.applicants[this.applicantIndex].maritalStatus.spouseTitle, this.spouseTitles);
           }
 
           if (!isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].familyDetails.fatherTitle))) {
@@ -1531,6 +1532,19 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.goToNextSlide(swiperInstance);
     } else {
       this.qde.application.applicants[this.applicantIndex].personalDetails.gender = value;
+      if(this.qde.application.applicants[this.applicantIndex].personalDetails.gender == "1"){
+        this.spouseTitles = this.femaleTitles;
+        this.selectedSpouseTitle = this.spouseTitles[0];
+        console.log("spouse is female"+JSON.stringify(this.spouseTitles));
+      }else if(this.qde.application.applicants[this.applicantIndex].personalDetails.gender == "2"){
+        this.spouseTitles = this.maleTitles;
+        this.selectedSpouseTitle = this.spouseTitles[0];
+        console.log("spouse is male"+JSON.stringify(this.spouseTitles));
+      }else{
+        this.spouseTitles = this.titles;
+        this.selectedSpouseTitle = this.spouseTitles[0];
+        console.log("spouse can be Either"+JSON.stringify(this.spouseTitles));
+      }
 
       console.log("FILT: ", this.qdeService.getFilteredJson(this.qde));
 
@@ -3818,6 +3832,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     let occupationData = {
       userId: parseInt(localStorage.getItem("userId")),
       applicantType: this.qde.application.applicants[this.applicantIndex].isIndividual == true ? 1 : 2,
+      isMainApplicant : this.qde.application.applicants[this.applicantIndex].isMainApplicant
     };
 
     this.qdeHttp.getOccupationLov(occupationData).subscribe(response => {

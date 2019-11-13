@@ -24,6 +24,8 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
   lastKey: number;
   isErrorModal: boolean = false;
   errorMsg: string;
+  isLoanPurpose:boolean = false;
+  isFinancialApplicant: boolean = false;
 
   @ViewChildren('lovsElements') lovsElements: QueryList<ElementRef>;
 
@@ -35,6 +37,8 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
       this.tableName = v['eachLovName']
       this.isApplicantTitle = this.tableName == 'applicant_title' ? true: false;
       this.isDocumentCategory = this.tableName == 'document_category' ? true: false;
+      this.isLoanPurpose = this.tableName == 'loan_purpose' ? true : false;
+      this.isFinancialApplicant = this.tableName == 'profile' ? true : false;
     });
 
     let response = this.route.snapshot.data['eachLovs']['ProcessVariables'];
@@ -59,7 +63,8 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
             male: v['male'],
             female: v['female'],
             tableName: this.tableName,
-            isRequired: v['isRequired']
+            isRequired: v['isRequired'],
+            reqBoolean : v['reqBoolean']
           }
         });
         for(var i=0; i<this.lovs.length;i++){
@@ -110,10 +115,10 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
   }
 
   addNew() {
-    this.lovs.push({tableName: this.tableName, userId: localStorage.getItem('userId'), description: '', value: '', isEdit: false, male: false, female: false});
     this.qdeHttp.adminLoadMoreLovs(this.tableName, parseInt(this.totalPages), parseInt(this.perPage),this.searchKey).subscribe(res => {
       if (res['ProcessVariables']['status'] == true) {
         if (res['ProcessVariables']['valueDescription'] && res['ProcessVariables']['valueDescription'].length > 0) {
+          this.lovs.push({tableName: this.tableName, userId: localStorage.getItem('userId'), description: '', value: '', isEdit: false, male: false, female: false});
           this.tempLovs = res['ProcessVariables']['valueDescription'].map((v, i) => {
             return {
               userId: localStorage.getItem('userId'),
@@ -124,7 +129,8 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
               male: v['male'],
               female: v['female'],
               tableName: this.tableName,
-              isRequired: v['isRequired']
+              isRequired: v['isRequired'],
+              reqBoolean : v['reqBoolean']
             }
           });
           this.lastKey = (parseInt(this.perPage)*(parseInt(this.totalPages)-1))+this.tempLovs.length+1;
@@ -188,7 +194,8 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
               stateId: v['stateId'],
               stateName: v['stateName'],
               zone: v['zone'],
-              zoneName: v['zoneName']
+              zoneName: v['zoneName'],
+              reqBoolean : v['reqBoolean']
             }
           });
           for(var i=0; i<this.lovs.length;i++){
@@ -230,6 +237,12 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
   changeIsRequired(n: string, index) {
     this.lovs[index].isRequired = (n=='1') ? '1': '0';
   }
+  changeIsPropertyIdentified(event,index){
+    this.lovs[index].reqBoolean = event.target.checked;
+  }
+  changeIsFinancialApplicant(event, index){
+    this.lovs[index].reqBoolean = event.target.checked;
+  }
 
   refresh() {
     this.searchKey="";
@@ -254,7 +267,8 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
               male: v['male'],
               female: v['female'],
               tableName: this.tableName,
-              isRequired: v['isRequired']
+              isRequired: v['isRequired'],
+              reqBoolean : v['reqBoolean']
             }
           });
           for(var i=0; i<this.lovs.length;i++){
@@ -291,9 +305,11 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
               male: v['male'],
               female: v['female'],
               tableName: this.tableName,
-              isRequired: v['isRequired']
+              isRequired: v['isRequired'],
+              reqBoolean : v['reqBoolean']
             }
           });
+          this.key=[];
           for(var i=0; i<this.lovs.length;i++){
             this.key[i]=((parseInt(this.perPage)*(data-1))+i+ 1);
           }

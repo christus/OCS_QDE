@@ -26,6 +26,7 @@ export class BranchAddEditComponent implements OnInit {
   selectedItem: number;
   defaultBranchType: number =null;
   isErrorModal:boolean = false;
+  regEx = {value: '^[0-9]*$'};
 
 
   Value:string;
@@ -141,10 +142,10 @@ export class BranchAddEditComponent implements OnInit {
     // this.renderer.removeClass(this.reportingRef.nativeElement, 'active');
     console.log("cityList",this.cityList);
     this.cityList.forEach(v => {
-      this.renderer.removeClass(v.nativeElement, "active");
+      this.renderer.removeClass(v.nativeElement, "select");
     })
-    this.renderer.addClass(this.cityList["_results"][index].nativeElement, 'active');
-    this.renderer.setStyle(this.cityDropDown.nativeElement, 'display', 'none');
+    this.renderer.addClass(this.cityList["_results"][index].nativeElement, 'select');
+    this.selectBoxRef.nativeElement.querySelector('.reporting_to').classList.add('hide');
   }
 
   filterLeads(event) {
@@ -156,21 +157,39 @@ export class BranchAddEditComponent implements OnInit {
     if (this._timeout) { //if there is already a timeout in process cancel it
       window.clearTimeout(this._timeout);
     }
-    this._timeout = window.setTimeout(() => {
+    // this._timeout = window.setTimeout(() => {
 
-      console.log(event.target.value.toLowerCase());
-      let input = { "cityName": event.target.value.toLowerCase() };
-      this.qdeHttp.adminGetCityLov(input).subscribe((response) => {
-        console.log("cityName", response);
-        if(response['ProcessVariables']['status']){
-        let cityList = response['ProcessVariables'].cityList;
-        this.filteredItems = cityList;
-      }else{
-        this.renderer.setStyle(this.cityDropDown.nativeElement, 'display', 'none');
-      }
-      });
+    //   console.log(event.target.value.toLowerCase());
+    //   let input = { "cityName": event.target.value.toLowerCase() };
+    //   if(event.target.value!=""){
+    //   this.qdeHttp.adminGetCityLov(input).subscribe((response) => {
+    //     console.log("cityName", response);
+    //     if(response['ProcessVariables']['status']){
+    //     let cityList = response['ProcessVariables'].cityList;
+    //     this.filteredItems = cityList;
+    //     }
+    //   })
+    // }else{
+    //     this.selectBoxRef.nativeElement.querySelector('.reporting_to').classList.add('hide');
+    //   }
 
-    }, 1000);
+    // }, 1000);
+    let input = { "cityName": event.target.value.toLowerCase() };
+       if(event.target.value!=""){
+       this.qdeHttp.adminGetCityLov(input).subscribe((response) => {
+         console.log("cityName", response);
+         if(response['ProcessVariables']['status'] && response['ProcessVariables']['cityList']!=null){
+         let cityList = response['ProcessVariables'].cityList;
+         this.filteredItems = cityList;
+         }else if(response['ProcessVariables']['cityList']==null){
+            this.selectBoxRef.nativeElement.querySelector('.reporting_to').classList.add('hide');
+            this.isErrorModal = true;
+            this.errorMsg = "No data present";
+         }
+       })
+     }else{
+         this.selectBoxRef.nativeElement.querySelector('.reporting_to').classList.add('hide');
+       }
 
   }
 
@@ -182,22 +201,38 @@ export class BranchAddEditComponent implements OnInit {
     if (this._timeout) { //if there is already a timeout in process cancel it
       window.clearTimeout(this._timeout);
     }
-    this._timeout = window.setTimeout(() => {
+    // this._timeout = window.setTimeout(() => {
 
-      console.log(event.target.value.toLowerCase());
-      let input = { "zipcode": event.target.value.toLowerCase() };
+    //   console.log(event.target.value.toLowerCase());
+    //   let input = { "zipcode": event.target.value.toLowerCase() };
+    //   this.qdeHttp.adminGetZipLov(input).subscribe((response) => {
+    //     console.log("cityName", response);
+    //     this.selectBoxRef2.nativeElement.querySelector('.reporting_to').classList.remove('hide');
+    //     if(response['ProcessVariables']['status']){
+    //     let zipcodeList = response['ProcessVariables'].zipcodeList;
+    //     this.filteredZipCodeItems = zipcodeList;
+    //   }else{
+    //     this.selectBoxRef2.nativeElement.querySelector('.reporting_to').classList.addClass('hide');
+    //   }
+    //   });
+
+    // }, 1000);
+    let input = { "zipcode": event.target.value.toLowerCase() };
+    if(event.target.value!=""){
       this.qdeHttp.adminGetZipLov(input).subscribe((response) => {
-        console.log("cityName", response);
-        if(response['ProcessVariables']['status']){
+        this.selectBoxRef2.nativeElement.querySelector('.reporting_to').classList.remove('hide');
+        if(response['ProcessVariables']['status'] && response['ProcessVariables']['zipcodeList']!=null){
         let zipcodeList = response['ProcessVariables'].zipcodeList;
         this.filteredZipCodeItems = zipcodeList;
-      }else{
-        this.renderer.setStyle(this.zipDropDown.nativeElement, 'display', 'none');
+      }else if(response['ProcessVariables']['zipcodeList']==null){
+        this.selectBoxRef2.nativeElement.querySelector('.reporting_to').classList.add('hide');
+        this.isErrorModal = true;
+        this.errorMsg = "No data present";
       }
-      });
-
-    }, 1000);
-
+    })
+  }else{
+        this.selectBoxRef2.nativeElement.querySelector('.reporting_to').classList.add('hide');
+      }
   }
 
   selectedzipCode(index, data) {
@@ -207,10 +242,10 @@ export class BranchAddEditComponent implements OnInit {
     // this.renderer.removeClass(this.reportingRef.nativeElement, 'active');
     console.log("cityList",this.zipCodeList);
     this.zipCodeList.forEach(v => {
-      this.renderer.removeClass(v.nativeElement, "active");
+      this.renderer.removeClass(v.nativeElement, "select");
     })
-    this.renderer.addClass(this.zipCodeList["_results"][index].nativeElement, 'active');
-    this.renderer.setStyle(this.zipDropDown.nativeElement, 'display', 'none');
+    this.renderer.addClass(this.zipCodeList["_results"][index].nativeElement, 'select');
+    this.selectBoxRef2.nativeElement.querySelector('.reporting_to').classList.add('hide');
   }
 
   

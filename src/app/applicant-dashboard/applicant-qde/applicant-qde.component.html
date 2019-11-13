@@ -1108,7 +1108,7 @@
                         <div class="form-wrap">
                           <div class="form-group">
                             <span class="control-title">Title</span>
-                            <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control" [data]="titles"
+                            <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control" [data]="spouseTitles"
                               textField="key" tabindex="1" valueField="value" name="spouseTitle"
                               nick="maritalStatus.spouseTitle" #spouseTitle
                               (selectionChange)="selectValueChanged($event, spouseTitle.hostElement)"
@@ -1624,7 +1624,7 @@
                               id="incomeConsiderNo2" class="not-usual" tabindex="2"
                               (click)="incomeConsiderYesNoIndividual(2, occupationSlider2)"
                               [checked]="qde.application.applicants[applicantIndex].incomeDetails.incomeConsider == false"
-                              [value]="2" />
+                              [value]="2" disabled />
                             <label for="incomeConsiderNo2"><span>No</span></label>
                           </div>
                         </div>

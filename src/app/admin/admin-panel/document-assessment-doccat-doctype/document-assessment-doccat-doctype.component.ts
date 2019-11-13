@@ -143,6 +143,8 @@ export class DocumentAssessmentDoccatDoctypeComponent implements OnInit {
     this.selectedDocumentCategory = this.documentCategories[0];
     this.selectedDocType = this.docTypes[0];
     this.selectedProfile = this.profiles[0];
+    this.applicantType = "";
+    this.financialApplicant = "";
   }
 
   tableAssessmentChanged(event, index) {
@@ -187,10 +189,12 @@ export class DocumentAssessmentDoccatDoctypeComponent implements OnInit {
 
     this.qdeHttp.adminUpdateDocumentProfile(dude).subscribe(res => {
       if(res["ProcessVariables"]['status'] == true) {
+        this.isErrorModal = true;
+        this.errorMsg = "Added successfully";
         this.refresh();
       } else {
         this.isErrorModal = true;
-        this.errorMsg = "Something went wrong";
+        this.errorMsg = res["ProcessVariables"]["errorMessage"];
         //alert('Something went wrong.');
       }
     }, err => {
@@ -198,6 +202,7 @@ export class DocumentAssessmentDoccatDoctypeComponent implements OnInit {
         this.errorMsg = "Something went wrong";
         //alert('Something went wrong.');
     });
+    this.refresh();
   }
 
   refresh() {
@@ -269,10 +274,12 @@ export class DocumentAssessmentDoccatDoctypeComponent implements OnInit {
 
     this.qdeHttp.adminUpdateDocumentProfile(dude).subscribe(res => {
       if(res["ProcessVariables"]['status'] == true) {
+        this.isErrorModal = true;
+        this.errorMsg = "Updated Successfully";
         this.refresh();
       } else {
         this.isErrorModal = true;
-        this.errorMsg = "Something went wrong";
+        this.errorMsg = res["ProcessVariables"]["errorMessage"];
         //alert('Something went wrong.');
       }
     }, err => {

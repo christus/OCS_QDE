@@ -1,36 +1,26 @@
 <button class="btn btn-default" routerLink="/admin/lovs/branch_list">Go Back</button><br><br>
-<span class="redalert">*All fields are mandatory</span>
+<div class="redalert">*All fields are mandatory</div><br>
 <form [formGroup]="registerUser" class="branch-edit" (ngSubmit)="onSubmit()"  autocomplete="off">
     <div class="inputBox form-field-el">
             <label for="Value" class="inputText">Value:</label>
-            <input type="text" id="Value" [(ngModel)]="Value" class="form-control" formControlName="Value" fieldFill autocomplete="off" required/> 
-            <ng-container *ngIf="formValue.Value.errors">
-            <span class="redalert" *ngIf="formValue.Value.errors.required">Kindly provide value as it is mandatory</span>
-        </ng-container>
+        <input type="text" id="Value" [(ngModel)]="Value" class="form-control" formControlName="Value" fieldFill autocomplete="off" required pattern={{regEx.value}}/>
+                <div class="redalert" *ngIf="(formValue.Value.errors?.required && (formValue.Value.touched || formValue.Value.dirty))">Value is mandatory</div>
+                <div class="redalert" *ngIf="(formValue.Value.errors?.pattern && (formValue.Value.touched || formValue.Value.dirty))">Value cannot contain characters</div>
     </div>
     <div class="inputBox form-field-el">
             <label for="description" class="inputText">Description:</label>
             <input type="text" id="description"  [(ngModel)]="description" class="form-control" fieldFill formControlName="description" autocomplete="off" required/>
-            <ng-container *ngIf="formValue.description.errors">
-                <span class="redalert" *ngIf="formValue.description.errors.required">Kindly provide description as it is
-                    mandatory</span>
-            </ng-container>
+            <div class="redalert" *ngIf="(formValue.description.errors?.required && (formValue.description.touched || formValue.description.dirty))">Description is mandatory</div>
     </div>
      <div class="inputBox form-field-el">
         <label for="branchCode" class="inputText">Branch code:</label>
         <input type="text" id="branchCode" class="form-control" [(ngModel)]="branchCode" fieldFill formControlName="branchCode" autocomplete="off" required/>
-        <ng-container *ngIf="formValue.branchCode.errors">
-                <span class="redalert" *ngIf="formValue.branchCode.errors.required">Kindly provide branchCode as it is
-                    mandatory</span>
-            </ng-container>
+        <div class="redalert" *ngIf="(formValue.branchCode.errors?.required && (formValue.branchCode.touched || formValue.branchCode.dirty))">Branch code is mandatory</div>
     </div>
     <div class="inputBox form-field-el">
         <label for="address" class="inputText">Address </label>
         <input type="text" id="address"  class="form-control" [(ngModel)]="address" fieldFill formControlName="address" autocomplete="off" required />
-        <ng-container *ngIf="formValue.address.errors">
-                <span class="redalert" *ngIf="formValue.address.errors.required">Kindly provide address as it is
-                    mandatory</span>
-            </ng-container>
+        <div class="redalert" *ngIf="(formValue.address.errors?.required && (formValue.address.touched || formValue.address.dirty))">Address is mandatory</div>
     </div>
     <!-- <div class="inputBox">
         <label for="branchType" class="inputText">Branch type </label>
@@ -45,29 +35,20 @@
             <option value="Single Branch">Single Branch</option>
             <option value="Multi Branch">Multi Branch</option>
         </select>
-        <ng-container *ngIf="formValue.branchType.errors">
-                <span class="redalert" *ngIf="formValue.branchType.errors.required">Kindly provide branchType as it is
-                    mandatory</span>
-            </ng-container>
+        <div class="redalert" *ngIf="(formValue.branchType.errors?.required && (formValue.branchType.touched || formValue.branchType.dirty))">Branch Type is mandatory</div>
     </div>
 
 
     <div class="inputBox form-field-el">
         <label for="newFinnOneCode" class="inputText" >NewFinnOne code:</label>
         <input type="text" id="newFinnOneCode"  [(ngModel)]="newFinnOneCode" class="form-control" fieldFill formControlName="newFinnOneCode" autocomplete="off" required />
-        <ng-container *ngIf="formValue.newFinnOneCode.errors">
-                <span class="redalert" *ngIf="formValue.newFinnOneCode.errors.required">Kindly provide newFinnOneCode as it is
-                    mandatory</span>
-            </ng-container>
+        <div class="redalert" *ngIf="(formValue.newFinnOneCode.errors?.required && (formValue.newFinnOneCode.touched || formValue.newFinnOneCode.dirty))">NewFinnoneCode is mandatory</div>
     </div>
 
     <div class="inputBox form-field-el reportingToBlock" #selectBox>
         <label for="city" class="">City:</label>
         <input type="text" id="city"   [(ngModel)]="city" (input)="filterLeads($event)" class="form-control"  formControlName="city" fieldFill  autocomplete="off" required/>
-        <ng-container *ngIf="formValue.city.errors">
-                <span class="redalert" *ngIf="formValue.city.errors.required"><br>Kindly provide city as it is
-                    mandatory</span>
-            </ng-container>
+        <div class="redalert" *ngIf="(formValue.city.errors?.required && (formValue.city.touched || formValue.city.dirty))">City is mandatory</div>
         <input type="hidden" class="form-control" hidden   [(ngModel)]="cityInp"  formControlName="cityInp" #cityEl  autocomplete="off"/>
         <span class="reporting_to hide" #cityDropDown>
             <ul>
@@ -82,10 +63,7 @@
     <div class="inputBox form-field-el reportingToBlock reporting_to_margin" #selectBox2>
             <label for="zipCode" class="">Zip code:</label>
             <input type="text" id="zipCode"  [(ngModel)]="zipCode" (input)="filteredZipItems($event)" class="form-control"  formControlName="zipCode" fieldFill  autocomplete="off" required/>
-            <ng-container *ngIf="formValue.zipCode.errors">
-                    <span class="redalert" *ngIf="formValue.zipCode.errors.required"><br>Kindly provide zipCode as it is
-                        mandatory</span>
-                </ng-container>
+            <div class="redalert" *ngIf="(formValue.zipCode.errors?.required && (formValue.zipCode.touched || formValue.zipCode.dirty))">ZipCode is mandatory</div>
             <input type="hidden" class="form-control" hidden  [(ngModel)]="zipCodeInp" formControlName="zipCodeInp" #zipCodeEl  autocomplete="off"/>
             <span class="reporting_to hide" #zipDropDown>
                 <ul>

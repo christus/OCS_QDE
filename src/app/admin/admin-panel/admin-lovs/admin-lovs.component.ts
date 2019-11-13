@@ -19,8 +19,8 @@ export class AdminLovsComponent implements OnInit, AfterViewInit {
     if(this.route.snapshot.data['adminLovs']) {
       this.adminLovs = this.route.snapshot.data['adminLovs']['ProcessVariables']['mastersList'];
       this.adminLovs.push({description: 'CLSS Checklist', value: 'clss_checklist'});
-      this.adminLovs.push({description: 'PMAY LIST', value: 'pmay_list'});
-      this.adminLovs.push({description: 'Branch LIST', value: 'branch_list'});
+      this.adminLovs.push({description: 'PMAY list', value: 'pmay_list'});
+      this.adminLovs.push({description: 'Branch list', value: 'branch_list'});
       this.adminLovs.push({description: 'Loan Type Purpose Mapping', value: 'loan_type_purpose_map'});
       this.adminLovs.push({description: 'Document Profile', value: 'document_profile'});
       this.adminLovs.push({description: 'Loan Master', value: 'loan_master'});

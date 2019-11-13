@@ -5,8 +5,9 @@
         <option *ngFor="let item of rolesList" [ngValue]="item" value={{item.roleId}} >
             {{item.roleName}}
         </option>
-    </select><br><br>
-
+    </select>
+    &nbsp; &nbsp; &nbsp;<input type="text" class="search" placeholder="Search" [(ngModel)]="searchKey" (input)="search()" />
+    <br>
 </div>
 
 <div class="list">
@@ -20,7 +21,7 @@
           <th style="width: 10%">Mobile Number</th>
           <th style="width: 5%">User Role</th>
           <th style="width: 10%">Branch Name</th>
-          <th style="width: 5%">Reportin To ID</th>
+          <th style="width: 5%">Reporting To ID</th>
           <th style="width: 5%">Reporting To</th>
         </tr>
       </thead>

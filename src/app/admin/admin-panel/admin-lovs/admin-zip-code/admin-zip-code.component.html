@@ -21,8 +21,8 @@
           <option *ngFor="let z of zones;" [ngValue]="z.value">{{z.key}}</option>
         </select>
     
-        <label for="city" *ngIf="selectedCity && selectedCity.value != -1">Select City</label>
-        <select id="city" name="cityId" *ngIf="selectedCity && selectedCity.value != -1" [(ngModel)]="selectedCity.value" (ngModelChange)="cityChanged($event)">
+        <label for="city" *ngIf="selectedCity ">Select City</label>
+        <select id="city" name="cityId" *ngIf="selectedCity " [(ngModel)]="selectedCity.value" (ngModelChange)="cityChanged($event)">
           <option *ngFor="let c of cities;" [ngValue]="c.value">{{c.key}}</option>
         </select>
       </div>

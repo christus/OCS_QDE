@@ -96,7 +96,7 @@ select:-webkit-autofill:focus {
     border-bottom: 1px solid #ddd;
 }
 
-.active{
+ .select{
    background: orange !important; 
 }
 
@@ -138,4 +138,5 @@ select:-webkit-autofill:focus {
     font-size: .94vw;
     font-weight: bold;
     letter-spacing: 0.5px;
+    position: fixed;
 }

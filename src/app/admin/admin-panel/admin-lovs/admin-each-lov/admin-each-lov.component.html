@@ -14,6 +14,8 @@
        <th>Edit/Save</th>
       <th *ngIf="isApplicantTitle"><form>Male/Female</form></th>
       <th *ngIf="isDocumentCategory"><form>Is Mandatory</form></th>
+      <th *ngIf="isLoanPurpose"><form>Is Property Mandatory</form></th>
+      <th *ngIf="isFinancialApplicant"><form>Financial Applicant</form></th>
        <th [ngStyle]="{textAlign: 'center'}">Delete</th>
      </tr>
    </thead>
@@ -46,6 +48,16 @@
           <input (change)="changeIsRequired('0', i)" type="radio" class="genders" [checked]="(l.isRequired == '0')" name="gender" *ngIf="!l.isEdit" /><label [ngClass]="{'displayNun': !(l.isRequired == '0'), 'displayInlineBlock': !l.isEdit}">No</label>
         </form>
       </td>
+      <td *ngIf="isLoanPurpose">
+          <form style="margin-left: 20%;">
+          <input type="checkbox" [checked]="l.reqBoolean" id="isPropIdentified" (change)="changeIsPropertyIdentified($event,i)" [disabled]="l.isEdit" /><label for="isPropIdentified">Yes</label>
+          </form>
+      </td>
+      <td *ngIf="isFinancialApplicant">
+          <form style="margin-left: 20%;">
+          <input type="checkbox" [checked]="l.reqBoolean" id="isFinancialApplicant" (change)="changeIsFinancialApplicant($event,i)" [disabled]="l.isEdit" /><label for="isFinancialApplicant">Yes</label>
+          </form>
+      </td>
        <td [ngStyle]="{textAlign: 'center'}">
          <button type="button" class="deleteBtn" (click)="delete(i)" *ngIf="l.id != null">
            <img src="assets/images/delete.svg" class="img-responsive deleteImg" alt="Delete" />
@@ -55,7 +67,7 @@
    </tbody>
  </table> 
 </div>
-<div class="overlay" [ngClass]="{'active': isErrorModal}"></div>
+<div class="overlay" [ngClass]="{'active': isErrorModal}">
   <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isErrorModal}">
     <a class="modal-close" (click)="isErrorModal = false"><span class="icon icon-close"></span></a>
     <div class="modal-body">
@@ -66,4 +78,5 @@
       </div>
     </div>
   </div>
+</div>
 <pagination-controls  (pageChange)="pageChanged($event)" class="pagination" autoHide="true" ></pagination-controls>

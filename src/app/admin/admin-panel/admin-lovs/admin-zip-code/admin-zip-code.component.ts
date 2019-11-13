@@ -136,6 +136,7 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
     this.selectedIndex = -1;
     if(this.tableName == 'zipcode') {
       this.selectedState = this.states[0];
+      this.stateChanged(this.selectedState.value);
     }
 
     this.description = '';
@@ -218,8 +219,15 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
   }
 
   stateChanged(event) {
-    this.selectedState = this.states.find(v => v.value == event);
-
+    //this.selectedState = this.states.find(v => v.value == event);
+    var result: Item = {'key':'','value':''};
+      for(var x in this.states){
+        if(this.states[x].value==event){
+          result.value = this.states[x].value;
+          result.key=this.states[x].key;
+        }
+      }
+      this.selectedState = result;
     this.qdeHttp.adminGetZoneFromState(this.selectedState.value).subscribe(res => {
       if(res['ProcessVariables']['status'] == true) {
         this.zones = res['ProcessVariables']['zoneList'];
@@ -243,11 +251,11 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
   
     this.selectedZone = this.zones.find(v => v.value == event);
 
-    if(this.selectedZone.value == "-1") {
-      this.cities = [{key:'No Cities Available', value: '-1'}];
-      this.selectedCity = this.cities[0];
-    } else {
-      this.qdeHttp.adminGetCityFromZone(this.selectedZone.value).subscribe(res => {
+    // if(this.selectedZone.value == "-1") {
+    //   this.cities = [{key:'No Cities Available', value: '-1'}];
+    //   this.selectedCity = this.cities[0];
+    // } else {
+      this.qdeHttp.adminGetCityFromZone(this.selectedZone.value,this.selectedState.value).subscribe(res => {
         if(res['ProcessVariables']['status'] == true) {
           this.cities = res['ProcessVariables']['cityList'];
           console.log("cities: ", this.cities);
@@ -265,7 +273,7 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
         //alert('Something went wrong');
         }
       });
-    }
+   // }
   
   }
 

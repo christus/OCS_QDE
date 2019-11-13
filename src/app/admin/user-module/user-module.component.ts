@@ -19,6 +19,7 @@ export class UserModuleComponent implements OnInit {
   activityList: any;
   rolesList: any[]= [];
   filterData: number;
+  searchKey: string="";
 
   // paginationConfig =  { 
   //   itemsPerPage: 2, 
@@ -26,9 +27,9 @@ export class UserModuleComponent implements OnInit {
   // }
 
 
-  constructor(private qdeHttp: QdeHttpService) { 
-
-     
+  constructor(private qdeHttp: QdeHttpService) {
+    
+    
   }
 
   ngOnInit() {
@@ -98,6 +99,16 @@ export class UserModuleComponent implements OnInit {
     data["currentPage"] = value;
     data["roleId"] = this.filterData;
     this.getAdminUsers(data);
+  }
+  search(){
+    if(this.searchKey==""){
+      this.pageChanged(1);
+    }else{
+      let data = {};
+      data["roleId"] = this.filterData;
+      data["searchKey"]= this.searchKey;
+      this.getAdminUsers(data);
+    }
   }
 
 
