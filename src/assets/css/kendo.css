@@ -118,7 +118,8 @@
 
 .k-column-menu .k-menu:not(.k-context-menu) .k-item {
     color: #656565;
-    background-color: #f9f9f9
+    background-color: #f9f9f9;
+    font-size: 2.28vw; 
 }
 
 .k-list .k-item:focus,.k-list .k-item.k-state-focused,.k-list-optionlabel:focus,.k-list-optionlabel.k-state-focused,.k-column-menu .k-menu:not(.k-context-menu) .k-item:focus,.k-column-menu .k-menu:not(.k-context-menu) .k-item.k-state-focused,.k-gantt-views li.k-state-focused,.k-gantt-views li .k-state-focused,.k-scheduler-navigation li.k-state-focused,.k-scheduler-views li.k-state-focused {
@@ -127,12 +128,14 @@
 
 .k-list .k-item:hover,.k-list .k-item.k-state-hover,.k-list-optionlabel:hover,.k-list-optionlabel.k-state-hover,.k-list-container .k-button:hover,.k-list-container .k-button.k-state-hover,.k-column-list-item:hover,.k-columnmenu-item:hover,.k-column-menu .k-menu:not(.k-context-menu) .k-item:hover,.k-column-menu .k-menu:not(.k-context-menu) .k-item.k-state-hover,.k-spreadsheet-filter-menu>.k-menu .k-item.k-state-hover,.k-spreadsheet-filter-menu>.k-menu:not(.k-context-menu) .k-item.k-state-hover,.k-spreadsheet-popup .k-button:hover,.k-spreadsheet-popup .k-button.k-state-hover,.k-menu-group .k-item:hover,.k-menu-group .k-item.k-state-hover,.k-menu.k-context-menu .k-item:hover,.k-menu.k-context-menu .k-item.k-state-hover {
     color: #656565;
-    background-color: #ededed
+    background-color: #ededed;
+  
 }
 
 .k-list .k-item.k-state-selected,.k-list-optionlabel.k-state-selected,.k-list-container .k-button:active,.k-list-container .k-button.k-state-active,.k-column-menu .k-menu:not(.k-context-menu) .k-item.k-state-selected,.k-spreadsheet-popup .k-button:active,.k-spreadsheet-popup .k-button.k-state-active,.k-spreadsheet-popup .k-button.k-state-selected,.k-menu-group .k-item.k-state-selected,.k-menu.k-context-menu .k-item.k-state-selected {
     color: #fff;
-    background-color: #ff6358
+    background-color: #ff6358;
+    
 }
 
 .k-theme-test-class,.k-common-test-class {
@@ -4891,7 +4894,9 @@ kendo-sortable {
 
 .k-list-optionlabel {
     cursor: pointer;
-    outline: none
+    outline: none;
+    font-size: 2.28em;
+    /* myself */
 }
 
 .k-list-filter {
@@ -6961,7 +6966,8 @@ kendo-sortable {
 .k-pane-wrapper .k-pane .k-mobile-list .k-item>.k-link:active,.k-pane-wrapper .k-pane .k-mobile-list .k-item>.k-label:active,.k-pane-wrapper .k-pane .k-mobile-list .k-item .k-edit-label.k-check:active,.k-pane-wrapper .k-pane .k-mobile-list .k-item .k-recur-view .k-check:active {
     color: #656565;
     background-color: #ededed;
-    border-color: rgba(0,0,0,0.15)
+    border-color: rgba(0,0,0,0.15);
+
 }
 
 .k-pane-wrapper .k-pane .k-mobile-list .k-item .k-state-selected {

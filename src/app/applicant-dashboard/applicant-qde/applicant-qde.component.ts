@@ -23,6 +23,7 @@ import { screenPages } from '../../app.constants';
 import { UtilService } from '../../services/util.service';
 import { MobileService } from '../../services/mobile-constant.service';
 import { DatePipe } from '@angular/common';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 interface Item {
   key: string,
@@ -46,9 +47,16 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   // regexPatternForDocType: Array<string> = ['[A-Z]{1}[0-9]{7}','^[A-Z]{2}[0-9]{13}$','^[A-Z]{3}[0-9]{7}$','[2-9]{1}[0-9]{11}','[0-9]{18}','[0-9]{14}','[0-9]{16}'];
 
-  regexPatternForDocType: Array<any> = [{ pattern: '[A-Z]{1}[0-9]{7}', hint: "V1234567" }, { pattern: '^[A-Z]{2}[0-9]{13}$', hint: "AN0120100051926" }, { pattern: '^[A-Z]{3}[0-9]{7}$', hint: "LWN5672084" }, { pattern: '[2-9]{1}[0-9]{11}', hint: "12 digit number, with first digit not 0 or 1" }, { pattern: '[0-9]{18}', hint: "	18 digit number" }, { pattern: '[0-9]{14}', hint: "	14 digit number" }, { pattern: '[0-9]{16}', hint: "	16 digit number" }]
+  regexPatternForDocType: Array<any> = [{ pattern: '^$', hint: "Should not be empty" },
+                                        { pattern: '[A-Z]{1}[0-9]{7}', hint: "V1234567" }, 
+                                        { pattern: '^[A-Z]{2}[0-9]{13}$', hint: "AN0120100051926" }, 
+                                        { pattern: '^[A-Z]{3}[0-9]{7}$', hint: "LWN5672084" }, 
+                                        { pattern: '[2-9]{1}[0-9]{11}', hint: "12 digit number, with first digit not 0 or 1" }, 
+                                        { pattern: '[0-9]{18}', hint: "	18 digit number" }, 
+                                        { pattern: '[0-9]{14}', hint: "	14 digit number" }, 
+                                        { pattern: '[0-9]{16}', hint: "	16 digit number" }];
 
-  maxlength: Array<string> = ['8', '15', '10', '12', '18', '14', '16'];
+  maxlength: Array<string> = ['2','8', '15', '10', '12', '18', '14', '16'];
 
   panImage: String;
 
@@ -357,6 +365,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   min: Date; // minimum date to date of birth
   maxDate : Date = new Date();
   
+
+  public defaultItem = { key: "Select..", value: "0" };
+
   constructor(private renderer: Renderer2,
     private route: ActivatedRoute,
     private router: Router,
@@ -366,7 +377,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     private utilService: UtilService,
     private file: File,
     public datepipe: DatePipe,
-    private mobileService: MobileService) {
+    private mobileService: MobileService,
+    private ngxService: NgxUiLoaderService) {
 
     this.qde = this.qdeService.defaultValue;
 
@@ -521,19 +533,19 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
       // this.docType = [{"key": "Aadhar", "value": "1"},{"key": "Driving License", "value": "2"},{"key": "passport", "value": "3"}];
 
-      this.selectedTitle = this.titles[0];
-      this.selectedReligion = this.religions[0];
-      console.log("selected religion data slice error: ", this.selectedReligion);
-      this.selectedMaritialStatus = this.maritals[0];
-      this.selectedCategory = this.categories[0];
-      this.selectedResidence = this.residences[0];
-      this.selectedSpouseTitle = this.titles[0];
-      this.selectedFatherTitle = this.maleTitles[0];
-      this.selectedOccupation = this.occupations[0];
-      this.selectedMotherTitle = this.femaleTitles[0]
-      this.selectedQualification = this.qualifications[0];
-      this.selectedConstitution = this.constitutions[0];
-      this.selectedDocType = this.docType[0];
+      // this.selectedTitle = this.titles[0];
+      // this.selectedReligion = this.religions[0];
+      // console.log("selected religion data slice error: ", this.selectedReligion);
+      // this.selectedMaritialStatus = this.maritals[0];
+      // this.selectedCategory = this.categories[0];
+      // this.selectedResidence = this.residences[0];
+      // this.selectedSpouseTitle = this.titles[0];
+      // this.selectedFatherTitle = this.maleTitles[0];
+      // this.selectedOccupation = this.occupations[0];
+      // this.selectedMotherTitle = this.femaleTitles[0]
+      // this.selectedQualification = this.qualifications[0];
+      // this.selectedConstitution = this.constitutions[0];
+      // this.selectedDocType = this.docType[0];
       this.selectedAssesmentMethodology = this.assessmentMethodology[0];
     }
 
@@ -1102,6 +1114,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   // }
 
   submitPanNumber(form: NgForm, swiperInstance?: Swiper) {
+    try {
+      this.ngxService.start();
     if (this.isTBMLoggedIn) {
       this.goToNextSlide(swiperInstance);
     } else {
@@ -1273,6 +1287,15 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       }
 
     }
+    
+  
+  } catch (ex) {
+        this.isErrorModal = true;
+        this.errorMessage = ex.message;
+         
+        } finally {
+          this.ngxService.stop();
+        }
   }
 
 
@@ -1281,6 +1304,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   //-------------------------------------------------------------
 
   submitOrgPanNumber(form: NgForm, swiperInstance?: Swiper) {
+    try {
+      this.ngxService.start();
     if (this.isTBMLoggedIn) {
       // this.goToNextSlide(swiperInstance);
       this.tabSwitch(this.activeTab + 1);
@@ -1413,6 +1438,14 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       }
 
     }
+    
+  } catch (ex) {
+        this.isErrorModal = true;
+        this.errorMessage = ex.message;
+         
+        } finally {
+          this.ngxService.stop();
+        }
   }
 
 
@@ -1423,7 +1456,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   // Personal Details
   //-------------------------------------------------------------
   submitNameDetails(form: NgForm, swiperInstance?: Swiper) {
-
+    try {
+      this.ngxService.start();
     if (this.isTBMLoggedIn) {
       this.goToNextSlide(swiperInstance);
     } else {
@@ -1486,11 +1520,21 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           ;
       });
     }
+   
+  } catch (ex) {
+        this.isErrorModal = true;
+        this.errorMessage = ex.message;
+         
+        } finally {
+          this.ngxService.stop();
+        }
 
   }
 
   //-------------------------------------------------------------
   submitResidentialNon(value, swiperInstance?: Swiper) {
+    try {
+      this.ngxService.start();
     if (this.isTBMLoggedIn) {
       if (value == 1) {
         this.qde.application.applicants[this.applicantIndex].personalDetails.applicantStatus = "1";
@@ -1524,10 +1568,19 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         this.errorMessage = "Something went wrong, please again later.";
       });
     }
+    
+  } catch (ex) {
+        this.isErrorModal = true;
+        this.errorMessage = ex.message;
+         
+        } finally {
+          this.ngxService.stop();
+        }
   }
 
   submitGenderDetails(value, swiperInstance?: Swiper) {
-
+    try {
+      this.ngxService.start();
     if (this.isTBMLoggedIn) {
       this.goToNextSlide(swiperInstance);
     } else {
@@ -1571,12 +1624,22 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           ;
       });
     }
+ 
+  } catch (ex) {
+        this.isErrorModal = true;
+        this.errorMessage = ex.message;
+         
+        } finally {
+          this.ngxService.stop();
+        }
 
   }
 
   //-------------------------------------------------------------
 
   submitQualificationDetails(form: NgForm, swiperInstance?: Swiper) {
+    try {
+      this.ngxService.start();
     if (this.isTBMLoggedIn) {
       this.goToNextSlide(swiperInstance);
     } else {
@@ -1612,6 +1675,13 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       });
     }
 
+} catch (ex) {
+      this.isErrorModal = true;
+      this.errorMessage = ex.message;
+       
+      } finally {
+        this.ngxService.stop();
+      }
   }
 
   onBirthDateChange(value: Date){
@@ -1656,6 +1726,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
   submitDobDetails(form: NgForm, swiperInstance?: Swiper) {
+    try {
+      this.ngxService.start();
     console.log("isTBMLoggedIn: ", this.isTBMLoggedIn);
     if (this.isTBMLoggedIn) {
       this.tabSwitch(2);
@@ -1736,6 +1808,14 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         this.errorMessage = "Something went wrong, please try again later.";
       });
     }
+  
+  } catch (ex) {
+        this.isErrorModal = true;
+        this.errorMessage = ex.message;
+         
+        } finally {
+          this.ngxService.stop();
+        }
   }
   //-------------------------------------------------------------
 
@@ -1744,6 +1824,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   // Contact Details
   //-------------------------------------------------------------
   submitContactDetails(form: NgForm) {
+    try {
+      this.ngxService.start();
     if (this.isTBMLoggedIn) {
       this.tabSwitch(3);
     } else {
@@ -1786,6 +1868,16 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       });
 
     }
+    
+  } catch (ex) {
+        this.isErrorModal = true;
+        this.errorMessage = ex.message;
+         
+        } finally {
+          this.ngxService.stop();
+        }
+  
+  
   }
 
   onPinCodeChange(event, screenName) {
@@ -1845,7 +1937,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   // Communication Details
   //-------------------------------------------------------------
   submitCommunicationAddressDetails(form: NgForm) {
-
+    try {
+      this.ngxService.start();
     if (this.isTBMLoggedIn) {
       this.tabSwitch(4);
     } else {
@@ -1906,7 +1999,15 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         this.errorMessage = "Something went wrong, please try again later.";
       });
     }
-
+    
+  } catch (ex) {
+        this.isErrorModal = true;
+        this.errorMessage = ex.message;
+         
+        } finally {
+          this.ngxService.stop();
+        }
+  
   }
 
   submitPreferedMail(flag) {
@@ -1918,7 +2019,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   // Marital Status
   //-------------------------------------------------------------
   submitMaritalStatus(form: NgForm, swiperInstance?: Swiper) {
-
+    try {
+      this.ngxService.start();
     if (this.isTBMLoggedIn) {
       if (form.value.maritalStatus.value == "2") {
         this.goToNextSlide(swiperInstance);
@@ -1967,9 +2069,20 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         this.errorMessage = "Something went wrong, please try again later.";
       });
     }
+  
+  } catch (ex) {
+        this.isErrorModal = true;
+        this.errorMessage = ex.message;
+         
+        } finally {
+          this.ngxService.stop();
+        }
+  
   }
 
   submitSpouseName(form: NgForm, swiperInstance?: Swiper) {
+    try {
+      this.ngxService.start();
     if (this.isTBMLoggedIn) {
       this.goToNextSlide(swiperInstance);
     } else {
@@ -2003,11 +2116,21 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       });
 
     }
+    
+  } catch (ex) {
+        this.isErrorModal = true;
+        this.errorMessage = ex.message;
+         
+        } finally {
+          this.ngxService.stop();
+        }
   }
 
 
 
   submitSpouseEarning(value, swiperInstance?: Swiper) {
+    try {
+      this.ngxService.start();
     if (this.isTBMLoggedIn) {
       if (value == 1) {
         this.goToNextSlide(swiperInstance);
@@ -2046,10 +2169,20 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       });
 
     }
+   
+  } catch (ex) {
+        this.isErrorModal = true;
+        this.errorMessage = ex.message;
+         
+        } finally {
+          this.ngxService.stop();
+        }
+  
   }
 
   submitSpouseEarningAmt(form: NgForm, swiperInstance?: Swiper) {
-
+    try {
+      this.ngxService.start();
     if (this.isTBMLoggedIn) {
       this.tabSwitch(5);
     } else {
@@ -2079,6 +2212,15 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         this.errorMessage = "Something went wrong, please try again later.";
       });
     }
+  
+  } catch (ex) {
+        this.isErrorModal = true;
+        this.errorMessage = ex.message;
+         
+        } finally {
+          this.ngxService.stop();
+        }
+  
   }
 
   //-------------------------------------------------------------
@@ -2088,7 +2230,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   // Family Details
   //-------------------------------------------------------------
   submitFamilyForm1(form: NgForm, swiperInstance?: Swiper) {
-
+    try {
+      this.ngxService.start();
     if (this.isTBMLoggedIn) {
       this.goToNextSlide(swiperInstance);
     } else {
@@ -2122,10 +2265,20 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       });
 
     }
+  
+  } catch (ex) {
+        this.isErrorModal = true;
+        this.errorMessage = ex.message;
+         
+        } finally {
+          this.ngxService.stop();
+        }
+  
   }
 
   submitFamilyForm2(form: NgForm, swiperInstance?: Swiper) {
-
+    try {
+      this.ngxService.start();
     if (this.isTBMLoggedIn) {
       this.tabSwitch(6);
     } else {
@@ -2162,7 +2315,15 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         this.errorMessage = "Something went wrong, please try again later.";
       });
     }
-
+  
+  } catch (ex) {
+        this.isErrorModal = true;
+        this.errorMessage = ex.message;
+         
+        } finally {
+          this.ngxService.stop();
+        }
+  
   }
   //-------------------------------------------------------------
 
@@ -2172,7 +2333,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   // Other Details
   //-------------------------------------------------------------
   submitOtherForm(form: NgForm) {
-
+    try {
+      this.ngxService.start();
     if (this.isTBMLoggedIn) {
       this.tabSwitch(7);
     } else {
@@ -2213,6 +2375,14 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       });
     }
 
+  } catch (ex) {
+        this.isErrorModal = true;
+        this.errorMessage = ex.message;
+         
+        } finally {
+          this.ngxService.stop();
+        }
+  
   }
   //-------------------------------------------------------------
 
@@ -2223,6 +2393,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
   submitOccupationDetails(form: NgForm, swiperInstance: Swiper) {
+    try {
+      this.ngxService.start();
     if (this.isTBMLoggedIn) {
 
 
@@ -2334,6 +2506,14 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       });
 
     }
+ 
+  } catch (ex) {
+        this.isErrorModal = true;
+        this.errorMessage = ex.message;
+         
+        } finally {
+          this.ngxService.stop();
+        }
   }
   //-------------------------------------------------------------
 
@@ -2342,6 +2522,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   // Official Correspondence
   //-------------------------------------------------------------
   submitOfficialCorrespondence(form: NgForm) {
+    try {
+      this.ngxService.start();
     if (this.isTBMLoggedIn) {
       this.tabSwitch(9);
     } else {
@@ -2388,6 +2570,15 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         this.errorMessage = "Something went wrong, please try again later.";
       });
     }
+ 
+  } catch (ex) {
+        this.isErrorModal = true;
+        this.errorMessage = ex.message;
+         
+        } finally {
+          this.ngxService.stop();
+        }
+  
   }
   //-------------------------------------------------------------
 
@@ -2396,6 +2587,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   // Organization Details
   //-------------------------------------------------------------
   submitOrganizationDetails(form: NgForm) {
+    try {
+      this.ngxService.start();
     if (this.isTBMLoggedIn) {
       this.tabSwitch(12);
     } else {
@@ -2446,6 +2639,15 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         this.errorMessage = "Something went wrong, please try again later.";
       });
     }
+    
+  } catch (ex) {
+        this.isErrorModal = true;
+        this.errorMessage = ex.message;
+         
+        } finally {
+          this.ngxService.stop();
+        }
+  
   }
 
 
@@ -2453,6 +2655,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   // Registered Address
   //-------------------------------------------------------------
   submitRegisteredAddress(form: NgForm) {
+    try {
+      this.ngxService.start();
     if (this.isTBMLoggedIn) {
       this.tabSwitch(13);
     } else {
@@ -2507,6 +2711,15 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         this.errorMessage = "Something went wrong, please try again later.";
       });
     }
+    
+  } catch (ex) {
+        this.isErrorModal = true;
+        this.errorMessage = ex.message;
+         
+        } finally {
+          this.ngxService.stop();
+        }
+  
   }
 
 
@@ -2514,6 +2727,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   // Corporate Address
   //-------------------------------------------------------------
   submitCorporateAddress(form: NgForm) {
+    try {
+      this.ngxService.start();
     if (this.isTBMLoggedIn) {
       this.tabSwitch(14);
     } else {
@@ -2561,6 +2776,15 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         this.errorMessage = "Something went wrong, please try again later.";
       });
     }
+   
+  } catch (ex) {
+        this.isErrorModal = true;
+        this.errorMessage = ex.message;
+         
+        } finally {
+          this.ngxService.stop();
+        }
+  
   }
 
 
@@ -2568,6 +2792,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   // Revenue Details
   //-------------------------------------------------------------
   submitRevenueDetails(form: NgForm) {
+    try {
+      this.ngxService.start();
     if (this.isTBMLoggedIn) {
       this.tabSwitch(15);
     } else {
@@ -2603,6 +2829,14 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         this.errorMessage = "Something went wrong, please try again later.";
       });
     }
+  
+  } catch (ex) {
+        this.isErrorModal = true;
+        this.errorMessage = ex.message;
+         
+        } finally {
+          this.ngxService.stop();
+        }
   }
 
   //-----------------------------------------------------------------------
@@ -2610,6 +2844,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   //-----------------------------------------------------------------------
 
   submitAnnualFamilyIncome(form: NgForm, swiperInstance?: Swiper) {
+    try {
+      this.ngxService.start();
     if (this.isTBMLoggedIn) {
       this.router.navigate(['/applicant', this.qde.application.applicants[this.applicantIndex].applicantId, 'co-applicant']);
     } else {
@@ -2650,10 +2886,20 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       });
 
     }
+    
+  } catch (ex) {
+        this.isErrorModal = true;
+        this.errorMessage = ex.message;
+         
+        } finally {
+          this.ngxService.stop();
+        }
   }
 
 
   submitMonthlyIncomeIndividual(form: NgForm, swiperInstance?: Swiper) {
+    try {
+      this.ngxService.start();
     if (this.isTBMLoggedIn) {
       this.goToNextSlide(swiperInstance);
     } else {
@@ -2693,9 +2939,19 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       });
 
     }
+  
+  } catch (ex) {
+        this.isErrorModal = true;
+        this.errorMessage = ex.message;
+         
+        } finally {
+          this.ngxService.stop();
+        }
   }
 
   submitMonthlyIncomeNonIndividual(form: NgForm, swiperInstance?: Swiper) {
+    try {
+      this.ngxService.start();
     if (this.isTBMLoggedIn) {
       this.router.navigate(['/applicant', this.qde.application.applicants[this.applicantIndex].applicantId, 'co-applicant'], { queryParams: { tabName: 'dashboard', page: 1 } })
     } else {
@@ -2733,6 +2989,14 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       });
 
     }
+    
+  } catch (ex) {
+        this.isErrorModal = true;
+        this.errorMessage = ex.message;
+         
+        } finally {
+          this.ngxService.stop();
+        }
   }
 
   selectPuccaHouse(value) {
@@ -3098,6 +3362,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   isAlternateStatus: boolean = false;
 
   submitOTP(form: NgForm, isAlternateNumber) {
+    try {
+      this.ngxService.start();
     console.log("Towards OTP");
 
     const mobileNumber = form.value.mobileNumber;
@@ -3122,6 +3388,15 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.isErrorModal = true;
       this.errorMessage = "Email id and Mobile number is mandatory for verification";
     }
+    
+  } catch (ex) {
+        this.isErrorModal = true;
+        this.errorMessage = ex.message;
+         
+        } finally {
+          this.ngxService.stop();
+        }
+  
   }
   timeout() {
     this.interval = setInterval(() => {
@@ -3334,19 +3609,19 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.organizationDetails = { day: { key: "DD", value: "DD" }, month: { key: "MM", value: "MM" }, year: { key: "YYYY", value: "YYYY" } };
     this.commCityState = "";
 
-    this.selectedTitle = this.titles[0];
-    this.selectedReligion = this.religions[0];
-    this.selectedMaritialStatus = this.maritals[0];
-    this.selectedCategory = this.categories[0];
+    this.selectedTitle = this.defaultItem;
+    this.selectedReligion = this.defaultItem;
+    this.selectedMaritialStatus = this.defaultItem;
+    this.selectedCategory = this.defaultItem;
     // this.selectedOccupation = this.selectedOccupation[0];
-    this.selectedOccupation = this.occupations[0];
-    this.selectedResidence = this.residences[0];
-    this.selectedSpouseTitle = this.titles[0];
-    this.selectedFatherTitle = this.maleTitles[0];
-    this.selectedMotherTitle = this.femaleTitles[0]
-    this.selectedQualification = this.qualifications[0];
-    this.selectedConstitution = this.constitutions[0];
-    this.selectedDocType = this.docType[0];
+    this.selectedOccupation = this.defaultItem;
+    this.selectedResidence = this.defaultItem;
+    this.selectedSpouseTitle = this.defaultItem;
+    this.selectedFatherTitle = this.defaultItem;
+    this.selectedMotherTitle = this.defaultItem;
+    this.selectedQualification = this.defaultItem;
+    this.selectedConstitution = this.defaultItem;
+    this.selectedDocType = this.defaultItem;
     this.selectedAssesmentMethodology = this.assessmentMethodology[0];
   }
 
@@ -3693,6 +3968,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   submitDuplicateApplicant(form: NgForm) {
+    try {
+      this.ngxService.start();
     let tempApplicant = this.qde.application.applicants[this.applicantIndex];
     let selectedApplication = this.duplicates.find(e => e.applicantId == form.value.selectDuplicateApplicant);
     let applicationId = Number(selectedApplication["applicationId"]);
@@ -3720,6 +3997,15 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           this.errorMessage = "Something went wrong, please try again later.";
         });
     });
+    
+  } catch (ex) {
+        this.isErrorModal = true;
+        this.errorMessage = ex.message;
+         
+        } finally {
+          this.ngxService.stop();
+        }
+  
   }
 
   // @ViewChild('commSlider') commSlider: ElementRef;
@@ -3765,7 +4051,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   isCategoryModal: boolean = false;
   checkForCondition() {
-    if (this.selectedCategory.value != "1") {
+    if (this.selectedCategory.value != "1" && this.selectedCategory.value != "0") {
       this.isCategoryModal = true;
     }
     else {
@@ -3839,10 +4125,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.occupations = JSON.parse(response["ProcessVariables"]["response"])['occupation'];
       console.log("Occupation Type", this.occupations);
 
-      if (occupationType != null) {
+      if (occupationType != null && occupationType !="") {
         this.selectedOccupation = this.occupations.some(v => v.value == occupationType) ? this.occupations.find(v => v.value == occupationType) : this.occupations[0];
       } else {
-        this.selectedOccupation = this.occupations[0];
+        this.selectedOccupation = this.defaultItem;
       }
       // this.selectedOccupation = this.occupations["occupation"]
       console.log("Select Occupation Type", this.selectedOccupation)

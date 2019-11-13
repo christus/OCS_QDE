@@ -171,9 +171,16 @@
                           </div>
                           <div class="form-group">
                             <span class="control-title">Document Type</span>
-                            <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control" [data]="docType"
-                              textField="key" tabindex="0" valueField="value" name="docTypeindividual"
-                              nick="pan.docType" #docTypeindividual
+                            <kendo-dropdownlist [readonly]="isTBMLoggedIn" 
+                              class="form-control"   
+                              [defaultItem] = "defaultItem"                            
+                              [data]="docType"
+                              [textField]="'key'"
+                              tabindex="0" 
+                              [valueField]="'value'"
+                              name="docTypeindividual"
+                              nick="pan.docType" 
+                              #docTypeindividual
                               (selectionChange)="selectValueChanged($event, docTypeindividual.hostElement)"
                               [(ngModel)]="selectedDocType">
                             </kendo-dropdownlist>
@@ -182,13 +189,13 @@
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                               [(ngModel)]="qde.application.applicants[applicantIndex].pan.docNumber" id="docNumber" 
                               oninput="this.value = this.value.toUpperCase()" name="docNumber" #panDocNumber="ngModel"
-                              pattern="{{regexPatternForDocType[parseInteger(selectedDocType.value) - 1].pattern}}"
-                              maxlength="{{maxlength[parseInteger(selectedDocType.value) - 1]}}" fieldFill  autocomplete="off" required />
-                            <label for="docNumber" tabindex="3">Document Number</label>
+                              pattern="{{regexPatternForDocType[parseInteger(selectedDocType?.value)].pattern}}"
+                              maxlength="{{maxlength[parseInteger(selectedDocType?.value)]}}" fieldFill  autocomplete="off" required />
+                            <label for="docNumber" tabindex="3">Document Number</label>                           
                             <div *ngIf="panDocNumber.touched && panDocNumber.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="panDocNumber.errors?.required">{{errors.panDocumentNo.required}}</div> -->
                               <div *ngIf="panDocNumber.errors?.pattern">{{errors.panDocumentNo.invalid}} - hint for Document number:
-                                <b>{{regexPatternForDocType[parseInteger(selectedDocType.value) - 1].hint}}</b></div>
+                                <b>{{regexPatternForDocType[parseInteger(selectedDocType?.value)].hint}}</b></div>
                             </div>
                             <!-- <image-upload [url]="imageUrl" [headers]="myHeaders"></image-upload> -->
                           </div>
@@ -316,11 +323,23 @@
                           <div class="form-group">
                             <span class="control-title">Title</span>
                             <div class="form-group">
-                              <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control" [data]="titles"
-                                textField="key" valueField="value" name="title" nick="personalDetails.title"
-                                tabindex="1" #title (selectionChange)="selectValueChanged($event, title.hostElement)"
-                                [(ngModel)]="selectedTitle">
-                              </kendo-dropdownlist>
+                            <kendo-dropdownlist [readonly]="isTBMLoggedIn"  
+                                isRequired="true"                             
+                                class="form-control"                              
+                                [data]="titles"
+                                [defaultItem] = "defaultItem"
+                                [textField]="'key'" 
+                                [valueField]="'value'" 
+                                name = "title" 
+                                nick = "personalDetails.title"                                
+                                tabindex = "1"
+                                #title 
+                                (selectionChange)="selectValueChanged($event, title.hostElement)"                                
+                                [(ngModel)]="selectedTitle" >                               
+                              </kendo-dropdownlist>                  
+                              
+                              <!-- <span class="invalid-feedback" *ngIf="!selectedTitle.value">Select Any Valid Titile</span>                         -->
+                        
                             </div>
                           </div>
                           <div class="form-group">
@@ -374,9 +393,9 @@
                           </div>
                         </div>
                         <div class="btn-wrap">
-                          <button type="submit" class="btn btn-primary" [ngClass]="{'disabled': (!nameForm.valid)}"
+                          <button type="submit" class="btn btn-primary" [ngClass]="{'disabled': (!nameForm.valid || selectedTitle.value==0)}"
                           tabindex="-1"
-                            [disabled]="!nameForm.valid">Next
+                            [disabled]="!nameForm.valid || selectedTitle.value==0">Next
                           </button>
                         </div>
                       </form>
@@ -400,8 +419,13 @@
                         <div class="form-wrap">
                           <div class="form-group">
                             <span class="control-title">Qualification</span>
-                            <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control" [data]="qualifications"
-                              textField="key" valueField="value" tabindex="0" #qualification
+                            <kendo-dropdownlist [readonly]="isTBMLoggedIn" 
+                              class="form-control" 
+                              [defaultItem] = "defaultItem"
+                              [data]="qualifications"
+                              textField="key" 
+                              valueField="value" 
+                              tabindex="0" #qualification
                               nick="personalDetails.qualification"
                               (selectionChange)="selectValueChanged($event, qualification.hostElement)"
                               name="qualification" [(ngModel)]="selectedQualification">
@@ -410,8 +434,8 @@
                         </div>
                         <div class="btn-wrap">
                           <button type="submit" class="btn btn-primary"
-                            [ngClass]="{'disabled': (!qualificationForm.valid)}"
-                            [disabled]="!qualificationForm.valid">Next
+                            [ngClass]="{'disabled': (!qualificationForm.valid || selectedQualification.value == 0)}"
+                            [disabled]="!qualificationForm.valid || selectedQualification.value == 0">Next
                           </button>
                         </div>
                       </form>
@@ -837,9 +861,16 @@
                           <h1 class="sub-heading" style="text-align: left ; margin-bottom: 12px">Current Address</h1>
                           <div class="form-group">
                             <span class="control-title">Residential status</span>
-                            <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control" [data]="residences"
-                              textField="key" tabindex="0" valueField="value" name="residentialStatus"
-                              nick="communicationAddress.residentialStatus" #residentialStatus
+                            <kendo-dropdownlist [readonly]="isTBMLoggedIn" 
+                              class="form-control" 
+                              [defaultItem]= "defaultItem"
+                              [data]="residences"
+                              [textField]="'key'" 
+                              tabindex="0" 
+                              [valueField]="'value'"
+                              name="residentialStatus"
+                              nick="communicationAddress.residentialStatus"
+                               #residentialStatus
                               (selectionChange)="selectValueChanged($event, residentialStatus.hostElement)"
                               [(ngModel)]="selectedResidence">
                             </kendo-dropdownlist>
@@ -1025,7 +1056,8 @@
                         </div>
                         <div class="btn-wrap">
                           <button type="submit" class="btn btn-primary"
-                            [ngClass]="{'disabled': (!communicationForm.valid)}" [disabled]="!communicationForm.valid">
+                            [ngClass]="{'disabled': (!communicationForm.valid || selectedResidence.value == 0)}" 
+                            [disabled]="(!communicationForm.valid || selectedResidence.value == 0)">
                             Next
                           </button>
                         </div>
@@ -1087,8 +1119,14 @@
                           <div class="form-group">
                             <span class="control-title">Marital Status</span>
 
-                            <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control" [data]="maritals"
-                              textField="key" valueField="value" tabindex="1" name="maritalStatus"
+                            <kendo-dropdownlist [readonly]="isTBMLoggedIn" 
+                              class="form-control"
+                              [defaultItem] = "defaultItem" 
+                              [data]="maritals"
+                              textField="key" 
+                              valueField="value" 
+                              tabindex="1" 
+                              name="maritalStatus"
                               nick="maritalStatus.status" #maritalStatusStatus
                               (selectionChange)="selectValueChanged($event, maritalStatusStatus.hostElement)"
                               [(ngModel)]="selectedMaritialStatus">
@@ -1097,7 +1135,9 @@
                           </div>
                         </div>
                         <div class="btn-wrap">
-                          <button type="submit" class="btn btn-primary">Next
+                          <button type="submit" class="btn btn-primary" 
+                          [ngClass]="{'disabled': (selectedMaritialStatus.value == 0)}" 
+                            [disabled]="selectedMaritialStatus.value == 0">Next
                           </button>
                         </div>
                       </form>
@@ -1108,9 +1148,16 @@
                         <div class="form-wrap">
                           <div class="form-group">
                             <span class="control-title">Title</span>
-                            <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control" [data]="spouseTitles"
-                              textField="key" tabindex="1" valueField="value" name="spouseTitle"
-                              nick="maritalStatus.spouseTitle" #spouseTitle
+                            <kendo-dropdownlist [readonly]="isTBMLoggedIn"                            
+                              class="form-control"
+                              [defaultItem] = "defaultItem"
+                              [data]="spouseTitles"
+                              textField="key" 
+                              tabindex="1" 
+                              valueField="value" 
+                              name="spouseTitle"
+                              nick="maritalStatus.spouseTitle" 
+                              #spouseTitle
                               (selectionChange)="selectValueChanged($event, spouseTitle.hostElement)"
                               [(ngModel)]="selectedSpouseTitle">
                             </kendo-dropdownlist>
@@ -1135,8 +1182,8 @@
                           </div>
                         </div>
                         <div class="btn-wrap">
-                          <button type="submit" [ngClass]="{'disabled': (!spouseForm.valid)}"
-                            [disabled]="!spouseForm.valid" class="btn btn-primary">
+                          <button type="submit" [ngClass]="{'disabled': (!spouseForm.valid || selectedSpouseTitle.value == 0)}"
+                            [disabled]="!spouseForm.valid || selectedSpouseTitle.value == 0" class="btn btn-primary">
                             Next
                           </button>
                         </div>
@@ -1263,9 +1310,16 @@
                           <div class="form-group">
                             <span class="control-title">Father's Title</span>
 
-                            <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control" [data]="maleTitles"
-                              textField="key" valueField="value" name="fatherTitle" tabindex="1"
-                              nick="familyDetails.fatherTitle" #fatherTitle
+                            <kendo-dropdownlist [readonly]="isTBMLoggedIn" 
+                              class="form-control"
+                              [defaultItem] = "defaultItem"
+                              [data]="maleTitles"
+                              textField="key" 
+                              valueField="value" 
+                              name="fatherTitle" 
+                              tabindex="1"
+                              nick="familyDetails.fatherTitle" 
+                              #fatherTitle
                               (selectionChange)="selectValueChanged($event, fatherTitle.hostElement)"
                               [(ngModel)]="selectedFatherTitle">
                             </kendo-dropdownlist>
@@ -1287,8 +1341,14 @@
                           </div>
                           <div class="form-group">
                             <span class="control-title">Mother's Title</span>
-                            <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control" [data]="femaleTitles"
-                              textField="key" valueField="value" tabindex="3" name="motherTitle"
+                            <kendo-dropdownlist [readonly]="isTBMLoggedIn" 
+                              class="form-control"
+                              [defaultItem] = "defaultItem" 
+                              [data]="femaleTitles"
+                              textField="key" 
+                              valueField="value" 
+                              tabindex="3" 
+                              name="motherTitle"
                               nick="familyDetails.motherTitle" #motherTitle
                               (selectionChange)="selectValueChanged($event, motherTitle.hostElement)"
                               [(ngModel)]="selectedMotherTitle">
@@ -1326,8 +1386,9 @@
                           </div>
                         </div>
                         <div class="btn-wrap">
-                          <button type="submit" class="btn btn-primary" [ngClass]="{'disabled': (!familyForm2.valid)}"
-                            [disabled]="!familyForm2.valid">
+                          <button type="submit" class="btn btn-primary" 
+                            [ngClass]="{'disabled': (!familyForm2.valid || selectedFatherTitle.value ==0 || selectedMotherTitle.value ==0)}"
+                            [disabled]="!familyForm2.valid || selectedFatherTitle.value ==0 || selectedMotherTitle.value ==0">
                             Next
                           </button>
                         </div>
@@ -1372,8 +1433,15 @@
                         <div class="form-wrap">
                           <div class="form-group">
                             <span class="control-title">Religion</span>
-                            <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control" [data]="religions"
-                              textField="key" valueField="value" name="religion" tabindex="1" nick="other.religion"
+                            <kendo-dropdownlist [readonly]="isTBMLoggedIn" 
+                              class="form-control" 
+                              [defaultItem] = "defaultItem"
+                              [data]="religions"
+                              textField="key" 
+                              valueField="value" 
+                              name="religion" 
+                              tabindex="1" 
+                              nick="other.religion"
                               #religion (selectionChange)="selectValueChanged($event, religion.hostElement)"
                               [(ngModel)]="selectedReligion">
                             </kendo-dropdownlist>
@@ -1393,17 +1461,28 @@
                           </div>
                           <div class="form-group">
                             <span class="control-title">Category</span>
-                            <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control" [data]="categories"
-                              textField="key" valueField="value" tabindex="3" name="category" nick="other.category"
-                              #category (selectionChange)="selectValueChanged($event, category.hostElement)"
-                              [(ngModel)]="selectedCategory" (ngModelChange)="checkForCondition()">
+                            <kendo-dropdownlist [readonly]="isTBMLoggedIn" 
+                              class="form-control" 
+                              [defaultItem] = "defaultItem"
+                              [data]="categories"
+                              textField="key" 
+                              valueField="value" 
+                              tabindex="3" 
+                              name="category" 
+                              nick="other.category"
+                              #category 
+                              (selectionChange)="selectValueChanged($event, category.hostElement)"
+                              [(ngModel)]="selectedCategory" 
+                              (ngModelChange)="checkForCondition()">
                             </kendo-dropdownlist>
                           </div>
                         </div>
 
                         <div class="btn-wrap">
-                          <button type="submit" [ngClass]="{'disabled': (!otherForm.valid) || otherReligion?.length == 25}"
-                            [disabled]="!otherForm.valid || otherReligion?.length == 25" class="btn btn-primary">Next</button>
+                          <button type="submit" 
+                            [ngClass]="{'disabled': (!otherForm.valid) || otherReligion?.length == 25 || selectedReligion.value == 0 || selectedCategory.value ==0}"
+                            [disabled]="!otherForm.valid || otherReligion?.length == 25 || selectedReligion.value == 0 || selectedCategory.value ==0" 
+                            class="btn btn-primary">Next</button>
                         </div>
                       </form>
                     </div>
@@ -1465,9 +1544,16 @@
                           <div class="form-group">
                             <span class="control-title">Occupation type</span>
 
-                            <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control" [data]="occupations"
-                              textField="key" valueField="value" name="occupationType" tabindex="1"
-                              nick="occupation.occupationType" #occupationType
+                            <kendo-dropdownlist [readonly]="isTBMLoggedIn" 
+                              class="form-control"
+                              [defaultItem] = "defaultItem" 
+                              [data]="occupations"
+                              textField="key" 
+                              valueField="value" 
+                              name="occupationType" 
+                              tabindex="1"
+                              nick="occupation.occupationType" 
+                              #occupationType
                               (selectionChange)="selectValueChangedOccupation($event)"
                               [(ngModel)]="selectedOccupation">
                             </kendo-dropdownlist>
@@ -1584,8 +1670,8 @@
 
                         <div  *ngIf="occupationRequired == true"
                           class="btn-wrap">
-                          <button type="submit" [ngClass]="{'disabled': !occupationForm.valid || expError}"
-                            [disabled]="(!occupationForm.valid || expError)" class="btn btn-primary">
+                          <button type="submit" [ngClass]="{'disabled': !occupationForm.valid || selectedOccupation.value == 0 || expError  }"
+                            [disabled]="(!occupationForm.valid || selectedOccupation.value == 0 || expError )" class="btn btn-primary">
                             Next
                           </button>
                         </div>
@@ -1593,6 +1679,8 @@
                         class="btn-wrap">
                           <button type="submit"
                             class="btn btn-primary"
+                            [ngClass]="{'disabled': selectedOccupation.value == 0}"
+                            [disabled]="(selectedOccupation.value ==0 )"
                             (click)="incomeConsiderYesNoIndividual(2, occupationSlider2)"
                             [value]="2">
                             Next
@@ -1795,7 +1883,8 @@
                               <!-- <div *ngIf="officeEmail.errors?.required">{{errors.officialCorrespondence.email.required}}</div> -->
                               <div *ngIf="officeEmail.errors.invalidDomain">{{errors.officialCorrespondence.email.invalidDomain}}
                               </div>
-                              <div *ngIf="officeEmail.errors?.pattern">{{errors.officialCorrespondence.email.invalid}}</div>  
+                              <div *ngIf="officeEmail.errors?.pattern">{{errors.officialCorrespondence.email.invalid}}
+                                </div>  
                             </div>
                           </div>
 
@@ -1873,13 +1962,25 @@
                           </div>
                           <div class="form-group">
                             <span class="control-title">Assessment methodology</span>
-                            <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control" [data]="assessmentMethodology" tabindex="2" textField="key" valueField="value" name="assessmentMethodology" nick="incomeDetails.assessmentMethodology" #assessmentMethodology1 (selectionChange)="selectValueChanged($event, assessmentMethodology1.hostElement)" [(ngModel)]="selectedAssesmentMethodology"></kendo-dropdownlist>
+                            <kendo-dropdownlist [readonly]="isTBMLoggedIn" 
+                            class="form-control" 
+                            [defaultItem] = "defaultItem"
+                            [data]="assessmentMethodology"
+                             tabindex="2" 
+                             textField="key" 
+                             valueField="value" 
+                             name="assessmentMethodology"
+                              nick="incomeDetails.assessmentMethodology" 
+                              #assessmentMethodology1 (selectionChange)="selectValueChanged($event, assessmentMethodology1.hostElement)"
+                              [(ngModel)]="selectedAssesmentMethodology">
+                            </kendo-dropdownlist>
                             <span class="redalert" *ngIf="assessmentMethodology && assessmentMethodology.length <= 0">Assessment methodology not applicable</span>
                           </div>
                         </div>
                         <div class="btn-wrap">
-                          <button type="submit" class="btn btn-primary" [disabled]="!incomeConsiderFormInd.valid || isTBMLoggedIn"
-                            [ngClass]="{'disabled': (!incomeConsiderFormInd.valid || isTBMLoggedIn)}">Save</button>
+                          <button type="submit" class="btn btn-primary" 
+                          [disabled]="!incomeConsiderFormInd.valid || selectedAssesmentMethodology.value ==0 || isTBMLoggedIn"
+                            [ngClass]="{'disabled': (!incomeConsiderFormInd.valid || selectedAssesmentMethodology.value ==0 || isTBMLoggedIn)}">Save</button>
                         </div>
                       </form>
                     </div>
@@ -2662,9 +2763,15 @@
                           </div>
                           <div class="form-group">
                             <span class="control-title">Assessment methodology</span>
-                            <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control"
-                              [data]="assessmentMethodology" textField="key" valueField="value" tabindex="2"
-                              name="assessmentMethodology" nick="incomeDetails.assessmentMethodology"
+                            <kendo-dropdownlist [readonly]="isTBMLoggedIn" 
+                              class="form-control"
+                              [defaultItem] = "defaultItem"
+                              [data]="assessmentMethodology" 
+                              textField="key" 
+                              valueField="value" 
+                              tabindex="2"
+                              name="assessmentMethodology"
+                              nick="incomeDetails.assessmentMethodology"
                               #assessmentMethodology2
                               (selectionChange)="selectValueChanged($event, assessmentMethodology2.hostElement)"
                               [(ngModel)]="selectedAssesmentMethodology"></kendo-dropdownlist>
@@ -2672,8 +2779,8 @@
                         </div>
                         <div class="btn-wrap">
                           <button type="submit" class="btn btn-primary"
-                            [ngClass]="{'disabled': (!incomeDetailsForm4.valid || isTBMLoggedIn)}"
-                            [disabled]="!incomeDetailsForm4.valid || isTBMLoggedIn">Save</button>
+                            [ngClass]="{'disabled': (!incomeDetailsForm4.valid || selectedAssesmentMethodology.value ==0 || isTBMLoggedIn)}"
+                            [disabled]="!incomeDetailsForm4.valid || selectedAssesmentMethodology.value ==0 || isTBMLoggedIn">Save</button>
                         </div>
                       </form>
                     </div>
@@ -2758,10 +2865,10 @@
   <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isErrorModal}">
     <!-- <a class="modal-close" href="javascript:void(0);" (click)="onBackOTP()"><span class="icon icon-close"></span></a> -->
     <a class="modal-close" (click)="onCrossModal()"><span class="icon icon-close"></span></a>
-    <div class="modal-body">
+    <div class="modal-body" style = "text-align:center;">
       <h1>{{errorMessage}}</h1>
       <div class="btn-wrap">
-        <button class="btn btn-border" (click)="isErrorModal = false">Cancel</button>
+        <button class="btn btn-border" (click)="isErrorModal = false">OK</button>
       </div>
     </div>
   </div>

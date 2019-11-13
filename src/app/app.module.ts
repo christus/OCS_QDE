@@ -571,7 +571,7 @@ const appRoutes: Routes = [
  
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   direction: 'horizontal',
-  slidesPerView: 'auto',
+  slidesPerView: 'auto'
 };
 
 @NgModule({
@@ -668,6 +668,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     ImageUploadModule.forRoot(),
     DeviceDetectorModule.forRoot(),
     NgxUiLoaderModule,
+    NgxUiLoaderRouterModule,
+    NgxUiLoaderRouterModule.forRoot({showForeground:true}),
     NgxPaginationModule,
     
     ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'})

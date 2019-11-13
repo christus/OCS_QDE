@@ -4,6 +4,7 @@ import { QdeHttpService } from "../services/qde-http.service";
 import { v } from "@angular/core/src/render3";
 import { indexDebugNode } from "@angular/core/src/debug/debug_node";
 import { CommonDataService } from "../services/common-data.service";
+import { NgxUiLoaderService } from "ngx-ui-loader";
 
 @Component({
   selector: "app-reassign",
@@ -52,7 +53,8 @@ export class ReassignComponent implements OnInit {
   // public value: Date = new Date(2001, 2, 10);
 
   constructor(private qdeHttp: QdeHttpService,
-              private cds:  CommonDataService) {
+              private cds:  CommonDataService,
+              private ngxService: NgxUiLoaderService) {
     const userId = localStorage.getItem("userId");
     let data = {"userId": userId };
     this.getUserList(data);
@@ -84,6 +86,8 @@ export class ReassignComponent implements OnInit {
 }
 
 getApplications(userId, from) {
+  try {
+    this.ngxService.start();
   // const userId = localStorage.getItem("userId");
   let data = {"userId": userId,
           "currentPage": from } ;
@@ -98,7 +102,14 @@ getApplications(userId, from) {
        if (this.currentPage == this.totalPages) {
          this.enableLoadMore = false;
        }
-  });
+  });  
+} catch (ex) {
+      this.isErrorModal = true;
+      this.errorMessage = ex.message;
+       
+      } finally {
+        this.ngxService.stop();
+      }
 }
 
 getUserList(data){
@@ -132,6 +143,8 @@ getUserList(data){
     }
 
   dataChanged(event,fromId) {
+    try {
+      this.ngxService.start();
       const selectedUser = this.source.find(myUser => myUser.key === event);
       if (selectedUser) {
         console.log("selected User ", selectedUser);
@@ -179,7 +192,15 @@ getUserList(data){
           this.validToAssignee = true;
         }
       }
-
+      
+    } catch (ex) {
+          this.isErrorModal = true;
+          this.errorMessage = ex.message;
+           
+          } finally {
+            this.ngxService.stop();
+          }
+    
   }
 
 
@@ -210,6 +231,8 @@ getUserList(data){
   }
 
   changeApllication(resonTochange, effectFromDate) {
+     try {
+    this.ngxService.start();
     const userID = localStorage.getItem("userId");
     if (this.toAssignId === null || this.toAssignId === undefined || this.reasonToChangeText == null ||
       this.reasonToChangeText == "" || this.reasonToChangeText == undefined) {
@@ -273,12 +296,18 @@ getUserList(data){
                       this.errorMessage = response["ProcessVariables"]["errorMessage"];
                     }
                   }
-
-
     });
-
-
   }
+ 
+} catch (ex) {
+      this.isErrorModal = true;
+      this.errorMessage = ex.message;
+       
+      } finally {
+        this.ngxService.stop();
+      }
+
+
   }
 
 
