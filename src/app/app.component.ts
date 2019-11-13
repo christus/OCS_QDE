@@ -19,7 +19,7 @@ import { AutoLogoutService } from './services/AutoLogoutService';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit, AfterViewInit{
+export class AppComponent implements OnInit{
 
   @ViewChild("myDiv") divView: ElementRef;
 
@@ -130,13 +130,6 @@ export class AppComponent implements OnInit, AfterViewInit{
 
     });
   
-  }
-
-
-  ngAfterViewInit() {
-   
-    var that = this;
-   
   }
 
   @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {

@@ -253,6 +253,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   selectedMotherTitle: Item;
   selectedQualification: Item;
   selectedConstitution: Item;
+  preferredEmail: Array<Item>;
 
 
   selectedDocType: Item;
@@ -489,6 +490,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.constitutions = lov.LOVS.constitution;
       this.assessmentMethodology = lov.LOVS.assessment_methodology;
       this.unOfficialEmails = lov.LOVS.un_official_emails;
+      this.preferredEmail = lov.LOVS.preferred_mails;
+
       console.log("data slice error: ", lov.LOVS.religion);
 
 
@@ -3760,6 +3763,21 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         return;
       }
     });
+  }
+
+  onPreferredEmailChange(value, emailCtrl) {
+    const emailId = value;
+    const domain = emailId.split("@")[1];
+    for(let i = 0; i < this.preferredEmail.length; i++) {
+      if (this.preferredEmail[i]["key"] == domain) {
+        console.log("Valid email");
+        emailCtrl.control.setErrors({ 'invalidDomain': false });
+        break;
+      }else {
+        console.log("Invalid email");
+        emailCtrl.control.setErrors({ 'invalidDomain': true });
+      }
+    }
   }
 
   setAssessmentMethodology() {

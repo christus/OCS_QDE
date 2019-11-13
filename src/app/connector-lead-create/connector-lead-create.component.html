@@ -133,13 +133,15 @@
                           id="emailId" autocomplete="off"
                           [(ngModel)]="qde.application.leadCreate.emailId"
                           name="email" #email="ngModel" 
-                          pattern="{{regexPattern.email}}" 
+                          pattern="{{regexPattern.email}}"
+                          (ngModelChange)="onPreferredEmailChange($event, email)"
                           fieldFill required/>
                         <label for="emailId">Email ID</label>
                         <div *ngIf="(email.touched || email.dirty) && email.invalid"
                                 class="invalid-feedback">
                              <div *ngIf="email.errors?.required">{{errors.leadCreate.email.required}}</div>
                               <div *ngIf="email.errors?.pattern">{{errors.leadCreate.email.invalid}}</div>
+                              <div *ngIf="email.errors.invalidDomain">{{errors.leadCreate.email.invalid}}</div>
                         </div>    
                     </div>
                     <div class="form-group">

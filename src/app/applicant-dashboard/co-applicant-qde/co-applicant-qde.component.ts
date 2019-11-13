@@ -245,7 +245,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   selectedQualification: Item;
   selectedConstitution: Item;
   selectedDocType: Item;
-
+  preferredEmail: Array<Item>;
   docType: Array<any>;
   selectedAssesmentMethodology: Array<any>;
 
@@ -507,6 +507,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       this.constitutions = lov.LOVS.constitution;
       this.assessmentMethodology = lov.LOVS.assessment_methodology; 
       this.unOfficialEmails =  lov.LOVS.un_official_emails;
+      this.preferredEmail = lov.LOVS.preferred_mails;
 
       //hardcoded
       //this.birthPlace = [{"key": "Chennai", "value": "1"},{"key": "Mumbai", "value": "2"},{"key": "Delhi", "value": "3"}];
@@ -3991,6 +3992,21 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         return;
       }
     });
+  }
+
+  onPreferredEmailChange(value, emailCtrl) {
+    const emailId = value;
+    const domain = emailId.split("@")[1];
+    for(let i = 0; i < this.preferredEmail.length; i++) {
+      if (this.preferredEmail[i]["key"] == domain) {
+        console.log("Valid email");
+        emailCtrl.control.setErrors({ 'invalidDomain': false });
+        break;
+      }else {
+        console.log("Invalid email");
+        emailCtrl.control.setErrors({ 'invalidDomain': true });
+      }
+    }
   }
 
   changedRelationship(event) {

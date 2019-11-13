@@ -571,7 +571,7 @@ const appRoutes: Routes = [
  
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   direction: 'horizontal',
-  slidesPerView: 'auto'
+  slidesPerView: 'auto',
 };
 
 @NgModule({

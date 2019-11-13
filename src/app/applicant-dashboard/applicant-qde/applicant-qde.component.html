@@ -531,6 +531,7 @@
                               id="pref-email" data-validation-attr="email" autocomplete="off"  maxlength="100"
                               [(ngModel)]="qde.application.applicants[applicantIndex].contactDetails.preferredEmailId"
                               name="preferEmailId" #preferEmailId="ngModel" pattern="{{regexPattern.email}}" fieldFill
+                              (ngModelChange)="onPreferredEmailChange($event, preferEmailId)"
                               required />
 
                               <div *ngIf="(qde.application.applicants[applicantIndex].contactDetails.preferredEmailId)?.length == 100" class="invalid-feedback">Maximum Character Exceeds</div>
@@ -541,11 +542,11 @@
                                 (click)="addRemoveEmailField()">+ Add
                               </a> alternate email id
                             </span>
-                            <div *ngIf="(preferEmailId.touched || preferEmailId.dirty) && preferEmailId.invalid"
+                            <div *ngIf="(preferEmailId.untouched || preferEmailId.touched || preferEmailId.dirty) && preferEmailId.invalid"
                               class="invalid-feedback">
                               <!-- <div *ngIf="preferEmailId.errors?.required">{{errors.contactDetails.preferedEmail.required}}</div> -->
-                              <div *ngIf="preferEmailId.errors?.pattern">{{errors.contactDetails.preferedEmail.invalid}}
-                              </div>
+                              <div *ngIf="preferEmailId.errors.invalidDomain">{{errors.contactDetails.preferedEmail.invalid}}</div>
+                              <div *ngIf="preferEmailId.errors?.pattern">{{errors.contactDetails.preferedEmail.invalid}} </div>
                             </div>
                           </div>
                           <div class="form-group transOpacity500ms fadeOut"
@@ -554,8 +555,16 @@
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="email" class="form-control" autocomplete="off"
                               id="alter-email" data-validation-attr="email01" pattern="{{regexPattern.email}}" maxlength="100"
                               [(ngModel)]="qde.application.applicants[applicantIndex].contactDetails.alternateEmailId"
-                              name="alternateEmailId" #alternateEmailId="ngModel" fieldFill />
+                              name="alternateEmailId" #alternateEmailId="ngModel" fieldFill 
+                              (ngModelChange)="onPreferredEmailChange($event, alternateEmailId)"/>
                               <div *ngIf="(qde.application.applicants[applicantIndex].contactDetails.alternateEmailId)?.length == 100" class="invalid-feedback">Maximum Character Exceeds</div>
+                              
+                            <div *ngIf="(alternateEmailId.untouched || alternateEmailId.touched || alternateEmailId.dirty) && alternateEmailId.invalid"
+                              class="invalid-feedback">
+                              <!-- <div *ngIf="alternateEmailId.errors?.required">{{errors.contactDetails.preferedEmail.required}}</div> -->
+                              <div *ngIf="alternateEmailId.errors.invalidDomain">{{errors.contactDetails.preferedEmail.invalid}}</div>
+                              <div *ngIf="alternateEmailId.errors?.pattern">{{errors.contactDetails.preferedEmail.invalid}} </div>
+                            </div>
 
                             <label for="alter-email" tabindex="3">Alternate email ID</label>
                             <span class="alternate-data">
@@ -1786,8 +1795,7 @@
                               <!-- <div *ngIf="officeEmail.errors?.required">{{errors.officialCorrespondence.email.required}}</div> -->
                               <div *ngIf="officeEmail.errors.invalidDomain">{{errors.officialCorrespondence.email.invalidDomain}}
                               </div>
-                              <div *ngIf="officeEmail.errors?.pattern">{{errors.officialCorrespondence.email.invalid}}
-                                </div>  
+                              <div *ngIf="officeEmail.errors?.pattern">{{errors.officialCorrespondence.email.invalid}}</div>  
                             </div>
                           </div>
 

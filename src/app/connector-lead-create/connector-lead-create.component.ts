@@ -20,6 +20,7 @@ interface Item {
 })
 export class ConnectorLeadCreateComponent implements OnInit {
 
+  preferredEmail: Array<Item>;
   isOptionsMenuDropOpen: boolean = false;
   loanType: Array<Item>;
   selectedLoanType: Item;
@@ -67,7 +68,8 @@ export class ConnectorLeadCreateComponent implements OnInit {
         },
       email:{
         required: "Email Id is mandatory",
-        invalid: "Invalid Email ID"
+        invalid: "Invalid Email ID",
+        invalidDomain: "Invalid Domain"
       },
       amount: {
         required: "Loan Amount is Mandatory",
@@ -103,6 +105,8 @@ export class ConnectorLeadCreateComponent implements OnInit {
     if(this.route.snapshot.data.listOfValues) {
       const lov = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs);
       this.loanType = lov.LOVS.loan_type;
+      this.preferredEmail = lov.LOVS.preferred_mails;
+
       this.selectedLoanType = this.loanType[0];
       console.log(this.selectedLoanType);
     }
@@ -199,6 +203,21 @@ export class ConnectorLeadCreateComponent implements OnInit {
       this.firstName =  res['ProcessVariables']['firstName'];
       console.log("ROLE Name: ", this.firstName);
     })
+  }
+
+  onPreferredEmailChange(value, emailCtrl) {
+    const emailId = value;
+    const domain = emailId.split("@")[1];
+    for(let i = 0; i < this.preferredEmail.length; i++) {
+      if (this.preferredEmail[i]["key"] == domain) {
+        console.log("Valid email");
+        emailCtrl.control.setErrors({ 'invalidDomain': false });
+        break;
+      }else {
+        console.log("Invalid email");
+        emailCtrl.control.setErrors({ 'invalidDomain': true });
+      }
+    }
   }
 
 }

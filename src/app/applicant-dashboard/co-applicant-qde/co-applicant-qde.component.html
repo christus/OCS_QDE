@@ -687,6 +687,7 @@
                                                         tabindex="1"
                                                         pattern="{{regexPattern.email}}"
                                                         spellcheck="false"
+                                                        (ngModelChange)="onPreferredEmailChange($event, preferEmailId)"
                                                         fieldFill
                                                         required />
                                                         
@@ -704,6 +705,8 @@
 
                                                     <div *ngIf="(preferEmailId.touched || preferEmailId.dirty) && preferEmailId.invalid" class="invalid-feedback">
                                                       <!-- <div *ngIf="preferEmailId.errors?.required">{{errors.contactDetails.preferedEmail.required}}</div> -->
+                                                      <div *ngIf="preferEmailId.errors.invalidDomain">{{errors.contactDetails.preferedEmail.invalid}}
+                                                        </div> 
                                                       <div *ngIf="preferEmailId.errors?.pattern">{{errors.contactDetails.preferedEmail.invalid}}</div>
                                                     </div>
                                               </div>
