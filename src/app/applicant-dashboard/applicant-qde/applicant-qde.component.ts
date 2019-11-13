@@ -3783,7 +3783,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     for(let i = 0; i < this.preferredEmail.length; i++) {
       if (this.preferredEmail[i]["key"] == domain) {
         console.log("Valid email");
-        emailCtrl.control.setErrors({ 'invalidDomain': false });
+        emailCtrl.control.setErrors({ 'invalidDomain': null });
+        emailCtrl.control.updateValueAndValidity();
         break;
       }else {
         console.log("Invalid email");

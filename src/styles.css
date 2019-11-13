@@ -5798,3 +5798,8 @@ img {
 .k-icon {
 	font-size: 18px;
 }
+
+.k-select {
+	padding-right: 30px !important;
+	background: #FFF !important;
+}
