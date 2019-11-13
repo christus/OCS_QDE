@@ -868,14 +868,17 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
   addRemoveEmailField() {
     this.isAlternateEmailId = !this.isAlternateEmailId;
+    this.qde.application.applicants[this.coApplicantIndex].contactDetails.alternateEmailId = ""
   }
 
   addRemoveMobileNumberField() {
     this.isAlternateMobileNumber = !this.isAlternateMobileNumber;
+    this.qde.application.applicants[this.coApplicantIndex].contactDetails.alternateMobileNumber = null;
   }
 
   addRemoveResidenceNumberField() {
     this.isAlternateResidenceNumber = !this.isAlternateResidenceNumber;
+    this.qde.application.applicants[this.coApplicantIndex].contactDetails.alternateResidenceNumber = "-"
   }
 
   //-------------------------------------------------------------

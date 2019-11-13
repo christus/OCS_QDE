@@ -1043,6 +1043,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   addRemoveEmailField() {
     this.isAlternateEmailId = !this.isAlternateEmailId;
+    this.qde.application.applicants[this.applicantIndex].contactDetails.alternateEmailId = ""
   }
 
   addRemoveMobileNumberField() {
@@ -1052,6 +1053,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   addRemoveResidenceNumberField() {
     this.isAlternateResidenceNumber = !this.isAlternateResidenceNumber;
+    this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber = "-"
   }
 
   //-------------------------------------------------------------
@@ -3659,7 +3661,17 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       //   }
       // }
       // else{
-        this.tabSwitch(2);
+
+      if(this.qde.application.applicants[this.applicantIndex].contactDetails.alternateEmailId == ""){
+        this.addRemoveEmailField();
+      }
+      if(this.qde.application.applicants[this.applicantIndex].contactDetails.alternateMobileNumber == null){
+        this.addRemoveMobileNumberField();
+      }
+      if(this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber == "-"){
+        this.addRemoveResidenceNumberField();
+      }
+      this.tabSwitch(2);
       // }
     } else {
       this.tabSwitch(12);
