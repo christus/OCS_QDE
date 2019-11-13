@@ -3662,13 +3662,13 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       // }
       // else{
 
-      if(this.qde.application.applicants[this.applicantIndex].contactDetails.alternateEmailId == ""){
+      if(this.qde.application.applicants[this.applicantIndex].contactDetails.alternateEmailId == "" && this.isAlternateEmailId == true){
         this.addRemoveEmailField();
       }
-      if(this.qde.application.applicants[this.applicantIndex].contactDetails.alternateMobileNumber == null){
+      if(this.qde.application.applicants[this.applicantIndex].contactDetails.alternateMobileNumber == null && this.isAlternateMobileNumber == true){
         this.addRemoveMobileNumberField();
       }
-      if(this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber == "-"){
+      if(this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber == "-" && this.isAlternateResidenceNumber == true){
         this.addRemoveResidenceNumberField();
       }
       this.tabSwitch(2);

@@ -32,7 +32,7 @@
               (ngModelChange)="endDateMonthDiff(startDate)"
               [format]="'dd/MM/yyyy'">
               </kendo-datepicker>
-               <div *ngIf ="!startDate" class="invalid-feedback" style="color: red">
+               <div *ngIf ="!startDate" class="invalid-feedback">
                 Select Valid Start Date
               </div>
             </div>
@@ -46,7 +46,7 @@
               (ngModelChange)="endDateMonthDiff(endDate)"
               [format]="'dd/MM/yyyy'">
               </kendo-datepicker>
-              <div *ngIf ="!endDate" class="invalid-feedback" style="color: red">
+              <div *ngIf ="!endDate" class="invalid-feedback">
                 Select Valid End Date
               </div>
               <div *ngIf="dateError.isError" class="redalert" style="color: red">

@@ -3809,7 +3809,16 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       //   }
       // }
       // else{
-        this.tabSwitch(3);
+      if(this.qde.application.applicants[this.coApplicantIndex].contactDetails.alternateEmailId == "" && this.isAlternateEmailId == true){
+        this.addRemoveEmailField();
+      }
+      if(this.qde.application.applicants[this.coApplicantIndex].contactDetails.alternateMobileNumber == null && this.isAlternateMobileNumber == true){
+        this.addRemoveMobileNumberField();
+      }
+      if(this.qde.application.applicants[this.coApplicantIndex].contactDetails.alternateResidenceNumber == "-" && this.isAlternateResidenceNumber == true){
+        this.addRemoveResidenceNumberField();
+      }
+      this.tabSwitch(3);
       // }
     } else {
       this.tabSwitch(13);
