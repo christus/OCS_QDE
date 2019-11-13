@@ -1043,17 +1043,17 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   addRemoveEmailField() {
     this.isAlternateEmailId = !this.isAlternateEmailId;
-    // this.qde.application.applicants[this.applicantIndex].contactDetails.alternateEmailId = ""
+    this.qde.application.applicants[this.applicantIndex].contactDetails.alternateEmailId = ""
   }
 
   addRemoveMobileNumberField() {
     this.isAlternateMobileNumber = !this.isAlternateMobileNumber;
-    // this.qde.application.applicants[this.applicantIndex].contactDetails.alternateMobileNumber = null;
+    this.qde.application.applicants[this.applicantIndex].contactDetails.alternateMobileNumber = null;
   }
 
   addRemoveResidenceNumberField() {
     this.isAlternateResidenceNumber = !this.isAlternateResidenceNumber;
-    // this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber = "-"
+    this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber = "-"
   }
 
   //-------------------------------------------------------------
