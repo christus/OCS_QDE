@@ -12420,6 +12420,7 @@ kendo-scrollview.k-scrollview-wrap .k-scrollview-next:hover,kendo-scrollview.k-s
 }
 
 .k-datepicker .k-picker-wrap,.k-timepicker .k-picker-wrap,.k-datetimepicker .k-picker-wrap {
+    border-color: #FFF;
     background-clip: padding-box
 }
 
@@ -20198,4 +20199,5 @@ kendo-scheduler .k-event.k-event-inverse,.k-event.k-event-inverse {
     background-color: #fff;
     box-shadow: 0 0 15px rgba(0,0,0,0.08)
 }
+
 

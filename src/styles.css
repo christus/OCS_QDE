@@ -5771,7 +5771,7 @@ img {
 .with_datepicker .k-i-sarrow-s::before,
 .with_datepicker .k-i-collapse::before,.with_datepicker .k-i-expand-s::before {
     content: "\/" !important;
-    font-size: 90px;
+    font-size: 60px;
     line-height: 6px;
 }
 
@@ -5803,3 +5803,8 @@ img {
 	padding-right: 30px !important;
 	background: #FFF !important;
 }
+
+.date_dropdown_fontsize .k-input {
+    font-size: 31px !important;
+}
+

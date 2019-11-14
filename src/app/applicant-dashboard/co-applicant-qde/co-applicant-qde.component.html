@@ -552,7 +552,7 @@
 
                                                       <div class="row with_datepicker">
                                                         <div class="col4">
-                                                            <kendo-dropdownlist [readonly] = "true" class="form-control"
+                                                            <kendo-dropdownlist [readonly] = "true" class="date_dropdown_fontsize form-control"
                                                             textField="key"
                                                             valueField="value"
                                                             name="day"
@@ -565,7 +565,7 @@
                                                         </div>
     
                                                         <div class="col4">
-                                                            <kendo-dropdownlist [readonly] = "true" class="form-control"
+                                                            <kendo-dropdownlist [readonly] = "true" class="date_dropdown_fontsize form-control"
                                                             textField="key"
                                                             valueField="value"
                                                             tabindex="2"
@@ -578,7 +578,7 @@
                                                         </div>
     
                                                         <div class="col4">
-                                                            <kendo-dropdownlist [readonly] = "true" class="mob_personal_year form-control"
+                                                            <kendo-dropdownlist [readonly] = "true" class="date_dropdown_fontsize mob_personal_year form-control"
                                                             textField="key"
                                                             valueField="value"
                                                             tabindex="3"
@@ -2659,9 +2659,9 @@
                                       </div>
                                       <div class="form-group typ-select">
                                           <span class="control-title">Date of Incorporation</span>
-                                          <div class="row with_datepicker">
+                                          <div class="row with_datepicker margin_zero">
                                               <div class="col4">
-                                                  <kendo-dropdownlist [readonly]="true" class="form-control"
+                                                  <kendo-dropdownlist [readonly]="true" class="date_dropdown_fontsize form-control"
                                                   textField="key"
                                                   valueField="value"
                                                   tabindex="2"
@@ -2674,7 +2674,7 @@
                                               </div>
       
                                               <div class="col4">
-                                                  <kendo-dropdownlist [readonly]="true" class="form-control"
+                                                  <kendo-dropdownlist [readonly]="true" class="date_dropdown_fontsize form-control"
                                                   textField="key"
                                                   tabindex="3"
                                                   valueField="value"
@@ -2687,7 +2687,7 @@
                                               </div>
       
                                               <div class="col4">
-                                                  <kendo-dropdownlist [readonly]="true" class="form-control mob_personal_year"
+                                                  <kendo-dropdownlist [readonly]="true" class="date_dropdown_fontsize form-control mob_personal_year"
                                                   textField="key"
                                                   valueField="value"
                                                   name="year"
@@ -2698,7 +2698,7 @@
                                                   [(ngModel)]="organizationDetails.year">
                                                   </kendo-dropdownlist>
                                               </div>
-                                                <kendo-datepicker class="kendo_date_picker"
+                                                <kendo-datepicker class="kendo_date_picker date_of_incorp"
                                                     [focusedDate]="focusIncorpDate"
                                                     (valueChange)="onDateOfIncorpChange($event)"
                                                     [min] = min
