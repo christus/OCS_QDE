@@ -48,4 +48,16 @@
       </tbody>
     </table>
 </div>
+<div class="overlay" [ngClass]="{'active': isErrorModal}">
+    <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isErrorModal}">
+        <!-- <a class="modal-close" href="javascript:void(0);" (click)="onBackOTP()"><span class="icon icon-close"></span></a> -->
+        <a class="modal-close" (click)="onCrossModal()"><span class="icon icon-close"></span></a>
+        <div class="modal-body">
+        <h1>{{errorMessage}}</h1>
+        <div class="btn-wrap">
+            <button class="btn btn-border" (click)="isErrorModal = false">Cancel</button>
+        </div>
+        </div>
+        </div>
+      </div>
 <pagination-controls  (pageChange)="pageChanged($event)" class="pagination" autoHide="true"  ></pagination-controls>

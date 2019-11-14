@@ -191,7 +191,7 @@ export class RelationshipMappingComponent implements OnInit {
   search(event){
     this.qdeHttp.adminApplicantRelationshipSearch(event.target.value).subscribe(response => {
       console.log("mama",response)
-      if(response['ProcessVariables']['status']){
+      if(response['ProcessVariables']['status'] && response['ProcessVariables']['mappingList']!=null){
       this.data = response['ProcessVariables']['mappingList'];
       this.currentPage=response['ProcessVariables']['currentPage'];
       this.perPage=response['ProcessVariables']['perPage'];
@@ -200,9 +200,12 @@ export class RelationshipMappingComponent implements OnInit {
       for(var i=0; i<this.data.length;i++){
         this.key[i]=((this.perPage*(this.currentPage-1))+i+ 1);
       }
-    }else{
+    }else if(response['ProcessVariables']['mappingList']==null){
       this.isErrorModal = true;
       this.errorMsg = "No Data present further"
+    }else if(response['ProcessVariables']['status']== false && (response['ProcessVariables']['errorMessage']!="" || response['ErrorMessage']!="")){
+      this.isErrorModal = true;
+      this.errorMsg = "Something went wrong";
     }
     });
   }

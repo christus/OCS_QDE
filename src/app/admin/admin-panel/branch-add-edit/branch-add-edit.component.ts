@@ -185,6 +185,7 @@ export class BranchAddEditComponent implements OnInit {
             this.selectBoxRef.nativeElement.querySelector('.reporting_to').classList.add('hide');
             this.isErrorModal = true;
             this.errorMsg = "No data present";
+            this.city = [];
          }
        })
      }else{
@@ -228,6 +229,7 @@ export class BranchAddEditComponent implements OnInit {
         this.selectBoxRef2.nativeElement.querySelector('.reporting_to').classList.add('hide');
         this.isErrorModal = true;
         this.errorMsg = "No data present";
+        this.zipCode = '';
       }
     })
   }else{

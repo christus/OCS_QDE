@@ -752,7 +752,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
             }
           } catch (e) { }
 
-
+          let set = this.setSpouseTitles();
+          console.log("Setted "+ set);
           // Document Type
           if (!isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].pan.docType))) {
             // this.selectedDocType = this.docType[(parseInt(this.qde.application.applicants[this.applicantIndex].pan.docType))-1];
@@ -833,8 +834,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           }
 
           if (!isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].maritalStatus.spouseTitle))) {
+            if(this.setSpouseTitles()){
             // this.selectedSpouseTitle = this.titles[(parseInt(this.qde.application.applicants[this.applicantIndex].maritalStatus.spouseTitle))-1];
             this.selectedSpouseTitle = this.getSelectedValue(this.qde.application.applicants[this.applicantIndex].maritalStatus.spouseTitle, this.spouseTitles);
+           }
           }
 
           if (!isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].familyDetails.fatherTitle))) {
@@ -1586,19 +1589,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.goToNextSlide(swiperInstance);
     } else {
       this.qde.application.applicants[this.applicantIndex].personalDetails.gender = value;
-      if(this.qde.application.applicants[this.applicantIndex].personalDetails.gender == "1"){
-        this.spouseTitles = this.femaleTitles;
-        this.selectedSpouseTitle = this.spouseTitles[0];
-        console.log("spouse is female"+JSON.stringify(this.spouseTitles));
-      }else if(this.qde.application.applicants[this.applicantIndex].personalDetails.gender == "2"){
-        this.spouseTitles = this.maleTitles;
-        this.selectedSpouseTitle = this.spouseTitles[0];
-        console.log("spouse is male"+JSON.stringify(this.spouseTitles));
-      }else{
-        this.spouseTitles = this.titles;
-        this.selectedSpouseTitle = this.spouseTitles[0];
-        console.log("spouse can be Either"+JSON.stringify(this.spouseTitles));
-      }
+      let result = this.setSpouseTitles();
+      console.log("Spouse title"+result);
 
       console.log("FILT: ", this.qdeService.getFilteredJson(this.qde));
 
@@ -4144,5 +4136,38 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   doNothing(event) {
     event.preventDefault();
   }
-
+  setSpouseTitles(): boolean{
+    var that = this;
+    if(that.qde.application.applicants[that.applicantIndex].personalDetails.gender == "1"){
+        that.spouseTitles = that.femaleTitles;
+        if(that.selectedSpouseTitle!=null){
+          that.selectedSpouseTitle = that.defaultItem;
+        }
+        console.log("spouse is female"+JSON.stringify(that.spouseTitles));
+        return true;
+      }else if(that.qde.application.applicants[that.applicantIndex].personalDetails.gender == "2"){
+        that.spouseTitles = that.maleTitles;
+        if(that.selectedSpouseTitle!=null){
+          that.selectedSpouseTitle = that.defaultItem;
+        }
+        console.log("spouse is male"+JSON.stringify(that.spouseTitles));
+        return true;
+      }else if(that.qde.application.applicants[that.applicantIndex].personalDetails.gender == "1010"){
+        let tempTitles=[];
+        tempTitles.push(that.maleTitles.find(v=> v.key=="Mr."));
+        that.spouseTitles = tempTitles;
+        if(that.selectedSpouseTitle!=null){
+          that.selectedSpouseTitle = that.defaultItem;
+        }
+        console.log("spouse can be Either"+JSON.stringify(that.spouseTitles));
+        return true;
+      }else{
+        console.log("Invalid Gender");
+        return false;
+      }
+  }
+  resetSpouseTitles(){
+    let result = this.setSpouseTitles();
+    console.log("reset "+result);
+  }
 }

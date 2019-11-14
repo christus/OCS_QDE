@@ -1393,7 +1393,8 @@
                                                       nick="maritalStatus.status"
                                                       #maritalStatusStatus
                                                       (selectionChange)="selectValueChanged($event, maritalStatusStatus.hostElement)"
-                                                      [(ngModel)]="selectedMaritialStatus">
+                                                      [(ngModel)]="selectedMaritialStatus"
+                                                      (selectionChange)="resetSpouseTitles()">
                                                     </kendo-dropdownlist>
   
                                                 </div>

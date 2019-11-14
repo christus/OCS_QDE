@@ -140,3 +140,6 @@ select:-webkit-autofill:focus {
     letter-spacing: 0.5px;
     position: fixed;
 }
+.modal-body{
+    word-wrap: break-word; 
+}
