@@ -368,12 +368,12 @@ input[type="text"]:invalid
     width: 0px;
     border: none;
     margin-bottom: 30px;
-    margin-left: -75px;
+    margin-left: -10%;
 }
 
 .date_of_incorp {
     top: 14px;
-    margin-left: -75px;
+    margin-left: -10%;
 }
 
 .margin_zero {

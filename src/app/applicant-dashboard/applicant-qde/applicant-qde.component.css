@@ -277,7 +277,7 @@ visibility: visible;
     width: 0px;
     border: none;
     margin-bottom: 30px;
-    margin-left: -75px;
+    margin-left: -10%;
 
 }
 .k-datepicker .k-dateinput, .k-datetimepicker .k-dateinput, .k-timepicker .k-dateinput {

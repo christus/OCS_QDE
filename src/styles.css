@@ -5808,3 +5808,6 @@ img {
     font-size: 31px !important;
 }
 
+.k-datepicker .k-select, .k-timepicker .k-select, .k-datetimepicker .k-select {
+	width: auto !important;
+}
