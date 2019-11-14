@@ -880,7 +880,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
   addRemoveResidenceNumberField() {
     this.isAlternateResidenceNumber = !this.isAlternateResidenceNumber;
-    this.qde.application.applicants[this.coApplicantIndex].contactDetails.alternateResidenceNumber = "-"
+	this.alternateResidenceNumberStdCode = ""
+    this.alternateResidenceNumberPhoneNumber = ""
   }
 
   //-------------------------------------------------------------

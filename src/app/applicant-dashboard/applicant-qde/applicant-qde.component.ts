@@ -1066,7 +1066,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   addRemoveResidenceNumberField() {
     this.isAlternateResidenceNumber = !this.isAlternateResidenceNumber;
-    this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber = "-"
+	this.alternateResidenceNumberStdCode = ""
+    this.alternateResidenceNumberPhoneNumber = ""
   }
 
   //-------------------------------------------------------------
