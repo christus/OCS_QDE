@@ -1,3 +1,4 @@
+import { CommonDataService } from 'src/app/services/common-data.service';
 import { environment } from 'src/environments/environment';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
 import { UtilService } from 'src/app/services/util.service';
@@ -10,15 +11,20 @@ const MINUTES_UNITL_AUTO_LOGOUT = environment.logoutTime; // in Minutes
 const CHECK_INTERVALL = 1000 // in ms
 const STORE_KEY = 'lastAction';
 
+
+
 @Injectable()
 export class AutoLogoutService {
+
+  cInterval:any;
 
   constructor(
     private auth: AuthGuard,
     private router: Router,
     private ngZone: NgZone,
     private utilService: UtilService,
-    private service: QdeHttpService
+    private service: QdeHttpService,
+    private cds: CommonDataService
   ) {
     this.check();
     this.initListener();
@@ -40,10 +46,14 @@ export class AutoLogoutService {
 
   initInterval() {
     this.ngZone.runOutsideAngular(() => {
-      setInterval(() => {
+      this.cInterval =  setInterval(() => {
         this.check();
       }, CHECK_INTERVALL);
     })
+  }
+
+  stopInterval() {
+    clearInterval(this.cInterval);
   }
 
   reset() {
@@ -61,6 +71,8 @@ export class AutoLogoutService {
     this.ngZone.run(() => {
       if (isTimeout && isTokenAvailable) {
         console.log(`Sie wurden automatisch nach ${MINUTES_UNITL_AUTO_LOGOUT} Minuten Inaktivität ausgeloggt.`);
+
+        this.cds.setDialogData(true);
 
         this.service.logout().subscribe(
           res => {
