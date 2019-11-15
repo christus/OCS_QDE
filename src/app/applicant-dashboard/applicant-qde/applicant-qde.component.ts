@@ -1,4 +1,4 @@
-import { Other, Applicant } from './../../models/qde.model';
+import { Other, Applicant, Occupation } from './../../models/qde.model';
 import { Component, OnInit, ViewChild, ElementRef, Renderer2, OnDestroy, AfterViewInit, ViewChildren, QueryList } from '@angular/core';
 
 import * as Swiper from 'swiper/dist/js/swiper.js';
@@ -834,7 +834,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           }
 
           if (!isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].maritalStatus.spouseTitle))) {
-            if(this.setSpouseTitles()){
+            if(this.spouseTitles){
             // this.selectedSpouseTitle = this.titles[(parseInt(this.qde.application.applicants[this.applicantIndex].maritalStatus.spouseTitle))-1];
             this.selectedSpouseTitle = this.getSelectedValue(this.qde.application.applicants[this.applicantIndex].maritalStatus.spouseTitle, this.spouseTitles);
            }
@@ -3040,7 +3040,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       // this.router.navigate([], {queryParams: { tabName: this.fragments[10], page: 1}});
     }
 
-    this.loadOccupationTypeLovs();
+    let occType = this.qde.application.applicants[this.applicantIndex].occupation.occupationType;
+
+    this.loadOccupationTypeLovs(occType);
     return this.beferoStatus;
   }
 
@@ -4140,14 +4142,14 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     var that = this;
     if(that.qde.application.applicants[that.applicantIndex].personalDetails.gender == "1"){
         that.spouseTitles = that.femaleTitles;
-        if(that.selectedSpouseTitle!=null){
+        if(that.selectedSpouseTitle == null){
           that.selectedSpouseTitle = that.defaultItem;
         }
         console.log("spouse is female"+JSON.stringify(that.spouseTitles));
         return true;
       }else if(that.qde.application.applicants[that.applicantIndex].personalDetails.gender == "2"){
         that.spouseTitles = that.maleTitles;
-        if(that.selectedSpouseTitle!=null){
+        if(that.selectedSpouseTitle == null){
           that.selectedSpouseTitle = that.defaultItem;
         }
         console.log("spouse is male"+JSON.stringify(that.spouseTitles));
@@ -4156,7 +4158,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         let tempTitles=[];
         tempTitles.push(that.maleTitles.find(v=> v.key=="Mr."));
         that.spouseTitles = tempTitles;
-        if(that.selectedSpouseTitle!=null){
+        if(that.selectedSpouseTitle == null){
           that.selectedSpouseTitle = that.defaultItem;
         }
         console.log("spouse can be Either"+JSON.stringify(that.spouseTitles));
