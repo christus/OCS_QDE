@@ -1922,7 +1922,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.qde.application.applicants[this.applicantIndex][screenName].city = "";
       this.qde.application.applicants[this.applicantIndex][screenName].state = "";
       this.qde.application.applicants[this.applicantIndex][screenName].cityState = "";
-    }
+	  }
   }
   //-------------------------------------------------------------
 
@@ -3175,11 +3175,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           };
 
           this.officialCorrespondencePhoneNumber = "";
-          this.officialCorrespondenceStdCode = "";
+          this.officialCorrespondenceStdCode = ""; 
 
         } else {
           this.qde.application.applicants[this.applicantIndex].incomeDetails = {
-            incomeConsider: null,
+            monthlyIncome: "",
             assessmentMethodology: "",
           };
         }
