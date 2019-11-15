@@ -4147,14 +4147,14 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     var that = this;
     if(that.qde.application.applicants[that.applicantIndex].personalDetails.gender == "1"){
         that.spouseTitles = that.femaleTitles;
-        if(that.selectedSpouseTitle == null){
+        if(that.isEmpty(that.selectedSpouseTitle)){
           that.selectedSpouseTitle = that.defaultItem;
         }
         console.log("spouse is female"+JSON.stringify(that.spouseTitles));
         return true;
       }else if(that.qde.application.applicants[that.applicantIndex].personalDetails.gender == "2"){
         that.spouseTitles = that.maleTitles;
-        if(that.selectedSpouseTitle == null){
+        if(that.isEmpty(that.selectedSpouseTitle)){
           that.selectedSpouseTitle = that.defaultItem;
         }
         console.log("spouse is male"+JSON.stringify(that.spouseTitles));
@@ -4163,7 +4163,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         let tempTitles=[];
         tempTitles.push(that.maleTitles.find(v=> v.key=="Mr."));
         that.spouseTitles = tempTitles;
-        if(that.selectedSpouseTitle == null){
+        if(that.isEmpty(that.selectedSpouseTitle)){
           that.selectedSpouseTitle = that.defaultItem;
         }
         console.log("spouse can be Either"+JSON.stringify(that.spouseTitles));
@@ -4174,7 +4174,18 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       }
   }
   resetSpouseTitles(){
+  this.selectedSpouseTitle = this.defaultItem
+	if(!this.isEmpty(this.selectedSpouseTitle)){
     let result = this.setSpouseTitles();
     console.log("reset "+result);
+  }
+ }
+  isEmpty(obj: object){
+	  for(var key in obj){
+		if(obj.hasOwnProperty(key)){
+			return false;
+		}
+	  }
+	  return true;
   }
 }
