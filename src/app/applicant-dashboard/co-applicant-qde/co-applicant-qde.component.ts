@@ -1534,6 +1534,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   onPinCodeChange(event, screenName) {
+    if(event.target.value.length < 6) {
+      return;
+    }
     console.log(event.target.value);
      let zipCode= event.target.value
 

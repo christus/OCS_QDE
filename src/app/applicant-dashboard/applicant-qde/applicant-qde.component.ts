@@ -334,6 +334,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   isApplicantRouteModal: boolean = false;
 
   isApplicantPinModal: boolean = false;
+  isWrongPinButtonDisabled: boolean = true;
 
   isDuplicateModalShown: boolean = false;
   duplicates: Array<Applicant> = [];
@@ -1874,6 +1875,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onPinCodeChange(event, screenName) {
+    if(event.target.value.length < 6) {
+      return;
+    }
     console.log(event.target.value);
     let zipCode = event.target.value
 
@@ -1889,6 +1893,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
             this.commCityState = result.city + " " + result.state;
           } else {
             this.isApplicantPinModal = true;
+            // this.isWrongPinButtonDisabled = false;
             // alert("Pin code not available / enter proper pincode");
           }
 

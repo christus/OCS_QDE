@@ -918,7 +918,7 @@
                               id="pincode" required autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.zipcode"
                               name="pinCode" #commPinCode="ngModel" maxlength="6" fieldFill
-                              (blur)="onPinCodeChange($event, 'communicationAddress')"
+                              (input)="onPinCodeChange($event, 'communicationAddress')"
                               pattern="{{regexPattern.pinCode}}" />
                             <label for="pincode" tabindex="3">Pincode</label>
                             <div class="redalert" *ngIf="RegExp(regexPattern.sameDigit).test(commPinCode.value)">
@@ -994,7 +994,7 @@
                             <div class="form-group">
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                                 id="per-pincode" name="pZipcode" #pZipcode="ngModel" autocomplete="off"
-                                (blur)="onPinCodeChange($event, 'permanentAddress')" fieldFill
+                                (input)="onPinCodeChange($event, 'permanentAddress')" fieldFill
                                 [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.zipcode"
                                 minlength="6" maxlength="6" pattern="{{regexPattern.pinCode}}" required 
                                 [readOnly]="qde.application.applicants[applicantIndex].communicationAddress.permanentAddress" />
@@ -1056,8 +1056,8 @@
                         </div>
                         <div class="btn-wrap">
                           <button type="submit" class="btn btn-primary"
-                            [ngClass]="{'disabled': (!communicationForm.valid || selectedResidence.value == 0)}" 
-                            [disabled]="(!communicationForm.valid || selectedResidence.value == 0)">
+                            [ngClass]="{'disabled': (!communicationForm.valid || selectedResidence.value == 0 || !qde.application.applicants[applicantIndex].communicationAddress.cityState) || !qde.application.applicants[applicantIndex].permanentAddress.cityState}" 
+                            [disabled]="(!communicationForm.valid || selectedResidence.value == 0 || !qde.application.applicants[applicantIndex].communicationAddress.cityState) || !qde.application.applicants[applicantIndex].permanentAddress.cityState">
                             Next
                           </button>
                         </div>
@@ -1813,7 +1813,7 @@
                               id="offPincode" required autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.zipcode"
                               #pinCode="ngModel" name="pinCode" tabindex="4" minlength="6" maxlength="6" fieldFill
-                              (blur)="onPinCodeChange($event, 'officialCorrespondence')"
+                              (input)="onPinCodeChange($event, 'officialCorrespondence')"
                               pattern="{{regexPattern.pinCode}}" />
                             <label for="offPincode">Pincode</label>
 
@@ -1893,8 +1893,8 @@
 
                         <div class="btn-wrap">
                           <button type="submit" class="btn btn-primary"
-                            [ngClass]="{'disabled': (!officialCorrespondenceForm.valid) || (qde.application.applicants[applicantIndex].officialCorrespondence.officeEmailId)?.length == 100}"
-                            [disabled]="!officialCorrespondenceForm.valid || (qde.application.applicants[applicantIndex].officialCorrespondence.officeEmailId)?.length == 100">Next
+                            [ngClass]="{'disabled': (!officialCorrespondenceForm.valid) || (qde.application.applicants[applicantIndex].officialCorrespondence.officeEmailId)?.length == 100 || !qde.application.applicants[applicantIndex].officialCorrespondence.cityState}"
+                            [disabled]="!officialCorrespondenceForm.valid || (qde.application.applicants[applicantIndex].officialCorrespondence.officeEmailId)?.length == 100 || !qde.application.applicants[applicantIndex].officialCorrespondence.cityState">Next
                           </button>
                         </div>
                       </form>
@@ -2396,7 +2396,7 @@
                               id="regoffPincode" required tabindex="3" autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].registeredAddress.zipcode"
                               #regAddrPinCode="ngModel" name="pinCode" minlength="6" maxlength="6" fieldFill
-                              (blur)="onPinCodeChange($event, 'registeredAddress')"
+                              (input)="onPinCodeChange($event, 'registeredAddress')"
                               pattern="{{regexPattern.pinCode}}" />
                             <label for="regoffPincode">Pincode</label>
 
@@ -2424,8 +2424,8 @@
                           </div>
                         </div>
                         <div class="btn-wrap">
-                          <button class="btn btn-primary" [ngClass]="{'disabled': (!registeredAddressForm.valid)}"
-                            [disabled]="!registeredAddressForm.valid">Next</button>
+                          <button class="btn btn-primary" [ngClass]="{'disabled': (!registeredAddressForm.valid || !qde.application.applicants[applicantIndex].registeredAddress.cityState)}"
+                            [disabled]="!registeredAddressForm.valid || !qde.application.applicants[applicantIndex].registeredAddress.cityState">Next</button>
 
                         </div>
                       </form>
@@ -2509,7 +2509,7 @@
                               id="pincode01" autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].corporateAddress.zipcode"
                               tabindex="4" pattern="{{regexPattern.pinCode}}" name="pincode" minlength="6" maxlength="6"
-                              required #corpPincode="ngModel" (blur)="onPinCodeChange($event, 'corporateAddress')"
+                              required #corpPincode="ngModel" (input)="onPinCodeChange($event, 'corporateAddress')"
                               fieldFill />
                             <label for="pincode01">Pincode</label>
 
@@ -2580,8 +2580,8 @@
                         </div>
                         <div class="btn-wrap">
                           <button type="submit" class="btn btn-primary"
-                            [ngClass]="{'disabled': (!corporateAddressForm.valid) || (qde.application.applicants[applicantIndex].corporateAddress.officeEmailId)?.length == 100}"
-                            [disabled]="!corporateAddressForm.valid || (qde.application.applicants[applicantIndex].corporateAddress.officeEmailId)?.length == 100">Next</button>
+                            [ngClass]="{'disabled': (!corporateAddressForm.valid) || (qde.application.applicants[applicantIndex].corporateAddress.officeEmailId)?.length == 100 || !qde.application.applicants[applicantIndex].corporateAddress.cityState}"
+                            [disabled]="!corporateAddressForm.valid || (qde.application.applicants[applicantIndex].corporateAddress.officeEmailId)?.length == 100 || !qde.application.applicants[applicantIndex].corporateAddress.cityState">Next</button>
                         </div>
                       </form>
                     </div>

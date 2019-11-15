@@ -5485,6 +5485,7 @@ img {
 	/* background-color: orange !important; */
 	background: #d8e0f3;
 	border-radius: 20px !important;
+	width: 95% !important;
   }
 
   .ng5-slider .ng5-slider-bar {
