@@ -1,3 +1,4 @@
+import { AutoLogoutService } from './../../services/AutoLogoutService';
 import { environment } from 'src/environments/environment';
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
@@ -40,7 +41,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
     private commonDataService: CommonDataService,
     private encrytionService: EncryptService,
     private catchaDataService: CaptchaResolverService ,
-    private activeRout: ActivatedRoute
+    private activeRout: ActivatedRoute,
+    private autoLogout: AutoLogoutService
   ) {
     this.catchaImageData = this.activeRout.snapshot.data;
     this.base64Data = this.catchaImageData["catchaImage"]["catchaImage"];
@@ -75,7 +77,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
         appId: "OCS",
         refId: this.oldRefId,
         captcha: this.captchaText,
-        useADAuth: userEmailId.startsWith("he")
+        useADAuth: false
+        //  useADAuth: userEmailId.startsWith("he")
       };
       console.log("login Data: ",data);
       let token = localStorage.getItem("token");
@@ -91,6 +94,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
         localStorage.setItem("token", res["token"] ? res["token"] : "");
         this.roleLogin();
         this.checkLogin();
+
+        this.autoLogout.initInterval();
 
       },
       error => {

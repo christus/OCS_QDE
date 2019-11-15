@@ -24,11 +24,12 @@ export class AutoLogoutService {
     private ngZone: NgZone,
     private utilService: UtilService,
     private service: QdeHttpService,
-    private cds: CommonDataService
-  ) {
+    private cds: CommonDataService) {
+
     this.check();
     this.initListener();
     this.initInterval();
+    
   }
 
   get lastAction() {
@@ -61,12 +62,27 @@ export class AutoLogoutService {
   }
 
   check() {
+    var that = this;
+
     const now = Date.now();
     const timeleft = this.lastAction + MINUTES_UNITL_AUTO_LOGOUT * 60 * 1000;
     const diff = timeleft - now;
     const isTimeout = diff < 0;
 
     const isTokenAvailable = localStorage.getItem("token");
+
+
+    const currentHref = window.location.href;
+
+    const arrUrl = ["/static/", "/payments/thankpayment"];
+
+    arrUrl.forEach(function(url) {
+      if(currentHref.includes(url)){
+        that.stopInterval();
+        console.log("stopInterval request....");
+        return;
+      }
+    });
 
     this.ngZone.run(() => {
       if (isTimeout && isTokenAvailable) {
@@ -81,6 +97,9 @@ export class AutoLogoutService {
           }
         );
         this.utilService.clearCredentials();
+        this.stopInterval();
+      }else if(isTimeout){
+        this.stopInterval();
       }
     });
   }

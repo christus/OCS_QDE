@@ -949,6 +949,15 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             if(processVariables["applicantTitleId"] > 0) {
               this.qde.application.applicants[this.coApplicantIndex].personalDetails.title  = processVariables["applicantTitleId"];
             }
+            
+
+            if (processVariables["applicantTitleId"] > 0) {
+              this.qde.application.applicants[this.coApplicantIndex].personalDetails.title = processVariables["applicantTitleId"] || this.qde.application.applicants[this.coApplicantIndex].personalDetails.title;
+            }
+            this.selectedTitle = this.getCoApplicantTitle((processVariables["applicantTitleId"] == 0) ? this.qde.application.applicants[this.coApplicantIndex].personalDetails.title: processVariables["applicantTitleId"] );
+
+
+            
             this.createOrUpdatePanDetailsSub = this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
           // If successful
             if(response["ProcessVariables"]["status"] == true) {
@@ -1099,7 +1108,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
           if(processVariables["applicantTitleId"] > 0) {
             this.qde.application.applicants[this.coApplicantIndex].personalDetails.title  = processVariables["applicantTitleId"];
           }
-          this.selectedTitle = this.getCoApplicantTitle(processVariables["applicantTitleId"]);
+
+          this.selectedTitle = this.getCoApplicantTitle((processVariables["applicantTitleId"] == 0) ? this.qde.application.applicants[this.coApplicantIndex].personalDetails.title: processVariables["applicantTitleId"] );
   
         //  response["ProcessVariables"]["status"] = true; // Comment while deploying if service is enabled false
   
@@ -1537,6 +1547,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     if(event.target.value.length < 6) {
       return;
     }
+      
     console.log(event.target.value);
      let zipCode= event.target.value
 
