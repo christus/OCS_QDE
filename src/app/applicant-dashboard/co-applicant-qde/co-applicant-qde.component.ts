@@ -4198,21 +4198,21 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     var that = this;
     if(that.qde.application.applicants[that.coApplicantIndex].personalDetails.gender == "1"){
         that.spouseTitles = that.femaleTitles;
-        if(that.selectedSpouseTitle == null){
+        if(that.selectedSpouseTitle){
           that.selectedSpouseTitle = that.defaultItem;
         }
         console.log("spouse is female"+JSON.stringify(that.spouseTitles));
         return true;
       }else if(that.qde.application.applicants[that.coApplicantIndex].personalDetails.gender == "2"){
         that.spouseTitles = that.maleTitles;
-        if(that.selectedSpouseTitle == null){
+        if(that.selectedSpouseTitle){
           that.selectedSpouseTitle = that.defaultItem;
         }
         console.log("spouse is male"+JSON.stringify(that.spouseTitles));
         return true;
       }else if(that.qde.application.applicants[that.coApplicantIndex].personalDetails.gender == "1010"){
         that.spouseTitles = that.titles;
-        if(that.selectedSpouseTitle == null){
+        if(that.selectedSpouseTitle){
           that.selectedSpouseTitle = that.defaultItem;
         }
         console.log("spouse can be Either"+JSON.stringify(that.spouseTitles));
