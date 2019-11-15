@@ -1680,8 +1680,8 @@
                         class="btn-wrap">
                           <button type="submit"
                             class="btn btn-primary"
-                            [ngClass]="{'disabled': selectedOccupation.value == 0}"
-                            [disabled]="(selectedOccupation.value ==0 )"
+                            [ngClass]="{'disabled':  !occupationForm.valid || selectedOccupation.value == 0}"
+                            [disabled]="( !occupationForm.valid || selectedOccupation.value ==0 )"
                             (click)="incomeConsiderYesNoIndividual(2, occupationSlider2)"
                             [value]="2">
                             Next

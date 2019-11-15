@@ -1988,7 +1988,7 @@
                                                 </span>
                                                 <span class="in-word"></span>
                     
-                                                <div *ngIf="annualPensionIncome1.touched && annualPensionIncome1.invalid"
+                                                <div *ngIf="annualPensionIncome1.invalid"
                                                   class="invalid-feedback">
                                                   <!-- <div *ngIf="annualPensionIncome1.errors?.required">{{errors.incomeDetails.familyIncome.required}}</div> -->
                                                   <div *ngIf="annualPensionIncome1.errors?.pattern">
@@ -2009,7 +2009,10 @@
                                         </div>
                                         <div *ngIf="occupationRequired == false"
                                         class="btn-wrap">
-                                          <button type="submit" class="btn btn-primary"
+                                          <button type="submit" 
+                                                [ngClass]="{'disabled': !occupationForm.valid}"
+                                                [disabled]="(!occupationForm.valid)" 
+                                                  class="btn btn-primary"
                                             (click)="incomeConsiderYesNoIndividual(2, occupationSlider2)"
                                             [value]="2">
                                             Next
