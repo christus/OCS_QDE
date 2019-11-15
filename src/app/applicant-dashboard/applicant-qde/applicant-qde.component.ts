@@ -1155,9 +1155,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
               this.qde.application.applicants[this.applicantIndex].personalDetails.lastName = processVariables["lastName"];
             }
             if (processVariables["applicantTitleId"] > 0) {
-              this.qde.application.applicants[this.applicantIndex].personalDetails.title = processVariables["applicantTitleId"];
+              this.qde.application.applicants[this.applicantIndex].personalDetails.title = processVariables["applicantTitleId"] || this.qde.application.applicants[this.applicantIndex].personalDetails.title;
             }
-            this.selectedTitle = this.getApplicantTitle(processVariables["applicantTitleId"]);
+            this.selectedTitle = this.getApplicantTitle((processVariables["applicantTitleId"] == 0) ? this.qde.application.applicants[this.applicantIndex].personalDetails.title: processVariables["applicantTitleId"] );
 
             this.createOrUpdatePanDetailsSub = this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
 
