@@ -7,52 +7,52 @@
                     <a [routerLink]="['/applicant', applicationId, 'co-applicant']" [queryParams]="{tabName: 'dashboard', page: 1}">Dashboard</a>
                   </li>
                   <li class="tab-link" [ngClass]="{'not-visible': isTabDisabled, 'active': (activeTab == 1), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
-                    <a href="javascript:void(0);" (click)="tabSwitch(1)">PAN</a>
+                    <a href="javascript:void(0);" (click)="tabSwitch(1, 1)">PAN</a>
                   </li>
                   <li class="tab-link" [ngClass]="{'not-visible': isTabDisabled, 'active': (activeTab == 2), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
-                    <a href="javascript:void(0);" (click)="tabSwitch(2)">personal details</a>
+                    <a href="javascript:void(0);" (click)="tabSwitch(2, 1)">personal details</a>
                   </li>
                   <li class="tab-link" [ngClass]="{'not-visible': isTabDisabled, 'active': (activeTab == 3), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
-                    <a href="javascript:void(0);" (click)="tabSwitch(3)">contact details</a>
+                    <a href="javascript:void(0);" (click)="tabSwitch(3, 1)">contact details</a>
                   </li>
                   <li class="tab-link" [ngClass]="{'not-visible': isTabDisabled, 'active': (activeTab == 4), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
-                    <a href="javascript:void(0);" (click)="tabSwitch(4)">communication address</a>
+                    <a href="javascript:void(0);" (click)="tabSwitch(4, 1)">communication address</a>
                   </li>
                   <li class="tab-link" [ngClass]="{'not-visible': isTabDisabled, 'active': (activeTab == 5), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
-                    <a href="javascript:void(0);" (click)="tabSwitch(5)">marital status</a>
+                    <a href="javascript:void(0);" (click)="tabSwitch(5, 1)">marital status</a>
                   </li>
                   <li class="tab-link" [ngClass]="{'not-visible': isTabDisabled, 'active': (activeTab == 6), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
-                    <a href="javascript:void(0);" (click)="tabSwitch(6)">family details</a>
+                    <a href="javascript:void(0);" (click)="tabSwitch(6, 1)">family details</a>
                   </li>
                   <li class="tab-link" [ngClass]="{'not-visible': isTabDisabled, 'active': (activeTab == 7), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
-                    <a href="javascript:void(0);" (click)="tabSwitch(7)">other</a>
+                    <a href="javascript:void(0);" (click)="tabSwitch(7, 1)">other</a>
                   </li>
                   <li class="tab-link" [ngClass]="{'not-visible': isTabDisabled, 'active': (activeTab == 8), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
-                    <a href="javascript:void(0);" (click)="tabSwitch(8)">occupation details</a>
+                    <a href="javascript:void(0);" (click)="tabSwitch(8, 1)">occupation details</a>
                   </li>
                   <li class="tab-link" [ngClass]="{'not-visible': isTabDisabled, 'active': (activeTab == 9), 'hide': ((!applicantIndividual) || !(qde?.application?.applicants[coApplicantIndex]?.incomeDetails?.incomeConsider == true)), 'disabled': isTabDisabled}">
-                    <a href="javascript:void(0);" (click)="tabSwitch(9)">official correspondence</a>
+                    <a href="javascript:void(0);" (click)="tabSwitch(9, 1)">official correspondence</a>
                   </li>
                   <li class="tab-link" [ngClass]="{'not-visible': isTabDisabled, 'active': (activeTab == 10), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
-                      <a href="javascript:void(0);" (click)="tabSwitch(10)">INCOME DETAILS</a>
+                      <a href="javascript:void(0);" (click)="tabSwitch(10, 1)">INCOME DETAILS</a>
                   </li>
                   <li class="tab-link hide" [ngClass]="{'active': (activeTab == 11), 'hide': (applicantIndividual)}">
-                      <a href="javascript:void(0);" (click)="tabSwitch(11)">PAN</a>
+                      <a href="javascript:void(0);" (click)="tabSwitch(11, 1)">PAN</a>
                   </li>
                   <li class="tab-link hide" [ngClass]="{'active': (activeTab == 12), 'hide': (applicantIndividual)}">
-                      <a href="javascript:void(0);" (click)="tabSwitch(12)">ORGANIZATION DETAILS</a>
+                      <a href="javascript:void(0);" (click)="tabSwitch(12, 1)">ORGANIZATION DETAILS</a>
                   </li>
                   <li class="tab-link hide" [ngClass]="{'active': (activeTab == 13), 'hide': (applicantIndividual)}">
-                      <a href="javascript:void(0);" (click)="tabSwitch(13)">REGISTERED ADDRESS</a>
+                      <a href="javascript:void(0);" (click)="tabSwitch(13, 1)">REGISTERED ADDRESS</a>
                   </li>
                   <li class="tab-link hide" [ngClass]="{'active': (activeTab == 14), 'hide': (applicantIndividual)}">
-                      <a href="javascript:void(0);" (click)="tabSwitch(14)">CORPORATE ADDRESS</a>
+                      <a href="javascript:void(0);" (click)="tabSwitch(14, 1)">CORPORATE ADDRESS</a>
                   </li>
                   <li class="tab-link hide" [ngClass]="{'active': (activeTab == 15), 'hide': (applicantIndividual)}">
-                      <a href="javascript:void(0);" (click)="tabSwitch(15)">REVENUE DETAILS</a>
+                      <a href="javascript:void(0);" (click)="tabSwitch(15, 1)">REVENUE DETAILS</a>
                   </li>
                   <li class="tab-link hide" [ngClass]="{'active': (activeTab == 16), 'hide': (applicantIndividual)}">
-                      <a href="javascript:void(0);" (click)="tabSwitch(16)">INCOME DETAILS</a>
+                      <a href="javascript:void(0);" (click)="tabSwitch(16, 1)">INCOME DETAILS</a>
                   </li>
               </ul>
                 <div class="tabs-contents" #tabContents>
@@ -63,7 +63,7 @@
                             <div class="lhs">
 
                                 <div  class="swiper-container form-swiper"
-                                [swiper]="lhsConfig"
+                                [swiper]="lhsConfig" #lhsSwiperS="ngxSwiper"
                                 #dashboardSlider1="ngxSwiper">
                                     <div class="swiper-wrapper">
                                         <div class="swiper-slide">
@@ -81,8 +81,6 @@
                                 <div  class="swiper-container form-swiper"
                                     [swiper]="rhsConfig"
                                     #swiperS="ngxSwiper"
-                                    (slidePrevTransitionStart)="slidePrevTransitionStart(dashboardSlider1)"
-                                    (slideNextTransitionStart)="slideNextTransitionStart(dashboardSlider1)"
                                     #dashboardSlider2="ngxSwiper">
                                     <div class="swiper-wrapper">
                                         <div class="swiper-slide">
@@ -116,12 +114,12 @@
                         </div>
                     </div>
                   <div class="tab-content" [ngClass]="{'active': (activeTab == 1)}">
-                    <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(panSlider2)"></a>
+                    <!-- <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(panSlider2)"></a> -->
                     <div class="lyt-tabs">
                         <div class="lhs">
 
                             <div  class="swiper-container form-swiper"
-                                  [swiper]="lhsConfig"
+                                  [swiper]="lhsConfig" #lhsSwiperS="ngxSwiper"
                                   #panSlider1="ngxSwiper">
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide">
@@ -167,7 +165,7 @@
                                                             [disabled]="isTBMLoggedIn"
                                                             [ngClass]="{'disabled': isTBMLoggedIn}"
                                                             [checked]="qde.application.applicants[coApplicantIndex].isIndividual == true"
-                                                            (click)="changeIsIndividual(1, panSlider2)"  />
+                                                            (click)="changeIsIndividual(1, panSlider2, panSlider1)"  />
                                                     <label for="individual"><span>Individual</span></label>
                                                 </div>
                                                 <div class="bs-radio">
@@ -179,7 +177,7 @@
                                                             [disabled]="isTBMLoggedIn"
                                                             [ngClass]="{'disabled': isTBMLoggedIn}"
                                                             [checked]="qde.application.applicants[coApplicantIndex].isIndividual == false"
-                                                            (click)="changeIsIndividual(2, panSlider2)" />
+                                                            (click)="changeIsIndividual(2, panSlider2, panSlider1)" />
                                                     <label for="non-individual"><span>Non-Individual</span></label>
                                                 </div>                                               
                                             </div>
@@ -189,7 +187,7 @@
                                         <form class="bs-form" *ngIf="!isTabDisabled" autocomplete="off"
                                               id="pan-form"
                                               #panNumberForm="ngForm" 
-                                              (ngSubmit)="submitPanNumber(panNumberForm, panSlider2)">
+                                              (ngSubmit)="submitPanNumber(panNumberForm, panSlider2, panSlider1)">
                                               <div class="form-wrap">
                                                 <div class="form-group last typ-optional" style="margin-bottom: 40px; ">
                                                     <input [readonly]="isReadOnly"  type="text"
@@ -312,12 +310,12 @@
                   </div>
   
                   <div class="tab-content" [ngClass]="{'active': (activeTab == 2)}">
-                      <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(pdSlider2)"></a>
+                      <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(3)"></a>
   
                       <div class="lyt-tabs">
                           <div class="lhs">
                               <div  class="swiper-container form-swiper"
-                                    [swiper]="lhsConfig"
+                                    [swiper]="lhsConfig" #lhsSwiperS="ngxSwiper"
                                     #pdSlider1="ngxSwiper">
                                   <div class="swiper-wrapper">
                                       <div class="swiper-slide">
@@ -355,8 +353,6 @@
                               <div  class="swiper-container form-swiper"
                                     [swiper]="rhsConfig"
                                     #swiperS="ngxSwiper"
-                                    (slidePrevTransitionStart)="slidePrevTransitionStart(pdSlider1)"
-                                  (slideNextTransitionStart)="slideNextTransitionStart(pdSlider1)"
                                     #pdSlider2="ngxSwiper">
                                   <div class="swiper-wrapper">
                                       <div class="swiper-slide">
@@ -369,7 +365,7 @@
                                                             [value]="1"
                                                             tabindex="1"
                                                             [checked]="qde.application.applicants[coApplicantIndex].personalDetails.applicantStatus == '1'"
-                                                            (click)="submitResidentialNon(1, pdSlider2)"
+                                                            (click)="submitResidentialNon(1, pdSlider2, pdSlider1)"
                                                             class="not-usual" />
                                                     <label for="yes-consider1"><span>Resident</span></label>
                                                 </div>
@@ -381,7 +377,7 @@
                                                             [value]="2"
                                                             tabindex="2"
                                                             [checked]="qde.application.applicants[coApplicantIndex].personalDetails.applicantStatus == '2'"
-                                                            (click)="submitResidentialNon(2, pdSlider2)" />
+                                                            (click)="submitResidentialNon(2, pdSlider2, pdSlider1)" />
                                                     <label for="no-consider1"><span>Non Resident</span></label>
                                                 </div>
                                             </div>
@@ -391,7 +387,7 @@
                                           <form   class="bs-form" *ngIf="!isTabDisabled" autocomplete="off"
                                                   id="personal-form"
                                                   #nameForm="ngForm"
-                                                  (ngSubmit)="submitNameDetails(nameForm, pdSlider2)">
+                                                  (ngSubmit)="submitNameDetails(nameForm, pdSlider2, pdSlider1)">
                                               <div class="form-wrap">
                                                     <div class="form-group">
                                                             <span class="control-title">Relationship with Main Applicant</span>
@@ -508,7 +504,7 @@
                                                                 [tabindex]="(i+1)"
                                                                 [value]="g.value"
                                                                 [checked]="qde.application.applicants[coApplicantIndex].personalDetails.gender == g.value"
-                                                                (click)="submitGenderDetails(g.value, pdSlider2)" />
+                                                                (click)="submitGenderDetails(g.value, pdSlider2, pdSlider1)" />
                                                         <label [for]="g.key"><span>{{g.key}}</span></label>
                                                     </div>
                                               </div>
@@ -517,7 +513,7 @@
                                       <div class="swiper-slide">
                                           <form   class="bs-form" *ngIf="!isTabDisabled" 
                                                   #qualificationForm="ngForm"
-                                                  (ngSubmit)="submitQualificationDetails(qualificationForm, pdSlider2)">
+                                                  (ngSubmit)="submitQualificationDetails(qualificationForm, pdSlider2, pdSlider1)">
                                               <div class="form-wrap">
                                                   <div class="form-group">
                                                       <span class="control-title">Qualification</span>
@@ -642,12 +638,12 @@
                   </div>
   
                   <div class="tab-content" [ngClass]="{'active': (activeTab == 3)}">
-                    <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
+                    <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(5)"></a>
                     <div class="lyt-tabs">
                         <div class="lhs">
 
                             <div  class="swiper-container form-swiper"
-                                [swiper]="lhsConfig"
+                                [swiper]="lhsConfig" #lhsSwiperS="ngxSwiper"
                                 #cdSlider1="ngxSwiper">
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide">
@@ -1001,13 +997,13 @@
                 </div>
   
                 <div class="tab-content" [ngClass]="{'active': (activeTab == 4)}">
-                  <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
+                  <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(1)"></a>
   
                   <div class="lyt-tabs">
                       <div class="lhs">
 
                         <div  class="swiper-container form-swiper"
-                            [swiper]="lhsConfig"
+                            [swiper]="lhsConfig" #lhsSwiperS="ngxSwiper"
                             #commSlider1="ngxSwiper">
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide">
@@ -1333,12 +1329,12 @@
                   </div>
   
                   <div    class="tab-content" [ngClass]="{'active': (activeTab == 5)}">
-                    <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(maritalSlider2)"></a>
-  
+                    <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(1)"></a>
+
                     <div class="lyt-tabs">
                         <div class="lhs">
                             <div  class="swiper-container form-swiper"
-                                  [swiper]="lhsConfig"
+                                  [swiper]="lhsConfig" #lhsSwiperS="ngxSwiper"
                                   #maritalSlider1="ngxSwiper">
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide">
@@ -1379,7 +1375,7 @@
                                     <div class="swiper-slide">
                                         <form class="bs-form" *ngIf="!isTabDisabled" autocomplete="off"
                                               #maritalStatusForm="ngForm"
-                                              (ngSubmit)="submitMaritalStatus(maritalStatusForm, maritalSlider2)">
+                                              (ngSubmit)="submitMaritalStatus(maritalStatusForm, maritalSlider2, maritalSlider1)">
                                             <div class="form-wrap">
                                                 <div class="form-group">
                                                     <span class="control-title">Marital Status</span>
@@ -1396,7 +1392,6 @@
                                                       [(ngModel)]="selectedMaritialStatus"
                                                       (selectionChange)="resetSpouseTitles()">
                                                     </kendo-dropdownlist>
-  
                                                 </div>
                                             </div>
                                             <div class="btn-wrap">
@@ -1409,7 +1404,7 @@
                                     <div class="swiper-slide">
                                         <form class="bs-form" *ngIf="!isTabDisabled" autocomplete="off"
                                               #spouseForm="ngForm"
-                                              (ngSubmit)="submitSpouseName(spouseForm, maritalSlider2)">
+                                              (ngSubmit)="submitSpouseName(spouseForm, maritalSlider2, maritalSlider1)">
                                             <div class="form-wrap">
                                                 <div class="form-group">
                                                     <span class="control-title">Title</span>
@@ -1470,7 +1465,7 @@
                                                               [checked]="qde.application.applicants[coApplicantIndex].maritalStatus.earning == true"
                                                               id="earningYes"
                                                               tabindex="1"
-                                                              (click)="submitSpouseEarning(1, maritalSlider2)" />
+                                                              (click)="submitSpouseEarning(1, maritalSlider2, maritalSlider1)" />
                                                     <label for="earningYes"><span>Yes</span></label>
                                                 </div>
                                                 <div class="bs-radio">
@@ -1480,7 +1475,7 @@
                                                               tabindex="2"
                                                               [checked]="qde.application.applicants[coApplicantIndex].maritalStatus.earning == false"
                                                               id="earningNo"
-                                                              (click)="submitSpouseEarning(2, maritalSlider2)" />
+                                                              (click)="submitSpouseEarning(2, maritalSlider2, maritalSlider1)" />
                                                     <label for="earningNo"><span>No</span></label>
                                                 </div>
                                             </div>
@@ -1532,13 +1527,13 @@
   
   
                 <div  class="tab-content" [ngClass]="{'active': (activeTab == 6)}">
-                  <a  href="javascript:void(0);"
-                      class="back-btn"
-                      (click)="onBackButtonClick(familySlider2)"></a>
+                    <!-- <a *ngIf="qde.application.applicants[coApplicantIndex].maritalStatus.earning == false" href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(3)"></a> -->
+                    <a *ngIf="selectedMaritialStatus.value != 2" href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(1)"></a>
+                    <a *ngIf="selectedMaritialStatus.value == 2" href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(4)"></a>        
                   <div class="lyt-tabs">
                       <div class="lhs">
                           <div  class="swiper-container form-swiper"
-                                [swiper]="lhsConfig"
+                                [swiper]="lhsConfig" #lhsSwiperS="ngxSwiper"
                                 #familySlider1="ngxSwiper">
                               <div class="swiper-wrapper">
                                   <div class="swiper-slide">
@@ -1567,14 +1562,13 @@
                           <div  class="swiper-container form-swiper"
                                 [swiper]="rhsConfig"
                                 #swiperS="ngxSwiper"
-                                (slidePrevTransitionStart)="slidePrevTransitionStart(familySlider1)"
-                                  (slideNextTransitionStart)="slideNextTransitionStart(familySlider1)"
+                                
                                 #familySlider2="ngxSwiper">
                               <div class="swiper-wrapper">
                                   <div class="swiper-slide">
                                       <form   class="bs-form" *ngIf="!isTabDisabled" autocomplete="off"
                                               #familyForm1="ngForm"
-                                              (ngSubmit)="submitFamilyForm1(familyForm1, familySlider2)">
+                                              (ngSubmit)="submitFamilyForm1(familyForm1, familySlider2, familySlider1)">
                                           <div class="form-wrap">
                                               <div class="form-group typ-range">
                                                   <span class="control-title">Enter number of dependents</span>
@@ -1719,13 +1713,13 @@
   
   
               <div class="tab-content" [ngClass]="{'active': (activeTab == 7)}">
-                  <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
+                  <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(2)"></a>
   
                   <div class="lyt-tabs">
                       <div class="lhs">
                           
                         <div  class="swiper-container form-swiper"
-                            [swiper]="lhsConfig"
+                            [swiper]="lhsConfig" #lhsSwiperS="ngxSwiper"
                             #otherSlider1="ngxSwiper">
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide">
@@ -1826,13 +1820,13 @@
                 </div>
   
               <div class="tab-content" [ngClass]="{'active': (activeTab == 8)}">
-                  <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(occupationSlider2)"></a>
+                  <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(1)"></a>
   
                   <div class="lyt-tabs">
                       <div class="lhs">
 
                         <div  class="swiper-container form-swiper"
-                            [swiper]="lhsConfig"
+                            [swiper]="lhsConfig" #lhsSwiperS="ngxSwiper"
                             #occupationSlider1="ngxSwiper">
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide">
@@ -1864,7 +1858,7 @@
                                     <div class="swiper-slide">
                                       <form   class="bs-form" *ngIf="!isTabDisabled" autocomplete="off"
                                               #occupationForm="ngForm"
-                                              (ngSubmit)="submitOccupationDetails(occupationForm, occupationSlider2)">
+                                              (ngSubmit)="submitOccupationDetails(occupationForm, occupationSlider2, occupationSlider1)">
                                           <div class="form-wrap">
                                               <div class="form-group">
                                                   <span class="control-title">Occupation type</span>
@@ -2058,13 +2052,13 @@
                 </div>
   
                 <div class="tab-content" [ngClass]="{'hide': !(qde?.application?.applicants[coApplicantIndex]?.incomeDetails?.incomeConsider == true), 'active': (activeTab == 9)}">
-                  <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
+                  <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(2)"></a>
   
                   <div class="lyt-tabs">
                       <div class="lhs">
 
                         <div  class="swiper-container form-swiper"
-                            [swiper]="lhsConfig"
+                            [swiper]="lhsConfig" #lhsSwiperS="ngxSwiper"
                             #offCor1="ngxSwiper">
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide">
@@ -2277,14 +2271,13 @@
                   </div>
               </div>
   
-              <div class="tab-content" [ngClass]="{'active': (activeTab == 10)}">
-                    <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(incomeSliderIndividual2)"></a>
+              <div class="tab-content" [ngClass]="{'active': (activeTab == 10)}" *ngIf="qde?.application?.applicants[coApplicantIndex]?.incomeDetails?.incomeConsider == true">
+                    <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(1)"></a>
                     <div class="lyt-tabs">
                         <div class="lhs">
-                            <div class="swiper-container form-swiper" [swiper]="lhsConfig" #incomeSliderIndividual1="ngxSwiper">
+                            <div class="swiper-container form-swiper" [swiper]="lhsConfig" #lhsSwiperS="ngxSwiper" #incomeSliderIndividual1="ngxSwiper">
                                 <div class="swiper-wrapper">
-                                    <div class="swiper-slide"
-                                    *ngIf="qde?.application?.applicants[coApplicantIndex]?.incomeDetails?.incomeConsider == true">
+                                    <div class="swiper-slide">
                                     <div class="title-wrap">
                                         <h4 class="title">Applicant’s monthly<span class="cm-line-break"></span>income details</h4>
                                     </div>
@@ -2310,9 +2303,9 @@
                                     #incomeSliderIndividual2="ngxSwiper">
                               <div class="swiper-wrapper">
 
-                                    <div class="swiper-slide" *ngIf="qde?.application?.applicants[coApplicantIndex]?.incomeDetails?.incomeConsider == true">
+                                    <div class="swiper-slide">
                                         <form class="bs-form" *ngIf="!isTabDisabled" autocomplete="off"
-                                        #incomeDetailsForm2="ngForm" (ngSubmit)="submitMonthlyIncomeIndividual(incomeDetailsForm2, incomeSliderIndividual2)">
+                                        #incomeDetailsForm2="ngForm" (ngSubmit)="submitMonthlyIncomeIndividual(incomeDetailsForm2, incomeSliderIndividual2, incomeSliderIndividual1)">
                                             <div class="form-wrap">
                                                 <div class="form-group inr">
                                                     <input [readonly]="isReadOnly" type="text" class="form-control" 
@@ -2353,14 +2346,14 @@
                                                 </div>
                                             </div>
                                             <div class="btn-wrap">
-                                                <button type="submit" class="btn btn-primary" [disabled]="!incomeDetailsForm2.valid || isTBMLoggedIn" [ngClass]="{'disabled': (!incomeDetailsForm2.valid || isTBMLoggedIn)}">Save</button>
+                                                <button type="submit" class="btn btn-primary" [disabled]="!incomeDetailsForm2.valid || isTBMLoggedIn" [ngClass]="{'disabled': (!incomeDetailsForm2.valid || isTBMLoggedIn)}">Next</button>
                                             </div>
                                         </form>
                                     </div>
 
                                     <div class="swiper-slide">
                                     <form class="bs-form" *ngIf="!isTabDisabled" autocomplete="off"
-                                        #annualIncomeForm="ngForm" (ngSubmit)="submitAnnualFamilyIncomeIndividual(annualIncomeForm, incomeSliderIndividual2)">
+                                        #annualIncomeForm="ngForm" (ngSubmit)="submitAnnualFamilyIncomeIndividual(annualIncomeForm, incomeSliderIndividual2, incomeSliderIndividual1)">
                                         <div class="form-wrap">
                                             <div class="form-group inr">
                                                     <input [readonly]="isReadOnly" type="text" class="form-control"
@@ -2455,13 +2448,136 @@
                     </div>
             </div>
   
+            <div class="tab-content" [ngClass]="{'active': (activeTab == 10)}" *ngIf="qde?.application?.applicants[coApplicantIndex]?.incomeDetails?.incomeConsider == false">
+                <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(2)"></a>
+                <div class="lyt-tabs">
+                    <div class="lhs">
+                        <div class="swiper-container form-swiper" [swiper]="lhsConfig" #lhsSwiperS="ngxSwiper" #incomeSliderIndividual1="ngxSwiper">
+                            <div class="swiper-wrapper">
+
+                                <div class="swiper-slide">
+                                    <div class="title-wrap">
+                                        <h4 class="title">Do you or any of the <span class="cm-line-break"></span>family members <span class="cm-line-break"></span> own a puccahouse <span class="cm-line-break"></span>anywhere in India?</h4>
+                                        <p class="note">House made with a high quality materials throughout, including a floor, roof and exterior walls, are called pucca houses</p>
+                                    </div>
+                                </div>
+            
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="rhs">
+
+                        <div class="swiper-container form-swiper"
+                                [swiper]="rhsConfig" #swiperS="ngxSwiper"
+                                (slidePrevTransitionStart)="slidePrevTransitionStart(incomeSliderIndividual1)"
+                              (slideNextTransitionStart)="slideNextTransitionStart(incomeSliderIndividual1)"
+                                #incomeSliderIndividual2="ngxSwiper">
+                          <div class="swiper-wrapper">
+
+                                <div class="swiper-slide">
+                                <form class="bs-form" *ngIf="!isTabDisabled" autocomplete="off"
+                                    #annualIncomeForm="ngForm" (ngSubmit)="submitAnnualFamilyIncomeIndividual(annualIncomeForm, incomeSliderIndividual2, incomeSliderIndividual1)">
+                                    <div class="form-wrap">
+                                        <div class="form-group inr">
+                                                <input [readonly]="isReadOnly" type="text" class="form-control"
+                                                id="annualFamilyIncome1" autocomplete="off"
+                                                [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.annualFamilyIncome"
+                                                #annualFamilyIncome1="ngModel"
+                                                name="annualFamilyIncome"
+                                                tabindex="1"
+                                                fieldFill
+                                                spellcheck="false"
+                                                pattern="{{regexPattern.amount}}"
+                                                required/>
+                                            <label for="annualFamilyIncome1">Annual Family Income <span class="lakhs"></span> </label>
+                                            <span class="addon">
+                                                <span class="icon icon-inr"></span>
+                                                </span>
+                                                <span class="in-word"></span>
+                                            <div *ngIf="annualFamilyIncome1.touched && annualFamilyIncome1.invalid" class="invalid-feedback">
+                                                    <!-- <div *ngIf="annualFamilyIncome1.errors?.required">{{errors.incomeDetails.familyIncome.required}}</div> -->
+                                                    <div *ngIf="annualFamilyIncome1.errors?.pattern">{{errors.incomeDetails.familyIncome.invalid}}</div>
+                                                </div> 
+                                        </div>
+                                            <div class="form-group inr">
+                                                <input [readonly]="isReadOnly" type="text" class="form-control" 
+                                                id="monthlyExpenditure1" autocomplete="off"
+                                                [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.monthlyExpenditure"
+                                                #monthlyExpenditure1="ngModel"
+                                                pattern="{{regexPattern.amount}}"
+                                                name="monthlyExpenditure"
+                                                spellcheck="false"
+                                                tabindex="2"
+                                                fieldFill
+                                                required/>
+                                                <label for="monthlyExpenditure1">Monthly Expenditure</label>
+                                                <span class="addon">
+                                                <span class="icon icon-inr"></span>
+                                                </span>
+                                                <span class="in-word"></span>
+                                                <div *ngIf="monthlyExpenditure1.touched && monthlyExpenditure1.invalid" class="invalid-feedback">
+                                                    <!-- <div *ngIf="monthlyExpenditure1.errors?.required">{{errors.incomeDetails.monthlyExpenditure.required}}</div> -->
+                                                    <div *ngIf="monthlyExpenditure1.errors?.pattern">{{errors.incomeDetails.monthlyExpenditure.invalid}}</div>
+                                                </div> 
+                                            </div>
+                                            <div class="form-group last">
+                                            <span class="control-title">Do you or any of the family members own a puccahouse anywhere in India?</span>
+                                            </div>
+
+                                            <div class="radio-wrap rounded-radio">
+                                                    <div class="bs-radio typ-normal">
+                                                        <input [readonly]="isReadOnly"  type="radio" 
+                                                                name="puccaHouse"
+                                                                [value]="1"
+                                                                tabindex="3"
+                                                                [checked]="qde.application.applicants[coApplicantIndex].incomeDetails.puccaHouse == true"
+                                                                (click)="selectPuccaHouse(1)"
+                                                                fieldFill
+                                                                id="pucchaHouseIdYes1" />
+                                                        <label for="pucchaHouseIdYes1">
+                                                            yes
+                                                        </label>
+                                                    </div>
+                                                    <div class="bs-radio typ-normal">
+                                                        <input [readonly]="isReadOnly"  type="radio"
+                                                                name="puccaHouse"
+                                                                [value]="2"
+                                                                tabindex="4"
+                                                                id="pucchaHouseIdNo1"
+                                                                [checked]="qde.application.applicants[coApplicantIndex].incomeDetails.puccaHouse == false"
+                                                                (click)="selectPuccaHouse(2)"
+                                                                fieldFill />
+                                                        <label for="pucchaHouseIdNo1">
+                                                            No
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                        </div>
+                                    <div class="btn-wrap">
+                                            <button 
+                                                type="submit"
+                                                class="btn btn-primary"
+                                                [ngClass]="{'disabled': (annualIncomeForm.invalid || qde.application.applicants[coApplicantIndex].incomeDetails.puccaHouse == null)}"
+                                                [disabled]="annualIncomeForm.invalid || qde.application.applicants[coApplicantIndex].incomeDetails.puccaHouse == null">
+                                            Save
+                                            </button>
+                                    </div>
+                                </form>
+                                </div>
+
+                          </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
               <div class="tab-content" [ngClass]="{'active': (activeTab == 11)}">
-                  <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(panSlider4)"></a>
+                  <!-- <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(panSlider4)"></a> -->
                   <div class="lyt-tabs">
                       <div class="lhs">
   
                           <div  class="swiper-container form-swiper"
-                                [swiper]="lhsConfig"
+                                [swiper]="lhsConfig" #lhsSwiperS="ngxSwiper"
                                 #panSlider3="ngxSwiper">
                               <div class="swiper-wrapper">
                                   <div class="swiper-slide">
@@ -2488,7 +2604,7 @@
                                   <div class="swiper-slide">
                                       <form class="bs-form" *ngIf="!isTabDisabled" autocomplete="off"
                                             #panNumberForm2="ngForm"
-                                            (ngSubmit)="submitOrgPanNumber(panNumberForm2, panSlider4)">
+                                            (ngSubmit)="submitOrgPanNumber(panNumberForm2, panSlider4, panSlider3)">
                                           <div class="form-wrap" style="overflow: hidden;">
                                               <div class="form-group last typ-optional">
                                                   <input [readonly]="isReadOnly"  type="text"
@@ -2607,15 +2723,15 @@
                   </div>
   
               </div>
-  
+
               <div class="tab-content" [ngClass]="{'active': (activeTab == 12)}">
-                   <a  href="javascript:void(0);" class="back-btn"  (click)="tabSwitch(11)"></a> 
+                   <a  href="javascript:void(0);" class="back-btn"  (click)="onBackButtonClick(1)"></a> 
   
                   <div class="lyt-tabs">
                       <div class="lhs">
 
                         <div  class="swiper-container form-swiper"
-                            [swiper]="lhsConfig"
+                            [swiper]="lhsConfig" #lhsSwiperS="ngxSwiper"
                             #orgSlider1="ngxSwiper">
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide">
@@ -2759,12 +2875,12 @@
               </div>
 
               <div class="tab-content"  [ngClass]="{'active': (activeTab == 13)}">
-                  <a  href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
+                  <a  href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(1)"></a>
                   <div class="lyt-tabs">
                       <div class="lhs">
 
                         <div  class="swiper-container form-swiper"
-                            [swiper]="lhsConfig"
+                            [swiper]="lhsConfig" #lhsSwiperS="ngxSwiper"
                             #regSlider1="ngxSwiper">
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide">
@@ -2890,12 +3006,12 @@
                   </div>
               </div>
               <div class="tab-content" [ngClass]="{'active': (activeTab == 14)}">
-                  <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
+                  <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(1)"></a>
                   <div class="lyt-tabs">
                       <div class="lhs">
 
                             <div  class="swiper-container form-swiper"
-                            [swiper]="lhsConfig"
+                            [swiper]="lhsConfig" #lhsSwiperS="ngxSwiper"
                             #corporateSlider1="ngxSwiper">
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide">
@@ -3102,12 +3218,12 @@
               </div>
   
               <div class="tab-content" [ngClass]="{'active': (activeTab == 15)}">
-                <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
+                <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(1)"></a>
 
                 <div class="lyt-tabs">
                     <div class="lhs">
                         <div  class="swiper-container form-swiper"
-                            [swiper]="lhsConfig"
+                            [swiper]="lhsConfig" #lhsSwiperS="ngxSwiper"
                             #revenueSlider1="ngxSwiper">
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide">
@@ -3213,10 +3329,10 @@
             </div>             
   
               <div class="tab-content" [ngClass]="{'active': (activeTab == 16)}">
-                      <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(incomeConsiderSliderNonIndividual2)"></a>
+                      <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(1)"></a>
                       <div class="lyt-tabs">
                           <div class="lhs">
-                            <div class="swiper-container form-swiper" [swiper]="lhsConfig" #incomeConsiderSliderNonIndividual1="ngxSwiper">
+                            <div class="swiper-container form-swiper" [swiper]="lhsConfig" #lhsSwiperS="ngxSwiper" #incomeConsiderSliderNonIndividual1="ngxSwiper">
                                 <div class="swiper-wrapper">
               
                                   <div class="swiper-slide">
@@ -3267,7 +3383,7 @@
 
                                     <div class="swiper-slide">
                                         <form class="bs-form" *ngIf="!isTabDisabled" autocomplete="off"
-                                                #incomeDetailsForm4="ngForm" (ngSubmit)="submitMonthlyIncomeNonIndividual(incomeDetailsForm4, incomeConsiderSliderNonIndividual2)">
+                                                #incomeDetailsForm4="ngForm" (ngSubmit)="submitMonthlyIncomeNonIndividual(incomeDetailsForm4, incomeConsiderSliderNonIndividual2, incomeConsiderSliderNonIndividual1)">
                                             <div class="form-wrap">
                                                 <div class="form-group inr">
                                                     <input [readonly]="isReadOnly" type="text" class="form-control" 

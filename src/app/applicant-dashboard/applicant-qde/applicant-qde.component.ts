@@ -1073,11 +1073,14 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     //   }
     // }
 
-    if(this.page <= 1) {
+    // alert(this.tabName == 9 && this.qde.application.applicants[this.applicantIndex].incomeDetails.incomeConsider == false);
+    if(this.tabName == this.fragments[9] && this.qde.application.applicants[this.applicantIndex].incomeDetails.incomeConsider == false) {
+      this.router.navigate([], {queryParams: {tabName: this.fragments[7], page: goToSlideNumber}});
+    } else if(this.page <= 1) {
       // Switch Tabs
       this.router.navigate([], {queryParams: {tabName: this.fragments[this.activeTab-1], page: goToSlideNumber}});
     } else {
-      // go to previous slide
+        // go to previous slide
       this.router.navigate([], {queryParams: {tabName: this.tabName, page: this.page-1}});
     }
   }

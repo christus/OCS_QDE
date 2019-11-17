@@ -303,6 +303,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
   otp:string;
   public defaultItem = { key: "Select..", value: "0" };
+  lhsSwiperSliders: Array<Swiper> = [];
+  swiperSlidersSub2: Subscription;
 
   idPanDocumnetType: any;
   idPanFileName: string;
@@ -335,8 +337,11 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   tempOldPanNumber: string;
   monthsInChar: Array<string> = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
 
-  // Only RHS Sliders
+  // RHS Sliders
   @ViewChildren('swiperS') swiperS$: QueryList<Swiper>;
+
+  // LHS Sliders
+  @ViewChildren('lhsSwiperS') lhsSwiperS$: QueryList<Swiper>;
 
   tabName: string;
   page: number;
@@ -449,17 +454,17 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
       //   // if(this.qde.application.applicants[this.coApplicantIndex].isIndividual == true) {
       //   //   if(localFragment == 'pan1') {
-      //   //     this.tabSwitch(0);
+      //   //     this.goToExactPageAndTab(0, 1); 
       //   //     this.panSlider2.setIndex(1);
       //   //   }
       //   // } else if(this.qde.application.applicants[this.coApplicantIndex].isIndividual == false) {
       //   //   if(localFragment == 'pan2') {
-      //   //     this.tabSwitch(10);
+      //   //     this.goToExactPageAndTab(1, 1);
       //   //   }
       //   // }
 
       //   this.activeTab = this.fragments.indexOf(localFragment);
-      //   this.tabSwitch(this.activeTab);
+      //   this.goToExactPageAndTab(this.a1tiveTab, 0);
       //   this.applicantIndividual = (this.activeTab >= 11) ? false: true;
       // }
 
@@ -468,18 +473,23 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
     this.fragmentSub = this.route.queryParams.subscribe(val => {
 
-      if(val['tabName'] && val['tabName'] != '') {
+      if(val['tabName']) {
         this.tabName = this.fragments.includes(val['tabName']) ? val['tabName'].toString(): this.fragments[0];
         this.activeTab = this.fragments.findIndex(v => v == val['tabName']);
       }
 
-      if(val['page'] && val['page'] != '') {
+      if(val['page']) {
         this.page = (val && val['page'] != null && parseInt(val['page']) != NaN && parseInt(val['page']) >= 1) ? parseInt(val['page']): 1;
       }
 
       this.applicantIndividual = (this.activeTab >= 11) ? false: true;
+      
+      if(this.tabName && this.page && this.swiperSliders && this.swiperSliders.length > 0 && this.lhsSwiperSliders && this.lhsSwiperSliders.length > 0) {
+        // alert(this.activeTab+' '+this.page);
+        this.swiperSliders[this.activeTab].setIndex(this.page-1);
+        this.lhsSwiperSliders[this.activeTab].setIndex(this.page-1);
+      }
 
-    
     });
     
    
@@ -618,12 +628,12 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
               //     this.goToExactPageAndTab(result.application.auditTrailDetails.tabPage, result.application.auditTrailDetails.pageNumber);
               //   }
               //   // else {
-              //   //   this.tabSwitch(0);
+              //   //   this.tabSwitch(0, 1);
               //   // }
   
               // } else {
                 if(params['coApplicantIndex'] == null) {
-                  this.tabSwitch(0);
+                  this.tabSwitch(0, 1);
                 }
               // }
   
@@ -764,7 +774,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       this.isReadOnly = false;
       this.options.readOnly = false;
     });
-     let today = new Date();
+    let today = new Date();
     let day = today.getDate();
     let month = today.getMonth() + 1;
     let year = today.getFullYear() - 99;
@@ -777,14 +787,18 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
    * Use to sync between lhs and rhs sliders
    * @param swiperInstance RHS Swiper Instance
    */
-  goToNextSlide(swiperInstance: Swiper) {
+  goToNextSlide(swiperInstance1: Swiper, swiperInstance2: Swiper) {
 
     // if (form && !form.valid) {
     //   return;
     // }
 
     // Create ngModel of radio button in future
-    swiperInstance.nextSlide();
+    swiperInstance1.nextSlide();
+
+    if(swiperInstance2)
+      swiperInstance2.nextSlide();
+
     this.page++;
     this.router.navigate([], {queryParams: { tabName: this.tabName, page: this.page }});
   }
@@ -802,10 +816,14 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
    * Use to sync between lhs and rhs sliders
    * @param swiperInstance RHS Swiper Instance
    */
-  goToPrevSlide(swiperInstance: Swiper) {
+  goToPrevSlide(swiperInstance1: Swiper, swiperInstance2: Swiper) {
 
     // Create ngModel of radio button in future
-    swiperInstance.prevSlide();
+    
+    swiperInstance1.prevSlide();
+
+    if(swiperInstance2)
+      swiperInstance2.prevSlide(); 
     this.page--;
     this.router.navigate([], {queryParams: { tabName: this.tabName, page: this.page }});
   }
@@ -818,54 +836,62 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     swiperInstance.prevSlide();
   }
 
-  tabSwitch(tabIndex ?: number, fromQde ?: boolean) {
-
+  tabSwitch(tabIndex ?: number, page?: number) {
 
     if(tabIndex == 0) {
       // Remove not saved coapplicants
       this.qde.application.applicants = this.qde.application.applicants.filter(v => v.applicantId != "");
-
 
       // TO BE REMOVED
       // this.qdeService.setQde(this.qde);
       this.isTabDisabled = true;
     }
 
-    let t = fromQde ? this.page: 1;
-    if(this.swiperSliders && this.swiperSliders.length > 0) {
-      // if (t == 1 && !fromQde){ 
-      //   this.swiperSliders[tabIndex].setIndex(0);
-      // } else {
-      this.swiperSliders[tabIndex].setIndex(this.page-1);
-      // }
-    }
+    // let t = fromQde ? this.page: 1;
+    // if(this.swiperSliders && this.swiperSliders.length > 0) {
+    //   // if (t == 1 && !fromQde){ 
+    //   //   this.swiperSliders[tabIndex].setIndex(0);
+    //   // } else {
+    //   this.swiperSliders[tabIndex].setIndex(this.page-1);
+    //   // }
+    // }
 
     // Check for invalid tabIndex
     if(tabIndex < this.fragments.length) {
       if(tabIndex == 0) {
-        this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant'], {queryParams: { tabName: this.fragments[tabIndex], page: t }});  
+        this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant'], {queryParams: { tabName: this.fragments[tabIndex], page: page }});
       } else {
-        this.router.navigate([], {queryParams: { tabName: this.fragments[tabIndex], page: t }});
+        this.router.navigate([], {queryParams: { tabName: this.fragments[tabIndex], page: page }});
       }
     }
   }
 
-  onBackButtonClick(swiperInstance ?: Swiper) {
+  onBackButtonClick(goToSlideNumber: number = 1) {
 
-    if(this.activeTab > -1) {
-      if(swiperInstance != null && swiperInstance.getIndex() > 0) {
-        // Go to Previous Slide
-        this.goToPrevSlide(swiperInstance);
-      } else {
-        if(this.activeTab == 10 && this.qde.application.applicants[this.coApplicantIndex].incomeDetails.incomeConsider == false) {
-          this.tabSwitch(this.activeTab - 2);
-        }else if(this.activeTab == 11){
-          this.tabSwitch(0);
-        }
-        else{
-        this.tabSwitch(this.activeTab - 1);
-        }
-      }
+    // if(this.activeTab > -1) {
+    //   if(swiperInstance != null && swiperInstance.getIndex() > 0) {
+    //     // Go to Previous Slide
+    //     this.goToPrevSlide(swiperInstance);
+    //   } else {
+    //     if(this.activeTab == 10 && this.qde.application.applicants[this.coApplicantIndex].incomeDetails.incomeConsider == false) {
+    //       this.tabSwitch(this, 1.activeTab - 2);
+    //     }else if(this.activeTab == 11){
+    //       this.tabSwitch(0, 1);
+    //     }
+    //     else{
+    //     this.tabSwitch(this, 1.activeTab - 1);
+    //     }
+    //   }
+    // }
+
+    if(this.tabName == this.fragments[10] && this.qde.application.applicants[this.coApplicantIndex].incomeDetails.incomeConsider == false) {
+      this.router.navigate([], {queryParams: {tabName: this.fragments[7], page: goToSlideNumber}});
+    } else if(this.page <= 1) {
+      // Switch Tabs
+      this.router.navigate([], {queryParams: {tabName: this.fragments[this.activeTab-1], page: goToSlideNumber}});
+    } else {
+      // go to previous slide
+      this.router.navigate([], {queryParams: {tabName: this.tabName, page: this.page-1}});
     }
   }
 
@@ -916,9 +942,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
   }
 
-  submitPanNumber(form: NgForm, swiperInstance ?: Swiper) {
+  submitPanNumber(form: NgForm, swiperInstance1 : Swiper, swiperInstance2: Swiper) {
     if(this.isTBMLoggedIn) {
-      this.tabSwitch(2);
+      this.tabSwitch(2, 1);
     } else {
 
       event.preventDefault();
@@ -1001,7 +1027,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     
               } else {
                 // this.cds.changePanSlide(true);
-                this.tabSwitch(2);
+                this.tabSwitch(2, 1);
               }
             } else {
               this.panErrorCount++;
@@ -1065,7 +1091,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   
             } else {
               // this.cds.changePanSlide(true);
-              this.tabSwitch(2);
+              this.tabSwitch(2, 1);
             }
           } else {
             this.panErrorCount++;
@@ -1085,9 +1111,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   // PAN
   //-------------------------------------------------------------
 
-  submitOrgPanNumber(form: NgForm, swiperInstance ?: Swiper) {
+  submitOrgPanNumber(form: NgForm, swiperInstance1 : Swiper, swiperInstance2: Swiper) {
     if(this.isTBMLoggedIn) {
-      this.tabSwitch(12);
+      this.tabSwitch(12, 1);
     } else {
       event.preventDefault();
 
@@ -1148,13 +1174,13 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                     if(response["ProcessVariables"]["status"] == true) { 
                       // this.cds.changePanSlide2(true);
                       this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant/'+this.coApplicantIndex], { queryParams: { tabName: this.fragments[12], page: 1 }});
-                      // this.tabSwitch(12);
+                      // this.tabSwitch(12, 1);
                     }
                   });
   
                 }else {
                   // this.cds.changePanSlide2(true);
-                  this.tabSwitch(12);
+                  this.tabSwitch(12, 1);
                   // this.goToNextSlide(swiperInstance);
                 }
               } else {
@@ -1210,8 +1236,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
             }else {
               // this.cds.changePanSlide2(true);
-              // this.tabSwitch(12);
-              this.goToNextSlide(swiperInstance);
+              // this.tabSwitch(12, 1);
+              this.goToNextSlide(swiperInstance1, swiperInstance2);
             }
           } else {
             this.panErrorCount++;
@@ -1232,9 +1258,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   //-------------------------------------------------------------
   // Personal Details
   //-------------------------------------------------------------
-  submitNameDetails(form: NgForm, swiperInstance ?: Swiper) {
+  submitNameDetails(form: NgForm, swiperInstance1: Swiper, swiperInstance2: Swiper) {
     if(this.isTBMLoggedIn) {
-      this.goToNextSlide(swiperInstance);
+      this.goToNextSlide(swiperInstance1,swiperInstance2);
     } else {
 
       event.preventDefault();
@@ -1284,7 +1310,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         else if(femaleTitles.find(v => v == this.selectedTitle.value) != null) {
           this.qde.application.applicants[this.coApplicantIndex].personalDetails.gender = '2';
         }
-          this.goToNextSlide(swiperInstance);
+          this.goToNextSlide(swiperInstance1, swiperInstance2);
         } else {
           // Throw Invalid Pan Error
         }
@@ -1297,7 +1323,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   //-------------------------------------------------------------
-  submitResidentialNon(value, swiperInstance ?: Swiper) {
+  submitResidentialNon(value, swiperInstance1: Swiper, swiperInstance2: Swiper) {
 
     if(this.isTBMLoggedIn) {
       if(value == 1) {
@@ -1305,7 +1331,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       } else {
         this.qde.application.applicants[this.coApplicantIndex].personalDetails.applicantStatus = "2";
       }
-      this.goToNextSlide(swiperInstance);
+      this.goToNextSlide(swiperInstance1, swiperInstance2);
     } else {
 
       this.qde.application.applicants[this.coApplicantIndex].personalDetails.applicantStatus = value;
@@ -1320,7 +1346,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
               this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
               this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
 
-              this.goToNextSlide(swiperInstance);
+              this.goToNextSlide(swiperInstance1, swiperInstance2);
             }
           } , error => {
             this.isErrorModal = true;
@@ -1339,10 +1365,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     
   }
 
-  submitGenderDetails(value, swiperInstance ?: Swiper) {
+  submitGenderDetails(value, swiperInstance1: Swiper, swiperInstance2: Swiper) {
 
     if(this.isTBMLoggedIn) {
-      this.goToNextSlide(swiperInstance);
+      this.goToNextSlide(swiperInstance1, swiperInstance2);
     } else {
       this.qde.application.applicants[this.coApplicantIndex].personalDetails.gender = value;
       let result = this.setSpouseTitles();
@@ -1364,7 +1390,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             this.isErrorModal = true;
             this.errorMessage = "Something went wrong, please try again later.";
           });
-          this.goToNextSlide(swiperInstance);
+          this.goToNextSlide(swiperInstance1, swiperInstance2);
           console.log(response['ProcessVariables']['response']);
         } else {
           // Throw Invalid Pan Error
@@ -1379,10 +1405,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
   //-------------------------------------------------------------
 
-  submitQualificationDetails(form: NgForm, swiperInstance ?: Swiper) {
+  submitQualificationDetails(form: NgForm, swiperInstance1: Swiper, swiperInstance2: Swiper) {
 
     if(this.isTBMLoggedIn) {
-      this.goToNextSlide(swiperInstance);
+      this.goToNextSlide(swiperInstance1, swiperInstance2);
     } else {
       event.preventDefault();
 
@@ -1408,7 +1434,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             this.isErrorModal = true;
             this.errorMessage = "Something went wrong, please try again later.";
           });
-          this.goToNextSlide(swiperInstance);
+          this.goToNextSlide(swiperInstance1, swiperInstance2);
         } else {
           // Throw Invalid Pan Error
         }
@@ -1422,7 +1448,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
   submitDobDetails(form: NgForm, swiperInstance ?: Swiper) {
     if(this.isTBMLoggedIn) {
-      this.tabSwitch(3);
+      this.tabSwitch(3, 1);
     } else {
       event.preventDefault();
 
@@ -1501,7 +1527,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   submitContactDetails(form: NgForm) {
 
     if(this.isTBMLoggedIn) {
-      this.tabSwitch(4);
+      this.tabSwitch(4, 1);
     } else {
       event.preventDefault();
 
@@ -1531,7 +1557,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             this.isErrorModal = true;
             this.errorMessage = "Something went wrong, please try again later.";
           });
-          this.tabSwitch(4);
+          this.tabSwitch(4, 1);
         } else {
           // Throw Invalid Pan Error
         }
@@ -1602,7 +1628,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   submitCommunicationAddressDetails(form: NgForm) {
 
     if(this.isTBMLoggedIn) {
-      this.tabSwitch(5);
+      this.tabSwitch(5, 1);
     } else {
 
       //  event.preventDefault();
@@ -1653,7 +1679,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             this.isErrorModal = true;
             this.errorMessage = "Something went wrong, please try again later.";
           });
-          this.tabSwitch(5);
+          this.tabSwitch(5, 1);
         } else {
           // Throw Invalid Pan Error
         }
@@ -1668,16 +1694,16 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   //-------------------------------------------------------------
   // Marital Status
   //-------------------------------------------------------------
-  submitMaritalStatus(form: NgForm, swiperInstance ?: Swiper) {
+  submitMaritalStatus(form: NgForm, swiperInstance1: Swiper, swiperInstance2: Swiper) {
 
     if(this.isTBMLoggedIn) {
       if(form.value.maritalStatus.value == "2") {
-        this.goToNextSlide(swiperInstance);
+        this.goToNextSlide(swiperInstance1, swiperInstance2);
       } else {
         this.qde.application.applicants[this.coApplicantIndex].maritalStatus.spouseTitle = null;
         this.qde.application.applicants[this.coApplicantIndex].maritalStatus.firstName = "";
         this.qde.application.applicants[this.coApplicantIndex].maritalStatus.amount = null
-        this.tabSwitch(6);
+        this.tabSwitch(6, 1);
       }      
     } else {
       if (form && !form.valid) {
@@ -1706,12 +1732,12 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
               this.isErrorModal = true;
               this.errorMessage = "Something went wrong, please try again later.";
             });
-            this.goToNextSlide(swiperInstance);
+            this.goToNextSlide(swiperInstance1, swiperInstance2);
           } else {
             this.qde.application.applicants[this.coApplicantIndex].maritalStatus.spouseTitle = null;
             this.qde.application.applicants[this.coApplicantIndex].maritalStatus.firstName = "";
             this.qde.application.applicants[this.coApplicantIndex].maritalStatus.amount = null
-            this.tabSwitch(6);
+            this.tabSwitch(6, 1);
           }
         } else {
           // Throw Invalid Pan Error
@@ -1724,10 +1750,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
   }
 
-  submitSpouseName(form: NgForm, swiperInstance ?: Swiper) {
+  submitSpouseName(form: NgForm, swiperInstance1: Swiper, swiperInstance2: Swiper) {
 
     if(this.isTBMLoggedIn) {
-      this.goToNextSlide(swiperInstance);
+      this.goToNextSlide(swiperInstance1, swiperInstance2);
     } else {
       if (form && !form.valid) {
         return;
@@ -1751,7 +1777,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             this.isErrorModal = true;
             this.errorMessage = "Something went wrong, please try again later.";
           });
-          this.goToNextSlide(swiperInstance);
+          this.goToNextSlide(swiperInstance1, swiperInstance2);
         } else {
           // Throw Invalid Pan Error
         }
@@ -1763,14 +1789,14 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     }
   }
 
-  submitSpouseEarning(value, swiperInstance ?: Swiper) {
+  submitSpouseEarning(value, swiperInstance1: Swiper, swiperInstance2: Swiper) {
 
     if(this.isTBMLoggedIn) {
       if(value == 1) {
-        this.goToNextSlide(swiperInstance);
+        this.goToNextSlide(swiperInstance1, swiperInstance2);
       } else {
         this.qde.application.applicants[this.coApplicantIndex].maritalStatus.amount = null;
-        this.tabSwitch(6);
+        this.tabSwitch(6, 1);
       }
     } else {
       this.qde.application.applicants[this.coApplicantIndex].maritalStatus.earning = (value == 1) ? true: false;
@@ -1791,10 +1817,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             this.errorMessage = "Something went wrong, please try again later.";
           });
           if(value == 1) {
-            this.goToNextSlide(swiperInstance);
+            this.goToNextSlide(swiperInstance1, swiperInstance2);
           } else {
             this.qde.application.applicants[this.coApplicantIndex].maritalStatus.amount = null;
-            this.tabSwitch(6);
+            this.tabSwitch(6, 1);
           }
         } else {
           // Throw Invalid Pan Error
@@ -1810,7 +1836,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   submitSpouseEarningAmt(form: NgForm, swiperInstance ?: Swiper) {
 
     if(this.isTBMLoggedIn) {
-      this.tabSwitch(6);
+      this.tabSwitch(6, 1);
     } else {
       // if (form && !form.valid) {
       //   return;
@@ -1839,7 +1865,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             this.isErrorModal = true;
             this.errorMessage = "Something went wrong, please try again later.";
           });
-          this.tabSwitch(6);
+          this.tabSwitch(6, 1);
         } else {
           // Throw Invalid Pan Error
         }
@@ -1857,10 +1883,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   //-------------------------------------------------------------
   // Family Details
   //-------------------------------------------------------------
-  submitFamilyForm1(form: NgForm, swiperInstance ?: Swiper) {
+  submitFamilyForm1(form: NgForm, swiperInstance1: Swiper, swiperInstance2: Swiper) {
 
     if(this.isTBMLoggedIn) {
-      this.goToNextSlide(swiperInstance);
+      this.goToNextSlide(swiperInstance1, swiperInstance2);
     } else {
       if (form && !form.valid) {
         return;
@@ -1884,7 +1910,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             this.isErrorModal = true;
             this.errorMessage = "Something went wrong, please try again later.";
           });
-          this.goToNextSlide(swiperInstance);
+          this.goToNextSlide(swiperInstance1, swiperInstance2);
         } else {
           // Throw Invalid Pan Error
         }
@@ -1899,7 +1925,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   submitFamilyForm2(form: NgForm, swiperInstance ?: Swiper) {
 
     if(this.isTBMLoggedIn) {
-      this.tabSwitch(7);
+      this.tabSwitch(7, 1);
     } else {
       if (form && !form.valid) {
         return;
@@ -1927,7 +1953,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             this.isErrorModal = true;
             this.errorMessage = "Something went wrong, please try again later.";
           });
-          this.tabSwitch(7);
+          this.tabSwitch(7, 1);
         } else {
           // Throw Invalid Pan Error
         }
@@ -1947,7 +1973,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   submitOtherForm(form: NgForm) {
 
     if(this.isTBMLoggedIn) {
-      this.tabSwitch(8);
+      this.tabSwitch(8, 1);
     } else {
       if (form && !form.valid) {
         return;
@@ -1978,7 +2004,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             this.isErrorModal = true;
             this.errorMessage = "Something went wrong, please try again later.";
           });
-          this.tabSwitch(8);
+          this.tabSwitch(8, 1);
         } else {
           // Throw Invalid Pan Error
         }
@@ -1996,7 +2022,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   // Occupation Details
   //-------------------------------------------------------------
  
-  submitOccupationDetails(form: NgForm, swiperInstance ?: Swiper) {
+  submitOccupationDetails(form: NgForm, swiperInstance1: Swiper, swiperInstance2: Swiper) {
 
     if(this.isTBMLoggedIn) {
       /*********************************************************************************************************
@@ -2014,9 +2040,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
         if(this.isOfficialCorrs) {
           // this.isApplicantRouteModal = true
-          this.goToNextSlide(swiperInstance);
+          this.goToNextSlide(swiperInstance1, swiperInstance2);
         } else {
-          this.tabSwitch(10);
+          this.tabSwitch(10, 1);
         }
 
 
@@ -2090,9 +2116,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             *********************************************************************************************************/
             if(this.isOfficialCorrs) {
               // this.isApplicantRouteModal = true
-              this.goToNextSlide(swiperInstance);
+              this.goToNextSlide(swiperInstance1, swiperInstance2);
             } else {
-              this.tabSwitch(10);
+              this.tabSwitch(10, 1);
             }
             
           } else {
@@ -2124,7 +2150,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   submitOfficialCorrespondence(form: NgForm) {
 
     if(this.isTBMLoggedIn) {
-      this.tabSwitch(10);
+      this.tabSwitch(10, 1);
     } else {
       if (form && !form.valid) {
         return;
@@ -2161,7 +2187,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             this.isErrorModal = true;
             this.errorMessage = "Something went wrong, please try again later.";
           });
-          this.tabSwitch(10);
+          this.tabSwitch(10, 1);
         } else {
           // Throw Invalid Pan Error
         }
@@ -2180,7 +2206,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   submitOrganizationDetails(form: NgForm) {
 
     if(this.isTBMLoggedIn) {
-      this.tabSwitch(13);
+      this.tabSwitch(13, 1);
     } else {
       if (form && !form.valid) {
         return;
@@ -2240,7 +2266,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   submitRegisteredAddress(form: NgForm) {
 
     if(this.isTBMLoggedIn) {
-      this.tabSwitch(14);
+      this.tabSwitch(14, 1);
     } else {
       if (form && !form.valid) {
         return;
@@ -2275,7 +2301,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             this.isErrorModal = true;
             this.errorMessage = "Something went wrong, please try again later.";
           });
-          this.tabSwitch(14);
+          this.tabSwitch(14, 1);
         } else {
           // Throw Invalid Pan Error
         }
@@ -2292,7 +2318,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   submitCorporateAddress(form: NgForm) {
 
     if(this.isTBMLoggedIn) {
-      this.tabSwitch(15);
+      this.tabSwitch(15, 1);
     } else {
       if (form && !form.valid) {
         return;
@@ -2329,7 +2355,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             this.isErrorModal = true;
             this.errorMessage = "Something went wrong, please try again later.";
           });
-          this.tabSwitch(15);
+          this.tabSwitch(15, 1);
         } else {
           // Throw Invalid Pan Error
         }
@@ -2347,7 +2373,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   submitRevenueDetails(form: NgForm) {
 
     if(this.isTBMLoggedIn) {
-      this.tabSwitch(16);
+      this.tabSwitch(16, 1);
     } else {
       if (form && !form.valid) {
         return;
@@ -2374,7 +2400,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             this.isErrorModal = true;
             this.errorMessage = "Something went wrong, please try again later.";
           });
-          this.tabSwitch(16);
+          this.tabSwitch(16, 1);
         } else {
           // Throw Invalid Pan Error
         }
@@ -2388,10 +2414,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   // Income Details
   //-----------------------------------------------------------------------
 
-  submitAnnualFamilyIncomeIndividual(form: NgForm, swiperInstance ?: Swiper) {
+  submitAnnualFamilyIncomeIndividual(form: NgForm, swiperInstance1: Swiper, swiperInstance2: Swiper) {
 
     if(this.isTBMLoggedIn) {
-      this.goToNextSlide(swiperInstance);
+      this.goToNextSlide(swiperInstance1, swiperInstance2);
     } else {
       if (form && !form.valid) {
         return;
@@ -2424,7 +2450,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
           
           this.isCoApplicantRouteModal = true;
           // Show modal here
-          this.goToNextSlide(swiperInstance);
+          this.goToNextSlide(swiperInstance1, swiperInstance2);
         } else {
           // Throw Invalid Pan Error
         }
@@ -2436,9 +2462,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     }
   }
 
-  submitMonthlyIncomeIndividual(form: NgForm, swiperInstance ?: Swiper) {
+  submitMonthlyIncomeIndividual(form: NgForm, swiperInstance1: Swiper, swiperInstance2: Swiper) {
     if(this.isTBMLoggedIn) {
-      this.goToNextSlide(swiperInstance);
+      this.goToNextSlide(swiperInstance1, swiperInstance2);
     } else {
       if (form && !form.valid) {
         return;
@@ -2463,9 +2489,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             this.isErrorModal = true;
             this.errorMessage = "Something went wrong, please try again later.";
           });
-          this.isCoApplicantRouteModal = true;
+          // this.isCoApplicantRouteModal = true;
           // this.router.navigate(['/applicant', this.qde.application.applicationId, 'co-applicant'], {fragment: 'dashboard'} );
-          // this.goToNextSlide(swiperInstance);
+          this.goToNextSlide(swiperInstance1, swiperInstance2);
         } else {
           // Throw Invalid Pan Error
         }
@@ -2478,10 +2504,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
 
-  submitMonthlyIncomeNonIndividual(form: NgForm, swiperInstance ?: Swiper) {
+  submitMonthlyIncomeNonIndividual(form: NgForm, swiperInstance1: Swiper, swiperInstance2: Swiper) {
 
     if(this.isTBMLoggedIn) {
-      this.goToNextSlide(swiperInstance);
+      this.goToNextSlide(swiperInstance1, swiperInstance2);
     } else {
       if (form && !form.valid) {
         return;
@@ -2532,7 +2558,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     return parseInt(value);
   }
 
-  changeIsIndividual(value, swiperInstance ?: Swiper) {
+  changeIsIndividual(value, swiperInstance1: Swiper, swiperInstance2: Swiper) {
     this.beferoStatus = this.qde.application.applicants[this.coApplicantIndex].isIndividual;
     if(value == 1) {
       if (this.beferoStatus == false){
@@ -2541,7 +2567,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         console.log("current status before",this.changeIsIndividualStatus);
       }
       else{
-        this.goToNextSlide(swiperInstance);
+        this.goToNextSlide(swiperInstance1, swiperInstance2);
         this.qde.application.applicants[this.coApplicantIndex].isIndividual = true;
       }
       // console.log("VALUE1: ", value);
@@ -2556,9 +2582,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       }
       else{
         this.qde.application.applicants[this.coApplicantIndex].isIndividual = false;
-        this.tabSwitch(11);  
+        this.tabSwitch(11, 1);  
       }
-      // this.tabSwitch(11);
+      // this.tabSwitch(11, 1);
       // this.qde.application.applicants[this.coApplicantIndex].isIndividual = false;
     }
 
@@ -2572,7 +2598,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   changeIsIndividualStatus: boolean = false;
   beferoStatus: boolean = false;
 
-  resetIndividualData(btnValue,swiperInstance ?: Swiper) {
+  resetIndividualData(btnValue,swiperInstance1: Swiper, swiperInstance2:Swiper) {
     
     this.changeIsIndividualStatus = false
     let currentPanValue = this.beferoStatus;
@@ -2599,7 +2625,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
               this.qde.application = JSON.parse(data["ProcessVariables"]["response"])["application"];
               this.qdeService.setQde(this.qde);
               this.auditTrial(applicationId,applicantId,1,"pan1",screenPages['coApplicantDetails']);           
-              this.tabSwitch(11);
+              this.tabSwitch(11, 1);
               this.qde.application.applicants[this.coApplicantIndex].isIndividual = false;
             } 
           );    
@@ -2623,7 +2649,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             this.qde.application = JSON.parse(data["ProcessVariables"]["response"])["application"]; 
             this.qdeService.setQde(this.qde);         
             this.auditTrial(applicationId,applicantId,2,"pan1",screenPages['coApplicantDetails']);
-            this.goToNextSlide(swiperInstance);
+            this.goToNextSlide(swiperInstance1, swiperInstance2);
             this.qde.application.applicants[this.coApplicantIndex].isIndividual = true;
           } 
         );      
@@ -2632,7 +2658,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     } else if ( btnValue=="no" && currentPanValue==false){
       
         this.auditTrial(applicationId,applicantId,1,"pan1",screenPages['coApplicantDetails']);
-        this.tabSwitch(11);
+        this.tabSwitch(11, 1);
         this.qde.application.applicants[this.coApplicantIndex].isIndividual = false;
     }
     else if(btnValue=="no" && currentPanValue==true)
@@ -2640,7 +2666,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       
         this.qde.application.applicants[this.coApplicantIndex].isIndividual = true;
         this.auditTrial(applicationId,applicantId,2,"pan1",screenPages['coApplicantDetails']);
-        this.goToNextSlide(swiperInstance);
+        this.goToNextSlide(swiperInstance1, swiperInstance2);
     }
     
   }
@@ -2671,9 +2697,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
     if(this.isTBMLoggedIn) {
       if(this.qde.application.applicants[this.coApplicantIndex].incomeDetails.incomeConsider) {
-        this.tabSwitch(9);
+        this.tabSwitch(9, 1);
       } else {
-        this.tabSwitch(10);
+        this.tabSwitch(10, 1);
       }
     } else {
 
@@ -2734,9 +2760,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
           
 
           if(this.qde.application.applicants[this.coApplicantIndex].incomeDetails.incomeConsider) {
-            this.tabSwitch(9);
+            this.tabSwitch(9, 1);
           } else {
-            this.tabSwitch(10);
+            this.tabSwitch(10, 1);
           }
         } else {
           // Throw Invalid Pan Error
@@ -2748,11 +2774,11 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     }
   }
 
-  incomeConsiderYesNoNonIndividual(value, swiperInstance ?: Swiper) {
+  incomeConsiderYesNoNonIndividual(value, swiperInstance1: Swiper, swiperInstance2: Swiper) {
 
     if(this.isTBMLoggedIn) {
       if(value == 1) {
-        this.goToNextSlide(swiperInstance);
+        this.goToNextSlide(swiperInstance1, swiperInstance2);
       } 
       else if(value == 2) {
         this.isCoApplicantRouteModal = true;
@@ -2818,7 +2844,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
 
           if(value == 1) {
-            this.goToNextSlide(swiperInstance);
+            this.goToNextSlide(swiperInstance1, swiperInstance2);
           } 
           else if(value == 2) {
             this.isCoApplicantRouteModal = true;
@@ -3149,34 +3175,34 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       // // Incoming from create in Individual Pan
       // if(this.panslide == true && this.qde.application.applicants[this.coApplicantIndex].isIndividual == true) {
       //   console.log('COAPPLICANTINDEX: ', this.coApplicantIndex);
-      //   // this.tabSwitch(1);
+      //   // this.tabSwitch(1, 1);
       //   this.swiperSliders.forEach((v, i, a) => {
       //     v.setIndex(0);
       //   });
-      //   this.tabSwitch(2);
+      //   this.tabSwitch(2, 1);
       //   // this.panSlider2.setIndex(2);
       // }
       // // Incoming from create in Non Individual Pan
       // else if(this.panslide2 == true && this.qde.application.applicants[this.coApplicantIndex].isIndividual == false) {
-      //   // this.tabSwitch(11);
+      //   // this.tabSwitch(11, 1);
       //   // this.panSlider4.setIndex(1);
       //   this.swiperSliders.forEach((v, i, a) => {
       //     v.setIndex(0);
       //   });
-      //   this.tabSwitch(12);
+      //   this.tabSwitch(12, 1);
       // } else if(this.panslide == false && this.qde.application.applicants[this.coApplicantIndex].isIndividual == true) {
         
       //   this.swiperSliders.forEach((v, i, a) => {
       //     v.setIndex(0);
       //   });
-      //   this.tabSwitch(1);
+      //   this.tabSwitch(1, 1);
       //   this.panSlider2.setIndex(1);
       // }
       // else if(this.panslide2 == false && this.qde.application.applicants[this.coApplicantIndex].isIndividual == false) {
       //   this.swiperSliders.forEach((v, i, a) => {
       //     v.setIndex(0);
       //   });
-      //   this.tabSwitch(11);
+      //   this.tabSwitch(11, 1);
       //   this.panSlider4.setIndex(0);
       // }
 
@@ -3194,7 +3220,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     this.coApplicantIndex = this.qde.application.applicants.length - 1;
     this.isTabDisabled = false;
     this.initializeVariables();
-    this.tabSwitch(1);
+    this.tabSwitch(1, 1);
   }
 
   addNewCoApplicant() {
@@ -3698,7 +3724,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
           // If successful
           if(response["ProcessVariables"]["status"] == true) {
             // alert("Switch to tab 1");
-            this.tabSwitch(1);
+            this.tabSwitch(1, 1);
           }
         }, error => {
           this.isErrorModal = true;
@@ -3752,16 +3778,16 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
     if (this.qde.application.applicants[this.coApplicantIndex].pan.imageId != null) {
       if(isIndividual) {
-        this.tabSwitch(2);
+        this.tabSwitch(2, 1);
       }else {
-        this.tabSwitch(12);
+        this.tabSwitch(12, 1);
       }
       return;
     }else {  /* Need to remove the else block once imageid is saved in back-end */
       if(isIndividual) {
-        this.tabSwitch(2);
+        this.tabSwitch(2, 1);
       }else {
-        this.tabSwitch(12);
+        this.tabSwitch(12, 1);
       }
     }
 
@@ -3790,9 +3816,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             // If successful
             if(response["ProcessVariables"]["status"] == true) {
               if(isIndividual) {
-                this.tabSwitch(2);
+                this.tabSwitch(2, 1);
               }else {
-                this.tabSwitch(12);
+                this.tabSwitch(12, 1);
               }
             }
           });
@@ -3823,14 +3849,14 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       //     //To remove extra phone number field
       //     if(this.qde.application.applicants[this.coApplicantIndex].contactDetails.alternateResidenceNumber == "-"){
       //       this.addRemoveResidenceNumberField();
-      //       this.tabSwitch(3); 
+      //       this.tabSwitch(3, 1); 
       //     }
       //     else{
-      //       this.tabSwitch(3); 
+      //       this.tabSwitch(3, 1); 
       //     }
       //   }
       //   else{
-      //     this.tabSwitch(3);
+      //     this.tabSwitch(3, 1);
       //   }
       // }
       // else{
@@ -3843,10 +3869,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       if(this.qde.application.applicants[this.coApplicantIndex].contactDetails.alternateResidenceNumber == "-" && this.isAlternateResidenceNumber == true){
         this.addRemoveResidenceNumberField();
       }
-      this.tabSwitch(3);
+      this.tabSwitch(3, 1);
       // }
     } else {
-      this.tabSwitch(13);
+      this.tabSwitch(13, 1);
     }
   }
 
@@ -3864,11 +3890,11 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       this.qde.application.applicants[this.coApplicantIndex] = this.qdeService.getModifiedObject(tempApplicant, newApplicantToBeReplaced);
       this.qde.application.applicants[this.coApplicantIndex].applicantId = tempApplicant.applicantId;
       this.qde.application.applicants[this.coApplicantIndex].isMainApplicant = tempApplicant.isMainApplicant;
-      this.qdeService.setQde(this.qde);    
+      this.qdeService.setQde(this.qde);
       this.createOrUpdatePersonalDetailsSub5=this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).
             subscribe((response) => {
         // If successful      
-        if(response["ProcessVariables"]["status"]) {  
+        if(response["ProcessVariables"]["status"]) {
 
           this.closeDuplicateModal();
         }
@@ -3982,6 +4008,15 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         this.swiperSliders[this.activeTab].setIndex(this.page-1);
       }
     });
+
+    this.swiperSlidersSub2 = this.lhsSwiperS$.changes.subscribe(v => {
+
+      console.log("Swipers: ", this.activeTab, this.swiperSliders);
+      this.lhsSwiperSliders = v._results;
+      // if (this.swiperSliders && this.swiperSliders.length > 0) {
+      //   this.swiperSliders[this.activeTab].setIndex(this.page - 1);
+      // }
+    });
   }
 
   moreCoApp(){
@@ -3992,15 +4027,21 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   backButton(){
     let mainApplicant = this.qde.application.applicants.find(v => v['isMainApplicant']);
     this.router.navigate(['/applicant', this.applicationId], {fragment: mainApplicant.isIndividual == true ? 'income1': 'income2'});
-    
   }
 
-  goToExactPageAndTab(tabPage: string, pageNumber: number) {
-    let index = this.fragments.findIndex(v => v == tabPage) != -1 ? this.fragments.findIndex(v => v == tabPage) : 0;
-    this.tabName = tabPage;
-    this.page = pageNumber;
-    this.tabSwitch(index, true);
-    // alert(this.coApplicantIndex);
+  // goToExactPageAndTab(tabPage: string, pageNumber: number) {
+  //   let index = this.fragments.findIndex(v => v == tabPage) != -1 ? this.fragments.findIndex(v => v == tabPage) : 0;
+  //   this.tabName = tabPage;
+  //   this.page = pageNumber;
+  //   this.tabSwitch(index, 1, true);
+  //   // alert(this.coApplicantIndex);
+  // }
+  goToExactPageAndTab(index: number, pageNumber: number) {
+    // let index = this.fragments.some(v => v == tabPage) ? this.fragments.findIndex(v => v == tabPage) : 0;
+    // this.tabName = tabPage;
+    // this.page = pageNumber;
+    // this.goToExactPageAndTab(i, 1ndex, true);
+    this.router.navigate([], {queryParams: {tabName: this.fragments[index] , page: pageNumber}});
   }
 
   isCategoryModal: boolean = false;
