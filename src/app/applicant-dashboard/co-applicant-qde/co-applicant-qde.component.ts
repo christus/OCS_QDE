@@ -885,7 +885,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     // }
 
     if(this.tabName == this.fragments[10] && this.qde.application.applicants[this.coApplicantIndex].incomeDetails.incomeConsider == false) {
-      this.router.navigate([], {queryParams: {tabName: this.fragments[7], page: goToSlideNumber}});
+      this.router.navigate([], {queryParams: {tabName: this.fragments[8], page: goToSlideNumber}});
     } else if(this.page <= 1) {
       // Switch Tabs
       this.router.navigate([], {queryParams: {tabName: this.fragments[this.activeTab-1], page: goToSlideNumber}});
