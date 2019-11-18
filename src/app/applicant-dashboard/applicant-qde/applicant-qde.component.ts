@@ -344,8 +344,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   tempOldPanNumber: string;
   monthsInChar: Array<string> = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
 
-  // Only RHS Sliders
+  // RHS Sliders
   @ViewChildren('swiperS') swiperS$: QueryList<Swiper>;
+
+  // LHS Sliders
+  @ViewChildren('lhsSwiperS') lhsSwiperS$: QueryList<Swiper>;
 
   tabName: string;
   page: number;
@@ -368,6 +371,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   
 
   public defaultItem = { key: "Select..", value: "0" };
+  lhsSwiperSliders: Array<Swiper> = [];
+  swiperSlidersSub2: Subscription;
 
   constructor(private renderer: Renderer2,
     private route: ActivatedRoute,
@@ -428,17 +433,17 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
     //     // if(this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
     //     //   if(localFragment == 'pan1') {
-    //     //     this.tabSwitch(0);
+    //     //     this.goToExactPageAndTab(0, 1);
     //     //     this.panSlider2.setIndex(1);
     //     //   }
     //     // } else if(this.qde.application.applicants[this.applicantIndex].isIndividual == false) {
     //     //   if(localFragment == 'pan2') {
-    //     //     this.tabSwitch(10);
+    //     //     this.goToExactPageAndTab(1, 1);
     //     //   }
     //     // }
 
     //     this.activeTab = this.fragments.indexOf(localFragment);
-    //     this.tabSwitch(this.activeTab);
+    //     this.goToExactPageAndTab(this.a1tiveTab, 0);
     //     this.applicantIndividual = (this.activeTab >= 10) ? false: true;
     //   }
     // });
@@ -454,21 +459,23 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.fragmentSub = this.route.queryParams.subscribe(val => {
 
-      if (val['tabName'] && val['tabName'] != '') {
+      if (val['tabName']) {
         this.tabName = this.fragments.includes(val['tabName']) ? val['tabName'].toString() : this.fragments[0];
         this.activeTab = this.fragments.findIndex(v => v == val['tabName']);
-
         this.applicantIndividual = (this.activeTab >= 10) ? false : true;
       }
 
-      if (val['page'] && val['page'] != '') {
+      if (val['page']) {
         this.page = (val && val['page'] != null && parseInt(val['page']) != NaN && parseInt(val['page']) >= 1) ? parseInt(val['page']) : 1;
       }
 
-      console.log("Fragment & QueryParams: ", this.tabName, this.page);
-
       if (this.tabName == this.fragments[9] || this.tabName == this.fragments[15]) {
         this.setAssessmentMethodology();
+      }
+
+      if(this.tabName && this.page && this.swiperSliders && this.swiperSliders.length > 0 && this.lhsSwiperSliders && this.lhsSwiperSliders.length > 0) {
+        this.swiperSliders[this.activeTab].setIndex(this.page-1);
+        this.lhsSwiperSliders[this.activeTab].setIndex(this.page-1);
       }
     });
 
@@ -595,18 +602,18 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
           this.loadOccupationTypeLovs(this.qde.application.applicants[this.applicantIndex].occupation.occupationType);
           if (this.qde.application.auditTrailDetails.screenPage == screenPages['applicantDetails']) {
-            this.goToExactPageAndTab(this.qde.application.auditTrailDetails.tabPage, this.qde.application.auditTrailDetails.pageNumber);
+            this.goToExactPageAndTab(this.fragments.findIndex(v => v == this.qde.application.auditTrailDetails.tabPage), this.qde.application.auditTrailDetails.pageNumber);
           }
           // else if(this.qde.application.auditTrailDetails.screenPage == screenPages['loanDetails']){
           //   this.router.navigate(['/loanDetails/'+this.qde.application.applicationId]);
           // }
           // else{
           //   if(this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
-          //     this.tabSwitch(0);
+          //     this.goToExactPageAndTab(0, 1);
           //   } else if(this.qde.application[this.applicantIndex].isIndividual == false) {
-          //     this.tabSwitch(10);
+          //     this.goToExactPageAndTab(1, 1);
           //   } else {
-          //     this.tabSwitch(0);
+          //     this.goToExactPageAndTab(0, 1);
           //   }
           // }
 
@@ -883,7 +890,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           //   this.swiperSliders.forEach((v, i, a) => {
           //     v.setIndex(0);
           //   });
-          //   this.tabSwitch(1);
+          //   this.goToExactPageAndTab(1, 1);
           //   //  this.panSlider2.setIndex(2);
           // }
           // // Incoming from create in Non Individual Pan
@@ -891,7 +898,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           //   this.swiperSliders.forEach((v, i, a) => {
           //     v.setIndex(0);
           //   });
-          //   this.tabSwitch(11);
+          //   this.goToExactPageAndTab(1, 11);
           //   this.panSlider4.setIndex(1);
           // }
           // // Incoming for edit Individual
@@ -899,7 +906,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           //   this.swiperSliders.forEach((v, i, a) => {
           //     v.setIndex(0);
           //   });
-          //   this.tabSwitch(0);
+          //   this.goToExactPageAndTab(0, 1);
           //   this.panSlider2.setIndex(1);
           // }
           // // Incoming for edit Non-Individual
@@ -908,10 +915,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           //     v.setIndex(0);
           //   });
           //   // Enable it when upload file is enabled
-          //   this.tabSwitch(10);
+          //   this.goToExactPageAndTab(1, 10);
           //   // this.panSlider4.setIndex(1);
 
-          //   // this.tabSwitch(10);
+          //   // this.goToExactPageAndTab(1, 10);
           // }
 
           // So that route is now in edit mode only
@@ -968,14 +975,18 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
    * Use to sync between lhs and rhs sliders
    * @param swiperInstance RHS Swiper Instance
    */
-  goToNextSlide(swiperInstance: Swiper) {
+  goToNextSlide(swiperInstance1: Swiper, swiperInstance2: Swiper) {
 
     // if (form && !form.valid) {
     //   return;
     // }
 
     // Create ngModel of radio button in future
-    swiperInstance.nextSlide();
+    swiperInstance1.nextSlide();
+
+    if(swiperInstance2)
+      swiperInstance2.nextSlide();
+
     this.page++;
     this.router.navigate([], { queryParams: { tabName: this.tabName, page: this.page } });
   }
@@ -985,6 +996,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
    * @param swiperInstance LHS Swiper Instance
    */
   slideNextTransitionStart(swiperInstance: Swiper) {
+    // alert('next');
     swiperInstance.nextSlide();
   }
 
@@ -993,11 +1005,15 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
    * Use to sync between lhs and rhs sliders
    * @param swiperInstance RHS Swiper Instance
    */
-  goToPrevSlide(swiperInstance: Swiper) {
+  goToPrevSlide(swiperInstance1: Swiper, swiperInstance2?: Swiper) {
 
     // Create ngModel of radio button in future
     // swiperInstance.prevSlide();
-    swiperInstance.prevSlide();
+    swiperInstance1.prevSlide();
+
+    if(swiperInstance2)
+      swiperInstance2.prevSlide();
+
     this.page--;
     this.router.navigate([], { queryParams: { tabName: this.tabName, page: this.page } });
   }
@@ -1007,56 +1023,67 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
    * @param swiperInstance LHS Swiper Instance
    */
   slidePrevTransitionStart(swiperInstance: Swiper) {
+    // alert('prev');
     swiperInstance.prevSlide();
   }
 
-  tabSwitch(tabIndex?: number, fromQde?: boolean) {
+  // goToExactPageAndTab(t, 1abIndex?: number, fromQde?: boolean) {
 
-    // Check for invalid tabIndex
-    if (tabIndex < this.fragments.length && tabIndex != -1) {
+  //   // Check for invalid tabIndex
+  //   if (tabIndex < this.fragments.length && tabIndex != -1) {
 
-      let t = fromQde ? this.page : 1;
+  //     let t = fromQde ? this.page : 1;
 
-      if (this.swiperSliders && this.swiperSliders.length > 0) {
-        if (t == 1 && !fromQde ) {
-          this.swiperSliders[tabIndex].setIndex( 0);
-        } else {
-          this.swiperSliders[tabIndex].setIndex(this.page - 1);
-        }
-      }
+  //     if (this.swiperSliders && this.swiperSliders.length > 0) {
+  //       if (t == 1 && !fromQde ) {
+  //         this.swiperSliders[tabIndex].setIndex(0);
+  //       } else {
+  //         this.swiperSliders[tabIndex].setIndex(this.page - 1);
+  //       }
+  //     }
 
-      // It should not allow to go to any other tabs if applicationId is not present
-      if (this.applicantIndex != null && this.qde.application.applicationId != null && this.qde.application.applicationId != '') {
+  //     // It should not allow to go to any other tabs if applicationId is not present
+  //     if (this.applicantIndex != null && this.qde.application.applicationId != null && this.qde.application.applicationId != '') {
      
-        this.router.navigate([], { queryParams: { tabName: this.fragments[tabIndex], page: t } });
-      }
+  //       this.router.navigate([], { queryParams: { tabName: this.fragments[tabIndex], page: t } });
+  //     }
 
-      // this.router.navigate([], { fragment: this.fragments[tabIndex]});
+  //     // this.router.navigate([], { fragment: this.fragments[tabIndex]});
+  //   }
+  // }
+
+  onBackButtonClick(goToSlideNumber: number = 1) {
+
+    // if (this.activeTab > -1) {
+    //   if (swiperInstance1 != null && swiperInstance1.getIndex() > 0) {
+    //     // Go to Previous Slide
+    //     this.goToPrevSlide(swiperInstance1, swiperInstance2);
+    //   } else {
+
+    //     // When income consider is true, official correspondence will be hidden
+    //     if (this.activeTab == 9 && this.qde.application.applicants[this.applicantIndex].incomeDetails.incomeConsider == false) {
+    //       this.goToExactPageAndTab(this.activeTab - 2, 0);
+    //     } else if (this.activeTab == 10 || this.activeTab == 0) {
+    //       // this.goToPrevSlide(swiperInstance1, swiperInstance2);
+    //       this.goToExactPageAndTab(this.activeTab, 1);
+    //       return;
+    //     } else {
+    //       this.goToExactPageAndTab(this.activeTab - 1, 0);
+    //     }
+    //   }
+    // }
+
+    // alert(this.tabName == 9 && this.qde.application.applicants[this.applicantIndex].incomeDetails.incomeConsider == false);
+    if(this.tabName == this.fragments[9] && this.qde.application.applicants[this.applicantIndex].incomeDetails.incomeConsider == false) {
+      this.router.navigate([], {queryParams: {tabName: this.fragments[7], page: goToSlideNumber}});
+    } else if(this.page <= 1) {
+      // Switch Tabs
+      this.router.navigate([], {queryParams: {tabName: this.fragments[this.activeTab-1], page: goToSlideNumber}});
+    } else {
+        // go to previous slide
+      this.router.navigate([], {queryParams: {tabName: this.tabName, page: this.page-1}});
     }
   }
-
-  onBackButtonClick(swiperInstance?: Swiper) {
-
-    if (this.activeTab > -1) {
-      if (swiperInstance != null && swiperInstance.getIndex() > 0) {
-        // Go to Previous Slide
-        this.goToPrevSlide(swiperInstance);
-      } else {
-
-        // When income consider is true, official correspondence will be hidden
-        if (this.activeTab == 9 && this.qde.application.applicants[this.applicantIndex].incomeDetails.incomeConsider == false) {
-          this.tabSwitch(this.activeTab - 2);
-        } else if (this.activeTab == 10 || this.activeTab == 0) {
-          this.goToPrevSlide(swiperInstance);
-          this.tabSwitch(0);
-          return;
-        } else {
-          this.tabSwitch(this.activeTab - 1);
-        }
-      }
-    }
-  }
-
 
   addRemoveEmailField() {
     this.isAlternateEmailId = !this.isAlternateEmailId;
@@ -1118,11 +1145,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   // }
 
-  submitPanNumber(form: NgForm, swiperInstance?: Swiper) {
+  submitPanNumber(form: NgForm, swiperInstance1: Swiper, swiperInstance2 : Swiper) {
     try {
       this.ngxService.start();
     if (this.isTBMLoggedIn) {
-      this.goToNextSlide(swiperInstance);
+      this.goToNextSlide(swiperInstance1, swiperInstance2);
     } else {
 
       event.preventDefault();
@@ -1196,7 +1223,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
                 } else {
                   //  this.cds.changePanSlide(true);
                   //  this.panSlider2.setIndex(2);
-                  this.tabSwitch(1);
+                  this.goToExactPageAndTab(1, 1);
                   // return;
                   //  this.panSlider2.setIndex(2);
                   //   return;
@@ -1273,7 +1300,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
             } else {
               //  this.cds.changePanSlide(true);
               //  this.panSlider2.setIndex(2);
-              this.tabSwitch(1);
+              this.goToExactPageAndTab(1, 1);
               // return;
               //  this.panSlider2.setIndex(2);
               //   return;
@@ -1308,12 +1335,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   // PAN
   //-------------------------------------------------------------
 
-  submitOrgPanNumber(form: NgForm, swiperInstance?: Swiper) {
+  submitOrgPanNumber(form: NgForm, swiperInstance1: Swiper, swiperInstance2: Swiper) {
     try {
       this.ngxService.start();
     if (this.isTBMLoggedIn) {
       // this.goToNextSlide(swiperInstance);
-      this.tabSwitch(this.activeTab + 1);
+      this.goToExactPageAndTab(this.activeTab + 1, 0);
     } else {
       event.preventDefault();
 
@@ -1373,7 +1400,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
                   });
 
                 } else {
-                  this.tabSwitch(11);
+                  this.goToExactPageAndTab(11, 1);
                   // this.goToNextSlide(swiperInstance);
                   return;
                 }
@@ -1427,7 +1454,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
               });
 
             } else {
-              this.tabSwitch(11);
+              this.goToExactPageAndTab(11, 1);
               // this.goToNextSlide(swiperInstance);
               return;
             }
@@ -1460,11 +1487,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   //-------------------------------------------------------------
   // Personal Details
   //-------------------------------------------------------------
-  submitNameDetails(form: NgForm, swiperInstance?: Swiper) {
+  submitNameDetails(form: NgForm, swiperInstance1: Swiper, swiperInstance2: Swiper) {
     try {
       this.ngxService.start();
     if (this.isTBMLoggedIn) {
-      this.goToNextSlide(swiperInstance);
+      this.goToNextSlide(swiperInstance1, swiperInstance2);
     } else {
       event.preventDefault();
 
@@ -1513,7 +1540,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           else if (femaleTitles.find(v => v == this.selectedTitle.value) != null) {
             this.qde.application.applicants[this.applicantIndex].personalDetails.gender = '2';
           }
-          this.goToNextSlide(swiperInstance);
+          this.goToNextSlide(swiperInstance1, swiperInstance2);
         } else {
           this.isErrorModal = true;
           this.errorMessage = "Something went wrong, please try again later."
@@ -1537,7 +1564,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   //-------------------------------------------------------------
-  submitResidentialNon(value, swiperInstance?: Swiper) {
+  submitResidentialNon(value, swiperInstance1: Swiper, swiperInstance2: Swiper) {
     try {
       this.ngxService.start();
     if (this.isTBMLoggedIn) {
@@ -1546,7 +1573,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       } else {
         this.qde.application.applicants[this.applicantIndex].personalDetails.applicantStatus = "2";
       }
-      this.goToNextSlide(swiperInstance);
+      this.goToNextSlide(swiperInstance1, swiperInstance2);
     } else {
 
 
@@ -1561,7 +1588,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
               this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
               this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
               this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
-              this.goToNextSlide(swiperInstance);
+              this.goToNextSlide(swiperInstance1, swiperInstance2);
             }
           });
         } else {
@@ -1583,11 +1610,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         }
   }
 
-  submitGenderDetails(value, swiperInstance?: Swiper) {
+  submitGenderDetails(value, swiperInstance1: Swiper, swiperInstance2: Swiper) {
     try {
       this.ngxService.start();
     if (this.isTBMLoggedIn) {
-      this.goToNextSlide(swiperInstance);
+      this.goToNextSlide(swiperInstance1,swiperInstance2);
     } else {
       this.qde.application.applicants[this.applicantIndex].personalDetails.gender = value;
       let result = this.setSpouseTitles();
@@ -1606,7 +1633,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
               this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
-          this.goToNextSlide(swiperInstance);
+          this.goToNextSlide(swiperInstance1, swiperInstance2);
           console.log(response['ProcessVariables']['response']);
         } else {
           this.isErrorModal = true;
@@ -1631,11 +1658,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //-------------------------------------------------------------
 
-  submitQualificationDetails(form: NgForm, swiperInstance?: Swiper) {
+  submitQualificationDetails(form: NgForm, swiperInstance1: Swiper, swiperInstance2: Swiper) {
     try {
       this.ngxService.start();
     if (this.isTBMLoggedIn) {
-      this.goToNextSlide(swiperInstance);
+      this.goToNextSlide(swiperInstance1,swiperInstance2);
     } else {
       event.preventDefault();
 
@@ -1658,7 +1685,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
               this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
-          this.goToNextSlide(swiperInstance);
+          this.goToNextSlide(swiperInstance1,swiperInstance2);
         } else {
           this.isErrorModal = true;
           this.errorMessage = "Something went wrong, please try again later.";
@@ -1724,7 +1751,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.ngxService.start();
     console.log("isTBMLoggedIn: ", this.isTBMLoggedIn);
     if (this.isTBMLoggedIn) {
-      this.tabSwitch(2);
+      this.goToExactPageAndTab(2, 1);
     } else {
       event.preventDefault();
 
@@ -1821,7 +1848,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     try {
       this.ngxService.start();
     if (this.isTBMLoggedIn) {
-      this.tabSwitch(3);
+      this.goToExactPageAndTab(3, 1);
     } else {
 
       event.preventDefault();
@@ -1851,7 +1878,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
               this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
-          this.tabSwitch(3);
+          this.goToExactPageAndTab(3, 1);
         } else {
           this.isErrorModal = true;
           this.errorMessage = "Something went wrong, please try again later.";
@@ -1938,7 +1965,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     try {
       this.ngxService.start();
     if (this.isTBMLoggedIn) {
-      this.tabSwitch(4);
+      this.goToExactPageAndTab(4, 1);
     } else {
       //  event.preventDefault();
 
@@ -1987,7 +2014,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
               this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
-          this.tabSwitch(4);
+          this.goToExactPageAndTab(4, 1);
         } else {
           this.isErrorModal = true;
           this.errorMessage = "Something went wrong, please try again later.";
@@ -2016,17 +2043,17 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   //-------------------------------------------------------------
   // Marital Status
   //-------------------------------------------------------------
-  submitMaritalStatus(form: NgForm, swiperInstance?: Swiper) {
+  submitMaritalStatus(form: NgForm, swiperInstance1: Swiper, swiperInstance2: Swiper) {
     try {
       this.ngxService.start();
     if (this.isTBMLoggedIn) {
       if (form.value.maritalStatus.value == "2") {
-        this.goToNextSlide(swiperInstance);
+        this.goToNextSlide(swiperInstance1, swiperInstance2);
       } else {
         this.qde.application.applicants[this.applicantIndex].maritalStatus.spouseTitle = null;
         this.qde.application.applicants[this.applicantIndex].maritalStatus.firstName = "";
         this.qde.application.applicants[this.applicantIndex].maritalStatus.amount = null
-        this.tabSwitch(5);
+        this.goToExactPageAndTab(5, 1);
       }
     } else {
 
@@ -2051,12 +2078,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           });
           console.log("Marital Status: ", form.value.maritalStatus.value);
           if (form.value.maritalStatus.value == "2") {
-            this.goToNextSlide(swiperInstance);
+            this.goToNextSlide(swiperInstance1, swiperInstance2);
           } else {
             this.qde.application.applicants[this.applicantIndex].maritalStatus.spouseTitle = null;
             this.qde.application.applicants[this.applicantIndex].maritalStatus.firstName = "";
             this.qde.application.applicants[this.applicantIndex].maritalStatus.amount = null
-            this.tabSwitch(5);
+            this.goToExactPageAndTab(5, 1);
           }
         } else {
           this.isErrorModal = true;
@@ -2078,11 +2105,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   
   }
 
-  submitSpouseName(form: NgForm, swiperInstance?: Swiper) {
+  submitSpouseName(form: NgForm, swiperInstance1: Swiper, swiperInstance2: Swiper) {
     try {
       this.ngxService.start();
     if (this.isTBMLoggedIn) {
-      this.goToNextSlide(swiperInstance);
+      this.goToNextSlide(swiperInstance1, swiperInstance2);
     } else {
       if (form && !form.valid) {
         return;
@@ -2103,7 +2130,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
               this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
-          this.goToNextSlide(swiperInstance);
+          this.goToNextSlide(swiperInstance1, swiperInstance2);
         } else {
           this.isErrorModal = true;
           this.errorMessage = "Something went wrong, please try again later.";
@@ -2126,15 +2153,15 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
 
-  submitSpouseEarning(value, swiperInstance?: Swiper) {
+  submitSpouseEarning(value, swiperInstance1: Swiper, swiperInstance2: Swiper) {
     try {
       this.ngxService.start();
     if (this.isTBMLoggedIn) {
       if (value == 1) {
-        this.goToNextSlide(swiperInstance);
+        this.goToNextSlide(swiperInstance1, swiperInstance2);
       } else {
         this.qde.application.applicants[this.applicantIndex].maritalStatus.amount = null;
-        this.tabSwitch(5);
+        this.goToExactPageAndTab(5, 1);
       }
     } else {
       this.qde.application.applicants[this.applicantIndex].maritalStatus.earning = (value == 1) ? true : false;
@@ -2152,10 +2179,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
             }
           });
           if (value == 1) {
-            this.goToNextSlide(swiperInstance);
+            this.goToNextSlide(swiperInstance1,swiperInstance2);
           } else {
             this.qde.application.applicants[this.applicantIndex].maritalStatus.amount = null;
-            this.tabSwitch(5);
+            this.goToExactPageAndTab(5, 1);
           }
         } else {
           this.isErrorModal = true;
@@ -2178,11 +2205,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   
   }
 
-  submitSpouseEarningAmt(form: NgForm, swiperInstance?: Swiper) {
+  submitSpouseEarningAmt(form: NgForm, swiperInstance1: Swiper, swiperInstance2: Swiper) {
     try {
       this.ngxService.start();
     if (this.isTBMLoggedIn) {
-      this.tabSwitch(5);
+      this.goToExactPageAndTab(5, 1);
     } else {
       // if (form && !form.valid) {
       //   return;
@@ -2200,7 +2227,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.createOrUpdatePersonalDetailsSub11 = this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful
         if (response["ProcessVariables"]["status"]) {
-          this.tabSwitch(5);
+          this.goToExactPageAndTab(5, 1);
         } else {
           this.isErrorModal = true;
           this.errorMessage = "Something went wrong, please try again later.";
@@ -2227,11 +2254,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   //-------------------------------------------------------------
   // Family Details
   //-------------------------------------------------------------
-  submitFamilyForm1(form: NgForm, swiperInstance?: Swiper) {
+  submitFamilyForm1(form: NgForm, swiperInstance1: Swiper, swiperInstance2: Swiper) {
     try {
       this.ngxService.start();
     if (this.isTBMLoggedIn) {
-      this.goToNextSlide(swiperInstance);
+      this.goToNextSlide(swiperInstance1, swiperInstance2);
     } else {
       if (form && !form.valid) {
         return;
@@ -2252,7 +2279,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
               this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
-          this.goToNextSlide(swiperInstance);
+          this.goToNextSlide(swiperInstance1,swiperInstance2);
         } else {
           this.isErrorModal = true;
           this.errorMessage = "Something went wrong, please try again later.";
@@ -2274,11 +2301,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   
   }
 
-  submitFamilyForm2(form: NgForm, swiperInstance?: Swiper) {
+  submitFamilyForm2(form: NgForm, swiperInstance1: Swiper, swiperInstance2: Swiper) {
     try {
       this.ngxService.start();
     if (this.isTBMLoggedIn) {
-      this.tabSwitch(6);
+      this.goToExactPageAndTab(6, 1);
     } else {
       if (form && !form.valid) {
         return;
@@ -2303,7 +2330,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
               this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
-          this.tabSwitch(6);
+          this.goToExactPageAndTab(6, 1);
         } else {
           this.isErrorModal = true;
           this.errorMessage = "Something went wrong, please try again later.";
@@ -2334,7 +2361,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     try {
       this.ngxService.start();
     if (this.isTBMLoggedIn) {
-      this.tabSwitch(7);
+      this.goToExactPageAndTab(7, 1);
     } else {
       if (form && !form.valid) {
         return;
@@ -2362,7 +2389,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
               this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
-          this.tabSwitch(7);
+          this.goToExactPageAndTab(7, 1);
         } else {
           this.isErrorModal = true;
           this.errorMessage = "Something went wrong, please try again later.";
@@ -2390,7 +2417,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   //-------------------------------------------------------------
 
 
-  submitOccupationDetails(form: NgForm, swiperInstance: Swiper) {
+  submitOccupationDetails(form: NgForm, swiperInstance1: Swiper, swiperInstance2:Swiper) {
     try {
       this.ngxService.start();
     if (this.isTBMLoggedIn) {
@@ -2410,9 +2437,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
         if (this.isOfficialCorrs) {
           // this.isApplicantRouteModal = true
-          this.goToNextSlide(swiperInstance);
+          this.goToNextSlide(swiperInstance1, swiperInstance2);
         } else {
-          this.tabSwitch(9);
+          this.goToExactPageAndTab(9, 1);
         }
 
 
@@ -2483,9 +2510,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
             *********************************************************************************************************/
             if (this.isOfficialCorrs) {
               // this.isApplicantRouteModal = true
-              this.goToNextSlide(swiperInstance);
+              this.goToNextSlide(swiperInstance1, swiperInstance2);
             } else {
-              this.tabSwitch(9);
+              this.goToExactPageAndTab(9, 1);
             }
 
           } else {
@@ -2523,7 +2550,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     try {
       this.ngxService.start();
     if (this.isTBMLoggedIn) {
-      this.tabSwitch(9);
+      this.goToExactPageAndTab(9, 1);
     } else {
       if (form && !form.valid) {
         return;
@@ -2558,7 +2585,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
             }
           });
           this.router.navigate([], { queryParams: { tabName: 'income1', page: 1 } });
-          // this.tabSwitch(9,true);
+          // this.goToExactPageAndTab(9, 1,true);
         } else {
           this.isErrorModal = true;
           this.errorMessage = "Something went wrong, please try again later.";
@@ -2588,7 +2615,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     try {
       this.ngxService.start();
     if (this.isTBMLoggedIn) {
-      this.tabSwitch(12);
+      this.goToExactPageAndTab(12, 1);
     } else {
       if (form && !form.valid) {
         return;
@@ -2626,7 +2653,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
               }
             }
           });
-          // this.tabSwitch(12);
+          // this.goToExactPageAndTab(12, 1);
 
         } else {
           this.isErrorModal = true;
@@ -2656,7 +2683,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     try {
       this.ngxService.start();
     if (this.isTBMLoggedIn) {
-      this.tabSwitch(13);
+      this.goToExactPageAndTab(13, 1);
     } else {
       if (form && !form.valid) {
         return;
@@ -2699,7 +2726,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
               this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
-          this.tabSwitch(13);
+          this.goToExactPageAndTab(13, 1);
         } else {
           this.isErrorModal = true;
           this.errorMessage = "Something went wrong, please try again later.";
@@ -2728,7 +2755,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     try {
       this.ngxService.start();
     if (this.isTBMLoggedIn) {
-      this.tabSwitch(14);
+      this.goToExactPageAndTab(14, 1);
     } else {
       if (form && !form.valid) {
         return;
@@ -2764,7 +2791,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
               this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
-          this.tabSwitch(14);
+          this.goToExactPageAndTab(14, 1);
         } else {
           this.isErrorModal = true;
           this.errorMessage = "Something went wrong, please try again later.";
@@ -2793,7 +2820,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     try {
       this.ngxService.start();
     if (this.isTBMLoggedIn) {
-      this.tabSwitch(15);
+      this.goToExactPageAndTab(15, 1);
     } else {
       if (form && !form.valid) {
         return;
@@ -2817,7 +2844,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
               this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
-          this.tabSwitch(15);
+          this.goToExactPageAndTab(15, 1);
         } else {
           this.isErrorModal = true;
           this.errorMessage = "Something went wrong, please try again later.";
@@ -2841,7 +2868,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   // Income Details
   //-----------------------------------------------------------------------
 
-  submitAnnualFamilyIncome(form: NgForm, swiperInstance?: Swiper) {
+  submitAnnualFamilyIncome(form: NgForm, swiperInstance1: Swiper, swiperInstance2: Swiper) {
     try {
       this.ngxService.start();
     if (this.isTBMLoggedIn) {
@@ -2895,11 +2922,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
 
-  submitMonthlyIncomeIndividual(form: NgForm, swiperInstance?: Swiper) {
+  submitMonthlyIncomeIndividual(form: NgForm, swiperInstance1: Swiper, swiperInstance2: Swiper) {
     try {
       this.ngxService.start();
     if (this.isTBMLoggedIn) {
-      this.goToNextSlide(swiperInstance);
+      this.goToNextSlide(swiperInstance1, swiperInstance2);
     } else {
       event.preventDefault();
 
@@ -2923,9 +2950,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
               this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
-          this.isApplicantRouteModal = true;
+          // this.isApplicantRouteModal = true;
           // this.router.navigate(['/applicant', this.qde.application.applicationId, 'co-applicant'], {fragment: 'dashboard'} );
-          // this.goToNextSlide(swiperInstance);
+          this.goToNextSlide(swiperInstance1, swiperInstance2);
           
         } else {
           this.isErrorModal = true;
@@ -3017,7 +3044,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   changeIsIndividualStatus: boolean = false;
   beferoStatus: boolean = false;
 
-  changeIsIndividual(value, swiperInstance?: Swiper) {
+  changeIsIndividual(value, swiperInstance1: Swiper, swiperInstance2: Swiper) {
     this.beferoStatus = this.qde.application.applicants[this.applicantIndex].isIndividual;
     if (value == 1) {
       console.log("current status before", this.qde.application.applicants[this.applicantIndex].isIndividual);
@@ -3027,7 +3054,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         console.log("current status before", this.changeIsIndividualStatus);
       }
       else {
-        this.goToNextSlide(swiperInstance);
+        this.goToNextSlide(swiperInstance1,swiperInstance2);
         this.qde.application.applicants[this.applicantIndex].isIndividual = true;
       }
 
@@ -3051,7 +3078,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     return this.beferoStatus;
   }
 
-  resetIndividualData(btnValue, swiperInstance?: Swiper) {
+  resetIndividualData(btnValue, swiperInstance1: Swiper, swiperInstance2: Swiper) {
 
     this.changeIsIndividualStatus = false
     let currentPanValue = this.beferoStatus;
@@ -3102,7 +3129,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           this.qdeService.setQde(this.qde);
           this.auditTrial(applicationId, applicantId, 2, "pan1", "ApplicantDetails");
           this.qde.application.applicants[this.applicantIndex].isIndividual = true;
-          this.goToNextSlide(swiperInstance);
+          this.goToNextSlide(swiperInstance1, swiperInstance2);
         }
       );
 
@@ -3115,7 +3142,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     else if (btnValue == "no" && currentPanValue == true) {
       this.qde.application.applicants[this.applicantIndex].isIndividual = true;
       this.auditTrial(applicationId, applicantId, 2, "pan1", "ApplicantDetails");
-      this.goToNextSlide(swiperInstance);
+      this.goToNextSlide(swiperInstance1, swiperInstance2);
     }
 
   }
@@ -3144,13 +3171,13 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     return new Array(size);
   }
 
-  incomeConsiderYesNoIndividual(value, swiperInstance?: Swiper) {
+  incomeConsiderYesNoIndividual(value, swiperInstance1: Swiper, swiperInstance2: Swiper) {
     console.log("click Yes in occupation Details");
     if (this.isTBMLoggedIn) {
       if (this.qde.application.applicants[this.applicantIndex].incomeDetails.incomeConsider) {
-        this.tabSwitch(8);
+        this.goToExactPageAndTab(8, 1);
       } else {
-        this.tabSwitch(9);
+        this.goToExactPageAndTab(9, 1);
         // this.router.navigate([], { queryParams: { tabName: 'income1', page: 0 } });
       }
     }
@@ -3210,9 +3237,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
             if (this.qde.application.applicants[this.applicantIndex].incomeDetails.incomeConsider) {
-              this.tabSwitch(8);
+              this.goToExactPageAndTab(8, 1);
             } else {
-              this.tabSwitch(9);
+              this.goToExactPageAndTab(9, 1);
               // this.router.navigate([], { queryParams: { tabName: 'income1', page: 0 } });
             }
           } else {
@@ -3226,15 +3253,15 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  incomeConsiderYesNoNonIndividual(value, swiperInstance?: Swiper) {
+  incomeConsiderYesNoNonIndividual(value, swiperInstance1: Swiper, swiperInstance2: Swiper) {
     if (this.isTBMLoggedIn) {
       if (value == 1) {
-        this.goToNextSlide(swiperInstance);
+        this.goToNextSlide(swiperInstance1, swiperInstance2);
       }
       else if (value == 2) {
         this.isApplicantRouteModal = true;
       }
-      this.goToNextSlide(swiperInstance);
+      this.goToNextSlide(swiperInstance1,swiperInstance2);
     } else {
 
       const incomeIsConsider = this.qde.application.applicants[this.applicantIndex].incomeDetails.incomeConsider;
@@ -3291,7 +3318,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
             }
           });
           if (value == 1) {
-            this.goToNextSlide(swiperInstance);
+            this.goToNextSlide(swiperInstance1, swiperInstance2);
           }
           else if (value == 2) {
             this.isApplicantRouteModal = true;
@@ -3804,7 +3831,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           // If successful
           if (response["ProcessVariables"]["status"] == true) {
             // alert("Switch to tab 1");
-            this.tabSwitch(1);
+            this.goToExactPageAndTab(1, 1);
           } else {
             this.isErrorModal = true;
             this.errorMessage = "Something went wrong, please try again later.";
@@ -3860,16 +3887,16 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
     if (this.qde.application.applicants[this.applicantIndex].pan.imageId != null) {
       if (isIndividual) {
-        this.tabSwitch(1);
+        this.goToExactPageAndTab(1, 1);
       } else {
-        this.tabSwitch(11);
+        this.goToExactPageAndTab(11, 1);
       }
       return;
     } else {  /* Need to remove the else block once imageid is saved in back-end */
       if (isIndividual) {
-        this.tabSwitch(1);
+        this.goToExactPageAndTab(1, 1);
       } else {
-        this.tabSwitch(11);
+        this.goToExactPageAndTab(11, 1);
       }
     }
 
@@ -3898,9 +3925,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
             // If successful
             if (response["ProcessVariables"]["status"] == true) {
               if (isIndividual) {
-                this.tabSwitch(1);
+                this.goToExactPageAndTab(1, 1);
               } else {
-                this.tabSwitch(11);
+                this.goToExactPageAndTab(11, 1);
               }
             }
           });
@@ -3939,14 +3966,14 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       //     //To remove extra phone number field
       //     if(this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber == "-"){
       //       this.addRemoveResidenceNumberField();
-      //       this.tabSwitch(2); 
+      //       this.goToExactPageAndTab(2, 1); 
       //     }
       //     else{
-      //       this.tabSwitch(2); 
+      //       this.goToExactPageAndTab(2, 1); 
       //     }
       //   }
       //   else{
-      //     this.tabSwitch(2);
+      //     this.goToExactPageAndTab(2, 1);
       //   }
       // }
       // else{
@@ -3960,10 +3987,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       if(this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber == "-" && this.isAlternateResidenceNumber == true){
         this.addRemoveResidenceNumberField();
       }
-      this.tabSwitch(2);
+      this.goToExactPageAndTab(2, 1);
       // }
     } else {
-      this.tabSwitch(12);
+      this.goToExactPageAndTab(12, 1);
     }
   }
 
@@ -4032,21 +4059,31 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     // this.swiperSliders.forEach((v, i, a) => {
     //   v.setIndex(0);
     // });
-
     this.swiperSlidersSub = this.swiperS$.changes.subscribe(v => {
-      this.swiperSliders = v._results;
-      if (this.swiperSliders && this.swiperSliders.length > 0) {
-        this.swiperSliders[this.activeTab].setIndex(this.page - 1);
-      }
 
+      console.log("Swipers: ", this.activeTab, this.swiperSliders);
+      this.swiperSliders = v._results;
+      // if (this.swiperSliders && this.swiperSliders.length > 0) {
+      //   this.swiperSliders[this.activeTab].setIndex(this.page - 1);
+      // }
+    });
+
+    this.swiperSlidersSub2 = this.lhsSwiperS$.changes.subscribe(v => {
+
+      console.log("Swipers: ", this.activeTab, this.swiperSliders);
+      this.lhsSwiperSliders = v._results;
+      // if (this.swiperSliders && this.swiperSliders.length > 0) {
+      //   this.swiperSliders[this.activeTab].setIndex(this.page - 1);
+      // }
     });
   }
 
-  goToExactPageAndTab(tabPage: string, pageNumber: number) {
-    let index = this.fragments.findIndex(v => v == tabPage) != -1 ? this.fragments.findIndex(v => v == tabPage) : 0;
-    this.tabName = tabPage;
-    this.page = pageNumber;
-    this.tabSwitch(index, true);
+  goToExactPageAndTab(index: number, pageNumber: number) {
+    // let index = this.fragments.some(v => v == tabPage) ? this.fragments.findIndex(v => v == tabPage) : 0;
+    // this.tabName = tabPage;
+    // this.page = pageNumber;
+    // this.goToExactPageAndTab(i, 1ndex, true);
+    this.router.navigate([], {queryParams: {tabName: this.fragments[index] , page: pageNumber}});
   }
 
   isCategoryModal: boolean = false;
