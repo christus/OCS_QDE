@@ -16,6 +16,7 @@
       <th *ngIf="isDocumentCategory"><form>Is Mandatory</form></th>
       <th *ngIf="isLoanPurpose"><form>Is Property Mandatory</form></th>
       <th *ngIf="isFinancialApplicant"><form>Financial Applicant</form></th>
+      <th *ngIf="isMale"><form>Male</form></th>
        <th [ngStyle]="{textAlign: 'center'}">Delete</th>
      </tr>
    </thead>
@@ -58,6 +59,11 @@
           <input type="checkbox" [checked]="l.reqBoolean" id="isFinancialApplicant" (change)="changeIsFinancialApplicant($event,i)" [disabled]="l.isEdit" /><label for="isFinancialApplicant">Yes</label>
           </form>
       </td>
+      <td *ngIf="isMale">
+        <form>
+        <input type="checkbox" [checked]="l.isMale" id="isMale" (change)="changeIsMale($event,i)" [disabled]="l.isEdit" /><label for="isMale">Yes</label>
+        </form>
+    </td>
        <td [ngStyle]="{textAlign: 'center'}">
          <button type="button" class="deleteBtn" (click)="delete(i)" *ngIf="l.id != null">
            <img src="assets/images/delete.svg" class="img-responsive deleteImg" alt="Delete" />

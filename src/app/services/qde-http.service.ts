@@ -1694,7 +1694,8 @@ createOrUpdatePersonalDetails(qde) {
       zone : lovs.zone != null ? lovs.zone: null,
       cityId : lovs.cityId!=null ? lovs.cityId: null,
       isRequired : lovs.isRequired!=null ? lovs.isRequired: null,
-      reqBoolean : lovs.reqBoolean
+      reqBoolean : lovs.reqBoolean,
+      isMale : lovs.isMale
     });
     console.log(obj);
 

@@ -1619,7 +1619,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.qde.application.applicants[this.applicantIndex].personalDetails.gender = value;
       let result = this.setSpouseTitles();
       console.log("Spouse title"+result);
-
+      let occType = this.qde.application.applicants[this.applicantIndex].occupation.occupationType;
+      this.loadOccupationTypeLovs(occType);
       console.log("FILT: ", this.qdeService.getFilteredJson(this.qde));
 
       this.createOrUpdatePersonalDetailsSub3 = this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
@@ -4155,7 +4156,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     let occupationData = {
       userId: parseInt(localStorage.getItem("userId")),
       applicantType: this.qde.application.applicants[this.applicantIndex].isIndividual == true ? 1 : 2,
-      isMainApplicant : this.qde.application.applicants[this.applicantIndex].isMainApplicant
+      isMainApplicant : this.qde.application.applicants[this.applicantIndex].isMainApplicant,
+      isMale : this.qde.application.applicants[this.applicantIndex].personalDetails.gender == '1' ? true : false
     };
 
     this.qdeHttp.getOccupationLov(occupationData).subscribe(response => {

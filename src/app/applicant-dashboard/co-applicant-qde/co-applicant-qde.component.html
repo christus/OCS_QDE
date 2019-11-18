@@ -370,7 +370,7 @@
                                                     <label for="yes-consider1"><span>Resident</span></label>
                                                 </div>
                                                 <div class="bs-radio">
-                                                    <input [readonly]="isReadOnly" type="radio"
+                                                    <input [attr.disabled]=true [readonly]="isReadOnly" type="radio"
                                                             name="income-consider"
                                                             id="no-consider1"
                                                             class="not-usual"

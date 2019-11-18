@@ -64,7 +64,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
           propertyArea:{
             required:"Property Area is Mandatory",
             invalid:"Property Area is not valid",
-            maxArea:"Property Area should not be more than 1 Lakh Sq foot"
+            maxArea:"Property Area should not be more than 10,000 Sq foot"
           },
           pinCode: {
             required: "Property Pincode is Mandatory",
@@ -1356,7 +1356,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   checkAreaLimit(event) {
     let n = parseInt(this.getNumberWithoutCommaFormat(event.target.value));
-    if(n >= 100001){
+    if(n >= 10001){
       this.isAreaLessThan100k = true;
     }
     else {
