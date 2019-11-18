@@ -302,6 +302,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   isTabDisabled: boolean = true;
 
   otp:string;
+  public defaultItem = { key: "Select..", value: "0" };
 
   idPanDocumnetType: any;
   idPanFileName: string;
@@ -880,7 +881,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
   addRemoveResidenceNumberField() {
     this.isAlternateResidenceNumber = !this.isAlternateResidenceNumber;
-    this.qde.application.applicants[this.coApplicantIndex].contactDetails.alternateResidenceNumber = "-"
+	this.alternateResidenceNumberStdCode = ""
+    this.alternateResidenceNumberPhoneNumber = ""
   }
 
   //-------------------------------------------------------------
@@ -947,6 +949,15 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             if(processVariables["applicantTitleId"] > 0) {
               this.qde.application.applicants[this.coApplicantIndex].personalDetails.title  = processVariables["applicantTitleId"];
             }
+            
+
+            if (processVariables["applicantTitleId"] > 0) {
+              this.qde.application.applicants[this.coApplicantIndex].personalDetails.title = processVariables["applicantTitleId"] || this.qde.application.applicants[this.coApplicantIndex].personalDetails.title;
+            }
+            this.selectedTitle = this.getCoApplicantTitle((processVariables["applicantTitleId"] == 0) ? this.qde.application.applicants[this.coApplicantIndex].personalDetails.title: processVariables["applicantTitleId"] );
+
+
+            
             this.createOrUpdatePanDetailsSub = this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
           // If successful
             if(response["ProcessVariables"]["status"] == true) {
@@ -1097,7 +1108,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
           if(processVariables["applicantTitleId"] > 0) {
             this.qde.application.applicants[this.coApplicantIndex].personalDetails.title  = processVariables["applicantTitleId"];
           }
-          this.selectedTitle = this.getCoApplicantTitle(processVariables["applicantTitleId"]);
+
+          this.selectedTitle = this.getCoApplicantTitle((processVariables["applicantTitleId"] == 0) ? this.qde.application.applicants[this.coApplicantIndex].personalDetails.title: processVariables["applicantTitleId"] );
   
         //  response["ProcessVariables"]["status"] = true; // Comment while deploying if service is enabled false
   
@@ -1333,20 +1345,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       this.goToNextSlide(swiperInstance);
     } else {
       this.qde.application.applicants[this.coApplicantIndex].personalDetails.gender = value;
-      if(this.qde.application.applicants[this.coApplicantIndex].personalDetails.gender == "1"){
-        this.spouseTitles = this.femaleTitles;
-        this.selectedSpouseTitle = this.spouseTitles[0];
-        console.log("spouse is female");
-      }else if(this.qde.application.applicants[this.coApplicantIndex].personalDetails.gender == "2"){
-        this.spouseTitles = this.maleTitles;
-        this.selectedSpouseTitle = this.spouseTitles[0];
-        console.log("spouse is male");
-      }else{
-        this.femaleTitles.push(this.maleTitles.find(v=>v.key=="Mr"));
-        this.spouseTitles = this.femaleTitles;
-        this.selectedSpouseTitle = this.spouseTitles[0];
-        console.log("spouse can be Either"+JSON.stringify(this.spouseTitles));
-      }
+      let result = this.setSpouseTitles();
+      console.log("Spouse title"+result);
 
       console.log("FILT: ",this.qdeService.getFilteredJson(this.qde));
   
@@ -1544,6 +1544,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   onPinCodeChange(event, screenName) {
+    if(event.target.value.length < 6) {
+      return;
+    }
+      
     console.log(event.target.value);
      let zipCode= event.target.value
 
@@ -2558,7 +2562,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       // this.qde.application.applicants[this.coApplicantIndex].isIndividual = false;
     }
 
-    this.loadOccupationTypeLovs();
+
+    let occType = this.qde.application.applicants[this.coApplicantIndex].occupation.occupationType;
+
+    this.loadOccupationTypeLovs(occType);
   }
 
   
@@ -2996,7 +3003,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       // if ( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].pan.docType)) ) {
       //   this.selectedDocType = this.docType[parseInt(this.qde.application.applicants[this.coApplicantIndex].pan.docType)];
       // }
-
+      let set = this.setSpouseTitles();
+      console.log("Setted "+ set);
       // Document Type
       if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].pan.docType)) ) {
         // this.selectedDocType = this.docType[(parseInt(this.qde.application.applicants[this.coApplicantIndex].pan.docType))-1];
@@ -3091,9 +3099,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       }
 
       if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].maritalStatus.spouseTitle)) ) {
+        if(this.spouseTitles){
         // this.selectedSpouseTitle = this.titles[(parseInt(this.qde.application.applicants[this.coApplicantIndex].maritalStatus.spouseTitle))-1];
-        this.selectedSpouseTitle = this.getSelectedValue(this.qde.application.applicants[this.coApplicantIndex].maritalStatus.spouseTitle, this.spouseTitles);
-
+          this.selectedSpouseTitle = this.getSelectedValue(this.qde.application.applicants[this.coApplicantIndex].maritalStatus.spouseTitle, this.spouseTitles);
+        }
       }
 
       if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].familyDetails.fatherTitle)) ) {
@@ -4198,6 +4207,49 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       year: { key: year, value: year } 
     }
     
+  }
+  setSpouseTitles(): boolean{
+    var that = this;
+    if(that.qde.application.applicants[that.coApplicantIndex].personalDetails.gender == "1"){
+        that.spouseTitles = that.femaleTitles;
+        if(that.isEmpty(that.selectedSpouseTitle)){
+          that.selectedSpouseTitle = that.defaultItem;
+        }
+        console.log("spouse is female"+JSON.stringify(that.spouseTitles));
+        return true;
+      }else if(that.qde.application.applicants[that.coApplicantIndex].personalDetails.gender == "2"){
+        that.spouseTitles = that.maleTitles;
+        if(that.isEmpty(that.selectedSpouseTitle)){
+          that.selectedSpouseTitle = that.defaultItem;
+        }
+        console.log("spouse is male"+JSON.stringify(that.spouseTitles));
+        return true;
+      }else if(that.qde.application.applicants[that.coApplicantIndex].personalDetails.gender == "1010"){
+        that.spouseTitles = that.titles;
+        if(that.isEmpty(that.selectedSpouseTitle)){
+          that.selectedSpouseTitle = that.defaultItem;
+        }
+        console.log("spouse can be Either"+JSON.stringify(that.spouseTitles));
+        return true;
+      }else{
+        console.log("Invalid Gender");
+        return false;
+      }
+  }
+  resetSpouseTitles(){
+  this.selectedSpouseTitle = this.defaultItem
+	if(!this.isEmpty(this.selectedSpouseTitle)){
+    let result = this.setSpouseTitles();
+    console.log("reset "+result);
+	}
+  }
+  isEmpty(obj: object){
+	  for(var key in obj){
+		if(obj.hasOwnProperty(key)){
+			return false;
+		}
+	  }
+	  return true;
   }
 
 }

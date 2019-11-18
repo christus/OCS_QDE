@@ -449,6 +449,9 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
           this.propertyClssValue =
             result.application.loanDetails.propertyType.propertyClss || "";
 
+          this.tempClssArea = this.propertyClssValue;
+
+
           this.propertyAreaValue =
             result.application.loanDetails.propertyType.propertyArea || null;
 
@@ -905,6 +908,9 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onPinCodeChange(event) {
+    if(event.target.value.length < 6) {
+      return;
+    }
     console.log(event.target.value);
     let zipCode = event.target.value;
 

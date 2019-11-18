@@ -271,14 +271,17 @@ visibility: visible;
 }
 .with_datepicker {
     margin-bottom: -10px;
-    width: 95%;
+    width: 82%;
 }
 .kendo_date_picker{
     width: 0px;
     border: none;
-    margin-bottom: 68px;
+    margin-bottom: 30px;
+    margin-left: -10%;
+
 }
 .k-datepicker .k-dateinput, .k-datetimepicker .k-dateinput, .k-timepicker .k-dateinput {
     width: 1%;
     border-left: 1px solid #e6e6e6;
 }
+

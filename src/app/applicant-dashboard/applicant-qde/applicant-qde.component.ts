@@ -1,4 +1,4 @@
-import { Other, Applicant } from './../../models/qde.model';
+import { Other, Applicant, Occupation } from './../../models/qde.model';
 import { Component, OnInit, ViewChild, ElementRef, Renderer2, OnDestroy, AfterViewInit, ViewChildren, QueryList } from '@angular/core';
 
 import * as Swiper from 'swiper/dist/js/swiper.js';
@@ -334,6 +334,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   isApplicantRouteModal: boolean = false;
 
   isApplicantPinModal: boolean = false;
+  isWrongPinButtonDisabled: boolean = true;
 
   isDuplicateModalShown: boolean = false;
   duplicates: Array<Applicant> = [];
@@ -752,7 +753,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
             }
           } catch (e) { }
 
-
+          let set = this.setSpouseTitles();
+          console.log("Setted "+ set);
           // Document Type
           if (!isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].pan.docType))) {
             // this.selectedDocType = this.docType[(parseInt(this.qde.application.applicants[this.applicantIndex].pan.docType))-1];
@@ -833,8 +835,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           }
 
           if (!isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].maritalStatus.spouseTitle))) {
+            if(this.spouseTitles){
             // this.selectedSpouseTitle = this.titles[(parseInt(this.qde.application.applicants[this.applicantIndex].maritalStatus.spouseTitle))-1];
             this.selectedSpouseTitle = this.getSelectedValue(this.qde.application.applicants[this.applicantIndex].maritalStatus.spouseTitle, this.spouseTitles);
+           }
           }
 
           if (!isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].familyDetails.fatherTitle))) {
@@ -1066,7 +1070,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   addRemoveResidenceNumberField() {
     this.isAlternateResidenceNumber = !this.isAlternateResidenceNumber;
-    this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber = "-"
+	this.alternateResidenceNumberStdCode = ""
+    this.alternateResidenceNumberPhoneNumber = ""
   }
 
   //-------------------------------------------------------------
@@ -1151,9 +1156,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
               this.qde.application.applicants[this.applicantIndex].personalDetails.lastName = processVariables["lastName"];
             }
             if (processVariables["applicantTitleId"] > 0) {
-              this.qde.application.applicants[this.applicantIndex].personalDetails.title = processVariables["applicantTitleId"];
+              this.qde.application.applicants[this.applicantIndex].personalDetails.title = processVariables["applicantTitleId"] || this.qde.application.applicants[this.applicantIndex].personalDetails.title;
             }
-            this.selectedTitle = this.getApplicantTitle(processVariables["applicantTitleId"]);
+            this.selectedTitle = this.getApplicantTitle((processVariables["applicantTitleId"] == 0) ? this.qde.application.applicants[this.applicantIndex].personalDetails.title: processVariables["applicantTitleId"] );
 
             this.createOrUpdatePanDetailsSub = this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
 
@@ -1585,19 +1590,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.goToNextSlide(swiperInstance);
     } else {
       this.qde.application.applicants[this.applicantIndex].personalDetails.gender = value;
-      if(this.qde.application.applicants[this.applicantIndex].personalDetails.gender == "1"){
-        this.spouseTitles = this.femaleTitles;
-        this.selectedSpouseTitle = this.spouseTitles[0];
-        console.log("spouse is female"+JSON.stringify(this.spouseTitles));
-      }else if(this.qde.application.applicants[this.applicantIndex].personalDetails.gender == "2"){
-        this.spouseTitles = this.maleTitles;
-        this.selectedSpouseTitle = this.spouseTitles[0];
-        console.log("spouse is male"+JSON.stringify(this.spouseTitles));
-      }else{
-        this.spouseTitles = this.titles;
-        this.selectedSpouseTitle = this.spouseTitles[0];
-        console.log("spouse can be Either"+JSON.stringify(this.spouseTitles));
-      }
+      let result = this.setSpouseTitles();
+      console.log("Spouse title"+result);
 
       console.log("FILT: ", this.qdeService.getFilteredJson(this.qde));
 
@@ -1881,6 +1875,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onPinCodeChange(event, screenName) {
+    if(event.target.value.length < 6) {
+      return;
+    }
     console.log(event.target.value);
     let zipCode = event.target.value
 
@@ -1896,6 +1893,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
             this.commCityState = result.city + " " + result.state;
           } else {
             this.isApplicantPinModal = true;
+            // this.isWrongPinButtonDisabled = false;
             // alert("Pin code not available / enter proper pincode");
           }
 
@@ -1929,7 +1927,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.qde.application.applicants[this.applicantIndex][screenName].city = "";
       this.qde.application.applicants[this.applicantIndex][screenName].state = "";
       this.qde.application.applicants[this.applicantIndex][screenName].cityState = "";
-    }
+	  }
   }
   //-------------------------------------------------------------
 
@@ -3047,7 +3045,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       // this.router.navigate([], {queryParams: { tabName: this.fragments[10], page: 1}});
     }
 
-    this.loadOccupationTypeLovs();
+    let occType = this.qde.application.applicants[this.applicantIndex].occupation.occupationType;
+
+    this.loadOccupationTypeLovs(occType);
     return this.beferoStatus;
   }
 
@@ -3182,11 +3182,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           };
 
           this.officialCorrespondencePhoneNumber = "";
-          this.officialCorrespondenceStdCode = "";
+          this.officialCorrespondenceStdCode = ""; 
 
         } else {
           this.qde.application.applicants[this.applicantIndex].incomeDetails = {
-            incomeConsider: null,
+            monthlyIncome: "",
             assessmentMethodology: "",
           };
         }
@@ -4143,5 +4143,49 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   doNothing(event) {
     event.preventDefault();
   }
-
+  setSpouseTitles(): boolean{
+    var that = this;
+    if(that.qde.application.applicants[that.applicantIndex].personalDetails.gender == "1"){
+        that.spouseTitles = that.femaleTitles;
+        if(that.isEmpty(that.selectedSpouseTitle)){
+          that.selectedSpouseTitle = that.defaultItem;
+        }
+        console.log("spouse is female"+JSON.stringify(that.spouseTitles));
+        return true;
+      }else if(that.qde.application.applicants[that.applicantIndex].personalDetails.gender == "2"){
+        that.spouseTitles = that.maleTitles;
+        if(that.isEmpty(that.selectedSpouseTitle)){
+          that.selectedSpouseTitle = that.defaultItem;
+        }
+        console.log("spouse is male"+JSON.stringify(that.spouseTitles));
+        return true;
+      }else if(that.qde.application.applicants[that.applicantIndex].personalDetails.gender == "1010"){
+        let tempTitles=[];
+        tempTitles.push(that.maleTitles.find(v=> v.key=="Mr."));
+        that.spouseTitles = tempTitles;
+        if(that.isEmpty(that.selectedSpouseTitle)){
+          that.selectedSpouseTitle = that.defaultItem;
+        }
+        console.log("spouse can be Either"+JSON.stringify(that.spouseTitles));
+        return true;
+      }else{
+        console.log("Invalid Gender");
+        return false;
+      }
+  }
+  resetSpouseTitles(){
+  this.selectedSpouseTitle = this.defaultItem
+	if(!this.isEmpty(this.selectedSpouseTitle)){
+    let result = this.setSpouseTitles();
+    console.log("reset "+result);
+  }
+ }
+  isEmpty(obj: object){
+	  for(var key in obj){
+		if(obj.hasOwnProperty(key)){
+			return false;
+		}
+	  }
+	  return true;
+  }
 }

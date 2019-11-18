@@ -5485,6 +5485,7 @@ img {
 	/* background-color: orange !important; */
 	background: #d8e0f3;
 	border-radius: 20px !important;
+	width: 95% !important;
   }
 
   .ng5-slider .ng5-slider-bar {
@@ -5771,7 +5772,7 @@ img {
 .with_datepicker .k-i-sarrow-s::before,
 .with_datepicker .k-i-collapse::before,.with_datepicker .k-i-expand-s::before {
     content: "\/" !important;
-    font-size: 90px;
+    font-size: 60px;
     line-height: 6px;
 }
 
@@ -5802,4 +5803,12 @@ img {
 .k-select {
 	padding-right: 30px !important;
 	background: #FFF !important;
+}
+
+.date_dropdown_fontsize .k-input {
+    font-size: 31px !important;
+}
+
+.k-datepicker .k-select, .k-timepicker .k-select, .k-datetimepicker .k-select {
+	width: auto !important;
 }

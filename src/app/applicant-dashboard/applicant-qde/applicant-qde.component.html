@@ -448,7 +448,7 @@
 
                             <div class="row with_datepicker">
                               <div class="col4">
-                                <kendo-dropdownlist   [readonly] = "true" class="form-control"
+                                <kendo-dropdownlist   [readonly] = "true" class="date_dropdown_fontsize form-control"
                                   textField="key" valueField="value" name="day" nick="personalDetails.day" tabindex="0"
                                   #dobDay (selectionChange)="selectValueChanged($event, dobDay.hostElement)"
                                   [(ngModel)]="dob.day">
@@ -456,7 +456,7 @@
                               </div>
 
                               <div class="col4">
-                                <kendo-dropdownlist   [readonly] = "true" class="form-control"
+                                <kendo-dropdownlist   [readonly] = "true" class="date_dropdown_fontsize form-control"
                                   textField="key" valueField="value" name="month" tabindex="0"
                                   nick="personalDetails.month" #dobMonth
                                   (selectionChange)="selectValueChanged($event, dobMonth.hostElement)"
@@ -465,7 +465,7 @@
                               </div>
 
                               <div class="col4">
-                                <kendo-dropdownlist   [readonly] = "true" class="mob_personal_year form-control"
+                                <kendo-dropdownlist   [readonly] = "true" class="date_dropdown_fontsize mob_personal_year form-control"
                                   textField="key" valueField="value" name="year" tabindex="0"
                                   nick="personalDetails.year" #dobYear
                                   (selectionChange)="selectValueChanged($event, dobYear.hostElement)"
@@ -918,7 +918,7 @@
                               id="pincode" required autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.zipcode"
                               name="pinCode" #commPinCode="ngModel" maxlength="6" fieldFill
-                              (blur)="onPinCodeChange($event, 'communicationAddress')"
+                              (input)="onPinCodeChange($event, 'communicationAddress')"
                               pattern="{{regexPattern.pinCode}}" />
                             <label for="pincode" tabindex="3">Pincode</label>
                             <div class="redalert" *ngIf="RegExp(regexPattern.sameDigit).test(commPinCode.value)">
@@ -994,7 +994,7 @@
                             <div class="form-group">
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                                 id="per-pincode" name="pZipcode" #pZipcode="ngModel" autocomplete="off"
-                                (blur)="onPinCodeChange($event, 'permanentAddress')" fieldFill
+                                (input)="onPinCodeChange($event, 'permanentAddress')" fieldFill
                                 [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.zipcode"
                                 minlength="6" maxlength="6" pattern="{{regexPattern.pinCode}}" required 
                                 [readOnly]="qde.application.applicants[applicantIndex].communicationAddress.permanentAddress" />
@@ -1056,8 +1056,8 @@
                         </div>
                         <div class="btn-wrap">
                           <button type="submit" class="btn btn-primary"
-                            [ngClass]="{'disabled': (!communicationForm.valid || selectedResidence.value == 0)}" 
-                            [disabled]="(!communicationForm.valid || selectedResidence.value == 0)">
+                            [ngClass]="{'disabled': (!communicationForm.valid || selectedResidence.value == 0 || !qde.application.applicants[applicantIndex].communicationAddress.cityState) || !qde.application.applicants[applicantIndex].permanentAddress.cityState}" 
+                            [disabled]="(!communicationForm.valid || selectedResidence.value == 0 || !qde.application.applicants[applicantIndex].communicationAddress.cityState) || !qde.application.applicants[applicantIndex].permanentAddress.cityState">
                             Next
                           </button>
                         </div>
@@ -1129,7 +1129,8 @@
                               name="maritalStatus"
                               nick="maritalStatus.status" #maritalStatusStatus
                               (selectionChange)="selectValueChanged($event, maritalStatusStatus.hostElement)"
-                              [(ngModel)]="selectedMaritialStatus">
+                              [(ngModel)]="selectedMaritialStatus"
+                              (selectionChange)="resetSpouseTitles()">
                             </kendo-dropdownlist>
 
                           </div>
@@ -1679,8 +1680,8 @@
                         class="btn-wrap">
                           <button type="submit"
                             class="btn btn-primary"
-                            [ngClass]="{'disabled': selectedOccupation.value == 0}"
-                            [disabled]="(selectedOccupation.value ==0 )"
+                            [ngClass]="{'disabled':  !occupationForm.valid || selectedOccupation.value == 0}"
+                            [disabled]="( !occupationForm.valid || selectedOccupation.value ==0 )"
                             (click)="incomeConsiderYesNoIndividual(2, occupationSlider2)"
                             [value]="2">
                             Next
@@ -1812,7 +1813,7 @@
                               id="offPincode" required autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.zipcode"
                               #pinCode="ngModel" name="pinCode" tabindex="4" minlength="6" maxlength="6" fieldFill
-                              (blur)="onPinCodeChange($event, 'officialCorrespondence')"
+                              (input)="onPinCodeChange($event, 'officialCorrespondence')"
                               pattern="{{regexPattern.pinCode}}" />
                             <label for="offPincode">Pincode</label>
 
@@ -1892,8 +1893,8 @@
 
                         <div class="btn-wrap">
                           <button type="submit" class="btn btn-primary"
-                            [ngClass]="{'disabled': (!officialCorrespondenceForm.valid) || (qde.application.applicants[applicantIndex].officialCorrespondence.officeEmailId)?.length == 100}"
-                            [disabled]="!officialCorrespondenceForm.valid || (qde.application.applicants[applicantIndex].officialCorrespondence.officeEmailId)?.length == 100">Next
+                            [ngClass]="{'disabled': (!officialCorrespondenceForm.valid) || (qde.application.applicants[applicantIndex].officialCorrespondence.officeEmailId)?.length == 100 || !qde.application.applicants[applicantIndex].officialCorrespondence.cityState}"
+                            [disabled]="!officialCorrespondenceForm.valid || (qde.application.applicants[applicantIndex].officialCorrespondence.officeEmailId)?.length == 100 || !qde.application.applicants[applicantIndex].officialCorrespondence.cityState">Next
                           </button>
                         </div>
                       </form>
@@ -2395,7 +2396,7 @@
                               id="regoffPincode" required tabindex="3" autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].registeredAddress.zipcode"
                               #regAddrPinCode="ngModel" name="pinCode" minlength="6" maxlength="6" fieldFill
-                              (blur)="onPinCodeChange($event, 'registeredAddress')"
+                              (input)="onPinCodeChange($event, 'registeredAddress')"
                               pattern="{{regexPattern.pinCode}}" />
                             <label for="regoffPincode">Pincode</label>
 
@@ -2423,8 +2424,8 @@
                           </div>
                         </div>
                         <div class="btn-wrap">
-                          <button class="btn btn-primary" [ngClass]="{'disabled': (!registeredAddressForm.valid)}"
-                            [disabled]="!registeredAddressForm.valid">Next</button>
+                          <button class="btn btn-primary" [ngClass]="{'disabled': (!registeredAddressForm.valid || !qde.application.applicants[applicantIndex].registeredAddress.cityState)}"
+                            [disabled]="!registeredAddressForm.valid || !qde.application.applicants[applicantIndex].registeredAddress.cityState">Next</button>
 
                         </div>
                       </form>
@@ -2508,7 +2509,7 @@
                               id="pincode01" autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].corporateAddress.zipcode"
                               tabindex="4" pattern="{{regexPattern.pinCode}}" name="pincode" minlength="6" maxlength="6"
-                              required #corpPincode="ngModel" (blur)="onPinCodeChange($event, 'corporateAddress')"
+                              required #corpPincode="ngModel" (input)="onPinCodeChange($event, 'corporateAddress')"
                               fieldFill />
                             <label for="pincode01">Pincode</label>
 
@@ -2579,8 +2580,8 @@
                         </div>
                         <div class="btn-wrap">
                           <button type="submit" class="btn btn-primary"
-                            [ngClass]="{'disabled': (!corporateAddressForm.valid) || (qde.application.applicants[applicantIndex].corporateAddress.officeEmailId)?.length == 100}"
-                            [disabled]="!corporateAddressForm.valid || (qde.application.applicants[applicantIndex].corporateAddress.officeEmailId)?.length == 100">Next</button>
+                            [ngClass]="{'disabled': (!corporateAddressForm.valid) || (qde.application.applicants[applicantIndex].corporateAddress.officeEmailId)?.length == 100 || !qde.application.applicants[applicantIndex].corporateAddress.cityState}"
+                            [disabled]="!corporateAddressForm.valid || (qde.application.applicants[applicantIndex].corporateAddress.officeEmailId)?.length == 100 || !qde.application.applicants[applicantIndex].corporateAddress.cityState">Next</button>
                         </div>
                       </form>
                     </div>
@@ -2779,8 +2780,8 @@
                         </div>
                         <div class="btn-wrap">
                           <button type="submit" class="btn btn-primary"
-                            [ngClass]="{'disabled': (!incomeDetailsForm4.valid || selectedAssesmentMethodology.value ==0 || isTBMLoggedIn)}"
-                            [disabled]="!incomeDetailsForm4.valid || selectedAssesmentMethodology.value ==0 || isTBMLoggedIn">Save</button>
+                            [ngClass]="{'disabled': (!incomeDetailsForm4.valid || isTBMLoggedIn)}"
+                            [disabled]="!incomeDetailsForm4.valid || isTBMLoggedIn">Save</button>
                         </div>
                       </form>
                     </div>

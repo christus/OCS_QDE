@@ -428,7 +428,7 @@
                                   </div>
                               </div>
                           </div>
-                          <div class="inner-card">
+                          <div class="inner-card" *ngIf="selectedLoanPurpose && ['16', '17'].includes(selectedLoanPurpose.value) || q['existingLoans']['liveLoan'] != 0 && q['existingLoans']['monthlyEmi']">
                               <div class="row" *ngIf="selectedLoanPurpose && ['16', '17'].includes(selectedLoanPurpose.value)">
                                   <div class="col-12">
                                       <div class="form-group">
@@ -445,7 +445,7 @@
                                       </div>
                                   </div>
                               </div>
-                              <div class="row">
+                              <div class="row" *ngIf="q['existingLoans']['liveLoan'] != 0 && q['existingLoans']['monthlyEmi']">
                                   <!-- <div class="col-6">
                                       <div class="form-group inr filled">
                                           <input readonly="true"  type="text" class="form-control" id="ex-loan-amt" value="12,45,604">

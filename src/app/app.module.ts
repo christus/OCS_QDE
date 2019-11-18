@@ -413,6 +413,10 @@ const appRoutes: Routes = [
     path: "static/payments/online-summary/:applicationId",
     component: OnlineSummaryComponent,
   },
+  // {
+  //   path: "static/payments/offline-payments/:applicationId",
+  //   component: OfflinePaymentComponent
+  // },
   {
     path: 'review-eligibility/:applicationId',
     component: ReviewEligibilityComponent

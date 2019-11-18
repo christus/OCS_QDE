@@ -20,6 +20,8 @@ export class UserModuleComponent implements OnInit {
   rolesList: any[]= [];
   filterData: number;
   searchKey: string="";
+  isErrorModal: boolean = false;
+  errorMessage: string;
 
   // paginationConfig =  { 
   //   itemsPerPage: 2, 
@@ -63,6 +65,7 @@ export class UserModuleComponent implements OnInit {
 
   getAdminUsers(data) {
     this.qdeHttp.getAdminUsers(data).subscribe((response) => {
+      if(response['ProcessVariables']['status'] && response['ProcessVariables']['errorMessage']=="" && response['ErrorMessage']==""){
       this.collection = response['ProcessVariables'].userDetails;
       this.totalPages = response['ProcessVariables'].totalPages;
       this.from = response['ProcessVariables'].from;
@@ -74,7 +77,14 @@ export class UserModuleComponent implements OnInit {
         this.enableLoadMore = false;
       }
       console.log(this.collection);
-    });
+     }else if (response['ProcessVariables']['status']==false && (response['ProcessVariables']['errorMessage']!="" || response['ErrorMessage']!="")){
+       this.isErrorModal = true;
+       this.errorMessage = "Something went wrong";
+     }else if (response['ProcessVariables']['status']==false && response['ProcessVariables']['userDetails']==null){
+       this.isErrorModal = true;
+       this.errorMessage = "No data present further";
+     }
+   });
   }
 
   // changeRole() {

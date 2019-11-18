@@ -1,0 +1,11 @@
+{
+  "Callback": {
+    "appiyoUrl" : "http://localhost:80808/ProcessStore",
+    "userName" : "icici@icicibankltd.com",
+    "password" : "icici@123",
+    "authToken" : "",
+    "isHTTPS" : false,
+    "longTermToken" : "true",
+    "redirectURL" : "/ocs/payments/thankpayment"
+  }
+}

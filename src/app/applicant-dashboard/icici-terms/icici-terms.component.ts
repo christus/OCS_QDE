@@ -1,3 +1,4 @@
+import { AutoLogoutService } from './../../services/AutoLogoutService';
 import { QdeService } from './../../services/qde.service';
 import { environment } from 'src/environments/environment';
 import { Component, OnInit } from '@angular/core';
@@ -17,9 +18,12 @@ export class IciciTermsComponent implements OnInit {
   applicationId: string;
   applicantId: string;
 
-  constructor(private route: ActivatedRoute, private router: Router,  private qdeService: QdeService, private qdeHttpService: QdeHttpService, private commonDataService: CommonDataService) {
+  constructor(private route: ActivatedRoute, private router: Router,  private qdeService: QdeService, private qdeHttpService: QdeHttpService, 
+    private commonDataService: CommonDataService,
+  private als: AutoLogoutService ) {
     var that = this;
 
+    als.stopInterval();
     const data = {
       email: environment.userName,
       password: environment.password

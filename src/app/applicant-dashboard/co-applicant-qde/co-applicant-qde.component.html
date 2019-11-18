@@ -552,7 +552,7 @@
 
                                                       <div class="row with_datepicker">
                                                         <div class="col4">
-                                                            <kendo-dropdownlist [readonly] = "true" class="form-control"
+                                                            <kendo-dropdownlist [readonly] = "true" class="date_dropdown_fontsize form-control"
                                                             textField="key"
                                                             valueField="value"
                                                             name="day"
@@ -565,7 +565,7 @@
                                                         </div>
     
                                                         <div class="col4">
-                                                            <kendo-dropdownlist [readonly] = "true" class="form-control"
+                                                            <kendo-dropdownlist [readonly] = "true" class="date_dropdown_fontsize form-control"
                                                             textField="key"
                                                             valueField="value"
                                                             tabindex="2"
@@ -578,7 +578,7 @@
                                                         </div>
     
                                                         <div class="col4">
-                                                            <kendo-dropdownlist [readonly] = "true" class="mob_personal_year form-control"
+                                                            <kendo-dropdownlist [readonly] = "true" class="date_dropdown_fontsize mob_personal_year form-control"
                                                             textField="key"
                                                             valueField="value"
                                                             tabindex="3"
@@ -1121,7 +1121,7 @@
                                                             fieldFill
                                                             tabindex="4"
                                                             spellcheck="false"
-                                                            (blur)="onPinCodeChange($event, 'communicationAddress')" 
+                                                            (input)="onPinCodeChange($event, 'communicationAddress')" 
                                                             [readonly]="qde.application.applicants[coApplicantIndex].communicationAddress.currentAddFromApp"
                                                             pattern="{{regexPattern.pinCode}}" />
                                                     <label for="pincode">Pincode</label>
@@ -1232,7 +1232,7 @@
                                                                     name="pZipcode"
                                                                     #pZipcode="ngModel"
                                                                     tabindex="9"
-                                                                    (blur)="onPinCodeChange($event, 'permanentAddress')" 
+                                                                    (input)="onPinCodeChange($event, 'permanentAddress')" 
                                                                     fieldFill
                                                                     spellcheck="false"
                                                                     [(ngModel)]="qde.application.applicants[coApplicantIndex].permanentAddress.zipcode"
@@ -1317,8 +1317,8 @@
                                           </div>
                                           <div class="btn-wrap">
                                               <button type="submit" class="btn btn-primary" 
-                                                      [ngClass]="{'disabled': (!communicationForm.valid)}"
-                                                      [disabled]="!communicationForm.valid">
+                                                      [ngClass]="{'disabled': (!communicationForm.valid || !qde.application.applicants[coApplicantIndex].communicationAddress.cityState || !qde.application.applicants[coApplicantIndex].permanentAddress.cityState)}"
+                                                      [disabled]="!communicationForm.valid || !qde.application.applicants[coApplicantIndex].communicationAddress.cityState || !qde.application.applicants[coApplicantIndex].permanentAddress.cityState">
                                                   Next
                                               </button>
                                           </div>
@@ -1393,7 +1393,8 @@
                                                       nick="maritalStatus.status"
                                                       #maritalStatusStatus
                                                       (selectionChange)="selectValueChanged($event, maritalStatusStatus.hostElement)"
-                                                      [(ngModel)]="selectedMaritialStatus">
+                                                      [(ngModel)]="selectedMaritialStatus"
+                                                      (selectionChange)="resetSpouseTitles()">
                                                     </kendo-dropdownlist>
   
                                                 </div>
@@ -1987,7 +1988,7 @@
                                                 </span>
                                                 <span class="in-word"></span>
                     
-                                                <div *ngIf="annualPensionIncome1.touched && annualPensionIncome1.invalid"
+                                                <div *ngIf="annualPensionIncome1.invalid"
                                                   class="invalid-feedback">
                                                   <!-- <div *ngIf="annualPensionIncome1.errors?.required">{{errors.incomeDetails.familyIncome.required}}</div> -->
                                                   <div *ngIf="annualPensionIncome1.errors?.pattern">
@@ -2008,7 +2009,10 @@
                                         </div>
                                         <div *ngIf="occupationRequired == false"
                                         class="btn-wrap">
-                                          <button type="submit" class="btn btn-primary"
+                                          <button type="submit" 
+                                                [ngClass]="{'disabled': !occupationForm.valid}"
+                                                [disabled]="(!occupationForm.valid)" 
+                                                  class="btn btn-primary"
                                             (click)="incomeConsiderYesNoIndividual(2, occupationSlider2)"
                                             [value]="2">
                                             Next
@@ -2163,7 +2167,7 @@
                                                         maxlength="6"
                                                         spellcheck="false"
                                                         fieldFill
-                                                        (blur)="onPinCodeChange($event, 'officialCorrespondence')" 
+                                                        (input)="onPinCodeChange($event, 'officialCorrespondence')" 
                                                         pattern="{{regexPattern.pinCode}}"/>
                                                     <label for="offPincode">Pincode</label>
               
@@ -2259,9 +2263,9 @@
                                           <div class="btn-wrap">
                                               <button type="submit" class="btn btn-primary" 
                                                       [ngClass]="{'disabled': (!officialCorrespondenceForm.valid) ||
-                                                      (qde.application.applicants[coApplicantIndex].officialCorrespondence.officeEmailId)?.length == 100}"
+                                                      (qde.application.applicants[coApplicantIndex].officialCorrespondence.officeEmailId)?.length == 100 || !qde.application.applicants[coApplicantIndex].officialCorrespondence.cityState}"
                                                       [disabled]="!officialCorrespondenceForm.valid || 
-                                                      (qde.application.applicants[coApplicantIndex].officialCorrespondence.officeEmailId)?.length == 100">Next
+                                                      (qde.application.applicants[coApplicantIndex].officialCorrespondence.officeEmailId)?.length == 100 || !qde.application.applicants[coApplicantIndex].officialCorrespondence.cityState">Next
                                               </button>
                                           </div>
                                       </form>
@@ -2659,9 +2663,9 @@
                                       </div>
                                       <div class="form-group typ-select">
                                           <span class="control-title">Date of Incorporation</span>
-                                          <div class="row with_datepicker">
+                                          <div class="row with_datepicker margin_zero">
                                               <div class="col4">
-                                                  <kendo-dropdownlist [readonly]="true" class="form-control"
+                                                  <kendo-dropdownlist [readonly]="true" class="date_dropdown_fontsize form-control"
                                                   textField="key"
                                                   valueField="value"
                                                   tabindex="2"
@@ -2674,7 +2678,7 @@
                                               </div>
       
                                               <div class="col4">
-                                                  <kendo-dropdownlist [readonly]="true" class="form-control"
+                                                  <kendo-dropdownlist [readonly]="true" class="date_dropdown_fontsize form-control"
                                                   textField="key"
                                                   tabindex="3"
                                                   valueField="value"
@@ -2687,7 +2691,7 @@
                                               </div>
       
                                               <div class="col4">
-                                                  <kendo-dropdownlist [readonly]="true" class="form-control mob_personal_year"
+                                                  <kendo-dropdownlist [readonly]="true" class="date_dropdown_fontsize form-control mob_personal_year"
                                                   textField="key"
                                                   valueField="value"
                                                   name="year"
@@ -2698,7 +2702,7 @@
                                                   [(ngModel)]="organizationDetails.year">
                                                   </kendo-dropdownlist>
                                               </div>
-                                                <kendo-datepicker class="kendo_date_picker"
+                                                <kendo-datepicker class="kendo_date_picker date_of_incorp"
                                                     [focusedDate]="focusIncorpDate"
                                                     (valueChange)="onDateOfIncorpChange($event)"
                                                     [min] = min
@@ -2839,7 +2843,7 @@
                                                             maxlength="6"
                                                             fieldFill
                                                             spellcheck="false"
-                                                            (blur)="onPinCodeChange($event, 'registeredAddress')"
+                                                            (input)="onPinCodeChange($event, 'registeredAddress')"
                                                             pattern="{{regexPattern.pinCode}}" />
                                                       <label for="regoffPincode">Pincode</label>
                 
@@ -2873,8 +2877,8 @@
                                           </div>
                                           <div class="btn-wrap">
                                               <button class="btn btn-primary"
-                                              [ngClass]="{'disabled': (!registeredAddressForm.valid)}"
-                                              [disabled]="!registeredAddressForm.valid" >Next</button>
+                                              [ngClass]="{'disabled': (!registeredAddressForm.valid || !qde.application.applicants[coApplicantIndex].registeredAddress.cityState)}"
+                                              [disabled]="!registeredAddressForm.valid || !qde.application.applicants[coApplicantIndex].registeredAddress.cityState" >Next</button>
               
                                           </div>
                                       </form>
@@ -2981,7 +2985,7 @@
                                                           required
                                                           spellcheck="false"
                                                           #corpPincode="ngModel"
-                                                          (blur)="onPinCodeChange($event, 'corporateAddress')" 
+                                                          (input)="onPinCodeChange($event, 'corporateAddress')" 
                                                           fieldFill />
                                                   <label for="pincode01">Pincode</label>
               
@@ -3084,9 +3088,9 @@
                                           <div class="btn-wrap">
                                               <button type="submit" class="btn btn-primary" 
                                               [ngClass]="{'disabled': (!corporateAddressForm.valid) ||
-                                              (qde.application.applicants[coApplicantIndex].corporateAddress.officeEmailId)?.length == 100}"
+                                              (qde.application.applicants[coApplicantIndex].corporateAddress.officeEmailId)?.length == 100 || !qde.application.applicants[coApplicantIndex].corporateAddress.cityState}"
                                               [disabled]="!corporateAddressForm.valid || 
-                                              (qde.application.applicants[coApplicantIndex].corporateAddress.officeEmailId)?.length == 100">Next</button>
+                                              (qde.application.applicants[coApplicantIndex].corporateAddress.officeEmailId)?.length == 100 || !qde.application.applicants[coApplicantIndex].corporateAddress.cityState">Next</button>
                                           </div>
                                       </form>
                                       </div>

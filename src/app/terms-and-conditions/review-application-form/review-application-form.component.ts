@@ -1,3 +1,4 @@
+import { AutoLogoutService } from './../../services/AutoLogoutService';
 import { Component, OnInit } from '@angular/core';
 import { QdeService } from 'src/app/services/qde.service';
 import { ActivatedRoute } from '@angular/router';
@@ -134,9 +135,9 @@ export class ReviewApplicationFormComponent implements OnInit {
 
   constructor(private qdeService: QdeService,
               private route: ActivatedRoute,
-              private qdeHttp: QdeHttpService) {
+              private qdeHttp: QdeHttpService
+             ) {
 
-    
     this.qdeService.qdeSource.subscribe(val => {
       this.qde = val;
 

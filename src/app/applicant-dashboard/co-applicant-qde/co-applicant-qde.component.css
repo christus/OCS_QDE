@@ -355,15 +355,39 @@ input[type="text"]:invalid
 }
 
 .with_datepicker {
-    /* margin-bottom: -10px; */
-    width: 95%;
+    margin-bottom: -10px;
+    width: 82%;
 }
+
+.with_datepicker {
+    margin-bottom: -10px;
+    width: 82%;
+}
+
 .kendo_date_picker{
     width: 0px;
     border: none;
-    margin-bottom: 99px;
+    margin-bottom: 30px;
+    margin-left: -10%;
+}
+
+.date_of_incorp {
+    top: 14px;
+    margin-left: -10%;
+}
+
+.margin_zero {
+    margin-bottom: 0px !important;
 }
 .k-datepicker .k-dateinput, .k-datetimepicker .k-dateinput, .k-timepicker .k-dateinput {
     width: 1%;
     border-left: 1px solid #e6e6e6;
+}
+
+.k-widget.form-control .k-input {
+    font-size: 31px !important;
+}
+
+.with_datepicker .k-i-arrow-60-down::before, .with_datepicker .k-i-arrow-s::before, .with_datepicker .k-i-sarrow-s::before, .with_datepicker .k-i-collapse::before, .with_datepicker .k-i-expand-s::before {
+    font-size: 60px !important;
 }
