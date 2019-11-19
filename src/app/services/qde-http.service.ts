@@ -2716,7 +2716,7 @@ createOrUpdatePersonalDetails(qde) {
    * @param mainApplicant
    * @param coApplicant If coApplicant is an empty string, then its for reference relationship
    */
-  getApplicantRelationships(mainApplicant: string, coApplicant: string) {
+  getApplicantRelationships(mainApplicant: string, coApplicant: string, getAll?: boolean) {
     const processId   = environment.api.getApplicantRelationships.processId;
     const workflowId  = environment.api.getApplicantRelationships.workflowId;
     const projectId   = environment.projectId;
@@ -2728,7 +2728,8 @@ createOrUpdatePersonalDetails(qde) {
       ProcessVariables: {
         userId: parseInt(localStorage.getItem('userId')),
         mainApplicant: mainApplicant,
-        coApplicant: coApplicant
+        coApplicant: coApplicant,
+        getAll: getAll
       },
       workflowId: workflowId,
       projectId: projectId

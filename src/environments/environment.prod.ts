@@ -438,7 +438,8 @@ export const environment = {
   // host: "https://ihfcmobileuat.icicihfc.com/appiyo",
   aesPublicKey: 'MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJ+GJdSSEeaNFBLqyfM3DIOgQgWCwJ0INfeZZV7ITsLeuA7Yd02rrkYGIix1IWvoebWVmzhncUepYxHwK1ARCdUCAwEAAQ==',
   encryptionType: true, //Ecryption
-  captchFormat: "&width=250&height=80&bgr=255&bgg=255&bgb=255&bga=255&fontR=187&fontG=187&fontB=187&fontSize=50&captchaSize=5"
+  captchFormat: "&width=250&height=80&bgr=255&bgg=255&bgb=255&bga=255&fontR=187&fontG=187&fontB=187&fontSize=50&captchaSize=5",
+  defaultItem:{key:"Select...",value:"0"}
   // host: "https://ihfcmobileuat.icicihfc.com/appiyo"
   //csvhost: "http://192.168.1.108/appiyo",
   //host: "https://103.87.42.117/appiyo"

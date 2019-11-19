@@ -15,11 +15,12 @@ import { QdeService } from 'src/app/services/qde.service';
 import { CommonDataService } from 'src/app/services/common-data.service';
 import { Subscription } from 'rxjs';
 import { screenPages } from 'src/app/app.constants';
+import { environment } from 'src/environments/environment';
 
 
 interface Item {
   key: string,
-  value: number
+  value: number | string
 }
 
 @Component({
@@ -154,16 +155,17 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
   residences: Array<any>;
   titles: Array<any>;
   maritals: Array<any>;
-  relationships: Array<any>;
+  relationships: Array<any> = [];
   loanpurposes: Array<any>;
   categories: Array<any>;
   genders: Array<any>;
   constitutions: Array<any>;
   selectedReferenceOneTitle: Item;
   selectedReferenceTwoTitle: Item;
-
+  relationshipMap: Array<any>;
   selectedReferenceOne: any;
-
+  relationshipChanged1: boolean = false;
+  relationshipChanged2: boolean = false;
   selectedTiltle1: string;
   selectedName1: string;
   selectedMobile1: string;
@@ -198,7 +200,7 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
 
   isErrorModal:boolean; 
   errorMessage:string;
-
+  public defaultItem: Item = environment.defaultItem;
   constructor(
     private renderer: Renderer2,
     private route: ActivatedRoute,
@@ -234,8 +236,25 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
 
     console.log(">>", JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs));
     var lov = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs);
-    this.titles = lov.LOVS.applicant_title;
-    this.relationships = lov.LOVS.relationship;
+    this.setTitle1(lov);
+    this.setTitle2(lov);
+    //this.titles = lov.LOVS.applicant_title;
+    //this.relationships = lov.LOVS.relationship;
+    //console.log(this.relationships);
+    this.qdeHttp.getApplicantRelationships('1', '1', true).subscribe(res => {
+      if (res['ProcessVariables']['status'] == true) {
+        this.relationshipMap = JSON.parse(res['ProcessVariables']['response']);
+        console.log(this.relationshipMap);
+        if (this.relationshipMap != undefined || this.relationshipMap != null) {
+          for (var x in this.relationshipMap) {
+            let temp = { 'key': '', 'value': '' };
+            temp.key = this.relationshipMap[x].relationShip;
+            temp.value = this.relationshipMap[x].relationShipId;
+            this.relationships.push(temp);
+          }
+        }
+      }
+    })
 
     if (
       this.route.snapshot.data.listOfValues != null &&
@@ -281,14 +300,14 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
 
           this.selectedReferenceOne =
             result.application.references.referenceOne.relationShip ||
-            this.relationships[0].value;
+            this.defaultItem.value;
           this.selectedReferenceTwo =
             result.application.references.referenceTwo.relationShip ||
-            this.relationships[0].value;
-
-          this.selectedTiltle1 =
+            this.defaultItem.value;
+          
+	        this.selectedTiltle1 =
             result.application.references.referenceOne.title ||
-            this.titles[0].value;
+            this.defaultItem.value;
           this.selectedName1 =
             result.application.references.referenceOne.fullName || "";
           this.selectedMobile1 =
@@ -300,7 +319,7 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
 
           this.selectedTiltle2 =
             result.application.references.referenceTwo.title ||
-            this.titles[0].value;
+            this.defaultItem.value;
           this.selectedName2 =
             result.application.references.referenceTwo.fullName || "";
           this.selectedMobile2 =
@@ -489,7 +508,20 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
       }
   
       this.qde.application.references.referenceOne.relationShip = this.selectedReferenceOne;
-  
+      this.setTitle1();
+      if(this.relationshipChanged1 && this.qde.application.references.referenceOne!=undefined){
+      this.selectedTiltle1 = "";
+      this.setTitle1();
+	    this.selectedName1 = "";
+	    this.selectedMobile1 = "";
+	    this.selectedAddressLineOne1 = "";
+      this.selectedAddressLineTwo1 = "";
+      this.qde.application.references.referenceOne.mobileNumber = "";
+      this.qde.application.references.referenceOne.addressLineOne = "";
+      this.qde.application.references.referenceOne.addressLineTwo = "";
+      this.qde.application.references.referenceOne.fullName = "";
+      this.qde.application.references.referenceOne.title = "";
+    }
       this.qdeHttp
         .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
         .subscribe(
@@ -596,6 +628,20 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
       this.qde.application.references.referenceTwo.relationShip = this.selectedReferenceTwo;
   
       //console.log(this.qde.application.references.referenceOne.relationShip);
+      this.setTitle2();
+      if(this.relationshipChanged2 && this.qde.application.references.referenceTwo!=undefined){
+      this.selectedTiltle2 = "";
+      this.setTitle2();
+	    this.selectedName2 = "";
+	    this.selectedMobile2 = "";
+	    this.selectedAddressLineOne2 = "";
+      this.selectedAddressLineTwo2 = "";
+      this.qde.application.references.referenceTwo.mobileNumber = "";
+      this.qde.application.references.referenceTwo.addressLineOne = "";
+      this.qde.application.references.referenceTwo.addressLineTwo = "";
+      this.qde.application.references.referenceTwo.fullName = "";
+      this.qde.application.references.referenceTwo.title = "";
+    }
   
       this.qdeHttp
         .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
@@ -723,5 +769,63 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
     this.tabName = tabPage;
     this.page = pageNumber;
     this.tabSwitch(index, true);
+  }
+  setTitle1(data?: any) {
+    var rela = this.qde.application.references.referenceOne.relationShip;
+    console.log(rela);
+    if (rela != null && rela != "" && this.relationshipMap != []) {
+      this.titles = [];
+      for (var x in this.relationshipMap) {
+        if (this.relationshipMap[x].relationShipId == rela) {
+          let tempTitles = this.relationshipMap[x].applicantTitles;
+          console.log(tempTitles);
+          for (var x in tempTitles) {
+            let temp = { 'key': '', 'value': '' };
+            temp.key = tempTitles[x].applicantTitle;
+            temp.value = tempTitles[x].applicantTitleId;
+            this.titles.push(temp);
+          }
+          if (this.selectedTiltle1=="") {
+            this.selectedTiltle1 = this.defaultItem.value.toString();
+          }
+          break;
+        }
+      }
+    } else if ((rela == undefined || rela == null || rela == "") && this.relationshipMap != []) {
+      this.titles = data.LOVS.applicant_title;
+          if (this.selectedTiltle1=="") {
+            this.selectedTiltle1 = this.defaultItem.value.toString();
+          }
+      console.log(this.titles);
+    }
+  }
+  setTitle2(data?: any) {
+    var rela = this.qde.application.references.referenceTwo.relationShip;
+    console.log(rela);
+    if (rela != null && rela != "" && this.relationshipMap != []) {
+      this.titles = [];
+      for (var x in this.relationshipMap) {
+        if (this.relationshipMap[x].relationShipId == rela) {
+          let tempTitles = this.relationshipMap[x].applicantTitles;
+          console.log(tempTitles);
+          for (var x in tempTitles) {
+            let temp = { 'key': '', 'value': '' };
+            temp.key = tempTitles[x].applicantTitle;
+            temp.value = tempTitles[x].applicantTitleId;
+            this.titles.push(temp);
+          }
+          if (this.selectedTiltle2=="") {
+            this.selectedTiltle2 = this.defaultItem.value.toString();
+          }
+          break;
+        }
+      }
+    } else if ((rela == undefined || rela == null || rela == "") && this.relationshipMap != []) {
+      this.titles = data.LOVS.applicant_title;
+          if (this.selectedTiltle2=="") {
+            this.selectedTiltle2 = this.defaultItem.value.toString();
+          }
+      console.log(this.titles);
+    }
   }
 }
