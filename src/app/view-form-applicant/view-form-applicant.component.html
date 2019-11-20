@@ -770,7 +770,7 @@
                   </div>
               </div>
           </div>
-          <div class="row" *ngIf="selectedOccupation.value != '6' && selectedOccupation.value != '7' && selectedOccupation.value != '10' && selectedOccupation.value != '14'">
+          <div class="row" *ngIf=" selectedOccupation.key != 'Non working' && selectedOccupation.key != 'Housewife' && selectedOccupation.key != 'Student' && selectedOccupation.key != 'Retired'">
               <div class="col-12">
                   <div class="form-group filled">
                         <input readonly="true"  type="text" class="form-control"
@@ -787,7 +787,7 @@
                   </div>
               </div>
           </div>
-          <div class="row" *ngIf="selectedOccupation.value != '6' && selectedOccupation.value != '7' && selectedOccupation.value != '10' && selectedOccupation.value != '14'">
+          <div class="row" *ngIf=" selectedOccupation.key != 'Non working' && selectedOccupation.key != 'Housewife' && selectedOccupation.key != 'Student' && selectedOccupation.key != 'Retired'">
               <div class="col-12">
                   <div class="form-group typ-range">
                       <span class="subtitle">Years in current employment/business</span>
@@ -811,7 +811,7 @@
                   </div>
               </div>
           </div>
-          <div class="row" *ngIf="selectedOccupation.value != '6' && selectedOccupation.value != '7' && selectedOccupation.value != '10' && selectedOccupation.value != '14'">
+          <div class="row" *ngIf=" selectedOccupation.key != 'Non working' && selectedOccupation.key != 'Housewife' && selectedOccupation.key != 'Student' && selectedOccupation.key != 'Retired'">
               <div class="col-12">
                   <div class="form-group typ-range">
                       <span class="subtitle">Total work experience</span>
@@ -831,7 +831,7 @@
                   </div>
               </div>
           </div>
-          <div class="row" *ngIf="selectedOccupation.value == 10">
+          <div class="row" *ngIf="selectedOccupation.key == 'Retired'">
                 <div class="col-12">
                     <h5 class="subtitle">Do you recieve pension</h5>
                     <div class="bs-radio">
@@ -853,7 +853,7 @@
                     </div>
                 </div>
             </div>
-          <div class="row"  *ngIf="selectedOccupation.value == 10 && qde.application.applicants[applicantIndex].occupation.pensioner == true">
+          <div class="row"  *ngIf="selectedOccupation.value == 'Retired' && qde.application.applicants[applicantIndex].occupation.pensioner == true">
             <div class="col-4">
                     <div class="form-group inr">
                             <input type="text" class="form-control" id="revenue"

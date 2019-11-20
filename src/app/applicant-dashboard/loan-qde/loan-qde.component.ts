@@ -122,7 +122,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // value: number = 0;
 
-  propertyNoSwitchTab = 2; // tabswitch
+  // propertyNoSwitchTab = 2; // tabswitch
 
   minValue: number = 1;
   options: Options = {
@@ -270,12 +270,19 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
   tabName: string;
   page: number;
 
-  // Only RHS Sliders
+  // RHS Sliders
   @ViewChildren('swiperS') swiperS$: QueryList<Swiper>;
+
+   // LHS Sliders
+   @ViewChildren('lhsSwiperS') lhsSwiperS$: QueryList<Swiper>;
 
   swiperSliders: Array<any>;
   swiperSlidersSub: Subscription;
   auditTrialApiSub: Subscription;
+
+  lhsSwiperSliders: Array<Swiper> = [];
+  swiperSlidersSub2: Subscription;
+
 
   isErrorModal:boolean;
   errorMessage:string;
@@ -372,16 +379,20 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.fragmentSub = this.route.queryParams.subscribe(val => {
 
-      if(val['tabName'] && val['tabName'] != '') {
-        this.tabName = this.fragments.includes(val['tabName']) ? val['tabName'].toString(): this.fragments[0];
+      if(val['tabName']) {
+        this.tabName = this.fragments.includes(val['tabName']) ? val['tabName'].toString() : this.fragments[0];
         this.activeTab = this.fragments.findIndex(v => v == val['tabName']);
-
       }
 
-      if(val['page'] && val['page'] != '') {
+      if(val['page']) {
         this.page = (val && val['page'] != null && parseInt(val['page']) != NaN && parseInt(val['page']) >= 1) ? parseInt(val['page']): 1;
       }
 
+    
+      if(this.tabName && this.page && this.swiperSliders && this.swiperSliders.length > 0 && this.lhsSwiperSliders && this.lhsSwiperSliders.length > 0) {
+        this.swiperSliders[this.activeTab].setIndex(this.page-1);
+        this.lhsSwiperSliders[this.activeTab].setIndex(this.page-1);
+      }
     });
 
     this.route.params.subscribe(params => {
@@ -420,9 +431,9 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
           }
           
           if(this.qde.application.auditTrailDetails.screenPage == screenPages['loanDetails']) {
-            this.goToExactPageAndTab(this.qde.application.auditTrailDetails.tabPage, this.qde.application.auditTrailDetails.pageNumber);
+            this.goToExactPageAndTab(this.fragments.findIndex(v => v == this.qde.application.auditTrailDetails.tabPage), this.qde.application.auditTrailDetails.pageNumber);
           } else {
-            this.goToExactPageAndTab(this.fragments[0], 1);
+            this.goToExactPageAndTab(parseInt(this.fragments[0]), 1);
           }
 
           // All hardcoded value need to removed
@@ -566,7 +577,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
     return titles[0];
   }
 
-  changePropertyIdentified(swiperInstance: Swiper, value: boolean) {
+  changePropertyIdentified(swiperInstance1: Swiper, swiperInstance2: Swiper, value: boolean) {
 
     const currentPropertyStatus = this.qde.application.loanDetails.propertyType.propertyIdentified;
     if(value) {
@@ -629,7 +640,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.errorMessage = "Something went wrong, please again later.";
               });
 
-              this.goToNextSlide(swiperInstance);
+              this.goToNextSlide(swiperInstance1, swiperInstance2);
             } else {
               // Throw Invalid Pan Error
             }
@@ -640,7 +651,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
         );
 
       }else {
-        this.goToNextSlide(swiperInstance);
+        this.goToNextSlide(swiperInstance1, swiperInstance2);
       }
 
     } else {
@@ -668,8 +679,8 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
                this.isErrorModal = true;
                this.errorMessage = "Something went wrong, please again later.";
              });
-
-             this.tabSwitch(this.propertyNoSwitchTab);
+             this.goToExactPageAndTab(2, 1);
+            //  this.tabSwitch(this.propertyNoSwitchTab);
            } else {
              // Throw Invalid Pan Error
            }
@@ -698,13 +709,18 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
    * Use to sync between lhs and rhs sliders
    * @param swiperInstance RHS Swiper Instance
    */
-  goToNextSlide(swiperInstance: Swiper, form?: NgForm) {
+  goToNextSlide(swiperInstance1: Swiper, swiperInstance2: Swiper) {
     // if (form && !form.valid) {
     //   return;
     // }
     // Create ngModel of radio button in future
-    swiperInstance.nextSlide();
+    swiperInstance1.nextSlide();
+
+    if(swiperInstance2)
+      swiperInstance2.nextSlide();
+
     this.page++;
+
     this.router.navigate([], {queryParams: { tabName: this.tabName, page: this.page }});
   }
 
@@ -720,9 +736,12 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
    * Use to sync between lhs and rhs sliders
    * @param swiperInstance RHS Swiper Instance
    */
-  goToPrevSlide(swiperInstance: Swiper) {
+  goToPrevSlide(swiperInstance1: Swiper, swiperInstance2: Swiper) {
     // Create ngModel of radio button in future
-    swiperInstance.prevSlide();
+    swiperInstance1.prevSlide();
+
+    if(swiperInstance2)
+      swiperInstance2.prevSlide();
     this.page--;
     this.router.navigate([], {queryParams: { tabName: this.tabName, page: this.page }});
   }
@@ -750,35 +769,48 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
   //   }
   // }
 
-  tabSwitch(tabIndex ?: number, fromQde ?: boolean) {
+  // tabSwitch(tabIndex ?: number, fromQde ?: boolean) {
 
-    let modifiedTabIndex = tabIndex;
-    // Check for invalid tabIndex
-    if(modifiedTabIndex < this.fragments.length) {
+  //   let modifiedTabIndex = tabIndex;
+  //   // Check for invalid tabIndex
+  //   if(modifiedTabIndex < this.fragments.length) {
 
-      let t = (fromQde) ? (modifiedTabIndex == 2) ? 1 : this.page: 1;
+  //     let t = (fromQde) ? (modifiedTabIndex == 2) ? 1 : this.page: 1;
 
-      if(this.swiperSliders && this.swiperSliders.length > 0) {
-        this.swiperSliders[modifiedTabIndex].setIndex(t-1);
+  //     if(this.swiperSliders && this.swiperSliders.length > 0) {
+  //       this.swiperSliders[modifiedTabIndex].setIndex(t-1);
+  //     }
+
+  //     // It should not allow to go to any other tabs if applicationId is not present
+  //     // if(this.applicantIndex != null && this.qde.application.applicationId != null && this.qde.application.applicationId != '') {
+  //     this.router.navigate([], {queryParams: { tabName: this.fragments[modifiedTabIndex], page: t }});
+  //     // }
+
+  //     // this.router.navigate([], { fragment: this.fragments[tabIndex]});
+  //   }
+  // }
+
+  onBackButtonClick(goToSlideNumber: number = 1) {
+    // if (this.activeTab > 0) {
+    //   if (swiperInstance != null && swiperInstance.getIndex() > 0) {
+    //     // Go to Previous Slide
+    //     this.goToPrevSlide(swiperInstance);
+    //   } else {
+    //     // Go To Previous Tab
+    //     this.tabSwitch(this.activeTab - 1);
+    //   }
+    // }
+    if(this.page <= 1) {
+      // Switch Tabs
+      this.router.navigate([], {queryParams: {tabName: this.fragments[this.activeTab-1], page: goToSlideNumber}});
+    } 
+    else {
+      // go to previous slide
+      if(this.tabName == this.fragments[2] && this.page == 4 && (this.selectedLoanPurpose.value != 16 || this.selectedLoanPurpose.value != 17)){
+        this.router.navigate([], {queryParams: {tabName: this.tabName, page: this.page-2}});
       }
-
-      // It should not allow to go to any other tabs if applicationId is not present
-      // if(this.applicantIndex != null && this.qde.application.applicationId != null && this.qde.application.applicationId != '') {
-      this.router.navigate([], {queryParams: { tabName: this.fragments[modifiedTabIndex], page: t }});
-      // }
-
-      // this.router.navigate([], { fragment: this.fragments[tabIndex]});
-    }
-  }
-
-  onBackButtonClick(swiperInstance?: Swiper) {
-    if (this.activeTab > 0) {
-      if (swiperInstance != null && swiperInstance.getIndex() > 0) {
-        // Go to Previous Slide
-        this.goToPrevSlide(swiperInstance);
-      } else {
-        // Go To Previous Tab
-        this.tabSwitch(this.activeTab - 1);
+      else{
+        this.router.navigate([], {queryParams: {tabName: this.tabName, page: this.page-1}});
       }
     }
   }
@@ -801,7 +833,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   submitLoanAmount(form: NgForm) {
     if(this.isTBMLoggedIn) {
-        this.tabSwitch(1);
+        this.goToExactPageAndTab(1,1);
     } else {
       if (form && !form.valid) {
         return;
@@ -848,7 +880,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.isErrorModal = true;
                 this.errorMessage = "Something went wrong, please try again later.";
               });
-                this.tabSwitch(1);              
+                this.goToExactPageAndTab(1,1);              
             } else {
               // Throw Invalid Pan Error
             }
@@ -868,16 +900,13 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
   //   this.goToNextSlide(swiperInstance);
   // }
 
-  updatePropertyType(form: NgForm, swiperInstance?: Swiper) {
+  updatePropertyType(form: NgForm, swiperInstance1: Swiper, swiperInstance2: Swiper) {
     if(this.isTBMLoggedIn) {
-      this.goToNextSlide(swiperInstance)
+      this.goToNextSlide(swiperInstance1, swiperInstance2)
     } else {
       if (form && !form.valid) {
         return;
       }
-  
-
-     
 
       this.qde.application.loanDetails.propertyType = {
         propertyIdentified: this.isPropertyIdentified,
@@ -905,7 +934,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
                 this.isErrorModal = true;
                 this.errorMessage = "Something went wrong, please try again later.";
               });
-              this.goToNextSlide(swiperInstance);
+              this.goToNextSlide(swiperInstance1, swiperInstance2);
             } else {
               // Throw Invalid Pan Error
             }
@@ -979,7 +1008,8 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   submitPropertyDetail(form: NgForm, swiperInstance?: Swiper) {
     if(this.isTBMLoggedIn) {
-        this.tabSwitch(2);
+        // this.goToExactPageAndTab(2,1);
+        this.clssProbabilityCheck();
     } else {
       if (form && !form.valid) {
         return;
@@ -1026,10 +1056,10 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  submitExistingLoanProvider(form: NgForm, swiperInstance?: Swiper) {
+  submitExistingLoanProvider(form: NgForm, swiperInstance1: Swiper, swiperInstance2: Swiper) {
 
     if(this.isTBMLoggedIn) {
-      this.goToNextSlide(swiperInstance)
+      this.goToNextSlide(swiperInstance1, swiperInstance2)
     } else {
       if (form && !form.valid) {
         return;
@@ -1063,7 +1093,6 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
       //   this.isErrorModal = true;
       //   this.errorMessage = "Something went wrong, please try again later.";
       // });
-              this.goToNextSlide(swiperInstance);
               this.isLoanRouteModal = true
             } else {
               // Throw Invalid Pan Error
@@ -1076,7 +1105,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  submitAnApplicantForExistingLoan(form: NgForm, swiperInstance?: Swiper) {
+  submitAnApplicantForExistingLoan(form: NgForm, swiperInstance1: Swiper, swiperInstance2: Swiper) {
     this.selectedApplicantIndex = this.qde.application.applicants.findIndex(v => v.applicantId == this.selectedApplicant.value);
     let s = this.qde.application.applicants.find(v => v.applicantId == this.selectedApplicant.value);
     this.selectedApplicantName = s.personalDetails ? `${s.personalDetails['firstName']} ${s.personalDetails['lastName']}`: '';
@@ -1089,17 +1118,17 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
     console.log("slected loan provider", this.qde.application.applicants[this.selectedApplicantIndex].existingLoans.loanProvider);
     this.monthlyEmiValue = this.qde.application.applicants[this.selectedApplicantIndex].existingLoans ? this.qde.application.applicants[this.selectedApplicantIndex].existingLoans.monthlyEmi ? this.qde.application.applicants[this.selectedApplicantIndex].existingLoans.monthlyEmi+'' :'' :'';
 
-    this.goToNextSlide(swiperInstance);
+    this.goToNextSlide(swiperInstance1, swiperInstance2);
   }
 
   RegExp(param) {
     return RegExp(param);
   }
 
-  submitLiveLoans(form: NgForm, swiperInstance?: Swiper ) {
+  submitLiveLoans(form: NgForm, swiperInstance1: Swiper, swiperInstance2: Swiper ) {
 
     if(this.isTBMLoggedIn) {
-      this.goToNextSlide(swiperInstance);
+      this.goToNextSlide(swiperInstance1, swiperInstance2);
     } else {
       if (form && !form.valid) {
         return;
@@ -1137,7 +1166,13 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
                   this.isErrorModal = true;
                   this.errorMessage = "Something went wrong, please try again later.";
                 });
-                this.goToNextSlide(swiperInstance);
+                if(this.selectedLoanPurpose && ['16', '17'].includes(this.selectedLoanPurpose.value)){
+                  this.goToNextSlide(swiperInstance1, swiperInstance2);
+                }
+                else{
+                  this.goToNextSlide(swiperInstance1, swiperInstance2);
+                  this.goToNextSlide(swiperInstance1, swiperInstance2);
+                }
               }else{                
                 this.isLoanRouteModal = true;
               }
@@ -1153,9 +1188,9 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  submitMonthlyEmi(form: NgForm, swiperInstance?: Swiper) {
+  submitMonthlyEmi(form: NgForm, swiperInstance1: Swiper, swiperInstance2: Swiper) {
     if(this.isTBMLoggedIn) {
-      this.goToNextSlide(swiperInstance);
+      this.goToNextSlide(swiperInstance1, swiperInstance2);
     } else {
       if (form && !form.valid) {
         return;
@@ -1384,18 +1419,37 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     this.swiperSlidersSub = this.swiperS$.changes.subscribe(v => {
+
+      console.log("Swipers: ", this.activeTab, this.swiperSliders);
       this.swiperSliders = v._results;
-      if(this.swiperSliders && this.swiperSliders.length > 0) {
-        this.swiperSliders[this.activeTab].setIndex(this.page-1);
-      }
+      // if (this.swiperSliders && this.swiperSliders.length > 0) {
+      //   this.swiperSliders[this.activeTab].setIndex(this.page - 1);
+      // }
+    });
+
+    this.swiperSlidersSub2 = this.lhsSwiperS$.changes.subscribe(v => {
+
+      console.log("Swipers: ", this.activeTab, this.swiperSliders);
+      this.lhsSwiperSliders = v._results;
+      // if (this.swiperSliders && this.swiperSliders.length > 0) {
+      //   this.swiperSliders[this.activeTab].setIndex(this.page - 1);
+      // }
     });
   }
 
-  goToExactPageAndTab(tabPage: string, pageNumber: number) {
-    let index = this.fragments.findIndex(v => v == tabPage) != -1 ? this.fragments.findIndex(v => v == tabPage) : 0;
-    this.tabName = tabPage;
-    this.page = pageNumber;
-    this.tabSwitch(index, true);
+  // goToExactPageAndTab(tabPage: string, pageNumber: number) {
+  //   let index = this.fragments.findIndex(v => v == tabPage) != -1 ? this.fragments.findIndex(v => v == tabPage) : 0;
+  //   this.tabName = tabPage;
+  //   this.page = pageNumber;
+  //   this.tabSwitch(index, true);
+  // }
+
+  goToExactPageAndTab(index: number, pageNumber: number) {
+    // let index = this.fragments.some(v => v == tabPage) ? this.fragments.findIndex(v => v == tabPage) : 0;
+    // this.tabName = tabPage;
+    // this.page = pageNumber;
+    // this.goToExactPageAndTab(i, 1ndex, true);
+    this.router.navigate([], {queryParams: {tabName: this.fragments[index] , page: pageNumber}});
   }
 
   ngOnDestroy() {
@@ -1407,7 +1461,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
   moreLoanObligation(n: boolean) {
     this.isLoanRouteModal = false;
     if(n) {
-      this.tabSwitch(2);
+      this.goToExactPageAndTab(2, 1);
     } else {
       this.router.navigate(['/references', this.qde.application.applicationId]);
     }

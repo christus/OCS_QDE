@@ -2083,7 +2083,9 @@
           </div>
 
           <div class="tab-content" [ngClass]="{'active': (activeTab == 9)}" *ngIf="qde?.application?.applicants[applicantIndex]?.incomeDetails?.incomeConsider == false">
-            <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(2)"></a>
+            <!-- <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(2)"></a> -->
+            <a *ngIf="occupationRequired == false" href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(1)"></a>
+            <a *ngIf="occupationRequired == true" href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(2)"></a>
             <div class="lyt-tabs mob_income_detail">
               <div class="lhs">
                 <div #lhsSwiperS="ngxSwiper" class="swiper-container form-swiper" [swiper]="lhsConfig" #incomeSliderIndividual1="ngxSwiper">

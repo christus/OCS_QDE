@@ -19,23 +19,23 @@
             <a href="javascript:void(0);" (click)="tabSwitch(0)">INCOME DETAILS</a>
           </li> -->
           <li class="tab-link" [ngClass]="{'active': (activeTab == 0)}">
-            <a href="javascript:void(0);" (click)="tabSwitch(0)">LOAN AMOUNT</a>
+            <a href="javascript:void(0);" (click)="goToExactPageAndTab(0, 1)">LOAN AMOUNT</a>
           </li>
           <li class="tab-link" [ngClass]="{'active': (activeTab == 1)}">
-            <a href="javascript:void(0);" (click)="tabSwitch(1)">PROPERTY</a>
+            <a href="javascript:void(0);" (click)="goToExactPageAndTab(1, 1)">PROPERTY</a>
           </li>
           <li class="tab-link" [ngClass]="{'active': (activeTab == 2)}">
-            <a href="javascript:void(0);" (click)="tabSwitch(2)">EXISTING LOAN OBLIGATION</a>
+            <a href="javascript:void(0);" (click)="goToExactPageAndTab(2, 1)">EXISTING LOAN OBLIGATION</a>
           </li>
          
         </ul>
         <div class="tabs-contents" #tabContents>
           <div class="tab-content" [ngClass]="{'active': (activeTab == 0)}">
-              <a [routerLink]="['/applicant', qde.application.applicationId, 'co-applicant']" fragment="existingLoan" class="back-btn"></a>
+              <a [routerLink]="['/applicant', qde.application.applicationId, 'co-applicant']" class="back-btn"></a>
             <div class="lyt-tabs">
               <div class="lhs">
 
-                <div class="swiper-container form-swiper" [swiper]="lhsConfig" #loanAmountSlider1="ngxSwiper">
+                <div #lhsSwiperS="ngxSwiper" class="swiper-container form-swiper" [swiper]="lhsConfig" #loanAmountSlider1="ngxSwiper">
                   <div class="swiper-wrapper">
                     <div class="swiper-slide">
                       <div class="title-wrap">
@@ -50,8 +50,7 @@
 
               <div class="rhs">
                 <div class="swiper-container form-swiper" [swiper]="rhsConfig" #swiperS="ngxSwiper"
-                  (slidePrevTransitionStart)="slidePrevTransitionStart(loanAmountSlider1)"
-                  (slideNextTransitionStart)="slideNextTransitionStart(loanAmountSlider1)" #loanAmountSlider2="ngxSwiper">
+                  #loanAmountSlider2="ngxSwiper">
                   <div class="swiper-wrapper">
                     <div class="swiper-slide">
                     <form class="bs-form" id="personal-form" autocomplete="off"
@@ -157,11 +156,11 @@
           </div>
 
           <div class="tab-content" [ngClass]="{'active': (activeTab == 1)}">
-            <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(property2)"></a>
+            <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(1)"></a>
 
             <div class="lyt-tabs">
               <div class="lhs">
-                <div class="swiper-container form-swiper" [swiper]="lhsConfig" #property1="ngxSwiper">
+                <div #lhsSwiperS="ngxSwiper" class="swiper-container form-swiper" [swiper]="lhsConfig" #property1="ngxSwiper">
                   <div class="swiper-wrapper">
                     <div class="swiper-slide">
                       <div class="title-wrap">
@@ -180,19 +179,18 @@
               </div>
               <div class="rhs">
                 <div class="swiper-container form-swiper" [swiper]="rhsConfig"
-                  (slidePrevTransitionStart)="slidePrevTransitionStart(property1)"
-                  (slideNextTransitionStart)="slideNextTransitionStart(property1)" #property2="ngxSwiper" #swiperS="ngxSwiper">
+                   #property2="ngxSwiper" #swiperS="ngxSwiper">
                   <div class="swiper-wrapper">
                    
                     <div class="swiper-slide">
                       <form class="bs-form">
                         <div class="form-wrap">
                           <div class="bs-radio">
-                            <input [readonly]="isTBMLoggedIn" type="radio" name="yes-property" [value]=true [(ngModel)]="isPropertyIdentified" (click)="changePropertyIdentified(property2, true)" />
+                            <input [readonly]="isTBMLoggedIn" type="radio" name="yes-property" [value]=true [(ngModel)]="isPropertyIdentified" (click)="changePropertyIdentified(property2, property1, true)" />
                             <label for="yes-property"><span>Yes</span></label>
                           </div>
                           <div class="bs-radio">
-                            <input [readonly]="isTBMLoggedIn" type="radio" name="no-property" [value]=false [(ngModel)]="isPropertyIdentified" (click)="changePropertyIdentified(property2, false)" [attr.disabled]="disableNo" />
+                            <input [readonly]="isTBMLoggedIn" type="radio" name="no-property" [value]=false [(ngModel)]="isPropertyIdentified" (click)="changePropertyIdentified(property2, property1, false)" [attr.disabled]="disableNo"/>
                             <label for="no-property"><span>No</span></label>
                           </div>
                         </div>
@@ -201,7 +199,7 @@
                     <div class="swiper-slide">
                       <form class="bs-form" autocomplete="off"
                       #propertyType="ngForm"
-                      (ngSubmit)="updatePropertyType(propertyType, property2)">
+                      (ngSubmit)="updatePropertyType(propertyType, property2, property1)">
                           <div class="form-wrap">
                               <div class="form-group">
                                 <span class="control-title">Property type</span>
@@ -378,10 +376,11 @@
 
 
           <div class="tab-content" [ngClass]="{'active': (activeTab == 2)}">
-            <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(existingLoan2)"></a>
+            <a *ngIf="isPropertyIdentified == true" href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(3)"></a>
+            <a *ngIf="isPropertyIdentified == false" href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(1)"></a>
             <div class="lyt-tabs">
                 <div class="lhs">
-                    <div class="swiper-container form-swiper " [swiper]="lhsConfig" #existingLoan1="ngxSwiper">
+                    <div #lhsSwiperS="ngxSwiper" class="swiper-container form-swiper " [swiper]="lhsConfig" #existingLoan1="ngxSwiper">
                       <div class="swiper-wrapper">
                         <div class="swiper-slide">
                           <div class="title-wrap">
@@ -395,7 +394,7 @@
                               <p class="note">For applicant {{selectedApplicantName}}</p>
                           </div>
                         </div>
-                        <div class="swiper-slide" *ngIf="selectedLoanPurpose && ['16', '17'].includes(selectedLoanPurpose.value)">
+                        <div class="swiper-slide">
                           <div class="title-wrap">
                               <h4 class="title">Select existing<span class="cm-line-break"></span>loan provider</h4>
                               <p class="note">For Applicant {{selectedApplicantName}}</p>
@@ -413,14 +412,13 @@
              
               <div class="rhs">
                 <div class="swiper-container form-swiper" [swiper]="rhsConfig"
-                  (slidePrevTransitionStart)="slidePrevTransitionStart(existingLoan1)"
-                  (slideNextTransitionStart)="slideNextTransitionStart(existingLoan1)" #existingLoan2="ngxSwiper" #swiperS="ngxSwiper">
+                  #existingLoan2="ngxSwiper" #swiperS="ngxSwiper">
                   <div class="swiper-wrapper">
 
                     <!-- Select an applicant for Existing Loan -->
                     <div class="swiper-slide">
                       <form class="bs-form" #selectApplicantForExistingLoanForm="ngForm" 
-                      (ngSubmit)="submitAnApplicantForExistingLoan(selectApplicantForExistingLoanForm, existingLoan2)" >
+                      (ngSubmit)="submitAnApplicantForExistingLoan(selectApplicantForExistingLoanForm, existingLoan2, existingLoan1)" >
                         <div class="form-wrap">
                           <div class="form-group">
                             <kendo-dropdownlist [readonly]="isTBMLoggedIn" 
@@ -444,7 +442,7 @@
 
                       <div class="swiper-slide">
                           <form class="bs-form" #liveLoansForm="ngForm" autocomplete="off"
-                          (ngSubmit)="submitLiveLoans(liveLoansForm, existingLoan2)">
+                          (ngSubmit)="submitLiveLoans(liveLoansForm, existingLoan2, existingLoan1)">
                             <div class="form-wrap">
                               <div class="form-group">
                                 <div class="form-group typ-range">
@@ -474,9 +472,9 @@
                           </form>
                         </div>
 
-                    <div class="swiper-slide" *ngIf="selectedLoanPurpose && ['16', '17'].includes(selectedLoanPurpose.value)">
+                    <div class="swiper-slide">
                       <form class="bs-form" #loanProvider="ngForm" autocomplete="off"
-                      (ngSubmit)="submitExistingLoanProvider(loanProvider, existingLoan2)">
+                      (ngSubmit)="submitExistingLoanProvider(loanProvider, existingLoan2, existingLoan1)">
                         <div class="form-wrap">
 
 
@@ -539,7 +537,7 @@
                     <div class="swiper-slide">
                       <form class="bs-form" autocomplete="off"
                       #monthlyEmiForm="ngForm"
-                      (ngSubmit)="submitMonthlyEmi(monthlyEmiForm, existingLoan2)">
+                      (ngSubmit)="submitMonthlyEmi(monthlyEmiForm, existingLoan2, existingLoan1)">
                         <div class="form-wrap">
                           <div class="form-group inr typ-optional">
                             <input [readonly]="isTBMLoggedIn" type="text" class="form-control" id="monthly-emi"
