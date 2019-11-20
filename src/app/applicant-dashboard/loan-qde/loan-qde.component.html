@@ -69,7 +69,7 @@
                             name="amountRequired"
                             fieldFill
                             pattern="^[1-9][0-9]*$"
-                            (input)="checkAmountLimit($event,50000,1000000000)">
+                            (input)="checkAmountLimit($event)">
     
                           <label for="amt-require">Amount required</label>
                           <span class="addon">
@@ -550,7 +550,7 @@
                               (input)="checkAmountLimit($event,1000,1000000)"/>
 
                             <label for="monthly-emi">Monthly EMI</label>
-                            <!-- <span class="optional">optional</span> -->
+                            <span class="optional">optional</span>
                             <div class="redalert" *ngIf="monthlyEmi.touched && monthlyEmi.valid && !isValidNumber(monthlyEmi.value)">{{errors.loanDetails.existingLoans.monthlyEmi.invalid}}</div>
                             <div *ngIf="(monthlyEmi.touched || monthlyEmi.dirty)" class="invalid-feedback">
                                 <div *ngIf="isNumberLessThan1k">{{errors.loanDetails.existingLoans.monthlyEmi.minamount}}</div>
