@@ -15,6 +15,7 @@ import { QdeService } from 'src/app/services/qde.service';
 import { CommonDataService } from 'src/app/services/common-data.service';
 import { Subscription } from 'rxjs';
 import { screenPages } from 'src/app/app.constants';
+import { environment } from 'src/environments/environment';
 
 
 interface Item {
