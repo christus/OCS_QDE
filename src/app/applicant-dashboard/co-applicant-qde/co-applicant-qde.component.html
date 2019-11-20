@@ -3218,6 +3218,7 @@
                                                             name="officeEmailId"
                                                             #ofcEmail="ngModel" maxlength="100"
                                                             fieldFill
+                                                            (ngModelChange)="onOfficialCorsEmailChange($event, ofcEmail)"
                                                             pattern="{{regexPattern.email}}"
                                                             spellcheck="false"
                                                              />                                      
@@ -3227,6 +3228,7 @@
                                                   <div *ngIf="(ofcEmail.untouched || ofcEmail.touched) && ofcEmail.invalid" class="invalid-feedback">
                                                       <!-- <div *ngIf="ofcEmail.errors?.required">{{errors.corporateAddress.ofcEmail.required}}</div> -->
                                                       <div *ngIf="ofcEmail.errors?.pattern">{{errors.corporateAddress.ofcEmail.invalid}}</div>
+                                                      <div *ngIf="ofcEmail.errors?.invalidDomain">{{errors.officialCorrespondence.email.invalidDomain}}</div>
                                                   </div>
               
                                               </div>
