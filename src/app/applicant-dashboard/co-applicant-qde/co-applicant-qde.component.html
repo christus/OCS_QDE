@@ -2383,7 +2383,7 @@
                                                     name="annualFamilyIncome"
                                                     tabindex="1"
                                                     fieldFill
-                                                    minlength="3"
+                                                    minlength="4"
                                                     spellcheck="false"
                                                     (input)="checkAmountLimit($event,50000)"
                                                     pattern="{{regexPattern.amount}}"
@@ -2458,8 +2458,8 @@
                                                 <button 
                                                     type="submit"
                                                     class="btn btn-primary"
-                                                    [ngClass]="{'disabled': (annualIncomeForm.invalid || qde.application.applicants[coApplicantIndex].incomeDetails.puccaHouse == null)}"
-                                                    [disabled]="annualIncomeForm.invalid || qde.application.applicants[coApplicantIndex].incomeDetails.puccaHouse == null">
+                                                    [ngClass]="{'disabled': (annualIncomeForm.invalid || qde.application.applicants[coApplicantIndex].incomeDetails.puccaHouse == null|| isLessAmount)}"
+                                                    [disabled]="annualIncomeForm.invalid || qde.application.applicants[coApplicantIndex].incomeDetails.puccaHouse == null || isLessAmount">
                                                 Save
                                                 </button>
                                         </div>
@@ -2512,7 +2512,7 @@
                                                 name="annualFamilyIncome"
                                                 tabindex="1"
                                                 fieldFill
-                                                minlength ="3"
+                                                minlength ="4"
                                                 spellcheck="false"
                                                 (input)="checkAmountLimit($event,50000)"
                                                 pattern="{{regexPattern.amount}}"
@@ -2588,8 +2588,8 @@
                                             <button 
                                                 type="submit"
                                                 class="btn btn-primary"
-                                                [ngClass]="{'disabled': (annualIncomeForm.invalid || qde.application.applicants[coApplicantIndex].incomeDetails.puccaHouse == null)}"
-                                                [disabled]="annualIncomeForm.invalid || qde.application.applicants[coApplicantIndex].incomeDetails.puccaHouse == null">
+                                                [ngClass]="{'disabled': (annualIncomeForm.invalid || qde.application.applicants[coApplicantIndex].incomeDetails.puccaHouse == null|| isLessAmount)}"
+                                                [disabled]="annualIncomeForm.invalid || qde.application.applicants[coApplicantIndex].incomeDetails.puccaHouse == null || isLessAmount">
                                             Save
                                             </button>
                                     </div>
@@ -3443,6 +3443,7 @@
                                                 <div class="form-group">
                                                     <span class="control-title">Assessment methodology</span>
                                                     <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                                    [defaultItem] = "defaultItem"
                                                     [data]="assessmentMethodology" 
                                                     tabindex="2"
                                                     textField="key"

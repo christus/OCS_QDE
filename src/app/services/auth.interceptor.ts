@@ -26,7 +26,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
     localStorage.setItem("login_required", "false");
 
-    // this.ngxService.start(); // start foreground spinner of the master loader with 'default' taskId
+    this.ngxService.start(); // start foreground spinner of the master loader with 'default' taskId
     let httpMethod = req.method;
     console.log("*************************************************");
     console.log("before Encryption: ", req.body);
@@ -74,7 +74,7 @@ export class AuthInterceptor implements HttpInterceptor {
       (event: HttpEvent<any>) => {
                 
         if (event instanceof HttpResponse) {
-          // this.ngxService.stop(); // stop foreground spinner of the master loader with 'default' taskId
+          this.ngxService.stop(); // stop foreground spinner of the master loader with 'default' taskId
           let responseValue = event.body;
           let typeOfbody = typeof(responseValue);
           console.log("respose header in auth int ", event.headers.get("content-type"));
@@ -104,21 +104,21 @@ export class AuthInterceptor implements HttpInterceptor {
             }
             this.utilService.clearCredentials();
           }
-          // this.ngxService.stop();
+          this.ngxService.stop();
           return event;
         }
-        // this.ngxService.stop();
+        this.ngxService.stop();
       },
       (err: any) => {
         if (err instanceof HttpErrorResponse) {
-          // this.ngxService.stop();
+          this.ngxService.stop();
           if (err.status === 401) {
           }
         } else {
-          // this.ngxService.stop();
+          this.ngxService.stop();
           alert("Error Message: " + err.message);
         }
-        // this.ngxService.stop();
+        this.ngxService.stop();
       }
       
     )    

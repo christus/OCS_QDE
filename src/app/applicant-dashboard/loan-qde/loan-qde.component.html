@@ -69,7 +69,7 @@
                             name="amountRequired"
                             fieldFill
                             pattern="^[1-9][0-9]*$"
-                            (input)="checkAmountLimit($event)">
+                            (input)="checkAmountLimit($event,50000,100000000)">
     
                           <label for="amt-require">Amount required</label>
                           <span class="addon">
@@ -79,14 +79,14 @@
     
                           <!-- <div class="redalert" *ngIf="amountRequired.touched && amountRequired.invalid">{{errors.loanDetails.loanAmount.amount.minamount}}</div> -->
                           <div class="invalid-feedback">
-                            <div *ngIf="isNumberLessThan50k">{{errors.loanDetails.loanAmount.amount.minamount}}</div>
-                            <div *ngIf="isNumberMoreThan100cr">{{errors.loanDetails.loanAmount.amount.maxamount}}</div>
+                            <div *ngIf="isMinAmount">{{errors.loanDetails.loanAmount.amount.minamount}}{{requirMinAmout}}</div>
+                            <div *ngIf="isMaxAmount">{{errors.loanDetails.loanAmount.amount.maxamount}}{{requirMaxAmout}}</div>
                             <!-- <div *ngIf="amountRequired.touched && amountRequired.errors?.required">{{errors.loanDetails.loanAmount.amount.required}}</div> -->
                             <div *ngIf="amountRequired.errors?.pattern">{{errors.loanDetails.loanAmount.amount.invalid}}</div>
                           </div>
     
                         </div>
-                          <!-- <div class="form-group">
+                          <!-- <div class="form-group">  already remove
                             <span class="control-title">Type of loan</span>
                             <kendo-dropdownlist [readonly]="isTBMLoggedIn" 
                               class="form-control"
@@ -108,10 +108,10 @@
                               [data]="loanpurposes" 
                               textField="key"
                               valueField="value"
-                              [(ngModel)]="selectedLoanPurpose">
+                              [(ngModel)]="selectedLoanPurpose"
+                              [valuePrimitive]="true">
                             </kendo-dropdownlist>
-                          </div>
-    
+                          </div>    
                         <div class="form-group typ-range">
                           <span class="control-title">Loan tenure (in years)</span>
                           <input [readonly]="isTBMLoggedIn" type="number" class="form-control" id="no-yrs"
@@ -142,8 +142,8 @@
                       <div class="btn-wrap">
                         <!-- <button type="submit"  class="btn btn-primary">Next</button> -->
                         <button class="btn btn-primary"
-                        [ngClass]="{'disabled': loanAmount.invalid || isNumberLessThan50k || isNumberMoreThan100cr}"
-                        [disabled]="loanAmount.invalid ||  isNumberLessThan50k || isNumberMoreThan100cr">Next</button>
+                        [ngClass]="{'disabled': loanAmount.invalid || isMinAmount || isMaxAmount }"
+                        [disabled]="loanAmount.invalid ||  isMinAmount || isMaxAmount">Next</button>
                       </div>
                     </form>
                     </div>
@@ -265,8 +265,8 @@
                           </div>
                           <div class="btn-wrap">
                               <button type="submit" class="btn btn-primary "
-                              [ngClass]="{'disabled': !propertyType.valid || selectedPropertyType == 0|| propertyClssValue != tempClssArea}"
-                              [disabled]="propertyType.invalid || selectedPropertyType == '0' || propertyClssValue != tempClssArea">Next</button>
+                              [ngClass]="{'disabled': !propertyType.valid || selectedPropertyType.value == 0|| propertyClssValue != tempClssArea}"
+                              [disabled]="propertyType.invalid || selectedPropertyType.value == '0' || propertyClssValue != tempClssArea">Next</button>
                           </div>
                       </form>
                   </div>
@@ -422,7 +422,7 @@
                         <div class="form-wrap">
                           <div class="form-group">
                             <kendo-dropdownlist [readonly]="isTBMLoggedIn" 
-                                                [defaultItem]="defaultItem"
+                                               [defaultItem]="defaultItem"
                                                 class="form-control"
                                                 name="selectApplicant"
                                                 [data]="allApplicantsItem" 
@@ -491,8 +491,8 @@
                             </kendo-dropdownlist>
                           </div>
 
-                          <div class="form-group inr">
-                              <input [readonly]="isTBMLoggedIn" 
+                          <div class="form-group inr typ-optional">
+                              <!-- <input [readonly]="isTBMLoggedIn" 
                                 type="text" 
                                 class="form-control" 
                                 id="monthly-emi"
@@ -500,19 +500,32 @@
                                 autocomplete="off"
                                 maxlength="7"
                                 #monthlyEmi = "ngModel"
-                                [(ngModel)]="monthlyEmiValue"                                                          
-                                minlength="4"
+                                [(ngModel)]="monthlyEmiValue"                              
+                               
                                 fieldFill
                                 name="monthlyEmi" 
                                 pattern="^[1-9][0-9]*$"
-                                (input)="checkAmountLimit($event,1000,1000000)" />
-  
+                                (input)="checkAmountLimit($event,1000,1000000)"/>   -->
+                                <input [readonly]="isTBMLoggedIn" 
+                                  type="text" 
+                                  class="form-control" 
+                                  id="monthly-emi"
+                                  ngModel autocomplete="off"
+                                  maxlength="7"
+                                  minlength="4"
+                                  #monthlyEmi = "ngModel"
+                                  [(ngModel)]="monthlyEmiValue"
+                                  fieldFill
+                                  name="monthlyEmi" pattern="^[1-9][0-9]*$"
+                                  (input)="checkAmountLimit($event,1000,1000000)"/>
                               <label for="monthly-emi">Monthly EMI</label>
-                              <!-- <span class="optional">optional</span> -->
-                              <div class="redalert" *ngIf="monthlyEmi.touched && monthlyEmi.valid && !isValidNumber(monthlyEmi.value)">{{errors.loanDetails.existingLoans.monthlyEmi.invalid}}</div>
-                              <div *ngIf="(monthlyEmi.touched || monthlyEmi.dirty) && monthlyEmi.invalid" class="invalid-feedback">
-                                  <div *ngIf="isNumberLessThan1k">{{errors.loanDetails.existingLoans.monthlyEmi.minamount}}</div>
-                                  <div *ngIf="isNumberMoreThan10lk">{{errors.loanDetails.existingLoans.monthlyEmi.maxamount}}</div>
+                              <span class="optional">optional</span>
+                              <div class="redalert" *ngIf="monthlyEmi.touched && monthlyEmi.valid && !isValidNumber(monthlyEmi.value)">
+                                {{errors.loanDetails.existingLoans.monthlyEmi.invalid}}</div>
+                                <div *ngIf="isMinAmount" class="invalid-feedback">{{errors.loanDetails.existingLoans.monthlyEmi.minamount}}{{requirMinAmout}}</div>
+                              <div *ngIf="(monthlyEmi.touched || monthlyEmi.dirty)" class="invalid-feedback">
+                                  <!-- <div *ngIf="isMinAmount">{{errors.loanDetails.existingLoans.monthlyEmi.minamount}}{{requirMinAmout}}</div> -->
+                                  <div *ngIf="isMaxAmount">{{errors.loanDetails.existingLoans.monthlyEmi.maxamount}}{{requirMaxAmout}}</div>
                                 <!-- <div *ngIf="monthlyEmi.errors?.required">{{errors.loanDetails.existingLoans.monthlyEmi.required}}</div> -->
                                 <!-- <div *ngIf="monthlyEmi.errors?.pattern">{{errors.loanDetails.existingLoans.monthlyEmi.invalid}}</div> -->
                               </div>
@@ -527,8 +540,8 @@
                 
                         <div class="btn-wrap">
                           <button type="submit" class="btn btn-primary" 
-                          [ngClass]="{'disabled': !loanProvider.valid || selectedLoanProvider.value==0}"
-                          [disabled]="!loanProvider.valid || selectedLoanProvider.value==0">Save</button>
+                          [ngClass]="{'disabled': !loanProvider.valid || selectedLoanProvider?.value==0}"
+                          [disabled]="!loanProvider.valid || selectedLoanProvider?.value == 0">Save</button>
                         </div>
                       </form>
                     </div>
@@ -540,9 +553,13 @@
                       (ngSubmit)="submitMonthlyEmi(monthlyEmiForm, existingLoan2, existingLoan1)">
                         <div class="form-wrap">
                           <div class="form-group inr typ-optional">
-                            <input [readonly]="isTBMLoggedIn" type="text" class="form-control" id="monthly-emi"
+                            <input [readonly]="isTBMLoggedIn" 
+                              type="text" 
+                              class="form-control" 
+                              id="monthly-emi"
                               ngModel autocomplete="off"
                               maxlength="7"
+                              minlength="4"
                               #monthlyEmi = "ngModel"
                               [(ngModel)]="monthlyEmiValue"
                               fieldFill
@@ -553,8 +570,8 @@
                             <span class="optional">optional</span>
                             <div class="redalert" *ngIf="monthlyEmi.touched && monthlyEmi.valid && !isValidNumber(monthlyEmi.value)">{{errors.loanDetails.existingLoans.monthlyEmi.invalid}}</div>
                             <div *ngIf="(monthlyEmi.touched || monthlyEmi.dirty)" class="invalid-feedback">
-                                <div *ngIf="isNumberLessThan1k">{{errors.loanDetails.existingLoans.monthlyEmi.minamount}}</div>
-                                <div *ngIf="isNumberMoreThan10lk">{{errors.loanDetails.existingLoans.monthlyEmi.maxamount}}</div>
+                                <div *ngIf="isMinAmount">{{errors.loanDetails.existingLoans.monthlyEmi.minamount}}{{requirMinAmout}}</div>
+                                <div *ngIf="isMaxAmount">{{errors.loanDetails.existingLoans.monthlyEmi.maxamount}}{{requirMaxAmout}}</div>
                               <!-- <div *ngIf="monthlyEmi.errors?.required">{{errors.loanDetails.existingLoans.monthlyEmi.required}}</div> -->
                               <!-- <div *ngIf="monthlyEmi.errors?.pattern">{{errors.loanDetails.existingLoans.monthlyEmi.invalid}}</div> -->
                             </div>
@@ -567,8 +584,8 @@
                         </div>
                         <div class="btn-wrap">
                           <button class="btn btn-primary"
-                          [ngClass]="{'disabled': monthlyEmi.invalid || !isValidNumber(monthlyEmi.value)}"
-                          [disabled]="monthlyEmi.invalid || !isValidNumber(monthlyEmi.value)">Save</button>
+                          [ngClass]="{'disabled': monthlyEmi.invalid || !isValidNumber(monthlyEmi.value) || isMinAmount}"
+                          [disabled]="monthlyEmi.invalid || !isValidNumber(monthlyEmi.value || isMinAmount)">Save</button>
                         </div>
                       </form>
                     </div>

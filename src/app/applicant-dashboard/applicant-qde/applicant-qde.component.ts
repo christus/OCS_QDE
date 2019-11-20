@@ -368,8 +368,6 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   min: Date; // minimum date to date of birth
   maxDate : Date = new Date();
-  
-
 
   public defaultItem = environment.defaultItem;
   lhsSwiperSliders: Array<Swiper> = [];
@@ -560,7 +558,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       // this.selectedQualification = this.qualifications[0];
       // this.selectedConstitution = this.constitutions[0];
       // this.selectedDocType = this.docType[0];
-      this.selectedAssesmentMethodology = this.assessmentMethodology[0];
+      // this.selectedAssesmentMethodology = this.assessmentMethodology[0];
     }
 
     console.log("params: ", this.route.snapshot.params);
@@ -4146,6 +4144,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
             this.assessmentMethodology.find(e => e.value == this.qde.application.applicants[this.applicantIndex].incomeDetails.assessmentMethodology);
           } else {
             this.selectedAssesmentMethodology = this.assessmentMethodology[0];
+            // this.selectedAssesmentMethodology.push(this.defaultItem);
           }
         } else {
           this.assessmentMethodology = [];

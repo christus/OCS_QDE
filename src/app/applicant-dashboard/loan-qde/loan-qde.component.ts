@@ -48,8 +48,8 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
          amount: {
            required: "Loan Amount is Mandatory",
            invalid: "Invalid Loan Amount / Alphabets and special characters not allowed",
-           minamount: "Amount should be greater than or equal to Rs.50000",
-           maxamount: "Amount should be less than or equal to Rs.1000000000",
+           minamount: "Amount should be greater than or equal to Rs.",
+           maxamount: "Amount should be less than or equal to Rs.",
          },
          tenure: {
            required: "Loan Tenure is Mandatory",
@@ -90,8 +90,8 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
            monthlyEmi: {
              required: "Monthly EMI is mandatory",
              invalid: "Monthly EMI is not valid",
-             minamount: "Amount should be greater than or equal to Rs.1000",
-             maxamount: "Amount should be less than or equal to Rs.1000000"
+             minamount: "Amount should be greater than or equal to Rs.",
+             maxamount: "Amount should be less than or equal to Rs."
            }
        },
      }
@@ -201,7 +201,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
   titles: Array<any>;
   maritals: Array<any>;
   relationships: Array<any>;
-  loanpurposes: Array<any> = [];
+  loanpurposes: Array<Item>;
   categories: Array<any>;
   genders: Array<any>;
   constitutions: Array<any>;
@@ -216,7 +216,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedLoanType: any;
 
   propertyTypes: Array<Item>;
-  selectedPropertyType: string;
+  selectedPropertyType: any;
   propertyClssLabel: string;
   propertyClssValue: string;
   propertyAreaValue: number;
@@ -232,7 +232,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
   cityState: string;
 
   selectedLoanProvider: Item;
-  loanProviderList: Array<any>;
+  loanProviderList: Array<Item>;
 
   liveLoan = 0;
   monthlyEmiValue: string;
@@ -252,8 +252,9 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   loanPinCodeModal:boolean = false;
 
-  allApplicantsItem: Array<Item> = [];
-  selectedApplicant: Item = {key: '', value: ''};
+  allApplicantsItem: Array<Item>;
+  // selectedApplicant: Item = {key: '', value: ''};
+  selectedApplicant: Item;
   selectedApplicantName: string;
   selectedApplicantIndex: number = 0;
 
@@ -265,6 +266,11 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
   isAreaLessThan100k: boolean;
   isNumberMoreThan10lk: boolean;
   isNumberLessThan1k: boolean;
+
+  isMinAmount: boolean;
+  requirMinAmout="";
+  isMaxAmount: boolean;
+  requirMaxAmout="";
 
   fragmentSub: Subscription;
   tabName: string;
@@ -355,7 +361,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
       console.log('LOVS: ', lov);
       this.titles = lov.LOVS.applicant_title;
 
-      // this.loanpurposes = lov.LOVS.loan_purpose;
+      this.loanpurposes = lov.LOVS.loan_purpose;
       this.loanType = lov.LOVS.loan_type;
       this.propertyTypes = lov.LOVS.property_type;
 
@@ -445,10 +451,14 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
           //   result.application.loanDetails.loanAmount.loanPurpose ||
           //   this.loanpurposes[0].value;
           if(result.application.loanDetails.loanAmount.loanType) {
-            this.setLoanPurposes(result.application.loanDetails.loanAmount.loanType+"", result.application.loanDetails.loanAmount.loanPurpose);
+            this.selectedLoanPurpose =
+            result.application.loanDetails.loanAmount.loanPurpose ||
+            this.defaultItem.value;
+            // this.loanpurposes[0].value;
+            // this.setLoanPurposes(result.application.loanDetails.loanAmount.loanType+"", result.application.loanDetails.loanAmount.loanPurpose);
           } else {
-            this.loanpurposes = [{key: '', value: ''}];
-            this.selectedLoanPurpose = this.defaultItem;
+            // this.loanpurposes = [{key: '', value: ''}];
+            this.selectedLoanPurpose = this.defaultItem.value;
             // this.loanpurposes[0]
           }
           
@@ -602,7 +612,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
         this.qde.application.loanDetails.property.state = "";
 
 
-        this.selectedPropertyType = "";
+        this.selectedPropertyType = this.defaultItem.value;
         this.propertyClssValue = "";
         this.propertyAreaValue = null;
 
@@ -841,11 +851,11 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
       
       console.log("selectedLoanPurpose: ", this.selectedLoanPurpose);
-      if(this.selectedLoanPurpose.propIdentified){
-        this.disableNo = 1;
-      }else{
-        this.disableNo=null;
-      }
+      // if(this.selectedLoanPurpose.propIdentified){
+      //   this.disableNo = 1;
+      // }else{
+      //   this.disableNo=null;
+      // }
 
       this.qde.application.loanDetails.loanAmount = {
         amountRequired: parseInt(this.getNumberWithoutCommaFormat(form.value.amountRequired)),
@@ -910,7 +920,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
       this.qde.application.loanDetails.propertyType = {
         propertyIdentified: this.isPropertyIdentified,
-        propertyType: this.selectedPropertyType,
+        propertyType: this.selectedPropertyType.value,
         propertyClss: this.propertyClssValue,
         propertyArea: this.propertyAreaValue
       };
@@ -1310,55 +1320,54 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.isLoanProductPage = false;
     this.selectedLoanType = lt;
     this.cds.changeMenuBarShown(true);
-
-    this.setLoanPurposes(lt.value);
+    // this.setLoanPurposes(lt.value);
   }
 
-  setLoanPurposes(loanType: string, data ?: string) {
-    var that = this;
-    this.qdeHttp.adminGetLov().subscribe(res => {
-      if(res['ProcessVariables']['status'] == true) {
-        var lov= JSON.parse(res['ProcessVariables']['lovs']);
-        that.fullloanpurposes = lov.LOVS.loan_purpose;
-        console.log("fullloanpurposes: ", that.fullloanpurposes);
+  // setLoanPurposes(loanType: string, data ?: string) {
+  //   var that = this;
+  //   this.qdeHttp.adminGetLov().subscribe(res => {
+  //     if(res['ProcessVariables']['status'] == true) {
+  //       var lov= JSON.parse(res['ProcessVariables']['lovs']);
+  //       that.fullloanpurposes = lov.LOVS.loan_purpose;
+  //       console.log("fullloanpurposes: ", that.fullloanpurposes);
 
-        that.qdeHttp.getLoanPurposeFromLoanType({loanType: loanType}).subscribe(res => {
-          var temploanpurposes = res['ProcessVariables']['loanPurposeLov'];
-          console.log("see here first"+JSON.stringify(temploanpurposes));
-          if(that.fullloanpurposes.length!=0){
-            for(var x in that.fullloanpurposes){
-              for(var y in temploanpurposes){
-                if(temploanpurposes[y].value==that.fullloanpurposes[x].id){
-                  temploanpurposes[y].propIdentified = that.fullloanpurposes[x].propIdentified;
-              }
-            }
-          }
-          that.loanpurposes = temploanpurposes;
-          console.log("see here"+JSON.stringify(that.loanpurposes));
-        }
-        if(that.loanpurposes.length!=0){
-          for(var x in that.loanpurposes){
-            if(that.loanpurposes[x].propIdentified){
-              that.isPropertyIdentified=true;
-            }
-          }
-        }
-        if(data) {
-          console.log("Definitely see here"+JSON.stringify(that.loanpurposes));
-          that.selectedLoanPurpose = that.loanpurposes.find(v => v.value == data) || that.defaultItem;
-        } else {
-          that.selectedLoanPurpose = that.defaultItem;
-        }
-      }, error => {
-        that.isErrorModal = true;
-        that.errorMessage = "Something went wrong, please try again later.";
-      });
-    }
-  }, error => {
-      this.isErrorModal = true;
-      this.errorMessage = "Something went wrong, please try again later.";
-    });
-  }
+  //       that.qdeHttp.getLoanPurposeFromLoanType({loanType: loanType}).subscribe(res => {
+  //         var temploanpurposes = res['ProcessVariables']['loanPurposeLov'];
+  //         console.log("see here first"+JSON.stringify(temploanpurposes));
+  //         if(that.fullloanpurposes.length!=0){
+  //           for(var x in that.fullloanpurposes){
+  //             for(var y in temploanpurposes){
+  //               if(temploanpurposes[y].value==that.fullloanpurposes[x].id){
+  //                 temploanpurposes[y].propIdentified = that.fullloanpurposes[x].propIdentified;
+  //             }
+  //           }
+  //         }
+  //         that.loanpurposes = temploanpurposes;
+  //         console.log("see here"+JSON.stringify(that.loanpurposes));
+  //       }
+  //       if(that.loanpurposes.length!=0){
+  //         for(var x in that.loanpurposes){
+  //           if(that.loanpurposes[x].propIdentified){
+  //             that.isPropertyIdentified=true;
+  //           }
+  //         }
+  //       }
+  //       if(data) {
+  //         console.log("Definitely see here"+JSON.stringify(that.loanpurposes));
+  //         that.selectedLoanPurpose = that.loanpurposes.find(v => v.value == data) || that.defaultItem;
+  //       } else {
+  //         that.selectedLoanPurpose = that.defaultItem;
+  //       }
+  //     }, error => {
+  //       that.isErrorModal = true;
+  //       that.errorMessage = "Something went wrong, please try again later.";
+  //     });
+  //   }
+  // }, error => {
+  //     this.isErrorModal = true;
+  //     this.errorMessage = "Something went wrong, please try again later.";
+  //   });
+  // }
 
   clssSearchArea(event: any){
     //console.log("gfegffdgewhj",event.target.value)
@@ -1385,25 +1394,44 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.allClssAreas = [];
   }
 
-  checkAmountLimit(event,minAmount,maxAmount) {
+  // checkAmountLimit(event,minAmount,maxAmount) {
+  //   console.log("checkAmountLimit call ",event,minAmount,maxAmount);
+  //   let n = parseInt(this.getNumberWithoutCommaFormat(event.target.value));
+  //   if(n < 50000 && minAmount == 50000){
+  //     this.isNumberLessThan50k = true;
+  //   }
+  //   else if(n >= 1000000001 && maxAmount == 1000000000){
+  //     this.isNumberMoreThan100cr = true; 
+  //   }
+  //   else if(n >= 1000001 && maxAmount == 1000000){
+  //     this.isNumberMoreThan10lk = true; 
+  //   } else if(n < 1000 && minAmount == 1000){
+  //     this.isNumberLessThan1k = true;
+  //   }
+  //   else {
+  //     this.isNumberLessThan50k = false;
+  //     this.isNumberMoreThan100cr = false;
+  //     this.isNumberMoreThan10lk = false;
+  //     this.isNumberLessThan1k =false;
+  //   }
+  // }
+
+  checkAmountLimit(event,minAmount?,maxAmount?) {
     console.log("checkAmountLimit call ",event,minAmount,maxAmount);
     let n = parseInt(this.getNumberWithoutCommaFormat(event.target.value));
-    if(n < 50000 && minAmount == 50000){
-      this.isNumberLessThan50k = true;
-    }
-    else if(n >= 1000000001 && maxAmount == 1000000000){
-      this.isNumberMoreThan100cr = true; 
-    }
-    else if(n >= 1000001 && maxAmount == 1000000){
-      this.isNumberMoreThan10lk = true; 
-    } if(n < 1000 && minAmount == 1000){
-      this.isNumberLessThan1k = true;
-    }
-    else {
-      this.isNumberLessThan50k = false;
-      this.isNumberMoreThan100cr = false;
-      this.isNumberMoreThan10lk = false;
-      this.isNumberLessThan1k =false;
+    if(minAmount != undefined && n < minAmount ){
+      console.log("min ",event,minAmount,maxAmount);
+      this.isMinAmount = true;
+      this.requirMinAmout = minAmount;
+    } else if(n >= maxAmount && !maxAmount){
+      console.log("max ",event,minAmount,maxAmount);
+      this.isMaxAmount = true;
+      this.requirMaxAmout = maxAmount;
+    } else {
+      this.isMinAmount = false;
+      this.requirMinAmout="";
+      this.isMaxAmount = false;
+      this.requirMaxAmout="";
     }
   }
 

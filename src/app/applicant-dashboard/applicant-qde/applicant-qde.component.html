@@ -1564,7 +1564,7 @@
                             *ngIf="occupationRequired == true">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control" autocomplete="off"
                               required [(ngModel)]="qde.application.applicants[applicantIndex].occupation.companyName" maxlength="50"
-                              pattern="{{regexPattern.name}}" tabindex="2" name="companyName" #companyName="ngModel"
+                              pattern="{{regexPattern.organizationName}}" tabindex="2" name="companyName" #companyName="ngModel"
                               fieldFill id="companyName" />
                             <label for="companyName">Company name</label>
 
@@ -2069,8 +2069,8 @@
                         </div> -->
                         <div class="btn-wrap">
                           <button type="submit" class="btn btn-primary"
-                            [ngClass]="{'disabled': !annualFamilyIncomeForm.valid || qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == null}"
-                            [disabled]="!annualFamilyIncomeForm.valid || qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == null">
+                            [ngClass]="{'disabled': !annualFamilyIncomeForm.valid || qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == null || isLessAmount}"
+                            [disabled]="!annualFamilyIncomeForm.valid || qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == null || isLessAmount">
                             Save
                           </button>
                         </div>
@@ -2130,7 +2130,7 @@
 
                             <div *ngIf="annualFamilyIncome1.touched || annualFamilyIncome1.dirty"
                               class="invalid-feedback">
-                              <div *ngIf="isNumberLessThan50k">{{errors.incomeDetails.familyIncome.minamount}}</div>                             
+                                                       
                               <!-- <div *ngIf="annualFamilyIncome1.errors?.required">{{errors.incomeDetails.familyIncome.required}}</div> -->
                               <div *ngIf="annualFamilyIncome1.errors?.pattern">
                                 {{errors.incomeDetails.familyIncome.invalid}}</div>
@@ -2191,8 +2191,8 @@
                         </div> -->
                         <div class="btn-wrap">
                           <button type="submit" class="btn btn-primary"
-                            [ngClass]="{'disabled': !annualFamilyIncomeForm.valid || qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == null}"
-                            [disabled]="!annualFamilyIncomeForm.valid || qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == null">
+                            [ngClass]="{'disabled': !annualFamilyIncomeForm.valid || qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == null || isLessAmount}"
+                            [disabled]="!annualFamilyIncomeForm.valid || qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == null || isLessAmount">
                             Save
                           </button>
                         </div>
