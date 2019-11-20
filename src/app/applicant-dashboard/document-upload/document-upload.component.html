@@ -203,8 +203,8 @@
                                             </div>
                                             <div class="btn-wrap">
                                                 <button class="btn btn-primary" (click)="goToNextSlide(aadharSlider2)"
-                                                [ngClass]="{'disabled': selectedIdProof[applicantIndex]?.value ==0}"
-                                                [disabled]="selectedIdProof[applicantIndex]?.value == 0">Next</button>
+                                                [ngClass]="{'disabled': !selectedIdProof[applicantIndex] || selectedIdProof[applicantIndex].value ==0}"
+                                                [disabled]="!selectedIdProof[applicantIndex] || selectedIdProof[applicantIndex].value == 0">Next</button>
                                             </div>
                                         </form>
                                     </div>
@@ -368,8 +368,8 @@
                                         <div class="btn-wrap">
                                             <button class="btn btn-primary"
                                             (click)="goToNextSlide(addressSlider2)"
-                                            [ngClass]="{'disabled': selectedAddressProof[applicantIndex]?.value ==0}"
-                                                [disabled]="selectedAddressProof[applicantIndex]?.value == 0">Next</button>
+                                            [ngClass]="{'disabled': !selectedAddressProof[applicantIndex] ||  selectedAddressProof[applicantIndex].value ==0}"
+                                                [disabled]="!selectedAddressProof[applicantIndex] || selectedAddressProof[applicantIndex].value == 0">Next</button>
                                         </div>
                                     </form>
                                   </div>
@@ -485,8 +485,8 @@
                                         <div class="btn-wrap">
                                             <button class="btn btn-primary"
                                             (click)="goToNextSlide(incomeSlider2)"
-                                            [ngClass]="{'disabled': selectedIncomeProof[applicantIndex]?.value ==0}"
-                                                [disabled]="selectedIncomeProof[applicantIndex]?.value == 0">Next</button>
+                                            [ngClass]="{'disabled': !selectedIncomeProof[applicantIndex] || selectedIncomeProof[applicantIndex].value ==0}"
+                                                [disabled]="!selectedIncomeProof[applicantIndex] || selectedIncomeProof[applicantIndex].value == 0">Next</button>
                                         </div>
                                     </form>
                                   </div>
@@ -602,8 +602,8 @@
                                         <div class="btn-wrap">
                                             <button class="btn btn-primary"
                                             (click)="goToNextSlide(bankingSlider2)"
-                                            [ngClass]="{'disabled': selectedBankProof[applicantIndex]?.value ==0}"
-                                                [disabled]="selectedBankProof[applicantIndex]?.value == 0">Next</button>
+                                            [ngClass]="{'disabled': !selectedBankProof[applicantIndex] || selectedBankProof[applicantIndex].value ==0}"
+                                                [disabled]=" !selectedBankProof[applicantIndex] || selectedBankProof[applicantIndex].value == 0">Next</button>
                                         </div>
                                     </form>
                                   </div>
@@ -721,8 +721,8 @@
                                         <div class="btn-wrap">
                                             <button class="btn btn-primary"
                                             (click)="goToNextSlide(collateralSlider2)"
-                                            [ngClass]="{'disabled': selectedCollateralProof[applicantIndex]?.value ==0}"
-                                                [disabled]="selectedCollateralProof[applicantIndex]?.value == 0">Next</button>
+                                            [ngClass]="{'disabled': !selectedCollateralProof[applicantIndex] || selectedCollateralProof[applicantIndex].value ==0}"
+                                                [disabled]="!selectedCollateralProof[applicantIndex] || selectedCollateralProof[applicantIndex].value == 0">Next</button>
                                         </div>
                                     </form>
                                   </div>

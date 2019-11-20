@@ -1174,7 +1174,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
           ******************************/
          console.log(this.selectedIdProof)
           this.idProofDocumnetType[index] = res.IdProof || [];
-          console.warn("idProofDocumnetType", this.idProofDocumnetType);
+          // console.warn("idProofDocumnetType", this.idProofDocumnetType);
           // this.selectedIdProof[index] = this.idProofDocumnetType[index][0];
 
           console.log("AddressProof: ", res.AddressProof);
