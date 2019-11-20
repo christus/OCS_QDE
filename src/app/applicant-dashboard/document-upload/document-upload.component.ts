@@ -203,6 +203,8 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
 
   lovs: Array<string>;
 
+  public defaultItem = environment.defaultItem;
+
   constructor(
     private renderer: Renderer2,
     private route: ActivatedRoute,
@@ -1163,20 +1165,25 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
           * Default Values for dropdowns
           ******************************/
           this.idProofDocumnetType = res.IdProof || [];
-          this.selectedIdProof.push(this.idProofDocumnetType[0]);
+          // this.idProofDocumnetType[0]
+          this.selectedIdProof.push(this.defaultItem);
 
           console.log("AddressProof: ", res.AddressProof);
           this.addressProofDocumnetType = res.AddressProof || [];
-          this.selectedAddressProof.push(this.addressProofDocumnetType[0]);
+          // this.addressProofDocumnetType[0]
+          this.selectedAddressProof.push(this.defaultItem);
 
           this.incomeProofDocumnetType = res.IncomeDocument || [];
-          this.selectedIncomeProof.push(this.incomeProofDocumnetType[0]);
+          // this.incomeProofDocumnetType[0]
+          this.selectedIncomeProof.push(this.defaultItem);
 
           this.bankProofDocumnetType = res.Banking || [];
-          this.selectedBankProof.push(this.bankProofDocumnetType[0]);
+          // this.bankProofDocumnetType[0]
+          this.selectedBankProof.push(this.defaultItem);
 
           this.collateralProofDocumnetType = res.collateral || [];
-          this.selectedCollateralProof.push(this.collateralProofDocumnetType[0]);
+          this.collateralProofDocumnetType[0]
+          this.selectedCollateralProof.push(this.defaultItem);
 
           /******************************************
           * It will load Documents of all Applicants

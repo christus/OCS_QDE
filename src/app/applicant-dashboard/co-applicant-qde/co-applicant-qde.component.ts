@@ -47,9 +47,16 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
   // regexPatternForDocType: Array<string> = ['[A-Z]{1}[0-9]{7}','^[A-Z]{2}[0-9]{13}$','^[A-Z]{3}[0-9]{7}$','[2-9]{1}[0-9]{11}','[0-9]{18}','[0-9]{14}','[0-9]{16}'];
 
-  regexPatternForDocType:Array<any>=[{pattern:'[A-Z]{1}[0-9]{7}',hint:"V1234567"},{pattern:'^[A-Z]{2}[0-9]{13}$',hint:"AN0120100051926"},{pattern:'^[A-Z]{3}[0-9]{7}$',hint:"LWN5672084"},{pattern:'[2-9]{1}[0-9]{11}',hint:"12 digit number, with first digit not 0 or 1"},{pattern:'[0-9]{18}',hint:"	18 digit number"},{pattern:'[0-9]{14}',hint:"	14 digit number"},{pattern:'[0-9]{16}',hint:"	16 digit number"}]
+  regexPatternForDocType:Array<any>=[{ pattern: '^$', hint: "Should not be empty" },
+                                     {pattern:'[A-Z]{1}[0-9]{7}',hint:"V1234567"},
+                                     {pattern:'^[A-Z]{2}[0-9]{13}$',hint:"AN0120100051926"},
+                                     {pattern:'^[A-Z]{3}[0-9]{7}$',hint:"LWN5672084"},
+                                     {pattern:'[2-9]{1}[0-9]{11}',hint:"12 digit number, with first digit not 0 or 1"},
+                                     {pattern:'[0-9]{18}',hint:"	18 digit number"},
+                                     {pattern:'[0-9]{14}',hint:"	14 digit number"},
+                                     {pattern:'[0-9]{16}',hint:"	16 digit number"}]
 
-  maxlength:Array<string> = ['8','15','10','12','18','14','16'];
+  maxlength:Array<string> = ['2','8','15','10','12','18','14','16'];
 
   regexPattern = {
     mobileNumber: "^[1-9][0-9]*$",
@@ -249,8 +256,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   spouseTitles: Array<any>;
 
   docType: Array<any>;
-  selectedAssesmentMethodology: Array<any>;
-
+  // selectedAssesmentMethodology: Array<any>;
+  selectedAssesmentMethodology: Item
   // Used when to whether its coming from create or edit
   // panslide: boolean;
   // panslide2: boolean;
@@ -302,7 +309,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   isTabDisabled: boolean = true;
 
   otp:string;
-  public defaultItem = { key: "Select..", value: "0" };
+
+  public defaultItem = environment.defaultItem;
   lhsSwiperSliders: Array<Swiper> = [];
   swiperSlidersSub2: Subscription;
 
@@ -377,8 +385,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   // public itemDisabled(itemArgs: { dataItem: string }) {
   //   return !itemArgs.dataItem. ;
   // }
-
-
+  isLessAmount: boolean;
+  isMaxAmount: boolean;
+  requirMinAmout;
+  requirMaxAmout;           
   constructor(private renderer: Renderer2,
               private route: ActivatedRoute,
               private router: Router,
@@ -552,19 +562,20 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
       // this.docType = [{"key": "Aadhar", "value": "1"},{"key": "Driving License", "value": "2"},{"key": "passport", "value": "3"}];
 
-      this.selectedTitle = this.titles[0];
-      this.selectedReligion = this.religions[0];
-      this.selectedMaritialStatus = this.maritals[0];
-      this.selectedCategory = this.categories[0];
-      this.selectedOccupation = this.occupations[0];
-      this.selectedResidence = this.residences[0];
-      this.selectedSpouseTitle = this.titles[0];
-      this.selectedFatherTitle = this.maleTitles[0];
-      this.selectedMotherTitle = this.femaleTitles[0]
-      this.selectedQualification = this.qualifications[0];
-      this.selectedConstitution = this.constitutions[0];
-      this.selectedDocType = this.docType[0];
-      this.selectedAssesmentMethodology = this.assessmentMethodology[0];
+      this.selectedTitle = this.defaultItem;
+      this.selectedReligion = this.defaultItem;
+      this.selectedMaritialStatus = this.defaultItem;
+      this.selectedCategory = this.defaultItem;
+      this.selectedOccupation = this.defaultItem;
+      this.selectedResidence = this.defaultItem;
+      this.selectedSpouseTitle = this.defaultItem;
+      this.selectedFatherTitle = this.defaultItem;
+      this.selectedMotherTitle = this.defaultItem;
+      this.selectedQualification = this.defaultItem;
+      this.selectedConstitution = this.defaultItem;
+      this.selectedDocType = this.defaultItem;
+      this.selectedAssesmentMethodology = this.defaultItem;
+      // this.assessmentMethodology[0];
     }
 
     console.log("params: ", this.route.snapshot.params);
@@ -2472,7 +2483,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       }
   
       this.qde.application.applicants[this.coApplicantIndex].incomeDetails.monthlyIncome = form.value.monthlyIncome;
-      this.qde.application.applicants[this.coApplicantIndex].incomeDetails.assessmentMethodology = this.selectedAssesmentMethodology ? this.selectedAssesmentMethodology['value'] : null;
+      // this.qde.application.applicants[this.coApplicantIndex].incomeDetails.assessmentMethodology = this.selectedAssesmentMethodology ? this.selectedAssesmentMethodology['value'] : null;
+
+      this.qde.application.applicants[this.coApplicantIndex].incomeDetails.assessmentMethodology = this.selectedAssesmentMethodology.value.toString();
 
       console.log("ID: ", this.qde.application.applicants[this.coApplicantIndex].incomeDetails);
 
@@ -2515,8 +2528,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       }
   
       this.qde.application.applicants[this.coApplicantIndex].incomeDetails.monthlyIncome = form.value.monthlyIncome;
-      this.qde.application.applicants[this.coApplicantIndex].incomeDetails.assessmentMethodology = this.selectedAssesmentMethodology ? this.selectedAssesmentMethodology['value']: null;
-  
+      // this.qde.application.applicants[this.coApplicantIndex].incomeDetails.assessmentMethodology = this.selectedAssesmentMethodology ? this.selectedAssesmentMethodology['value']: null;
+      this.qde.application.applicants[this.coApplicantIndex].incomeDetails.assessmentMethodology = this.selectedAssesmentMethodology.value.toString();
       console.log("ID: ", this.qde.application.applicants[this.coApplicantIndex].incomeDetails);
   
       this.createOrUpdatePersonalDetailsSub22 = this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
@@ -3921,6 +3934,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     this.qde.application.applicants[this.coApplicantIndex].communicationAddress.state = this.qde.application.applicants.find(v => v.isMainApplicant == true).communicationAddress.state;
 
     this.qde.application.applicants[this.coApplicantIndex].communicationAddress.cityState = this.qde.application.applicants.find(v => v.isMainApplicant == true).communicationAddress.city+" "+this.qde.application.applicants.find(v => v.isMainApplicant == true).communicationAddress.state;
+
+    this.selectedResidence = this.residences.find(v => v.value == this.qde.application.applicants[this.coApplicantIndex].communicationAddress.residentialStatus);
     }
     else{
       this.qde.application.applicants[this.coApplicantIndex].communicationAddress.residentialStatus = "";
@@ -3934,6 +3949,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       this.qde.application.applicants[this.coApplicantIndex].communicationAddress.state = "";
 
       this.qde.application.applicants[this.coApplicantIndex].communicationAddress.cityState = "";
+      this.selectedResidence = this.defaultItem;
     }
     // this.isCurrentAddressFromMainApplicant = false;
   }
@@ -4047,7 +4063,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
   isCategoryModal: boolean = false;
   checkForCondition(){
-    if(this.selectedCategory.value != "1"){
+    if(this.selectedCategory.value != "1" && this.selectedCategory.value != 0){
       this.isCategoryModal = true;
     }
     else{
@@ -4090,8 +4106,11 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   changedRelationship(event) {
-    this.titles = this.applicantRelationships.find(v => v.relationShipId == event).applicantTitles.map(v => ({key: v.applicantTitle, value: v.applicantTitleId}));
-    this.selectedTitle = this.titles[0];
+  
+    if (event != 0) {
+      this.titles = this.applicantRelationships.find(v => v.relationShipId == event).applicantTitles.map(v => ({key: v.applicantTitle, value: v.applicantTitleId}));
+      this.selectedTitle = this.defaultItem;
+    }
   }
 
   changeTitle(event) {
@@ -4116,7 +4135,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         this.relationships = this.applicantRelationships.map(v => ({key: v.relationShip, value: v.relationShipId}));
 
         this.titles = this.applicantRelationships[0].applicantTitles.map(v => ({key: v.applicantTitle, value: v.applicantTitleId}));
-        this.selectedTitle = this.titles[0];
+        this.selectedTitle = this.defaultItem;
 
 
         if(this.qde.application.applicants[coApplicantIndex].isIndividual == true) {
@@ -4125,13 +4144,13 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
             this.titles = this.applicantRelationships.find(v => v.relationShipId == this.selectedRelationship).applicantTitles.map(v => ({key: v.applicantTitle, value: v.applicantTitleId}));
             this.selectedTitle = this.titles.find(v => v.value == this.qde.application.applicants[coApplicantIndex].personalDetails.title);
           } else {
-            this.selectedRelationship = this.relationships[0].value;
+            this.selectedRelationship = this.defaultItem.value;
           }
         } else if(this.qde.application.applicants[coApplicantIndex].isIndividual == false) {
           if(this.qde.application.applicants[coApplicantIndex].organizationDetails.relationShip) {
             this.selectedRelationship = this.relationships.find(v => v.value == this.qde.application.applicants[coApplicantIndex].organizationDetails.relationShip).value;
           } else {
-            this.selectedRelationship = this.relationships[0].value;
+            this.selectedRelationship = this.defaultItem.value;
           }
         }
       } else {
@@ -4152,13 +4171,14 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         if(res['ProcessVariables']['AssessementList']) {
           this.assessmentMethodology = res['ProcessVariables']['AssessementList'].map(e => ({key: e.id, value: e.value}));
           if(this.qde && this.qde.application.applicants[this.coApplicantIndex].incomeDetails.assessmentMethodology) {
-            this.selectedAssesmentMethodology =  this.assessmentMethodology.find(e => e.value == this.qde.application.applicants[this.coApplicantIndex].incomeDetails.assessmentMethodology);
+            this.selectedAssesmentMethodology = this.assessmentMethodology.find(e => e.value == this.qde.application.applicants[this.coApplicantIndex].incomeDetails.assessmentMethodology);
           } else {
-            this.selectedAssesmentMethodology = this.assessmentMethodology[0];
+            // this.selectedAssesmentMethodology = this.assessmentMethodology[0];
+            this.selectedAssesmentMethodology = this.defaultItem;
           }
         } else {
           this.assessmentMethodology = [];
-          this.selectedAssesmentMethodology = null;
+          this.selectedAssesmentMethodology = this.defaultItem;
         }
       }, err => {
         this.isErrorModal = true;
@@ -4178,10 +4198,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       this.occupations = JSON.parse(response["ProcessVariables"]["response"])['occupation'];
       console.log("Occupation Type",this.occupations);
 
-      if(occupationType != null) {
+      if(occupationType != null && occupationType !="") {
         this.selectedOccupation = this.occupations.some(v => v.value == occupationType) ? this.occupations.find(v => v.value == occupationType): this.occupations[0];
       } else {
-        this.selectedOccupation = this.occupations[0];
+        this.selectedOccupation = this.defaultItem;
       }
       // this.selectedOccupation = this.occupations["occupation"]
       console.log("Select Occupation Type",this.selectedOccupation)
@@ -4294,5 +4314,25 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 	  }
 	  return true;
   }
-
+  checkAmountLimit(event,minAmount?,maxAmount?) {
+    // console.log("checkAmountLimit call ",event,minAmount,maxAmount);
+    let n = parseInt(this.getNumberWithoutCommaFormat(event.target.value));
+    if(minAmount != undefined && n < minAmount ){
+      console.log("min ",event,minAmount,maxAmount);
+      this.isLessAmount = true;
+      this.requirMinAmout = minAmount;
+    } else if(n >= maxAmount && !maxAmount){
+      console.log("max ",event,minAmount,maxAmount);
+      this.isMaxAmount = true;
+      this.requirMaxAmout = maxAmount;
+    } else {
+      this.isLessAmount = false;
+      this.requirMinAmout="";
+      this.isMaxAmount = false;
+      this.requirMaxAmout="";
+    }
+  }
+  getNumberWithoutCommaFormat(x: string) : string {
+    return x ? x+"".split(',').join(''): '';
+  }
 }

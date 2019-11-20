@@ -16,6 +16,7 @@ import { CommonDataService } from 'src/app/services/common-data.service';
 import { Subscription } from 'rxjs';
 
 import { screenPages } from '../../app.constants';
+import { environment } from 'src/environments/environment.prod';
 
 interface Item {
   key: string,
@@ -88,7 +89,9 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
        existingLoans: {
            monthlyEmi: {
              required: "Monthly EMI is mandatory",
-             invalid: "Monthly EMI is not valid"
+             invalid: "Monthly EMI is not valid",
+             minamount: "Amount should be greater than or equal to Rs.1000",
+             maxamount: "Amount should be less than or equal to Rs.1000000"
            }
        },
      }
@@ -198,7 +201,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
   titles: Array<any>;
   maritals: Array<any>;
   relationships: Array<any>;
-  loanpurposes: Array<any>=[];
+  loanpurposes: Array<any> = [];
   categories: Array<any>;
   genders: Array<any>;
   constitutions: Array<any>;
@@ -212,7 +215,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedLoanPurpose: any;
   selectedLoanType: any;
 
-  propertyTypes: Array<any>;
+  propertyTypes: Array<Item>;
   selectedPropertyType: string;
   propertyClssLabel: string;
   propertyClssValue: string;
@@ -260,6 +263,8 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
   isNumberLessThan50k: boolean;
   isNumberMoreThan100cr: boolean;
   isAreaLessThan100k: boolean;
+  isNumberMoreThan10lk: boolean;
+  isNumberLessThan1k: boolean;
 
   fragmentSub: Subscription;
   tabName: string;
@@ -275,6 +280,8 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
   isErrorModal:boolean;
   errorMessage:string;
   tempClssArea: string;
+  
+  public defaultItem = environment.defaultItem;
 
   constructor(
     private renderer: Renderer2,
@@ -430,7 +437,8 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
             this.setLoanPurposes(result.application.loanDetails.loanAmount.loanType+"", result.application.loanDetails.loanAmount.loanPurpose);
           } else {
             this.loanpurposes = [{key: '', value: ''}];
-            this.selectedLoanPurpose = this.loanpurposes[0];
+            this.selectedLoanPurpose = this.defaultItem;
+            // this.loanpurposes[0]
           }
           
 
@@ -440,7 +448,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
           this.selectedPropertyType =
             result.application.loanDetails.propertyType.propertyType ||
-            this.propertyTypes[0].value;
+            this.defaultItem.value;
 
           this.isPropertyIdentified =
             result.application.loanDetails.propertyType.propertyIdentified ||
@@ -513,10 +521,12 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
               return {key: val.organizationDetails.nameOfOrganization+" "+val.personalDetails.lastName, value: val.applicantId};
             }
           });
-
-          this.selectedApplicant = this.allApplicantsItem[0];
+          // this.allApplicantsItem[0];
+          this.selectedApplicant = this.defaultItem;
+          if (this.selectedApplicant.value !=0){
           this.selectedApplicantIndex = this.qde.application.applicants.findIndex(v => v.applicantId == this.selectedApplicant.value);
           this.selectedApplicantName = this.qde.application.applicants[this.selectedApplicantIndex].personalDetails ? `${this.qde.application.applicants[this.selectedApplicantIndex].personalDetails['firstName']} ${this.qde.application.applicants[this.selectedApplicantIndex].personalDetails['lastName']}`: '';
+          }
         }, error => {
           this.isErrorModal = true;
           this.errorMessage = "Something went wrong, please try again later.";
@@ -1300,9 +1310,9 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
         }
         if(data) {
           console.log("Definitely see here"+JSON.stringify(that.loanpurposes));
-          that.selectedLoanPurpose = that.loanpurposes.find(v => v.value == data) || that.loanpurposes[0];
+          that.selectedLoanPurpose = that.loanpurposes.find(v => v.value == data) || that.defaultItem;
         } else {
-          that.selectedLoanPurpose = that.loanpurposes[0];
+          that.selectedLoanPurpose = that.defaultItem;
         }
       }, error => {
         that.isErrorModal = true;
@@ -1340,17 +1350,25 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.allClssAreas = [];
   }
 
-  checkAmountLimit(event) {
+  checkAmountLimit(event,minAmount,maxAmount) {
+    console.log("checkAmountLimit call ",event,minAmount,maxAmount);
     let n = parseInt(this.getNumberWithoutCommaFormat(event.target.value));
-    if(n < 50000){
+    if(n < 50000 && minAmount == 50000){
       this.isNumberLessThan50k = true;
     }
-    else if(n >= 1000000001){
+    else if(n >= 1000000001 && maxAmount == 1000000000){
       this.isNumberMoreThan100cr = true; 
+    }
+    else if(n >= 1000001 && maxAmount == 1000000){
+      this.isNumberMoreThan10lk = true; 
+    } if(n < 1000 && minAmount == 1000){
+      this.isNumberLessThan1k = true;
     }
     else {
       this.isNumberLessThan50k = false;
       this.isNumberMoreThan100cr = false;
+      this.isNumberMoreThan10lk = false;
+      this.isNumberLessThan1k =false;
     }
   }
 

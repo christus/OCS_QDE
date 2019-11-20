@@ -440,7 +440,7 @@ export const environment = {
   encryptionType: true, // Ecryption
   // host: ""
   captchFormat: "&width=250&height=80&bgr=255&bgg=255&bgb=255&bga=255&fontR=187&fontG=187&fontB=187&fontSize=50&captchaSize=5",
-  defaultItem:{key:"Select...",value:"0"}
+  defaultItem : { key: "Select...", value: "0" }
 };
 
 /*

@@ -191,7 +191,9 @@ export const errors: any = {
   incomeDetails:{
     familyIncome:{
       required: "Annual family Income is mandatory",
-      invalid:"Invalid Family Income / Alphabets and Special characters are not allowed"
+      invalid:"Invalid Family Income / Alphabets and Special characters are not allowed",
+      minamount: "Amount should be greater than or equal to Rs.",
+      maxamount: "Amount should be less than or equal to Rs.",
     },
     pensionIncome:{
       required: "Annual Pension is mandatory",

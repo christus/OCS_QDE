@@ -59,7 +59,10 @@
                     (ngSubmit)="submitLoanAmount(loanAmount)">
                       <div class="form-wrap">
                         <div class="form-group inr">
-                          <input [readonly]="isTBMLoggedIn" type="text" class="form-control" id="amt-require"
+                          <input [readonly]="isTBMLoggedIn" 
+                            type="text" 
+                            class="form-control" 
+                            id="amt-require"
                             required autocomplete="off"
                             maxlength="10"
                             [(ngModel)]="qde?.application.loanDetails.loanAmount.amountRequired"
@@ -67,7 +70,7 @@
                             name="amountRequired"
                             fieldFill
                             pattern="^[1-9][0-9]*$"
-                            (input)="checkAmountLimit($event)">
+                            (input)="checkAmountLimit($event,50000,1000000000)">
     
                           <label for="amt-require">Amount required</label>
                           <span class="addon">
@@ -99,7 +102,8 @@
                         
                           <div class="form-group">
                             <span class="control-title">Loan purpose</span>
-                            <kendo-dropdownlist [readonly]="isTBMLoggedIn" 
+                            <kendo-dropdownlist [readonly]="isTBMLoggedIn"
+                              [defaultItem]="defaultItem"
                               class="form-control"
                               name="loanPurpose"
                               [data]="loanpurposes" 
@@ -140,7 +144,7 @@
                         <!-- <button type="submit"  class="btn btn-primary">Next</button> -->
                         <button class="btn btn-primary"
                         [ngClass]="{'disabled': loanAmount.invalid || isNumberLessThan50k || isNumberMoreThan100cr}"
-                        [disabled]="loanAmount.invalid || isNumberLessThan50k || isNumberMoreThan100cr">Next</button>
+                        [disabled]="loanAmount.invalid ||  isNumberLessThan50k || isNumberMoreThan100cr">Next</button>
                       </div>
                     </form>
                     </div>
@@ -202,6 +206,7 @@
                               <div class="form-group">
                                 <span class="control-title">Property type</span>
                                 <kendo-dropdownlist [readonly]="isTBMLoggedIn" 
+                                  [defaultItem]="defaultItem"
                                   class="form-control" 
                                   name="propertyTypes1" 
                                   [data]="propertyTypes" 
@@ -262,8 +267,8 @@
                           </div>
                           <div class="btn-wrap">
                               <button type="submit" class="btn btn-primary "
-                              [ngClass]="{'disabled': !propertyType.valid || propertyClssValue != tempClssArea}"
-                              [disabled]="propertyType.invalid || propertyClssValue != tempClssArea">Next</button>
+                              [ngClass]="{'disabled': !propertyType.valid || selectedPropertyType == 0|| propertyClssValue != tempClssArea}"
+                              [disabled]="propertyType.invalid || selectedPropertyType == '0' || propertyClssValue != tempClssArea">Next</button>
                           </div>
                       </form>
                   </div>
@@ -419,6 +424,7 @@
                         <div class="form-wrap">
                           <div class="form-group">
                             <kendo-dropdownlist [readonly]="isTBMLoggedIn" 
+                                                [defaultItem]="defaultItem"
                                                 class="form-control"
                                                 name="selectApplicant"
                                                 [data]="allApplicantsItem" 
@@ -429,7 +435,9 @@
                           </div>
                         </div>
                         <div class="btn-wrap">
-                          <button type="submit" class="btn btn-primary">Next</button>
+                          <button type="submit" class="btn btn-primary"
+                          [ngClass]="{'disabled': selectedApplicant.value ==0}"
+                          [disabled]="selectedApplicant.value == 0">Next</button>
                         </div>
                       </form>
                     </div>
@@ -477,6 +485,7 @@
                             <kendo-dropdownlist [readonly]="isTBMLoggedIn" 
                                                 class="form-control" 
                                                 name="loanProvider" 
+                                                [defaultItem]="defaultItem"
                                                 [data]="loanProviderList"
                                                 textField="key"
                                                 valueField="value"
@@ -484,18 +493,28 @@
                             </kendo-dropdownlist>
                           </div>
 
-                          <div class="form-group inr typ-optional">
-                              <input [readonly]="isTBMLoggedIn" type="text" class="form-control" id="monthly-emi"
-                                ngModel autocomplete="off"
+                          <div class="form-group inr">
+                              <input [readonly]="isTBMLoggedIn" 
+                                type="text" 
+                                class="form-control" 
+                                id="monthly-emi"
+                                required
+                                autocomplete="off"
+                                maxlength="7"
                                 #monthlyEmi = "ngModel"
-                                [(ngModel)]="monthlyEmiValue"
+                                [(ngModel)]="monthlyEmiValue"                                                          
+                                minlength="4"
                                 fieldFill
-                                name="monthlyEmi" pattern="^[1-9][0-9]*$"/>
+                                name="monthlyEmi" 
+                                pattern="^[1-9][0-9]*$"
+                                (input)="checkAmountLimit($event,1000,1000000)" />
   
                               <label for="monthly-emi">Monthly EMI</label>
-                              <span class="optional">optional</span>
+                              <!-- <span class="optional">optional</span> -->
                               <div class="redalert" *ngIf="monthlyEmi.touched && monthlyEmi.valid && !isValidNumber(monthlyEmi.value)">{{errors.loanDetails.existingLoans.monthlyEmi.invalid}}</div>
                               <div *ngIf="(monthlyEmi.touched || monthlyEmi.dirty) && monthlyEmi.invalid" class="invalid-feedback">
+                                  <div *ngIf="isNumberLessThan1k">{{errors.loanDetails.existingLoans.monthlyEmi.minamount}}</div>
+                                  <div *ngIf="isNumberMoreThan10lk">{{errors.loanDetails.existingLoans.monthlyEmi.maxamount}}</div>
                                 <!-- <div *ngIf="monthlyEmi.errors?.required">{{errors.loanDetails.existingLoans.monthlyEmi.required}}</div> -->
                                 <!-- <div *ngIf="monthlyEmi.errors?.pattern">{{errors.loanDetails.existingLoans.monthlyEmi.invalid}}</div> -->
                               </div>
@@ -510,8 +529,8 @@
                 
                         <div class="btn-wrap">
                           <button type="submit" class="btn btn-primary" 
-                          [ngClass]="{'disabled': !loanProvider.valid}"
-                          [disabled]="!loanProvider.valid">Save</button>
+                          [ngClass]="{'disabled': !loanProvider.valid || selectedLoanProvider.value==0}"
+                          [disabled]="!loanProvider.valid || selectedLoanProvider.value==0">Save</button>
                         </div>
                       </form>
                     </div>
@@ -525,15 +544,19 @@
                           <div class="form-group inr typ-optional">
                             <input [readonly]="isTBMLoggedIn" type="text" class="form-control" id="monthly-emi"
                               ngModel autocomplete="off"
+                              maxlength="7"
                               #monthlyEmi = "ngModel"
                               [(ngModel)]="monthlyEmiValue"
                               fieldFill
-                              name="monthlyEmi" pattern="^[1-9][0-9]*$"/>
+                              name="monthlyEmi" pattern="^[1-9][0-9]*$"
+                              (input)="checkAmountLimit($event,1000,1000000)"/>
 
                             <label for="monthly-emi">Monthly EMI</label>
-                            <span class="optional">optional</span>
+                            <!-- <span class="optional">optional</span> -->
                             <div class="redalert" *ngIf="monthlyEmi.touched && monthlyEmi.valid && !isValidNumber(monthlyEmi.value)">{{errors.loanDetails.existingLoans.monthlyEmi.invalid}}</div>
-                            <div *ngIf="(monthlyEmi.touched || monthlyEmi.dirty) && monthlyEmi.invalid" class="invalid-feedback">
+                            <div *ngIf="(monthlyEmi.touched || monthlyEmi.dirty)" class="invalid-feedback">
+                                <div *ngIf="isNumberLessThan1k">{{errors.loanDetails.existingLoans.monthlyEmi.minamount}}</div>
+                                <div *ngIf="isNumberMoreThan10lk">{{errors.loanDetails.existingLoans.monthlyEmi.maxamount}}</div>
                               <!-- <div *ngIf="monthlyEmi.errors?.required">{{errors.loanDetails.existingLoans.monthlyEmi.required}}</div> -->
                               <!-- <div *ngIf="monthlyEmi.errors?.pattern">{{errors.loanDetails.existingLoans.monthlyEmi.invalid}}</div> -->
                             </div>

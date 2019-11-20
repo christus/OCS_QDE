@@ -218,6 +218,7 @@
                                                   <span class="control-title">Document Type</span>
 
                                                   <kendo-dropdownlist [readonly]="isReadOnly"  class="form-control"
+                                                                        [defaultItem] = "defaultItem"
                                                                         [data]="docType" 
                                                                         textField="key"
                                                                         valueField="value"
@@ -237,15 +238,15 @@
                                                             name="docNumber"
                                                             #panDocNumber="ngModel"
                                                             oninput="this.value = this.value.toUpperCase()"
-                                                            pattern="{{regexPatternForDocType[parseInteger(selectedDocType.value) - 1].pattern}}"
-                                                            maxlength="{{maxlength[selectedDocType.value - 1]}}"
+                                                            pattern="{{regexPatternForDocType[parseInteger(selectedDocType.value)].pattern}}"
+                                                            maxlength="{{maxlength[parseInteger(selectedDocType.value)]}}"
                                                             fieldFill 
                                                             spellcheck="false"
                                                             required/>
                                                 <label for="docNumber" tabindex="2">Document Number</label>
                                                 <div *ngIf="panDocNumber.touched && panDocNumber.invalid" class="invalid-feedback">
                                                   <!-- <div *ngIf="panDocNumber.errors?.required">{{errors.panDocumentNo.required}}</div> -->
-                                                  <div *ngIf="panDocNumber.errors?.pattern">{{errors.panDocumentNo.invalid}} - Valid Document number Format: <b>{{regexPatternForDocType[parseInteger(selectedDocType.value) - 1].hint}}</b></div>
+                                                  <div *ngIf="panDocNumber.errors?.pattern">{{errors.panDocumentNo.invalid}} - Valid Document number Format: <b>{{regexPatternForDocType[parseInteger(selectedDocType.value)].hint}}</b></div>
                                                 </div>
                                                 <!-- <image-upload [url]="imageUrl" [headers]="myHeaders"></image-upload> -->
                                             </div>
@@ -255,8 +256,8 @@
                                             <div class="btn-wrap">
                                                 <button type="submit"
                                                         class="btn btn-primary"
-                                                        [ngClass]="{'disabled': (!panNumberForm.valid)}"
-                                                        [disabled]="!panNumberForm.valid">Next
+                                                        [ngClass]="{'disabled': (!panNumberForm.valid || selectedDocType.value == 0)}"
+                                                        [disabled]="!panNumberForm.valid || selectedDocType.value == '0'">Next
                                                 </button>
                                             </div>
                                         </form>
@@ -395,29 +396,32 @@
                                                                <option *ngFor="let rela of relationships" [value]="rela.value">{{rela.key}}</option>
                                                             </select> -->
                                         
-                                                            <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
-                                                            
+                                                        <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                                            [defaultItem]= "defaultItem"
                                                             [data]="relationships" 
-                                                            textField="key"
-                                                            valueField="value"
+                                                            [textField]="'key'"
+                                                            [valueField]="'value'"
                                                             name="relationShip"
                                                             [valuePrimitive]="true"
                                                             [(ngModel)]="selectedRelationship"
-                                                            (valueChange)="changedRelationship($event)">
+                                                            (valueChange)="changedRelationship($event)"
+                                                            >
                                                             </kendo-dropdownlist>
                                         
                                                         </div>
                                                   <div class="form-group">
                                                       <span class="control-title">Title</span>
                                                       <div class="form-group">   
-                                                          <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                                          <kendo-dropdownlist [readonly]=" selectedRelationship == 0 ||isReadOnly"                                                            
+                                                            class="form-control"
+                                                            [defaultItem]= "defaultItem"                                                           
                                                             [data]="titles"                                                            
                                                             tabindex="1"
                                                             textField="key"
                                                             valueField="value"
                                                             name="title"
                                                             [(ngModel)]="selectedTitle"
-                                                            (valueChange)="changeTitle($event)">
+                                                            (valueChange)="changeTitle($event)" >
                                                           </kendo-dropdownlist>
                                                       </div>
                                                   </div>
@@ -488,8 +492,8 @@
                                               <div class="btn-wrap">
                                                 <button   type="submit"
                                                           class="btn btn-primary"
-                                                          [ngClass]="{'disabled': (!nameForm.valid)}"
-                                                          [disabled]="!nameForm.valid">Next
+                                                          [ngClass]="{'disabled': (!nameForm.valid || selectedRelationship ==0 || selectedTitle.value ==0)}"
+                                                          [disabled]="!nameForm.valid || selectedRelationship ==0 || selectedTitle.value == 0">Next
                                                 </button>
                                               </div>
                                           </form>
@@ -518,6 +522,7 @@
                                                   <div class="form-group">
                                                       <span class="control-title">Qualification</span>
                                                       <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                                        [defaultItem] = "defaultItem"
                                                         [data]="qualifications" 
                                                         textField="key"
                                                         valueField="value"
@@ -533,8 +538,8 @@
                                               <div class="btn-wrap">
                                                   <button type="submit"
                                                           class="btn btn-primary"
-                                                          [ngClass]="{'disabled': (!qualificationForm.valid)}"
-                                                          [disabled]="!qualificationForm.valid">Next
+                                                          [ngClass]="{'disabled': (!qualificationForm.valid || selectedQualification.value ==0)}"
+                                                          [disabled]="!qualificationForm.valid || selectedQualification.value ==0">Next
                                                   </button>
                                               </div>
                                           </form>
@@ -1045,7 +1050,9 @@
                                               </div>
                                               <div class="form-group">
                                                   <span class="control-title">Residential status</span>
-                                                  <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                                  <kendo-dropdownlist [readonly]="isReadOnly" 
+                                                    class="form-control"
+                                                    [defaultItem] ="defaultItem"
                                                     [data]="residences" 
                                                     textField="key"
                                                     tabindex="1"
@@ -1313,8 +1320,8 @@
                                           </div>
                                           <div class="btn-wrap">
                                               <button type="submit" class="btn btn-primary" 
-                                                      [ngClass]="{'disabled': (!communicationForm.valid || !qde.application.applicants[coApplicantIndex].communicationAddress.cityState || !qde.application.applicants[coApplicantIndex].permanentAddress.cityState)}"
-                                                      [disabled]="!communicationForm.valid || !qde.application.applicants[coApplicantIndex].communicationAddress.cityState || !qde.application.applicants[coApplicantIndex].permanentAddress.cityState">
+                                                      [ngClass]="{'disabled': (!communicationForm.valid || !qde.application.applicants[coApplicantIndex].communicationAddress.cityState || !qde.application.applicants[coApplicantIndex].permanentAddress.cityState || selectedResidence.value ==0)}"
+                                                      [disabled]="!communicationForm.valid || !qde.application.applicants[coApplicantIndex].communicationAddress.cityState || !qde.application.applicants[coApplicantIndex].permanentAddress.cityState || selectedResidence.value ==0">
                                                   Next
                                               </button>
                                           </div>
@@ -1381,6 +1388,7 @@
                                                     <span class="control-title">Marital Status</span>
 
                                                     <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                                        [defaultItem] = "defaultItem"
                                                       [data]="maritals" 
                                                       textField="key"
                                                       tabindex="1"
@@ -1396,7 +1404,9 @@
                                             </div>
                                             <div class="btn-wrap">
                                               <button type="submit"
-                                                      class="btn btn-primary">Next
+                                                      class="btn btn-primary"
+                                                      [ngClass]="{'disabled': (selectedMaritialStatus.value ==0)}"
+                                                      [disabled]="selectedMaritialStatus.value ==0">Next
                                               </button>
                                             </div>
                                         </form>
@@ -1409,6 +1419,7 @@
                                                 <div class="form-group">
                                                     <span class="control-title">Title</span>
                                                     <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                                                        [defaultItem] = "defaultItem"
                                                                         [data]="spouseTitles" 
                                                                         textField="key"
                                                                         valueField="value"
@@ -1447,8 +1458,8 @@
                                             </div>
                                             <div class="btn-wrap">
                                                 <button   type="submit"
-                                                          [ngClass]="{'disabled': (!spouseForm.valid)}"
-                                                          [disabled]="!spouseForm.valid"
+                                                          [ngClass]="{'disabled': (!spouseForm.valid || selectedSpouseTitle.value == 0)}"
+                                                          [disabled]="!spouseForm.valid || selectedSpouseTitle.value ==0"
                                                           class="btn btn-primary">
                                                   Next
                                                 </button>
@@ -1604,6 +1615,7 @@
                                                   <span class="control-title">Father's Title</span>
 
                                                   <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                                    [defaultItem] = "defaultItem"
                                                     [data]="maleTitles" 
                                                     textField="key"
                                                     valueField="value"
@@ -1639,6 +1651,7 @@
                                               <div class="form-group">
                                                   <span class="control-title">Mother's Title</span>
                                                   <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                                  [defaultItem] = "defaultItem"
                                                   [data]="femaleTitles" 
                                                   textField="key"
                                                   valueField="value"
@@ -1696,8 +1709,8 @@
                                           <div class="btn-wrap">
                                               <button type="submit"
                                                       class="btn btn-primary"
-                                                      [ngClass]="{'disabled': (!familyForm2.valid)}"
-                                                      [disabled]="!familyForm2.valid">
+                                                      [ngClass]="{'disabled': (!familyForm2.valid || selectedFatherTitle.value == 0 || selectedMotherTitle.value ==0 )}"
+                                                      [disabled]="!familyForm2.valid || selectedFatherTitle.value == 0 || selectedMotherTitle.value ==0">
                                                   Next
                                               </button>
                                           </div>
@@ -1752,6 +1765,7 @@
                                           <div class="form-group">
                                               <span class="control-title">Religion</span>
                                               <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                                [defaultItem] = "defaultItem"
                                                 [data]="religions"
                                                 textField="key"
                                                 valueField="value"
@@ -1777,6 +1791,7 @@
                                           <div class="form-group">
                                               <span class="control-title">Category</span>
                                               <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                                [defaultItem] = "defaultItem"
                                                 [data]="categories"
                                                 tabindex="2"
                                                 textField="key"
@@ -1792,8 +1807,8 @@
           
                                       <div class="btn-wrap">
                                           <button type="submit"
-                                                  [ngClass]="{'disabled': (!otherForm.valid) || otherReligion?.length == 25}"
-                                                  [disabled]="!otherForm.valid || otherReligion?.length == 25"
+                                                  [ngClass]="{'disabled': (!otherForm.valid) || otherReligion?.length == 25 || selectedReligion.value ==0 || selectedCategory.value ==0 }"
+                                                  [disabled]="!otherForm.valid || otherReligion?.length == 25 || selectedReligion.value ==0 || selectedCategory.value ==0"
                                                   class="btn btn-primary">Next</button>
                                       </div>
                                   </form>
@@ -1864,6 +1879,7 @@
                                                   <span class="control-title">Occupation type</span>
             
                                                   <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                                    [defaultItem] ="defaultItem"
                                                     [data]="occupations"
                                                     tabindex="1"
                                                     textField="key"
@@ -1881,7 +1897,7 @@
                                                           required
                                                           tabindex="2"
                                                           [(ngModel)]="qde.application.applicants[coApplicantIndex].occupation.companyName"
-                                                          pattern="{{regexPattern.name}}"
+                                                          pattern="{{regexPattern.organizationName}}"
                                                           name="companyName"
                                                           #companyName="ngModel"
                                                           fieldFill
@@ -1995,8 +2011,8 @@
               
                                           <div *ngIf="occupationRequired == true" class="btn-wrap">
                                             <button type="submit"
-                                                    [ngClass]="{'disabled': !occupationForm.valid || expError}"
-                                                    [disabled]="(!occupationForm.valid || expError)" 
+                                                    [ngClass]="{'disabled': !occupationForm.valid || selectedOccupation.value ==0 || expError}"
+                                                    [disabled]="(!occupationForm.valid || selectedOccupation.value ==0 || expError)" 
                                                     class="btn btn-primary">
                                                 Next
                                             </button>
@@ -2004,8 +2020,8 @@
                                         <div *ngIf="occupationRequired == false"
                                         class="btn-wrap">
                                           <button type="submit" 
-                                                [ngClass]="{'disabled': !occupationForm.valid}"
-                                                [disabled]="(!occupationForm.valid)" 
+                                                [ngClass]="{'disabled': !occupationForm.valid || selectedOccupation.value ==0}"
+                                                [disabled]="(!occupationForm.valid || selectedOccupation.value ==0)" 
                                                   class="btn btn-primary"
                                             (click)="incomeConsiderYesNoIndividual(2, occupationSlider2)"
                                             [value]="2">
@@ -2333,6 +2349,7 @@
                                                 <div class="form-group">
                                                         <span class="control-title">Assessment methodology</span>
                                                         <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                                        [defaultItem]="defaultItem"
                                                         [data]="assessmentMethodology" 
                                                         tabindex="2"
                                                         textField="key"
@@ -2346,7 +2363,9 @@
                                                 </div>
                                             </div>
                                             <div class="btn-wrap">
-                                                <button type="submit" class="btn btn-primary" [disabled]="!incomeDetailsForm2.valid || isTBMLoggedIn" [ngClass]="{'disabled': (!incomeDetailsForm2.valid || isTBMLoggedIn)}">Next</button>
+                                                <button type="submit" class="btn btn-primary" 
+                                                [disabled]="!incomeDetailsForm2.valid || isTBMLoggedIn" 
+                                                [ngClass]="{'disabled': (!incomeDetailsForm2.valid || isTBMLoggedIn)}">Next</button>
                                             </div>
                                         </form>
                                     </div>
@@ -2357,23 +2376,28 @@
                                         <div class="form-wrap">
                                             <div class="form-group inr">
                                                     <input [readonly]="isReadOnly" type="text" class="form-control"
-                                                    id="annualFamilyIncome1" autocomplete="off"
+                                                    id="annualFamilyIncome1" 
+                                                    ngModel autocomplete="off"
                                                     [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.annualFamilyIncome"
                                                     #annualFamilyIncome1="ngModel"
                                                     name="annualFamilyIncome"
                                                     tabindex="1"
                                                     fieldFill
+                                                    minlength="3"
                                                     spellcheck="false"
+                                                    (input)="checkAmountLimit($event,50000)"
                                                     pattern="{{regexPattern.amount}}"
                                                     required/>
                                                 <label for="annualFamilyIncome1">Annual Family Income <span class="lakhs"></span> </label>
                                                 <span class="addon">
                                                     <span class="icon icon-inr"></span>
                                                     </span>
-                                                    <span class="in-word"></span>
-                                                <div *ngIf="annualFamilyIncome1.touched && annualFamilyIncome1.invalid" class="invalid-feedback">
+                                                    <span class="in-word"></span>                                                   
+                                                <div *ngIf="annualFamilyIncome1.touched || annualFamilyIncome1.dirty" class="invalid-feedback">
                                                         <!-- <div *ngIf="annualFamilyIncome1.errors?.required">{{errors.incomeDetails.familyIncome.required}}</div> -->
                                                         <div *ngIf="annualFamilyIncome1.errors?.pattern">{{errors.incomeDetails.familyIncome.invalid}}</div>
+                                                        <div *ngIf="isLessAmount">{{errors.incomeDetails.familyIncome.minamount}}{{requirMinAmout}}</div>
+                                                        <div *ngIf="isMaxAmount">{{errors.incomeDetails.familyIncome.maxamount}}{{requirMaxAmout}}</div>
                                                     </div> 
                                             </div>
                                                 <div class="form-group inr">
@@ -2487,7 +2511,9 @@
                                                 name="annualFamilyIncome"
                                                 tabindex="1"
                                                 fieldFill
+                                                minlength ="3"
                                                 spellcheck="false"
+                                                (input)="checkAmountLimit($event,50000)"
                                                 pattern="{{regexPattern.amount}}"
                                                 required/>
                                             <label for="annualFamilyIncome1">Annual Family Income <span class="lakhs"></span> </label>
@@ -2495,9 +2521,12 @@
                                                 <span class="icon icon-inr"></span>
                                                 </span>
                                                 <span class="in-word"></span>
-                                            <div *ngIf="annualFamilyIncome1.touched && annualFamilyIncome1.invalid" class="invalid-feedback">
+                                  
+                                            <div *ngIf="annualFamilyIncome1.touched || annualFamilyIncome1.dirty" class="invalid-feedback">
                                                     <!-- <div *ngIf="annualFamilyIncome1.errors?.required">{{errors.incomeDetails.familyIncome.required}}</div> -->
                                                     <div *ngIf="annualFamilyIncome1.errors?.pattern">{{errors.incomeDetails.familyIncome.invalid}}</div>
+                                                    <div *ngIf="isLessAmount">{{errors.incomeDetails.familyIncome.minamount}}{{requirMinAmout}}</div>
+                                                    <div *ngIf="isMaxAmount">{{errors.incomeDetails.familyIncome.maxamount}}{{requirMaxAmout}}</div>
                                                 </div> 
                                         </div>
                                             <div class="form-group inr">
@@ -3517,8 +3546,8 @@
         <h1 class="center">Are You Sure to Change Applicant Pan Status!</h1>
         <h2 class="center">if you click yes All Application Data's are Reset</h2>
         <div class="btn-wrap">
-            <button class="btn btn-border" (click)="resetIndividualData('yes',panSlider2)">Yes</button>
-            <button class="btn btn-border" (click)="resetIndividualData('no',panSlider2)">No</button>
+            <button class="btn btn-border" (click)="resetIndividualData('yes',panSlider2,panSlider1)">Yes</button>
+            <button class="btn btn-border" (click)="resetIndividualData('no',panSlider2,panSlider1)">No</button>
         </div>
         </div>    
     </div>

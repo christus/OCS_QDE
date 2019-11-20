@@ -370,9 +370,15 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   maxDate : Date = new Date();
   
 
-  public defaultItem = { key: "Select..", value: "0" };
+
+  public defaultItem = environment.defaultItem;
   lhsSwiperSliders: Array<Swiper> = [];
   swiperSlidersSub2: Subscription;
+
+  isLessAmount: boolean ;
+  requirMinAmout ;
+  isMaxAmount: boolean;
+  requirMaxAmout;
 
   constructor(private renderer: Renderer2,
     private route: ActivatedRoute,
@@ -4226,5 +4232,27 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 		}
 	  }
 	  return true;
+  }
+
+  checkAmountLimit(event,minAmount?,maxAmount?) {
+    console.log("checkAmountLimit call ",event,minAmount,maxAmount);
+    let n = parseInt(this.getNumberWithoutCommaFormat(event.target.value));
+    if(minAmount != undefined && n < minAmount ){
+      console.log("min ",event,minAmount,maxAmount);
+      this.isLessAmount = true;
+      this.requirMinAmout = minAmount;
+    } else if(n >= maxAmount && !maxAmount){
+      console.log("max ",event,minAmount,maxAmount);
+      this.isMaxAmount = true;
+      this.requirMaxAmout = maxAmount;
+    } else {
+      this.isLessAmount = false;
+      this.requirMinAmout="";
+      this.isMaxAmount = false;
+      this.requirMaxAmout="";
+    }
+  }
+  getNumberWithoutCommaFormat(x: string) : string {
+    return x ? x+"".split(',').join(''): '';
   }
 }
