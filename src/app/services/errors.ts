@@ -61,6 +61,7 @@ export const errors: any = {
     stdCode: {
       required: "Std Code is mandatory",
       invalid: "Invalid STD code",
+      wrong: "Please provide valid Std code"
       // minlength: "STD is not valid"
     },
     alternateResidenceNumberStd1:{
@@ -72,14 +73,17 @@ export const errors: any = {
       // minlength: "Residence number is not valid",
       invalid: "Invalid Residence number/Alphabets and Special Characters not allowed",
       sameNumber: "Residence numbers are same. Please use different number",
-      sameNumberMobile: "Numbers are same. Please use different number"
+      sameNumberMobile: "Numbers are same. Please use different number",
+      wrong: "Please provide valid residence number"
     },
     alternateResidenceNumber1:{
       invalid:"Invalid Residence number/Alphabets and Special Characters not allowed",
+      wrong: "Please provide valid residence number",
       // minlength: "Residence number is not valid"
     },
     alternateResidenceNumber2:{
       invalid:"Invalid Residence number/Alphabets and Special Characters not allowed",
+      wrong: "Please provide valid residence number",
       // minlength: "Residence number is not valid"
     }
   },
@@ -205,7 +209,9 @@ export const errors: any = {
     },
     monthlyIncome:{
       required:"Monthly Income is mandatory",
-      invalid:"Invalid Monthly Income / Alphabets and Special characters are not allowed"
+      invalid:"Invalid Monthly Income / Alphabets and Special characters are not allowed",
+      minamount: "Amount should be greater than or equal to Rs.1000",
+      maxamount: "Amount should be less than or equal to Rs.1000000000",
     }
   },
   organizationDetails: {

@@ -378,6 +378,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   isMaxAmount: boolean;
   requirMaxAmout;
 
+  isNumberLessThan1k: boolean;
+  isNumberMoreThan100cr: boolean;
+
   constructor(private renderer: Renderer2,
     private route: ActivatedRoute,
     private router: Router,
@@ -4251,6 +4254,21 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.requirMaxAmout="";
     }
   }
+
+  checkAmountLimitMonthlyIncome(event) {
+    let n = parseInt(this.getNumberWithoutCommaFormat(event.target.value));
+    if(n < 1000){
+      this.isNumberLessThan1k = true;
+    }
+    else if(n >= 1000000001){
+      this.isNumberMoreThan100cr = true; 
+    }
+    else {
+      this.isNumberLessThan1k = false;
+      this.isNumberMoreThan100cr = false;
+    }
+  }
+
   getNumberWithoutCommaFormat(x: string) : string {
     return x ? x+"".split(',').join(''): '';
   }

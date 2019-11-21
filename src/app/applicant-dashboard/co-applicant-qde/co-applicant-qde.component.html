@@ -763,7 +763,7 @@
           
                                                   <button type="button" *ngIf="!qde.application.applicants[coApplicantIndex].contactDetails.isMobileOTPverified" 
                                                   href="javascript:void(0);" class="sent-otp modal-init" data-target="sent-otp-modal" 
-                                                  [disabled]="!mobileNumber.valid" 
+                                                  [disabled]="!mobileNumber.valid || RegExp(regexPattern.sameDigit).test(mobileNumber.value)" 
                                                   (click)="submitOTP(contactForm, false)">Send OTP<span class="icon icon-tick"></span></button>
                                                   <a *ngIf="qde.application.applicants[coApplicantIndex].contactDetails.isMobileOTPverified" 
                                                   href="javascript:void(0);"   class="sent-otp modal-init " 
@@ -840,6 +840,7 @@
                                                                 spellcheck="false"
                                                                 id="std" />
                                                         <label for="std">STD</label>
+                                                        <div class="redalert" *ngIf="RegExp(regexPattern.sameDigit).test(residenceStdCode.value)">{{errors.contactDetails.stdCode.wrong}}</div>
                                                         <div *ngIf="residenceStdCode.touched && residenceStdCode.invalid" class="invalid-feedback">
                                                             <!-- <div *ngIf="residenceStdCode.errors?.required">{{errors.contactDetails.stdCode.required}}</div> -->
                                                             <div *ngIf="residenceStdCode.errors?.pattern || residenceStdCode.errors?.minlength">
@@ -863,6 +864,7 @@
                                                                 spellcheck="false" />
                                                       <label for="res-no">Residence number</label>
                                                       <span class="optional">Optional</span>
+                                                      <div class="redalert" *ngIf="RegExp(regexPattern.sameDigit).test(residenceNumber.value)">{{errors.contactDetails.residenceNumber.wrong}}</div>
                                                       <div *ngIf="residenceNumber.touched  && residenceNumber.invalid" class="invalid-feedback">
                                                         <div *ngIf="residenceNumber.errors?.pattern || residenceNumber.errors?.minlength">
                                                             {{errors.contactDetails.residenceNumber.invalid}}</div>                                                           
@@ -911,6 +913,7 @@
                                                                 data-validation-attr="residenceno01" />
                                                       <label for="altr-res-no">Residence number</label>
                                                       <span class="optional">Optional</span>
+                                                      <div class="redalert" *ngIf="RegExp(regexPattern.sameDigit).test(alternateResidenceNumber2.value)">{{errors.contactDetails.alternateResidenceNumber2.wrong}}</div>
                                                       <div *ngIf="alternateResidenceNumber2.touched  && alternateResidenceNumber2.invalid" class="invalid-feedback">
                                                         <div *ngIf="alternateResidenceNumber2.errors?.pattern || alternateResidenceNumber2.errors?.minlength">
                                                             {{errors.contactDetails.alternateResidenceNumber2.invalid}}</div>
@@ -929,13 +932,17 @@
                                           <div class="btn-wrap">
                                                 <button class="btn btn-primary"
                                                         type="submit"
-                                                        [ngClass]="{'disabled': (!contactForm.valid)|| (altMobileNo.value == mobileNumber.value) || 
+                                                        [ngClass]="{'disabled': (!contactForm.valid)|| (altMobileNo.value == mobileNumber.value)                            
+                                                        || RegExp(regexPattern.sameDigit).test(residenceNumber.value)
+                                                        || RegExp(regexPattern.sameDigit).test(alternateResidenceNumber2.value) || 
                                                         (alternateEmailId.value == preferEmailId.value) || RegExp(regexPattern.sameDigit).test(mobileNumber.value) 
                                                         || RegExp(regexPattern.sameDigit).test(altMobileNo.value) || 
                                                         (qde.application.applicants[coApplicantIndex].contactDetails.preferredEmailId)?.length == 100 ||
                                                         (qde.application.applicants[coApplicantIndex].contactDetails.alternateEmailId)?.length == 100 ||
                                                         (!qde.application.applicants[coApplicantIndex].contactDetails.isMobileOTPverified)}"
-                                                        [disabled]="!contactForm.valid || (altMobileNo.value == mobileNumber.value) || 
+                                                        [disabled]="!contactForm.valid || (altMobileNo.value == mobileNumber.value) 
+                                                        || RegExp(regexPattern.sameDigit).test(residenceNumber.value)
+                                                        || RegExp(regexPattern.sameDigit).test(alternateResidenceNumber2.value) || 
                                                         (alternateEmailId.value == preferEmailId.value) || RegExp(regexPattern.sameDigit).test(mobileNumber.value) 
                                                         || RegExp(regexPattern.sameDigit).test(altMobileNo.value) || 
                                                         (qde.application.applicants[coApplicantIndex].contactDetails.preferredEmailId)?.length == 100 ||
@@ -2330,16 +2337,19 @@
                                                     [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.monthlyIncome"
                                                     #monthlyIncome1="ngModel"
                                                     fieldFill
+                                                    maxlength="10"
                                                     spellcheck="false"
                                                     pattern="{{regexPattern.amount}}"
                                                     name="monthlyIncome"
+                                                    (input)="checkAmountLimitMonthlyIncome($event)"
                                                     required/>
                                                     <label for="monthlyIncome1">Monthly income</label>
                                                     <span class="addon">
                                                         <span class="icon icon-inr"></span>
                                                     </span>
                                                     <span class="in-word"></span>
-
+                                                    <div  class="invalid-feedback" *ngIf="isNumberLessThan1k">{{errors.incomeDetails.monthlyIncome.minamount}}</div>
+                                                    <div  class="invalid-feedback" *ngIf="isNumberMoreThan100cr">{{errors.incomeDetails.monthlyIncome.maxamount}}</div>
                                                     <div *ngIf="monthlyIncome1.touched && monthlyIncome1.invalid" class="invalid-feedback">
                                                         <!-- <div *ngIf="monthlyIncome1.errors?.required">{{errors.incomeDetails.monthlyIncome.required}}</div> -->
                                                         <div *ngIf="monthlyIncome1.errors?.pattern">{{errors.incomeDetails.monthlyIncome.invalid}}</div>
@@ -2364,8 +2374,8 @@
                                             </div>
                                             <div class="btn-wrap">
                                                 <button type="submit" class="btn btn-primary" 
-                                                [disabled]="!incomeDetailsForm2.valid || isTBMLoggedIn" 
-                                                [ngClass]="{'disabled': (!incomeDetailsForm2.valid || isTBMLoggedIn)}">Next</button>
+                                                [disabled]="!incomeDetailsForm2.valid || isTBMLoggedIn  || isNumberLessThan1k || isNumberMoreThan100cr" 
+                                                [ngClass]="{'disabled': (!incomeDetailsForm2.valid || isTBMLoggedIn  || isNumberLessThan1k || isNumberMoreThan100cr)}">Next</button>
                                             </div>
                                         </form>
                                     </div>
@@ -3423,17 +3433,20 @@
                                                     [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.monthlyIncome"
                                                     #monthlyIncome2="ngModel"
                                                     fieldFill
+                                                    maxlength="10"
                                                     tabindex="1"
                                                     spellcheck="false"
                                                     pattern="{{regexPattern.amount}}"
                                                     name="monthlyIncome"
+                                                    (input)="checkAmountLimitMonthlyIncome($event)"
                                                     required/>
                                                     <label for="monthlyIncome2">Monthly income</label>
                                                     <span class="addon">
                                                         <span class="icon icon-inr"></span>
                                                     </span>
                                                     <span class="in-word"></span>
-
+                                                    <div  class="invalid-feedback" *ngIf="isNumberLessThan1k">{{errors.incomeDetails.monthlyIncome.minamount}}</div>
+                                                    <div  class="invalid-feedback" *ngIf="isNumberMoreThan100cr">{{errors.incomeDetails.monthlyIncome.maxamount}}</div>
                                                     <div *ngIf="monthlyIncome2.touched && monthlyIncome2.invalid" class="invalid-feedback">
                                                     <!-- <div *ngIf="monthlyIncome2.errors?.required">{{errors.incomeDetails.monthlyIncome.required}}</div> -->
                                                     <div *ngIf="monthlyIncome2.errors?.pattern">{{errors.incomeDetails.monthlyIncome.invalid}}</div>
@@ -3456,7 +3469,7 @@
                                             </div>
                                             </div>
                                             <div class="btn-wrap">
-                                                <button type="submit" class="btn btn-primary" [disabled]="!incomeDetailsForm4.valid || isTBMLoggedIn" [ngClass]="{'disabled': (!incomeDetailsForm4.valid || isTBMLoggedIn)}">Save</button>
+                                                <button type="submit" class="btn btn-primary" [disabled]="!incomeDetailsForm4.valid || isTBMLoggedIn  || isNumberLessThan1k || isNumberMoreThan100cr" [ngClass]="{'disabled': (!incomeDetailsForm4.valid || isTBMLoggedIn  || isNumberLessThan1k || isNumberMoreThan100cr)}">Save</button>
                                             </div>
                                         </form>
                                     </div>

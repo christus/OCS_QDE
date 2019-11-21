@@ -140,7 +140,8 @@ export class OfflinePaymentComponent implements OnInit {
     private qdeHttp: QdeHttpService,
   ) {
     this.commonDataService.setactiveTab(screenPages['payments']);
-
+    this.qde = this.qdeService.defaultValue;
+    this.qdeService.resetQde();
     this.commonDataService.changeMenuBarShown(true);
     this.commonDataService.changeViewFormNameVisible(true);
     this.commonDataService.changeViewFormVisible(true);

@@ -263,6 +263,13 @@ export class QdeService {
         emailId : "",
         loanAmount : null,
         loanType : null
+      },
+      offlinePayments: {
+        chequeDrawn: "",
+        bankName: null,
+        ifscCode: "",
+        chequeNumber: null,
+        amount: null,
       }
     }
   };
@@ -772,6 +779,13 @@ export class QdeService {
           emailId : "",
           loanAmount : null,
           loanType : null
+        },
+        offlinePayments: {
+          chequeDrawn: "",
+          bankName: null,
+          ifscCode: "",
+          chequeNumber: null,
+          amount: null,
         }
       }
     });
