@@ -840,7 +840,7 @@
                   </div>
               </div>
           </div>
-          <div class="row" *ngIf="selectedOccupation.key == 'Retired' && selectedOccupation.key == 'retired' && selectedOccupation.key != 'RETIRED'">
+          <div class="row" *ngIf="selectedOccupation.key == 'Retired' || selectedOccupation.key == 'retired' || selectedOccupation.key != 'RETIRED'">
                 <div class="col-12">
                     <h5 class="subtitle">Do you recieve pension</h5>
                     <div class="bs-radio">
@@ -862,7 +862,7 @@
                     </div>
                 </div>
             </div>
-          <div class="row"  *ngIf="selectedOccupation.key == 'Retired' || selectedOccupation.key == 'retired'  && selectedOccupation.key != 'RETIRED' && qde.application.applicants[applicantIndex].occupation.pensioner == true">
+          <div class="row"  *ngIf="selectedOccupation.key == 'Retired' || selectedOccupation.key == 'retired' || selectedOccupation.key != 'RETIRED' && qde.application.applicants[applicantIndex].occupation.pensioner == true">
             <div class="col-4">
                     <div class="form-group inr">
                             <input type="text" class="form-control" id="revenue"
