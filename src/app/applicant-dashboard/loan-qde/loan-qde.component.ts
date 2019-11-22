@@ -502,8 +502,8 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
             result.application.loanDetails.existingLoans = {}; //This line need to be removed
           }
 
-          this.selectedLoanProvider = result.application.applicants[0].existingLoans.loanProvider != '' ? this.loanProviderList.find(v => v.value == result.application.applicants[0].existingLoans.loanProvider) : this.loanProviderList[0];
-          
+          this.selectedLoanProvider = result.application.applicants[0].existingLoans.loanProvider != '' ? this.loanProviderList.find(v => v.value == result.application.applicants[0].existingLoans.loanProvider) : this.defaultItem;
+          // this.loanProviderList[0]
           this.liveLoan = result.application.applicants[0].existingLoans ? result.application.applicants[0].existingLoans.liveLoan ? result.application.applicants[0].existingLoans.liveLoan :0 :0;
 
           this.monthlyEmiValue = result.application.applicants[0].existingLoans ? result.application.applicants[0].existingLoans.monthlyEmi ? result.application.applicants[0].existingLoans.monthlyEmi+'' :'' :'';
@@ -816,7 +816,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
     } 
     else {
       // go to previous slide
-      if(this.tabName == this.fragments[2] && this.page == 4 && (this.selectedLoanPurpose.value != 16 || this.selectedLoanPurpose.value != 17)){
+      if(this.tabName == this.fragments[2] && this.page == 4 && (this.selectedLoanPurpose != 16 || this.selectedLoanPurpose != 17)){
         this.router.navigate([], {queryParams: {tabName: this.tabName, page: this.page-2}});
       }
       else{
@@ -859,7 +859,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
       this.qde.application.loanDetails.loanAmount = {
         amountRequired: parseInt(this.getNumberWithoutCommaFormat(form.value.amountRequired)),
-        loanPurpose: this.selectedLoanPurpose.value,
+        loanPurpose: this.selectedLoanPurpose,
         loanTenure: form.value.loanTenure,
         loanType: parseInt(this.selectedLoanType.value+"")
       };
@@ -1123,7 +1123,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.liveLoan =  this.qde.application.applicants[this.selectedApplicantIndex].existingLoans? this.qde.application.applicants[this.selectedApplicantIndex].existingLoans.liveLoan: 0 ;
     
 
-    this.selectedLoanProvider = this.qde.application.applicants[this.selectedApplicantIndex].existingLoans.loanProvider != '' ?  this.loanProviderList.find(v => v.value == this.qde.application.applicants[this.selectedApplicantIndex].existingLoans.loanProvider)    : this.loanProviderList[0];
+    this.selectedLoanProvider = this.qde.application.applicants[this.selectedApplicantIndex].existingLoans.loanProvider != '' ?  this.loanProviderList.find(v => v.value == this.qde.application.applicants[this.selectedApplicantIndex].existingLoans.loanProvider)    : this.defaultItem; //this.loanProviderList[0]
 
     console.log("slected loan provider", this.qde.application.applicants[this.selectedApplicantIndex].existingLoans.loanProvider);
     this.monthlyEmiValue = this.qde.application.applicants[this.selectedApplicantIndex].existingLoans ? this.qde.application.applicants[this.selectedApplicantIndex].existingLoans.monthlyEmi ? this.qde.application.applicants[this.selectedApplicantIndex].existingLoans.monthlyEmi+'' :'' :'';
@@ -1176,7 +1176,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
                   this.isErrorModal = true;
                   this.errorMessage = "Something went wrong, please try again later.";
                 });
-                if(this.selectedLoanPurpose && ['16', '17'].includes(this.selectedLoanPurpose.value)){
+                if(this.selectedLoanPurpose && ['16', '17'].includes(this.selectedLoanPurpose)){
                   this.goToNextSlide(swiperInstance1, swiperInstance2);
                 }
                 else{

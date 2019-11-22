@@ -2339,6 +2339,7 @@
                                                     fieldFill
                                                     maxlength="10"
                                                     spellcheck="false"
+                                                    (input)="checkAmountLimit($event,1000)"
                                                     pattern="{{regexPattern.amount}}"
                                                     name="monthlyIncome"
                                                     (input)="checkAmountLimitMonthlyIncome($event)"
@@ -2351,6 +2352,7 @@
                                                     <div  class="invalid-feedback" *ngIf="isNumberLessThan1k">{{errors.incomeDetails.monthlyIncome.minamount}}</div>
                                                     <div  class="invalid-feedback" *ngIf="isNumberMoreThan100cr">{{errors.incomeDetails.monthlyIncome.maxamount}}</div>
                                                     <div *ngIf="monthlyIncome1.touched && monthlyIncome1.invalid" class="invalid-feedback">
+                                                            <div *ngIf="isLessAmount">{{errors.incomeDetails.familyIncome.minamount}}{{requirMinAmout}}</div>
                                                         <!-- <div *ngIf="monthlyIncome1.errors?.required">{{errors.incomeDetails.monthlyIncome.required}}</div> -->
                                                         <div *ngIf="monthlyIncome1.errors?.pattern">{{errors.incomeDetails.monthlyIncome.invalid}}</div>
 
@@ -2872,6 +2874,7 @@
                                       <div class="form-group last">
                                           <span class="control-title">Constitution</span>
                                           <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                                              [defaultItem]="defaultItem"
                                                               [data]="constitutions" 
                                                               textField="key"
                                                               valueField="value"
@@ -2890,11 +2893,12 @@
                                         </select> -->
                     
                                         <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                        [defaultItem]="defaultItem"
                                         [data]="relationships" 
                                         textField="key"
                                         valueField="value"
-                                        name="relationShip"
-                                        [valuePrimitive]="true"
+                                        name="relationShip" 
+                                        [valuePrimitive]="true"                                       
                                         [(ngModel)]="selectedRelationship">
                                         </kendo-dropdownlist>
                     
@@ -2902,8 +2906,8 @@
                                   </div>
                                     <div class="btn-wrap">
                                         <button class="btn btn-primary"
-                                                [ngClass]="{'disabled': (!organizationForm.valid || organizationDetails.day.value == 'DD' || organizationDetails.month.value == 'MM' || organizationDetails.year.value == 'YYYY')}"
-                                                [disabled]="(!organizationForm.valid || organizationDetails.day.value == 'DD' || organizationDetails.month.value == 'MM' || organizationDetails.year.value == 'YYYY')">Next
+                                                [ngClass]="{'disabled': (!organizationForm.valid || organizationDetails.day.value == 'DD' || organizationDetails.month.value == 'MM' || organizationDetails.year.value == 'YYYY' || selectedRelationship ==0 || selectedConstitution.value == 0)}"
+                                                [disabled]="(!organizationForm.valid || organizationDetails.day.value == 'DD' || organizationDetails.month.value == 'MM' || organizationDetails.year.value == 'YYYY' || selectedRelationship ==0 || selectedConstitution.value == 0)">Next
                                         </button>
                                     </div>
                                 </form>
@@ -3299,11 +3303,15 @@
                                               fieldFill
                                               tabindex="1"
                                               spellcheck="false"
+                                              minlength="5"
+                                              (input)="checkAmountLimit($event,50000)"
                                               pattern="{{regexPattern.revenue}}"
                                               required />
                                               <label for="revenue">Receipt/Gross turnover</label>
-                                              <div *ngIf="revenue.touched && revenue.invalid" class="invalid-feedback">
-                                                  <!-- <div *ngIf="revenue.errors?.required">{{errors.revenueDetails.revenue.required}}</div> -->
+                                              <div *ngIf="(revenue.touched && revenue.dirty) || qde.application.applicants[coApplicantIndex]?.revenueDetails.revenue < 50000" class="invalid-feedback">
+                                                  
+                                                  <!-- <div *ngIf="revenue.errors?.required">{{errors.revenueDetails.revenue.required}}</div> -->                                                 
+                                                  <div *ngIf="isLessAmount && qde.application.applicants[coApplicantIndex].revenueDetails.revenue < 50000">{{errors.incomeDetails.familyIncome.minamount}}{{requirMinAmout}}</div>
                                                   <div *ngIf="revenue.errors?.pattern">{{errors.revenueDetails.revenue.invalid}}</div>
                                               </div>
           
@@ -3318,14 +3326,17 @@
                                               [(ngModel)]="qde.application.applicants[coApplicantIndex].revenueDetails.annualNetIncome"
                                               fieldFill
                                               maxlength="15"
+                                              minlength="4"
                                               tabindex="2"
                                               spellcheck="false"
                                               #annualNetincome="ngModel"
-                                              name="annualNetIncome"
+                                              name="annualNetIncome"  
+                                              (input)="checkAmountLimit($event,1000)"                                            
                                               pattern="{{regexPattern.revenue}}" />
                                               <label for="net-income">Annual Net Profit</label>
-                                              <div *ngIf="annualNetincome.touched && annualNetincome.invalid" class="invalid-feedback">
+                                              <div *ngIf="(annualNetincome.touched && annualNetincome.dirty) || qde.application.applicants[coApplicantIndex]?.revenueDetails.annualNetIncome < 1000" class="invalid-feedback">
                                                   <!-- <div *ngIf="annualNetincome.errors?.required">{{errors.revenueDetails.annualNetincome.required}}</div> -->
+                                                  <div *ngIf="isLessAmount && qde.application.applicants[coApplicantIndex].revenueDetails.annualNetIncome < 1000">{{errors.incomeDetails.familyIncome.minamount}}{{requirMinAmout}}</div>
                                                   <div *ngIf="annualNetincome.errors?.pattern">{{errors.revenueDetails.annualNetincome.invalid}}</div>
                                               </div>
           
@@ -3358,8 +3369,8 @@
                                           </div> -->
                                       </div>
                                       <div class="btn-wrap">
-                                          <button type="submit" class="btn btn-primary" [ngClass]="{'disabled': (!revenueForm.valid)}"
-                                          [disabled]="!revenueForm.valid">Next</button>
+                                          <button type="submit" class="btn btn-primary" [ngClass]="{'disabled': (!revenueForm.valid || isLessAmount)}"
+                                          [disabled]="!revenueForm.valid || isLessAmount">Next</button>
                                       </div>
                                   </form>
                                   </div>
@@ -3436,6 +3447,8 @@
                                                     maxlength="10"
                                                     tabindex="1"
                                                     spellcheck="false"
+                                                    minlength="4"
+                                                    (input)="checkAmountLimit($event,1000)"
                                                     pattern="{{regexPattern.amount}}"
                                                     name="monthlyIncome"
                                                     (input)="checkAmountLimitMonthlyIncome($event)"
@@ -3448,8 +3461,9 @@
                                                     <div  class="invalid-feedback" *ngIf="isNumberLessThan1k">{{errors.incomeDetails.monthlyIncome.minamount}}</div>
                                                     <div  class="invalid-feedback" *ngIf="isNumberMoreThan100cr">{{errors.incomeDetails.monthlyIncome.maxamount}}</div>
                                                     <div *ngIf="monthlyIncome2.touched && monthlyIncome2.invalid" class="invalid-feedback">
-                                                    <!-- <div *ngIf="monthlyIncome2.errors?.required">{{errors.incomeDetails.monthlyIncome.required}}</div> -->
-                                                    <div *ngIf="monthlyIncome2.errors?.pattern">{{errors.incomeDetails.monthlyIncome.invalid}}</div>
+                                                        <div *ngIf="isLessAmount">{{errors.incomeDetails.familyIncome.minamount}}{{requirMinAmout}}</div>
+                                                        <!-- <div *ngIf="monthlyIncome2.errors?.required">{{errors.incomeDetails.monthlyIncome.required}}</div> -->
+                                                        <div *ngIf="monthlyIncome2.errors?.pattern">{{errors.incomeDetails.monthlyIncome.invalid}}</div>
 
                                                 </div>
                                                 </div>

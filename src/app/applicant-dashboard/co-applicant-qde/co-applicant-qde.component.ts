@@ -3187,7 +3187,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       // try {
       //   this.selectedRelationship = this.qde.application.applicants[this.coApplicantIndex].personalDetails.relationShip || this.relationships[0].value;
       // } catch(ex) {
-      //   this.selectedRelationship = this.relationships[0].value;
+      //   this.selectedRelationship = this.defaultItem.value;
       // }
 
       // // Incoming from create in Individual Pan

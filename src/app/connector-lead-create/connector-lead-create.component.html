@@ -166,12 +166,14 @@
                         <div class="form-group">
                             <span class="control-title">Type of loan</span>
                             <kendo-dropdownlist
+                              [defaultItem]="defaultItem"
                               class="form-control"
                               name="loanType"
                               [data]="loanType" 
                               textField="key"
                               valueField="value"
-                              [(ngModel)]="qde.application.leadCreate.loanType">
+                              [(ngModel)]="selectedLoanType">selectedLoanType
+                              <!-- [(ngModel)]="qde.application.leadCreate.loanType" -->
                             </kendo-dropdownlist>
                         </div>
                         <div class="error-msg">
@@ -179,8 +181,8 @@
                         </div>
                       <div class="btn-wrap">
                           <button class="btn btn-primary"
-                          [ngClass]="{'disabled': (!leadForm.valid)|| isNumberLessThan50k || isNumberMoreThan100cr}"
-                          [disabled]="!leadForm.valid || isNumberLessThan50k || isNumberMoreThan100cr"
+                          [ngClass]="{'disabled': (!leadForm.valid)|| isNumberLessThan50k || isNumberMoreThan100cr || selectedLoanType.value ==0}"
+                          [disabled]="!leadForm.valid || isNumberLessThan50k || isNumberMoreThan100cr || selectedLoanType.value == 0"
                           >Submit</button>
                       </div>
                   </form>

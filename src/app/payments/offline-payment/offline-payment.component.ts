@@ -13,6 +13,7 @@ import { QdeService } from 'src/app/services/qde.service';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
 import { Subscription } from 'rxjs';
 import { statuses, screenPages } from '../../app.constants';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-offline-payment',
@@ -131,6 +132,8 @@ export class OfflinePaymentComponent implements OnInit {
   getQdeDataSub: Subscription;
   qde: Qde;
 
+  public defaultItem = environment.defaultItem;
+
   constructor(
     private renderer: Renderer2,
     private route: ActivatedRoute,
@@ -161,7 +164,7 @@ export class OfflinePaymentComponent implements OnInit {
 
   ngOnInit() {
     // this.renderer.addClass(this.select2.selector.nativeElement, 'js-select');
-
+    
     this.route.fragment.subscribe(fragment => {
       let localFragment = fragment;
 
