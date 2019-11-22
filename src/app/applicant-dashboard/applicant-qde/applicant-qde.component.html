@@ -621,6 +621,7 @@
                             <span class="optional">10 digit</span>
                             <button type="button" *ngIf="!qde.application.applicants[applicantIndex].contactDetails.isMobileOTPverified"
                               href="javascript:void(0);" class="sent-otp modal-init" 
+                              [ngClass]="{'disabled': (!mobileNumber.valid || RegExp(regexPattern.sameDigit).test(mobileNumber.value))}"
                               [disabled]="!mobileNumber.valid || RegExp(regexPattern.sameDigit).test(mobileNumber.value)" data-target="sent-otp-modal"
                                (click)="submitOTP(contactForm, false)">Send OTP<span
                                 class="icon icon-tick"></span></button>
@@ -1869,6 +1870,8 @@
                                 pattern="{{regexPattern.mobileNumber}}"
                                 [(ngModel)]="officialCorrespondencePhoneNumber" />
                               <label for="res-no03">Office number</label>
+                              <div class="invalid-feedback" *ngIf="RegExp(regexPattern.sameDigit).test(phoneNumber.value)">
+                                {{errors.corporateAddress.phoneNumber.invalid}}</div>
                               <div *ngIf="offStdNumber.touched && offStdNumber.invalid" class="invalid-feedback">
                                 <!-- <div *ngIf="offStdNumber.errors?.required">{{errors.officialCorrespondence.phoneNumber.required}}</div> -->
                                 <div *ngIf="offStdNumber.errors?.pattern || offStdNumber.errors?.minlength">
@@ -1901,8 +1904,8 @@
 
                         <div class="btn-wrap">
                           <button type="submit" class="btn btn-primary"
-                            [ngClass]="{'disabled': (!officialCorrespondenceForm.valid) || (qde.application.applicants[applicantIndex].officialCorrespondence.officeEmailId)?.length == 100 || !qde.application.applicants[applicantIndex].officialCorrespondence.cityState}"
-                            [disabled]="!officialCorrespondenceForm.valid || (qde.application.applicants[applicantIndex].officialCorrespondence.officeEmailId)?.length == 100 || !qde.application.applicants[applicantIndex].officialCorrespondence.cityState">Next
+                            [ngClass]="{'disabled': (!officialCorrespondenceForm.valid) || (qde.application.applicants[applicantIndex].officialCorrespondence.officeEmailId)?.length == 100 || !qde.application.applicants[applicantIndex].officialCorrespondence.cityState} || RegExp(regexPattern.sameDigit).test(phoneNumber.value)"
+                            [disabled]="!officialCorrespondenceForm.valid || (qde.application.applicants[applicantIndex].officialCorrespondence.officeEmailId)?.length == 100 || !qde.application.applicants[applicantIndex].officialCorrespondence.cityState || RegExp(regexPattern.sameDigit).test(phoneNumber.value)">Next
                           </button>
                         </div>
                       </form>

@@ -762,7 +762,8 @@
                                                   <span class="optional">10 digit</span>
           
                                                   <button type="button" *ngIf="!qde.application.applicants[coApplicantIndex].contactDetails.isMobileOTPverified" 
-                                                  href="javascript:void(0);" class="sent-otp modal-init" data-target="sent-otp-modal" 
+                                                  href="javascript:void(0);" class="sent-otp modal-init" data-target="sent-otp-modal"
+                                                  [ngClass]="{'disabled': (!mobileNumber.valid || RegExp(regexPattern.sameDigit).test(mobileNumber.value))}" 
                                                   [disabled]="!mobileNumber.valid || RegExp(regexPattern.sameDigit).test(mobileNumber.value)" 
                                                   (click)="submitOTP(contactForm, false)">Send OTP<span class="icon icon-tick"></span></button>
                                                   <a *ngIf="qde.application.applicants[coApplicantIndex].contactDetails.isMobileOTPverified" 
@@ -3216,6 +3217,8 @@
                                                               data-validation-attr="residenceno" 
                                                               required/>
                                                       <label for="ca-res-no">Office number</label>
+                                                      <div class="invalid-feedback" *ngIf="RegExp(regexPattern.sameDigit).test(phoneNumber.value)">
+                                                        {{errors.corporateAddress.phoneNumber.invalid}}</div>
                                                       <div *ngIf="phoneNumber.touched  && phoneNumber.invalid" class="invalid-feedback">
                                                         <!-- <div *ngIf="phoneNumber.errors?.required">{{errors.corporateAddress.phoneNumber.required}}</div> -->
                                                         <div *ngIf="phoneNumber.errors?.pattern || phoneNumber.errors?.minlength">{{errors.corporateAddress.phoneNumber.invalid}}</div>
@@ -3249,9 +3252,9 @@
                                           </div>
                                           <div class="btn-wrap">
                                               <button type="submit" class="btn btn-primary" 
-                                              [ngClass]="{'disabled': (!corporateAddressForm.valid) ||
+                                              [ngClass]="{'disabled': (!corporateAddressForm.valid) || RegExp(regexPattern.sameDigit).test(phoneNumber.value) ||
                                               (qde.application.applicants[coApplicantIndex].corporateAddress.officeEmailId)?.length == 100 || !qde.application.applicants[coApplicantIndex].corporateAddress.cityState}"
-                                              [disabled]="!corporateAddressForm.valid || 
+                                              [disabled]="!corporateAddressForm.valid || RegExp(regexPattern.sameDigit).test(phoneNumber.value) ||
                                               (qde.application.applicants[coApplicantIndex].corporateAddress.officeEmailId)?.length == 100 || !qde.application.applicants[coApplicantIndex].corporateAddress.cityState">Next</button>
                                           </div>
                                       </form>
