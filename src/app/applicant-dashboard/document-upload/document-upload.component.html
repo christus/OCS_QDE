@@ -8,7 +8,7 @@
                 <li class="tab-link " [ngClass]="{'active': (activeTab == 0), 'hide': (!applicantIndividual)}">
                     <a href="javascript:void(0);" (click)="tabSwitch(0)">Dashboard</a>
                 </li>
-                <li class="tab-link" [ngClass]="{'disabled': isTabDisabled, 'active': (activeTab == 1), 'hide': (!applicantIndividual)}">
+                <li class="tab-link" *ngIf="qde?.application?.applicants[applicantIndex]?.isIndividual == true" [ngClass]="{'disabled': isTabDisabled, 'active': (activeTab == 1), 'hide': (!applicantIndividual)}">
                     <a href="javascript:void(0);" (click)="tabSwitch(1)">Customer Photo</a>
                   </li>
                 <li class="tab-link " [ngClass]="{'disabled': isTabDisabled, 'active': (activeTab == 2), 'hide': (!applicantIndividual)}">

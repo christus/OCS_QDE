@@ -528,7 +528,11 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
         // Go To Previous Tab. If income consider is No then to Address Proof instead of Banking
         if(this.qde.application.applicants[this.applicantIndex].incomeDetails.incomeConsider == false && this.activeTab == 6) {
           this.tabSwitch(this.activeTab - 2);
-        } else {
+        }
+        else if(this.qde.application.applicants[this.applicantIndex].isIndividual == false && this.activeTab == 2){
+          this.tabSwitch(this.activeTab - 2);
+        }
+        else {
           this.tabSwitch(this.activeTab - 1);
         }
       }
@@ -1283,7 +1287,13 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
     this.applicantIndex = index;
     // this.isTabDisabled = false;
     // this.router.navigate(['/document-uploads/'+applicationId+'/applicant/'+mainApplicantId], {queryParams: {tabName: this.fragments[1], page: 1}});
-    this.tabSwitch(1);
+    if(this.qde.application.applicants[this.applicantIndex].isIndividual == false){
+      this.tabSwitch(2);
+    }
+    else{
+      this.tabSwitch(1);
+    }
+   
   }
 
   loadDocuments(documents: Array<any>, index: number, callback) {
