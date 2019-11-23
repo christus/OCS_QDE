@@ -10,7 +10,7 @@
       </div>
   </div>
   <div class="rhs">
-      <form class="bs-form" autocomplete="off">
+      <form class="bs-form margin_top" autocomplete="off">
           <div class="form-wrap">
               <div class="form-group">
                 <input type="text" #userNameField [(ngModel)]="userName" class="form-control" name="userName" id="emp-id" fieldFill  />
@@ -38,8 +38,8 @@
           </div>
       </form>
   </div>
-  <div class="container">
-    <div class="bottomright" title="{{buildDate}}">Version - {{version}}</div>
+  <div class="container version_container">
+    <div class="bottomright version_container" title="{{buildDate}}">Version - {{version}}</div>
   </div>
 
   <div class="overlay" [ngClass]="{'active': activeSessionExists}"></div>

@@ -1,3 +1,4 @@
+import { QdeHttpService } from 'src/app/services/qde-http.service';
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -8,7 +9,8 @@ import { environment } from 'src/environments/environment';
 })
 export class CaptchaResolverService implements Resolve<Observable<any>> {
   captchaData;
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+    private qdeHttp: QdeHttpService) { }
 
   resolve(): any {
    this.captchaData = this.getCaptchaData("");
@@ -21,6 +23,6 @@ export class CaptchaResolverService implements Resolve<Observable<any>> {
 
     // let uri = environment.host + '/account/login_ne';
     // let uri = environment.host + '/account/login';
-   return this.http.get(uri);
+    return this.qdeHttp.callGet(uri);
   }
 }

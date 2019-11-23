@@ -1,3 +1,4 @@
+import { MobileService } from './../../services/mobile-constant.service';
 import { AutoLogoutService } from './../../services/AutoLogoutService';
 import { environment } from 'src/environments/environment';
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
@@ -19,6 +20,7 @@ import { Observable } from 'rxjs';
 })
 export class LoginComponent implements OnInit, AfterViewInit {
 
+  isMobile: any;
   userName = "";
   password = "";
   captchaText = "";
@@ -42,7 +44,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
     private encrytionService: EncryptService,
     private catchaDataService: CaptchaResolverService ,
     private activeRout: ActivatedRoute,
-    private autoLogout: AutoLogoutService
+    private autoLogout: AutoLogoutService,
+    private mobileService: MobileService,
   ) {
     this.catchaImageData = this.activeRout.snapshot.data;
     this.base64Data = this.catchaImageData["catchaImage"]["catchaImage"];
@@ -93,7 +96,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
         this.commonDataService.setLogindata(data);
         localStorage.setItem("token", res["token"] ? res["token"] : "");
         this.roleLogin();
-        this.checkLogin();
+        //this.checkLogin();
 
         this.autoLogout.initInterval();
 
@@ -102,7 +105,17 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
         let getTypeOfError = error.length;
           if (!getTypeOfError) {
-            let getError = JSON.parse(this.decryptResponse( error));
+
+            this.isMobile = this.mobileService.isMobile;
+
+            let getError;
+            
+            if(this.isMobile) {
+              getError = error;
+            }else{
+              getError = JSON.parse(this.decryptResponse( error));
+            }
+
             if (getError["message"] == "Invalid captcha"){
               this.sessionMessage = getError["message"];
               this.activeSessionExists = getError["activeSessionExists"];
@@ -188,30 +201,30 @@ export class LoginComponent implements OnInit, AfterViewInit {
     );
   }
 
-  checkLogin() {
-    let data = {
-      'email': 'icici@icicibankltd.com',
-      'password': 'icici@123',
-      'longTimeToken': true
-    };
+  // checkLogin() {
+  //   let data = {
+  //     'email': 'icici@icicibankltd.com',
+  //     'password': 'icici@123',
+  //     'longTimeToken': true
+  //   };
 
-    this.qdeService.longLiveAuthenticate(data).subscribe(
-      res => {
-        console.log("response");
-        console.log("login-response: ",res);
+  //   this.qdeService.longLiveAuthenticate(data).subscribe(
+  //     res => {
+  //       console.log("response");
+  //       console.log("login-response: ",res);
 
-        localStorage.setItem("token", res["token"] ? res["token"] : "");
+  //       localStorage.setItem("token", res["token"] ? res["token"] : "");
 
-        this.router.navigate(['/setPin']);
+  //       this.router.navigate(['/setPin']);
 
-      },
-      error => {
-        console.log("error-response");
+  //     },
+  //     error => {
+  //       console.log("error-response");
 
-        console.log(error);
-      }
-    );
-  }
+  //       console.log(error);
+  //     }
+  //   );
+  // }
 
   ngAfterViewInit() {
     this.userNameField.nativeElement.focus();

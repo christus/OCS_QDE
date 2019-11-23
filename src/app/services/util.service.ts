@@ -36,55 +36,57 @@ export class UtilService {
     localStorage.removeItem('token');
     localStorage.removeItem('roles');
     localStorage.removeItem('userId')
-    if(this.isMobile) {
-      this.navigateToLoginWithMpin();
-      return;
-    }else {
-      this.navigateToLogin();
-    }   
+    // if(this.isMobile) {
+    //   this.navigateToLoginWithMpin();
+    //   return;
+    // }else {
+    //   this.navigateToLogin();
+    // }
+    
+    this.navigateToLogin();
   }
 
   navigateToLogin() {
     this.router.navigate(['/login']);
   }
 
-  navigateToLoginWithMpin() {
+  // navigateToLoginWithMpin() {
     
-   let isFirstTime = localStorage.getItem("firstTime");
+  //  let isFirstTime = localStorage.getItem("firstTime");
 
-   console.log("isFirstTime", isFirstTime);
+  //  console.log("isFirstTime", isFirstTime);
 
-   if(isFirstTime == null) {
+  //  if(isFirstTime == null) {
 
-    let data = {
-      'email': environment.userName,
-      'password': environment.password,
-      'longTimeToken': true
-    }
+  //   let data = {
+  //     'email': environment.userName,
+  //     'password': environment.password,
+  //     'longTimeToken': true
+  //   }
 
-    console.log("data", isFirstTime);
+  //   console.log("data", isFirstTime);
   
-    this.qdehttpService.longLiveAuthenticate(data).subscribe(
-      res => {
-        console.log("response");
-        console.log("login-response: ",res);
+  //   this.qdehttpService.longLiveAuthenticate(data).subscribe(
+  //     res => {
+  //       console.log("response");
+  //       console.log("login-response: ",res);
 
-        localStorage.setItem("token", res["token"] ? res["token"] : "");
+  //       localStorage.setItem("token", res["token"] ? res["token"] : "");
 
-        this.router.navigate(['/setPin']);
+  //       this.router.navigate(['/setPin']);
 
-      },
-      error => {
-        console.log("error-response");
+  //     },
+  //     error => {
+  //       console.log("error-response");
 
-        console.log(error);
-      }
-    );
+  //       console.log(error);
+  //     }
+  //   );
 
-    return;
-   }
+  //   return;
+  //  }
 
-    this.router.navigate(['/loginWithPin']);
-  }
+  //   this.router.navigate(['/loginWithPin']);
+  // }
   
 }

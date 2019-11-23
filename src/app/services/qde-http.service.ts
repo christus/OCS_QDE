@@ -1,3 +1,5 @@
+import { UtilService } from 'src/app/services/util.service';
+import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { MobileService } from './mobile-constant.service';
 import { Injectable } from '@angular/core';
@@ -51,6 +53,8 @@ export class QdeHttpService {
   private httpIonic: HTTP,
   private mobileService: MobileService,
   private ngxService: NgxUiLoaderService,
+  private router: Router,
+  private cds: CommonDataService,
   private encrytionService: EncryptService) {
 
     this.commonDataService.loginData.subscribe(result => {
@@ -2859,6 +2863,9 @@ createOrUpdatePersonalDetails(qde) {
           'Content-Type': 'application/json',
           'authentication-token':  localStorage.getItem('token') ? localStorage.getItem('token') : '',
         };
+
+        this.httpIonic.setSSLCertMode("nocheck");
+
         this.httpIonic.get(url, {}, headers).then(result => {
           const data = JSON.parse(result.data);
           observer.next(data);
@@ -2894,7 +2901,8 @@ createOrUpdatePersonalDetails(qde) {
     }else if(serviceType == "login" && this.isMobile) {
       setUrl = environment.host + '/account/v3/login';
       reqEntity = JSON.stringify(requestEntity);
-    }else if(serviceType == "login" && !this.isMobile) {
+    }
+    else if(serviceType == "login") {
       setUrl = environment.host + '/account/' +environment.apiVersion.login+ 'login';
       reqEntity = JSON.stringify(requestEntity);
     }else if(serviceType == "uploadAppiyoDrive") {
@@ -2929,6 +2937,8 @@ createOrUpdatePersonalDetails(qde) {
 
       const obs = new Observable((observer) => {
 
+        let data;
+
         this.httpIonic.setSSLCertMode("nocheck");
 
         console.log("post requestEntity********", reqEntity);
@@ -2950,20 +2960,62 @@ createOrUpdatePersonalDetails(qde) {
         this.httpIonic.sendRequest(setUrl, this.ionicOption).then(result => {
 
           console.log("result", result);
-          let decritedData = that.encrytionService.decryptMobileResponse(result);
-          console.log("decritedData", decritedData);
-          
-          const data = JSON.parse(decritedData);
-          console.log("~~~***Response***~~~", data);
+
+          if (result["headers"]["content-type"] != "text/plain" && typeof(result["data"] != "object")) {
+            data = JSON.parse(result["data"]);
+          }else {
+            let decritedData = that.encrytionService.decryptMobileResponse(result);
+            console.log("decritedData", decritedData);
+            
+            data = JSON.parse(decritedData);
+            console.log("~~~***Response***~~~", data);
+          }
 
           observer.next(data);
           observer.complete();
           this.ngxService.stop();
+
+          if (data && data["login_required"]){
+            
+            if(this.router.url.search('auto-login') == -1) {
+                this.cds.setDialogData(true);
+                localStorage.removeItem('token');
+                localStorage.removeItem('roles');
+                localStorage.removeItem('userId')
+                this.router.navigate(['/login']);                
+            }
+
+            localStorage.removeItem('token');
+            localStorage.removeItem('roles');
+            localStorage.removeItem('userId')
+            this.router.navigate(['/login']);      
+          }
+         
+
+       
         }).catch(error => {
-          observer.error(error);
+
+          console.log("~~~***Response error***~~~", error);
+
+          if (error["headers"]["content-type"] == "text/plain") {
+            console.log("text/plain");
+            let decritedData = that.encrytionService.decryptMobileResponse(error);
+            console.log("decritedData", decritedData);
+            
+            data = JSON.parse(decritedData);
+          }
+
+          if (error["headers"]["content-type"] != "text/plain" && typeof(error["data"] != "object")) {
+            data = JSON.parse(error["data"]);
+          }
+
+          observer.error(data);
           observer.complete();
           this.ngxService.stop();
-          console.log("~~~***Response error***~~~", error);
+
+       
+
+
         });
 
       });
@@ -3202,7 +3254,7 @@ createOrUpdatePersonalDetails(qde) {
 
     // let uri = environment.host + '/account/login_ne';
     // let uri = environment.host + '/account/login';
-    return this.http.get(uri);
+      return this.callGet(uri);
   }
 
 }
