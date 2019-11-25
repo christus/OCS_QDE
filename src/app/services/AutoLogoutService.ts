@@ -92,7 +92,7 @@ export class AutoLogoutService {
       // console.log("isTokenAvailable- autologoutservice", isTokenAvailable);
       // console.log("dontRunNgZone- autologoutservice", dontRunNgZone);
       if (isTimeout && isTokenAvailable && !dontRunNgZone) {
-        console.log(`Sie wurden automatisch nach ${MINUTES_UNITL_AUTO_LOGOUT} Minuten Inaktivität ausgeloggt.`);
+        // console.log(`Sie wurden automatisch nach ${MINUTES_UNITL_AUTO_LOGOUT} Minuten Inaktivität ausgeloggt.`);
 
         this.cds.setDialogData(true);
 

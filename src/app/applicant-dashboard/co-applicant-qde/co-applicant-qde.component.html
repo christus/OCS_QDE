@@ -3320,10 +3320,10 @@
                                               pattern="{{regexPattern.revenue}}"
                                               required />
                                               <label for="revenue">Receipt/Gross turnover</label>
-                                              <div *ngIf="(revenue.touched && revenue.dirty) || qde.application.applicants[coApplicantIndex]?.revenueDetails.revenue < 50000" class="invalid-feedback">
+                                              <div *ngIf="(revenue.touched && revenue.dirty) && qde.application.applicants[coApplicantIndex].revenueDetails.revenue < 50000" class="invalid-feedback">
                                                   
                                                   <!-- <div *ngIf="revenue.errors?.required">{{errors.revenueDetails.revenue.required}}</div> -->                                                 
-                                                  <div *ngIf="isLessAmount && qde.application.applicants[coApplicantIndex].revenueDetails.revenue < 50000">{{errors.incomeDetails.familyIncome.minamount}}{{requirMinAmout}}</div>
+                                                  <div *ngIf="isLessAmount && qde.application.applicants[coApplicantIndex]?.revenueDetails.revenue < 50000">{{errors.incomeDetails.familyIncome.minamount}}{{requirMinAmout}}</div>
                                                   <div *ngIf="revenue.errors?.pattern">{{errors.revenueDetails.revenue.invalid}}</div>
                                               </div>
           
@@ -3344,11 +3344,11 @@
                                               #annualNetincome="ngModel"
                                               name="annualNetIncome"  
                                               (input)="checkAmountLimit($event,1000)"                                            
-                                              pattern="{{regexPattern.revenue}}" />
+                                              pattern="{{regexPattern.amount}}" />
                                               <label for="net-income">Annual Net Profit</label>
-                                              <div *ngIf="(annualNetincome.touched && annualNetincome.dirty) || qde.application.applicants[coApplicantIndex]?.revenueDetails.annualNetIncome < 1000" class="invalid-feedback">
+                                              <div *ngIf="(annualNetincome.touched && annualNetincome.dirty && annualNetincome.invalid) && qde.application.applicants[coApplicantIndex].revenueDetails.annualNetIncome < 1000" class="invalid-feedback">
                                                   <!-- <div *ngIf="annualNetincome.errors?.required">{{errors.revenueDetails.annualNetincome.required}}</div> -->
-                                                  <div *ngIf="isLessAmount && qde.application.applicants[coApplicantIndex].revenueDetails.annualNetIncome < 1000">{{errors.incomeDetails.familyIncome.minamount}}{{requirMinAmout}}</div>
+                                                  <div *ngIf="isLessAmount && qde.application.applicants[coApplicantIndex]?.revenueDetails.annualNetIncome < 1000">{{errors.incomeDetails.familyIncome.minamount}}{{requirMinAmout}}</div>
                                                   <div *ngIf="annualNetincome.errors?.pattern">{{errors.revenueDetails.annualNetincome.invalid}}</div>
                                               </div>
           
@@ -3528,7 +3528,13 @@
                     <div class="duplicate-table-data-wrapper">
                         <div class="duplicate-table-data" *ngFor="let d of duplicates;let i=index;">
                             <div class="duplicate-table-col">{{d['applicantId']}}</div>
-                            <div class="duplicate-table-col">{{d['personalDetails']['firstName']}}{{d['personalDetails']['middleName'] ? " "+d['personalDetails']['middleName'] : ""}}{{" "+d['personalDetails']['lastName']}}</div>
+                            <div class="duplicate-table-col" *ngIf ="qde.application.applicants[coApplicantIndex].isIndividual">
+                                {{d['personalDetails']['firstName']}}{{d['personalDetails']['middleName'] ? " "+d['personalDetails']['middleName'] : ""}}{{" "+d['personalDetails']['lastName']}}
+                                {{qde.application.applicants[coApplicantIndex].isIndividual}}
+                            </div>
+                            <div class="duplicate-table-col" *ngIf ="!qde.application.applicants[coApplicantIndex].isIndividual">
+                                    {{d['organizationDetails']['nameOfOrganization']}}
+                                </div>
                             <div class="duplicate-table-col">
                                 <input type="radio" name="selectDuplicateApplicant" [value]="d['applicantId']" ngModel class="duplicate-radio" />
                             </div>
@@ -3570,13 +3576,13 @@
         </div>
     </div>
     <div class="overlay" [ngClass]="{'active': isErrorModal}"></div>
-    <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isErrorModal}">
+    <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isErrorModal}" style="text-align:center;">
         <!-- <a class="modal-close" href="javascript:void(0);" (click)="onBackOTP()"><span class="icon icon-close"></span></a> -->
         <a class="modal-close" (click)="onCrossModal()"><span class="icon icon-close"></span></a>
         <div class="modal-body">
         <h1>{{errorMessage}}</h1>
         <div class="btn-wrap">
-            <button class="btn btn-border" (click)="isErrorModal = false">Cancel</button>
+            <button class="btn btn-border" (click)="isErrorModal = false">OK</button>
         </div>
         </div>
     </div>

@@ -212,7 +212,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   loanType: Array<any>;
   isPropertyIdentified = false;
-  selectedLoanPurpose: any;
+  selectedLoanPurpose:  any;
   selectedLoanType: any;
 
   propertyTypes: Array<Item>;
@@ -452,13 +452,14 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
           //   this.loanpurposes[0].value;
           if(result.application.loanDetails.loanAmount.loanType) {
             this.selectedLoanPurpose =
-            result.application.loanDetails.loanAmount.loanPurpose ||
-            this.defaultItem.value;
+            result.application.loanDetails.loanAmount.loanPurpose;
+            // ||
+            // this.defaultItem.value.toString();
             // this.loanpurposes[0].value;
             // this.setLoanPurposes(result.application.loanDetails.loanAmount.loanType+"", result.application.loanDetails.loanAmount.loanPurpose);
           } else {
             // this.loanpurposes = [{key: '', value: ''}];
-            this.selectedLoanPurpose = this.defaultItem.value;
+            this.selectedLoanPurpose = this.defaultItem;
             // this.loanpurposes[0]
           }
 
@@ -824,7 +825,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     else {
       // go to previous slide
-      if(this.tabName == this.fragments[2] && this.page == 4 && (this.selectedLoanPurpose != 16 || this.selectedLoanPurpose != 17)){
+      if(this.tabName == this.fragments[2] && this.page == 4 && (this.selectedLoanPurpose != "16" || this.selectedLoanPurpose != "17")){
         this.router.navigate([], {queryParams: {tabName: this.tabName, page: this.page-2}});
       }
       else{

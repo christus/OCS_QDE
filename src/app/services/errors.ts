@@ -116,7 +116,9 @@ export const errors: any = {
     },
     salaryAmount: {
       required: "Salary Amount is mandatory",
-      invalid: "Invalid Amount / Alphabets and Special Characters not allowed"
+      invalid: "Invalid Amount / Alphabets and Special Characters not allowed",
+      minamount: "Amount should be greater than or equal to Rs.",
+      maxamount: "Amount should be less than or equal to Rs.",
     }
   },
 

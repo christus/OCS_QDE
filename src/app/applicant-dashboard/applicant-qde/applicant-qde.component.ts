@@ -268,7 +268,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   selectedConstitutions: Item;
 
   docType: Array<any>;
-  selectedAssesmentMethodology: Array<any>;
+  // selectedAssesmentMethodology: Array<any>;
+  selectedAssesmentMethodology: Item;
 
   // panslideSub: Subscription;
   // panslide2Sub: Subscription;
@@ -595,299 +596,13 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         // If not coming from leads dashboard
         // if(this.qdeService.getQde().application.applicationId == "" || this.qdeService.getQde().application.applicationId == null) {
         this.getQdeDataSub = this.qdeHttp.getQdeData(params.applicationId).subscribe(response => {
+          
           console.log("RESPONSE ", response);
           var result = JSON.parse(response["ProcessVariables"]["response"]);
           console.log("Get ", result);
-
           this.qde = result;
           this.qdeService.setQde(result);
-          this.cds.setStatus(result.application.status);
-          this.cds.setactiveTab(screenPages['applicantDetails']);
-          this.applicantIndex = result.application.applicants.findIndex(v => v.isMainApplicant == true);
-          this.cds.enableTabsIfStatus1(this.qde.application.status);
-          this.tempOldPanNumber = result.application.applicants[this.applicantIndex].pan.panNumber;
-
-          this.loadOccupationTypeLovs(this.qde.application.applicants[this.applicantIndex].occupation.occupationType);
-          if (this.qde.application.auditTrailDetails.screenPage == screenPages['applicantDetails']) {
-            this.goToExactPageAndTab(this.fragments.findIndex(v => v == this.qde.application.auditTrailDetails.tabPage), this.qde.application.auditTrailDetails.pageNumber);
-          }
-          // else if(this.qde.application.auditTrailDetails.screenPage == screenPages['loanDetails']){
-          //   this.router.navigate(['/loanDetails/'+this.qde.application.applicationId]);
-          // }
-          // else{
-          //   if(this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
-          //     this.goToExactPageAndTab(0, 1);
-          //   } else if(this.qde.application[this.applicantIndex].isIndividual == false) {
-          //     this.goToExactPageAndTab(1, 1);
-          //   } else {
-          //     this.goToExactPageAndTab(0, 1);
-          //   }
-          // }
-
-          try {
-            // this.qde.application.applicationFormNumber = "ijijijjjjj"
-            if (result.application.applicants[this.applicantIndex].communicationAddress != null) {
-              this.commCityState = "";
-              if (result.application.applicants[this.applicantIndex].communicationAddress.city) {
-                this.commCityState = result.application.applicants[this.applicantIndex].communicationAddress.city + " " + result.application.applicants[this.applicantIndex].communicationAddress.state;
-              }
-              this.qde.application.applicants[this.applicantIndex].communicationAddress.city = result.application.applicants[this.applicantIndex].communicationAddress.city;
-              this.qde.application.applicants[this.applicantIndex].communicationAddress.state = result.application.applicants[this.applicantIndex].communicationAddress.state;
-              this.qde.application.applicants[this.applicantIndex].communicationAddress.cityState = this.commCityState;
-              this.qde.application.applicants[this.applicantIndex].communicationAddress.zipcodeId = result.application.applicants[this.applicantIndex].communicationAddress.zipcodeId;
-              this.qde.application.applicants[this.applicantIndex].communicationAddress.stateId = result.application.applicants[this.applicantIndex].communicationAddress.stateId;
-              this.qde.application.applicants[this.applicantIndex].communicationAddress.cityId = result.application.applicants[this.applicantIndex].communicationAddress.cityId;
-            }
-          } catch (e) { }
-          try {
-            if (result.application.applicants[this.applicantIndex].permanentAddress != null) {
-              this.commCityState = "";
-              if (result.application.applicants[this.applicantIndex].permanentAddress.city) {
-                this.commCityState = result.application.applicants[this.applicantIndex].permanentAddress.city + " " + result.application.applicants[this.applicantIndex].permanentAddress.state;
-              }
-
-              this.qde.application.applicants[this.applicantIndex].permanentAddress.city = result.application.applicants[this.applicantIndex].permanentAddress.city;
-              this.qde.application.applicants[this.applicantIndex].permanentAddress.state = result.application.applicants[this.applicantIndex].permanentAddress.state;
-              this.qde.application.applicants[this.applicantIndex].permanentAddress.cityState = this.commCityState;
-              this.qde.application.applicants[this.applicantIndex].permanentAddress.zipcodeId = result.application.applicants[this.applicantIndex].permanentAddress.zipcodeId;
-              this.qde.application.applicants[this.applicantIndex].permanentAddress.stateId = result.application.applicants[this.applicantIndex].permanentAddress.stateId;
-              this.qde.application.applicants[this.applicantIndex].permanentAddress.cityId = result.application.applicants[this.applicantIndex].permanentAddress.cityId;
-
-
-            }
-          } catch (e) { }
-          try {
-            if (result.application.applicants[this.applicantIndex].residentialAddress != null) {
-              this.commCityState = "";
-              if (result.application.applicants[this.applicantIndex].residentialAddress.city) {
-                this.commCityState = result.application.applicants[this.applicantIndex].residentialAddress.city + " " + result.application.applicants[this.applicantIndex].residentialAddress.state;
-              }
-
-              this.qde.application.applicants[this.applicantIndex].residentialAddress.city = result.application.applicants[this.applicantIndex].residentialAddress.city;
-              this.qde.application.applicants[this.applicantIndex].residentialAddress.state = result.application.applicants[this.applicantIndex].residentialAddress.state;
-              this.qde.application.applicants[this.applicantIndex].residentialAddress.cityState = this.commCityState;
-              this.qde.application.applicants[this.applicantIndex].residentialAddress.zipcodeId = result.application.applicants[this.applicantIndex].residentialAddress.zipcodeId;
-              this.qde.application.applicants[this.applicantIndex].residentialAddress.stateId = result.application.applicants[this.applicantIndex].residentialAddress.stateId;
-              this.qde.application.applicants[this.applicantIndex].residentialAddress.cityId = result.application.applicants[this.applicantIndex].residentialAddress.cityId;
-
-            }
-          } catch (e) { }
-          try {
-            if (result.application.applicants[this.applicantIndex].officialCorrespondence != null) {
-              this.commCityState = "";
-              if (result.application.applicants[this.applicantIndex].officialCorrespondence.city) {
-                this.commCityState = result.application.applicants[this.applicantIndex].officialCorrespondence.city + " " + result.application.applicants[this.applicantIndex].officialCorrespondence.state;
-              }
-              this.qde.application.applicants[this.applicantIndex].officialCorrespondence.city = result.application.applicants[this.applicantIndex].officialCorrespondence.city;
-              this.qde.application.applicants[this.applicantIndex].officialCorrespondence.state = result.application.applicants[this.applicantIndex].officialCorrespondence.state;
-              this.qde.application.applicants[this.applicantIndex].officialCorrespondence.cityState = this.commCityState;
-              this.qde.application.applicants[this.applicantIndex].officialCorrespondence.zipcodeId = result.application.applicants[this.applicantIndex].officialCorrespondence.zipcodeId;
-              this.qde.application.applicants[this.applicantIndex].officialCorrespondence.stateId = result.application.applicants[this.applicantIndex].officialCorrespondence.stateId;
-              this.qde.application.applicants[this.applicantIndex].officialCorrespondence.cityId = result.application.applicants[this.applicantIndex].officialCorrespondence.cityId;
-            }
-          } catch (e) { }
-          try {
-            if (result.application.applicants[this.applicantIndex].organizationDetails != null) {
-              this.qde.application.applicants[this.applicantIndex].organizationDetails = result.application.applicants[this.applicantIndex].organizationDetails;
-            }
-          } catch (e) { }
-          try {
-            if (result.application.applicants[this.applicantIndex].registeredAddress != null) {
-              this.commCityState = "";
-              if (result.application.applicants[this.applicantIndex].registeredAddress.city) {
-                this.commCityState = result.application.applicants[this.applicantIndex].registeredAddress.city + " " + result.application.applicants[this.applicantIndex].registeredAddress.state;
-              }
-
-              this.qde.application.applicants[this.applicantIndex].registeredAddress.city = result.application.applicants[this.applicantIndex].registeredAddress.city;
-              this.qde.application.applicants[this.applicantIndex].registeredAddress.state = result.application.applicants[this.applicantIndex].registeredAddress.state;
-              this.qde.application.applicants[this.applicantIndex].registeredAddress.cityState = this.commCityState;
-              this.qde.application.applicants[this.applicantIndex].registeredAddress.zipcodeId = result.application.applicants[this.applicantIndex].registeredAddress.zipcodeId;
-              this.qde.application.applicants[this.applicantIndex].registeredAddress.stateId = result.application.applicants[this.applicantIndex].registeredAddress.stateId;
-              this.qde.application.applicants[this.applicantIndex].registeredAddress.cityId = result.application.applicants[this.applicantIndex].registeredAddress.cityId;
-            }
-          } catch (e) { }
-
-          try {
-            if (result.application.applicants[this.applicantIndex].corporateAddress != null) {
-              this.commCityState = "";
-              if (result.application.applicants[this.applicantIndex].corporateAddress.city) {
-                this.commCityState = result.application.applicants[this.applicantIndex].corporateAddress.city + " " + result.application.applicants[this.applicantIndex].corporateAddress.state;
-              }
-
-              this.qde.application.applicants[this.applicantIndex].corporateAddress.city = result.application.applicants[this.applicantIndex].corporateAddress.city;
-              this.qde.application.applicants[this.applicantIndex].corporateAddress.state = result.application.applicants[this.applicantIndex].corporateAddress.state;
-              this.qde.application.applicants[this.applicantIndex].corporateAddress.cityState = this.commCityState;
-              this.qde.application.applicants[this.applicantIndex].corporateAddress.zipcodeId = result.application.applicants[this.applicantIndex].corporateAddress.zipcodeId;
-              this.qde.application.applicants[this.applicantIndex].corporateAddress.stateId = result.application.applicants[this.applicantIndex].corporateAddress.stateId;
-              this.qde.application.applicants[this.applicantIndex].corporateAddress.cityId = result.application.applicants[this.applicantIndex].corporateAddress.cityId;
-            }
-          } catch (e) { }
-          try {
-            if (result.application.applicants[this.applicantIndex].revenueDetails != null) {
-              this.qde.application.applicants[this.applicantIndex].revenueDetails = result.application.applicants[this.applicantIndex].revenueDetails;
-            }
-          } catch (e) { }
-          try {
-            if (result.application.applicants[this.applicantIndex].incomeDetails != null) {
-              this.qde.application.applicants[this.applicantIndex].incomeDetails = result.application.applicants[this.applicantIndex].incomeDetails;
-            }
-          } catch (e) { }
-          try {
-            if (result.application.applicants[this.applicantIndex].documents != null) {
-              this.qde.application.applicants[this.applicantIndex].documents = result.application.applicants[this.applicantIndex].documents;
-            }
-          } catch (e) { }
-          try {
-            if (result.application.applicants[this.applicantIndex].isMainApplicant != null) {
-              this.qde.application.applicants[this.applicantIndex].isMainApplicant = result.application.applicants[this.applicantIndex].isMainApplicant;
-            }
-          } catch (e) { }
-
-          try {
-            if (result.application.applicants[this.applicantIndex].pan.fileName != null) {
-              this.idPanFileName = result.application.applicants[this.applicantIndex].pan.fileName;
-            }
-          } catch (e) { }
-
-          try {
-            if (result.application.applicants[this.applicantIndex].pan.fileSize != null) {
-              this.idPanFileSize = result.application.applicants[this.applicantIndex].pan.fileSize;
-            }
-          } catch (e) { }
-
-          try {
-            if (result.application.applicants[this.applicantIndex].contactDetails.isMobileOTPverified != null) {
-              this.qde.application.applicants[this.applicantIndex].contactDetails.isMobileOTPverified = result.application.applicants[this.applicantIndex].contactDetails.isMobileOTPverified;
-            }
-          } catch (e) { }
-
-          try {
-            if (result.application.applicants[this.applicantIndex].contactDetails.isAlternateOTPverified != null) {
-              this.qde.application.applicants[this.applicantIndex].contactDetails.isAlternateOTPverified = result.application.applicants[this.applicantIndex].contactDetails.isAlternateOTPverified;
-            }
-          } catch (e) { }
-
-          let set = this.setSpouseTitles();
-          console.log("Setted "+ set);
-          // Document Type
-          if (!isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].pan.docType))) {
-            // this.selectedDocType = this.docType[(parseInt(this.qde.application.applicants[this.applicantIndex].pan.docType))-1];
-            this.selectedDocType = this.getSelectedValue(this.qde.application.applicants[this.applicantIndex].pan.docType, this.docType);
-
-          }
-
-          // Personal Details Title
-          if (!isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].personalDetails.title))) {
-            this.selectedTitle = this.getApplicantTitle(this.qde.application.applicants[this.applicantIndex].personalDetails.title);
-          }
-
-          // Personal Details Qualification (different because qualification isnt sending sequential value like 1,2,3)
-          if (!isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].personalDetails.qualification))) {
-            // console.log('this.qde.application.applicants[this.applicantIndex].personalDetails.qualification: ', this.qde.application.applicants[this.applicantIndex].personalDetails.qualification);
-            // this.selectedQualification = this.qualifications[(parseInt(this.qde.application.applicants[this.applicantIndex].personalDetails.qualification))-1];
-            this.selectedQualification = this.qualifications.find(e => e.value == this.qde.application.applicants[this.applicantIndex].personalDetails.qualification);
-            console.log('selectedQualification: ', this.selectedQualification);
-          }
-
-          // Personal Details Day
-          if (!isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split('/')[2]))) {
-            this.dob.day = this.days[parseInt(this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split('/')[2])];
-          }
-
-          // Personal Details Month
-          if (!isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split('/')[1]))) {
-            this.dob.month = this.months[parseInt(this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split('/')[1])];
-          }
-
-          // Personal Details Year
-          if (!isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split('/')[0]))) {
-            this.dob.year = this.years.find(val => this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split('/')[0] == val.value);
-          }
-
-          if(this.dob.year.value == "YYYY") {
-            this.focusedDate = new Date();
-          }else {
-            this.focusedDate = new Date(parseInt(this.dob.year.value.toString()), parseInt(this.dob.month.value.toString())-1, parseInt(this.dob.day.value.toString()));
-          }
-
-
-          console.log("focusedDate **", this.focusedDate);
-
-          // Date of Incorporation Day
-          if (!isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split('/')[2]))) {
-            this.organizationDetails.day = this.days[parseInt(this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split('/')[2])];
-          }
-
-          // Date of Incorporation Month
-          if (!isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split('/')[1]))) {
-            this.organizationDetails.month = this.months[parseInt(this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split('/')[1])];
-          }
-
-          // Date of Incorporation Year
-          if (!isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split('/')[0]))) {
-            this.organizationDetails.year = this.years.find(val => this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split('/')[0] == val.value);
-          }
-
-          // Constitution
-          if (!isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].organizationDetails.constitution))) {
-            console.log('c', this.qde.application.applicants[this.applicantIndex].organizationDetails.constitution);
-            // this.selectedConstitution = this.constitutions[(parseInt(this.qde.application.applicants[this.applicantIndex].organizationDetails.constitution))-1];
-            this.selectedConstitution = this.getSelectedValue(this.qde.application.applicants[this.applicantIndex].organizationDetails.constitution, this.constitutions);
-
-            console.log(this.selectedConstitution);
-          }
-
-          // Communication address
-          if (!isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].communicationAddress.residentialStatus))) {
-            //this.selectedResidence = this.residences[(parseInt(this.qde.application.applicants[this.applicantIndex].communicationAddress.residentialStatus)) - 1];
-            this.selectedResidence = this.getSelectedValue(this.qde.application.applicants[this.applicantIndex].communicationAddress.residentialStatus, this.residences);
-          }
-
-          if (!isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].maritalStatus.status))) {
-            // this.selectedMaritialStatus = this.maritals[(parseInt(this.qde.application.applicants[this.applicantIndex].maritalStatus.status))-1];
-            this.selectedMaritialStatus = this.getSelectedValue(this.qde.application.applicants[this.applicantIndex].maritalStatus.status, this.maritals);
-          }
-
-          if (!isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].maritalStatus.spouseTitle))) {
-            if(this.spouseTitles){
-            // this.selectedSpouseTitle = this.titles[(parseInt(this.qde.application.applicants[this.applicantIndex].maritalStatus.spouseTitle))-1];
-            this.selectedSpouseTitle = this.getSelectedValue(this.qde.application.applicants[this.applicantIndex].maritalStatus.spouseTitle, this.spouseTitles);
-           }
-          }
-
-          if (!isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].familyDetails.fatherTitle))) {
-            // this.selectedFatherTitle  = this.maleTitles[(parseInt(this.qde.application.applicants[this.applicantIndex].familyDetails.fatherTitle))-1];
-            this.selectedFatherTitle = this.getSelectedValue(this.qde.application.applicants[this.applicantIndex].familyDetails.fatherTitle, this.maleTitles);
-          }
-
-          if (!isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].familyDetails.motherTitle))) {
-            // this.selectedMotherTitle = this.femaleTitles[(parseInt(this.qde.application.applicants[this.applicantIndex].familyDetails.motherTitle))-1];
-            this.selectedMotherTitle = this.getSelectedValue(this.qde.application.applicants[this.applicantIndex].familyDetails.motherTitle, this.femaleTitles);
-          }
-
-          // Other
-          if (!isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].other.religion))) {
-            // this.selectedReligion = this.religions[(parseInt(this.qde.application.applicants[this.applicantIndex].other.religion))-1];
-            this.selectedReligion = this.getSelectedValue(this.qde.application.applicants[this.applicantIndex].other.religion, this.religions);
-          }
-
-          // Category
-          if (!isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].other.category))) {
-            // this.selectedCategory  = this.categories[(parseInt(this.qde.application.applicants[this.applicantIndex].other.category))-1];
-            this.selectedCategory = this.getSelectedValue(this.qde.application.applicants[this.applicantIndex].other.category, this.categories);
-          }
-
-          // Occupation details
-          // if( ! isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].occupation.occupationType)) ) {
-          // this.selectedOccupation = this.occupations.find(e => e.value == this.qde.application.applicants[this.applicantIndex].occupation.occupationType);
-          //   this.selectedTitle = this.getSelectedValue(this.qde.application.applicants[this.applicantIndex].occupation.occupationType,this.occupations);
-          // }
-
-          // Assesment methodology
-          console.log("AM: ", this.assessmentMethodology);
-          if (!isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].incomeDetails.assessmentMethodology))) {
-            this.selectedAssesmentMethodology = this.assessmentMethodology.find(v => v.value == this.qde.application.applicants[this.applicantIndex].incomeDetails.assessmentMethodology);
-          }
+          this.getSetQdeData(result);
 
           /******************************************************************************
           * Sacred Route Start (WARNING: TOUCH THIS ONLY IF YOU KNOW WHAT YOU ARE DOING)
@@ -934,17 +649,14 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           /*******************************************
           * Sacred Route End
           *******************************************/
-
-
-          this.initializeVariables();
-
-          this.setAssessmentMethodology();
+         
+          
         }
         // , error => {
         //   this.isErrorModal = true;
         //   this.errorMessage = "Something went wrong, please try again later.";
         // }
-      );
+        );
         // }
       }
 
@@ -979,6 +691,304 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.min = new Date(year, month, day);
   }
+
+  // get and set qde data 
+
+    getSetQdeData(result){
+
+      
+      this.cds.setStatus(result.application.status);
+      this.cds.setactiveTab(screenPages['applicantDetails']);
+      this.applicantIndex = result.application.applicants.findIndex(v => v.isMainApplicant == true);
+      this.cds.enableTabsIfStatus1(this.qde.application.status);
+      this.tempOldPanNumber = result.application.applicants[this.applicantIndex].pan.panNumber;
+
+      this.loadOccupationTypeLovs(this.qde.application.applicants[this.applicantIndex].occupation.occupationType);
+      if (this.qde.application.auditTrailDetails.screenPage == screenPages['applicantDetails']) {
+        this.goToExactPageAndTab(this.fragments.findIndex(v => v == this.qde.application.auditTrailDetails.tabPage), this.qde.application.auditTrailDetails.pageNumber);
+      }
+      // else if(this.qde.application.auditTrailDetails.screenPage == screenPages['loanDetails']){
+      //   this.router.navigate(['/loanDetails/'+this.qde.application.applicationId]);
+      // }
+      // else{
+      //   if(this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
+      //     this.goToExactPageAndTab(0, 1);
+      //   } else if(this.qde.application[this.applicantIndex].isIndividual == false) {
+      //     this.goToExactPageAndTab(1, 1);
+      //   } else {
+      //     this.goToExactPageAndTab(0, 1);
+      //   }
+      // }
+
+      try {
+        // this.qde.application.applicationFormNumber = "ijijijjjjj"
+        if (result.application.applicants[this.applicantIndex].communicationAddress != null) {
+          this.commCityState = "";
+          if (result.application.applicants[this.applicantIndex].communicationAddress.city) {
+            this.commCityState = result.application.applicants[this.applicantIndex].communicationAddress.city + " " + result.application.applicants[this.applicantIndex].communicationAddress.state;
+          }
+          this.qde.application.applicants[this.applicantIndex].communicationAddress.city = result.application.applicants[this.applicantIndex].communicationAddress.city;
+          this.qde.application.applicants[this.applicantIndex].communicationAddress.state = result.application.applicants[this.applicantIndex].communicationAddress.state;
+          this.qde.application.applicants[this.applicantIndex].communicationAddress.cityState = this.commCityState;
+          this.qde.application.applicants[this.applicantIndex].communicationAddress.zipcodeId = result.application.applicants[this.applicantIndex].communicationAddress.zipcodeId;
+          this.qde.application.applicants[this.applicantIndex].communicationAddress.stateId = result.application.applicants[this.applicantIndex].communicationAddress.stateId;
+          this.qde.application.applicants[this.applicantIndex].communicationAddress.cityId = result.application.applicants[this.applicantIndex].communicationAddress.cityId;
+        }
+      } catch (e) { }
+      try {
+        if (result.application.applicants[this.applicantIndex].permanentAddress != null) {
+          this.commCityState = "";
+          if (result.application.applicants[this.applicantIndex].permanentAddress.city) {
+            this.commCityState = result.application.applicants[this.applicantIndex].permanentAddress.city + " " + result.application.applicants[this.applicantIndex].permanentAddress.state;
+          }
+
+          this.qde.application.applicants[this.applicantIndex].permanentAddress.city = result.application.applicants[this.applicantIndex].permanentAddress.city;
+          this.qde.application.applicants[this.applicantIndex].permanentAddress.state = result.application.applicants[this.applicantIndex].permanentAddress.state;
+          this.qde.application.applicants[this.applicantIndex].permanentAddress.cityState = this.commCityState;
+          this.qde.application.applicants[this.applicantIndex].permanentAddress.zipcodeId = result.application.applicants[this.applicantIndex].permanentAddress.zipcodeId;
+          this.qde.application.applicants[this.applicantIndex].permanentAddress.stateId = result.application.applicants[this.applicantIndex].permanentAddress.stateId;
+          this.qde.application.applicants[this.applicantIndex].permanentAddress.cityId = result.application.applicants[this.applicantIndex].permanentAddress.cityId;
+
+
+        }
+      } catch (e) { }
+      try {
+        if (result.application.applicants[this.applicantIndex].residentialAddress != null) {
+          this.commCityState = "";
+          if (result.application.applicants[this.applicantIndex].residentialAddress.city) {
+            this.commCityState = result.application.applicants[this.applicantIndex].residentialAddress.city + " " + result.application.applicants[this.applicantIndex].residentialAddress.state;
+          }
+
+          this.qde.application.applicants[this.applicantIndex].residentialAddress.city = result.application.applicants[this.applicantIndex].residentialAddress.city;
+          this.qde.application.applicants[this.applicantIndex].residentialAddress.state = result.application.applicants[this.applicantIndex].residentialAddress.state;
+          this.qde.application.applicants[this.applicantIndex].residentialAddress.cityState = this.commCityState;
+          this.qde.application.applicants[this.applicantIndex].residentialAddress.zipcodeId = result.application.applicants[this.applicantIndex].residentialAddress.zipcodeId;
+          this.qde.application.applicants[this.applicantIndex].residentialAddress.stateId = result.application.applicants[this.applicantIndex].residentialAddress.stateId;
+          this.qde.application.applicants[this.applicantIndex].residentialAddress.cityId = result.application.applicants[this.applicantIndex].residentialAddress.cityId;
+
+        }
+      } catch (e) { }
+      try {
+        if (result.application.applicants[this.applicantIndex].officialCorrespondence != null) {
+          this.commCityState = "";
+          if (result.application.applicants[this.applicantIndex].officialCorrespondence.city) {
+            this.commCityState = result.application.applicants[this.applicantIndex].officialCorrespondence.city + " " + result.application.applicants[this.applicantIndex].officialCorrespondence.state;
+          }
+          this.qde.application.applicants[this.applicantIndex].officialCorrespondence.city = result.application.applicants[this.applicantIndex].officialCorrespondence.city;
+          this.qde.application.applicants[this.applicantIndex].officialCorrespondence.state = result.application.applicants[this.applicantIndex].officialCorrespondence.state;
+          this.qde.application.applicants[this.applicantIndex].officialCorrespondence.cityState = this.commCityState;
+          this.qde.application.applicants[this.applicantIndex].officialCorrespondence.zipcodeId = result.application.applicants[this.applicantIndex].officialCorrespondence.zipcodeId;
+          this.qde.application.applicants[this.applicantIndex].officialCorrespondence.stateId = result.application.applicants[this.applicantIndex].officialCorrespondence.stateId;
+          this.qde.application.applicants[this.applicantIndex].officialCorrespondence.cityId = result.application.applicants[this.applicantIndex].officialCorrespondence.cityId;
+        }
+      } catch (e) { }
+      try {
+        if (result.application.applicants[this.applicantIndex].organizationDetails != null) {
+          this.qde.application.applicants[this.applicantIndex].organizationDetails = result.application.applicants[this.applicantIndex].organizationDetails;
+        }
+      } catch (e) { }
+      try {
+        if (result.application.applicants[this.applicantIndex].registeredAddress != null) {
+          this.commCityState = "";
+          if (result.application.applicants[this.applicantIndex].registeredAddress.city) {
+            this.commCityState = result.application.applicants[this.applicantIndex].registeredAddress.city + " " + result.application.applicants[this.applicantIndex].registeredAddress.state;
+          }
+
+          this.qde.application.applicants[this.applicantIndex].registeredAddress.city = result.application.applicants[this.applicantIndex].registeredAddress.city;
+          this.qde.application.applicants[this.applicantIndex].registeredAddress.state = result.application.applicants[this.applicantIndex].registeredAddress.state;
+          this.qde.application.applicants[this.applicantIndex].registeredAddress.cityState = this.commCityState;
+          this.qde.application.applicants[this.applicantIndex].registeredAddress.zipcodeId = result.application.applicants[this.applicantIndex].registeredAddress.zipcodeId;
+          this.qde.application.applicants[this.applicantIndex].registeredAddress.stateId = result.application.applicants[this.applicantIndex].registeredAddress.stateId;
+          this.qde.application.applicants[this.applicantIndex].registeredAddress.cityId = result.application.applicants[this.applicantIndex].registeredAddress.cityId;
+        }
+      } catch (e) { }
+
+      try {
+        if (result.application.applicants[this.applicantIndex].corporateAddress != null) {
+          this.commCityState = "";
+          if (result.application.applicants[this.applicantIndex].corporateAddress.city) {
+            this.commCityState = result.application.applicants[this.applicantIndex].corporateAddress.city + " " + result.application.applicants[this.applicantIndex].corporateAddress.state;
+          }
+
+          this.qde.application.applicants[this.applicantIndex].corporateAddress.city = result.application.applicants[this.applicantIndex].corporateAddress.city;
+          this.qde.application.applicants[this.applicantIndex].corporateAddress.state = result.application.applicants[this.applicantIndex].corporateAddress.state;
+          this.qde.application.applicants[this.applicantIndex].corporateAddress.cityState = this.commCityState;
+          this.qde.application.applicants[this.applicantIndex].corporateAddress.zipcodeId = result.application.applicants[this.applicantIndex].corporateAddress.zipcodeId;
+          this.qde.application.applicants[this.applicantIndex].corporateAddress.stateId = result.application.applicants[this.applicantIndex].corporateAddress.stateId;
+          this.qde.application.applicants[this.applicantIndex].corporateAddress.cityId = result.application.applicants[this.applicantIndex].corporateAddress.cityId;
+        }
+      } catch (e) { }
+      try {
+        if (result.application.applicants[this.applicantIndex].revenueDetails != null) {
+          this.qde.application.applicants[this.applicantIndex].revenueDetails = result.application.applicants[this.applicantIndex].revenueDetails;
+        }
+      } catch (e) { }
+      try {
+        if (result.application.applicants[this.applicantIndex].incomeDetails != null) {
+          this.qde.application.applicants[this.applicantIndex].incomeDetails = result.application.applicants[this.applicantIndex].incomeDetails;
+        }
+      } catch (e) { }
+      try {
+        if (result.application.applicants[this.applicantIndex].documents != null) {
+          this.qde.application.applicants[this.applicantIndex].documents = result.application.applicants[this.applicantIndex].documents;
+        }
+      } catch (e) { }
+      try {
+        if (result.application.applicants[this.applicantIndex].isMainApplicant != null) {
+          this.qde.application.applicants[this.applicantIndex].isMainApplicant = result.application.applicants[this.applicantIndex].isMainApplicant;
+        }
+      } catch (e) { }
+
+      try {
+        if (result.application.applicants[this.applicantIndex].pan.fileName != null) {
+          this.idPanFileName = result.application.applicants[this.applicantIndex].pan.fileName;
+        }
+      } catch (e) { }
+
+      try {
+        if (result.application.applicants[this.applicantIndex].pan.fileSize != null) {
+          this.idPanFileSize = result.application.applicants[this.applicantIndex].pan.fileSize;
+        }
+      } catch (e) { }
+
+      try {
+        if (result.application.applicants[this.applicantIndex].contactDetails.isMobileOTPverified != null) {
+          this.qde.application.applicants[this.applicantIndex].contactDetails.isMobileOTPverified = result.application.applicants[this.applicantIndex].contactDetails.isMobileOTPverified;
+        }
+      } catch (e) { }
+
+      try {
+        if (result.application.applicants[this.applicantIndex].contactDetails.isAlternateOTPverified != null) {
+          this.qde.application.applicants[this.applicantIndex].contactDetails.isAlternateOTPverified = result.application.applicants[this.applicantIndex].contactDetails.isAlternateOTPverified;
+        }
+      } catch (e) { }
+
+      let set = this.setSpouseTitles();
+      console.log("Setted "+ set);
+      // Document Type
+      if (!isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].pan.docType))) {
+        // this.selectedDocType = this.docType[(parseInt(this.qde.application.applicants[this.applicantIndex].pan.docType))-1];
+        this.selectedDocType = this.getSelectedValue(this.qde.application.applicants[this.applicantIndex].pan.docType, this.docType);
+
+      }
+
+      // Personal Details Title
+      if (!isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].personalDetails.title))) {
+        this.selectedTitle = this.getApplicantTitle(this.qde.application.applicants[this.applicantIndex].personalDetails.title);
+      }
+
+      // Personal Details Qualification (different because qualification isnt sending sequential value like 1,2,3)
+      if (!isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].personalDetails.qualification))) {
+        // console.log('this.qde.application.applicants[this.applicantIndex].personalDetails.qualification: ', this.qde.application.applicants[this.applicantIndex].personalDetails.qualification);
+        // this.selectedQualification = this.qualifications[(parseInt(this.qde.application.applicants[this.applicantIndex].personalDetails.qualification))-1];
+        this.selectedQualification = this.qualifications.find(e => e.value == this.qde.application.applicants[this.applicantIndex].personalDetails.qualification);
+        console.log('selectedQualification: ', this.selectedQualification);
+      }
+
+      // Personal Details Day
+      if (!isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split('/')[2]))) {
+        this.dob.day = this.days[parseInt(this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split('/')[2])];
+      }
+
+      // Personal Details Month
+      if (!isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split('/')[1]))) {
+        this.dob.month = this.months[parseInt(this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split('/')[1])];
+      }
+
+      // Personal Details Year
+      if (!isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split('/')[0]))) {
+        this.dob.year = this.years.find(val => this.qde.application.applicants[this.applicantIndex].personalDetails.dob.split('/')[0] == val.value);
+      }
+
+      if(this.dob.year.value == "YYYY") {
+        this.focusedDate = new Date();
+      }else {
+        this.focusedDate = new Date(parseInt(this.dob.year.value.toString()), parseInt(this.dob.month.value.toString())-1, parseInt(this.dob.day.value.toString()));
+      }
+
+
+      console.log("focusedDate **", this.focusedDate);
+      
+      // Date of Incorporation Day
+      if (!isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split('/')[2]))) {
+        this.organizationDetails.day = this.days[parseInt(this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split('/')[2])];
+      }
+
+      // Date of Incorporation Month
+      if (!isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split('/')[1]))) {
+        this.organizationDetails.month = this.months[parseInt(this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split('/')[1])];
+      }
+
+      // Date of Incorporation Year
+      if (!isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split('/')[0]))) {
+        this.organizationDetails.year = this.years.find(val => this.qde.application.applicants[this.applicantIndex].organizationDetails.dateOfIncorporation.split('/')[0] == val.value);
+      }
+
+      // Constitution
+      if (!isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].organizationDetails.constitution))) {
+        console.log('c', this.qde.application.applicants[this.applicantIndex].organizationDetails.constitution);
+        // this.selectedConstitution = this.constitutions[(parseInt(this.qde.application.applicants[this.applicantIndex].organizationDetails.constitution))-1];
+        this.selectedConstitution = this.getSelectedValue(this.qde.application.applicants[this.applicantIndex].organizationDetails.constitution, this.constitutions);
+
+        console.log(this.selectedConstitution);
+      }
+
+      // Communication address
+      if (!isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].communicationAddress.residentialStatus))) {
+        //this.selectedResidence = this.residences[(parseInt(this.qde.application.applicants[this.applicantIndex].communicationAddress.residentialStatus)) - 1];
+        this.selectedResidence = this.getSelectedValue(this.qde.application.applicants[this.applicantIndex].communicationAddress.residentialStatus, this.residences);
+      }
+
+      if (!isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].maritalStatus.status))) {
+        // this.selectedMaritialStatus = this.maritals[(parseInt(this.qde.application.applicants[this.applicantIndex].maritalStatus.status))-1];
+        this.selectedMaritialStatus = this.getSelectedValue(this.qde.application.applicants[this.applicantIndex].maritalStatus.status, this.maritals);
+      }
+
+      if (!isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].maritalStatus.spouseTitle))) {
+        if(this.spouseTitles){
+        // this.selectedSpouseTitle = this.titles[(parseInt(this.qde.application.applicants[this.applicantIndex].maritalStatus.spouseTitle))-1];
+        this.selectedSpouseTitle = this.getSelectedValue(this.qde.application.applicants[this.applicantIndex].maritalStatus.spouseTitle, this.spouseTitles);
+       }
+      }
+
+      if (!isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].familyDetails.fatherTitle))) {
+        // this.selectedFatherTitle  = this.maleTitles[(parseInt(this.qde.application.applicants[this.applicantIndex].familyDetails.fatherTitle))-1];
+        this.selectedFatherTitle = this.getSelectedValue(this.qde.application.applicants[this.applicantIndex].familyDetails.fatherTitle, this.maleTitles);
+      }
+
+      if (!isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].familyDetails.motherTitle))) {
+        // this.selectedMotherTitle = this.femaleTitles[(parseInt(this.qde.application.applicants[this.applicantIndex].familyDetails.motherTitle))-1];
+        this.selectedMotherTitle = this.getSelectedValue(this.qde.application.applicants[this.applicantIndex].familyDetails.motherTitle, this.femaleTitles);
+      }
+
+      // Other
+      if (!isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].other.religion))) {
+        // this.selectedReligion = this.religions[(parseInt(this.qde.application.applicants[this.applicantIndex].other.religion))-1];
+        this.selectedReligion = this.getSelectedValue(this.qde.application.applicants[this.applicantIndex].other.religion, this.religions);
+      }
+
+      // Category
+      if (!isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].other.category))) {
+        // this.selectedCategory  = this.categories[(parseInt(this.qde.application.applicants[this.applicantIndex].other.category))-1];
+        this.selectedCategory = this.getSelectedValue(this.qde.application.applicants[this.applicantIndex].other.category, this.categories);
+      }
+
+      // Occupation details
+      // if( ! isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].occupation.occupationType)) ) {
+      // this.selectedOccupation = this.occupations.find(e => e.value == this.qde.application.applicants[this.applicantIndex].occupation.occupationType);
+      //   this.selectedTitle = this.getSelectedValue(this.qde.application.applicants[this.applicantIndex].occupation.occupationType,this.occupations);
+      // }
+
+      // Assesment methodology
+      console.log("AM: ", this.assessmentMethodology);
+      if (!isNaN(parseInt(this.qde.application.applicants[this.applicantIndex].incomeDetails.assessmentMethodology))) {
+        this.selectedAssesmentMethodology = this.assessmentMethodology.find(v => v.value == this.qde.application.applicants[this.applicantIndex].incomeDetails.assessmentMethodology);
+      }
+
+      this.initializeVariables();
+
+      this.setAssessmentMethodology();
+    }
 
   /**
    * Use to sync between lhs and rhs sliders
@@ -1830,38 +1840,41 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
               this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
               this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
-            // else {
-            //   this.isErrorModal = true;
-            //   this.errorMessage = "Something went wrong, please try again later.";
-            // }
-          }
-          // , error => {
-          //   this.isErrorModal = true;
-          //   this.errorMessage = "Something went wrong, please try again later.";
-          // }
-        );
-          this.qdeHttp.duplicateApplicantCheck(this.qde.application.applicants[this.applicantIndex].applicantId).subscribe(res => {
+          }, error => {
+            this.isErrorModal = true;
+            this.errorMessage = "Something went wrong, please try again later.";
+          });
+          //  check if pan is null or empty
+          if (this.qde.application.applicants[this.applicantIndex].pan.panNumber !="" 
+            && this.qde.application.applicants[this.applicantIndex].pan.panNumber !=null) {
 
-            if (res['ProcessVariables']['status'] == true) {
-              if (res['ProcessVariables']['response'] == '' || res['ProcessVariables']['response'] == null) {
-                this.closeDuplicateModal();
-              } else {
-                this.duplicates = JSON.parse(res['ProcessVariables']['response'])['duplicates'];
-                if (this.duplicates.length > 0) {
-                  this.openDuplicateModal();
+              this.qdeHttp.duplicateApplicantCheck(this.qde.application.applicants[this.applicantIndex].applicantId).subscribe(res => {
+
+                if (res['ProcessVariables']['status'] == true) {
+                  if (res['ProcessVariables']['response'] == '' || res['ProcessVariables']['response'] == null) {
+                    this.closeDuplicateModal();
+                  } else {
+                    this.duplicates = JSON.parse(res['ProcessVariables']['response'])['duplicates'];
+                    if (this.duplicates.length > 0) {
+                      this.openDuplicateModal();
+                    }
+                  }
+                } else {
+                  this.isErrorModal = true;
+                  this.errorMessage = "Something went wrong, please try again later.";
                 }
               }
+              // , error => {
+              //   this.isErrorModal = true;
+              //   this.errorMessage = "Something went wrong, please try again later.";
+              // }
+              );
+          } else {
+            this.closeDuplicateModal();
             }
-            // else {
-            //   this.isErrorModal = true;
-            //   this.errorMessage = "Something went wrong, please try again later.";
-            // }
-          }
-          // , error => {
-          //   this.isErrorModal = true;
-          //   this.errorMessage = "Something went wrong, please try again later.";
-          // }
-        );
+          } else {
+            this.isErrorModal = true;
+            this.errorMessage = "Something went wrong, please try again later.";
         }
         // else {
         //   this.isErrorModal = true;
@@ -2722,6 +2735,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
             }
           });
           let result = this.parseJson(response["ProcessVariables"]["response"]);
+          //  check if pan is null or empty
+          if (this.qde.application.applicants[this.applicantIndex].pan.panNumber !="" 
+            && this.qde.application.applicants[this.applicantIndex].pan.panNumber !=null) {
           this.qdeHttp.duplicateApplicantCheck(this.qde.application.applicants[this.applicantIndex].applicantId).subscribe(res => {
 
             if (res['ProcessVariables']['status'] == true) {
@@ -2736,7 +2752,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
             }
           });
           // this.goToExactPageAndTab(12, 1);
-
+        } else {
+          this.closeDuplicateModal();
+        }
+        } else {
+          this.isErrorModal = true;
+          this.errorMessage = "Something went wrong, please try again later.";
         }
         // else {
         //   this.isErrorModal = true;
@@ -3032,7 +3053,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       }
 
       this.qde.application.applicants[this.applicantIndex].incomeDetails.monthlyIncome = form.value.monthlyIncome;
-      this.qde.application.applicants[this.applicantIndex].incomeDetails.assessmentMethodology = this.selectedAssesmentMethodology ? this.selectedAssesmentMethodology['value'] : null;
+      this.qde.application.applicants[this.applicantIndex].incomeDetails.assessmentMethodology = this.selectedAssesmentMethodology.value.toString()? this.selectedAssesmentMethodology['value'].toString() : null;
 
       console.log("ID: ", this.qde.application.applicants[this.applicantIndex].incomeDetails);
 
@@ -3085,7 +3106,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       }
 
       this.qde.application.applicants[this.applicantIndex].incomeDetails.monthlyIncome = form.value.monthlyIncome;
-      this.qde.application.applicants[this.applicantIndex].incomeDetails.assessmentMethodology = this.selectedAssesmentMethodology ? this.selectedAssesmentMethodology['value'] : null;
+      this.qde.application.applicants[this.applicantIndex].incomeDetails.assessmentMethodology = this.selectedAssesmentMethodology.value.toString() ? this.selectedAssesmentMethodology['value'].toString() : null;
 
       console.log("ID: ", this.qde.application.applicants[this.applicantIndex].incomeDetails);
 
@@ -3764,7 +3785,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.selectedQualification = this.defaultItem;
     this.selectedConstitution = this.defaultItem;
     this.selectedDocType = this.defaultItem;
-    this.selectedAssesmentMethodology = this.assessmentMethodology[0];
+    // this.selectedAssesmentMethodology = this.assessmentMethodology[0];
+    this.selectedAssesmentMethodology = this.defaultItem;
   }
 
   expError = false;
@@ -4112,38 +4134,51 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   submitDuplicateApplicant(form: NgForm) {
     try {
-      this.ngxService.start();
-    let tempApplicant = this.qde.application.applicants[this.applicantIndex];
-    let selectedApplication = this.duplicates.find(e => e.applicantId == form.value.selectDuplicateApplicant);
-    let applicationId = Number(selectedApplication["applicationId"]);
-    this.getQdeDataSub = this.qdeHttp.getQdeData(applicationId).subscribe(data => {
-      // console.log("Applicationin get " ,JSON.parse(data["ProcessVariables"]["response"])["application"]["applicants"] );
-      let duplicates: any = JSON.parse(data["ProcessVariables"]["response"])["application"]["applicants"];
-      let newApplicantToBeReplaced = duplicates.find(e => e.applicantId == form.value.selectDuplicateApplicant);
-      this.qde.application.applicants[this.applicantIndex] = this.qdeService.getModifiedObject(tempApplicant, newApplicantToBeReplaced);
-      this.qde.application.applicants[this.applicantIndex].applicantId = tempApplicant.applicantId;
-      this.qde.application.applicants[this.applicantIndex].isMainApplicant = tempApplicant.isMainApplicant;
+      if (!form.value.selectDuplicateApplicant && form.value.selectDuplicateApplicant=="") {
+        this.isErrorModal = true;
+        this.errorMessage="Select Any Applicant to Use"
 
-      this.qdeService.setQde(this.qde);
+      } else{
+        this.ngxService.start();
+        let tempApplicant = this.qde.application.applicants[this.applicantIndex];
+        let selectedApplication = this.duplicates.find(e => e.applicantId == form.value.selectDuplicateApplicant);
+        let applicationId = Number(selectedApplication["applicationId"]);
+        this.getQdeDataSub = this.qdeHttp.getQdeData(applicationId).subscribe(data => {           
+        // console.log("Applicationin get " ,JSON.parse(data["ProcessVariables"]["response"])["application"]["applicants"] ); 
+        let response =   JSON.parse(data["ProcessVariables"]["response"]);
+        if(response) {
+          let duplicates: any = JSON.parse(data["ProcessVariables"]["response"])["application"]["applicants"];
+          let newApplicantToBeReplaced = duplicates.find(e => e.applicantId == form.value.selectDuplicateApplicant);
+          this.qde.application.applicants[this.applicantIndex] = this.qdeService.getModifiedObject(tempApplicant, newApplicantToBeReplaced);
+          this.qde.application.applicants[this.applicantIndex].applicantId = tempApplicant.applicantId;
+          this.qde.application.applicants[this.applicantIndex].isMainApplicant = tempApplicant.isMainApplicant;
+          this.qde.application.applicants[this.applicantIndex].contactDetails.isMobileOTPverified = false;
 
-      this.createOrUpdatePersonalDetailsSub5 = this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).
-        subscribe((response) => {
-          // If successful
-          if (response["ProcessVariables"]["status"]) {
-            this.closeDuplicateModal();
-          }
-          // else {
-          //   this.isErrorModal = true;
-          //   this.errorMessage = "Something went wrong, please try again later.";
-          // }
+          this.qdeService.setQde(this.qde);
+        
+          console.log("this qde ",this.qde);
+
+          this.getSetQdeData(this.qde)
+
+          this.createOrUpdatePersonalDetailsSub5 = this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).
+            subscribe((response) => {
+              // If successful
+              if (response["ProcessVariables"]["status"]) {
+                this.closeDuplicateModal();
+              } else {
+                this.isErrorModal = true;
+                this.errorMessage = "Something went wrong, please try again later.";
+              }
+            }
+            // , error => {
+            //   this.isErrorModal = true;
+            //   this.errorMessage = "Something went wrong, please try again later.";
+            // }
+            );
         }
-        // , error => {
-        //   this.isErrorModal = true;
-        //   this.errorMessage = "Something went wrong, please try again later.";
-        // }
-      );
-    });
-
+        
+      });
+    }
   } catch (ex) {
         this.isErrorModal = true;
         this.errorMessage = ex.message;
@@ -4257,12 +4292,14 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           if (this.qde && this.qde.application.applicants[this.applicantIndex].incomeDetails.assessmentMethodology) {
             this.assessmentMethodology.find(e => e.value == this.qde.application.applicants[this.applicantIndex].incomeDetails.assessmentMethodology);
           } else {
-            this.selectedAssesmentMethodology = this.assessmentMethodology[0];
-            // this.selectedAssesmentMethodology.push(this.defaultItem);
+            // this.selectedAssesmentMethodology = this.assessmentMethodology[0];
+            this.selectedAssesmentMethodology = this.defaultItem;
           }
         } else {
           this.assessmentMethodology = [];
-          this.selectedAssesmentMethodology = null;
+          // this.selectedAssesmentMethodology = null;
+          this.selectedAssesmentMethodology = this.defaultItem;
+
         }
       }
       // , err => {

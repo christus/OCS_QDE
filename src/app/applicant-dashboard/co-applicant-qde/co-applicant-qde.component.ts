@@ -609,13 +609,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
               this.cds.setactiveTab(screenPages['coApplicantDetails']);
               this.qdeService.setQde(result);
               let mainApplicant = this.qde.application.applicants.find(v => v.isMainApplicant == true);
-              let applicantIndex = this.qde.application.applicants.findIndex(v => v.isMainApplicant == true);
-              this.coApplicantsForDashboard = result.application.applicants.filter(v => v.isMainApplicant == false);
-              this.cds.enableTabsIfStatus1(this.qde.application.status);
-
-              if(this.qde.application.applicants[this.coApplicantIndex]) {
-                this.loadOccupationTypeLovs(this.qde.application.applicants[this.coApplicantIndex].occupation.occupationType);
-              }
+              this.getSetQdeData(result);  // get call get and set qde data 
 
               if(params.coApplicantIndex != null) {
                 this.coApplicantIndex = params.coApplicantIndex;
@@ -651,6 +645,71 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                 if(params['coApplicantIndex'] == null) {
                   this.tabSwitch(0, 1);
                 }
+                this.prefillData(params);
+
+                if(params.coApplicantIndex != null) {
+                  this.setRelationship(mainApplicant, params.coApplicantIndex);
+                }
+              
+            }, error => {
+              this.isErrorModal = true;
+              this.errorMessage = "Something went wrong, please try again later.";
+            });
+            
+          }
+          
+      }
+      
+
+
+      if(params['applicationId'] != null) {
+        if(this.isEligibilityForReviewsSub != null) {
+          this.isEligibilityForReviewsSub.unsubscribe();
+        }
+        this.isEligibilityForReviewsSub = this.cds.isEligibilityForReviews.subscribe(val => {
+          try {
+            this.isEligibilityForReview = val.find(v => v.applicationId == params['applicationId'])['isEligibilityForReview'];
+          } catch(ex) {
+            // this.router.navigate(['/leads']);
+          }
+        });
+      }
+    });
+ 
+    this.cds.isTBMLoggedIn.subscribe(val => {
+      this.isTBMLoggedIn = val;
+    });
+
+    /********************************************************************
+    * Check for User and set isReadOnly=true to disable editing of fields
+    ********************************************************************/
+    this.cds.isReadOnlyForm.subscribe(val => {
+      this.isReadOnly = false;
+      this.options.readOnly = false;
+    });
+    let today = new Date();
+    let day = today.getDate();
+    let month = today.getMonth() + 1;
+    let year = today.getFullYear() - 99;
+
+
+    this.min = new Date(year, month, day);
+  }
+
+
+  //get and set qde data
+
+  getSetQdeData(result){
+    
+              let applicantIndex = this.qde.application.applicants.findIndex(v => v.isMainApplicant == true);
+              this.coApplicantsForDashboard = result.application.applicants.filter(v => v.isMainApplicant == false);
+              this.cds.enableTabsIfStatus1(this.qde.application.status);
+
+              if(this.qde.application.applicants[this.coApplicantIndex]) {
+                this.loadOccupationTypeLovs(this.qde.application.applicants[this.coApplicantIndex].occupation.occupationType);
+              }
+
+           
               // }
 
               try {
@@ -746,61 +805,11 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                 if(result.application.applicants[this.coApplicantIndex].pan.fileSize != null){
                   this.idPanFileSize = result.application.applicants[this.coApplicantIndex].pan.fileSize;
                 }
-              }catch(e) {}
-
-
-              this.prefillData(params);
-
-              if(params.coApplicantIndex != null) {
-                this.setRelationship(mainApplicant, params.coApplicantIndex);
-              }
-            }
-            // , error => {
-            //   this.isErrorModal = true;
-            //   this.errorMessage = "Something went wrong, please try again later.";
-            // }
-          );
-
-          }
-
-      }
-
-
-
-      if(params['applicationId'] != null) {
-        if(this.isEligibilityForReviewsSub != null) {
-          this.isEligibilityForReviewsSub.unsubscribe();
-        }
-        this.isEligibilityForReviewsSub = this.cds.isEligibilityForReviews.subscribe(val => {
-          try {
-            this.isEligibilityForReview = val.find(v => v.applicationId == params['applicationId'])['isEligibilityForReview'];
-          } catch(ex) {
-            // this.router.navigate(['/leads']);
-          }
-        });
-      }
-    });
-
-    this.cds.isTBMLoggedIn.subscribe(val => {
-      this.isTBMLoggedIn = val;
-    });
-
-    /********************************************************************
-    * Check for User and set isReadOnly=true to disable editing of fields
-    ********************************************************************/
-    this.cds.isReadOnlyForm.subscribe(val => {
-      this.isReadOnly = false;
-      this.options.readOnly = false;
-    });
-    let today = new Date();
-    let day = today.getDate();
-    let month = today.getMonth() + 1;
-    let year = today.getFullYear() - 99;
-
-
-    this.min = new Date(year, month, day);
+              }catch(e) {}  
+  
+  
+             
   }
-
   /**
    * Use to sync between lhs and rhs sliders
    * @param swiperInstance RHS Swiper Instance
@@ -1542,12 +1551,15 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                     this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                     this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
-          }
+          } 
           // , error => {
           //   this.isErrorModal = true;
           //   this.errorMessage = "Something went wrong, please try again later.";
           // }
-        );
+          );
+             //  check if pan is null or empty
+          if (this.qde.application.applicants[this.coApplicantIndex].pan.panNumber !=""
+          && this.qde.application.applicants[this.coApplicantIndex].pan.panNumber !=null) {
           this.qdeHttp.duplicateApplicantCheck(this.qde.application.applicants[this.coApplicantIndex].applicantId).subscribe(res => {
 
             if(res['ProcessVariables']['status'] == true) {
@@ -1566,6 +1578,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
           //   this.errorMessage = "Something went wrong, please try again later.";
           // }
         );
+        } else {
+          this.closeDuplicateModal();
+          }
         } else {
           // Throw Invalid Pan Error
         }
@@ -4029,35 +4044,41 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   submitDuplicateApplicant(form: NgForm) {
+    if (!form.value.selectDuplicateApplicant && form.value.selectDuplicateApplicant=="") {
+      this.isErrorModal = true;
+      this.errorMessage="Select Any Applicant to Use"
 
-    let tempApplicant = this.qde.application.applicants[this.coApplicantIndex];
-    let selectedApplication = this.duplicates.find(e => e.applicantId == form.value.selectDuplicateApplicant);
-  // console.log("Selected Application new " , selectedApplication["applicationId"]);
-    let applicationId = Number( selectedApplication["applicationId"]);
-    this.getQdeDataSub = this.qdeHttp.getQdeData(applicationId).subscribe(data => {
-    // console.log("Applicationin get " ,JSON.parse(data["ProcessVariables"]["response"])["application"]["applicants"] );
-      let duplicates: any = JSON.parse(data["ProcessVariables"]["response"])["application"]["applicants"] ;
-      let newApplicantToBeReplaced = duplicates.find(e => e.applicantId == form.value.selectDuplicateApplicant);
-      // console.log("new application in data suub " , newApplicantToBeReplaced);
-      this.qde.application.applicants[this.coApplicantIndex] = this.qdeService.getModifiedObject(tempApplicant, newApplicantToBeReplaced);
-      this.qde.application.applicants[this.coApplicantIndex].applicantId = tempApplicant.applicantId;
-      this.qde.application.applicants[this.coApplicantIndex].isMainApplicant = tempApplicant.isMainApplicant;
-      this.qdeService.setQde(this.qde);
-      this.createOrUpdatePersonalDetailsSub5=this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).
-            subscribe((response) => {
-        // If successful
-        if(response["ProcessVariables"]["status"]) {
+    } else{
+        let tempApplicant = this.qde.application.applicants[this.coApplicantIndex];
+        let selectedApplication = this.duplicates.find(e => e.applicantId == form.value.selectDuplicateApplicant);
+      // console.log("Selected Application new " , selectedApplication["applicationId"]);
+        let applicationId = Number( selectedApplication["applicationId"]);
+        this.getQdeDataSub = this.qdeHttp.getQdeData(applicationId).subscribe(data => {
+        // console.log("Applicationin get " ,JSON.parse(data["ProcessVariables"]["response"])["application"]["applicants"] );    
+          let duplicates: any = JSON.parse(data["ProcessVariables"]["response"])["application"]["applicants"] ;
+          let newApplicantToBeReplaced = duplicates.find(e => e.applicantId == form.value.selectDuplicateApplicant);
+          // console.log("new application in data suub " , newApplicantToBeReplaced);
+          this.qde.application.applicants[this.coApplicantIndex] = this.qdeService.getModifiedObject(tempApplicant, newApplicantToBeReplaced);
+          this.qde.application.applicants[this.coApplicantIndex].applicantId = tempApplicant.applicantId;
+          this.qde.application.applicants[this.coApplicantIndex].isMainApplicant = tempApplicant.isMainApplicant;
+          this.qdeService.setQde(this.qde);
+         this.getSetQdeData(this.qde);
+          this.createOrUpdatePersonalDetailsSub5=this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).
+                subscribe((response) => {
+            // If successful      
+            if(response["ProcessVariables"]["status"]) {
 
-          this.closeDuplicateModal();
-        }
-      }
-      // , error => {
-      //   this.isErrorModal = true;
-      //   this.errorMessage = "Something went wrong, please try again later.";
-      // }
-    );
-  });
-}
+              this.closeDuplicateModal();
+            }
+          }
+          // , error => {
+          //   this.isErrorModal = true;
+          //   this.errorMessage = "Something went wrong, please try again later.";
+          // }
+          );
+      });
+    }
+  }
 
 
   currentAddressFromMainApplicant(event: boolean) {
