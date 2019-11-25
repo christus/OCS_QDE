@@ -139,6 +139,7 @@ export class ConnectorLeadCreateComponent implements OnInit {
 
     this.qdeHttp.connectorLeadCreateSave(data).subscribe(res => {
       if(res['ProcessVariables']['status'] == true) {
+        this.sessionMessage = res['ProcessVariables']['errorMessage']
         this.isSuccessfulRouteModal = true;
       }
       else{
