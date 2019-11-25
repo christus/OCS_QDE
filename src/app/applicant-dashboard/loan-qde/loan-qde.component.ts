@@ -293,7 +293,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
   isErrorModal:boolean;
   errorMessage:string;
   tempClssArea: string;
-  
+
   public defaultItem = environment.defaultItem;
 
   constructor(
@@ -341,7 +341,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     });
 
- 
+
     this.cds.isTBMLoggedIn.subscribe(val => {
       this.isTBMLoggedIn = val;
     });
@@ -367,7 +367,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
       this.loanProviderList = lov.LOVS.loan_providers;
     }
-    
+
 
 
     // this.route.fragment.subscribe(fragment => {
@@ -394,7 +394,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
         this.page = (val && val['page'] != null && parseInt(val['page']) != NaN && parseInt(val['page']) >= 1) ? parseInt(val['page']): 1;
       }
 
-    
+
       if(this.tabName && this.page && this.swiperSliders && this.swiperSliders.length > 0 && this.lhsSwiperSliders && this.lhsSwiperSliders.length > 0) {
         this.swiperSliders[this.activeTab].setIndex(this.page-1);
         this.lhsSwiperSliders[this.activeTab].setIndex(this.page-1);
@@ -415,7 +415,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
           this.cds.enableTabsIfStatus1(result.application.status);
 
           console.log("loanType: ", this.loanType);
-          
+
           this.qde = result;
           this.cds.setStatus(result.application.status);
           this.qdeService.setQde(result);
@@ -428,14 +428,14 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
          if(result.application.loanDetails &&
           result.application.loanDetails.loanAmount &&
           result.application.loanDetails.loanAmount.loanType) {
-            
+
             this.isLoanProductPage = false;
-            this.cds.changeMenuBarShown(true);            
+            this.cds.changeMenuBarShown(true);
           } else {
             this.isLoanProductPage = true;
             this.cds.changeMenuBarShown(false);
           }
-          
+
           if(this.qde.application.auditTrailDetails.screenPage == screenPages['loanDetails']) {
             this.goToExactPageAndTab(this.fragments.findIndex(v => v == this.qde.application.auditTrailDetails.tabPage), this.qde.application.auditTrailDetails.pageNumber);
           } else {
@@ -461,7 +461,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
             this.selectedLoanPurpose = this.defaultItem.value;
             // this.loanpurposes[0]
           }
-          
+
 
           if (!result.application.loanDetails.propertyType) {
             result.application.loanDetails.propertyType = {}; //This line need to be removed
@@ -515,13 +515,13 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
           // this.qdeService.setQde(this.qde);
           this.valuechange(this.qde.application.tenure, 0);
 
-          
+
 
 
           this.qde.application.loanDetails.property.zipcodeId = result.application.loanDetails.property.zipcodeId;
           this.qde.application.loanDetails.property.stateId = result.application.loanDetails.property.stateId;
           this.qde.application.loanDetails.property.cityId = result.application.loanDetails.property.cityId;
-  
+
           this.qde.application.loanDetails.property.city = result.application.loanDetails.property.city;
           this.qde.application.loanDetails.property.state = result.application.loanDetails.property.state;
           this.qde.application.loanDetails.property.zipcode = result.application.loanDetails.property.zipcode;
@@ -548,10 +548,12 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
           this.selectedApplicantIndex = this.qde.application.applicants.findIndex(v => v.applicantId == this.selectedApplicant.value);
           this.selectedApplicantName = this.qde.application.applicants[this.selectedApplicantIndex].personalDetails ? `${this.qde.application.applicants[this.selectedApplicantIndex].personalDetails['firstName']} ${this.qde.application.applicants[this.selectedApplicantIndex].personalDetails['lastName']}`: '';
           }
-        }, error => {
-          this.isErrorModal = true;
-          this.errorMessage = "Something went wrong, please try again later.";
-        });
+        }
+        // , error => {
+        //   this.isErrorModal = true;
+        //   this.errorMessage = "Something went wrong, please try again later.";
+        // }
+      );
       } else {
         this.qde = this.qdeService.defaultValue;
       }
@@ -572,7 +574,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
-    
+
   }
 
   getApplicantTitle (salutation:string) {
@@ -594,13 +596,13 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
       // If user changed to "NO"
       if(!currentPropertyStatus) {
-       
+
 
         this.qde.application.loanDetails.propertyType.propertyIdentified = false;
         this.qde.application.loanDetails.propertyType.propertyType = "";
         this.qde.application.loanDetails.propertyType.propertyClss = "";
         this.qde.application.loanDetails.propertyType.propertyArea = null;
-        
+
 
         this.qde.application.loanDetails.property.zipcodeId = null;
         this.qde.application.loanDetails.property.zipcode = null;
@@ -645,19 +647,22 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
                   //this.goToNextSlide(swiperInstance);
                 }
-              }, error => {
-                this.isErrorModal = true;
-                this.errorMessage = "Something went wrong, please again later.";
-              });
+              }
+              // , error => {
+              //   this.isErrorModal = true;
+              //   this.errorMessage = "Something went wrong, please again later.";
+              // }
+            );
 
               this.goToNextSlide(swiperInstance1, swiperInstance2);
             } else {
               // Throw Invalid Pan Error
             }
-          }, error => {
-            this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please again later.";
           }
+          // , error => {
+          //   this.isErrorModal = true;
+          //   this.errorMessage = "Something went wrong, please again later.";
+          // }
         );
 
       }else {
@@ -667,7 +672,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
     } else {
       //switching to existing loan
        this.qde.application.loanDetails.propertyType.propertyIdentified = value;
-       
+
        this.qdeHttp
        .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
        .subscribe(
@@ -683,23 +688,26 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
                  this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                  this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
 
-                
+
                }
-             }, error => {
-               this.isErrorModal = true;
-               this.errorMessage = "Something went wrong, please again later.";
-             });
+             }
+             // , error => {
+             //   this.isErrorModal = true;
+             //   this.errorMessage = "Something went wrong, please again later.";
+             // }
+           );
              this.goToExactPageAndTab(2, 1);
             //  this.tabSwitch(this.propertyNoSwitchTab);
            } else {
              // Throw Invalid Pan Error
            }
-         }, error => {
-           this.isErrorModal = true;
-           this.errorMessage = "Something went wrong, please again later.";
          }
+         // , error => {
+         //   this.isErrorModal = true;
+         //   this.errorMessage = "Something went wrong, please again later.";
+         // }
        );
-       
+
 
       // If user changed to "YES"
       if(currentPropertyStatus) {
@@ -710,7 +718,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
       //   this.router.navigate(['/references', this.qde.application.applicationId])
       // } else {
       //   this.tabSwitch(this.propertyNoSwitchTab);
-       
+
       // }
     }
   }
@@ -813,7 +821,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
     if(this.page <= 1) {
       // Switch Tabs
       this.router.navigate([], {queryParams: {tabName: this.fragments[this.activeTab-1], page: goToSlideNumber}});
-    } 
+    }
     else {
       // go to previous slide
       if(this.tabName == this.fragments[2] && this.page == 4 && (this.selectedLoanPurpose != 16 || this.selectedLoanPurpose != 17)){
@@ -849,7 +857,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
         return;
       }
 
-      
+
       console.log("selectedLoanPurpose: ", this.selectedLoanPurpose);
       // if(this.selectedLoanPurpose.propIdentified){
       //   this.disableNo = 1;
@@ -863,10 +871,10 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
         loanTenure: form.value.loanTenure,
         loanType: parseInt(this.selectedLoanType.value+"")
       };
-      
+
       if(this.qde.application.loanDetails.loanAmount.loanTenure == 0){
         this.tenureYears = true;
-        return; 
+        return;
       }else{
         this.tenureYears = false;
       }
@@ -886,23 +894,26 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
                   this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                   this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
                 }
-              }, error => {
-                this.isErrorModal = true;
-                this.errorMessage = "Something went wrong, please try again later.";
-              });
-                this.goToExactPageAndTab(1,1);              
+              }
+              // , error => {
+              //   this.isErrorModal = true;
+              //   this.errorMessage = "Something went wrong, please try again later.";
+              // }
+            );
+                this.goToExactPageAndTab(1,1);
             } else {
               // Throw Invalid Pan Error
             }
-          }, error => {
-            this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please try again later.";
           }
+          // , error => {
+          //   this.isErrorModal = true;
+          //   this.errorMessage = "Something went wrong, please try again later.";
+          // }
         );
-  
+
       // console.log("Submitted Amount"+ this.qde.application.loanDetails.loanAmount);
-  
-  
+
+
     }
   }
 
@@ -924,7 +935,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
         propertyClss: this.propertyClssValue,
         propertyArea: this.propertyAreaValue
       };
-  
+
       this.qdeHttp
         .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
         .subscribe(
@@ -940,18 +951,21 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
                   this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                   this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
                 }
-              }, error => {
-                this.isErrorModal = true;
-                this.errorMessage = "Something went wrong, please try again later.";
-              });
+              }
+              // , error => {
+              //   this.isErrorModal = true;
+              //   this.errorMessage = "Something went wrong, please try again later.";
+              // }
+            );
               this.goToNextSlide(swiperInstance1, swiperInstance2);
             } else {
               // Throw Invalid Pan Error
             }
-          }, error => {
-            this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please try again later.";
           }
+          // , error => {
+          //   this.isErrorModal = true;
+          //   this.errorMessage = "Something went wrong, please try again later.";
+          // }
         );
     }
   }
@@ -967,7 +981,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
       this.qdeHttp.getCityAndState(zipCode).subscribe(response => {
         // console.log(JSON.parse(response["ProcessVariables"]["response"]));
         var result = JSON.parse(response["ProcessVariables"]["response"]);
-        
+
 
         if (result.city && result.state) {
 
@@ -999,10 +1013,12 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
           this.qde.application.loanDetails.property.stateId = null;
         }
-      }, error => {
-        this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please try again later.";
-      });
+      }
+      // , error => {
+      //   this.isErrorModal = true;
+      //   this.errorMessage = "Something went wrong, please try again later.";
+      // }
+    );
     }else {
       this.cityState = "";
 
@@ -1024,7 +1040,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
       if (form && !form.valid) {
         return;
       }
-  
+
       this.qde.application.loanDetails.property = {
         zipcodeId: this.qde.application.loanDetails.property.zipcodeId,
         zipcode: this.propertyPincodeValue,
@@ -1035,7 +1051,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
         stateId: this.qde.application.loanDetails.property.stateId,
         state: this.state
       };
-  
+
       this.qdeHttp
         .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
         .subscribe(
@@ -1050,18 +1066,21 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
                   this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                   this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
                 }
-              }, error => {
-                this.isErrorModal = true;
-                this.errorMessage = "Something went wrong, please try again later.";
-              });
+              }
+              // , error => {
+              //   this.isErrorModal = true;
+              //   this.errorMessage = "Something went wrong, please try again later.";
+              // }
+            );
               this.clssProbabilityCheck();
             } else {
               // Throw Invalid Pan Error
             }
-          }, error => {
-            this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please try again later.";
           }
+          // , error => {
+          //   this.isErrorModal = true;
+          //   this.errorMessage = "Something went wrong, please try again later.";
+          // }
         );
     }
   }
@@ -1074,16 +1093,16 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
       if (form && !form.valid) {
         return;
       }
-  
+
       // this.qde.application.loanDetails.existingLoans = {
       //   loanProvider: this.selectedLoanProvider
       // };
 
       this.qde.application.applicants[this.selectedApplicantIndex].existingLoans.loanProvider = this.selectedLoanProvider.value? this.selectedLoanProvider.value+"": this.selectedLoanProvider+"";
-  
+
       this.qde.application.applicants[this.selectedApplicantIndex].existingLoans.monthlyEmi = parseInt(this.monthlyEmiValue+''.split(',').join(''));
 
-      
+
       this.qdeHttp
         .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
         .subscribe(
@@ -1107,10 +1126,11 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
             } else {
               // Throw Invalid Pan Error
             }
-          }, error => {
-            this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please try again later.";
           }
+          // , error => {
+          //   this.isErrorModal = true;
+          //   this.errorMessage = "Something went wrong, please try again later.";
+          // }
         );
     }
   }
@@ -1119,9 +1139,9 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.selectedApplicantIndex = this.qde.application.applicants.findIndex(v => v.applicantId == this.selectedApplicant.value);
     let s = this.qde.application.applicants.find(v => v.applicantId == this.selectedApplicant.value);
     this.selectedApplicantName = s.personalDetails ? `${s.personalDetails['firstName']} ${s.personalDetails['lastName']}`: '';
-   
+
     this.liveLoan =  this.qde.application.applicants[this.selectedApplicantIndex].existingLoans? this.qde.application.applicants[this.selectedApplicantIndex].existingLoans.liveLoan: 0 ;
-    
+
 
     this.selectedLoanProvider = this.qde.application.applicants[this.selectedApplicantIndex].existingLoans.loanProvider != '' ?  this.loanProviderList.find(v => v.value == this.qde.application.applicants[this.selectedApplicantIndex].existingLoans.loanProvider)    : this.defaultItem; //this.loanProviderList[0]
 
@@ -1143,7 +1163,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
       if (form && !form.valid) {
         return;
       }
-  
+
       // this.qde.application.applicants.loanDetails.existingLoans = {
       //   liveLoan: this.liveLoan
       // };
@@ -1154,7 +1174,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
       this.qde.application.applicants.find(v => v.applicantId == this.selectedApplicant.value).existingLoans.liveLoan = form.value.liveLoansNumber;
 
-      
+
       this.qdeHttp
         .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
         .subscribe(
@@ -1172,10 +1192,12 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
                     this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                     this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
                   }
-                }, error => {
-                  this.isErrorModal = true;
-                  this.errorMessage = "Something went wrong, please try again later.";
-                });
+                }
+                // , error => {
+                //   this.isErrorModal = true;
+                //   this.errorMessage = "Something went wrong, please try again later.";
+                // }
+              );
                 if(this.selectedLoanPurpose && ['16', '17'].includes(this.selectedLoanPurpose)){
                   this.goToNextSlide(swiperInstance1, swiperInstance2);
                 }
@@ -1183,17 +1205,18 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
                   this.goToNextSlide(swiperInstance1, swiperInstance2);
                   this.goToNextSlide(swiperInstance1, swiperInstance2);
                 }
-              }else{                
+              }else{
                 this.isLoanRouteModal = true;
               }
-            
+
             } else {
               // Throw Invalid Pan Error
             }
-          }, error => {
-            this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please try again later.";
           }
+          // , error => {
+          //   this.isErrorModal = true;
+          //   this.errorMessage = "Something went wrong, please try again later.";
+          // }
         );
     }
   }
@@ -1205,7 +1228,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
       if (form && !form.valid) {
         return;
       }
-  
+
       // this.qde.application.loanDetails.existingLoans = {
       //   monthlyEmi: this.monthlyEmiValue
       // };
@@ -1227,18 +1250,21 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
                   this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                   this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
                 }
-              }, error => {
-                this.isErrorModal = true;
-                this.errorMessage = "Something went wrong, please try again later.";
-              });
+              }
+              // , error => {
+              //   this.isErrorModal = true;
+              //   this.errorMessage = "Something went wrong, please try again later.";
+              // }
+            );
               this.isLoanRouteModal = true
             } else {
               // Throw Invalid Pan Error
             }
-          }, error => {
-            this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please try again later.";
           }
+          // , error => {
+          //   this.isErrorModal = true;
+          //   this.errorMessage = "Something went wrong, please try again later.";
+          // }
         );
     }
   }
@@ -1251,10 +1277,11 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
         } else {
           this.isClssNotEligibleModal = true;
         }
-      }, error => {
-        this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please try again later.";
       }
+      // , error => {
+      //   this.isErrorModal = true;
+      //   this.errorMessage = "Something went wrong, please try again later.";
+      // }
     );
   }
 
@@ -1280,7 +1307,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
       // } else {
       //   // this.tabSwitch(this.propertyNoSwitchTab);
       //   this.router.navigate([], {queryParams: { tabName: this.fragments[2], page: 0 }});
-       
+
       // }
   }
   proceedToExistingLoanNotEligible() {
@@ -1293,7 +1320,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   //    this.router.navigate([], {queryParams: { tabName: this.fragments[2], page: 1 }});
 
-    
+
   //  }
   }
 
@@ -1301,14 +1328,14 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.isLoanRouteModal = false;
     this.loanPinCodeModal = false;
   }
-  
+
   /*******************************************
    * Pass "1,23,45,678" and will return number
    *******************************************/
   getNumberWithoutCommaFormat(x: string) : string {
     return x ? x+"".split(',').join(''): '';
   }
-  
+
   /****************************************
   * Is a valid Number after removing Comma
   ****************************************/
@@ -1376,10 +1403,12 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
         this.allClssAreas = res['ProcessVariables']['townNames'] ? res['ProcessVariables']['townNames']: []
         console.log("CLSSArea: ", this.allClssAreas);
       }
-    }, error => {
-      this.isErrorModal = true;
-      this.errorMessage = "Something went wrong, please try again later.";
-    });
+    }
+    // , error => {
+    //   this.isErrorModal = true;
+    //   this.errorMessage = "Something went wrong, please try again later.";
+    // }
+  );
   }
 
   // moreLoanObligation(){
@@ -1401,10 +1430,10 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
   //     this.isNumberLessThan50k = true;
   //   }
   //   else if(n >= 1000000001 && maxAmount == 1000000000){
-  //     this.isNumberMoreThan100cr = true; 
+  //     this.isNumberMoreThan100cr = true;
   //   }
   //   else if(n >= 1000001 && maxAmount == 1000000){
-  //     this.isNumberMoreThan10lk = true; 
+  //     this.isNumberMoreThan10lk = true;
   //   } else if(n < 1000 && minAmount == 1000){
   //     this.isNumberLessThan1k = true;
   //   }
@@ -1493,6 +1522,6 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
     } else {
       this.router.navigate(['/references', this.qde.application.applicationId]);
     }
-    
+
   }
 }

@@ -23,7 +23,7 @@
                   <a href="javascript:void(0);" (click)="tabSwitch(6)">Customer Photo</a>
                 </li>
               </ul> -->
-          
+
               <!-- Upload Documents -->
 
               <div class="tabs-contents" #tabContents>
@@ -60,12 +60,12 @@
                                                       <label for="online">
                                                           <div class="inner-sect">
                                                               <div class="title">Online</div>
-                                                              <p class="desc">A link will be sent to 
-                                                                      the customer’s verified 
-                                                                      mobile number and 
-                                                                      email address. The 
-                                                                      customer can then pay 
-                                                                      online through any 
+                                                              <p class="desc">A link will be sent to
+                                                                      the customer’s verified
+                                                                      mobile number and
+                                                                      email address. The
+                                                                      customer can then pay
+                                                                      online through any
                                                                       payment method.</p>
                                                               </div>
                                                       </label>
@@ -76,11 +76,11 @@
                                                           <div class="inner-sect">
                                                             <div class="title">Offline</div>
                                                             <p class="desc">
-                                                                    Agent will collect a 
-                                                                    cheque and upload a 
-                                                                    photo of it through the 
-                                                                    app. A cheque usually 
-                                                                    takes 2-3 days to clear. 
+                                                                    Agent will collect a
+                                                                    cheque and upload a
+                                                                    photo of it through the
+                                                                    app. A cheque usually
+                                                                    takes 2-3 days to clear.
                                                             </p>
                                                           </div>
                                                       </label>
@@ -144,18 +144,18 @@
                                             </div>
                                             <div class="form-group">
                                                 <span class="control-title">Name of the Bank</span>
-                                                <!-- <select class="js-select" name="bankname" aria-placeholder="Name of the bank">                          
+                                                <!-- <select class="js-select" name="bankname" aria-placeholder="Name of the bank">
                                                         <option value="SBI">SBI</option>
                                                         <option value="HDFC">HDFC</option>
                                                         <option value="Citibank">Citibank</option>
                                                 </select>
                                                [(ngModel)]="selectedDocType" -->
-                                               <kendo-dropdownlist 
+                                               <kendo-dropdownlist
                                                [defaultItem]="defaultItem"
-                                               class="form-control" 
-                                               name="loanProvider" 
-                                               [data]="loanProviderList" 
-                                               textField="key" 
+                                               class="form-control"
+                                               name="loanProvider"
+                                               [data]="loanProviderList"
+                                               textField="key"
                                                valueField="value"
                                                [(ngModel)]="bankName">
                                              </kendo-dropdownlist>
@@ -171,7 +171,7 @@
                                                 pattern="{{regexPattern.ifsc}}"
                                                 fieldFill>
                                                 <label for="ifsc-code">IFSC Code</label>
-                                               
+
                                                 <div *ngIf="(ifscCode1.touched || ifscCode1.dirty) && ifscCode1.invalid" class="invalid-feedback">
                                                    <div *ngIf="ifscCode1?.errors?.pattern">{{errors.payment.offline.ifscCode.invalid}}</div>
                                               </div>
@@ -204,7 +204,7 @@
                                                 [(ngModel)]="amount"
                                                 pattern="{{regexPattern.amount}}"
                                                 fieldFill />
-                                               
+
                                                 <label for="amount">Amount (in Rupees)</label>
                                                 <span class="addon">
                                                     <span class="icon icon-inr"></span>
@@ -221,7 +221,7 @@
                                           [ngClass]="{'disabled': false}">Submit</button>
                                       </div>
                                     </form>
-                                    </div>                              
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -254,17 +254,17 @@
                     </div>
                 </div>
             </div>
-            <div class="overlay" [ngClass]="{'active': isPaymentFailedModal}"></div>
-            <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isPaymentFailedModal}">
+            <!-- <div class="overlay" [ngClass]="{'active': isPaymentFailedModal}"></div>
+            <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isPaymentFailedModal}"> -->
                 <!-- <a class="modal-close" (click)="onCrossModal()"><span class="icon icon-close"></span></a> -->
-                <div class="modal-body">
-                    <h1 class="center">{{butMes}}</h1>
+                <!-- <div class="modal-body">
+                    <h1 class="center">{{butMes}}</h1> -->
                     <!-- <p class="body">Do you like to upload documents?</p> -->
-                        <div class="btn-wrap">
+                        <!-- <div class="btn-wrap">
                             <button class="btn btn-border" [routerLink]="['/leads']">Okay</button>
                         </div>
                 </div>
-            </div>
+            </div> -->
             <!-- <div class="overlay" [ngClass]="{'active': isErrorModal}"></div>
             <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isErrorModal}"> -->
                 <!-- <a class="modal-close" href="javascript:void(0);" (click)="onBackOTP()"><span class="icon icon-close"></span></a> -->

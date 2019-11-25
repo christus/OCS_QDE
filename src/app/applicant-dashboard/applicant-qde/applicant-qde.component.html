@@ -144,7 +144,7 @@
                                         <!-- <div class="redalert" *ngIf="RegExp(regexPattern.sameDigit).test(applicationRefNo.value)">
                                             {{errors.applicationReferenceNo.wrong}}</div> -->
                                         <div *ngIf="applicationRefNo.touched && applicationRefNo.invalid " class="invalid-feedback">
-                                            
+
                                             <div *ngIf="applicationRefNo.errors?.pattern">{{errors.applicationReferenceNo.invalid}}</div>
                                             </div>
                             </div>
@@ -170,15 +170,15 @@
                           </div>
                           <div class="form-group">
                             <span class="control-title">Document Type</span>
-                            <kendo-dropdownlist [readonly]="isTBMLoggedIn" 
-                              class="form-control"   
-                              [defaultItem] = "defaultItem"                            
+                            <kendo-dropdownlist [readonly]="isTBMLoggedIn"
+                              class="form-control"
+                              [defaultItem] = "defaultItem"
                               [data]="docType"
                               [textField]="'key'"
-                              tabindex="0" 
+                              tabindex="0"
                               [valueField]="'value'"
                               name="docTypeindividual"
-                              nick="pan.docType" 
+                              nick="pan.docType"
                               #docTypeindividual
                               (selectionChange)="selectValueChanged($event, docTypeindividual.hostElement)"
                               [(ngModel)]="selectedDocType">
@@ -186,11 +186,11 @@
                           </div>
                           <div class="form-group">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              [(ngModel)]="qde.application.applicants[applicantIndex].pan.docNumber" id="docNumber" 
+                              [(ngModel)]="qde.application.applicants[applicantIndex].pan.docNumber" id="docNumber"
                               oninput="this.value = this.value.toUpperCase()" name="docNumber" #panDocNumber="ngModel"
                               pattern="{{regexPatternForDocType[parseInteger(selectedDocType?.value)].pattern}}"
                               maxlength="{{maxlength[parseInteger(selectedDocType?.value)]}}" fieldFill  autocomplete="off" required />
-                            <label for="docNumber" tabindex="3">Document Number</label>                           
+                            <label for="docNumber" tabindex="3">Document Number</label>
                             <div *ngIf="panDocNumber.touched && panDocNumber.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="panDocNumber.errors?.required">{{errors.panDocumentNo.required}}</div> -->
                               <div *ngIf="panDocNumber.errors?.pattern">{{errors.panDocumentNo.invalid}} - hint for Document number:
@@ -227,15 +227,15 @@
                                               <input type="file" [readonly]="isTBMLoggedIn" class="form-control" (change)="setPanProof($event.target.files)" >
                                               <label for="file"><span>Click photo of Id proof</span></label>
                                           </div>
-      
+
                                           <div class="doc_file_name_size" *ngIf="idPanFileName">
                                               <div>
                                                   <span>{{idPanFileName}} </span>
                                                   <span ng-switch-when="true">({{idPanFileSize}})</span>
                                               </div>
                                           </div>
-                                      </div>  
-                                      
+                                      </div>
+
                                   </div>
                                   <div class="btn-wrap">
                                       <button  *ngIf="isMobile" class="btn btn-primary" (click)="sendPanImage(imageURI)">Next</button>
@@ -322,23 +322,23 @@
                           <div class="form-group">
                             <span class="control-title">Title</span>
                             <div class="form-group">
-                            <kendo-dropdownlist [readonly]="isTBMLoggedIn"  
-                                isRequired="true"                             
-                                class="form-control"                              
+                            <kendo-dropdownlist [readonly]="isTBMLoggedIn"
+                                isRequired="true"
+                                class="form-control"
                                 [data]="titles"
                                 [defaultItem] = "defaultItem"
-                                [textField]="'key'" 
-                                [valueField]="'value'" 
-                                name = "title" 
-                                nick = "personalDetails.title"                                
+                                [textField]="'key'"
+                                [valueField]="'value'"
+                                name = "title"
+                                nick = "personalDetails.title"
                                 tabindex = "1"
-                                #title 
-                                (selectionChange)="selectValueChanged($event, title.hostElement)"                                
-                                [(ngModel)]="selectedTitle" >                               
-                              </kendo-dropdownlist>                  
-                              
+                                #title
+                                (selectionChange)="selectValueChanged($event, title.hostElement)"
+                                [(ngModel)]="selectedTitle" >
+                              </kendo-dropdownlist>
+
                               <!-- <span class="invalid-feedback" *ngIf="!selectedTitle.value">Select Any Valid Titile</span>                         -->
-                        
+
                             </div>
                           </div>
                           <div class="form-group">
@@ -350,7 +350,7 @@
                               tabindex="2" maxlength="50"
                               pattern="{{regexPattern.name}}" />
                             <label for="firstName">First name</label>
-                            
+
                             <div *ngIf="(qde.application.applicants[applicantIndex].personalDetails.firstName)?.length == 50" class="invalid-feedback">Maximum Character Exceeds</div>
                             <div *ngIf="(firstName.touched || firstName.dirty) && firstName.invalid"
                               class="invalid-feedback">
@@ -418,12 +418,12 @@
                         <div class="form-wrap">
                           <div class="form-group">
                             <span class="control-title">Qualification</span>
-                            <kendo-dropdownlist [readonly]="isTBMLoggedIn" 
-                              class="form-control" 
+                            <kendo-dropdownlist [readonly]="isTBMLoggedIn"
+                              class="form-control"
                               [defaultItem] = "defaultItem"
                               [data]="qualifications"
-                              textField="key" 
-                              valueField="value" 
+                              textField="key"
+                              valueField="value"
                               tabindex="0" #qualification
                               nick="personalDetails.qualification"
                               (selectionChange)="selectValueChanged($event, qualification.hostElement)"
@@ -475,9 +475,9 @@
                             <kendo-datepicker class="kendo_date_picker"
                               (valueChange)="onBirthDateChange($event)"
                               [min]= min
-                              [max] =  maxDate 
+                              [max] =  maxDate
                               [focusedDate]="focusedDate"
-                              [(value)]="dateofBirthKendo" 
+                              [(value)]="dateofBirthKendo"
                               [format]="'dd-MMM-yyyy'">
                             </kendo-datepicker>
                             <div *ngIf="ageError" class="invalid-feedback">
@@ -545,7 +545,7 @@
                   (slideNextTransitionStart)="slideNextTransitionStart(cdSlider1)" #cdSlider2="ngxSwiper">
                   <div class="swiper-wrapper">
                     <div class="swiper-slide">
-                      <form class="bs-form" id="contact-form" #contactForm="ngForm" autocomplete="off" 
+                      <form class="bs-form" id="contact-form" #contactForm="ngForm" autocomplete="off"
                         (ngSubmit)="submitContactDetails(contactForm)">
                         <div class="form-wrap">
                           <div class="form-group" [ngClass]="{'prefer': isAlternateEmailId}">
@@ -578,10 +578,10 @@
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="email" class="form-control" autocomplete="off"
                               id="alter-email" data-validation-attr="email01" pattern="{{regexPattern.email}}" maxlength="100"
                               [(ngModel)]="qde.application.applicants[applicantIndex].contactDetails.alternateEmailId"
-                              name="alternateEmailId" #alternateEmailId="ngModel" fieldFill 
+                              name="alternateEmailId" #alternateEmailId="ngModel" fieldFill
                               (ngModelChange)="onPreferredEmailChange($event, alternateEmailId)"/>
                               <div *ngIf="(qde.application.applicants[applicantIndex].contactDetails.alternateEmailId)?.length == 100" class="invalid-feedback">Maximum Character Exceeds</div>
-                              
+
                             <div *ngIf="(alternateEmailId.untouched || alternateEmailId.touched || alternateEmailId.dirty) && alternateEmailId.invalid"
                               class="invalid-feedback">
                               <!-- <div *ngIf="alternateEmailId.errors?.required">{{errors.contactDetails.preferedEmail.required}}</div> -->
@@ -610,9 +610,9 @@
 
                           <div class="form-group typ-mob">
 
-                            <input [readonly]="isTBMLoggedIn || qde.application.applicants[applicantIndex].contactDetails.isMobileOTPverified" 
+                            <input [readonly]="isTBMLoggedIn || qde.application.applicants[applicantIndex].contactDetails.isMobileOTPverified"
                               spellcheck="false" type="tel" class="form-control" autocomplete="off"
-                              id="mob-no" minlength="10" maxlength="10" im-insert="true" 
+                              id="mob-no" minlength="10" maxlength="10" im-insert="true"
                               [(ngModel)]="qde.application.applicants[applicantIndex].contactDetails.mobileNumber"
                               name="mobileNumber" #mobileNumber="ngModel" pattern="{{regexPattern.mobileNumber}}"
                               fieldFill required />
@@ -620,7 +620,7 @@
                             <label for="mob-no" tabindex="5">Mobile number</label>
                             <span class="optional">10 digit</span>
                             <button type="button" *ngIf="!qde.application.applicants[applicantIndex].contactDetails.isMobileOTPverified"
-                              href="javascript:void(0);" class="sent-otp modal-init" 
+                              href="javascript:void(0);" class="sent-otp modal-init"
                               [ngClass]="{'disabled': (!mobileNumber.valid || RegExp(regexPattern.sameDigit).test(mobileNumber.value))}"
                               [disabled]="!mobileNumber.valid || RegExp(regexPattern.sameDigit).test(mobileNumber.value)" data-target="sent-otp-modal"
                                (click)="submitOTP(contactForm, false)">Send OTP<span
@@ -628,13 +628,13 @@
                             <a *ngIf="qde.application.applicants[applicantIndex].contactDetails.isMobileOTPverified"
                               href="javascript:void(0);" class="sent-otp modal-init"
                               data-target="sent-otp-modal" (click)="editMobileNO()">Edit<span
-                                class="icon icon-tick"></span></a> 
-                            <span 
+                                class="icon icon-tick"></span></a>
+                            <span
                                 *ngIf="qde.application.applicants[applicantIndex].contactDetails.isMobileOTPverified"
                                  style=" font-size: 15px;color: green">verified</span>
                             <span  *ngIf="mobileNumber.valid && !qde.application.applicants[applicantIndex].contactDetails.isMobileOTPverified"
                             class="invalid-feedback">Need to Verify</span>
-                                 
+
                             <span class="alternate-data" *ngIf="!isAlternateMobileNumber">
                               <a href="javascript:void(0);" class="alter-btn" tabindex="6"
                                 (click)="addRemoveMobileNumberField()">+ Add</a> alternate Mobile number
@@ -781,7 +781,7 @@
                             ((qde.application.applicants[applicantIndex].contactDetails.preferredEmailId)?.length == 100) ||
                             (qde.application.applicants[applicantIndex].contactDetails.alternateEmailId)?.length == 100 ||
                             (!qde.application.applicants[applicantIndex].contactDetails.isMobileOTPverified)}"
-                            [disabled]="!contactForm.valid || (altMobileNo.value == mobileNumber.value) 
+                            [disabled]="!contactForm.valid || (altMobileNo.value == mobileNumber.value)
                             || RegExp(regexPattern.sameDigit).test(residenceNumber.value)
                             || RegExp(regexPattern.sameDigitStd).test(residenceStdCode.value)
                             || RegExp(regexPattern.sameDigit).test(alternateResidenceNumber2.value) 
@@ -873,12 +873,12 @@
                           <h1 class="sub-heading" style="text-align: left ; margin-bottom: 12px">Current Address</h1>
                           <div class="form-group">
                             <span class="control-title">Residential status</span>
-                            <kendo-dropdownlist [readonly]="isTBMLoggedIn" 
-                              class="form-control" 
+                            <kendo-dropdownlist [readonly]="isTBMLoggedIn"
+                              class="form-control"
                               [defaultItem]= "defaultItem"
                               [data]="residences"
-                              [textField]="'key'" 
-                              tabindex="0" 
+                              [textField]="'key'"
+                              tabindex="0"
                               [valueField]="'value'"
                               name="residentialStatus"
                               nick="communicationAddress.residentialStatus"
@@ -975,7 +975,7 @@
                                 [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.addressLineOne"
                                 [readOnly]="qde.application.applicants[applicantIndex].communicationAddress.permanentAddress"
                                 required />
-                                
+
 
                                 <div *ngIf="(qde.application.applicants[applicantIndex].permanentAddress.addressLineOne)?.length == 120" class="invalid-feedback">Maximum Character Exceeds</div>
 
@@ -1008,7 +1008,7 @@
                                 id="per-pincode" name="pZipcode" #pZipcode="ngModel" autocomplete="off"
                                 (input)="onPinCodeChange($event, 'permanentAddress')" fieldFill
                                 [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.zipcode"
-                                minlength="6" maxlength="6" pattern="{{regexPattern.pinCode}}" required 
+                                minlength="6" maxlength="6" pattern="{{regexPattern.pinCode}}" required
                                 [readOnly]="qde.application.applicants[applicantIndex].communicationAddress.permanentAddress" />
                               <label for="per-pincode" tabindex="8">Pincode</label>
 
@@ -1024,7 +1024,7 @@
                             <div class="form-group">
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                                 id="per-cityState" name="commCityState" #commCityState1="ngModel" fieldFill readonly autocomplete="off"
-                                [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.cityState" disabled 
+                                [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.cityState" disabled
                                 [readOnly]="qde.application.applicants[applicantIndex].communicationAddress.permanentAddress">
                               <label for="per-cityState" tabindex="9">City/State</label>
                             </div>
@@ -1068,7 +1068,7 @@
                         </div>
                         <div class="btn-wrap">
                           <button type="submit" class="btn btn-primary"
-                            [ngClass]="{'disabled': (!communicationForm.valid || selectedResidence.value == 0 || !qde.application.applicants[applicantIndex].communicationAddress.cityState) || !qde.application.applicants[applicantIndex].permanentAddress.cityState}" 
+                            [ngClass]="{'disabled': (!communicationForm.valid || selectedResidence.value == 0 || !qde.application.applicants[applicantIndex].communicationAddress.cityState) || !qde.application.applicants[applicantIndex].permanentAddress.cityState}"
                             [disabled]="(!communicationForm.valid || selectedResidence.value == 0 || !qde.application.applicants[applicantIndex].communicationAddress.cityState) || !qde.application.applicants[applicantIndex].permanentAddress.cityState">
                             Next
                           </button>
@@ -1131,13 +1131,13 @@
                           <div class="form-group">
                             <span class="control-title">Marital Status</span>
 
-                            <kendo-dropdownlist [readonly]="isTBMLoggedIn" 
+                            <kendo-dropdownlist [readonly]="isTBMLoggedIn"
                               class="form-control"
-                              [defaultItem] = "defaultItem" 
+                              [defaultItem] = "defaultItem"
                               [data]="maritals"
-                              textField="key" 
-                              valueField="value" 
-                              tabindex="1" 
+                              textField="key"
+                              valueField="value"
+                              tabindex="1"
                               name="maritalStatus"
                               nick="maritalStatus.status" #maritalStatusStatus
                               (selectionChange)="selectValueChanged($event, maritalStatusStatus.hostElement)"
@@ -1148,8 +1148,8 @@
                           </div>
                         </div>
                         <div class="btn-wrap">
-                          <button type="submit" class="btn btn-primary" 
-                          [ngClass]="{'disabled': (selectedMaritialStatus.value == 0)}" 
+                          <button type="submit" class="btn btn-primary"
+                          [ngClass]="{'disabled': (selectedMaritialStatus.value == 0)}"
                             [disabled]="selectedMaritialStatus.value == 0">Next
                           </button>
                         </div>
@@ -1161,15 +1161,15 @@
                         <div class="form-wrap">
                           <div class="form-group">
                             <span class="control-title">Title</span>
-                            <kendo-dropdownlist [readonly]="isTBMLoggedIn"                            
+                            <kendo-dropdownlist [readonly]="isTBMLoggedIn"
                               class="form-control"
                               [defaultItem] = "defaultItem"
                               [data]="spouseTitles"
-                              textField="key" 
-                              tabindex="1" 
-                              valueField="value" 
+                              textField="key"
+                              tabindex="1"
+                              valueField="value"
                               name="spouseTitle"
-                              nick="maritalStatus.spouseTitle" 
+                              nick="maritalStatus.spouseTitle"
                               #spouseTitle
                               (selectionChange)="selectValueChanged($event, spouseTitle.hostElement)"
                               [(ngModel)]="selectedSpouseTitle">
@@ -1325,15 +1325,15 @@
                           <div class="form-group">
                             <span class="control-title">Father's Title</span>
 
-                            <kendo-dropdownlist [readonly]="isTBMLoggedIn" 
+                            <kendo-dropdownlist [readonly]="isTBMLoggedIn"
                               class="form-control"
                               [defaultItem] = "defaultItem"
                               [data]="maleTitles"
-                              textField="key" 
-                              valueField="value" 
-                              name="fatherTitle" 
+                              textField="key"
+                              valueField="value"
+                              name="fatherTitle"
                               tabindex="1"
-                              nick="familyDetails.fatherTitle" 
+                              nick="familyDetails.fatherTitle"
                               #fatherTitle
                               (selectionChange)="selectValueChanged($event, fatherTitle.hostElement)"
                               [(ngModel)]="selectedFatherTitle">
@@ -1356,13 +1356,13 @@
                           </div>
                           <div class="form-group">
                             <span class="control-title">Mother's Title</span>
-                            <kendo-dropdownlist [readonly]="isTBMLoggedIn" 
+                            <kendo-dropdownlist [readonly]="isTBMLoggedIn"
                               class="form-control"
-                              [defaultItem] = "defaultItem" 
+                              [defaultItem] = "defaultItem"
                               [data]="femaleTitles"
-                              textField="key" 
-                              valueField="value" 
-                              tabindex="3" 
+                              textField="key"
+                              valueField="value"
+                              tabindex="3"
                               name="motherTitle"
                               nick="familyDetails.motherTitle" #motherTitle
                               (selectionChange)="selectValueChanged($event, motherTitle.hostElement)"
@@ -1401,7 +1401,7 @@
                           </div>
                         </div>
                         <div class="btn-wrap">
-                          <button type="submit" class="btn btn-primary" 
+                          <button type="submit" class="btn btn-primary"
                             [ngClass]="{'disabled': (!familyForm2.valid || selectedFatherTitle.value ==0 || selectedMotherTitle.value ==0)}"
                             [disabled]="!familyForm2.valid || selectedFatherTitle.value ==0 || selectedMotherTitle.value ==0">
                             Next
@@ -1448,14 +1448,14 @@
                         <div class="form-wrap">
                           <div class="form-group">
                             <span class="control-title">Religion</span>
-                            <kendo-dropdownlist [readonly]="isTBMLoggedIn" 
-                              class="form-control" 
+                            <kendo-dropdownlist [readonly]="isTBMLoggedIn"
+                              class="form-control"
                               [defaultItem] = "defaultItem"
                               [data]="religions"
-                              textField="key" 
-                              valueField="value" 
-                              name="religion" 
-                              tabindex="1" 
+                              textField="key"
+                              valueField="value"
+                              name="religion"
+                              tabindex="1"
                               nick="other.religion"
                               #religion (selectionChange)="selectValueChanged($event, religion.hostElement)"
                               [(ngModel)]="selectedReligion">
@@ -1470,33 +1470,33 @@
                             <div *ngIf="otherReligion?.length == 25" class="invalid-feedback">Maximum Character Exceeds</div>
 
                             <div *ngIf="specifyReligion.touched && specifyReligion.invalid" class="invalid-feedback">
-                                
+
                               <div *ngIf="specifyReligion.errors?.pattern">{{errors.other.specifyReligion.invalid}}</div>
                           </div>
                           </div>
                           <div class="form-group">
                             <span class="control-title">Category</span>
-                            <kendo-dropdownlist [readonly]="isTBMLoggedIn" 
-                              class="form-control" 
+                            <kendo-dropdownlist [readonly]="isTBMLoggedIn"
+                              class="form-control"
                               [defaultItem] = "defaultItem"
                               [data]="categories"
-                              textField="key" 
-                              valueField="value" 
-                              tabindex="3" 
-                              name="category" 
+                              textField="key"
+                              valueField="value"
+                              tabindex="3"
+                              name="category"
                               nick="other.category"
-                              #category 
+                              #category
                               (selectionChange)="selectValueChanged($event, category.hostElement)"
-                              [(ngModel)]="selectedCategory" 
+                              [(ngModel)]="selectedCategory"
                               (ngModelChange)="checkForCondition()">
                             </kendo-dropdownlist>
                           </div>
                         </div>
 
                         <div class="btn-wrap">
-                          <button type="submit" 
+                          <button type="submit"
                             [ngClass]="{'disabled': (!otherForm.valid) || otherReligion?.length == 25 || selectedReligion.value == 0 || selectedCategory.value ==0}"
-                            [disabled]="!otherForm.valid || otherReligion?.length == 25 || selectedReligion.value == 0 || selectedCategory.value ==0" 
+                            [disabled]="!otherForm.valid || otherReligion?.length == 25 || selectedReligion.value == 0 || selectedCategory.value ==0"
                             class="btn btn-primary">Next</button>
                         </div>
                       </form>
@@ -1531,7 +1531,7 @@
                   <div class="swiper-wrapper">
                     <div class="swiper-slide">
                       <div class="title-wrap">
-                        <h4 class="title">Enter details of <span class="cm-line-break"></span>Applicant’s current 
+                        <h4 class="title">Enter details of <span class="cm-line-break"></span>Applicant’s current
                           <span class="cm-line-break"></span>occupation</h4>
                         <p class="note">We may need this details for regulatory
                           <span class="cm-line-break">purposes.</span>
@@ -1559,15 +1559,15 @@
                           <div class="form-group">
                             <span class="control-title">Occupation type</span>
 
-                            <kendo-dropdownlist [readonly]="isTBMLoggedIn" 
+                            <kendo-dropdownlist [readonly]="isTBMLoggedIn"
                               class="form-control"
-                              [defaultItem] = "defaultItem" 
+                              [defaultItem] = "defaultItem"
                               [data]="occupations"
-                              textField="key" 
-                              valueField="value" 
-                              name="occupationType" 
+                              textField="key"
+                              valueField="value"
+                              name="occupationType"
                               tabindex="1"
-                              nick="occupation.occupationType" 
+                              nick="occupation.occupationType"
                               #occupationType
                               (selectionChange)="selectValueChangedOccupation($event)"
                               [(ngModel)]="selectedOccupation">
@@ -1618,7 +1618,7 @@
                               name="totalExperienceYear" class="form-control" tabindex="5" autocomplete="off"
                               oninput="this.value=this.value.slice(0,this.maxLength)"
                               [(ngModel)]="qde.application.applicants[applicantIndex].occupation.totalWorkExperience"
-                              maxlength="2" 
+                              maxlength="2"
                               #totalExperienceYear="ngModel" required />
 
                             <ng5-slider class="commSlider" tabindex="6"
@@ -1672,7 +1672,7 @@
                                 <span class="icon icon-inr"></span>
                               </span>
                               <span class="in-word"></span>
-  
+
                               <div *ngIf="annualPensionIncome1.touched && annualPensionIncome1.invalid"
                                 class="invalid-feedback">
                                 <!-- <div *ngIf="annualPensionIncome1.errors?.required">{{errors.incomeDetails.familyIncome.required}}</div> -->
@@ -1723,7 +1723,7 @@
                             <label for="incomeConsiderYes2"><span>Yes</span></label>
                           </div>
                           <div class="bs-radio">
-                            <input [readonly]="isTBMLoggedIn" spellcheck="false" type="radio" name="income-consider"
+                            <input disabled [readonly]="isTBMLoggedIn" spellcheck="false" type="radio" name="income-consider"
                               id="incomeConsiderNo2" class="not-usual" tabindex="2"
                               (click)="incomeConsiderYesNoIndividual(2, occupationSlider2, occupationSlider1)"
                               [checked]="qde.application.applicants[applicantIndex].incomeDetails.incomeConsider == false"
@@ -1867,7 +1867,7 @@
                                 <!-- <div *ngIf="stdCode.errors?.minlength">{{errors.officialCorrespondence.stdCode.invalid}}</div> -->
                               </div>
                             </div>
-                            <span class="seperator">-</span> 
+                            <span class="seperator">-</span>
                             <div class="form-group">
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                                 id="res-no03" data-validation-attr="residenceno" required #offStdNumber="ngModel"
@@ -1901,7 +1901,7 @@
                               <div *ngIf="officeEmail.errors.invalidDomain">{{errors.officialCorrespondence.email.invalidDomain}}
                               </div>
                               <div *ngIf="officeEmail.errors?.pattern">{{errors.officialCorrespondence.email.invalid}}
-                                </div>  
+                                </div>
                             </div>
                           </div>
 
@@ -1958,12 +1958,12 @@
                         <div class="form-wrap">
                           <div class="form-group inr">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="monthlyIncome1" tabindex="1" 
+                              id="monthlyIncome1" tabindex="1"
                               autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.monthlyIncome"
-                              #monthlyIncome1="ngModel" 
+                              #monthlyIncome1="ngModel"
                               minlength="4"
-                              fieldFill maxlength="10" 
+                              fieldFill maxlength="10"
                               (input)="checkAmountLimit($event,1000)"
                               pattern="{{regexPattern.amount}}"
                               name="monthlyIncome" required />
@@ -1984,15 +1984,15 @@
                           </div>
                           <div class="form-group">
                             <span class="control-title">Assessment methodology</span>
-                            <kendo-dropdownlist [readonly]="isTBMLoggedIn" 
-                            class="form-control" 
+                            <kendo-dropdownlist [readonly]="isTBMLoggedIn"
+                            class="form-control"
                             [defaultItem] = "defaultItem"
                             [data]="assessmentMethodology"
-                             tabindex="2" 
-                             textField="key" 
-                             valueField="value" 
+                             tabindex="2"
+                             textField="key"
+                             valueField="value"
                              name="assessmentMethodology"
-                              nick="incomeDetails.assessmentMethodology" 
+                              nick="incomeDetails.assessmentMethodology"
                               #assessmentMethodology1 (selectionChange)="selectValueChanged($event, assessmentMethodology1.hostElement)"
                               [(ngModel)]="selectedAssesmentMethodology">
                             </kendo-dropdownlist>
@@ -2000,7 +2000,7 @@
                           </div>
                         </div>
                         <div class="btn-wrap">
-                          <button type="submit" class="btn btn-primary" 
+                          <button type="submit" class="btn btn-primary"
                           [disabled]="!incomeConsiderFormInd.valid || selectedAssesmentMethodology.value ==0 || isTBMLoggedIn || isNumberLessThan1k || isNumberMoreThan100cr"
                             [ngClass]="{'disabled': (!incomeConsiderFormInd.valid || selectedAssesmentMethodology.value ==0 || isTBMLoggedIn || isNumberLessThan1k || isNumberMoreThan100cr)}">Next</button>
                         </div>
@@ -2015,13 +2015,13 @@
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                               id="annualFamilyIncome1" autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.annualFamilyIncome"
-                              #annualFamilyIncome1="ngModel" 
-                              name="annualFamilyIncome" 
+                              #annualFamilyIncome1="ngModel"
+                              name="annualFamilyIncome"
                               tabindex="1" fieldFill
                               maxlength="10"
                               minlength="4"
                               (input)="checkAmountLimit($event,50000,1000000000)"
-                              pattern="{{regexPattern.amount}}" 
+                              pattern="{{regexPattern.amount}}"
                               required />
                             <label for="annualFamilyIncome1">Annual Family Income <span class="lakhs"></span></label>
                             <span class="addon">
@@ -2152,7 +2152,7 @@
 
                             <div *ngIf="annualFamilyIncome1.touched || annualFamilyIncome1.dirty"
                               class="invalid-feedback">
-                                                       
+
                               <!-- <div *ngIf="annualFamilyIncome1.errors?.required">{{errors.incomeDetails.familyIncome.required}}</div> -->
                               <div *ngIf="annualFamilyIncome1.errors?.pattern">
                                 {{errors.incomeDetails.familyIncome.invalid}}</div>
@@ -2261,7 +2261,7 @@
                                         type="text"  autocomplete="off"
                                         class="form-control"
                                         [(ngModel)]="qde.application.applicationFormNumber"
-                                        (ngModelChange)="qde.application.applicationFormNumber = $event.toUpperCase()" 
+                                        (ngModelChange)="qde.application.applicationFormNumber = $event.toUpperCase()"
                                         id="ref-no-nonind"
                                         maxlength="20"
                                         pattern="{{regexPattern.appRefNo}}"
@@ -2274,7 +2274,7 @@
                                         <!-- <div class="redalert" *ngIf="RegExp(regexPattern.sameDigit).test(applicationRefNoNonInd.value)">
                                             {{errors.applicationReferenceNo.wrong}}</div> -->
                                             <div *ngIf="applicationRefNoNonInd.touched && applicationRefNoNonInd.invalid " class="invalid-feedback">
-                                            
+
                                                 <div *ngIf="applicationRefNoNonInd.errors?.pattern">{{errors.applicationReferenceNo.invalid}}</div>
                                                 </div>
                             </div>
@@ -2301,7 +2301,7 @@
                           <!-- <div class="form-group">
                                                 <span class="control-title">Document Type</span>
                                                 <kendo-dropdownlist [readonly]="isTBMLoggedIn"   class="form-control"
-                                                    [data]="docType" 
+                                                    [data]="docType"
                                                     textField="key"
                                                     valueField="value"
                                                     tabindex="2"
@@ -2366,14 +2366,14 @@
                                                     <input type="file" [readonly]="isTBMLoggedIn" class="form-control" (change)="setPanProof($event.target.files)" >
                                                     <label for="file"><span>Click photo of Id proof</span></label>
                                                 </div>
-            
+
                                                 <div class="doc_file_name_size" *ngIf="idPanFileName">
                                                     <div>
                                                         <span>{{idPanFileName}} </span>
                                                         <span ng-switch-when="true">({{idPanFileSize}})</span>
                                                     </div>
                                                 </div>
-                                            </div>  
+                                            </div>
                                         </div>
                                         <div class="btn-wrap">
                                             <button  *ngIf="isMobile" class="btn btn-primary" (click)="sendPanImage(imageURI)">Next</button>
@@ -2621,7 +2621,7 @@
                                   name="corporateAddress"
                                   (ngModelChange)="makeCorporateAddressSame($event)"
                                   [checked]="qde.application.applicants[applicantIndex].registeredAddress.corporateAddress == true"
-                                  id="corporateAddress" />    
+                                  id="corporateAddress" />
                                 <!-- <label for="corporateAddress" tabindex="5"><span>Registered Address is Corporate Address</span></label> -->
                                 <label for="corporateAddress" tabindex="1"><span>Registered Address is Corporate Address</span></label>
                             </div>
@@ -2768,7 +2768,7 @@
                   (slideNextTransitionStart)="slideNextTransitionStart(revenueSlider1)" #revenueSlider2="ngxSwiper">
                   <div class="swiper-wrapper">
                     <div class="swiper-slide">
-                      <form class="bs-form" #revenueForm="ngForm" autocomplete="off" 
+                      <form class="bs-form" #revenueForm="ngForm" autocomplete="off"
                       (ngSubmit)="submitRevenueDetails(revenueForm)">
                         <div class="form-wrap">
                           <div class="form-group inr">
@@ -2808,7 +2808,7 @@
                           </div>
                           <!-- <div class="form-group inr last">
                                               <input [readonly]="isTBMLoggedIn" spellcheck="false"
-                                               maxlength="15" type="text" class="form-control" id="gross-turnover" 
+                                               maxlength="15" type="text" class="form-control" id="gross-turnover"
                                               required
                                               [(ngModel)]="qde.application.applicants[applicantIndex].revenueDetails.grossTurnOver"
                                               #grossTurnover="ngModel"
@@ -2821,7 +2821,7 @@
                           <!-- <div *ngIf="grossTurnover.errors?.required">{{errors.revenueDetails.grossTurnover.required}}</div> -->
                           <!-- <div *ngIf="grossTurnover.errors?.pattern">{{errors.revenueDetails.grossTurnover.invalid}}</div>
                                               </div>
-          
+
                                               <span class="addon">
                                                   <span class="icon icon-inr"></span>
                                               </span>
@@ -2871,7 +2871,7 @@
                   (slidePrevTransitionStart)="slidePrevTransitionStart(incomeConsiderSliderNonIndividual1)"
                   (slideNextTransitionStart)="slideNextTransitionStart(incomeConsiderSliderNonIndividual1)" #incomeConsiderSliderNonIndividual2="ngxSwiper">
                   <div class="swiper-wrapper">
-                    
+
                     <div class="swiper-slide">
                       <form class="bs-form">
                         <div class="form-wrap">
@@ -2883,7 +2883,7 @@
                             <label for="incomeConsiderYes2"><span>Yes</span></label>
                           </div>
                           <div class="bs-radio">
-                            <input [readonly]="isTBMLoggedIn" spellcheck="false" type="radio"                               
+                            <input disabled [readonly]="isTBMLoggedIn" spellcheck="false" type="radio"
                               name="income-consider"
                               id="incomeConsiderNo2" class="not-usual" tabindex="2"
                               [checked]="qde.application.applicants[applicantIndex].incomeDetails.incomeConsider == false"
@@ -2900,10 +2900,10 @@
                         <div class="form-wrap">
                           <div class="form-group inr">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="monthlyIncome2" maxlength="10" 
+                              id="monthlyIncome2" maxlength="10"
                               autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.monthlyIncome"
-                              #monthlyIncome2="ngModel" 
+                              #monthlyIncome2="ngModel"
                               fieldFill tabindex="1"
                               minlength ="4"
                               pattern="{{regexPattern.amount}}"
@@ -2925,12 +2925,12 @@
                           </div>
                           <div class="form-group">
                             <span class="control-title">Assessment methodology</span>
-                            <kendo-dropdownlist [readonly]="isTBMLoggedIn" 
+                            <kendo-dropdownlist [readonly]="isTBMLoggedIn"
                               class="form-control"
                               [defaultItem] = "defaultItem"
-                              [data]="assessmentMethodology" 
-                              textField="key" 
-                              valueField="value" 
+                              [data]="assessmentMethodology"
+                              textField="key"
+                              valueField="value"
                               tabindex="2"
                               name="assessmentMethodology"
                               nick="incomeDetails.assessmentMethodology"

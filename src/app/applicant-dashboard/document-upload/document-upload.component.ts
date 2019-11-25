@@ -40,7 +40,7 @@ enum DocumentCategory {
 export class DocumentUploadComponent implements OnInit, AfterViewInit {
 
   isMobile:boolean;
-  
+
   cameraImage: string;
 
   imageURI: string;
@@ -125,7 +125,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
   // fileSize: string;
   progress: string;
 
-  
+
   photoProofFileName: Array<string> = [];
   photoProofFileSize: Array<string> = [];
   photoProofId: Array<string> = [];
@@ -198,7 +198,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
   errorMessage:string;
 
   isSubmitDisabled: boolean = true;
-  
+
   previousUrl: string;
 
   lovs: Array<string>;
@@ -268,7 +268,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
       if (params.applicationId != null) {
 
         this.applicantId = params['applicantId'];
-        
+
 
           this.getQdeDataSub = this.qdeHttp.getQdeData(params.applicationId).subscribe(response => {
             var result = JSON.parse(response["ProcessVariables"]["response"]);
@@ -286,14 +286,14 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
             this.qdeService.setQde(result);
             var butRes = result.application.status;
             this.applicationId = this.qde.application.applicationId;
-  
+
             // if(butRes >= 5) {
             //   this.cds.setIsMainTabEnabled(false);
             // }
             // else{
             //   this.cds.setIsMainTabEnabled(true);
             // }
-  
+
             /***********************************************
             * Check if route is appropriate with Applicants
             * If not then redirect to Dashboard
@@ -312,22 +312,24 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
             // else {
             //   this.tabSwitch(0);
             // }
-  
+
             if(result != null) {
               this.applicantIndex = result.application.applicants.findIndex(v => v.applicantId == this.applicantId);
             }
-  
+
             const applicants = this.qde.application.applicants;
-  
+
             this.recurvLovCalls(applicants);
 
             this.cds.changeApplicationId(this.qde.application.applicationId);
             this.cds.enableTabsIfStatus1(this.qde.application.status);
-  
-          }, error => {
-            this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please try again later.";
-          });
+
+          }
+          // , error => {
+          //   this.isErrorModal = true;
+          //   this.errorMessage = "Something went wrong, please try again later.";
+          // }
+        );
 
 
 
@@ -490,14 +492,14 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
           this.isSubmitDisabled = false;
         } else {
           this.isSubmitDisabled = true;
-          this.isErrorModal = true;
-          this.errorMessage = res['ProcessVariables']['description'];
+          // this.isErrorModal = true;
+          // this.errorMessage = res['ProcessVariables']['description'];
         }
       },
       err => {
         this.isSubmitDisabled=true;
-        this.isErrorModal=true;
-        this.errorMessage = 'Something went wrong.';
+        // this.isErrorModal=true;
+        // this.errorMessage = 'Something went wrong.';
       });
     }
 
@@ -578,10 +580,12 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
                 this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                 this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
       }
-    } , error => {
-      this.isErrorModal = true;
-      this.errorMessage = "Something went wrong, please try again later.";
-    });
+    }
+    // , error => {
+    //   this.isErrorModal = true;
+    //   this.errorMessage = "Something went wrong, please try again later.";
+    // }
+  );
 
   }
 
@@ -611,7 +615,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
       writable: true,
       value: this.photoProofDoc[this.applicantIndex]["name"]
     });
-    
+
     modifiedFile["name"] = this.applicationId + "-" + applicantId + "-" + new Date().getTime() + "-" + modifiedFile["name"];
 
     const callback = (info: JSON) => {
@@ -630,9 +634,9 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
     };
 
     this.uploadToMongo(modifiedFile, callback);
-  
+
   }
-  
+
   /************************
   * Id Proof Chooser
   ************************/
@@ -646,7 +650,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
       this.idProofFileSize[this.applicantIndex] = "";
       return;
     }
-    
+
     console.log("files: ", files.item(0));
     this.idProofDoc[this.applicantIndex] = files.item(0);
     let size = this.getFileSize(this.idProofDoc[this.applicantIndex]["size"]);
@@ -663,10 +667,12 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
                 this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                 this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
       }
-    } , error => {
-      this.isErrorModal = true;
-      this.errorMessage = "Something went wrong, please try again later.";
-    });
+    }
+    // , error => {
+    //   this.isErrorModal = true;
+    //   this.errorMessage = "Something went wrong, please try again later.";
+    // }
+  );
   }
 
   /************************
@@ -682,7 +688,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
     }
 
     console.log("handleIdProof isMobile", this.isMobile);
-    
+
     if(this.isMobile) {
       const documentCategory = this.findDocumentCategory("ID Proof");
 
@@ -690,7 +696,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    
+
     const applicantId = this.qde.application.applicants[this.applicantIndex].applicantId.toString();
     //this.progress = this.idProofDoc["progress"];
 
@@ -728,7 +734,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
     this.ngxService.start();
 
     this.qdeHttp.uploadFile(fileName, image).then((data) => {
-      
+
       if(data["responseCode"] == 200) {
 
         var result = JSON.parse(data["response"]);
@@ -739,7 +745,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
 
 
         const documentId = imageId;
-  
+
         const documentInfo = {
           applicationId: this.applicationId,
           applicantId: applicantId,
@@ -790,10 +796,12 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
                 this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                 this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
       }
-    } , error => {
-      this.isErrorModal = true;
-      this.errorMessage = "Something went wrong, please try again later.";
-    });
+    }
+    // , error => {
+    //   this.isErrorModal = true;
+    //   this.errorMessage = "Something went wrong, please try again later.";
+    // }
+  );
   }
 
   /************************
@@ -801,7 +809,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
   ************************/
   handleAddressProof(slider) {
     const tabIndex = 4;
-    
+
     if (!this.addressProofDoc[this.applicantIndex]) {
       // this.goToNextSlide(slider);
       this.tabSwitch(tabIndex);
@@ -868,10 +876,12 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
                 this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                 this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
       }
-    } , error => {
-      this.isErrorModal = true;
-      this.errorMessage = "Something went wrong, please try again later.";
-    });
+    }
+    // , error => {
+    //   this.isErrorModal = true;
+    //   this.errorMessage = "Something went wrong, please try again later.";
+    // }
+  );
   }
 
   /***************************
@@ -956,10 +966,12 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
                 this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                 this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
       }
-    } , error => {
-      this.isErrorModal = true;
-      this.errorMessage = "Something went wrong, please try again later.";
-    });
+    }
+    // , error => {
+    //   this.isErrorModal = true;
+    //   this.errorMessage = "Something went wrong, please try again later.";
+    // }
+  );
 
   }
 
@@ -974,7 +986,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
       this.tabSwitch(tabIndex);
       return;
     }
-    
+
     if(this.isMobile) {
       const documentCategory = this.findDocumentCategory("Banking");
       this.sendImgProof(this.bankingProofDoc[this.applicantIndex], tabIndex, slider, documentCategory, this.selectedBankProof[this.applicantIndex].value);
@@ -1042,21 +1054,23 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
                 this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                 this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
       }
-    } , error => {
-      this.isErrorModal = true;
-      this.errorMessage = "Something went wrong, please try again later.";
-    });
+    }
+    // , error => {
+    //   this.isErrorModal = true;
+    //   this.errorMessage = "Something went wrong, please try again later.";
+    // }
+  );
   }
 
   /*******************************
   * Collateral Proof Next(Submit)
   *******************************/
   handleCollateralProof(slider) {
-        
+
     // this.qdeHttp.apsApi(""+this.applicationId).subscribe(res => {
     //   console.log("res APS: ", res);
     // });
-    
+
     // const tabIndex = 7;
 
     if (!this.collateralProofDoc[this.applicantIndex]) {
@@ -1116,12 +1130,13 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
         } else {
           console.log(alert["message"]);
         }
-      }, error => {
-        if(error.error.message) {
-          this.isErrorModal = true;
-          this.errorMessage = error.error.message;
-        }
       }
+      // , error => {
+      //   if(error.error.message) {
+      //     this.isErrorModal = true;
+      //     this.errorMessage = error.error.message;
+      //   }
+      // }
     );
   }
 
@@ -1155,10 +1170,11 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
             );
           }
         }
-      }, error => {
-        this.isErrorModal = true;
-        this.errorMessage = error.message;
       }
+      // , error => {
+      //   this.isErrorModal = true;
+      //   this.errorMessage = error.message;
+      // }
     );
   }
 
@@ -1168,7 +1184,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
       response => {
         const processVariables = response["ProcessVariables"];
         if (response["Error"] === "0" && processVariables["status"]) {
-          
+
           const res = JSON.parse(processVariables["response"]);
 
           console.log("getApplicableDocuments: ", response);
@@ -1200,7 +1216,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
           /******************************************
           * It will load Documents of all Applicants
           ******************************************/
-          
+
           this.loadDocuments(documents, index, callback);
         } else {
 
@@ -1210,10 +1226,11 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
             console.log("Response: " + response["ProcessVariables"]["errorMessage"]);
           }
         }
-      }, error => {
-        this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please try again later.";
       }
+      // , error => {
+      //   this.isErrorModal = true;
+      //   this.errorMessage = "Something went wrong, please try again later.";
+      // }
     );
   }
 
@@ -1244,7 +1261,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
        // $(file).val(''); //for clearing with Jquery
        return null;
     } else {
-     
+
       size = size / 1024;
 
       let isMegaByte = false;
@@ -1293,7 +1310,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
     else{
       this.tabSwitch(1);
     }
-   
+
   }
 
   loadDocuments(documents: Array<any>, index: number, callback) {
@@ -1391,7 +1408,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
         } else {
           that.coApplicants.push(applicants);
         }
-        
+
       }
 
       if(applicants[index+1] != null) {

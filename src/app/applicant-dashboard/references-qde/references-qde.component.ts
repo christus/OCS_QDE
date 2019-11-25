@@ -90,7 +90,7 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
          }
        }
 
-        
+
      }
   };
 
@@ -198,7 +198,7 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
   auditTrialApiSub: Subscription;
   fragmentSub: Subscription;
 
-  isErrorModal:boolean; 
+  isErrorModal:boolean;
   errorMessage:string;
   public defaultItem: Item = environment.defaultItem;
   constructor(
@@ -272,10 +272,10 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
         this.qdeHttp.getQdeData(applicationId).subscribe(response => {
           let result = JSON.parse(response["ProcessVariables"]["response"]);
 
-          
+
           this.cds.setStatus(result.application.status);
           this.cds.setactiveTab(screenPages['references']);
-          
+
           this.qde = result;
           this.applicantIndex = this.qde.application.applicants.findIndex(v => v.isMainApplicant == true);
 
@@ -304,7 +304,7 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
           this.selectedReferenceTwo =
             result.application.references.referenceTwo.relationShip ||
             this.defaultItem.value;
-          
+
 	        this.selectedTiltle1 =
             result.application.references.referenceOne.title ||
             this.defaultItem.value;
@@ -334,10 +334,12 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
           this.qde.application.applicationId = applicationId;
 
           this.qdeService.setQde(this.qde);
-        }, error => {
-          this.isErrorModal = true;
-          this.errorMessage = "Something went wrong, please try again later.";
-        });
+        }
+        // , error => {
+        //   this.isErrorModal = true;
+        //   this.errorMessage = "Something went wrong, please try again later.";
+        // }
+      );
       } else {
         this.qde = this.qdeService.getQde();
         this.cds.enableTabsIfStatus1(this.qde.application.status);
@@ -400,7 +402,7 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
     //   }
     // });
 
- 
+
     this.cds.isTBMLoggedIn.subscribe(val => {
       this.isTBMLoggedIn = val;
     });
@@ -506,7 +508,7 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
       if (form && !form.valid) {
         return;
       }
-  
+
       this.qde.application.references.referenceOne.relationShip = this.selectedReferenceOne;
       this.setTitle1();
       if(this.relationshipChanged1 && this.qde.application.references.referenceOne!=undefined){
@@ -542,21 +544,25 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
 
                   this.goToNextSlide(swiperInstance);
                 }
-              }, error => {
-                this.isErrorModal = true;
-                this.errorMessage = "Something went wrong, please try again later.";
-              });
+              }
+              // , error => {
+              //   this.isErrorModal = true;
+              //   this.errorMessage = "Something went wrong, please try again later.";
+              // }
+            );
 
               this.referenceId1 = this.qde.application.references.referenceOne.referenceId;
-            } else {
-              alert(response["ErrorMessage"]);
             }
-          }, error => {
-            this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please try again later.";
+            // else {
+            //   alert(response["ErrorMessage"]);
+            // }
           }
+          // , error => {
+          //   this.isErrorModal = true;
+          //   this.errorMessage = "Something went wrong, please try again later.";
+          // }
         );
-  
+
       console.log("submitted");
     }
   }
@@ -568,7 +574,7 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
       if (form && !form.valid) {
         return;
       }
-  
+
       this.qde.application.references.referenceOne = {
         referenceId: this.referenceId1,
         title: this.selectedTiltle1,
@@ -577,9 +583,9 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
         addressLineOne: this.selectedAddressLineOne1,
         addressLineTwo: this.selectedAddressLineTwo1
       };
-  
+
       console.log(this.qde.application.references.referenceOne.relationShip);
-  
+
       this.qdeHttp
         .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
         .subscribe(
@@ -598,20 +604,24 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
 
                   this.goToNextSlide(swiperInstance);
                 }
-              }, error => {
-                this.isErrorModal = true;
-                this.errorMessage = "Something went wrong, please try again later.";
-              });
+              }
+              // , error => {
+              //   this.isErrorModal = true;
+              //   this.errorMessage = "Something went wrong, please try again later.";
+              // }
+            );
               this.tabSwitch(1);
-            } else {
-              alert(response["ErrorMessage"]);
             }
-          }, error => {
-            this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please try again later.";
+            // else {
+            //   alert(response["ErrorMessage"]);
+            // }
           }
+          // , error => {
+          //   this.isErrorModal = true;
+          //   this.errorMessage = "Something went wrong, please try again later.";
+          // }
         );
-  
+
       console.log("submitted");
     }
   }
@@ -624,9 +634,9 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
       if (form && !form.valid) {
         return;
       }
-  
+
       this.qde.application.references.referenceTwo.relationShip = this.selectedReferenceTwo;
-  
+
       //console.log(this.qde.application.references.referenceOne.relationShip);
       this.setTitle2();
       if(this.relationshipChanged2 && this.qde.application.references.referenceTwo!=undefined){
@@ -642,7 +652,7 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
       this.qde.application.references.referenceTwo.fullName = "";
       this.qde.application.references.referenceTwo.title = "";
     }
-  
+
       this.qdeHttp
         .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
         .subscribe(
@@ -663,19 +673,23 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
 
                   this.goToNextSlide(swiperInstance);
                 }
-              }, error => {
-                this.isErrorModal = true;
-                this.errorMessage = "Something went wrong, please try again later.";
-              });
-            } else {
-              alert(response["ErrorMessage"]);
+              }
+              // , error => {
+              //   this.isErrorModal = true;
+              //   this.errorMessage = "Something went wrong, please try again later.";
+              // }
+            );
             }
-          }, error => {
-            this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please try again later.";
+            // else {
+            //   alert(response["ErrorMessage"]);
+            // }
           }
+          // , error => {
+          //   this.isErrorModal = true;
+          //   this.errorMessage = "Something went wrong, please try again later.";
+          // }
         );
-  
+
       console.log("submitted");
     }
   }
@@ -696,7 +710,7 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
       if (form && !form.valid) {
         return;
       }
-  
+
       this.qde.application.references.referenceTwo = {
         referenceId: this.referenceId2,
         title: this.selectedTiltle2,
@@ -705,9 +719,9 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
         addressLineOne: this.selectedAddressLineOne2,
         addressLineTwo: this.selectedAddressLineTwo2
       };
-  
+
       console.log(this.qde.application.references.referenceOne.relationShip);
-  
+
       this.qdeHttp
         .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
         .subscribe(
@@ -717,7 +731,7 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
               response["Error"] === "0" &&
               response["ProcessVariables"]["status"]
             ) {
-              
+
               this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['references']).subscribe(auditRes => {
                 if(auditRes['ProcessVariables']['status'] == true) {
                   this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
@@ -727,19 +741,23 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
 
                   this.isReferenceRouteModal = true;
                 }
-              }, error => {
-                this.isErrorModal = true;
-                this.errorMessage = "Something went wrong, please try again later.";
-              });
-            } else {
-              alert(response["ErrorMessage"]);
+              }
+              // , error => {
+              //   this.isErrorModal = true;
+              //   this.errorMessage = "Something went wrong, please try again later.";
+              // }
+            );
             }
-          }, error => {
-            this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please try again later.";
+            // else {
+            //   alert(response["ErrorMessage"]);
+            // }
           }
+          // , error => {
+          //   this.isErrorModal = true;
+          //   this.errorMessage = "Something went wrong, please try again later.";
+          // }
         );
-  
+
       console.log("submitted");
       //this.qdeHttp.setStatusApi(this.applicationId, this.applicationStatus).subscribe(res => {}, err => {});
     }

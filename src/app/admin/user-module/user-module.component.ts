@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./user-module.component.css']
 })
 export class UserModuleComponent implements OnInit {
-  collection: any[] = [];  
+  collection: any[] = [];
   p: number = 1;
   userTable:any[] ;
   totalPages:string;
@@ -23,15 +23,15 @@ export class UserModuleComponent implements OnInit {
   isErrorModal: boolean = false;
   errorMessage: string;
 
-  // paginationConfig =  { 
-  //   itemsPerPage: 2, 
-  //   totalItems: total 
+  // paginationConfig =  {
+  //   itemsPerPage: 2,
+  //   totalItems: total
   // }
 
 
   constructor(private qdeHttp: QdeHttpService) {
-    
-    
+
+
   }
 
   ngOnInit() {
@@ -50,7 +50,7 @@ export class UserModuleComponent implements OnInit {
     };
     this.qdeHttp.getRoleNameList(data).subscribe((response) => {
       this.rolesList = response['ProcessVariables'].roleList;
-      
+
     });
   }
 
@@ -77,10 +77,7 @@ export class UserModuleComponent implements OnInit {
         this.enableLoadMore = false;
       }
       console.log(this.collection);
-     }else if (response['ProcessVariables']['status']==false && (response['ProcessVariables']['errorMessage']!="" || response['ErrorMessage']!="")){
-       this.isErrorModal = true;
-       this.errorMessage = "Something went wrong";
-     }else if (response['ProcessVariables']['status']==false && response['ProcessVariables']['userDetails']==null){
+     }else if (response['ProcessVariables']['userDetails']==null){
        this.isErrorModal = true;
        this.errorMessage = "No data present further";
      }

@@ -72,15 +72,15 @@ export class AuthInterceptor implements HttpInterceptor {
   return next.handle(authReq).pipe(
     map(
       (event: HttpEvent<any>) => {
-                
+
         if (event instanceof HttpResponse) {
           this.ngxService.stop(); // stop foreground spinner of the master loader with 'default' taskId
           let responseValue = event.body;
           let typeOfbody = typeof(responseValue);
           console.log("respose header in auth int ", event.headers.get("content-type"));
           console.log("type of response: ", typeOfbody);
-          
-          // console.log("Response Value: " + event.body);text/plain          
+
+          // console.log("Response Value: " + event.body);text/plain
           if (event.headers.get("content-type") == "text/plain") {
             event = event.clone({ body: JSON.parse(this.encrytionService.decryptResponse(event)) });
             // console.log("after Encryption: ", event.body);
@@ -88,8 +88,41 @@ export class AuthInterceptor implements HttpInterceptor {
           console.log("*************************************************");
           console.log("after Decryption: " , event.body);
           console.log("*************************************************");
-          
+
           let response = event.body;
+          if(response['Error']=="0"
+            && response['Error']!=undefined
+            && response['ProcessVariables']!=""
+            && response['ProcessVariables']!= undefined
+            && response['ProcessVariables']['status']==true
+            && response['ProcessVariables']['status']!=undefined
+            && response['ProcessVariables']['errorCode']==""
+            && response['ProcessVariables']['errorCode']!=undefined){
+            console.log("There are no Errors");
+          }
+          else if(response['Error']=="0"
+          && response['Error']!=undefined
+          && response['ProcessVariables']!=""
+          && response['ProcessVariables']!= undefined
+          && response['ProcessVariables']['status']==false
+          && response['ProcessVariables']['status']!=undefined
+          && response['ProcessVariables']['errorCode']!=""
+          && response['ProcessVariables']['errorCode']!=undefined){
+            let data = response['ProcessVariables']['errorCode'];
+            this.cds.setErrorData(true, data);
+          }else if(response['Error']=="0"
+          && response['Error']!=undefined
+          && response['ProcessVariables']!=""
+          && response['ProcessVariables']!= undefined
+          && response['ProcessVariables']['status']==false
+          && response['ProcessVariables']['status']!=undefined){
+            let data = "DEF";
+            this.cds.setErrorData(true, data);
+          }else if(response['Error']=="1"
+          && response['Error']!=undefined){
+            let data = "APP001";
+            this.cds.setErrorData(true, data);
+          }
           if (event.headers.get("content-type") != "text/plain" && typeof(event.body) != "object") {
             response = JSON.parse(event.body);
           }
@@ -98,7 +131,7 @@ export class AuthInterceptor implements HttpInterceptor {
             if(this.router.url.search('auto-login') == -1) {
 
               this.cds.setDialogData(true);
-              
+
               this.utilService.clearCredentials();
               // alert(response['message']);
             }
@@ -120,8 +153,8 @@ export class AuthInterceptor implements HttpInterceptor {
         }
         this.ngxService.stop();
       }
-      
-    )    
+
+    )
   );
 }
 }
