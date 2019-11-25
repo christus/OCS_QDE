@@ -841,7 +841,7 @@
                                                                 spellcheck="false"
                                                                 id="std" />
                                                         <label for="std">STD</label>
-                                                        <div class="redalert" *ngIf="RegExp(regexPattern.sameDigit).test(residenceStdCode.value)">{{errors.contactDetails.stdCode.wrong}}</div>
+                                                        <div class="redalert" *ngIf="RegExp(regexPattern.sameDigitStd).test(residenceStdCode.value)">{{errors.contactDetails.stdCode.wrong}}</div>
                                                         <div *ngIf="residenceStdCode.touched && residenceStdCode.invalid" class="invalid-feedback">
                                                             <!-- <div *ngIf="residenceStdCode.errors?.required">{{errors.contactDetails.stdCode.required}}</div> -->
                                                             <div *ngIf="residenceStdCode.errors?.pattern || residenceStdCode.errors?.minlength">
@@ -893,6 +893,7 @@
                                                                 spellcheck="false"
                                                                 id="altrstd">
                                                       <label for="altrstd" >STD</label>
+                                                      <div class="redalert" *ngIf="RegExp(regexPattern.sameDigitStd).test(alternateResidenceNumberStd1.value)">{{errors.contactDetails.stdCode.wrong}}</div>
                                                       <div *ngIf="alternateResidenceNumberStd1.touched  && alternateResidenceNumberStd1.invalid" class="invalid-feedback">
                                                         <div *ngIf="alternateResidenceNumberStd1.errors?.pattern || alternateResidenceNumberStd1.errors?.minlength">
                                                             {{errors.contactDetails.alternateResidenceNumberStd1.invalid}}</div>
@@ -935,16 +936,20 @@
                                                         type="submit"
                                                         [ngClass]="{'disabled': (!contactForm.valid)|| (altMobileNo.value == mobileNumber.value)                            
                                                         || RegExp(regexPattern.sameDigit).test(residenceNumber.value)
-                                                        || RegExp(regexPattern.sameDigit).test(alternateResidenceNumber2.value) || 
-                                                        (alternateEmailId.value == preferEmailId.value) || RegExp(regexPattern.sameDigit).test(mobileNumber.value) 
+                                                        || RegExp(regexPattern.sameDigitStd).test(residenceStdCode.value)
+                                                        || RegExp(regexPattern.sameDigit).test(alternateResidenceNumber2.value) 
+                                                        || RegExp(regexPattern.sameDigitStd).test(alternateResidenceNumberStd1.value) 
+                                                        || (alternateEmailId.value == preferEmailId.value) || RegExp(regexPattern.sameDigit).test(mobileNumber.value) 
                                                         || RegExp(regexPattern.sameDigit).test(altMobileNo.value) || 
                                                         (qde.application.applicants[coApplicantIndex].contactDetails.preferredEmailId)?.length == 100 ||
                                                         (qde.application.applicants[coApplicantIndex].contactDetails.alternateEmailId)?.length == 100 ||
                                                         (!qde.application.applicants[coApplicantIndex].contactDetails.isMobileOTPverified)}"
                                                         [disabled]="!contactForm.valid || (altMobileNo.value == mobileNumber.value) 
                                                         || RegExp(regexPattern.sameDigit).test(residenceNumber.value)
-                                                        || RegExp(regexPattern.sameDigit).test(alternateResidenceNumber2.value) || 
-                                                        (alternateEmailId.value == preferEmailId.value) || RegExp(regexPattern.sameDigit).test(mobileNumber.value) 
+                                                        || RegExp(regexPattern.sameDigitStd).test(residenceStdCode.value)
+                                                        || RegExp(regexPattern.sameDigit).test(alternateResidenceNumber2.value) 
+                                                        || RegExp(regexPattern.sameDigitStd).test(alternateResidenceNumberStd1.value)
+                                                        || (alternateEmailId.value == preferEmailId.value) || RegExp(regexPattern.sameDigit).test(mobileNumber.value) 
                                                         || RegExp(regexPattern.sameDigit).test(altMobileNo.value) || 
                                                         (qde.application.applicants[coApplicantIndex].contactDetails.preferredEmailId)?.length == 100 ||
                                                         (qde.application.applicants[coApplicantIndex].contactDetails.alternateEmailId)?.length == 100 ||
@@ -3195,6 +3200,7 @@
                                                               pattern="{{regexPattern.stdCode}}"
                                                               required/>
                                                       <label for="caStd">STD</label>
+                                                      <div class="redalert" *ngIf="RegExp(regexPattern.sameDigitStd).test(stdNumber.value)">{{errors.contactDetails.stdCode.wrong}}</div>
                                                       <div *ngIf="stdNumber.touched  && stdNumber.invalid" class="invalid-feedback">
                                                         <!-- <div *ngIf="stdNumber.errors?.required">{{errors.corporateAddress.stdNumber.required}}</div> -->
                                                         <div *ngIf="stdNumber.errors?.pattern || stdNumber.errors?.minlength">
@@ -3252,7 +3258,7 @@
                                           </div>
                                           <div class="btn-wrap">
                                               <button type="submit" class="btn btn-primary" 
-                                              [ngClass]="{'disabled': (!corporateAddressForm.valid) || RegExp(regexPattern.sameDigit).test(phoneNumber.value) ||
+                                              [ngClass]="{'disabled': (!corporateAddressForm.valid) || RegExp(regexPattern.sameDigit).test(phoneNumber.value) || RegExp(regexPattern.sameDigitStd).test(stdNumber.value) ||
                                               (qde.application.applicants[coApplicantIndex].corporateAddress.officeEmailId)?.length == 100 || !qde.application.applicants[coApplicantIndex].corporateAddress.cityState}"
                                               [disabled]="!corporateAddressForm.valid || RegExp(regexPattern.sameDigit).test(phoneNumber.value) ||
                                               (qde.application.applicants[coApplicantIndex].corporateAddress.officeEmailId)?.length == 100 || !qde.application.applicants[coApplicantIndex].corporateAddress.cityState">Next</button>

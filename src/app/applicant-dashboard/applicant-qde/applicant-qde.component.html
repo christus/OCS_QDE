@@ -692,7 +692,7 @@
                                 #residenceStdCode="ngModel" data-validation-attr="residenceno01" maxlength="5"
                                 minlength="3" name="residenceNumber1" class="form-control" fieldFill id="std" />
                               <label for="std" tabindex="9">STD</label>
-                              <div class="redalert" *ngIf="RegExp(regexPattern.sameDigit).test(residenceStdCode.value)">{{errors.contactDetails.stdCode.wrong}}</div>
+                              <div class="redalert" *ngIf="RegExp(regexPattern.sameDigitStd).test(residenceStdCode.value)">{{errors.contactDetails.stdCode.wrong}}</div>
                               <div *ngIf="residenceStdCode.touched && residenceStdCode.invalid"
                                 class="invalid-feedback">
                                 <!-- <div *ngIf="residenceStdCode.errors?.required">{{errors.contactDetails.stdCode.required}}</div> -->
@@ -733,6 +733,7 @@
                                 minlength="3" maxlength="5" #alternateResidenceNumberStd1="ngModel"
                                 pattern="{{regexPattern.stdCode}}" class="form-control" fieldFill id="altrstd">
                               <label for="altrstd" tabindex="12">STD</label>
+                              <div class="redalert" *ngIf="RegExp(regexPattern.sameDigitStd).test(alternateResidenceNumberStd1.value)">{{errors.contactDetails.stdCode.wrong}}</div>
                               <div *ngIf="alternateResidenceNumberStd1.touched  && alternateResidenceNumberStd1.invalid"
                                 class="invalid-feedback">
                                 <div *ngIf="alternateResidenceNumberStd1.errors?.pattern || alternateResidenceNumberStd1.errors?.minlength">
@@ -772,15 +773,19 @@
                           <button class="btn btn-primary" type="submit"
                             [ngClass]="{'disabled': (!contactForm.valid) || (altMobileNo.value == mobileNumber.value)
                             || RegExp(regexPattern.sameDigit).test(residenceNumber.value)
-                            || RegExp(regexPattern.sameDigit).test(alternateResidenceNumber2.value) ||
-                            (alternateEmailId.value == preferEmailId.value) || RegExp(regexPattern.sameDigit).test(mobileNumber.value) 
+                            || RegExp(regexPattern.sameDigitStd).test(residenceStdCode.value)
+                            || RegExp(regexPattern.sameDigit).test(alternateResidenceNumber2.value) 
+                            || RegExp(regexPattern.sameDigitStd).test(alternateResidenceNumberStd1.value)
+                            || (alternateEmailId.value == preferEmailId.value) || RegExp(regexPattern.sameDigit).test(mobileNumber.value) 
                             || RegExp(regexPattern.sameDigit).test(altMobileNo.value) || 
                             ((qde.application.applicants[applicantIndex].contactDetails.preferredEmailId)?.length == 100) ||
                             (qde.application.applicants[applicantIndex].contactDetails.alternateEmailId)?.length == 100 ||
                             (!qde.application.applicants[applicantIndex].contactDetails.isMobileOTPverified)}"
                             [disabled]="!contactForm.valid || (altMobileNo.value == mobileNumber.value) 
                             || RegExp(regexPattern.sameDigit).test(residenceNumber.value)
-                            || RegExp(regexPattern.sameDigit).test(alternateResidenceNumber2.value) || 
+                            || RegExp(regexPattern.sameDigitStd).test(residenceStdCode.value)
+                            || RegExp(regexPattern.sameDigit).test(alternateResidenceNumber2.value) 
+                            || RegExp(regexPattern.sameDigitStd).test(alternateResidenceNumberStd1.value) || 
                             (alternateEmailId.value == preferEmailId.value) || RegExp(regexPattern.sameDigit).test(mobileNumber.value) 
                             || RegExp(regexPattern.sameDigit).test(altMobileNo.value) || 
                             ((qde.application.applicants[applicantIndex].contactDetails.preferredEmailId)?.length == 100) ||
@@ -2688,6 +2693,7 @@
                                 #stdNumber="ngModel" tabindex="6" fieldFill minlength="3" maxlength="5" required id="caStd"
                                 pattern="{{regexPattern.stdCode}}" required />
                               <label for="caStd">STD</label>
+                              <div class="redalert" *ngIf="RegExp(regexPattern.sameDigitStd).test(stdNumber.value)">{{errors.contactDetails.stdCode.wrong}}</div>
                               <div *ngIf="stdNumber.touched  && stdNumber.invalid" class="invalid-feedback">
                                 <!-- <div *ngIf="stdNumber.errors?.required">{{errors.corporateAddress.stdNumber.required}}</div> -->
                                 <div *ngIf="stdNumber.errors?.pattern || stdNumber.errors?.minlength">{{errors.corporateAddress.stdNumber.invalid}}</div>
@@ -2701,6 +2707,8 @@
                                 fieldFill #phoneNumber="ngModel" pattern="{{regexPattern.mobileNumber}}" minlength="4" maxlength="10"
                                 data-validation-attr="residenceno" required />
                               <label for="ca-res-no">Office number</label>
+                              <div class="invalid-feedback" *ngIf="RegExp(regexPattern.sameDigit).test(phoneNumber.value)">
+                                {{errors.corporateAddress.phoneNumber.invalid}}</div>
                               <div *ngIf="phoneNumber.touched  && phoneNumber.invalid" class="invalid-feedback">
                                 <!-- <div *ngIf="phoneNumber.errors?.required">{{errors.corporateAddress.phoneNumber.required}}</div> -->
                                 <div *ngIf="phoneNumber.errors?.pattern || phoneNumber.errors?.minlength">{{errors.corporateAddress.phoneNumber.invalid}}</div>
@@ -2726,8 +2734,8 @@
                         </div>
                         <div class="btn-wrap">
                           <button type="submit" class="btn btn-primary"
-                            [ngClass]="{'disabled': (!corporateAddressForm.valid) || (qde.application.applicants[applicantIndex].corporateAddress.officeEmailId)?.length == 100 || !qde.application.applicants[applicantIndex].corporateAddress.cityState}"
-                            [disabled]="!corporateAddressForm.valid || (qde.application.applicants[applicantIndex].corporateAddress.officeEmailId)?.length == 100 || !qde.application.applicants[applicantIndex].corporateAddress.cityState">Next</button>
+                            [ngClass]="{'disabled': (!corporateAddressForm.valid) || (qde.application.applicants[applicantIndex].corporateAddress.officeEmailId)?.length == 100 || !qde.application.applicants[applicantIndex].corporateAddress.cityState} || RegExp(regexPattern.sameDigit).test(phoneNumber.value) || RegExp(regexPattern.sameDigitStd).test(stdNumber.value)"
+                            [disabled]="!corporateAddressForm.valid || (qde.application.applicants[applicantIndex].corporateAddress.officeEmailId)?.length == 100 || !qde.application.applicants[applicantIndex].corporateAddress.cityState || RegExp(regexPattern.sameDigit).test(phoneNumber.value) || RegExp(regexPattern.sameDigitStd).test(stdNumber.value)">Next</button>
                         </div>
                       </form>
                     </div>
