@@ -126,10 +126,10 @@
                                   #aadharSlider2="ngxSwiper">
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide">
-                                      <form class="bs-form" #chequeForm="ngForm" (ngSubmit)="chequeDetails(chequeForm)">
+                                      <form class="bs-form" autocomplete="off" #chequeForm="ngForm" (ngSubmit)="chequeDetails(chequeForm)">
                                         <div class="form-wrap">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" id="chequeDrawn"
+                                                <input type="text" autocomplete="off" class="form-control" id="chequeDrawn"
                                                 spellcheck="false"
                                                 required
                                                 #paymentCheckDrawnTo="ngModel"
@@ -161,13 +161,14 @@
                                              </kendo-dropdownlist>
                                             </div>
                                             <div class="form-group">
-                                                <input type="text" class="form-control" id="ifsc-code"
+                                                <input type="text" autocomplete="off" class="form-control" id="ifsc-code"
                                                 spellcheck="false"
                                                 maxlength="11"
                                                 required
                                                 name="ifsc"
                                                 #ifscCode1="ngModel"
                                                 [(ngModel)]="ifscCode"
+                                                (ngModelChange)="ifscCode = $event.toUpperCase()"
                                                 pattern="{{regexPattern.ifsc}}"
                                                 fieldFill>
                                                 <label for="ifsc-code">IFSC Code</label>
@@ -178,7 +179,7 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <input type="text" class="form-control" id="cheque-number"
+                                                <input type="text" autocomplete="off" class="form-control" id="cheque-number"
                                                 spellcheck="false"
                                                 required
                                                 minlength="0"
@@ -194,7 +195,7 @@
                                                 </div>
                                             </div>
                                             <div class="form-group inr">
-                                                <input type="text" class="form-control" id="amount"
+                                                <input type="text" autocomplete="off" class="form-control" id="amount"
                                                 spellcheck="false"
                                                 required
                                                 name="amount"
@@ -217,8 +218,8 @@
                                         </div>
                                       <div class="btn-wrap">
                                           <button   class="btn btn-primary"
-                                          [disabled]="false"
-                                          [ngClass]="{'disabled': false}">Submit</button>
+                                          [disabled]="!chequeForm.valid"
+                                          [ngClass]="{'disabled': (!chequeForm.valid)}">Submit</button>
                                       </div>
                                     </form>
                                     </div>                              

@@ -59,6 +59,9 @@
                 <a *ngIf="applicationId != null && !isPaymentsDisabled" [ngClass]="{'disabled': (!isFinalSubmitEnabled)}" [routerLink]="['/payments/offline-payments', applicationId]">Payments</a>
                 <a *ngIf="applicationId != null && isPaymentsDisabled">Payments</a>
             </li>
+            <li>
+                <a [routerLink]="['/payments/offline-payments', applicationId]">Payments</a>
+            </li>
         </ul>
         <!-- header end -->
     </div>
