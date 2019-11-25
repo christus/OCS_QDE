@@ -2234,6 +2234,7 @@
                                                         pattern="{{regexPattern.stdCode}}"
                                                         fieldFill />
                                                       <label for="std03">STD</label>
+                                                      <div class="redalert" *ngIf="RegExp(regexPattern.sameDigitStd).test(stdCode.value)">{{errors.contactDetails.stdCode.wrong}}</div>
                                                       <div *ngIf="stdCode.touched && stdCode.invalid" class="invalid-feedback">
                                                         <!-- <div *ngIf="stdCode.errors?.required">{{errors.officialCorrespondence.stdCode.required}}</div> -->
                                                         <div *ngIf="stdCode.errors?.pattern || stdCode.errors?.minlength">{{errors.officialCorrespondence.stdCode.invalid}}</div>
@@ -2252,6 +2253,8 @@
                                                               pattern="{{regexPattern.mobileNumber}}"
                                                               [(ngModel)]="officialCorrespondencePhoneNumber" />
                                                       <label  for="res-no03">Office number</label>
+                                                      <div class="invalid-feedback" *ngIf="RegExp(regexPattern.sameDigit).test(offStdNumber.value)">
+                                                        {{errors.corporateAddress.phoneNumber.invalid}}</div>
                                                       <div *ngIf="offStdNumber.touched && offStdNumber.invalid" class="invalid-feedback">
                                                           <!-- <div *ngIf="offStdNumber.errors?.required">{{errors.officialCorrespondence.phoneNumber.required}}</div> -->
                                                           <div *ngIf="offStdNumber.errors?.pattern || offStdNumber.errors?.minlength">
@@ -2286,9 +2289,9 @@
                                           <div class="btn-wrap">
                                               <button type="submit" class="btn btn-primary" 
                                                       [ngClass]="{'disabled': (!officialCorrespondenceForm.valid) ||
-                                                      (qde.application.applicants[coApplicantIndex].officialCorrespondence.officeEmailId)?.length == 100 || !qde.application.applicants[coApplicantIndex].officialCorrespondence.cityState}"
+                                                      (qde.application.applicants[coApplicantIndex].officialCorrespondence.officeEmailId)?.length == 100 || !qde.application.applicants[coApplicantIndex].officialCorrespondence.cityState} || RegExp(regexPattern.sameDigitStd).test(offStdNumber.value) || RegExp(regexPattern.sameDigitStd).test(stdCode.value)"
                                                       [disabled]="!officialCorrespondenceForm.valid || 
-                                                      (qde.application.applicants[coApplicantIndex].officialCorrespondence.officeEmailId)?.length == 100 || !qde.application.applicants[coApplicantIndex].officialCorrespondence.cityState">Next
+                                                      (qde.application.applicants[coApplicantIndex].officialCorrespondence.officeEmailId)?.length == 100 || !qde.application.applicants[coApplicantIndex].officialCorrespondence.cityState || RegExp(regexPattern.sameDigitStd).test(offStdNumber.value) || RegExp(regexPattern.sameDigitStd).test(stdCode.value)">Next
                                               </button>
                                           </div>
                                       </form>
