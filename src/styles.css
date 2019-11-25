@@ -5775,10 +5775,13 @@ img {
 	}
 
 	.mobile .version_container {
-		position: static;
+		position: static !important;
 	}
 	.mobile .lyt-box {
 		margin: 5.95vw auto 0;
+	}
+	.mobile .bottomright {
+		position: static !important;
 	}
 }
 

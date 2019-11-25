@@ -88,9 +88,9 @@ export class AutoLogoutService {
 
     this.ngZone.run(() => {
 
-      console.log("isTimeout- autologoutservice", isTimeout);
-      console.log("isTokenAvailable- autologoutservice", isTokenAvailable);
-      console.log("dontRunNgZone- autologoutservice", dontRunNgZone);
+      // console.log("isTimeout- autologoutservice", isTimeout);
+      // console.log("isTokenAvailable- autologoutservice", isTokenAvailable);
+      // console.log("dontRunNgZone- autologoutservice", dontRunNgZone);
       if (isTimeout && isTokenAvailable && !dontRunNgZone) {
         console.log(`Sie wurden automatisch nach ${MINUTES_UNITL_AUTO_LOGOUT} Minuten Inaktivität ausgeloggt.`);
 
