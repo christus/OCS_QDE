@@ -384,7 +384,7 @@ export class LeadsListComponent implements OnInit {
           
       return "/document-uploads/"+applicationId;
     } 
-    else if(statuses[status] == "15") {
+    else if(statuses[status] == "15" || statuses[status] == "17") {
       this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
       
       // return "/payments/online-summary/"+applicationId;
