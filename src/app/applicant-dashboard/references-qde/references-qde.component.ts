@@ -200,7 +200,7 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
 
   isErrorModal:boolean;
   errorMessage:string;
-  public defaultItem: Item = environment.defaultItem;
+  public defaultItem = environment.defaultItem;
   constructor(
     private renderer: Renderer2,
     private route: ActivatedRoute,
