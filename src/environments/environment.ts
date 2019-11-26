@@ -23,6 +23,10 @@ export const environment = {
 
   logoutTime: 15,
 
+  zoneId: 98,
+
+  sesValidity: 600,
+
   api: {
     'dashboard': {
       'workflowId': '050f5c82789a11e982270242ac110002',
@@ -419,10 +423,12 @@ export const environment = {
       'workflowId': '16c6f24efbaa11e9b4290242ac110002',
       'processId' : '16e1cefcfbaa11e9949c0242ac110002'
     },
+    "validateAuth": {
+      'workflowId': '597050620f7e11ea962c0242ac110002',
+      'processId' : '598e78a80f7e11ea82920242ac110002'
+    }
     
   },
-  userName: "icici@icicibankltd.com",
-  password: "icici@123",
   appiyoDrive: "/d/drive/upload/",
   host: "http://192.168.1.108/appiyo",
   iciciDomainExt: "@icicibankltd.com",

@@ -63,11 +63,9 @@ export class AuthInterceptor implements HttpInterceptor {
     // }
 
     const authReq = req.clone({
-      headers: req.headers.append(
-        'authentication-token',
-        localStorage.getItem('token') ? localStorage.getItem('token') : ''
-      )
-    });
+      headers: req.headers.set('authentication-token', localStorage.getItem('token') ? localStorage.getItem('token'): '')
+      .set('X-AUTH-SESSIONID', localStorage.getItem('X-AUTH-SESSIONID') ? localStorage.getItem('X-AUTH-SESSIONID').trim() : '')
+  });
 
   return next.handle(authReq).pipe(
     map(

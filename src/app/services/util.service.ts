@@ -47,46 +47,24 @@ export class UtilService {
   }
 
   navigateToLogin() {
-    this.router.navigate(['/login']);
+
+    let showLoginPage = true;
+
+    const currentHref = window.location.href;
+
+    const arrUrl = ["/static/", "/payments/thankpayment"];
+
+    arrUrl.forEach(function(url) {
+      if(currentHref.includes(url)){
+        showLoginPage = false;
+        console.log("showLoginPage....", showLoginPage);
+        return;
+      }
+    });
+
+    if(showLoginPage) {
+      this.router.navigate(['/login']);
+    }
   }
-
-  // navigateToLoginWithMpin() {
-    
-  //  let isFirstTime = localStorage.getItem("firstTime");
-
-  //  console.log("isFirstTime", isFirstTime);
-
-  //  if(isFirstTime == null) {
-
-  //   let data = {
-  //     'email': environment.userName,
-  //     'password': environment.password,
-  //     'longTimeToken': true
-  //   }
-
-  //   console.log("data", isFirstTime);
-  
-  //   this.qdehttpService.longLiveAuthenticate(data).subscribe(
-  //     res => {
-  //       console.log("response");
-  //       console.log("login-response: ",res);
-
-  //       localStorage.setItem("token", res["token"] ? res["token"] : "");
-
-  //       this.router.navigate(['/setPin']);
-
-  //     },
-  //     error => {
-  //       console.log("error-response");
-
-  //       console.log(error);
-  //     }
-  //   );
-
-  //   return;
-  //  }
-
-  //   this.router.navigate(['/loginWithPin']);
-  // }
   
 }

@@ -71,60 +71,6 @@ export class LoginWithMPINComponent implements OnInit {
   }
 
   login() {
-    this.mPin = this.mPin1+this.mPin2+this.mPin3+this.mPin4
-    console.log("UserName", this.userName+" "+ "Password", this.mPin );
-
-    let appiyoAuthdata = {
-      'email': environment.userName,
-      'password': environment.password,
-      'longTimeToken': true
-    }
-
-    this.commonDataService.setLogindata(appiyoAuthdata);
-
-    if(this.userName && this.mPin) {
-      this.qdeService.longLiveAuthenticate(appiyoAuthdata).subscribe(
-        res => {
-          console.log("response");
-          console.log("login-response: ",res);
-  
-          localStorage.setItem("token", res["token"] ? res["token"] : "");
-  
-          var data = {
-            userName: this.userName.trim() + environment.iciciDomainExt,
-            mPin: this.mPin
-          }
-      
-          this.qdeService.loginMpin(data).subscribe(
-            res => {
-              if (res["ProcessVariables"]["status"]) {
-                console.log("ROLE LOGIN: ", res['ProcessVariables']['roleName']);
-                localStorage.setItem("userId", res["ProcessVariables"]["userId"]);
-                localStorage.setItem('roles', JSON.stringify(res["ProcessVariables"]["roleName"]));
-                localStorage.setItem("firstTime", "true");
-                this.roleLogin();   
-                this.router.navigate(["/leads"]);
-              }else if(res['ProcessVariables']['errorMessage']){
-                this.loginError = true;
-                this.errorMsg = res['ProcessVariables']['errorMessage'];
-              }
-            },
-            error => {
-              console.log(error);
-            }
-          );
-  
-        },
-        error => {
-          console.log("error-response");
-  
-          console.log(error);
-        }
-      );
-    }else {
-      this.loginError = true;
-      this.errorMsg = errors.loginWithMpin.invalidCredentials;
-    }
   }
 
 

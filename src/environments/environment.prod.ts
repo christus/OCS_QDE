@@ -19,6 +19,10 @@ export const environment = {
 
   logoutTime: 15,
 
+  zoneId: 98,
+
+  sesValidity: 600,
+
   api: {
     'dashboard': {
       'workflowId': '050f5c82789a11e982270242ac110002',
@@ -419,11 +423,13 @@ export const environment = {
     "uploadCSV": {
       'workflowId': 'f17089c6927f11e982270242ac110002',
       'processId' : '66145102ca6311e9bd540242ac110002'
+    },
+    "validateAuth": {
+      'workflowId': '597050620f7e11ea962c0242ac110002',
+      'processId' : '598e78a80f7e11ea82920242ac110002'
     }
    
   },
-  userName: "icici@icicibankltd.com",
-  password: "icici@123",
   iciciDomainExt: "@icicibankltd.com",
   appiyoDrive: "/d/drive/upload/",
   driveLocation: "/d/drive/docs/",

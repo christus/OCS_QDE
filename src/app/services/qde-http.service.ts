@@ -197,17 +197,6 @@ createOrUpdatePersonalDetails(qde) {
     return this.callPost(null, null, body, data, "login");
   }
 
-  duplicateLogin() {
-
-      const body = {
-        'email': environment.userName,
-        'password': environment.password,
-      };
-
-    let uri = environment.host + '/account/'+environment.apiVersion.login+'login';
-    return this.callPost(null, null, body, null, "login");
-  }
-
   getLeads(search?: string, fromDay?: string, fromMonth?: string, fromYear?: string, toDay?: string, toMonth?: string, toYear?: string, assignedTo?: string, status?: string) {
     const processId = environment.api.dashboard.processId;
     const workflowId = environment.api.dashboard.workflowId;
@@ -328,9 +317,6 @@ createOrUpdatePersonalDetails(qde) {
     const processId = environment.api.cityState.processId;
     const workflowId = environment.api.cityState.workflowId;
     const projectId = environment.projectId;
-
-    const userName = environment.userName;
-    const password = environment.password;
 
 
     const requestEntity: RequestEntity = {
@@ -579,10 +565,6 @@ createOrUpdatePersonalDetails(qde) {
     const workflowId = environment.api.payGate.workflowId;
     const projectId = environment.projectId;
 
-    const userName = environment.userName;
-    const password = environment.password;
-
-
     const requestEntity: RequestEntity = {
       processId: processId,
       ProcessVariables: {
@@ -654,9 +636,6 @@ createOrUpdatePersonalDetails(qde) {
     const processId = environment.api.cibil.processId;
     const workflowId = environment.api.cibil.workflowId;
     const projectId = environment.projectId;
-
-    const userName = environment.userName;
-    const password = environment.password;
 
 
     const requestEntity: RequestEntity = {
@@ -815,9 +794,6 @@ createOrUpdatePersonalDetails(qde) {
     const workflowId = environment.api.sendOTP.workflowId;
     const projectId = environment.projectId;
 
-    const userName = environment.userName;
-    const password = environment.password;
-
 
     const requestEntity: RequestEntity = {
       processId: processId,
@@ -845,9 +821,6 @@ createOrUpdatePersonalDetails(qde) {
     const processId = environment.api.validateOTP.processId;
     const workflowId = environment.api.validateOTP.workflowId;
     const projectId = environment.projectId;
-
-    const userName = environment.userName;
-    const password = environment.password;
 
 
     const requestEntity: RequestEntity = {
@@ -940,9 +913,6 @@ createOrUpdatePersonalDetails(qde) {
     const workflowId = environment.api.veiwFormSms.workflowId;
     const projectId = environment.projectId;
 
-    const userName = environment.userName;
-    const password = environment.password;
-
 
     const requestEntity: RequestEntity = {
       processId: processId,
@@ -966,9 +936,6 @@ createOrUpdatePersonalDetails(qde) {
     const processId = environment.api.status.processId;
     const workflowId = environment.api.status.workflowId;
     const projectId = environment.projectId;
-
-    const userName = environment.userName;
-    const password = environment.password;
 
 
     const requestEntity: RequestEntity = {
@@ -2358,9 +2325,6 @@ createOrUpdatePersonalDetails(qde) {
     const workflowId = environment.api.mandatoryDocs.workflowId;
     const projectId = environment.projectId;
 
-    const userName = environment.userName;
-    const password = environment.password;
-
 
     const requestEntity: RequestEntity = {
       processId: processId,
@@ -2384,9 +2348,6 @@ createOrUpdatePersonalDetails(qde) {
     const processId = environment.api.omniDocs.processId;
     const workflowId = environment.api.omniDocs.workflowId;
     const projectId = environment.projectId;
-
-    const userName = environment.userName;
-    const password = environment.password;
 
 
     const requestEntity: RequestEntity = {
@@ -2894,21 +2855,23 @@ createOrUpdatePersonalDetails(qde) {
 
     this.isMobile = this.mobileService.isMobile;
 
-
-    if(workflowId && projectId) {
+    if(serviceType == "validate_auth") {
+      setUrl = environment.host + '/session/auth_validate'
+    }else if(workflowId && projectId) {
       setUrl = environment.host + "/d/workflows/" + workflowId + "/" +environment.apiVersion.api+ "execute?projectId=" + projectId;
       reqEntity = requestEntity["processVariables"];
     }else if(serviceType == "login" && this.isMobile) {
       setUrl = environment.host + '/account/v3/login';
       reqEntity = JSON.stringify(requestEntity);
-    }
-    else if(serviceType == "login") {
+    }else if(serviceType == "login") {
       setUrl = environment.host + '/account/' +environment.apiVersion.login+ 'login';
       reqEntity = JSON.stringify(requestEntity);
     }else if(serviceType == "uploadAppiyoDrive") {
       setUrl = environment.host + environment.appiyoDrive;
-    } else if(serviceType == "captcha") {
+    }else if(serviceType == "captcha") {
       setUrl = environment.host + '/account/captcha/generate_catcha'
+    }else if(serviceType == "create_session") {
+      setUrl = environment.host + '/account/create_session'
     }
 
 
@@ -2919,7 +2882,9 @@ createOrUpdatePersonalDetails(qde) {
     arrUrl.forEach(function(url) {
       if(currentHref.includes(url)){
         that.isMobile = false;
-        if(workflowId && projectId) {
+        if(serviceType == "validate_auth") {
+          setUrl = environment.host + '/session/auth_validate'
+        }else if(workflowId && projectId) {
           setUrl = environment.host + "/d/workflows/" + workflowId + "/v2/execute?projectId=" + projectId;
         } else if(serviceType == "login") {
           setUrl = environment.host + '/account/v3/login'
@@ -3255,6 +3220,54 @@ createOrUpdatePersonalDetails(qde) {
     // let uri = environment.host + '/account/login_ne';
     // let uri = environment.host + '/account/login';
       return this.callGet(uri);
+  }
+
+  createSession(appilcantionId){
+    const body = {
+      'userId': appilcantionId,
+      'zoneId': environment.zoneId,
+      'validity': environment.sesValidity
+    };
+
+    return this.callPost(null, null, JSON.stringify(body), null, "create_session");
+  }
+
+  validateAuth(sessionId){
+
+    const processId = environment.api.validateAuth.processId;
+    const workflowId = environment.api.validateAuth.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity = {
+      processId: processId,
+      sessionId: sessionId,
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    return this.callPost(workflowId, projectId, JSON.stringify(requestEntity), null, "validate_auth");
+  }
+
+  createsession(applicationId, callback) {
+    console.log("create session*******");
+    this.createSession(applicationId).subscribe(res =>{
+      console.log("createSession-response: ",res);
+      if(res["status"]) {
+        let sessionId = res["payload"]["auth"]["sessionId"];
+        localStorage.setItem('X-AUTH-SESSIONID', sessionId);
+        this.validateAuth(sessionId).subscribe(res => {
+          if(res["status"]) {
+            let auth_token = res["payload"]["processResponse"]["authentication-token"];
+            let isAuthValidated = res["payload"]["processResponse"]["ProcessVariables"]["isAuthValidated"];
+            console.log("auth_token: ",auth_token);
+            localStorage.setItem("token", auth_token ? auth_token : "");
+            callback();
+          } 
+        });
+      }else {
+        console.log("session id not created");
+      }
+    });
   }
 
 }

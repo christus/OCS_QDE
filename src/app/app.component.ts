@@ -126,29 +126,29 @@ export class AppComponent implements OnInit{
       }else {
         this.isErrorModal = this.showErrDialog;
 
-        this.errorMessage = "Session expired please login again.";
+        this.errorMessage = "Your session expired...";
         console.log("reqesut", "ngAfterview not active");
 
       }
 
     });
 
-    this.cds.showError.subscribe((value) => {
-      let errorCode = value[1];
-      this.qdeHttp.adminGetLov().subscribe(res=>{
-        if(res['ProcessVariables']['status']){
-          this.errorList = JSON.parse(res['ProcessVariables']['lovs']).LOVS.error_message_mapping;
-          for(var x in this.errorList){
-            if(this.errorList[x].description== errorCode){
-              this.errorCodeMessage = this.errorList[x].id;
-              this.isErrorCodeModal = value[0];
-              console.log(this.errorList[x].id);
-              break;
-            }
-          }
-        }
-      })
-    });
+    // this.cds.showError.subscribe((value) => {
+    //   let errorCode = value[1];
+    //   this.qdeHttp.adminGetLov().subscribe(res=>{
+    //     if(res['ProcessVariables']['status']){
+    //       this.errorList = JSON.parse(res['ProcessVariables']['lovs']).LOVS.error_message_mapping;
+    //       for(var x in this.errorList){
+    //         if(this.errorList[x].description== errorCode){
+    //           this.errorCodeMessage = this.errorList[x].id;
+    //           this.isErrorCodeModal = value[0];
+    //           console.log(this.errorList[x].id);
+    //           break;
+    //         }
+    //       }
+    //     }
+    //   })
+    // });
   }
 
   @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
