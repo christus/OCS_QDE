@@ -1233,10 +1233,10 @@
                               id="amount" tabindex="1" autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].maritalStatus.amount"
                               #amount="ngModel" name="amount"
-                              minlength="4"                              
+                              minlength="5"                              
                               maxlength="16" fieldFill
                               pattern="{{regexPattern.amount}}"
-                              (input)="checkAmountLimit($event,1000)"/>
+                              (input)="checkAmountLimit($event,50000)"/>
 
                             <label for="amount">Amount</label>
                             <span class="addon">
@@ -1251,8 +1251,8 @@
                           </div>
                         </div>
                         <div class="btn-wrap">
-                          <button type="submit" [ngClass]="{'disabled': (!spouseEarningAmtForm.valid)}"
-                          [disabled]="!spouseEarningAmtForm.valid"  class="btn btn-primary">Next
+                          <button type="submit" [ngClass]="{'disabled': (!spouseEarningAmtForm.valid || isLessAmount)}"
+                          [disabled]="!spouseEarningAmtForm.valid || isLessAmount"  class="btn btn-primary">Next
                           </button>
                         </div>
                       </form>

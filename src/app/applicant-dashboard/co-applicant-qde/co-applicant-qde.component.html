@@ -1521,6 +1521,8 @@
                                                           name="amount"
                                                           fieldFill
                                                           spellcheck="false"
+                                                          minlength="5"
+                                                          (input)="checkAmountLimit($event,50000)"
                                                           pattern="{{regexPattern.amount}}" />
   
                                                   <label for="amount">Amount</label>
@@ -1530,13 +1532,14 @@
                                                   <span class="optional">Optional</span>  
                                                   <div *ngIf="(amount.touched || amount.dirty) && amount.invalid" class="invalid-feedback">
                                                       <!-- <div *ngIf="amount.errors?.required">{{errors.maritialStatus.salaryAmount.required}}</div> -->
+                                                      <div *ngIf="isLessAmount">{{errors.maritialStatus.salaryAmount.minamount}}{{requirMinAmout}}</div>
                                                       <div *ngIf="amount.errors?.pattern">{{errors.maritialStatus.salaryAmount.invalid}}</div>
                                                   </div>
                                                 </div>
                                             </div>
                                             <div class="btn-wrap">
-                                                <button   type="submit"[ngClass]="{'disabled': (!spouseEarningAmtForm.valid)}"
-                                                [disabled]="!spouseEarningAmtForm.valid" class="btn btn-primary">Next
+                                                <button   type="submit"[ngClass]="{'disabled': (!spouseEarningAmtForm.valid || isLessAmount)}"
+                                                [disabled]="!spouseEarningAmtForm.valid || isLessAmount" class="btn btn-primary">Next
                                                 </button>
                                             </div>
                                         </form>
@@ -3530,7 +3533,7 @@
                             <div class="duplicate-table-col">{{d['applicantId']}}</div>
                             <div class="duplicate-table-col" *ngIf ="qde.application.applicants[coApplicantIndex].isIndividual">
                                 {{d['personalDetails']['firstName']}}{{d['personalDetails']['middleName'] ? " "+d['personalDetails']['middleName'] : ""}}{{" "+d['personalDetails']['lastName']}}
-                                {{qde.application.applicants[coApplicantIndex].isIndividual}}
+                                
                             </div>
                             <div class="duplicate-table-col" *ngIf ="!qde.application.applicants[coApplicantIndex].isIndividual">
                                     {{d['organizationDetails']['nameOfOrganization']}}

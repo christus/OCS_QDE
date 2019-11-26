@@ -88,7 +88,7 @@ export class AuthInterceptor implements HttpInterceptor {
           console.log("*************************************************");
 
           let response = event.body;
-           if (event.headers.get("content-type") != "text/plain" && typeof(event.body) != "object") {
+          if (event.headers.get("content-type") != "text/plain" && typeof(event.body) != "object") {
             response = JSON.parse(event.body);
           }
           if(response['Error']=="0"
@@ -99,7 +99,7 @@ export class AuthInterceptor implements HttpInterceptor {
             && response['ProcessVariables']['status']!=undefined
             && response['ProcessVariables']['errorCode']==""
             && response['ProcessVariables']['errorCode']!=undefined){
-            console.log("There are no Errors");
+            // console.log("There are no Errors");
           }
           else if(response['Error']=="0"
           && response['Error']!=undefined
@@ -124,7 +124,7 @@ export class AuthInterceptor implements HttpInterceptor {
             let data = "APP001";
             this.cds.setErrorData(true, data);
           }
-         
+        
 
           if (response && response["login_required"]) {
             if(this.router.url.search('auto-login') == -1) {

@@ -3504,12 +3504,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   selectValueChangedOccupation(event) {
-    if(event.value!=0){
+    if (event.value != 0) {
     this.qdeHttp.occupationLovCompanyDetails(event.value).subscribe(response => {
       this.occupationRequired = response["ProcessVariables"]["profileStatus"]
     });
   }
-  }
+}
 
   editMobileNO() {
     this.qde.application.applicants[this.applicantIndex].contactDetails.isMobileOTPverified = false;

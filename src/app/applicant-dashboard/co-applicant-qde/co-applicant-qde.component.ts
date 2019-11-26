@@ -609,7 +609,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
               this.cds.setactiveTab(screenPages['coApplicantDetails']);
               this.qdeService.setQde(result);
               let mainApplicant = this.qde.application.applicants.find(v => v.isMainApplicant == true);
-              this.getSetQdeData(result);  // get call get and set qde data 
+              this.getSetQdeData(result);  // get call get and set qde data
 
               if(params.coApplicantIndex != null) {
                 this.coApplicantIndex = params.coApplicantIndex;
@@ -651,10 +651,12 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                   this.setRelationship(mainApplicant, params.coApplicantIndex);
                 }
               
-            }, error => {
-              this.isErrorModal = true;
-              this.errorMessage = "Something went wrong, please try again later.";
-            });
+            }, 
+            // error => {
+            //   this.isErrorModal = true;
+            //   this.errorMessage = "Something went wrong, please try again later.";
+            // }
+            );
             
           }
           
@@ -806,7 +808,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                   this.idPanFileSize = result.application.applicants[this.coApplicantIndex].pan.fileSize;
                 }
               }catch(e) {}  
-  
+
+              
   
              
   }
@@ -3053,12 +3056,12 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   selectValueChangedOccupation(event) {
-    if(event.value!=0){
+    if(event.value !=0) {
     this.qdeHttp.occupationLovCompanyDetails(event.value).subscribe(response => {
       this.occupationRequired = response["ProcessVariables"]["profileStatus"]
     });
   }
-  }
+}
 
   selectCoApplicant(applicationId, index) {
 
@@ -3208,7 +3211,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         console.log('this.qde.application.applicants[this.coApplicantIndex].personalDetails.qualification: ', this.qde.application.applicants[this.coApplicantIndex].personalDetails.qualification);
         // this.selectedQualification = this.qualifications[(parseInt(this.qde.application.applicants[this.coApplicantIndex].personalDetails.qualification))-1];
         this.selectedQualification = this.qualifications.find(e => e.value == this.qde.application.applicants[this.coApplicantIndex].personalDetails.qualification);
-        console.log('selectedQualification: ', this.selectedQualification);
+        // console.log('selectedQualification: ', this.selectedQualification);
       }
 
       // Personal Details Day
@@ -4063,8 +4066,11 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
           this.qde.application.applicants[this.coApplicantIndex] = this.qdeService.getModifiedObject(tempApplicant, newApplicantToBeReplaced);
           this.qde.application.applicants[this.coApplicantIndex].applicantId = tempApplicant.applicantId;
           this.qde.application.applicants[this.coApplicantIndex].isMainApplicant = tempApplicant.isMainApplicant;
+          this.qde.application.applicants[this.coApplicantIndex].contactDetails.isMobileOTPverified = false;
           this.qdeService.setQde(this.qde);
-         this.getSetQdeData(this.qde);
+          this.getSetQdeData(this.qde);
+          let dataPara ={applicationId: applicationId,coApplicantIndex: this.coApplicantIndex}
+          this.prefillData(dataPara);
           this.createOrUpdatePersonalDetailsSub5=this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).
                 subscribe((response) => {
             // If successful      
@@ -4079,6 +4085,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
           // }
           );
       });
+      
+      
     }
   }
 
