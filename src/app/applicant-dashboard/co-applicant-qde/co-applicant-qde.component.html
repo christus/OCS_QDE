@@ -492,8 +492,8 @@
                                               <div class="btn-wrap">
                                                 <button   type="submit"
                                                           class="btn btn-primary"
-                                                          [ngClass]="{'disabled': (!nameForm.valid || selectedRelationship ==0 || selectedTitle.value ==0)}"
-                                                          [disabled]="!nameForm.valid || selectedRelationship ==0 || selectedTitle.value == 0">Next
+                                                          [ngClass]="{'disabled': (!nameForm.valid || selectedRelationship ==0 || selectedTitle?.value ==0)}"
+                                                          [disabled]="!nameForm.valid || selectedRelationship ==0 || selectedTitle?.value == 0">Next
                                                 </button>
                                               </div>
                                           </form>
