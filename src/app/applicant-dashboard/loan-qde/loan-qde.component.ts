@@ -456,7 +456,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
             // ||
             // this.defaultItem.value.toString();
             // this.loanpurposes[0].value;
-            // this.setLoanPurposes(result.application.loanDetails.loanAmount.loanType+"", result.application.loanDetails.loanAmount.loanPurpose);
+            this.setLoanPurposes(result.application.loanDetails.loanAmount.loanType+"", result.application.loanDetails.loanAmount.loanPurpose);
           } else {
             // this.loanpurposes = [{key: '', value: ''}];
             this.selectedLoanPurpose = this.defaultItem;
@@ -860,11 +860,9 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
       console.log("selectedLoanPurpose: ", this.selectedLoanPurpose);
-      // if(this.selectedLoanPurpose.propIdentified){
-      //   this.disableNo = 1;
-      // }else{
-      //   this.disableNo=null;
-      // }
+        if(this.selectedLoanPurpose!=""){
+          this.setLoanPurposes(this.selectedLoanType.value,this.selectedLoanPurpose);
+        }
 
       this.qde.application.loanDetails.loanAmount = {
         amountRequired: parseInt(this.getNumberWithoutCommaFormat(form.value.amountRequired)),
@@ -888,6 +886,9 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
             if (response["ProcessVariables"]["status"]) {
               let result = response['ProcessVariables']['response'];
               // console.log(this.qde.application.references.referenceOne.relationShip);
+              if(!this.tabName){
+                this.tabName = "loan";
+              }
               this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['loanDetails']).subscribe(auditRes => {
                 if(auditRes['ProcessVariables']['status'] == true) {
                   this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
@@ -1348,54 +1349,37 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.isLoanProductPage = false;
     this.selectedLoanType = lt;
     this.cds.changeMenuBarShown(true);
-    // this.setLoanPurposes(lt.value);
+    this.setLoanPurposes(lt.value);
   }
 
-  // setLoanPurposes(loanType: string, data ?: string) {
-  //   var that = this;
-  //   this.qdeHttp.adminGetLov().subscribe(res => {
-  //     if(res['ProcessVariables']['status'] == true) {
-  //       var lov= JSON.parse(res['ProcessVariables']['lovs']);
-  //       that.fullloanpurposes = lov.LOVS.loan_purpose;
-  //       console.log("fullloanpurposes: ", that.fullloanpurposes);
-
-  //       that.qdeHttp.getLoanPurposeFromLoanType({loanType: loanType}).subscribe(res => {
-  //         var temploanpurposes = res['ProcessVariables']['loanPurposeLov'];
-  //         console.log("see here first"+JSON.stringify(temploanpurposes));
-  //         if(that.fullloanpurposes.length!=0){
-  //           for(var x in that.fullloanpurposes){
-  //             for(var y in temploanpurposes){
-  //               if(temploanpurposes[y].value==that.fullloanpurposes[x].id){
-  //                 temploanpurposes[y].propIdentified = that.fullloanpurposes[x].propIdentified;
-  //             }
-  //           }
-  //         }
-  //         that.loanpurposes = temploanpurposes;
-  //         console.log("see here"+JSON.stringify(that.loanpurposes));
-  //       }
-  //       if(that.loanpurposes.length!=0){
-  //         for(var x in that.loanpurposes){
-  //           if(that.loanpurposes[x].propIdentified){
-  //             that.isPropertyIdentified=true;
-  //           }
-  //         }
-  //       }
-  //       if(data) {
-  //         console.log("Definitely see here"+JSON.stringify(that.loanpurposes));
-  //         that.selectedLoanPurpose = that.loanpurposes.find(v => v.value == data) || that.defaultItem;
-  //       } else {
-  //         that.selectedLoanPurpose = that.defaultItem;
-  //       }
-  //     }, error => {
-  //       that.isErrorModal = true;
-  //       that.errorMessage = "Something went wrong, please try again later.";
-  //     });
-  //   }
-  // }, error => {
-  //     this.isErrorModal = true;
-  //     this.errorMessage = "Something went wrong, please try again later.";
-  //   });
-  // }
+  setLoanPurposes(loanType: string, data ?: string) {
+        this.qdeHttp.getLoanPurposeFromLoanType({"loanType": loanType}).subscribe(res => {
+          if(res['ProcessVariables']['status']){
+            this.loanpurposes = res['ProcessVariables']['loanPurposeLov'];
+            if(data) {
+              for(var x in this.loanpurposes){
+                if(this.loanpurposes[x].value==data){
+                  this.selectedLoanPurpose = this.loanpurposes[x].value;
+                  break; 
+                }
+              }
+            } else {
+              this.selectedLoanPurpose = this.defaultItem.value;
+            }
+          }
+        });
+          if(this.selectedLoanPurpose!="" && typeof(this.selectedLoanPurpose)!="object"){
+            this.qdeHttp.getPropIdentified(this.selectedLoanPurpose).subscribe(res=>{
+              if(res['ProcessVariables']['status']){
+                if(res['ProcessVariables']['propIdentified']){
+                 this.disableNo = 1; 
+                }else{
+                this.disableNo = null;
+              }
+            }
+            });
+          }
+      }
 
   clssSearchArea(event: any){
     //console.log("gfegffdgewhj",event.target.value)

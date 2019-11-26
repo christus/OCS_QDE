@@ -427,7 +427,11 @@ export const environment = {
     "validateAuth": {
       'workflowId': '597050620f7e11ea962c0242ac110002',
       'processId' : '598e78a80f7e11ea82920242ac110002'
-    }
+    },
+    "getPropIdentified":{
+      'workflowId': '107260700f7511eab9480242ac110002',
+      'processId' : '108f10300f7511eabb200242ac110002'
+    },
    
   },
   iciciDomainExt: "@icicibankltd.com",

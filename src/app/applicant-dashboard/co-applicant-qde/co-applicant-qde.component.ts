@@ -3053,9 +3053,11 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   selectValueChangedOccupation(event) {
+    if(event.value!=0){
     this.qdeHttp.occupationLovCompanyDetails(event.value).subscribe(response => {
       this.occupationRequired = response["ProcessVariables"]["profileStatus"]
     });
+  }
   }
 
   selectCoApplicant(applicationId, index) {

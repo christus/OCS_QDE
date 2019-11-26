@@ -3221,6 +3221,29 @@ createOrUpdatePersonalDetails(qde) {
     // let uri = environment.host + '/account/login';
       return this.callGet(uri);
   }
+  
+  getPropIdentified(data:string){
+    const processId = environment.api.getPropIdentified.processId;
+    const workflowId = environment.api.getPropIdentified.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: {
+        loanPurposeId: data
+      },
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = {
+      'processVariables':
+      JSON.stringify(requestEntity)
+    };
+
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
+  }
 
   createSession(appilcantionId){
     const body = {
