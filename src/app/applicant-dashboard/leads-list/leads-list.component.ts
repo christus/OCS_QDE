@@ -384,7 +384,7 @@ export class LeadsListComponent implements OnInit {
           
       return "/document-uploads/"+applicationId;
     } 
-    else if(statuses[status] == "15" || statuses[status] == "17") {
+    else if(statuses[status] == "15") {
       this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
       
       // return "/payments/online-summary/"+applicationId;
@@ -398,7 +398,8 @@ export class LeadsListComponent implements OnInit {
     else if(statuses[status] == "17") {
       this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
           
-      return "/document-uploads/"+applicationId;
+      // return "/document-uploads/"+applicationId;
+      return "/payments/offline-payments/"+applicationId;
     } 
     else if(statuses[status] == "20") {
       this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});

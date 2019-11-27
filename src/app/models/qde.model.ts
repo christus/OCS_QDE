@@ -32,6 +32,7 @@ export interface Applicant {
     applicantId ?: string;
     isMainApplicant : boolean; /* Applicant / Co-Applicant: true/false */
     isIndividual ?: boolean; /* Individual / Non-individual: true/false */
+    dedupeDone?: boolean;
     partnerRelationship ?: string;
     termsAndConditions ?: boolean;
     maritalStatus ?: MaritalStatus;

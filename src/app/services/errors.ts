@@ -212,8 +212,8 @@ export const errors: any = {
     monthlyIncome:{
       required:"Monthly Income is mandatory",
       invalid:"Invalid Monthly Income / Alphabets and Special characters are not allowed",
-      minamount: "Amount should be greater than or equal to Rs.1000",
-      maxamount: "Amount should be less than or equal to Rs.1000000000",
+      minamount: "Amount should be greater than or equal to Rs.",
+      maxamount: "Amount should be less than or equal to Rs.",
     }
   },
   organizationDetails: {
@@ -275,12 +275,15 @@ export const errors: any = {
     revenue:{
       required: "Receipt/Gross turnover is mandatory",
       invalid: "Receipt/Gross turnover is not valid",
-      minamount: "Amount should be greater than or equal to Rs.50000",
+      minamount: "Amount should be greater than or equal to Rs.",
+ 	    maxamount: "Amount should be less than or equal to Rs.",
+
     },
     annualNetincome:{
       required:"Annual Net Profit is mandatory",
       invalid:"Invalid Annual Net Profit",
-      minamount: "Amount should be greater than or equal to Rs.1000",
+      minamount: "Amount should be greater than or equal to Rs.",
+	    maxamount: "Amount should be less than or equal to Rs.",
     },
     grossTurnover:{
       required: "Gross Turnover is mandatory",

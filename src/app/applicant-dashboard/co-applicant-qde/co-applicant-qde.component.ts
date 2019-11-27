@@ -609,16 +609,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
               this.cds.setactiveTab(screenPages['coApplicantDetails']);
               this.qdeService.setQde(result);
               let mainApplicant = this.qde.application.applicants.find(v => v.isMainApplicant == true);
+
               this.getSetQdeData(result);  // get call get and set qde data
 
-              if(params.coApplicantIndex != null) {
-                this.coApplicantIndex = params.coApplicantIndex;
-                this.setAssessmentMethodology();
-              }
-              console.log("Fragment & QueryParams: ", this.tabName, this.page);
-              if(this.tabName == this.fragments[10] || this.tabName == this.fragments[16]) {
-                this.setAssessmentMethodology();
-              }
+              
 
               // TO BE REMOVED
               // this.qdeService.setQde(result);
@@ -809,7 +803,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                 }
               }catch(e) {}  
 
-              
+                
   
              
   }
@@ -1002,6 +996,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
               this.qde.application.applicants[this.coApplicantIndex].personalDetails.firstName = processVariables["firstName"];
               this.qde.application.applicants[this.coApplicantIndex].personalDetails.lastName = processVariables["lastName"];
             }
+             // set deupe is require
+             this.qde.application.applicants[this.coApplicantIndex].dedupeDone = false;
+
             if(processVariables["applicantTitleId"] > 0) {
               this.qde.application.applicants[this.coApplicantIndex].personalDetails.title  = processVariables["applicantTitleId"];
             }
@@ -1086,6 +1083,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       }
       // When Pan Not Verified
       else {
+        // set deupe is require
+        this.qde.application.applicants[this.coApplicantIndex].dedupeDone = true;
         this.createOrUpdatePanDetailsSub = this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successful
           if(response["ProcessVariables"]["status"] == true) {
@@ -3374,6 +3373,14 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
       this.initializeVariables();
     }
+    if(params.coApplicantIndex != null) {
+      this.coApplicantIndex = params.coApplicantIndex;
+      this.setAssessmentMethodology();
+    }
+    console.log("Fragment & QueryParams: ", this.tabName, this.page);
+    if(this.tabName == this.fragments[10] || this.tabName == this.fragments[16]) {
+      this.setAssessmentMethodology();
+    }
   }
 
   // New CoApplicant Index for New CoApplicant
@@ -4067,10 +4074,14 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
           this.qde.application.applicants[this.coApplicantIndex].applicantId = tempApplicant.applicantId;
           this.qde.application.applicants[this.coApplicantIndex].isMainApplicant = tempApplicant.isMainApplicant;
           this.qde.application.applicants[this.coApplicantIndex].contactDetails.isMobileOTPverified = false;
+           // dedupe set done (disable dedupe) 
+          this.qde.application.applicants[this.coApplicantIndex].dedupeDone = true;
+          
           this.qdeService.setQde(this.qde);
           this.getSetQdeData(this.qde);
           let dataPara ={applicationId: applicationId,coApplicantIndex: this.coApplicantIndex}
           this.prefillData(dataPara);
+         
           this.createOrUpdatePersonalDetailsSub5=this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).
                 subscribe((response) => {
             // If successful      

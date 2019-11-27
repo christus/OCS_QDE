@@ -1201,6 +1201,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
               this.qde.application.applicants[this.applicantIndex].personalDetails.firstName = processVariables["firstName"];
               this.qde.application.applicants[this.applicantIndex].personalDetails.lastName = processVariables["lastName"];
             }
+
+            // set deupe is require
+            this.qde.application.applicants[this.applicantIndex].dedupeDone = false;
+
             if (processVariables["applicantTitleId"] > 0) {
               this.qde.application.applicants[this.applicantIndex].personalDetails.title = processVariables["applicantTitleId"] || this.qde.application.applicants[this.applicantIndex].personalDetails.title;
             }
@@ -1273,6 +1277,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       // Only create HFC API when PAN is already valid and not touched
       else {
+        
+        // set deupe is require
+        this.qde.application.applicants[this.applicantIndex].dedupeDone = true;
+
         this.createOrUpdatePanDetailsSub = this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
           // If successful
 
@@ -1846,7 +1854,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           });
           //  check if pan is null or empty
           if (this.qde.application.applicants[this.applicantIndex].pan.panNumber !="" 
-            && this.qde.application.applicants[this.applicantIndex].pan.panNumber !=null) {
+            && this.qde.application.applicants[this.applicantIndex].pan.panNumber !=null 
+            && this.qde.application.applicants[this.applicantIndex].dedupeDone == false) {
 
               this.qdeHttp.duplicateApplicantCheck(this.qde.application.applicants[this.applicantIndex].applicantId).subscribe(res => {
 
@@ -4155,12 +4164,14 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           this.qde.application.applicants[this.applicantIndex].applicantId = tempApplicant.applicantId;
           this.qde.application.applicants[this.applicantIndex].isMainApplicant = tempApplicant.isMainApplicant;
           this.qde.application.applicants[this.applicantIndex].contactDetails.isMobileOTPverified = false;
-
+          // dedupe set done (disable dedupe) 
+          this.qde.application.applicants[this.applicantIndex].dedupeDone = true;
           this.qdeService.setQde(this.qde);
         
           console.log("this qde ",this.qde);
 
           this.getSetQdeData(this.qde)
+          
 
           this.createOrUpdatePersonalDetailsSub5 = this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).
             subscribe((response) => {

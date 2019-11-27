@@ -6,7 +6,7 @@
 
 
 <div #myDiv class="overlay" [ngClass]="{'active': isErrorModal}"></div>
-<div class="logout_dialog bs-modal" id="biomatric-modal" [ngClass]="{'active': isErrorModal}">
+<div class="logout_dialog bs-modal" id="biomatric-modal" [ngClass]="{'active': isErrorModal}" >
     <!-- <a class="modal-close" href="javascript:void(0);" (click)="onBackOTP()"><span class="icon icon-close"></span></a> -->
     <a class="modal-close" (click)="isErrorModal = false"><span class="icon icon-close"></span></a>
     <div class="modal-body">
@@ -16,8 +16,8 @@
     </div>
     </div>
 </div>
-<div class="overlay" [ngClass]="{'active': isErrorCodeModal}"></div>
-<div class="logout_dialog bs-modal" id="biomatric-modal" [ngClass]="{'active': isErrorCodeModal}">
+<div class="overlay" [ngClass]="{'active': isErrorCodeModal}" ></div>
+<div class="logout_dialog bs-modal" id="biomatric-modal" [ngClass]="{'active': isErrorCodeModal}" >
     <a class="modal-close" (click)="isErrorCodeModal = false"><span class="icon icon-close"></span></a>
     <div class="modal-body">
     <h1>{{errorCodeMessage}}</h1>
