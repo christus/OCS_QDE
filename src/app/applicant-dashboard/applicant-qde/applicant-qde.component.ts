@@ -4375,19 +4375,19 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       }
   }
   resetSpouseTitles(){
-  this.selectedSpouseTitle = this.defaultItem
-	if(!this.isEmpty(this.selectedSpouseTitle)){
-    let result = this.setSpouseTitles();
-    console.log("reset "+result);
-  }
- }
-  isEmpty(obj: object){
-	  for(var key in obj){
-		if(obj.hasOwnProperty(key)){
-			return false;
-		}
-	  }
-	  return true;
+      this.selectedSpouseTitle = this.defaultItem
+      if(!this.isEmpty(this.selectedSpouseTitle)){
+        let result = this.setSpouseTitles();
+        console.log("reset "+result);
+      }
+    }
+      isEmpty(obj: object){
+        for(var key in obj){
+        if(obj.hasOwnProperty(key)){
+          return false;
+        }
+        }
+        return true;
   }
 
   checkAmountLimit(event,minAmount?,maxAmount?) {
