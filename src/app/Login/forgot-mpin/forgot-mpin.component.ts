@@ -31,60 +31,6 @@ export class ForgotMPINComponent implements OnInit {
   }
 
   setMpin() {
-
-    this.uuID = "";
-
-    this.uniqueDeviceID.get()
-    .then((uuid: any) =>
-      this.uuID = uuid
-    ).catch((error: any) => console.log(error));   
-
-
-    console.log("UserName", this.userName);
-
-    let appiyoAuthdata = {
-      'email': environment.userName,
-      'password': environment.password,
-      'longTimeToken': true
-    }  
-
-   this.qdeService.longLiveAuthenticate(appiyoAuthdata).subscribe(
-      res => {
-        console.log("response");
-        console.log("login-response: ",res);
-
-        localStorage.setItem("token", res["token"] ? res["token"] : "");
-
-
-        var empId = this.userName.trim() + environment.iciciDomainExt;
-
-        var data = {
-          empId : empId,
-          uuid: this.uuID
-        };
-
-        this.qdeService.resetMpin(data).subscribe(
-          res => {
-            if (res["ProcessVariables"]["status"]) {
-              console.log("move to confirm pin");
-              this.router.navigate(["/ConfirmPin", {"EmpId": empId} ]);
-            }else if(res['ProcessVariables']['errorMessage']){
-              this.errorMsg = (res['ProcessVariables']['errorMessage']);
-              this.logError = true;
-            }
-          },
-          error => {
-            console.log(error);
-          }
-        );
-
-      },
-      error => {
-        console.log("error-response");
-
-        console.log(error);
-      }
-    );
   }
 
 

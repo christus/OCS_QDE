@@ -34,39 +34,21 @@ export class OnlineSummaryComponent implements OnInit {
     this.route.params.subscribe(v => {
       this.applicationId = v.applicationId;
     });
-
-    const data = {
-      email: environment.userName,
-      password: environment.password
-    };
     
-    this.qdeHttp.authenticate(data).subscribe(
-      res => {
-        console.log("response");
-        console.log("login-response: ",res);
-        this.commonDataService.setLogindata(data);
-        localStorage.setItem("token", res["token"] ? res["token"] : "");
-
-        this.qdeHttp.getQdeData(parseInt(this.applicationId)).subscribe(response => {
+    this.qdeHttp.createsession(this.applicationId, ()=>{
+      this.qdeHttp.getQdeData(parseInt(this.applicationId)).subscribe(response => {
           
-          this.qdeService.qdeSource.subscribe(val => {
-            this.qde = val;
-          });
-
-          var result = JSON.parse(response["ProcessVariables"]["response"]);
-
-          this.qdeService.setQde(result);
-  
-          this.submitEligibility();
+        this.qdeService.qdeSource.subscribe(val => {
+          this.qde = val;
         });
 
-      },
-      error => {
-        console.log(error);
-      }
-    );
-    
+        var result = JSON.parse(response["ProcessVariables"]["response"]);
 
+        this.qdeService.setQde(result);
+
+        this.submitEligibility();
+      });
+    })
    
   }
 

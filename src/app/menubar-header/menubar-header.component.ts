@@ -114,7 +114,7 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
     this.qdeService.qdeSource.subscribe(v => {
       this.qde = v;
 
-      console.log("Apllication status", this.qde);
+      // console.log("Apllication status", this.qde);
 
 
       this.applicantBtnStatus = (this.qde.application.status == parseInt(statuses['Login Fee Paid']) ? true: false) ;

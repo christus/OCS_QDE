@@ -64,6 +64,7 @@ export class AutoLogoutService {
   check() {
     var that = this;
 
+    let dontRunNgZone = false; 
     const now = Date.now();
     const timeleft = this.lastAction + MINUTES_UNITL_AUTO_LOGOUT * 60 * 1000;
     const diff = timeleft - now;
@@ -79,14 +80,19 @@ export class AutoLogoutService {
     arrUrl.forEach(function(url) {
       if(currentHref.includes(url)){
         that.stopInterval();
+        dontRunNgZone = true;
         console.log("stopInterval request....");
         return;
       }
     });
 
     this.ngZone.run(() => {
-      if (isTimeout && isTokenAvailable) {
-        console.log(`Sie wurden automatisch nach ${MINUTES_UNITL_AUTO_LOGOUT} Minuten Inaktivität ausgeloggt.`);
+
+      // console.log("isTimeout- autologoutservice", isTimeout);
+      // console.log("isTokenAvailable- autologoutservice", isTokenAvailable);
+      // console.log("dontRunNgZone- autologoutservice", dontRunNgZone);
+      if (isTimeout && isTokenAvailable && !dontRunNgZone) {
+        // console.log(`Sie wurden automatisch nach ${MINUTES_UNITL_AUTO_LOGOUT} Minuten Inaktivität ausgeloggt.`);
 
         this.cds.setDialogData(true);
 

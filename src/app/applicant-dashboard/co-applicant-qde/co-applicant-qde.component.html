@@ -7,52 +7,52 @@
                     <a [routerLink]="['/applicant', applicationId, 'co-applicant']" [queryParams]="{tabName: 'dashboard', page: 1}">Dashboard</a>
                   </li>
                   <li class="tab-link" [ngClass]="{'not-visible': isTabDisabled, 'active': (activeTab == 1), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
-                    <a href="javascript:void(0);" (click)="tabSwitch(1)">PAN</a>
+                    <a href="javascript:void(0);" (click)="tabSwitch(1, 1)">PAN</a>
                   </li>
                   <li class="tab-link" [ngClass]="{'not-visible': isTabDisabled, 'active': (activeTab == 2), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
-                    <a href="javascript:void(0);" (click)="tabSwitch(2)">personal details</a>
+                    <a href="javascript:void(0);" (click)="tabSwitch(2, 1)">personal details</a>
                   </li>
                   <li class="tab-link" [ngClass]="{'not-visible': isTabDisabled, 'active': (activeTab == 3), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
-                    <a href="javascript:void(0);" (click)="tabSwitch(3)">contact details</a>
+                    <a href="javascript:void(0);" (click)="tabSwitch(3, 1)">contact details</a>
                   </li>
                   <li class="tab-link" [ngClass]="{'not-visible': isTabDisabled, 'active': (activeTab == 4), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
-                    <a href="javascript:void(0);" (click)="tabSwitch(4)">communication address</a>
+                    <a href="javascript:void(0);" (click)="tabSwitch(4, 1)">communication address</a>
                   </li>
                   <li class="tab-link" [ngClass]="{'not-visible': isTabDisabled, 'active': (activeTab == 5), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
-                    <a href="javascript:void(0);" (click)="tabSwitch(5)">marital status</a>
+                    <a href="javascript:void(0);" (click)="tabSwitch(5, 1)">marital status</a>
                   </li>
                   <li class="tab-link" [ngClass]="{'not-visible': isTabDisabled, 'active': (activeTab == 6), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
-                    <a href="javascript:void(0);" (click)="tabSwitch(6)">family details</a>
+                    <a href="javascript:void(0);" (click)="tabSwitch(6, 1)">family details</a>
                   </li>
                   <li class="tab-link" [ngClass]="{'not-visible': isTabDisabled, 'active': (activeTab == 7), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
-                    <a href="javascript:void(0);" (click)="tabSwitch(7)">other</a>
+                    <a href="javascript:void(0);" (click)="tabSwitch(7, 1)">other</a>
                   </li>
                   <li class="tab-link" [ngClass]="{'not-visible': isTabDisabled, 'active': (activeTab == 8), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
-                    <a href="javascript:void(0);" (click)="tabSwitch(8)">occupation details</a>
+                    <a href="javascript:void(0);" (click)="tabSwitch(8, 1)">occupation details</a>
                   </li>
                   <li class="tab-link" [ngClass]="{'not-visible': isTabDisabled, 'active': (activeTab == 9), 'hide': ((!applicantIndividual) || !(qde?.application?.applicants[coApplicantIndex]?.incomeDetails?.incomeConsider == true)), 'disabled': isTabDisabled}">
-                    <a href="javascript:void(0);" (click)="tabSwitch(9)">official correspondence</a>
+                    <a href="javascript:void(0);" (click)="tabSwitch(9, 1)">official correspondence</a>
                   </li>
                   <li class="tab-link" [ngClass]="{'not-visible': isTabDisabled, 'active': (activeTab == 10), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
-                      <a href="javascript:void(0);" (click)="tabSwitch(10)">INCOME DETAILS</a>
+                      <a href="javascript:void(0);" (click)="tabSwitch(10, 1)">INCOME DETAILS</a>
                   </li>
                   <li class="tab-link hide" [ngClass]="{'active': (activeTab == 11), 'hide': (applicantIndividual)}">
-                      <a href="javascript:void(0);" (click)="tabSwitch(11)">PAN</a>
+                      <a href="javascript:void(0);" (click)="tabSwitch(11, 1)">PAN</a>
                   </li>
                   <li class="tab-link hide" [ngClass]="{'active': (activeTab == 12), 'hide': (applicantIndividual)}">
-                      <a href="javascript:void(0);" (click)="tabSwitch(12)">ORGANIZATION DETAILS</a>
+                      <a href="javascript:void(0);" (click)="tabSwitch(12, 1)">ORGANIZATION DETAILS</a>
                   </li>
                   <li class="tab-link hide" [ngClass]="{'active': (activeTab == 13), 'hide': (applicantIndividual)}">
-                      <a href="javascript:void(0);" (click)="tabSwitch(13)">REGISTERED ADDRESS</a>
+                      <a href="javascript:void(0);" (click)="tabSwitch(13, 1)">REGISTERED ADDRESS</a>
                   </li>
                   <li class="tab-link hide" [ngClass]="{'active': (activeTab == 14), 'hide': (applicantIndividual)}">
-                      <a href="javascript:void(0);" (click)="tabSwitch(14)">CORPORATE ADDRESS</a>
+                      <a href="javascript:void(0);" (click)="tabSwitch(14, 1)">CORPORATE ADDRESS</a>
                   </li>
                   <li class="tab-link hide" [ngClass]="{'active': (activeTab == 15), 'hide': (applicantIndividual)}">
-                      <a href="javascript:void(0);" (click)="tabSwitch(15)">REVENUE DETAILS</a>
+                      <a href="javascript:void(0);" (click)="tabSwitch(15, 1)">REVENUE DETAILS</a>
                   </li>
                   <li class="tab-link hide" [ngClass]="{'active': (activeTab == 16), 'hide': (applicantIndividual)}">
-                      <a href="javascript:void(0);" (click)="tabSwitch(16)">INCOME DETAILS</a>
+                      <a href="javascript:void(0);" (click)="tabSwitch(16, 1)">INCOME DETAILS</a>
                   </li>
               </ul>
                 <div class="tabs-contents" #tabContents>
@@ -63,7 +63,7 @@
                             <div class="lhs">
 
                                 <div  class="swiper-container form-swiper"
-                                [swiper]="lhsConfig"
+                                [swiper]="lhsConfig" #lhsSwiperS="ngxSwiper"
                                 #dashboardSlider1="ngxSwiper">
                                     <div class="swiper-wrapper">
                                         <div class="swiper-slide">
@@ -81,8 +81,6 @@
                                 <div  class="swiper-container form-swiper"
                                     [swiper]="rhsConfig"
                                     #swiperS="ngxSwiper"
-                                    (slidePrevTransitionStart)="slidePrevTransitionStart(dashboardSlider1)"
-                                    (slideNextTransitionStart)="slideNextTransitionStart(dashboardSlider1)"
                                     #dashboardSlider2="ngxSwiper">
                                     <div class="swiper-wrapper">
                                         <div class="swiper-slide">
@@ -116,12 +114,12 @@
                         </div>
                     </div>
                   <div class="tab-content" [ngClass]="{'active': (activeTab == 1)}">
-                    <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(panSlider2)"></a>
+                    <!-- <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(panSlider2)"></a> -->
                     <div class="lyt-tabs">
                         <div class="lhs">
 
                             <div  class="swiper-container form-swiper"
-                                  [swiper]="lhsConfig"
+                                  [swiper]="lhsConfig" #lhsSwiperS="ngxSwiper"
                                   #panSlider1="ngxSwiper">
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide">
@@ -167,7 +165,7 @@
                                                             [disabled]="isTBMLoggedIn"
                                                             [ngClass]="{'disabled': isTBMLoggedIn}"
                                                             [checked]="qde.application.applicants[coApplicantIndex].isIndividual == true"
-                                                            (click)="changeIsIndividual(1, panSlider2)"  />
+                                                            (click)="changeIsIndividual(1, panSlider2, panSlider1)"  />
                                                     <label for="individual"><span>Individual</span></label>
                                                 </div>
                                                 <div class="bs-radio">
@@ -179,7 +177,7 @@
                                                             [disabled]="isTBMLoggedIn"
                                                             [ngClass]="{'disabled': isTBMLoggedIn}"
                                                             [checked]="qde.application.applicants[coApplicantIndex].isIndividual == false"
-                                                            (click)="changeIsIndividual(2, panSlider2)" />
+                                                            (click)="changeIsIndividual(2, panSlider2, panSlider1)" />
                                                     <label for="non-individual"><span>Non-Individual</span></label>
                                                 </div>                                               
                                             </div>
@@ -189,7 +187,7 @@
                                         <form class="bs-form" *ngIf="!isTabDisabled" autocomplete="off"
                                               id="pan-form"
                                               #panNumberForm="ngForm" 
-                                              (ngSubmit)="submitPanNumber(panNumberForm, panSlider2)">
+                                              (ngSubmit)="submitPanNumber(panNumberForm, panSlider2, panSlider1)">
                                               <div class="form-wrap">
                                                 <div class="form-group last typ-optional" style="margin-bottom: 40px; ">
                                                     <input [readonly]="isReadOnly"  type="text"
@@ -220,6 +218,7 @@
                                                   <span class="control-title">Document Type</span>
 
                                                   <kendo-dropdownlist [readonly]="isReadOnly"  class="form-control"
+                                                                        [defaultItem] = "defaultItem"
                                                                         [data]="docType" 
                                                                         textField="key"
                                                                         valueField="value"
@@ -239,15 +238,15 @@
                                                             name="docNumber"
                                                             #panDocNumber="ngModel"
                                                             oninput="this.value = this.value.toUpperCase()"
-                                                            pattern="{{regexPatternForDocType[parseInteger(selectedDocType.value) - 1].pattern}}"
-                                                            maxlength="{{maxlength[selectedDocType.value - 1]}}"
+                                                            pattern="{{regexPatternForDocType[parseInteger(selectedDocType.value)].pattern}}"
+                                                            maxlength="{{maxlength[parseInteger(selectedDocType.value)]}}"
                                                             fieldFill 
                                                             spellcheck="false"
                                                             required/>
                                                 <label for="docNumber" tabindex="2">Document Number</label>
                                                 <div *ngIf="panDocNumber.touched && panDocNumber.invalid" class="invalid-feedback">
                                                   <!-- <div *ngIf="panDocNumber.errors?.required">{{errors.panDocumentNo.required}}</div> -->
-                                                  <div *ngIf="panDocNumber.errors?.pattern">{{errors.panDocumentNo.invalid}} - Valid Document number Format: <b>{{regexPatternForDocType[parseInteger(selectedDocType.value) - 1].hint}}</b></div>
+                                                  <div *ngIf="panDocNumber.errors?.pattern">{{errors.panDocumentNo.invalid}} - Valid Document number Format: <b>{{regexPatternForDocType[parseInteger(selectedDocType.value)].hint}}</b></div>
                                                 </div>
                                                 <!-- <image-upload [url]="imageUrl" [headers]="myHeaders"></image-upload> -->
                                             </div>
@@ -257,8 +256,8 @@
                                             <div class="btn-wrap">
                                                 <button type="submit"
                                                         class="btn btn-primary"
-                                                        [ngClass]="{'disabled': (!panNumberForm.valid)}"
-                                                        [disabled]="!panNumberForm.valid">Next
+                                                        [ngClass]="{'disabled': (!panNumberForm.valid || selectedDocType.value == 0)}"
+                                                        [disabled]="!panNumberForm.valid || selectedDocType.value == '0'">Next
                                                 </button>
                                             </div>
                                         </form>
@@ -312,12 +311,12 @@
                   </div>
   
                   <div class="tab-content" [ngClass]="{'active': (activeTab == 2)}">
-                      <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(pdSlider2)"></a>
+                      <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(3)"></a>
   
                       <div class="lyt-tabs">
                           <div class="lhs">
                               <div  class="swiper-container form-swiper"
-                                    [swiper]="lhsConfig"
+                                    [swiper]="lhsConfig" #lhsSwiperS="ngxSwiper"
                                     #pdSlider1="ngxSwiper">
                                   <div class="swiper-wrapper">
                                       <div class="swiper-slide">
@@ -355,8 +354,6 @@
                               <div  class="swiper-container form-swiper"
                                     [swiper]="rhsConfig"
                                     #swiperS="ngxSwiper"
-                                    (slidePrevTransitionStart)="slidePrevTransitionStart(pdSlider1)"
-                                  (slideNextTransitionStart)="slideNextTransitionStart(pdSlider1)"
                                     #pdSlider2="ngxSwiper">
                                   <div class="swiper-wrapper">
                                       <div class="swiper-slide">
@@ -369,19 +366,19 @@
                                                             [value]="1"
                                                             tabindex="1"
                                                             [checked]="qde.application.applicants[coApplicantIndex].personalDetails.applicantStatus == '1'"
-                                                            (click)="submitResidentialNon(1, pdSlider2)"
+                                                            (click)="submitResidentialNon(1, pdSlider2, pdSlider1)"
                                                             class="not-usual" />
                                                     <label for="yes-consider1"><span>Resident</span></label>
                                                 </div>
                                                 <div class="bs-radio">
-                                                    <input [readonly]="isReadOnly" type="radio"
+                                                    <input [attr.disabled]=true [readonly]="isReadOnly" type="radio"
                                                             name="income-consider"
                                                             id="no-consider1"
                                                             class="not-usual"
                                                             [value]="2"
                                                             tabindex="2"
                                                             [checked]="qde.application.applicants[coApplicantIndex].personalDetails.applicantStatus == '2'"
-                                                            (click)="submitResidentialNon(2, pdSlider2)" />
+                                                            (click)="submitResidentialNon(2, pdSlider2, pdSlider1)" />
                                                     <label for="no-consider1"><span>Non Resident</span></label>
                                                 </div>
                                             </div>
@@ -391,7 +388,7 @@
                                           <form   class="bs-form" *ngIf="!isTabDisabled" autocomplete="off"
                                                   id="personal-form"
                                                   #nameForm="ngForm"
-                                                  (ngSubmit)="submitNameDetails(nameForm, pdSlider2)">
+                                                  (ngSubmit)="submitNameDetails(nameForm, pdSlider2, pdSlider1)">
                                               <div class="form-wrap">
                                                     <div class="form-group">
                                                             <span class="control-title">Relationship with Main Applicant</span>
@@ -399,29 +396,32 @@
                                                                <option *ngFor="let rela of relationships" [value]="rela.value">{{rela.key}}</option>
                                                             </select> -->
                                         
-                                                            <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
-                                                            
+                                                        <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                                            [defaultItem]= "defaultItem"
                                                             [data]="relationships" 
-                                                            textField="key"
-                                                            valueField="value"
+                                                            [textField]="'key'"
+                                                            [valueField]="'value'"
                                                             name="relationShip"
                                                             [valuePrimitive]="true"
                                                             [(ngModel)]="selectedRelationship"
-                                                            (valueChange)="changedRelationship($event)">
+                                                            (valueChange)="changedRelationship($event)"
+                                                            >
                                                             </kendo-dropdownlist>
                                         
                                                         </div>
                                                   <div class="form-group">
                                                       <span class="control-title">Title</span>
                                                       <div class="form-group">   
-                                                          <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                                          <kendo-dropdownlist [readonly]=" selectedRelationship == 0 ||isReadOnly"                                                            
+                                                            class="form-control"
+                                                            [defaultItem]= "defaultItem"                                                           
                                                             [data]="titles"                                                            
                                                             tabindex="1"
                                                             textField="key"
                                                             valueField="value"
                                                             name="title"
                                                             [(ngModel)]="selectedTitle"
-                                                            (valueChange)="changeTitle($event)">
+                                                            (valueChange)="changeTitle($event)" >
                                                           </kendo-dropdownlist>
                                                       </div>
                                                   </div>
@@ -492,8 +492,8 @@
                                               <div class="btn-wrap">
                                                 <button   type="submit"
                                                           class="btn btn-primary"
-                                                          [ngClass]="{'disabled': (!nameForm.valid)}"
-                                                          [disabled]="!nameForm.valid">Next
+                                                          [ngClass]="{'disabled': (!nameForm.valid || selectedRelationship ==0 || selectedTitle.value ==0)}"
+                                                          [disabled]="!nameForm.valid || selectedRelationship ==0 || selectedTitle.value == 0">Next
                                                 </button>
                                               </div>
                                           </form>
@@ -508,7 +508,7 @@
                                                                 [tabindex]="(i+1)"
                                                                 [value]="g.value"
                                                                 [checked]="qde.application.applicants[coApplicantIndex].personalDetails.gender == g.value"
-                                                                (click)="submitGenderDetails(g.value, pdSlider2)" />
+                                                                (click)="submitGenderDetails(g.value, pdSlider2, pdSlider1)" />
                                                         <label [for]="g.key"><span>{{g.key}}</span></label>
                                                     </div>
                                               </div>
@@ -517,11 +517,12 @@
                                       <div class="swiper-slide">
                                           <form   class="bs-form" *ngIf="!isTabDisabled" 
                                                   #qualificationForm="ngForm"
-                                                  (ngSubmit)="submitQualificationDetails(qualificationForm, pdSlider2)">
+                                                  (ngSubmit)="submitQualificationDetails(qualificationForm, pdSlider2, pdSlider1)">
                                               <div class="form-wrap">
                                                   <div class="form-group">
                                                       <span class="control-title">Qualification</span>
                                                       <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                                        [defaultItem] = "defaultItem"
                                                         [data]="qualifications" 
                                                         textField="key"
                                                         valueField="value"
@@ -537,8 +538,8 @@
                                               <div class="btn-wrap">
                                                   <button type="submit"
                                                           class="btn btn-primary"
-                                                          [ngClass]="{'disabled': (!qualificationForm.valid)}"
-                                                          [disabled]="!qualificationForm.valid">Next
+                                                          [ngClass]="{'disabled': (!qualificationForm.valid || selectedQualification.value ==0)}"
+                                                          [disabled]="!qualificationForm.valid || selectedQualification.value ==0">Next
                                                   </button>
                                               </div>
                                           </form>
@@ -642,12 +643,12 @@
                   </div>
   
                   <div class="tab-content" [ngClass]="{'active': (activeTab == 3)}">
-                    <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
+                    <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(5)"></a>
                     <div class="lyt-tabs">
                         <div class="lhs">
 
                             <div  class="swiper-container form-swiper"
-                                [swiper]="lhsConfig"
+                                [swiper]="lhsConfig" #lhsSwiperS="ngxSwiper"
                                 #cdSlider1="ngxSwiper">
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide">
@@ -761,8 +762,9 @@
                                                   <span class="optional">10 digit</span>
           
                                                   <button type="button" *ngIf="!qde.application.applicants[coApplicantIndex].contactDetails.isMobileOTPverified" 
-                                                  href="javascript:void(0);" class="sent-otp modal-init" data-target="sent-otp-modal" 
-                                                  [disabled]="!mobileNumber.valid" 
+                                                  href="javascript:void(0);" class="sent-otp modal-init" data-target="sent-otp-modal"
+                                                  [ngClass]="{'disabled': (!mobileNumber.valid || RegExp(regexPattern.sameDigit).test(mobileNumber.value))}" 
+                                                  [disabled]="!mobileNumber.valid || RegExp(regexPattern.sameDigit).test(mobileNumber.value)" 
                                                   (click)="submitOTP(contactForm, false)">Send OTP<span class="icon icon-tick"></span></button>
                                                   <a *ngIf="qde.application.applicants[coApplicantIndex].contactDetails.isMobileOTPverified" 
                                                   href="javascript:void(0);"   class="sent-otp modal-init " 
@@ -839,6 +841,7 @@
                                                                 spellcheck="false"
                                                                 id="std" />
                                                         <label for="std">STD</label>
+                                                        <div class="redalert" *ngIf="RegExp(regexPattern.sameDigitStd).test(residenceStdCode.value)">{{errors.contactDetails.stdCode.wrong}}</div>
                                                         <div *ngIf="residenceStdCode.touched && residenceStdCode.invalid" class="invalid-feedback">
                                                             <!-- <div *ngIf="residenceStdCode.errors?.required">{{errors.contactDetails.stdCode.required}}</div> -->
                                                             <div *ngIf="residenceStdCode.errors?.pattern || residenceStdCode.errors?.minlength">
@@ -862,6 +865,7 @@
                                                                 spellcheck="false" />
                                                       <label for="res-no">Residence number</label>
                                                       <span class="optional">Optional</span>
+                                                      <div class="redalert" *ngIf="RegExp(regexPattern.sameDigit).test(residenceNumber.value)">{{errors.contactDetails.residenceNumber.wrong}}</div>
                                                       <div *ngIf="residenceNumber.touched  && residenceNumber.invalid" class="invalid-feedback">
                                                         <div *ngIf="residenceNumber.errors?.pattern || residenceNumber.errors?.minlength">
                                                             {{errors.contactDetails.residenceNumber.invalid}}</div>                                                           
@@ -889,6 +893,7 @@
                                                                 spellcheck="false"
                                                                 id="altrstd">
                                                       <label for="altrstd" >STD</label>
+                                                      <div class="redalert" *ngIf="RegExp(regexPattern.sameDigitStd).test(alternateResidenceNumberStd1.value)">{{errors.contactDetails.stdCode.wrong}}</div>
                                                       <div *ngIf="alternateResidenceNumberStd1.touched  && alternateResidenceNumberStd1.invalid" class="invalid-feedback">
                                                         <div *ngIf="alternateResidenceNumberStd1.errors?.pattern || alternateResidenceNumberStd1.errors?.minlength">
                                                             {{errors.contactDetails.alternateResidenceNumberStd1.invalid}}</div>
@@ -910,6 +915,7 @@
                                                                 data-validation-attr="residenceno01" />
                                                       <label for="altr-res-no">Residence number</label>
                                                       <span class="optional">Optional</span>
+                                                      <div class="redalert" *ngIf="RegExp(regexPattern.sameDigit).test(alternateResidenceNumber2.value)">{{errors.contactDetails.alternateResidenceNumber2.wrong}}</div>
                                                       <div *ngIf="alternateResidenceNumber2.touched  && alternateResidenceNumber2.invalid" class="invalid-feedback">
                                                         <div *ngIf="alternateResidenceNumber2.errors?.pattern || alternateResidenceNumber2.errors?.minlength">
                                                             {{errors.contactDetails.alternateResidenceNumber2.invalid}}</div>
@@ -928,14 +934,22 @@
                                           <div class="btn-wrap">
                                                 <button class="btn btn-primary"
                                                         type="submit"
-                                                        [ngClass]="{'disabled': (!contactForm.valid)|| (altMobileNo.value == mobileNumber.value) || 
-                                                        (alternateEmailId.value == preferEmailId.value) || RegExp(regexPattern.sameDigit).test(mobileNumber.value) 
+                                                        [ngClass]="{'disabled': (!contactForm.valid)|| (altMobileNo.value == mobileNumber.value)                            
+                                                        || RegExp(regexPattern.sameDigit).test(residenceNumber.value)
+                                                        || RegExp(regexPattern.sameDigitStd).test(residenceStdCode.value)
+                                                        || RegExp(regexPattern.sameDigit).test(alternateResidenceNumber2.value) 
+                                                        || RegExp(regexPattern.sameDigitStd).test(alternateResidenceNumberStd1.value) 
+                                                        || (alternateEmailId.value == preferEmailId.value) || RegExp(regexPattern.sameDigit).test(mobileNumber.value) 
                                                         || RegExp(regexPattern.sameDigit).test(altMobileNo.value) || 
                                                         (qde.application.applicants[coApplicantIndex].contactDetails.preferredEmailId)?.length == 100 ||
                                                         (qde.application.applicants[coApplicantIndex].contactDetails.alternateEmailId)?.length == 100 ||
                                                         (!qde.application.applicants[coApplicantIndex].contactDetails.isMobileOTPverified)}"
-                                                        [disabled]="!contactForm.valid || (altMobileNo.value == mobileNumber.value) || 
-                                                        (alternateEmailId.value == preferEmailId.value) || RegExp(regexPattern.sameDigit).test(mobileNumber.value) 
+                                                        [disabled]="!contactForm.valid || (altMobileNo.value == mobileNumber.value) 
+                                                        || RegExp(regexPattern.sameDigit).test(residenceNumber.value)
+                                                        || RegExp(regexPattern.sameDigitStd).test(residenceStdCode.value)
+                                                        || RegExp(regexPattern.sameDigit).test(alternateResidenceNumber2.value) 
+                                                        || RegExp(regexPattern.sameDigitStd).test(alternateResidenceNumberStd1.value)
+                                                        || (alternateEmailId.value == preferEmailId.value) || RegExp(regexPattern.sameDigit).test(mobileNumber.value) 
                                                         || RegExp(regexPattern.sameDigit).test(altMobileNo.value) || 
                                                         (qde.application.applicants[coApplicantIndex].contactDetails.preferredEmailId)?.length == 100 ||
                                                         (qde.application.applicants[coApplicantIndex].contactDetails.alternateEmailId)?.length == 100 ||
@@ -1001,13 +1015,13 @@
                 </div>
   
                 <div class="tab-content" [ngClass]="{'active': (activeTab == 4)}">
-                  <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
+                  <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(1)"></a>
   
                   <div class="lyt-tabs">
                       <div class="lhs">
 
                         <div  class="swiper-container form-swiper"
-                            [swiper]="lhsConfig"
+                            [swiper]="lhsConfig" #lhsSwiperS="ngxSwiper"
                             #commSlider1="ngxSwiper">
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide">
@@ -1049,7 +1063,9 @@
                                               </div>
                                               <div class="form-group">
                                                   <span class="control-title">Residential status</span>
-                                                  <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                                  <kendo-dropdownlist [readonly]="isReadOnly" 
+                                                    class="form-control"
+                                                    [defaultItem] ="defaultItem"
                                                     [data]="residences" 
                                                     textField="key"
                                                     tabindex="1"
@@ -1317,8 +1333,8 @@
                                           </div>
                                           <div class="btn-wrap">
                                               <button type="submit" class="btn btn-primary" 
-                                                      [ngClass]="{'disabled': (!communicationForm.valid || !qde.application.applicants[coApplicantIndex].communicationAddress.cityState || !qde.application.applicants[coApplicantIndex].permanentAddress.cityState)}"
-                                                      [disabled]="!communicationForm.valid || !qde.application.applicants[coApplicantIndex].communicationAddress.cityState || !qde.application.applicants[coApplicantIndex].permanentAddress.cityState">
+                                                      [ngClass]="{'disabled': (!communicationForm.valid || !qde.application.applicants[coApplicantIndex].communicationAddress.cityState || !qde.application.applicants[coApplicantIndex].permanentAddress.cityState || selectedResidence.value ==0)}"
+                                                      [disabled]="!communicationForm.valid || !qde.application.applicants[coApplicantIndex].communicationAddress.cityState || !qde.application.applicants[coApplicantIndex].permanentAddress.cityState || selectedResidence.value ==0">
                                                   Next
                                               </button>
                                           </div>
@@ -1333,12 +1349,12 @@
                   </div>
   
                   <div    class="tab-content" [ngClass]="{'active': (activeTab == 5)}">
-                    <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(maritalSlider2)"></a>
-  
+                    <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(1)"></a>
+
                     <div class="lyt-tabs">
                         <div class="lhs">
                             <div  class="swiper-container form-swiper"
-                                  [swiper]="lhsConfig"
+                                  [swiper]="lhsConfig" #lhsSwiperS="ngxSwiper"
                                   #maritalSlider1="ngxSwiper">
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide">
@@ -1379,12 +1395,13 @@
                                     <div class="swiper-slide">
                                         <form class="bs-form" *ngIf="!isTabDisabled" autocomplete="off"
                                               #maritalStatusForm="ngForm"
-                                              (ngSubmit)="submitMaritalStatus(maritalStatusForm, maritalSlider2)">
+                                              (ngSubmit)="submitMaritalStatus(maritalStatusForm, maritalSlider2, maritalSlider1)">
                                             <div class="form-wrap">
                                                 <div class="form-group">
                                                     <span class="control-title">Marital Status</span>
 
                                                     <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                                        [defaultItem] = "defaultItem"
                                                       [data]="maritals" 
                                                       textField="key"
                                                       tabindex="1"
@@ -1396,12 +1413,13 @@
                                                       [(ngModel)]="selectedMaritialStatus"
                                                       (selectionChange)="resetSpouseTitles()">
                                                     </kendo-dropdownlist>
-  
                                                 </div>
                                             </div>
                                             <div class="btn-wrap">
                                               <button type="submit"
-                                                      class="btn btn-primary">Next
+                                                      class="btn btn-primary"
+                                                      [ngClass]="{'disabled': (selectedMaritialStatus.value ==0)}"
+                                                      [disabled]="selectedMaritialStatus.value ==0">Next
                                               </button>
                                             </div>
                                         </form>
@@ -1409,11 +1427,12 @@
                                     <div class="swiper-slide">
                                         <form class="bs-form" *ngIf="!isTabDisabled" autocomplete="off"
                                               #spouseForm="ngForm"
-                                              (ngSubmit)="submitSpouseName(spouseForm, maritalSlider2)">
+                                              (ngSubmit)="submitSpouseName(spouseForm, maritalSlider2, maritalSlider1)">
                                             <div class="form-wrap">
                                                 <div class="form-group">
                                                     <span class="control-title">Title</span>
                                                     <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                                                        [defaultItem] = "defaultItem"
                                                                         [data]="spouseTitles" 
                                                                         textField="key"
                                                                         valueField="value"
@@ -1452,8 +1471,8 @@
                                             </div>
                                             <div class="btn-wrap">
                                                 <button   type="submit"
-                                                          [ngClass]="{'disabled': (!spouseForm.valid)}"
-                                                          [disabled]="!spouseForm.valid"
+                                                          [ngClass]="{'disabled': (!spouseForm.valid || selectedSpouseTitle.value == 0)}"
+                                                          [disabled]="!spouseForm.valid || selectedSpouseTitle.value ==0"
                                                           class="btn btn-primary">
                                                   Next
                                                 </button>
@@ -1470,7 +1489,7 @@
                                                               [checked]="qde.application.applicants[coApplicantIndex].maritalStatus.earning == true"
                                                               id="earningYes"
                                                               tabindex="1"
-                                                              (click)="submitSpouseEarning(1, maritalSlider2)" />
+                                                              (click)="submitSpouseEarning(1, maritalSlider2, maritalSlider1)" />
                                                     <label for="earningYes"><span>Yes</span></label>
                                                 </div>
                                                 <div class="bs-radio">
@@ -1480,7 +1499,7 @@
                                                               tabindex="2"
                                                               [checked]="qde.application.applicants[coApplicantIndex].maritalStatus.earning == false"
                                                               id="earningNo"
-                                                              (click)="submitSpouseEarning(2, maritalSlider2)" />
+                                                              (click)="submitSpouseEarning(2, maritalSlider2, maritalSlider1)" />
                                                     <label for="earningNo"><span>No</span></label>
                                                 </div>
                                             </div>
@@ -1502,22 +1521,25 @@
                                                           name="amount"
                                                           fieldFill
                                                           spellcheck="false"
+                                                          (input)="checkAmountLimit($event,50000,1000000)"
                                                           pattern="{{regexPattern.amount}}" />
   
                                                   <label for="amount">Amount</label>
                                                   <span class="addon">
                                                     <span class="icon icon-inr"></span>
                                                   </span>
-                                                  <span class="optional">Optional</span>  
+                                                  <span class="optional">Optional</span>
+                                                  <div *ngIf="isLessAmount" class="invalid-feedback">{{errors.maritialStatus.salaryAmount.minamount}}{{requirMinAmout}}</div>  
                                                   <div *ngIf="(amount.touched || amount.dirty) && amount.invalid" class="invalid-feedback">
                                                       <!-- <div *ngIf="amount.errors?.required">{{errors.maritialStatus.salaryAmount.required}}</div> -->
+                                                      <div *ngIf="isLessAmount">{{errors.maritialStatus.salaryAmount.minamount}}{{requirMinAmout}}</div>
                                                       <div *ngIf="amount.errors?.pattern">{{errors.maritialStatus.salaryAmount.invalid}}</div>
                                                   </div>
                                                 </div>
                                             </div>
                                             <div class="btn-wrap">
-                                                <button   type="submit"[ngClass]="{'disabled': (!spouseEarningAmtForm.valid)}"
-                                                [disabled]="!spouseEarningAmtForm.valid" class="btn btn-primary">Next
+                                                <button   type="submit"[ngClass]="{'disabled': (!spouseEarningAmtForm.valid || isLessAmount)}"
+                                                [disabled]="!spouseEarningAmtForm.valid || isLessAmount" class="btn btn-primary">Next
                                                 </button>
                                             </div>
                                         </form>
@@ -1532,13 +1554,13 @@
   
   
                 <div  class="tab-content" [ngClass]="{'active': (activeTab == 6)}">
-                  <a  href="javascript:void(0);"
-                      class="back-btn"
-                      (click)="onBackButtonClick(familySlider2)"></a>
+                    <!-- <a *ngIf="qde.application.applicants[coApplicantIndex].maritalStatus.earning == false" href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(3)"></a> -->
+                    <a *ngIf="selectedMaritialStatus.value != 2" href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(1)"></a>
+                    <a *ngIf="selectedMaritialStatus.value == 2" href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(4)"></a>        
                   <div class="lyt-tabs">
                       <div class="lhs">
                           <div  class="swiper-container form-swiper"
-                                [swiper]="lhsConfig"
+                                [swiper]="lhsConfig" #lhsSwiperS="ngxSwiper"
                                 #familySlider1="ngxSwiper">
                               <div class="swiper-wrapper">
                                   <div class="swiper-slide">
@@ -1567,14 +1589,13 @@
                           <div  class="swiper-container form-swiper"
                                 [swiper]="rhsConfig"
                                 #swiperS="ngxSwiper"
-                                (slidePrevTransitionStart)="slidePrevTransitionStart(familySlider1)"
-                                  (slideNextTransitionStart)="slideNextTransitionStart(familySlider1)"
+                                
                                 #familySlider2="ngxSwiper">
                               <div class="swiper-wrapper">
                                   <div class="swiper-slide">
                                       <form   class="bs-form" *ngIf="!isTabDisabled" autocomplete="off"
                                               #familyForm1="ngForm"
-                                              (ngSubmit)="submitFamilyForm1(familyForm1, familySlider2)">
+                                              (ngSubmit)="submitFamilyForm1(familyForm1, familySlider2, familySlider1)">
                                           <div class="form-wrap">
                                               <div class="form-group typ-range">
                                                   <span class="control-title">Enter number of dependents</span>
@@ -1610,6 +1631,7 @@
                                                   <span class="control-title">Father's Title</span>
 
                                                   <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                                    [defaultItem] = "defaultItem"
                                                     [data]="maleTitles" 
                                                     textField="key"
                                                     valueField="value"
@@ -1645,6 +1667,7 @@
                                               <div class="form-group">
                                                   <span class="control-title">Mother's Title</span>
                                                   <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                                  [defaultItem] = "defaultItem"
                                                   [data]="femaleTitles" 
                                                   textField="key"
                                                   valueField="value"
@@ -1702,8 +1725,8 @@
                                           <div class="btn-wrap">
                                               <button type="submit"
                                                       class="btn btn-primary"
-                                                      [ngClass]="{'disabled': (!familyForm2.valid)}"
-                                                      [disabled]="!familyForm2.valid">
+                                                      [ngClass]="{'disabled': (!familyForm2.valid || selectedFatherTitle.value == 0 || selectedMotherTitle.value ==0 )}"
+                                                      [disabled]="!familyForm2.valid || selectedFatherTitle.value == 0 || selectedMotherTitle.value ==0">
                                                   Next
                                               </button>
                                           </div>
@@ -1719,13 +1742,13 @@
   
   
               <div class="tab-content" [ngClass]="{'active': (activeTab == 7)}">
-                  <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
+                  <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(2)"></a>
   
                   <div class="lyt-tabs">
                       <div class="lhs">
                           
                         <div  class="swiper-container form-swiper"
-                            [swiper]="lhsConfig"
+                            [swiper]="lhsConfig" #lhsSwiperS="ngxSwiper"
                             #otherSlider1="ngxSwiper">
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide">
@@ -1758,6 +1781,7 @@
                                           <div class="form-group">
                                               <span class="control-title">Religion</span>
                                               <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                                [defaultItem] = "defaultItem"
                                                 [data]="religions"
                                                 textField="key"
                                                 valueField="value"
@@ -1783,6 +1807,7 @@
                                           <div class="form-group">
                                               <span class="control-title">Category</span>
                                               <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                                [defaultItem] = "defaultItem"
                                                 [data]="categories"
                                                 tabindex="2"
                                                 textField="key"
@@ -1798,8 +1823,8 @@
           
                                       <div class="btn-wrap">
                                           <button type="submit"
-                                                  [ngClass]="{'disabled': (!otherForm.valid) || otherReligion?.length == 25}"
-                                                  [disabled]="!otherForm.valid || otherReligion?.length == 25"
+                                                  [ngClass]="{'disabled': (!otherForm.valid) || otherReligion?.length == 25 || selectedReligion.value ==0 || selectedCategory.value ==0 }"
+                                                  [disabled]="!otherForm.valid || otherReligion?.length == 25 || selectedReligion.value ==0 || selectedCategory.value ==0"
                                                   class="btn btn-primary">Next</button>
                                       </div>
                                   </form>
@@ -1826,13 +1851,13 @@
                 </div>
   
               <div class="tab-content" [ngClass]="{'active': (activeTab == 8)}">
-                  <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(occupationSlider2)"></a>
+                  <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(1)"></a>
   
                   <div class="lyt-tabs">
                       <div class="lhs">
 
                         <div  class="swiper-container form-swiper"
-                            [swiper]="lhsConfig"
+                            [swiper]="lhsConfig" #lhsSwiperS="ngxSwiper"
                             #occupationSlider1="ngxSwiper">
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide">
@@ -1864,12 +1889,13 @@
                                     <div class="swiper-slide">
                                       <form   class="bs-form" *ngIf="!isTabDisabled" autocomplete="off"
                                               #occupationForm="ngForm"
-                                              (ngSubmit)="submitOccupationDetails(occupationForm, occupationSlider2)">
+                                              (ngSubmit)="submitOccupationDetails(occupationForm, occupationSlider2, occupationSlider1)">
                                           <div class="form-wrap">
                                               <div class="form-group">
                                                   <span class="control-title">Occupation type</span>
             
                                                   <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                                    [defaultItem] ="defaultItem"
                                                     [data]="occupations"
                                                     tabindex="1"
                                                     textField="key"
@@ -1887,7 +1913,7 @@
                                                           required
                                                           tabindex="2"
                                                           [(ngModel)]="qde.application.applicants[coApplicantIndex].occupation.companyName"
-                                                          pattern="{{regexPattern.name}}"
+                                                          pattern="{{regexPattern.organizationName}}"
                                                           name="companyName"
                                                           #companyName="ngModel"
                                                           fieldFill
@@ -2001,8 +2027,8 @@
               
                                           <div *ngIf="occupationRequired == true" class="btn-wrap">
                                             <button type="submit"
-                                                    [ngClass]="{'disabled': !occupationForm.valid || expError}"
-                                                    [disabled]="(!occupationForm.valid || expError)" 
+                                                    [ngClass]="{'disabled': !occupationForm.valid || selectedOccupation.value ==0 || expError}"
+                                                    [disabled]="(!occupationForm.valid || selectedOccupation.value ==0 || expError)" 
                                                     class="btn btn-primary">
                                                 Next
                                             </button>
@@ -2010,8 +2036,8 @@
                                         <div *ngIf="occupationRequired == false"
                                         class="btn-wrap">
                                           <button type="submit" 
-                                                [ngClass]="{'disabled': !occupationForm.valid}"
-                                                [disabled]="(!occupationForm.valid)" 
+                                                [ngClass]="{'disabled': !occupationForm.valid || selectedOccupation.value ==0}"
+                                                [disabled]="(!occupationForm.valid || selectedOccupation.value ==0)" 
                                                   class="btn btn-primary"
                                             (click)="incomeConsiderYesNoIndividual(2, occupationSlider2)"
                                             [value]="2">
@@ -2058,13 +2084,13 @@
                 </div>
   
                 <div class="tab-content" [ngClass]="{'hide': !(qde?.application?.applicants[coApplicantIndex]?.incomeDetails?.incomeConsider == true), 'active': (activeTab == 9)}">
-                  <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
+                  <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(2)"></a>
   
                   <div class="lyt-tabs">
                       <div class="lhs">
 
                         <div  class="swiper-container form-swiper"
-                            [swiper]="lhsConfig"
+                            [swiper]="lhsConfig" #lhsSwiperS="ngxSwiper"
                             #offCor1="ngxSwiper">
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide">
@@ -2211,6 +2237,7 @@
                                                         pattern="{{regexPattern.stdCode}}"
                                                         fieldFill />
                                                       <label for="std03">STD</label>
+                                                      <div class="redalert" *ngIf="RegExp(regexPattern.sameDigitStd).test(stdCode.value)">{{errors.contactDetails.stdCode.wrong}}</div>
                                                       <div *ngIf="stdCode.touched && stdCode.invalid" class="invalid-feedback">
                                                         <!-- <div *ngIf="stdCode.errors?.required">{{errors.officialCorrespondence.stdCode.required}}</div> -->
                                                         <div *ngIf="stdCode.errors?.pattern || stdCode.errors?.minlength">{{errors.officialCorrespondence.stdCode.invalid}}</div>
@@ -2229,6 +2256,8 @@
                                                               pattern="{{regexPattern.mobileNumber}}"
                                                               [(ngModel)]="officialCorrespondencePhoneNumber" />
                                                       <label  for="res-no03">Office number</label>
+                                                      <div class="invalid-feedback" *ngIf="RegExp(regexPattern.sameDigit).test(offStdNumber.value)">
+                                                        {{errors.corporateAddress.phoneNumber.invalid}}</div>
                                                       <div *ngIf="offStdNumber.touched && offStdNumber.invalid" class="invalid-feedback">
                                                           <!-- <div *ngIf="offStdNumber.errors?.required">{{errors.officialCorrespondence.phoneNumber.required}}</div> -->
                                                           <div *ngIf="offStdNumber.errors?.pattern || offStdNumber.errors?.minlength">
@@ -2263,9 +2292,9 @@
                                           <div class="btn-wrap">
                                               <button type="submit" class="btn btn-primary" 
                                                       [ngClass]="{'disabled': (!officialCorrespondenceForm.valid) ||
-                                                      (qde.application.applicants[coApplicantIndex].officialCorrespondence.officeEmailId)?.length == 100 || !qde.application.applicants[coApplicantIndex].officialCorrespondence.cityState}"
+                                                      (qde.application.applicants[coApplicantIndex].officialCorrespondence.officeEmailId)?.length == 100 || !qde.application.applicants[coApplicantIndex].officialCorrespondence.cityState} || RegExp(regexPattern.sameDigitStd).test(offStdNumber.value) || RegExp(regexPattern.sameDigitStd).test(stdCode.value)"
                                                       [disabled]="!officialCorrespondenceForm.valid || 
-                                                      (qde.application.applicants[coApplicantIndex].officialCorrespondence.officeEmailId)?.length == 100 || !qde.application.applicants[coApplicantIndex].officialCorrespondence.cityState">Next
+                                                      (qde.application.applicants[coApplicantIndex].officialCorrespondence.officeEmailId)?.length == 100 || !qde.application.applicants[coApplicantIndex].officialCorrespondence.cityState || RegExp(regexPattern.sameDigitStd).test(offStdNumber.value) || RegExp(regexPattern.sameDigitStd).test(stdCode.value)">Next
                                               </button>
                                           </div>
                                       </form>
@@ -2277,14 +2306,13 @@
                   </div>
               </div>
   
-              <div class="tab-content" [ngClass]="{'active': (activeTab == 10)}">
-                    <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(incomeSliderIndividual2)"></a>
+              <div class="tab-content" [ngClass]="{'active': (activeTab == 10)}" *ngIf="qde?.application?.applicants[coApplicantIndex]?.incomeDetails?.incomeConsider == true">
+                    <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(1)"></a>
                     <div class="lyt-tabs">
                         <div class="lhs">
-                            <div class="swiper-container form-swiper" [swiper]="lhsConfig" #incomeSliderIndividual1="ngxSwiper">
+                            <div class="swiper-container form-swiper" [swiper]="lhsConfig" #lhsSwiperS="ngxSwiper" #incomeSliderIndividual1="ngxSwiper">
                                 <div class="swiper-wrapper">
-                                    <div class="swiper-slide"
-                                    *ngIf="qde?.application?.applicants[coApplicantIndex]?.incomeDetails?.incomeConsider == true">
+                                    <div class="swiper-slide">
                                     <div class="title-wrap">
                                         <h4 class="title">Applicant’s monthly<span class="cm-line-break"></span>income details</h4>
                                     </div>
@@ -2310,9 +2338,9 @@
                                     #incomeSliderIndividual2="ngxSwiper">
                               <div class="swiper-wrapper">
 
-                                    <div class="swiper-slide" *ngIf="qde?.application?.applicants[coApplicantIndex]?.incomeDetails?.incomeConsider == true">
+                                    <div class="swiper-slide">
                                         <form class="bs-form" *ngIf="!isTabDisabled" autocomplete="off"
-                                        #incomeDetailsForm2="ngForm" (ngSubmit)="submitMonthlyIncomeIndividual(incomeDetailsForm2, incomeSliderIndividual2)">
+                                        #incomeDetailsForm2="ngForm" (ngSubmit)="submitMonthlyIncomeIndividual(incomeDetailsForm2, incomeSliderIndividual2, incomeSliderIndividual1)">
                                             <div class="form-wrap">
                                                 <div class="form-group inr">
                                                     <input [readonly]="isReadOnly" type="text" class="form-control" 
@@ -2321,17 +2349,22 @@
                                                     [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.monthlyIncome"
                                                     #monthlyIncome1="ngModel"
                                                     fieldFill
+                                                    maxlength="10"
                                                     spellcheck="false"
+                                                    (input)="checkAmountLimit($event,1000)"
                                                     pattern="{{regexPattern.amount}}"
                                                     name="monthlyIncome"
+                                                    (input)="checkAmountLimitMonthlyIncome($event)"
                                                     required/>
                                                     <label for="monthlyIncome1">Monthly income</label>
                                                     <span class="addon">
                                                         <span class="icon icon-inr"></span>
                                                     </span>
                                                     <span class="in-word"></span>
-
+                                                    <div  class="invalid-feedback" *ngIf="isNumberLessThan1k">{{errors.incomeDetails.monthlyIncome.minamount}}</div>
+                                                    <div  class="invalid-feedback" *ngIf="isNumberMoreThan100cr">{{errors.incomeDetails.monthlyIncome.maxamount}}</div>
                                                     <div *ngIf="monthlyIncome1.touched && monthlyIncome1.invalid" class="invalid-feedback">
+                                                            <div *ngIf="isLessAmount">{{errors.incomeDetails.familyIncome.minamount}}{{requirMinAmout}}</div>
                                                         <!-- <div *ngIf="monthlyIncome1.errors?.required">{{errors.incomeDetails.monthlyIncome.required}}</div> -->
                                                         <div *ngIf="monthlyIncome1.errors?.pattern">{{errors.incomeDetails.monthlyIncome.invalid}}</div>
 
@@ -2340,6 +2373,7 @@
                                                 <div class="form-group">
                                                         <span class="control-title">Assessment methodology</span>
                                                         <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                                        [defaultItem]="defaultItem"
                                                         [data]="assessmentMethodology" 
                                                         tabindex="2"
                                                         textField="key"
@@ -2353,34 +2387,41 @@
                                                 </div>
                                             </div>
                                             <div class="btn-wrap">
-                                                <button type="submit" class="btn btn-primary" [disabled]="!incomeDetailsForm2.valid || isTBMLoggedIn" [ngClass]="{'disabled': (!incomeDetailsForm2.valid || isTBMLoggedIn)}">Save</button>
+                                                <button type="submit" class="btn btn-primary" 
+                                                [disabled]="!incomeDetailsForm2.valid || isTBMLoggedIn  || isNumberLessThan1k || isNumberMoreThan100cr" 
+                                                [ngClass]="{'disabled': (!incomeDetailsForm2.valid || isTBMLoggedIn  || isNumberLessThan1k || isNumberMoreThan100cr)}">Next</button>
                                             </div>
                                         </form>
                                     </div>
 
                                     <div class="swiper-slide">
                                     <form class="bs-form" *ngIf="!isTabDisabled" autocomplete="off"
-                                        #annualIncomeForm="ngForm" (ngSubmit)="submitAnnualFamilyIncomeIndividual(annualIncomeForm, incomeSliderIndividual2)">
+                                        #annualIncomeForm="ngForm" (ngSubmit)="submitAnnualFamilyIncomeIndividual(annualIncomeForm, incomeSliderIndividual2, incomeSliderIndividual1)">
                                         <div class="form-wrap">
                                             <div class="form-group inr">
                                                     <input [readonly]="isReadOnly" type="text" class="form-control"
-                                                    id="annualFamilyIncome1" autocomplete="off"
+                                                    id="annualFamilyIncome1" 
+                                                    ngModel autocomplete="off"
                                                     [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.annualFamilyIncome"
                                                     #annualFamilyIncome1="ngModel"
                                                     name="annualFamilyIncome"
                                                     tabindex="1"
                                                     fieldFill
+                                                    minlength="4"
                                                     spellcheck="false"
+                                                    (input)="checkAmountLimit($event,50000)"
                                                     pattern="{{regexPattern.amount}}"
                                                     required/>
                                                 <label for="annualFamilyIncome1">Annual Family Income <span class="lakhs"></span> </label>
                                                 <span class="addon">
                                                     <span class="icon icon-inr"></span>
                                                     </span>
-                                                    <span class="in-word"></span>
-                                                <div *ngIf="annualFamilyIncome1.touched && annualFamilyIncome1.invalid" class="invalid-feedback">
+                                                    <span class="in-word"></span>                                                   
+                                                <div *ngIf="annualFamilyIncome1.touched || annualFamilyIncome1.dirty" class="invalid-feedback">
                                                         <!-- <div *ngIf="annualFamilyIncome1.errors?.required">{{errors.incomeDetails.familyIncome.required}}</div> -->
                                                         <div *ngIf="annualFamilyIncome1.errors?.pattern">{{errors.incomeDetails.familyIncome.invalid}}</div>
+                                                        <div *ngIf="isLessAmount">{{errors.incomeDetails.familyIncome.minamount}}{{requirMinAmout}}</div>
+                                                        <div *ngIf="isMaxAmount">{{errors.incomeDetails.familyIncome.maxamount}}{{requirMaxAmout}}</div>
                                                     </div> 
                                             </div>
                                                 <div class="form-group inr">
@@ -2393,12 +2434,15 @@
                                                     spellcheck="false"
                                                     tabindex="2"
                                                     fieldFill
+                                                    (input)="checkAmountLimitMonthlyIncome($event)"
                                                     required/>
                                                     <label for="monthlyExpenditure1">Monthly Expenditure</label>
                                                     <span class="addon">
                                                     <span class="icon icon-inr"></span>
                                                     </span>
                                                     <span class="in-word"></span>
+                                                    <div  class="invalid-feedback" *ngIf="isNumberLessThan1k">{{errors.incomeDetails.monthlyIncome.minamount}}</div>
+                                                    <div  class="invalid-feedback" *ngIf="isNumberMoreThan100cr">{{errors.incomeDetails.monthlyIncome.maxamount}}</div>
                                                     <div *ngIf="monthlyExpenditure1.touched && monthlyExpenditure1.invalid" class="invalid-feedback">
                                                         <!-- <div *ngIf="monthlyExpenditure1.errors?.required">{{errors.incomeDetails.monthlyExpenditure.required}}</div> -->
                                                         <div *ngIf="monthlyExpenditure1.errors?.pattern">{{errors.incomeDetails.monthlyExpenditure.invalid}}</div>
@@ -2441,8 +2485,8 @@
                                                 <button 
                                                     type="submit"
                                                     class="btn btn-primary"
-                                                    [ngClass]="{'disabled': (annualIncomeForm.invalid || qde.application.applicants[coApplicantIndex].incomeDetails.puccaHouse == null)}"
-                                                    [disabled]="annualIncomeForm.invalid || qde.application.applicants[coApplicantIndex].incomeDetails.puccaHouse == null">
+                                                    [ngClass]="{'disabled': (annualIncomeForm.invalid || qde.application.applicants[coApplicantIndex].incomeDetails.puccaHouse == null|| isLessAmount || isNumberLessThan1k || isNumberMoreThan100cr)}"
+                                                    [disabled]="annualIncomeForm.invalid || qde.application.applicants[coApplicantIndex].incomeDetails.puccaHouse == null || isLessAmount || isNumberLessThan1k || isNumberMoreThan100cr">
                                                 Save
                                                 </button>
                                         </div>
@@ -2455,13 +2499,145 @@
                     </div>
             </div>
   
+            <div class="tab-content" [ngClass]="{'active': (activeTab == 10)}" *ngIf="qde?.application?.applicants[coApplicantIndex]?.incomeDetails?.incomeConsider == false">
+                <a *ngIf="occupationRequired == false" href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(1)"></a>
+                <a *ngIf="occupationRequired == true" href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(2)"></a>
+                <div class="lyt-tabs">
+                    <div class="lhs">
+                        <div class="swiper-container form-swiper" [swiper]="lhsConfig" #lhsSwiperS="ngxSwiper" #incomeSliderIndividual1="ngxSwiper">
+                            <div class="swiper-wrapper">
+
+                                <div class="swiper-slide">
+                                    <div class="title-wrap">
+                                        <h4 class="title">Do you or any of the <span class="cm-line-break"></span>family members <span class="cm-line-break"></span> own a puccahouse <span class="cm-line-break"></span>anywhere in India?</h4>
+                                        <p class="note">House made with a high quality materials throughout, including a floor, roof and exterior walls, are called pucca houses</p>
+                                    </div>
+                                </div>
+            
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="rhs">
+
+                        <div class="swiper-container form-swiper"
+                                [swiper]="rhsConfig" #swiperS="ngxSwiper"
+                                (slidePrevTransitionStart)="slidePrevTransitionStart(incomeSliderIndividual1)"
+                              (slideNextTransitionStart)="slideNextTransitionStart(incomeSliderIndividual1)"
+                                #incomeSliderIndividual2="ngxSwiper">
+                          <div class="swiper-wrapper">
+
+                                <div class="swiper-slide">
+                                <form class="bs-form" *ngIf="!isTabDisabled" autocomplete="off"
+                                    #annualIncomeForm="ngForm" (ngSubmit)="submitAnnualFamilyIncomeIndividual(annualIncomeForm, incomeSliderIndividual2, incomeSliderIndividual1)">
+                                    <div class="form-wrap">
+                                        <div class="form-group inr">
+                                                <input [readonly]="isReadOnly" type="text" class="form-control"
+                                                id="annualFamilyIncome1" autocomplete="off"
+                                                [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.annualFamilyIncome"
+                                                #annualFamilyIncome1="ngModel"
+                                                name="annualFamilyIncome"
+                                                tabindex="1"
+                                                fieldFill
+                                                minlength ="4"
+                                                spellcheck="false"
+                                                (input)="checkAmountLimit($event,50000)"
+                                                pattern="{{regexPattern.amount}}"
+                                                required/>
+                                            <label for="annualFamilyIncome1">Annual Family Income <span class="lakhs"></span> </label>
+                                            <span class="addon">
+                                                <span class="icon icon-inr"></span>
+                                                </span>
+                                                <span class="in-word"></span>
+                                  
+                                            <div *ngIf="annualFamilyIncome1.touched || annualFamilyIncome1.dirty" class="invalid-feedback">
+                                                    <!-- <div *ngIf="annualFamilyIncome1.errors?.required">{{errors.incomeDetails.familyIncome.required}}</div> -->
+                                                    <div *ngIf="annualFamilyIncome1.errors?.pattern">{{errors.incomeDetails.familyIncome.invalid}}</div>
+                                                    <div *ngIf="isLessAmount">{{errors.incomeDetails.familyIncome.minamount}}{{requirMinAmout}}</div>
+                                                    <div *ngIf="isMaxAmount">{{errors.incomeDetails.familyIncome.maxamount}}{{requirMaxAmout}}</div>
+                                                </div> 
+                                        </div>
+                                            <div class="form-group inr">
+                                                <input [readonly]="isReadOnly" type="text" class="form-control" 
+                                                id="monthlyExpenditure1" autocomplete="off"
+                                                [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.monthlyExpenditure"
+                                                #monthlyExpenditure1="ngModel"
+                                                pattern="{{regexPattern.amount}}"
+                                                name="monthlyExpenditure"
+                                                spellcheck="false"
+                                                tabindex="2"
+                                                fieldFill
+                                                (input)="checkAmountLimitMonthlyIncome($event)"
+                                                required/>
+                                                <label for="monthlyExpenditure1">Monthly Expenditure</label>
+                                                <span class="addon">
+                                                <span class="icon icon-inr"></span>
+                                                </span>
+                                                <span class="in-word"></span>
+                                                <div  class="invalid-feedback" *ngIf="isNumberLessThan1k">{{errors.incomeDetails.monthlyIncome.minamount}}</div>
+                                                <div  class="invalid-feedback" *ngIf="isNumberMoreThan100cr">{{errors.incomeDetails.monthlyIncome.maxamount}}</div>
+                                                <div *ngIf="monthlyExpenditure1.touched && monthlyExpenditure1.invalid" class="invalid-feedback">
+                                                    <!-- <div *ngIf="monthlyExpenditure1.errors?.required">{{errors.incomeDetails.monthlyExpenditure.required}}</div> -->
+                                                    <div *ngIf="monthlyExpenditure1.errors?.pattern">{{errors.incomeDetails.monthlyExpenditure.invalid}}</div>
+                                                </div> 
+                                            </div>
+                                            <div class="form-group last">
+                                            <span class="control-title">Do you or any of the family members own a puccahouse anywhere in India?</span>
+                                            </div>
+
+                                            <div class="radio-wrap rounded-radio">
+                                                    <div class="bs-radio typ-normal">
+                                                        <input [readonly]="isReadOnly"  type="radio" 
+                                                                name="puccaHouse"
+                                                                [value]="1"
+                                                                tabindex="3"
+                                                                [checked]="qde.application.applicants[coApplicantIndex].incomeDetails.puccaHouse == true"
+                                                                (click)="selectPuccaHouse(1)"
+                                                                fieldFill
+                                                                id="pucchaHouseIdYes1" />
+                                                        <label for="pucchaHouseIdYes1">
+                                                            yes
+                                                        </label>
+                                                    </div>
+                                                    <div class="bs-radio typ-normal">
+                                                        <input [readonly]="isReadOnly"  type="radio"
+                                                                name="puccaHouse"
+                                                                [value]="2"
+                                                                tabindex="4"
+                                                                id="pucchaHouseIdNo1"
+                                                                [checked]="qde.application.applicants[coApplicantIndex].incomeDetails.puccaHouse == false"
+                                                                (click)="selectPuccaHouse(2)"
+                                                                fieldFill />
+                                                        <label for="pucchaHouseIdNo1">
+                                                            No
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                        </div>
+                                    <div class="btn-wrap">
+                                            <button 
+                                                type="submit"
+                                                class="btn btn-primary"
+                                                [ngClass]="{'disabled': (annualIncomeForm.invalid || qde.application.applicants[coApplicantIndex].incomeDetails.puccaHouse == null|| isLessAmount || isNumberLessThan1k || isNumberMoreThan100cr)}"
+                                                [disabled]="annualIncomeForm.invalid || qde.application.applicants[coApplicantIndex].incomeDetails.puccaHouse == null || isLessAmount || isNumberLessThan1k || isNumberMoreThan100cr">
+                                            Save
+                                            </button>
+                                    </div>
+                                </form>
+                                </div>
+
+                          </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
               <div class="tab-content" [ngClass]="{'active': (activeTab == 11)}">
-                  <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(panSlider4)"></a>
+                  <!-- <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(panSlider4)"></a> -->
                   <div class="lyt-tabs">
                       <div class="lhs">
   
                           <div  class="swiper-container form-swiper"
-                                [swiper]="lhsConfig"
+                                [swiper]="lhsConfig" #lhsSwiperS="ngxSwiper"
                                 #panSlider3="ngxSwiper">
                               <div class="swiper-wrapper">
                                   <div class="swiper-slide">
@@ -2488,7 +2664,7 @@
                                   <div class="swiper-slide">
                                       <form class="bs-form" *ngIf="!isTabDisabled" autocomplete="off"
                                             #panNumberForm2="ngForm"
-                                            (ngSubmit)="submitOrgPanNumber(panNumberForm2, panSlider4)">
+                                            (ngSubmit)="submitOrgPanNumber(panNumberForm2, panSlider4, panSlider3)">
                                           <div class="form-wrap" style="overflow: hidden;">
                                               <div class="form-group last typ-optional">
                                                   <input [readonly]="isReadOnly"  type="text"
@@ -2607,15 +2783,15 @@
                   </div>
   
               </div>
-  
+
               <div class="tab-content" [ngClass]="{'active': (activeTab == 12)}">
-                   <a  href="javascript:void(0);" class="back-btn"  (click)="tabSwitch(11)"></a> 
+                   <a  href="javascript:void(0);" class="back-btn"  (click)="onBackButtonClick(1)"></a> 
   
                   <div class="lyt-tabs">
                       <div class="lhs">
 
                         <div  class="swiper-container form-swiper"
-                            [swiper]="lhsConfig"
+                            [swiper]="lhsConfig" #lhsSwiperS="ngxSwiper"
                             #orgSlider1="ngxSwiper">
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide">
@@ -2716,6 +2892,7 @@
                                       <div class="form-group last">
                                           <span class="control-title">Constitution</span>
                                           <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                                              [defaultItem]="defaultItem"
                                                               [data]="constitutions" 
                                                               textField="key"
                                                               valueField="value"
@@ -2734,11 +2911,12 @@
                                         </select> -->
                     
                                         <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                        [defaultItem]="defaultItem"
                                         [data]="relationships" 
                                         textField="key"
                                         valueField="value"
-                                        name="relationShip"
-                                        [valuePrimitive]="true"
+                                        name="relationShip" 
+                                        [valuePrimitive]="true"                                       
                                         [(ngModel)]="selectedRelationship">
                                         </kendo-dropdownlist>
                     
@@ -2746,8 +2924,8 @@
                                   </div>
                                     <div class="btn-wrap">
                                         <button class="btn btn-primary"
-                                                [ngClass]="{'disabled': (!organizationForm.valid || organizationDetails.day.value == 'DD' || organizationDetails.month.value == 'MM' || organizationDetails.year.value == 'YYYY')}"
-                                                [disabled]="(!organizationForm.valid || organizationDetails.day.value == 'DD' || organizationDetails.month.value == 'MM' || organizationDetails.year.value == 'YYYY')">Next
+                                                [ngClass]="{'disabled': (!organizationForm.valid || organizationDetails.day.value == 'DD' || organizationDetails.month.value == 'MM' || organizationDetails.year.value == 'YYYY' || selectedRelationship ==0 || selectedConstitution.value == 0)}"
+                                                [disabled]="(!organizationForm.valid || organizationDetails.day.value == 'DD' || organizationDetails.month.value == 'MM' || organizationDetails.year.value == 'YYYY' || selectedRelationship ==0 || selectedConstitution.value == 0)">Next
                                         </button>
                                     </div>
                                 </form>
@@ -2759,12 +2937,12 @@
               </div>
 
               <div class="tab-content"  [ngClass]="{'active': (activeTab == 13)}">
-                  <a  href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
+                  <a  href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(1)"></a>
                   <div class="lyt-tabs">
                       <div class="lhs">
 
                         <div  class="swiper-container form-swiper"
-                            [swiper]="lhsConfig"
+                            [swiper]="lhsConfig" #lhsSwiperS="ngxSwiper"
                             #regSlider1="ngxSwiper">
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide">
@@ -2890,12 +3068,12 @@
                   </div>
               </div>
               <div class="tab-content" [ngClass]="{'active': (activeTab == 14)}">
-                  <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
+                  <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(1)"></a>
                   <div class="lyt-tabs">
                       <div class="lhs">
 
                             <div  class="swiper-container form-swiper"
-                            [swiper]="lhsConfig"
+                            [swiper]="lhsConfig" #lhsSwiperS="ngxSwiper"
                             #corporateSlider1="ngxSwiper">
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide">
@@ -3034,6 +3212,7 @@
                                                               pattern="{{regexPattern.stdCode}}"
                                                               required/>
                                                       <label for="caStd">STD</label>
+                                                      <div class="redalert" *ngIf="RegExp(regexPattern.sameDigitStd).test(stdNumber.value)">{{errors.contactDetails.stdCode.wrong}}</div>
                                                       <div *ngIf="stdNumber.touched  && stdNumber.invalid" class="invalid-feedback">
                                                         <!-- <div *ngIf="stdNumber.errors?.required">{{errors.corporateAddress.stdNumber.required}}</div> -->
                                                         <div *ngIf="stdNumber.errors?.pattern || stdNumber.errors?.minlength">
@@ -3056,6 +3235,8 @@
                                                               data-validation-attr="residenceno" 
                                                               required/>
                                                       <label for="ca-res-no">Office number</label>
+                                                      <div class="invalid-feedback" *ngIf="RegExp(regexPattern.sameDigit).test(phoneNumber.value)">
+                                                        {{errors.corporateAddress.phoneNumber.invalid}}</div>
                                                       <div *ngIf="phoneNumber.touched  && phoneNumber.invalid" class="invalid-feedback">
                                                         <!-- <div *ngIf="phoneNumber.errors?.required">{{errors.corporateAddress.phoneNumber.required}}</div> -->
                                                         <div *ngIf="phoneNumber.errors?.pattern || phoneNumber.errors?.minlength">{{errors.corporateAddress.phoneNumber.invalid}}</div>
@@ -3072,6 +3253,7 @@
                                                             name="officeEmailId"
                                                             #ofcEmail="ngModel" maxlength="100"
                                                             fieldFill
+                                                            (ngModelChange)="onOfficialCorsEmailChange($event, ofcEmail)"
                                                             pattern="{{regexPattern.email}}"
                                                             spellcheck="false"
                                                              />                                      
@@ -3081,15 +3263,16 @@
                                                   <div *ngIf="(ofcEmail.untouched || ofcEmail.touched) && ofcEmail.invalid" class="invalid-feedback">
                                                       <!-- <div *ngIf="ofcEmail.errors?.required">{{errors.corporateAddress.ofcEmail.required}}</div> -->
                                                       <div *ngIf="ofcEmail.errors?.pattern">{{errors.corporateAddress.ofcEmail.invalid}}</div>
+                                                      <div *ngIf="ofcEmail.errors?.invalidDomain">{{errors.officialCorrespondence.email.invalidDomain}}</div>
                                                   </div>
               
                                               </div>
                                           </div>
                                           <div class="btn-wrap">
                                               <button type="submit" class="btn btn-primary" 
-                                              [ngClass]="{'disabled': (!corporateAddressForm.valid) ||
+                                              [ngClass]="{'disabled': (!corporateAddressForm.valid) || RegExp(regexPattern.sameDigit).test(phoneNumber.value) || RegExp(regexPattern.sameDigitStd).test(stdNumber.value) ||
                                               (qde.application.applicants[coApplicantIndex].corporateAddress.officeEmailId)?.length == 100 || !qde.application.applicants[coApplicantIndex].corporateAddress.cityState}"
-                                              [disabled]="!corporateAddressForm.valid || 
+                                              [disabled]="!corporateAddressForm.valid || RegExp(regexPattern.sameDigit).test(phoneNumber.value) ||
                                               (qde.application.applicants[coApplicantIndex].corporateAddress.officeEmailId)?.length == 100 || !qde.application.applicants[coApplicantIndex].corporateAddress.cityState">Next</button>
                                           </div>
                                       </form>
@@ -3102,12 +3285,12 @@
               </div>
   
               <div class="tab-content" [ngClass]="{'active': (activeTab == 15)}">
-                <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick()"></a>
+                <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(1)"></a>
 
                 <div class="lyt-tabs">
                     <div class="lhs">
                         <div  class="swiper-container form-swiper"
-                            [swiper]="lhsConfig"
+                            [swiper]="lhsConfig" #lhsSwiperS="ngxSwiper"
                             #revenueSlider1="ngxSwiper">
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide">
@@ -3141,11 +3324,15 @@
                                               fieldFill
                                               tabindex="1"
                                               spellcheck="false"
+                                              minlength="5"
+                                              (input)="checkAmountLimit($event,50000)"
                                               pattern="{{regexPattern.revenue}}"
                                               required />
                                               <label for="revenue">Receipt/Gross turnover</label>
-                                              <div *ngIf="revenue.touched && revenue.invalid" class="invalid-feedback">
-                                                  <!-- <div *ngIf="revenue.errors?.required">{{errors.revenueDetails.revenue.required}}</div> -->
+                                              <div *ngIf="(revenue.touched && revenue.dirty) && qde.application.applicants[coApplicantIndex].revenueDetails.revenue < 50000" class="invalid-feedback">
+                                                  
+                                                  <!-- <div *ngIf="revenue.errors?.required">{{errors.revenueDetails.revenue.required}}</div> -->                                                 
+                                                  <div *ngIf="isLessAmount && qde.application.applicants[coApplicantIndex]?.revenueDetails.revenue < 50000">{{errors.incomeDetails.familyIncome.minamount}}{{requirMinAmout}}</div>
                                                   <div *ngIf="revenue.errors?.pattern">{{errors.revenueDetails.revenue.invalid}}</div>
                                               </div>
           
@@ -3160,14 +3347,17 @@
                                               [(ngModel)]="qde.application.applicants[coApplicantIndex].revenueDetails.annualNetIncome"
                                               fieldFill
                                               maxlength="15"
+                                              minlength="4"
                                               tabindex="2"
                                               spellcheck="false"
                                               #annualNetincome="ngModel"
-                                              name="annualNetIncome"
-                                              pattern="{{regexPattern.revenue}}" />
+                                              name="annualNetIncome"  
+                                              (input)="checkAmountLimit($event,1000)"                                            
+                                              pattern="{{regexPattern.amount}}" />
                                               <label for="net-income">Annual Net Profit</label>
-                                              <div *ngIf="annualNetincome.touched && annualNetincome.invalid" class="invalid-feedback">
+                                              <div *ngIf="(annualNetincome.touched && annualNetincome.dirty && annualNetincome.invalid) && qde.application.applicants[coApplicantIndex].revenueDetails.annualNetIncome < 1000" class="invalid-feedback">
                                                   <!-- <div *ngIf="annualNetincome.errors?.required">{{errors.revenueDetails.annualNetincome.required}}</div> -->
+                                                  <div *ngIf="isLessAmount && qde.application.applicants[coApplicantIndex]?.revenueDetails.annualNetIncome < 1000">{{errors.incomeDetails.familyIncome.minamount}}{{requirMinAmout}}</div>
                                                   <div *ngIf="annualNetincome.errors?.pattern">{{errors.revenueDetails.annualNetincome.invalid}}</div>
                                               </div>
           
@@ -3200,8 +3390,8 @@
                                           </div> -->
                                       </div>
                                       <div class="btn-wrap">
-                                          <button type="submit" class="btn btn-primary" [ngClass]="{'disabled': (!revenueForm.valid)}"
-                                          [disabled]="!revenueForm.valid">Next</button>
+                                          <button type="submit" class="btn btn-primary" [ngClass]="{'disabled': (!revenueForm.valid || isLessAmount)}"
+                                          [disabled]="!revenueForm.valid || isLessAmount">Next</button>
                                       </div>
                                   </form>
                                   </div>
@@ -3213,10 +3403,10 @@
             </div>             
   
               <div class="tab-content" [ngClass]="{'active': (activeTab == 16)}">
-                      <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(incomeConsiderSliderNonIndividual2)"></a>
+                      <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(1)"></a>
                       <div class="lyt-tabs">
                           <div class="lhs">
-                            <div class="swiper-container form-swiper" [swiper]="lhsConfig" #incomeConsiderSliderNonIndividual1="ngxSwiper">
+                            <div class="swiper-container form-swiper" [swiper]="lhsConfig" #lhsSwiperS="ngxSwiper" #incomeConsiderSliderNonIndividual1="ngxSwiper">
                                 <div class="swiper-wrapper">
               
                                   <div class="swiper-slide">
@@ -3267,7 +3457,7 @@
 
                                     <div class="swiper-slide">
                                         <form class="bs-form" *ngIf="!isTabDisabled" autocomplete="off"
-                                                #incomeDetailsForm4="ngForm" (ngSubmit)="submitMonthlyIncomeNonIndividual(incomeDetailsForm4, incomeConsiderSliderNonIndividual2)">
+                                                #incomeDetailsForm4="ngForm" (ngSubmit)="submitMonthlyIncomeNonIndividual(incomeDetailsForm4, incomeConsiderSliderNonIndividual2, incomeConsiderSliderNonIndividual1)">
                                             <div class="form-wrap">
                                                 <div class="form-group inr">
                                                     <input [readonly]="isReadOnly" type="text" class="form-control" 
@@ -3275,26 +3465,33 @@
                                                     [(ngModel)]="qde.application.applicants[coApplicantIndex].incomeDetails.monthlyIncome"
                                                     #monthlyIncome2="ngModel"
                                                     fieldFill
+                                                    maxlength="10"
                                                     tabindex="1"
                                                     spellcheck="false"
+                                                    minlength="4"
+                                                    (input)="checkAmountLimit($event,1000)"
                                                     pattern="{{regexPattern.amount}}"
                                                     name="monthlyIncome"
+                                                    (input)="checkAmountLimitMonthlyIncome($event)"
                                                     required/>
                                                     <label for="monthlyIncome2">Monthly income</label>
                                                     <span class="addon">
                                                         <span class="icon icon-inr"></span>
                                                     </span>
                                                     <span class="in-word"></span>
-
+                                                    <div  class="invalid-feedback" *ngIf="isNumberLessThan1k">{{errors.incomeDetails.monthlyIncome.minamount}}</div>
+                                                    <div  class="invalid-feedback" *ngIf="isNumberMoreThan100cr">{{errors.incomeDetails.monthlyIncome.maxamount}}</div>
                                                     <div *ngIf="monthlyIncome2.touched && monthlyIncome2.invalid" class="invalid-feedback">
-                                                    <!-- <div *ngIf="monthlyIncome2.errors?.required">{{errors.incomeDetails.monthlyIncome.required}}</div> -->
-                                                    <div *ngIf="monthlyIncome2.errors?.pattern">{{errors.incomeDetails.monthlyIncome.invalid}}</div>
+                                                        <div *ngIf="isLessAmount">{{errors.incomeDetails.familyIncome.minamount}}{{requirMinAmout}}</div>
+                                                        <!-- <div *ngIf="monthlyIncome2.errors?.required">{{errors.incomeDetails.monthlyIncome.required}}</div> -->
+                                                        <div *ngIf="monthlyIncome2.errors?.pattern">{{errors.incomeDetails.monthlyIncome.invalid}}</div>
 
                                                 </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <span class="control-title">Assessment methodology</span>
                                                     <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                                    [defaultItem] = "defaultItem"
                                                     [data]="assessmentMethodology" 
                                                     tabindex="2"
                                                     textField="key"
@@ -3307,7 +3504,7 @@
                                             </div>
                                             </div>
                                             <div class="btn-wrap">
-                                                <button type="submit" class="btn btn-primary" [disabled]="!incomeDetailsForm4.valid || isTBMLoggedIn" [ngClass]="{'disabled': (!incomeDetailsForm4.valid || isTBMLoggedIn)}">Save</button>
+                                                <button type="submit" class="btn btn-primary" [disabled]="!incomeDetailsForm4.valid || isTBMLoggedIn  || isNumberLessThan1k || isNumberMoreThan100cr || selectedAssesmentMethodology.value == 0" [ngClass]="{'disabled': (!incomeDetailsForm4.valid || isTBMLoggedIn  || isNumberLessThan1k || isNumberMoreThan100cr || selectedAssesmentMethodology.value == 0)}">Save</button>
                                             </div>
                                         </form>
                                     </div>
@@ -3340,7 +3537,13 @@
                     <div class="duplicate-table-data-wrapper">
                         <div class="duplicate-table-data" *ngFor="let d of duplicates;let i=index;">
                             <div class="duplicate-table-col">{{d['applicantId']}}</div>
-                            <div class="duplicate-table-col">{{d['personalDetails']['firstName']}}{{d['personalDetails']['middleName'] ? " "+d['personalDetails']['middleName'] : ""}}{{" "+d['personalDetails']['lastName']}}</div>
+                            <div class="duplicate-table-col" *ngIf ="qde.application.applicants[coApplicantIndex].isIndividual">
+                                {{d['personalDetails']['firstName']}}{{d['personalDetails']['middleName'] ? " "+d['personalDetails']['middleName'] : ""}}{{" "+d['personalDetails']['lastName']}}
+                                
+                            </div>
+                            <div class="duplicate-table-col" *ngIf ="!qde.application.applicants[coApplicantIndex].isIndividual">
+                                    {{d['organizationDetails']['nameOfOrganization']}}
+                                </div>
                             <div class="duplicate-table-col">
                                 <input type="radio" name="selectDuplicateApplicant" [value]="d['applicantId']" ngModel class="duplicate-radio" />
                             </div>
@@ -3382,13 +3585,13 @@
         </div>
     </div>
     <div class="overlay" [ngClass]="{'active': isErrorModal}"></div>
-    <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isErrorModal}">
+    <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isErrorModal}" style="text-align:center;">
         <!-- <a class="modal-close" href="javascript:void(0);" (click)="onBackOTP()"><span class="icon icon-close"></span></a> -->
         <a class="modal-close" (click)="onCrossModal()"><span class="icon icon-close"></span></a>
         <div class="modal-body">
         <h1>{{errorMessage}}</h1>
         <div class="btn-wrap">
-            <button class="btn btn-border" (click)="isErrorModal = false">Cancel</button>
+            <button class="btn btn-border" (click)="isErrorModal = false">OK</button>
         </div>
         </div>
     </div>
@@ -3401,8 +3604,8 @@
         <h1 class="center">Are You Sure to Change Applicant Pan Status!</h1>
         <h2 class="center">if you click yes All Application Data's are Reset</h2>
         <div class="btn-wrap">
-            <button class="btn btn-border" (click)="resetIndividualData('yes',panSlider2)">Yes</button>
-            <button class="btn btn-border" (click)="resetIndividualData('no',panSlider2)">No</button>
+            <button class="btn btn-border" (click)="resetIndividualData('yes',panSlider2,panSlider1)">Yes</button>
+            <button class="btn btn-border" (click)="resetIndividualData('no',panSlider2,panSlider1)">No</button>
         </div>
         </div>    
     </div>

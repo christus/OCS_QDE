@@ -68,7 +68,7 @@ export class ReassignComponent implements OnInit {
     this.filteredSource = this.source1.slice();
     this.fromAssignId = null;
     this.toAssignId = null;
-       
+
 
   }
 
@@ -79,10 +79,12 @@ export class ReassignComponent implements OnInit {
       this.allClssAreas = res["ProcessVariables"]["townNames"] ? res["ProcessVariables"]["townNames"] : [];
       console.log("CLSSArea: ", this.allClssAreas);
     }
-  }, error => {
-    this.isErrorModal = true;
-    this.errorMessage = "Something went wrong, please try again later.";
-  });
+  }
+  // , error => {
+  //   this.isErrorModal = true;
+  //   this.errorMessage = "Something went wrong, please try again later.";
+  // }
+);
 }
 
 getApplications(userId, from) {
@@ -102,11 +104,11 @@ getApplications(userId, from) {
        if (this.currentPage == this.totalPages) {
          this.enableLoadMore = false;
        }
-  });  
+  });
 } catch (ex) {
       this.isErrorModal = true;
       this.errorMessage = ex.message;
-       
+
       } finally {
         this.ngxService.stop();
       }
@@ -170,7 +172,7 @@ getUserList(data){
                           this.toAssignId = Number(this.selectedAssign);
                           this.validToAssignee = false;
                         }
-                        
+
                       }
             } else {
               if (fromId == 1) {
@@ -178,7 +180,7 @@ getUserList(data){
               }
             }
             console.log("fassignee change value ", event);
-           
+
       } else {
         this.isErrorModal = true;
         if (fromId == 1) {
@@ -192,15 +194,15 @@ getUserList(data){
           this.validToAssignee = true;
         }
       }
-      
+
     } catch (ex) {
           this.isErrorModal = true;
           this.errorMessage = ex.message;
-           
+
           } finally {
             this.ngxService.stop();
           }
-    
+
   }
 
 
@@ -217,7 +219,7 @@ getUserList(data){
           this.applications.push(this.applictionList[index]["applicationId"]);
           console.log("aray lengh ", arrarLength , index, this.applictionList[index]["applicationId"] ,this.applications );
         }
-      } 
+      }
       // else {
       //   this.isErrorModal = true;
       //   this.errorMessage = "Select Any From Assignee and Select Any Application";
@@ -298,11 +300,11 @@ getUserList(data){
                   }
     });
   }
- 
+
 } catch (ex) {
       this.isErrorModal = true;
       this.errorMessage = ex.message;
-       
+
       } finally {
         this.ngxService.stop();
       }

@@ -36,55 +36,35 @@ export class UtilService {
     localStorage.removeItem('token');
     localStorage.removeItem('roles');
     localStorage.removeItem('userId')
-    if(this.isMobile) {
-      this.navigateToLoginWithMpin();
-      return;
-    }else {
-      this.navigateToLogin();
-    }   
+    // if(this.isMobile) {
+    //   this.navigateToLoginWithMpin();
+    //   return;
+    // }else {
+    //   this.navigateToLogin();
+    // }
+    
+    this.navigateToLogin();
   }
 
   navigateToLogin() {
-    this.router.navigate(['/login']);
-  }
 
-  navigateToLoginWithMpin() {
-    
-   let isFirstTime = localStorage.getItem("firstTime");
+    let showLoginPage = true;
 
-   console.log("isFirstTime", isFirstTime);
+    const currentHref = window.location.href;
 
-   if(isFirstTime == null) {
+    const arrUrl = ["/static/", "/payments/thankpayment"];
 
-    let data = {
-      'email': environment.userName,
-      'password': environment.password,
-      'longTimeToken': true
-    }
-
-    console.log("data", isFirstTime);
-  
-    this.qdehttpService.longLiveAuthenticate(data).subscribe(
-      res => {
-        console.log("response");
-        console.log("login-response: ",res);
-
-        localStorage.setItem("token", res["token"] ? res["token"] : "");
-
-        this.router.navigate(['/setPin']);
-
-      },
-      error => {
-        console.log("error-response");
-
-        console.log(error);
+    arrUrl.forEach(function(url) {
+      if(currentHref.includes(url)){
+        showLoginPage = false;
+        console.log("showLoginPage....", showLoginPage);
+        return;
       }
-    );
+    });
 
-    return;
-   }
-
-    this.router.navigate(['/loginWithPin']);
+    if(showLoginPage) {
+      this.router.navigate(['/login']);
+    }
   }
   
 }

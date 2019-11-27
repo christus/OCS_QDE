@@ -61,6 +61,7 @@ export const errors: any = {
     stdCode: {
       required: "Std Code is mandatory",
       invalid: "Invalid STD code",
+      wrong: "Please provide valid Std code"
       // minlength: "STD is not valid"
     },
     alternateResidenceNumberStd1:{
@@ -72,14 +73,17 @@ export const errors: any = {
       // minlength: "Residence number is not valid",
       invalid: "Invalid Residence number/Alphabets and Special Characters not allowed",
       sameNumber: "Residence numbers are same. Please use different number",
-      sameNumberMobile: "Numbers are same. Please use different number"
+      sameNumberMobile: "Numbers are same. Please use different number",
+      wrong: "Please provide valid residence number"
     },
     alternateResidenceNumber1:{
       invalid:"Invalid Residence number/Alphabets and Special Characters not allowed",
+      wrong: "Please provide valid residence number",
       // minlength: "Residence number is not valid"
     },
     alternateResidenceNumber2:{
       invalid:"Invalid Residence number/Alphabets and Special Characters not allowed",
+      wrong: "Please provide valid residence number",
       // minlength: "Residence number is not valid"
     }
   },
@@ -112,7 +116,9 @@ export const errors: any = {
     },
     salaryAmount: {
       required: "Salary Amount is mandatory",
-      invalid: "Invalid Amount / Alphabets and Special Characters not allowed"
+      invalid: "Invalid Amount / Alphabets and Special Characters not allowed",
+      minamount: "Amount should be greater than or equal to Rs.",
+      maxamount: "Amount should be less than or equal to Rs.",
     }
   },
 
@@ -191,7 +197,9 @@ export const errors: any = {
   incomeDetails:{
     familyIncome:{
       required: "Annual family Income is mandatory",
-      invalid:"Invalid Family Income / Alphabets and Special characters are not allowed"
+      invalid:"Invalid Family Income / Alphabets and Special characters are not allowed",
+      minamount: "Amount should be greater than or equal to Rs.",
+      maxamount: "Amount should be less than or equal to Rs.",
     },
     pensionIncome:{
       required: "Annual Pension is mandatory",
@@ -203,7 +211,9 @@ export const errors: any = {
     },
     monthlyIncome:{
       required:"Monthly Income is mandatory",
-      invalid:"Invalid Monthly Income / Alphabets and Special characters are not allowed"
+      invalid:"Invalid Monthly Income / Alphabets and Special characters are not allowed",
+      minamount: "Amount should be greater than or equal to Rs.1000",
+      maxamount: "Amount should be less than or equal to Rs.1000000000",
     }
   },
   organizationDetails: {
@@ -264,11 +274,13 @@ export const errors: any = {
   revenueDetails: {
     revenue:{
       required: "Receipt/Gross turnover is mandatory",
-      invalid: "Receipt/Gross turnover is not valid"
+      invalid: "Receipt/Gross turnover is not valid",
+      minamount: "Amount should be greater than or equal to Rs.50000",
     },
     annualNetincome:{
       required:"Annual Net Profit is mandatory",
-      invalid:"Invalid Annual Net Profit"
+      invalid:"Invalid Annual Net Profit",
+      minamount: "Amount should be greater than or equal to Rs.1000",
     },
     grossTurnover:{
       required: "Gross Turnover is mandatory",

@@ -59,20 +59,9 @@ export class ProceedToReviewFormComponent implements OnInit {
 
   ngOnInit() {
 
-    this.qdehttpService.duplicateLogin().subscribe(
-      res => {
-        console.log(res);
-        localStorage.setItem("token", res["token"] ? res["token"] : "");
-        this.qdehttpService.getQdeData(parseInt(this.applicantId));
-
-        // this.commonDataService.changeMenuBarShown(false);
-        // this.commonDataService.changeViewFormVisible(false);
-        // this.commonDataService.changeLogoutVisible(false);
-      },
-      error => {
-        console.log(error);
-      }
-    );
+    this.qdehttpService.createsession(this.applicationId, ()=>{
+      this.qdehttpService.getQdeData(parseInt(this.applicantId));
+    });
   }
 
 }

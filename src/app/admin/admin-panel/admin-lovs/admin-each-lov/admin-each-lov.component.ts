@@ -26,6 +26,7 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
   errorMsg: string;
   isLoanPurpose:boolean = false;
   isFinancialApplicant: boolean = false;
+  isMale: boolean;
 
   @ViewChildren('lovsElements') lovsElements: QueryList<ElementRef>;
 
@@ -39,6 +40,7 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
       this.isDocumentCategory = this.tableName == 'document_category' ? true: false;
       this.isLoanPurpose = this.tableName == 'loan_purpose' ? true : false;
       this.isFinancialApplicant = this.tableName == 'profile' ? true : false;
+      this.isMale = this.tableName == 'profile' ? true : false;
     });
 
     let response = this.route.snapshot.data['eachLovs']['ProcessVariables'];
@@ -64,7 +66,8 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
             female: v['female'],
             tableName: this.tableName,
             isRequired: v['isRequired'],
-            reqBoolean : v['reqBoolean']
+            reqBoolean : v['reqBoolean'],
+            isMale : v['isMale']
           }
         });
         for(var i=0; i<this.lovs.length;i++){
@@ -130,7 +133,8 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
               female: v['female'],
               tableName: this.tableName,
               isRequired: v['isRequired'],
-              reqBoolean : v['reqBoolean']
+              reqBoolean : v['reqBoolean'],
+              isMale : v['isMale']
             }
           });
           this.lastKey = (parseInt(this.perPage)*(parseInt(this.totalPages)-1))+this.tempLovs.length+1;
@@ -195,7 +199,8 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
               stateName: v['stateName'],
               zone: v['zone'],
               zoneName: v['zoneName'],
-              reqBoolean : v['reqBoolean']
+              reqBoolean : v['reqBoolean'],
+              isMale : v['isMale']
             }
           });
           for(var i=0; i<this.lovs.length;i++){
@@ -244,6 +249,10 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
     this.lovs[index].reqBoolean = event.target.checked;
   }
 
+  changeIsMale(event, index){
+    this.lovs[index].isMale = event.target.checked;
+  }
+
   refresh() {
     this.searchKey="";
     this.qdeHttp.adminLoadMoreLovs(this.tableName).subscribe(res => {
@@ -268,7 +277,8 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
               female: v['female'],
               tableName: this.tableName,
               isRequired: v['isRequired'],
-              reqBoolean : v['reqBoolean']
+              reqBoolean : v['reqBoolean'],
+              isMale : v['isMale']
             }
           });
           for(var i=0; i<this.lovs.length;i++){
@@ -306,7 +316,8 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
               female: v['female'],
               tableName: this.tableName,
               isRequired: v['isRequired'],
-              reqBoolean : v['reqBoolean']
+              reqBoolean : v['reqBoolean'],
+              isMale : v['isMale']
             }
           });
           this.key=[];

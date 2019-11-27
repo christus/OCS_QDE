@@ -16,6 +16,7 @@ import { CommonDataService } from 'src/app/services/common-data.service';
 import { Subscription } from 'rxjs';
 
 import { screenPages } from '../../app.constants';
+import { environment } from 'src/environments/environment.prod';
 
 interface Item {
   key: string,
@@ -47,8 +48,8 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
          amount: {
            required: "Loan Amount is Mandatory",
            invalid: "Invalid Loan Amount / Alphabets and special characters not allowed",
-           minamount: "Amount should be greater than or equal to Rs.50000",
-           maxamount: "Amount should be less than or equal to Rs.1000000000",
+           minamount: "Amount should be greater than or equal to Rs.",
+           maxamount: "Amount should be less than or equal to Rs.",
          },
          tenure: {
            required: "Loan Tenure is Mandatory",
@@ -64,7 +65,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
           propertyArea:{
             required:"Property Area is Mandatory",
             invalid:"Property Area is not valid",
-            maxArea:"Property Area should not be more than 1 Lakh Sq foot"
+            maxArea:"Property Area should not be more than 10,000 Sq foot"
           },
           pinCode: {
             required: "Property Pincode is Mandatory",
@@ -88,7 +89,9 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
        existingLoans: {
            monthlyEmi: {
              required: "Monthly EMI is mandatory",
-             invalid: "Monthly EMI is not valid"
+             invalid: "Monthly EMI is not valid",
+             minamount: "Amount should be greater than or equal to Rs.",
+             maxamount: "Amount should be less than or equal to Rs."
            }
        },
      }
@@ -119,7 +122,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // value: number = 0;
 
-  propertyNoSwitchTab = 2; // tabswitch
+  // propertyNoSwitchTab = 2; // tabswitch
 
   minValue: number = 1;
   options: Options = {
@@ -198,7 +201,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
   titles: Array<any>;
   maritals: Array<any>;
   relationships: Array<any>;
-  loanpurposes: Array<any>=[];
+  loanpurposes: Array<Item>;
   categories: Array<any>;
   genders: Array<any>;
   constitutions: Array<any>;
@@ -209,11 +212,11 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   loanType: Array<any>;
   isPropertyIdentified = false;
-  selectedLoanPurpose: any;
+  selectedLoanPurpose:  any;
   selectedLoanType: any;
 
-  propertyTypes: Array<any>;
-  selectedPropertyType: string;
+  propertyTypes: Array<Item>;
+  selectedPropertyType: any;
   propertyClssLabel: string;
   propertyClssValue: string;
   propertyAreaValue: number;
@@ -229,7 +232,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
   cityState: string;
 
   selectedLoanProvider: Item;
-  loanProviderList: Array<any>;
+  loanProviderList: Array<Item>;
 
   liveLoan = 0;
   monthlyEmiValue: string;
@@ -249,8 +252,9 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   loanPinCodeModal:boolean = false;
 
-  allApplicantsItem: Array<Item> = [];
-  selectedApplicant: Item = {key: '', value: ''};
+  allApplicantsItem: Array<Item>;
+  // selectedApplicant: Item = {key: '', value: ''};
+  selectedApplicant: Item;
   selectedApplicantName: string;
   selectedApplicantIndex: number = 0;
 
@@ -260,21 +264,37 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
   isNumberLessThan50k: boolean;
   isNumberMoreThan100cr: boolean;
   isAreaLessThan100k: boolean;
+  isNumberMoreThan10lk: boolean;
+  isNumberLessThan1k: boolean;
+
+  isMinAmount: boolean;
+  requirMinAmout="";
+  isMaxAmount: boolean;
+  requirMaxAmout="";
 
   fragmentSub: Subscription;
   tabName: string;
   page: number;
 
-  // Only RHS Sliders
+  // RHS Sliders
   @ViewChildren('swiperS') swiperS$: QueryList<Swiper>;
+
+   // LHS Sliders
+   @ViewChildren('lhsSwiperS') lhsSwiperS$: QueryList<Swiper>;
 
   swiperSliders: Array<any>;
   swiperSlidersSub: Subscription;
   auditTrialApiSub: Subscription;
 
+  lhsSwiperSliders: Array<Swiper> = [];
+  swiperSlidersSub2: Subscription;
+
+
   isErrorModal:boolean;
   errorMessage:string;
   tempClssArea: string;
+
+  public defaultItem = environment.defaultItem;
 
   constructor(
     private renderer: Renderer2,
@@ -321,7 +341,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     });
 
- 
+
     this.cds.isTBMLoggedIn.subscribe(val => {
       this.isTBMLoggedIn = val;
     });
@@ -341,13 +361,13 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
       console.log('LOVS: ', lov);
       this.titles = lov.LOVS.applicant_title;
 
-      // this.loanpurposes = lov.LOVS.loan_purpose;
+      this.loanpurposes = lov.LOVS.loan_purpose;
       this.loanType = lov.LOVS.loan_type;
       this.propertyTypes = lov.LOVS.property_type;
 
       this.loanProviderList = lov.LOVS.loan_providers;
     }
-    
+
 
 
     // this.route.fragment.subscribe(fragment => {
@@ -365,16 +385,20 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.fragmentSub = this.route.queryParams.subscribe(val => {
 
-      if(val['tabName'] && val['tabName'] != '') {
-        this.tabName = this.fragments.includes(val['tabName']) ? val['tabName'].toString(): this.fragments[0];
+      if(val['tabName']) {
+        this.tabName = this.fragments.includes(val['tabName']) ? val['tabName'].toString() : this.fragments[0];
         this.activeTab = this.fragments.findIndex(v => v == val['tabName']);
-
       }
 
-      if(val['page'] && val['page'] != '') {
+      if(val['page']) {
         this.page = (val && val['page'] != null && parseInt(val['page']) != NaN && parseInt(val['page']) >= 1) ? parseInt(val['page']): 1;
       }
 
+
+      if(this.tabName && this.page && this.swiperSliders && this.swiperSliders.length > 0 && this.lhsSwiperSliders && this.lhsSwiperSliders.length > 0) {
+        this.swiperSliders[this.activeTab].setIndex(this.page-1);
+        this.lhsSwiperSliders[this.activeTab].setIndex(this.page-1);
+      }
     });
 
     this.route.params.subscribe(params => {
@@ -391,7 +415,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
           this.cds.enableTabsIfStatus1(result.application.status);
 
           console.log("loanType: ", this.loanType);
-          
+
           this.qde = result;
           this.cds.setStatus(result.application.status);
           this.qdeService.setQde(result);
@@ -404,18 +428,18 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
          if(result.application.loanDetails &&
           result.application.loanDetails.loanAmount &&
           result.application.loanDetails.loanAmount.loanType) {
-            
+
             this.isLoanProductPage = false;
-            this.cds.changeMenuBarShown(true);            
+            this.cds.changeMenuBarShown(true);
           } else {
             this.isLoanProductPage = true;
             this.cds.changeMenuBarShown(false);
           }
-          
+
           if(this.qde.application.auditTrailDetails.screenPage == screenPages['loanDetails']) {
-            this.goToExactPageAndTab(this.qde.application.auditTrailDetails.tabPage, this.qde.application.auditTrailDetails.pageNumber);
+            this.goToExactPageAndTab(this.fragments.findIndex(v => v == this.qde.application.auditTrailDetails.tabPage), this.qde.application.auditTrailDetails.pageNumber);
           } else {
-            this.goToExactPageAndTab(this.fragments[0], 1);
+            this.goToExactPageAndTab(parseInt(this.fragments[0]), 1);
           }
 
           // All hardcoded value need to removed
@@ -427,12 +451,18 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
           //   result.application.loanDetails.loanAmount.loanPurpose ||
           //   this.loanpurposes[0].value;
           if(result.application.loanDetails.loanAmount.loanType) {
+            this.selectedLoanPurpose =
+            result.application.loanDetails.loanAmount.loanPurpose;
+            // ||
+            // this.defaultItem.value.toString();
+            // this.loanpurposes[0].value;
             this.setLoanPurposes(result.application.loanDetails.loanAmount.loanType+"", result.application.loanDetails.loanAmount.loanPurpose);
           } else {
-            this.loanpurposes = [{key: '', value: ''}];
-            this.selectedLoanPurpose = this.loanpurposes[0];
+            // this.loanpurposes = [{key: '', value: ''}];
+            this.selectedLoanPurpose = this.defaultItem;
+            // this.loanpurposes[0]
           }
-          
+
 
           if (!result.application.loanDetails.propertyType) {
             result.application.loanDetails.propertyType = {}; //This line need to be removed
@@ -440,7 +470,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
           this.selectedPropertyType =
             result.application.loanDetails.propertyType.propertyType ||
-            this.propertyTypes[0].value;
+            this.defaultItem.value;
 
           this.isPropertyIdentified =
             result.application.loanDetails.propertyType.propertyIdentified ||
@@ -473,8 +503,8 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
             result.application.loanDetails.existingLoans = {}; //This line need to be removed
           }
 
-          this.selectedLoanProvider = result.application.applicants[0].existingLoans.loanProvider != '' ? this.loanProviderList.find(v => v.value == result.application.applicants[0].existingLoans.loanProvider) : this.loanProviderList[0];
-          
+          this.selectedLoanProvider = result.application.applicants[0].existingLoans.loanProvider != '' ? this.loanProviderList.find(v => v.value == result.application.applicants[0].existingLoans.loanProvider) : this.defaultItem;
+          // this.loanProviderList[0]
           this.liveLoan = result.application.applicants[0].existingLoans ? result.application.applicants[0].existingLoans.liveLoan ? result.application.applicants[0].existingLoans.liveLoan :0 :0;
 
           this.monthlyEmiValue = result.application.applicants[0].existingLoans ? result.application.applicants[0].existingLoans.monthlyEmi ? result.application.applicants[0].existingLoans.monthlyEmi+'' :'' :'';
@@ -486,13 +516,13 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
           // this.qdeService.setQde(this.qde);
           this.valuechange(this.qde.application.tenure, 0);
 
-          
+
 
 
           this.qde.application.loanDetails.property.zipcodeId = result.application.loanDetails.property.zipcodeId;
           this.qde.application.loanDetails.property.stateId = result.application.loanDetails.property.stateId;
           this.qde.application.loanDetails.property.cityId = result.application.loanDetails.property.cityId;
-  
+
           this.qde.application.loanDetails.property.city = result.application.loanDetails.property.city;
           this.qde.application.loanDetails.property.state = result.application.loanDetails.property.state;
           this.qde.application.loanDetails.property.zipcode = result.application.loanDetails.property.zipcode;
@@ -513,14 +543,18 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
               return {key: val.organizationDetails.nameOfOrganization+" "+val.personalDetails.lastName, value: val.applicantId};
             }
           });
-
-          this.selectedApplicant = this.allApplicantsItem[0];
+          // this.allApplicantsItem[0];
+          this.selectedApplicant = this.defaultItem;
+          if (this.selectedApplicant.value !=0){
           this.selectedApplicantIndex = this.qde.application.applicants.findIndex(v => v.applicantId == this.selectedApplicant.value);
           this.selectedApplicantName = this.qde.application.applicants[this.selectedApplicantIndex].personalDetails ? `${this.qde.application.applicants[this.selectedApplicantIndex].personalDetails['firstName']} ${this.qde.application.applicants[this.selectedApplicantIndex].personalDetails['lastName']}`: '';
-        }, error => {
-          this.isErrorModal = true;
-          this.errorMessage = "Something went wrong, please try again later.";
-        });
+          }
+        }
+        // , error => {
+        //   this.isErrorModal = true;
+        //   this.errorMessage = "Something went wrong, please try again later.";
+        // }
+      );
       } else {
         this.qde = this.qdeService.defaultValue;
       }
@@ -541,7 +575,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
-    
+
   }
 
   getApplicantTitle (salutation:string) {
@@ -556,20 +590,20 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
     return titles[0];
   }
 
-  changePropertyIdentified(swiperInstance: Swiper, value: boolean) {
+  changePropertyIdentified(swiperInstance1: Swiper, swiperInstance2: Swiper, value: boolean) {
 
     const currentPropertyStatus = this.qde.application.loanDetails.propertyType.propertyIdentified;
     if(value) {
 
       // If user changed to "NO"
       if(!currentPropertyStatus) {
-       
+
 
         this.qde.application.loanDetails.propertyType.propertyIdentified = false;
         this.qde.application.loanDetails.propertyType.propertyType = "";
         this.qde.application.loanDetails.propertyType.propertyClss = "";
         this.qde.application.loanDetails.propertyType.propertyArea = null;
-        
+
 
         this.qde.application.loanDetails.property.zipcodeId = null;
         this.qde.application.loanDetails.property.zipcode = null;
@@ -581,7 +615,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
         this.qde.application.loanDetails.property.state = "";
 
 
-        this.selectedPropertyType = "";
+        this.selectedPropertyType = this.defaultItem.value;
         this.propertyClssValue = "";
         this.propertyAreaValue = null;
 
@@ -614,29 +648,32 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
                   //this.goToNextSlide(swiperInstance);
                 }
-              }, error => {
-                this.isErrorModal = true;
-                this.errorMessage = "Something went wrong, please again later.";
-              });
+              }
+              // , error => {
+              //   this.isErrorModal = true;
+              //   this.errorMessage = "Something went wrong, please again later.";
+              // }
+            );
 
-              this.goToNextSlide(swiperInstance);
+              this.goToNextSlide(swiperInstance1, swiperInstance2);
             } else {
               // Throw Invalid Pan Error
             }
-          }, error => {
-            this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please again later.";
           }
+          // , error => {
+          //   this.isErrorModal = true;
+          //   this.errorMessage = "Something went wrong, please again later.";
+          // }
         );
 
       }else {
-        this.goToNextSlide(swiperInstance);
+        this.goToNextSlide(swiperInstance1, swiperInstance2);
       }
 
     } else {
       //switching to existing loan
        this.qde.application.loanDetails.propertyType.propertyIdentified = value;
-       
+
        this.qdeHttp
        .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
        .subscribe(
@@ -652,23 +689,26 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
                  this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                  this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
 
-                
-               }
-             }, error => {
-               this.isErrorModal = true;
-               this.errorMessage = "Something went wrong, please again later.";
-             });
 
-             this.tabSwitch(this.propertyNoSwitchTab);
+               }
+             }
+             // , error => {
+             //   this.isErrorModal = true;
+             //   this.errorMessage = "Something went wrong, please again later.";
+             // }
+           );
+             this.goToExactPageAndTab(2, 1);
+            //  this.tabSwitch(this.propertyNoSwitchTab);
            } else {
              // Throw Invalid Pan Error
            }
-         }, error => {
-           this.isErrorModal = true;
-           this.errorMessage = "Something went wrong, please again later.";
          }
+         // , error => {
+         //   this.isErrorModal = true;
+         //   this.errorMessage = "Something went wrong, please again later.";
+         // }
        );
-       
+
 
       // If user changed to "YES"
       if(currentPropertyStatus) {
@@ -679,7 +719,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
       //   this.router.navigate(['/references', this.qde.application.applicationId])
       // } else {
       //   this.tabSwitch(this.propertyNoSwitchTab);
-       
+
       // }
     }
   }
@@ -688,13 +728,18 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
    * Use to sync between lhs and rhs sliders
    * @param swiperInstance RHS Swiper Instance
    */
-  goToNextSlide(swiperInstance: Swiper, form?: NgForm) {
+  goToNextSlide(swiperInstance1: Swiper, swiperInstance2: Swiper) {
     // if (form && !form.valid) {
     //   return;
     // }
     // Create ngModel of radio button in future
-    swiperInstance.nextSlide();
+    swiperInstance1.nextSlide();
+
+    if(swiperInstance2)
+      swiperInstance2.nextSlide();
+
     this.page++;
+
     this.router.navigate([], {queryParams: { tabName: this.tabName, page: this.page }});
   }
 
@@ -710,9 +755,12 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
    * Use to sync between lhs and rhs sliders
    * @param swiperInstance RHS Swiper Instance
    */
-  goToPrevSlide(swiperInstance: Swiper) {
+  goToPrevSlide(swiperInstance1: Swiper, swiperInstance2: Swiper) {
     // Create ngModel of radio button in future
-    swiperInstance.prevSlide();
+    swiperInstance1.prevSlide();
+
+    if(swiperInstance2)
+      swiperInstance2.prevSlide();
     this.page--;
     this.router.navigate([], {queryParams: { tabName: this.tabName, page: this.page }});
   }
@@ -740,35 +788,48 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
   //   }
   // }
 
-  tabSwitch(tabIndex ?: number, fromQde ?: boolean) {
+  // tabSwitch(tabIndex ?: number, fromQde ?: boolean) {
 
-    let modifiedTabIndex = tabIndex;
-    // Check for invalid tabIndex
-    if(modifiedTabIndex < this.fragments.length) {
+  //   let modifiedTabIndex = tabIndex;
+  //   // Check for invalid tabIndex
+  //   if(modifiedTabIndex < this.fragments.length) {
 
-      let t = (fromQde) ? (modifiedTabIndex == 2) ? 1 : this.page: 1;
+  //     let t = (fromQde) ? (modifiedTabIndex == 2) ? 1 : this.page: 1;
 
-      if(this.swiperSliders && this.swiperSliders.length > 0) {
-        this.swiperSliders[modifiedTabIndex].setIndex(t-1);
-      }
+  //     if(this.swiperSliders && this.swiperSliders.length > 0) {
+  //       this.swiperSliders[modifiedTabIndex].setIndex(t-1);
+  //     }
 
-      // It should not allow to go to any other tabs if applicationId is not present
-      // if(this.applicantIndex != null && this.qde.application.applicationId != null && this.qde.application.applicationId != '') {
-      this.router.navigate([], {queryParams: { tabName: this.fragments[modifiedTabIndex], page: t }});
-      // }
+  //     // It should not allow to go to any other tabs if applicationId is not present
+  //     // if(this.applicantIndex != null && this.qde.application.applicationId != null && this.qde.application.applicationId != '') {
+  //     this.router.navigate([], {queryParams: { tabName: this.fragments[modifiedTabIndex], page: t }});
+  //     // }
 
-      // this.router.navigate([], { fragment: this.fragments[tabIndex]});
+  //     // this.router.navigate([], { fragment: this.fragments[tabIndex]});
+  //   }
+  // }
+
+  onBackButtonClick(goToSlideNumber: number = 1) {
+    // if (this.activeTab > 0) {
+    //   if (swiperInstance != null && swiperInstance.getIndex() > 0) {
+    //     // Go to Previous Slide
+    //     this.goToPrevSlide(swiperInstance);
+    //   } else {
+    //     // Go To Previous Tab
+    //     this.tabSwitch(this.activeTab - 1);
+    //   }
+    // }
+    if(this.page <= 1) {
+      // Switch Tabs
+      this.router.navigate([], {queryParams: {tabName: this.fragments[this.activeTab-1], page: goToSlideNumber}});
     }
-  }
-
-  onBackButtonClick(swiperInstance?: Swiper) {
-    if (this.activeTab > 0) {
-      if (swiperInstance != null && swiperInstance.getIndex() > 0) {
-        // Go to Previous Slide
-        this.goToPrevSlide(swiperInstance);
-      } else {
-        // Go To Previous Tab
-        this.tabSwitch(this.activeTab - 1);
+    else {
+      // go to previous slide
+      if(this.tabName == this.fragments[2] && this.page == 4 && (this.selectedLoanPurpose != "16" || this.selectedLoanPurpose != "17")){
+        this.router.navigate([], {queryParams: {tabName: this.tabName, page: this.page-2}});
+      }
+      else{
+        this.router.navigate([], {queryParams: {tabName: this.tabName, page: this.page-1}});
       }
     }
   }
@@ -791,30 +852,28 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   submitLoanAmount(form: NgForm) {
     if(this.isTBMLoggedIn) {
-        this.tabSwitch(1);
+        this.goToExactPageAndTab(1,1);
     } else {
       if (form && !form.valid) {
         return;
       }
 
-      
+
       console.log("selectedLoanPurpose: ", this.selectedLoanPurpose);
-      if(this.selectedLoanPurpose.propIdentified){
-        this.disableNo = 1;
-      }else{
-        this.disableNo=null;
-      }
+        if(this.selectedLoanPurpose!=""){
+          this.setLoanPurposes(this.selectedLoanType.value,this.selectedLoanPurpose);
+        }
 
       this.qde.application.loanDetails.loanAmount = {
         amountRequired: parseInt(this.getNumberWithoutCommaFormat(form.value.amountRequired)),
-        loanPurpose: this.selectedLoanPurpose.value,
+        loanPurpose: this.selectedLoanPurpose,
         loanTenure: form.value.loanTenure,
         loanType: parseInt(this.selectedLoanType.value+"")
       };
-      
+
       if(this.qde.application.loanDetails.loanAmount.loanTenure == 0){
         this.tenureYears = true;
-        return; 
+        return;
       }else{
         this.tenureYears = false;
       }
@@ -827,6 +886,9 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
             if (response["ProcessVariables"]["status"]) {
               let result = response['ProcessVariables']['response'];
               // console.log(this.qde.application.references.referenceOne.relationShip);
+              if(!this.tabName){
+                this.tabName = "loan";
+              }
               this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['loanDetails']).subscribe(auditRes => {
                 if(auditRes['ProcessVariables']['status'] == true) {
                   this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
@@ -834,23 +896,26 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
                   this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                   this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
                 }
-              }, error => {
-                this.isErrorModal = true;
-                this.errorMessage = "Something went wrong, please try again later.";
-              });
-                this.tabSwitch(1);              
+              }
+              // , error => {
+              //   this.isErrorModal = true;
+              //   this.errorMessage = "Something went wrong, please try again later.";
+              // }
+            );
+                this.goToExactPageAndTab(1,1);
             } else {
               // Throw Invalid Pan Error
             }
-          }, error => {
-            this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please try again later.";
           }
+          // , error => {
+          //   this.isErrorModal = true;
+          //   this.errorMessage = "Something went wrong, please try again later.";
+          // }
         );
-  
+
       // console.log("Submitted Amount"+ this.qde.application.loanDetails.loanAmount);
-  
-  
+
+
     }
   }
 
@@ -858,24 +923,21 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
   //   this.goToNextSlide(swiperInstance);
   // }
 
-  updatePropertyType(form: NgForm, swiperInstance?: Swiper) {
+  updatePropertyType(form: NgForm, swiperInstance1: Swiper, swiperInstance2: Swiper) {
     if(this.isTBMLoggedIn) {
-      this.goToNextSlide(swiperInstance)
+      this.goToNextSlide(swiperInstance1, swiperInstance2)
     } else {
       if (form && !form.valid) {
         return;
       }
-  
-
-     
 
       this.qde.application.loanDetails.propertyType = {
         propertyIdentified: this.isPropertyIdentified,
-        propertyType: this.selectedPropertyType,
+        propertyType: this.selectedPropertyType.value,
         propertyClss: this.propertyClssValue,
         propertyArea: this.propertyAreaValue
       };
-  
+
       this.qdeHttp
         .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
         .subscribe(
@@ -891,18 +953,21 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
                   this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                   this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
                 }
-              }, error => {
-                this.isErrorModal = true;
-                this.errorMessage = "Something went wrong, please try again later.";
-              });
-              this.goToNextSlide(swiperInstance);
+              }
+              // , error => {
+              //   this.isErrorModal = true;
+              //   this.errorMessage = "Something went wrong, please try again later.";
+              // }
+            );
+              this.goToNextSlide(swiperInstance1, swiperInstance2);
             } else {
               // Throw Invalid Pan Error
             }
-          }, error => {
-            this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please try again later.";
           }
+          // , error => {
+          //   this.isErrorModal = true;
+          //   this.errorMessage = "Something went wrong, please try again later.";
+          // }
         );
     }
   }
@@ -918,7 +983,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
       this.qdeHttp.getCityAndState(zipCode).subscribe(response => {
         // console.log(JSON.parse(response["ProcessVariables"]["response"]));
         var result = JSON.parse(response["ProcessVariables"]["response"]);
-        
+
 
         if (result.city && result.state) {
 
@@ -950,10 +1015,12 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
           this.qde.application.loanDetails.property.stateId = null;
         }
-      }, error => {
-        this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please try again later.";
-      });
+      }
+      // , error => {
+      //   this.isErrorModal = true;
+      //   this.errorMessage = "Something went wrong, please try again later.";
+      // }
+    );
     }else {
       this.cityState = "";
 
@@ -969,12 +1036,13 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   submitPropertyDetail(form: NgForm, swiperInstance?: Swiper) {
     if(this.isTBMLoggedIn) {
-        this.tabSwitch(2);
+        // this.goToExactPageAndTab(2,1);
+        this.clssProbabilityCheck();
     } else {
       if (form && !form.valid) {
         return;
       }
-  
+
       this.qde.application.loanDetails.property = {
         zipcodeId: this.qde.application.loanDetails.property.zipcodeId,
         zipcode: this.propertyPincodeValue,
@@ -985,7 +1053,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
         stateId: this.qde.application.loanDetails.property.stateId,
         state: this.state
       };
-  
+
       this.qdeHttp
         .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
         .subscribe(
@@ -1000,40 +1068,43 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
                   this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                   this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
                 }
-              }, error => {
-                this.isErrorModal = true;
-                this.errorMessage = "Something went wrong, please try again later.";
-              });
+              }
+              // , error => {
+              //   this.isErrorModal = true;
+              //   this.errorMessage = "Something went wrong, please try again later.";
+              // }
+            );
               this.clssProbabilityCheck();
             } else {
               // Throw Invalid Pan Error
             }
-          }, error => {
-            this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please try again later.";
           }
+          // , error => {
+          //   this.isErrorModal = true;
+          //   this.errorMessage = "Something went wrong, please try again later.";
+          // }
         );
     }
   }
 
-  submitExistingLoanProvider(form: NgForm, swiperInstance?: Swiper) {
+  submitExistingLoanProvider(form: NgForm, swiperInstance1: Swiper, swiperInstance2: Swiper) {
 
     if(this.isTBMLoggedIn) {
-      this.goToNextSlide(swiperInstance)
+      this.goToNextSlide(swiperInstance1, swiperInstance2)
     } else {
       if (form && !form.valid) {
         return;
       }
-  
+
       // this.qde.application.loanDetails.existingLoans = {
       //   loanProvider: this.selectedLoanProvider
       // };
 
       this.qde.application.applicants[this.selectedApplicantIndex].existingLoans.loanProvider = this.selectedLoanProvider.value? this.selectedLoanProvider.value+"": this.selectedLoanProvider+"";
-  
+
       this.qde.application.applicants[this.selectedApplicantIndex].existingLoans.monthlyEmi = parseInt(this.monthlyEmiValue+''.split(',').join(''));
 
-      
+
       this.qdeHttp
         .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
         .subscribe(
@@ -1053,48 +1124,48 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
       //   this.isErrorModal = true;
       //   this.errorMessage = "Something went wrong, please try again later.";
       // });
-              this.goToNextSlide(swiperInstance);
               this.isLoanRouteModal = true
             } else {
               // Throw Invalid Pan Error
             }
-          }, error => {
-            this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please try again later.";
           }
+          // , error => {
+          //   this.isErrorModal = true;
+          //   this.errorMessage = "Something went wrong, please try again later.";
+          // }
         );
     }
   }
 
-  submitAnApplicantForExistingLoan(form: NgForm, swiperInstance?: Swiper) {
+  submitAnApplicantForExistingLoan(form: NgForm, swiperInstance1: Swiper, swiperInstance2: Swiper) {
     this.selectedApplicantIndex = this.qde.application.applicants.findIndex(v => v.applicantId == this.selectedApplicant.value);
     let s = this.qde.application.applicants.find(v => v.applicantId == this.selectedApplicant.value);
     this.selectedApplicantName = s.personalDetails ? `${s.personalDetails['firstName']} ${s.personalDetails['lastName']}`: '';
-   
-    this.liveLoan =  this.qde.application.applicants[this.selectedApplicantIndex].existingLoans? this.qde.application.applicants[this.selectedApplicantIndex].existingLoans.liveLoan: 0 ;
-    
 
-    this.selectedLoanProvider = this.qde.application.applicants[this.selectedApplicantIndex].existingLoans.loanProvider != '' ?  this.loanProviderList.find(v => v.value == this.qde.application.applicants[this.selectedApplicantIndex].existingLoans.loanProvider)    : this.loanProviderList[0];
+    this.liveLoan =  this.qde.application.applicants[this.selectedApplicantIndex].existingLoans? this.qde.application.applicants[this.selectedApplicantIndex].existingLoans.liveLoan: 0 ;
+
+
+    this.selectedLoanProvider = this.qde.application.applicants[this.selectedApplicantIndex].existingLoans.loanProvider != '' ?  this.loanProviderList.find(v => v.value == this.qde.application.applicants[this.selectedApplicantIndex].existingLoans.loanProvider)    : this.defaultItem; //this.loanProviderList[0]
 
     console.log("slected loan provider", this.qde.application.applicants[this.selectedApplicantIndex].existingLoans.loanProvider);
     this.monthlyEmiValue = this.qde.application.applicants[this.selectedApplicantIndex].existingLoans ? this.qde.application.applicants[this.selectedApplicantIndex].existingLoans.monthlyEmi ? this.qde.application.applicants[this.selectedApplicantIndex].existingLoans.monthlyEmi+'' :'' :'';
 
-    this.goToNextSlide(swiperInstance);
+    this.goToNextSlide(swiperInstance1, swiperInstance2);
   }
 
   RegExp(param) {
     return RegExp(param);
   }
 
-  submitLiveLoans(form: NgForm, swiperInstance?: Swiper ) {
+  submitLiveLoans(form: NgForm, swiperInstance1: Swiper, swiperInstance2: Swiper ) {
 
     if(this.isTBMLoggedIn) {
-      this.goToNextSlide(swiperInstance);
+      this.goToNextSlide(swiperInstance1, swiperInstance2);
     } else {
       if (form && !form.valid) {
         return;
       }
-  
+
       // this.qde.application.applicants.loanDetails.existingLoans = {
       //   liveLoan: this.liveLoan
       // };
@@ -1105,7 +1176,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
       this.qde.application.applicants.find(v => v.applicantId == this.selectedApplicant.value).existingLoans.liveLoan = form.value.liveLoansNumber;
 
-      
+
       this.qdeHttp
         .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
         .subscribe(
@@ -1123,34 +1194,43 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
                     this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                     this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
                   }
-                }, error => {
-                  this.isErrorModal = true;
-                  this.errorMessage = "Something went wrong, please try again later.";
-                });
-                this.goToNextSlide(swiperInstance);
-              }else{                
+                }
+                // , error => {
+                //   this.isErrorModal = true;
+                //   this.errorMessage = "Something went wrong, please try again later.";
+                // }
+              );
+                if(this.selectedLoanPurpose && ['16', '17'].includes(this.selectedLoanPurpose)){
+                  this.goToNextSlide(swiperInstance1, swiperInstance2);
+                }
+                else{
+                  this.goToNextSlide(swiperInstance1, swiperInstance2);
+                  this.goToNextSlide(swiperInstance1, swiperInstance2);
+                }
+              }else{
                 this.isLoanRouteModal = true;
               }
-            
+
             } else {
               // Throw Invalid Pan Error
             }
-          }, error => {
-            this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please try again later.";
           }
+          // , error => {
+          //   this.isErrorModal = true;
+          //   this.errorMessage = "Something went wrong, please try again later.";
+          // }
         );
     }
   }
 
-  submitMonthlyEmi(form: NgForm, swiperInstance?: Swiper) {
+  submitMonthlyEmi(form: NgForm, swiperInstance1: Swiper, swiperInstance2: Swiper) {
     if(this.isTBMLoggedIn) {
-      this.goToNextSlide(swiperInstance);
+      this.goToNextSlide(swiperInstance1, swiperInstance2);
     } else {
       if (form && !form.valid) {
         return;
       }
-  
+
       // this.qde.application.loanDetails.existingLoans = {
       //   monthlyEmi: this.monthlyEmiValue
       // };
@@ -1172,18 +1252,21 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
                   this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                   this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
                 }
-              }, error => {
-                this.isErrorModal = true;
-                this.errorMessage = "Something went wrong, please try again later.";
-              });
+              }
+              // , error => {
+              //   this.isErrorModal = true;
+              //   this.errorMessage = "Something went wrong, please try again later.";
+              // }
+            );
               this.isLoanRouteModal = true
             } else {
               // Throw Invalid Pan Error
             }
-          }, error => {
-            this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please try again later.";
           }
+          // , error => {
+          //   this.isErrorModal = true;
+          //   this.errorMessage = "Something went wrong, please try again later.";
+          // }
         );
     }
   }
@@ -1196,10 +1279,11 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
         } else {
           this.isClssNotEligibleModal = true;
         }
-      }, error => {
-        this.isErrorModal = true;
-        this.errorMessage = "Something went wrong, please try again later.";
       }
+      // , error => {
+      //   this.isErrorModal = true;
+      //   this.errorMessage = "Something went wrong, please try again later.";
+      // }
     );
   }
 
@@ -1225,7 +1309,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
       // } else {
       //   // this.tabSwitch(this.propertyNoSwitchTab);
       //   this.router.navigate([], {queryParams: { tabName: this.fragments[2], page: 0 }});
-       
+
       // }
   }
   proceedToExistingLoanNotEligible() {
@@ -1238,7 +1322,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   //    this.router.navigate([], {queryParams: { tabName: this.fragments[2], page: 1 }});
 
-    
+
   //  }
   }
 
@@ -1246,14 +1330,14 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.isLoanRouteModal = false;
     this.loanPinCodeModal = false;
   }
-  
+
   /*******************************************
    * Pass "1,23,45,678" and will return number
    *******************************************/
   getNumberWithoutCommaFormat(x: string) : string {
     return x ? x+"".split(',').join(''): '';
   }
-  
+
   /****************************************
   * Is a valid Number after removing Comma
   ****************************************/
@@ -1265,55 +1349,37 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.isLoanProductPage = false;
     this.selectedLoanType = lt;
     this.cds.changeMenuBarShown(true);
-
     this.setLoanPurposes(lt.value);
   }
 
   setLoanPurposes(loanType: string, data ?: string) {
-    var that = this;
-    this.qdeHttp.adminGetLov().subscribe(res => {
-      if(res['ProcessVariables']['status'] == true) {
-        var lov= JSON.parse(res['ProcessVariables']['lovs']);
-        that.fullloanpurposes = lov.LOVS.loan_purpose;
-        console.log("fullloanpurposes: ", that.fullloanpurposes);
-
-        that.qdeHttp.getLoanPurposeFromLoanType({loanType: loanType}).subscribe(res => {
-          var temploanpurposes = res['ProcessVariables']['loanPurposeLov'];
-          console.log("see here first"+JSON.stringify(temploanpurposes));
-          if(that.fullloanpurposes.length!=0){
-            for(var x in that.fullloanpurposes){
-              for(var y in temploanpurposes){
-                if(temploanpurposes[y].value==that.fullloanpurposes[x].id){
-                  temploanpurposes[y].propIdentified = that.fullloanpurposes[x].propIdentified;
+        this.qdeHttp.getLoanPurposeFromLoanType({"loanType": loanType}).subscribe(res => {
+          if(res['ProcessVariables']['status']){
+            this.loanpurposes = res['ProcessVariables']['loanPurposeLov'];
+            if(data) {
+              for(var x in this.loanpurposes){
+                if(this.loanpurposes[x].value==data){
+                  this.selectedLoanPurpose = this.loanpurposes[x].value;
+                  break; 
+                }
+              }
+            } else {
+              this.selectedLoanPurpose = this.defaultItem.value;
+            }
+          }
+        });
+          if(this.selectedLoanPurpose!="" && typeof(this.selectedLoanPurpose)!="object"){
+            this.qdeHttp.getPropIdentified(this.selectedLoanPurpose).subscribe(res=>{
+              if(res['ProcessVariables']['status']){
+                if(res['ProcessVariables']['propIdentified']){
+                 this.disableNo = 1; 
+                }else{
+                this.disableNo = null;
               }
             }
+            });
           }
-          that.loanpurposes = temploanpurposes;
-          console.log("see here"+JSON.stringify(that.loanpurposes));
-        }
-        if(that.loanpurposes.length!=0){
-          for(var x in that.loanpurposes){
-            if(that.loanpurposes[x].propIdentified){
-              that.isPropertyIdentified=true;
-            }
-          }
-        }
-        if(data) {
-          console.log("Definitely see here"+JSON.stringify(that.loanpurposes));
-          that.selectedLoanPurpose = that.loanpurposes.find(v => v.value == data) || that.loanpurposes[0];
-        } else {
-          that.selectedLoanPurpose = that.loanpurposes[0];
-        }
-      }, error => {
-        that.isErrorModal = true;
-        that.errorMessage = "Something went wrong, please try again later.";
-      });
-    }
-  }, error => {
-      this.isErrorModal = true;
-      this.errorMessage = "Something went wrong, please try again later.";
-    });
-  }
+      }
 
   clssSearchArea(event: any){
     //console.log("gfegffdgewhj",event.target.value)
@@ -1322,10 +1388,12 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
         this.allClssAreas = res['ProcessVariables']['townNames'] ? res['ProcessVariables']['townNames']: []
         console.log("CLSSArea: ", this.allClssAreas);
       }
-    }, error => {
-      this.isErrorModal = true;
-      this.errorMessage = "Something went wrong, please try again later.";
-    });
+    }
+    // , error => {
+    //   this.isErrorModal = true;
+    //   this.errorMessage = "Something went wrong, please try again later.";
+    // }
+  );
   }
 
   // moreLoanObligation(){
@@ -1340,23 +1408,50 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.allClssAreas = [];
   }
 
-  checkAmountLimit(event) {
+  // checkAmountLimit(event,minAmount,maxAmount) {
+  //   console.log("checkAmountLimit call ",event,minAmount,maxAmount);
+  //   let n = parseInt(this.getNumberWithoutCommaFormat(event.target.value));
+  //   if(n < 50000 && minAmount == 50000){
+  //     this.isNumberLessThan50k = true;
+  //   }
+  //   else if(n >= 1000000001 && maxAmount == 1000000000){
+  //     this.isNumberMoreThan100cr = true;
+  //   }
+  //   else if(n >= 1000001 && maxAmount == 1000000){
+  //     this.isNumberMoreThan10lk = true;
+  //   } else if(n < 1000 && minAmount == 1000){
+  //     this.isNumberLessThan1k = true;
+  //   }
+  //   else {
+  //     this.isNumberLessThan50k = false;
+  //     this.isNumberMoreThan100cr = false;
+  //     this.isNumberMoreThan10lk = false;
+  //     this.isNumberLessThan1k =false;
+  //   }
+  // }
+
+  checkAmountLimit(event,minAmount?,maxAmount?) {
+    console.log("checkAmountLimit call ",event,minAmount,maxAmount);
     let n = parseInt(this.getNumberWithoutCommaFormat(event.target.value));
-    if(n < 50000){
-      this.isNumberLessThan50k = true;
-    }
-    else if(n >= 1000000001){
-      this.isNumberMoreThan100cr = true; 
-    }
-    else {
-      this.isNumberLessThan50k = false;
-      this.isNumberMoreThan100cr = false;
+    if(minAmount != undefined && n < minAmount ){
+      console.log("min ",event,minAmount,maxAmount);
+      this.isMinAmount = true;
+      this.requirMinAmout = minAmount;
+    } else if(n >= maxAmount && !maxAmount){
+      console.log("max ",event,minAmount,maxAmount);
+      this.isMaxAmount = true;
+      this.requirMaxAmout = maxAmount;
+    } else {
+      this.isMinAmount = false;
+      this.requirMinAmout="";
+      this.isMaxAmount = false;
+      this.requirMaxAmout="";
     }
   }
 
   checkAreaLimit(event) {
     let n = parseInt(this.getNumberWithoutCommaFormat(event.target.value));
-    if(n >= 100001){
+    if(n >= 10001){
       this.isAreaLessThan100k = true;
     }
     else {
@@ -1366,18 +1461,37 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     this.swiperSlidersSub = this.swiperS$.changes.subscribe(v => {
+
+      console.log("Swipers: ", this.activeTab, this.swiperSliders);
       this.swiperSliders = v._results;
-      if(this.swiperSliders && this.swiperSliders.length > 0) {
-        this.swiperSliders[this.activeTab].setIndex(this.page-1);
-      }
+      // if (this.swiperSliders && this.swiperSliders.length > 0) {
+      //   this.swiperSliders[this.activeTab].setIndex(this.page - 1);
+      // }
+    });
+
+    this.swiperSlidersSub2 = this.lhsSwiperS$.changes.subscribe(v => {
+
+      console.log("Swipers: ", this.activeTab, this.swiperSliders);
+      this.lhsSwiperSliders = v._results;
+      // if (this.swiperSliders && this.swiperSliders.length > 0) {
+      //   this.swiperSliders[this.activeTab].setIndex(this.page - 1);
+      // }
     });
   }
 
-  goToExactPageAndTab(tabPage: string, pageNumber: number) {
-    let index = this.fragments.findIndex(v => v == tabPage) != -1 ? this.fragments.findIndex(v => v == tabPage) : 0;
-    this.tabName = tabPage;
-    this.page = pageNumber;
-    this.tabSwitch(index, true);
+  // goToExactPageAndTab(tabPage: string, pageNumber: number) {
+  //   let index = this.fragments.findIndex(v => v == tabPage) != -1 ? this.fragments.findIndex(v => v == tabPage) : 0;
+  //   this.tabName = tabPage;
+  //   this.page = pageNumber;
+  //   this.tabSwitch(index, true);
+  // }
+
+  goToExactPageAndTab(index: number, pageNumber: number) {
+    // let index = this.fragments.some(v => v == tabPage) ? this.fragments.findIndex(v => v == tabPage) : 0;
+    // this.tabName = tabPage;
+    // this.page = pageNumber;
+    // this.goToExactPageAndTab(i, 1ndex, true);
+    this.router.navigate([], {queryParams: {tabName: this.fragments[index] , page: pageNumber}});
   }
 
   ngOnDestroy() {
@@ -1389,10 +1503,10 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
   moreLoanObligation(n: boolean) {
     this.isLoanRouteModal = false;
     if(n) {
-      this.tabSwitch(2);
+      this.goToExactPageAndTab(2, 1);
     } else {
       this.router.navigate(['/references', this.qde.application.applicationId]);
     }
-    
+
   }
 }

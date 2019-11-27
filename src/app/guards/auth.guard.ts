@@ -27,10 +27,10 @@ export class AuthGuard implements CanActivate {
       return true;
     } else {
 
-      if(this.isMobile) {
-        this.utilService.navigateToLoginWithMpin();
-        return;
-      }
+      // if(this.isMobile) {
+      //   this.utilService.navigateToLoginWithMpin();
+      //   return;
+      // }
 
 
       this.utilService.navigateToLogin();

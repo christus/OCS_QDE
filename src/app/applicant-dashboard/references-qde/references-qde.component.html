@@ -63,12 +63,14 @@
                             </select> -->
 
                             <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                              [defaultItem] ="defaultItem"
                               [data]="relationships" 
                               textField="key"
                               valueField="value"
                               name="relationShip"
                               [valuePrimitive]="true"
-                              [(ngModel)]="selectedReferenceOne">
+                              [(ngModel)]="selectedReferenceOne"
+                              (selectionChange)="relationshipChanged1=true">
                             </kendo-dropdownlist>
 
                           </div>
@@ -94,6 +96,7 @@
                             <span class="control-title">Title</span>
                             <kendo-dropdownlist [readonly]="isReadOnly" 
                               class="form-control" 
+                              [defaultItem]="defaultItem"
                               [data]="titles" 
                               textField="key" 
                               valueField="value" 
@@ -150,7 +153,7 @@
                               <div *ngIf="refOneMobileNumber.errors?.minlength">{{errors.references.referenceOne.mobileNumber.minlength}}</div>
                             </div>
                             <div class="invalid-feedback">
-                                <div *ngIf="refOneMobileNumber.touched && refOneMobileNumber.value == refTwoMobileNumber.value">{{errors.references.referenceOne.mobileNumber.sameNumber}}</div>
+                                <div *ngIf="refOneMobileNumber.touched && refOneMobileNumber.dirty && refOneMobileNumber.value == refTwoMobileNumber.value && refOneMobileNumber.value">{{errors.references.referenceOne.mobileNumber.sameNumber}}</div>
                             </div>
 
                           </div>
@@ -253,13 +256,15 @@
                             <option *ngFor="let rela of relationships" [value]="rela.value">{{rela.key}}</option>
                           </select> -->
                           <kendo-dropdownlist [readonly]="isReadOnly" 
+                          [defaultItem]="defaultItem"
                             class="form-control"
                             [data]="relationships" 
                             textField="key"
                             valueField="value"
                             name="relationShip"
                             [valuePrimitive]="true"
-                            [(ngModel)]="selectedReferenceTwo">
+                            [(ngModel)]="selectedReferenceTwo"
+                            (selectionChange)="relationshipChanged2=true">
                           </kendo-dropdownlist>
                         </div>
                       </div>
@@ -283,6 +288,7 @@
                             <span class="control-title">Title</span>
                               <kendo-dropdownlist [readonly]="isReadOnly" 
                                 class="form-control" 
+                                [defaultItem] = "defaultItem"
                                 [data]="titles" 
                                 textField="key" 
                                 valueField="value" 

@@ -24,10 +24,6 @@ export class IciciTermsComponent implements OnInit {
     var that = this;
 
     als.stopInterval();
-    const data = {
-      email: environment.userName,
-      password: environment.password
-    };
 
     this.route.params.subscribe(val => {
       if(val['applicationId'] != null) {
@@ -40,25 +36,14 @@ export class IciciTermsComponent implements OnInit {
     });
 
     if(this.router.url.search('auto-login') != 0) {
-      this.qdeHttpService.authenticate(data).subscribe(
-        res => {
-          console.log("response");
-          console.log("login-response: ",res);
-          this.commonDataService.setLogindata(data);
-          localStorage.setItem("token", res["token"] ? res["token"] : "");
-          if(this.applicationId != null && this.applicantId != null) {
-            this.getQde(this.applicationId, function (){
-              that.router.navigate(['/static/terms-and-conditions/proceed-to-review', that.applicationId, that.applicantId]);
-            });
-          }
-        },
-        error => {
-          console.log(error);
+      this.qdeHttpService.createsession(this.applicationId, () =>{
+        if(this.applicationId != null && this.applicantId != null) {
+          this.getQde(this.applicationId, function (){
+            that.router.navigate(['/static/terms-and-conditions/proceed-to-review', that.applicationId, that.applicantId]);
+          });
         }
-      );
+      });
     }
-
-   
     
   }
 

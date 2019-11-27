@@ -1,12 +1,12 @@
 export const environment = {
-  version: "1.8.6",
-  buildDate: "15-11-2019",
+  version: "1.8.8",
+  buildDate: "26-11-2019",
   production: true,
-  projectId: '5928d30eac7811e9a1670242ac110002', // developement
+  //projectId: '5928d30eac7811e9a1670242ac110002', // developement
 
-   //projectId: '3209f7ea7ba811e982270242ac110002', // production
+  projectId: '3209f7ea7ba811e982270242ac110002', // production
 
-  // projectId: 'ff8e364e6fce11e98754782bcb8f3845', // UAT Development
+  //projectId: 'ff8e364e6fce11e98754782bcb8f3845', // UAT Development
 
   status: {
     QDECREATED: "1"
@@ -18,6 +18,10 @@ export const environment = {
   },
 
   logoutTime: 15,
+
+  zoneId: 98,
+
+  sesValidity: 600,
 
   api: {
     'dashboard': {
@@ -419,26 +423,33 @@ export const environment = {
     "uploadCSV": {
       'workflowId': 'f17089c6927f11e982270242ac110002',
       'processId' : '66145102ca6311e9bd540242ac110002'
-    }
+    },
+    "validateAuth": {
+      'workflowId': '597050620f7e11ea962c0242ac110002',
+      'processId' : '598e78a80f7e11ea82920242ac110002'
+    },
+    "getPropIdentified":{
+      'workflowId': '107260700f7511eab9480242ac110002',
+      'processId' : '108f10300f7511eabb200242ac110002'
+    },
    
   },
-  userName: "icici@icicibankltd.com",
-  password: "icici@123",
   iciciDomainExt: "@icicibankltd.com",
   appiyoDrive: "/d/drive/upload/",
   driveLocation: "/d/drive/docs/",
   ocsHost: "/ocs",
-  // host: "http://192.168.1.108/appiyo",
+  //host: "http://192.168.1.108/appiyo",
   //host: "/ProcessStore",
-  host:  "/appiyo",
+  //host:  "/appiyo",
   pdfLocation: "/d/download/pdf?",
   csvLocation: "/d/download/csv?",
   isMobile: false,
   mobileExtenstion: "@icicibankltd.com",
-  // host: "https://ihfcmobileuat.icicihfc.com/appiyo",
+  host: "https://ihfcmobileuat.icicihfc.com/appiyo",
   aesPublicKey: 'MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJ+GJdSSEeaNFBLqyfM3DIOgQgWCwJ0INfeZZV7ITsLeuA7Yd02rrkYGIix1IWvoebWVmzhncUepYxHwK1ARCdUCAwEAAQ==',
   encryptionType: true, //Ecryption
-  captchFormat: "&width=250&height=80&bgr=255&bgg=255&bgb=255&bga=255&fontR=187&fontG=187&fontB=187&fontSize=50&captchaSize=5"
+  captchFormat: "&width=250&height=80&bgr=255&bgg=255&bgb=255&bga=255&fontR=187&fontG=187&fontB=187&fontSize=50&captchaSize=5",
+  defaultItem: {key: "Select...", value: "0"}
   // host: "https://ihfcmobileuat.icicihfc.com/appiyo"
   //csvhost: "http://192.168.1.108/appiyo",
   //host: "https://103.87.42.117/appiyo"

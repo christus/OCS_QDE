@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
 
 interface Item {
   key: string,
-  value: string
+  value: string | number
 }
 @Component({
   selector: 'app-connector-lead-create',
@@ -80,6 +80,8 @@ export class ConnectorLeadCreateComponent implements OnInit {
     }
   };
 
+  public defaultItem = environment.defaultItem
+  
   constructor(private route: ActivatedRoute,
     private router: Router,
     private qdeHttp: QdeHttpService,
@@ -106,8 +108,8 @@ export class ConnectorLeadCreateComponent implements OnInit {
       const lov = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs);
       this.loanType = lov.LOVS.loan_type;
       this.preferredEmail = lov.LOVS.preferred_mails;
-
-      this.selectedLoanType = this.loanType[0];
+      // this.loanType[0]
+      this.selectedLoanType = this.defaultItem ;
       console.log(this.selectedLoanType);
     }
 
@@ -137,6 +139,7 @@ export class ConnectorLeadCreateComponent implements OnInit {
 
     this.qdeHttp.connectorLeadCreateSave(data).subscribe(res => {
       if(res['ProcessVariables']['status'] == true) {
+        this.sessionMessage = res['ProcessVariables']['errorMessage']
         this.isSuccessfulRouteModal = true;
       }
       else{

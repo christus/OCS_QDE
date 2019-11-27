@@ -1,3 +1,5 @@
+import { UtilService } from 'src/app/services/util.service';
+import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { MobileService } from './mobile-constant.service';
 import { Injectable } from '@angular/core';
@@ -51,6 +53,8 @@ export class QdeHttpService {
   private httpIonic: HTTP,
   private mobileService: MobileService,
   private ngxService: NgxUiLoaderService,
+  private router: Router,
+  private cds: CommonDataService,
   private encrytionService: EncryptService) {
 
     this.commonDataService.loginData.subscribe(result => {
@@ -193,17 +197,6 @@ createOrUpdatePersonalDetails(qde) {
     return this.callPost(null, null, body, data, "login");
   }
 
-  duplicateLogin() {
-
-      const body = {
-        'email': environment.userName,
-        'password': environment.password,
-      };
-
-    let uri = environment.host + '/account/'+environment.apiVersion.login+'login';
-    return this.callPost(null, null, body, null, "login");
-  }
-
   getLeads(search?: string, fromDay?: string, fromMonth?: string, fromYear?: string, toDay?: string, toMonth?: string, toYear?: string, assignedTo?: string, status?: string) {
     const processId = environment.api.dashboard.processId;
     const workflowId = environment.api.dashboard.workflowId;
@@ -324,9 +317,6 @@ createOrUpdatePersonalDetails(qde) {
     const processId = environment.api.cityState.processId;
     const workflowId = environment.api.cityState.workflowId;
     const projectId = environment.projectId;
-
-    const userName = environment.userName;
-    const password = environment.password;
 
 
     const requestEntity: RequestEntity = {
@@ -575,10 +565,6 @@ createOrUpdatePersonalDetails(qde) {
     const workflowId = environment.api.payGate.workflowId;
     const projectId = environment.projectId;
 
-    const userName = environment.userName;
-    const password = environment.password;
-
-
     const requestEntity: RequestEntity = {
       processId: processId,
       ProcessVariables: {
@@ -650,9 +636,6 @@ createOrUpdatePersonalDetails(qde) {
     const processId = environment.api.cibil.processId;
     const workflowId = environment.api.cibil.workflowId;
     const projectId = environment.projectId;
-
-    const userName = environment.userName;
-    const password = environment.password;
 
 
     const requestEntity: RequestEntity = {
@@ -811,9 +794,6 @@ createOrUpdatePersonalDetails(qde) {
     const workflowId = environment.api.sendOTP.workflowId;
     const projectId = environment.projectId;
 
-    const userName = environment.userName;
-    const password = environment.password;
-
 
     const requestEntity: RequestEntity = {
       processId: processId,
@@ -841,9 +821,6 @@ createOrUpdatePersonalDetails(qde) {
     const processId = environment.api.validateOTP.processId;
     const workflowId = environment.api.validateOTP.workflowId;
     const projectId = environment.projectId;
-
-    const userName = environment.userName;
-    const password = environment.password;
 
 
     const requestEntity: RequestEntity = {
@@ -936,9 +913,6 @@ createOrUpdatePersonalDetails(qde) {
     const workflowId = environment.api.veiwFormSms.workflowId;
     const projectId = environment.projectId;
 
-    const userName = environment.userName;
-    const password = environment.password;
-
 
     const requestEntity: RequestEntity = {
       processId: processId,
@@ -962,9 +936,6 @@ createOrUpdatePersonalDetails(qde) {
     const processId = environment.api.status.processId;
     const workflowId = environment.api.status.workflowId;
     const projectId = environment.projectId;
-
-    const userName = environment.userName;
-    const password = environment.password;
 
 
     const requestEntity: RequestEntity = {
@@ -1694,7 +1665,8 @@ createOrUpdatePersonalDetails(qde) {
       zone : lovs.zone != null ? lovs.zone: null,
       cityId : lovs.cityId!=null ? lovs.cityId: null,
       isRequired : lovs.isRequired!=null ? lovs.isRequired: null,
-      reqBoolean : lovs.reqBoolean
+      reqBoolean : lovs.reqBoolean,
+      isMale : lovs.isMale
     });
     console.log(obj);
 
@@ -2353,9 +2325,6 @@ createOrUpdatePersonalDetails(qde) {
     const workflowId = environment.api.mandatoryDocs.workflowId;
     const projectId = environment.projectId;
 
-    const userName = environment.userName;
-    const password = environment.password;
-
 
     const requestEntity: RequestEntity = {
       processId: processId,
@@ -2379,9 +2348,6 @@ createOrUpdatePersonalDetails(qde) {
     const processId = environment.api.omniDocs.processId;
     const workflowId = environment.api.omniDocs.workflowId;
     const projectId = environment.projectId;
-
-    const userName = environment.userName;
-    const password = environment.password;
 
 
     const requestEntity: RequestEntity = {
@@ -2715,7 +2681,7 @@ createOrUpdatePersonalDetails(qde) {
    * @param mainApplicant
    * @param coApplicant If coApplicant is an empty string, then its for reference relationship
    */
-  getApplicantRelationships(mainApplicant: string, coApplicant: string) {
+  getApplicantRelationships(mainApplicant: string, coApplicant: string, getAll?: boolean) {
     const processId   = environment.api.getApplicantRelationships.processId;
     const workflowId  = environment.api.getApplicantRelationships.workflowId;
     const projectId   = environment.projectId;
@@ -2727,7 +2693,8 @@ createOrUpdatePersonalDetails(qde) {
       ProcessVariables: {
         userId: parseInt(localStorage.getItem('userId')),
         mainApplicant: mainApplicant,
-        coApplicant: coApplicant
+        coApplicant: coApplicant,
+        getAll: getAll
       },
       workflowId: workflowId,
       projectId: projectId
@@ -2857,6 +2824,9 @@ createOrUpdatePersonalDetails(qde) {
           'Content-Type': 'application/json',
           'authentication-token':  localStorage.getItem('token') ? localStorage.getItem('token') : '',
         };
+
+        this.httpIonic.setSSLCertMode("nocheck");
+
         this.httpIonic.get(url, {}, headers).then(result => {
           const data = JSON.parse(result.data);
           observer.next(data);
@@ -2885,20 +2855,23 @@ createOrUpdatePersonalDetails(qde) {
 
     this.isMobile = this.mobileService.isMobile;
 
-
-    if(workflowId && projectId) {
+    if(serviceType == "validate_auth") {
+      setUrl = environment.host + '/session/auth_validate'
+    }else if(workflowId && projectId) {
       setUrl = environment.host + "/d/workflows/" + workflowId + "/" +environment.apiVersion.api+ "execute?projectId=" + projectId;
       reqEntity = requestEntity["processVariables"];
     }else if(serviceType == "login" && this.isMobile) {
       setUrl = environment.host + '/account/v3/login';
       reqEntity = JSON.stringify(requestEntity);
-    }else if(serviceType == "login" && !this.isMobile) {
+    }else if(serviceType == "login") {
       setUrl = environment.host + '/account/' +environment.apiVersion.login+ 'login';
       reqEntity = JSON.stringify(requestEntity);
     }else if(serviceType == "uploadAppiyoDrive") {
       setUrl = environment.host + environment.appiyoDrive;
-    } else if(serviceType == "captcha") {
+    }else if(serviceType == "captcha") {
       setUrl = environment.host + '/account/captcha/generate_catcha'
+    }else if(serviceType == "create_session") {
+      setUrl = environment.host + '/account/create_session'
     }
 
 
@@ -2909,7 +2882,9 @@ createOrUpdatePersonalDetails(qde) {
     arrUrl.forEach(function(url) {
       if(currentHref.includes(url)){
         that.isMobile = false;
-        if(workflowId && projectId) {
+        if(serviceType == "validate_auth") {
+          setUrl = environment.host + '/session/auth_validate'
+        }else if(workflowId && projectId) {
           setUrl = environment.host + "/d/workflows/" + workflowId + "/v2/execute?projectId=" + projectId;
         } else if(serviceType == "login") {
           setUrl = environment.host + '/account/v3/login'
@@ -2926,6 +2901,8 @@ createOrUpdatePersonalDetails(qde) {
       this.ngxService.start();
 
       const obs = new Observable((observer) => {
+
+        let data;
 
         this.httpIonic.setSSLCertMode("nocheck");
 
@@ -2948,20 +2925,62 @@ createOrUpdatePersonalDetails(qde) {
         this.httpIonic.sendRequest(setUrl, this.ionicOption).then(result => {
 
           console.log("result", result);
-          let decritedData = that.encrytionService.decryptMobileResponse(result);
-          console.log("decritedData", decritedData);
-          
-          const data = JSON.parse(decritedData);
-          console.log("~~~***Response***~~~", data);
+
+          if (result["headers"]["content-type"] != "text/plain" && typeof(result["data"] != "object")) {
+            data = JSON.parse(result["data"]);
+          }else {
+            let decritedData = that.encrytionService.decryptMobileResponse(result);
+            console.log("decritedData", decritedData);
+            
+            data = JSON.parse(decritedData);
+            console.log("~~~***Response***~~~", data);
+          }
 
           observer.next(data);
           observer.complete();
           this.ngxService.stop();
+
+          if (data && data["login_required"]){
+            
+            if(this.router.url.search('auto-login') == -1) {
+                this.cds.setDialogData(true);
+                localStorage.removeItem('token');
+                localStorage.removeItem('roles');
+                localStorage.removeItem('userId')
+                this.router.navigate(['/login']);                
+            }
+
+            localStorage.removeItem('token');
+            localStorage.removeItem('roles');
+            localStorage.removeItem('userId')
+            this.router.navigate(['/login']);      
+          }
+         
+
+       
         }).catch(error => {
-          observer.error(error);
+
+          console.log("~~~***Response error***~~~", error);
+
+          if (error["headers"]["content-type"] == "text/plain") {
+            console.log("text/plain");
+            let decritedData = that.encrytionService.decryptMobileResponse(error);
+            console.log("decritedData", decritedData);
+            
+            data = JSON.parse(decritedData);
+          }
+
+          if (error["headers"]["content-type"] != "text/plain" && typeof(error["data"] != "object")) {
+            data = JSON.parse(error["data"]);
+          }
+
+          observer.error(data);
           observer.complete();
           this.ngxService.stop();
-          console.log("~~~***Response error***~~~", error);
+
+       
+
+
         });
 
       });
@@ -3200,7 +3219,78 @@ createOrUpdatePersonalDetails(qde) {
 
     // let uri = environment.host + '/account/login_ne';
     // let uri = environment.host + '/account/login';
-    return this.http.get(uri);
+      return this.callGet(uri);
+  }
+  
+  getPropIdentified(data:string){
+    const processId = environment.api.getPropIdentified.processId;
+    const workflowId = environment.api.getPropIdentified.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: {
+        loanPurposeId: data
+      },
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = {
+      'processVariables':
+      JSON.stringify(requestEntity)
+    };
+
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
+  }
+
+  createSession(appilcantionId){
+    const body = {
+      'userId': appilcantionId,
+      'zoneId': environment.zoneId,
+      'validity': environment.sesValidity
+    };
+
+    return this.callPost(null, null, JSON.stringify(body), null, "create_session");
+  }
+
+  validateAuth(sessionId){
+
+    const processId = environment.api.validateAuth.processId;
+    const workflowId = environment.api.validateAuth.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity = {
+      processId: processId,
+      sessionId: sessionId,
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    return this.callPost(workflowId, projectId, JSON.stringify(requestEntity), null, "validate_auth");
+  }
+
+  createsession(applicationId, callback) {
+    console.log("create session*******");
+    this.createSession(applicationId).subscribe(res =>{
+      console.log("createSession-response: ",res);
+      if(res["status"]) {
+        let sessionId = res["payload"]["auth"]["sessionId"];
+        localStorage.setItem('X-AUTH-SESSIONID', sessionId);
+        this.validateAuth(sessionId).subscribe(res => {
+          if(res["status"]) {
+            let auth_token = res["payload"]["processResponse"]["authentication-token"];
+            let isAuthValidated = res["payload"]["processResponse"]["ProcessVariables"]["isAuthValidated"];
+            console.log("auth_token: ",auth_token);
+            localStorage.setItem("token", auth_token ? auth_token : "");
+            callback();
+          } 
+        });
+      }else {
+        console.log("session id not created");
+      }
+    });
   }
 
 }

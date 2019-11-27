@@ -34,38 +34,20 @@ export class EligibilityNotClearedComponent implements OnInit {
     this.applicationId = v.applicationId;
   });
 
-  const data = {
-    email: environment.userName,
-    password: environment.password
-  };
 
-  this.qdeHttp.authenticate(data).subscribe(
-    res => {
-    console.log("response");
-    console.log("login-response: ",res);
-    this.commonDataService.setLogindata(data);
-    localStorage.setItem("token", res["token"] ? res["token"] : "");
-
+  this.qdeHttp.createsession(this.applicationId, ()=>{
     this.qdeHttp.getQdeData(parseInt(this.applicationId)).subscribe(response => {
 
 
       var result = JSON.parse(response["ProcessVariables"]["response"]);
-
+  
         console.log("Response", result);
-
+  
         this.ocsNumber = result.application.ocsNumber || "";
         let applicantDetail = result.application.applicants[0].personalDetails;
         this.userName = applicantDetail.firstName + applicantDetail.lastName || "";
-
-
     });
-
-  },
-  error => {
-    console.log(error);
   });
-
-
 
 }
 

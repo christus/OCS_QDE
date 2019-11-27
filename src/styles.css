@@ -5765,6 +5765,24 @@ img {
 	.mobile .width_80{
 		width: 80%;
 	}
+
+	.mobile .lyt-login .rhs{
+		display: inline-block;
+	}
+
+	.mobile .margin_top {
+		margin-top: 22%;
+	}
+
+	.mobile .version_container {
+		position: static !important;
+	}
+	.mobile .lyt-box {
+		margin: 5.95vw auto 0;
+	}
+	.mobile .bottomright {
+		position: static !important;
+	}
 }
 
 .with_datepicker .k-i-arrow-60-down::before,

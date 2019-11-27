@@ -8,7 +8,7 @@
                 <li class="tab-link " [ngClass]="{'active': (activeTab == 0), 'hide': (!applicantIndividual)}">
                     <a href="javascript:void(0);" (click)="tabSwitch(0)">Dashboard</a>
                 </li>
-                <li class="tab-link" [ngClass]="{'disabled': isTabDisabled, 'active': (activeTab == 1), 'hide': (!applicantIndividual)}">
+                <li class="tab-link" *ngIf="qde?.application?.applicants[applicantIndex]?.isIndividual == true" [ngClass]="{'disabled': isTabDisabled, 'active': (activeTab == 1), 'hide': (!applicantIndividual)}">
                     <a href="javascript:void(0);" (click)="tabSwitch(1)">Customer Photo</a>
                   </li>
                 <li class="tab-link " [ngClass]="{'disabled': isTabDisabled, 'active': (activeTab == 2), 'hide': (!applicantIndividual)}">
@@ -192,8 +192,9 @@
                                                 <div class="form-group">
                                                     <span class="control-title">Select a Document Type</span>
                                                     <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control" 
+                                                        [defaultItem]="defaultItem"
                                                         name="id-proof" 
-                                                        [data]="idProofDocumnetType" 
+                                                        [data]="idProofDocumnetType[applicantIndex]" 
                                                         textField="key"
                                                         valueField="value" 
                                                         [(ngModel)]="selectedIdProof[applicantIndex]">
@@ -201,7 +202,9 @@
                                                 </div>
                                             </div>
                                             <div class="btn-wrap">
-                                                <button class="btn btn-primary" (click)="goToNextSlide(aadharSlider2)">Next</button>
+                                                <button class="btn btn-primary" (click)="goToNextSlide(aadharSlider2)"
+                                                [ngClass]="{'disabled': !selectedIdProof[applicantIndex] || selectedIdProof[applicantIndex].value ==0}"
+                                                [disabled]="!selectedIdProof[applicantIndex] || selectedIdProof[applicantIndex].value == 0">Next</button>
                                             </div>
                                         </form>
                                     </div>
@@ -354,7 +357,8 @@
                                                 <span class="control-title">Select a Document Type</span>
                                                 <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control" 
                                                     name="address-proof" 
-                                                    [data]="addressProofDocumnetType" 
+                                                    [defaultItem]="defaultItem"
+                                                    [data]="addressProofDocumnetType[applicantIndex]" 
                                                     textField="key" 
                                                     valueField="value"
                                                     [(ngModel)]="selectedAddressProof[applicantIndex]">
@@ -363,7 +367,9 @@
                                         </div>
                                         <div class="btn-wrap">
                                             <button class="btn btn-primary"
-                                            (click)="goToNextSlide(addressSlider2)">Next</button>
+                                            (click)="goToNextSlide(addressSlider2)"
+                                            [ngClass]="{'disabled': !selectedAddressProof[applicantIndex] ||  selectedAddressProof[applicantIndex].value ==0}"
+                                                [disabled]="!selectedAddressProof[applicantIndex] || selectedAddressProof[applicantIndex].value == 0">Next</button>
                                         </div>
                                     </form>
                                   </div>
@@ -468,7 +474,8 @@
                                                 <span class="control-title">Select a Document Type</span>
                                                 <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control" 
                                                     name="income-proof" 
-                                                    [data]="incomeProofDocumnetType" 
+                                                    [defaultItem]="defaultItem"
+                                                    [data]="incomeProofDocumnetType[applicantIndex]" 
                                                     textField="key" 
                                                     valueField="value"
                                                     [(ngModel)]="selectedIncomeProof[applicantIndex]">
@@ -477,7 +484,9 @@
                                         </div>
                                         <div class="btn-wrap">
                                             <button class="btn btn-primary"
-                                            (click)="goToNextSlide(incomeSlider2)">Next</button>
+                                            (click)="goToNextSlide(incomeSlider2)"
+                                            [ngClass]="{'disabled': !selectedIncomeProof[applicantIndex] || selectedIncomeProof[applicantIndex].value ==0}"
+                                                [disabled]="!selectedIncomeProof[applicantIndex] || selectedIncomeProof[applicantIndex].value == 0">Next</button>
                                         </div>
                                     </form>
                                   </div>
@@ -582,7 +591,8 @@
                                                 <span class="control-title">Select a Document Type</span>
                                                 <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control" 
                                                     name="banking-proof" 
-                                                    [data]="bankProofDocumnetType" 
+                                                    [defaultItem]="defaultItem"
+                                                    [data]="bankProofDocumnetType[applicantIndex]" 
                                                     textField="key" 
                                                     valueField="value"
                                                     [(ngModel)]="selectedBankProof[applicantIndex]">
@@ -591,7 +601,9 @@
                                         </div>
                                         <div class="btn-wrap">
                                             <button class="btn btn-primary"
-                                            (click)="goToNextSlide(bankingSlider2)">Next</button>
+                                            (click)="goToNextSlide(bankingSlider2)"
+                                            [ngClass]="{'disabled': !selectedBankProof[applicantIndex] || selectedBankProof[applicantIndex].value ==0}"
+                                                [disabled]=" !selectedBankProof[applicantIndex] || selectedBankProof[applicantIndex].value == 0">Next</button>
                                         </div>
                                     </form>
                                   </div>
@@ -698,7 +710,8 @@
                                                 <span class="control-title">Select a Document Type</span>
                                                 <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control" 
                                                     name="collateral-proof" 
-                                                    [data]="collateralProofDocumnetType" 
+                                                    [defaultItem]="defaultItem"
+                                                    [data]="collateralProofDocumnetType[applicantIndex]" 
                                                     textField="key" 
                                                     valueField="value"
                                                     [(ngModel)]="selectedCollateralProof[applicantIndex]">
@@ -707,7 +720,9 @@
                                         </div>
                                         <div class="btn-wrap">
                                             <button class="btn btn-primary"
-                                            (click)="goToNextSlide(collateralSlider2)">Next</button>
+                                            (click)="goToNextSlide(collateralSlider2)"
+                                            [ngClass]="{'disabled': !selectedCollateralProof[applicantIndex] || selectedCollateralProof[applicantIndex].value ==0}"
+                                                [disabled]="!selectedCollateralProof[applicantIndex] || selectedCollateralProof[applicantIndex].value == 0">Next</button>
                                         </div>
                                     </form>
                                   </div>
@@ -769,7 +784,7 @@
   </div>
 
   <div class="overlay" [ngClass]="{'active': isErrorModal}"></div>
-  <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isErrorModal}">
+  <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isErrorModal}" style="text-align:center;">
       <!-- <a class="modal-close" href="javascript:void(0);" (click)="onBackOTP()"><span class="icon icon-close"></span></a> -->
       <div class="modal-body">
       <h1>{{errorMessage}}</h1>

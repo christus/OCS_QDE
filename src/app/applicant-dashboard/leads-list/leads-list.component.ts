@@ -66,15 +66,15 @@ export class LeadsListComponent implements OnInit {
     private router: Router,
     private ngxService: NgxUiLoaderService) {
     this.isMobile = this.mobileService.isMobile;
-    if(this.isMobile) {
-      let isFirstTime = localStorage.getItem("firstTime");
-      console.log("on reload of application -leads", isFirstTime);
+    // if(this.isMobile) {
+    //   let isFirstTime = localStorage.getItem("firstTime");
+    //   console.log("on reload of application -leads", isFirstTime);
 
-      if(isFirstTime == null) {
-        this.router.navigate(['/setPin']);
-        return;
-      }  
-    }
+    //   if(isFirstTime == null) {
+    //     this.router.navigate(['/setPin']);
+    //     return;
+    //   }  
+    // }
     this.cds.setactiveTab(screenPages["applicantDetails"]);
     this.cds.changeApplicationId(null);
  
@@ -384,7 +384,7 @@ export class LeadsListComponent implements OnInit {
           
       return "/document-uploads/"+applicationId;
     } 
-    else if(statuses[status] == "15") {
+    else if(statuses[status] == "15" || statuses[status] == "17") {
       this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
       
       // return "/payments/online-summary/"+applicationId;

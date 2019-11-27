@@ -16,6 +16,7 @@ export interface Application {
     status ?: number;
     auditTrailDetails?: AuditTrailDetails;
     leadCreate?: LeadCreate;
+    offlinePayments?: ChequeDetails;
 }
 
 export interface Document {

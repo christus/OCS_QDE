@@ -22,6 +22,16 @@ export class CommonDataService {
   showLogout$: BehaviorSubject<any> = new BehaviorSubject<boolean>(false);
   public showLogout = this.showLogout$.asObservable();
 
+  showError$: BehaviorSubject<any> = new BehaviorSubject<boolean>(false);
+  public showError = this.showError$.asObservable();
+
+  setErrorData(data: boolean, errorCode: string) {
+    let arr = [];
+    arr[0] = data;
+    arr[1] = errorCode;
+    this.showError$.next(arr)
+   }
+
 
   setDialogData(data: boolean) {
    this.showLogout$.next(data)

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import Qde from '../models/qde.model';
+import { QdeHttpService } from '../services/qde-http.service';
 
 @Component({
   selector: 'app-view-form-applicant',
@@ -66,12 +67,19 @@ export class ViewFormApplicantComponent implements OnInit {
   @Input() isCoApplicant: boolean;
   @Input() applicationId: any;
   @Input() showEdit: boolean;
-  // @Input() occupationRequired: boolean;
+  occupationRequired: boolean;
 
-  constructor() { }
+  constructor(private qdeHttp: QdeHttpService,) {}
 
   ngOnInit() {
-    console.log("QDE in View form applicant: ", this.qde);
+    // console.log("this.slegthjdfbgvkbvkjdsfnkvndf",this.selectedOccupation["value"])
+    // this.selectValueChangedOccupation();
   }
+  // selectValueChangedOccupation() {
+  //   this.qdeHttp.occupationLovCompanyDetails(this.selectedOccupation.value).subscribe(response => {
+  //     this.occupationRequired = response["ProcessVariables"]["status"]
+  //     console.log("khgjfshdkgjvdfhbngfkjjgfd,b", this.occupationRequired)
+  //   });
+  // }
 
 }

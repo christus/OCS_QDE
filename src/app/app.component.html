@@ -16,6 +16,17 @@
     </div>
     </div>
 </div>
+<div class="overlay" [ngClass]="{'active': isErrorCodeModal}"></div>
+<div class="logout_dialog bs-modal" id="biomatric-modal" [ngClass]="{'active': isErrorCodeModal}">
+    <a class="modal-close" (click)="isErrorCodeModal = false"><span class="icon icon-close"></span></a>
+    <div class="modal-body">
+    <h1>{{errorCodeMessage}}</h1>
+    <div class="btn-wrap">
+        <button class="btn btn-border" (click)="isErrorCodeModal = false">Ok</button>
+    </div>
+    </div>
+</div>
+
 <!-- <app-login-with-mpin></app-login-with-mpin> -->
 
 <!-- <app-forgot-mpin></app-forgot-mpin> -->
