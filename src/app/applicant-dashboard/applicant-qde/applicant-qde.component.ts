@@ -86,7 +86,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     email: "^\\w+([\.-]?\\w+)*@\\w+([\.-]?\\w+)*(\\.\\w{2,10})+$",
     revenue: "^[1-9][\\d]{0,10}([.][0-9]{0,4})?",
     sameDigit: '^0{6,10}|1{6,10}|2{6,10}|3{6,10}|4{6,10}|5{6,10}|6{6,10}|7{6,10}|8{6,10}|9{6,10}$',
-    sameDigitStd:'^0{2,10}|1{2,10}|2{2,10}|3{2,10}|4{2,10}|5{2,10}|6{2,10}|7{2,10}|8{2,10}|9{2,10}$',
+    sameDigitStd:'^0{2,10}|1{4,10}|2{4,10}|3{4,10}|4{4,10}|5{4,10}|6{4,10}|7{4,10}|8{4,10}|9{4,10}$',
     // revenue:"^[\\d]{0,14}([.][0-9]{0,4})?"
 
   };
@@ -1116,7 +1116,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   addRemoveResidenceNumberField() {
     this.isAlternateResidenceNumber = !this.isAlternateResidenceNumber;
-	this.alternateResidenceNumberStdCode = ""
+	  this.alternateResidenceNumberStdCode = ""
     this.alternateResidenceNumberPhoneNumber = ""
   }
 

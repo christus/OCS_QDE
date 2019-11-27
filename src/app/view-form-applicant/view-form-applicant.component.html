@@ -108,10 +108,10 @@
                   </div>
               </div>
           </div>
-          <div class="row last">
+          <div class="row">
               <div class="col-6">
-                  <div class="form-group typ-select">
-                      <span class="control-title1">Date of Birth</span>
+                  <div class="form-group">
+                      <span class="control-title">Date of Birth</span>
                       <div class="row">
                           <div class="col-4 padd0">
                               <kendo-dropdownlist class="form-control"
@@ -490,7 +490,29 @@
                 </div>
             </div>
         </div>
-
+    </div>
+    <div class="bs-form">
+            <div class="row">
+                    <div class="col-12">
+                        <h5 class="subtitle">Prefered mailing address</h5>
+                        <div class="bs-radio">
+                            <input disabled="true" class="disabled" spellcheck="false" type="radio" name="prefredMail" [value]="1"
+                                [checked]="qde.application.applicants[applicantIndex].communicationAddress.preferedMailingAddress == true"
+                                fieldFill id="current-add-mail" />
+                            <label for="current-add-mail" style="font-size: 1.5vw">
+                              Current Address
+                            </label>
+                        </div>
+                        <div class="bs-radio">
+                                <input disabled="true" class="disabled" spellcheck="false" type="radio" name="prefredMail" [value]="2" 
+                                [checked]="qde.application.applicants[applicantIndex].communicationAddress.preferedMailingAddress == false"
+                                fieldFill id="permanent-add-mail" />
+                            <label for="permanent-add-mail"  style="font-size: 1.5vw">
+                              Permanent Address
+                            </label>
+                        </div>
+                    </div>
+                </div>
         <div class="row">
             <div class="col-12">
                 <div class="form-group typ-range">
@@ -840,9 +862,9 @@
                   </div>
               </div>
           </div>
-          <div class="row" *ngIf="selectedOccupation.key == 'Retired' || selectedOccupation.key == 'retired' || selectedOccupation.key != 'RETIRED'">
+          <div class="row" *ngIf="selectedOccupation.key == 'Retired' || selectedOccupation.key == 'retired' || selectedOccupation.key == 'RETIRED'">
                 <div class="col-12">
-                    <h5 class="subtitle">Do you recieve pension</h5>
+                    <h5 class="subtitle">Do you receive pension</h5>
                     <div class="bs-radio">
                         <input disabled="true" class="disabled" spellcheck="false" type="radio" name="pensioner" [value]="1"
                             [checked]="qde.application.applicants[applicantIndex].occupation.pensioner == true"
@@ -862,7 +884,7 @@
                     </div>
                 </div>
             </div>
-          <div class="row"  *ngIf="selectedOccupation.key == 'Retired' || selectedOccupation.key == 'retired' || selectedOccupation.key != 'RETIRED' && qde.application.applicants[applicantIndex].occupation.pensioner == true">
+          <div class="row"  *ngIf="selectedOccupation.key == 'Retired' || selectedOccupation.key == 'retired' || selectedOccupation.key == 'RETIRED' && qde.application.applicants[applicantIndex].occupation.pensioner == true">
             <div class="col-4">
                     <div class="form-group inr">
                             <input type="text" class="form-control" id="revenue"
@@ -1045,8 +1067,8 @@
               </div>
               <div class="row">
                   <div class="col-4">
-                          <div class="form-group typ-select">
-                                  <span class="control-title1">Date of Incorporation</span>
+                          <div class="form-group">
+                                  <span class="control-title">Date of Incorporation</span>
                                   <div class="row">
                                       <div class="col4 padd0">
                                           <kendo-dropdownlist class="form-control"

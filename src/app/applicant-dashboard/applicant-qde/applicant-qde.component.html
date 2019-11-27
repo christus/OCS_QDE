@@ -1232,7 +1232,7 @@
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                               id="amount" tabindex="1" autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].maritalStatus.amount"
-                              #amount="ngModel" name="amount" maxlength="16" fieldFill
+                              #amount="ngModel" name="amount" maxlength="10" fieldFill
                               (input)="checkAmountLimit($event,50000,1000000)"
                               pattern="{{regexPattern.amount}}" />
 
@@ -1244,7 +1244,6 @@
                             <div *ngIf="isLessAmount" class="invalid-feedback">{{errors.maritialStatus.salaryAmount.minamount}}{{requirMinAmout}}</div>
                             <div *ngIf="(amount.touched || amount.dirty)" class="invalid-feedback">
                               <!-- <div *ngIf="amount.errors?.required">{{errors.maritialStatus.salaryAmount.required}}</div> -->
-                              <div *ngIf="isLessAmount">{{errors.maritialStatus.salaryAmount.minamount}}{{requirMinAmout}}</div>
                               <div *ngIf="amount.errors?.pattern">{{errors.maritialStatus.salaryAmount.invalid}}</div>
                             </div>
                           </div>
