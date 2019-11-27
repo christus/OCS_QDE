@@ -39,7 +39,7 @@ export class AppComponent implements OnInit{
   errorList = [];
   isErrorCodeModal : boolean = false;
   errorCodeMessage : string;
-
+  isEmpty : boolean;
   isMenuBarShown:boolean;
 
 
@@ -65,7 +65,9 @@ export class AppComponent implements OnInit{
 
     var that = this;
 
-
+    if(this.errorList!=undefined && this.errorList.length==0){
+      this.isEmpty = true;
+    }
     console.log("isErrorModal", this.isErrorModal);
 
     document.addEventListener('backbutton', () => {
@@ -135,19 +137,19 @@ export class AppComponent implements OnInit{
 
     this.cds.showError.subscribe((value) => {
       let errorCode = value[1];
-      this.qdeHttp.adminGetLov().subscribe(res=>{
-        if(res['ProcessVariables']['status']){
-          this.errorList = JSON.parse(res['ProcessVariables']['lovs']).LOVS.error_message_mapping;
-          for(var x in this.errorList){
-            if(this.errorList[x].description== errorCode){
-              this.errorCodeMessage = this.errorList[x].id;
-              this.isErrorCodeModal = value[0];
-              console.log(this.errorList[x].id);
-              break;
-            }
-          }
+      let token = localStorage.getItem("token");
+      if (this.isEmpty == true && (token !="" || token!=null)) {
+        let error = this.fillErrorList();
+        if (error == true) {
+          let result = this.errorList.find(v=> v.key == errorCode);
+          this.errorCodeMessage = result.value;
+          this.isErrorCodeModal = value[0];
         }
-      })
+      } else if (this.isEmpty == false) {
+          let result = this.errorList.find(v=> v.key == errorCode);
+          this.errorCodeMessage = result.value;
+          this.isErrorCodeModal = value[0];
+      }
     });
   }
 
@@ -159,6 +161,21 @@ export class AppComponent implements OnInit{
       console.log("Tab key pressed", event);
       event.preventDefault();
     }
+  }
+
+  fillErrorList(): boolean{
+    var returnBool;
+    this.qdeHttp.getAllLov().subscribe(res=>{
+      if(res['ProcessVariables']['status']){
+        let lov = JSON.parse(res['ProcessVariables']['lovs']);
+        this.errorList = lov.LOVS.error_message_mapping;
+        this.isEmpty = false;
+        returnBool = true;
+      }else{
+        returnBool = false;
+      }
+    });
+    return returnBool;
   }
 
 }

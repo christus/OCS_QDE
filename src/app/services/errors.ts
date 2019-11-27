@@ -274,14 +274,14 @@ export const errors: any = {
   revenueDetails: {
     revenue:{
       required: "Receipt/Gross turnover is mandatory",
-      invalid: "Receipt/Gross turnover is not valid",
+      invalid: "Invalid Receipt/Gross turnover. Alphabets and Special Characters not allowed",
       minamount: "Amount should be greater than or equal to Rs.",
  	    maxamount: "Amount should be less than or equal to Rs.",
 
     },
     annualNetincome:{
       required:"Annual Net Profit is mandatory",
-      invalid:"Invalid Annual Net Profit",
+      invalid:"Invalid Annual Net Profit. Alphabets and Special Characters not allowed",
       minamount: "Amount should be greater than or equal to Rs.",
 	    maxamount: "Amount should be less than or equal to Rs.",
     },

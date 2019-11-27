@@ -158,6 +158,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   timeLeft : number = 180;
   isOTPExpired:boolean = false;
   isOTPEmpty: boolean = true;
+  itemBeingChecked : string;
 
   activeTab: number = 0;
   dob: {day: Item, month: Item, year: Item} = { day: {key: "DD", value: "DD"}, month: {key: "MM", value: "MM"}, year: {key: "YYYY", value: "YYYY"} };
@@ -4510,10 +4511,12 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       console.log("min ",event,minAmount,maxAmount);
       this.isLessAmount = true;
       this.requirMinAmout = minAmount;
+      this.itemBeingChecked = event.target.name;
     } else if(n >= maxAmount && !maxAmount){
       console.log("max ",event,minAmount,maxAmount);
       this.isMaxAmount = true;
       this.requirMaxAmout = maxAmount;
+      this.itemBeingChecked = event.target.name;
     } else {
       this.isLessAmount = false;
       this.requirMinAmout="";

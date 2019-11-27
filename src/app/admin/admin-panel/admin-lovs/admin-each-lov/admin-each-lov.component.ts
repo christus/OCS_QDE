@@ -27,6 +27,8 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
   isLoanPurpose:boolean = false;
   isFinancialApplicant: boolean = false;
   isMale: boolean;
+  isConfirmModal : boolean;
+  delIndex;
 
   @ViewChildren('lovsElements') lovsElements: QueryList<ElementRef>;
 
@@ -92,8 +94,8 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
         this.isErrorModal = true;
         this.errorMsg='Please enter all values';
         //alert("Please enter all values");
-        this.refresh();
-      }
+        //this.refresh();
+      }else{
 
       this.qdeHttp.insertUpdateEachLovs(this.lovs[index]).subscribe(res => {
         if(res['ProcessVariables']['status'] == true) {
@@ -101,12 +103,13 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
           this.lovs[index].isEdit = true;
           this.lovs[index].id = res['ProcessVariables']['id'];
         } else if(res['ProcessVariables']['errorMessage'] != "") {
-          this.refresh();
+          //this.refresh();
           this.isErrorModal = true;
           this.errorMsg=res['ProcessVariables']['errorMessage'];
           //alert(res['ProcessVariables']['errorMessage']);
         }
       });
+    }
     } else {
       console.log(this.lovs[index]);
       this.isErrorModal = true;
@@ -157,14 +160,16 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
   }
 
   delete(index) {
-    let dude = this.lovs[index];
-    if(confirm("Are you sure?")) {
-      this.qdeHttp.softDeleteLov(dude).subscribe(res => {
-        // console.log(res['ProcessVariables']);
-        this.refresh();
-      });
-      this.tempLovs = this.lovs;
-    } 
+    this.delIndex = this.lovs[index];
+    this.isConfirmModal = true; 
+  }
+
+  confirmDelete(){
+        this.isConfirmModal = false;
+        this.qdeHttp.softDeleteLov(this.delIndex).subscribe(res => {
+          this.refresh();
+        });
+        this.tempLovs = this.lovs;
   }
 
 

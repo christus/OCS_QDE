@@ -3245,6 +3245,27 @@ createOrUpdatePersonalDetails(qde) {
     return this.callPost(workflowId, projectId, body);
   }
 
+  getAllLov(){
+    const processId = environment.api.lov.processId;
+    const workflowId = environment.api.lov.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: {},
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = {
+      'processVariables':
+      JSON.stringify(requestEntity)
+    };
+
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
+  }
+
   createSession(appilcantionId){
     const body = {
       'userId': appilcantionId,

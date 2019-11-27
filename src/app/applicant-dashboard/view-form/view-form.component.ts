@@ -981,7 +981,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
       if(res["ProcessVariables"]['responseApplicationId'] != null) {
         if(res["ProcessVariables"]['responseApplicationId'] == "") {
           alert("Mandatory fields missing.");
-        } else {
+        } else if(res['ProcessVariables']['status']){
           this.qdeHttp.omniDocsApi(this.applicationId).subscribe(res1=>{
             if(res1["ProcessVariables"]["status"] == true){
               this.qdeHttp.setStatusApi(this.applicationId, statuses["DDE Submitted"]).subscribe(res2 => {}, err => {});
