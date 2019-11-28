@@ -22,7 +22,7 @@ export class CommonDataService {
   showLogout$: BehaviorSubject<any> = new BehaviorSubject<boolean>(false);
   public showLogout = this.showLogout$.asObservable();
 
-  showError$: BehaviorSubject<any> = new BehaviorSubject<boolean>(false);
+  showError$: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   public showError = this.showError$.asObservable();
 
   setErrorData(data: boolean, errorCode: string) {

@@ -492,8 +492,8 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
           this.isSubmitDisabled = false;
         } else {
           this.isSubmitDisabled = true;
-          // this.isErrorModal = true;
-          // this.errorMessage = res['ProcessVariables']['description'];
+          this.isErrorModal = true;
+          this.errorMessage = res['ProcessVariables']['description'];
         }
       },
       err => {

@@ -17,10 +17,11 @@
     </div>
 </div>
 <div class="overlay" [ngClass]="{'active': isErrorCodeModal}" ></div>
-<div class="logout_dialog bs-modal" id="biomatric-modal" [ngClass]="{'active': isErrorCodeModal}" >
+<div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isErrorCodeModal}" >
     <a class="modal-close" (click)="isErrorCodeModal = false"><span class="icon icon-close"></span></a>
     <div class="modal-body">
     <h1>{{errorCodeMessage}}</h1>
+    <br><br><br>
     <div class="btn-wrap">
         <button class="btn btn-border" (click)="isErrorCodeModal = false">Ok</button>
     </div>

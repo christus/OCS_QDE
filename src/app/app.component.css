@@ -14,3 +14,6 @@
 .logout_dialog.bs-modal .modal-body {
     padding: 1.91vw 0;
 }
+.bs-modal .modal-body{
+    word-wrap: break-word;
+}

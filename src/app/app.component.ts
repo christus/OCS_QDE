@@ -23,6 +23,7 @@ import { QdeHttpService } from './services/qde-http.service';
 export class AppComponent implements OnInit{
 
   @ViewChild("myDiv") divView: ElementRef;
+  @ViewChild("adminErrorDiv") adminDivView: ElementRef;
 
 
   isMobile:any;
@@ -41,6 +42,7 @@ export class AppComponent implements OnInit{
   errorCodeMessage : string;
   isEmpty : boolean;
   isMenuBarShown:boolean;
+  noErrors : boolean;
 
 
 
@@ -136,20 +138,36 @@ export class AppComponent implements OnInit{
     });
 
     this.cds.showError.subscribe((value) => {
+      if(Array.isArray(value) && value.length!=0){
+      let status = value[0];
       let errorCode = value[1];
       let token = localStorage.getItem("token");
-      if (this.isEmpty == true && (token !="" || token!=null)) {
-        let error = this.fillErrorList();
-        if (error == true) {
+      if (this.isEmpty == true && token!=null) {
+        this.fillErrorList().then(()=>{
+          if (this.noErrors == true) {
+            if((this.adminDivView!=null && this.adminDivView!=undefined)){
+              if((this.adminDivView.nativeElement.classList.contains('active'))){
+              console.log("errorModal active");
+              }
+            }else {
+            let result = this.errorList.find(v=> v.key == errorCode);
+            this.errorCodeMessage = result.value;
+            this.isErrorCodeModal = status;
+            }
+          }
+        })
+      } else if (this.isEmpty == false) {
+        if((this.adminDivView!=null && this.adminDivView!=undefined)){
+        if((this.adminDivView.nativeElement.classList.contains('active'))){
+          console.log("errorModal active");
+          }
+        }else {
           let result = this.errorList.find(v=> v.key == errorCode);
           this.errorCodeMessage = result.value;
           this.isErrorCodeModal = value[0];
         }
-      } else if (this.isEmpty == false) {
-          let result = this.errorList.find(v=> v.key == errorCode);
-          this.errorCodeMessage = result.value;
-          this.isErrorCodeModal = value[0];
       }
+    }
     });
   }
 
@@ -163,19 +181,20 @@ export class AppComponent implements OnInit{
     }
   }
 
-  fillErrorList(): boolean{
-    var returnBool;
-    this.qdeHttp.getAllLov().subscribe(res=>{
-      if(res['ProcessVariables']['status']){
-        let lov = JSON.parse(res['ProcessVariables']['lovs']);
-        this.errorList = lov.LOVS.error_message_mapping;
-        this.isEmpty = false;
-        returnBool = true;
-      }else{
-        returnBool = false;
-      }
+  fillErrorList(){
+    return new Promise(resolve=>{
+      this.qdeHttp.getAllLov().subscribe(res=>{
+        if(res['ProcessVariables']['status']){
+          let lov = JSON.parse(res['ProcessVariables']['lovs']);
+          this.errorList = lov.LOVS.error_message_mapping;
+          this.isEmpty = false;
+          this.noErrors = true;
+          resolve();
+        }else{
+          this.noErrors = false;
+        }
+      });
     });
-    return returnBool;
   }
 
 }

@@ -199,6 +199,7 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
               value: v['value'],
               isEdit: true,
               description: v['description'],
+              isRequired: v['isRequired'],
               id: v['id'] ? v['id'] : null,
               stateId: v['stateId'],
               stateName: v['stateName'],
