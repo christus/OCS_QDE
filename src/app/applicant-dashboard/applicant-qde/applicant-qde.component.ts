@@ -1414,6 +1414,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
               this.qde.application.applicants[this.applicantIndex].personalDetails.title = processVariables["applicantTitleId"];
             }
             this.selectedTitle = this.getApplicantTitle(processVariables["applicantTitleId"]);
+            // set deupe is require
+            this.qde.application.applicants[this.applicantIndex].dedupeDone = false;
             this.createOrUpdatePanDetailsSub2 = this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
               // If successfull
               if (response["ProcessVariables"]["status"] == true) {
@@ -1469,6 +1471,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         // }
       );
       } else {
+        // set deupe is require
+        this.qde.application.applicants[this.applicantIndex].dedupeDone = true;
         this.createOrUpdatePanDetailsSub2 = this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
           // If successfull
           if (response["ProcessVariables"]["status"] == true) {
@@ -1860,7 +1864,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
             this.isErrorModal = true;
             this.errorMessage = "Something went wrong, please try again later.";
           });
-          //  check if pan is null or empty
+          //  check if pan is null or empty and dedupe is false
           if (this.qde.application.applicants[this.applicantIndex].pan.panNumber !="" 
             && this.qde.application.applicants[this.applicantIndex].pan.panNumber !=null 
             && this.qde.application.applicants[this.applicantIndex].dedupeDone == false) {
@@ -4400,14 +4404,17 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.requirMaxAmout="";
     }
   }
-
-  checkAmountLimitMonthlyIncome(event) {
+  requirMinAmout1;
+  requirMaxAmout1;
+  checkAmountLimitMonthlyIncome(event,minAmount?,maxAmount?) {
     let n = parseInt(this.getNumberWithoutCommaFormat(event.target.value));
     if(n < 1000){
       this.isNumberLessThan1k = true;
+      this.requirMinAmout1=minAmount;
     }
     else if(n >= 1000000001){
       this.isNumberMoreThan100cr = true;
+      this.requirMaxAmout1 =maxAmount;
     }
     else {
       this.isNumberLessThan1k = false;

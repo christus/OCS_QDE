@@ -1194,7 +1194,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
           if(response["ProcessVariables"]["status"] && response['ProcessVariables']['isValidPan'] == true) { // Boolean to check from nsdl website whether pan is valid or not
 
             this.qde.application.applicants[this.coApplicantIndex].pan.panVerified = true;
-
+            // set deupe is require
+            this.qde.application.applicants[this.coApplicantIndex].dedupeDone = false;
             this.createOrUpdatePanDetailsSub2 = this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
 
               console.log(response)
@@ -1255,6 +1256,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         // }
       );
       } else {
+         // set deupe is require
+         this.qde.application.applicants[this.coApplicantIndex].dedupeDone = true;
         this.createOrUpdatePanDetailsSub2 = this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
 
           console.log(response)
@@ -1568,9 +1571,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
           //   this.errorMessage = "Something went wrong, please try again later.";
           // }
           );
-             //  check if pan is null or empty
+             //  check if pan is null or empty and dedupe is false
           if (this.qde.application.applicants[this.coApplicantIndex].pan.panNumber !=""
-          && this.qde.application.applicants[this.coApplicantIndex].pan.panNumber !=null) {
+          && this.qde.application.applicants[this.coApplicantIndex].pan.panNumber !=null
+          && this.qde.application.applicants[this.coApplicantIndex].dedupeDone == false) {
           this.qdeHttp.duplicateApplicantCheck(this.qde.application.applicants[this.coApplicantIndex].applicantId).subscribe(res => {
 
             if(res['ProcessVariables']['status'] == true) {
@@ -2367,24 +2371,30 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
           // }
         );
           let result = this.parseJson(response["ProcessVariables"]["response"]);
-          this.qdeHttp.duplicateApplicantCheck(this.qde.application.applicants[this.coApplicantIndex].applicantId).subscribe(res => {
+          //  check if pan is null or empty and dedupe is false
+          if (this.qde.application.applicants[this.coApplicantIndex].pan.panNumber !=""
+          && this.qde.application.applicants[this.coApplicantIndex].pan.panNumber !=null
+          && this.qde.application.applicants[this.coApplicantIndex].dedupeDone == false) {
+            this.qdeHttp.duplicateApplicantCheck(this.qde.application.applicants[this.coApplicantIndex].applicantId).subscribe(res => {
 
-            if(res['ProcessVariables']['status'] == true) {
-              if(res['ProcessVariables']['response'] == '' || res['ProcessVariables']['response'] == null) {
-                this.closeDuplicateModal();
-              } else {
-                this.duplicates = JSON.parse(res['ProcessVariables']['response'])['duplicates'];
-                if(this.duplicates.length > 0 ) {
-                  this.openDuplicateModal();
+              if(res['ProcessVariables']['status'] == true) {
+                if(res['ProcessVariables']['response'] == '' || res['ProcessVariables']['response'] == null) {
+                  this.closeDuplicateModal();
+                } else {
+                  this.duplicates = JSON.parse(res['ProcessVariables']['response'])['duplicates'];
+                  if(this.duplicates.length > 0 ) {
+                    this.openDuplicateModal();
+                  }
                 }
               }
             }
-          }
-          // , error => {
-          //   this.isErrorModal = true;
-          //   this.errorMessage = "Something went wrong, please try again later.";
-          // }
-        );
+          
+            // , error => {
+            //   this.isErrorModal = true;
+            //   this.errorMessage = "Something went wrong, please try again later.";
+            // }
+          );
+        }
         } else {
           // Throw Invalid Pan Error
         }
@@ -4526,14 +4536,16 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       this.requirMaxAmout="";
     }
   }
-
-  checkAmountLimitMonthlyIncome(event) {
+  requirMinAmout1;
+  checkAmountLimitMonthlyIncome(event,minAmount?,maxAmount?) {
     let n = parseInt(this.getNumberWithoutCommaFormat(event.target.value));
     if(n < 1000){
       this.isNumberLessThan1k = true;
+      this.requirMinAmout1 = minAmount;
     }
     else if(n >= 1000000001){
       this.isNumberMoreThan100cr = true;
+      
     }
     else {
       this.isNumberLessThan1k = false;

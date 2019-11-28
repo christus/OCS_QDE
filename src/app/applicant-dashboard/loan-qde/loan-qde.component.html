@@ -4,9 +4,9 @@
 
     <div class="lyt-product" *ngIf="isLoanProductPage == true">
       <ul class="product-list">
-          <li class="item-product typ-loan" *ngFor="let lt of loanType;" (click)="selectLoanType(lt)">
+          <li class="item-product typ-loan" *ngFor="let lt of loanType;" (click)="selectLoanType(lt)" [ngClass]="{ 'disabled': lt.key=='Other Products'}">
               <span class="icon icon-home-loan"></span>
-              <h3 class="product-title">{{lt.key}}</h3>
+              <h3 class="product-title" >{{lt.key}}</h3>
           </li>
       </ul>      
     </div>
@@ -210,7 +210,7 @@
                                   [data]="propertyTypes" 
                                   textField="key" 
                                   valueField="value"
-                                  
+                                  [valuePrimitive]="true"
                                   [(ngModel)]="selectedPropertyType">
                                 </kendo-dropdownlist>
                               </div>

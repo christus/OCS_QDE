@@ -931,7 +931,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
         return;
       }
 
-      let prepertyType = this.selectedPropertyType.value;
+      let prepertyType = Number(this.selectedPropertyType.value);
 
       // this.qde.application.loanDetails.propertyType = {
       //   propertyIdentified: this.isPropertyIdentified,
