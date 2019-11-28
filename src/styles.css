@@ -4535,7 +4535,7 @@ img {
 
 .bs-card .bs-form .form-group .control-title {
 	font-size: .78vw;
-	line-height: 1.17vw;
+	line-height: 0.17vw;
 	position: absolute;
 	top: -14px;
 	left: 0
@@ -4548,7 +4548,8 @@ img {
 
 .bs-card .bs-form .form-group label {
 	font-size: 1.64vw;
-	line-height: 3.13vw
+	line-height: 3.13vw;
+	width: 31vw;
 }
 
 .bs-card .bs-form .form-group:after {

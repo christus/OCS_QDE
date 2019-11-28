@@ -413,6 +413,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     this.cds.changeViewFormVisible(true);
     this.cds.changeLogoutVisible(true);
     this.cds.changeHomeVisible(true);
+    // this.contactExtraFieldRemoval();
 
     // console.log("QDE:::: ", route.data['qde']);
     // this.panslideSub = this.cds.panslide.subscribe(val => {
@@ -911,10 +912,17 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
     if(this.tabName == this.fragments[10] && this.qde.application.applicants[this.coApplicantIndex].incomeDetails.incomeConsider == false) {
       this.router.navigate([], {queryParams: {tabName: this.fragments[8], page: goToSlideNumber}});
-    } else if(this.page <= 1) {
+    } 
+    else if(this.tabName == this.fragments[4]){
+      //for tab switch from address to phone
+      this.contactExtraFieldRemoval();
+      this.router.navigate([], {queryParams: {tabName: this.fragments[this.activeTab-1], page: goToSlideNumber}});
+    } 
+    else if(this.page <= 1) {
       // Switch Tabs
       this.router.navigate([], {queryParams: {tabName: this.fragments[this.activeTab-1], page: goToSlideNumber}});
-    } else {
+    } 
+    else {
       // go to previous slide
       this.router.navigate([], {queryParams: {tabName: this.tabName, page: this.page-1}});
     }
@@ -1604,6 +1612,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   submitContactDetails(form: NgForm) {
 
     if(this.isTBMLoggedIn) {
+      this.contactExtraFieldRemoval();
       this.tabSwitch(4, 1);
     } else {
       event.preventDefault();
@@ -1636,6 +1645,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
           //   this.errorMessage = "Something went wrong, please try again later.";
           // }
         );
+          this.contactExtraFieldRemoval();
           this.tabSwitch(4, 1);
         } else {
           // Throw Invalid Pan Error
@@ -4040,15 +4050,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       //   }
       // }
       // else{
-      if(this.qde.application.applicants[this.coApplicantIndex].contactDetails.alternateEmailId == "" && this.isAlternateEmailId == true){
-        this.addRemoveEmailField();
-      }
-      if(this.qde.application.applicants[this.coApplicantIndex].contactDetails.alternateMobileNumber == null && this.isAlternateMobileNumber == true){
-        this.addRemoveMobileNumberField();
-      }
-      if(this.qde.application.applicants[this.coApplicantIndex].contactDetails.alternateResidenceNumber == "-" && this.isAlternateResidenceNumber == true){
-        this.addRemoveResidenceNumberField();
-      }
+      this.contactExtraFieldRemoval();
       this.tabSwitch(3, 1);
       // }
     } else {
@@ -4541,5 +4543,17 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
   getNumberWithoutCommaFormat(x: string) : string {
     return x ? x+"".split(',').join(''): '';
+  }
+
+    contactExtraFieldRemoval(){
+    if(this.qde.application.applicants[this.coApplicantIndex].contactDetails.alternateEmailId == "" && this.isAlternateEmailId == true){
+      this.addRemoveEmailField();
+    }
+    if(this.qde.application.applicants[this.coApplicantIndex].contactDetails.alternateMobileNumber == null && this.isAlternateMobileNumber == true){
+      this.addRemoveMobileNumberField();
+    }
+    if(this.qde.application.applicants[this.coApplicantIndex].contactDetails.alternateResidenceNumber == "-" && this.isAlternateResidenceNumber == true){
+      this.addRemoveResidenceNumberField();
+    }
   }
 }

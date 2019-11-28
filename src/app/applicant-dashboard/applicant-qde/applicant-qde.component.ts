@@ -412,6 +412,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.cds.changeViewFormVisible(true);
     this.cds.changeLogoutVisible(true);
     this.cds.changeHomeVisible(true);
+    this.contactExtraFieldRemoval();
 
     // this.panslideSub = this.cds.panslide.subscribe(val => {
     //   this.panslide = val;
@@ -1095,10 +1096,17 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     // alert(this.tabName == 9 && this.qde.application.applicants[this.applicantIndex].incomeDetails.incomeConsider == false);
     if(this.tabName == this.fragments[9] && this.qde.application.applicants[this.applicantIndex].incomeDetails.incomeConsider == false) {
       this.router.navigate([], {queryParams: {tabName: this.fragments[7], page: goToSlideNumber}});
-    } else if(this.page <= 1) {
+    }
+    else if(this.tabName == this.fragments[3] || this.tabName == this.fragments[2]){
+      //for tab switch from address to phone
+      this.contactExtraFieldRemoval();
+      this.router.navigate([], {queryParams: {tabName: this.fragments[this.activeTab-1], page: goToSlideNumber}});
+    } 
+    else if(this.page <= 1) {
       // Switch Tabs
       this.router.navigate([], {queryParams: {tabName: this.fragments[this.activeTab-1], page: goToSlideNumber}});
-    } else {
+    }
+    else {
         // go to previous slide
       this.router.navigate([], {queryParams: {tabName: this.tabName, page: this.page-1}});
     }
@@ -1915,6 +1923,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     try {
       this.ngxService.start();
     if (this.isTBMLoggedIn) {
+      this.contactExtraFieldRemoval();
       this.goToExactPageAndTab(3, 1);
     } else {
 
@@ -1945,6 +1954,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
               this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
+          this.contactExtraFieldRemoval();
           this.goToExactPageAndTab(3, 1);
         }
         // else {
@@ -4106,36 +4116,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   closeDuplicateModal() {
     this.isDuplicateModalShown = false;
     if (this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
-      //To remove extra e-mail field
-      // if(this.qde.application.applicants[this.applicantIndex].contactDetails.alternateEmailId == ""){
-      //   this.addRemoveEmailField();
-      //   //To remove extra mobile number field
-      //   if(this.qde.application.applicants[this.applicantIndex].contactDetails.alternateMobileNumber == null){
-      //     this.addRemoveMobileNumberField();
-      //     //To remove extra phone number field
-      //     if(this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber == "-"){
-      //       this.addRemoveResidenceNumberField();
-      //       this.goToExactPageAndTab(2, 1);
-      //     }
-      //     else{
-      //       this.goToExactPageAndTab(2, 1);
-      //     }
-      //   }
-      //   else{
-      //     this.goToExactPageAndTab(2, 1);
-      //   }
-      // }
-      // else{
-
-      if(this.qde.application.applicants[this.applicantIndex].contactDetails.alternateEmailId == "" && this.isAlternateEmailId == true){
-        this.addRemoveEmailField();
-      }
-      if(this.qde.application.applicants[this.applicantIndex].contactDetails.alternateMobileNumber == null && this.isAlternateMobileNumber == true){
-        this.addRemoveMobileNumberField();
-      }
-      if(this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber == "-" && this.isAlternateResidenceNumber == true){
-        this.addRemoveResidenceNumberField();
-      }
+      this.contactExtraFieldRemoval();
       this.goToExactPageAndTab(2, 1);
       // }
     } else {
@@ -4436,5 +4417,17 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   getNumberWithoutCommaFormat(x: string) : string {
     return x ? x+"".split(',').join(''): '';
+  }
+
+  contactExtraFieldRemoval(){
+    if(this.qde.application.applicants[this.applicantIndex].contactDetails.alternateEmailId == "" && this.isAlternateEmailId == true){
+      this.addRemoveEmailField();
+    }
+    if(this.qde.application.applicants[this.applicantIndex].contactDetails.alternateMobileNumber == null && this.isAlternateMobileNumber == true){
+      this.addRemoveMobileNumberField();
+    }
+    if(this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber == "-" && this.isAlternateResidenceNumber == true){
+      this.addRemoveResidenceNumberField();
+    }
   }
 }

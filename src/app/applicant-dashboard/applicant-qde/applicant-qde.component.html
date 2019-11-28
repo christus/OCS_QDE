@@ -13,7 +13,7 @@
           </li>
           <li class="tab-link"
             [ngClass]="{'active': (activeTab == 2), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
-            <a href="javascript:void(0);" (click)="goToExactPageAndTab(2, 1)">contact details</a>
+            <a href="javascript:void(0);" (click)="goToExactPageAndTab(2, 1); contactExtraFieldRemoval()">contact details</a>
           </li>
           <li class="tab-link"
             [ngClass]="{'active': (activeTab == 3), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">

@@ -13,7 +13,7 @@
                     <a href="javascript:void(0);" (click)="tabSwitch(2, 1)">personal details</a>
                   </li>
                   <li class="tab-link" [ngClass]="{'not-visible': isTabDisabled, 'active': (activeTab == 3), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
-                    <a href="javascript:void(0);" (click)="tabSwitch(3, 1)">contact details</a>
+                    <a href="javascript:void(0);" (click)="tabSwitch(3, 1); contactExtraFieldRemoval()">contact details</a>
                   </li>
                   <li class="tab-link" [ngClass]="{'not-visible': isTabDisabled, 'active': (activeTab == 4), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
                     <a href="javascript:void(0);" (click)="tabSwitch(4, 1)">communication address</a>

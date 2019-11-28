@@ -2,6 +2,7 @@
     <button [routerLink]="['/applicant', qde.application.applicants[applicantIndex].applicantId]" class="btn btn-default edit">Edit</button>
 </div>
 <!-- Individual -->
+<ng-content></ng-content>
   <div class="bs-card" [ngClass]="{'incomplete': isIncomplete.pan}">
       <h3 class="card-title">PAN details</h3>
       <div class="bs-form">
@@ -1324,7 +1325,7 @@
                                   fieldFill
                                   spellcheck="false"
                                   required />
-                                  <label for="revenu">Recieved Gross Turnover</label>
+                                  <label for="revenu">Receipt/Gross Turnover</label>
 
 
                                   <span class="addon">
