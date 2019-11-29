@@ -3314,4 +3314,25 @@ createOrUpdatePersonalDetails(qde) {
     });
   }
 
+  getOfflinePaymentAmount(data) {
+    const processId = environment.api.getOfflinePaymentAmount.processId;
+    const workflowId = environment.api.getOfflinePaymentAmount.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      ProcessVariables: data,
+      processId: processId,
+      workflowId: workflowId,
+      projectId: projectId,
+    };
+
+    const body = {
+      "processVariables":
+      JSON.stringify(requestEntity)
+    };
+
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
+  }
+
 }

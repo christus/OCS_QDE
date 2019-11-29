@@ -1,4 +1,4 @@
-import { Other } from './../../models/qde.model';
+import { Other, Item } from './../../models/qde.model';
 import { Component, OnInit,  ViewChild, ElementRef, Renderer2, AfterViewInit } from '@angular/core';
 
 import * as Swiper from "swiper/dist/js/swiper.js";
@@ -14,6 +14,7 @@ import { QdeHttpService } from 'src/app/services/qde-http.service';
 import { Subscription } from 'rxjs';
 import { statuses, screenPages } from '../../app.constants';
 import { environment } from 'src/environments/environment';
+import { rS } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-offline-payment',
@@ -26,7 +27,7 @@ export class OfflinePaymentComponent implements OnInit {
   value: number = 0;
 
   chequeDrawn: string;
-  bankName: number;
+  bankName: Item;
   ifscCode: string;
   chequeNumber: number;
   amount: number;
@@ -131,7 +132,11 @@ export class OfflinePaymentComponent implements OnInit {
 
   getQdeDataSub: Subscription;
   qde: Qde;
+  totalFee:number;
+  baseFee: number;
+  taxAmount: number;
 
+  
   public defaultItem = environment.defaultItem;
 
   constructor(
@@ -177,9 +182,17 @@ export class OfflinePaymentComponent implements OnInit {
         this.tabSwitch(this.fragments.indexOf(localFragment));
       }
     });
-
+    
     const lov = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs);
     this.loanProviderList = lov.LOVS.loan_providers;
+    const data = { applicationId: this.applicationId};
+    this.qdeHttp.getOfflinePaymentAmount(data).subscribe(response =>
+      {
+        const responseData = response["ProcessVariables"];
+        this.baseFee =  parseInt(responseData.baseFee);
+        this.taxAmount =  parseInt(responseData.taxAmount);
+        this.amount =  parseInt(responseData.totalAmount);
+      })
   }
 
   ngAfterViewInit() {}
@@ -276,7 +289,10 @@ export class OfflinePaymentComponent implements OnInit {
       bankName: parseInt(form.value.loanProvider.value),
       ifscCode: form.value.ifsc,
       chequeNumber: parseInt(form.value.chequeNo),
-      amount: parseInt(form.value.amount)
+      amount: parseInt(form.value.amount),
+      baseFee: this.baseFee,
+      taxAmount: this.taxAmount
+
     }
 
     this.qdeHttp.chequeDetailsSave(data).subscribe(res => {
@@ -292,7 +308,7 @@ export class OfflinePaymentComponent implements OnInit {
   }
 
 
-  totalFee:number;
+  
   submitPaymentForm() {
   // this.qdeHttp.loginFee(parseInt(this.applicationId)).subscribe(res => {
   //   this.totalFee = res['ProcessVariables']['totalAmount'];

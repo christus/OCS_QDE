@@ -431,6 +431,10 @@ export const environment = {
       'workflowId': '107260700f7511eab9480242ac110002',
       'processId' : '108f10300f7511eabb200242ac110002'
     },
+    "getOfflinePaymentAmount":{
+      'workflowId': 'f512f03a8ea311e982270242ac110002',
+      'processId' : 'f53166328ea311e982270242ac110002'
+    },
     
   },
   appiyoDrive: "/d/drive/upload/",
