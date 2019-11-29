@@ -78,9 +78,9 @@ export class EligibilityClearedComponent implements OnInit {
       else if(res['ProcessVariables']['checkEligibility'].toLowerCase() == 'review'){
         this.isUnderReview = true;
       }
-      else{
-        alert("Server is Down!!!");
-      }
+      // else{
+      //   alert("Server is Down!!!");
+      // }
     });
 
 

@@ -234,9 +234,9 @@ export class EligibilityCheckComponent implements OnInit {
         this.showReview = true;
         this.commonDataService.setIsMainTabEnabled(false);
       }
-      else{
-        alert("Server is Down!!!");
-      }
+      // else{
+      //   alert("Server is Down!!!");
+      // }
     });
   }
 

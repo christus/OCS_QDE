@@ -89,7 +89,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
        existingLoans: {
            monthlyEmi: {
              required: "Monthly EMI is mandatory",
-             invalid: "Monthly EMI is not valid",
+             invalid: "Monthly EMI is not valid. Alphabets and Special Characters not allowed",
              minamount: "Amount should be greater than or equal to Rs.",
              maxamount: "Amount should be less than or equal to Rs."
            }
