@@ -931,7 +931,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
         return;
       }
 
-      let prepertyType = Number(this.selectedPropertyType.value);
+      // let prepertyType = Number(this.selectedPropertyType.value);
 
       // this.qde.application.loanDetails.propertyType = {
       //   propertyIdentified: this.isPropertyIdentified,
@@ -939,8 +939,10 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
       //   propertyClss: this.propertyClssValue,
       //   propertyArea: this.propertyAreaValue
       // };
+// console.log("update property value",form.value["propertyTypes1"].value);
+
       this.qde.application.loanDetails.propertyType.propertyIdentified = this.isPropertyIdentified;
-      this.qde.application.loanDetails.propertyType.propertyType = prepertyType.toString();
+      this.qde.application.loanDetails.propertyType.propertyType = form.value["propertyTypes1"].value;
       this.qde.application.loanDetails.propertyType.propertyClss = this.propertyClssValue;
       this.qde.application.loanDetails.propertyType.propertyArea = this.propertyAreaValue;
 

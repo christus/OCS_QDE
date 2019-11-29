@@ -208,9 +208,9 @@
                                   class="form-control" 
                                   name="propertyTypes1" 
                                   [data]="propertyTypes" 
-                                  textField="key" 
-                                  valueField="value"
-                                  [valuePrimitive]="true"
+                                  [textField]="'key'" 
+                                  [valueField]="'value'"
+                                  
                                   [(ngModel)]="selectedPropertyType">
                                 </kendo-dropdownlist>
                               </div>
