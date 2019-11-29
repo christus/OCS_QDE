@@ -138,7 +138,8 @@ export class AppComponent implements OnInit{
     });
 
     this.cds.showError.subscribe((value) => {
-      if(Array.isArray(value) && value.length!=0){
+      let role = localStorage.getItem("roles");
+      if(Array.isArray(value) && value.length!=0 && role!='["Admin"]'){
       let status = value[0];
       let errorCode = value[1];
       let token = localStorage.getItem("token");
