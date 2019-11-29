@@ -350,7 +350,7 @@
                                       </div>
                                   </div>
                               </div>
-                              <div class="row">
+                              <div class="row"  *ngIf="propertyPincodeValue">
                                   <div class="col-6">
                                       <div class="form-group filled" *ngIf="propertyPincodeValue">
                                             <input type="text" class="form-control" id="proprty-pin"
@@ -366,8 +366,8 @@
                                           <label for="prop-pin2">Property pincode</label>
                                       </div>
                                   </div>
-                                  <div class="col-6">
-                                      <div class="form-group" *ngIf="cityState">
+                                  <div class="col-6" *ngIf="cityState">
+                                      <div class="form-group">
                                             <input type="text" class="form-control" id="pro-city2"
                                             required
                                             ngModel

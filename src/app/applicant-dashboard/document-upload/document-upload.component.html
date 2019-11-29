@@ -485,8 +485,8 @@
                                         <div class="btn-wrap">
                                             <button class="btn btn-primary"
                                             (click)="goToNextSlide(incomeSlider2)"
-                                            [ngClass]="{'disabled': !selectedIncomeProof[applicantIndex] || selectedIncomeProof[applicantIndex].value ==0}"
-                                                [disabled]="!selectedIncomeProof[applicantIndex] || selectedIncomeProof[applicantIndex].value == 0">Next</button>
+                                            [ngClass]="{'disabled': !selectedIncomeProof[applicantIndex]}"
+                                                [disabled]="!selectedIncomeProof[applicantIndex]">Next</button>
                                         </div>
                                     </form>
                                   </div>
@@ -522,11 +522,12 @@
                                             <div class="image-wrapper-container">
                                                 <div class="bs-file">
                                                     <div *ngIf="!isMobile">
-                                                        <input  [readonly]="isTBMLoggedIn" id="incomeProofID" type="file" class="form-control"  (change)="setIncomeProof($event.target.files, applicantIndex)" >
+                                                        <input  [readonly]="isTBMLoggedIn" id="incomeProofID" type="file" class="form-control"  
+                                                        (change)="setIncomeProof($event.target.files, applicantIndex)" [disabled]="selectedIncomeProof[applicantIndex].value ==0" >
                                                         <label for="incomeProofID"><span>Click to photo / Upload document</span></label>
                                                     </div>
                                                     <div *ngIf="isMobile && !isTBMLoggedIn" (click)="openCamera('setIncomeProof')"  
-                                                    (change)="setIncomeProof($event.target.files, applicantIndex)">
+                                                    (change)="setIncomeProof($event.target.files, applicantIndex)" [ngClass]="{ 'disabled': selectedIncomeProof[applicantIndex].value ==0 }">
                                                         <label for="incomeProofID"><span>Click to photo / Upload document</span></label>    
                                                     </div>
                                                 </div>
@@ -602,8 +603,8 @@
                                         <div class="btn-wrap">
                                             <button class="btn btn-primary"
                                             (click)="goToNextSlide(bankingSlider2)"
-                                            [ngClass]="{'disabled': !selectedBankProof[applicantIndex] || selectedBankProof[applicantIndex].value ==0}"
-                                                [disabled]=" !selectedBankProof[applicantIndex] || selectedBankProof[applicantIndex].value == 0">Next</button>
+                                            [ngClass]="{'disabled': !selectedBankProof[applicantIndex]}"
+                                                [disabled]=" !selectedBankProof[applicantIndex]">Next</button>
                                         </div>
                                     </form>
                                   </div>
@@ -639,11 +640,12 @@
                                             <div class="image-wrapper-container">
                                                 <div class="bs-file">
                                                     <div *ngIf="!isMobile">
-                                                        <input  [readonly]="isTBMLoggedIn" id="bankingProofID" type="file" class="form-control"  (change)="setBankingProof($event.target.files, applicantIndex)" >
+                                                        <input  [readonly]="isTBMLoggedIn" id="bankingProofID" type="file" class="form-control"  
+                                                        (change)="setBankingProof($event.target.files, applicantIndex)" [disabled]="selectedBankProof[applicantIndex].value ==0" >
                                                         <label for="bankingProofID"><span>Click to photo / Upload document</span></label>
                                                     </div>
                                                     <div *ngIf="isMobile && !isTBMLoggedIn" (click)="openCamera('setBankingProof')"  
-                                                    (change)="setBankingProof($event.target.files, applicantIndex)">
+                                                    (change)="setBankingProof($event.target.files, applicantIndex)" [ngClass]="{ 'disabled': selectedBankProof[applicantIndex].value ==0 }">
                                                         <label for="bankingProofID"><span>Click to photo / Upload document</span></label>    
                                                     </div>
                                                 </div>
@@ -721,8 +723,8 @@
                                         <div class="btn-wrap">
                                             <button class="btn btn-primary"
                                             (click)="goToNextSlide(collateralSlider2)"
-                                            [ngClass]="{'disabled': !selectedCollateralProof[applicantIndex] || selectedCollateralProof[applicantIndex].value ==0}"
-                                                [disabled]="!selectedCollateralProof[applicantIndex] || selectedCollateralProof[applicantIndex].value == 0">Next</button>
+                                            [ngClass]="{'disabled': !selectedCollateralProof[applicantIndex]}"
+                                                [disabled]="!selectedCollateralProof[applicantIndex]">Next</button>
                                         </div>
                                     </form>
                                   </div>
@@ -733,11 +735,12 @@
                                                 <div class="image-wrapper-container">
                                                     <div class="bs-file">
                                                         <div *ngIf="!isMobile">
-                                                            <input  [readonly]="isTBMLoggedIn" id="collateralProofID" type="file" class="form-control"  (change)="setCollateralProof($event.target.files, applicantIndex)" >
+                                                            <input  [readonly]="isTBMLoggedIn" id="collateralProofID" type="file" class="form-control"  
+                                                            (change)="setCollateralProof($event.target.files, applicantIndex)" [disabled]= "selectedCollateralProof[applicantIndex].value ==0" >
                                                             <label for="collateralProofID"><span>Click to photo / Upload document</span></label>
                                                         </div>
                                                         <div *ngIf="isMobile && !isTBMLoggedIn" (click)="openCamera('setCollateralProof')"  
-                                                        (change)="setCollateralProof($event.target.files, applicantIndex)">
+                                                        (change)="setCollateralProof($event.target.files, applicantIndex)" [ngClass]="{ 'disabled': selectedCollateralProof[applicantIndex].value ==0 }">
                                                             <label for="collateralProofID"><span>Click to photo / Upload document</span></label>    
                                                         </div>
                                                     </div>

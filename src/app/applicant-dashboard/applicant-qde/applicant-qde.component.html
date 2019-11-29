@@ -13,7 +13,7 @@
           </li>
           <li class="tab-link"
             [ngClass]="{'active': (activeTab == 2), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
-            <a href="javascript:void(0);" (click)="goToExactPageAndTab(2, 1)">contact details</a>
+            <a href="javascript:void(0);" (click)="goToExactPageAndTab(2, 1); contactExtraFieldRemoval()">contact details</a>
           </li>
           <li class="tab-link"
             [ngClass]="{'active': (activeTab == 3), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
@@ -1232,7 +1232,7 @@
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                               id="amount" tabindex="1" autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].maritalStatus.amount"
-                              #amount="ngModel" name="amount" maxlength="16" fieldFill
+                              #amount="ngModel" name="amount" maxlength="10" fieldFill
                               (input)="checkAmountLimit($event,50000,1000000)"
                               pattern="{{regexPattern.amount}}" />
 
@@ -1244,7 +1244,6 @@
                             <div *ngIf="isLessAmount" class="invalid-feedback">{{errors.maritialStatus.salaryAmount.minamount}}{{requirMinAmout}}</div>
                             <div *ngIf="(amount.touched || amount.dirty)" class="invalid-feedback">
                               <!-- <div *ngIf="amount.errors?.required">{{errors.maritialStatus.salaryAmount.required}}</div> -->
-                              <div *ngIf="isLessAmount">{{errors.maritialStatus.salaryAmount.minamount}}{{requirMinAmout}}</div>
                               <div *ngIf="amount.errors?.pattern">{{errors.maritialStatus.salaryAmount.invalid}}</div>
                             </div>
                           </div>
@@ -2027,7 +2026,7 @@
                               (input)="checkAmountLimit($event,50000,1000000000)"
                               pattern="{{regexPattern.amount}}"
                               required />
-                            <label for="annualFamilyIncome1">Annual Family Income <span class="lakhs"></span></label>
+                            <label for="annualFamilyIncome1">Monthly Family Income <span class="lakhs"></span></label>
                             <span class="addon">
                               <span class="icon icon-inr"></span>
                             </span>
@@ -2047,14 +2046,14 @@
                               id="monthlyExpenditure1" autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.monthlyExpenditure"
                               #monthlyExpenditure1="ngModel" pattern="{{regexPattern.amount}}" name="monthlyExpenditure"
-                              (input)="checkAmountLimitMonthlyIncome($event)"
+                              (input)="checkAmountLimitMonthlyIncome($event,1000)"
                               tabindex="2" maxlength="10" fieldFill required />
                             <label for="monthlyExpenditure1">Monthly Expenditure</label>
                             <span class="addon">
                               <span class="icon icon-inr"></span>
                             </span>
                             <span class="in-word"></span>
-                            <div  class="invalid-feedback" *ngIf="isNumberLessThan1k">{{errors.incomeDetails.monthlyIncome.minamount}}</div>
+                            <div  class="invalid-feedback" *ngIf="isNumberLessThan1k">{{errors.incomeDetails.monthlyIncome.minamount}}{{requirMinAmout1}}</div>
                             <div  class="invalid-feedback" *ngIf="isNumberMoreThan100cr">{{errors.incomeDetails.monthlyIncome.maxamount}}</div>
                             <div *ngIf="monthlyExpenditure1.touched && monthlyExpenditure1.invalid"
                               class="invalid-feedback">
@@ -2151,7 +2150,7 @@
                               maxlength="10"
                               minlength="4"
                               pattern="{{regexPattern.amount}}" required />
-                            <label for="annualFamilyIncome1">Annual Family Income <span class="lakhs"></span></label>
+                            <label for="annualFamilyIncome1">Monthly Family Income <span class="lakhs"></span></label>
                             <span class="addon">
                               <span class="icon icon-inr"></span>
                             </span>
@@ -2179,7 +2178,7 @@
                               <span class="icon icon-inr"></span>
                             </span>
                             <span class="in-word"></span>
-                            <div  class="invalid-feedback" *ngIf="isNumberLessThan1k">{{errors.incomeDetails.monthlyIncome.minamount}}</div>
+                            <div  class="invalid-feedback" *ngIf="isNumberLessThan1k">{{errors.incomeDetails.monthlyIncome.minamount}}{{requirMinAmout1}}</div>
                             <div  class="invalid-feedback" *ngIf="isNumberMoreThan100cr">{{errors.incomeDetails.monthlyIncome.maxamount}}</div>
                             <div *ngIf="monthlyExpenditure1.touched && monthlyExpenditure1.invalid"
                               class="invalid-feedback">

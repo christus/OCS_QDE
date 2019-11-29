@@ -19,7 +19,7 @@ import { screenPages } from '../../app.constants';
 import { environment } from 'src/environments/environment.prod';
 
 interface Item {
-  key: string,
+  key: string ,
   value: number | string
 }
 
@@ -216,7 +216,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedLoanType: any;
 
   propertyTypes: Array<Item>;
-  selectedPropertyType: any;
+  selectedPropertyType: Item;
   propertyClssLabel: string;
   propertyClssValue: string;
   propertyAreaValue: number;
@@ -468,9 +468,9 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
             result.application.loanDetails.propertyType = {}; //This line need to be removed
           }
 
-          this.selectedPropertyType =
-            result.application.loanDetails.propertyType.propertyType ||
-            this.defaultItem.value;
+          this.selectedPropertyType = this.propertyTypes.find(v => v.value ==
+                                      result.application.loanDetails.propertyType.propertyType)||
+                                      this.defaultItem;
 
           this.isPropertyIdentified =
             result.application.loanDetails.propertyType.propertyIdentified ||
@@ -615,7 +615,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
         this.qde.application.loanDetails.property.state = "";
 
 
-        this.selectedPropertyType = this.defaultItem.value;
+        this.selectedPropertyType = this.defaultItem;
         this.propertyClssValue = "";
         this.propertyAreaValue = null;
 
@@ -931,12 +931,18 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
         return;
       }
 
-      this.qde.application.loanDetails.propertyType = {
-        propertyIdentified: this.isPropertyIdentified,
-        propertyType: this.selectedPropertyType.value,
-        propertyClss: this.propertyClssValue,
-        propertyArea: this.propertyAreaValue
-      };
+      let prepertyType = Number(this.selectedPropertyType.value);
+
+      // this.qde.application.loanDetails.propertyType = {
+      //   propertyIdentified: this.isPropertyIdentified,
+      //   propertyType: prepertyType,
+      //   propertyClss: this.propertyClssValue,
+      //   propertyArea: this.propertyAreaValue
+      // };
+      this.qde.application.loanDetails.propertyType.propertyIdentified = this.isPropertyIdentified;
+      this.qde.application.loanDetails.propertyType.propertyType = prepertyType.toString();
+      this.qde.application.loanDetails.propertyType.propertyClss = this.propertyClssValue;
+      this.qde.application.loanDetails.propertyType.propertyArea = this.propertyAreaValue;
 
       this.qdeHttp
         .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))

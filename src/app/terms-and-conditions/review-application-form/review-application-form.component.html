@@ -10,7 +10,7 @@
             </h3>
             <div class="cont">
                 <p>A copy of this has been sent to your registered email address as well.</p>
-                <h2 class="title" style="margin-top: 2vw">Applicant's details</h2>
+                <h2 class="title" style="margin-top: 2vw">Details of Applicant</h2>
                 <form   #applicantIndividualForm="ngForm">
                         <app-view-form-applicant
                         [applicationId]="applicationId"
@@ -70,7 +70,6 @@
                         [isIncomplete]="isIncomplete">
                     </app-view-form-applicant>
                     </form>
-                    <h2 class="title">Co-Applicant's details</h2>
                     <form   #coApplicantIndividualForm="ngForm">
                             <app-view-form-applicant
                             [showEdit]="false"
@@ -130,6 +129,7 @@
                             [docType]="docType"
                             [selectedAssesmentMethodology]="selectedAssesmentMethodology[c]"
                             [isIncomplete]="isIncomplete">
+                            <h2 class="title" *ngIf="c != 0">Details of Co-Applicant number {{c}}</h2>
                         </app-view-form-applicant>
                         </form>
 
@@ -297,7 +297,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row" *ngIf="propertyPincodeValue">
                                     <div class="col-6">
                                         <div class="form-group filled" *ngIf="propertyPincodeValue">
                                               <input type="text" class="form-control" id="proprty-pin"

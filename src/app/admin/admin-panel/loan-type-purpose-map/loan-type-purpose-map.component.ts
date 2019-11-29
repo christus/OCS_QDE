@@ -232,9 +232,9 @@ export class LoanTypePurposeMapComponent implements OnInit {
     this.qdeHttp.adminInsertUpdateLoanTypePurposeMap(dude).subscribe(res => {
       if(res["ProcessVariables"]['status'] == true) {
         this.refresh();
-      } else {
+      } else if(res['ProcessVariables']['errorMessage']){
         this.isErrorModal = true;
-        this.errorMsg = "Something went wrong";
+        this.errorMsg = res['ProcessVariables']['errorMessage'];
         //alert('Something went wrong');
       }
     }, err => {

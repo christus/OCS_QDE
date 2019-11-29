@@ -23,6 +23,7 @@ import { QdeHttpService } from './services/qde-http.service';
 export class AppComponent implements OnInit{
 
   @ViewChild("myDiv") divView: ElementRef;
+  @ViewChild("adminErrorDiv") adminDivView: ElementRef;
 
 
   isMobile:any;
@@ -37,10 +38,11 @@ export class AppComponent implements OnInit{
 
   showErrDialog;
   errorList = [];
-  isErrorCodeModal : boolean;
+  isErrorCodeModal : boolean = false;
   errorCodeMessage : string;
-
+  isEmpty : boolean;
   isMenuBarShown:boolean;
+  noErrors : boolean;
 
 
 
@@ -65,7 +67,9 @@ export class AppComponent implements OnInit{
 
     var that = this;
 
-
+    if(this.errorList!=undefined && this.errorList.length==0){
+      this.isEmpty = true;
+    }
     console.log("isErrorModal", this.isErrorModal);
 
     document.addEventListener('backbutton', () => {
@@ -133,22 +137,38 @@ export class AppComponent implements OnInit{
 
     });
 
-    // this.cds.showError.subscribe((value) => {
-    //   let errorCode = value[1];
-    //   this.qdeHttp.adminGetLov().subscribe(res=>{
-    //     if(res['ProcessVariables']['status']){
-    //       this.errorList = JSON.parse(res['ProcessVariables']['lovs']).LOVS.error_message_mapping;
-    //       for(var x in this.errorList){
-    //         if(this.errorList[x].description== errorCode){
-    //           this.errorCodeMessage = this.errorList[x].id;
-    //           this.isErrorCodeModal = value[0];
-    //           console.log(this.errorList[x].id);
-    //           break;
-    //         }
-    //       }
-    //     }
-    //   })
-    // });
+    this.cds.showError.subscribe((value) => {
+      if(Array.isArray(value) && value.length!=0){
+      let status = value[0];
+      let errorCode = value[1];
+      let token = localStorage.getItem("token");
+      if (this.isEmpty == true && token!=null) {
+        this.fillErrorList().then(()=>{
+          if (this.noErrors == true) {
+            if((this.adminDivView!=null && this.adminDivView!=undefined)){
+              if((this.adminDivView.nativeElement.classList.contains('active'))){
+              console.log("errorModal active");
+              }
+            }else {
+            let result = this.errorList.find(v=> v.key == errorCode);
+            this.errorCodeMessage = result.value;
+            this.isErrorCodeModal = status;
+            }
+          }
+        })
+      } else if (this.isEmpty == false) {
+        if((this.adminDivView!=null && this.adminDivView!=undefined)){
+        if((this.adminDivView.nativeElement.classList.contains('active'))){
+          console.log("errorModal active");
+          }
+        }else {
+          let result = this.errorList.find(v=> v.key == errorCode);
+          this.errorCodeMessage = result.value;
+          this.isErrorCodeModal = value[0];
+        }
+      }
+    }
+    });
   }
 
   @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
@@ -159,6 +179,22 @@ export class AppComponent implements OnInit{
       console.log("Tab key pressed", event);
       event.preventDefault();
     }
+  }
+
+  fillErrorList(){
+    return new Promise(resolve=>{
+      this.qdeHttp.getAllLov().subscribe(res=>{
+        if(res['ProcessVariables']['status']){
+          let lov = JSON.parse(res['ProcessVariables']['lovs']);
+          this.errorList = lov.LOVS.error_message_mapping;
+          this.isEmpty = false;
+          this.noErrors = true;
+          resolve();
+        }else{
+          this.noErrors = false;
+        }
+      });
+    });
   }
 
 }

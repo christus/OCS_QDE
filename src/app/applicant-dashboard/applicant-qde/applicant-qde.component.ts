@@ -86,7 +86,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     email: "^\\w+([\.-]?\\w+)*@\\w+([\.-]?\\w+)*(\\.\\w{2,10})+$",
     revenue: "^[1-9][\\d]{0,10}([.][0-9]{0,4})?",
     sameDigit: '^0{6,10}|1{6,10}|2{6,10}|3{6,10}|4{6,10}|5{6,10}|6{6,10}|7{6,10}|8{6,10}|9{6,10}$',
-    sameDigitStd:'^0{2,10}|1{2,10}|2{2,10}|3{2,10}|4{2,10}|5{2,10}|6{2,10}|7{2,10}|8{2,10}|9{2,10}$',
+    sameDigitStd:'^0{2,10}|1{4,10}|2{4,10}|3{4,10}|4{4,10}|5{4,10}|6{4,10}|7{4,10}|8{4,10}|9{4,10}$',
     // revenue:"^[\\d]{0,14}([.][0-9]{0,4})?"
 
   };
@@ -412,6 +412,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.cds.changeViewFormVisible(true);
     this.cds.changeLogoutVisible(true);
     this.cds.changeHomeVisible(true);
+    this.contactExtraFieldRemoval();
 
     // this.panslideSub = this.cds.panslide.subscribe(val => {
     //   this.panslide = val;
@@ -1095,10 +1096,17 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     // alert(this.tabName == 9 && this.qde.application.applicants[this.applicantIndex].incomeDetails.incomeConsider == false);
     if(this.tabName == this.fragments[9] && this.qde.application.applicants[this.applicantIndex].incomeDetails.incomeConsider == false) {
       this.router.navigate([], {queryParams: {tabName: this.fragments[7], page: goToSlideNumber}});
-    } else if(this.page <= 1) {
+    }
+    else if(this.tabName == this.fragments[3] || this.tabName == this.fragments[2]){
+      //for tab switch from address to phone
+      this.contactExtraFieldRemoval();
+      this.router.navigate([], {queryParams: {tabName: this.fragments[this.activeTab-1], page: goToSlideNumber}});
+    } 
+    else if(this.page <= 1) {
       // Switch Tabs
       this.router.navigate([], {queryParams: {tabName: this.fragments[this.activeTab-1], page: goToSlideNumber}});
-    } else {
+    }
+    else {
         // go to previous slide
       this.router.navigate([], {queryParams: {tabName: this.tabName, page: this.page-1}});
     }
@@ -1116,7 +1124,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   addRemoveResidenceNumberField() {
     this.isAlternateResidenceNumber = !this.isAlternateResidenceNumber;
-	this.alternateResidenceNumberStdCode = ""
+	  this.alternateResidenceNumberStdCode = ""
     this.alternateResidenceNumberPhoneNumber = ""
   }
 
@@ -1201,6 +1209,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
               this.qde.application.applicants[this.applicantIndex].personalDetails.firstName = processVariables["firstName"];
               this.qde.application.applicants[this.applicantIndex].personalDetails.lastName = processVariables["lastName"];
             }
+
+            // set deupe is require
+            this.qde.application.applicants[this.applicantIndex].dedupeDone = false;
+
             if (processVariables["applicantTitleId"] > 0) {
               this.qde.application.applicants[this.applicantIndex].personalDetails.title = processVariables["applicantTitleId"] || this.qde.application.applicants[this.applicantIndex].personalDetails.title;
             }
@@ -1273,6 +1285,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       // Only create HFC API when PAN is already valid and not touched
       else {
+        
+        // set deupe is require
+        this.qde.application.applicants[this.applicantIndex].dedupeDone = true;
+
         this.createOrUpdatePanDetailsSub = this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
           // If successful
 
@@ -1398,6 +1414,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
               this.qde.application.applicants[this.applicantIndex].personalDetails.title = processVariables["applicantTitleId"];
             }
             this.selectedTitle = this.getApplicantTitle(processVariables["applicantTitleId"]);
+            // set deupe is require
+            this.qde.application.applicants[this.applicantIndex].dedupeDone = false;
             this.createOrUpdatePanDetailsSub2 = this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
               // If successfull
               if (response["ProcessVariables"]["status"] == true) {
@@ -1453,6 +1471,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         // }
       );
       } else {
+        // set deupe is require
+        this.qde.application.applicants[this.applicantIndex].dedupeDone = true;
         this.createOrUpdatePanDetailsSub2 = this.qdeHttp.createOrUpdatePanDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
           // If successfull
           if (response["ProcessVariables"]["status"] == true) {
@@ -1844,9 +1864,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
             this.isErrorModal = true;
             this.errorMessage = "Something went wrong, please try again later.";
           });
-          //  check if pan is null or empty
+          //  check if pan is null or empty and dedupe is false
           if (this.qde.application.applicants[this.applicantIndex].pan.panNumber !="" 
-            && this.qde.application.applicants[this.applicantIndex].pan.panNumber !=null) {
+            && this.qde.application.applicants[this.applicantIndex].pan.panNumber !=null 
+            && this.qde.application.applicants[this.applicantIndex].dedupeDone == false) {
 
               this.qdeHttp.duplicateApplicantCheck(this.qde.application.applicants[this.applicantIndex].applicantId).subscribe(res => {
 
@@ -1906,6 +1927,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     try {
       this.ngxService.start();
     if (this.isTBMLoggedIn) {
+      this.contactExtraFieldRemoval();
       this.goToExactPageAndTab(3, 1);
     } else {
 
@@ -1936,6 +1958,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
               this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
             }
           });
+          this.contactExtraFieldRemoval();
           this.goToExactPageAndTab(3, 1);
         }
         // else {
@@ -4097,36 +4120,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   closeDuplicateModal() {
     this.isDuplicateModalShown = false;
     if (this.qde.application.applicants[this.applicantIndex].isIndividual == true) {
-      //To remove extra e-mail field
-      // if(this.qde.application.applicants[this.applicantIndex].contactDetails.alternateEmailId == ""){
-      //   this.addRemoveEmailField();
-      //   //To remove extra mobile number field
-      //   if(this.qde.application.applicants[this.applicantIndex].contactDetails.alternateMobileNumber == null){
-      //     this.addRemoveMobileNumberField();
-      //     //To remove extra phone number field
-      //     if(this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber == "-"){
-      //       this.addRemoveResidenceNumberField();
-      //       this.goToExactPageAndTab(2, 1);
-      //     }
-      //     else{
-      //       this.goToExactPageAndTab(2, 1);
-      //     }
-      //   }
-      //   else{
-      //     this.goToExactPageAndTab(2, 1);
-      //   }
-      // }
-      // else{
-
-      if(this.qde.application.applicants[this.applicantIndex].contactDetails.alternateEmailId == "" && this.isAlternateEmailId == true){
-        this.addRemoveEmailField();
-      }
-      if(this.qde.application.applicants[this.applicantIndex].contactDetails.alternateMobileNumber == null && this.isAlternateMobileNumber == true){
-        this.addRemoveMobileNumberField();
-      }
-      if(this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber == "-" && this.isAlternateResidenceNumber == true){
-        this.addRemoveResidenceNumberField();
-      }
+      this.contactExtraFieldRemoval();
       this.goToExactPageAndTab(2, 1);
       // }
     } else {
@@ -4155,12 +4149,14 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           this.qde.application.applicants[this.applicantIndex].applicantId = tempApplicant.applicantId;
           this.qde.application.applicants[this.applicantIndex].isMainApplicant = tempApplicant.isMainApplicant;
           this.qde.application.applicants[this.applicantIndex].contactDetails.isMobileOTPverified = false;
-
+          // dedupe set done (disable dedupe) 
+          this.qde.application.applicants[this.applicantIndex].dedupeDone = true;
           this.qdeService.setQde(this.qde);
         
           console.log("this qde ",this.qde);
 
           this.getSetQdeData(this.qde)
+          
 
           this.createOrUpdatePersonalDetailsSub5 = this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).
             subscribe((response) => {
@@ -4408,14 +4404,17 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.requirMaxAmout="";
     }
   }
-
-  checkAmountLimitMonthlyIncome(event) {
+  requirMinAmout1;
+  requirMaxAmout1;
+  checkAmountLimitMonthlyIncome(event,minAmount?,maxAmount?) {
     let n = parseInt(this.getNumberWithoutCommaFormat(event.target.value));
     if(n < 1000){
       this.isNumberLessThan1k = true;
+      this.requirMinAmout1=minAmount;
     }
     else if(n >= 1000000001){
       this.isNumberMoreThan100cr = true;
+      this.requirMaxAmout1 =maxAmount;
     }
     else {
       this.isNumberLessThan1k = false;
@@ -4425,5 +4424,17 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   getNumberWithoutCommaFormat(x: string) : string {
     return x ? x+"".split(',').join(''): '';
+  }
+
+  contactExtraFieldRemoval(){
+    if(this.qde.application.applicants[this.applicantIndex].contactDetails.alternateEmailId == "" && this.isAlternateEmailId == true){
+      this.addRemoveEmailField();
+    }
+    if(this.qde.application.applicants[this.applicantIndex].contactDetails.alternateMobileNumber == null && this.isAlternateMobileNumber == true){
+      this.addRemoveMobileNumberField();
+    }
+    if(this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber == "-" && this.isAlternateResidenceNumber == true){
+      this.addRemoveResidenceNumberField();
+    }
   }
 }

@@ -117,8 +117,10 @@ export class AuthInterceptor implements HttpInterceptor {
           && response['ProcessVariables']!= undefined
           && response['ProcessVariables']['status']==false
           && response['ProcessVariables']['status']!=undefined){
+            if(response['ProcessName']!="Required documents"){
             let data = "DEF";
             this.cds.setErrorData(true, data);
+          }
           }else if(response['Error']=="1"
           && response['Error']!=undefined){
             let data = "APP001";
