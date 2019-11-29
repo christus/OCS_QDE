@@ -38,7 +38,7 @@ public class Configuration {
     	
     	this.appiyoUrl = (String) callbackConfig.get("appiyoUrl");
     	this.emailId = (String) callbackConfig.get("userName");
-    	this.password = (String) callbackConfig.get("password");
+    	this.password = RSAEncryption.decrypt((String) callbackConfig.get("password"));
 		this.authToken = (String) callbackConfig.get("authToken");
 		System.out.println("authToken is configured " + authToken.isEmpty());
 		this.isHTTPS = (boolean) callbackConfig.get("isHTTPS");
