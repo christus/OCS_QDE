@@ -4387,14 +4387,14 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   checkAmountLimit(event,minAmount?,maxAmount?) {
-    console.log("checkAmountLimit call ",event,minAmount,maxAmount);
+    console.log("event ",event);
     let n = parseInt(this.getNumberWithoutCommaFormat(event.target.value));
     if(minAmount != undefined && n < minAmount ){
-      console.log("min ",event,minAmount,maxAmount);
+      console.log("min ",minAmount);
       this.isLessAmount = true;
       this.requirMinAmout = minAmount;
-    } else if(n >= maxAmount && !maxAmount){
-      console.log("max ",event,minAmount,maxAmount);
+    } else if(maxAmount != undefined && n >= maxAmount){
+      console.log("max ",maxAmount);
       this.isMaxAmount = true;
       this.requirMaxAmout = maxAmount;
     } else {
@@ -4404,17 +4404,14 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.requirMaxAmout="";
     }
   }
-  requirMinAmout1;
-  requirMaxAmout1;
+
   checkAmountLimitMonthlyIncome(event,minAmount?,maxAmount?) {
     let n = parseInt(this.getNumberWithoutCommaFormat(event.target.value));
     if(n < 1000){
       this.isNumberLessThan1k = true;
-      this.requirMinAmout1=minAmount;
     }
     else if(n >= 1000000001){
       this.isNumberMoreThan100cr = true;
-      this.requirMaxAmout1 =maxAmount;
     }
     else {
       this.isNumberLessThan1k = false;
