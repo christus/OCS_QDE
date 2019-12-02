@@ -1390,7 +1390,7 @@
                         name="annualFamilyIncome"
                         fieldFill
                         required/>
-                      <label for="annualFamilyIncome12">Annual Family Income <span class="lakhs"></span> </label>
+                      <label for="annualFamilyIncome12">Monthly Family Income <span class="lakhs"></span> </label>
                       <span class="addon">
                           <span class="icon icon-inr"></span>
                         </span>
@@ -1416,7 +1416,7 @@
                   </div>
               </div>
           </div>
-        <div class="row" *ngIf="qde.application.applicants[applicantIndex].incomeDetails.monthlyIncome">
+        <div class="row" *ngIf="qde?.application?.applicants[applicantIndex]?.incomeDetails?.incomeConsider == true">
             <div class="col-12">
                 <div class="form-group inr">
                     <input type="text" class="form-control" 

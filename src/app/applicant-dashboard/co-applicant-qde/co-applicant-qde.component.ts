@@ -2909,6 +2909,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         }else {
           this.qde.application.applicants[this.coApplicantIndex].incomeDetails = {
             incomeConsider: null,
+            monthlyIncome: "",
             assessmentMethodology: "",
           };
         }
