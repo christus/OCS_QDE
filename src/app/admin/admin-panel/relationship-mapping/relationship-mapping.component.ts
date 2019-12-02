@@ -39,6 +39,8 @@ export class RelationshipMappingComponent implements OnInit {
   applicantTitles: Array<any>;
   mainApplicant: string;
   coApplicant: string;
+  delIndex: any;
+  isConfirmModal: boolean;
 
   constructor(private qdeHttp: QdeHttpService, private route: ActivatedRoute) {
     this.userId = parseInt(localStorage.getItem('userId'));
@@ -178,7 +180,7 @@ export class RelationshipMappingComponent implements OnInit {
         this.isAdd = !this.isAdd;
       } else {
         this.isErrorModal = true;
-        this.errorMsg = "Something went wrong";
+        this.errorMsg = res["ProcessVariables"]['errorMessage'];
         //alert('Something went wrong.');
       }
     }, err => {
@@ -294,12 +296,14 @@ export class RelationshipMappingComponent implements OnInit {
   }
 
   delete(index) {
-    let dude = this.data[index];
+    this.delIndex = this.data[index];
     // dude.tableName = this.tableName;
-    dude.tableName = 'applicant_relation_title_map';
-
-    if(confirm("Are you sure?")) {
-      this.qdeHttp.softDeleteLov(dude).subscribe(res => {
+    this.delIndex.tableName = 'applicant_relation_title_map';
+    this.isConfirmModal = true;
+  }
+  deleteConfirm(){
+    this.isConfirmModal = false;
+      this.qdeHttp.softDeleteLov(this.delIndex).subscribe(res => {
         // console.log(res['ProcessVariables']);
         if(res['ProcessVariables']['status'] == true) {
           this.isErrorModal = true;
@@ -307,11 +311,10 @@ export class RelationshipMappingComponent implements OnInit {
           this.refresh();
         } else {
           this.isErrorModal = true;
-          this.errorMsg = "Something went wrong";
+          this.errorMsg = res['ProcessVariables']['errorMessage'];
         //alert('Something went wrong.');
         }
       });
-    } 
   }
 
 

@@ -128,3 +128,9 @@ thead, tbody tr {
     display: inline-block;
     vertical-align: middle;
 }
+.redalert {
+    color: red;
+    font-size: .94vw;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
