@@ -501,11 +501,11 @@
                                   minlength="4"
                                   #monthlyEmi = "ngModel"
                                   [(ngModel)]="monthlyEmiValue"
-                                  fieldFill
+                                  fieldFill required
                                   name="monthlyEmi" pattern="^[1-9][0-9]*$"
                                   (input)="checkAmountLimit($event,1000,1000000)"/>
                               <label for="monthly-emi">Monthly EMI</label>
-                              <span class="optional">optional</span>
+                              <!-- <span class="optional">optional</span> -->
                               <!-- <div class="redalert" *ngIf="monthlyEmi.touched && monthlyEmi.valid && !isValidNumber(monthlyEmi.value)"> -->
                                 <div class="invalid-feedback" *ngIf="monthlyEmi.invalid && monthlyEmi.errors?.pattern">{{errors.loanDetails.existingLoans.monthlyEmi.invalid}}</div>
                                 <div *ngIf="isMinAmount" class="invalid-feedback">{{errors.loanDetails.existingLoans.monthlyEmi.minamount}}{{requirMinAmout}}</div>
@@ -550,10 +550,9 @@
                               [(ngModel)]="monthlyEmiValue"                             
                               name="monthlyEmi" pattern="^[1-9][0-9]*$"
                               (input)="checkAmountLimit($event,1000,1000000)"
-                              fieldFill/>
+                              fieldFill required/>
                             <label for="monthly-emi1">Monthly EMI</label>
-                            <span class="optional">optional</span>
-                            <div class="invalid-feedback" *ngIf="monthlyEmi.invalid && monthlyEmi.errors?.pattern">{{errors.loanDetails.existingLoans.monthlyEmi.invalid}}</div>
+                            <!-- <span class="optional">optional</span> -->
                             <div class="redalert" *ngIf="monthlyEmi.touched && monthlyEmi.valid && !isValidNumber(monthlyEmi.value)">{{errors.loanDetails.existingLoans.monthlyEmi.invalid}}</div>
                             <div *ngIf="(monthlyEmi.touched || monthlyEmi.dirty)" class="invalid-feedback">
                                 <div *ngIf="isMinAmount">{{errors.loanDetails.existingLoans.monthlyEmi.minamount}}{{requirMinAmout}}</div>

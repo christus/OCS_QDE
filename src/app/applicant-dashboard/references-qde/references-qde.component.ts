@@ -101,10 +101,6 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
     sameDigit: '0{10}|1{10}|2{10}|3{10}|4{10}|5{10}|6{10}|7{10}|8{10}|9{10}'
   };
 
-  RegExp(param) {
-    return RegExp(param);
-  }
-
   lhsConfig = {
     noSwiping: true,
     noSwipingClass: "",
@@ -188,10 +184,15 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
   isEligibilityForReviewsSub: Subscription;
   isTBMLoggedIn: boolean;
 
-  // Only RHS Sliders
+  // RHS Sliders
   @ViewChildren('swiperS') swiperS$: QueryList<Swiper>;
   swiperSliders: Array<Swiper> = [];
   swiperSlidersSub: Subscription;
+
+  // LHS Sliders
+  @ViewChildren('lhsSwiperS') lhsSwiperS$: QueryList<Swiper>;
+  lhsSwiperSliders: Array<Swiper> = [];
+  swiperSlidersSub2: Subscription;
 
   tabName: string;
   page: number;
@@ -201,6 +202,7 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
   isErrorModal:boolean;
   errorMessage:string;
   public defaultItem = environment.defaultItem;
+
   constructor(
     private renderer: Renderer2,
     private route: ActivatedRoute,
@@ -500,6 +502,10 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
     this.isAlternateResidenceNumber = !this.isAlternateResidenceNumber;
   }
 
+  RegExp(param) {
+    return RegExp(param);
+  }
+
   submitRelationWithApplicant1(form: NgForm, swiperInstance?: Swiper) {
 
     if(this.isTBMLoggedIn) {
@@ -602,7 +608,7 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
                   this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                   this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
 
-                  this.goToNextSlide(swiperInstance);
+                  // this.goToNextSlide(swiperInstance);
                 }
               }
               // , error => {

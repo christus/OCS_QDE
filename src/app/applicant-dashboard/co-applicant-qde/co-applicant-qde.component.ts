@@ -612,6 +612,15 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
               this.qdeService.setQde(result);
               let mainApplicant = this.qde.application.applicants.find(v => v.isMainApplicant == true);
 
+              if(params['coApplicantIndex'] == null) {
+                this.tabSwitch(0, 1);
+              }
+              this.prefillData(params);
+
+              if(params.coApplicantIndex != null) {
+                this.setRelationship(mainApplicant, params.coApplicantIndex);
+              }
+              console.log("BEFORE GET QE DATA: ", this.coApplicantIndex);
               this.getSetQdeData(result);  // get call get and set qde data
 
               
@@ -638,14 +647,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
               //   // }
 
               // } else {
-                if(params['coApplicantIndex'] == null) {
-                  this.tabSwitch(0, 1);
-                }
-                this.prefillData(params);
-
-                if(params.coApplicantIndex != null) {
-                  this.setRelationship(mainApplicant, params.coApplicantIndex);
-                }
+               
               
             }, 
             // error => {
@@ -703,6 +705,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
               this.coApplicantsForDashboard = result.application.applicants.filter(v => v.isMainApplicant == false);
               this.cds.enableTabsIfStatus1(this.qde.application.status);
 
+              console.log("PARTH coApplicantIndex: ",this.coApplicantIndex);
               if(this.qde.application.applicants[this.coApplicantIndex]) {
                 this.loadOccupationTypeLovs(this.qde.application.applicants[this.coApplicantIndex].occupation.occupationType);
               }
@@ -769,7 +772,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
               } catch(e) {}
               try {
                 if(result.application.applicants[this.coApplicantIndex].registeredAddress != null) {
-
+                  console.log("CITY STATE:", result.application.applicants[this.coApplicantIndex], this.coApplicantIndex );
                   this.commCityState = result.application.applicants[this.coApplicantIndex].registeredAddress.city + " "+ result.application.applicants[this.coApplicantIndex].registeredAddress.state;
                   this.qde.application.applicants[this.coApplicantIndex].registeredAddress.city = result.application.applicants[this.coApplicantIndex].registeredAddress.city;
                   this.qde.application.applicants[this.coApplicantIndex].registeredAddress.state = result.application.applicants[this.coApplicantIndex].registeredAddress.state;
@@ -2906,6 +2909,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         }else {
           this.qde.application.applicants[this.coApplicantIndex].incomeDetails = {
             incomeConsider: null,
+            monthlyIncome: "",
             assessmentMethodology: "",
           };
         }
@@ -3086,6 +3090,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   selectCoApplicant(applicationId, index) {
 
     this.coApplicantIndex = index;
+    console.log("selectcoApplicant: ", index);
     // if( this.qde.application.auditTrailDetails.screenPage == screenPages['coApplicantDetails'] &&
     //     this.qde.application.auditTrailDetails.applicantId == parseInt(this.qde.application.applicants[index].applicantId)) {
 
@@ -3201,6 +3206,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     if( params.coApplicantIndex != null && (!isNaN(parseInt(params.coApplicantIndex))) && params.coApplicantIndex < this.qde.application.applicants.length) {
 
       this.coApplicantIndex = params.coApplicantIndex;
+      console.log("params.coApplicantIndex: ",this.coApplicantIndex);
       this.isTabDisabled = false;
       //------------------------------------------------------
       //    Prefilling values
@@ -3395,7 +3401,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       this.initializeVariables();
     }
     if(params.coApplicantIndex != null) {
-      this.coApplicantIndex = params.coApplicantIndex;
+      // this.coApplicantIndex = params.coApplicantIndex;
       this.setAssessmentMethodology();
     }
     console.log("Fragment & QueryParams: ", this.tabName, this.page);
