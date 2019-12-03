@@ -199,7 +199,7 @@ export const errors: any = {
       required: "Annual family Income is mandatory",
       invalid:"Invalid Family Income / Alphabets and Special characters are not allowed",
       minamount: "Amount should be greater than or equal to Rs.",
-      maxamount: "Amount should be less than or equal to Rs.",
+      maxamount: "Amount should be less than to Rs.",
     },
     pensionIncome:{
       required: "Annual Pension is mandatory",
@@ -212,8 +212,8 @@ export const errors: any = {
     monthlyIncome:{
       required:"Monthly Income is mandatory",
       invalid:"Invalid Monthly Income / Alphabets and Special characters are not allowed",
-      minamount: "Amount should be greater than or equal to Rs.",
-      maxamount: "Amount should be less than or equal to Rs.",
+      minamount: "Amount should be greater than or equal to Rs.1000",
+      maxamount: "Amount should be less than or equal to Rs.1000000000",
     }
   },
   organizationDetails: {

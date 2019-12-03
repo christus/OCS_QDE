@@ -4393,7 +4393,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       console.log("min ",minAmount);
       this.isLessAmount = true;
       this.requirMinAmout = minAmount;
-    } else if(maxAmount != undefined && n >= maxAmount){
+    } else if(n >= maxAmount && !maxAmount){
       console.log("max ",maxAmount);
       this.isMaxAmount = true;
       this.requirMaxAmout = maxAmount;
