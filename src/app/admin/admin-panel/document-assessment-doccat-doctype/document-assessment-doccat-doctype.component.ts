@@ -35,6 +35,8 @@ export class DocumentAssessmentDoccatDoctypeComponent implements OnInit {
   applicantType: string;
 
   data: Array<any> = [];
+  delIndex: any;
+  isConfirmModal: boolean;
 
   constructor(private qdeHttp: QdeHttpService, private route: ActivatedRoute) {
     this.userId = parseInt(localStorage.getItem('userId'));
@@ -290,16 +292,17 @@ export class DocumentAssessmentDoccatDoctypeComponent implements OnInit {
   }
 
   delete(index) {
-    let dude = this.data[index];
-    dude.tableName = this.tableName;
-
-    if(confirm("Are you sure?")) {
-      this.qdeHttp.softDeleteLov(dude).subscribe(res => {
+    this.delIndex = this.data[index];
+    this.delIndex.tableName = this.tableName;
+    this.isConfirmModal = true;
+  }
+    confirmDelete(){
+      this.isConfirmModal = false;
+      this.qdeHttp.softDeleteLov(this.delIndex).subscribe(res => {
         // console.log(res['ProcessVariables']);
         if(res["ProcessVariables"]["status"]){this.isErrorModal = true; this.errorMsg = "Deleted Successfully";}
         this.refresh();
       });
-    } 
   }
 
   changeIsIndividual(event, index) {

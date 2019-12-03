@@ -102,12 +102,7 @@
     
     </form> 
 </div>
-<div>
-    <button class="fileUpload" (click)="callFile()">Upload Connector / DMA List</button>
-    <input type="file" #uploadCSV accept=".csv" (change)="startUpload($event)" style="display: none;">
-    <button type="button" class="btn btn-default" [ngClass]="{'disabled': (!isFileSelected)}"
-        [disabled]="!isFileSelected" (click)="uploadCSVFile()"> Upload List</button>
-</div>
+
     <div class="overlay" [ngClass]="{'active': isErrorModal}">
         <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isErrorModal}">
             <a class="modal-close" (click)="isErrorModal = false"><span class="icon icon-close"></span></a>

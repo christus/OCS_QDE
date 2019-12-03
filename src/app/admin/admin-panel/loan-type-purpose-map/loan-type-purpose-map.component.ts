@@ -35,6 +35,8 @@ export class LoanTypePurposeMapComponent implements OnInit {
   searchKey:string;
   isErrorModal: boolean = false;
   errorMsg: string;
+  delIndex: any;
+  isConfirmModal: boolean;
 
 
   constructor(private qdeHttp: QdeHttpService, private route: ActivatedRoute) {
@@ -260,15 +262,17 @@ export class LoanTypePurposeMapComponent implements OnInit {
   }
 
   delete(index) {
-    let dude = this.data[index];
-    dude.tableName = this.tableName;
-    if(confirm("Are you sure?")) {
-      this.qdeHttp.softDeleteLov(dude).subscribe(res => {
+    this.delIndex = this.data[index];
+    this.delIndex.tableName = this.tableName;
+    this.isConfirmModal = true;
+  }
+  confirmDelete(){
+    this.isConfirmModal = false;
+      this.qdeHttp.softDeleteLov(this.delIndex).subscribe(res => {
         // console.log(res['ProcessVariables']);
         if(res["ProcessVariables"]["status"]){this.isErrorModal = true; this.errorMsg = "Deleted successfully"};
         this.refresh();
-      });
-    } 
+      }); 
   }
   pageChanged(value){
     this.qdeHttp.adminLoanTypePurposeMap(value,this.perPage,this.searchKey).subscribe(res => {

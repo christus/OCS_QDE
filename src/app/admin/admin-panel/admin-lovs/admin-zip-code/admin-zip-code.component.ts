@@ -19,7 +19,7 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
 
   tableName: string;
   userId: number;
-
+  isConfirmModal : boolean = false;
   states: Array<Item> = [];
   zones: Array<Item> = [];
   cities: Array<Item> = [];
@@ -61,6 +61,7 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
   @ViewChild('searchInp') searchInp: ElementRef;
 
   subs: Array<Subscription> = [];
+  delIndex: {};
 
   constructor(private route: ActivatedRoute, private qdeHttp: QdeHttpService, private qdeService: QdeService, private router: Router) {
 
@@ -306,23 +307,24 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
   delete(index) {
     this.isAdd = false;
     this.selectedIndex = -1;
-    let dude = this.qdeService.getFilteredJson(this.data[index]);
-
-    if(confirm("Are you sure?")) {
-      this.qdeHttp.softDeleteLov(dude).subscribe(res => {
+    this.delIndex = this.qdeService.getFilteredJson(this.data[index]);
+    this.isConfirmModal = true; 
+  }
+  confirmDelete(){
+    this.isConfirmModal = false;
+      this.qdeHttp.softDeleteLov(this.delIndex).subscribe(res => {
         // console.log(res['ProcessVariables']);
         if(res['ProcessVariables']['status'] == true) {
           this.isErrorModal = true;
           this.errorMsg = "Deleted Successfully!";
           //alert('Deleted Successfully!');
-          this.router.navigate([], {queryParams: {currentPage: this.currentPage, perPage: this.perPage}})
+          this.refresh();
         } else {
           this.isErrorModal = true;
           this.errorMsg = "Something went wrong";
           //alert('Something went wrong');
         }
       });
-    } 
   }
 
   refresh() {

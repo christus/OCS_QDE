@@ -191,13 +191,3 @@ select:-webkit-autofill:focus {
 .hide {
     display: none;
 }
-
-.fileUpload {
-    background: #f9f9f9;
-    padding: 15px;
-    border-radius: 5px;
-    margin: 10px;
-    cursor: pointer;
-    font-family: zurich-light;
-    font-size: 1.64vw;
-}
