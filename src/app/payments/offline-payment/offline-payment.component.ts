@@ -188,11 +188,13 @@ export class OfflinePaymentComponent implements OnInit {
     const data = { applicationId: this.applicationId};
     this.qdeHttp.getOfflinePaymentAmount(data).subscribe(response =>
       {
+        if (response["Error"] == 0){
         const responseData = response["ProcessVariables"];
         this.baseFee =  parseInt(responseData.baseFee);
         this.taxAmount =  parseInt(responseData.taxAmount);
         this.amount =  parseInt(responseData.totalAmount);
-      })
+      }
+    });
   }
 
   ngAfterViewInit() {}
@@ -296,14 +298,15 @@ export class OfflinePaymentComponent implements OnInit {
     }
 
     this.qdeHttp.chequeDetailsSave(data).subscribe(res => {
+      if (res["Error"] == 0){
       if(res['ProcessVariables']['status'] == true) {
         this.isChequeProceedModal = true;
         this.qdeHttp.setStatusApi(this.applicationId, statuses['Cheque Received']).subscribe(res => {}, err => {});
-      }
-      else{
+      } else{
         this.sessionMessage = res['ProcessVariables']['errorMessage']
       }
-    });
+    }
+  });
 
   }
 

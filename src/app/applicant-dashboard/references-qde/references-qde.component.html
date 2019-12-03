@@ -68,7 +68,7 @@
                               textField="key"
                               valueField="value"
                               name="relationShip"
-                              [valuePrimitive]="true"
+                              
                               [(ngModel)]="selectedReferenceOne"
                               (selectionChange)="relationshipChanged1=true">
                             </kendo-dropdownlist>
@@ -78,8 +78,8 @@
                         <div class="btn-wrap">
                           <button class="btn btn-primary" 
                             type="submit"
-                            [ngClass]="{'disabled': !refRelationship1.valid}"
-                            [disabled]="!refRelationship1.valid">Next</button>
+                            [ngClass]="{'disabled': !refRelationship1.valid || selectedReferenceOne?.value == 0 }"
+                            [disabled]="!refRelationship1.valid || selectedReferenceOne?.value == 0 ">Next</button>
                         </div>
                       </form>
 
@@ -101,7 +101,7 @@
                               textField="key" 
                               valueField="value" 
                               name="titles"
-                              [valuePrimitive]="true" 
+                             
                               [(ngModel)]="selectedTiltle1">
                             </kendo-dropdownlist>
                             <!-- <select name="title" ngModel class="js-select" required>
@@ -197,8 +197,8 @@
                         </div>
                         <div class="btn-wrap">
                           <button type="submit" class="btn btn-primary"
-                          [ngClass]="{'disabled': !ref1Detail.valid || (refOneMobileNumber.value == refTwoMobileNumber.value)}"
-                          [disabled]="!ref1Detail.valid || (refOneMobileNumber.value == refTwoMobileNumber.value)">Next</button>
+                          [ngClass]="{'disabled': !ref1Detail.valid || selectedTiltle1?.value == 0 || (refOneMobileNumber.value == refTwoMobileNumber.value)  }"
+                          [disabled]="!ref1Detail.valid || selectedTiltle1?.value == '0' || (refOneMobileNumber.value == refTwoMobileNumber.value)">Next</button>
                         </div>
                       </form>
 
@@ -262,7 +262,7 @@
                             textField="key"
                             valueField="value"
                             name="relationShip"
-                            [valuePrimitive]="true"
+                            
                             [(ngModel)]="selectedReferenceTwo"
                             (selectionChange)="relationshipChanged2=true">
                           </kendo-dropdownlist>
@@ -270,8 +270,8 @@
                       </div>
                       <div class="btn-wrap">
                         <button type="submit" class="btn btn-primary"
-                          [ngClass]="{'disabled': !ref2Relationship.valid }"
-                          [disabled]="!ref2Relationship.valid">Next</button>
+                          [ngClass]="{'disabled': !ref2Relationship.valid  || selectedReferenceTwo?.value == 0}"
+                          [disabled]="!ref2Relationship.valid || selectedReferenceTwo?.value == 0 ">Next</button>
                       </div>
                     </form>
 
@@ -293,7 +293,7 @@
                                 textField="key" 
                                 valueField="value" 
                                 name="titles"
-                                [valuePrimitive]="true" 
+                                
                                 [(ngModel)]="selectedTiltle2">
                               </kendo-dropdownlist>
                            <!--  <select name="title" ngModel class="js-select" required>
@@ -385,8 +385,8 @@
                         </div>
                         <div class="btn-wrap">
                           <button type="submit" class="btn btn-primary" 
-                          [ngClass]="{'disabled': !ref2Detail.valid || (refOneMobileNumber.value == refTwoMobileNumber.value)}"
-                          [disabled]="!ref2Detail.valid || (refOneMobileNumber.value == refTwoMobileNumber.value)">Save</button>
+                          [ngClass]="{'disabled': !ref2Detail.valid || (refOneMobileNumber.value == refTwoMobileNumber.value) ||  selectedTiltle2?.value == 0}"
+                          [disabled]="!ref2Detail.valid || (refOneMobileNumber.value == refTwoMobileNumber.value) || selectedTiltle2?.value == '0'">Save</button>
                         </div>
                     </form>
 

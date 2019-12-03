@@ -101,6 +101,10 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
     sameDigit: '0{10}|1{10}|2{10}|3{10}|4{10}|5{10}|6{10}|7{10}|8{10}|9{10}'
   };
 
+  RegExp(param) {
+    return RegExp(param);
+  }
+
   lhsConfig = {
     noSwiping: true,
     noSwipingClass: "",
@@ -159,18 +163,18 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
   selectedReferenceOneTitle: Item;
   selectedReferenceTwoTitle: Item;
   relationshipMap: Array<any>;
-  selectedReferenceOne: any;
+  selectedReferenceOne: Item;
   relationshipChanged1: boolean = false;
   relationshipChanged2: boolean = false;
-  selectedTiltle1: string;
+  selectedTiltle1: Item;
   selectedName1: string;
   selectedMobile1: string;
   selectedAddressLineOne1: string;
   selectedAddressLineTwo1: string;
 
-  selectedReferenceTwo: any;
+  selectedReferenceTwo: Item;
 
-  selectedTiltle2: string;
+  selectedTiltle2: Item;
   selectedName2: string;
   selectedMobile2: string;
   selectedAddressLineOne2: string;
@@ -184,15 +188,10 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
   isEligibilityForReviewsSub: Subscription;
   isTBMLoggedIn: boolean;
 
-  // RHS Sliders
+  // Only RHS Sliders
   @ViewChildren('swiperS') swiperS$: QueryList<Swiper>;
   swiperSliders: Array<Swiper> = [];
   swiperSlidersSub: Subscription;
-
-  // LHS Sliders
-  @ViewChildren('lhsSwiperS') lhsSwiperS$: QueryList<Swiper>;
-  lhsSwiperSliders: Array<Swiper> = [];
-  swiperSlidersSub2: Subscription;
 
   tabName: string;
   page: number;
@@ -202,7 +201,6 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
   isErrorModal:boolean;
   errorMessage:string;
   public defaultItem = environment.defaultItem;
-
   constructor(
     private renderer: Renderer2,
     private route: ActivatedRoute,
@@ -238,8 +236,7 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
 
     console.log(">>", JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs));
     var lov = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs);
-    this.setTitle1(lov);
-    this.setTitle2(lov);
+    
     //this.titles = lov.LOVS.applicant_title;
     //this.relationships = lov.LOVS.relationship;
     //console.log(this.relationships);
@@ -299,17 +296,20 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
           if (!result.application.references.referenceTwo || Object.keys(result.application.references.referenceTwo).length === 0) {
             result.application.references.referenceTwo = {};
           }
+          if (result.application.references.referenceOne.relationShip) {
+          this.selectedReferenceOne = this.relationships.find(v => v.value == result.application.references.referenceOne.relationShip); 
+          } else {
+            this.selectedReferenceOne = this.defaultItem;
+          }
+          // || this.defaultItem;
+          if (result.application.references.referenceTwo.relationShip){
+          this.selectedReferenceTwo = this.relationships.find(v => v.value == result.application.references.referenceTwo.relationShip)
+           } else {
+            this.selectedReferenceTwo =this.defaultItem;
+           }
 
-          this.selectedReferenceOne =
-            result.application.references.referenceOne.relationShip ||
-            this.defaultItem.value;
-          this.selectedReferenceTwo =
-            result.application.references.referenceTwo.relationShip ||
-            this.defaultItem.value;
-
-	        this.selectedTiltle1 =
-            result.application.references.referenceOne.title ||
-            this.defaultItem.value;
+	        this.selectedTiltle1 = this.titles.find(v => v.value == result.application.references.referenceOne.title) ||
+            this.defaultItem;
           this.selectedName1 =
             result.application.references.referenceOne.fullName || "";
           this.selectedMobile1 =
@@ -319,9 +319,8 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
           this.selectedAddressLineTwo1 =
             result.application.references.referenceOne.addressLineTwo || "";
 
-          this.selectedTiltle2 =
-            result.application.references.referenceTwo.title ||
-            this.defaultItem.value;
+          this.selectedTiltle2 = this.titles.find(v => v.value == result.application.references.referenceTwo.title) ||
+            this.defaultItem;
           this.selectedName2 =
             result.application.references.referenceTwo.fullName || "";
           this.selectedMobile2 =
@@ -359,6 +358,8 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
           }
         });
       }
+      this.setTitle1(lov);
+    this.setTitle2(lov);
     });
 
     // this.route.fragment.subscribe(fragment => {
@@ -502,10 +503,6 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
     this.isAlternateResidenceNumber = !this.isAlternateResidenceNumber;
   }
 
-  RegExp(param) {
-    return RegExp(param);
-  }
-
   submitRelationWithApplicant1(form: NgForm, swiperInstance?: Swiper) {
 
     if(this.isTBMLoggedIn) {
@@ -514,11 +511,11 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
       if (form && !form.valid) {
         return;
       }
-
-      this.qde.application.references.referenceOne.relationShip = this.selectedReferenceOne;
+      // this.selectedReferenceOne
+      this.qde.application.references.referenceOne.relationShip = form.value.relationShip.value ;
       this.setTitle1();
-      if(this.relationshipChanged1 && this.qde.application.references.referenceOne!=undefined){
-      this.selectedTiltle1 = "";
+      if(this.relationshipChanged1 && this.qde.application.references.referenceOne != undefined){
+      this.selectedTiltle1 = this.defaultItem;
       this.setTitle1();
 	    this.selectedName1 = "";
 	    this.selectedMobile1 = "";
@@ -580,10 +577,10 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
       if (form && !form.valid) {
         return;
       }
-
+      // this.selectedTiltle1
       this.qde.application.references.referenceOne = {
         referenceId: this.referenceId1,
-        title: this.selectedTiltle1,
+        title: form.value.titles.value,
         fullName: this.selectedName1,
         mobileNumber: this.selectedMobile1,
         addressLineOne: this.selectedAddressLineOne1,
@@ -608,7 +605,7 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
                   this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
                   this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
 
-                  // this.goToNextSlide(swiperInstance);
+                  this.goToNextSlide(swiperInstance);
                 }
               }
               // , error => {
@@ -641,12 +638,12 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
         return;
       }
 
-      this.qde.application.references.referenceTwo.relationShip = this.selectedReferenceTwo;
+      this.qde.application.references.referenceTwo.relationShip = form.value.relationShip.value;
 
       //console.log(this.qde.application.references.referenceOne.relationShip);
       this.setTitle2();
       if(this.relationshipChanged2 && this.qde.application.references.referenceTwo!=undefined){
-      this.selectedTiltle2 = "";
+      this.selectedTiltle2 = this.defaultItem;
       this.setTitle2();
 	    this.selectedName2 = "";
 	    this.selectedMobile2 = "";
@@ -716,10 +713,10 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
       if (form && !form.valid) {
         return;
       }
-
+      // this.selectedTiltle2
       this.qde.application.references.referenceTwo = {
         referenceId: this.referenceId2,
-        title: this.selectedTiltle2,
+        title: form.value.titles.value,
         fullName: this.selectedName2,
         mobileNumber: this.selectedMobile2,
         addressLineOne: this.selectedAddressLineOne2,
@@ -809,16 +806,16 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
             temp.value = tempTitles[x].applicantTitleId;
             this.titles.push(temp);
           }
-          if (this.selectedTiltle1=="") {
-            this.selectedTiltle1 = this.defaultItem.value.toString();
+          if (!this.selectedTiltle1) {
+            this.selectedTiltle1 = this.defaultItem;
           }
           break;
         }
       }
     } else if ((rela == undefined || rela == null || rela == "") && this.relationshipMap != []) {
       this.titles = data.LOVS.applicant_title;
-          if (this.selectedTiltle1=="") {
-            this.selectedTiltle1 = this.defaultItem.value.toString();
+          if (!this.selectedTiltle1) {
+            this.selectedTiltle1 = this.defaultItem;
           }
       console.log(this.titles);
     }
@@ -838,16 +835,16 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
             temp.value = tempTitles[x].applicantTitleId;
             this.titles.push(temp);
           }
-          if (this.selectedTiltle2=="") {
-            this.selectedTiltle2 = this.defaultItem.value.toString();
+          if (!this.selectedTiltle2) {
+            this.selectedTiltle2 = this.defaultItem;
           }
           break;
         }
       }
     } else if ((rela == undefined || rela == null || rela == "") && this.relationshipMap != []) {
       this.titles = data.LOVS.applicant_title;
-          if (this.selectedTiltle2=="") {
-            this.selectedTiltle2 = this.defaultItem.value.toString();
+          if (!this.selectedTiltle2) {
+            this.selectedTiltle2 = this.defaultItem;
           }
       console.log(this.titles);
     }

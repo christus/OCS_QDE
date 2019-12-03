@@ -866,11 +866,11 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
       this.qde.application.loanDetails.loanAmount = {
         amountRequired: parseInt(this.getNumberWithoutCommaFormat(form.value.amountRequired)),
-        loanPurpose: this.selectedLoanPurpose,
+        loanPurpose: form.value.loanPurpose,
         loanTenure: form.value.loanTenure,
         loanType: parseInt(this.selectedLoanType.value+"")
       };
-
+      // this.selectedLoanPurpose,
       if(this.qde.application.loanDetails.loanAmount.loanTenure == 0){
         this.tenureYears = true;
         return;

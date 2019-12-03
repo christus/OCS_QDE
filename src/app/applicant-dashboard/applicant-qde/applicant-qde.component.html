@@ -201,8 +201,8 @@
                         </div>
 
                         <div class="btn-wrap">
-                          <button type="submit" class="btn btn-primary" [ngClass]="{'disabled': (!panNumberForm.valid)}"
-                            [disabled]="!panNumberForm.valid">Next
+                          <button type="submit" class="btn btn-primary" [ngClass]="{'disabled': (!panNumberForm.valid) || selectedDocType?.value == 0 }"
+                            [disabled]="!panNumberForm.valid || selectedDocType?.value == 0">Next
                           </button>
                         </div>
                       </form>
@@ -392,9 +392,9 @@
                           </div>
                         </div>
                         <div class="btn-wrap">
-                          <button type="submit" class="btn btn-primary" [ngClass]="{'disabled': (!nameForm.valid || selectedTitle.value==0)}"
+                          <button type="submit" class="btn btn-primary" [ngClass]="{'disabled': (!nameForm.valid || selectedTitle?.value == 0)}"
                           tabindex="-1"
-                            [disabled]="!nameForm.valid || selectedTitle.value==0">Next
+                            [disabled]="!nameForm.valid || selectedTitle?.value == 0">Next
                           </button>
                         </div>
                       </form>
@@ -433,8 +433,8 @@
                         </div>
                         <div class="btn-wrap">
                           <button type="submit" class="btn btn-primary"
-                            [ngClass]="{'disabled': (!qualificationForm.valid || selectedQualification.value == 0)}"
-                            [disabled]="!qualificationForm.valid || selectedQualification.value == 0">Next
+                            [ngClass]="{'disabled': (!qualificationForm.valid || selectedQualification?.value == 0)}"
+                            [disabled]="!qualificationForm.valid || selectedQualification?.value == 0">Next
                           </button>
                         </div>
                       </form>
@@ -1150,8 +1150,8 @@
                         </div>
                         <div class="btn-wrap">
                           <button type="submit" class="btn btn-primary"
-                          [ngClass]="{'disabled': (selectedMaritialStatus.value == 0)}"
-                            [disabled]="selectedMaritialStatus.value == 0">Next
+                          [ngClass]="{'disabled': (selectedMaritialStatus?.value == 0)}"
+                            [disabled]="selectedMaritialStatus?.value == 0">Next
                           </button>
                         </div>
                       </form>
@@ -1196,8 +1196,8 @@
                           </div>
                         </div>
                         <div class="btn-wrap">
-                          <button type="submit" [ngClass]="{'disabled': (!spouseForm.valid || selectedSpouseTitle.value == 0)}"
-                            [disabled]="!spouseForm.valid || selectedSpouseTitle.value == 0" class="btn btn-primary">
+                          <button type="submit" [ngClass]="{'disabled': (!spouseForm.valid || selectedSpouseTitle?.value == 0)}"
+                            [disabled]="!spouseForm.valid || selectedSpouseTitle?.value == 0" class="btn btn-primary">
                             Next
                           </button>
                         </div>
@@ -1406,8 +1406,8 @@
                         </div>
                         <div class="btn-wrap">
                           <button type="submit" class="btn btn-primary"
-                            [ngClass]="{'disabled': (!familyForm2.valid || selectedFatherTitle.value ==0 || selectedMotherTitle.value ==0)}"
-                            [disabled]="!familyForm2.valid || selectedFatherTitle.value ==0 || selectedMotherTitle.value ==0">
+                            [ngClass]="{'disabled': (!familyForm2.valid || selectedFatherTitle?.value ==0 || selectedMotherTitle?.value ==0)}"
+                            [disabled]="!familyForm2.valid || selectedFatherTitle?.value ==0 || selectedMotherTitle?.value ==0">
                             Next
                           </button>
                         </div>
@@ -1499,8 +1499,8 @@
 
                         <div class="btn-wrap">
                           <button type="submit"
-                            [ngClass]="{'disabled': (!otherForm.valid) || otherReligion?.length == 25 || selectedReligion.value == 0 || selectedCategory.value ==0}"
-                            [disabled]="!otherForm.valid || otherReligion?.length == 25 || selectedReligion.value == 0 || selectedCategory.value ==0"
+                            [ngClass]="{'disabled': (!otherForm.valid) || otherReligion?.length == 25 || selectedReligion?.value == 0 || selectedCategory?.value ==0}"
+                            [disabled]="!otherForm.valid || otherReligion?.length == 25 || selectedReligion?.value == 0 || selectedCategory?.value ==0"
                             class="btn btn-primary">Next</button>
                         </div>
                       </form>
@@ -1689,8 +1689,8 @@
 
                         <div  *ngIf="occupationRequired == true"
                           class="btn-wrap">
-                          <button type="submit" [ngClass]="{'disabled': !occupationForm.valid || selectedOccupation.value == 0 || expError  }"
-                            [disabled]="(!occupationForm.valid || selectedOccupation.value == 0 || expError )" class="btn btn-primary">
+                          <button type="submit" [ngClass]="{'disabled': !occupationForm.valid || selectedOccupation?.value == 0 || expError  }"
+                            [disabled]="(!occupationForm.valid || selectedOccupation?.value == 0 || expError )" class="btn btn-primary">
                             Next
                           </button>
                         </div>
@@ -1698,8 +1698,8 @@
                         class="btn-wrap">
                           <button type="submit"
                             class="btn btn-primary"
-                            [ngClass]="{'disabled':  !occupationForm.valid || selectedOccupation.value == 0}"
-                            [disabled]="( !occupationForm.valid || selectedOccupation.value ==0 )"
+                            [ngClass]="{'disabled':  !occupationForm.valid || selectedOccupation?.value == 0}"
+                            [disabled]="( !occupationForm.valid || selectedOccupation?.value ==0 )"
                             (click)="incomeConsiderYesNoIndividual(2, occupationSlider2, occupationSlider1)"
                             [value]="2">
                             Next
@@ -2006,8 +2006,8 @@
                         </div>
                         <div class="btn-wrap">
                           <button type="submit" class="btn btn-primary"
-                          [disabled]="!incomeConsiderFormInd.valid || selectedAssesmentMethodology.value ==0 || isTBMLoggedIn || isNumberLessThan1k || isNumberMoreThan100cr"
-                            [ngClass]="{'disabled': (!incomeConsiderFormInd.valid || selectedAssesmentMethodology.value ==0 || isTBMLoggedIn || isNumberLessThan1k || isNumberMoreThan100cr)}">Next</button>
+                          [disabled]="!incomeConsiderFormInd.valid || selectedAssesmentMethodology?.value ==0 || isTBMLoggedIn || isNumberLessThan1k || isNumberMoreThan100cr"
+                            [ngClass]="{'disabled': (!incomeConsiderFormInd.valid || selectedAssesmentMethodology?.value ==0 || isTBMLoggedIn || isNumberLessThan1k || isNumberMoreThan100cr)}">Next</button>
                         </div>
                       </form>
                     </div>
@@ -2474,10 +2474,18 @@
                           </div>
                           <div class="form-group last">
                             <span class="control-title">Constitution</span>
-                            <kendo-dropdownlist [readonly]="isTBMLoggedIn" class="form-control" [data]="constitutions"
-                              textField="key" valueField="value" tabindex="5" name="constitution" #constitution
+                            <kendo-dropdownlist 
+                              [defaultItem]="defaultItem"
+                              [readonly]="isTBMLoggedIn" 
+                              class="form-control" 
+                              [data]="constitutions"
+                              textField="key" 
+                              valueField="value" 
+                              tabindex="5" 
+                              name="constitution" #constitution
                               (selectionChange)="selectValueChanged($event, constitution.hostElement)"
-                              nick="organizationDetails.constitution" [(ngModel)]="selectedConstitution">
+                              nick="organizationDetails.constitution" 
+                              [(ngModel)]="selectedConstitution">
                             </kendo-dropdownlist>
                           </div>
                         </div>

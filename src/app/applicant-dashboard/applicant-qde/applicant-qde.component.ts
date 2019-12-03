@@ -2537,7 +2537,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       * If Salaried, Self Employed Professional, Self Employed Business then only show income consider
       *********************************************************************************************************/
       let data = {
-        profileId: this.selectedOccupation.value.toString()
+        // this.selectedOccupation.value.toString()
+        profileId: form.value.occupationType.value
       }
       this.qdeHttp.checkOccupationType(data).subscribe((response) => {
 
@@ -2570,7 +2571,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
       let data = {
-        profileId: this.selectedOccupation.value.toString()
+        // profileId: this.selectedOccupation.value.toString()
+        profileId: form.value.occupationType.value
       };
 
       this.qdeHttp.checkOccupationType(data).subscribe((response) => {
@@ -2580,7 +2582,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           this.isOfficialCorrs = response["ProcessVariables"]["incomeConsider"];
         }
 
-        this.qde.application.applicants[this.applicantIndex].occupation.occupationType = this.selectedOccupation.value.toString();
+        this.qde.application.applicants[this.applicantIndex].occupation.occupationType = form.value.occupationType.value;
 
         if (this.isOfficialCorrs) {
           this.qde.application.applicants[this.applicantIndex].occupation.companyName = form.value.companyName;
@@ -3011,6 +3013,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.ngxService.start();
     if (this.isTBMLoggedIn) {
       this.router.navigate(['/applicant', this.qde.application.applicants[this.applicantIndex].applicantId, 'co-applicant']);
+    }else if (!this.qde.application.applicants[this.applicantIndex].contactDetails.isMobileOTPverified &&
+      this.qde.application.applicants[this.applicantIndex].isIndividual ) {
+      this.isErrorModal = true;
+        this.errorMessage = "Contact Number/ Mobile Number not Verified.. Please Verify..."
     } else {
       if (form && !form.valid) {
         return;
@@ -3076,7 +3082,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       }
 
       this.qde.application.applicants[this.applicantIndex].incomeDetails.monthlyIncome = form.value.monthlyIncome;
-      this.qde.application.applicants[this.applicantIndex].incomeDetails.assessmentMethodology = this.selectedAssesmentMethodology.value.toString()? this.selectedAssesmentMethodology['value'].toString() : null;
+      this.qde.application.applicants[this.applicantIndex].incomeDetails.assessmentMethodology = form.value.assessmentMethodology.value;
+      
+      // this.selectedAssesmentMethodology.value.toString()? this.selectedAssesmentMethodology['value'].toString() : null;
 
       console.log("ID: ", this.qde.application.applicants[this.applicantIndex].incomeDetails);
 
@@ -3129,7 +3137,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       }
 
       this.qde.application.applicants[this.applicantIndex].incomeDetails.monthlyIncome = form.value.monthlyIncome;
-      this.qde.application.applicants[this.applicantIndex].incomeDetails.assessmentMethodology = this.selectedAssesmentMethodology.value.toString() ? this.selectedAssesmentMethodology['value'].toString() : null;
+      this.qde.application.applicants[this.applicantIndex].incomeDetails.assessmentMethodology = form.value.assessmentMethodology.value;
+      
+      // this.selectedAssesmentMethodology.value.toString() ? this.selectedAssesmentMethodology['value'].toString() : null;
 
       console.log("ID: ", this.qde.application.applicants[this.applicantIndex].incomeDetails);
 

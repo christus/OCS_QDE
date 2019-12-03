@@ -6,52 +6,52 @@
                   <li class="tab-link" [ngClass]="{'active': (activeTab == 0), 'pending': false}">
                     <a [routerLink]="['/applicant', applicationId, 'co-applicant']" [queryParams]="{tabName: 'dashboard', page: 1}">Dashboard</a>
                   </li>
-                  <li class="tab-link" [ngClass]="{'not-visible': isTabDisabled, 'active': (activeTab == 1), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
+                  <li class="tab-link" [ngClass]="{'not-visible': isTabDisabled, 'active': (activeTab == 1), 'hide': (!applicantIndividual), 'disabled': (isTabDisabled)}">
                     <a href="javascript:void(0);" (click)="tabSwitch(1, 1)">PAN</a>
                   </li>
-                  <li class="tab-link" [ngClass]="{'not-visible': isTabDisabled, 'active': (activeTab == 2), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
+                  <li class="tab-link" [ngClass]="{'not-visible': isTabDisabled, 'active': (activeTab == 2), 'hide': (!applicantIndividual), 'disabled': (isTabDisabled || tabHide)}">
                     <a href="javascript:void(0);" (click)="tabSwitch(2, 1)">personal details</a>
                   </li>
-                  <li class="tab-link" [ngClass]="{'not-visible': isTabDisabled, 'active': (activeTab == 3), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
+                  <li class="tab-link" [ngClass]="{'not-visible': isTabDisabled, 'active': (activeTab == 3), 'hide': (!applicantIndividual), 'disabled': (isTabDisabled || tabHide)}">
                     <a href="javascript:void(0);" (click)="tabSwitch(3, 1); contactExtraFieldRemoval()">contact details</a>
                   </li>
-                  <li class="tab-link" [ngClass]="{'not-visible': isTabDisabled, 'active': (activeTab == 4), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
+                  <li class="tab-link" [ngClass]="{'not-visible': isTabDisabled, 'active': (activeTab == 4), 'hide': (!applicantIndividual), 'disabled': (isTabDisabled || tabHide)}">
                     <a href="javascript:void(0);" (click)="tabSwitch(4, 1)">communication address</a>
                   </li>
-                  <li class="tab-link" [ngClass]="{'not-visible': isTabDisabled, 'active': (activeTab == 5), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
+                  <li class="tab-link" [ngClass]="{'not-visible': isTabDisabled, 'active': (activeTab == 5), 'hide': (!applicantIndividual), 'disabled': (isTabDisabled || tabHide)}">
                     <a href="javascript:void(0);" (click)="tabSwitch(5, 1)">marital status</a>
                   </li>
-                  <li class="tab-link" [ngClass]="{'not-visible': isTabDisabled, 'active': (activeTab == 6), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
+                  <li class="tab-link" [ngClass]="{'not-visible': isTabDisabled, 'active': (activeTab == 6), 'hide': (!applicantIndividual), 'disabled': (isTabDisabled || tabHide)}">
                     <a href="javascript:void(0);" (click)="tabSwitch(6, 1)">family details</a>
                   </li>
-                  <li class="tab-link" [ngClass]="{'not-visible': isTabDisabled, 'active': (activeTab == 7), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
+                  <li class="tab-link" [ngClass]="{'not-visible': isTabDisabled, 'active': (activeTab == 7), 'hide': (!applicantIndividual), 'disabled': (isTabDisabled || tabHide)}">
                     <a href="javascript:void(0);" (click)="tabSwitch(7, 1)">other</a>
                   </li>
-                  <li class="tab-link" [ngClass]="{'not-visible': isTabDisabled, 'active': (activeTab == 8), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
+                  <li class="tab-link" [ngClass]="{'not-visible': isTabDisabled, 'active': (activeTab == 8), 'hide': (!applicantIndividual), 'disabled': (isTabDisabled || tabHide)}">
                     <a href="javascript:void(0);" (click)="tabSwitch(8, 1)">occupation details</a>
                   </li>
-                  <li class="tab-link" [ngClass]="{'not-visible': isTabDisabled, 'active': (activeTab == 9), 'hide': ((!applicantIndividual) || !(qde?.application?.applicants[coApplicantIndex]?.incomeDetails?.incomeConsider == true)), 'disabled': isTabDisabled}">
+                  <li class="tab-link" [ngClass]="{'not-visible': isTabDisabled, 'active': (activeTab == 9), 'hide': ((!applicantIndividual) || !(qde?.application?.applicants[coApplicantIndex]?.incomeDetails?.incomeConsider == true)), 'disabled': (isTabDisabled || tabHide)}">
                     <a href="javascript:void(0);" (click)="tabSwitch(9, 1)">official correspondence</a>
                   </li>
-                  <li class="tab-link" [ngClass]="{'not-visible': isTabDisabled, 'active': (activeTab == 10), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
+                  <li class="tab-link" [ngClass]="{'not-visible': isTabDisabled, 'active': (activeTab == 10), 'hide': (!applicantIndividual), 'disabled': (isTabDisabled || tabHide)}">
                       <a href="javascript:void(0);" (click)="tabSwitch(10, 1)">INCOME DETAILS</a>
                   </li>
                   <li class="tab-link hide" [ngClass]="{'active': (activeTab == 11), 'hide': (applicantIndividual)}">
-                      <a href="javascript:void(0);" (click)="tabSwitch(11, 1)">PAN</a>
+                      <a href="javascript:void(0);" (click)="tabSwitch(1, 1)">PAN</a>
                   </li>
-                  <li class="tab-link hide" [ngClass]="{'active': (activeTab == 12), 'hide': (applicantIndividual)}">
+                  <li class="tab-link hide" [ngClass]="{'active': (activeTab == 12), 'hide': (applicantIndividual),'disabled': tabHide}">
                       <a href="javascript:void(0);" (click)="tabSwitch(12, 1)">ORGANIZATION DETAILS</a>
                   </li>
-                  <li class="tab-link hide" [ngClass]="{'active': (activeTab == 13), 'hide': (applicantIndividual)}">
+                  <li class="tab-link hide" [ngClass]="{'active': (activeTab == 13), 'hide': (applicantIndividual),'disabled': tabHide}">
                       <a href="javascript:void(0);" (click)="tabSwitch(13, 1)">REGISTERED ADDRESS</a>
                   </li>
-                  <li class="tab-link hide" [ngClass]="{'active': (activeTab == 14), 'hide': (applicantIndividual)}">
+                  <li class="tab-link hide" [ngClass]="{'active': (activeTab == 14), 'hide': (applicantIndividual),'disabled': tabHide}">
                       <a href="javascript:void(0);" (click)="tabSwitch(14, 1)">CORPORATE ADDRESS</a>
                   </li>
-                  <li class="tab-link hide" [ngClass]="{'active': (activeTab == 15), 'hide': (applicantIndividual)}">
+                  <li class="tab-link hide" [ngClass]="{'active': (activeTab == 15), 'hide': (applicantIndividual),'disabled': tabHide}">
                       <a href="javascript:void(0);" (click)="tabSwitch(15, 1)">REVENUE DETAILS</a>
                   </li>
-                  <li class="tab-link hide" [ngClass]="{'active': (activeTab == 16), 'hide': (applicantIndividual)}">
+                  <li class="tab-link hide" [ngClass]="{'active': (activeTab == 16), 'hide': (applicantIndividual),'disabled': tabHide}">
                       <a href="javascript:void(0);" (click)="tabSwitch(16, 1)">INCOME DETAILS</a>
                   </li>
               </ul>
@@ -256,8 +256,8 @@
                                             <div class="btn-wrap">
                                                 <button type="submit"
                                                         class="btn btn-primary"
-                                                        [ngClass]="{'disabled': (!panNumberForm.valid || selectedDocType.value == 0)}"
-                                                        [disabled]="!panNumberForm.valid || selectedDocType.value == '0'">Next
+                                                        [ngClass]="{'disabled': (!panNumberForm.valid || selectedDocType?.value == 0)}"
+                                                        [disabled]="!panNumberForm.valid || selectedDocType?.value == '0'">Next
                                                 </button>
                                             </div>
                                         </form>
@@ -396,23 +396,23 @@
                                                                <option *ngFor="let rela of relationships" [value]="rela.value">{{rela.key}}</option>
                                                             </select> -->
                                         
-                                                        <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
+                                                        <kendo-dropdownlist [readonly]="isReadOnly"
+                                                            class="form-control"
                                                             [defaultItem]= "defaultItem"
                                                             [data]="relationships" 
-                                                            [textField]="'key'"
-                                                            [valueField]="'value'"
+                                                            textField="key"
+                                                            valueField="value"
                                                             name="relationShip"
-                                                            [valuePrimitive]="true"
+                                                            
                                                             [(ngModel)]="selectedRelationship"
-                                                            (valueChange)="changedRelationship($event)"
-                                                            >
+                                                            (valueChange)="changedRelationship($event)">
                                                             </kendo-dropdownlist>
                                         
                                                         </div>
                                                   <div class="form-group">
                                                       <span class="control-title">Title</span>
                                                       <div class="form-group">   
-                                                          <kendo-dropdownlist [readonly]=" selectedRelationship == 0 ||isReadOnly"                                                            
+                                                          <kendo-dropdownlist [readonly]=" selectedRelationship?.value == 0 ||isReadOnly"                                                            
                                                             class="form-control"
                                                             [defaultItem]= "defaultItem"                                                           
                                                             [data]="titles"                                                            
@@ -420,6 +420,7 @@
                                                             textField="key"
                                                             valueField="value"
                                                             name="title"
+                                                            
                                                             [(ngModel)]="selectedTitle"
                                                             (valueChange)="changeTitle($event)" >
                                                           </kendo-dropdownlist>
@@ -492,8 +493,8 @@
                                               <div class="btn-wrap">
                                                 <button   type="submit"
                                                           class="btn btn-primary"
-                                                          [ngClass]="{'disabled': (!nameForm.valid || selectedRelationship ==0 || selectedTitle?.value ==0)}"
-                                                          [disabled]="!nameForm.valid || selectedRelationship ==0 || selectedTitle?.value == 0">Next
+                                                          [ngClass]="{'disabled': (!nameForm.valid || selectedRelationship?.value == 0 || selectedTitle?.value == 0)}"
+                                                          [disabled]="!nameForm.valid || selectedRelationship?.value == 0 || selectedTitle?.value == 0">Next
                                                 </button>
                                               </div>
                                           </form>
@@ -538,8 +539,8 @@
                                               <div class="btn-wrap">
                                                   <button type="submit"
                                                           class="btn btn-primary"
-                                                          [ngClass]="{'disabled': (!qualificationForm.valid || selectedQualification.value ==0)}"
-                                                          [disabled]="!qualificationForm.valid || selectedQualification.value ==0">Next
+                                                          [ngClass]="{'disabled': (!qualificationForm.valid || selectedQualification?.value ==0)}"
+                                                          [disabled]="!qualificationForm.valid || selectedQualification?.value ==0">Next
                                                   </button>
                                               </div>
                                           </form>
@@ -1333,8 +1334,8 @@
                                           </div>
                                           <div class="btn-wrap">
                                               <button type="submit" class="btn btn-primary" 
-                                                      [ngClass]="{'disabled': (!communicationForm.valid || !qde.application.applicants[coApplicantIndex].communicationAddress.cityState || !qde.application.applicants[coApplicantIndex].permanentAddress.cityState || selectedResidence.value ==0)}"
-                                                      [disabled]="!communicationForm.valid || !qde.application.applicants[coApplicantIndex].communicationAddress.cityState || !qde.application.applicants[coApplicantIndex].permanentAddress.cityState || selectedResidence.value ==0">
+                                                      [ngClass]="{'disabled': (!communicationForm.valid || !qde.application.applicants[coApplicantIndex].communicationAddress.cityState || !qde.application.applicants[coApplicantIndex].permanentAddress.cityState || selectedResidence?.value ==0)}"
+                                                      [disabled]="!communicationForm.valid || !qde.application.applicants[coApplicantIndex].communicationAddress.cityState || !qde.application.applicants[coApplicantIndex].permanentAddress.cityState || selectedResidence?.value ==0">
                                                   Next
                                               </button>
                                           </div>
@@ -1418,8 +1419,8 @@
                                             <div class="btn-wrap">
                                               <button type="submit"
                                                       class="btn btn-primary"
-                                                      [ngClass]="{'disabled': (selectedMaritialStatus.value ==0)}"
-                                                      [disabled]="selectedMaritialStatus.value ==0">Next
+                                                      [ngClass]="{'disabled': (selectedMaritialStatus?.value ==0)}"
+                                                      [disabled]="selectedMaritialStatus?.value ==0">Next
                                               </button>
                                             </div>
                                         </form>
@@ -1471,8 +1472,8 @@
                                             </div>
                                             <div class="btn-wrap">
                                                 <button   type="submit"
-                                                          [ngClass]="{'disabled': (!spouseForm.valid || selectedSpouseTitle.value == 0)}"
-                                                          [disabled]="!spouseForm.valid || selectedSpouseTitle.value ==0"
+                                                          [ngClass]="{'disabled': (!spouseForm.valid || selectedSpouseTitle?.value == 0)}"
+                                                          [disabled]="!spouseForm.valid || selectedSpouseTitle?.value ==0"
                                                           class="btn btn-primary">
                                                   Next
                                                 </button>
@@ -1725,8 +1726,8 @@
                                           <div class="btn-wrap">
                                               <button type="submit"
                                                       class="btn btn-primary"
-                                                      [ngClass]="{'disabled': (!familyForm2.valid || selectedFatherTitle.value == 0 || selectedMotherTitle.value ==0 )}"
-                                                      [disabled]="!familyForm2.valid || selectedFatherTitle.value == 0 || selectedMotherTitle.value ==0">
+                                                      [ngClass]="{'disabled': (!familyForm2.valid || selectedFatherTitle?.value == 0 || selectedMotherTitle?.value ==0 )}"
+                                                      [disabled]="!familyForm2.valid || selectedFatherTitle?.value == 0 || selectedMotherTitle?.value ==0">
                                                   Next
                                               </button>
                                           </div>
@@ -1823,8 +1824,8 @@
           
                                       <div class="btn-wrap">
                                           <button type="submit"
-                                                  [ngClass]="{'disabled': (!otherForm.valid) || otherReligion?.length == 25 || selectedReligion.value ==0 || selectedCategory.value ==0 }"
-                                                  [disabled]="!otherForm.valid || otherReligion?.length == 25 || selectedReligion.value ==0 || selectedCategory.value ==0"
+                                                  [ngClass]="{'disabled': (!otherForm.valid) || otherReligion?.length == 25 || selectedReligion?.value ==0 || selectedCategory?.value ==0 }"
+                                                  [disabled]="!otherForm.valid || otherReligion?.length == 25 || selectedReligion?.value ==0 || selectedCategory?.value ==0"
                                                   class="btn btn-primary">Next</button>
                                       </div>
                                   </form>
@@ -2036,8 +2037,8 @@
                                         <div *ngIf="occupationRequired == false"
                                         class="btn-wrap">
                                           <button type="submit" 
-                                                [ngClass]="{'disabled': !occupationForm.valid || selectedOccupation.value ==0}"
-                                                [disabled]="(!occupationForm.valid || selectedOccupation.value ==0)" 
+                                                [ngClass]="{'disabled': !occupationForm.valid || selectedOccupation?.value ==0}"
+                                                [disabled]="(!occupationForm.valid || selectedOccupation?.value ==0)" 
                                                   class="btn btn-primary"
                                             (click)="incomeConsiderYesNoIndividual(2, occupationSlider2)"
                                             [value]="2">
@@ -2354,7 +2355,7 @@
                                                   
                                                     pattern="{{regexPattern.amount}}"
                                                     name="monthlyIncome"
-                                                    (input)="checkAmountLimitMonthlyIncome($event)"
+                                                    (input)="checkAmountLimitMonthlyIncome($event,1000,1000000000)"
                                                     required/>
                                                     <label for="monthlyIncome1">Monthly income</label>
                                                     <span class="addon">
@@ -2362,7 +2363,7 @@
                                                     </span>
                                                     <span class="in-word"></span>
                                                     <div  class="invalid-feedback" *ngIf="isNumberLessThan1k">{{errors.incomeDetails.monthlyIncome.minamount}}{{requirMinAmout1}}</div>
-                                                    <div  class="invalid-feedback" *ngIf="isNumberMoreThan100cr">{{errors.incomeDetails.monthlyIncome.maxamount}}</div>
+                                                    <div  class="invalid-feedback" *ngIf="isNumberMoreThan100cr">{{errors.incomeDetails.monthlyIncome.maxamount}}{{requirMaxAmout1}}</div>
                                                     <div *ngIf="monthlyIncome1.touched && monthlyIncome1.invalid" class="invalid-feedback">
                                                             <!-- <div *ngIf="isLessAmount">{{errors.incomeDetails.familyIncome.minamount}}{{requirMinAmout}}</div> -->
                                                         <!-- <div *ngIf="monthlyIncome1.errors?.required">{{errors.incomeDetails.monthlyIncome.required}}</div> -->
@@ -2388,8 +2389,8 @@
                                             </div>
                                             <div class="btn-wrap">
                                                 <button type="submit" class="btn btn-primary" 
-                                                [disabled]="!incomeDetailsForm2.valid || isTBMLoggedIn  || isNumberLessThan1k || isNumberMoreThan100cr" 
-                                                [ngClass]="{'disabled': (!incomeDetailsForm2.valid || isTBMLoggedIn  || isNumberLessThan1k || isNumberMoreThan100cr)}">Next</button>
+                                                [disabled]="!incomeDetailsForm2.valid|| selectedAssesmentMethodology?.value == 0 || isTBMLoggedIn  || isNumberLessThan1k || isNumberMoreThan100cr" 
+                                                [ngClass]="{'disabled': (!incomeDetailsForm2.valid  || selectedAssesmentMethodology?.value == 0|| isTBMLoggedIn  || isNumberLessThan1k || isNumberMoreThan100cr)}">Next</button>
                                             </div>
                                         </form>
                                     </div>
@@ -2915,14 +2916,14 @@
                                     <!-- <select ngModel name="relationShip" class="js-select" required>
                                            <option *ngFor="let rela of relationships" [value]="rela.value">{{rela.key}}</option>
                                         </select> -->
-                    
+                                        <!-- [valuePrimitive]="true" -->
                                         <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
                                         [defaultItem]="defaultItem"
                                         [data]="relationships" 
                                         textField="key"
                                         valueField="value"
                                         name="relationShip" 
-                                        [valuePrimitive]="true"                                       
+                                                                               
                                         [(ngModel)]="selectedRelationship">
                                         </kendo-dropdownlist>
                     
@@ -2930,8 +2931,8 @@
                                   </div>
                                     <div class="btn-wrap">
                                         <button class="btn btn-primary"
-                                                [ngClass]="{'disabled': (!organizationForm.valid || organizationDetails.day.value == 'DD' || organizationDetails.month.value == 'MM' || organizationDetails.year.value == 'YYYY' || selectedRelationship ==0 || selectedConstitution.value == 0)}"
-                                                [disabled]="(!organizationForm.valid || organizationDetails.day.value == 'DD' || organizationDetails.month.value == 'MM' || organizationDetails.year.value == 'YYYY' || selectedRelationship ==0 || selectedConstitution.value == 0)">Next
+                                                [ngClass]="{'disabled': (!organizationForm.valid || organizationDetails.day.value == 'DD' || organizationDetails.month.value == 'MM' || organizationDetails.year.value == 'YYYY' || selectedRelationship?.value == 0 || selectedConstitution?.value == 0)}"
+                                                [disabled]="(!organizationForm.valid || organizationDetails.day.value == 'DD' || organizationDetails.month.value == 'MM' || organizationDetails.year.value == 'YYYY' || selectedRelationship?.value == 0 || selectedConstitution?.value == 0)">Next
                                         </button>
                                     </div>
                                 </form>
@@ -3475,7 +3476,7 @@
                                                     tabindex="1"
                                                     spellcheck="false"
                                                     minlength="4"
-                                                    (input)="checkAmountLimit($event,1000)"
+                                                    (input)="checkAmountLimit($event,1000,1000000000)"
                                                     pattern="{{regexPattern.amount}}"
                                                     name="monthlyIncome"
                                                     
@@ -3485,8 +3486,8 @@
                                                         <span class="icon icon-inr"></span>
                                                     </span>
                                                     <span class="in-word"></span>
-                                                    <div  class="invalid-feedback" *ngIf="isNumberLessThan1k">{{errors.incomeDetails.monthlyIncome.minamount}}</div>
-                                                    <div  class="invalid-feedback" *ngIf="isNumberMoreThan100cr">{{errors.incomeDetails.monthlyIncome.maxamount}}</div>
+                                                    <div  class="invalid-feedback" *ngIf="isNumberLessThan1k">{{errors.incomeDetails.monthlyIncome.minamount}}{{requirMinAmout}}</div>
+                                                    <div  class="invalid-feedback" *ngIf="isNumberMoreThan100cr">{{errors.incomeDetails.monthlyIncome.maxamount}}{{requirMaxAmout}}</div>
                                                     <div *ngIf="monthlyIncome2.touched && monthlyIncome2.dirty" class="invalid-feedback">
                                                         <div *ngIf="isLessAmount">{{errors.incomeDetails.familyIncome.minamount}}{{requirMinAmout}}</div>
                                                         <!-- <div *ngIf="monthlyIncome2.errors?.required">{{errors.incomeDetails.monthlyIncome.required}}</div> -->
@@ -3510,7 +3511,8 @@
                                             </div>
                                             </div>
                                             <div class="btn-wrap">
-                                                <button type="submit" class="btn btn-primary" [disabled]="!incomeDetailsForm4.valid || isTBMLoggedIn  || isNumberLessThan1k || isNumberMoreThan100cr || selectedAssesmentMethodology.value==0" [ngClass]="{'disabled': (!incomeDetailsForm4.valid || isTBMLoggedIn  || isNumberLessThan1k || isNumberMoreThan100cr || selectedAssesmentMethodology.value==0)}">Save</button>
+                                                <button type="submit" class="btn btn-primary" [disabled]="!incomeDetailsForm4.valid || isTBMLoggedIn  || isNumberLessThan1k || isNumberMoreThan100cr || selectedAssesmentMethodology?.value == 0" 
+                                                [ngClass]="{'disabled': (!incomeDetailsForm4.valid || isTBMLoggedIn  || isNumberLessThan1k || isNumberMoreThan100cr || selectedAssesmentMethodology?.value == 0)}">Save</button>
                                             </div>
                                         </form>
                                     </div>
@@ -3545,11 +3547,11 @@
                             <div class="duplicate-table-col">{{d['applicantId']}}</div>
                             <div class="duplicate-table-col" *ngIf ="qde.application.applicants[coApplicantIndex].isIndividual">
                                 {{d['personalDetails']['firstName']}}{{d['personalDetails']['middleName'] ? " "+d['personalDetails']['middleName'] : ""}}{{" "+d['personalDetails']['lastName']}}
-                                
+                                {{d['organizationDetails']['nameOfOrganization']}}
                             </div>
-                            <div class="duplicate-table-col" *ngIf ="!qde.application.applicants[coApplicantIndex].isIndividual">
-                                    {{d['organizationDetails']['nameOfOrganization']}}
-                                </div>
+                            <!-- <div class="duplicate-table-col" *ngIf ="!qde.application.applicants[coApplicantIndex].isIndividual">
+                                   
+                                </div> -->
                             <div class="duplicate-table-col">
                                 <input type="radio" name="selectDuplicateApplicant" [value]="d['applicantId']" ngModel class="duplicate-radio" />
                             </div>
