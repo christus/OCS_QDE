@@ -1,4 +1,4 @@
-<main>
+﻿<main>
     <div class="main">
         <div class="lyt-home">
             <div class="tabs">
@@ -3339,7 +3339,7 @@
                                               <div *ngIf="(revenue.touched && revenue.dirty)" class="invalid-feedback">
                                                   
                                                   <!-- <div *ngIf="revenue.errors?.required">{{errors.revenueDetails.revenue.required}}</div> -->                                                 
-                                                  <div *ngIf="isLessAmount && qde.application.applicants[coApplicantIndex]?.revenueDetails.revenue < 50000 && (itemBeingChecked == 'revenue')">{{errors.incomeDetails.familyIncome.minamount}}{{requirMinAmout}}</div>
+                                                  <div *ngIf="isReceiptsLess && qde.application.applicants[coApplicantIndex]?.revenueDetails.revenue < 50000">{{errors.incomeDetails.familyIncome.minamount}}{{requireMinAmountReceipts}}</div>
                                                   <div *ngIf="revenue.errors?.pattern">{{errors.revenueDetails.revenue.invalid}}</div>
                                               </div>
           
@@ -3364,7 +3364,7 @@
                                               <label for="net-income">Annual Net Profit</label>
                                               <div *ngIf="(annualNetincome.touched && annualNetincome.dirty && annualNetincome.invalid)" class="invalid-feedback">
                                                   <!-- <div *ngIf="annualNetincome.errors?.required">{{errors.revenueDetails.annualNetincome.required}}</div> -->
-                                                  <div *ngIf="isLessAmount && qde.application.applicants[coApplicantIndex]?.revenueDetails.annualNetIncome < 1000 && (itemBeingChecked == 'annualNetIncome')">{{errors.incomeDetails.familyIncome.minamount}}{{requirMinAmout}}</div>
+                                                  <div *ngIf="isRevenueLess && qde.application.applicants[coApplicantIndex]?.revenueDetails.annualNetIncome < 1000">{{errors.incomeDetails.familyIncome.minamount}}{{requireMinAmountRevenue}}</div>
                                                   <div *ngIf="annualNetincome.errors?.pattern">{{errors.revenueDetails.annualNetincome.invalid}}</div>
                                               </div>
           

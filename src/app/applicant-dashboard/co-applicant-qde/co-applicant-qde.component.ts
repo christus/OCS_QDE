@@ -158,7 +158,6 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   timeLeft : number = 180;
   isOTPExpired:boolean = false;
   isOTPEmpty: boolean = true;
-  itemBeingChecked : string;
 
   activeTab: number = 0;
   dob: {day: Item, month: Item, year: Item} = { day: {key: "DD", value: "DD"}, month: {key: "MM", value: "MM"}, year: {key: "YYYY", value: "YYYY"} };
@@ -194,6 +193,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
   // For Hide/Show tabs between Indi and Non indi
   applicantStatus:string = "" ;
+  requireMinAmountReceipts: string;
+  requireMinAmountRevenue: string;
+  isReceiptsLess: boolean = false;
+  isRevenueLess: boolean = false;
 
   dateofBirthKendo:Date;
 
@@ -3203,6 +3206,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
     } else {
       this.qde.application.applicants[this.coApplicantIndex].corporateAddress.corporateAddress = "";
+      this.qde.application.applicants[this.coApplicantIndex].corporateAddress.landMark = "";
       this.qde.application.applicants[this.coApplicantIndex].corporateAddress.zipcode = "";
       this.qde.application.applicants[this.coApplicantIndex].corporateAddress.cityState = "";
       this.qde.application.applicants[this.coApplicantIndex].corporateAddress.stateId = "";
@@ -3361,9 +3365,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       }
 
       // Occupation details
-      // if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].occupation.occupationType)) ) {
-      //   this.selectedOccupation = this.occupations.find(e => e.value == this.qde.application.applicants[this.coApplicantIndex].occupation.occupationType);
-      // }
+      if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].occupation.occupationType)) ) {
+         this.selectedOccupation = this.occupations.find(e => e.value == this.qde.application.applicants[this.coApplicantIndex].occupation.occupationType);
+       }
 
       // Assesment methodology
       console.log("AM: ", this.assessmentMethodology);
@@ -4550,12 +4554,17 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       console.log("min ",event,minAmount,maxAmount);
       this.isLessAmount = true;
       this.requirMinAmout = minAmount;
-      this.itemBeingChecked = event.target.name;
+      if(event.target.name == "revenue"){
+      this.requireMinAmountReceipts = minAmount;
+      this.isReceiptsLess = true;
+      }else if(event.target.name == "annualNetIncome"){
+      this.requireMinAmountRevenue = minAmount;	
+      this.isRevenueLess = true;
+      }      
     } else if(n >= maxAmount && !maxAmount){
       console.log("max ",event,minAmount,maxAmount);
       this.isMaxAmount = true;
       this.requirMaxAmout = maxAmount;
-      this.itemBeingChecked = event.target.name;
     } else {
       this.isLessAmount = false;
       this.requirMinAmout="";
