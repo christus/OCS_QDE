@@ -450,8 +450,10 @@
                                 <kendo-dropdownlist   [readonly] = "true" class="date_dropdown_fontsize form-control"
                                   textField="key" valueField="value" name="day" nick="personalDetails.day" tabindex="0"
                                   #dobDay (selectionChange)="selectValueChanged($event, dobDay.hostElement)"
-                                  [(ngModel)]="dob.day">
+                                  [(ngModel)]="dob.day"
+                                  >
                                 </kendo-dropdownlist>
+                                <!-- (blur)="dateofBirthKendo2.toggle()" -->
                               </div>
 
                               <div class="col4">
@@ -473,6 +475,8 @@
                               </div>
                             </div>
                             <kendo-datepicker class="kendo_date_picker"
+                              [activeView]="'decade'"
+                              #dateofBirthKendo2
                               (valueChange)="onBirthDateChange($event)"
                               [min]= min
                               [max] =  maxDate
@@ -1232,8 +1236,10 @@
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                               id="amount" tabindex="1" autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].maritalStatus.amount"
-                              #amount="ngModel" name="amount" maxlength="11" fieldFill
-                              (input)="checkAmountLimit($event,1000,100000000000)"
+                              #amount="ngModel" name="amount"
+                              [maxlength]="minMaxValues['Spouse_earning'].maxLength" 
+                              fieldFill
+                              (input)="checkAmountLimit($event,minMaxValues['Spouse_earning'].minValue,minMaxValues['Spouse_earning'].maxValue)"
                               pattern="{{regexPattern.amount}}" />
 
                             <label for="amount">Amount</label>
@@ -1965,10 +1971,10 @@
                               id="monthlyIncome1" tabindex="1"
                               autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.monthlyIncome"
-                              #monthlyIncome1="ngModel"
-                              minlength="4"
-                              fieldFill maxlength="10"
-                              (input)="checkAmountLimitMonthlyIncome($event)"
+                              #monthlyIncome1="ngModel"                              
+                              fieldFill
+                              [maxlength]="minMaxValues['Monthly_Income'].maxLength"
+                              (input)="checkAmountLimit($event,minMaxValues['Monthly_Income'].minValue,minMaxValues['Monthly_Income'].maxValue)"
                               pattern="{{regexPattern.amount}}"
                               name="monthlyIncome" required />
                             <label for="monthlyIncome1">Monthly income</label>
@@ -1976,8 +1982,8 @@
                               <span class="icon icon-inr"></span>
                             </span>
                             <span class="in-word"></span>
-                            <div  class="invalid-feedback" *ngIf="isNumberLessThan1k">{{errors.incomeDetails.monthlyIncome.minamount}}</div>
-                            <div  class="invalid-feedback" *ngIf="isNumberMoreThan100cr">{{errors.incomeDetails.monthlyIncome.maxamount}}</div>
+                            <div  class="invalid-feedback" *ngIf="isLessAmount">{{errors.incomeDetails.monthlyIncome.minamount}}{{requirMinAmout}}</div>
+                            <div  class="invalid-feedback" *ngIf="isMaxAmount">{{errors.incomeDetails.monthlyIncome.maxamount}}{{requirMaxAmout}}</div>
                             <div *ngIf="monthlyIncome1.touched && monthlyIncome1.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="monthlyIncome1.errors?.required">{{errors.incomeDetails.monthlyIncome.required}}</div> -->
                               <!-- <div *ngIf="isLessAmount">{{errors.incomeDetails.familyIncome.minamount}}{{requirMinAmout}}</div>
@@ -2006,8 +2012,8 @@
                         </div>
                         <div class="btn-wrap">
                           <button type="submit" class="btn btn-primary"
-                          [disabled]="!incomeConsiderFormInd.valid || selectedAssesmentMethodology?.value ==0 || isTBMLoggedIn || isNumberLessThan1k || isNumberMoreThan100cr"
-                            [ngClass]="{'disabled': (!incomeConsiderFormInd.valid || selectedAssesmentMethodology?.value ==0 || isTBMLoggedIn || isNumberLessThan1k || isNumberMoreThan100cr)}">Next</button>
+                          [disabled]="!incomeConsiderFormInd.valid || selectedAssesmentMethodology?.value ==0 || isTBMLoggedIn || isLessAmount || isMaxAmount"
+                            [ngClass]="{'disabled': (!incomeConsiderFormInd.valid || selectedAssesmentMethodology?.value ==0 || isTBMLoggedIn || isLessAmount || isMaxAmount)}">Next</button>
                         </div>
                       </form>
                     </div>
@@ -2023,8 +2029,8 @@
                               #annualFamilyIncome1="ngModel"
                               name="annualFamilyIncome"
                               tabindex="1" fieldFill
-                              maxlength="10"
-                              (input)="checkAmountLimit($event,5000,1000000000)"
+                              [maxlength]="minMaxValues['Monthly_family_income'].maxLength"
+                              (input)="checkAmountLimit($event,minMaxValues['Monthly_family_income'].minValue,minMaxValues['Monthly_family_income'].maxValue)"
                               pattern="{{regexPattern.amount}}"
                               required />
                             <label for="annualFamilyIncome1">Monthly Family Income <span class="lakhs"></span></label>
@@ -2046,17 +2052,20 @@
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                               id="monthlyExpenditure1" autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.monthlyExpenditure"
-                              #monthlyExpenditure1="ngModel" pattern="{{regexPattern.amount}}" name="monthlyExpenditure"
-                              (input)="checkAmountLimitMonthlyIncome($event)"
-                              tabindex="2" maxlength="10" fieldFill required />
+                              #monthlyExpenditure1="ngModel" 
+                              pattern="{{regexPattern.amount}}" 
+                              name="monthlyExpenditure"
+                              (input)="checkAmountLimitMonthlyIncome($event,minMaxValues['Monthly_expenditure'].minValue,minMaxValues['Monthly_expenditure'].maxValue)"
+                              tabindex="2"
+                              [maxlength]="minMaxValues['Monthly_expenditure'].maxLength" fieldFill required />
                             <label for="monthlyExpenditure1">Monthly Expenditure</label>
                             <span class="addon">
                               <span class="icon icon-inr"></span>
                             </span>
                             <span class="in-word"></span>
 
-                            <div class="invalid-feedback" *ngIf="isNumberLessThan1k">{{errors.incomeDetails.monthlyIncome.minamount}}</div>
-                            <div class="invalid-feedback" *ngIf="isNumberMoreThan100cr">{{errors.incomeDetails.monthlyIncome.maxamount}}</div>
+                            <div class="invalid-feedback" *ngIf="isNumberLessThan1k">{{errors.incomeDetails.monthlyIncome.minamount}}{{requirMinAmout1}}</div>
+                            <div class="invalid-feedback" *ngIf="isNumberMoreThan100cr">{{errors.incomeDetails.monthlyIncome.maxamount}}{{requirMaxAmout1}}</div>
                             <div *ngIf="monthlyExpenditure1.touched || monthlyExpenditure1.invalid"
                               class="invalid-feedback">
                               <!-- <div *ngIf="monthlyExpenditure1.errors?.required">{{errors.incomeDetails.monthlyExpenditure.required}}</div> -->
@@ -2144,13 +2153,17 @@
                         (ngSubmit)="submitAnnualFamilyIncome(annualFamilyIncomeForm,incomeSliderIndividual2)">
                         <div class="form-wrap">
                           <div class="form-group inr">
-                            <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="annualFamilyIncome1" autocomplete="off"
+                            <input [readonly]="isTBMLoggedIn" 
+                              spellcheck="false" 
+                              type="text" 
+                              class="form-control"
+                              id="annualFamilyIncome1" 
+                              autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.annualFamilyIncome"
-                              #annualFamilyIncome1="ngModel" name="annualFamilyIncome" tabindex="1" fieldFill
-                              (input)="checkAmountLimit($event,5000)"
-                              maxlength="10"
-                              minlength="4"
+                              #annualFamilyIncome1="ngModel" 
+                              name="annualFamilyIncome" tabindex="1" fieldFill
+                              (input)="checkAmountLimit($event,minMaxValues['Monthly_family_income'].minValue,minMaxValues['Monthly_family_income'].maxValue)"
+                              [maxlength]="minMaxValues['Monthly_family_income'].maxLength"                              
                               pattern="{{regexPattern.amount}}" required />
                             <label for="annualFamilyIncome1">Monthly Family Income <span class="lakhs"></span></label>
                             <span class="addon">
@@ -2160,7 +2173,8 @@
 
                             <div *ngIf="annualFamilyIncome1.touched || annualFamilyIncome1.dirty"
                               class="invalid-feedback">
-
+                              <div *ngIf="isLessAmount">{{errors.incomeDetails.familyIncome.minamount}}{{requirMinAmout}}</div>
+                              <div *ngIf="isMaxAmount">{{errors.incomeDetails.familyIncome.maxamount}}{{requirMaxAmout}}</div>
                               <!-- <div *ngIf="annualFamilyIncome1.errors?.required">{{errors.incomeDetails.familyIncome.required}}</div> -->
                               <div *ngIf="annualFamilyIncome1.errors?.pattern">
                                 {{errors.incomeDetails.familyIncome.invalid}}</div>
@@ -2172,16 +2186,20 @@
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                               id="monthlyExpenditure1" autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.monthlyExpenditure"
-                              #monthlyExpenditure1="ngModel" pattern="{{regexPattern.amount}}" name="monthlyExpenditure"
-                              (input)="checkAmountLimitMonthlyIncome($event)"
-                              tabindex="2" maxlength="10" fieldFill required />
+                              #monthlyExpenditure1="ngModel"
+                              pattern="{{regexPattern.amount}}" 
+                              name="monthlyExpenditure"
+                              (input)="checkAmountLimitMonthlyIncome($event,minMaxValues['Monthly_expenditure'].minValue,minMaxValues['Monthly_expenditure'].maxValue)"
+                              tabindex="2"
+                               [maxlength]="minMaxValues['Monthly_expenditure'].maxLength" 
+                               fieldFill required />
                             <label for="monthlyExpenditure1">Monthly Expenditure</label>
                             <span class="addon">
                               <span class="icon icon-inr"></span>
                             </span>
                             <span class="in-word"></span>
-                            <!-- <div  class="invalid-feedback" *ngIf="isNumberLessThan1k">{{errors.incomeDetails.monthlyIncome.minamount}}{{requirMinAmout1}}</div>
-                            <div  class="invalid-feedback" *ngIf="isNumberMoreThan100cr">{{errors.incomeDetails.monthlyIncome.maxamount}}</div> -->
+                            <div  class="invalid-feedback" *ngIf="isNumberLessThan1k">{{errors.incomeDetails.monthlyIncome.minamount}}{{requirMinAmout1}}</div>
+                            <div  class="invalid-feedback" *ngIf="isNumberMoreThan100cr">{{errors.incomeDetails.monthlyIncome.maxamount}}{{requirMaxAmout1}}</div>
                             <div *ngIf="monthlyExpenditure1.touched && monthlyExpenditure1.invalid"
                               class="invalid-feedback">
                               <!-- <div *ngIf="monthlyExpenditure1.errors?.required">{{errors.incomeDetails.monthlyExpenditure.required}}</div> -->
@@ -2224,8 +2242,8 @@
                         </div> -->
                         <div class="btn-wrap">
                           <button type="submit" class="btn btn-primary"
-                            [ngClass]="{'disabled': !annualFamilyIncomeForm.valid || qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == null}"
-                            [disabled]="!annualFamilyIncomeForm.valid || qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == null">
+                            [ngClass]="{'disabled': !annualFamilyIncomeForm.valid || qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == null || isLessAmount || isNumberLessThan1k}"
+                            [disabled]="!annualFamilyIncomeForm.valid || qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == null || isLessAmount || isNumberLessThan1k">
                             Save
                           </button>
                         </div>
@@ -2795,9 +2813,15 @@
                               id="revenue" autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].revenueDetails.revenue"
                               #revenue="ngModel" name="revenue" maxlength="15" fieldFill tabindex="1"
-                              pattern="{{regexPattern.revenue}}" required />
+                              pattern="{{regexPattern.revenue}}" 
+                              required 
+                              [maxlength]="minMaxValues['Receipt_Gross_turnover'].maxLength"
+                              (input)="checkAmountLimit($event,minMaxValues['Receipt_Gross_turnover'].minValue,minMaxValues['Receipt_Gross_turnover'].maxValue)"
+                              />
                             <label for="revenue">Receipt/Gross turnover</label>
                             <div *ngIf="revenue.touched && revenue.invalid" class="invalid-feedback">
+                                <div *ngIf="isLessAmount">{{errors.incomeDetails.familyIncome.minamount}}{{requirMinAmout}}</div>
+                                <div *ngIf="isMaxAmount">{{errors.incomeDetails.familyIncome.maxamount}}{{requirMaxAmout}}</div>
                               <!-- <div *ngIf="revenue.errors?.required">{{errors.revenueDetails.revenue.required}}</div> -->
                               <div *ngIf="revenue.errors?.pattern">{{errors.revenueDetails.revenue.invalid}}</div>
                             </div>
@@ -2808,13 +2832,23 @@
                             <span class="in-word"></span>
                           </div>
                           <div class="form-group inr">
-                            <input [readonly]="isTBMLoggedIn" spellcheck="false" maxlength="15" type="text"
-                              class="form-control" id="net-income" required autocomplete="off"
+                            <input [readonly]="isTBMLoggedIn" 
+                              spellcheck="false" 
+                              [maxlength]="minMaxValues['Annual_Net_Profit'].maxLength" 
+                              type="text"
+                              class="form-control" 
+                              id="net-income" 
+                              required autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].revenueDetails.annualNetIncome"
-                              fieldFill tabindex="2" #annualNetincome="ngModel" name="annualNetIncome"
+                              fieldFill tabindex="2" #annualNetincome="ngModel" 
+                              name="annualNetIncome"
+                              (input)="checkAmountLimit($event,minMaxValues['Annual_Net_Profit'].minValue,minMaxValues['Annual_Net_Profit'].maxValue)"
                               pattern="{{regexPattern.revenue}}" />
                             <label for="net-income">Annual Net Profit</label>
-                            <div *ngIf="annualNetincome.touched && annualNetincome.invalid" class="invalid-feedback">
+                            
+                            <div *ngIf="annualNetincome.touched && annualNetincome.dirty" class="invalid-feedback">
+                                <div *ngIf="isLessAmount">{{errors.incomeDetails.familyIncome.minamount}}{{requirMinAmout}}</div>
+                                <div *ngIf="isMaxAmount">{{errors.incomeDetails.familyIncome.maxamount}}{{requirMaxAmout}}</div>
                               <!-- <div *ngIf="annualNetincome.errors?.required">{{errors.revenueDetails.annualNetincome.required}}</div> -->
                               <div *ngIf="annualNetincome.errors?.pattern">
                                 {{errors.revenueDetails.annualNetincome.invalid}}</div>
@@ -2919,23 +2953,26 @@
                         <div class="form-wrap">
                           <div class="form-group inr">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="monthlyIncome2" maxlength="10"
+                              id="monthlyIncome2"                     
                               autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].incomeDetails.monthlyIncome"
                               #monthlyIncome2="ngModel"
                               fieldFill tabindex="1"
-                              minlength ="4"
+                              [maxlength] ="minMaxValues['Monthly_Income'].maxLength"
                               pattern="{{regexPattern.amount}}"
-                              (input)="checkAmountLimit($event,1000)"
+                              (input)="checkAmountLimit($event,minMaxValues['Monthly_Income'].minValue,minMaxValues['Monthly_Income'].maxValue)"
                               name="monthlyIncome" required />
                             <label for="monthlyIncome2">Monthly income</label>
                             <span class="addon">
                               <span class="icon icon-inr"></span>
                             </span>
                             <span class="in-word"></span>
-
-                            <div *ngIf="monthlyIncome2.touched && monthlyIncome2.invalid" class="invalid-feedback">
+                            <div class="invalid-feedback">
                                 <div *ngIf="isLessAmount">{{errors.incomeDetails.familyIncome.minamount}}{{requirMinAmout}}</div>
+                                <div *ngIf="isMaxAmount">{{errors.incomeDetails.familyIncome.maxamount}}{{requirMaxAmout}}</div>
+                            </div>                            
+                            <div *ngIf="monthlyIncome2.touched && monthlyIncome2.invalid" class="invalid-feedback">
+                                
                               <!-- <div *ngIf="monthlyIncome2.errors?.required">{{errors.incomeDetails.monthlyIncome.required}}</div> -->
                               <div *ngIf="monthlyIncome2.errors?.pattern">{{errors.incomeDetails.monthlyIncome.invalid}}
                               </div>
@@ -2960,8 +2997,8 @@
                         </div>
                         <div class="btn-wrap">
                           <button type="submit" class="btn btn-primary"
-                            [ngClass]="{'disabled': (!incomeDetailsForm4.valid || isTBMLoggedIn)}"
-                            [disabled]="!incomeDetailsForm4.valid || isTBMLoggedIn">Save</button>
+                            [ngClass]="{'disabled': (!incomeDetailsForm4.valid || isTBMLoggedIn || isLessAmount)}"
+                            [disabled]="!incomeDetailsForm4.valid || isTBMLoggedIn || isLessAmount">Save</button>
                         </div>
                       </form>
                     </div>

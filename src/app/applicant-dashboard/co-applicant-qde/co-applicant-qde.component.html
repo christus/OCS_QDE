@@ -548,10 +548,9 @@
                                       <div class="swiper-slide">
                                           <form class="bs-form" *ngIf="!isTabDisabled" #dobForm="ngForm" autocomplete="off" 
                                           (ngSubmit)="submitDobDetails(dobForm, pdSlider2)">
-                                              <div class="form-wrap">
+                                              <div class="form-wrap">                                                 
                                                   <div class="form-group typ-select">
                                                       <span class="control-title">Date of Birth</span>
-
                                                       <div class="row with_datepicker">
                                                         <div class="col4">
                                                             <kendo-dropdownlist [readonly] = "true" class="date_dropdown_fontsize form-control"
@@ -562,7 +561,7 @@
                                                             nick="personalDetails.day"
                                                             #dobDay
                                                             (selectionChange)="selectValueChanged($event, dobDay.hostElement, 'dob')"
-                                                            [(ngModel)]="dob.day">
+                                                            [(ngModel)]="dob.day"                                              >
                                                             </kendo-dropdownlist>
                                                         </div>
     
@@ -575,7 +574,8 @@
                                                             nick="personalDetails.month"
                                                             #dobMonth
                                                             (selectionChange)="selectValueChanged($event, dobMonth.hostElement, 'dob')"
-                                                            [(ngModel)]="dob.month">
+                                                            [(ngModel)]="dob.month"
+                                                            >
                                                             </kendo-dropdownlist>
                                                         </div>
     
@@ -588,21 +588,27 @@
                                                             nick="personalDetails.year"
                                                             #dobYear
                                                             (selectionChange)="selectValueChanged($event, dobYear.hostElement, 'dob')"
-                                                            [(ngModel)]="dob.year">
-                                                            </kendo-dropdownlist>
+                                                            [(ngModel)]="dob.year"                                                          
+                                                            >
+                                                            </kendo-dropdownlist> 
+                                                            <!-- (click)="dateofBirthKendo1.toggle(true)"                                                           -->
                                                         </div>
                                                     </div>
                                                     <kendo-datepicker class="kendo_date_picker"
+                                                        [activeView]="'decade'"
                                                         (valueChange)="onBirthDateChange($event)"
+                                                        #dateofBirthKendo1
                                                         [min] = min
                                                         [max] = maxDate
                                                         [focusedDate]="focusedDate"
                                                         [(value)]="dateofBirthKendo" 
-                                                        [format]="'dd-MMM-yyyy'">
+                                                        [format]="'dd-MMM-yyyy'"
+                                                        >
                                                     </kendo-datepicker>
+                                                   
                                                     <div *ngIf="ageError" class="invalid-feedback">
                                                         <div *ngIf="ageError">Age should not be less than 18 years</div>
-                                                      </div>
+                                                      </div>                                                      
                                                   </div>
                                                   <div class="form-group">                                                 
                                                     
@@ -2315,7 +2321,7 @@
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide">
                                     <div class="title-wrap">
-                                        <h4 class="title">Applicant’s monthly<span class="cm-line-break"></span>income details</h4>
+                                        <h4 class="title">Co-Applicant’s monthly<span class="cm-line-break"></span>income details</h4>
                                     </div>
                                     </div>
                 
@@ -3424,7 +3430,7 @@
               
                                   <div class="swiper-slide">
                                     <div class="title-wrap">
-                                      <h4 class="title">Applicant’s monthly<span class="cm-line-break"></span>income details</h4>
+                                      <h4 class="title">Co-Applicant’s monthly<span class="cm-line-break"></span>income details</h4>
                                     </div>
                                   </div>
               
@@ -3545,10 +3551,11 @@
                     <div class="duplicate-table-data-wrapper">
                         <div class="duplicate-table-data" *ngFor="let d of duplicates;let i=index;">
                             <div class="duplicate-table-col">{{d['applicantId']}}</div>
-                            <div class="duplicate-table-col" *ngIf ="qde.application.applicants[coApplicantIndex].isIndividual">
+                            <div class="duplicate-table-col" >
                                 {{d['personalDetails']['firstName']}}{{d['personalDetails']['middleName'] ? " "+d['personalDetails']['middleName'] : ""}}{{" "+d['personalDetails']['lastName']}}
                                 {{d['organizationDetails']['nameOfOrganization']}}
                             </div>
+                            <!-- *ngIf ="qde.application.applicants[coApplicantIndex].isIndividual" -->
                             <!-- <div class="duplicate-table-col" *ngIf ="!qde.application.applicants[coApplicantIndex].isIndividual">
                                    
                                 </div> -->
@@ -3609,8 +3616,8 @@
         <!-- <a class="modal-close" href="javascript:void(0);" (click)="onBackOTP()"><span class="icon icon-close"></span></a> -->
         <!-- <a class="modal-close" (click)="resetIndividualData()"><span class="icon icon-close">Yes</span></a> -->
         <div class="modal-body">
-        <h1 class="center">Are You Sure to Change Applicant Pan Status!</h1>
-        <h2 class="center">if you click yes All Application Data's are Reset</h2>
+        <h1 class="center">Are You Sure to Change Co-Applicant Pan Status!</h1>
+        <h2 class="center">if you click yes All Co-Application Data's are Reset</h2>
         <div class="btn-wrap">
             <button class="btn btn-border" (click)="resetIndividualData('yes',panSlider2,panSlider1)">Yes</button>&nbsp;&nbsp;
             <button class="btn btn-border" (click)="resetIndividualData('no',panSlider2,panSlider1)">No</button>

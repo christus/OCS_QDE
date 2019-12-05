@@ -30,6 +30,11 @@ interface Item {
   value: number | string
 }
 
+interface MinMax {
+  minValue: string,
+  maxValue: string,
+  maxLength: string
+}
 @Component({
   selector: 'app-co-applicant-qde',
   templateUrl: './co-applicant-qde.component.html',
@@ -398,6 +403,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   isNumberLessThan1k: boolean;
   isNumberMoreThan100cr: boolean;
   tabHide: boolean;
+  minMaxValues: Array<MinMax>;
+
   constructor(private renderer: Renderer2,
               private route: ActivatedRoute,
               private router: Router,
@@ -541,7 +548,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       this.assessmentMethodology = lov.LOVS.assessment_methodology;
       this.unOfficialEmails =  lov.LOVS.un_official_emails;
       this.preferredEmail = lov.LOVS.preferred_mails;
-
+      this.minMaxValues = lov.LOVS.min_max_values;
       //hardcoded
       //this.birthPlace = [{"key": "Chennai", "value": "1"},{"key": "Mumbai", "value": "2"},{"key": "Delhi", "value": "3"}];
       // List of Values for Date
@@ -924,7 +931,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     //     }
     //   }
     // }
-
+   
     if(this.tabName == this.fragments[10] && this.qde.application.applicants[this.coApplicantIndex].incomeDetails.incomeConsider == false) {
       this.router.navigate([], {queryParams: {tabName: this.fragments[8], page: goToSlideNumber}});
     } 
@@ -1538,6 +1545,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   submitDobDetails(form: NgForm, swiperInstance ?: Swiper) {
+   
     if(this.isTBMLoggedIn) {
       this.tabSwitch(3, 1);
     } else {
@@ -2801,39 +2809,41 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     let currentPanValue = this.beferoStatus;
 
 
-    let applicationId =  this.route.snapshot.params["applicationId"];
+    let applicationId =  this.route.snapshot.params["applicationId"] || null;
 
-    let applicantId: string =this.qde.application.applicants[this.coApplicantIndex].applicantId;
+    let applicantId =this.qde.application.applicants[this.coApplicantIndex].applicantId || null;
 
      if (btnValue=="yes" && currentPanValue == true) {
       console.log("inside yes click and ", btnValue);
 
           let data = {
             "userId": parseInt(localStorage.getItem("userId")),
-            "applicantId": applicantId + "",
+            "applicantId": Number(applicantId),
             "docType": 1,
             "applicationId": Number(applicationId)
           };
 
           //flash exiting dataresetIn
           this.qdeHttp.flashExitingData(data).subscribe(
-            data =>{
+            data => {
+              if (data["Error"] ==0) {
               // console.log(JSON.parse(data["ProcessVariables"]["response"])["application"])
               this.qde.application = JSON.parse(data["ProcessVariables"]["response"])["application"];
               this.qdeService.setQde(this.qde);
               this.auditTrial(applicationId,applicantId,1,"pan1",screenPages['coApplicantDetails']);
               this.tabSwitch(11, 1);
               this.qde.application.applicants[this.coApplicantIndex].isIndividual = false;
+              }
             }
           );
 
           this.setRelationship(this.qde.application.applicants.find(v => v.isMainApplicant == true), this.coApplicantIndex);
-    }else if (btnValue=="yes" && currentPanValue == false){
+    } else if (btnValue=="yes" && currentPanValue == false){
       console.log("inside no click and ", btnValue);
 
         let data = {
           "userId": parseInt(localStorage.getItem("userId")),
-          "applicantId": applicantId,
+          "applicantId": Number(applicantId),
           "docType": 1,
           "applicationId": Number(applicationId)
         };
@@ -2841,13 +2851,14 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         //flash exiting dataresetIn
 
         this.qdeHttp.flashExitingData(data).subscribe(
-          data =>{
-
+          data => {
+            if (data["Error"] ==0) {
             this.qde.application = JSON.parse(data["ProcessVariables"]["response"])["application"];
             this.qdeService.setQde(this.qde);
             this.auditTrial(applicationId,applicantId,2,"pan1",screenPages['coApplicantDetails']);
             this.goToNextSlide(swiperInstance1, swiperInstance2);
             this.qde.application.applicants[this.coApplicantIndex].isIndividual = true;
+            }
           }
         );
 
@@ -3366,11 +3377,11 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
       // Occupation details
       if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].occupation.occupationType)) ) {
-         this.selectedOccupation = this.occupations.find(e => e.value == this.qde.application.applicants[this.coApplicantIndex].occupation.occupationType);
-       }
+        this.selectedOccupation = this.occupations.find(e => e.value == this.qde.application.applicants[this.coApplicantIndex].occupation.occupationType);
+      }
 
       // Assesment methodology
-      console.log("AM: ", this.assessmentMethodology);
+      // console.log("AM: ", this.assessmentMethodology);
       if( ! isNaN(parseInt(this.qde.application.applicants[this.coApplicantIndex].incomeDetails.assessmentMethodology)) ) {
         // this.selectedAssesmentMethodology = this.assessmentMethodology[(parseInt(this.qde.application.applicants[this.coApplicantIndex].incomeDetails.assessmentMethodology))-1];
         this.selectedAssesmentMethodology = this.assessmentMethodology.find(v => v.value == this.qde.application.applicants[this.coApplicantIndex].incomeDetails.assessmentMethodology);
