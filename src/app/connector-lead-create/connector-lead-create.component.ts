@@ -13,6 +13,11 @@ interface Item {
   key: string,
   value: string | number
 }
+interface MinMax {
+  minValue: string,
+  maxValue: string,
+  maxLength: string
+}
 @Component({
   selector: 'app-connector-lead-create',
   templateUrl: './connector-lead-create.component.html',
@@ -34,6 +39,12 @@ export class ConnectorLeadCreateComponent implements OnInit {
   firstName: string;
   qdeSourceSub: Subscription;
   applicantIndex: number = 0;
+  minMaxValues: Array<MinMax>;
+  isLessAmount: boolean ;
+  requirMinAmout ;
+  isMaxAmount: boolean;
+  requirMaxAmout;
+
 
   regexPattern={
     firstName: "[A-Za-z ]+$",
@@ -74,8 +85,8 @@ export class ConnectorLeadCreateComponent implements OnInit {
       amount: {
         required: "Loan Amount is Mandatory",
         invalid: "Invalid Loan Amount / Alphabets and special characters not allowed",
-        minamount: "Amount should be greater than or equal to Rs.50000",
-        maxamount: "Amount should be less than or equal to Rs.1000000000",
+        minamount: "Amount should be greater than or equal to Rs.",
+        maxamount: "Amount should be less than or equal to Rs.",
       }
     }
   };
@@ -110,7 +121,7 @@ export class ConnectorLeadCreateComponent implements OnInit {
       this.preferredEmail = lov.LOVS.preferred_mails;
       // this.loanType[0]
       this.selectedLoanType = this.defaultItem ;
-      console.log(this.selectedLoanType);
+      this.minMaxValues = lov.LOVS.min_max_values;
     }
 
     this.version = environment.version;
@@ -187,17 +198,24 @@ export class ConnectorLeadCreateComponent implements OnInit {
     return RegExp(param);
   }
 
-  checkAmountLimit(event) {
+  
+  checkAmountLimit(event,minAmount?,maxAmount?) {
+    console.log("event ",event);
     let n = parseInt(this.getNumberWithoutCommaFormat(event.target.value));
-    if(n < 50000){
-      this.isNumberLessThan50k = true;
-    }
-    else if(n >= 1000000001){
-      this.isNumberMoreThan100cr = true; 
-    }
-    else {
-      this.isNumberLessThan50k = false;
-      this.isNumberMoreThan100cr = false;
+    console.log("event ",n);
+    if(minAmount != undefined && n < minAmount ){
+      console.log("min ",minAmount);
+      this.isLessAmount = true;
+      this.requirMinAmout = minAmount;
+    } else if(n >= maxAmount && !maxAmount){
+      console.log("max ",maxAmount);
+      this.isMaxAmount = true;
+      this.requirMaxAmout = maxAmount;
+    } else {
+      this.isLessAmount = false;
+      this.requirMinAmout="";
+      this.isMaxAmount = false;
+      this.requirMaxAmout="";
     }
   }
 
