@@ -220,8 +220,8 @@
                                         </div>
                                       <div class="btn-wrap">
                                           <button   class="btn btn-primary"
-                                          [disabled]="!chequeForm.valid || bankName.value ==0"
-                                          [ngClass]="{'disabled': (!chequeForm.valid) || bankName.value ==0}">Submit</button>
+                                          [disabled]="!chequeForm.valid || bankName?.value == '0'"
+                                          [ngClass]="{'disabled': (!chequeForm.valid) || bankName?.value == '0'}">Submit</button>
                                       </div>
                                     </form>
                                     </div>

@@ -1,10 +1,10 @@
 export const environment = {
-  version: "1.8.9",
-  buildDate: "28-11-2019",
+  version: "1.9.0",
+  buildDate: "03-12-2019",
   production: true,
-  // projectId: '5928d30eac7811e9a1670242ac110002', // developement
+  projectId: '5928d30eac7811e9a1670242ac110002', // developement
 
-  projectId: '3209f7ea7ba811e982270242ac110002', // production
+  // projectId: '3209f7ea7ba811e982270242ac110002', // production
 
   //projectId: 'ff8e364e6fce11e98754782bcb8f3845', // UAT Development
 
@@ -432,15 +432,19 @@ export const environment = {
       'workflowId': '107260700f7511eab9480242ac110002',
       'processId' : '108f10300f7511eabb200242ac110002'
     },
+    "getOfflinePaymentAmount":{
+      'workflowId': 'f512f03a8ea311e982270242ac110002',
+      'processId' : 'f53166328ea311e982270242ac110002'
+    },
    
   },
   iciciDomainExt: "@icicibankltd.com",
   appiyoDrive: "/d/drive/upload/",
   driveLocation: "/d/drive/docs/",
   ocsHost: "/ocs",
-  // host: "http://192.168.1.108/appiyo",
+  host: "http://192.168.1.108/appiyo",
   //host: "/ProcessStore",
-  host:  "/appiyo",
+  // host:  "/appiyo",
   pdfLocation: "/d/download/pdf?",
   csvLocation: "/d/download/csv?",
   isMobile: false,
