@@ -156,7 +156,7 @@ export class CollateralComponent  {
       },
       error => {
         console.log("Error : ", error);
-        alert(error.error.message);
+        //alert(error.error.message);
       }
     );
   }

@@ -60,6 +60,22 @@ export class LeadsListComponent implements OnInit {
   pendingAppStatus: string = "pendingApplication";
   pendingPaymentStatus: string = "pendingPayment";
   isMobile:boolean;
+  perPage: number;
+  currentPage: number;
+  totalPages: string;
+  totalItems: number;
+  perPageNL: number;
+  currentPageNL: number;
+  totalPagesNL: string;
+  totalItemsNL: number;
+  perPagePA: number;
+  currentPagePA: number;
+  totalPagesPA: string;
+  totalItemsPA: number;
+  perPagePP: number;
+  currentPagePP: number;
+  totalPagesPP: string;
+  totalItemsPP: number;
 
   constructor(private service: QdeHttpService, private utilService: UtilService, private cds: CommonDataService, 
     private mobileService: MobileService,
@@ -153,18 +169,22 @@ export class LeadsListComponent implements OnInit {
     this.getFilteredLeads();
   }
 
-  getPendingApplication() {
+  getPendingApplication(currentPage?: string) {
 
     if(localStorage.getItem("token") && localStorage.getItem("userId")){
         const startDate = new Date();
         console.log("PendingApplication Api Call: Start Date & Time ", startDate, startDate.getMilliseconds());
-          this.service.getLeads(this.searchTxt, this.fromDay.value, this.fromMonth.value, this.fromYear.value, this.toDay.value, this.toMonth.value, this.toYear.value, "", this.pendingAppStatus).subscribe(
+          this.service.getLeads(this.searchTxt, this.fromDay.value, this.fromMonth.value, this.fromYear.value, this.toDay.value, this.toMonth.value, this.toYear.value, "", this.pendingAppStatus,currentPage).subscribe(
           res => {
             const endDate = new Date();
             console.log("PendingApplication Api Call: End Date & Time ", endDate, endDate.getMilliseconds());
             console.log(res);
 
             if (res["Error"] && res["Error"] == 0) {
+              this.perPagePA = res['ProcessVariables']['perPage'];
+			  this.currentPagePA = res['ProcessVariables']['currentPage'];
+			  let totalPages = res['ProcessVariables']['totalPages'];
+			  this.totalItemsPA = parseInt(totalPages) * this.perPagePA;
               this.newPendingApplicationDetails = res["ProcessVariables"].userDetails || [];
 
               this.newPendingApplicationDetails.forEach(el => {
@@ -197,17 +217,21 @@ export class LeadsListComponent implements OnInit {
         );
       }
   }
-  getPendingPayment() {
+  getPendingPayment(currentPage?: string) {
     if(localStorage.getItem("token") && localStorage.getItem("userId")){
       const startDate = new Date();
       console.log("PendingPayment Api Call: Start Date & Time ", startDate, startDate.getMilliseconds());
       this.service.getLeads(this.searchTxt, this.fromDay.value, this.fromMonth.value, this.fromYear.value, 
-        this.toDay.value, this.toMonth.value, this.toYear.value, "", this.pendingPaymentStatus).subscribe(
+        this.toDay.value, this.toMonth.value, this.toYear.value, "", this.pendingPaymentStatus,currentPage).subscribe(
         res => {
           const endDate = new Date();
           console.log("PendingPayment Api Call: End Date & Time ", endDate, endDate.getMilliseconds());
           // console.log(res);
           if (res["Error"] && res["Error"] == 0) {
+            this.perPagePP = res['ProcessVariables']['perPage'];
+			  this.currentPagePP = res['ProcessVariables']['currentPage'];
+			  let totalPages = res['ProcessVariables']['totalPages'];
+			  this.totalItemsPP = parseInt(totalPages) * this.perPagePP;
             this.newPendingPaymentDetails = res["ProcessVariables"].userDetails || [];
 
             this.newPendingPaymentDetails.forEach(el => {
@@ -241,18 +265,22 @@ export class LeadsListComponent implements OnInit {
       );
     }
   }
-  getNewLeads() {
+  getNewLeads(currentPage?: string) {
     if (localStorage.getItem("token") && localStorage.getItem("userId")) {
       const startDate = new Date();
       console.log("New Leads Api Call: Start Date & Time ", startDate, startDate.getMilliseconds());
       this.service.getNewLeads(this.searchTxt, this.fromDay.value, this.fromMonth.value, this.fromYear.value, 
-        this.toDay.value, this.toMonth.value, this.toYear.value).subscribe(
+        this.toDay.value, this.toMonth.value, this.toYear.value,"","",currentPage).subscribe(
         res => {
           const endDate = new Date();
           console.log("New Leads Api Call: End Date & Time ", endDate, endDate.getMilliseconds());
           // console.log(res);
 
           if (res["Error"] && res["Error"] == 0) {
+            this.perPageNL = res['ProcessVariables']['perPage'];
+			  this.currentPageNL = res['ProcessVariables']['currentPage'];
+			  let totalPages = res['ProcessVariables']['totalPages'];
+			  this.totalItemsNL = parseInt(totalPages) * this.perPageNL;
             this.newLeadsDetails = res["ProcessVariables"].userDetails || [];
 
             this.newLeadsDetails.forEach(el => {
@@ -287,14 +315,14 @@ export class LeadsListComponent implements OnInit {
 
 }
 
-  getFilteredLeads() {
+  getFilteredLeads(currentPage?: string) {
     try {
       this.ngxService.start();
       if(localStorage.getItem("token") && localStorage.getItem("userId")){
         const startDate = new Date();
         console.log("FilteredLeads Api Call: Start Date & Time ",startDate, startDate.getMilliseconds());
         this.service.getLeads(this.searchTxt, this.fromDay.value, this.fromMonth.value, this.fromYear.value, 
-          this.toDay.value, this.toMonth.value, this.toYear.value,"", this.allStatus).subscribe(
+          this.toDay.value, this.toMonth.value, this.toYear.value,"", this.allStatus, currentPage).subscribe(
           res => {
             const endDate = new Date();
             console.log("FilteredLeads Api Call: End Date & Time ", endDate, endDate.getMilliseconds());
@@ -303,6 +331,11 @@ export class LeadsListComponent implements OnInit {
             console.log("dectypt ",res);
       
             if (res["Error"] && res["Error"] == 0) {
+        this.perPage = res['ProcessVariables']['perPage'];
+			  this.currentPage = res['ProcessVariables']['currentPage'];
+			  let totalPages = res['ProcessVariables']['totalPages'];
+			  this.totalItems = parseInt(totalPages) * this.perPage;
+			  console.log("???"+this.perPage+this.currentPage+this.totalItems);
               this.userDetails = res["ProcessVariables"].userDetails || [];
 
               this.userDetails.forEach(el => {
@@ -471,5 +504,21 @@ export class LeadsListComponent implements OnInit {
 
   getRoles(): Array<string> {
     return JSON.parse(localStorage.getItem("roles"));
+  }
+  pageChanged(value) {
+    let data = value;
+    this.getFilteredLeads(data);
+  }
+  pageChangedNL(value) {
+    let data = value;
+    this.getNewLeads(data);
+  }
+  pageChangedPA(value) {
+    let data = value;
+    this.getPendingApplication(data);
+  }
+  pageChangedPP(value) {
+    let data = value;
+    this.getPendingPayment(data);
   }
 }

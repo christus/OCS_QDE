@@ -74,11 +74,11 @@ export class PmayListComponent implements OnInit {
       "searchKey": event.target.value
     }
     this.qdeHttp.getPmayList(data).subscribe(response => {
-      if(response['ProcessVariables'].pmayList==null){
+      if(response['ProcessVariables']['status'] && response['ProcessVariables']['pmayList']==null){
         this.isErrorModal = true;
         this.errorMsg = "No data present further";
         //alert("No data present further");
-      }else{
+      }else if(response['ProcessVariables']['status'] && response['ProcessVariables']['pmayList']!=null){
       this.collection = response['ProcessVariables'].pmayList;
       this.totalPages = response['ProcessVariables'].totalPages;
       this.from = response['ProcessVariables'].from;
@@ -116,7 +116,8 @@ export class PmayListComponent implements OnInit {
         this.isErrorModal = true;
         this.errorMsg = "Deleted Successfully";
         //alert("Deleted Successfully!");
-    } else {
+    } 
+	/* else {
       if (response["ErrorMessage"]) {
         console.log("Response: " + response["ErrorMessage"]);
         this.isErrorModal = true;
@@ -130,11 +131,13 @@ export class PmayListComponent implements OnInit {
         this.errorMsg = response["ProcessVariables"]["errorMessage"];
         //alert(this.errorMsg);
       }
-    }
-  },
+    } */
+  }
+  /* ,
   error => {
     console.log("Error : ", error);
-  });
+  } */
+  );
     this.refresh();
   }
 

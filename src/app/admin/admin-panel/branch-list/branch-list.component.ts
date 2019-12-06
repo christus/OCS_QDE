@@ -66,7 +66,7 @@ export class BranchListComponent implements OnInit {
       "searchKey": event.target.value
     }
     this.qdeHttp.getBranchList(data).subscribe(response => {
-      if(response['ProcessVariables']['status']){
+      if(response['ProcessVariables']['status'] && response['ProcessVariables']['branchDetails']!=null){
       this.collection = response['ProcessVariables'].branchDetails;
       this.totalPages = response['ProcessVariables'].totalPages;
       this.from = response['ProcessVariables'].from;
@@ -77,7 +77,7 @@ export class BranchListComponent implements OnInit {
         this.enableLoadMore = false;
       }
       console.log(this.collection);
-    }else{
+    }else if(response['ProcessVariables']['status'] && response['ProcessVariables']['branchDetails']==null){
       this.isErrorModal = true;
       this.errorMsg = "No data present further";
     }
@@ -108,7 +108,8 @@ export class BranchListComponent implements OnInit {
       delete this.collection[id];
       this.isErrorModal = true;
       this.errorMsg="Deleted successfully";
-    } else {
+    } 
+/* 	else {
       if (response["ErrorMessage"]) {
         console.log("Response: " + response["ErrorMessage"]);
         this.isErrorModal = true;
@@ -120,7 +121,7 @@ export class BranchListComponent implements OnInit {
         this.isErrorModal = true;
         this.errorMsg = response["ProcessVariables"]["errorMessage"];
       }
-    }
+    } */
   },
   error => {
     console.log("Error : ", error);

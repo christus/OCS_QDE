@@ -436,6 +436,14 @@ export const environment = {
       'workflowId': 'f512f03a8ea311e982270242ac110002',
       'processId' : 'f53166328ea311e982270242ac110002'
     },
+    "adminGetMinMax":{
+      'workflowId': '30ab0550167c11ea86b50242ac110002',
+      'processId' : '30c350ba167c11ea88870242ac110002'
+    },
+    "adminUpdateMinMax":{
+      'workflowId': '30ab0550167c11ea86b50242ac110002',
+      'processId' : '30b91f82167c11eaadae0242ac110002'
+    }
    
   },
   iciciDomainExt: "@icicibankltd.com",

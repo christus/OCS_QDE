@@ -61,11 +61,13 @@ export class LoanMasterComponent implements OnInit {
         this.loanTypeData = res['ProcessVariables']['valueDescription'];
         this.selectedLoanTypeData = this.loanTypeData[0];
       }
-    }, err => {
+    }
+	/* , err => {
       this.isErrorModal = true;
       this.errorMsg = "Something went wrong";
       //alert('Something went wrong');
-    });
+    } */
+	);
 
     if(this.isLoanMaster) {
       this.qdeHttp.adminGetAllLoanMaster().subscribe(res => {
@@ -152,39 +154,49 @@ export class LoanMasterComponent implements OnInit {
           this.isErrorModal = true;
           this.errorMsg = "Added Successfully";
           this.refresh();
-        } else {
+        } 
+		/* else {
           this.isErrorModal = true;
           this.errorMsg = res["ProcessVariables"]['errorMessage'];
           //alert(res["ProcessVariables"]['errorMessage']);
-        }
-      }, err => {
+        } */
+      }
+	  /* , err => {
         this.isErrorModal = true;
         this.errorMsg = "Something went wrong";
         //alert('Something went wrong');
-      });
+      } */
+	  );
     } else if(this.isLoginFee) {
       this.qdeHttp.adminUpdateLoginFee(dude).subscribe(res => {
         if(res["ProcessVariables"]['status'] == true) {
           this.refresh();
-        } else {
+        }
+		/* else {
           this.isErrorModal = true;
           this.errorMsg = res["ProcessVariables"]['errorMessage'];
           //alert(res["ProcessVariables"]['errorMessage']);
-        }
-      }, err => {
+        } */
+      }
+	  /* , err => {
         this.isErrorModal = true;
         this.errorMsg = "Something went wrong";
         //alert('Something went wrong');
-      });
+      } */
+	  );
     }
   }
 
   search(event){
     if(this.isLoanMaster) {
       this.qdeHttp.adminSearchAllLoanMaster(event.target.value).subscribe(res => {
-        if(res["ProcessVariables"]["status"]){
+        if(res["ProcessVariables"]["status"] && res["ProcessVariables"]["loanMaster"]!=null){
         this.data = res['ProcessVariables']['loanMaster'];
-      }else{
+        this.currentPage = parseInt(res['ProcessVariables']['currentPage']);
+        this.totalPages = parseInt(res['ProcessVariables']['totalPages']);
+        this.perPage = parseInt(res['ProcessVariables']['perPage']);
+        this.totalElements = parseInt(res['ProcessVariables']['totalPages']) * this.perPage;
+      }else if(res["ProcessVariables"]["status"] && res["ProcessVariables"]["loanMaster"]==null) {
         this.isErrorModal = true;
         this.errorMsg = "No data present further";
       }
@@ -193,13 +205,13 @@ export class LoanMasterComponent implements OnInit {
     } 
     else if(this.isLoginFee) {
       this.qdeHttp.adminSearchAllLoginFee(event.target.value).subscribe(res => {
-        if(res["ProcessVariables"]["status"]){
+        if(res["ProcessVariables"]["status"] && res["ProcessVariables"]["loginFee"]!=null ){
         this.data = res['ProcessVariables']['loginFee'];
-        // this.currentPage = parseInt(res['ProcessVariables']['currentPage']);
-        // this.totalPages = parseInt(res['ProcessVariables']['totalPages']);
-        // this.perPage = parseInt(res['ProcessVariables']['perPage']);
-        // this.totalElements = parseInt(res['ProcessVariables']['totalPages']) * this.perPage;
-      }else{
+        this.currentPage = parseInt(res['ProcessVariables']['currentPage']);
+        this.totalPages = parseInt(res['ProcessVariables']['totalPages']);
+        this.perPage = parseInt(res['ProcessVariables']['perPage']);
+        this.totalElements = parseInt(res['ProcessVariables']['totalPages']) * this.perPage;
+      } else if(res["ProcessVariables"]["status"] && res["ProcessVariables"]["loginFee"]==null){
         this.isErrorModal = true;
         this.errorMsg = "No data present further";
       }
@@ -270,30 +282,36 @@ export class LoanMasterComponent implements OnInit {
       this.qdeHttp.adminUpdateLoanMaster(dude).subscribe(res => {
         if(res["ProcessVariables"]['status'] == true) {
           this.refresh();
-        } else {
+        }
+		/* else {
           this.isErrorModal = true;
           this.errorMsg = res["ProcessVariables"]['errorMessage'];
           //alert(res["ProcessVariables"]['errorMessage']);
-        }
-      }, err => {
+        } */
+      }
+	  /* , err => {
         this.isErrorModal = true;
         this.errorMsg = "Something went wrong";
         //alert('Something went wrong');
-      });
+      } */
+	  );
     } else if(this.isLoginFee) {
       this.qdeHttp.adminUpdateLoginFee(dude).subscribe(res => {
         if(res["ProcessVariables"]['status'] == true) {
           this.refresh();
-        } else {
+        }
+		/* else {
           this.isErrorModal = true;
           this.errorMsg = res["ProcessVariables"]['errorMessage'];
           //alert(res["ProcessVariables"]['errorMessage']);
-        }
-      }, err => {
+        } */
+      }
+	  /* , err => {
         this.isErrorModal = true;
         this.errorMsg = "Something went wrong";
         //alert('Something went wrong');
-      });
+      } */
+	  );
     }
   }
 
@@ -335,10 +353,12 @@ export class LoanMasterComponent implements OnInit {
         this.totalPages = parseInt(res['ProcessVariables']['totalPages']);
         this.perPage = parseInt(res['ProcessVariables']['perPage']);
         this.totalElements = parseInt(res['ProcessVariables']['totalPages']) * this.perPage;
-      }, err => {
+      }
+	  /* , err => {
         this.isErrorModal = true;
         this.errorMsg = "Something went wrong";
-      });
+      } */
+	  );
     } else if (this.isLoginFee) {
       this.qdeHttp.adminGetAllLoginFee(value,this.perPage,this.searchKey).subscribe(res => {
         this.data = res['ProcessVariables']['loginFee'];
@@ -347,10 +367,12 @@ export class LoanMasterComponent implements OnInit {
         this.perPage = parseInt(res['ProcessVariables']['perPage']);
         this.totalElements = parseInt(res['ProcessVariables']['totalPages']) * this.perPage;
 
-      }, err => {
+      }
+	  /* , err => {
         this.isErrorModal = true;
         this.errorMsg = "Something went wrong";
-      });
+      } */
+	  );
      }
   }
   checkDecimals(event){

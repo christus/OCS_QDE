@@ -1,7 +1,7 @@
 <h1 class="title">Error Handling Message</h1>
 &nbsp; &nbsp;<input type="text" class="search" placeholder="Search" (input)="search($event)" />
 <br><br>
-<div *ngIf="!searchNotFound">
+<!-- <div *ngIf="!searchNotFound"> -->
 <div class="list">
     <table class="admin-table">
         <thead>
@@ -24,5 +24,17 @@
       </table>
 </div>
 <pagination-controls  (pageChange)="pageChanged($event)" class="pagination" autoHide="true" ></pagination-controls>
+<!-- </div> -->
+<!-- <span *ngIf="searchNotFound" class="notfound">No results found</span>											 -->
+<div class="overlay" [ngClass]="{'active': searchNotFound}">
+  <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': searchNotFound}">
+    <a class="modal-close" (click)="searchNotFound = false"><span class="icon icon-close"></span></a>
+    <div class="modal-body">
+      <h1>No data present further</h1>
+      <br><br>
+      <div class="btn-wrap">
+        <button class="btn btn-border" (click)="searchNotFound = false">Close</button>
+      </div>
+    </div>
+  </div>
 </div>
-<span *ngIf="searchNotFound" class="notfound">No results found</span>											

@@ -202,7 +202,8 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
           //alert("Uploaded Successfully!");
           this.registerUser.reset();
           this.router.navigate(['admin/user-module']);
-        } else {
+        } 
+		/* else {
           if (response["ErrorMessage"]) {
             console.log("Response: " + response["ErrorMessage"]);
             this.isErrorModal = true;
@@ -214,7 +215,7 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
             this.isErrorModal = true;
             this.errorMsg = response["ProcessVariables"]["errorMessage"];
           }
-        }
+        } */
       },
       error => {
         console.log("Error : ", error);
@@ -336,7 +337,8 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
           //alert("Uploaded Successfully!");
           this.registerUser.reset();
           this.router.navigate(['admin/user-module']);
-        } else {
+        } 
+		/* else {
           if (response["ErrorMessage"]) {
             console.log("Response: " + response["ErrorMessage"]);
             this.isErrorModal = true;
@@ -348,7 +350,7 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
             this.isErrorModal = true;
             this.errorMsg = response["ProcessVariables"]["errorMessage"];
           }
-        }
+        } */
       },
       error => {
         console.log("Error : ", error);

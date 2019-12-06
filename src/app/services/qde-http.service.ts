@@ -197,7 +197,7 @@ createOrUpdatePersonalDetails(qde) {
     return this.callPost(null, null, body, data, "login");
   }
 
-  getLeads(search?: string, fromDay?: string, fromMonth?: string, fromYear?: string, toDay?: string, toMonth?: string, toYear?: string, assignedTo?: string, status?: string) {
+  getLeads(search?: string, fromDay?: string, fromMonth?: string, fromYear?: string, toDay?: string, toMonth?: string, toYear?: string, assignedTo?: string, status?: string, currentPage?:string) {
     const processId = environment.api.dashboard.processId;
     const workflowId = environment.api.dashboard.workflowId;
     const projectId = environment.projectId;
@@ -207,7 +207,8 @@ createOrUpdatePersonalDetails(qde) {
       firstName: (search != null) ? search : "",
       fromDate: (fromDay != 'DD' || fromMonth != 'MM' || fromYear != 'YYYY') ? new Date(fromYear+""+"-"+fromMonth+"-"+fromDay).toJSON(): "",
       toDate: (toDay != 'DD' || toMonth != 'MM' || toYear != 'YYYY') ? new Date(toYear+""+"-"+toMonth+"-"+toDay).toJSON(): "",
-      applicationStatus: status
+      applicationStatus: status,
+      currentPage : currentPage!= "" ? currentPage : "1"
     };
 
     const requestEntity: RequestEntity = {
@@ -226,7 +227,7 @@ createOrUpdatePersonalDetails(qde) {
     return this.callPost(workflowId, projectId, body);
   }
 
-  getNewLeads(search?: string, fromDay?: string, fromMonth?: string, fromYear?: string, toDay?: string, toMonth?: string, toYear?: string, assignedTo?: string, status?: string) {
+  getNewLeads(search?: string, fromDay?: string, fromMonth?: string, fromYear?: string, toDay?: string, toMonth?: string, toYear?: string, assignedTo?: string, status?: string, currentPage?:string) {
     const processId = environment.api.newLeads.processId;
     const workflowId = environment.api.newLeads.workflowId;
     const projectId = environment.projectId;
@@ -235,7 +236,8 @@ createOrUpdatePersonalDetails(qde) {
       userId: parseInt(localStorage.getItem("userId")),
       firstName: (search != null) ? search : "",
       fromDate: (fromDay != 'DD' || fromMonth != 'MM' || fromYear != 'YYYY') ? new Date(fromYear+""+"-"+fromMonth+"-"+fromDay).toJSON(): "",
-      toDate: (toDay != 'DD' || toMonth != 'MM' || toYear != 'YYYY') ? new Date(toYear+""+"-"+toMonth+"-"+toDay).toJSON(): ""
+      toDate: (toDay != 'DD' || toMonth != 'MM' || toYear != 'YYYY') ? new Date(toYear+""+"-"+toMonth+"-"+toDay).toJSON(): "",
+      currentPage : currentPage!= "" ? currentPage : "1"
     };
 
     const requestEntity: RequestEntity = {
@@ -3328,6 +3330,56 @@ createOrUpdatePersonalDetails(qde) {
 
     const body = {
       "processVariables":
+      JSON.stringify(requestEntity)
+    };
+
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
+  }
+  adminGetMinMax(currentPage?: string,searchKey?: string){
+    const processId = environment.api.adminGetMinMax.processId;
+    const workflowId = environment.api.adminGetMinMax.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: {
+        userId: parseInt(localStorage.getItem('userId')),
+        searchKey: searchKey!="" ? searchKey : "",
+        currentPage: currentPage!="" ? currentPage : ""
+      },
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = {
+      'processVariables':
+      JSON.stringify(requestEntity)
+    };
+
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
+  }
+  adminUpdateMinMax(data: object){
+    const processId = environment.api.adminUpdateMinMax.processId;
+    const workflowId = environment.api.adminUpdateMinMax.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: {
+        userId: parseInt(localStorage.getItem('userId')),
+        id: data['id'],
+        minValue: data['minValue'],
+        maxValue: data['maxValue'],
+        maxLength: data['maxLength']
+      },
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = {
+      'processVariables':
       JSON.stringify(requestEntity)
     };
 

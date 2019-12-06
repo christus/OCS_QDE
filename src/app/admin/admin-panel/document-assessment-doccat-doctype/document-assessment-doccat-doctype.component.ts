@@ -100,19 +100,13 @@ export class DocumentAssessmentDoccatDoctypeComponent implements OnInit {
     this.qdeHttp.adminGetLov().subscribe(res=>{
       this.assessments = JSON.parse(res['ProcessVariables']['lovs']).LOVS.assessment_methodology;
       this.selectedAssessment = this.assessments[0];
-    },err => {});
-    this.qdeHttp.adminGetLov().subscribe(res=>{
       this.documentCategories = JSON.parse(res['ProcessVariables']['lovs']).LOVS.document_category;
       this.selectedDocumentCategory = this.documentCategories[0];
-    },err => {});
-    this.qdeHttp.adminGetLov().subscribe(res=>{
       this.docTypes = JSON.parse(res['ProcessVariables']['lovs']).LOVS.document_type;
       this.selectedDocType = this.docTypes[0];
-    },err => {});
-    this.qdeHttp.adminGetLov().subscribe(res=>{
       this.profiles = JSON.parse(res['ProcessVariables']['lovs']).LOVS.occupation;
       this.selectedProfile = this.profiles[0];
-    },err => {});
+    });
   }
 
 
@@ -194,16 +188,19 @@ export class DocumentAssessmentDoccatDoctypeComponent implements OnInit {
         this.isErrorModal = true;
         this.errorMsg = "Added successfully";
         this.refresh();
-      } else {
+      } 
+	  /* else {
         this.isErrorModal = true;
         this.errorMsg = res["ProcessVariables"]["errorMessage"];
         //alert('Something went wrong.');
-      }
-    }, err => {
+      } */
+    }
+	/* , err => {
         this.isErrorModal = true;
         this.errorMsg = "Something went wrong";
         //alert('Something went wrong.');
-    });
+    } */
+	);
     this.refresh();
   }
 
@@ -244,18 +241,21 @@ export class DocumentAssessmentDoccatDoctypeComponent implements OnInit {
         console.log("totalPages: ",this.totalPages);
   
         this.data = this.data.concat(response['documentMapping']);
-      } else {
+      }
+	  /* else {
         this.isErrorModal = true;
         this.errorMsg = "Something went wrong";
         //alert('Something went wrong.');
         this.currentPage--;
-      }
-    }, err => {
+      } */
+    }
+	/* , err => {
         this.isErrorModal = true;
         this.errorMsg = "Something went wrong";
         //alert('Something went wrong.');
       this.currentPage--;
-    });
+    } */
+	);
   }
 
   update(index) {
@@ -279,16 +279,19 @@ export class DocumentAssessmentDoccatDoctypeComponent implements OnInit {
         this.isErrorModal = true;
         this.errorMsg = "Updated Successfully";
         this.refresh();
-      } else {
+      }
+	  /* else {
         this.isErrorModal = true;
         this.errorMsg = res["ProcessVariables"]["errorMessage"];
         //alert('Something went wrong.');
-      }
-    }, err => {
+      } */
+    }
+	/* , err => {
         this.isErrorModal = true;
         this.errorMsg = "Something went wrong";
         //alert('Something went wrong.');
-    });
+    } */
+	);
   }
 
   delete(index) {
@@ -310,39 +313,43 @@ export class DocumentAssessmentDoccatDoctypeComponent implements OnInit {
   }
   search(event){
     this.qdeHttp.adminDocumentProfile(this.currentPage,this.perPage,event.target.value).subscribe(res => {
-      if(res['ProcessVariables']['status'] == true) {
+      if(res['ProcessVariables']['status'] == true && res['ProcessVariables']['documentMapping']!=null) {
         let response = res['ProcessVariables'];
-  
-        this.currentPage = parseInt(response['currentPage']); ;
+
+        this.currentPage = parseInt(response['currentPage']);
+        ;
         this.totalPages = parseInt(response['totalPages']);
         this.perPage = parseInt(response['perPage']);
         this.totalElements = this.totalPages * this.perPage;
 
-        console.log("currentPage: ",this.currentPage);
-        console.log("totalPages: ",this.totalPages);
-        if(response['documentMapping']){
+        console.log("currentPage: ", this.currentPage);
+        console.log("totalPages: ", this.totalPages);
+        if (response['documentMapping']) {
           this.data = response['documentMapping'];
-          for(var i=0; i<this.data.length;i++){
-            this.key[i]=((this.perPage*(this.currentPage-1))+i+ 1);
+          for (var i = 0; i < this.data.length; i++) {
+            this.key[i] = ((this.perPage * (this.currentPage - 1)) + i + 1);
           }
-        }else{
+        }
+      }else if (res['ProcessVariables']['status'] == true && res['ProcessVariables']['documentMapping']==null){
           this.isErrorModal = true;
           this.errorMsg = "No Data present further";
           //alert("No Data present further");
         }
         
-      } else {
+      } 
+	  /* else {
         this.isErrorModal = true;
         this.errorMsg = "Something went wrong";
         //alert('Something went wrong.');
         this.currentPage--;
-      }
-    }, err => {
+      } */
+	/* , err => {
         this.isErrorModal = true;
         this.errorMsg = "Something went wrong";
         //alert('Something went wrong.');
       this.currentPage--;
-    });
+    } */
+	);
   }
   
   pageChanged(value){
@@ -359,17 +366,20 @@ export class DocumentAssessmentDoccatDoctypeComponent implements OnInit {
           for(var i=0; i<this.data.length;i++){
             this.key[i]=((this.perPage*(this.currentPage-1))+i+ 1);
           }
-      } else {
+      }
+	  /* else {
         this.isErrorModal = true;
         this.errorMsg = "Something went wrong";
         //alert('Something went wrong.');
         this.currentPage--;
-      }
-    }, err => {
+      } */
+    }
+	/* , err => {
         this.isErrorModal = true;
         this.errorMsg = "Something went wrong";
         //alert('Something went wrong.');
       this.currentPage--;
-    });
+    } */
+	);
   }
 }

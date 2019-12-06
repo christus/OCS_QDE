@@ -280,7 +280,8 @@ export class BranchAddEditComponent implements OnInit {
               //alert("Branch created Successfully!");
             this.registerUser.reset();
             this.router.navigate(['admin/lovs/branch_list']);
-          } else {
+          } 
+		  /* else {
             if (response["ErrorMessage"]) {
               console.log("Response: " + response["ErrorMessage"]);
               this.isErrorModal = true;
@@ -292,7 +293,7 @@ export class BranchAddEditComponent implements OnInit {
               this.isErrorModal = true;
               this.errorMsg = response["ProcessVariables"]["errorMessage"];
             }
-          }
+          } */
         },
         error => {
           console.log("Error : ", error);

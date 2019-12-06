@@ -26,7 +26,7 @@ export class ErrorHandlingMessageComponent implements OnInit {
     this.getErrorHandlingMessage(data);
   }
   getErrorHandlingMessage(data) {
-    this.searchNotFound=false;
+    // this.searchNotFound=false;
         this.qdeHttp.getErrorHandlingMessage(data).subscribe((response) =>{
      console.log("errormsg:",response);
  
@@ -71,7 +71,7 @@ search(searchEvent){
           }
         }else{
         this.searchNotFound=true;
-        this.collection=null;
+        // this.collection=null;
       }
     });
     }

@@ -13,7 +13,7 @@
 </div>
 <tabs>
     <tab tabTitle="ALL" class="tab">
-        <ul *ngFor="let detail of userDetails">
+        <ul *ngFor="let detail of userDetails | paginate: {id: 'pagination1', itemsPerPage: perPage, currentPage: currentPage, totalItems: totalItems};">
             <li>
              <a [routerLink]="detail.url" [queryParams]="detail['queryParams']" class="lead-action">
 
@@ -38,10 +38,10 @@
             </a>
           </li>
       </ul>
-
+      <pagination-controls id="pagination1" (pageChange)="pageChanged($event)" class="pagination" autoHide="true" ></pagination-controls>
     </tab>
     <tab tabTitle="NEW LEADS">
-      <ul *ngFor="let detail of newLeadsDetails">
+      <ul *ngFor="let detail of newLeadsDetails | paginate: {id: 'pagination2', itemsPerPage: perPageNL, currentPage: currentPageNL, totalItems: totalItemsNL};">
         <li>
             <ul class="bs-lead-card">
                 <li>
@@ -58,9 +58,10 @@
             </ul>
         </li>
     </ul>
+    <pagination-controls id="pagination2" (pageChange)="pageChangedNL($event)" class="pagination" autoHide="true" ></pagination-controls>
     </tab>
     <tab tabTitle="PENDING APPLICATION">
-      <ul *ngFor="let detail of newPendingApplicationDetails">
+      <ul *ngFor="let detail of newPendingApplicationDetails | paginate: {id: 'pagination3',itemsPerPage: perPagePA, currentPage: currentPagePA, totalItems: totalItemsPA};">
         <li>
             <a [routerLink]="detail.url" [queryParams]="detail['queryParams']" class="lead-action">
             <ul class="bs-lead-card">
@@ -83,9 +84,10 @@
           </a>
         </li>
     </ul>
+    <pagination-controls id="pagination3"  (pageChange)="pageChangedPA($event)" class="pagination" autoHide="true" ></pagination-controls>
     </tab>
     <tab tabTitle="PENDING PAYMENT">
-      <ul *ngFor="let detail of newPendingPaymentDetails">
+      <ul *ngFor="let detail of newPendingPaymentDetails | paginate: {id: 'pagination4',itemsPerPage: perPagePP, currentPage: currentPagePP, totalItems: totalItemsPP};">
         <li>
             <a [routerLink]="detail.url" [queryParams]="detail['queryParams']" class="lead-action">
             <ul class="bs-lead-card">
@@ -108,6 +110,7 @@
           </a>
         </li>
     </ul>
-    </tab>
+    <pagination-controls id="pagination4"  (pageChange)="pageChangedPP($event)" class="pagination" autoHide="true" ></pagination-controls>
+</tab>
 </tabs>
 </div>

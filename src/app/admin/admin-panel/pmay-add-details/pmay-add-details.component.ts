@@ -109,7 +109,8 @@ export class PmayAddDetailsComponent implements OnInit {
             //alert("Uploaded Successfully!");
             this.registerUser.reset();
             this.router.navigate(['admin/lovs/pmay_list']);
-          } else {
+          } 
+		  /* else {
             if (response["ErrorMessage"]) {
               console.log("Response: " + response["ErrorMessage"]);
               this.isErrorModal = true;
@@ -121,11 +122,13 @@ export class PmayAddDetailsComponent implements OnInit {
               this.isErrorModal = true;
               this.errorMsg = response["ProcessVariables"]["errorMessage"];
             }
-          }
-        },
+          } */
+        }
+		/* ,
         error => {
           console.log("Error : ", error);
-        });
+        } */
+		);
   
   
     }
@@ -159,7 +162,8 @@ export class PmayAddDetailsComponent implements OnInit {
             //alert("Uploaded Successfully!");
             this.registerUser.reset();
             this.router.navigate(['admin/user-module']);
-          } else {
+          }
+		  /* else {
             if (response["ErrorMessage"]) {
               console.log("Response: " + response["ErrorMessage"]);
               this.isErrorModal = true;
@@ -171,11 +175,13 @@ export class PmayAddDetailsComponent implements OnInit {
               this.isErrorModal = true;
               this.errorMsg = response["ProcessVariables"]["errorMessage"];
             }
-          }
-        },
+          } */
+        }
+		/* ,
         error => {
           console.log("Error : ", error);
-        });
+        } */
+		);
     }
 
 

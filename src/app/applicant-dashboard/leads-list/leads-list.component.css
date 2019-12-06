@@ -266,3 +266,11 @@ a, a:visited {
 .initials {
   display: none!important;
 }
+
+.pagination {
+  display: block;
+  clear: both;
+  text-align: center;
+  font-family: zurich-light;
+  font-size: small;
+}

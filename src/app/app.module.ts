@@ -142,6 +142,8 @@ import { AdminAuditTrialComponent } from './admin/admin-audit-trial/admin-audit-
 import { ReassignComponent } from './reassign/reassign.component';
 import { CaptchaResolverService } from './services/captcha-resolver.service';
 import { DatePipe } from '@angular/common';
+import { MaxMinLimitsComponent } from './admin/admin-panel/max-min-limits/max-min-limits.component';
+import { MinMaxLimitsResolverService } from './services/min-max-limits-resolver.service';
 
 
 
@@ -472,9 +474,9 @@ const appRoutes: Routes = [
       {
         path: 'lovs/pmay_list',
         component: PmayListComponent,
-        resolve: {
-          eachLovs: MasterLovResolverService
-        }
+        //resolve: {
+          //eachLovs: MasterLovResolverService
+        //}
       },
       {
         path: 'lovs/pmay_list/add',
@@ -493,9 +495,9 @@ const appRoutes: Routes = [
       {
         path: 'lovs/branch_list',
         component: BranchListComponent,
-        resolve: {
-          eachLovs: MasterLovResolverService
-        }
+        //resolve: {
+          //eachLovs: MasterLovResolverService
+        //}
       },
       {
         path: 'lovs/branch_list/add',
@@ -567,6 +569,13 @@ const appRoutes: Routes = [
       {
         path: 'auditTrail',
         component: AdminAuditTrialComponent
+      },
+      {
+        path: 'configMinMax',
+        component: MaxMinLimitsComponent,
+        resolve: {
+          maxMinLimits: MinMaxLimitsResolverService
+        }
       }
     ]
   },
@@ -656,7 +665,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     RelationshipMappingComponent,
     AdminAuditTrialComponent,
     ReportsComponent,
-    ReassignComponent
+    ReassignComponent,
+    MaxMinLimitsComponent
   ],
   imports: [
     BrowserModule,
@@ -713,7 +723,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     ApplicationRelationshipResolverService,
     CaptchaResolverService,
     DatePipe,
-    AutoLogoutService
+    AutoLogoutService,
+    MinMaxLimitsResolverService
   ],
   bootstrap: [AppComponent]
 })

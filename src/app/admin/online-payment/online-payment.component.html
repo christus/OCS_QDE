@@ -25,7 +25,7 @@
           </div>
   
         <div class="file-name">{{uploadFileName}}</div>
-        <div class="error-msg">{{errorMsg}}</div>
+        <!-- <div class="error-msg">{{errorMsg}}</div> -->
       </div>
       <!--Tabs 1 Upload cheque payment starts-->
   
@@ -44,5 +44,17 @@
       </div>
       <!--Tabs 3 Download non-reconciled records ends-->  
 
+    </div>
+  </div>
+  <div class="overlay" [ngClass]="{'active': isErrorModal}">
+    <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isErrorModal}">
+      <a class="modal-close" (click)="isErrorModal = false"><span class="icon icon-close"></span></a>
+      <div class="modal-body">
+        <h1>{{errorMsg}}</h1>
+        <br><br>
+        <div class="btn-wrap">
+          <button class="btn btn-border" (click)="isErrorModal = false">Close</button>
+        </div>
+      </div>
     </div>
   </div>

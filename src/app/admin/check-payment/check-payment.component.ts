@@ -21,6 +21,8 @@ export class CheckPaymentComponent implements OnInit {
   startDate : Date ;
 
   endDate : Date;
+  isErrorModal: boolean;
+  errorMsgModal: string;
 
   constructor(private qdeHttp: QdeHttpService) { }
 
@@ -101,13 +103,13 @@ export class CheckPaymentComponent implements OnInit {
             console.log(
               "Response: " + response["ProcessVariables"]["errorMessage"]
             );
-            this.errorMsg = response["ProcessVariables"]["errorMessage"];
+            // this.errorMsg = response["ProcessVariables"]["errorMessage"];
           }
         }
       },
       error => {
         console.log("Error : ", error);
-        this.errorMsg = error;
+        // this.errorMsg = error;
       }
     );
   }
@@ -128,7 +130,9 @@ export class CheckPaymentComponent implements OnInit {
         if (
           response["Error"] === "0" &&
           response["ProcessVariables"]["status"]) {
-            alert("Uploaded Successfully!");
+            // alert("Uploaded Successfully!");
+            this.isErrorModal = true;
+            this.errorMsgModal = "Uploaded Successfully!";
         } else {
           if (response["ErrorMessage"]) {
             console.log("Response: " + response["ErrorMessage"]);
@@ -136,14 +140,14 @@ export class CheckPaymentComponent implements OnInit {
             console.log(
               "Response: " + response["ProcessVariables"]["errorMessage"]
             );
-            this.errorMsg = response["ProcessVariables"]["errorMessage"];
+            // this.errorMsg = response["ProcessVariables"]["errorMessage"];
 
           }
         }
       },
       error => {
         console.log("Error : ", error);
-        this.errorMsg = error;
+        // this.errorMsg = error;
       }
     );
   }
@@ -188,12 +192,14 @@ export class CheckPaymentComponent implements OnInit {
           //console.log(response);
           callback(response["info"]);
         } else {
-          alert(["message"]);
+          // alert(["message"]);
+          this.isErrorModal = true;
+          this.errorMsgModal = response["message"];
         }
       },
       error => {
         console.log("Error : ", error);
-        alert(error.error.message);
+        // alert(error.error.message);
       }
     );
   }
@@ -204,7 +210,9 @@ export class CheckPaymentComponent implements OnInit {
         if (
           response["Error"] === "0" &&
           response["ProcessVariables"]["status"]) {
-            alert("Uploaded Successfully!");
+            // alert("Uploaded Successfully!");
+            this.isErrorModal = true;
+            this.errorMsgModal = "Uploaded Successfully";
         } else {
           if (response["ErrorMessage"]) {
             console.log("Response: " + response["ErrorMessage"]);
@@ -212,13 +220,13 @@ export class CheckPaymentComponent implements OnInit {
             console.log(
               "Response: " + response["ProcessVariables"]["errorMessage"]
             );
-            this.errorMsg = response["ProcessVariables"]["errorMessage"];
+            // this.errorMsg = response["ProcessVariables"]["errorMessage"];
           }
         }
       },
       error => {
         console.log("Error : ", error);
-        this.errorMsg = error;
+        // this.errorMsg = error;
       }
     );
   }
