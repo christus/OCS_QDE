@@ -1839,12 +1839,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       const d2: any = new Date();
       var diff = d2 - d1;
       var age = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
-      if (age < 18) {
+      if (age < Number(this.minMaxValues["Age_limit"].minValue)) {
         this.ageError = true;
         return;
-      }else if (age >  99){
+      }else if (age >  Number(this.minMaxValues["Age_limit"].maxValue)){
         this.isErrorModal = true;
-        this.errorMessage = "Maximum age limit is 99.";
+        this.errorMessage = `Maximum age limit is.${this.minMaxValues["Age_limit"].maxValue}`;
         return;
       } else {
         this.ageError = false;

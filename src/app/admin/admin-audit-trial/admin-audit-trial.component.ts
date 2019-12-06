@@ -41,7 +41,7 @@ export class AdminAuditTrialComponent implements OnInit {
   _timeout: any = null;
 
   userId:string;
-  isErrormodal: boolean;
+  isErrorModal: boolean;
   errorMsgModal: string;
 
 
@@ -250,7 +250,7 @@ export class AdminAuditTrialComponent implements OnInit {
           response["Error"] === "0" &&
           response["ProcessVariables"]["status"]) {
             // alert("Uploaded Successfully!");
-            this.isErrormodal = true;
+            this.isErrorModal = true;
             this.errorMsgModal = "Uploaded Successfully";
         } else {
           if (response["ErrorMessage"]) {
@@ -313,7 +313,7 @@ export class AdminAuditTrialComponent implements OnInit {
           callback(response["info"]);
         } else {
           // alert(["message"]);
-          this.isErrormodal = true;
+          this.isErrorModal = true;
           this.errorMsgModal = response["message"];
         }
       },
@@ -331,7 +331,7 @@ export class AdminAuditTrialComponent implements OnInit {
           response["Error"] === "0" &&
           response["ProcessVariables"]["status"]) {
             // alert("Uploaded Successfully!");
-            this.isErrormodal = true;
+            this.isErrorModal = true;
             this.errorMsgModal = "Uploaded Successfully";
         } else {
           if (response["ErrorMessage"]) {

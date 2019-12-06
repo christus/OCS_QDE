@@ -63,13 +63,13 @@
                             class="form-control" 
                             id="amt-require"
                             required autocomplete="off"
-                            maxlength="10"
+                            maxlength="minMaxValues['Loan_amount'].maxLength"
                             [(ngModel)]="qde?.application.loanDetails.loanAmount.amountRequired"
                             #amountRequired = "ngModel"
                             name="amountRequired"
                             fieldFill
                             pattern="^[1-9][0-9]*$"
-                            (input)="checkAmountLimit($event,50000,100000000)">
+                            (input)="checkAmountLimit($event,minMaxValues['Loan_amount'].minValue,minMaxValues['Loan_amount'].maxValue)">
     
                           <label for="amt-require">Amount required</label>
                           <span class="addon">
@@ -243,7 +243,7 @@
                               <div class="form-group">
                                   <input [readonly]="isTBMLoggedIn"
                                   type="text" autocomplete="off"
-                                  maxlength="6"
+                                  [maxlength]="minMaxValues['Property_area_sq_fts'].maxLength"
                                   class="form-control"
                                   id="pro-add-line2" 
                                   name="propertyAreaInSqFFeets"
@@ -251,7 +251,7 @@
                                   [(ngModel)]="propertyAreaValue"
                                   pattern="{{regexPattern.mobileNumber}}"
                                   fieldFill
-                                  (input)="checkAreaLimit($event)"
+                                  (input)="checkAmountLimit($event,minMaxValues['Property_area_sq_fts'].minValue,minMaxValues['Property_area_sq_fts'].minValue)"
                                   required/>
                                   <label for="pro-add-line2">Property area in sq. fts.</label>
                                   <div *ngIf="(propertyArea.touched || propertyArea.dirty) && propertyArea.invalid" class="invalid-feedback">
@@ -259,14 +259,16 @@
                                     <div *ngIf="propertyArea.errors?.pattern">{{errors.loanDetails.property.propertyArea.invalid}}</div>
                                   </div>
                                   <div class="invalid-feedback">
-                                    <div *ngIf="isAreaLessThan100k">{{errors.loanDetails.property.propertyArea.maxArea}}</div>
+                                      <div *ngIf="isMinAmount">{{errors.loanDetails.property.propertyArea.minArea}}{{requirMinAmout}} Sq foot</div>
+                                      <div *ngIf="isMaxAmount">{{errors.loanDetails.property.propertyArea.maxArea}}{{requirMaxAmout}} Sq foot</div>
+                                    <!-- <div *ngIf="isAreaLessThan100k">{{errors.loanDetails.property.propertyArea.maxArea}}</div> -->
                                   </div>
                               </div>
                           </div>
                           <div class="btn-wrap">
                               <button type="submit" class="btn btn-primary "
-                              [ngClass]="{'disabled': !propertyType.valid || selectedPropertyType.value == 0|| propertyClssValue != tempClssArea}"
-                              [disabled]="propertyType.invalid || selectedPropertyType.value == '0' || propertyClssValue != tempClssArea">Next</button>
+                              [ngClass]="{'disabled': !propertyType.valid || selectedPropertyType.value == 0|| propertyClssValue != tempClssArea || isMinAmount}"
+                              [disabled]="propertyType.invalid || selectedPropertyType.value == '0' || propertyClssValue != tempClssArea || isMinAmount">Next</button>
                           </div>
                       </form>
                   </div>
@@ -497,20 +499,18 @@
                                   class="form-control" 
                                   id="monthly-emi"
                                   ngModel autocomplete="off"
-                                  maxlength="7"
-                                  minlength="4"
+                                  [maxlength]="minMaxValues['Monthly_EMI'].maxLength"                                  
                                   #monthlyEmi = "ngModel"
                                   [(ngModel)]="monthlyEmiValue"
                                   fieldFill required
                                   name="monthlyEmi" pattern="^[1-9][0-9]*$"
-                                  (input)="checkAmountLimit($event,1000,1000000)"/>
+                                  (input)="checkAmountLimit($event,minMaxValues['Monthly_EMI'].minValue,minMaxValues['Monthly_EMI'].maxValue)"/>
                               <label for="monthly-emi">Monthly EMI</label>
                               <!-- <span class="optional">optional</span> -->
                               <!-- <div class="redalert" *ngIf="monthlyEmi.touched && monthlyEmi.valid && !isValidNumber(monthlyEmi.value)"> -->
                                 <div class="invalid-feedback" *ngIf="monthlyEmi.invalid && monthlyEmi.errors?.pattern">{{errors.loanDetails.existingLoans.monthlyEmi.invalid}}</div>
                                 <div *ngIf="isMinAmount" class="invalid-feedback">{{errors.loanDetails.existingLoans.monthlyEmi.minamount}}{{requirMinAmout}}</div>
-                              <div *ngIf="(monthlyEmi.touched || monthlyEmi.dirty)" class="invalid-feedback">
-                                  <!-- <div *ngIf="isMinAmount">{{errors.loanDetails.existingLoans.monthlyEmi.minamount}}{{requirMinAmout}}</div> -->
+                              <div *ngIf="(monthlyEmi.touched || monthlyEmi.dirty)" class="invalid-feedback">                                 
                                   <div *ngIf="isMaxAmount">{{errors.loanDetails.existingLoans.monthlyEmi.maxamount}}{{requirMaxAmout}}</div>
                                 <!-- <div *ngIf="monthlyEmi.errors?.required">{{errors.loanDetails.existingLoans.monthlyEmi.required}}</div> -->
                                 <!-- <div *ngIf="monthlyEmi.errors?.pattern">{{errors.loanDetails.existingLoans.monthlyEmi.invalid}}</div> -->
@@ -544,12 +544,11 @@
                               class="form-control" 
                               id="monthly-emi1"
                               autocomplete="off"
-                              maxlength="7"
-                              minlength="4"
+                              [maxlength]="minMaxValues['Monthly_EMI'].maxLength"                              
                               #monthlyEmi = "ngModel"
                               [(ngModel)]="monthlyEmiValue"                             
                               name="monthlyEmi" pattern="^[1-9][0-9]*$"
-                              (input)="checkAmountLimit($event,1000,1000000)"
+                              (input)="checkAmountLimit($event,minMaxValues['Monthly_EMI'].minValue,minMaxValues['Monthly_EMI'].maxValue)"
                               fieldFill required/>
                             <label for="monthly-emi1">Monthly EMI</label>
                             <!-- <span class="optional">optional</span> -->

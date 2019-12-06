@@ -17,6 +17,7 @@ import { Subscription } from 'rxjs';
 
 import { screenPages } from '../../app.constants';
 import { environment } from 'src/environments/environment.prod';
+import { MinMax } from 'src/app/models/qde.model';
 
 interface Item {
   key: string ,
@@ -65,7 +66,8 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
           propertyArea:{
             required:"Property Area is Mandatory",
             invalid:"Property Area is not valid",
-            maxArea:"Property Area should not be more than 10,000 Sq foot"
+            maxArea:"Property Area should not be more than ",
+            minArea:"Property Area should not be more than "
           },
           pinCode: {
             required: "Property Pincode is Mandatory",
@@ -293,6 +295,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
   isErrorModal:boolean;
   errorMessage:string;
   tempClssArea: string;
+  minMaxValues: Array<MinMax>;
 
   public defaultItem = environment.defaultItem;
 
@@ -366,6 +369,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
       this.propertyTypes = lov.LOVS.property_type;
 
       this.loanProviderList = lov.LOVS.loan_providers;
+      this.minMaxValues = lov.LOVS.min_max_values;
     }
 
 

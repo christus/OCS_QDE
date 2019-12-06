@@ -23,18 +23,18 @@ import { UtilService } from '../../services/util.service';
 import { MobileService } from '../../services/mobile-constant.service';
 import { DatePipe } from '@angular/common';
 import { SelectionRangeEnd } from '@progress/kendo-angular-dateinputs';
-
+import { MinMax } from 'src/app/models/qde.model';
 
 interface Item {
   key: string,
   value: number | string
 }
 
-interface MinMax {
-  minValue: string,
-  maxValue: string,
-  maxLength: string
-}
+// interface MinMax {
+//   minValue: string,
+//   maxValue: string,
+//   maxLength: string
+// }
 @Component({
   selector: 'app-co-applicant-qde',
   templateUrl: './co-applicant-qde.component.html',
@@ -76,8 +76,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     otp: "^[0-9]+$",
     panInd:"[A-Z]{3}(P)[A-Z]{1}[0-9]{4}[A-Z]{1}",
     panNonInd:"[A-Z]{5}[0-9]{4}[A-Z]{1}",
-    amount:"^[1-9][\\d]{0,10}([.][0-9]{0,4})?",
-    revenue:"^[1-9][\\d]{0,10}([.][0-9]{0,4})?",
+    amount:"^[1-9][\\d]{0,15}([.][0-9]{0,4})?",
+    revenue:"^[1-9][\\d]{0,15}([.][0-9]{0,4})?",
     email:"^\\w+([\.-]?\\w+)*@\\w+([\.-]?\\w+)*(\\.\\w{2,10})+$",
     sameDigit: '^0{6,10}|1{6,10}|2{6,10}|3{6,10}|4{6,10}|5{6,10}|6{6,10}|7{6,10}|8{6,10}|9{6,10}$',
     sameDigitStd:'^0{2,10}|1{4,10}|2{4,10}|3{4,10}|4{4,10}|5{4,10}|6{4,10}|7{4,10}|8{4,10}|9{4,10}$',
@@ -1562,7 +1562,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       const d2:any = new Date();
       var diff = d2 - d1 ;
       var age = Math.floor(diff/(1000*60*60*24*365.25));
-      if(age <=18 ){
+      if(age < Number(this.minMaxValues['Age_limit'].minValue)){
         this.ageError = true;
         return;
       }else {
@@ -4487,7 +4487,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     const d2: any = new Date();
     var diff = d2 - d1;
     var age = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
-    if (age < 18) {
+    if (age <  Number(this.minMaxValues['Age_limit'].minValue)) {
       this.ageError = true;
       return;
     } else {
@@ -4588,11 +4588,11 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   
   checkAmountLimitMonthlyIncome(event,minAmount?,maxAmount?) {
     let n = parseInt(this.getNumberWithoutCommaFormat(event.target.value));
-    if(n < 1000){
+    if(n < minAmount){
       this.isNumberLessThan1k = true;
       this.requirMinAmout1 = minAmount;
     }
-    else if(n >= 1000000001){
+    else if(n > maxAmount){
       this.isNumberMoreThan100cr = true;
       this.requirMaxAmout1 = maxAmount;
     }

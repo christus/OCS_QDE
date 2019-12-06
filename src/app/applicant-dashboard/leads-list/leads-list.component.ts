@@ -450,11 +450,13 @@ export class LeadsListComponent implements OnInit {
       if(roles.includes("TBM") || roles.includes("TMA")) {
 
         this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: true});
+        return "/review-eligibility/"+applicationId;
       } else {
-        this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
-      }
-      
+        this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});       
+        
+      }      
       return "/document-uploads/"+applicationId;
+      
     }
     else if(statuses[status] == "27") {
       this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});

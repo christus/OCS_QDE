@@ -270,7 +270,10 @@ a, a:visited {
 .pagination {
   display: block;
   clear: both;
-  text-align: center;
-  font-family: zurich-light;
-  font-size: small;
+  text-align: center; 
+  margin-top: 1rem;
+  font-size: 1.09vw;
+  line-height: 1.95vw;
+  font-family: zurich-bold;
+  color: #444!important;
 }
