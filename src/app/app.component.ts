@@ -142,10 +142,12 @@ export class AppComponent implements OnInit{
       if(Array.isArray(value) && value.length!=0){
       let status = value[0];
       let errorCode = value[1];
+      let errorMessage = value[2];
       let token = localStorage.getItem("token");
       if (this.isEmpty == true && token!=null) {
         this.fillErrorList().then(()=>{
           if (this.noErrors == true) {
+	    if(errorCode!="DYN001"){
             let result = this.errorList.find(v=> v.key == errorCode);
             if(result!=null && result!=undefined){
             this.errorCodeMessage = result.value;
@@ -155,12 +157,17 @@ export class AppComponent implements OnInit{
             this.errorCodeMessage = temp.value;
             this.isErrorCodeModal = status;
           }
+	}else{
+	    this.errorCodeMessage = errorMessage;
+            this.isErrorCodeModal = status;
+	}
         }else{
           this.isErrorCodeModal = true;
           this.errorCodeMessage = "No interent detected. Please try again";
         }
       })
       }else if (this.isEmpty == false) {
+	  if(errorCode!="DYN001"){
           let result = this.errorList.find(v=> v.key == errorCode);
           if(result!=null && result!=undefined){
             this.errorCodeMessage = result.value;
@@ -170,6 +177,10 @@ export class AppComponent implements OnInit{
             this.errorCodeMessage = temp.value;
             this.isErrorCodeModal = status;
           }
+	}else{
+	   this.errorCodeMessage = errorMessage;
+           this.isErrorCodeModal = status;
+	}
       }
     }
     });

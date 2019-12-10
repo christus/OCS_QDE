@@ -165,8 +165,8 @@ export class UserModuleComponent implements OnInit {
           let el = this.uploadCSV.nativeElement;
           el.value = "";
         }else{
-          this.isErrorModal = true;
-          this.errorMessage = res['ProcessVariables']['errorMessage'];
+          //this.isErrorModal = true;
+          //this.errorMessage = res['ProcessVariables']['errorMessage'];
           this.isFileSelected = false;
           let el = this.uploadCSV.nativeElement;
           el.value = "";

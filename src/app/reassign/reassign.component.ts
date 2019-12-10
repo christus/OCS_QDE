@@ -277,6 +277,8 @@ getUserList(data){
         this.qdeHttp.reAssignApplications(data).subscribe(response => {
           if (  response["Error"] === "0" &&
                     response["ProcessVariables"]["status"]) {
+                      this.isErrorModal = true;
+                      this.errorMessage = "Re-assigned successfully!";
                       // alert("Uploaded Successfully!");
                       this.toAssignId = null;
                       this.fromAssignId = null;

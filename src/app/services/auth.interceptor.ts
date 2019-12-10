@@ -108,9 +108,12 @@ export class AuthInterceptor implements HttpInterceptor {
           && response['ProcessVariables']['status']==false
           && response['ProcessVariables']['status']!=undefined
           && response['ProcessVariables']['errorCode']!=""
-          && response['ProcessVariables']['errorCode']!=undefined){
+          && response['ProcessVariables']['errorCode']!=undefined
+          && response['ProcessVariables']['errorMessage']!=""
+          && response['ProcessVariables']['errorMessage']!=undefined){
             let data = response['ProcessVariables']['errorCode'];
-            this.cds.setErrorData(true, data);
+	          let msg = response['ProcessVariables']['errorMessage'];
+            this.cds.setErrorData(true, data, msg);
           }else if(response['Error']=="0"
           && response['Error']!=undefined
           && response['ProcessVariables']!=""

@@ -934,7 +934,7 @@ createOrUpdatePersonalDetails(qde) {
     return this.callPost(workflowId, projectId, body);
   }
 
-  setStatusApi(applicationId: string, status: string) {
+  setStatusApi(applicationId: string, status: string, remarks?:string) {
     const processId = environment.api.status.processId;
     const workflowId = environment.api.status.workflowId;
     const projectId = environment.projectId;
@@ -944,7 +944,8 @@ createOrUpdatePersonalDetails(qde) {
       processId: processId,
       ProcessVariables: {
         applicationStatus: status,
-        applicationId: "" + applicationId
+        applicationId: "" + applicationId,
+        remarks: remarks
       },
       workflowId: workflowId,
       projectId: projectId

@@ -1,3 +1,4 @@
+<app-menubar-header></app-menubar-header>
 <div class="review-eligibility-wrapper">
   <div class="review-eligibility-card" *ngIf="isEligibilityForReview">
     <h2 class="card-title">Eligibility Review</h2>
@@ -11,7 +12,7 @@
               <h3 class="card-info bold">Application Number: </h3>
           </div>
           <div class="col-md-6">
-              <p class="card-info">{{applicationId}}</p>
+              <p class="card-info">{{referenceNumber}}</p>
           </div>
           <div class="col-md-6">
               <h3 class="card-info bold">Date Created: </h3>
@@ -32,26 +33,27 @@
           <div class="col-md-6">
               <p class="card-info">{{loanType}}</p>
           </div>
-
           <div class="clearfix"></div>
-          <div class="col-md-12">
-              <p class="card-info bold">Applicants</p>
-          </div>
       </div>
-
+      <br>
+      <div class="col-md-12">
+        <p class="card-title">Applicants</p>
+    </div>
       <div class="row">
         <div class="col-12">
             <table class="eligibility-table">
                 <thead>
                     <tr>
                         <th class="bold">Name</th>
-                        <th class="bold">Credit Score Above Cut-off</th>
+                        <th class="bold">Eligibility Y/N</th>
+			            <th class="bold">Reason</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let a of listOfApplicantsNameAndCutOff;">
                         <td class="eligibility-name">{{a['name']}}</td>
                         <td class="eligibility-yesno">{{a['aboveCutOff']}}</td>
+			            <td class="eligibility-name" *ngIf="!a['flag']">Cibil Score below cut off</td>
                     </tr>
                 </tbody>
             </table>
@@ -68,20 +70,27 @@
         <div class="col-12">
           <br/>
           <p class="card-info">Eligibility - Considering income and EMI of applicants with Credit Score Above Cut-off:</p>
-          <p class="card-info">Loan Soft Eligibility - Rs. {{revisedEligibilityAmount}} Lakhs (revised eligibility amount and revised Max EMI are available in Get Data for each applicant)</p>
+          <p class="card-info">Loan Soft Eligibility - Rs. {{revisedEligibilityAmount}} Lakhs</p>
           <p class="card-info">Max EMI - Rs. {{revisedMaxEMI}}</p>
           <br/>
         </div>
       </div>
+      <div>
+      <p class="card-title">Remarks:</p>
+      <textarea rows="5" cols="200" [(ngModel)]="remarks" ></textarea>
+      </div>
+      <br><br>
       <div class="row">
           <div class="col-12">
               <div class="btn-wrap center">
                   <button class="btn btn-default edit" (click)="applicationAccepted()">Accept</button>
                   <button class="btn btn-default edit" [ngStyle]="{'margin-left': '15px'}" (click)="applicationRejected()">Reject</button>
               </div>
+              <br><br>
           </div>
       </div>
     </div>
 
   </div>
+  <br><br><br>
 </div>

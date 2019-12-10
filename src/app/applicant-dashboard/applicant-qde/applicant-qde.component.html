@@ -1736,7 +1736,6 @@
                             <input disabled [readonly]="isTBMLoggedIn" spellcheck="false" type="radio" name="income-consider"
                               id="incomeConsiderNo2" class="not-usual" tabindex="2"
                               (click)="incomeConsiderYesNoIndividual(2, occupationSlider2, occupationSlider1)"
-                              [checked]="qde.application.applicants[applicantIndex].incomeDetails.incomeConsider == false"
                               [value]="2" />
                             <label for="incomeConsiderNo2"><span>No</span></label>
                           </div>
@@ -2939,7 +2938,6 @@
                             <input disabled [readonly]="isTBMLoggedIn" spellcheck="false" type="radio"
                               name="income-consider"
                               id="incomeConsiderNo2" class="not-usual" tabindex="2"
-                              [checked]="qde.application.applicants[applicantIndex].incomeDetails.incomeConsider == false"
                               (click)="incomeConsiderYesNoNonIndividual(2, incomeConsiderSliderNonIndividual2, incomeConsiderSliderNonIndividual1)" [value]="2"/>
                             <label for="incomeConsiderNo2"><span>No</span></label>
                           </div>
