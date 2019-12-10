@@ -561,6 +561,7 @@
                                                             nick="personalDetails.day"
                                                             #dobDay
                                                             (selectionChange)="selectValueChanged($event, dobDay.hostElement, 'dob')"
+                                                            (click)="dateofBirthKendo1.focus(dateofBirthKendo1.toggle())"
                                                             [(ngModel)]="dob.day">
                                                             </kendo-dropdownlist>
                                                         </div>
@@ -574,6 +575,7 @@
                                                             nick="personalDetails.month"
                                                             #dobMonth
                                                             (selectionChange)="selectValueChanged($event, dobMonth.hostElement, 'dob')"
+                                                            (click)="dateofBirthKendo1.focus(dateofBirthKendo1.toggle())"
                                                             [(ngModel)]="dob.month"
                                                             >
                                                             </kendo-dropdownlist>
@@ -588,6 +590,7 @@
                                                             nick="personalDetails.year"
                                                             #dobYear
                                                             (selectionChange)="selectValueChanged($event, dobYear.hostElement, 'dob')"
+                                                            (click)="dateofBirthKendo1.focus(dateofBirthKendo1.toggle())"
                                                             [(ngModel)]="dob.year"                                                          
                                                             >
                                                             </kendo-dropdownlist> 
@@ -2860,6 +2863,7 @@
                                                   nick="organizationDetails.day"
                                                   #doiDay
                                                   (selectionChange)="selectValueChanged($event, doiDay.hostElement, 'organizationDetails')"
+                                                  (click)="dateofBirthKendo3.focus(dateofBirthKendo3.toggle())"
                                                   [(ngModel)]="organizationDetails.day">
                                                   </kendo-dropdownlist>
                                               </div>
@@ -2873,6 +2877,7 @@
                                                   nick="organizationDetails.month"
                                                   #doiMonth
                                                   (selectionChange)="selectValueChanged($event, doiMonth.hostElement, 'organizationDetails')"
+                                                  (click)="dateofBirthKendo3.focus(dateofBirthKendo3.toggle())"
                                                   [(ngModel)]="organizationDetails.month">
                                                   </kendo-dropdownlist>
                                               </div>
@@ -2886,10 +2891,13 @@
                                                   nick="organizationDetails.year"
                                                   #doiYear
                                                   (selectionChange)="selectValueChanged($event, doiYear.hostElement, 'organizationDetails')"
+                                                  (click)="dateofBirthKendo3.focus(dateofBirthKendo3.toggle())"
                                                   [(ngModel)]="organizationDetails.year">
                                                   </kendo-dropdownlist>
                                               </div>
                                                 <kendo-datepicker class="kendo_date_picker date_of_incorp"
+                                                    #dateofBirthKendo3
+                                                    [activeView]="'decade'"
                                                     [focusedDate]="focusIncorpDate"
                                                     (valueChange)="onDateOfIncorpChange($event)"
                                                     [min] = min

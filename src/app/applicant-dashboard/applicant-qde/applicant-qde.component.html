@@ -4,35 +4,35 @@
       <div class="tabs">
         <ul class="tabs-head">
           <li class="tab-link"
-            [ngClass]="{'active': (activeTab == 0), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
+            [ngClass]="{'active': (activeTab == 0), 'hide': (!applicantIndividual), 'disabled': isTabDisabled }">
             <a href="javascript:void(0);" (click)="goToExactPageAndTab(0, 1)">PAN</a>
           </li>
           <li class="tab-link"
-            [ngClass]="{'active': (activeTab == 1), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
+            [ngClass]="{'active': (activeTab == 1), 'hide': (!applicantIndividual), 'disabled': (isTabDisabled || tabHide)}">
             <a href="javascript:void(0);" (click)="goToExactPageAndTab(1, 1)">personal details</a>
           </li>
           <li class="tab-link"
-            [ngClass]="{'active': (activeTab == 2), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
+            [ngClass]="{'active': (activeTab == 2), 'hide': (!applicantIndividual), 'disabled': (isTabDisabled || tabHide)}">
             <a href="javascript:void(0);" (click)="goToExactPageAndTab(2, 1); contactExtraFieldRemoval()">contact details</a>
           </li>
           <li class="tab-link"
-            [ngClass]="{'active': (activeTab == 3), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
+            [ngClass]="{'active': (activeTab == 3), 'hide': (!applicantIndividual), 'disabled': (isTabDisabled || tabHide)}">
             <a href="javascript:void(0);" (click)="goToExactPageAndTab(3, 1)">communication address</a>
           </li>
           <li class="tab-link"
-            [ngClass]="{'active': (activeTab == 4), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
+            [ngClass]="{'active': (activeTab == 4), 'hide': (!applicantIndividual), 'disabled': (isTabDisabled || tabHide)}">
             <a href="javascript:void(0);" (click)="goToExactPageAndTab(4, 1)">marital status</a>
           </li>
           <li class="tab-link"
-            [ngClass]="{'active': (activeTab == 5), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
+            [ngClass]="{'active': (activeTab == 5), 'hide': (!applicantIndividual), 'disabled': (isTabDisabled || tabHide)}">
             <a href="javascript:void(0);" (click)="goToExactPageAndTab(5, 1)">family details</a>
           </li>
           <li class="tab-link"
-            [ngClass]="{'active': (activeTab == 6), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
+            [ngClass]="{'active': (activeTab == 6), 'hide': (!applicantIndividual), 'disabled': (isTabDisabled || tabHide)}">
             <a href="javascript:void(0);" (click)="goToExactPageAndTab(6, 1)">other</a>
           </li>
           <li class="tab-link"
-            [ngClass]="{'active': (activeTab == 7), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
+            [ngClass]="{'active': (activeTab == 7), 'hide': (!applicantIndividual), 'disabled': (isTabDisabled || tabHide)}">
             <a href="javascript:void(0);" (click)="goToExactPageAndTab(7, 1)">occupation details</a>
           </li>
           <li class="tab-link"
@@ -40,25 +40,25 @@
             <a href="javascript:void(0);" (click)="goToExactPageAndTab(8, 1)">official correspondence</a>
           </li>
           <li class="tab-link"
-            [ngClass]="{'active': (activeTab == 9), 'hide': (!applicantIndividual), 'disabled': isTabDisabled}">
+            [ngClass]="{'active': (activeTab == 9), 'hide': (!applicantIndividual), 'disabled': (isTabDisabled || tabHide)}">
             <a href="javascript:void(0);" (click)="goToExactPageAndTab(9, 1)">INCOME DETAILS</a>
           </li>
-          <li class="tab-link hide" [ngClass]="{'active': (activeTab == 10), 'hide': (applicantIndividual)}">
+          <li class="tab-link hide" [ngClass]="{'active': (activeTab == 10), 'hide': (applicantIndividual),'disabled': tabHide}">
             <a href="javascript:void(0);" (click)="goToExactPageAndTab(10, 1)">PAN</a>
           </li>
-          <li class="tab-link hide" [ngClass]="{'active': (activeTab == 11), 'hide': (applicantIndividual)}">
+          <li class="tab-link hide" [ngClass]="{'active': (activeTab == 11), 'hide': (applicantIndividual),'disabled': tabHide}">
             <a href="javascript:void(0);" (click)="goToExactPageAndTab(11, 1)">ORGANIZATION DETAILS</a>
           </li>
-          <li class="tab-link hide" [ngClass]="{'active': (activeTab == 12), 'hide': (applicantIndividual)}">
+          <li class="tab-link hide" [ngClass]="{'active': (activeTab == 12), 'hide': (applicantIndividual),'disabled': tabHide}">
             <a href="javascript:void(0);" (click)="goToExactPageAndTab(12, 1)">REGISTERED ADDRESS</a>
           </li>
-          <li class="tab-link hide" [ngClass]="{'active': (activeTab == 13), 'hide': (applicantIndividual)}">
+          <li class="tab-link hide" [ngClass]="{'active': (activeTab == 13), 'hide': (applicantIndividual),'disabled': tabHide}">
             <a href="javascript:void(0);" (click)="goToExactPageAndTab(13, 1)">CORPORATE ADDRESS</a>
           </li>
-          <li class="tab-link hide" [ngClass]="{'active': (activeTab == 14), 'hide': (applicantIndividual)}">
+          <li class="tab-link hide" [ngClass]="{'active': (activeTab == 14), 'hide': (applicantIndividual),'disabled': tabHide}">
             <a href="javascript:void(0);" (click)="goToExactPageAndTab(14, 1)">REVENUE DETAILS</a>
           </li>
-          <li class="tab-link hide" [ngClass]="{'active': (activeTab == 15), 'hide': (applicantIndividual)}">
+          <li class="tab-link hide" [ngClass]="{'active': (activeTab == 15), 'hide': (applicantIndividual),'disabled': tabHide}">
             <a href="javascript:void(0);" (click)="goToExactPageAndTab(15, 1)">INCOME DETAILS</a>
           </li>
         </ul>
@@ -450,6 +450,7 @@
                                 <kendo-dropdownlist   [readonly] = "true" class="date_dropdown_fontsize form-control"
                                   textField="key" valueField="value" name="day" nick="personalDetails.day" tabindex="0"
                                   #dobDay (selectionChange)="selectValueChanged($event, dobDay.hostElement)"
+                                  (click)="dateofBirthKendo2.focus(dateofBirthKendo2.toggle())"
                                   [(ngModel)]="dob.day"
                                   >
                                 </kendo-dropdownlist>
@@ -461,6 +462,7 @@
                                   textField="key" valueField="value" name="month" tabindex="0"
                                   nick="personalDetails.month" #dobMonth
                                   (selectionChange)="selectValueChanged($event, dobMonth.hostElement)"
+                                  (click)="dateofBirthKendo2.focus(dateofBirthKendo2.toggle())"
                                   [(ngModel)]="dob.month">
                                 </kendo-dropdownlist>
                               </div>
@@ -470,6 +472,7 @@
                                   textField="key" valueField="value" name="year" tabindex="0"
                                   nick="personalDetails.year" #dobYear
                                   (selectionChange)="selectValueChanged($event, dobYear.hostElement)"
+                                  (click)="dateofBirthKendo2.focus(dateofBirthKendo2.toggle())"
                                   [(ngModel)]="dob.year">
                                 </kendo-dropdownlist>
                               </div>

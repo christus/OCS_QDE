@@ -93,6 +93,7 @@ export class EligibilityCheckComponent implements OnInit {
     private qdeHttp: QdeHttpService,
     private qdeService: QdeService) {
 
+      
     this.commonDataService.changeMenuBarShown(true);
     this.commonDataService.changeViewFormNameVisible(true);
     this.commonDataService.changeViewFormVisible(true);
@@ -104,6 +105,7 @@ export class EligibilityCheckComponent implements OnInit {
       this.qdeService.qdeSource.subscribe(value => {
         this.applicationId = value.application.applicationId;
         this.ocsNumber = value.application.ocsNumber;
+        this.commonDataService.changeApplicationId(this.applicationId);
       });
       console.log(this.route.snapshot.data);
       // this.applicationId

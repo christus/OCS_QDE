@@ -682,8 +682,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     ImageUploadModule.forRoot(),
     DeviceDetectorModule.forRoot(),
     NgxUiLoaderModule,
-    NgxUiLoaderRouterModule,
-    NgxUiLoaderRouterModule.forRoot({showForeground:true}),
+    // NgxUiLoaderRouterModule,
+    // NgxUiLoaderRouterModule.forRoot({showForeground:true}),
     NgxPaginationModule,
     
     ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'})

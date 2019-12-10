@@ -386,7 +386,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   isNumberLessThan1k: boolean;
   isNumberMoreThan100cr: boolean;
   minMaxValues: Array<MinMax>;
-
+  tabHide: boolean;
   constructor(private renderer: Renderer2,
     private route: ActivatedRoute,
     private router: Router,
@@ -677,6 +677,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
             //   this.router.navigate(['/leads']);
           }
         });
+      }
+      if (params.applicationId == undefined) {
+        this.tabHide = true;
+
+      } else {
+        this.tabHide = false;
       }
     });
 
