@@ -216,7 +216,7 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
     this.cds.changeViewFormVisible(true);
     this.cds.changeLogoutVisible(true);
     this.cds.changeHomeVisible(true);
-
+    this.cds.changeViewFormNameVisible(true);
 
     this.route.params.subscribe(params => {
       if(params['applicationId'] != null) {

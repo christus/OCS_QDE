@@ -107,6 +107,7 @@ export class ConnectorLeadCreateComponent implements OnInit {
     this.commonDataService.changeViewFormVisible(false);
     this.commonDataService.changeLogoutVisible(true);
     this.commonDataService.changeHomeVisible(true);
+    this.commonDataService.changeViewFormNameVisible(true);
     
     this.qdeSourceSub=this.qdeService.qdeSource.subscribe(val => {
       console.log("VALVE: ", val);

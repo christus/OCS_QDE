@@ -236,7 +236,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
     this.commonDataService.changeViewFormVisible(false);
     this.commonDataService.changeLogoutVisible(true);
     this.commonDataService.changeHomeVisible(true);
-
+    this.commonDataService.changeViewFormNameVisible(true);
   
       
     

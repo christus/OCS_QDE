@@ -30,6 +30,7 @@ export class OnlineSummaryComponent implements OnInit {
     this.commonDataService.changeViewFormVisible(false);
     this.commonDataService.changeLogoutVisible(false);
     this.commonDataService.changeHomeVisible(false);
+    this.commonDataService.changeViewFormNameVisible(false);
 
     this.route.params.subscribe(v => {
       this.applicationId = v.applicationId;

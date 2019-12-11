@@ -294,7 +294,7 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
     this._timeout = window.setTimeout(() => {
 
       console.log(event.target.value.toLowerCase());
-      let input = { "userName": event.target.value.toLowerCase() };
+      let input = { "userName": event.target.value.toLowerCase() };      
       this.qdeHttp.adminReportingTo(input).subscribe((response) => {
         console.log("Reporting", response);
         let usersList = response['ProcessVariables'].userList;

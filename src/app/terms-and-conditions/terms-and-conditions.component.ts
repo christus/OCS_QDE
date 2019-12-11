@@ -13,7 +13,7 @@ export class TermsAndConditionsComponent implements OnInit {
     this.commonDataService.changeViewFormVisible(false);
     this.commonDataService.changeLogoutVisible(false);
     this.commonDataService.changeHomeVisible(false);
-
+    this.commonDataService.changeViewFormNameVisible(false);
   }
 
   ngOnInit() {

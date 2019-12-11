@@ -417,6 +417,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.cds.changeViewFormVisible(true);
     this.cds.changeLogoutVisible(true);
     this.cds.changeHomeVisible(true);
+    this.cds.changeViewFormNameVisible(true);
     this.contactExtraFieldRemoval();
 
     // this.panslideSub = this.cds.panslide.subscribe(val => {

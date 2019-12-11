@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonDataService } from 'src/app/services/common-data.service';
 
 @Component({
   selector: 'app-payment-successfull',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PaymentSuccessfullComponent implements OnInit {
 
-  constructor() { }
+  constructor(private commonDataService: CommonDataService) { 
+    this.commonDataService.changeViewFormNameVisible(true);
+  }
 
   ngOnInit() {
   }

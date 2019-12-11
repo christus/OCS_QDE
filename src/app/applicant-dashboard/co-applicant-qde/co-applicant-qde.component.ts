@@ -423,6 +423,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     this.cds.changeViewFormVisible(true);
     this.cds.changeLogoutVisible(true);
     this.cds.changeHomeVisible(true);
+    this.cds.changeViewFormNameVisible(true);
     // this.contactExtraFieldRemoval();
 
     // console.log("QDE:::: ", route.data['qde']);

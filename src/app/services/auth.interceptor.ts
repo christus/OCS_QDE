@@ -188,8 +188,16 @@ export class AuthInterceptor implements HttpInterceptor {
 
   isSpinnerRequired(req){
     if(req.body != null) {
+      let typeofBody = typeof(req.body)
+      let reqBody  = req.body;
+     if (typeofBody != "object"){
+      reqBody = JSON.parse(req.body);
+     }
+      let needSpinner;
+      if (reqBody.processId) {
       let processId = JSON.parse(req.body).processId;
-      let needSpinner = this.checkProcessNeedSpinner(processId);
+         needSpinner = this.checkProcessNeedSpinner(processId);
+      }
       if(needSpinner) {
         this.totalRequests++;
         if(!this.isNgxRunning){
