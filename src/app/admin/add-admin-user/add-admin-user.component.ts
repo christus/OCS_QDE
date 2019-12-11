@@ -27,7 +27,7 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
 
   @ViewChild('selectBox') selectBoxRef: ElementRef;
 
-  @ViewChild('uploadCSV') uploadCSV:ElementRef;
+  
   userRoles: Array<any>;
   branches: Array<any>;
   formdata;
@@ -40,9 +40,6 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
   userId: number;
   updatebtn:boolean = false;
   errorMsg:string;
-  uploadCSVString: string;
-  selectedFile: File;
-  isFileSelected: boolean = false;
   isErrorModal:boolean = false;
   CSVerrorMessage: string;
   regexPattern = {
@@ -205,7 +202,8 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
           //alert("Uploaded Successfully!");
           this.registerUser.reset();
           this.router.navigate(['admin/user-module']);
-        } else {
+        } 
+		/* else {
           if (response["ErrorMessage"]) {
             console.log("Response: " + response["ErrorMessage"]);
             this.isErrorModal = true;
@@ -217,7 +215,7 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
             this.isErrorModal = true;
             this.errorMsg = response["ProcessVariables"]["errorMessage"];
           }
-        }
+        } */
       },
       error => {
         console.log("Error : ", error);
@@ -339,7 +337,8 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
           //alert("Uploaded Successfully!");
           this.registerUser.reset();
           this.router.navigate(['admin/user-module']);
-        } else {
+        } 
+		/* else {
           if (response["ErrorMessage"]) {
             console.log("Response: " + response["ErrorMessage"]);
             this.isErrorModal = true;
@@ -351,7 +350,7 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
             this.isErrorModal = true;
             this.errorMsg = response["ProcessVariables"]["errorMessage"];
           }
-        }
+        } */
       },
       error => {
         console.log("Error : ", error);
@@ -372,59 +371,5 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
       }
     }
     return null;
-  }
-  startUpload(event){
-    this.selectedFile = event.target.files[0];
-    if(this.selectedFile.size!=0){
-      this.isFileSelected = true;
-    }else{
-      alert("No File selected");
-      this.isFileSelected=false;
-    }
-    this.getBase64(this.selectedFile);
-  }
-  getBase64(inputValue: any) {
-    var file:File = inputValue
-    var myReader:FileReader = new FileReader();
-    myReader.onloadend = (e) => {
-      this.uploadCSVString = myReader.result.substr(myReader.result.indexOf(',') + 1);;
-      console.log("result base64", this.uploadCSVString);
-    }
-    myReader.readAsDataURL(file);
-  }
-  uploadCSVFile(){
-    let name = this.selectedFile.name;
-    let size = this.selectedFile.size;
-    if(size!=0){
-      let documentInfo = {
-        userId: localStorage.getItem("userId"),
-        "attachment": {
-          "name": name,
-          "operation": "upload",
-          "content": this.uploadCSVString,
-          "mime": "text/csv",
-          "size": size
-        }
-      }
-      this.qdeHttp.uploadCSV(documentInfo).subscribe(res=>{
-        if(res['ProcessVariables']['status'] && res['ProcessVariables']['errorMessage']==''){
-          this.isErrorModal = true;
-          this.errorMsg = "File Uploaded successfully";
-          this.isFileSelected = false;
-          let el = this.uploadCSV.nativeElement;
-          el.value = "";
-        }else{
-          this.isErrorModal = true;
-          this.errorMsg = res['ProcessVariables']['errorMessage'];
-          this.isFileSelected = false;
-          let el = this.uploadCSV.nativeElement;
-          el.value = "";
-        }
-      })
-    }
-  }
-  callFile(){
-    let el = this.uploadCSV.nativeElement;
-    el.click();  
   }
 }

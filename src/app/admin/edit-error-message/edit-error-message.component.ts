@@ -63,12 +63,12 @@ handleErrorMessage(errorMessagesText) {
   } else {
     if (response["ErrorMessage"]) {
       // console.log("Response: " + response["ErrorMessage"]);
-      this.errorMsg = response["ErrorMessage"];
+      // this.errorMsg = response["ErrorMessage"];
     } else if (response["ProcessVariables"]["errorMessage"]) {
       // console.log(
       //   "Response: " + response["ProcessVariables"]["errorMessage"]
       // );
-      this.errorMsg = response["ProcessVariables"]["errorMessage"];
+      // this.errorMsg = response["ProcessVariables"]["errorMessage"];
     }
   }
   });

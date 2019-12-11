@@ -26,6 +26,7 @@ export class AdminLovsComponent implements OnInit, AfterViewInit {
       this.adminLovs.push({description: 'Loan Master', value: 'loan_master'});
       this.adminLovs.push({description: 'Login Fee', value: 'login_fee'});
       this.adminLovs.push({description: 'Applicant Relationship Mapping', value: 'applicant_relationship_mapping'});
+      
 
       this.filteredLovs = this.adminLovs;
     } else {
@@ -36,6 +37,7 @@ export class AdminLovsComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.adminLovs.sort(this.compare);	
   }
 
   ngAfterViewInit() {
@@ -55,4 +57,16 @@ export class AdminLovsComponent implements OnInit, AfterViewInit {
       this.filteredLovs = this.adminLovs;
     }
   }
+  compare(a, b) {
+     const bandA = a.description.toUpperCase();
+     const bandB = b.description.toUpperCase();
+     let comparison = 0;
+     if (bandA > bandB) {
+        comparison = 1;
+     } else if (bandA < bandB) {
+        comparison = -1;
+     }
+        return comparison;
+     }
+
 }

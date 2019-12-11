@@ -21,7 +21,7 @@ export class LoanMasterComponent implements OnInit {
   baseFee: number;
   taxApplicable: number;
   variableFee: number;
-
+  invalidFeedback : boolean = false;
   loanTypeData: Array<any>;
   selectedLoanTypeData: any;
   searchKey:string = "";
@@ -33,6 +33,9 @@ export class LoanMasterComponent implements OnInit {
   perPage: number;
   totalPages: number;
   totalElements: number;
+  invalidFeedback1: boolean;
+  delIndex: any;
+  isConfirmModal: boolean;
 
   constructor(private qdeHttp: QdeHttpService, private _route: ActivatedRoute) {
 
@@ -58,11 +61,13 @@ export class LoanMasterComponent implements OnInit {
         this.loanTypeData = res['ProcessVariables']['valueDescription'];
         this.selectedLoanTypeData = this.loanTypeData[0];
       }
-    }, err => {
+    }
+	/* , err => {
       this.isErrorModal = true;
       this.errorMsg = "Something went wrong";
       //alert('Something went wrong');
-    });
+    } */
+	);
 
     if(this.isLoanMaster) {
       this.qdeHttp.adminGetAllLoanMaster().subscribe(res => {
@@ -127,7 +132,7 @@ export class LoanMasterComponent implements OnInit {
     let dude = form.value;
     
     if(this.isLoanMaster) {
-      dude.rateOfInterest = parseInt(form.value.rateOfInterest);
+      dude.rateOfInterest = parseFloat(form.value.rateOfInterest);
       dude.baseAmount = parseInt(form.value.baseAmount);
       dude.tableName = this.tableName;
     } else if(this.isLoginFee) {
@@ -149,39 +154,49 @@ export class LoanMasterComponent implements OnInit {
           this.isErrorModal = true;
           this.errorMsg = "Added Successfully";
           this.refresh();
-        } else {
+        } 
+		/* else {
           this.isErrorModal = true;
           this.errorMsg = res["ProcessVariables"]['errorMessage'];
           //alert(res["ProcessVariables"]['errorMessage']);
-        }
-      }, err => {
+        } */
+      }
+	  /* , err => {
         this.isErrorModal = true;
         this.errorMsg = "Something went wrong";
         //alert('Something went wrong');
-      });
+      } */
+	  );
     } else if(this.isLoginFee) {
       this.qdeHttp.adminUpdateLoginFee(dude).subscribe(res => {
         if(res["ProcessVariables"]['status'] == true) {
           this.refresh();
-        } else {
+        }
+		/* else {
           this.isErrorModal = true;
           this.errorMsg = res["ProcessVariables"]['errorMessage'];
           //alert(res["ProcessVariables"]['errorMessage']);
-        }
-      }, err => {
+        } */
+      }
+	  /* , err => {
         this.isErrorModal = true;
         this.errorMsg = "Something went wrong";
         //alert('Something went wrong');
-      });
+      } */
+	  );
     }
   }
 
   search(event){
     if(this.isLoanMaster) {
       this.qdeHttp.adminSearchAllLoanMaster(event.target.value).subscribe(res => {
-        if(res["ProcessVariables"]["status"]){
+        if(res["ProcessVariables"]["status"] && res["ProcessVariables"]["loanMaster"]!=null){
         this.data = res['ProcessVariables']['loanMaster'];
-      }else{
+        this.currentPage = parseInt(res['ProcessVariables']['currentPage']);
+        this.totalPages = parseInt(res['ProcessVariables']['totalPages']);
+        this.perPage = parseInt(res['ProcessVariables']['perPage']);
+        this.totalElements = parseInt(res['ProcessVariables']['totalPages']) * this.perPage;
+      }else if(res["ProcessVariables"]["status"] && res["ProcessVariables"]["loanMaster"]==null) {
         this.isErrorModal = true;
         this.errorMsg = "No data present further";
       }
@@ -190,13 +205,13 @@ export class LoanMasterComponent implements OnInit {
     } 
     else if(this.isLoginFee) {
       this.qdeHttp.adminSearchAllLoginFee(event.target.value).subscribe(res => {
-        if(res["ProcessVariables"]["status"]){
+        if(res["ProcessVariables"]["status"] && res["ProcessVariables"]["loginFee"]!=null ){
         this.data = res['ProcessVariables']['loginFee'];
-        // this.currentPage = parseInt(res['ProcessVariables']['currentPage']);
-        // this.totalPages = parseInt(res['ProcessVariables']['totalPages']);
-        // this.perPage = parseInt(res['ProcessVariables']['perPage']);
-        // this.totalElements = parseInt(res['ProcessVariables']['totalPages']) * this.perPage;
-      }else{
+        this.currentPage = parseInt(res['ProcessVariables']['currentPage']);
+        this.totalPages = parseInt(res['ProcessVariables']['totalPages']);
+        this.perPage = parseInt(res['ProcessVariables']['perPage']);
+        this.totalElements = parseInt(res['ProcessVariables']['totalPages']) * this.perPage;
+      } else if(res["ProcessVariables"]["status"] && res["ProcessVariables"]["loginFee"]==null){
         this.isErrorModal = true;
         this.errorMsg = "No data present further";
       }
@@ -245,7 +260,7 @@ export class LoanMasterComponent implements OnInit {
     if(this.isLoanMaster) {
       dude = {
         userId: this.userId,
-        rateOfInterest: parseInt(this.data[index].rateOfInterest),
+        rateOfInterest: parseFloat(this.data[index].rateOfInterest),
         baseAmount: parseInt(this.data[index].baseAmount),
         loanType: this.data[index].loanType,
         tableName: this.tableName,
@@ -267,43 +282,52 @@ export class LoanMasterComponent implements OnInit {
       this.qdeHttp.adminUpdateLoanMaster(dude).subscribe(res => {
         if(res["ProcessVariables"]['status'] == true) {
           this.refresh();
-        } else {
+        }
+		/* else {
           this.isErrorModal = true;
           this.errorMsg = res["ProcessVariables"]['errorMessage'];
           //alert(res["ProcessVariables"]['errorMessage']);
-        }
-      }, err => {
+        } */
+      }
+	  /* , err => {
         this.isErrorModal = true;
         this.errorMsg = "Something went wrong";
         //alert('Something went wrong');
-      });
+      } */
+	  );
     } else if(this.isLoginFee) {
       this.qdeHttp.adminUpdateLoginFee(dude).subscribe(res => {
         if(res["ProcessVariables"]['status'] == true) {
           this.refresh();
-        } else {
+        }
+		/* else {
           this.isErrorModal = true;
           this.errorMsg = res["ProcessVariables"]['errorMessage'];
           //alert(res["ProcessVariables"]['errorMessage']);
-        }
-      }, err => {
+        } */
+      }
+	  /* , err => {
         this.isErrorModal = true;
         this.errorMsg = "Something went wrong";
         //alert('Something went wrong');
-      });
+      } */
+	  );
     }
   }
 
   delete(index) {
-    let dude = this.data[index];
-    dude.tableName = this.tableName;
-    if(confirm("Are you sure?")) {
-      this.qdeHttp.softDeleteLov(dude).subscribe(res => {
+    this.delIndex = this.data[index];
+    this.delIndex.tableName = this.tableName;
+    this.isConfirmModal = true;
+  }
+
+  confirmDelete(){
+    this.isConfirmModal = false;
+      this.qdeHttp.softDeleteLov(this.delIndex).subscribe(res => {
         // console.log(res['ProcessVariables']);
         if(res["ProcessVariables"]["status"]){this.isErrorModal = true; this.errorMsg="Deleted Successfully";}
         this.refresh();
       });
-    } 
   }
 
   loadMore() {
@@ -329,10 +353,12 @@ export class LoanMasterComponent implements OnInit {
         this.totalPages = parseInt(res['ProcessVariables']['totalPages']);
         this.perPage = parseInt(res['ProcessVariables']['perPage']);
         this.totalElements = parseInt(res['ProcessVariables']['totalPages']) * this.perPage;
-      }, err => {
+      }
+	  /* , err => {
         this.isErrorModal = true;
         this.errorMsg = "Something went wrong";
-      });
+      } */
+	  );
     } else if (this.isLoginFee) {
       this.qdeHttp.adminGetAllLoginFee(value,this.perPage,this.searchKey).subscribe(res => {
         this.data = res['ProcessVariables']['loginFee'];
@@ -341,10 +367,33 @@ export class LoanMasterComponent implements OnInit {
         this.perPage = parseInt(res['ProcessVariables']['perPage']);
         this.totalElements = parseInt(res['ProcessVariables']['totalPages']) * this.perPage;
 
-      }, err => {
+      }
+	  /* , err => {
         this.isErrorModal = true;
         this.errorMsg = "Something went wrong";
-      });
+      } */
+	  );
      }
   }
+  checkDecimals(event){
+  let num = event.target.value;
+  // let pattern = /[0-9]?[0-9]?(\.[0-9][0-9]?)?/;
+  let pattern = /^[0-9]?[0-9]?(\.[0-9]{1,2})?$/;
+  if(!pattern.test(num)){
+    this.invalidFeedback = true;
+  }else{
+    this.invalidFeedback = false;
+  }
+  }
+  checkDecimals1(event){
+    let num = event.target.value;
+    // let pattern = /[0-9]?[0-9]?(\.[0-9][0-9]?)?/;
+    let pattern = /^[0-9]?[0-9]?(\.[0-9]{1,2})?$/;
+    if(!pattern.test(num) || num==""){
+      this.invalidFeedback1 = true;
+    }else{
+      this.invalidFeedback1 = false;
+    }
+    }
+
 }

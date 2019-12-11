@@ -17,6 +17,7 @@ export class OnlinePaymentComponent implements OnInit {
   errorMsg:string;
 
   uploadFileName: string;
+  isErrorModal: boolean;
 
   constructor(private qdeHttp: QdeHttpService) { }
 
@@ -73,22 +74,23 @@ export class OnlinePaymentComponent implements OnInit {
           response["Error"] === "0" &&
           response["ProcessVariables"]["status"]) {
             this.readBase64Content(response)
-        } else {
-          if (response["ErrorMessage"]) {
-            console.log("Response: " + response["ErrorMessage"]);
-          } else if (response["ProcessVariables"]["errorMessage"]) {
-            console.log(
-              "Response: " + response["ProcessVariables"]["errorMessage"]
-            );
-            this.errorMsg = response["ProcessVariables"]["errorMessage"];
-          }
-        }
-      },
-      error => {
-        console.log("Error : ", error);
-        this.errorMsg = error;
-      }
-    );
+        } 
+      //   else {
+      //     if (response["ErrorMessage"]) {
+      //       console.log("Response: " + response["ErrorMessage"]);
+      //     } else if (response["ProcessVariables"]["errorMessage"]) {
+      //       console.log(
+      //         "Response: " + response["ProcessVariables"]["errorMessage"]
+      //       );
+      //       this.errorMsg = response["ProcessVariables"]["errorMessage"];
+      //     }
+      //   }
+      // },
+      // error => {
+      //   console.log("Error : ", error);
+      //   this.errorMsg = error;
+      // }
+      });
   }
 
   downloadPaymentReconCSV(data) {
@@ -98,22 +100,23 @@ export class OnlinePaymentComponent implements OnInit {
           response["Error"] === "0" &&
           response["ProcessVariables"]["status"]) {
             this.readBase64Content(response)
-        } else {
-          if (response["ErrorMessage"]) {
-            console.log("Response: " + response["ErrorMessage"]);
-          } else if (response["ProcessVariables"]["errorMessage"]) {
-            console.log(
-              "Response: " + response["ProcessVariables"]["errorMessage"]
-            );
-            this.errorMsg = response["ProcessVariables"]["errorMessage"];
-          }
-        }
-      },
-      error => {
-        console.log("Error : ", error);
-        this.errorMsg = error;
-      }
-    );
+        } 
+      //   else {
+      //     if (response["ErrorMessage"]) {
+      //       console.log("Response: " + response["ErrorMessage"]);
+      //     } else if (response["ProcessVariables"]["errorMessage"]) {
+      //       console.log(
+      //         "Response: " + response["ProcessVariables"]["errorMessage"]
+      //       );
+      //       this.errorMsg = response["ProcessVariables"]["errorMessage"];
+      //     }
+      //   }
+      // },
+      // error => {
+      //   console.log("Error : ", error);
+      //   this.errorMsg = error;
+      // }
+      });
   }
 
   uploadOnlinePaymentRecon(callback) {
@@ -132,24 +135,26 @@ export class OnlinePaymentComponent implements OnInit {
         if (
           response["Error"] === "0" &&
           response["ProcessVariables"]["status"]) {
-            alert("Uploaded Successfully!");
-        } else {
-          if (response["ErrorMessage"]) {
-            console.log("Response: " + response["ErrorMessage"]);
-          } else if (response["ProcessVariables"]["errorMessage"]) {
-            console.log(
-              "Response: " + response["ProcessVariables"]["errorMessage"]
-            );
-            this.errorMsg = response["ProcessVariables"]["errorMessage"];
-
-          }
-        }
-      },
-      error => {
-        console.log("Error : ", error);
-        this.errorMsg = error;
-      }
-    );
+            this.isErrorModal = true;
+            //alert("Uploaded Successfully!");
+            this.errorMsg = "Uploaded Successfully";
+        } 
+      //   else {
+      //     if (response["ErrorMessage"]) {
+      //       console.log("Response: " + response["ErrorMessage"]);
+      //     } else if (response["ProcessVariables"]["errorMessage"]) {
+      //       console.log(
+      //         "Response: " + response["ProcessVariables"]["errorMessage"]
+      //       );
+      //       this.errorMsg = response["ProcessVariables"]["errorMessage"];
+      //     }
+      //   }
+      // },
+      // error => {
+      //   console.log("Error : ", error);
+      //   this.errorMsg = error;
+      // }
+      });
   }
 
   readBase64Content(response) {
@@ -197,7 +202,7 @@ export class OnlinePaymentComponent implements OnInit {
       },
       error => {
         console.log("Error : ", error);
-        alert(error.error.message);
+        //alert(error.error.message);
       }
     );
   }
@@ -208,23 +213,26 @@ export class OnlinePaymentComponent implements OnInit {
         if (
           response["Error"] === "0" &&
           response["ProcessVariables"]["status"]) {
-            alert("Uploaded Successfully!");
-        } else {
-          if (response["ErrorMessage"]) {
-            console.log("Response: " + response["ErrorMessage"]);
-          } else if (response["ProcessVariables"]["errorMessage"]) {
-            console.log(
-              "Response: " + response["ProcessVariables"]["errorMessage"]
-            );
-            this.errorMsg = response["ProcessVariables"]["errorMessage"];
-          }
-        }
-      },
-      error => {
-        console.log("Error : ", error);
-        this.errorMsg = error;
-      }
-    );
+            //alert("Uploaded Successfully!");
+            this.isErrorModal = true;
+            this.errorMsg = "Uploaded Successfully";
+        } 
+      //   else {
+      //     if (response["ErrorMessage"]) {
+      //       console.log("Response: " + response["ErrorMessage"]);
+      //     } else if (response["ProcessVariables"]["errorMessage"]) {
+      //       console.log(
+      //         "Response: " + response["ProcessVariables"]["errorMessage"]
+      //       );
+      //       this.errorMsg = response["ProcessVariables"]["errorMessage"];
+      //     }
+      //   }
+      // },
+      // error => {
+      //   console.log("Error : ", error);
+      //   this.errorMsg = error;
+      // }
+      });
   }
 
   dataURItoBlob(dataURI, mimeType) {

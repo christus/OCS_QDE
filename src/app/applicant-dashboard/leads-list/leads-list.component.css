@@ -266,3 +266,14 @@ a, a:visited {
 .initials {
   display: none!important;
 }
+
+.pagination {
+  display: block;
+  clear: both;
+  text-align: center; 
+  margin-top: 1rem;
+  font-size: 1.09vw;
+  line-height: 1.95vw;
+  font-family: zurich-bold;
+  color: #444!important;
+}

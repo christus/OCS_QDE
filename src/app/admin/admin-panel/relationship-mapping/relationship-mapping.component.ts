@@ -39,6 +39,8 @@ export class RelationshipMappingComponent implements OnInit {
   applicantTitles: Array<any>;
   mainApplicant: string;
   coApplicant: string;
+  delIndex: any;
+  isConfirmModal: boolean;
 
   constructor(private qdeHttp: QdeHttpService, private route: ActivatedRoute) {
     this.userId = parseInt(localStorage.getItem('userId'));
@@ -58,11 +60,12 @@ export class RelationshipMappingComponent implements OnInit {
           this.key[i]=((this.perPage*(this.currentPage-1))+i+ 1);
         }
         console.log(this.data);
-      } else {
+      } 
+	  /* else {
         this.isErrorModal = true;
         this.errorMsg = "Something went wrong";
         //alert('Something went wrong.');
-      }
+      } */
      }
   }
 
@@ -73,21 +76,13 @@ export class RelationshipMappingComponent implements OnInit {
       var lov= JSON.parse(res['ProcessVariables']['lovs']);
       this.relationships = lov.LOVS.relationship;
       this.selectedRelationship = this.relationships[0];
-      console.log("relationships: ",this.relationships);
-      }
-    }, err => {
-    });
-
-    this.qdeHttp.adminGetLov().subscribe(res => {
-      if(res['ProcessVariables']['status'] == true) {
-      var lov= JSON.parse(res['ProcessVariables']['lovs']);  
       this.applicantTitles = lov.LOVS.applicant_title;
       this.selectedApplicantTitle = this.applicantTitles[0];
+      console.log("relationships: ",this.relationships);
       console.log("applicantTitles: ",this.applicantTitles);
       }
     }, err => {
     });
-
   }
 
 
@@ -176,16 +171,19 @@ export class RelationshipMappingComponent implements OnInit {
         this.errorMsg ="Updated successfully";
         this.refresh();
         this.isAdd = !this.isAdd;
-      } else {
+      } 
+	  /* else {
+        this.isErrorModal = true;
+        this.errorMsg = res["ProcessVariables"]['errorMessage'];
+        //alert('Something went wrong.');
+      } */
+    }
+	/* , err => {
         this.isErrorModal = true;
         this.errorMsg = "Something went wrong";
         //alert('Something went wrong.');
-      }
-    }, err => {
-        this.isErrorModal = true;
-        this.errorMsg = "Something went wrong";
-        //alert('Something went wrong.');
-    });
+    } */
+	);
   }
 
   search(event){
@@ -200,13 +198,13 @@ export class RelationshipMappingComponent implements OnInit {
       for(var i=0; i<this.data.length;i++){
         this.key[i]=((this.perPage*(this.currentPage-1))+i+ 1);
       }
-    }else if(response['ProcessVariables']['mappingList']==null){
+    } else if(response['ProcessVariables']['mappingList']==null){
       this.isErrorModal = true;
       this.errorMsg = "No Data present further"
-    }else if(response['ProcessVariables']['status']== false && (response['ProcessVariables']['errorMessage']!="" || response['ErrorMessage']!="")){
+    }/*else if(response['ProcessVariables']['status']== false && (response['ProcessVariables']['errorMessage']!="" || response['ErrorMessage']!="")){
       this.isErrorModal = true;
       this.errorMsg = "Something went wrong";
-    }
+    } */
     });
   }
 
@@ -227,11 +225,11 @@ export class RelationshipMappingComponent implements OnInit {
           for(var i=0; i<this.data.length;i++){
             this.key[i]=((this.perPage*(this.currentPage-1))+i+ 1);
           }
-        } else {
+        } /* else {
           this.isErrorModal = true;
           this.errorMsg = "Something went wrong";
         //alert('Something went wrong.');
-        }
+        } */
       }
     }, err => {
 
@@ -281,37 +279,38 @@ export class RelationshipMappingComponent implements OnInit {
         this.isErrorModal = true;
         this.errorMsg = "Updated successfully";
         this.refresh();
-      } else {
+      } /* else {
         this.isErrorModal = true;
         this.errorMsg = "Something went wrong";
         //alert('Something went wrong.');
-      }
-    }, err => {
+      } */
+    }/* , err => {
         this.isErrorModal = true;
         this.errorMsg = "Something went wrong";
         //alert('Something went wrong.');
-    });
+    } */);
   }
 
   delete(index) {
-    let dude = this.data[index];
+    this.delIndex = this.data[index];
     // dude.tableName = this.tableName;
-    dude.tableName = 'applicant_relation_title_map';
-
-    if(confirm("Are you sure?")) {
-      this.qdeHttp.softDeleteLov(dude).subscribe(res => {
+    this.delIndex.tableName = 'applicant_relation_title_map';
+    this.isConfirmModal = true;
+  }
+  deleteConfirm(){
+    this.isConfirmModal = false;
+      this.qdeHttp.softDeleteLov(this.delIndex).subscribe(res => {
         // console.log(res['ProcessVariables']);
         if(res['ProcessVariables']['status'] == true) {
           this.isErrorModal = true;
           this.errorMsg = "Deleted successfully";
           this.refresh();
-        } else {
+        } /* else {
           this.isErrorModal = true;
-          this.errorMsg = "Something went wrong";
+          this.errorMsg = res['ProcessVariables']['errorMessage'];
         //alert('Something went wrong.');
-        }
+        } */
       });
-    } 
   }
 
 
@@ -339,11 +338,11 @@ export class RelationshipMappingComponent implements OnInit {
           for(var i=0; i<this.data.length;i++){
             this.key[i]=((this.perPage*(value-1))+i+ 1);
           }
-        } else {
+        } /* else {
           this.isErrorModal = true;
           this.errorMsg = "Something went wrong";
         //alert('Something went wrong.');
-        }
+        } */
       }
     }, err => {
     });

@@ -17,6 +17,7 @@ import { Subscription } from 'rxjs';
 
 import { screenPages } from '../../app.constants';
 import { environment } from 'src/environments/environment.prod';
+import { MinMax } from 'src/app/models/qde.model';
 
 interface Item {
   key: string ,
@@ -65,7 +66,8 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
           propertyArea:{
             required:"Property Area is Mandatory",
             invalid:"Property Area is not valid",
-            maxArea:"Property Area should not be more than 10,000 Sq foot"
+            maxArea:"Property Area should not be more than ",
+            minArea:"Property Area should not be more than "
           },
           pinCode: {
             required: "Property Pincode is Mandatory",
@@ -89,7 +91,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
        existingLoans: {
            monthlyEmi: {
              required: "Monthly EMI is mandatory",
-             invalid: "Monthly EMI is not valid",
+             invalid: "Monthly EMI is not valid. Alphabets and Special Characters not allowed",
              minamount: "Amount should be greater than or equal to Rs.",
              maxamount: "Amount should be less than or equal to Rs."
            }
@@ -293,6 +295,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
   isErrorModal:boolean;
   errorMessage:string;
   tempClssArea: string;
+  minMaxValues: Array<MinMax>;
 
   public defaultItem = environment.defaultItem;
 
@@ -366,6 +369,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
       this.propertyTypes = lov.LOVS.property_type;
 
       this.loanProviderList = lov.LOVS.loan_providers;
+      this.minMaxValues = lov.LOVS.min_max_values;
     }
 
 
@@ -866,11 +870,11 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
       this.qde.application.loanDetails.loanAmount = {
         amountRequired: parseInt(this.getNumberWithoutCommaFormat(form.value.amountRequired)),
-        loanPurpose: this.selectedLoanPurpose,
+        loanPurpose: form.value.loanPurpose,
         loanTenure: form.value.loanTenure,
         loanType: parseInt(this.selectedLoanType.value+"")
       };
-
+      // this.selectedLoanPurpose,
       if(this.qde.application.loanDetails.loanAmount.loanTenure == 0){
         this.tenureYears = true;
         return;
@@ -931,7 +935,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
         return;
       }
 
-      let prepertyType = Number(this.selectedPropertyType.value);
+      // let prepertyType = Number(this.selectedPropertyType.value);
 
       // this.qde.application.loanDetails.propertyType = {
       //   propertyIdentified: this.isPropertyIdentified,
@@ -939,8 +943,10 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
       //   propertyClss: this.propertyClssValue,
       //   propertyArea: this.propertyAreaValue
       // };
+// console.log("update property value",form.value["propertyTypes1"].value);
+
       this.qde.application.loanDetails.propertyType.propertyIdentified = this.isPropertyIdentified;
-      this.qde.application.loanDetails.propertyType.propertyType = prepertyType.toString();
+      this.qde.application.loanDetails.propertyType.propertyType = form.value["propertyTypes1"].value;
       this.qde.application.loanDetails.propertyType.propertyClss = this.propertyClssValue;
       this.qde.application.loanDetails.propertyType.propertyArea = this.propertyAreaValue;
 

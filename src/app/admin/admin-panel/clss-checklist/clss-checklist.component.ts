@@ -269,15 +269,16 @@ export class ClssChecklistComponent implements OnInit {
   search(event) {
     this.qdeHttp.adminClssSearch(event.target.value).subscribe(response => {
       console.log("mamam",response)
-      if(response['ProcessVariables']['status']){
+      if(response['ProcessVariables']['status'] && response['ProcessVariables']['clssDetailsList']!=null){
       this.lovs = response["ProcessVariables"]["clssDetailsList"]
       for(var x in this.lovs){
         this.lovs[x].isEdit=true;
       }
-    }else{
+    }
+	  else if(response['ProcessVariables']['status'] && response['ProcessVariables']['clssDetailsList']==null){
       this.isErrorModal = true;
       this.errorMsg = "No data present further";
-    }
+    } 
     });
   }
 

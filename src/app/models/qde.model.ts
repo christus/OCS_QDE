@@ -311,3 +311,9 @@ export interface Item {
     key: string;
     value: string;
 }
+
+export interface MinMax {
+    minValue: string,
+    maxValue: string,
+    maxLength: string
+  }

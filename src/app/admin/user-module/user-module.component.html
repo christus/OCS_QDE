@@ -7,6 +7,10 @@
         </option>
     </select>
     &nbsp; &nbsp; &nbsp;<input type="text" class="search" placeholder="Search" [(ngModel)]="searchKey" (input)="search()" />
+      <button class="fileUpload" (click)="callFile()">Upload Connector / DMA List</button>
+      <input type="file" #uploadCSV accept=".csv" (change)="startUpload($event)" style="display: none;">
+      <button type="button" class="btn btn-default" [ngClass]="{'disabled': (!isFileSelected)}"
+          [disabled]="!isFileSelected" (click)="uploadCSVFile()"> Upload List</button>
     <br>
 </div>
 
@@ -49,13 +53,14 @@
     </table>
 </div>
 <div class="overlay" [ngClass]="{'active': isErrorModal}">
-    <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isErrorModal}">
+    <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isErrorModal}" style="text-align: center;">
         <!-- <a class="modal-close" href="javascript:void(0);" (click)="onBackOTP()"><span class="icon icon-close"></span></a> -->
         <a class="modal-close" (click)="isErrorModal = false"><span class="icon icon-close"></span></a>
         <div class="modal-body">
         <h1>{{errorMessage}}</h1>
+        <br><br><br>
         <div class="btn-wrap">
-            <button class="btn btn-border" (click)="isErrorModal = false">Cancel</button>
+            <button class="btn btn-border" (click)="isErrorModal = false">Okay</button>
         </div>
         </div>
         </div>

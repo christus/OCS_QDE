@@ -158,3 +158,16 @@
         </div>
     </div>
 </div>
+<div class="overlay" [ngClass]="{'active': isConfirmModal}">
+  <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isConfirmModal}">
+      <a class="modal-close" (click)="isConfirmModal = false"><span class="icon icon-close"></span></a>
+      <div class="modal-body">
+          <h1>Are you sure?</h1>
+          <br><br>
+          <div class="btn-wrap">
+              <button class="btn btn-border" (click)="confirmDelete()">Yes</button>&nbsp;&nbsp;
+              <button class="btn btn-border" (click)="isConfirmModal = false">Cancel</button>
+          </div>
+      </div>
+  </div>
+</div>

@@ -35,6 +35,8 @@ export class LoanTypePurposeMapComponent implements OnInit {
   searchKey:string;
   isErrorModal: boolean = false;
   errorMsg: string;
+  delIndex: any;
+  isConfirmModal: boolean;
 
 
   constructor(private qdeHttp: QdeHttpService, private route: ActivatedRoute) {
@@ -70,11 +72,12 @@ export class LoanTypePurposeMapComponent implements OnInit {
       for(var i=0; i<this.data.length;i++){
         this.key[i]=((this.perPage*(this.currentPage-1))+i+ 1);
       }
-    } else {
+    }
+	/* else {
       this.isErrorModal = true;
       this.errorMsg = "No Data present";
       //alert('No Data Present');
-    }
+    } */
     // } else {
     //   alert('No Data Present');
     // }
@@ -86,19 +89,22 @@ export class LoanTypePurposeMapComponent implements OnInit {
         var lov= JSON.parse(res['ProcessVariables']['lovs']);
         this.loanTypeData = lov.LOVS.loan_type;
         this.selectedLoanTypeData = this.loanTypeData[0];
+		    this.loanPurposeData = lov.LOVS.loan_purpose;
+        this.selectedLoanPurposeData = this.loanPurposeData[0];
         console.log("loanTypeData: ", this.loanTypeData);
       }
-    }, err => {
+    }
+	/* , err => {
       this.isErrorModal = true;
       this.errorMsg = "Something went wrong";
       //alert('Something went wrong');
-    });
+    } */
+	);
 
-    this.qdeHttp.adminGetLov().subscribe(res => {
+    /* this.qdeHttp.adminGetLov().subscribe(res => {
       if(res['ProcessVariables']['status'] == true) {
         var lov= JSON.parse(res['ProcessVariables']['lovs']);
-        this.loanPurposeData = lov.LOVS.loan_purpose;
-        this.selectedLoanPurposeData = this.loanPurposeData[0];
+        
         console.log("loanPurposeData: ", this.loanPurposeData);
 
       }
@@ -106,7 +112,7 @@ export class LoanTypePurposeMapComponent implements OnInit {
       this.isErrorModal = true;
       this.errorMsg = "Something went wrong";
       //alert('Something went wrong');
-    });
+    }); */
   }
 
   add() {
@@ -141,22 +147,25 @@ export class LoanTypePurposeMapComponent implements OnInit {
         this.isErrorModal = true;
         this.errorMsg = "Updated successfully";
         this.refresh();
-      } else {
+      } 
+	  /* else {
         this.isErrorModal = true;
         this.errorMsg = "Something went wrong";
         //alert('Something went wrong');
-      }
-    }, err => {
+      } */
+    }
+	/* , err => {
       this.isErrorModal = true;
       this.errorMsg = "Something went wrong";
       //alert('Something went wrong');
-    });
+    } */
+	);
   }
 
   search(event) {
     this.qdeHttp.adminLoanTypeSearch(event.target.value).subscribe(response => {
       // console.log("mamam",v)
-      if(response['ProcessVariables']['loanTypePurposeList']!=null){
+      if(response['ProcessVariables']['status'] && response['ProcessVariables']['loanTypePurposeList']!=null){
         this.data = response['ProcessVariables']['loanTypePurposeList'].map(v => {
           return {
             userId: this.userId,
@@ -177,11 +186,11 @@ export class LoanTypePurposeMapComponent implements OnInit {
           for(var i=0; i<this.data.length;i++){
             this.key[i]=((this.perPage*(this.currentPage-1))+i+ 1);
           }
-      }else{
+      }else if(response['ProcessVariables']['status'] && response['ProcessVariables']['loanTypePurposeList']==null) {
         this.isErrorModal = true;
         this.errorMsg = "No data present further";
         //alert("No data present further");
-      }   
+      }
     });
   }
 
@@ -211,11 +220,13 @@ export class LoanTypePurposeMapComponent implements OnInit {
         this.totalElements = res['ProcessVariables']['totalPages'] * this.perPage;
         // this.perPageCount = Math.ceil(this.totalElements/this.perPage);
       } 
-    }, err => {
+    }
+	/* , err => {
       this.isErrorModal = true;
       this.errorMsg = "Something went wrong while reloading data.";
       //alert('Something went wrong while reloading data.');
-    });
+    } */
+	);
   }
 
   submitForm(form: NgForm) {
@@ -232,16 +243,19 @@ export class LoanTypePurposeMapComponent implements OnInit {
     this.qdeHttp.adminInsertUpdateLoanTypePurposeMap(dude).subscribe(res => {
       if(res["ProcessVariables"]['status'] == true) {
         this.refresh();
-      } else if(res['ProcessVariables']['errorMessage']){
+      } 
+	  /* else if(res['ProcessVariables']['errorMessage']){
         this.isErrorModal = true;
         this.errorMsg = res['ProcessVariables']['errorMessage'];
         //alert('Something went wrong');
-      }
-    }, err => {
+      } */
+    }
+	/* , err => {
         this.isErrorModal = true;
         this.errorMsg = "Something went wrong";
         //alert('Something went wrong');
-    });
+    } */
+	);
   }
 
 
@@ -260,15 +274,17 @@ export class LoanTypePurposeMapComponent implements OnInit {
   }
 
   delete(index) {
-    let dude = this.data[index];
-    dude.tableName = this.tableName;
-    if(confirm("Are you sure?")) {
-      this.qdeHttp.softDeleteLov(dude).subscribe(res => {
+    this.delIndex = this.data[index];
+    this.delIndex.tableName = this.tableName;
+    this.isConfirmModal = true;
+  }
+  confirmDelete(){
+    this.isConfirmModal = false;
+      this.qdeHttp.softDeleteLov(this.delIndex).subscribe(res => {
         // console.log(res['ProcessVariables']);
         if(res["ProcessVariables"]["status"]){this.isErrorModal = true; this.errorMsg = "Deleted successfully"};
         this.refresh();
-      });
-    } 
+      }); 
   }
   pageChanged(value){
     this.qdeHttp.adminLoanTypePurposeMap(value,this.perPage,this.searchKey).subscribe(res => {
@@ -293,17 +309,20 @@ export class LoanTypePurposeMapComponent implements OnInit {
         for(var i=0; i<this.data.length;i++){
           this.key[i]=((this.perPage*(this.currentPage-1))+i+ 1);
         }
-      } else {
+      } 
+	  /* else {
         this.isErrorModal = true;
         this.errorMsg = "Something went wrong";
         //alert('Something went wrong');
         this.currentPage--;
-      }
-    }, err => {
+      } */
+    }
+	/* , err => {
         this.isErrorModal = true;
         this.errorMsg = "Something went wrong";
         //alert('Something went wrong');
       this.currentPage--;
-    });
+    } */
+	);
   }
 }

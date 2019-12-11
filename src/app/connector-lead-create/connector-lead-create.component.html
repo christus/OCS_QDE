@@ -147,18 +147,18 @@
                     <div class="form-group">
                         <input spellcheck="false" type="text" class="form-control"
                           id="loanAmt" autocomplete="off"
-                          maxlength="10"
+                          [maxlength]="minMaxValues['Loan_amount'].maxLength"
                           [(ngModel)]="qde.application.leadCreate.loanAmount"
                           name="loanAmount" 
                           #loanAmount="ngModel" 
                           fieldFill 
                           required
                           pattern="{{regexPattern.amount}}"
-                          (input)="checkAmountLimit($event)"/>
+                          (input)="checkAmountLimit($event,minMaxValues['Loan_amount'].minValue,minMaxValues['Loan_amount'].maxValue)"/>
                         <label for="loanAmt">Loan Amount</label>    
                         <div class="invalid-feedback">
-                            <div *ngIf="isNumberLessThan50k">{{errors.leadCreate.amount.minamount}}</div>
-                            <div *ngIf="isNumberMoreThan100cr">{{errors.leadCreate.amount.maxamount}}</div>
+                            <div class="invalid-feedback" *ngIf="isLessAmount">{{errors.leadCreate.amount.minamount}}{{requirMinAmout}}</div>
+                            <div class="invalid-feedback" *ngIf="isMaxAmount">{{errors.leadCreate.amount.maxamount}}{{requirMaxAmout}}</div>
                             <div *ngIf="loanAmount.touched && loanAmount.errors?.required">{{errors.leadCreate.amount.required}}</div>
                             <div *ngIf="loanAmount.errors?.pattern">{{errors.leadCreate.amount.invalid}}</div>
                         </div>

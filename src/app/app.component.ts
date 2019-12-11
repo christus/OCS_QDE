@@ -138,34 +138,49 @@ export class AppComponent implements OnInit{
     });
 
     this.cds.showError.subscribe((value) => {
+      let role = localStorage.getItem("roles");
       if(Array.isArray(value) && value.length!=0){
       let status = value[0];
       let errorCode = value[1];
+      let errorMessage = value[2];
       let token = localStorage.getItem("token");
       if (this.isEmpty == true && token!=null) {
         this.fillErrorList().then(()=>{
           if (this.noErrors == true) {
-            if((this.adminDivView!=null && this.adminDivView!=undefined)){
-              if((this.adminDivView.nativeElement.classList.contains('active'))){
-              console.log("errorModal active");
-              }
-            }else {
+	    if(errorCode!="DYN001"){
             let result = this.errorList.find(v=> v.key == errorCode);
+            if(result!=null && result!=undefined){
             this.errorCodeMessage = result.value;
             this.isErrorCodeModal = status;
-            }
+          }else{
+            let temp = this.errorList.find(v=> v.key == "DEF");
+            this.errorCodeMessage = temp.value;
+            this.isErrorCodeModal = status;
           }
-        })
-      } else if (this.isEmpty == false) {
-        if((this.adminDivView!=null && this.adminDivView!=undefined)){
-        if((this.adminDivView.nativeElement.classList.contains('active'))){
-          console.log("errorModal active");
-          }
-        }else {
-          let result = this.errorList.find(v=> v.key == errorCode);
-          this.errorCodeMessage = result.value;
-          this.isErrorCodeModal = value[0];
+	}else{
+	    this.errorCodeMessage = errorMessage;
+            this.isErrorCodeModal = status;
+	}
+        }else{
+          this.isErrorCodeModal = true;
+          this.errorCodeMessage = "No interent detected. Please try again";
         }
+      })
+      }else if (this.isEmpty == false) {
+	  if(errorCode!="DYN001"){
+          let result = this.errorList.find(v=> v.key == errorCode);
+          if(result!=null && result!=undefined){
+            this.errorCodeMessage = result.value;
+            this.isErrorCodeModal = status;
+          }else{
+            let temp = this.errorList.find(v=> v.key == "DEF");
+            this.errorCodeMessage = temp.value;
+            this.isErrorCodeModal = status;
+          }
+	}else{
+	   this.errorCodeMessage = errorMessage;
+           this.isErrorCodeModal = status;
+	}
       }
     }
     });

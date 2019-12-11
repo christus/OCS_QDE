@@ -19,7 +19,7 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
 
   tableName: string;
   userId: number;
-
+  isConfirmModal : boolean = false;
   states: Array<Item> = [];
   zones: Array<Item> = [];
   cities: Array<Item> = [];
@@ -61,6 +61,7 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
   @ViewChild('searchInp') searchInp: ElementRef;
 
   subs: Array<Subscription> = [];
+  delIndex: {};
 
   constructor(private route: ActivatedRoute, private qdeHttp: QdeHttpService, private qdeService: QdeService, private router: Router) {
 
@@ -107,11 +108,12 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
         this.errorMsg = "No Data Present";
         //alert('No Data Present');
       }
-    } else {
+    } 
+	/* else {
         this.isErrorModal = true;
         this.errorMsg = "No Data Present";
         //alert('No Data Present');
-    }
+    } */
 
     // States
     if(this.route.snapshot.data['generalLovs']['ProcessVariables']['status'] == true) {
@@ -121,11 +123,12 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
 
       this.stateChanged(this.selectedState.value);
       console.log(this.selectedState)
-    } else {
+    } 
+	/* else {
         this.isErrorModal = true;
         this.errorMsg = "No Data Present";
         //alert('No Data Present');
-    }
+    } */
   }
 
   ngOnInit() {
@@ -165,11 +168,12 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
         this.errorMsg = "ZipCode Saved Successfully!";
         //alert("ZipCode Saved Successfully!");
         this.isAdd = false;
-      } else {
+      } 
+	  /* else {
         this.isErrorModal = true;
         this.errorMsg = res['ProcessVariables']['errorMessage'];
         //alert(res['ProcessVariables']['errorMessage']);
-      }
+      } */
     }, err => {
 
     }));
@@ -210,11 +214,12 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
           this.errorMsg = "No Data Present Further";
           //alert('No Data Present Further');
         }
-      } else {
+      } 
+	  /* else {
           this.isErrorModal = true;
           this.errorMsg = "No Data Present Further";
           //alert('No Data Present Further');
-      }
+      } */
     });
   }
 
@@ -239,11 +244,12 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
           this.selectedZone = this.zones[0];
         }
         this.zoneChanged(this.selectedZone.value);
-      } else {
+      } 
+	  /* else {
           this.isErrorModal = true;
           this.errorMsg = "Something went wrong";
         //alert('Something went wrong');
-      }
+      } */
     });
   }
 
@@ -267,11 +273,12 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
           }
           console.log("selectedCity: ", this.selectedCity);
           this.cityChanged(this.selectedCity.value);
-        } else {
+        } 
+		/* else {
           this.isErrorModal = true;
           this.errorMsg = "Something went wrong";
         //alert('Something went wrong');
-        }
+        } */
       });
    // }
   
@@ -306,23 +313,25 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
   delete(index) {
     this.isAdd = false;
     this.selectedIndex = -1;
-    let dude = this.qdeService.getFilteredJson(this.data[index]);
-
-    if(confirm("Are you sure?")) {
-      this.qdeHttp.softDeleteLov(dude).subscribe(res => {
+    this.delIndex = this.qdeService.getFilteredJson(this.data[index]);
+    this.isConfirmModal = true; 
+  }
+  confirmDelete(){
+    this.isConfirmModal = false;
+      this.qdeHttp.softDeleteLov(this.delIndex).subscribe(res => {
         // console.log(res['ProcessVariables']);
         if(res['ProcessVariables']['status'] == true) {
           this.isErrorModal = true;
           this.errorMsg = "Deleted Successfully!";
           //alert('Deleted Successfully!');
-          this.router.navigate([], {queryParams: {currentPage: this.currentPage, perPage: this.perPage}})
-        } else {
+          this.refresh();
+        } 
+		/* else {
           this.isErrorModal = true;
           this.errorMsg = "Something went wrong";
           //alert('Something went wrong');
-        }
+        } */
       });
-    } 
   }
 
   refresh() {
@@ -367,11 +376,12 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
           this.errorMsg = "No Data Present";
           //alert('No Data Present');
         }
-      } else {
+      } 
+	  /* else {
           this.isErrorModal = true;
           this.errorMsg = "No Data Present";
           //alert('No Data Present');
-      }
+      } */
     });
 
     this.data = this.tempData;
@@ -419,11 +429,12 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
             this.errorMsg = "No Data Present Further";
             //alert('No Data Present Further');
           }
-        } else {
+        } 
+		/* else {
             this.isErrorModal = true;
             this.errorMsg = "No Data Present Further";
             //alert('No Data Present Further');
-        }
+        } */
       });
     } else {
       this.data = this.tempData;

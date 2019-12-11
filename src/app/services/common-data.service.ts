@@ -25,10 +25,11 @@ export class CommonDataService {
   showError$: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   public showError = this.showError$.asObservable();
 
-  setErrorData(data: boolean, errorCode: string) {
+  setErrorData(data: boolean, errorCode: string, errorMessage?:string) {
     let arr = [];
     arr[0] = data;
     arr[1] = errorCode;
+    arr[2] = errorMessage;
     this.showError$.next(arr)
    }
 

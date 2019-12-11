@@ -29,7 +29,11 @@ interface Item {
   key: string,
   value: number | string
 }
-
+interface MinMax {
+  minValue: string,
+  maxValue: string,
+  maxLength: string
+}
 @Component({
   selector: 'app-applicant-qde',
   templateUrl: './applicant-qde.component.html',
@@ -82,9 +86,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     panNonInd: "[A-Z]{5}[0-9]{4}[A-Z]{1}",
     // amount:"[0-9]{0,17}\.[0-9]{1,4}?$",
     sliderValue: "[0-9]{0,2}",
-    amount: "^[1-9][\\d]{0,10}([.][0-9]{0,4})?",
+    amount: "^[1-9][\\d]{0,15}([.][0-9]{0,4})?",
     email: "^\\w+([\.-]?\\w+)*@\\w+([\.-]?\\w+)*(\\.\\w{2,10})+$",
-    revenue: "^[1-9][\\d]{0,10}([.][0-9]{0,4})?",
+    revenue: "^[1-9][\\d]{0,18}([.][0-9]{0,4})?",
     sameDigit: '^0{6,10}|1{6,10}|2{6,10}|3{6,10}|4{6,10}|5{6,10}|6{6,10}|7{6,10}|8{6,10}|9{6,10}$',
     sameDigitStd:'^0{2,10}|1{4,10}|2{4,10}|3{4,10}|4{4,10}|5{4,10}|6{4,10}|7{4,10}|8{4,10}|9{4,10}$',
     // revenue:"^[\\d]{0,14}([.][0-9]{0,4})?"
@@ -381,7 +385,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   isNumberLessThan1k: boolean;
   isNumberMoreThan100cr: boolean;
-
+  minMaxValues: Array<MinMax>;
+  tabHide: boolean;
   constructor(private renderer: Renderer2,
     private route: ActivatedRoute,
     private router: Router,
@@ -521,8 +526,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.assessmentMethodology = lov.LOVS.assessment_methodology;
       this.unOfficialEmails = lov.LOVS.un_official_emails;
       this.preferredEmail = lov.LOVS.preferred_mails;
-
-      console.log("data slice error: ", lov.LOVS.religion);
+      this.minMaxValues = lov.LOVS.min_max_values;
+      // console.log("data slice error: ", lov.LOVS.religion);
 
 
 
@@ -672,6 +677,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
             //   this.router.navigate(['/leads']);
           }
         });
+      }
+      if (params.applicationId == undefined) {
+        this.tabHide = true;
+
+      } else {
+        this.tabHide = false;
       }
     });
 
@@ -1797,12 +1808,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       const d2: any = new Date();
       var diff = d2 - d1;
       var age = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
-      if (age < 18) {
+      if (age < Number(this.minMaxValues["Age_limit"].minValue)) {
         this.ageError = true;
         return;
-      }else if (age >  99){
+      }else if (age >  Number(this.minMaxValues["Age_limit"].maxValue)){
         this.isErrorModal = true;
-        this.errorMessage = "Maximum age limit is 99.";
+        this.errorMessage = `Maximum age limit is.${this.minMaxValues["Age_limit"].maxValue}`;
         return;
       } else {
         this.ageError = false;
@@ -1834,12 +1845,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       const d2: any = new Date();
       var diff = d2 - d1;
       var age = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
-      if (age < 18) {
+      if (age < Number(this.minMaxValues["Age_limit"].minValue)) {
         this.ageError = true;
         return;
-      }else if (age >  99){
+      }else if (age >  Number(this.minMaxValues["Age_limit"].maxValue)){
         this.isErrorModal = true;
-        this.errorMessage = "Maximum age limit is 99.";
+        this.errorMessage = `Maximum age limit is.${this.minMaxValues["Age_limit"].maxValue}`;
         return;
       } else {
         this.ageError = false;
@@ -2537,7 +2548,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       * If Salaried, Self Employed Professional, Self Employed Business then only show income consider
       *********************************************************************************************************/
       let data = {
-        profileId: this.selectedOccupation.value.toString()
+        // this.selectedOccupation.value.toString()
+        profileId: form.value.occupationType.value
       }
       this.qdeHttp.checkOccupationType(data).subscribe((response) => {
 
@@ -2570,7 +2582,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
       let data = {
-        profileId: this.selectedOccupation.value.toString()
+        // profileId: this.selectedOccupation.value.toString()
+        profileId: form.value.occupationType.value
       };
 
       this.qdeHttp.checkOccupationType(data).subscribe((response) => {
@@ -2580,7 +2593,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           this.isOfficialCorrs = response["ProcessVariables"]["incomeConsider"];
         }
 
-        this.qde.application.applicants[this.applicantIndex].occupation.occupationType = this.selectedOccupation.value.toString();
+        this.qde.application.applicants[this.applicantIndex].occupation.occupationType = form.value.occupationType.value;
 
         if (this.isOfficialCorrs) {
           this.qde.application.applicants[this.applicantIndex].occupation.companyName = form.value.companyName;
@@ -3011,6 +3024,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.ngxService.start();
     if (this.isTBMLoggedIn) {
       this.router.navigate(['/applicant', this.qde.application.applicants[this.applicantIndex].applicantId, 'co-applicant']);
+    }else if (!this.qde.application.applicants[this.applicantIndex].contactDetails.isMobileOTPverified &&
+      this.qde.application.applicants[this.applicantIndex].isIndividual ) {
+      this.isErrorModal = true;
+        this.errorMessage = "Contact Number/ Mobile Number not Verified.. Please Verify..."
     } else {
       if (form && !form.valid) {
         return;
@@ -3076,7 +3093,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       }
 
       this.qde.application.applicants[this.applicantIndex].incomeDetails.monthlyIncome = form.value.monthlyIncome;
-      this.qde.application.applicants[this.applicantIndex].incomeDetails.assessmentMethodology = this.selectedAssesmentMethodology.value.toString()? this.selectedAssesmentMethodology['value'].toString() : null;
+      this.qde.application.applicants[this.applicantIndex].incomeDetails.assessmentMethodology = form.value.assessmentMethodology.value;
+      
+      // this.selectedAssesmentMethodology.value.toString()? this.selectedAssesmentMethodology['value'].toString() : null;
 
       console.log("ID: ", this.qde.application.applicants[this.applicantIndex].incomeDetails);
 
@@ -3129,7 +3148,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       }
 
       this.qde.application.applicants[this.applicantIndex].incomeDetails.monthlyIncome = form.value.monthlyIncome;
-      this.qde.application.applicants[this.applicantIndex].incomeDetails.assessmentMethodology = this.selectedAssesmentMethodology.value.toString() ? this.selectedAssesmentMethodology['value'].toString() : null;
+      this.qde.application.applicants[this.applicantIndex].incomeDetails.assessmentMethodology = form.value.assessmentMethodology.value;
+      
+      // this.selectedAssesmentMethodology.value.toString() ? this.selectedAssesmentMethodology['value'].toString() : null;
 
       console.log("ID: ", this.qde.application.applicants[this.applicantIndex].incomeDetails);
 
@@ -4387,14 +4408,15 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   checkAmountLimit(event,minAmount?,maxAmount?) {
-    console.log("checkAmountLimit call ",event,minAmount,maxAmount);
+    console.log("event ",event);
     let n = parseInt(this.getNumberWithoutCommaFormat(event.target.value));
+    console.log("event ",n);
     if(minAmount != undefined && n < minAmount ){
-      console.log("min ",event,minAmount,maxAmount);
+      console.log("min ",minAmount);
       this.isLessAmount = true;
       this.requirMinAmout = minAmount;
     } else if(n >= maxAmount && !maxAmount){
-      console.log("max ",event,minAmount,maxAmount);
+      console.log("max ",maxAmount);
       this.isMaxAmount = true;
       this.requirMaxAmout = maxAmount;
     } else {
@@ -4404,21 +4426,23 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.requirMaxAmout="";
     }
   }
-  requirMinAmout1;
   requirMaxAmout1;
+  requirMinAmout1;
+
   checkAmountLimitMonthlyIncome(event,minAmount?,maxAmount?) {
     let n = parseInt(this.getNumberWithoutCommaFormat(event.target.value));
-    if(n < 1000){
+    if(n < minAmount && minAmount != undefined ) {
       this.isNumberLessThan1k = true;
-      this.requirMinAmout1=minAmount;
-    }
-    else if(n >= 1000000001){
+      this.requirMinAmout1 = minAmount;
+    } else if(n > maxAmount && maxAmount != undefined){
       this.isNumberMoreThan100cr = true;
-      this.requirMaxAmout1 =maxAmount;
+      this.requirMaxAmout1 = maxAmount;
     }
     else {
       this.isNumberLessThan1k = false;
       this.isNumberMoreThan100cr = false;
+      this.requirMaxAmout1 = "";
+      this.requirMinAmout1= "";
     }
   }
 

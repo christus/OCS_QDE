@@ -27,6 +27,8 @@ export class ReviewEligibilityComponent implements OnInit {
   revisedEligibilityAmount: number;
   revisedMaxEMI: number;
   loanType: string;
+  referenceNumber: string;
+  remarks: string;
 
   constructor(private route: ActivatedRoute,
               private commonDataService: CommonDataService,
@@ -38,7 +40,6 @@ export class ReviewEligibilityComponent implements OnInit {
 
     this.route.params.subscribe(value => {
       if(value['applicationId'] != null) {
-
         this.applicationId = value['applicationId'];
 
         if(this.isEligibilityForReviewsSub != null) {
@@ -61,6 +62,9 @@ export class ReviewEligibilityComponent implements OnInit {
             if(this.elibilityReviewAPISub != null) {
               this.elibilityReviewAPISub.unsubscribe();
             }
+            this.commonDataService.changeApplicationId(this.applicationId);
+            this.commonDataService.changeViewFormNameVisible(true);
+            this.commonDataService.changeViewFormVisible(true);
   
             this.elibilityReviewAPISub = this.qdeHttp.getElibilityReview(this.applicationId).subscribe(res => {
               let response = res['ProcessVariables'];
@@ -77,7 +81,14 @@ export class ReviewEligibilityComponent implements OnInit {
               this.revisedEligibilityAmount = response['revisedEligibilityAmount'];
               this.revisedMaxEMI = response['revisedMaxEMI'];
               this.loanType = response['loanType'];
-
+              this.referenceNumber = response['ocsNumber'];
+              for(var x in this.listOfApplicantsNameAndCutOff){
+                if(this.listOfApplicantsNameAndCutOff[x].aboveCutOff=="Yes"){
+                  this.listOfApplicantsNameAndCutOff[x]['flag'] = true;
+                }else{
+                  this.listOfApplicantsNameAndCutOff[x]['flag'] = false;
+                }
+              }
             });
           } else {
             // this._router.navigate(['/leads']);
@@ -86,17 +97,18 @@ export class ReviewEligibilityComponent implements OnInit {
 
       }
     });
+    
   }
 
   ngOnInit() {
   }
 
   applicationAccepted() {
-    this.qdeHttp.setStatusApi(this.applicationId, statuses['Eligibility Review Accepted']).subscribe(res => {this._router.navigate(['/leads'])}, err => {});
+    this.qdeHttp.setStatusApi(this.applicationId, statuses['Eligibility Review Accepted'],this.remarks).subscribe(res => {this._router.navigate(['/leads'])}, err => {});
   }
 
   applicationRejected() {
-    this.qdeHttp.setStatusApi(this.applicationId, statuses['Eligibility Review Rejected']).subscribe(res => {this._router.navigate(['/leads'])}, err => {});
+    this.qdeHttp.setStatusApi(this.applicationId, statuses['Eligibility Review Rejected'],this.remarks).subscribe(res => {this._router.navigate(['/leads'])}, err => {});
   }
 
   ngOnDestroy() {

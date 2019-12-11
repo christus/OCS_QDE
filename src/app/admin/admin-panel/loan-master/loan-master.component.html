@@ -11,7 +11,8 @@
     <div class="admin-col-half">
 
       <label *ngIf="isLoanMaster" for="rateOfInterest">Rate of Interest</label>
-      <input *ngIf="isLoanMaster" id="rateOfInterest" type="text" [(ngModel)]="rateOfInterest" name="rateOfInterest" pattern="^[0-9]*$" />
+      <input *ngIf="isLoanMaster" id="rateOfInterest" type="text" [(ngModel)]="rateOfInterest" name="rateOfInterest" (input)="checkDecimals($event)" maxlength="5" />
+      <span *ngIf="isAdd && isLoanMaster && invalidFeedback" class="redalert"><br>Invalid Rate Of Interest. Kindly ensure there are minimum 1 but not greater 2 numbers before and after the decimal</span>
 
       <label *ngIf="isLoanMaster" for="baseAmount">Base Amount</label>
       <input *ngIf="isLoanMaster" id="baseAmount" type="text" [(ngModel)]="baseAmount" name="baseAmount" pattern="^[0-9]*$" />
@@ -20,7 +21,8 @@
       <input *ngIf="isLoginFee" id="baseFee" type="text" [(ngModel)]="baseFee" name="baseFee" pattern="^[0-9]*$" />
 
       <label *ngIf="isLoginFee" for="taxApplicable">Tax Applicable</label>
-      <input *ngIf="isLoginFee" id="taxApplicable" type="text" [(ngModel)]="taxApplicable" name="taxApplicable" pattern="[0-9]+(\.[0-9]{0,2})?%?" />
+      <input *ngIf="isLoginFee" id="taxApplicable" type="text" [(ngModel)]="taxApplicable" name="taxApplicable" (input)="checkDecimals($event)" maxlength="5" />
+      <span *ngIf="isAdd && isLoginFee && invalidFeedback" class="redalert"><br>Invalid Tax. Kindly ensure there are minimum 1 but not greater 2 numbers before and after the decimal</span>
 
       <label *ngIf="isLoginFee" for="variableFee">Variable Fee</label>
       <input *ngIf="isLoginFee" id="variableFee" type="text" [(ngModel)]="variableFee" name="variableFee" pattern="[0-9]+(\.[0-9]{0,2})?%?" />
@@ -30,7 +32,7 @@
         <option *ngFor="let z of loanTypeData;" [value]="z.id">{{z.description}}</option>
       </select>
 
-      <button type="submit" class="saveBtn">Save</button>
+      <button type="submit" class="saveBtn" [disabled]="invalidFeedback" [ngClass]="{'disabled': invalidFeedback}">Save</button>
     </div>
 
     <!-- <div class="admin-col-half">
@@ -67,7 +69,8 @@
         <td>{{i+1}}</td>
         <td *ngIf="isLoanMaster">
           <form>
-            <input id="tablerateOfInterest" type="text" [(ngModel)]="d.rateOfInterest" name="rateOfInterest" pattern="^[0-9]*$" />
+            <input id="tablerateOfInterest" type="text" [(ngModel)]="d.rateOfInterest" name="rateOfInterest" #rateOfInterest="ngModel" pattern="^[0-9]?[0-9]?(\.[0-9]{1,2})?$" (input)="checkDecimals1($event)" maxlength="5" />
+            <span *ngIf="(rateOfInterest.touched || rateOfInterest.dirty) && rateOfInterest.errors?.pattern" class="redalert">Invalid Rate Of Interest. Kindly ensure there are minimum 1 but not greater 2 numbers before and after the decimal</span>
           </form>
         </td>
         <td *ngIf="isLoanMaster">
@@ -82,7 +85,8 @@
         </td>
         <td *ngIf="isLoginFee">
           <form>
-            <input id="tabletaxapplicable" type="text" [(ngModel)]="d.taxApplicable" name="taxApplicable" pattern="[0-9]+(\.[0-9]{0,2})?%?" />
+            <input id="tabletaxapplicable" type="text" [(ngModel)]="d.taxApplicable" name="taxApplicable" #taxApplicable="ngModel" pattern="^[0-9]?[0-9]?(\.[0-9]{1,2})?$" (input)="checkDecimals1($event)" maxlength="5" />
+            <span *ngIf="(taxApplicable.touched || taxApplicable.dirty) && taxApplicable.errors?.pattern" class="redalert">Invalid Tax. Kindly ensure there are minimum 1 but not greater 2 numbers before and after the decimal</span>
           </form>
         </td>
         <td *ngIf="isLoginFee">
@@ -98,7 +102,7 @@
           </form>
         </td>
         <td>
-          <button type="button" class="editsavebtn" (click)="update(i)">Save</button>
+          <button type="button" class="editsavebtn" (click)="update(i)" [disabled]="invalidFeedback1" [ngClass]="{'disabled': invalidFeedback1}" >Save</button>
         </td>
         <td>
           <button type="button" class="editsavebtn" (click)="delete(i)">Delete</button>
@@ -141,4 +145,17 @@
             </div>
         </div>
     </div>
+</div>
+<div class="overlay" [ngClass]="{'active': isConfirmModal}">
+  <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isConfirmModal}">
+      <a class="modal-close" (click)="isConfirmModal = false"><span class="icon icon-close"></span></a>
+      <div class="modal-body">
+          <h1>Are you Sure?</h1>
+          <br><br>
+          <div class="btn-wrap">
+              <button class="btn btn-border" (click)="confirmDelete()">Yes</button>&nbsp;&nbsp;
+              <button class="btn btn-border" (click)="isConfirmModal = false">Cancel</button>
+          </div>
+      </div>
+  </div>
 </div>

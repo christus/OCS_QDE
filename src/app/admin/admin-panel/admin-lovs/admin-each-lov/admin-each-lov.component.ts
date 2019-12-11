@@ -102,12 +102,13 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
           console.log(this.lovs[index]);
           this.lovs[index].isEdit = true;
           this.lovs[index].id = res['ProcessVariables']['id'];
-        } else if(res['ProcessVariables']['errorMessage'] != "") {
+        } 
+		/* else if(res['ProcessVariables']['errorMessage'] != "") {
           //this.refresh();
           this.isErrorModal = true;
           this.errorMsg=res['ProcessVariables']['errorMessage'];
           //alert(res['ProcessVariables']['errorMessage']);
-        }
+        } */
       });
     }
     } else {
@@ -217,11 +218,12 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
         this.errorMsg='No Data Present Further';
           //alert('No Data Present Further');
         }
-      } else {
+      } 
+	  /* else {
         this.isErrorModal = true;
         this.errorMsg='No Data Present Further';
           //alert('No Data Present Further');
-      }
+      } */
     });
   
   }
