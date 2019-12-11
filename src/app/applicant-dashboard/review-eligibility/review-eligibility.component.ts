@@ -4,6 +4,7 @@ import { CommonDataService } from 'src/app/services/common-data.service';
 import { Subscription } from 'rxjs';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
 import { statuses } from '../../app.constants';
+import { QdeService } from 'src/app/services/qde.service';
 
 @Component({
   selector: 'app-review-eligibility',
@@ -28,12 +29,13 @@ export class ReviewEligibilityComponent implements OnInit {
   revisedMaxEMI: number;
   loanType: string;
   referenceNumber: string;
-  remarks: string;
+  remarks: string;  
 
   constructor(private route: ActivatedRoute,
               private commonDataService: CommonDataService,
               private qdeHttp: QdeHttpService,
-              private _router: Router) {
+              private _router: Router,
+              private qdeService: QdeService) {
 
     console.log("review Eligibility Data: ", this.route.snapshot.params['reviewEligibilityData']);
     
@@ -41,7 +43,7 @@ export class ReviewEligibilityComponent implements OnInit {
     this.route.params.subscribe(value => {
       if(value['applicationId'] != null) {
         this.applicationId = value['applicationId'];
-
+        this.commonDataService.changeApplicationId(this.applicationId);
         if(this.isEligibilityForReviewsSub != null) {
           this.isEligibilityForReviewsSub.unsubscribe();
         }
@@ -62,11 +64,12 @@ export class ReviewEligibilityComponent implements OnInit {
             if(this.elibilityReviewAPISub != null) {
               this.elibilityReviewAPISub.unsubscribe();
             }
-            this.commonDataService.changeApplicationId(this.applicationId);
-            this.commonDataService.changeViewFormNameVisible(true);
+            this.commonDataService.changeMenuBarShown(true);
+            this.commonDataService.changeViewFormNameVisible(false);
             this.commonDataService.changeViewFormVisible(true);
   
             this.elibilityReviewAPISub = this.qdeHttp.getElibilityReview(this.applicationId).subscribe(res => {
+             
               let response = res['ProcessVariables'];
               this.eligibilityAssignedTo = response['assignedTo'];
               this.eligibilityDate = response['dateCreated'].split('-')[2]+"-"+response['dateCreated'].split('-')[1]+"-"+response['dateCreated'].split('-')[0];

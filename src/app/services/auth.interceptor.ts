@@ -109,29 +109,21 @@ export class AuthInterceptor implements HttpInterceptor {
               && response['ProcessVariables']['errorCode']==""
               && response['ProcessVariables']['errorCode']!=undefined){
               // console.log("There are no Errors");
-            }
-            else if(response['Error']=="0"
-            && response['Error']!=undefined
-            && response['ProcessVariables']!=""
-            && response['ProcessVariables']!= undefined
-            && response['ProcessVariables']['status']==false
-            && response['ProcessVariables']['status']!=undefined
-            && response['ProcessVariables']['errorCode']!=""
-            && response['ProcessVariables']['errorCode']!=undefined){
-            // console.log("There are no Errors");
-          }else if(response['Error']=="0"
+            }else if(response['Error']=="0"
           && response['Error']!=undefined
           && response['ProcessVariables']!=""
           && response['ProcessVariables']!= undefined
           && response['ProcessVariables']['status']==false
           && response['ProcessVariables']['status']!=undefined
           && response['ProcessVariables']['errorCode']!=""
-          && response['ProcessVariables']['errorCode']!=undefined
-          && response['ProcessVariables']['errorMessage']!=""
-          && response['ProcessVariables']['errorMessage']!=undefined){
+          && response['ProcessVariables']['errorCode']!=undefined){
             let data = response['ProcessVariables']['errorCode'];
-	          let msg = response['ProcessVariables']['errorMessage'];
+	    let msg = response['ProcessVariables']['errorMessage'];
+	  if(response['ProcessVariables']['errorMessage']!=undefined && response['ProcessVariables']['errroMessage']!=""){
             this.cds.setErrorData(true, data, msg);
+	  }else{
+	    this.cds.setErrorData(true,data);
+	  }
           }else if(response['Error']=="0"
           && response['Error']!=undefined
           && response['ProcessVariables']!=""
@@ -196,8 +188,16 @@ export class AuthInterceptor implements HttpInterceptor {
 
   isSpinnerRequired(req){
     if(req.body != null) {
+      let typeofBody = typeof(req.body)
+      let reqBody  = req.body;
+     if (typeofBody != "object"){
+      reqBody = JSON.parse(req.body);
+     }
+      let needSpinner;
+      if (reqBody.processId) {
       let processId = JSON.parse(req.body).processId;
-      let needSpinner = this.checkProcessNeedSpinner(processId);
+         needSpinner = this.checkProcessNeedSpinner(processId);
+      }
       if(needSpinner) {
         this.totalRequests++;
         if(!this.isNgxRunning){

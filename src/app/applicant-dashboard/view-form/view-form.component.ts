@@ -221,6 +221,8 @@ export class ViewFormComponent implements OnInit, OnDestroy {
   getElibilityReviewSub: Subscription;
 
   applicantNameForLoanDetails: Array<string> = [];
+  isErrorModal: boolean;
+  errorMsg: string;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -234,7 +236,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
     this.commonDataService.changeViewFormVisible(false);
     this.commonDataService.changeLogoutVisible(true);
     this.commonDataService.changeHomeVisible(true);
-
+    this.commonDataService.changeViewFormNameVisible(true);
   
       
     
@@ -979,13 +981,13 @@ export class ViewFormComponent implements OnInit, OnDestroy {
 
       // Temporary 
       if(res["ProcessVariables"]['responseApplicationId'] != null) {
-        if(res["ProcessVariables"]['responseApplicationId'] == "") {
-          alert("Mandatory fields missing.");
-        } else if(res['ProcessVariables']['status']){
+        if(res['ProcessVariables']['status']){
           this.qdeHttp.omniDocsApi(this.applicationId).subscribe(res1=>{
             if(res1["ProcessVariables"]["status"] == true){
               this.qdeHttp.setStatusApi(this.applicationId, statuses["DDE Submitted"]).subscribe(res2 => {}, err => {});
-              alert("APS ID generated successfully with ID "+res["ProcessVariables"]['responseApplicationId']);
+              this.isErrorModal = true;
+              this.errorMsg = "APS ID generated successfully with ID "+res["ProcessVariables"]['responseApplicationId'];
+              // alert("APS ID generated successfully with ID "+res["ProcessVariables"]['responseApplicationId']);
             }
             else{
               return

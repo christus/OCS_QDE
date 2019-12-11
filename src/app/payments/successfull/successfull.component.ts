@@ -3,6 +3,7 @@ import { QdeHttpService } from 'src/app/services/qde-http.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { CommonDataService } from 'src/app/services/common-data.service';
 
 @Component({
   selector: 'app-successfull',
@@ -20,7 +21,10 @@ export class SuccessfullComponent implements OnInit {
   constructor(private qdeHttp: QdeHttpService,
               private _router: Router,
               private activeRoute:  ActivatedRoute,
-              private location: Location ) { }
+              private location: Location,
+              private commonDataService: CommonDataService, ) {
+                this.commonDataService.changeViewFormNameVisible(true);
+               }
 
   ngOnInit() {
     const routeVales = this.activeRoute.snapshot.params;

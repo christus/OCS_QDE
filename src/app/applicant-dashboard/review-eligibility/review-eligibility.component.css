@@ -50,3 +50,9 @@
 .center {
     text-align: center;
 }
+textarea {
+    /* resize: none; */
+    width: 98%;
+    height: 10%;
+    font-size: 1.64vw;
+  }
