@@ -1127,16 +1127,16 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
           //this.progress = Math.round(100 * event.loaded / event.total);
           //console.log(response);
           callback(response["info"]);
-        } else {
-          console.log(alert["message"]);
-        }
-      }
-      // , error => {
-      //   if(error.error.message) {
-      //     this.isErrorModal = true;
-      //     this.errorMessage = error.error.message;
-      //   }
-      // }
+        } 
+        //else {
+            //alert["message"];
+        //}
+      }, error => {
+         if(error.error.message) {
+           this.isErrorModal = true;
+           this.errorMessage = error.error.message;
+         }
+       }
     );
   }
 
@@ -1170,11 +1170,10 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
             );
           }
         }
-      }
-      // , error => {
-      //   this.isErrorModal = true;
-      //   this.errorMessage = error.message;
-      // }
+      }, error => {
+         this.isErrorModal = true;
+         this.errorMessage = error.message;
+       }
     );
   }
 

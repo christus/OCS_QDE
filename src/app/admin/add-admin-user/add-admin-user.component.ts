@@ -291,18 +291,34 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
     if (this._timeout) { //if there is already a timeout in process cancel it
       window.clearTimeout(this._timeout);
     }
-    this._timeout = window.setTimeout(() => {
+    //this._timeout = window.setTimeout(() => {
 
-      console.log(event.target.value.toLowerCase());
-      let input = { "userName": event.target.value.toLowerCase() };      
-      this.qdeHttp.adminReportingTo(input).subscribe((response) => {
-        console.log("Reporting", response);
-        let usersList = response['ProcessVariables'].userList;
-        this.filteredItems = usersList;
-      });
-
-    }, 1000);
-
+      //console.log(event.target.value.toLowerCase());
+      //if(event.target.value!=""){
+      //let input = { "userName": event.target.value.toLowerCase() };
+      //this.qdeHttp.adminReportingTo(input).subscribe((response) => {
+        //console.log("Reporting", response);
+        //let usersList = response['ProcessVariables'].userList;
+        //this.filteredItems = usersList;
+      //});
+	//}
+    //}, 1000);
+    if(event.target.value!=""){
+		let input = { "userName": event.target.value.toLowerCase() };
+       this.qdeHttp.adminReportingTo(input).subscribe((response) => {
+         console.log("Reporting", response);
+         if(response['ProcessVariables']['status'] && response['ProcessVariables']['userList']!=null){
+         let usersList = response['ProcessVariables']['userList'];
+         this.filteredItems = usersList;
+         }else if(response['ProcessVariables']['status'] && response['ProcessVariables']['userList']==null){
+            this.selectBoxRef.nativeElement.querySelector('.reporting_to').classList.add('hide');
+            this.isErrorModal = true;
+            this.errorMsg = "No data present Further";
+         }
+       })
+     }else{
+         this.selectBoxRef.nativeElement.querySelector('.reporting_to').classList.add('hide');
+       }
   }
 
   searchReportinToAPI(text) {

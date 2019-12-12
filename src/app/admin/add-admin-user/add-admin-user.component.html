@@ -1,6 +1,5 @@
 <div class="app-admin-container">
     <form [formGroup]="registerUser" (ngSubmit)="onSubmit()"  autocomplete="off">
-        <p class="redalert user-hint">*All Fields are Mandatory<br></p>
         <div class="inputBox form-field-el">
                 <label for="firstname" class="inputText">First name:</label>
                 <input type="text" id="firstname" class="form-control" [(ngModel)]="firstName" formControlName="firstName" fieldFill autocomplete="nope" pattern={{regexPattern.name}}/>
@@ -95,6 +94,7 @@
         <div class="inputBox form-field-el">
             <button type="submit" class="btn btn-default"   [ngClass]="{'disabled': (!registerUser.valid)}"
             [disabled]="!registerUser.valid" > Submit   </button>
+            <p class="redalert user-hint">*All Fields are Mandatory</p>
         </div> 
 
        <!-- <div class="redalert error-msg">{{errorMsg}}</div> -->

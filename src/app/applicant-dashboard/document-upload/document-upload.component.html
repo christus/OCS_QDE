@@ -786,15 +786,16 @@
       </div>
   </div>
 
-  <div class="overlay" [ngClass]="{'active': isErrorModal}"></div>
-  <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isErrorModal}" style="text-align:center;">
+  <div class="overlay" [ngClass]="{'active': isErrorModal}">
+  <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isErrorModal}">
       <!-- <a class="modal-close" href="javascript:void(0);" (click)="onBackOTP()"><span class="icon icon-close"></span></a> -->
-      <div class="modal-body">
+      <div class="modal-body" style="text-align: center; vertical-align: center;">
       <h1>{{errorMessage}}</h1>
       <div class="btn-wrap">
           <button class="btn btn-border" (click)="isErrorModal = false">OK</button>
       </div>
       </div>
+  </div>
   </div>
 </main>
 
