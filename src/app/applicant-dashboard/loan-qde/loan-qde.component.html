@@ -1,15 +1,17 @@
 <app-menubar-header></app-menubar-header>
 <main>
   <div class="main">
-
-    <div class="lyt-product" *ngIf="isLoanProductPage == true">
+    <div *ngIf="isLoanProductPage == true">
+    <div class="lyt-product">
+      <a class="back-btn" [routerLink]="['/applicant', this.qde.application.applicationId, 'co-applicant']"></a>
       <ul class="product-list">
           <li class="item-product typ-loan" *ngFor="let lt of loanType;" (click)="selectLoanType(lt)" [ngClass]="{ 'disabled': lt.key=='Other Products'}">
               <span class="icon icon-home-loan"></span>
-              <h3 class="product-title" >{{lt.key}}</h3>
+              <h3 class="product-title" >{{lt.key}}</h3>      
           </li>
       </ul>      
     </div>
+  </div>
 
 
     <div class="lyt-home" *ngIf="isLoanProductPage == false">
@@ -31,16 +33,16 @@
         </ul>
         <div class="tabs-contents" #tabContents>
           <div class="tab-content" [ngClass]="{'active': (activeTab == 0)}">
-              <a [routerLink]="['/applicant', qde.application.applicationId, 'co-applicant']" class="back-btn"></a>
+            <!-- <a [routerLink]="['/applicant', qde.application.applicationId, 'co-applicant']" class="back-btn"></a> -->
+            <a (click)="changeLoan()" class="back-btn"></a>
             <div class="lyt-tabs">
               <div class="lhs">
-
                 <div #lhsSwiperS="ngxSwiper" class="swiper-container form-swiper" [swiper]="lhsConfig" #loanAmountSlider1="ngxSwiper">
                   <div class="swiper-wrapper">
                     <div class="swiper-slide">
                       <div class="title-wrap">
                         <h4 class="title">Enter desired loan <span class="cm-line-break"></span>amount & purpose</h4>
-                        <!-- <p class="note">Enter the property details for which loan is being sought for</p> -->
+                          <p class="note"><b>Applying for {{selectedLoanType.key}}</b></p>
                       </div>
                     </div>
                   </div>
@@ -98,7 +100,6 @@
                               [(ngModel)]="selectedLoanType">
                             </kendo-dropdownlist>
                           </div> -->
-                        
                           <div class="form-group">
                             <span class="control-title">Loan purpose</span>
                             <kendo-dropdownlist [readonly]="isTBMLoggedIn"
@@ -166,12 +167,14 @@
                       <div class="title-wrap">
                         <h4 class="title">Have you identified <span class="cm-line-break"></span>the property?</h4>
                         <!-- <p class="note">Enter the property details for which loan is being sought for</p> -->
+                        <p class="note"><b>Applying for {{selectedLoanType.key}}</b></p>
                       </div>
                     </div>
                     <div class="swiper-slide">
                       <div class="title-wrap">
                         <h4 class="title">Enter the <span class="cm-line-break"></span>property address</h4>
                         <!-- <p class="note">Enter the property details for which loan is being sought for</p> -->
+                        <p class="note"><b>Applying for {{selectedLoanType.key}}</b></p>
                       </div>
                     </div>
                   </div>
@@ -223,7 +226,7 @@
                                   name="propertyClssArea"
                                   #propertyClss="ngModel"
                                   [(ngModel)]="propertyClssValue"
-                                  pattern="^[0-9a-zA-Z _'@$%!~^+,/*#&().-]+$"
+                                  pattern="^[a-zA-Z]+$"
                                   (input)="clssSearchArea($event)"
                                   fieldFill
                                   required >
@@ -640,7 +643,7 @@
             <div class="modal-body">
             <h1>{{errorMessage}}</h1>
             <div class="btn-wrap">
-                <button class="btn btn-border" (click)="isErrorModal = false">Cancel</button>
+                <button class="btn btn-border" (click)="isErrorModal = false">Close</button>
             </div>
             </div>
   </div>

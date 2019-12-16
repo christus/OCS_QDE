@@ -61,7 +61,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
         property: {
           propertyClss:{
             required:"Property Clss is Mandatory",
-            invalid:"Property Clss is not valid"
+            invalid:"Property Clss is not valid. Cannot contain numbers / special characters"
           },
           propertyArea:{
             required:"Property Area is Mandatory",
@@ -291,7 +291,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
   lhsSwiperSliders: Array<Swiper> = [];
   swiperSlidersSub2: Subscription;
 
-
+  previousLoanType;
   isErrorModal:boolean;
   errorMessage:string;
   tempClssArea: string;
@@ -1359,10 +1359,14 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   selectLoanType(lt) {
+    if(this.previousLoanType == lt.value){
+      console.log("SAME LOAN TYPE SELECTED");
+    }else{
+      this.setLoanPurposes(lt.value);
+    }
     this.isLoanProductPage = false;
     this.selectedLoanType = lt;
     this.cds.changeMenuBarShown(true);
-    this.setLoanPurposes(lt.value);
   }
 
   setLoanPurposes(loanType: string, data ?: string) {
@@ -1395,11 +1399,16 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
       }
 
   clssSearchArea(event: any){
-    //console.log("gfegffdgewhj",event.target.value)
+    // console.log("gfegffdgewhj",event);
+    if(event.target.value!="" && event.target.validity.valid){
     this.qdeHttp.clssSearch(event.target.value).subscribe(res => {
-      if(res['ProcessVariables']['status']) {
-        this.allClssAreas = res['ProcessVariables']['townNames'] ? res['ProcessVariables']['townNames']: []
+      if(res['ProcessVariables']['status'] && res['ProcessVariables']['townNames']!=null) {
+        // this.allClssAreas = res['ProcessVariables']['townNames'] ? res['ProcessVariables']['townNames']: []
+        this.allClssAreas = res['ProcessVariables']['townNames'];
         console.log("CLSSArea: ", this.allClssAreas);
+      }else if(res['ProcessVariables']['status'] && res['ProcessVariables']['townNames']==null){
+        this.isErrorModal = true;
+        this.errorMessage = "No Data present further";
       }
     }
     // , error => {
@@ -1407,6 +1416,9 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
     //   this.errorMessage = "Something went wrong, please try again later.";
     // }
   );
+  }else{
+    this.allClssAreas = [];
+  }
   }
 
   // moreLoanObligation(){
@@ -1521,5 +1533,11 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
       this.router.navigate(['/references', this.qde.application.applicationId]);
     }
 
+  }
+  changeLoan(){
+    this.previousLoanType = this.selectedLoanType.value;
+    this.isLoanProductPage = true;
+    this.cds.changeMenuBarShown(false);
+    console.log(this.previousLoanType);
   }
 }

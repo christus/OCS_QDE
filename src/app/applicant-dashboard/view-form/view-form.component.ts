@@ -987,6 +987,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
               this.qdeHttp.setStatusApi(this.applicationId, statuses["DDE Submitted"]).subscribe(res2 => {}, err => {});
               this.isErrorModal = true;
               this.errorMsg = "APS ID generated successfully with ID "+res["ProcessVariables"]['responseApplicationId'];
+              this.isFinalSubmitEnabled = false;
               // alert("APS ID generated successfully with ID "+res["ProcessVariables"]['responseApplicationId']);
             }
             else{
