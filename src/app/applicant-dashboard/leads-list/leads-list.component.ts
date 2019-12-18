@@ -126,6 +126,7 @@ export class LeadsListComponent implements OnInit {
     // this.getPendingApplication();
     // this.getPendingPayment();
     } else {
+      
       this.utilService.clearCredentials();
       return;
     }
@@ -141,12 +142,12 @@ export class LeadsListComponent implements OnInit {
   
   logout() {
 
-    this.service.logout().subscribe(
-      res => {
-      },
-      error => {
-      }
-    );
+    // this.service.logout().subscribe(
+    //   res => {
+    //   },
+    //   error => {
+    //   }
+    // );
     this.utilService.clearCredentials();
   }
 

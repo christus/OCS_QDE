@@ -46,37 +46,37 @@
                     <tr>
                         <th class="bold">Name</th>
                         <th class="bold">Eligibility Y/N</th>
-			            <th class="bold">Reason</th>
+			                  <th class="bold">Reason</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let a of listOfApplicantsNameAndCutOff;">
                         <td class="eligibility-name">{{a['name']}}</td>
                         <td class="eligibility-yesno">{{a['aboveCutOff']}}</td>
-			            <td class="eligibility-name" *ngIf="!a['flag']">Cibil Score below cut off</td>
+			                  <td class="eligibility-name" *ngIf="!a['flag']; else yesEligibility">Cibil Score below cut off</td>
                     </tr>
                 </tbody>
             </table>
         </div>
-
-        <div class="col-12">
+        <ng-template #yesEligibility>-</ng-template>
+        <!-- <div class="col-12">
             <br/>
             <p class="card-info">Eligibility - Considering income and EMI of all applicants:</p>
             <p class="card-info">Loan Soft Eligibility - Rs. {{eligibilityAmount}} Lakhs</p>
             <p class="card-info">Max EMI - Rs. {{maxEMI}}</p>
             <br/>
-        </div>
+        </div> -->
 
         <div class="col-12">
           <br/>
           <p class="card-info">Eligibility - Considering income and EMI of applicants with Credit Score Above Cut-off:</p>
-          <p class="card-info">Loan Soft Eligibility - Rs. {{revisedEligibilityAmount}} Lakhs</p>
-          <p class="card-info">Max EMI - Rs. {{revisedMaxEMI}}</p>
+          <p class="card-info">Loan Soft Eligibility - Rs. {{eligibilityAmount}} Lakhs</p>
+          <p class="card-info">Max EMI - Rs. {{maxEMI}}</p>
           <br/>
         </div>
       </div>
-      <div class="col-12 center">
-      <p class="card-title right">Remarks:</p>
+      <div class="col-12">
+      <p class="card-title">Remarks</p>
       <textarea class="form-control" [(ngModel)]="remarks" ></textarea>
       </div>
       <br><br>

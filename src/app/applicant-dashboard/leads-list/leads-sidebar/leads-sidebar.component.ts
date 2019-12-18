@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonDataService } from 'src/app/services/common-data.service';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-leads-sidebar',
@@ -13,8 +14,14 @@ export class LeadsSidebarComponent implements OnInit {
   userRole: any = [];
   isTBMLoggedIn: boolean ;
   constructor(private router: Router,
-              private cds: CommonDataService) {
-                this.isTBMLoggedIn = this.getRoles().includes('TBM') || this.getRoles().includes('ZBM') || this.getRoles().includes('TMA');
+              private cds: CommonDataService,
+              private utilService: UtilService) {
+                if(this.getRoles()){
+                  this.isTBMLoggedIn = this.getRoles().includes('TBM') || this.getRoles().includes('ZBM') || this.getRoles().includes('TMA');
+                } else {
+                  this.utilService.clearCredentials();
+                      // this.router.navigate(['login']);
+                  }
                 }
 
   ngOnInit() {

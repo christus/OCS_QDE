@@ -161,13 +161,13 @@ export class ConnectorLeadCreateComponent implements OnInit {
   }
 
   logout() {
-    this.qdeHttp.logout().subscribe(
-      res => {},
-      error => {
-        // window.alert("Error Message: " + error.message );
-      }
+    // this.qdeHttp.logout().subscribe(
+    //   res => {},
+    //   error => {
+    //     // window.alert("Error Message: " + error.message );
+    //   }
       
-    );
+    // );
     this.utilService.clearCredentials();
 
     // this.utilService.logout().subscribe(

@@ -4804,6 +4804,18 @@ img {
 	z-index: 2;
 	margin-top: -10px;
 }
+.lyt-product .back-btn {
+	position: absolute;
+	left: 1.95vw;
+	top: 1.95vw;
+	background: url(/assets/images/slide-back.png) no-repeat;
+	background-size: contain;
+	width: 2.73vw;
+	height: 2.73vw;
+	display: block;
+	z-index: 2;
+	margin-top: -10px;
+}
 
 .lyt-home.typ-co-app .step1 {
 	position: relative;

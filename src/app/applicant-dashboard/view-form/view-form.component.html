@@ -457,14 +457,14 @@
                                       </div>
                                   </div> -->
                                   <div class="col-6">
-                                      <div class="form-group inr filled typ-optional">
+                                      <div class="form-group inr filled">
                                             <input type="text" class="form-control" id="monthly-emi"
                                             required
                                             [(ngModel)]="q['existingLoans']['monthlyEmi']"
                                             fieldFill
                                             name="monthlyEmi">                                          
                                             <label for="ex-emi">Existing monthly EMI</label>
-                                            <span class="optional">optional</span>
+                                            <!-- <span class="optional">optional</span> -->
                                           <span class="addon">
                                               <span class="icon icon-inr"></span>
                                           </span>
@@ -503,7 +503,7 @@
                                           textField="key"
                                           valueField="value"
                                           name="relationShip"
-                                          [valuePrimitive]="true"     
+                                          
                                           [(ngModel)]="selectedReferenceOne">
                                         </kendo-dropdownlist>
                                         <!-- [valuePrimitive]="true" -->
@@ -520,7 +520,7 @@
                                           textField="key" 
                                           valueField="value" 
                                           name="titles"
-                                          [valuePrimitive]="true"
+                                          
                                           [(ngModel)]="selectedTiltle1">
                                         </kendo-dropdownlist>
                                     </div>
@@ -602,7 +602,7 @@
                                           textField="key"
                                           valueField="value"
                                           name="relationShip"
-                                          [valuePrimitive]="true"
+                                          
                                           [(ngModel)]="selectedReferenceTwo">
                                         </kendo-dropdownlist>
                                       </div>
@@ -618,7 +618,7 @@
                                             textField="key" 
                                             valueField="value" 
                                             name="titles"
-                                            [valuePrimitive]="true"
+                                            
                                             [(ngModel)]="selectedTiltle2">
                                             </kendo-dropdownlist>
                                         </div>
@@ -986,9 +986,11 @@
           <!-- <a class="modal-close" (click)="onCrossModal()"><span class="icon icon-close"></span></a> -->
           <div class="modal-body">
               <h1 class="center">{{butMes}}</h1>
-              <p class="body">Do you like to upload documents?</p>
+              <!-- <p class="body">Do you like to upload documents?</p> -->
+              <br><br>
                   <div class="btn-wrap">
-                      <button class="btn btn-border" [routerLink]="['/document-uploads', applicationId]">Yes</button>
+                      <!-- <button class="btn btn-border" [routerLink]="['/document-uploads', applicationId]">Yes</button> -->
+                      <button class="btn btn-border" [routerLink]="[routePageName, applicationId]">OK</button>
                   </div>
           </div>
       </div>
@@ -999,7 +1001,7 @@
             <h1>{{errorMsg}}</h1>
             <br><br>
             <div class="btn-wrap">
-              <button class="btn btn-border" (click)="isErrorModal = false">Close</button>
+              <button class="btn btn-border" routerLink="/leads" (click)="isErrorModal = false">Close</button>
             </div>
           </div>
         </div>

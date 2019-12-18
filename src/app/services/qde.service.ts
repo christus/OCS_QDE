@@ -848,4 +848,74 @@ export class QdeService {
     }
     return temp;
   }
+
+  getValidateApplication(arg){
+  var a = arg.constructor == Object ? Object.entries(arg).map(([key, value]) => ({key, value}) ) : arg;
+
+  var newObj = {};
+
+  a.forEach((obj ,index) => {
+
+    // Filter Empty Values
+    if(obj.key == 'ocsNumber' || obj.key == 'isMainApplicant' || obj.key == 'applicationId') {
+      newObj[obj.key] = obj.value;
+    } else {
+      if(obj.value == null || obj.value == undefined || obj.value == NaN) {
+          newObj[obj.key] = obj.value;
+        return;
+      } else if(obj.value.constructor == String) {
+        if(obj.value == "") {
+            newObj[obj.key] = obj.value;
+            return;
+        } else {
+            delete obj.key;
+            return;
+          }
+      } else if(obj.value.constructor == Boolean) {
+        if(obj.value == null) {
+          newObj[obj.key] = obj.value;
+          // delete obj.key;
+          return;
+        } 
+        else {
+          delete obj.key;
+          // newObj[obj.key] = obj.value;
+          return;
+        }
+      }else if(obj.value.constructor == Number) {
+        if(obj.value == null) {
+          newObj[obj.key] = obj.value;
+          // delete obj.key;
+          return;
+        } else {
+          delete obj.key;
+          // newObj[obj.key] = obj.value;
+          return;
+        }
+      } else if(obj.value.constructor == Array) {
+        if(obj.value.length != 0) {
+          let f = obj.value.map((val) => {
+            return this.getValidateApplication(val);
+          });
+          if(f.length != 0) {
+            newObj[obj.key] = f;
+            // delete obj.key;
+          } 
+        }
+          
+      } else if(obj.value.constructor == Object) {
+        if(Object.keys(obj.value).length != 0) {
+          let f = this.getValidateApplication(obj.value)
+          if(Object.keys(f).length != 0) {
+            newObj[obj.key] = f;
+            // delete obj.key;
+          } 
+        }
+      }
+    }
+  });
+
+  return newObj;
+}
+
 }

@@ -239,6 +239,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   titles: Array<any>;
   maleTitles: Array<any>;
   femaleTitles: Array<any>;
+  mariedFemaleTitles: Array<Item>;
   maritals: Array<any>;
   relationships: Array<any>;
   loanpurposes: Array<any>;
@@ -535,6 +536,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       this.titles = lov.LOVS.applicant_title;
       this.maleTitles = lov.LOVS.male_applicant_title;
       this.femaleTitles = lov.LOVS.female_applicant_title;
+      this.mariedFemaleTitles = this.femaleTitles.filter(v => v.value !="2");
       // this.docType = lov.LOVS.document_type;
       // Hardcoded values as per requirement
       this.docType = [{key: "Passport", value:"1"},{key: "Driving License", value:"2"},{key: "Voter's Identity Card", value:"3"},
@@ -2253,10 +2255,11 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         if(!this.isOfficialCorrs) {
           this.qde.application.applicants[this.coApplicantIndex].incomeDetails.incomeConsider = false;
         }
-        this.setAssessmentMethodology();
+     
         this.createOrUpdatePersonalDetailsSub15=this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
           // If successful
           if(response["ProcessVariables"]["status"]) {
+            this.setAssessmentMethodology();
             this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.coApplicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['applicantDetails']).subscribe(auditRes => {
               if(auditRes['ProcessVariables']['status'] == true) {
                 this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
@@ -2573,6 +2576,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       this.createOrUpdatePersonalDetailsSub20 = this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successfull
         if(response["ProcessVariables"]["status"]) {
+          this.setAssessmentMethodology();
           this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.coApplicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['coApplicantDetails']).subscribe(auditRes => {
             if(auditRes['ProcessVariables']['status'] == true) {
                     this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
@@ -3802,7 +3806,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     const emailId = form.value.preferEmailId;
     const isValidMobile = this.RegExp(this.regexPattern.mobileNumber).test(mobileNumber);
     const isValidEmailID = this.RegExp(this.regexPattern.email).test(emailId);
-    if(isValidMobile && isValidEmailID) {
+    if( form.controls.preferEmailId.invalid) {
+      this.isErrorModal = true;
+      this.errorMessage = "Please Enter valid Email id  for verification";
+    } else if(isValidMobile && isValidEmailID) {
       this.qde.application.applicants[this.coApplicantIndex].contactDetails.mobileNumber = mobileNumber;
       this.qde.application.applicants[this.coApplicantIndex].contactDetails.preferredEmailId = emailId;
       const applicationId = this.qde.application.applicationId;
@@ -4519,7 +4526,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   setSpouseTitles(): boolean{
     var that = this;
     if(that.qde.application.applicants[that.coApplicantIndex].personalDetails.gender == "1"){
-        that.spouseTitles = that.femaleTitles;
+        that.spouseTitles = that.femaleTitles.filter(v => v.value != "2");
         if(that.isEmpty(that.selectedSpouseTitle)){
           that.selectedSpouseTitle = that.defaultItem;
         }

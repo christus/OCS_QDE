@@ -237,12 +237,12 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
   }
 
   logout() {
-    this.qdehttp.logout().subscribe(
-      res => {
-      },
-      error => {
-      }
-    );
+    // this.qdehttp.logout().subscribe(
+    //   res => {
+    //   },
+    //   error => {
+    //   }
+    // );
     this.utilService.clearCredentials();
    
 

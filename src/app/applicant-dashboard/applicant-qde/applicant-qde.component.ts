@@ -242,7 +242,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   residences: Array<any>;
   titles: Array<any>;
   maleTitles: Array<any>;
-  femaleTitles: Array<any>;
+  femaleTitles: Array<Item>;
+  mariedFemaleTitle: Array<Item>;
   maritals: Array<any>;
   relationships: Array<any>;
   loanpurposes: Array<any>;
@@ -405,6 +406,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.tabName = this.fragments[0];
     this.page = 1;
 
+   
 
     this.dobYears = Array.from(Array(100).keys()).map((val, index) => {
       let v = (this.YYYY17YearsAgo - index) + "";
@@ -470,6 +472,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.applicantIndex = val.application.applicants.findIndex(v => v.isMainApplicant == true);
       // this.isValidPan = val.application.applicants[this.applicantIndex].pan.panVerified;
       this.cds.enableTabsIfStatus1(this.qde.application.status);
+      //  console.log("validation qde ",this.qdeService.getValidateApplication(this.qde));
     });
 
     this.fragmentSub = this.route.queryParams.subscribe(val => {
@@ -515,6 +518,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.titles = lov.LOVS.applicant_title;
       this.maleTitles = lov.LOVS.male_applicant_title;
       this.femaleTitles = lov.LOVS.female_applicant_title;
+      this.mariedFemaleTitle =this.femaleTitles.filter(v => v.value != "2");
       // this.docType = lov.LOVS.pan_document_type;
       // Hardcoded values as per requirement
       this.docType = [{ key: "Passport", value: "1" }, { key: "Driving License", value: "2" }, { key: "Voter's Identity Card", value: "3" }, { key: "Aadhaar Card", value: "4" }, { key: "NREGA Job Card", value: "5" }]
@@ -3574,8 +3578,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     const emailId = form.value.preferEmailId;
     const isValidMobile = this.RegExp(this.regexPattern.mobileNumber).test(mobileNumber);
     const isValidEmailID = this.RegExp(this.regexPattern.email).test(emailId);
-
-    if (isValidMobile && isValidEmailID) {
+    if( form.controls.preferEmailId.invalid) {
+      this.isErrorModal = true;
+      this.errorMessage = "Please Enter valid Email id  for verification";
+    } else if (isValidMobile && isValidEmailID ) {
       this.qde.application.applicants[this.applicantIndex].contactDetails.mobileNumber = mobileNumber;
       this.qde.application.applicants[this.applicantIndex].contactDetails.preferredEmailId = emailId;
       const applicationId = this.qde.application.applicationId;
@@ -4365,7 +4371,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   setSpouseTitles(): boolean{
     var that = this;
     if(that.qde.application.applicants[that.applicantIndex].personalDetails.gender == "1"){
-        that.spouseTitles = that.femaleTitles;
+        that.spouseTitles = that.femaleTitles.filter( v => v.value != "2");
         if(that.isEmpty(that.selectedSpouseTitle)){
           that.selectedSpouseTitle = that.defaultItem;
         }

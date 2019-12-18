@@ -202,7 +202,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
   previousUrl: string;
 
   lovs: Array<string>;
-
+  isMainTabEnabled: boolean;
   public defaultItem = environment.defaultItem;
 
   constructor(
@@ -243,6 +243,9 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
     this.cds.isReadOnlyForm.subscribe(val => {
       this.isReadOnly = false;
       this.options.readOnly = false;
+    });
+    this.cds.isMainTabEnabled.subscribe(val => {
+      this.isMainTabEnabled = val;
     });
   }
 
@@ -493,7 +496,10 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
         } else {
           this.isSubmitDisabled = true;
           this.isErrorModal = true;
-          this.errorMessage = res['ProcessVariables']['description'];
+          this.errorMessage
+          let mandatoryDataReq = JSON.parse( res['ProcessVariables']['description']);
+          this.getDocumetsDataDetails(mandatoryDataReq);
+
         }
       },
       err => {
@@ -520,6 +526,27 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
       }
     }
   }
+
+  getDocumetsDataDetails(myObject){
+
+    let myGetErrorObject = myObject;
+    if (myGetErrorObject["applicants"]){
+      if (myGetErrorObject["applicants"].length > 0) {      
+        this.errorMessage = "Kindly Fill Below Mandatory Details for @"+myGetErrorObject["applicants"][0]["name"]+
+                            ", We Require Data - "
+                            + myGetErrorObject["applicants"][0]["errorMessage"];
+      }
+    }
+    else if(myGetErrorObject["loanDetails"]){
+
+      this.errorMessage =  myGetErrorObject["loanDetails"];
+    
+    } else if(myGetErrorObject["Documents"]){
+      this.errorMessage = myGetErrorObject["Documents"];
+    }
+
+  }
+
 
   onBackButtonClick(swiperInstance?: Swiper) {
     if (this.activeTab > 0) {
@@ -1127,16 +1154,16 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
           //this.progress = Math.round(100 * event.loaded / event.total);
           //console.log(response);
           callback(response["info"]);
-        } else {
-          console.log(alert["message"]);
-        }
-      }
-      // , error => {
-      //   if(error.error.message) {
-      //     this.isErrorModal = true;
-      //     this.errorMessage = error.error.message;
-      //   }
-      // }
+        } 
+        //else {
+            //alert["message"];
+        //}
+      }, error => {
+         if(error.error.message) {
+           this.isErrorModal = true;
+           this.errorMessage = error.error.message;
+         }
+       }
     );
   }
 
@@ -1170,11 +1197,10 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
             );
           }
         }
-      }
-      // , error => {
-      //   this.isErrorModal = true;
-      //   this.errorMessage = error.message;
-      // }
+      }, error => {
+         this.isErrorModal = true;
+         this.errorMessage = error.message;
+       }
     );
   }
 

@@ -610,7 +610,7 @@
                                                     </kendo-datepicker>
                                                    
                                                     <div *ngIf="ageError" class="invalid-feedback">
-                                                        <div *ngIf="ageError">Age should not be less than 18 years</div>
+                                                        <div *ngIf="ageError">Age should not be less than {{minMaxValues['Age_limit']['minValue']}} years</div>
                                                       </div>                                                      
                                                   </div>
                                                   <div class="form-group">                                                 
@@ -1679,7 +1679,7 @@
                                                   <span class="control-title">Mother's Title</span>
                                                   <kendo-dropdownlist [readonly]="isReadOnly" class="form-control"
                                                   [defaultItem] = "defaultItem"
-                                                  [data]="femaleTitles" 
+                                                  [data]="mariedFemaleTitles" 
                                                   textField="key"
                                                   valueField="value"
                                                   name="motherTitle"
