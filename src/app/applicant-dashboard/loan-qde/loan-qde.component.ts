@@ -1253,28 +1253,28 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
       this.qdeHttp
         .createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde))
         .subscribe(
-          response => {
-            let result = response['ProcessVariables']['response'];
-
-            // If successful
-            if (response["ProcessVariables"]["status"]) {
-              this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['loanDetails']).subscribe(auditRes => {
-                if(auditRes['ProcessVariables']['status'] == true) {
-                  this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
-                  this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
-                  this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
-                  this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
+          response => {           
+              let result = response['ProcessVariables']['response'];
+              // If successful
+              if (response["ProcessVariables"]["status"]) {
+                this.auditTrialApiSub = this.qdeHttp.auditTrailUpdateAPI(this.qde['application']['applicationId'], this.qde['application']['applicants'][this.applicantIndex]['applicantId']+"", this.page, this.tabName, screenPages['loanDetails']).subscribe(auditRes => {
+                  if(auditRes['ProcessVariables']['status'] == true) {
+                    this.qde.application.auditTrailDetails.applicantId = auditRes['ProcessVariables']['applicantId'];
+                    this.qde.application.auditTrailDetails.screenPage = auditRes['ProcessVariables']['screenPage'];
+                    this.qde.application.auditTrailDetails.tabPage = auditRes['ProcessVariables']['tabPage'];
+                    this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
+                  }
                 }
+                // , error => {
+                //   this.isErrorModal = true;
+                //   this.errorMessage = "Something went wrong, please try again later.";
+                // }
+              );
+                this.isLoanRouteModal = true
+              } else {
+                // Throw Invalid Pan Error
               }
-              // , error => {
-              //   this.isErrorModal = true;
-              //   this.errorMessage = "Something went wrong, please try again later.";
-              // }
-            );
-              this.isLoanRouteModal = true
-            } else {
-              // Throw Invalid Pan Error
-            }
+            
           }
           // , error => {
           //   this.isErrorModal = true;
@@ -1400,7 +1400,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   clssSearchArea(event: any){
     // console.log("gfegffdgewhj",event);
-    if(event.target.value!="" && event.target.validity.valid){
+    if(event.target.value!="" && event.target.validity.valid &&  event.target.value != " "){
     this.qdeHttp.clssSearch(event.target.value).subscribe(res => {
       if(res['ProcessVariables']['status'] && res['ProcessVariables']['townNames']!=null) {
         // this.allClssAreas = res['ProcessVariables']['townNames'] ? res['ProcessVariables']['townNames']: []

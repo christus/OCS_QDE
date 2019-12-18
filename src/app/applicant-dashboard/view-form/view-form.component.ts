@@ -144,7 +144,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
   selectedLoanProvider: Array<Item> = [];
   selectedLoanPurpose: Array<Item> = [];
   selectedLoanType: Array<Item> = [];
-  selectedPropertyType: Array<Item> = [];
+  selectedPropertyType: Item;
   isPropertyIdentified = false;
   propertyClssValue: string;
   propertyAreaValue: number;
@@ -158,15 +158,15 @@ export class ViewFormComponent implements OnInit, OnDestroy {
   state: string;
   cityState:string;
 
-  selectedReferenceOne: Array<Item> = [];
-  selectedTiltle1:  Array<Item> = [];
+  selectedReferenceOne: Item;
+  selectedTiltle1:  Item;
   selectedName1: string;
   selectedMobile1: string;
   selectedAddressLineOne1: string;
   selectedAddressLineTwo1: string;
 
-  selectedReferenceTwo:  Array<Item> = [];
-  selectedTiltle2:  Array<Item> = [];
+  selectedReferenceTwo:  Item ;
+  selectedTiltle2:  Item;
   selectedName2: string;
   selectedMobile2: string;
   selectedAddressLineOne2: string;
@@ -223,6 +223,8 @@ export class ViewFormComponent implements OnInit, OnDestroy {
   applicantNameForLoanDetails: Array<string> = [];
   isErrorModal: boolean;
   errorMsg: string;
+  routePageName: string;
+
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -377,6 +379,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
         this.qdeHttp.getQdeData(applicationId).subscribe(response => {
           let result = JSON.parse(response["ProcessVariables"]["response"]);
           this.qde = result;
+          // console.log("validation qde ",this.qdeService.getValidateApplication(this.qde));
 
           this.loanType = this.loanType.slice(0, 3);
           this.selectedLoanType = this.loanType.find(v => v.value == this.qde.application.loanDetails.loanAmount.loanType) || this.loanType[0];
@@ -458,16 +461,16 @@ export class ViewFormComponent implements OnInit, OnDestroy {
               result.application.references.referenceTwo = {};
             }
   
-            this.selectedReferenceOne =
-              result.application.references.referenceOne.relationShip ||
-              this.relationships[0].value;
-            this.selectedReferenceTwo =
-              result.application.references.referenceTwo.relationShip ||
-              this.relationships[0].value;
+            this.selectedReferenceOne = this.relationships.find( v => v.value == 
+                                        result.application.references.referenceOne.relationShip)||
+                                        this.relationships[0];
+            this.selectedReferenceTwo = this.relationships.find(v => v.value ==
+                                            result.application.references.referenceTwo.relationShip) ||
+                                            this.relationships[0];
   
-            this.selectedTiltle1 =
-              result.application.references.referenceOne.title ||
-              this.titles[0].value;
+            this.selectedTiltle1 = this.titles.find(v => v.value ==
+                                    result.application.references.referenceOne.title) ||
+                                    this.titles[0];
             this.selectedName1 =
               result.application.references.referenceOne.fullName || "";
             this.selectedMobile1 =
@@ -477,9 +480,9 @@ export class ViewFormComponent implements OnInit, OnDestroy {
             this.selectedAddressLineTwo1 =
               result.application.references.referenceOne.addressLineTwo || "";
   
-            this.selectedTiltle2 =
-              result.application.references.referenceTwo.title ||
-              this.titles[0].value;
+            this.selectedTiltle2 = this.titles.find(v => v.value == 
+                                    result.application.references.referenceTwo.title) ||
+                                    this.titles[0];
             this.selectedName2 =
               result.application.references.referenceTwo.fullName || "";
             this.selectedMobile2 =
@@ -751,7 +754,8 @@ export class ViewFormComponent implements OnInit, OnDestroy {
     this.qdeHttp.mandatoryDocsApi(parseInt(this.applicationId)).subscribe(res => {
       var button = res['ProcessVariables']['applicationStatus']
       var butEnDis = res['ProcessVariables']['status']
-      this.butMes = res['ProcessVariables']['description']
+      let myDataObject = JSON.parse(res['ProcessVariables']['description'])
+      // this.butMes = res['ProcessVariables']['description']
     
       //Change Status in accordance to the ID Corresponding to QDE Completed in DB
       if(button >= 5) {
@@ -771,12 +775,37 @@ export class ViewFormComponent implements OnInit, OnDestroy {
         else{
           this.isQdeSubmitEnabled = false;
           this.isDocNotUploadModal = true;
+
+          this.getDocumetsDataDetails(myDataObject);
         }
       }
     },
      err => {});
 
     this.commonDataService.setIsMainTabEnabled(false);
+  }
+
+  getDocumetsDataDetails(myObject){
+
+    let myGetErrorObject = myObject;
+    if (myGetErrorObject["applicants"]){
+      if (myGetErrorObject["applicants"].length > 0) {      
+        this.butMes = "Kindly Fill Below Mandatory Details for @"+myGetErrorObject["applicants"][0]["name"]+
+                            ", We Require Data - "
+                            + myGetErrorObject["applicants"][0]["errorMessage"];
+        this.routePageName = "/applicant";
+      }
+    }
+    else if(myGetErrorObject["loanDetails"]){
+
+      this.butMes =  myGetErrorObject["loanDetails"];
+      this.routePageName = "/loan";
+    
+    } else if(myGetErrorObject["Documents"]){
+      this.butMes = myGetErrorObject["Documents"];
+      this.routePageName = "/document-uploads";
+    }
+
   }
 
   sendSMS() {

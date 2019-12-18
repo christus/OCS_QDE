@@ -31,7 +31,7 @@
               <!-- Upload Documents -->
               <div class="tabs-contents" #tabContents>
                 <div class="tab-content" [ngClass]="{'active': (activeTab == 0)}">
-                        <a [routerLink]="['/references', applicationId]" fragment="reference2" class="back-btn"></a>
+                        <a [routerLink]="['/references', applicationId]" fragment="reference2" class="back-btn" [ngClass]="{'disabled': !isMainTabEnabled}"></a>
                     <div class="lyt-tabs">
                         <div class="lhs">
                             <div  class="swiper-container form-swiper"
@@ -756,7 +756,8 @@
 
                                           </div>
                                           <div class="btn-wrap">
-                                              <button type="button" class="btn btn-primary" (click)="handleCollateralProof(collateralSlider2)" [ngClass]="{'disabled': isSubmitDisabled}">Submit</button>
+                                              <button type="button" class="btn btn-primary" (click)="handleCollateralProof(collateralSlider2)" 
+                                                        [ngClass]="{'disabled': isSubmitDisabled}">Submit</button>
                                           </div>
                                       </form>
                                   </div>

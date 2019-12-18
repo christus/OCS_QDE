@@ -96,12 +96,12 @@ export class AutoLogoutService {
 
         this.cds.setDialogData(true);
 
-        this.service.logout().subscribe(
-          res => {
-          },
-          error => {
-          }
-        );
+        // this.service.logout().subscribe(
+        //   res => {
+        //   },
+        //   error => {
+        //   }
+        // );
         this.utilService.clearCredentials();
         this.stopInterval();
       }else if(isTimeout){

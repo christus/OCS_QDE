@@ -31,9 +31,8 @@
           </li>
          
         </ul>
-        <div class="tabs-contents" #tabContents>
-          <div class="tab-content" [ngClass]="{'active': (activeTab == 0)}">
-            <!-- <a [routerLink]="['/applicant', qde.application.applicationId, 'co-applicant']" class="back-btn"></a> -->
+        <div class="tabs-contents" #tabContents>            
+          <div class="tab-content" [ngClass]="{'active': (activeTab == 0)}">            
             <a (click)="changeLoan()" class="back-btn"></a>
             <div class="lyt-tabs">
               <div class="lhs">
@@ -226,7 +225,7 @@
                                   name="propertyClssArea"
                                   #propertyClss="ngModel"
                                   [(ngModel)]="propertyClssValue"
-                                  pattern="^[a-zA-Z]+$"
+                                  pattern="^[a-zA-Z ]+$"
                                   (input)="clssSearchArea($event)"
                                   fieldFill
                                   required >

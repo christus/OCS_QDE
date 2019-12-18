@@ -33,6 +33,12 @@ export class UtilService {
 
   
   clearCredentials() {
+    this.qdehttpService.logout().subscribe(
+      res => {
+      },
+      error => {
+      }
+    );
     localStorage.removeItem('token');
     localStorage.removeItem('roles');
     localStorage.removeItem('userId')
