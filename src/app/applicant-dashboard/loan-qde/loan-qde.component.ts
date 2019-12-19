@@ -1400,7 +1400,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   clssSearchArea(event: any){
     // console.log("gfegffdgewhj",event);
-    if(event.target.value!="" && event.target.validity.valid &&  event.target.value != " "){
+    if(event.target.value!="" && event.target.value!=" " && event.target.validity.valid){
     this.qdeHttp.clssSearch(event.target.value).subscribe(res => {
       if(res['ProcessVariables']['status'] && res['ProcessVariables']['townNames']!=null) {
         // this.allClssAreas = res['ProcessVariables']['townNames'] ? res['ProcessVariables']['townNames']: []

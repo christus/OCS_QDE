@@ -138,12 +138,21 @@ export class AppComponent implements OnInit{
     });
 
     this.cds.showError.subscribe((value) => {
-      let role = localStorage.getItem("roles");
       if(Array.isArray(value) && value.length!=0){
       let status = value[0];
       let errorCode = value[1];
       let errorMessage = value[2];
       let token = localStorage.getItem("token");
+      if(errorCode==="HTTP"){
+        this.isErrorCodeModal = true;
+        this.errorCodeMessage = "No internet detected. Please try again";
+        return;
+      }
+      if(errorCode==="HTTPTimeOut"){
+        this.isErrorCodeModal = true;
+        this.errorCodeMessage = "Network failure. Please try again";
+        return;
+      }
       if (this.isEmpty == true && token!=null) {
         this.fillErrorList().then(()=>{
           if (this.noErrors == true) {
@@ -158,12 +167,12 @@ export class AppComponent implements OnInit{
             this.isErrorCodeModal = status;
           }
 	}else{
-	    this.errorCodeMessage = errorMessage;
+	          this.errorCodeMessage = errorMessage;
             this.isErrorCodeModal = status;
 	}
         }else{
           this.isErrorCodeModal = true;
-          this.errorCodeMessage = "No interent detected. Please try again";
+          this.errorCodeMessage = "No internet detected. Please try again";
         }
       })
       }else if (this.isEmpty == false) {

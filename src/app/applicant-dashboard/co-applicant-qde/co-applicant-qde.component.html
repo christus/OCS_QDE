@@ -1566,8 +1566,8 @@
   
                 <div  class="tab-content" [ngClass]="{'active': (activeTab == 6)}">
                     <!-- <a *ngIf="qde.application.applicants[coApplicantIndex].maritalStatus.earning == false" href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(3)"></a> -->
-                    <a *ngIf="selectedMaritialStatus.value != 2" href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(1)"></a>
-                    <a *ngIf="selectedMaritialStatus.value == 2" href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(4)"></a>        
+                    <a *ngIf="selectedMaritialStatus?.value != 2" href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(1)"></a>
+                    <a *ngIf="selectedMaritialStatus?.value == 2" href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(4)"></a>        
                   <div class="lyt-tabs">
                       <div class="lhs">
                           <div  class="swiper-container form-swiper"
@@ -2081,8 +2081,7 @@
                                                 id="incomeConsiderNo2" class="not-usual" tabindex="2"
                                                 (click)="incomeConsiderYesNoIndividual(2, occupationSlider2)"
                                                 [checked]="qde.application.applicants[coApplicantIndex].incomeDetails.incomeConsider == false"
-                                                [value]="2" 
-                                                [disabled]="occupationRequired" [ngClass]="{'disabled': occupationRequired}"/>
+                                                [value]="2" />
                                                 <label for="incomeConsiderNo2"><span>No</span></label>
                                             </div>
                                             </div>
@@ -3467,8 +3466,7 @@
                                                 <input [readonly]="isTBMLoggedIn" spellcheck="false" type="radio" name="income-consider"
                                                 id="incomeConsiderNo2" class="not-usual" tabindex="2"
                                                 [checked]="qde.application.applicants[coApplicantIndex].incomeDetails.incomeConsider == false"
-                                                (click)="incomeConsiderYesNoNonIndividual(2, incomeConsiderSliderNonIndividual2)" [value]="2" 
-                                                [disabled]="occupationRequired" [ngClass]="{'disabled': occupationRequired}"/>
+                                                (click)="incomeConsiderYesNoNonIndividual(2, incomeConsiderSliderNonIndividual2)" [value]="2" />
                                                 <label for="incomeConsiderNo2"><span>No</span></label>
                                             </div>
                                             </div>

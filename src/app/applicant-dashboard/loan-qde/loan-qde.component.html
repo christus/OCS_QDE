@@ -225,7 +225,7 @@
                                   name="propertyClssArea"
                                   #propertyClss="ngModel"
                                   [(ngModel)]="propertyClssValue"
-                                  pattern="^[a-zA-Z ]+$"
+                                  pattern="^[a-zA-Z _'@$%!~^+,/*#&().-]+$"
                                   (input)="clssSearchArea($event)"
                                   fieldFill
                                   required >
