@@ -384,6 +384,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   range;
 
   ageError:boolean = false;
+  ageMaxError:boolean = false;
 
   min: Date; // minimum date to date of birth amd non indu
   maxDate : Date = new Date();
@@ -4521,6 +4522,27 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       month: { key: month, value: month },
       year: { key: year, value: year }
     }
+    const dateofbirth = this.getFormattedDate(value);
+      console.log("dateofbirth", dateofbirth);
+      const d1: any = new Date(dateofbirth);
+      const d2: any = new Date();
+      var diff = d2 - d1;
+      var age = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
+      if (age < Number(this.minMaxValues["Age_limit"].minValue)) {
+        this.ageError = true;
+        this.ageMaxError = false;
+        return;
+      }else if (age >  Number(this.minMaxValues["Age_limit"].maxValue)){
+        
+        this.isErrorModal = true;
+        this.errorMessage = `Maximum age limit is.${this.minMaxValues["Age_limit"].maxValue}`;
+        this.ageMaxError = true;
+        this.ageError = false;
+        return;
+      } else {
+        this.ageError = false;
+        this.ageMaxError = false;
+      }
 
   }
   setSpouseTitles(): boolean{
@@ -4624,5 +4646,18 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     if(this.qde.application.applicants[this.coApplicantIndex].contactDetails.alternateResidenceNumber == "-" && this.isAlternateResidenceNumber == true){
       this.addRemoveResidenceNumberField();
     }
+  }
+  getFormattedDate(date) {
+    console.log("in date conversion " + date);
+
+    let dateFormat: Date = date;
+    let year = dateFormat.getFullYear();
+    let month = dateFormat.getMonth() + 1;
+    let month1 = month < 10 ? '0' + month.toString() : '' + month.toString(); // ('' + month) for string result
+    let day = date.getDate();
+    day = day < 10 ? '0' + day : '' + day; // ('' + month) for string result
+    let formattedDate = year + '-' + month1 + '-' + day;
+    // console.log("final Value "+ formattedDate);
+    return formattedDate;
   }
 }

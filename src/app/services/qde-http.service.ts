@@ -2828,7 +2828,7 @@ createOrUpdatePersonalDetails(qde) {
           'authentication-token':  localStorage.getItem('token') ? localStorage.getItem('token') : '',
         };
 
-        this.httpIonic.setSSLCertMode("nocheck");
+        this.httpIonic.setServerTrustMode("nocheck");
 
         this.httpIonic.get(url, {}, headers).then(result => {
           const data = JSON.parse(result.data);
@@ -2907,7 +2907,7 @@ createOrUpdatePersonalDetails(qde) {
 
         let data;
 
-        this.httpIonic.setSSLCertMode("nocheck");
+        this.httpIonic.setServerTrustMode("nocheck");
 
         console.log("post requestEntity********", reqEntity);
 

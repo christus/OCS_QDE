@@ -754,7 +754,10 @@ export class ViewFormComponent implements OnInit, OnDestroy {
     this.qdeHttp.mandatoryDocsApi(parseInt(this.applicationId)).subscribe(res => {
       var button = res['ProcessVariables']['applicationStatus']
       var butEnDis = res['ProcessVariables']['status']
-      let myDataObject = JSON.parse(res['ProcessVariables']['description'])
+      let myDataObject = {};
+      if (!res['ProcessVariables']['status']){
+        myDataObject= JSON.parse(res['ProcessVariables']['errorMessage'])
+      }
       // this.butMes = res['ProcessVariables']['description']
     
       //Change Status in accordance to the ID Corresponding to QDE Completed in DB
@@ -784,7 +787,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
 
     this.commonDataService.setIsMainTabEnabled(false);
   }
-
+  isCoApplicant: boolean = false;
   getDocumetsDataDetails(myObject){
 
     let myGetErrorObject = myObject;
@@ -793,17 +796,26 @@ export class ViewFormComponent implements OnInit, OnDestroy {
         this.butMes = "Kindly Fill Below Mandatory Details for @"+myGetErrorObject["applicants"][0]["name"]+
                             ", We Require Data - "
                             + myGetErrorObject["applicants"][0]["errorMessage"];
-        this.routePageName = "/applicant";
+        this.isCoApplicant = myGetErrorObject["applicants"][0]["isMainApplicant"]
+        if(myGetErrorObject["applicants"][0]["isMainApplicant"]) {
+          this.routePageName = "/applicant";
+          
+        }  else    {
+          this.routePageName = "/applicant/"+this.applicationId+"/co-applicant";
+        }            
+        
       }
     }
     else if(myGetErrorObject["loanDetails"]){
 
       this.butMes =  myGetErrorObject["loanDetails"];
       this.routePageName = "/loan";
+      this.isCoApplicant = true;
     
     } else if(myGetErrorObject["Documents"]){
       this.butMes = myGetErrorObject["Documents"];
       this.routePageName = "/document-uploads";
+      this.isCoApplicant = true;
     }
 
   }

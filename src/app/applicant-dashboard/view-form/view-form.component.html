@@ -990,7 +990,9 @@
               <br><br>
                   <div class="btn-wrap">
                       <!-- <button class="btn btn-border" [routerLink]="['/document-uploads', applicationId]">Yes</button> -->
-                      <button class="btn btn-border" [routerLink]="[routePageName, applicationId]">OK</button>
+                      <button class="btn btn-border" *ngIf= "isCoApplicant" [routerLink]="[routePageName, applicationId]">OK</button>
+                      <button class="btn btn-border" *ngIf= "!isCoApplicant" [routerLink]="[routePageName]"
+                            [queryParams]="{'tabName':'dashboard','page':'1'}">OK</button>
                   </div>
           </div>
       </div>

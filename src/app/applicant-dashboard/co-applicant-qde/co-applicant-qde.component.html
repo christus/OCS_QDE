@@ -609,8 +609,9 @@
                                                         >
                                                     </kendo-datepicker>
                                                    
-                                                    <div *ngIf="ageError" class="invalid-feedback">
+                                                    <div *ngIf="ageError || ageMaxError" class="invalid-feedback">
                                                         <div *ngIf="ageError">Age should not be less than {{minMaxValues['Age_limit']['minValue']}} years</div>
+                                                        <div *ngIf="ageMaxError">Age should not be More than {{minMaxValues['Age_limit']['maxValue']}} years</div>
                                                       </div>                                                      
                                                   </div>
                                                   <div class="form-group">                                                 
@@ -637,8 +638,8 @@
                                               <div class="btn-wrap">
                                                   <button type="submit"
                                                           class="btn btn-primary"
-                                                          [ngClass]="{'disabled': (dob.day.value == 'DD' || dob.month.value == 'MM' || dob.year.value == 'YYYY' || dobForm.invalid )}"
-                                                          [disabled]="(dob.day.value == 'DD' || dob.month.value == 'MM' || dob.year.value == 'YYYY' || dobForm.invalid )">Next
+                                                          [ngClass]="{'disabled': (dob.day.value == 'DD' || dob.month.value == 'MM' || dob.year.value == 'YYYY' || dobForm.invalid  || ageMaxError || ageError)}"
+                                                          [disabled]="(dob.day.value == 'DD' || dob.month.value == 'MM' || dob.year.value == 'YYYY' || dobForm.invalid || ageMaxError || ageError)">Next
                                                   </button>
                                               </div>
                                           </form>

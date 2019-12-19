@@ -358,14 +358,8 @@ input[type="text"]:invalid
     margin-bottom: -10px;
     width: 82%;
 }
-
-.with_datepicker {
-    margin-bottom: -10px;
-    width: 82%;
-}
-
 .kendo_date_picker{
-    width: 0px;
+    width: 2.1vw;
     border: none;
     margin-bottom: 30px;
     margin-left: -10%;

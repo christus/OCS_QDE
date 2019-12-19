@@ -78,6 +78,10 @@ export class AuthInterceptor implements HttpInterceptor {
   });
 
   return next.handle(authReq).pipe(
+    // catchError((errcatchError((err: HttpErrorResponse) : Observable<any> =>{
+    //     this.handleError(err);
+    //     return of ();
+    //   })
     map(
       (event: HttpEvent<any>) => {
 
@@ -182,11 +186,7 @@ export class AuthInterceptor implements HttpInterceptor {
           this.isNgxRunning= false;
         }
 
-      ),
-      catchError((err: HttpErrorResponse) : Observable<any> =>{
-        this.handleError(err);
-        return of ();
-      })
+      )
     );
   }
 

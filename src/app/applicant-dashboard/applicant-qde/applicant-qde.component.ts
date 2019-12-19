@@ -371,6 +371,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
   ageError:boolean = false;
+  ageMaxError: boolean = false;
 
   min: Date; // minimum date to date of birth
   maxDate : Date = new Date();
@@ -1806,8 +1807,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       year: { key: year, value: year }
     }
 
-     const dateofbirth = this.dateofBirthKendo;
-
+    //  const dateofbirth = this.dateofBirthKendo;
+      const dateofbirth = this.getFormattedDate(value);
       console.log("dateofbirth", dateofbirth);
       const d1: any = new Date(dateofbirth);
       const d2: any = new Date();
@@ -1815,13 +1816,18 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       var age = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
       if (age < Number(this.minMaxValues["Age_limit"].minValue)) {
         this.ageError = true;
+        this.ageMaxError = false;
         return;
       }else if (age >  Number(this.minMaxValues["Age_limit"].maxValue)){
+        
         this.isErrorModal = true;
         this.errorMessage = `Maximum age limit is.${this.minMaxValues["Age_limit"].maxValue}`;
+        this.ageMaxError = true;
+        this.ageError = false;
         return;
       } else {
         this.ageError = false;
+        this.ageMaxError = false;
       }
 
 
@@ -4467,5 +4473,19 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     if(this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber == "-" && this.isAlternateResidenceNumber == true){
       this.addRemoveResidenceNumberField();
     }
+  }
+
+  getFormattedDate(date) {
+    console.log("in date conversion " + date);
+
+    let dateFormat: Date = date;
+    let year = dateFormat.getFullYear();
+    let month = dateFormat.getMonth() + 1;
+    let month1 = month < 10 ? '0' + month.toString() : '' + month.toString(); // ('' + month) for string result
+    let day = date.getDate();
+    day = day < 10 ? '0' + day : '' + day; // ('' + month) for string result
+    let formattedDate = year + '-' + month1 + '-' + day;
+    // console.log("final Value "+ formattedDate);
+    return formattedDate;
   }
 }
