@@ -406,7 +406,7 @@ export class LeadsListComponent implements OnInit {
       } else if(screenPages["documentUploads"] == el["auditTrialScreenPage"]) {
         el["queryParams"] = {tabName: "dashboard", page: 1};
         return "/document-uploads/"+applicationId;
-      }
+      }     
     } 
     else if(statuses[status] == "5") {
       this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
@@ -475,9 +475,11 @@ export class LeadsListComponent implements OnInit {
       return "/document-uploads/"+applicationId;
     }
     else if(statuses[status] == "29") {
+      
       this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
       
-      return "/applicant/"+applicationId;
+      // return "/applicant/"+applicationId;
+      return "/view-form/"+applicationId;
     }
     else if(statuses[status] == "31") {
       this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});

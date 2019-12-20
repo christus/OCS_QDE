@@ -24,6 +24,7 @@ import { MobileService } from '../../services/mobile-constant.service';
 import { DatePipe } from '@angular/common';
 import { SelectionRangeEnd } from '@progress/kendo-angular-dateinputs';
 import { MinMax } from 'src/app/models/qde.model';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 interface Item {
   key: string,
@@ -415,7 +416,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
               private cds: CommonDataService,
               private utilService: UtilService,
               public datepipe: DatePipe,
-              private mobileService: MobileService) {
+              private mobileService: MobileService,
+              private ngxService: NgxUiLoaderService) {
     this.qde = this.qdeService.defaultValue;
 
 
@@ -1002,6 +1004,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   submitPanNumber(form: NgForm, swiperInstance1 : Swiper, swiperInstance2: Swiper) {
+    try {
+      this.ngxService.start();
     if(this.isTBMLoggedIn) {
       this.tabSwitch(2, 1);
     } else {
@@ -1182,6 +1186,13 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       }
 
     }
+  } catch (ex) {
+    this.isErrorModal = true;
+    this.errorMessage = ex.message;
+
+    } finally {
+      // this.ngxService.stop();
+    }
   }
 
 
@@ -1190,6 +1201,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   //-------------------------------------------------------------
 
   submitOrgPanNumber(form: NgForm, swiperInstance1 : Swiper, swiperInstance2: Swiper) {
+    try{
+      this.ngxService.start();
     if(this.isTBMLoggedIn) {
       this.tabSwitch(12, 1);
     } else {
@@ -1333,6 +1346,13 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         // }
       );
       }
+    }
+  } catch (ex) {
+    this.isErrorModal = true;
+    this.errorMessage = ex.message;
+
+    } finally {
+      // this.ngxService.stop();
     }
   }
 
@@ -4194,6 +4214,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
       this.qde.application.applicants[this.coApplicantIndex].communicationAddress.cityState = "";
       this.selectedResidence = this.defaultItem;
+      this.makePermanentAddressSame(false);
     }
     // this.isCurrentAddressFromMainApplicant = false;
   }
