@@ -9,14 +9,16 @@
         <th>Field Name</th>
         <th>Minimum Value</th>
         <th>Maximum Value</th>
+	      <th>Field Type</th>
+	      <th>Maximum Length</th>
         <th>Edit/Save</th>
         <th></th>
       </tr>
     </thead>
     <tbody>
       <tr class="item" *ngFor="let item of collection | paginate: { itemsPerPage: perPage, currentPage: currentPage, totalItems: totalItems}; let i=index">
-        <td>{{i+1}}</td>
-        <td><input type="text" placeholder="Field Name" [(ngModel)]="item.columnName" disabled /></td>
+        <td>{{keys[i]}}</td>
+        <td><span style="text-align: left;">{{item.columnName}}</span></td>
         <td><input type="text" placeholder="Minimum Value" #minValue="ngModel" [(ngModel)]="item.minValue" [disabled]="!item.isEdit" autocomplete="off" required pattern="^[0-9]{0,15}$" />
         <span *ngIf="(minValue.touched || minValue.dirty) && minValue.errors?.required" class="redalert"><br>Minimum Value cannot be empty</span>
         <span *ngIf="(minValue.touched || minValue.dirty) && minValue.errors?.pattern && item.minValue.length<15" class="redalert"><br>Minimum Value cannot contain alphabets / special characters</span>
@@ -27,6 +29,11 @@
           <span *ngIf="(maxValue.touched || maxValue.dirty) && maxValue.errors?.pattern && item.maxValue.length<15" class="redalert"><br>Maximum Value cannot contain alphabets / special characters</span>
           <span *ngIf="(maxValue.touched || maxValue.dirty) && maxValue.errors?.pattern && item.maxValue.length>15" class="redalert"><br>Maximum Value cannot contain more than 15 digits</span>
         </td>
+	      <td><span style="text-align: left;">{{item.fieldType}}</span></td>
+	      <td>
+	      <input type="text" placeholder="Maximum Length" #maxLength="ngModel" [(ngModel)]="item.maxLength" [disabled]="!item.isEdit" autocomplete="off" required 
+	      (input)="checkMaxLength($event,i)" />
+	      <span *ngIf="(maxLength.touched || maxLength.dirty) && maxLength.errors?.required" class="redalert"><br>Maximum Length cannot be empty</span>
         <td>
           <button type="button" class="editsavebtn" *ngIf="!item.isEdit" (click)="edit(i)">Edit</button>
           <button type="button" class="editsavebtn" *ngIf="item.isEdit" [disabled]="!minValue.valid || !maxValue.valid" [ngClass]="{'disabled':(!minValue.valid || !maxValue.valid)}" (click)="save(i)">Save</button>

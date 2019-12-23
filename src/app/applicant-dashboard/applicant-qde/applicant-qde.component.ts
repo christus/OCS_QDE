@@ -533,6 +533,14 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.unOfficialEmails = lov.LOVS.un_official_emails;
       this.preferredEmail = lov.LOVS.preferred_mails;
       this.minMaxValues = lov.LOVS.min_max_values;
+      this.options['floor'] = this.minMaxValues['Years_in_residence']['minValue'];
+      this.options['ceil'] = this.minMaxValues['Years_in_residence']['maxValue'];
+      this.familyOptions['floor'] = this.minMaxValues['No_Of_Dependents']['minValue'];
+      this.familyOptions['ceil'] = this.minMaxValues['No_Of_Dependents']['maxValue'];
+      this.employementOptions['floor']= this.minMaxValues['Years_in_employment']['minValue'];
+      this.employementOptions['ceil']= this.minMaxValues['Years_in_employment']['maxValue'];
+      this.experienceOptions['floor']= this.minMaxValues['Years_in_employment']['minValue'];
+      this.experienceOptions['ceil']= this.minMaxValues['Years_in_employment']['maxValue'];
       // console.log("data slice error: ", lov.LOVS.religion);
 
 
@@ -3538,6 +3546,23 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   //   });
   // }
 
+  checkAgeOfIncorporation(event: Date ){
+    let dateofbirth = this.getFormattedDate(event);
+    const d1: any = new Date(dateofbirth);
+    const d2: any = new Date();
+    var diff = d2 - d1;
+    var age = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
+    if (age < Number(this.minMaxValues["Age_Of_Incorporation"].minValue)) {
+      this.ageError = true;
+      return;
+    }else if (age >  Number(this.minMaxValues["Age_Of_Incorporation"].maxValue)){
+      this.isErrorModal = true;
+      this.errorMessage = `Maximum age limit is.${this.minMaxValues["Age_Of_Incorporation"].maxValue}`;
+      return;
+    } else {
+      this.ageError = false;
+    }
+  }
 
   selectValueChanged(event, to, key?) {
     let whichSelectQde = this.qde.application.applicants[this.applicantIndex];
@@ -4474,7 +4499,6 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.addRemoveResidenceNumberField();
     }
   }
-
   getFormattedDate(date) {
     console.log("in date conversion " + date);
 
