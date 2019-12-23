@@ -215,14 +215,21 @@
                               <div class="col-12">
                                   <div class="form-group filled">
                                     <span class="control-title">Type of Loan</span>
-                                   <kendo-dropdownlist 
+                                    <input type="text" class="form-control" 
+                            
+                                    [(ngModel)]="selLoantype"
+                                    name="dob"
+                                    fieldFill
+                                    spellcheck="false"
+                                    required />
+                                    <!-- <kendo-dropdownlist 
                                         class="form-control"
                                         name="loanType"
                                         [data]="loanType" 
                                         textField="key"
                                         valueField="value"
                                         [(ngModel)]="selectedLoanType">
-                                        </kendo-dropdownlist>
+                                        </kendo-dropdownlist> -->
                                   </div>
                               </div>
                           </div>
@@ -230,14 +237,21 @@
                                 <div class="col-12">
                                     <div class="form-group filled">
                                       <span class="control-title">Loan Purpose</span>
-                                      <kendo-dropdownlist 
+                                      <input type="text" class="form-control" 
+                            
+                                    [(ngModel)]="selLoanpurpose"
+                                    name="loanPurpose"
+                                    fieldFill
+                                    spellcheck="false"
+                                    required />
+                                      <!-- <kendo-dropdownlist 
                                         class="form-control"
                                         name="loanPurpose"
                                         [data]="loanpurposes" 
                                         textField="key"
                                         valueField="value"
                                         [(ngModel)]="selectedLoanPurpose">
-                                    </kendo-dropdownlist>
+                                    </kendo-dropdownlist> -->
                                     </div>
                                 </div>
                             </div>
@@ -280,14 +294,21 @@
                                     <div class="col-12">
                                         <div class="form-group">
                                                 <span class="control-title">Property type</span>
-                                                <kendo-dropdownlist 
+                                                <input type="text" class="form-control" 
+                            
+                                                [(ngModel)]="selPropertyType"
+                                                name="propertyTypes1"
+                                                fieldFill
+                                                spellcheck="false"
+                                                required />
+                                                <!-- <kendo-dropdownlist 
                                                   class="form-control" 
                                                   name="propertyTypes1" 
                                                   [data]="propertyTypes" 
                                                   textField="key" 
                                                   valueField="value"
                                                   [(ngModel)]="selectedPropertyType">
-                                                </kendo-dropdownlist>
+                                                </kendo-dropdownlist> -->
                                         </div>
                                     </div>
                                 </div> 
@@ -457,14 +478,14 @@
                                       </div>
                                   </div> -->
                                   <div class="col-6">
-                                      <div class="form-group inr filled">
+                                      <div class="form-group inr filled typ-optional">
                                             <input type="text" class="form-control" id="monthly-emi"
                                             required
                                             [(ngModel)]="q['existingLoans']['monthlyEmi']"
                                             fieldFill
                                             name="monthlyEmi">                                          
                                             <label for="ex-emi">Existing monthly EMI</label>
-                                            <!-- <span class="optional">optional</span> -->
+                                            <span class="optional">optional</span>
                                           <span class="addon">
                                               <span class="icon icon-inr"></span>
                                           </span>
@@ -498,14 +519,21 @@
                                   <div class="col-12">
                                       <div class="form-group">
                                           <span class="control-title">Relationship with the applicant</span>
-                                          <kendo-dropdownlist class="form-control"
+                                          <input type="text" class="form-control" 
+                            
+                                          [(ngModel)]="selReferenceOne"
+                                          name="relationShip"
+                                          fieldFill
+                                          spellcheck="false"
+                                          required />
+                                          <!-- <kendo-dropdownlist class="form-control"
                                           [data]="relationships" 
                                           textField="key"
                                           valueField="value"
                                           name="relationShip"
-                                          
+                                          [valuePrimitive]="true"     
                                           [(ngModel)]="selectedReferenceOne">
-                                        </kendo-dropdownlist>
+                                        </kendo-dropdownlist> -->
                                         <!-- [valuePrimitive]="true" -->
                                       </div>
                                   </div>
@@ -514,7 +542,7 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <span class="control-title">Title</span>
-                                        <kendo-dropdownlist 
+                                        <!-- <kendo-dropdownlist 
                                           class="form-control" 
                                           [data]="titles" 
                                           textField="key" 
@@ -522,7 +550,14 @@
                                           name="titles"
                                           
                                           [(ngModel)]="selectedTiltle1">
-                                        </kendo-dropdownlist>
+                                        </kendo-dropdownlist> -->
+                                        <input type="text" class="form-control" 
+                            
+                                          [(ngModel)]="selTiltle1"
+                                          name="titles"
+                                          fieldFill
+                                          spellcheck="false"
+                                          required />
                                     </div>
                                 </div>
                                 <div class="col-6">
@@ -596,7 +631,7 @@
                                   <div class="col-12">
                                       <div class="form-group">
                                           <span class="control-title">Relationship with the applicant</span>
-                                          <kendo-dropdownlist 
+                                          <!-- <kendo-dropdownlist 
                                           class="form-control"
                                           [data]="relationships" 
                                           textField="key"
@@ -604,7 +639,14 @@
                                           name="relationShip"
                                           
                                           [(ngModel)]="selectedReferenceTwo">
-                                        </kendo-dropdownlist>
+                                        </kendo-dropdownlist> -->
+                                        <input type="text" class="form-control" 
+                            
+                                          [(ngModel)]="selReferenceTwo"
+                                          name="relationShip"
+                                          fieldFill
+                                          spellcheck="false"
+                                          required />
                                       </div>
                                   </div>
                               </div>
@@ -612,15 +654,22 @@
                                   <div class="col-6">
                                         <div class="form-group">
                                         <span class="control-title">Title</span>
-                                            <kendo-dropdownlist 
+                                            <!-- <kendo-dropdownlist 
                                             class="form-control" 
                                             [data]="titles" 
                                             textField="key" 
                                             valueField="value" 
                                             name="titles"
-                                            
+                                            [valuePrimitive]="true"
                                             [(ngModel)]="selectedTiltle2">
-                                            </kendo-dropdownlist>
+                                            </kendo-dropdownlist> -->
+                                            <input type="text" class="form-control" 
+                            
+                                            [(ngModel)]="selTiltle2"
+                                            name="titles"
+                                            fieldFill
+                                            spellcheck="false"
+                                            required />
                                         </div>
                                   </div>
                                   <div class="col-6">
@@ -990,8 +1039,8 @@
               <br><br>
                   <div class="btn-wrap">
                       <!-- <button class="btn btn-border" [routerLink]="['/document-uploads', applicationId]">Yes</button> -->
-                      <button class="btn btn-border" *ngIf= "isCoApplicant" [routerLink]="[routePageName, applicationId]">OK</button>
-                      <button class="btn btn-border" *ngIf= "!isCoApplicant" [routerLink]="[routePageName]"
+                      <button class="btn btn-border modal_btn" *ngIf= "isCoApplicant" [routerLink]="[routePageName, applicationId]">OK</button>
+                      <button class="btn btn-border modal_btn" *ngIf= "!isCoApplicant" [routerLink]="[routePageName]"
                             [queryParams]="{'tabName':'dashboard','page':'1'}">OK</button>
                   </div>
           </div>

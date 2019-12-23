@@ -141,3 +141,17 @@
 .marginBot15 {
     margin-bottom: 15px;    
 }
+@media screen and (max-width: 800px) {
+   
+    .k-dropdown .k-dropdown-wrap .k-select {
+        display: none;
+    }
+	.bs-modal{
+		max-width:55.25vw;
+    }
+    .modal_btn{
+        height:20px;
+        width: 30px;
+        font-size: 3vw;
+    }
+}

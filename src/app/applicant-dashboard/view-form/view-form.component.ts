@@ -225,6 +225,13 @@ export class ViewFormComponent implements OnInit, OnDestroy {
   errorMsg: string;
   routePageName: string;
 
+  selPropertyType:string;
+  selLoantype:string;
+  selLoanpurpose:string;
+  selReferenceOne:string;
+  selTiltle1:string;
+  selReferenceTwo:string;
+  selTiltle2:string;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -340,7 +347,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
 
 
   }
-  
+
   ngOnInit() {
 
     if(this.route.snapshot.data.listOfValues) {
@@ -386,6 +393,8 @@ export class ViewFormComponent implements OnInit, OnDestroy {
 
           this.setLoanPurposes(this.selectedLoanType['value'], this.qde.application.loanDetails.loanAmount.loanPurpose);
           
+          this.selLoantype = this.selectedLoanType['key'];
+
           if (!result.application.loanDetails.propertyType) {
             result.application.loanDetails.propertyType = {}; //This line need to be removed
           }
@@ -394,9 +403,11 @@ export class ViewFormComponent implements OnInit, OnDestroy {
           this.selectedPropertyType = this.propertyTypes.find(v => v.value == result.application.loanDetails.propertyType.propertyType) || this.propertyTypes[0];
             // result.application.loanDetails.propertyType.propertyType ||
             // this.propertyTypes[0];
+          this.selPropertyType = this.selectedPropertyType['key'];
 
           this.selectedReferenceOne = this.relationships.find(v => v.value == result.application.references.referenceOne.relationShip) || this.relationships[0];
-
+        
+          
 
           this.isPropertyIdentified =
             result.application.loanDetails.propertyType.propertyIdentified ||
@@ -460,17 +471,28 @@ export class ViewFormComponent implements OnInit, OnDestroy {
             if (!result.application.references.referenceTwo || Object.keys(result.application.references.referenceTwo).length === 0) {
               result.application.references.referenceTwo = {};
             }
+          const relationShipValueOne = result.application.references.referenceOne
+            this.selectedReferenceOne =
+            relationShipValueOne.relationShip ||
+                this.relationships[0].value;
+            
+            this.selReferenceOne = ( this.relationships.find(val => val.value === relationShipValueOne.relationShip) || '').key;
+          
+          const relationShipValueTwo =  result.application.references.referenceTwo
+            this.selectedReferenceTwo =
+            relationShipValueTwo.relationShip ||
+              this.relationships[0].value;
   
-            this.selectedReferenceOne = this.relationships.find( v => v.value == 
-                                        result.application.references.referenceOne.relationShip)||
-                                        this.relationships[0];
-            this.selectedReferenceTwo = this.relationships.find(v => v.value ==
-                                            result.application.references.referenceTwo.relationShip) ||
-                                            this.relationships[0];
-  
-            this.selectedTiltle1 = this.titles.find(v => v.value ==
-                                    result.application.references.referenceOne.title) ||
-                                    this.titles[0];
+              this.selReferenceTwo = (this.relationships.find(val => val.value === relationShipValueTwo.relationShip)||'').key;
+
+          const referenceoneTitle = result.application.references.referenceOne
+
+            this.selectedTiltle1 =
+              referenceoneTitle.title ||
+              this.titles[0].value;
+
+            this.selTiltle1 = (this.titles.find(v => v.value === referenceoneTitle.title)||'').key;
+
             this.selectedName1 =
               result.application.references.referenceOne.fullName || "";
             this.selectedMobile1 =
@@ -479,10 +501,14 @@ export class ViewFormComponent implements OnInit, OnDestroy {
               result.application.references.referenceOne.addressLineOne || "";
             this.selectedAddressLineTwo1 =
               result.application.references.referenceOne.addressLineTwo || "";
-  
-            this.selectedTiltle2 = this.titles.find(v => v.value == 
-                                    result.application.references.referenceTwo.title) ||
-                                    this.titles[0];
+        
+          const referencetwoTitle = result.application.references.referenceTwo
+            this.selectedTiltle2 =
+              referencetwoTitle.title ||
+              this.titles[0].value;
+
+            this.selTiltle2 = (this.titles.find(v => v.value === referencetwoTitle.title)||'').key;
+
             this.selectedName2 =
               result.application.references.referenceTwo.fullName || "";
             this.selectedMobile2 =
@@ -563,8 +589,10 @@ export class ViewFormComponent implements OnInit, OnDestroy {
     });
     
   }
+ 
 
-  setApplicantName(qde) {
+
+ setApplicantName(qde) {
     this.applicantName = this.qde.application.applicants[0].personalDetails.firstName;
     console.log("this.applicantName", this.applicantName);
   }
@@ -1131,7 +1159,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
     }
     return ret;
   }
-
+  
   
   setLoanPurposes(loanType: string, data ?: string) {
     this.qdeHttp.getLoanPurposeFromLoanType({loanType: loanType}).subscribe(res => {
@@ -1139,9 +1167,11 @@ export class ViewFormComponent implements OnInit, OnDestroy {
       console.log("loanpurposes: ", this.loanpurposes);
       if(data) {
         this.selectedLoanPurpose = this.loanpurposes.find(v => v.value == data) || this.loanpurposes[0];
+        
       } else {
         this.selectedLoanPurpose = this.loanpurposes[0];
       }
+      this.selLoanpurpose = this.selectedLoanPurpose['key'];
       console.log("selectedLoanPurpose: ", this.selectedLoanPurpose);
     }, error => {
       // this.isErrorModal = true;
