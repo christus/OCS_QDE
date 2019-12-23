@@ -1,4 +1,4 @@
-import { Other, Item } from './../../models/qde.model';
+import { Other, Item, MinMax } from './../../models/qde.model';
 import { Component, OnInit,  ViewChild, ElementRef, Renderer2, AfterViewInit } from '@angular/core';
 
 import * as Swiper from "swiper/dist/js/swiper.js";
@@ -52,7 +52,7 @@ export class OfflinePaymentComponent implements OnInit {
   }
 
   regexPattern={
-    name:"[A-Z|a-z]+$",
+    name:"[A-Z|a-z ]+$",
     ifsc:"[A-Z|a-z]{4}[0][\\d]{6}$",
     chequeNo: "[\\d]{0,6}",
     amount:"^[\\d]{0,10}([.][0-9]{0,4})?"
@@ -138,6 +138,7 @@ export class OfflinePaymentComponent implements OnInit {
 
   
   public defaultItem = environment.defaultItem;
+  minMaxValues: Array<MinMax>;
 
   constructor(
     private renderer: Renderer2,
@@ -184,6 +185,7 @@ export class OfflinePaymentComponent implements OnInit {
     });
     
     const lov = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs);
+    this.minMaxValues = lov['LOVS']['min_max_values'];
     this.loanProviderList = lov.LOVS.loan_providers;
     const data = { applicationId: this.applicationId};
     this.qdeHttp.getOfflinePaymentAmount(data).subscribe(response =>

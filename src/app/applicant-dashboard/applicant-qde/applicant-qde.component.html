@@ -354,7 +354,7 @@
                               pattern="{{regexPattern.name}}" />
                             <label for="firstName">First name</label>
 
-                            <div *ngIf="(qde.application.applicants[applicantIndex].personalDetails.firstName)?.length == minMaxValues['Name']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div>
+                            <!-- <div *ngIf="(qde.application.applicants[applicantIndex].personalDetails.firstName)?.length == minMaxValues['Name']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div> -->
                             <div *ngIf="(firstName.touched || firstName.dirty) && firstName.invalid"
                               class="invalid-feedback">
                               <!-- <div *ngIf="firstName.errors?.required">{{errors.personalDetails.firstName.required}}</div> -->
@@ -368,7 +368,7 @@
                               pattern="{{regexPattern.name}}" fieldFill #middleName="ngModel" tabindex="3" />
                             <label for="middleName">Middle name</label>
 
-                            <div *ngIf="(qde.application.applicants[applicantIndex].personalDetails.middleName)?.length == minMaxValues['Name']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div>
+                            <!-- <div *ngIf="(qde.application.applicants[applicantIndex].personalDetails.middleName)?.length == minMaxValues['Name']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div> -->
 
                             <span class="optional">Optional</span>
                             <div *ngIf="(middleName.touched || middleName.dirty) && middleName.invalid"
@@ -385,7 +385,7 @@
                               pattern="{{regexPattern.name}}" required tabindex="4" />
                             <label for="lastName">Last name</label>
 
-                            <div *ngIf="(qde.application.applicants[applicantIndex].personalDetails.lastName)?.length == minMaxValues['Name']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div>
+                            <!-- <div *ngIf="(qde.application.applicants[applicantIndex].personalDetails.lastName)?.length == minMaxValues['Name']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div> -->
 
                             <div *ngIf="(lastName.touched || lastName.dirty) && lastName.invalid"
                               class="invalid-feedback">
@@ -505,7 +505,7 @@
                               pattern="{{regexPattern.birthPlace}}" fieldFill #birthPlace="ngModel" required />
                             <label for="birthPlace">Birth place</label>
 
-                            <div *ngIf="(qde.application.applicants[applicantIndex].personalDetails.birthPlace)?.length == minMaxValues['Birth_Place']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div>
+                            <!-- <div *ngIf="(qde.application.applicants[applicantIndex].personalDetails.birthPlace)?.length == minMaxValues['Birth_Place']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div> -->
 
                             <div *ngIf="(birthPlace.touched || birthPlace.dirty) && birthPlace.invalid"
                               class="invalid-feedback">
@@ -568,7 +568,7 @@
                               (ngModelChange)="onPreferredEmailChange($event, preferEmailId)"
                               required />
 
-                              <div *ngIf="(qde.application.applicants[applicantIndex].contactDetails.preferredEmailId)?.length == 100" class="invalid-feedback">Maximum Character Exceeds</div>
+                              <!-- <div *ngIf="(qde.application.applicants[applicantIndex].contactDetails.preferredEmailId)?.length == 100" class="invalid-feedback">Maximum Character Exceeds</div> -->
 
                             <label for="pref-email" tabindex="1">Preferred email ID</label>
                             <span class="alternate-data" *ngIf="!isAlternateEmailId">
@@ -591,7 +591,7 @@
                               [(ngModel)]="qde.application.applicants[applicantIndex].contactDetails.alternateEmailId"
                               name="alternateEmailId" #alternateEmailId="ngModel" fieldFill
                               (ngModelChange)="onPreferredEmailChange($event, alternateEmailId)"/>
-                              <div *ngIf="(qde.application.applicants[applicantIndex].contactDetails.alternateEmailId)?.length == 100" class="invalid-feedback">Maximum Character Exceeds</div>
+                              <!-- <div *ngIf="(qde.application.applicants[applicantIndex].contactDetails.alternateEmailId)?.length == 100" class="invalid-feedback">Maximum Character Exceeds</div> -->
 
                             <div *ngIf="(alternateEmailId.untouched || alternateEmailId.touched || alternateEmailId.dirty) && alternateEmailId.invalid"
                               class="invalid-feedback">
@@ -907,7 +907,7 @@
                               pattern="{{regexPattern.address}}" name="addressLineOne" #address1="ngModel" fieldFill
                               required autocomplete="off" />
 
-                              <div *ngIf="(qde.application.applicants[applicantIndex].communicationAddress.addressLineOne)?.length == minMaxValues['Address_Line']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div>
+                              <!-- <div *ngIf="(qde.application.applicants[applicantIndex].communicationAddress.addressLineOne)?.length == minMaxValues['Address_Line']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div> -->
 
                             <div *ngIf="(address1.touched || address1.dirty) && address1.invalid"
                               class="invalid-feedback">
@@ -926,7 +926,7 @@
                               [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.addressLineTwo"
                               pattern="{{regexPattern.address}}" name="addressLineTwo" #address2="ngModel" fieldFill />
 
-                              <div *ngIf="(qde.application.applicants[applicantIndex].communicationAddress.addressLineTwo)?.length == minMaxValues['Address_Line']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div>
+                              <!-- <div *ngIf="(qde.application.applicants[applicantIndex].communicationAddress.addressLineTwo)?.length == minMaxValues['Address_Line']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div> -->
 
                             <label for="address2" tabindex="2">Address line 2</label>
                             <span class="optional">optional</span>
@@ -991,7 +991,7 @@
                                 required />
 
 
-                                <div *ngIf="(qde.application.applicants[applicantIndex].permanentAddress.addressLineOne)?.length == minMaxValues['Address_Line']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div>
+                                <!-- <div *ngIf="(qde.application.applicants[applicantIndex].permanentAddress.addressLineOne)?.length == minMaxValues['Address_Line']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div> -->
 
                               <label for="per-address1" tabindex="6">Address line 1</label>
                               <div *ngIf="(pAddress1.touched || pAddress1.dirty) && pAddress1.invalid"
@@ -1009,7 +1009,7 @@
                                 [readOnly]="qde.application.applicants[applicantIndex].communicationAddress.permanentAddress"/>
                               <label for="per-address2" tabindex="7">Address line 2</label>
 
-                              <div *ngIf="(qde.application.applicants[applicantIndex].permanentAddress.addressLineTwo)?.length == minMaxValues['Address_Line']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div>
+                              <!-- <div *ngIf="(qde.application.applicants[applicantIndex].permanentAddress.addressLineTwo)?.length == minMaxValues['Address_Line']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div> -->
 
                               <span class="optional">optional</span>
                               <div *ngIf="(pAddress2.touched || pAddress2.dirty) && pAddress2.invalid"
@@ -1201,7 +1201,7 @@
                               id="spouse-name" fieldFill required  autocomplete="off"/>
                             <label for="spouse-name">First name</label>
 
-                            <div *ngIf="(qde.application.applicants[applicantIndex].maritalStatus.firstName)?.length == minMaxValues['Name']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div>
+                            <!-- <div *ngIf="(qde.application.applicants[applicantIndex].maritalStatus.firstName)?.length == minMaxValues['Name']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div> -->
 
                             <div *ngIf="(spouseName.touched || spouseName.dirty) && spouseName.invalid"
                               class="invalid-feedback">
@@ -1370,7 +1370,7 @@
                               pattern="{{regexPattern.name}}" />
                             <label for="father-name">Father's name</label>
 
-                            <div *ngIf="(qde.application.applicants[applicantIndex].familyDetails.fatherName)?.length == minMaxValues['Name']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div>
+                            <!-- <div *ngIf="(qde.application.applicants[applicantIndex].familyDetails.fatherName)?.length == minMaxValues['Name']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div> -->
 
                             <div *ngIf="fatherName.touched && fatherName.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="fatherName.errors?.required">{{errors.familyDetails.fatherName.required}}</div> -->
@@ -1399,7 +1399,7 @@
                               #motherName="ngModel" name="motherName" fieldFill pattern="{{regexPattern.name}}" />
                             <label for="mother-name">Mother's name</label>
 
-                            <div *ngIf="(qde.application.applicants[applicantIndex].familyDetails.motherName)?.length == minMaxValues['Name']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div>
+                            <!-- <div *ngIf="(qde.application.applicants[applicantIndex].familyDetails.motherName)?.length == minMaxValues['Name']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div> -->
 
                             <div *ngIf="motherName.touched && motherName.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="motherName.errors?.required">{{errors.familyDetails.motherName.required}}</div> -->
@@ -1415,7 +1415,7 @@
                               pattern="{{regexPattern.name}}" />
                             <label for="maiden-name">Mother's maiden name</label>
 
-                            <div *ngIf="(qde.application.applicants[applicantIndex].familyDetails.motherMaidenName)?.length == minMaxValues['Name']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div>
+                            <!-- <div *ngIf="(qde.application.applicants[applicantIndex].familyDetails.motherMaidenName)?.length == minMaxValues['Name']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div> -->
 
                             <div *ngIf="motherMaiden.touched && motherMaiden.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="motherMaiden.errors?.required">{{errors.familyDetails.motherMaiden.required}}</div> -->
@@ -1491,7 +1491,7 @@
                             pattern="{{regexPattern.name}}" #specifyReligion = "ngModel" required maxlength="25" autocomplete="off"
                               tabindex="2" [(ngModel)]="otherReligion" name="religionName" fieldFill id="religion-name">
                             <label for="religion-name">Specify other religion</label>
-                            <div *ngIf="otherReligion?.length == 25" class="invalid-feedback">Maximum Character Exceeds</div>
+                            <!-- <div *ngIf="otherReligion?.length == 25" class="invalid-feedback">Maximum Character Exceeds</div> -->
 
                             <div *ngIf="specifyReligion.touched && specifyReligion.invalid" class="invalid-feedback">
 
@@ -1605,7 +1605,7 @@
                               fieldFill id="companyName" />
                             <label for="companyName">Company name</label>
 
-                            <div *ngIf="(qde.application.applicants[applicantIndex].occupation.companyName)?.length == minMaxValues['Company_Name']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div>
+                            <!-- <div *ngIf="(qde.application.applicants[applicantIndex].occupation.companyName)?.length == minMaxValues['Company_Name']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div> -->
 
                             <div *ngIf="(companyName.touched || companyName.dirty) && companyName.invalid"
                               class="invalid-feedback">
@@ -1803,7 +1803,7 @@
                               required  [maxlength]="minMaxValues['Address_Line']?.maxLength" [minlength]="minMaxValues['Address_Line']?.minValue" />
                             <label for="ofcAddOne">Office address line1</label>
 
-                            <div *ngIf="(qde.application.applicants[applicantIndex].officialCorrespondence.addressLineOne)?.length == minMaxValues['Address_Line']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div>
+                            <!-- <div *ngIf="(qde.application.applicants[applicantIndex].officialCorrespondence.addressLineOne)?.length == minMaxValues['Address_Line']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div> -->
 
                             <div *ngIf="ofcA1.touched  && ofcA1.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="ofcA1.errors?.required">{{errors.officialCorrespondence.address1.required}}</div> -->
@@ -1820,7 +1820,7 @@
                               pattern="{{regexPattern.address}}" name="ofcA2" tabindex="2" #ofcA2="ngModel" fieldFill />
                             <label for="ofcAddTwo">Office address line2</label>
 
-                            <div *ngIf="(qde.application.applicants[applicantIndex].officialCorrespondence.addressLineTwo)?.length == minMaxValues['Address_Line']?.minValue" class="invalid-feedback">Maximum Character Exceeds</div>
+                            <!-- <div *ngIf="(qde.application.applicants[applicantIndex].officialCorrespondence.addressLineTwo)?.length == minMaxValues['Address_Line']?.minValue" class="invalid-feedback">Maximum Character Exceeds</div> -->
 
                             <span class="optional">optional</span>
                             <div *ngIf="ofcA2.touched && ofcA2.invalid" class="invalid-feedback">
@@ -1840,7 +1840,7 @@
                             <label for="offLandmark">Landmark</label>
                             <span class="optional">optional</span>
 
-                            <div *ngIf="(qde.application.applicants[applicantIndex].officialCorrespondence.landMark)?.length == minMaxValues['Landmark']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div>
+                            <!-- <div *ngIf="(qde.application.applicants[applicantIndex].officialCorrespondence.landMark)?.length == minMaxValues['Landmark']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div> -->
 
                             <div *ngIf="landMark.touched && landMark.invalid" class="invalid-feedback">
                               <div *ngIf="landMark.errors?.pattern">{{errors.officialCorrespondence.landMark.invalid}}
@@ -1921,7 +1921,7 @@
                               name="officeEmail" (ngModelChange)="onOfficialCorsEmailChange($event, officeEmail)"/>
                             <label for="off-email">Office email ID</label>
 
-                            <div *ngIf="(qde.application.applicants[applicantIndex].officialCorrespondence.officeEmailId)?.length == 100" class="invalid-feedback">Maximum Character Exceeds</div>
+                            <!-- <div *ngIf="(qde.application.applicants[applicantIndex].officialCorrespondence.officeEmailId)?.length == 100" class="invalid-feedback">Maximum Character Exceeds</div> -->
 
                             <div *ngIf="(officeEmail.untouched || officeEmail.touched) && officeEmail.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="officeEmail.errors?.required">{{errors.officialCorrespondence.email.required}}</div> -->
@@ -2472,7 +2472,7 @@
                               #orgName="ngModel" name="orgName" fieldFill required />
                             <label for="org-name">Name of Organization</label>
 
-                            <div *ngIf="(qde.application.applicants[applicantIndex].organizationDetails.nameOfOrganization)?.length == minMaxValues['Name']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div>
+                            <!-- <div *ngIf="(qde.application.applicants[applicantIndex].organizationDetails.nameOfOrganization)?.length == minMaxValues['Name']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div> -->
 
                             <div *ngIf="(orgName.touched || orgName.dirty) && orgName.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="orgName.errors?.required">{{errors.organizationDetails.orgName.required}}</div> -->
@@ -2579,7 +2579,7 @@
                               required />
                             <label for="reg-add">Registered Address</label>
 
-                            <div *ngIf="(qde.application.applicants[applicantIndex].registeredAddress.registeredAddress)?.length == minMaxValues['Address_Line']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div>
+                            <!-- <div *ngIf="(qde.application.applicants[applicantIndex].registeredAddress.registeredAddress)?.length == minMaxValues['Address_Line']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div> -->
 
                             <div *ngIf="(regAdd.touched || regAdd.dirty) && regAdd.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="regAdd.errors?.required">{{errors.registeredAddress.address.required}}</div> -->
@@ -2592,7 +2592,7 @@
                               [(ngModel)]="qde.application.applicants[applicantIndex].registeredAddress.landMark"
                               id="landmark" pattern="{{regexPattern.landmark}}" />
 
-                              <div *ngIf="(qde.application.applicants[applicantIndex].registeredAddress.landMark)?.length == minMaxValues['Landmark']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div>
+                              <!-- <div *ngIf="(qde.application.applicants[applicantIndex].registeredAddress.landMark)?.length == minMaxValues['Landmark']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div> -->
 
                             <label for="landmark">Landmark</label>
                             <span class="optional">optional</span>
@@ -2693,7 +2693,7 @@
                               required />
                             <label for="corp-add">Corporate Address</label>
 
-                            <div *ngIf="(qde.application.applicants[applicantIndex].corporateAddress.corporateAddress)?.length == minMaxValues['Address_Line']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div>
+                            <!-- <div *ngIf="(qde.application.applicants[applicantIndex].corporateAddress.corporateAddress)?.length == minMaxValues['Address_Line']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div> -->
 
                             <div *ngIf="corpAddress.touched  && corpAddress.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="corpAddress.errors?.required">{{errors.corporateAddress.address.required}}</div> -->
@@ -2708,7 +2708,7 @@
                             <label for="landmark01">Landmark</label>
                             <span class="optional">optional</span>
 
-                            <div *ngIf="(qde.application.applicants[applicantIndex].corporateAddress.landMark)?.length == minMaxValues['Landmark']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div>
+                            <!-- <div *ngIf="(qde.application.applicants[applicantIndex].corporateAddress.landMark)?.length == minMaxValues['Landmark']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div> -->
 
                             <div *ngIf="(landmark.touched || landmark.dirty) && landmark.invalid"
                               class="invalid-feedback">
@@ -2783,7 +2783,7 @@
                               name="officeEmailId" #ofcEmail="ngModel" fieldFill />
                             <label for="ofc-email">Office email ID</label>
 
-                            <div *ngIf="(qde.application.applicants[applicantIndex].corporateAddress.officeEmailId)?.length == 100" class="invalid-feedback">Maximum Character Exceeds</div>
+                            <!-- <div *ngIf="(qde.application.applicants[applicantIndex].corporateAddress.officeEmailId)?.length == 100" class="invalid-feedback">Maximum Character Exceeds</div> -->
 
                             <div *ngIf="(ofcEmail.untouched || ofcEmail.touched) && ofcEmail.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="ofcEmail.errors?.required">{{errors.corporateAddress.ofcEmail.required}}</div> -->

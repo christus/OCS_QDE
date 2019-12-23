@@ -64,7 +64,7 @@
                             class="form-control" 
                             id="amt-require"
                             required autocomplete="off"
-                            maxlength="minMaxValues['Loan_amount'].maxLength"
+                            maxlength="minMaxValues['Loan_amount']?.maxLength"
                             [(ngModel)]="qde?.application.loanDetails.loanAmount.amountRequired"
                             #amountRequired = "ngModel"
                             name="amountRequired"
@@ -118,9 +118,9 @@
                             required
                             ngModel autocomplete="off"
                             #loanTenure = "ngModel"
-                            min="1"
-                            max="30"
-                            maxlength="2"
+                            [min]="loanTenureMin"
+                            [max]="loanTenureMax"
+                            [maxlength]="loanTenureMax?.length"
                             oninput="this.value=this.value.slice(0,this.maxLength)"
                             name="loanTenure"
                             [(ngModel)]="qde?.application.tenure"
@@ -245,7 +245,7 @@
                               <div class="form-group">
                                   <input [readonly]="isTBMLoggedIn"
                                   type="text" autocomplete="off"
-                                  [maxlength]="minMaxValues['Property_area_sq_fts'].maxLength"
+                                  [maxlength]="minMaxValues['Property_area_sq_fts']?.maxLength"
                                   class="form-control"
                                   id="pro-add-line2" 
                                   name="propertyAreaInSqFFeets"
@@ -286,9 +286,10 @@
                             #proaddressLineOne="ngModel"
                             [(ngModel)]="addressLineOneValue"
                             name="proaddressLineOne"
-                            fieldFill maxlength="120"
+                            fieldFill [maxlength]="minMaxValues['Address_Line']?.maxLength"
+                            [minlength]="minMaxValues['Address_Line']?.minValue"
                             pattern='{{regexPattern.address}}'/>
-                            <div *ngIf="addressLineOneValue?.length == 120" class="invalid-feedback">Maximum Character Exceeds</div>
+                            <!-- <div *ngIf="addressLineOneValue?.length == minMaxValues['Address_Line']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div> -->
                             <label for="add-line1">Property address line1</label>
 
                             <div *ngIf="(proaddressLineOne.touched || proaddressLineOne.dirty) && proaddressLineOne.invalid" class="invalid-feedback">
@@ -301,12 +302,12 @@
                             <input [readonly]="isTBMLoggedIn" type="text" class="form-control" id="add-line2"
                               ngModel
                               #addressLineTwo = "ngModel" autocomplete="off"
-							                fieldFill maxlength="120"
+							                fieldFill [maxlength]="minMaxValues['Address_Line']?.maxLength"
                               [(ngModel)]="addressLineTwoValue"
                               name="addressLineTwo"
                               pattern='{{regexPattern.address}}'/>
                               
-                              <div *ngIf="addressLineTwoValue?.length == 120" class="invalid-feedback">Maximum Character Exceeds</div>
+                              <!-- <div *ngIf="addressLineTwoValue?.length == minMaxValues['Address_Line']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div> -->
 
                             <label for="add-line2">Property address line2</label>
                             <span class="optional">optional</span>
@@ -322,8 +323,8 @@
                             ngModel
                             #propertyPincode = "ngModel" autocomplete="off"
                             [(ngModel)]="propertyPincodeValue"
-                            minlength="6"
-                            maxlength="6"
+                            [minlength]="minMaxValues['Pincode']?.minValue"
+                            [maxlength]="minMaxValues['Pincode']?.maxLength"
                             name="propertyPincode"
 							              fieldFill
                             pattern='{{regexPattern.pinCode}}'
@@ -454,7 +455,7 @@
                                     <input type="number" autocomplete="off"
                                             name="liveLoansNumber"
                                             oninput="this.value=this.value.slice(0,this.maxLength)"
-                                            maxLength = 1
+                                            [maxLength] = "minMaxValues['Live_Loans']?.maxLength"
                                             class="form-control"
                                             [(ngModel)]="liveLoan"
                                             (ngModelChange)="valuechange($event, 1)" />
@@ -501,7 +502,7 @@
                                   class="form-control" 
                                   id="monthly-emi"
                                   ngModel autocomplete="off"
-                                  [maxlength]="minMaxValues['Monthly_EMI'].maxLength"                                  
+                                  [maxlength]="minMaxValues['Monthly_EMI']?.maxLength"                                  
                                   #monthlyEmi = "ngModel"
                                   [(ngModel)]="monthlyEmiValue"
                                   fieldFill required
@@ -546,7 +547,7 @@
                               class="form-control" 
                               id="monthly-emi1"
                               autocomplete="off"
-                              [maxlength]="minMaxValues['Monthly_EMI'].maxLength"                              
+                              [maxlength]="minMaxValues['Monthly_EMI']?.maxLength"                              
                               #monthlyEmi = "ngModel"
                               [(ngModel)]="monthlyEmiValue"                             
                               name="monthlyEmi" pattern="^[1-9][0-9]*$"

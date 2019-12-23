@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
 import { ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
+import { MinMax } from 'src/app/models/qde.model';
 
 @Component({
   selector: 'app-loan-master',
@@ -36,6 +37,8 @@ export class LoanMasterComponent implements OnInit {
   invalidFeedback1: boolean;
   delIndex: any;
   isConfirmModal: boolean;
+  minMaxValues: Array<MinMax>;
+  rateOfInterestDecimal;
 
   constructor(private qdeHttp: QdeHttpService, private _route: ActivatedRoute) {
 
@@ -45,7 +48,6 @@ export class LoanMasterComponent implements OnInit {
     });
 
     this.userId = parseInt(localStorage.getItem('userId'));
-
     if(_route.snapshot.url[1]['path'] == 'loan_master') {
       this.tableName = 'loan_master';
       this.isLoanMaster = true;
@@ -79,6 +81,9 @@ export class LoanMasterComponent implements OnInit {
         this.totalPages = parseInt(res['ProcessVariables']['totalPages']);
         this.perPage = parseInt(res['ProcessVariables']['perPage']);
         this.totalElements = parseInt(res['ProcessVariables']['totalPages']) * this.perPage;
+        this.qdeHttp.adminGetMinMax("1","rate").subscribe(res=>{
+          this.minMaxValues = res['ProcessVariables']['minMaxList'];
+          })
       }, err => {
   
       });
@@ -377,8 +382,9 @@ export class LoanMasterComponent implements OnInit {
   }
   checkDecimals(event){
   let num = event.target.value;
-  // let pattern = /[0-9]?[0-9]?(\.[0-9][0-9]?)?/;
-  let pattern = /^[0-9]?[0-9]?(\.[0-9]{1,2})?$/;
+  let pattern = /[0-9]?[0-9]?(\.[0-9][0-9]?)?/;
+  // switch(this.minMaxValues);
+  // let pattern = /^[0-9]?[0-9]?(\.[0-9]{1,this.minMaxValues['Rate_Of_Interest_Decimal'].maxLength})?$/;
   if(!pattern.test(num)){
     this.invalidFeedback = true;
   }else{

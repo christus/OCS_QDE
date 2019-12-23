@@ -115,13 +115,14 @@
                             name="fullName" 
                             id="ref1-name"
                             pattern="{{regexPattern.name}}" 
-                            maxlength="50"
+                            [minlength]="minMaxValues['Name']?.minValue"
+                            [maxlength]="minMaxValues['Name']?.maxLength"
                             #refOneFullName="ngModel"
                             spellcheck="false"
                             fieldFill 
                             [(ngModel)]="selectedName1">
                             <label for="ref1-name">Full name</label>
-                         <div *ngIf="selectedName1?.length == 50" class="invalid-feedback">Maximum Character Exceeds</div>
+                         <!-- <div *ngIf="selectedName1?.length == minMaxValues['Name']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div> -->
                             <div *ngIf="refOneFullName.touched && refOneFullName.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="refOneFullName.errors?.required">{{errors.references.referenceOne.fullName.required}}</div> -->
                               <div *ngIf="refOneFullName.errors?.pattern">{{errors.references.referenceOne.fullName.invalid}}</div>
@@ -135,8 +136,8 @@
                             required  autocomplete="off"
                             id="ref1-mobile"  
                             name="mobileNumber"
-                            minlength="10"
-                            maxlength="10"
+                            [minlength]="minMaxValues['Mobile_Number']?.minValue"
+                            [maxlength]="minMaxValues['Mobile_Number']?.maxLength"
                             pattern="{{regexPattern.mobileNumber}}"  
                             ngModel
                             spellcheck="false"
@@ -150,7 +151,7 @@
                             <div *ngIf="refOneMobileNumber.touched && refOneMobileNumber.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="refOneMobileNumber.errors?.required">{{errors.references.referenceOne.mobileNumber.required}}</div> -->
                               <div *ngIf="refOneMobileNumber.errors?.pattern">{{errors.references.referenceOne.mobileNumber.invalid}}</div>
-                              <div *ngIf="refOneMobileNumber.errors?.minlength">{{errors.references.referenceOne.mobileNumber.minlength}}</div>
+                              <div *ngIf="refOneMobileNumber.errors?.minlength">{{errors.references.referenceOne.mobileNumber.minlength}}{{" "+minMaxValues['Mobile_Number']?.minValue+" digits"}}</div>
                             </div>
                             <div class="invalid-feedback">
                                 <div *ngIf="refOneMobileNumber.touched && refOneMobileNumber.dirty && refOneMobileNumber.value == refTwoMobileNumber.value && refOneMobileNumber.value">{{errors.references.referenceOne.mobileNumber.sameNumber}}</div>
@@ -164,12 +165,12 @@
                             name="addressLineOne" 
                             ngModel
                             spellcheck="false"
-                            fieldFill maxlength="120"
-                            pattern="{{regexPattern.address}}" 
+                            fieldFill [maxlength]="minMaxValues['Address_Line']?.maxLength"
+                            [minlength]="minMaxValues['Address_Line']?.minValue" pattern="{{regexPattern.address}}" 
                             #refOneAddressLineOne="ngModel"
                             [(ngModel)]="selectedAddressLineOne1">
                             <label for="ref1-add1">Address line1</label>
-                            <div *ngIf="selectedAddressLineOne1?.length == 120" class="invalid-feedback">Maximum Character Exceeds</div>
+                            <!-- <div *ngIf="selectedAddressLineOne1?.length == minMaxValues['Address_Line']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div> -->
                             <div *ngIf="refOneAddressLineOne.touched && refOneAddressLineOne.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="refOneAddressLineOne.errors?.required">{{errors.references.referenceOne.addressLineOne.required}}</div> -->
                               <div *ngIf="refOneAddressLineOne.errors?.pattern">{{errors.references.referenceOne.addressLineOne.invalid}}</div>
@@ -181,12 +182,12 @@
                             name="addressLineTwo"  autocomplete="off"
                             ngModel
                             spellcheck="false"
-                            fieldFill maxlength="120"
+                            fieldFill [maxlength]="minMaxValues['Address_Line']?.maxLength"
                             pattern="{{regexPattern.address}}" 
                             #refOneAddressLineTwo="ngModel"
                             [(ngModel)]="selectedAddressLineTwo1">
                             <label for="ref1-add2">Address line2</label>
-                            <div *ngIf="selectedAddressLineTwo1?.length == 120" class="invalid-feedback">Maximum Character Exceeds</div>
+                            <!-- <div *ngIf="selectedAddressLineTwo1?.length == minMaxValues['Address_Line']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div> -->
                             <span class="optional">optional</span>
                             <div *ngIf="refOneAddressLineTwo.touched && refOneAddressLineTwo.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="refOneAddressLineTwo.errors?.required">{{errors.references.referenceOne.addressLineTwo.required}}</div> -->
@@ -308,11 +309,12 @@
                             #refTwoFullName="ngModel"
                             pattern="{{regexPattern.name}}"
                             required
-                            spellcheck="false" maxlength="50"
+                            spellcheck="false" [maxlength]="minMaxValues['Name']?.maxLength"
+                            [minlength]="minMaxValues['Name']?.minValue"
                             fieldFill
                             [(ngModel)]="selectedName2">
                             
-                            <div *ngIf="selectedName2?.length == 50" class="invalid-feedback">Maximum Character Exceeds</div>
+                            <!-- <div *ngIf="selectedName2?.length == minMaxValues['Name']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div> -->
                             <label for="ref2-name">Full name</label>
                             <div *ngIf="refTwoFullName.touched && refTwoFullName.invalid" class="invalid-feedback">
                                 <!-- <div *ngIf="refTwoFullName.errors?.required">{{errors.references.referenceTwo.fullName.required}}</div> -->
@@ -324,8 +326,8 @@
                             <input [readonly]="isReadOnly" type="text" class="form-control" id="ref2-mobile" 
                             name="mobileNumber"  autocomplete="off"
                             ngModel 
-                            minlength="10"
-                            maxlength="10"
+                            [minlength]="minMaxValues['Mobile_Number']?.minValue"
+                            [maxlength]="minMaxValues['Mobile_Number']?.maxLength"
                             #refTwoMobileNumber="ngModel"
                             pattern="{{regexPattern.mobileNumber}}"
                             fieldFill
@@ -339,7 +341,7 @@
                             <div *ngIf="refTwoMobileNumber.touched && refTwoMobileNumber.invalid" class="invalid-feedback">
                                 <!-- <div *ngIf="refTwoMobileNumber.errors?.required">{{errors.references.referenceTwo.mobileNumber.required}}</div> -->
                                 <div *ngIf="refTwoMobileNumber.errors?.pattern">{{errors.references.referenceTwo.mobileNumber.invalid}}</div>
-                                <div *ngIf="refTwoMobileNumber.errors?.minlength">{{errors.references.referenceTwo.mobileNumber.minlength}}</div>  
+                                <div *ngIf="refTwoMobileNumber.errors?.minlength">{{errors.references.referenceTwo.mobileNumber.minlength}}{{" "+minMaxValues['Mobile_Number']?.minValue+" digits"}}</div>  
                             </div>
                             <div class="invalid-feedback">
                                 <div *ngIf="refTwoMobileNumber.touched && refTwoMobileNumber.value == refOneMobileNumber.value">{{errors.references.referenceTwo.mobileNumber.sameNumber}}</div>
@@ -352,13 +354,13 @@
                               ngModel autocomplete="off"
                               #refTwoAddressLineOne="ngModel"
                               pattern="{{regexPattern.address}}"
-                              required maxlength="120"
-                              spellcheck="false"
+                              required [maxlength]="minMaxValues['Address_Line']?.maxLength"
+                              [minlength]="minMaxValues['Address_Line']?.minValue" spellcheck="false"
                               fieldFill
                               [(ngModel)]="selectedAddressLineOne2">
                                
                             <label for="ref2-add1">Address line1</label>
-                            <div *ngIf="selectedAddressLineOne2?.length == 120" class="invalid-feedback">Maximum Character Exceeds</div>
+                            <!-- <div *ngIf="selectedAddressLineOne2?.length == minMaxValues['Address_Line']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div> -->
                             <div *ngIf="refTwoAddressLineOne.touched && refTwoAddressLineOne.invalid" class="invalid-feedback">
                                 <!-- <div *ngIf="refTwoAddressLineOne.errors?.required">{{errors.references.referenceTwo.addressLineOne.required}}</div> -->
                                 <div *ngIf="refTwoAddressLineOne.errors?.pattern">{{errors.references.referenceTwo.addressLineOne.invalid}}</div>
@@ -372,11 +374,11 @@
                              #refTwoAddressLineTwo="ngModel"
                              pattern="{{regexPattern.address}}"
                              spellcheck="false"
-                             fieldFill maxlength="120"
+                             fieldFill [maxlength]="minMaxValues['Address_Line']?.maxLength"
                              [(ngModel)]="selectedAddressLineTwo2">
                             <label for="ref2-add2">Address line2</label>
                             <span class="optional">optional</span>
-                            <div *ngIf="selectedAddressLineTwo2?.length == 120" class="invalid-feedback">Maximum Character Exceeds</div>
+                            <!-- <div *ngIf="selectedAddressLineTwo2?.length == 120" class="invalid-feedback">Maximum Character Exceeds</div> -->
                             <div *ngIf="refTwoAddressLineTwo.touched && refTwoAddressLineTwo.invalid" class="invalid-feedback">
                                 <!-- <div *ngIf="refTwoAddressLineTwo.errors?.required">{{errors.references.referenceTwo.addressLineTwo.required}}</div> -->
                                 <div *ngIf="refTwoAddressLineTwo.errors?.pattern">{{errors.references.referenceTwo.addressLineTwo.invalid}}</div>

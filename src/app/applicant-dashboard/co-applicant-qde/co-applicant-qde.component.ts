@@ -67,10 +67,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   regexPattern = {
     mobileNumber: "^[1-9][0-9]*$",
     stdCode: "^[0][0-9]*$",
-    name: "^[A-Za-z ]{0,49}$",
-    organizationName: "^[0-9A-Za-z, _&*#'/\\-@]{0,49}$",
+    name: "^[A-Za-z ]{0,99}$",
+    organizationName: "^[0-9A-Za-z, _&*#'/\\-@]{0,99}$",
     birthPlace:"^[A-Za-z ]{0,99}$",
-    address : "^[0-9A-Za-z, _&*#'/\\-]{0,119}$",
+    address : "^[0-9A-Za-z, _&*#'/\\-]{0,99}$",
     landmark : "^[0-9A-Za-z, _&*#'/\\-]{0,99}$",
     // cityState:"^[0-9A-Za-z, &'#]$",
     pinCode: "^[1-9][0-9]{5}$",

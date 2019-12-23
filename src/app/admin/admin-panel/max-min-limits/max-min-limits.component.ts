@@ -65,6 +65,8 @@ export class MaxMinLimitsComponent implements OnInit {
     this.collection[index]['isEdit']=true;
   }
   save(index){
+    let res = this.checkMaxLength(index);
+    if(res==true){
     this.collection[index]['isEdit']=false;
     this.qdeHttp.adminUpdateMinMax(this.collection[index]).subscribe(res=>{
       if(res['Error'] == "0" && res['ProcessVariables']['status'] && res['ProcessVariables']['errorMessage'] == ""){
@@ -72,33 +74,34 @@ export class MaxMinLimitsComponent implements OnInit {
         this.errorMsg = "Updated Successfully";
       }
     })
-
+  }
   }
 
   pageChanged(value) {
     this.getData(value);
   }
-  checkMaxLength(event, index: number) {
-    if (event.target.value != "") {
+  checkMaxLength(index: number) : boolean {
       let fieldType = this.collection[index]['fieldType'];
       let maxValue = this.collection[index]['maxValue'];
       if (fieldType === "Alpha") {
         if (this.collection[index]['maxLength'] != maxValue) {
           this.isErrorModal = true;
-          this.errorMsg = "Field accepts only Alphabets. Hence, Maximum Length should be equal to maximum value"
-        }
+          this.errorMsg = "Field accepts only Alphabets. Hence, Maximum Length should be equal to maximum value";
+          return false;
+        }else{ return true;}
       } else if (fieldType === "Alpha numeric") {
         if (this.collection[index]['maxLength'] != maxValue) {
           this.isErrorModal = true;
-          this.errorMsg = "Field is AlphaNumeric. Hence, Maximum Length should be equal to maximum value"
-        }
+          this.errorMsg = "Field is AlphaNumeric. Hence, Maximum Length should be equal to maximum value";
+          return false;
+        }else { return true;}
       } else if (fieldType === "Numeric") {
         let maxLength = String(this.collection[index]['maxValue']).length;
         if (this.collection[index]['maxLength'] != maxLength) {
           this.isErrorModal = true;
-          this.errorMsg = "Field is Numeric. Hence, Maximum Length should be equal to length of the maximum value"
-        }
+          this.errorMsg = "Field is Numeric. Hence, Maximum Length should be equal to length of the maximum value";
+          return false;
+        }else { return true;}
       }
-    }
   }
 }

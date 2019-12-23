@@ -31,8 +31,7 @@
         </td>
 	      <td><span style="text-align: left;">{{item.fieldType}}</span></td>
 	      <td>
-	      <input type="text" placeholder="Maximum Length" #maxLength="ngModel" [(ngModel)]="item.maxLength" [disabled]="!item.isEdit" autocomplete="off" required 
-	      (input)="checkMaxLength($event,i)" />
+	      <input type="text" placeholder="Maximum Length" #maxLength="ngModel" [(ngModel)]="item.maxLength" [disabled]="!item.isEdit" autocomplete="off" required />
 	      <span *ngIf="(maxLength.touched || maxLength.dirty) && maxLength.errors?.required" class="redalert"><br>Maximum Length cannot be empty</span>
         <td>
           <button type="button" class="editsavebtn" *ngIf="!item.isEdit" (click)="edit(i)">Edit</button>
