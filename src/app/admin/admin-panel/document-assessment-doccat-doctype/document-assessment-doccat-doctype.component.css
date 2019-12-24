@@ -148,3 +148,8 @@ thead, tbody tr {
     display: inline-block;
     vertical-align: middle;
 }
+.fileUpload {
+    background: #f9f9f9;
+    padding: 10px;
+    cursor: pointer;
+}
