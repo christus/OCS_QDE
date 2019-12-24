@@ -11,8 +11,8 @@
     <div class="admin-col-half">
 
       <label *ngIf="isLoanMaster" for="rateOfInterest">Rate of Interest</label>
-      <input *ngIf="isLoanMaster" id="rateOfInterest" type="text" [(ngModel)]="rateOfInterest" name="rateOfInterest" (input)="checkDecimals($event)" [maxlength]="(2+(minMaxValues['Rate_Of_Interest_Decimal']?.maxLength))" />
-      <span *ngIf="isAdd && isLoanMaster && invalidFeedback" class="redalert"><br>Invalid Rate Of Interest. Kindly ensure there are minimum 1 but not greater 2 numbers before and after the decimal</span>
+      <input *ngIf="isLoanMaster" id="rateOfInterest" type="text" [(ngModel)]="rateOfInterest" name="rateOfInterest" (input)="checkDecimals($event)" [maxlength]="maxLength" />
+      <span *ngIf="isAdd && isLoanMaster && invalidFeedback" class="redalert"><br>Invalid Rate Of Interest</span>
 
       <label *ngIf="isLoanMaster" for="baseAmount">Base Amount</label>
       <input *ngIf="isLoanMaster" id="baseAmount" type="text" [(ngModel)]="baseAmount" name="baseAmount" pattern="^[0-9]*$" />
@@ -69,8 +69,8 @@
         <td>{{i+1}}</td>
         <td *ngIf="isLoanMaster">
           <form>
-            <input id="tablerateOfInterest" type="text" [(ngModel)]="d.rateOfInterest" name="rateOfInterest" #rateOfInterest="ngModel" pattern="^[0-9]?[0-9]?(\.[0-9]{1,2})?$" (input)="checkDecimals1($event)" maxlength="5" />
-            <span *ngIf="(rateOfInterest.touched || rateOfInterest.dirty) && rateOfInterest.errors?.pattern" class="redalert">Invalid Rate Of Interest. Kindly ensure there are minimum 1 but not greater 2 numbers before and after the decimal</span>
+            <input id="tablerateOfInterest" type="text" [(ngModel)]="d.rateOfInterest" name="rateOfInterest" #rateOfInterest="ngModel" [pattern]="ROIpattern" [maxlength]="maxLength" (input)="checkDecimals1($event)" />
+            <span *ngIf="(rateOfInterest.touched || rateOfInterest.dirty) && rateOfInterest.errors?.pattern" class="redalert">Invalid Rate Of Interest</span>
           </form>
         </td>
         <td *ngIf="isLoanMaster">
