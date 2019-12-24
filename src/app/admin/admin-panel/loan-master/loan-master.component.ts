@@ -393,6 +393,7 @@ export class LoanMasterComponent implements OnInit {
 	  );
      }
   }
+
   checkDecimals(event){
   if(event.target.name == "taxApplicable"){
   let num = event.target.value;

@@ -350,7 +350,9 @@
                               id="firstName"
                               [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.firstName"
                               name="firstName"  #firstName="ngModel" fieldFill required autocomplete="off"
-                              tabindex="2" [maxlength]="minMaxValues['Name']?.maxLength" [minlength]="minMaxValues['Name']?.minValue"
+                              tabindex="2"
+                              [maxlength]="minMaxValues['Name']?.maxLength" 
+                              [minlength]="minMaxValues['Name']?.minValue"
                               pattern="{{regexPattern.name}}" />
                             <label for="firstName">First name</label>
 

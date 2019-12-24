@@ -28,9 +28,13 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
   isFinancialApplicant: boolean = false;
   isMale: boolean;
   isConfirmModal : boolean;
+  isUserAtivity: boolean = false;
   delIndex;
 
   @ViewChildren('lovsElements') lovsElements: QueryList<ElementRef>;
+  public actvityLists: Array<string> = [ "Lead", "Login", "Report","Reassign"];
+  public selectedSizes: Array<string> = [];
+
 
   constructor(private route: ActivatedRoute,
               private qdeHttp: QdeHttpService,
@@ -43,6 +47,7 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
       this.isLoanPurpose = this.tableName == 'loan_purpose' ? true : false;
       this.isFinancialApplicant = this.tableName == 'profile' ? true : false;
       this.isMale = this.tableName == 'profile' ? true : false;
+      this.isUserAtivity = this.tableName == "user_role"? true : false;
     });
 
     let response = this.route.snapshot.data['eachLovs']['ProcessVariables'];

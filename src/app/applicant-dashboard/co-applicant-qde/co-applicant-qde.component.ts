@@ -555,6 +555,15 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       this.unOfficialEmails =  lov.LOVS.un_official_emails;
       this.preferredEmail = lov.LOVS.preferred_mails;
       this.minMaxValues = lov.LOVS.min_max_values;
+      this.options['floor'] = this.minMaxValues["Years_in_residence"].minValue;
+      this.options['ceil'] = this.minMaxValues["Years_in_residence"].maxLength;
+      this.employementOptions['floor'] = this.minMaxValues["Years_in_employment"].minValue;
+      this.employementOptions['ceil'] = this.minMaxValues["Years_in_employment"].maxLength;
+      this.experienceOptions['floor'] = this.minMaxValues["Years_in_employment"].minValue;
+      this.experienceOptions['ceil'] = this.minMaxValues["Years_in_employment"].maxLength;
+      this.familyOptions['floor'] = this.minMaxValues["No_Of_Dependents"].minValue;
+      this.familyOptions['ceil'] = this.minMaxValues["No_Of_Dependents"].maxLength;
+      
       //hardcoded
       //this.birthPlace = [{"key": "Chennai", "value": "1"},{"key": "Mumbai", "value": "2"},{"key": "Delhi", "value": "3"}];
       // List of Values for Date
@@ -4510,18 +4519,27 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     }
 
 
-    const dateofbirth = this.dateofBirthKendo;
-
+    // const dateofbirth = this.dateofBirthKendo;
+    const dateofbirth =this.getFormattedDate(value);
     console.log("dateofbirth", dateofbirth);
     const d1: any = new Date(dateofbirth);
     const d2: any = new Date();
     var diff = d2 - d1;
     var age = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
-    if (age <  Number(this.minMaxValues['Age_limit'].minValue)) {
+    if (age <  Number(this.minMaxValues['Age_Of_Incorporation'].minValue)) {
       this.ageError = true;
+      this.ageMaxError = false;
       return;
-    } else {
+    }else if (age >  Number(this.minMaxValues["Age_Of_Incorporation"].maxValue)){     
+      this.ageMaxError = true;   
+      this.isErrorModal = true;
+      this.errorMessage = `Maximum age limit is.${this.minMaxValues["Age_Of_Incorporation"].maxValue}`;
+      
       this.ageError = false;
+      return;
+    }else {
+      this.ageError = false;
+      this.ageMaxError = false;
     }
 
   }
