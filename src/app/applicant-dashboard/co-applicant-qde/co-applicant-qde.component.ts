@@ -24,6 +24,7 @@ import { MobileService } from '../../services/mobile-constant.service';
 import { DatePipe } from '@angular/common';
 import { SelectionRangeEnd } from '@progress/kendo-angular-dateinputs';
 import { MinMax } from 'src/app/models/qde.model';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 interface Item {
   key: string,
@@ -66,10 +67,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   regexPattern = {
     mobileNumber: "^[1-9][0-9]*$",
     stdCode: "^[0][0-9]*$",
-    name: "^[A-Za-z ]{0,49}$",
-    organizationName: "^[0-9A-Za-z, _&*#'/\\-@]{0,49}$",
+    name: "^[A-Za-z ]{0,99}$",
+    organizationName: "^[0-9A-Za-z, _&*#'/\\-@]{0,99}$",
     birthPlace:"^[A-Za-z ]{0,99}$",
-    address : "^[0-9A-Za-z, _&*#'/\\-]{0,119}$",
+    address : "^[0-9A-Za-z, _&*#'/\\-]{0,99}$",
     landmark : "^[0-9A-Za-z, _&*#'/\\-]{0,99}$",
     // cityState:"^[0-9A-Za-z, &'#]$",
     pinCode: "^[1-9][0-9]{5}$",
@@ -384,6 +385,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   range;
 
   ageError:boolean = false;
+  ageMaxError:boolean = false;
 
   min: Date; // minimum date to date of birth amd non indu
   maxDate : Date = new Date();
@@ -414,7 +416,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
               private cds: CommonDataService,
               private utilService: UtilService,
               public datepipe: DatePipe,
-              private mobileService: MobileService) {
+              private mobileService: MobileService,
+              private ngxService: NgxUiLoaderService) {
     this.qde = this.qdeService.defaultValue;
 
 
@@ -1001,6 +1004,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   submitPanNumber(form: NgForm, swiperInstance1 : Swiper, swiperInstance2: Swiper) {
+    try {
+      this.ngxService.start();
     if(this.isTBMLoggedIn) {
       this.tabSwitch(2, 1);
     } else {
@@ -1181,6 +1186,13 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       }
 
     }
+  } catch (ex) {
+    this.isErrorModal = true;
+    this.errorMessage = ex.message;
+
+    } finally {
+      // this.ngxService.stop();
+    }
   }
 
 
@@ -1189,6 +1201,8 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   //-------------------------------------------------------------
 
   submitOrgPanNumber(form: NgForm, swiperInstance1 : Swiper, swiperInstance2: Swiper) {
+    try{
+      this.ngxService.start();
     if(this.isTBMLoggedIn) {
       this.tabSwitch(12, 1);
     } else {
@@ -1332,6 +1346,13 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         // }
       );
       }
+    }
+  } catch (ex) {
+    this.isErrorModal = true;
+    this.errorMessage = ex.message;
+
+    } finally {
+      // this.ngxService.stop();
     }
   }
 
@@ -4193,6 +4214,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
       this.qde.application.applicants[this.coApplicantIndex].communicationAddress.cityState = "";
       this.selectedResidence = this.defaultItem;
+      this.makePermanentAddressSame(false);
     }
     // this.isCurrentAddressFromMainApplicant = false;
   }
@@ -4521,6 +4543,27 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       month: { key: month, value: month },
       year: { key: year, value: year }
     }
+    const dateofbirth = this.getFormattedDate(value);
+      console.log("dateofbirth", dateofbirth);
+      const d1: any = new Date(dateofbirth);
+      const d2: any = new Date();
+      var diff = d2 - d1;
+      var age = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
+      if (age < Number(this.minMaxValues["Age_limit"].minValue)) {
+        this.ageError = true;
+        this.ageMaxError = false;
+        return;
+      }else if (age >  Number(this.minMaxValues["Age_limit"].maxValue)){
+        
+        this.isErrorModal = true;
+        this.errorMessage = `Maximum age limit is.${this.minMaxValues["Age_limit"].maxValue}`;
+        this.ageMaxError = true;
+        this.ageError = false;
+        return;
+      } else {
+        this.ageError = false;
+        this.ageMaxError = false;
+      }
 
   }
   setSpouseTitles(): boolean{
@@ -4624,5 +4667,18 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     if(this.qde.application.applicants[this.coApplicantIndex].contactDetails.alternateResidenceNumber == "-" && this.isAlternateResidenceNumber == true){
       this.addRemoveResidenceNumberField();
     }
+  }
+  getFormattedDate(date) {
+    console.log("in date conversion " + date);
+
+    let dateFormat: Date = date;
+    let year = dateFormat.getFullYear();
+    let month = dateFormat.getMonth() + 1;
+    let month1 = month < 10 ? '0' + month.toString() : '' + month.toString(); // ('' + month) for string result
+    let day = date.getDate();
+    day = day < 10 ? '0' + day : '' + day; // ('' + month) for string result
+    let formattedDate = year + '-' + month1 + '-' + day;
+    // console.log("final Value "+ formattedDate);
+    return formattedDate;
   }
 }

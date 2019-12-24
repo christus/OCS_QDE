@@ -1,6 +1,6 @@
 import { CommonDataService } from 'src/app/services/common-data.service';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpResponse, HttpErrorResponse } from "@angular/common/http";
-import { Observable } from "rxjs";
+import { Observable, of } from "rxjs";
 import { map, tap, first, catchError } from "rxjs/operators";
 import { UtilService } from "./util.service";
 import { Inject } from "@angular/core";
@@ -78,6 +78,10 @@ export class AuthInterceptor implements HttpInterceptor {
   });
 
   return next.handle(authReq).pipe(
+    // catchError((errcatchError((err: HttpErrorResponse) : Observable<any> =>{
+    //     this.handleError(err);
+    //     return of ();
+    //   })
     map(
       (event: HttpEvent<any>) => {
 
@@ -134,8 +138,8 @@ export class AuthInterceptor implements HttpInterceptor {
             let data = "DEF";
             this.cds.setErrorData(true, data);
           }
-          }else if(response['Error']=="1"
-          && response['Error']!=undefined){
+          }else if((response['Error']=="1"
+          && response['Error']!=undefined) || (response['status']===false && response['status']!=undefined)){
             let data = "APP001";
             this.cds.setErrorData(true, data);
           }
@@ -246,6 +250,29 @@ export class AuthInterceptor implements HttpInterceptor {
       this.ngxService.stop();
       this.isNgxRunning= false;
     }
+  }
+
+  private handleError(err: HttpErrorResponse){
+      if (err instanceof HttpErrorResponse) {
+        this.ngxService.stop();
+        this.isNgxRunning= false;
+        if (err.status === 408) {
+          let data = "HTTPTimeOut";
+          this.cds.setErrorData(true, data);
+          this.ngxService.stop();
+          this.isNgxRunning= false;
+        }else if(err.status === 0){
+          let data = "HTTP";
+          this.cds.setErrorData(true, data);
+          this.ngxService.stop();
+          this.isNgxRunning= false;
+        }
+      } 
+      // else {
+      //   this.ngxService.stop();
+      //   this.isNgxRunning= false;
+      //   alert("Error Message: " + err['statusText']);
+      // }      
   }
 
 }

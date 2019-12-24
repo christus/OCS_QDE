@@ -6,6 +6,8 @@ import { screenPages } from '../app.constants';
   providedIn: 'root'
 })
 export class CommonDataService {
+  httpCount: number=0;
+  httpTimeOutCount: number;
 
   constructor() { }
 
@@ -30,7 +32,7 @@ export class CommonDataService {
     arr[0] = data;
     arr[1] = errorCode;
     arr[2] = errorMessage;
-    this.showError$.next(arr)
+    this.showError$.next(arr);
    }
 
 

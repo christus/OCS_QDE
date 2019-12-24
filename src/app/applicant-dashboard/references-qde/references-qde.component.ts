@@ -9,7 +9,7 @@ import { Options } from "ng5-slider";
 import { NgForm } from "@angular/forms";
 
 
-import Qde from 'src/app/models/qde.model';
+import Qde, { MinMax } from 'src/app/models/qde.model';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
 import { QdeService } from 'src/app/services/qde.service';
 import { CommonDataService } from 'src/app/services/common-data.service';
@@ -55,7 +55,7 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
             wrong: "please enter valid mobile number",
            required: "10 digit mobile number is mandatory",
            invalid: "Invalid Mobile Number",
-           minlength: "Mobile number must be 10 digits",
+           minlength: "Mobile number must be at least",
            sameNumber: "Mobile number is same as of another reference , please use different numbers",
           },
           addressLineOne: {
@@ -96,8 +96,8 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
 
   regexPattern = {
     mobileNumber: "[1-9][0-9]*",
-    name: "^[a-zA-Z ]{0,49}$",
-    address : "^[0-9A-Za-z, _&'/#\\-]{0,119}$",
+    name: "^[a-zA-Z ]{0,99}$",
+    address : "^[0-9A-Za-z, _&'/#\\-]{0,99}$",
     sameDigit: '0{10}|1{10}|2{10}|3{10}|4{10}|5{10}|6{10}|7{10}|8{10}|9{10}'
   };
 
@@ -197,7 +197,7 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
   page: number;
   auditTrialApiSub: Subscription;
   fragmentSub: Subscription;
-
+  minMaxValues: Array<MinMax>;
   isErrorModal:boolean;
   errorMessage:string;
   public defaultItem = environment.defaultItem;
@@ -236,7 +236,8 @@ export class ReferencesQdeComponent implements OnInit, AfterViewInit {
 
     console.log(">>", JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs));
     var lov = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs);
-    
+    this.minMaxValues = lov['LOVS']['min_max_values'];
+    // this.regexPattern['name'] = "^[a-zA-Z ]{0,"+this.minMaxValues['Name']['maxLength']+"}$"
     //this.titles = lov.LOVS.applicant_title;
     //this.relationships = lov.LOVS.relationship;
     //console.log(this.relationships);

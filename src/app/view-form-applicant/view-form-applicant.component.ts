@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import Qde from '../models/qde.model';
 import { QdeHttpService } from '../services/qde-http.service';
 
@@ -7,11 +7,21 @@ import { QdeHttpService } from '../services/qde-http.service';
   templateUrl: './view-form-applicant.component.html',
   styleUrls: ['./view-form-applicant.component.css']
 })
-export class ViewFormApplicantComponent implements OnInit {
+export class ViewFormApplicantComponent implements OnInit, OnChanges {
 
   @Input() qde: Qde;
   @Input() applicantIndex: any;
-  @Input() dob: any;
+  @Input()  set dob(dob: any) {
+    if(!dob) {
+      this._dob = ''
+      return
+    }
+    const day = dob.day.key ;
+    const month = dob.month.key ;
+    const year = dob.year.key ;
+    this._dob  = day ? `${day}/${month}/${year}` : '';
+    console.log("_dob", this._dob)
+  }
   @Input() residenceNumberStdCode: any;
   @Input() residenceNumberPhoneNumber: any;
   @Input() alternateResidenceNumberStdCode: any;
@@ -19,7 +29,16 @@ export class ViewFormApplicantComponent implements OnInit {
   @Input() addressCityState: any;
   @Input() permAddressCityState: any;
   @Input() otherReligion: any;
-  @Input() organizationDetails: any;
+  @Input() set organizationDetails(organizationDetails: any) {
+    if(!organizationDetails){
+      this.orgDetails=''
+      return;
+    }
+    const day = organizationDetails.day.key;
+    const month = organizationDetails.month.key;
+    const year = organizationDetails.year.key;
+    this.orgDetails = day ? `${day}/${month}/${year}` : '';
+  }
   @Input() registeredAddressCityState: any; //
   @Input() corporateAddressCityState: any; //
   @Input() corporateAddressStdCode: any;
@@ -68,12 +87,15 @@ export class ViewFormApplicantComponent implements OnInit {
   @Input() applicationId: any;
   @Input() showEdit: boolean;
   occupationRequired: boolean;
+  orgDetails: any;
+  _dob: any;
 
-  constructor(private qdeHttp: QdeHttpService,) {}
+  constructor(private qdeHttp: QdeHttpService, ) { }
 
   ngOnInit() {
     // console.log("this.slegthjdfbgvkbvkjdsfnkvndf",this.selectedOccupation["value"])
     // this.selectValueChangedOccupation();
+
   }
   // selectValueChangedOccupation() {
   //   this.qdeHttp.occupationLovCompanyDetails(this.selectedOccupation.value).subscribe(response => {
@@ -81,5 +103,48 @@ export class ViewFormApplicantComponent implements OnInit {
   //     console.log("khgjfshdkgjvdfhbngfkjjgfd,b", this.occupationRequired)
   //   });
   // }
+
+  ngOnChanges(simpleChanges: SimpleChanges) {
+    if('selectedTitle' in simpleChanges){
+      this.selectedTitle = this.selectedTitle ? this.selectedTitle.key : '';
+    }
+    if('selectedGender' in simpleChanges){
+      this.selectedGender = this.selectedGender ? this.selectedGender.key : '';
+    }
+    if('selectedQualification' in simpleChanges){
+      this.selectedQualification = this.selectedQualification ? this.selectedQualification.key : '';
+    }
+    if('selectedResidence' in simpleChanges){
+      this.selectedResidence = this.selectedResidence ? this.selectedResidence.key : '';
+    }
+    if('selectedMaritialStatus' in simpleChanges){
+      this.selectedMaritialStatus = (this.selectedMaritialStatus) ? this.selectedMaritialStatus.key : '';
+    }
+    if('selectedSpouseTitle' in simpleChanges){
+      this.selectedSpouseTitle = (this.selectedSpouseTitle) ? this.selectedSpouseTitle.key : '';
+    }
+    if('selectedFatherTitle' in simpleChanges){
+      this.selectedFatherTitle = (this.selectedFatherTitle) ? this.selectedFatherTitle.key : '';
+    }
+    if ('selectedMotherTitle' in simpleChanges) {
+      this.selectedMotherTitle = (this.selectedMotherTitle)? this.selectedMotherTitle.key : '';
+    }
+    if('selectedReligion'in simpleChanges){
+      this.selectedReligion = this.selectedReligion ? this.selectedReligion.key : '';
+    }
+    if('selectedCategory' in simpleChanges){
+      this.selectedCategory = this.selectedCategory ? this.selectedCategory.key : '';
+    }
+    if('selectedOccupation' in simpleChanges){
+      this.selectedOccupation = this.selectedOccupation ? this.selectedOccupation.key : '';
+    }
+    if('selectedConstitution' in simpleChanges){
+      console.log('selectedConstitution:',this.selectedConstitution);
+      this.selectedConstitution = this.selectedConstitution ? this.selectedConstitution.key : '';
+    }
+    if('selectedAssesmentMethodology' in simpleChanges){
+      this.selectedAssesmentMethodology = this.selectedAssesmentMethodology ? this.selectedAssesmentMethodology.key : '';
+    }
+  }
 
 }

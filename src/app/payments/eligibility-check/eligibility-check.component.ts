@@ -225,7 +225,7 @@ export class EligibilityCheckComponent implements OnInit {
         console.log(this.firstname)
         this.firstname = res['ProcessVariables']['firstName'];
         this.emiAmount = parseInt(res['ProcessVariables']['emi']);
-        this.eligibleAmount = parseInt(res['ProcessVariables']['eligibilityAmount']);
+        this.eligibleAmount = parseFloat(res['ProcessVariables']['eligibilityAmount']);
         this.commonDataService.setIsMainTabEnabled(false);
       }
       else if(res['ProcessVariables']['checkEligibility'].toLowerCase() == 'no'){

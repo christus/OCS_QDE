@@ -11,7 +11,7 @@
     <div class="admin-col-half">
 
       <label *ngIf="isLoanMaster" for="rateOfInterest">Rate of Interest</label>
-      <input *ngIf="isLoanMaster" id="rateOfInterest" type="text" [(ngModel)]="rateOfInterest" name="rateOfInterest" (input)="checkDecimals($event)" maxlength="5" />
+      <input *ngIf="isLoanMaster" id="rateOfInterest" type="text" [(ngModel)]="rateOfInterest" name="rateOfInterest" (input)="checkDecimals($event)" [maxlength]="(2+(minMaxValues['Rate_Of_Interest_Decimal']?.maxLength))" />
       <span *ngIf="isAdd && isLoanMaster && invalidFeedback" class="redalert"><br>Invalid Rate Of Interest. Kindly ensure there are minimum 1 but not greater 2 numbers before and after the decimal</span>
 
       <label *ngIf="isLoanMaster" for="baseAmount">Base Amount</label>

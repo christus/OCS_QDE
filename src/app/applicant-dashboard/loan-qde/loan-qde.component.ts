@@ -102,9 +102,9 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
     mobileNumber: "^[1-9][0-9]*$",
     amount: "^[\\d]{0,14}([.][0-9]{0,4})?",
     minAmount: "[5-9][0-9]{4}|[1-9]\d{5,}",
-    name: "/^[a-zA-Z ]{0,49}$/",
+    name: "/^[a-zA-Z ]{0,99}$/",
     pinCode: "^[1-9][0-9]{5}$",
-    address: "^[0-9A-Za-z, _&'/#\\-]{0,119}$",
+    address: "^[0-9A-Za-z, _&'/#\\-]{0,99}$",
     tenure: "^[1-9][0-9]{1,2}$",
     sameDigit: '^0{6,10}|1{6,10}|2{6,10}|3{6,10}|4{6,10}|5{6,10}|6{6,10}|7{6,10}|8{6,10}|9{6,10}$',
     cityState: "^$"
@@ -298,6 +298,8 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
   minMaxValues: Array<MinMax>;
 
   public defaultItem = environment.defaultItem;
+  loanTenureMin: any;
+  loanTenureMax: any;
 
   constructor(
     private renderer: Renderer2,
@@ -371,6 +373,8 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
       this.loanProviderList = lov.LOVS.loan_providers;
       this.minMaxValues = lov.LOVS.min_max_values;
+      this.liveLoanOption['floor'] = this.minMaxValues['Live_Loans']['minValue'];
+      this.liveLoanOption['ceil'] = this.minMaxValues['Live_Loans']['maxValue'];
     }
 
 
@@ -451,7 +455,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
           this.loanType = this.loanType.slice(0, 3);
           console.log("result.application.loanDetails.loanAmount.loanType: ", result.application.loanDetails.loanAmount.loanType);
           this.selectedLoanType = this.loanType.find(v => v.value == this.qde.application.loanDetails.loanAmount.loanType) || this.loanType[0];
-
+          this.loadLoanTenure(this.loanType.find(v => v.value == this.qde.application.loanDetails.loanAmount.loanType) || this.loanType[0]);
           // this.selectedLoanPurpose =
           //   result.application.loanDetails.loanAmount.loanPurpose ||
           //   this.loanpurposes[0].value;
@@ -1363,6 +1367,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
       console.log("SAME LOAN TYPE SELECTED");
     }else{
       this.setLoanPurposes(lt.value);
+      this.loadLoanTenure(lt);
     }
     this.isLoanProductPage = false;
     this.selectedLoanType = lt;
@@ -1400,7 +1405,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   clssSearchArea(event: any){
     // console.log("gfegffdgewhj",event);
-    if(event.target.value!="" && event.target.validity.valid &&  event.target.value != " "){
+    if(event.target.value!="" && event.target.value!=" " && event.target.validity.valid){
     this.qdeHttp.clssSearch(event.target.value).subscribe(res => {
       if(res['ProcessVariables']['status'] && res['ProcessVariables']['townNames']!=null) {
         // this.allClssAreas = res['ProcessVariables']['townNames'] ? res['ProcessVariables']['townNames']: []
@@ -1540,4 +1545,21 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.cds.changeMenuBarShown(false);
     console.log(this.previousLoanType);
   }
+  loadLoanTenure(lt:any){
+    if(lt!=null || lt!=undefined){
+      if(lt.key =="Home Loan"){
+      this.loanTenureMin = this.minMaxValues['Loan_Tenure_Home_Loan']['minValue'];
+      this.loanTenureMax = this.minMaxValues['Loan_Tenure_Home_Loan']['maxValue'];
+    }else if(lt.key =="Home Equity"){
+      this.loanTenureMin = this.minMaxValues['Loan_Tenure_Home_Equity']['minValue'];
+      this.loanTenureMax = this.minMaxValues['Loan_Tenure_Home_Equity']['maxValue'];
+    }
+    if((this.loanTenureMin!=null || this.loanTenureMin!=undefined) && (this.loanTenureMax!=null || this.loanTenureMax!=undefined)){
+    console.log(this.loanTenureMax);
+    console.log(this.loanTenureMin);
+    this.options['floor'] = this.loanTenureMin;
+    this.options['ceil']= this.loanTenureMax;
+    }
+  }
+}
 }

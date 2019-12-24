@@ -3857,7 +3857,7 @@ img {
 	position: absolute;
 	left: 0;
 	top: 4.69vw;
-	height: 1px;
+	/* height: 1px; */
 	width: 0;
 	transition: width .4s ease-in;
 	background: #f58220
@@ -4364,6 +4364,7 @@ img {
 	height: 50%;
 	max-width: 31.25vw;
 	z-index: -1;
+	overflow: auto;
 	background: #fff;
 	border-radius: 5px;
 	opacity: 0;
@@ -5842,4 +5843,19 @@ img {
 
 .k-datepicker .k-select, .k-timepicker .k-select, .k-datetimepicker .k-select {
 	width: auto !important;
+}
+
+@media screen and (max-width: 800px) {
+    .bs-form .form-group.filled label{
+        margin-top: 16px !important; 
+    }
+    .k-icon {
+        font-size: 8px !important;
+	}
+	
+	.bs-card .bs-form .form-group .control-title {
+		line-height: 6px;
+		font-size: 5px;
+		top: -8px;
+	}
 }

@@ -15,6 +15,7 @@ export class MaxMinLimitsComponent implements OnInit {
   searchKey: string;
   isErrorModal: boolean;
   errorMsg: string;
+  keys: Array<number>=[];
 
   constructor(private route: ActivatedRoute,
     private qdeHttp: QdeHttpService) { }
@@ -22,32 +23,38 @@ export class MaxMinLimitsComponent implements OnInit {
   ngOnInit() {
     let response = this.route.snapshot.data['maxMinLimits']['ProcessVariables'];
     this.collection = response['minMaxList'];
+    this.perPage = response['perPage'];
+    this.currentPage = response['currentPage'];
+    let totalPages = response['totalPages'];
+    this.totalItems = parseInt(totalPages) * parseInt(this.perPage);
     if (this.collection != undefined && this.collection != null) {
+      for(var i=0; i<this.collection.length; i++){ 
+        this.keys[i]=((parseInt(this.perPage)*(parseInt(this.currentPage)-1))+i+ 1);
+      }
       for (var x in this.collection) {
         this.collection[x]['columnName'] = this.collection[x]['columnName'].split("_").join(" "); 
         this.collection[x]['isEdit'] = false;
       }
     }
-    this.perPage = response['perPage'];
-    this.currentPage = response['currentPage'];
-    let totalPages = response['totalPages'];
-    this.totalItems = parseInt(totalPages) * parseInt(this.perPage);
   }
   getData(currentPage?: string) {
     this.qdeHttp.adminGetMinMax(currentPage, this.searchKey).subscribe(res => {
       if (res['Error'] == "0" && res['ProcessVariables']['status'] && res['ProcessVariables']['errorMessage'] == "" && res['ProcessVariables']['minMaxList']!=null) {
         let response = res['ProcessVariables'];
         this.collection = response['minMaxList'];
+        this.perPage = response['perPage'];
+        this.currentPage = response['currentPage'];
+        let totalPages = response['totalPages'];
+        this.totalItems = parseInt(totalPages) * parseInt(this.perPage);
         if (this.collection != undefined && this.collection != null) {
+          for(var i=0; i<this.collection.length;i++){ 
+            this.keys[i]=((parseInt(this.perPage)*(parseInt(this.currentPage)-1))+i+ 1);
+          }
           for (var x in this.collection) {
             this.collection[x]['columnName'] = this.collection[x]['columnName'].split("_").join(" "); 
             this.collection[x]['isEdit'] = false; 
           }
         }
-        this.perPage = response['perPage'];
-        this.currentPage = response['currentPage'];
-        let totalPages = response['totalPages'];
-        this.totalItems = parseInt(totalPages) * parseInt(this.perPage);
       }else if(res['Error'] == "0" && res['ProcessVariables']['status'] && res['ProcessVariables']['errorMessage'] == "" && res['ProcessVariables']['minMaxList']==null){
         this.isErrorModal = true;
         this.errorMsg = "No Data present further";
@@ -58,6 +65,8 @@ export class MaxMinLimitsComponent implements OnInit {
     this.collection[index]['isEdit']=true;
   }
   save(index){
+    let res = this.checkMaxLength(index);
+    if(res==true){
     this.collection[index]['isEdit']=false;
     this.qdeHttp.adminUpdateMinMax(this.collection[index]).subscribe(res=>{
       if(res['Error'] == "0" && res['ProcessVariables']['status'] && res['ProcessVariables']['errorMessage'] == ""){
@@ -65,10 +74,34 @@ export class MaxMinLimitsComponent implements OnInit {
         this.errorMsg = "Updated Successfully";
       }
     })
-
+  }
   }
 
   pageChanged(value) {
     this.getData(value);
+  }
+  checkMaxLength(index: number) : boolean {
+      let fieldType = this.collection[index]['fieldType'];
+      let maxValue = this.collection[index]['maxValue'];
+      if (fieldType === "Alpha") {
+        if (this.collection[index]['maxLength'] != maxValue) {
+          this.isErrorModal = true;
+          this.errorMsg = "Field accepts only Alphabets. Hence, Maximum Length should be equal to maximum value";
+          return false;
+        }else{ return true;}
+      } else if (fieldType === "Alpha numeric") {
+        if (this.collection[index]['maxLength'] != maxValue) {
+          this.isErrorModal = true;
+          this.errorMsg = "Field is AlphaNumeric. Hence, Maximum Length should be equal to maximum value";
+          return false;
+        }else { return true;}
+      } else if (fieldType === "Numeric") {
+        let maxLength = String(this.collection[index]['maxValue']).length;
+        if (this.collection[index]['maxLength'] != maxLength) {
+          this.isErrorModal = true;
+          this.errorMsg = "Field is Numeric. Hence, Maximum Length should be equal to length of the maximum value";
+          return false;
+        }else { return true;}
+      }
   }
 }

@@ -134,7 +134,7 @@
                                                 required
                                                 #paymentCheckDrawnTo="ngModel"
                                                 [(ngModel)]="chequeDrawn"
-                                                name="checkDrawnTo"
+                                                name="checkDrawnTo" [maxlength]="minMaxValues['Name']?.maxLength"
                                                 pattern="{{regexPattern.name}}"
                                                 fieldFill>
                                                 <label for="chequeDrawn">Cheque drawn to</label>

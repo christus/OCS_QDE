@@ -2,11 +2,12 @@ export const errors: any = {
 
   applicationReferenceNo:{
     invalid: "Invalid Application Form Number ",
-    wrong: "please enter valid application form number"
+    wrong: "please enter valid application form number",
+    minlength: "Applicant Form Number should have atleast"
   },
   pan: {
     required: "PAN is mandatory",
-    length: "PAN must be at least 10 characters",
+    length: "PAN must be at least",
     invalid: "Invalid PAN, valid PAN format - AAAPA1111A",
     invalidNonInd: "Invalid PAN, valid PAN format - AAAAA1111A",
     after3Attemps: "Please check and enter your correct PAN"
@@ -46,12 +47,12 @@ export const errors: any = {
     prefferedMobile: {
       required: "10 digit mobile number is mandatory",
       invalid: "Invalid mobile number/Alphabets and Special Characters not allowed",
-      minlength: "Mobile number must be 10 digits",
+      minlength: "Mobile number must be",
       wrong: "Please provide valid mobile number"
     },
     alternateMobile: {
       invalid: "Invalid mobile number/Alphabets and Special Characters not allowed",
-      minlength: "Mobile number must be 10 digits",
+      minlength: "Mobile number must be",
       sameNumber: "Mobile numbers are same, please use different numbers",
       wrong: "Please provide valid mobile number"
     },
@@ -61,12 +62,12 @@ export const errors: any = {
     stdCode: {
       required: "Std Code is mandatory",
       invalid: "Invalid STD code",
-      wrong: "Please provide valid Std code"
-      // minlength: "STD is not valid"
+      wrong: "Please provide valid Std code",
+      minlength: "STD code must have at least"
     },
     alternateResidenceNumberStd1:{
       invalid: "Invalid STD code",
-      // minlength: "STD is not valid"
+      minlength: "STD code must have at least"
     },
     residenceNumber: {
       required: "Residence number is mandatory",
@@ -91,11 +92,13 @@ export const errors: any = {
   commAddress: {
     address1: {
       required: "Address Line 1 is mandatory",
-      invalid: "Incomplete address"
+      invalid: "Incomplete address",
+      minlength: "Address cannot be less than"
     },
     address2: {
       required: "Address Line 2 is mandatory",
-      invalid: "Incomplete address"
+      invalid: "Incomplete address",
+      minlength: "Address cannot be less than"
     },
     pinCode: {
       required: "Pincode is mandatory",
@@ -161,11 +164,13 @@ export const errors: any = {
   officialCorrespondence: {
     address1: {
       required: "Office address line1 is mandatory",
-      invalid: "Incomplete address"
+      invalid: "Incomplete address",
+      minlength: "Address cannot be less than"
     },
     address2: {
       required: "Office address line2 is mandatory",
-      invalid: "Incomplete address"
+      invalid: "Incomplete address",
+      minlength: "Address cannot be less than"
     },
     pinCode: {
       required: "Pincode is mandatory",
@@ -181,11 +186,13 @@ export const errors: any = {
     },
     stdCode: {
       required: "Std Code is mandatory",
-      invalid: "Invalid Std Code"
+      invalid: "Invalid Std Code",
+      minlength: "STD code must have at least"
     },
     phoneNumber: {
       required: "Phone Number is mandatory",
-      invalid: "Invalid Phone Number"
+      invalid: "Invalid Phone Number",
+      minlength: "Phone Number cannot be less than"
     },
     email: {
       required: "Office Email Id is mandatory",
@@ -259,11 +266,13 @@ export const errors: any = {
     },
     stdNumber:{
       required:"Std Code is mandatory",
-      invalid:"Invalid Std Code"
+      invalid:"Invalid Std Code",
+      minlength: "STD code must have at least"
     },
     phoneNumber:{
       required:"Phone number is mandatory",
-      invalid:"Invalid Phone number"
+      invalid:"Invalid Phone number",
+      minlength: "Phone number should have at least"
     },
 
     ofcEmail:{

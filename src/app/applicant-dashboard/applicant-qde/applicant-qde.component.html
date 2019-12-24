@@ -134,7 +134,8 @@
                                         [(ngModel)]="qde.application.applicationFormNumber"
                                         id="ref-no"
                                         pattern="{{regexPattern.appRefNo}}"
-                                        maxlength="20"
+                                        [minlength]="minMaxValues['Application_Form_No']?.minValue"
+                                        [maxlength]="minMaxValues['Application_Form_No']?.maxLength"
                                         name="applicationFormNo"
                                         (keyup)="keyUpPanNumber($event)"
                                         #applicationRefNo="ngModel"
@@ -146,13 +147,14 @@
                                         <div *ngIf="applicationRefNo.touched && applicationRefNo.invalid " class="invalid-feedback">
 
                                             <div *ngIf="applicationRefNo.errors?.pattern">{{errors.applicationReferenceNo.invalid}}</div>
+                                            <div *ngIf="applicationRefNo.errors?.minlength">{{errors.applicationReferenceNo.minlength}}{{" "+minMaxValues['Application_Form_No']?.minValue+" characters"}}</div>
                                             </div>
                             </div>
                           <div class="form-group last typ-optional" style="margin-bottom: 40px;">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                               [(ngModel)]="qde.application.applicants[applicantIndex].pan.panNumber"
                               (ngModelChange)="qde.application.applicants[applicantIndex].pan.panNumber = $event.toUpperCase()"
-                              id="pan-inpt" minlength="10" maxlength="10" pattern="{{regexPattern.panInd}}" name="pan"
+                              id="pan-inpt" [minlength]="minMaxValues['PAN']?.minValue" [maxlength]="minMaxValues['PAN']?.maxLength" pattern="{{regexPattern.panInd}}" name="pan"
                               (keyup)="keyUpPanNumber($event)" #panNumber="ngModel" fieldFill autocomplete="off" required/>
                             <label for="pan-inpt" tabindex="1">Enter PAN</label>
                             <!-- <span class="optional">optional</span> -->
@@ -160,8 +162,9 @@
                               class="invalid-feedback">
                               <!-- <div *ngIf="panNumber.errors?.required">{{errors.panNumber.required}}</div> -->
                               <div *ngIf="panNumber.errors?.pattern ? true : false">{{errors.pan.invalid}}</div>
-                              <div *ngIf="panNumber.errors?.minlength || panNumber.errors?.maxlength">
-                                {{errors.pan.length}}</div>
+                              <div *ngIf="panNumber.errors?.minlength">{{errors.pan.length}}{{" "+minMaxValues['PAN']?.minValue+" characters"}}</div>
+                              <!-- <div *ngIf="panNumber.errors?.minlength || panNumber.errors?.maxlength">
+                                {{errors.pan.length}}</div> -->
                             </div>
                             <div *ngIf="panErrorCount >= 3" class="invalid-feedback">{{errors.pan.after3Attemps}}</div>
                             <div class="redalert"
@@ -347,11 +350,11 @@
                               id="firstName"
                               [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.firstName"
                               name="firstName"  #firstName="ngModel" fieldFill required autocomplete="off"
-                              tabindex="2" maxlength="50"
+                              tabindex="2" [maxlength]="minMaxValues['Name']?.maxLength" [minlength]="minMaxValues['Name']?.minValue"
                               pattern="{{regexPattern.name}}" />
                             <label for="firstName">First name</label>
 
-                            <div *ngIf="(qde.application.applicants[applicantIndex].personalDetails.firstName)?.length == 50" class="invalid-feedback">Maximum Character Exceeds</div>
+                            <!-- <div *ngIf="(qde.application.applicants[applicantIndex].personalDetails.firstName)?.length == minMaxValues['Name']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div> -->
                             <div *ngIf="(firstName.touched || firstName.dirty) && firstName.invalid"
                               class="invalid-feedback">
                               <!-- <div *ngIf="firstName.errors?.required">{{errors.personalDetails.firstName.required}}</div> -->
@@ -360,12 +363,12 @@
                           </div>
                           <div class="form-group typ-optional">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="middleName" name="middleName" autocomplete="off" maxlength="50"
+                              id="middleName" name="middleName" autocomplete="off" [maxlength]="minMaxValues['Name']?.maxLength"
                               [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.middleName"
                               pattern="{{regexPattern.name}}" fieldFill #middleName="ngModel" tabindex="3" />
                             <label for="middleName">Middle name</label>
 
-                            <div *ngIf="(qde.application.applicants[applicantIndex].personalDetails.middleName)?.length == 50" class="invalid-feedback">Maximum Character Exceeds</div>
+                            <!-- <div *ngIf="(qde.application.applicants[applicantIndex].personalDetails.middleName)?.length == minMaxValues['Name']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div> -->
 
                             <span class="optional">Optional</span>
                             <div *ngIf="(middleName.touched || middleName.dirty) && middleName.invalid"
@@ -378,11 +381,11 @@
 
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                               [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.lastName"
-                              name="lastName" #lastName="ngModel" id="lastName" fieldFill autocomplete="off" maxlength="50"
+                              name="lastName" #lastName="ngModel" id="lastName" fieldFill autocomplete="off" [maxlength]="minMaxValues['Name']?.maxLength" [minlength]="minMaxValues['Name']?.minValue"
                               pattern="{{regexPattern.name}}" required tabindex="4" />
                             <label for="lastName">Last name</label>
 
-                            <div *ngIf="(qde.application.applicants[applicantIndex].personalDetails.lastName)?.length == 50" class="invalid-feedback">Maximum Character Exceeds</div>
+                            <!-- <div *ngIf="(qde.application.applicants[applicantIndex].personalDetails.lastName)?.length == minMaxValues['Name']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div> -->
 
                             <div *ngIf="(lastName.touched || lastName.dirty) && lastName.invalid"
                               class="invalid-feedback">
@@ -487,8 +490,9 @@
                               [(value)]="dateofBirthKendo"
                               [format]="'dd-MMM-yyyy'">
                             </kendo-datepicker>
-                            <div *ngIf="ageError" class="invalid-feedback">
+                            <div *ngIf="ageError || ageMaxError" class="invalid-feedback">
                               <div *ngIf="ageError">Age should not be less than {{minMaxValues['Age_limit']['minValue']}} years</div>
+                              <div *ngIf="ageMaxError">Age should not be More than {{minMaxValues['Age_limit']['maxValue']}} years</div>
                             </div>
 
                           </div>
@@ -496,12 +500,12 @@
                             <label for="birthPlace" tabindex="1">Birth place</label>
 
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="birthPlace" name="birthPlace" autocomplete="off" maxlength="100"
+                              id="birthPlace" name="birthPlace" autocomplete="off" [maxlength]="minMaxValues['Birth_Place']?.maxLength"
                               [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.birthPlace"
                               pattern="{{regexPattern.birthPlace}}" fieldFill #birthPlace="ngModel" required />
                             <label for="birthPlace">Birth place</label>
 
-                            <div *ngIf="(qde.application.applicants[applicantIndex].personalDetails.birthPlace)?.length == 100" class="invalid-feedback">Maximum Character Exceeds</div>
+                            <!-- <div *ngIf="(qde.application.applicants[applicantIndex].personalDetails.birthPlace)?.length == minMaxValues['Birth_Place']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div> -->
 
                             <div *ngIf="(birthPlace.touched || birthPlace.dirty) && birthPlace.invalid"
                               class="invalid-feedback">
@@ -513,8 +517,8 @@
                         <div class="btn-wrap">
 
                           <button type="submit" class="btn btn-primary"
-                            [ngClass]="{'disabled': (dob.day.value == 'DD' || dob.month.value == 'MM' || dob.year.value == 'YYYY' || dobForm.invalid)}"
-                            [disabled]="(dob.day.value == 'DD' || dob.month.value == 'MM' || dob.year.value == 'YYYY' || dobForm.invalid)">Next
+                            [ngClass]="{'disabled': (dob.day.value == 'DD' || dob.month.value == 'MM' || dob.year.value == 'YYYY' || dobForm.invalid || ageError || ageMaxError)}"
+                            [disabled]="(dob.day.value == 'DD' || dob.month.value == 'MM' || dob.year.value == 'YYYY' || dobForm.invalid || ageError || ageMaxError)">Next
                           </button>
                         </div>
                       </form>
@@ -564,7 +568,7 @@
                               (ngModelChange)="onPreferredEmailChange($event, preferEmailId)"
                               required />
 
-                              <div *ngIf="(qde.application.applicants[applicantIndex].contactDetails.preferredEmailId)?.length == 100" class="invalid-feedback">Maximum Character Exceeds</div>
+                              <!-- <div *ngIf="(qde.application.applicants[applicantIndex].contactDetails.preferredEmailId)?.length == 100" class="invalid-feedback">Maximum Character Exceeds</div> -->
 
                             <label for="pref-email" tabindex="1">Preferred email ID</label>
                             <span class="alternate-data" *ngIf="!isAlternateEmailId">
@@ -587,7 +591,7 @@
                               [(ngModel)]="qde.application.applicants[applicantIndex].contactDetails.alternateEmailId"
                               name="alternateEmailId" #alternateEmailId="ngModel" fieldFill
                               (ngModelChange)="onPreferredEmailChange($event, alternateEmailId)"/>
-                              <div *ngIf="(qde.application.applicants[applicantIndex].contactDetails.alternateEmailId)?.length == 100" class="invalid-feedback">Maximum Character Exceeds</div>
+                              <!-- <div *ngIf="(qde.application.applicants[applicantIndex].contactDetails.alternateEmailId)?.length == 100" class="invalid-feedback">Maximum Character Exceeds</div> -->
 
                             <div *ngIf="(alternateEmailId.untouched || alternateEmailId.touched || alternateEmailId.dirty) && alternateEmailId.invalid"
                               class="invalid-feedback">
@@ -619,7 +623,7 @@
 
                             <input [readonly]="isTBMLoggedIn || qde.application.applicants[applicantIndex].contactDetails.isMobileOTPverified"
                               spellcheck="false" type="tel" class="form-control" autocomplete="off"
-                              id="mob-no" minlength="10" maxlength="10" im-insert="true"
+                              id="mob-no" [minlength]="minMaxValues['Mobile_Number']?.minValue" [maxlength]="minMaxValues['Mobile_Number']?.maxValue" im-insert="true"
                               [(ngModel)]="qde.application.applicants[applicantIndex].contactDetails.mobileNumber"
                               name="mobileNumber" #mobileNumber="ngModel" pattern="{{regexPattern.mobileNumber}}"
                               fieldFill required />
@@ -655,15 +659,15 @@
                               <div *ngIf="mobileNumber.errors?.pattern">
                                 {{errors.contactDetails.prefferedMobile.invalid}}</div>
                               <div *ngIf="mobileNumber.errors?.minlength">
-                                {{errors.contactDetails.prefferedMobile.minlength}}</div>
+                                {{errors.contactDetails.prefferedMobile.minlength}}{{" "+minMaxValues['Mobile_Number']?.minValue+" digits"}} </div>
                             </div>
                           </div>
 
 
                           <div class="form-group typ-mob" [ngClass]="{'typ-alternative': !isAlternateMobileNumber}">
 
-                            <input [readonly]="isTBMLoggedIn" spellcheck="false" minlength="10" type="tel"
-                              class="form-control" id="alter-mob" data-validation-attr="mobileno01" maxlength="10"
+                            <input [readonly]="isTBMLoggedIn" spellcheck="false" [minlength]="minMaxValues['Mobile_Number']?.minValue" type="tel"
+                              class="form-control" id="alter-mob" data-validation-attr="mobileno01" [maxlength]="minMaxValues['Mobile_Number']?.maxLength"
                               im-insert="true" autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].contactDetails.alternateMobileNumber"
                               name="alternateMobileNumber" #altMobileNo="ngModel" fieldFill
@@ -685,7 +689,7 @@
                               <div *ngIf="altMobileNo.errors?.pattern">{{errors.contactDetails.alternateMobile.invalid}}
                               </div>
                               <div *ngIf="altMobileNo.errors?.minlength">
-                                {{errors.contactDetails.alternateMobile.minlength}}</div>
+                                {{errors.contactDetails.alternateMobile.minlength}}{{" "+minMaxValues['Mobile_Number']?.minValue+" digits"}}</div>
                             </div>
                             <div class="invalid-feedback"
                               *ngIf="(altMobileNo.value != '' && altMobileNo.touched && altMobileNo.value == mobileNumber.value)">
@@ -696,22 +700,22 @@
                             <div class="form-group ">
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" autocomplete="off"
                                 [(ngModel)]="residenceNumberStdCode" pattern="{{regexPattern.stdCode}}"
-                                #residenceStdCode="ngModel" data-validation-attr="residenceno01" maxlength="5"
-                                minlength="3" name="residenceNumber1" class="form-control" fieldFill id="std" />
+                                #residenceStdCode="ngModel" data-validation-attr="residenceno01" [maxlength]="minMaxValues['STD_Code']?.maxLength"
+                                [minlength]="minMaxValues['STD_Code']?.minValue" name="residenceNumber1" class="form-control" fieldFill id="std" />
                               <label for="std" tabindex="9">STD</label>
                               <div class="redalert" *ngIf="RegExp(regexPattern.sameDigitStd).test(residenceStdCode.value)">{{errors.contactDetails.stdCode.wrong}}</div>
                               <div *ngIf="residenceStdCode.touched && residenceStdCode.invalid"
                                 class="invalid-feedback">
                                 <!-- <div *ngIf="residenceStdCode.errors?.required">{{errors.contactDetails.stdCode.required}}</div> -->
-                                <div *ngIf="residenceStdCode.errors?.pattern || residenceStdCode.errors?.minlength">{{errors.contactDetails.stdCode.invalid}}</div>
-                                <!-- <div *ngIf="residenceStdCode.errors?.minlength">{{errors.contactDetails.stdCode.invalid}}</div> -->
+                                <div *ngIf="residenceStdCode.errors?.pattern">{{errors.contactDetails.stdCode.invalid}}</div>
+                                <div *ngIf="residenceStdCode.errors?.minlength">{{errors.contactDetails.stdCode.minlength}}{{" "+minMaxValues['STD_Code']?.minValue+" digits"}}</div>
                               </div>
                             </div>
                             <span class="seperator">-</span>
                             <div class="form-group typ-optional">
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                                 id="res-no" [(ngModel)]="residenceNumberPhoneNumber"autocomplete="off"
-                                pattern="{{regexPattern.mobileNumber}}" minlength="4" maxlength="8" #residenceNumber="ngModel"
+                                pattern="{{regexPattern.mobileNumber}}" maxlength="minMaxValues['Land_Line_Number']?.maxLength" #residenceNumber="ngModel"
                                 name="residenceNumber2" value="{{residenceNumber.phoneNumber}}"
                                 data-validation-attr="residenceno" fieldFill />
                               <label for="res-no" tabindex="10">Residence number</label>
@@ -737,24 +741,24 @@
                             <div class="form-group">
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" autocomplete="off"
                                 [(ngModel)]="alternateResidenceNumberStdCode" name="alternateResidenceNumberStd1"
-                                minlength="3" maxlength="5" #alternateResidenceNumberStd1="ngModel"
+                                [minlength]="minMaxValues['STD_Code']?.minValue" [maxlength]="minMaxValues['STD_Code']?.maxLength" #alternateResidenceNumberStd1="ngModel"
                                 pattern="{{regexPattern.stdCode}}" class="form-control" fieldFill id="altrstd">
                               <label for="altrstd" tabindex="12">STD</label>
                               <div class="redalert" *ngIf="RegExp(regexPattern.sameDigitStd).test(alternateResidenceNumberStd1.value)">{{errors.contactDetails.stdCode.wrong}}</div>
                               <div *ngIf="alternateResidenceNumberStd1.touched  && alternateResidenceNumberStd1.invalid"
                                 class="invalid-feedback">
-                                <div *ngIf="alternateResidenceNumberStd1.errors?.pattern || alternateResidenceNumberStd1.errors?.minlength">
+                                <div *ngIf="alternateResidenceNumberStd1.errors?.pattern">
                                   {{errors.contactDetails.alternateResidenceNumberStd1.invalid}}</div>
-                                <!-- <div *ngIf="alternateResidenceNumberStd1.errors?.minlength">
-                                  {{errors.contactDetails.alternateResidenceNumberStd1.invalid}}</div> -->
+                                <div *ngIf="alternateResidenceNumberStd1.errors?.minlength">
+                                  {{errors.contactDetails.alternateResidenceNumberStd1.minlength}}{{" "+minMaxValues['STD_Code']?.minValue+" digits"}} </div>
                               </div>
                             </div>
                             <span class="seperator">-</span>
                             <div class="form-group typ-optional">
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                                 [(ngModel)]="alternateResidenceNumberPhoneNumber" #alternateResidenceNumber2="ngModel"
-                                name="alternateResidenceNumber2" id="altr-res-no" minlength="4"
-                                value="{{residenceNumber.phoneNumber}}" maxlength="8" fieldFill autocomplete="off"
+                                name="alternateResidenceNumber2" id="altr-res-no"
+                                value="{{residenceNumber.phoneNumber}}" [maxlength]="minMaxValues['Land_Line_Number']?.maxLength" fieldFill autocomplete="off"
                                 pattern="{{regexPattern.mobileNumber}}" data-validation-attr="residenceno01" />
                               <label for="altr-res-no" tabindex="13">Residence number</label>
                               <span class="optional">Optional</span>
@@ -898,19 +902,19 @@
                           <div class="form-group">
 
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="address1" maxlength="120"
+                              id="address1" [maxlength]="minMaxValues['Address_Line']?.maxLength" [minlength]="minMaxValues['Address_Line']?.minValue"
                               [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.addressLineOne"
                               pattern="{{regexPattern.address}}" name="addressLineOne" #address1="ngModel" fieldFill
                               required autocomplete="off" />
 
-                              <div *ngIf="(qde.application.applicants[applicantIndex].communicationAddress.addressLineOne)?.length == 120" class="invalid-feedback">Maximum Character Exceeds</div>
+                              <!-- <div *ngIf="(qde.application.applicants[applicantIndex].communicationAddress.addressLineOne)?.length == minMaxValues['Address_Line']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div> -->
 
                             <div *ngIf="(address1.touched || address1.dirty) && address1.invalid"
                               class="invalid-feedback">
                               <!-- <div *ngIf="address1.errors?.required">{{errors.commAddress.address1.required}}</div> -->
                               <div *ngIf="address1.errors?.pattern">{{errors.commAddress.address1.invalid}}</div>
-                            </div>
-
+                              <!-- <div *ngIf="address1.errors?.minlength">{{errors.commAddress.address1.minlength}}{{" "+minMaxValues['Address_Line']?.minValue+" characters"}}</div> -->
+                          </div>
                             <label for="address1" tabindex="1">Address line 1</label>
 
                           </div>
@@ -918,11 +922,11 @@
                           <div class="form-group typ-optional">
                             <input [readonly]="isTBMLoggedIn" 
                               spellcheck="false" type="text" class="form-control"
-                              id="address2" autocomplete="off" maxlength="120"
+                              id="address2" autocomplete="off" [maxlength]="minMaxValues['Address_Line']?.maxLength"
                               [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.addressLineTwo"
                               pattern="{{regexPattern.address}}" name="addressLineTwo" #address2="ngModel" fieldFill />
 
-                              <div *ngIf="(qde.application.applicants[applicantIndex].communicationAddress.addressLineTwo)?.length == 120" class="invalid-feedback">Maximum Character Exceeds</div>
+                              <!-- <div *ngIf="(qde.application.applicants[applicantIndex].communicationAddress.addressLineTwo)?.length == minMaxValues['Address_Line']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div> -->
 
                             <label for="address2" tabindex="2">Address line 2</label>
                             <span class="optional">optional</span>
@@ -930,6 +934,7 @@
                               class="invalid-feedback">
                               <!-- <div *ngIf="address2.errors?.required">{{errors.commAddress.address2.required}}</div> -->
                               <div *ngIf="address2.errors?.pattern">{{errors.commAddress.address2.invalid}}</div>
+                              <!-- <div *ngIf="address2.errors?.minlength">{{errors.commAddress.address2.minlength}}{{" "+minMaxValues['Address_Line']?.minValue+" characters"}}</div> -->
                             </div>
                           </div>
 
@@ -937,7 +942,7 @@
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                               id="pincode" required autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.zipcode"
-                              name="pinCode" #commPinCode="ngModel" maxlength="6" fieldFill
+                              name="pinCode" #commPinCode="ngModel" [maxlength]="minMaxValues['Pincode']?.maxLength" fieldFill
                               (input)="onPinCodeChange($event, 'communicationAddress')"
                               pattern="{{regexPattern.pinCode}}" />
                             <label for="pincode" tabindex="3">Pincode</label>
@@ -978,37 +983,40 @@
                             <h1 class="sub-heading" style="text-align: left; margin-bottom: 32px">Permanent Address</h1>
                             <div class="form-group">
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                                id="per-address1" name="pAddressLineOne" #pAddress1="ngModel" maxlength="120"
+                                id="per-address1" name="pAddressLineOne" #pAddress1="ngModel" [maxlength]="minMaxValues['Address_Line']?.maxLength"
+                                [minlength]="minMaxValues['Address_Line']?.minValue"
                                 pattern="{{regexPattern.address}}" fieldFill autocomplete="off"
                                 [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.addressLineOne"
                                 [readOnly]="qde.application.applicants[applicantIndex].communicationAddress.permanentAddress"
                                 required />
 
 
-                                <div *ngIf="(qde.application.applicants[applicantIndex].permanentAddress.addressLineOne)?.length == 120" class="invalid-feedback">Maximum Character Exceeds</div>
+                                <!-- <div *ngIf="(qde.application.applicants[applicantIndex].permanentAddress.addressLineOne)?.length == minMaxValues['Address_Line']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div> -->
 
                               <label for="per-address1" tabindex="6">Address line 1</label>
                               <div *ngIf="(pAddress1.touched || pAddress1.dirty) && pAddress1.invalid"
                                 class="invalid-feedback">
                                 <!-- <div *ngIf="pAddress1.errors?.required">{{errors.commAddress.address1.required}}</div> -->
                                 <div *ngIf="pAddress1.errors?.pattern">{{errors.commAddress.address1.invalid}}</div>
+                                <!-- <div *ngIf="pAddress1.errors?.minlength">{{errors.commAddress.address1.minlength}}{{" "+minMaxValues['Address_Line']?.minValue+" characters"}}</div> -->
                               </div>
                             </div>
                             <div class="form-group typ-optional">
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                                 id="per-address2" name="pAddressLineTwo" #pAddress2="ngModel" fieldFill
-                                pattern="{{regexPattern.address}}" autocomplete="off" maxlength="120"
+                                pattern="{{regexPattern.address}}" autocomplete="off" [maxlength]="minMaxValues['Address_Line']?.maxLength"
                                 [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.addressLineTwo"
                                 [readOnly]="qde.application.applicants[applicantIndex].communicationAddress.permanentAddress"/>
                               <label for="per-address2" tabindex="7">Address line 2</label>
 
-                              <div *ngIf="(qde.application.applicants[applicantIndex].permanentAddress.addressLineTwo)?.length == 120" class="invalid-feedback">Maximum Character Exceeds</div>
+                              <!-- <div *ngIf="(qde.application.applicants[applicantIndex].permanentAddress.addressLineTwo)?.length == minMaxValues['Address_Line']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div> -->
 
                               <span class="optional">optional</span>
                               <div *ngIf="(pAddress2.touched || pAddress2.dirty) && pAddress2.invalid"
                                 class="invalid-feedback">
                                 <!-- <div *ngIf="pAddress2.errors?.required">{{errors.commAddress.address2.required}}</div> -->
                                 <div *ngIf="pAddress2.errors?.pattern">{{errors.commAddress.address2.invalid}}</div>
+                                <!-- <div *ngIf="pAddress2.errors?.minlength">{{errors.commAddress.address2.minlength}}{{" "+minMaxValues['Address_Line']?.minValue+" characters"}}</div> -->
                               </div>
                             </div>
                             <div class="form-group">
@@ -1016,7 +1024,7 @@
                                 id="per-pincode" name="pZipcode" #pZipcode="ngModel" autocomplete="off"
                                 (input)="onPinCodeChange($event, 'permanentAddress')" fieldFill
                                 [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.zipcode"
-                                minlength="6" maxlength="6" pattern="{{regexPattern.pinCode}}" required
+                                [minlength]="minMaxValues['Pincode']?.minValue" [maxlength]="minMaxValues['Pincode']?.maxLength" pattern="{{regexPattern.pinCode}}" required
                                 [readOnly]="qde.application.applicants[applicantIndex].communicationAddress.permanentAddress" />
                               <label for="per-pincode" tabindex="8">Pincode</label>
 
@@ -1066,7 +1074,7 @@
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="number" autocomplete="off"
                               name="numberOfYearsInCurrentResidence" class="form-control mob_current_residence"
                               [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.numberOfYearsInCurrentResidence"
-                              tabindex="12" min="0" max="50" maxlength="2"
+                              tabindex="12" [min]="minMaxValues['Years_in_residence'].minValue" [max]="minMaxValues['Years_in_residence'].maxValue" [maxlength]="minMaxValues['Years_in_residence'].maxLength"
                               oninput="this.value=this.value.slice(0,this.maxLength)"
                               #numberOfYearsInCurrentResidence="ngModel" fieldFill required />
                             <ng5-slider tabindex="13" class="commSlider"
@@ -1187,12 +1195,13 @@
                           <div class="form-group">
 
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              [(ngModel)]="qde.application.applicants[applicantIndex].maritalStatus.firstName" maxlength="50"
+                              [(ngModel)]="qde.application.applicants[applicantIndex].maritalStatus.firstName" [maxlength]="minMaxValues['Name']?.maxLength" [minlength]="minMaxValues['Name']?.minValue"
+                              [minlength]="minMaxValues['Name']?.minValue"
                               #spouseName="ngModel" tabindex="2" name="firstName" pattern="{{regexPattern.name}}"
                               id="spouse-name" fieldFill required  autocomplete="off"/>
                             <label for="spouse-name">First name</label>
 
-                            <div *ngIf="(qde.application.applicants[applicantIndex].maritalStatus.firstName)?.length == 50" class="invalid-feedback">Maximum Character Exceeds</div>
+                            <!-- <div *ngIf="(qde.application.applicants[applicantIndex].maritalStatus.firstName)?.length == minMaxValues['Name']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div> -->
 
                             <div *ngIf="(spouseName.touched || spouseName.dirty) && spouseName.invalid"
                               class="invalid-feedback">
@@ -1315,7 +1324,7 @@
                           <div class="form-group typ-range">
                             <span class="control-title">Enter number of dependents</span>
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="number" name="numberOfDependents"
-                              min="0" max="6" tabindex="1" maxlength="1" autocomplete="off"
+                              [min]="minMaxValues['No_Of_Dependents']?.minValue" [max]="minMaxValues['No_Of_Dependents']?.maxValue" tabindex="1" [maxlength]="minMaxValues['No_Of_Dependents']?.maxLength" autocomplete="off"
                               oninput="this.value=this.value.slice(0,this.maxLength)" class="depen-width form-control"
                               [(ngModel)]="qde.application.applicants[applicantIndex].familyDetails.numberOfDependents" />
                             <ng5-slider class="commSlider"
@@ -1356,11 +1365,12 @@
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                               id="father-name" required
                               [(ngModel)]="qde.application.applicants[applicantIndex].familyDetails.fatherName"
-                              #fatherName="ngModel" tabindex="2" name="fatherName" fieldFill autocomplete="off" maxlength="50"
+                              #fatherName="ngModel" tabindex="2" name="fatherName" fieldFill autocomplete="off" 
+                              [maxlength]="minMaxValues['Name']?.maxLength" [minlength]="minMaxValues['Name']?.minValue"
                               pattern="{{regexPattern.name}}" />
                             <label for="father-name">Father's name</label>
 
-                            <div *ngIf="(qde.application.applicants[applicantIndex].familyDetails.fatherName)?.length == 50" class="invalid-feedback">Maximum Character Exceeds</div>
+                            <!-- <div *ngIf="(qde.application.applicants[applicantIndex].familyDetails.fatherName)?.length == minMaxValues['Name']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div> -->
 
                             <div *ngIf="fatherName.touched && fatherName.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="fatherName.errors?.required">{{errors.familyDetails.fatherName.required}}</div> -->
@@ -1384,12 +1394,12 @@
                           </div>
                           <div class="form-group">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="mother-name" tabindex="4" required autocomplete="off" maxlength="50"
+                              id="mother-name" tabindex="4" required autocomplete="off" [maxlength]="minMaxValues['Name']?.maxLength" [minlength]="minMaxValues['Name']?.minValue"
                               [(ngModel)]="qde.application.applicants[applicantIndex].familyDetails.motherName"
                               #motherName="ngModel" name="motherName" fieldFill pattern="{{regexPattern.name}}" />
                             <label for="mother-name">Mother's name</label>
 
-                            <div *ngIf="(qde.application.applicants[applicantIndex].familyDetails.motherName)?.length == 50" class="invalid-feedback">Maximum Character Exceeds</div>
+                            <!-- <div *ngIf="(qde.application.applicants[applicantIndex].familyDetails.motherName)?.length == minMaxValues['Name']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div> -->
 
                             <div *ngIf="motherName.touched && motherName.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="motherName.errors?.required">{{errors.familyDetails.motherName.required}}</div> -->
@@ -1400,11 +1410,12 @@
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                               id="maiden-name" required tabindex="5" autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].familyDetails.motherMaidenName"
-                              #motherMaiden="ngModel" name="motherMaidenName" fieldFill maxlength="50"
+                              #motherMaiden="ngModel" name="motherMaidenName" fieldFill [maxlength]="minMaxValues['Name']?.maxLength"
+                              [minlength]="minMaxValues['Name']?.minValue"
                               pattern="{{regexPattern.name}}" />
                             <label for="maiden-name">Mother's maiden name</label>
 
-                            <div *ngIf="(qde.application.applicants[applicantIndex].familyDetails.motherMaidenName)?.length == 50" class="invalid-feedback">Maximum Character Exceeds</div>
+                            <!-- <div *ngIf="(qde.application.applicants[applicantIndex].familyDetails.motherMaidenName)?.length == minMaxValues['Name']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div> -->
 
                             <div *ngIf="motherMaiden.touched && motherMaiden.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="motherMaiden.errors?.required">{{errors.familyDetails.motherMaiden.required}}</div> -->
@@ -1480,7 +1491,7 @@
                             pattern="{{regexPattern.name}}" #specifyReligion = "ngModel" required maxlength="25" autocomplete="off"
                               tabindex="2" [(ngModel)]="otherReligion" name="religionName" fieldFill id="religion-name">
                             <label for="religion-name">Specify other religion</label>
-                            <div *ngIf="otherReligion?.length == 25" class="invalid-feedback">Maximum Character Exceeds</div>
+                            <!-- <div *ngIf="otherReligion?.length == 25" class="invalid-feedback">Maximum Character Exceeds</div> -->
 
                             <div *ngIf="specifyReligion.touched && specifyReligion.invalid" class="invalid-feedback">
 
@@ -1589,12 +1600,12 @@
                           <div class="form-group"
                             *ngIf="occupationRequired == true">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control" autocomplete="off"
-                              required [(ngModel)]="qde.application.applicants[applicantIndex].occupation.companyName" maxlength="50"
-                              pattern="{{regexPattern.organizationName}}" tabindex="2" name="companyName" #companyName="ngModel"
+                              required [(ngModel)]="qde.application.applicants[applicantIndex].occupation.companyName" [maxlength]="minMaxValues['Company_Name']?.maxLength"
+                              [minlength]="minMaxValues['Name']?.minValue" pattern="{{regexPattern.organizationName}}" tabindex="2" name="companyName" #companyName="ngModel"
                               fieldFill id="companyName" />
                             <label for="companyName">Company name</label>
 
-                            <div *ngIf="(qde.application.applicants[applicantIndex].occupation.companyName)?.length == 50" class="invalid-feedback">Maximum Character Exceeds</div>
+                            <!-- <div *ngIf="(qde.application.applicants[applicantIndex].occupation.companyName)?.length == minMaxValues['Company_Name']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div> -->
 
                             <div *ngIf="(companyName.touched || companyName.dirty) && companyName.invalid"
                               class="invalid-feedback">
@@ -1611,7 +1622,7 @@
                               name="numberOfYearsInCurrentCompany" id="no-yrs" class="form-control"
                               oninput="this.value=this.value.slice(0,this.maxLength)"
                               [(ngModel)]="qde.application.applicants[applicantIndex].occupation.numberOfYearsInCurrentCompany"
-                              tabindex="3" maxlength="2" min="1" max="40" #numberOfYearsInCurrentCompany="ngModel"
+                              tabindex="3" [maxlength]="minMaxValues['Years_in_employment']?.maxLength" [min]="minMaxValues['Years_in_employment']?.minValue" [max]="minMaxValues['Years_in_employment']?.maxValue" #numberOfYearsInCurrentCompany="ngModel"
                               required />
 
                             <ng5-slider class="commSlider" tabindex="4"
@@ -1631,7 +1642,7 @@
                               name="totalExperienceYear" class="form-control" tabindex="5" autocomplete="off"
                               oninput="this.value=this.value.slice(0,this.maxLength)"
                               [(ngModel)]="qde.application.applicants[applicantIndex].occupation.totalWorkExperience"
-                              maxlength="2"
+                              [maxlength]="minMaxValues['Years_in_employment']?.maxLength"
                               #totalExperienceYear="ngModel" required />
 
                             <ng5-slider class="commSlider" tabindex="6"
@@ -1789,32 +1800,34 @@
                               id="ofcAddOne" autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.addressLineOne"
                               pattern="{{regexPattern.address}}" tabindex="1" name="ofcA1" #ofcA1="ngModel" fieldFill
-                              required  maxlength="120"/>
+                              required  [maxlength]="minMaxValues['Address_Line']?.maxLength" [minlength]="minMaxValues['Address_Line']?.minValue" />
                             <label for="ofcAddOne">Office address line1</label>
 
-                            <div *ngIf="(qde.application.applicants[applicantIndex].officialCorrespondence.addressLineOne)?.length == 120" class="invalid-feedback">Maximum Character Exceeds</div>
+                            <!-- <div *ngIf="(qde.application.applicants[applicantIndex].officialCorrespondence.addressLineOne)?.length == minMaxValues['Address_Line']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div> -->
 
                             <div *ngIf="ofcA1.touched  && ofcA1.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="ofcA1.errors?.required">{{errors.officialCorrespondence.address1.required}}</div> -->
                               <div *ngIf="ofcA1.errors?.pattern">{{errors.officialCorrespondence.address1.invalid}}
                               </div>
+                              <div *ngIf="ofcA1.errors?.minlength">{{errors.officialCorrespondence.address1.minlength}}{{" "+minMaxValues['Address_Line']?.minValue+" characters"}}</div>
                             </div>
                           </div>
 
                           <div class="form-group typ-optional">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="ofcAddTwo" autocomplete="off" maxlength="120"
+                              id="ofcAddTwo" autocomplete="off" [maxlength]="minMaxValues['Address_Line']?.maxLength"
                               [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.addressLineTwo"
                               pattern="{{regexPattern.address}}" name="ofcA2" tabindex="2" #ofcA2="ngModel" fieldFill />
                             <label for="ofcAddTwo">Office address line2</label>
 
-                            <div *ngIf="(qde.application.applicants[applicantIndex].officialCorrespondence.addressLineTwo)?.length == 120" class="invalid-feedback">Maximum Character Exceeds</div>
+                            <!-- <div *ngIf="(qde.application.applicants[applicantIndex].officialCorrespondence.addressLineTwo)?.length == minMaxValues['Address_Line']?.minValue" class="invalid-feedback">Maximum Character Exceeds</div> -->
 
                             <span class="optional">optional</span>
                             <div *ngIf="ofcA2.touched && ofcA2.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="ofcA2.errors?.required">{{errors.officialCorrespondence.address2.required}}</div> -->
                               <div *ngIf="ofcA2.errors?.pattern">{{errors.officialCorrespondence.address2.invalid}}
                               </div>
+                              <div *ngIf="ofcA2.errors?.minlength">{{errors.officialCorrespondence.address2.minlength}}{{" "+minMaxValues['Address_Line']?.minValue+" characters"}}</div>
                             </div>
                           </div>
 
@@ -1822,23 +1835,24 @@
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                               id="offLandmark" autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.landMark"
-                              name="landMark" fieldFill tabindex="3" pattern="{{regexPattern.landmark}}" maxlength="100"
+                              name="landMark" fieldFill tabindex="3" pattern="{{regexPattern.landmark}}" [maxlength]="minMaxValues['Landmark']?.maxLength"
                               #landMark="ngModel" />
                             <label for="offLandmark">Landmark</label>
                             <span class="optional">optional</span>
 
-                            <div *ngIf="(qde.application.applicants[applicantIndex].officialCorrespondence.landMark)?.length == 100" class="invalid-feedback">Maximum Character Exceeds</div>
+                            <!-- <div *ngIf="(qde.application.applicants[applicantIndex].officialCorrespondence.landMark)?.length == minMaxValues['Landmark']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div> -->
 
                             <div *ngIf="landMark.touched && landMark.invalid" class="invalid-feedback">
-                              <div *ngIf="landMark.errors?.pattern">{{errors.officialCorrespondence.address2.invalid}}
+                              <div *ngIf="landMark.errors?.pattern">{{errors.officialCorrespondence.landMark.invalid}}
                               </div>
+                              <div *ngIf="landMark.errors?.minlength">{{errors.officialCorrespondence.landMark.minlength}}{{" "+minMaxValues['Address_Line']?.minValue+" characters"}}   </div>
                             </div>
                           </div>
                           <div class="form-group typ-optional">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                               id="offPincode" required autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].officialCorrespondence.zipcode"
-                              #pinCode="ngModel" name="pinCode" tabindex="4" minlength="6" maxlength="6" fieldFill
+                              #pinCode="ngModel" name="pinCode" tabindex="4" [minlength]="minMaxValues['Pincode']?.minValue" [maxlength]="minMaxValues['Pincode']?.maxLength" fieldFill
                               (input)="onPinCodeChange($event, 'officialCorrespondence')"
                               pattern="{{regexPattern.pinCode}}" />
                             <label for="offPincode">Pincode</label>
@@ -1870,31 +1884,32 @@
                             <div class="form-group">
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                                 id="std03" required [(ngModel)]="officialCorrespondenceStdCode" #stdCode="ngModel"
-                                tabindex="6" name="stdCode" minlength="3" maxlength="5" pattern="{{regexPattern.stdCode}}"
+                                tabindex="6" name="stdCode" [minlength]="minMaxValues['STD_Code']?.minValue" [maxlength]="minMaxValues['STD_Code']?.maxLength" pattern="{{regexPattern.stdCode}}"
                                 fieldFill autocomplete="off"/>
                               <label for="std03">STD</label>
                               <div class="redalert" *ngIf="RegExp(regexPattern.sameDigitStd).test(stdCode.value)">{{errors.contactDetails.stdCode.wrong}}</div>
                               <div *ngIf="stdCode.touched && stdCode.invalid" class="invalid-feedback">
                                 <!-- <div *ngIf="stdCode.errors?.required">{{errors.officialCorrespondence.stdCode.required}}</div> -->
-                                <div *ngIf="stdCode.errors?.pattern || stdCode.errors?.minlength">{{errors.officialCorrespondence.stdCode.invalid}}</div>
-                                <!-- <div *ngIf="stdCode.errors?.minlength">{{errors.officialCorrespondence.stdCode.invalid}}</div> -->
+                                <div *ngIf="stdCode.errors?.pattern">{{errors.officialCorrespondence.stdCode.invalid}}</div>
+                                <div *ngIf="stdCode.errors?.minlength">{{errors.officialCorrespondence.stdCode.minlength}}{{" "+minMaxValues['STD_Code']?.minValue+" digits"}}</div>
                               </div>
                             </div>
                             <span class="seperator">-</span>
                             <div class="form-group">
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                                 id="res-no03" data-validation-attr="residenceno" required #offStdNumber="ngModel"
-                                name="offStdNumber" fieldFill tabindex="7" minlength="4" maxlength="10" autocomplete="off"
+                                name="offStdNumber" fieldFill tabindex="7" [minlength]="minMaxValues['Land_Line_Number']?.minValue" [maxlength]="minMaxValues['Land_Line_Number']?.maxLength" autocomplete="off"
                                 pattern="{{regexPattern.mobileNumber}}"
                                 [(ngModel)]="officialCorrespondencePhoneNumber" />
                               <label for="res-no03">Office number</label>
                               <div class="redalert" *ngIf="RegExp(regexPattern.sameDigit).test(offStdNumber.value)">{{errors.contactDetails.residenceNumber.wrong}}</div>
                               <div *ngIf="offStdNumber.touched && offStdNumber.invalid" class="invalid-feedback">
                                 <!-- <div *ngIf="offStdNumber.errors?.required">{{errors.officialCorrespondence.phoneNumber.required}}</div> -->
-                                <div *ngIf="offStdNumber.errors?.pattern || offStdNumber.errors?.minlength">
+                                <div *ngIf="offStdNumber.errors?.pattern">
                                   {{errors.officialCorrespondence.phoneNumber.invalid}}</div>
                                 <!-- <div *ngIf="offStdNumber.errors?.required">
                                   {{errors.officialCorrespondence.phoneNumber.required}}</div> -->
+                                <div *ngIf="offStdNumber.errors?.minlength">{{errors.officialCorrespondence.phoneNumber.minlength}}{{" "+minMaxValues['Land_Line_Number']?.minValue+" digits"}}   </div>
                               </div>
                             </div>
                           </div>
@@ -1906,7 +1921,7 @@
                               name="officeEmail" (ngModelChange)="onOfficialCorsEmailChange($event, officeEmail)"/>
                             <label for="off-email">Office email ID</label>
 
-                            <div *ngIf="(qde.application.applicants[applicantIndex].officialCorrespondence.officeEmailId)?.length == 100" class="invalid-feedback">Maximum Character Exceeds</div>
+                            <!-- <div *ngIf="(qde.application.applicants[applicantIndex].officialCorrespondence.officeEmailId)?.length == 100" class="invalid-feedback">Maximum Character Exceeds</div> -->
 
                             <div *ngIf="(officeEmail.untouched || officeEmail.touched) && officeEmail.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="officeEmail.errors?.required">{{errors.officialCorrespondence.email.required}}</div> -->
@@ -2294,7 +2309,8 @@
                                         [(ngModel)]="qde.application.applicationFormNumber"
                                         (ngModelChange)="qde.application.applicationFormNumber = $event.toUpperCase()"
                                         id="ref-no-nonind"
-                                        maxlength="20"
+                                        [minlength]="minMaxValues['Application_Form_No']?.minValue"
+                                        [maxlength]="minMaxValues['Application_Form_No']?.maxLength"
                                         pattern="{{regexPattern.appRefNo}}"
                                         name="applicationFormNo"
                                         (keyup)="keyUpPanNumber($event)"
@@ -2307,12 +2323,13 @@
                                             <div *ngIf="applicationRefNoNonInd.touched && applicationRefNoNonInd.invalid " class="invalid-feedback">
 
                                                 <div *ngIf="applicationRefNoNonInd.errors?.pattern">{{errors.applicationReferenceNo.invalid}}</div>
+                                                <div *ngIf="applicationRefNoNonInd.errors?.minlength">{{errors.applicationReferenceNo.minlength}}{{" "+minMaxValues['Application_Form_No']?.minValue+" characters"}} </div>
                                                 </div>
                             </div>
                           <div class="form-group last typ-optional">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                               [(ngModel)]="qde.application.applicants[applicantIndex].pan.panNumber" tabindex="1"
-                              id="pan-inpt2" minlength="10" maxlength="10" pattern="{{regexPattern.panNonInd}}" autocomplete="off"
+                              id="pan-inpt2" [minlength]="minMaxValues['PAN']?.minValue" [maxlength]="minMaxValues['PAN']?.maxLength" pattern="{{regexPattern.panNonInd}}" autocomplete="off"
                               (ngModelChange)="qde.application.applicants[applicantIndex].pan.panNumber = $event.toUpperCase()"
                               (keyup)="keyUpPanNumber($event)" name="pan" #panNumber2="ngModel" fieldFill required/>
                             <label for="pan-inpt2">Enter PAN</label>
@@ -2321,13 +2338,14 @@
                               class="invalid-feedback">
                               <!-- <div *ngIf="panNumber2.errors?.required">{{errors.pan.required}}</div> -->
                               <div *ngIf="panNumber2.errors?.pattern ? true : false">{{errors.pan.invalidNonInd}}</div>
-                              <div *ngIf="panNumber2.errors?.minlength || panNumber2.errors?.maxlength">
-                                {{errors.pan.length}}</div>
+                              <!-- <div *ngIf="panNumber2.errors?.minlength || panNumber2.errors?.maxlength">
+                                {{errors.pan.length}}</div> -->
                             </div>
                             <div *ngIf="panErrorCount >= 3" class="invalid-feedback">{{errors.pan.after3Attemps}}</div>
                             <div class="redalert"
                               *ngIf="panNumber2.touched && panNumber2.valid && RegExp(regexPattern.panNonInd).test(panNumber2.value) && isValidPan == false">
                               Invalid PAN</div>
+                            <div *ngIf="panNumber2.errors?.minlength">{{errors.pan.length}}{{" "+minMaxValues['PAN']?.minValue+" characters"}}</div>
                           </div>
                           <!-- <div class="form-group">
                                                 <span class="control-title">Document Type</span>
@@ -2449,12 +2467,12 @@
                         <div class="form-wrap">
                           <div class="form-group">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="org-name" tabindex="1" pattern="{{regexPattern.organizationName}}" autocomplete="off" maxlength="50"
+                              id="org-name" tabindex="1" pattern="{{regexPattern.organizationName}}" autocomplete="off" [maxlength]="minMaxValues['Name']?.maxLength"
                               [(ngModel)]="qde.application.applicants[applicantIndex].organizationDetails.nameOfOrganization"
                               #orgName="ngModel" name="orgName" fieldFill required />
                             <label for="org-name">Name of Organization</label>
 
-                            <div *ngIf="(qde.application.applicants[applicantIndex].organizationDetails.nameOfOrganization)?.length == 50" class="invalid-feedback">Maximum Character Exceeds</div>
+                            <!-- <div *ngIf="(qde.application.applicants[applicantIndex].organizationDetails.nameOfOrganization)?.length == minMaxValues['Name']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div> -->
 
                             <div *ngIf="(orgName.touched || orgName.dirty) && orgName.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="orgName.errors?.required">{{errors.organizationDetails.orgName.required}}</div> -->
@@ -2469,6 +2487,7 @@
                                   textField="key" valueField="value" tabindex="2" name="day"
                                   nick="organizationDetails.day" #doiDay
                                   (selectionChange)="selectValueChanged($event, doiDay.hostElement)"
+                                  (change)="checkAgeOfIncorporation($event)"
                                   [(ngModel)]="organizationDetails.day" required>
                                 </kendo-dropdownlist>
                               </div>
@@ -2478,6 +2497,7 @@
                                   textField="key" valueField="value" name="month" tabindex="3"
                                   nick="organizationDetails.month" #doiMonth
                                   (selectionChange)="selectValueChanged($event, doiMonth.hostElement)"
+                                  (change)="checkAgeOfIncorporation($event)"
                                   [(ngModel)]="organizationDetails.month" required>
                                 </kendo-dropdownlist>
                               </div>
@@ -2487,6 +2507,7 @@
                                   textField="key" valueField="value" tabindex="4" name="year"
                                   nick="organizationDetails.year" #doiYear
                                   (selectionChange)="selectValueChanged($event, doiYear.hostElement)"
+                                  (change)="checkAgeOfIncorporation($event)"
                                   [(ngModel)]="organizationDetails.year" required>
                                 </kendo-dropdownlist>
                               </div>
@@ -2552,13 +2573,13 @@
                         <div class="form-wrap">
                           <div class="form-group">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="reg-add" autocomplete="off" maxlength="120"
+                              id="reg-add" autocomplete="off" [maxlength]="minMaxValues['Address_Line']?.maxLength"
                               [(ngModel)]="qde.application.applicants[applicantIndex].registeredAddress.registeredAddress"
                               pattern="{{regexPattern.address}}" name="regAdd" #regAdd="ngModel" tabindex="1" fieldFill
                               required />
                             <label for="reg-add">Registered Address</label>
 
-                            <div *ngIf="(qde.application.applicants[applicantIndex].registeredAddress.registeredAddress)?.length == 120" class="invalid-feedback">Maximum Character Exceeds</div>
+                            <!-- <div *ngIf="(qde.application.applicants[applicantIndex].registeredAddress.registeredAddress)?.length == minMaxValues['Address_Line']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div> -->
 
                             <div *ngIf="(regAdd.touched || regAdd.dirty) && regAdd.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="regAdd.errors?.required">{{errors.registeredAddress.address.required}}</div> -->
@@ -2567,11 +2588,11 @@
                           </div>
                           <div class="form-group typ-optional">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              name="landmark" tabindex="2" #landmark01="ngModel" fieldFill autocomplete="off" maxlength="100"
+                              name="landmark" tabindex="2" #landmark01="ngModel" fieldFill autocomplete="off" [maxlength]="minMaxValues['Landmark']?.maxLength"
                               [(ngModel)]="qde.application.applicants[applicantIndex].registeredAddress.landMark"
                               id="landmark" pattern="{{regexPattern.landmark}}" />
 
-                              <div *ngIf="(qde.application.applicants[applicantIndex].registeredAddress.landMark)?.length == 100" class="invalid-feedback">Maximum Character Exceeds</div>
+                              <!-- <div *ngIf="(qde.application.applicants[applicantIndex].registeredAddress.landMark)?.length == minMaxValues['Landmark']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div> -->
 
                             <label for="landmark">Landmark</label>
                             <span class="optional">optional</span>
@@ -2585,7 +2606,7 @@
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                               id="regoffPincode" required tabindex="3" autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].registeredAddress.zipcode"
-                              #regAddrPinCode="ngModel" name="pinCode" minlength="6" maxlength="6" fieldFill
+                              #regAddrPinCode="ngModel" name="pinCode" [minlength]="minMaxValues['Pincode']?.minValue" [maxlength]="minMaxValues['Pincode']?.maxLength" fieldFill
                               (input)="onPinCodeChange($event, 'registeredAddress')"
                               pattern="{{regexPattern.pinCode}}" />
                             <label for="regoffPincode">Pincode</label>
@@ -2666,13 +2687,13 @@
                             </div>
                           <div class="form-group">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="corp-add" tabindex="2" autocomplete="off" maxlength="120"
+                              id="corp-add" tabindex="2" autocomplete="off" [maxlength]="minMaxValues['Address_Line']?.maxLength"
                               [(ngModel)]="qde.application.applicants[applicantIndex].corporateAddress.corporateAddress"
                               pattern="{{regexPattern.address}}" name="corpAddress" #corpAddress="ngModel" fieldFill
                               required />
                             <label for="corp-add">Corporate Address</label>
 
-                            <div *ngIf="(qde.application.applicants[applicantIndex].corporateAddress.corporateAddress)?.length == 120" class="invalid-feedback">Maximum Character Exceeds</div>
+                            <!-- <div *ngIf="(qde.application.applicants[applicantIndex].corporateAddress.corporateAddress)?.length == minMaxValues['Address_Line']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div> -->
 
                             <div *ngIf="corpAddress.touched  && corpAddress.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="corpAddress.errors?.required">{{errors.corporateAddress.address.required}}</div> -->
@@ -2683,11 +2704,11 @@
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].corporateAddress.landMark"
                               tabindex="3" name="landmark" #landmark="ngModel" class="form-control" fieldFill
-                              pattern="{{regexPattern.landmark}}" id="landmark01" maxlength="100"/>
+                              pattern="{{regexPattern.landmark}}" id="landmark01" [maxlength]="minMaxValues['Landmark']?.maxLength"/>
                             <label for="landmark01">Landmark</label>
                             <span class="optional">optional</span>
 
-                            <div *ngIf="(qde.application.applicants[applicantIndex].corporateAddress.landMark)?.length == 100" class="invalid-feedback">Maximum Character Exceeds</div>
+                            <!-- <div *ngIf="(qde.application.applicants[applicantIndex].corporateAddress.landMark)?.length == minMaxValues['Landmark']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div> -->
 
                             <div *ngIf="(landmark.touched || landmark.dirty) && landmark.invalid"
                               class="invalid-feedback">
@@ -2698,7 +2719,7 @@
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                               id="pincode01" autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].corporateAddress.zipcode"
-                              tabindex="4" pattern="{{regexPattern.pinCode}}" name="pincode" minlength="6" maxlength="6"
+                              tabindex="4" pattern="{{regexPattern.pinCode}}" name="pincode" [minlength]="minMaxValues['Pincode']?.minValue" [maxlength]="minMaxValues['Pincode']?.maxLength"
                               required #corpPincode="ngModel" (input)="onPinCodeChange($event, 'corporateAddress')"
                               fieldFill />
                             <label for="pincode01">Pincode</label>
@@ -2729,29 +2750,29 @@
                             <div class="form-group">
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" autocomplete="off"
                                 [(ngModel)]="corporateAddressStdCode" name="stdNumber" class="form-control"
-                                #stdNumber="ngModel" tabindex="6" fieldFill minlength="3" maxlength="5" required id="caStd"
+                                #stdNumber="ngModel" tabindex="6" fieldFill [minlength]="minMaxValues['STD_Code']?.minValue" [maxlength]="minMaxValues['STD_Code']?.maxLength" required id="caStd"
                                 pattern="{{regexPattern.stdCode}}" required />
                               <label for="caStd">STD</label>
                               <div class="redalert" *ngIf="RegExp(regexPattern.sameDigitStd).test(stdNumber.value)">{{errors.contactDetails.stdCode.wrong}}</div>
                               <div *ngIf="stdNumber.touched  && stdNumber.invalid" class="invalid-feedback">
                                 <!-- <div *ngIf="stdNumber.errors?.required">{{errors.corporateAddress.stdNumber.required}}</div> -->
-                                <div *ngIf="stdNumber.errors?.pattern || stdNumber.errors?.minlength">{{errors.corporateAddress.stdNumber.invalid}}</div>
-                                <!-- <div *ngIf="stdNumber.errors?.minlength">{{errors.corporateAddress.stdNumber.invalid}}</div> -->
+                                <div *ngIf="stdNumber.errors?.pattern">{{errors.corporateAddress.stdNumber.invalid}}</div>
+                                <div *ngIf="stdNumber.errors?.minlength">{{errors.corporateAddress.stdNumber.minlength}}{{" "+minMaxValues['STD_Code']?.maxLength+" digits"}}</div>
                               </div>
                             </div>
                             <span class="seperator">-</span>
                             <div class="form-group">
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control" autocomplete="off"
                                 [(ngModel)]="corporateAddressPhoneNumber" name="phoneNumber" id="ca-res-no" tabindex="7"
-                                fieldFill #phoneNumber="ngModel" pattern="{{regexPattern.mobileNumber}}" minlength="4" maxlength="10"
+                                fieldFill #phoneNumber="ngModel" pattern="{{regexPattern.mobileNumber}}" [minlength]="minMaxValues['Land_Line_Number']?.minValue" [maxlength]="minMaxValues['Land_Line_Number']?.maxLength"
                                 data-validation-attr="residenceno" required />
                               <label for="ca-res-no">Office number</label>
                               <div class="invalid-feedback" *ngIf="RegExp(regexPattern.sameDigit).test(phoneNumber.value)">
                                 {{errors.corporateAddress.phoneNumber.invalid}}</div>
                               <div *ngIf="phoneNumber.touched  && phoneNumber.invalid" class="invalid-feedback">
                                 <!-- <div *ngIf="phoneNumber.errors?.required">{{errors.corporateAddress.phoneNumber.required}}</div> -->
-                                <div *ngIf="phoneNumber.errors?.pattern || phoneNumber.errors?.minlength">{{errors.corporateAddress.phoneNumber.invalid}}</div>
-                                <!-- <div *ngIf="phoneNumber.errors?.minlength">{{errors.corporateAddress.phoneNumber.invalid}}</div> -->
+                                <div *ngIf="phoneNumber.errors?.pattern">{{errors.corporateAddress.phoneNumber.invalid}}</div>
+                                <div *ngIf="phoneNumber.errors?.minlength">{{errors.corporateAddress.phoneNumber.minlength}} {{" "+minMaxValues['Land_Line_Number']?.minValue+" digits"}}</div>
                               </div>
                             </div>
                           </div>
@@ -2762,7 +2783,7 @@
                               name="officeEmailId" #ofcEmail="ngModel" fieldFill />
                             <label for="ofc-email">Office email ID</label>
 
-                            <div *ngIf="(qde.application.applicants[applicantIndex].corporateAddress.officeEmailId)?.length == 100" class="invalid-feedback">Maximum Character Exceeds</div>
+                            <!-- <div *ngIf="(qde.application.applicants[applicantIndex].corporateAddress.officeEmailId)?.length == 100" class="invalid-feedback">Maximum Character Exceeds</div> -->
 
                             <div *ngIf="(ofcEmail.untouched || ofcEmail.touched) && ofcEmail.invalid" class="invalid-feedback">
                               <!-- <div *ngIf="ofcEmail.errors?.required">{{errors.corporateAddress.ofcEmail.required}}</div> -->

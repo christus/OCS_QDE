@@ -74,10 +74,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     appRefNo: "^[A-Za-z0-9]+$",
     stdCode: "^[0][0-9]*$",
     mobileNumber: "^[1-9][0-9]*$",
-    name: "^[A-Za-z ]{0,49}$",
-    organizationName: "^[0-9A-Za-z, _&*#'/\\-@]{0,49}$",
+    name: "^[A-Za-z ]{0,99}$",
+    organizationName: "^[0-9A-Za-z, _&*#'/\\-@]{0,99}$",
     birthPlace: "^[A-Za-z ]{0,99}$",
-    address: "^[0-9A-Za-z, _&*#'/\\-]{0,119}$",
+    address: "^[0-9A-Za-z, _&*#'/\\-]{0,99}$",
     landmark: "^[0-9A-Za-z, _&*#'/\\-]{0,99}$",
     // cityState:"^[0-9A-Za-z, &'#]$",
     pinCode: "^[1-9][0-9]{5}$",
@@ -371,6 +371,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
   ageError:boolean = false;
+  ageMaxError: boolean = false;
 
   min: Date; // minimum date to date of birth
   maxDate : Date = new Date();
@@ -532,6 +533,14 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.unOfficialEmails = lov.LOVS.un_official_emails;
       this.preferredEmail = lov.LOVS.preferred_mails;
       this.minMaxValues = lov.LOVS.min_max_values;
+      this.options['floor'] = this.minMaxValues['Years_in_residence']['minValue'];
+      this.options['ceil'] = this.minMaxValues['Years_in_residence']['maxValue'];
+      this.familyOptions['floor'] = this.minMaxValues['No_Of_Dependents']['minValue'];
+      this.familyOptions['ceil'] = this.minMaxValues['No_Of_Dependents']['maxValue'];
+      this.employementOptions['floor']= this.minMaxValues['Years_in_employment']['minValue'];
+      this.employementOptions['ceil']= this.minMaxValues['Years_in_employment']['maxValue'];
+      this.experienceOptions['floor']= this.minMaxValues['Years_in_employment']['minValue'];
+      this.experienceOptions['ceil']= this.minMaxValues['Years_in_employment']['maxValue'];
       // console.log("data slice error: ", lov.LOVS.religion);
 
 
@@ -1806,8 +1815,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       year: { key: year, value: year }
     }
 
-     const dateofbirth = this.dateofBirthKendo;
-
+    //  const dateofbirth = this.dateofBirthKendo;
+      const dateofbirth = this.getFormattedDate(value);
       console.log("dateofbirth", dateofbirth);
       const d1: any = new Date(dateofbirth);
       const d2: any = new Date();
@@ -1815,13 +1824,18 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       var age = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
       if (age < Number(this.minMaxValues["Age_limit"].minValue)) {
         this.ageError = true;
+        this.ageMaxError = false;
         return;
       }else if (age >  Number(this.minMaxValues["Age_limit"].maxValue)){
+        
         this.isErrorModal = true;
         this.errorMessage = `Maximum age limit is.${this.minMaxValues["Age_limit"].maxValue}`;
+        this.ageMaxError = true;
+        this.ageError = false;
         return;
       } else {
         this.ageError = false;
+        this.ageMaxError = false;
       }
 
 
@@ -3532,6 +3546,23 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   //   });
   // }
 
+  checkAgeOfIncorporation(event: Date ){
+    let dateofbirth = this.getFormattedDate(event);
+    const d1: any = new Date(dateofbirth);
+    const d2: any = new Date();
+    var diff = d2 - d1;
+    var age = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
+    if (age < Number(this.minMaxValues["Age_Of_Incorporation"].minValue)) {
+      this.ageError = true;
+      return;
+    }else if (age >  Number(this.minMaxValues["Age_Of_Incorporation"].maxValue)){
+      this.isErrorModal = true;
+      this.errorMessage = `Maximum age limit is.${this.minMaxValues["Age_Of_Incorporation"].maxValue}`;
+      return;
+    } else {
+      this.ageError = false;
+    }
+  }
 
   selectValueChanged(event, to, key?) {
     let whichSelectQde = this.qde.application.applicants[this.applicantIndex];
@@ -4467,5 +4498,18 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     if(this.qde.application.applicants[this.applicantIndex].contactDetails.alternateResidenceNumber == "-" && this.isAlternateResidenceNumber == true){
       this.addRemoveResidenceNumberField();
     }
+  }
+  getFormattedDate(date) {
+    console.log("in date conversion " + date);
+
+    let dateFormat: Date = date;
+    let year = dateFormat.getFullYear();
+    let month = dateFormat.getMonth() + 1;
+    let month1 = month < 10 ? '0' + month.toString() : '' + month.toString(); // ('' + month) for string result
+    let day = date.getDate();
+    day = day < 10 ? '0' + day : '' + day; // ('' + month) for string result
+    let formattedDate = year + '-' + month1 + '-' + day;
+    // console.log("final Value "+ formattedDate);
+    return formattedDate;
   }
 }
