@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { QdeHttpService } from '../../services/qde-http.service';
 
 @Component({
@@ -18,25 +18,39 @@ export class CheckPaymentComponent implements OnInit {
 
   uploadFileName: string;
 
-  startDate : Date ;
+  startDate : Date | string;
 
-  endDate : Date;
+  endDate : Date | string;
   isErrorModal: boolean;
   errorMsgModal: string;
+  isFileSelected : boolean = false;
+  @ViewChild("paymentUploadPic") paymentUploadPic : ElementRef;
 
   constructor(private qdeHttp: QdeHttpService) { }
 
   ngOnInit() {
-    this.startDate = new Date();
-    this.startDate.setDate(this.startDate.getDate()- 7);
-
-    this.endDate = new Date();
+    let fromDate = new Date();
+    // this.startDate = new Date();
+    // fromDate.setDate(fromDate.getDate()- 7);
+    let month = fromDate.getUTCMonth()+1;
+    let date = fromDate.getDate()-7;
+    let year = fromDate.getFullYear();
+    this.startDate = year+"/"+month+"/"+date;
+    // this.endDate = new Date();
+    let toDate = new Date();
+    month = toDate.getUTCMonth()+1;
+    date = toDate.getDate();
+    year = toDate.getFullYear();
+    this.endDate = year+"/"+month+"/"+date;
   }
 
   setUploadDoc(inputValue:any) {
     this.uploadDoc = inputValue.files[0];
-    this.uploadFileName = "";
-    this.uploadFileName = this.uploadDoc.name;
+    if(this.uploadDoc["size"]!=0){
+      this.isFileSelected = true;
+      this.uploadFileName = this.uploadDoc.name;
+    }
+    // this.uploadFileName = "";
     this.getBase64(this.uploadDoc);
     this.errorMsg = "";
   }
@@ -133,13 +147,16 @@ export class CheckPaymentComponent implements OnInit {
             // alert("Uploaded Successfully!");
             this.isErrorModal = true;
             this.errorMsgModal = "Uploaded Successfully!";
+            this.clearFile();
         } else {
           if (response["ErrorMessage"]) {
             console.log("Response: " + response["ErrorMessage"]);
+            this.clearFile();
           } else if (response["ProcessVariables"]["errorMessage"]) {
             console.log(
               "Response: " + response["ProcessVariables"]["errorMessage"]
             );
+            this.clearFile();
             // this.errorMsg = response["ProcessVariables"]["errorMessage"];
 
           }
@@ -213,13 +230,16 @@ export class CheckPaymentComponent implements OnInit {
             // alert("Uploaded Successfully!");
             this.isErrorModal = true;
             this.errorMsgModal = "Uploaded Successfully";
+            this.clearFile();
         } else {
           if (response["ErrorMessage"]) {
             console.log("Response: " + response["ErrorMessage"]);
+            this.clearFile();
           } else if (response["ProcessVariables"]["errorMessage"]) {
             console.log(
               "Response: " + response["ProcessVariables"]["errorMessage"]
             );
+            this.clearFile();
             // this.errorMsg = response["ProcessVariables"]["errorMessage"];
           }
         }
@@ -251,6 +271,11 @@ export class CheckPaymentComponent implements OnInit {
       console.log("result base64", this.uploadCSVFile);
     }
     myReader.readAsDataURL(file);
+  }
+  clearFile(){
+    this.uploadFileName = "";
+    this.isFileSelected = false;
+    this.paymentUploadPic.nativeElement.value = "";
   }
 
 }
