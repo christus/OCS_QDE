@@ -8,7 +8,6 @@
   <form (ngSubmit)="submitForm(addForm)" #addForm="ngForm">
 
     <div class="admin-col-half">
-
       <label for="assessment">Select Assessment Methodology</label>
       <select id="assessment" name="assessmentId" [ngModel]="selectedAssessment.id" (ngModelChange)="assessmentChanged($event)">
         <option *ngFor="let z of assessments;" [value]="z.id">{{z.description}}</option>
@@ -57,6 +56,14 @@
     </div> -->
 
   </form>
+  <br>
+      &nbsp;<button class="fileUpload" (click)="callFile()">Upload Mapping list</button>
+      <input type="file" #uploadCSV accept=".csv" (change)="startUpload($event)" style="display: none;">
+      &nbsp;&nbsp; <button type="button" class="saveBtn" [ngClass]="{'disabled': (!isFileSelected)}"
+       [disabled]="!isFileSelected" (click)="uploadCSVFile()"> Upload List</button>
+       <br><br>
+       <span style="margin-left: 0.3vw;"><b>CSV Format:</b>Applicant type,Profile,Financial applicant,Assessment
+       methodology,Document category,Document Type,Mandatory</span>
 </div>
 
 <!-- <input type="text" class="lov-search" placeholder="Search" (input)="search($event)" /> -->

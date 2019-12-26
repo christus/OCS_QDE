@@ -13,15 +13,16 @@ export class LeadsSidebarComponent implements OnInit {
   viewMode: string = '' ;
   userRole: any = [];
   isTBMLoggedIn: boolean ;
+  showReAssign: boolean;
   constructor(private router: Router,
               private cds: CommonDataService,
               private utilService: UtilService) {
-                if(this.getRoles()){
-                  this.isTBMLoggedIn = this.getRoles().includes('TBM') || this.getRoles().includes('ZBM') || this.getRoles().includes('TMA');
-                } else {
-                  this.utilService.clearCredentials();
-                      // this.router.navigate(['login']);
-                  }
+                // if(this.getRoles()){
+                //   this.isTBMLoggedIn = this.getRoles().includes('TBM') || this.getRoles().includes('ZBM') || this.getRoles().includes('TMA');
+                // } else {
+                //   this.utilService.clearCredentials();
+                //       // this.router.navigate(['login']);
+                //   }
                 }
 
   ngOnInit() {
@@ -32,6 +33,7 @@ export class LeadsSidebarComponent implements OnInit {
     
      console.log("userRole ", this.userRole);
     // this.viewMode = "tab2";
+     this.cds.reAssign$.subscribe(value => this.showReAssign =value )
   }
   pageNavigation(pageValue) {
     console.log("page click call", pageValue);

@@ -194,8 +194,8 @@
                                                             class="form-control" autocomplete="off"
                                                             [(ngModel)]="qde.application.applicants[coApplicantIndex].pan.panNumber"
                                                             id="pan-inpt"
-                                                            minlength="10"
-                                                            maxlength="10"
+                                                            [maxlength]="minMaxValues['PAN']?.maxLength"
+                                                            [minlength]="minMaxValues['PAN']?.minValue"
                                                             pattern="{{regexPattern.panInd}}"      
                                                             (ngModelChange)="qde.application.applicants[coApplicantIndex].pan.panNumber = $event.toUpperCase()"
                                                             name="pan"
@@ -435,6 +435,7 @@
                                                             tabindex="2"
                                                             fieldFill 
                                                             [maxlength]="minMaxValues['Name']?.maxLength"
+                                                            [minlength]="minMaxValues['Name']?.minValue"
                                                             spellcheck="false"
                                                             required
                                                             pattern="{{regexPattern.name}}"
@@ -454,6 +455,7 @@
                                                           id="middleName" 
                                                           name="middleName" 
                                                           [maxlength]="minMaxValues['Name']?.maxLength"
+                                                          [minlength]="minMaxValues['Name']?.minValue"
                                                           tabindex="3"
                                                           [(ngModel)]="qde.application.applicants[coApplicantIndex].personalDetails.middleName"
                                                           pattern="{{regexPattern.name}}"
@@ -477,6 +479,7 @@
                                                               name="lastName" 
                                                               #lastName="ngModel"  
                                                               [maxlength]="minMaxValues['Name']?.maxLength"
+                                                              [minlength]="minMaxValues['Name']?.minValue"
                                                               id="lastName"
                                                               tabindex="4" autocomplete="off"
                                                               fieldFill
@@ -762,8 +765,8 @@
                                               <div class="form-group typ-mob">
                                                   <input [readonly]="isReadOnly || qde.application.applicants[coApplicantIndex].contactDetails.isMobileOTPverified" type="tel" class="form-control" id="mob-no"
                                                     [maxlength]="minMaxValues['Mobile_Number']?.maxLength" 
-                                                    im-insert="true"
-                                                    minlength="10"
+                                                    [minlength]="minMaxValues['Mobile_Number']?.minValue"                                                 
+                                                    im-insert="true"                                                    
                                                     tabindex="5"
                                                     [(ngModel)]="qde.application.applicants[coApplicantIndex].contactDetails.mobileNumber"
                                                     autocomplete="off"
@@ -816,6 +819,7 @@
                                                   <input [readonly]="isReadOnly" type="tel" class="form-control" id="alter-mob" data-validation-attr="mobileno01" 
                                                     im-insert="true" autocomplete="off"
                                                     [maxlength]="minMaxValues['Mobile_Number']?.maxLength" 
+                                                    [minlength]="minMaxValues['Mobile_Number']?.minValue" 
                                                     tabindex="7"
                                                     [(ngModel)]="qde.application.applicants[coApplicantIndex].contactDetails.alternateMobileNumber"
                                                     name="alternateMobileNumber"
@@ -848,8 +852,8 @@
                                                                 [(ngModel)]="residenceNumberStdCode"
                                                                 pattern="{{regexPattern.stdCode}}"
                                                                 #residenceStdCode="ngModel"
-                                                                [maxlength]="minMaxValues['STD_Code']?.maxLength" 
-                                                                minlength="3"
+                                                                [minlength]="minMaxValues['STD_Code']?.minValue" 
+                                                                [maxlength]="minMaxValues['STD_Code']?.maxLength"
                                                                 name="residenceNumber1"
                                                                 class="form-control"
                                                                 fieldFill
@@ -871,7 +875,7 @@
                                                                 id="res-no"
                                                                 [(ngModel)]="residenceNumberPhoneNumber"
                                                                 pattern="{{regexPattern.mobileNumber}}"
-                                                                minlength="4" 
+                                                                [minlength]="minMaxValues['Land_Line_Number']?.minValue"
                                                                 [maxlength]="minMaxValues['Land_Line_Number']?.maxLength" 
                                                                 #residenceNumber="ngModel"
                                                                 name="residenceNumber2"
@@ -901,7 +905,7 @@
                                                       <input [readonly]="isReadOnly"    type="text" autocomplete="off"
                                                                 [(ngModel)]="alternateResidenceNumberStdCode"
                                                                 name="alternateResidenceNumberStd1"
-                                                                minlength="3"
+                                                                [minlength]="minMaxValues['STD_Code']?.minValue" 
                                                                 [maxlength]="minMaxValues['STD_Code']?.maxLength"
                                                                 tabindex="12"
                                                                 #alternateResidenceNumberStd1="ngModel"
@@ -927,7 +931,7 @@
                                                                 id="altr-res-no"
                                                                 fieldFill
                                                                 tabindex="13"
-                                                                minlength="4" 
+                                                                [minlength]="minMaxValues['Land_Line_Number']?.minValue" 
                                                                 [maxlength]="minMaxValues['Land_Line_Number']?.maxLength" 
                                                                 spellcheck="false"
                                                                 pattern="{{regexPattern.mobileNumber}}"
@@ -1108,6 +1112,7 @@
                                                           name="addressLineOne"
                                                           #address1="ngModel"
                                                           fieldFill 
+                                                          [minlength]="minMaxValues['Address_Line']?.minValue"
                                                           [maxlength]="minMaxValues['Address_Line']?.maxLength"
                                                           spellcheck="false"
                                                           [readonly]="qde.application.applicants[coApplicantIndex].communicationAddress.currentAddFromApp"
@@ -1132,6 +1137,7 @@
                                                     #address2="ngModel"
                                                     fieldFill 
                                                     [maxlength]="minMaxValues['Address_Line']?.maxLength"
+                                                    
                                                     tabindex="3"
                                                     [readonly]="qde.application.applicants[coApplicantIndex].communicationAddress.currentAddFromApp"
                                                     spellcheck="false"/>
@@ -1154,7 +1160,8 @@
                                                             [(ngModel)]="qde.application.applicants[coApplicantIndex].communicationAddress.zipcode"
                                                             name="pinCode"
                                                             #commPinCode="ngModel" 
-                                                            maxlength="6"
+                                                            [minlength]="minMaxValues['Pincode']?.minValue"
+                                                            [maxlength]="minMaxValues['Pincode']?.maxLength"
                                                             fieldFill
                                                             tabindex="4"
                                                             spellcheck="false"
@@ -1226,6 +1233,7 @@
                                                           pattern="{{regexPattern.address}}"
                                                           fieldFill 
                                                           [maxlength]="minMaxValues['Address_Line']?.maxLength"
+                                                          [minlength]="minMaxValues['Address_Line']?.minValue"
                                                           tabindex="7"
                                                           spellcheck="false"
                                                           [(ngModel)]="qde.application.applicants[coApplicantIndex].permanentAddress.addressLineOne"
@@ -1247,6 +1255,7 @@
                                                           #pAddress2="ngModel"
                                                           fieldFill
                                                           [maxlength]="minMaxValues['Address_Line']?.maxLength"
+                                                          
                                                           tabindex="8"
                                                           pattern="{{regexPattern.address}}"
                                                           spellcheck="false"
@@ -1275,8 +1284,8 @@
                                                                     fieldFill
                                                                     spellcheck="false"
                                                                     [(ngModel)]="qde.application.applicants[coApplicantIndex].permanentAddress.zipcode"
-                                                                    minlength="6"
-                                                                    maxlength="6"
+                                                                    [minlength]="minMaxValues['Pincode']?.minValue"
+                                                                    [maxlength]="minMaxValues['Pincode']?.maxLength"
                                                                     pattern="{{regexPattern.pinCode}}"
                                                                     required
                                                                     [readOnly]="qde.application.applicants[coApplicantIndex].communicationAddress.permanentAddress || 
@@ -1480,6 +1489,7 @@
                                                       pattern="{{regexPattern.name}}"
                                                       tabindex="2"                                                      
                                                       [maxlength]="minMaxValues['Name']?.maxLength"
+                                                      [minlength]="minMaxValues['Name']?.minValue"
                                                       id="spouse-name"
                                                       fieldFill
                                                       spellcheck="false"
@@ -1673,7 +1683,9 @@
                                               <div class="form-group">
                                                   <input [readonly]="isReadOnly"  type="text" autocomplete="off"
                                                           class="form-control"
-                                                          id="father-name" maxlength="50"
+                                                          id="father-name" 
+                                                          [maxlength]="minMaxValues['Name']?.maxLength"
+                                                          [minlength]="minMaxValues['Name']?.minValue"
                                                           required
                                                           [(ngModel)]="qde.application.applicants[coApplicantIndex].familyDetails.fatherName"
                                                           #fatherName="ngModel"
@@ -1716,7 +1728,9 @@
                                                           tabindex="4"
                                                           name="motherName"
                                                           fieldFill
-                                                          spellcheck="false" maxlength="50"
+                                                          spellcheck="false" 
+                                                          [maxlength]="minMaxValues['Name']?.maxLength"
+                                                          [minlength]="minMaxValues['Name']?.minValue"
                                                           pattern="{{regexPattern.name}}" />
                                                         <label for="mother-name">Mother's name</label>
 
@@ -1735,7 +1749,9 @@
                                                             tabindex="5"
                                                             [(ngModel)]="qde.application.applicants[coApplicantIndex].familyDetails.motherMaidenName"
                                                             #motherMaiden="ngModel"
-                                                            name="motherMaidenName" maxlength="50"
+                                                            name="motherMaidenName" 
+                                                            [maxlength]="minMaxValues['Name']?.maxLength"
+                                                            [minlength]="minMaxValues['Name']?.minValue"
                                                             fieldFill
                                                             spellcheck="false"
                                                             pattern="{{regexPattern.name}}" />
@@ -1822,7 +1838,9 @@
                                           </div>
                                           <div class="form-group" *ngIf="selectedReligion.value == '6'" [ngClass]="{'hidden': (selectedReligion.value != '6')}">
                                               <input [readonly]="isReadOnly" type="text" class="form-control" autocomplete="off"
-                                              pattern="{{regexPattern.name}}" #specifyReligion="ngModel" required maxlength="10"
+                                              pattern="{{regexPattern.name}}" #specifyReligion="ngModel" required 
+                                              [maxlength]="minMaxValues['Name']?.maxLength"
+                                              [minlength]="minMaxValues['Name']?.minValue"
                                               [(ngModel)]="otherReligion" name="religionName" fieldFill id="religion-name">
                                               <label for="religion-name">Specify other religion</label>
                                               <!-- <div *ngIf="otherReligion?.length == 25" class="invalid-feedback">Maximum Character Exceeds</div> -->
@@ -1941,6 +1959,8 @@
                                                           tabindex="2"
                                                           [(ngModel)]="qde.application.applicants[coApplicantIndex].occupation.companyName"
                                                           pattern="{{regexPattern.organizationName}}"
+                                                          [maxlength]="minMaxValues['Name']?.maxLength"
+                                                          [minlength]="minMaxValues['Name']?.minValue"
                                                           name="companyName"
                                                           #companyName="ngModel"
                                                           fieldFill
@@ -2154,6 +2174,7 @@
                                                           pattern="{{regexPattern.address}}"
                                                           name="ofcA1" 
                                                           [maxlength]="minMaxValues['Address_Line']?.maxLength"
+                                                          [minlength]="minMaxValues['Address_Line']?.minValue"
                                                           tabindex="1"
                                                           #ofcA1="ngModel"
                                                           fieldFill
@@ -2177,6 +2198,7 @@
                                                     pattern="{{regexPattern.address}}"
                                                     name="ofcA2" 
                                                     [maxlength]="minMaxValues['Address_Line']?.maxLength"
+                                                   
                                                     spellcheck="false"
                                                     #ofcA2="ngModel"
                                                     fieldFill/>
@@ -2198,7 +2220,8 @@
                                                     fieldFill
                                                     tabindex="3"
                                                     spellcheck="false"
-                                                    pattern="{{regexPattern.landmark}}" maxlength="100"
+                                                    pattern="{{regexPattern.landmark}}" 
+                                                    [maxlength]="minMaxValues['Landmark']?.maxLength"
                                                     #landMark="ngModel" />
                                                   <label for="offLandmark">Landmark</label>
                                                   <span class="optional">optional</span>
@@ -2218,8 +2241,8 @@
                                                         #pinCode="ngModel"
                                                         tabindex="4"
                                                         name="pinCode"
-                                                        minlength="6"
-                                                        maxlength="6"
+                                                        [minlength]="minMaxValues['Pincode']?.minValue"
+                                                        [maxlength]="minMaxValues['Pincode']?.maxLength"
                                                         spellcheck="false"
                                                         fieldFill
                                                         (input)="onPinCodeChange($event, 'officialCorrespondence')" 
@@ -2260,7 +2283,7 @@
                                                         [(ngModel)]="officialCorrespondenceStdCode"
                                                         #stdCode="ngModel"
                                                         name="stdCode"
-                                                        minlength="3" 
+                                                        [minlength]="minMaxValues['STD_Code']?.minValue" 
                                                         [maxlength]="minMaxValues['STD_Code']?.maxLength"
                                                         tabindex="6"
                                                         spellcheck="false"
@@ -2281,7 +2304,7 @@
                                                               name="offStdNumber"
                                                               fieldFill
                                                               tabindex="7"
-                                                              minlength="4" 
+                                                              [minlength]="minMaxValues['Land_Line_Number']?.maxValue" 
                                                               [maxlength]="minMaxValues['Land_Line_Number']?.maxLength" 
                                                               spellcheck="false"
                                                               pattern="{{regexPattern.mobileNumber}}"
@@ -2706,8 +2729,8 @@
                                                           [(ngModel)]="qde.application.applicants[coApplicantIndex].pan.panNumber"
                                                           id="pan-inpt2"
                                                           tabindex="1"
-                                                          minlength="10"
-                                                          maxlength="10"
+                                                          [maxlength]="minMaxValues['PAN']?.maxLength"
+                                                          [minlength]="minMaxValues['PAN']?.minValue"
                                                           pattern="{{regexPattern.panNonInd}}"                                              
                                                           name="pan"
                                                           (ngModelChange)="qde.application.applicants[coApplicantIndex].pan.panNumber = $event.toUpperCase()"
@@ -2859,7 +2882,9 @@
                                                   [(ngModel)]="qde.application.applicants[coApplicantIndex].organizationDetails.nameOfOrganization"
                                                   #orgName="ngModel"
                                                   name="orgName"
-                                                  fieldFill maxlength="50"
+                                                  fieldFill 
+                                                  [maxlength]="minMaxValues['Name']?.maxLength"
+                                                  [minlength]="minMaxValues['Name']?.minValue"
                                                   spellcheck="false"
                                                   required />
                                           <label for="org-name">Name of Organization</label>
@@ -2925,6 +2950,10 @@
                                                     [(value)]="dateofBirthKendo" 
                                                     [format]="'dd-MMM-yyyy'">
                                                 </kendo-datepicker>
+                                                <div *ngIf="ageError || ageMaxError" class="invalid-feedback">
+                                                    <div *ngIf="ageError">Age should not be less than {{minMaxValues['Age_Of_Incorporation']['minValue']}} years</div>
+                                                    <div *ngIf="ageMaxError">Age should not be More than {{minMaxValues['Age_Of_Incorporation']['maxValue']}} years</div>
+                                                  </div>
                                           </div>
                                       </div>
 
@@ -2963,8 +2992,8 @@
                                   </div>
                                     <div class="btn-wrap">
                                         <button class="btn btn-primary"
-                                                [ngClass]="{'disabled': (!organizationForm.valid || organizationDetails.day.value == 'DD' || organizationDetails.month.value == 'MM' || organizationDetails.year.value == 'YYYY' || selectedRelationship?.value == 0 || selectedConstitution?.value == 0)}"
-                                                [disabled]="(!organizationForm.valid || organizationDetails.day.value == 'DD' || organizationDetails.month.value == 'MM' || organizationDetails.year.value == 'YYYY' || selectedRelationship?.value == 0 || selectedConstitution?.value == 0)">Next
+                                                [ngClass]="{'disabled': (!organizationForm.valid || organizationDetails.day.value == 'DD' || organizationDetails.month.value == 'MM' || organizationDetails.year.value == 'YYYY' || selectedRelationship?.value == 0 || selectedConstitution?.value == 0 || ageError)}"
+                                                [disabled]="(!organizationForm.valid || organizationDetails.day.value == 'DD' || organizationDetails.month.value == 'MM' || organizationDetails.year.value == 'YYYY' || selectedRelationship?.value == 0 || selectedConstitution?.value == 0 || ageError)">Next
                                         </button>
                                     </div>
                                 </form>
@@ -3013,6 +3042,7 @@
                                                             pattern="{{regexPattern.address}}"
                                                             name="regAdd"
                                                             [maxlength]="minMaxValues['Address_Line']?.maxLength"
+                                                            [minlength]="minMaxValues['Address_Line']?.minValue"
                                                             tabindex="1"
                                                             #regAdd="ngModel"
                                                             fieldFill
@@ -3031,7 +3061,8 @@
                                                   <input [readonly]="isReadOnly"  type="text" autocomplete="off"
                                                           class="form-control"
                                                           name="landmark"
-                                                          tabindex="2" maxlength="100"
+                                                          tabindex="2"
+                                                          [maxlength]="minMaxValues['Landmark']?.maxLength"
                                                           #landmark01="ngModel"
                                                           fieldFill
                                                           spellcheck="false"
@@ -3057,8 +3088,8 @@
                                                             [(ngModel)]="qde.application.applicants[coApplicantIndex].registeredAddress.zipcode"
                                                             #regAddrPinCode="ngModel" 
                                                             name="pinCode"
-                                                            minlength="6"
-                                                            maxlength="6"
+                                                            [minlength]="minMaxValues['Pincode']?.minValue"
+                                                            [maxlength]="minMaxValues['Pincode']?.maxLength"
                                                             fieldFill
                                                             spellcheck="false"
                                                             (input)="onPinCodeChange($event, 'registeredAddress')"
@@ -3155,6 +3186,7 @@
                                                             id="corp-add"
                                                             tabindex="2" 
                                                             [maxlength]="minMaxValues['Address_Line']?.maxLength"
+                                                            [minlength]="minMaxValues['Address_Line']?.minValue"
                                                             [(ngModel)]="qde.application.applicants[coApplicantIndex].corporateAddress.corporateAddress"
                                                             pattern="{{regexPattern.address}}"
                                                             name="corpAddress"
@@ -3177,7 +3209,8 @@
                                                           name="landmark"
                                                           #landmark="ngModel"
                                                           class="form-control"
-                                                          fieldFill maxlength="100"
+                                                          fieldFill 
+                                                          [maxlength]="minMaxValues['Landmark']?.maxLength"
                                                           spellcheck="false"
                                                           tabindex="3"
                                                           pattern="{{regexPattern.landmark}}"
@@ -3197,10 +3230,10 @@
                                                           id="pincode01" 
                                                           [(ngModel)]="qde.application.applicants[coApplicantIndex].corporateAddress.zipcode"
                                                           pattern="{{regexPattern.pinCode}}"
-                                                          name="pincode"
-                                                          minlength="6"
+                                                          name="pincode"                                                          
                                                           tabindex="4"
-                                                          maxlength="6"
+                                                          [minlength]="minMaxValues['Pincode']?.minValue"
+                                                          [maxlength]="minMaxValues['Pincode']?.maxLength"
                                                           required
                                                           spellcheck="false"
                                                           #corpPincode="ngModel"
@@ -3247,7 +3280,7 @@
                                                               fieldFill
                                                               tabindex="6"
                                                               spellcheck="false"
-                                                              minlength="3" 
+                                                              [minlength]="minMaxValues['STD_Code']?.minValue" 
                                                               [maxlength]="minMaxValues['STD_Code']?.maxLength"
                                                               required
                                                               id="caStd"
@@ -3273,7 +3306,7 @@
                                                               spellcheck="false"
                                                               #phoneNumber="ngModel"
                                                               pattern="{{regexPattern.mobileNumber}}"
-                                                              minlength="4" 
+                                                              [minlength]="minMaxValues['Land_Line_Number']?.minValue" 
                                                               [maxlength]="minMaxValues['Land_Line_Number']?.maxLength" 
                                                               data-validation-attr="residenceno" 
                                                               required/>

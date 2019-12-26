@@ -442,6 +442,10 @@ export const environment = {
     "adminUpdateMinMax":{
       'workflowId': '30ab0550167c11ea86b50242ac110002',
       'processId' : '30b91f82167c11eaadae0242ac110002'
+    },
+    "documentProfileUploadCsv": {
+      'workflowId' : '26952466806211e982270242ac110002',
+      'processId'  : 'fe06f728806a11e982270242ac110002'
     }
     
   },

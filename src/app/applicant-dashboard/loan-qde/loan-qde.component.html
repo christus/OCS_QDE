@@ -64,7 +64,7 @@
                             class="form-control" 
                             id="amt-require"
                             required autocomplete="off"
-                            maxlength="minMaxValues['Loan_amount']?.maxLength"
+                            [maxlength]="minMaxValues['Loan_amount']?.maxLength"
                             [(ngModel)]="qde?.application.loanDetails.loanAmount.amountRequired"
                             #amountRequired = "ngModel"
                             name="amountRequired"

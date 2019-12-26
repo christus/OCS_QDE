@@ -4364,7 +4364,7 @@ img {
 	height: 50%;
 	max-width: 31.25vw;
 	z-index: -1;
-	overflow: auto;
+	/* overflow: auto; */
 	background: #fff;
 	border-radius: 5px;
 	opacity: 0;

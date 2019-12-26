@@ -9,6 +9,7 @@ import { statuses, screenPages } from "../../app.constants";
 import { TabsComponent } from "./tabs/tabs.component";
 import { EncryptService } from "src/app/services/encrypt.service";
 import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { THROW_IF_NOT_FOUND } from '@angular/core/src/di/injector';
 
 export interface UserDetails {
   "amountEligible": number;
@@ -76,8 +77,11 @@ export class LeadsListComponent implements OnInit {
   currentPagePP: number;
   totalPagesPP: string;
   totalItemsPP: number;
+  newLogin: boolean = false;
+  createLead: boolean = false;
 
-  constructor(private service: QdeHttpService, private utilService: UtilService, private cds: CommonDataService, 
+  constructor(private service: QdeHttpService, private utilService: UtilService, 
+    private cds: CommonDataService, 
     private mobileService: MobileService,
     private router: Router,
     private ngxService: NgxUiLoaderService) {
@@ -91,6 +95,12 @@ export class LeadsListComponent implements OnInit {
     //     return;
     //   }  
     // }
+    let roleName = localStorage.getItem("roles");
+    if(roleName.includes("Admin")) {
+      this.router.navigate(["/admin/lovs"]);
+      //this.router.navigate(["/user-module"]);
+      return;
+    }
     this.cds.setactiveTab(screenPages["applicantDetails"]);
     this.cds.changeApplicationId(null);
  
@@ -130,6 +140,8 @@ export class LeadsListComponent implements OnInit {
       this.utilService.clearCredentials();
       return;
     }
+   
+    
   }
 
   isloggedIn() {
@@ -164,6 +176,14 @@ export class LeadsListComponent implements OnInit {
         this.utilService.clearCredentials();
         return;
       }
+
+      
+        this.cds.showCreateLead$.subscribe(myValue => 
+                      this.createLead = myValue)
+    
+        this.cds.showNewLogin$.subscribe(value => 
+          this.newLogin = value)
+     
   }
 
   filterLeads(event: any) {

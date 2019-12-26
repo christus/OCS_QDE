@@ -14,3 +14,10 @@
 .space{
     margin-right: 8px;
 }
+
+@media screen and (max-width: 800px) {
+
+    .user-name{
+    font-size: 2vw;
+    }
+}

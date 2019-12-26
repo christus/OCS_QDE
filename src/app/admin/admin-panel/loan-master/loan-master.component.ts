@@ -39,6 +39,15 @@ export class LoanMasterComponent implements OnInit {
   isConfirmModal: boolean;
   minMaxValues: Array<MinMax>;
   rateOfInterestDecimal;
+  maxLength: number;
+  patternArray  = [
+                  /^[0-9]?[0-9]?(\.[0-9]{1,1})?$/,
+                  /^[0-9]?[0-9]?(\.[0-9]{1,2})?$/, 
+                  /^[0-9]?[0-9]?(\.[0-9]{1,3})?$/,
+                  /^[0-9]?[0-9]?(\.[0-9]{1,4})?$/,
+                  /^[0-9]?[0-9]?(\.[0-9]{1,5})?$/
+                  ];
+  ROIpattern: RegExp;
 
   constructor(private qdeHttp: QdeHttpService, private _route: ActivatedRoute) {
 
@@ -81,8 +90,12 @@ export class LoanMasterComponent implements OnInit {
         this.totalPages = parseInt(res['ProcessVariables']['totalPages']);
         this.perPage = parseInt(res['ProcessVariables']['perPage']);
         this.totalElements = parseInt(res['ProcessVariables']['totalPages']) * this.perPage;
-        this.qdeHttp.adminGetMinMax("1","rate").subscribe(res=>{
+        this.qdeHttp.adminGetMinMax(1,"rate").subscribe(res=>{
           this.minMaxValues = res['ProcessVariables']['minMaxList'];
+          this.maxLength = 3+parseInt(res['ProcessVariables']['minMaxList'][0]['maxValue']);
+          let decimal = res['ProcessVariables']['minMaxList'][0]['maxValue'];
+          let pattern = this.patternArray[decimal-1];
+          this.ROIpattern = pattern;
           })
       }, err => {
   
@@ -380,26 +393,43 @@ export class LoanMasterComponent implements OnInit {
 	  );
      }
   }
+
   checkDecimals(event){
+  if(event.target.name == "taxApplicable"){
   let num = event.target.value;
-  let pattern = /[0-9]?[0-9]?(\.[0-9][0-9]?)?/;
-  // switch(this.minMaxValues);
-  // let pattern = /^[0-9]?[0-9]?(\.[0-9]{1,this.minMaxValues['Rate_Of_Interest_Decimal'].maxLength})?$/;
+  let pattern = /^[0-9]?[0-9]?(\.[0-9]{1,2})?$/;
+  if(!pattern.test(num)){
+    this.invalidFeedback = true;
+  }else{
+    this.invalidFeedback = false;
+  }
+  }else if(event.target.name=="rateOfInterest"){
+  let num = event.target.value;
+  let pattern = this.ROIpattern;
   if(!pattern.test(num)){
     this.invalidFeedback = true;
   }else{
     this.invalidFeedback = false;
   }
   }
+  }
   checkDecimals1(event){
-    let num = event.target.value;
-    // let pattern = /[0-9]?[0-9]?(\.[0-9][0-9]?)?/;
-    let pattern = /^[0-9]?[0-9]?(\.[0-9]{1,2})?$/;
-    if(!pattern.test(num) || num==""){
-      this.invalidFeedback1 = true;
-    }else{
-      this.invalidFeedback1 = false;
-    }
-    }
-
+    if(event.target.name == "taxApplicable"){
+      let num = event.target.value;
+      let pattern = /^[0-9]?[0-9]?(\.[0-9]{1,2})?$/;
+      if(!pattern.test(num)){
+        this.invalidFeedback1 = true;
+      }else{
+        this.invalidFeedback1 = false;
+      }
+      }else if(event.target.name=="rateOfInterest"){
+      let num = event.target.value;
+      let pattern = this.ROIpattern;
+      if(!pattern.test(num)){
+        this.invalidFeedback1 = true;
+      }else{
+        this.invalidFeedback1 = false;
+      }
+      }
+  }
 }

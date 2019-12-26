@@ -90,3 +90,8 @@
     color: #949494;
     padding: .47vw 1.56vw;
 }
+@media screen and (max-width: 800px) {
+    .main{
+    margin-top: 9vw;
+    }
+    }

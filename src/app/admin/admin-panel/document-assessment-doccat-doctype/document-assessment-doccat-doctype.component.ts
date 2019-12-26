@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
 import { ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
@@ -37,6 +37,11 @@ export class DocumentAssessmentDoccatDoctypeComponent implements OnInit {
   data: Array<any> = [];
   delIndex: any;
   isConfirmModal: boolean;
+
+  @ViewChild('uploadCSV') uploadCSV:ElementRef;
+  uploadCSVString: string;
+  selectedFile: File;
+  isFileSelected: boolean = false;
 
   constructor(private qdeHttp: QdeHttpService, private route: ActivatedRoute) {
     this.userId = parseInt(localStorage.getItem('userId'));
@@ -381,5 +386,60 @@ export class DocumentAssessmentDoccatDoctypeComponent implements OnInit {
       this.currentPage--;
     } */
 	);
+  }
+  startUpload(event){
+    this.selectedFile = event.target.files[0];
+    if(this.selectedFile.size!=0){
+      this.isFileSelected = true;
+    }else{
+      this.isErrorModal = true;
+      this.errorMsg = "No File selected";
+      this.isFileSelected=false;
+    }
+    this.getBase64(this.selectedFile);
+  }
+  getBase64(inputValue: any) {
+    var file:File = inputValue
+    var myReader:FileReader = new FileReader();
+    myReader.onloadend = (e) => {
+      this.uploadCSVString = myReader.result.substr(myReader.result.indexOf(',') + 1);;
+      console.log("result base64", this.uploadCSVString);
+    }
+    myReader.readAsDataURL(file);
+  }
+  uploadCSVFile(){
+    let name = this.selectedFile.name;
+    let size = this.selectedFile.size;
+    if(size!=0){
+      let documentInfo = {
+        userId: localStorage.getItem("userId"),
+        "attachment": {
+          "name": name,
+          "operation": "upload",
+          "content": this.uploadCSVString,
+          "mime": "text/csv",
+          "size": size
+        }
+      }
+      this.qdeHttp.documentProfileUploadCSV(documentInfo).subscribe(res=>{
+        if(res['ProcessVariables']['status'] && res['ProcessVariables']['errorMessage']==''){
+          this.isErrorModal = true;
+          this.errorMsg = "File Uploaded successfully";
+          this.isFileSelected = false;
+          let el = this.uploadCSV.nativeElement;
+          el.value = "";
+        }else{
+          //this.isErrorModal = true;
+          //this.errorMessage = res['ProcessVariables']['errorMessage'];
+          this.isFileSelected = false;
+          let el = this.uploadCSV.nativeElement;
+          el.value = "";
+        }
+      })
+    }
+  }
+  callFile(){
+    let el = this.uploadCSV.nativeElement;
+    el.click();  
   }
 }

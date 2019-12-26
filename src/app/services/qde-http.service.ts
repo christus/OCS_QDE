@@ -3337,7 +3337,7 @@ createOrUpdatePersonalDetails(qde) {
     let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
     return this.callPost(workflowId, projectId, body);
   }
-  adminGetMinMax(currentPage?: string,searchKey?: string){
+  adminGetMinMax(currentPage?: number,searchKey?: string){
     const processId = environment.api.adminGetMinMax.processId;
     const workflowId = environment.api.adminGetMinMax.workflowId;
     const projectId = environment.projectId;
@@ -3347,7 +3347,7 @@ createOrUpdatePersonalDetails(qde) {
       ProcessVariables: {
         userId: parseInt(localStorage.getItem('userId')),
         searchKey: searchKey!="" ? searchKey : "",
-        currentPage: currentPage!="" ? currentPage : ""
+        currentPage: currentPage!=null ? currentPage : 1
       },
       workflowId: workflowId,
       projectId: projectId
@@ -3386,6 +3386,27 @@ createOrUpdatePersonalDetails(qde) {
 
     let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
     return this.callPost(workflowId, projectId, body);
+  }
+  documentProfileUploadCSV(data){
+    const processId = environment.api.documentProfileUploadCsv.processId;
+    const workflowId = environment.api.documentProfileUploadCsv.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      ProcessVariables: data,
+      processId: processId,
+      workflowId: workflowId,
+      projectId: projectId,
+    };
+
+    const body = {
+      "processVariables":
+      JSON.stringify(requestEntity)
+    };
+
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
+
   }
 
 }

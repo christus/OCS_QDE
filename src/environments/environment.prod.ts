@@ -1,6 +1,6 @@
 export const environment = {
-  version: "1.9.4",
-  buildDate: "20-12-2019",
+  version: "1.9.5",
+  buildDate: "24-12-2019",
   production: true,
   // projectId: '5928d30eac7811e9a1670242ac110002', // developement
 
@@ -443,6 +443,10 @@ export const environment = {
     "adminUpdateMinMax":{
       'workflowId': '30ab0550167c11ea86b50242ac110002',
       'processId' : '30b91f82167c11eaadae0242ac110002'
+    },
+    "documentProfileUploadCsv": {
+      'workflowId' : '26952466806211e982270242ac110002',
+      'processId'  : 'fe06f728806a11e982270242ac110002'
     }
    
   },

@@ -7,12 +7,12 @@
     <li class="tab-link active" data-target="leads-tab"><a> Dashboard </a></li>
     <!-- Logins -->
   </ul>
-  <button routerLink="/applicant" class="btn application add-new-login">NEW LOGIN</button>
-  <button routerLink="/connector/lead-create" class="btn application add-lead-link">CREATE LEAD</button>
+  <button routerLink="/applicant" class="btn application add-new-login" *ngIf="newLogin">NEW LOGIN</button>
+  <button routerLink="/connector/lead-create" class="btn application add-lead-link" *ngIf="createLead">CREATE LEAD</button>
 
 </div>
 <tabs>
-    <tab tabTitle="ALL" class="tab">
+    <tab tabTitle="ALL" class="tab" *ngIf="(newLogin && createLead)" >
         <ul *ngFor="let detail of userDetails | paginate: {id: 'pagination1', itemsPerPage: perPage, currentPage: currentPage, totalItems: totalItems};">
             <li>
              <a [routerLink]="detail.url" [queryParams]="detail['queryParams']" class="lead-action">
@@ -40,7 +40,7 @@
       </ul>
       <pagination-controls id="pagination1" (pageChange)="pageChanged($event)" class="pagination" autoHide="true" ></pagination-controls>
     </tab>
-    <tab tabTitle="NEW LEADS">
+    <tab tabTitle="NEW LEADS" *ngIf="createLead">
       <ul *ngFor="let detail of newLeadsDetails | paginate: {id: 'pagination2', itemsPerPage: perPageNL, currentPage: currentPageNL, totalItems: totalItemsNL};">
         <li>
             <ul class="bs-lead-card">
@@ -60,7 +60,7 @@
     </ul>
     <pagination-controls id="pagination2" (pageChange)="pageChangedNL($event)" class="pagination" autoHide="true" ></pagination-controls>
     </tab>
-    <tab tabTitle="PENDING APPLICATION">
+    <tab tabTitle="PENDING APPLICATION" *ngIf="(newLogin && createLead)">
       <ul *ngFor="let detail of newPendingApplicationDetails | paginate: {id: 'pagination3',itemsPerPage: perPagePA, currentPage: currentPagePA, totalItems: totalItemsPA};">
         <li>
             <a [routerLink]="detail.url" [queryParams]="detail['queryParams']" class="lead-action">
@@ -86,7 +86,7 @@
     </ul>
     <pagination-controls id="pagination3"  (pageChange)="pageChangedPA($event)" class="pagination" autoHide="true" ></pagination-controls>
     </tab>
-    <tab tabTitle="PENDING PAYMENT">
+    <tab tabTitle="PENDING PAYMENT" *ngIf="(newLogin && createLead)">
       <ul *ngFor="let detail of newPendingPaymentDetails | paginate: {id: 'pagination4',itemsPerPage: perPagePP, currentPage: currentPagePP, totalItems: totalItemsPP};">
         <li>
             <a [routerLink]="detail.url" [queryParams]="detail['queryParams']" class="lead-action">

@@ -191,6 +191,28 @@ export class LoginComponent implements OnInit, AfterViewInit {
           this.router.navigate(["/admin/lovs"]);
           //this.router.navigate(["/user-module"]);
           return;
+        } else if(roleName.includes("connector")){
+          this.commonDataService.changeCreateLead(true);
+          this.commonDataService.changeNewLogin(false);
+          this.commonDataService.changereAssign(false);
+        }else if(roleName.includes("SA") || roleName.includes("SM") || roleName.includes("DMA")){
+          this.commonDataService.changeCreateLead(true);
+          this.commonDataService.changeNewLogin(true);
+          this.commonDataService.changereAssign(false);
+        }else if(roleName.includes("TBM") || roleName.includes("TMA") || roleName.includes("ZBM") || roleName.includes("NBH")
+                  || roleName.includes("CRO") || roleName.includes("CEO")  || roleName.includes("COO")){
+          this.commonDataService.changeCreateLead(true);
+          this.commonDataService.changeNewLogin(true);
+          this.commonDataService.changereAssign(true);
+        }else if(roleName.includes("CSA")){
+          this.commonDataService.changeCreateLead(true);
+          this.commonDataService.changeNewLogin(true);          
+          this.commonDataService.changereAssign(false);
+        }        
+        else {
+          this.commonDataService.changeCreateLead(false);
+          this.commonDataService.changeNewLogin(false);
+          this.commonDataService.changereAssign(false);
         }
 
         this.router.navigate(["/leads"]);

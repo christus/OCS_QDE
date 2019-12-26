@@ -12,6 +12,11 @@ export class CommonDataService {
   constructor() { }
 
   isMenuBarShown$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  // showCreateLead$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+ 
+
+  
+  
 
   isMenuBarShown = this.isMenuBarShown$.asObservable();
 
@@ -195,6 +200,27 @@ export class CommonDataService {
   
   changeApplicantName(val: string) {
     this.applicantName$.next(val);
+  }
+
+  showCreateLead$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  public showCreateLead = this.showCreateLead$.asObservable();
+
+  changeCreateLead(value: boolean) {
+    this.showCreateLead$.next(value);
+    console.log("change Change create lead ", this.showCreateLead)
+  }
+
+  showNewLogin$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  public showNewLogin = this.showNewLogin$.asObservable();
+
+  changeNewLogin(value: boolean) {
+    this.showNewLogin$.next(value);
+  }
+  reAssign$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  public reAssign = this.reAssign$.asObservable();
+
+  changereAssign(value: boolean) {
+    this.reAssign$.next(value);
   }
 
 }
