@@ -434,8 +434,8 @@
                                                             name="firstName"
                                                             tabindex="2"
                                                             fieldFill 
-                                                            [maxlength]="minMaxValues['Name']?.maxLength"
-                                                            [minlength]="minMaxValues['Name']?.minValue"
+                                                            [maxlength]="minMaxValues['Company_Name']?.maxLength"
+                                                            [minlength]="minMaxValues['Company_Name']?.minValue"
                                                             spellcheck="false"
                                                             required
                                                             pattern="{{regexPattern.name}}"
@@ -454,8 +454,8 @@
                                                           class="form-control"
                                                           id="middleName" 
                                                           name="middleName" 
-                                                          [maxlength]="minMaxValues['Name']?.maxLength"
-                                                          [minlength]="minMaxValues['Name']?.minValue"
+                                                          [maxlength]="minMaxValues['Company_Name']?.maxLength"
+                                                          [minlength]="minMaxValues['Company_Name']?.minValue"
                                                           tabindex="3"
                                                           [(ngModel)]="qde.application.applicants[coApplicantIndex].personalDetails.middleName"
                                                           pattern="{{regexPattern.name}}"
@@ -478,8 +478,8 @@
                                                               [(ngModel)]="qde.application.applicants[coApplicantIndex].personalDetails.lastName" 
                                                               name="lastName" 
                                                               #lastName="ngModel"  
-                                                              [maxlength]="minMaxValues['Name']?.maxLength"
-                                                              [minlength]="minMaxValues['Name']?.minValue"
+                                                              [maxlength]="minMaxValues['Company_Name']?.maxLength"
+                                                              [minlength]="minMaxValues['Company_Name']?.minValue"
                                                               id="lastName"
                                                               tabindex="4" autocomplete="off"
                                                               fieldFill
@@ -1351,7 +1351,7 @@
                                                           name="numberOfYearsInCurrentResidence"
                                                           class="form-control"
                                                           [(ngModel)]="qde.application.applicants[coApplicantIndex].communicationAddress.numberOfYearsInCurrentResidence"
-                                                          min=0
+                                                          [min]="minMaxValues['Years_in_residence']?.minValue"
                                                           [max]="minMaxValues['Years_in_residence']?.maxValue"
                                                           tabindex="13"
                                                           spellcheck="false"
@@ -1488,8 +1488,8 @@
                                                       name="firstName"
                                                       pattern="{{regexPattern.name}}"
                                                       tabindex="2"                                                      
-                                                      [maxlength]="minMaxValues['Name']?.maxLength"
-                                                      [minlength]="minMaxValues['Name']?.minValue"
+                                                      [maxlength]="minMaxValues['Company_Name']?.maxLength"
+                                                      [minlength]="minMaxValues['Company_Name']?.minValue"
                                                       id="spouse-name"
                                                       fieldFill
                                                       spellcheck="false"
@@ -1639,9 +1639,9 @@
                                                   <input [readonly]="isReadOnly"  type="number" autocomplete="off"
                                                           name="numberOfDependents"
                                                           tabindex="1"
-                                                          min=0
-                                                          max=2
-                                                          maxlength="1"
+                                                          [min]="minMaxValues['No_Of_Dependents']?.minValue"
+                                                          [max]="minMaxValues['No_Of_Dependents']?.maxValue"
+                                                          [maxlength]="minMaxValues['No_Of_Dependents']?.maxLength"
                                                           oninput="this.value=this.value.slice(0,this.maxLength)"
                                                           class="form-control"
                                                           spellcheck="false"
@@ -1959,8 +1959,8 @@
                                                           tabindex="2"
                                                           [(ngModel)]="qde.application.applicants[coApplicantIndex].occupation.companyName"
                                                           pattern="{{regexPattern.organizationName}}"
-                                                          [maxlength]="minMaxValues['Name']?.maxLength"
-                                                          [minlength]="minMaxValues['Name']?.minValue"
+                                                          [maxlength]="minMaxValues['Company_Name']?.maxLength"
+                                                          [minlength]="minMaxValues['Company_Name']?.minValue"
                                                           name="companyName"
                                                           #companyName="ngModel"
                                                           fieldFill
@@ -1982,7 +1982,7 @@
                                                           tabindex="3"
                                                           class="form-control"
                                                           [(ngModel)]="qde.application.applicants[coApplicantIndex].occupation.numberOfYearsInCurrentCompany"
-                                                          maxlength="2"
+                                                          [maxlength]="minMaxValues['Years_in_employment']?.maxLength"
                                                           oninput="this.value=this.value.slice(0,this.maxLength)"
                                                           spellcheck="false"
                                                           #numberOfYearsInCurrentCompany="ngModel"
@@ -2006,7 +2006,7 @@
                                                           class="form-control"
                                                           tabindex="5"
                                                           [(ngModel)]="qde.application.applicants[coApplicantIndex].occupation.totalWorkExperience"
-                                                          maxlength="2"
+                                                          [maxlength]="minMaxValues['Years_in_employment']?.maxLength"
                                                           oninput="this.value=this.value.slice(0,this.maxLength)"
                                                           #totalExperienceYear="ngModel"
                                                           spellcheck="false"
@@ -2623,7 +2623,7 @@
                                                 spellcheck="false"
                                                 tabindex="2"
                                                 fieldFill
-                                                maxlength="minMaxValues['Monthly_expenditure']?.maxValue"
+                                                [maxlength]="minMaxValues['Monthly_expenditure']?.maxLength"
                                                 (input)="checkAmountLimitMonthlyIncome($event,minMaxValues['Monthly_expenditure']?.minValue,minMaxValues['Monthly_expenditure']?.maxValue)"
                                                 required/>
                                                 <label for="monthlyExpenditure1">Monthly Expenditure</label>

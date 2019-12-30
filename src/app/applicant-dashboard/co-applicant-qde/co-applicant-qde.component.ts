@@ -67,7 +67,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   regexPattern = {
     mobileNumber: "^[1-9][0-9]*$",
     stdCode: "^[0][0-9]*$",
-    name: "^[A-Za-z ]{0,99}$",
+    name: "^[0-9A-Za-z ]{0,99}$",
     organizationName: "^[0-9A-Za-z, _&*#'/\\-@]{0,99}$",
     birthPlace:"^[A-Za-z ]{0,99}$",
     address : "^[0-9A-Za-z, _&*#'/\\-]{0,99}$",
@@ -556,13 +556,13 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       this.preferredEmail = lov.LOVS.preferred_mails;
       this.minMaxValues = lov.LOVS.min_max_values;
       this.options['floor'] = this.minMaxValues["Years_in_residence"].minValue;
-      this.options['ceil'] = this.minMaxValues["Years_in_residence"].maxLength;
+      this.options['ceil'] = this.minMaxValues["Years_in_residence"].maxValue;
       this.employementOptions['floor'] = this.minMaxValues["Years_in_employment"].minValue;
-      this.employementOptions['ceil'] = this.minMaxValues["Years_in_employment"].maxLength;
+      this.employementOptions['ceil'] = this.minMaxValues["Years_in_employment"].maxValue;
       this.experienceOptions['floor'] = this.minMaxValues["Years_in_employment"].minValue;
-      this.experienceOptions['ceil'] = this.minMaxValues["Years_in_employment"].maxLength;
+      this.experienceOptions['ceil'] = this.minMaxValues["Years_in_employment"].maxValue;
       this.familyOptions['floor'] = this.minMaxValues["No_Of_Dependents"].minValue;
-      this.familyOptions['ceil'] = this.minMaxValues["No_Of_Dependents"].maxLength;
+      this.familyOptions['ceil'] = this.minMaxValues["No_Of_Dependents"].maxValue;
       
       //hardcoded
       //this.birthPlace = [{"key": "Chennai", "value": "1"},{"key": "Mumbai", "value": "2"},{"key": "Delhi", "value": "3"}];

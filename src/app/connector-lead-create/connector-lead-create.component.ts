@@ -130,14 +130,18 @@ export class ConnectorLeadCreateComponent implements OnInit {
     this.loginName()
   }
 
-  openOptionsMenuDropdown(a: ElementRef) {
-    this.isOptionsMenuDropOpen = true;
+  openOptionsMenuDropdown() {
+    this.isOptionsMenuDropOpen = !this.isOptionsMenuDropOpen;
     // a.nativeElement.focus();
   }
 
-  closeOptionsMenuDropdown(optionsMenuDropdownContent: ElementRef) {
-    // this.isOptionsMenuDropOpen = false;
-  }
+  // closeOptionsMenuDropdown(optionsMenuDropdownContent: ElementRef) {
+  //   alert("Trigerred");
+  //   alert(!optionsMenuDropdownContent.nativeElement.contains(event.target));
+  //   if(!optionsMenuDropdownContent.nativeElement.contains(event.target)){
+  //   this.isOptionsMenuDropOpen = false;
+  // }
+  // }
 
   leadSaveConnector(form: NgForm){
     console.log(this.qde.application.leadCreate);

@@ -1,3 +1,4 @@
+<button *ngIf="updatebtn" class="btn btn-default" routerLink="/admin/user-module">Go Back</button>
 <div class="app-admin-container">
     <form [formGroup]="registerUser" (ngSubmit)="onSubmit()"  autocomplete="off">
         <div class="inputBox form-field-el">
@@ -18,8 +19,8 @@
                 <label for="userName" class="inputText">Employee Id: *</label>
             <input type="text" id="userName" [(ngModel)]="userName"  class="form-control trans-lower-case" fieldFill formControlName="userName" 
             autocomplete="nope" />
-            <div *ngIf="formValue.userName.errors" >
-                <!-- <div class="redalert"  *ngIf="formValue.userName.errors.required"> required</div> -->
+	    <div *ngIf="formValue.userName.errors && (formValue.userName.touched || formValue.userName.dirty)" >
+                 <div class="redalert"  *ngIf="formValue.userName.errors.minlength"> Employee Id should be at least 6 characters </div> 
             </div>
         </div>
         <div class="inputBox form-field-el">

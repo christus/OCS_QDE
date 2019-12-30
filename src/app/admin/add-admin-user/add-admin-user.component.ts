@@ -54,7 +54,7 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
   registerUser = new FormGroup({
     firstName: new FormControl('', Validators.required),
     lastName: new FormControl('', Validators.required),
-    userName: new FormControl('', [Validators.required]),
+    userName: new FormControl('', [Validators.required, Validators.minLength(6)]),
     password: new FormControl('', [Validators.required, Validators.minLength(6)]),
     mailId: new FormControl('', [Validators.required, Validators.email, Validators.pattern("[^ @]*@[^ @]*")]),
     mobileNumber: new FormControl('', [Validators.required, Validators.maxLength(10), Validators.pattern('[6-9]\\d{9}')]),
