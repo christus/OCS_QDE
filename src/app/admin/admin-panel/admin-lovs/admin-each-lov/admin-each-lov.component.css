@@ -129,3 +129,6 @@ thead, tbody tr {
     text-align: center;
     margin: 0px 0;
 }
+.k-select {
+    padding-right: 0px !important;
+}

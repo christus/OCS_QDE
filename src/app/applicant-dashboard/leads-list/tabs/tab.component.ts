@@ -2,7 +2,7 @@
  * Single Tab page
  */
 
-import { Component, Input } from '@angular/core';
+import { Component, Input, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 
 @Component({
     selector: 'tab',
@@ -10,7 +10,17 @@ import { Component, Input } from '@angular/core';
     styleUrls: ['./tab.component.css']
 })
 
-export class TabComponent {
+export class TabComponent implements AfterViewInit {
     @Input('tabTitle') title: string;
-    @Input() active = false;
+    @Input() active;
+    constructor(private cdr:  ChangeDetectorRef){} 
+
+    // onChange(): void {
+    //     this.active = false;
+    //     this.cdr.detectChanges();
+    //   }
+    ngAfterViewInit() {
+        this.active = false;
+        this.cdr.detectChanges();
+    }
 }

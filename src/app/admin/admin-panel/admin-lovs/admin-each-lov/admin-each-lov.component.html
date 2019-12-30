@@ -17,7 +17,7 @@
       <th *ngIf="isLoanPurpose"><form>Is Property Mandatory</form></th>
       <th *ngIf="isFinancialApplicant"><form>Financial Applicant</form></th>
       <th *ngIf="isMale"><form>Male</form></th>
-      <!-- <th *ngIf="isUserAtivity">Activity</th> -->
+      <th *ngIf="isUserAtivity">Activity</th>
        <th [ngStyle]="{textAlign: 'center'}">Delete</th>
      </tr>
    </thead>
@@ -66,20 +66,22 @@
         </form>
     </td>
 
-    <!-- <td [ngStyle]="{textAlign: 'center'}"  *ngIf="isUserAtivity" >
+    <td [ngStyle]="{textAlign: 'center'}"  *ngIf="isUserAtivity" >
       <kendo-multiselect
-            [data]="actvityLists"            
-            [value]="selectedSizes"
+            [data]="activityLists"  
+            [textField]="'value'"
+            [valueField]="'key'"            
             [allowCustom]="true"
-            (valueChange)="onSizeChange($event)"
-            [disabled]="l.isEdit"            
+            (valueChange)="onAddActivity($event,i)"
+            [disabled]="l.isEdit"
+            [(ngModel)]="l.activityLists"
         >
-        <ng-template kendoMultiSelectCustomItemTemplate let-customText>
+        <!-- [value]="selectedSizes" -->
+        <!-- <ng-template kendoMultiSelectCustomItemTemplate let-customText>
             <strong>{{ customText }}</strong>
-        </ng-template>
-        </kendo-multiselect>
-      
-    </td> -->
+        </ng-template> -->
+        </kendo-multiselect>      
+    </td>
        <td [ngStyle]="{textAlign: 'center'}">
          <button type="button" class="deleteBtn" (click)="delete(i)" *ngIf="l.id != null">
            <img src="assets/images/delete.svg" class="img-responsive deleteImg" alt="Delete" />

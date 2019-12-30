@@ -918,4 +918,75 @@ export class QdeService {
   return newObj;
 }
 
+getOnlyKeyValues(arg){
+  {
+    var a = arg.constructor == Object ? Object.entries(arg).map(([key, value]) => ({key, value}) ) : arg;
+  
+    var newObj = [];
+  
+    a.forEach((obj ,index) => {
+      if(obj.key == 'ocsNumber' || obj.key == 'isMainApplicant' || obj.key == 'applicationId') {
+        newObj.push(obj.key);
+      } else {
+        if(obj.value == null || obj.value == undefined || obj.value == NaN) {
+          delete obj.key;
+          return;
+        } else if(obj.value.constructor == String) {
+          if(obj.value == "") {
+              delete obj.key;
+              return;
+          } else {
+            newObj.push(obj.key);
+            return;
+          }
+        } else if(obj.value.constructor == Boolean) {
+          if(obj.value == null) {
+            delete obj.key;
+            return;
+          } else {
+            newObj.push(obj.key);
+            return;
+          }
+        }else if(obj.value.constructor == Number) {
+          if(obj.value == null) {
+            delete obj.key;
+            return;
+          } else {
+            newObj.push(obj.key);
+            return;
+          }
+        } else if(obj.value.constructor == Array) {
+          if(obj.value.length == 0) {
+            delete obj.key;
+            return;
+          } else {
+            let f = obj.value.map((val) => {
+              return this.getFilteredJson(val);
+            });
+            if(f.length == 0) {
+              delete obj.key;
+            } else {
+              newObj[obj.key] = f;
+            }
+          }
+        } else if(obj.value.constructor == Object) {
+          if(Object.keys(obj.value).length == 0) {
+            delete obj.key;
+          } else {
+            let f = this.getFilteredJson(obj.value)
+            if(Object.keys(f).length == 0) {
+              delete obj.key;
+            } else {
+              newObj[obj.key] = f;
+            }
+          }
+        }
+      }
+
+    });
+    console.log("object key values",newObj)
+    return newObj;
+  }
+}
+
 }

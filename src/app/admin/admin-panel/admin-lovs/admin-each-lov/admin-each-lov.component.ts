@@ -1,6 +1,9 @@
 import { Component, OnInit, ViewChildren, ElementRef, QueryList, EventEmitter, OnChanges, SimpleChanges, AfterViewInit, Renderer2 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
+import { Item } from 'src/app/models/qde.model';
+import { dashCaseToCamelCase } from '@angular/compiler/src/util';
+import { json } from 'sjcl';
 
 @Component({
   selector: 'admin-each-lov',
@@ -30,15 +33,21 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
   isConfirmModal : boolean;
   isUserAtivity: boolean = false;
   delIndex;
+responseData;
 
   @ViewChildren('lovsElements') lovsElements: QueryList<ElementRef>;
-  public actvityLists: Array<string> = [ "Lead", "Login", "Report","Reassign"];
-  public selectedSizes: Array<string> = [];
+  public activityLists: Array<any>;
+  public userActivityList: Array<any> ;
+  public selectedRoleActivity = {};
+  myCall: any;
+
+  
 
 
   constructor(private route: ActivatedRoute,
-              private qdeHttp: QdeHttpService,
+              private qdeHttp: QdeHttpService,              
               private ren: Renderer2) {
+                
 
     this.route.params.subscribe(v => {
       this.tableName = v['eachLovName']
@@ -48,35 +57,54 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
       this.isFinancialApplicant = this.tableName == 'profile' ? true : false;
       this.isMale = this.tableName == 'profile' ? true : false;
       this.isUserAtivity = this.tableName == "user_role"? true : false;
-    });
+      if (this.tableName== "user_role"){
+        
+        console.log("resolve data", this.route.snapshot.data);     
 
-    let response = this.route.snapshot.data['eachLovs']['ProcessVariables'];
+
+        // this.activityLists = JSON.parse(this.route.snapshot.data["roleLovs"]['ProcessVariables']["lovs"])["LOVS"]["activity"];activityList
+        // this.activityLists = JSON.parse(this.route.snapshot.data["eachLovs"]['ProcessVariables']["activityList"])
+        console.log("Type",this.activityLists);       
+        
+        
+      }
+    });
+    
+
+    let response = this.route.snapshot.data['eachLovs'];
 
     if(this.route.snapshot.data['eachLovs']['ProcessVariables']['status'] == true) {
       if(this.route.snapshot.data['eachLovs']['ProcessVariables']['valueDescription'] && this.route.snapshot.data['eachLovs']['ProcessVariables']['valueDescription'].length > 0 ) {
         console.log(this.route.snapshot.data['eachLovs']['ProcessVariables']);
         console.log(this.route.snapshot.data['eachLovs']['ProcessVariables']['perPage']);
         console.log(this.route.snapshot.data['eachLovs']['ProcessVariables']['totalPages']);
+        this.activityLists = this.route.snapshot.data["eachLovs"]['ProcessVariables']["activityList"]
+        console.log("activity List",this.activityLists);   
         this.perPage = this.route.snapshot.data['eachLovs']['ProcessVariables']['perPage'];
         this.currentPage = this.route.snapshot.data['eachLovs']['ProcessVariables']['currentPage'];
         this.totalPages = this.route.snapshot.data['eachLovs']['ProcessVariables']['totalPages'];
         this.totalItems = parseInt(this.perPage)*parseInt(this.totalPages);
-        this.tempLovs = this.lovs = this.route.snapshot.data['eachLovs']['ProcessVariables']['valueDescription'].map((v, i) => {
+        this.tempLovs = this.lovs = this.getLovMap(this.route.snapshot.data['eachLovs']['ProcessVariables']['valueDescription']);
+         
+        // console.log("this.activityLists", this.activeRout.snapshot.data);
+        // this.route.snapshot.data['eachLovs']['ProcessVariables']['valueDescription'].map((v, i) => {
 
-          return {
-            userId: localStorage.getItem('userId'),
-            description: v['description'],
-            value: v['value'],
-            isEdit: true,
-            id: v['id'],
-            male: v['male'],
-            female: v['female'],
-            tableName: this.tableName,
-            isRequired: v['isRequired'],
-            reqBoolean : v['reqBoolean'],
-            isMale : v['isMale']
-          }
-        });
+        //   return {
+        //     userId: localStorage.getItem('userId'),
+        //     description: v['description'],
+        //     value: v['value'],
+        //     isEdit: true,
+        //     id: v['id'],
+        //     male: v['male'],
+        //     female: v['female'],
+        //     tableName: this.tableName,
+        //     isRequired: v['isRequired'],
+        //     reqBoolean : v['reqBoolean'],
+        //     isMale : v['isMale'],
+        //     activityLists: v['activityId']
+            
+        //   }
+        // });
         for(var i=0; i<this.lovs.length;i++){
           this.key[i]=((parseInt(this.perPage)*(parseInt(this.currentPage)-1))+i+ 1);
         }
@@ -88,6 +116,8 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    
+
   }
 
   save(index) {
@@ -101,6 +131,24 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
         //alert("Please enter all values");
         //this.refresh();
       }else{
+        let data ;
+        if(this.tableName == "user_role"){
+          console.log("index Value ",this.lovs[index])
+          data = { 
+            userId: this.lovs[index].userId,
+              tableName: "user_role",             
+              value: this.lovs[index].value,
+              isEdit: true,
+              description: this.lovs[index].description,              
+              id: 13,
+              activityLists: this.selectedRoleActivity[index]
+          }
+        } else{
+          data = this.lovs[index];
+        }
+        // console.log("index Value ",this.lovs[index]);
+         console.log("index Value ",data);
+
 
       this.qdeHttp.insertUpdateEachLovs(this.lovs[index]).subscribe(res => {
         if(res['ProcessVariables']['status'] == true) {
@@ -131,21 +179,24 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
       if (res['ProcessVariables']['status'] == true) {
         if (res['ProcessVariables']['valueDescription'] && res['ProcessVariables']['valueDescription'].length > 0) {
           this.lovs.push({tableName: this.tableName, userId: localStorage.getItem('userId'), description: '', value: '', isEdit: false, male: false, female: false});
-          this.tempLovs = res['ProcessVariables']['valueDescription'].map((v, i) => {
-            return {
-              userId: localStorage.getItem('userId'),
-              description: v['description'],
-              value: v['value'],
-              isEdit: true,
-              id: v['id'],
-              male: v['male'],
-              female: v['female'],
-              tableName: this.tableName,
-              isRequired: v['isRequired'],
-              reqBoolean : v['reqBoolean'],
-              isMale : v['isMale']
-            }
-          });
+          this.tempLovs = this.getLovMap(res['ProcessVariables']['valueDescription']);
+          
+          // res['ProcessVariables']['valueDescription'].map((v, i) => {
+          //   return {
+          //     userId: localStorage.getItem('userId'),
+          //     description: v['description'],
+          //     value: v['value'],
+          //     isEdit: true,
+          //     id: v['id'],
+          //     male: v['male'],
+          //     female: v['female'],
+          //     tableName: this.tableName,
+          //     isRequired: v['isRequired'],
+          //     reqBoolean : v['reqBoolean'],
+          //     isMale : v['isMale'],
+          //     activityLists: v['activityId']
+          //   }
+          // });
           this.lastKey = (parseInt(this.perPage)*(parseInt(this.totalPages)-1))+this.tempLovs.length+1;
           console.log(this.lastKey);
           this.key.push(this.lastKey);
@@ -154,6 +205,53 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
     })
   }
 
+  getLovMap(obj) {
+    let myLovs = obj.map((v, i) => {
+      return {
+        userId: parseInt(localStorage.getItem('userId')),
+        tableName: this.tableName,
+        cityId: v['cityId'],
+        cityName: v['cityName'],
+        value: v['value'],
+        isEdit: true,
+        description: v['description'],
+        isRequired: v['isRequired'],
+        id: v['id'] ? v['id'] : null,
+        stateId: v['stateId'],
+        stateName: v['stateName'],
+        zone: v['zone'],
+        zoneName: v['zoneName'],
+        reqBoolean : v['reqBoolean'],
+        isMale : v['isMale'],
+        activityLists: v['activityId']!= null? this.getActivityObject(v['activityId']):null 
+      }
+    });
+
+  console.log('activity list',myLovs["activityLists"]);
+  return myLovs;
+  }
+
+
+  getActivityObject(aList){
+    let getStringList: string = aList
+    let selectActivity: Array<any> = getStringList.split(",");
+    let myList=[];
+    console.log("arry list length ",this.activityLists.length);
+    if (selectActivity.length>0 &&  this.activityLists.length >0 ){
+        selectActivity.forEach((d) => {
+          this.activityLists.forEach( (obj)=> {
+              if (d== obj.key){
+                  console.log("ddd",obj)
+                  myList.push(obj);
+                  }}
+              )});
+            }
+          
+
+    console.log('conveted Object',myList) ;
+          return myList;
+
+  }
   ngAfterViewInit() {
     // this.previousLength = this.tempLovs.length;
 
@@ -196,25 +294,26 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
           this.currentPage = res['ProcessVariables']['currentPage'];
           this.totalPages = res['ProcessVariables']['totalPages'];
           this.totalItems = parseInt(this.perPage) * parseInt(this.totalPages);
-          this.lovs = res['ProcessVariables']['valueDescription'].map((v, i) => {
-            return {
-              userId: parseInt(localStorage.getItem('userId')),
-              tableName: this.tableName,
-              cityId: v['cityId'],
-              cityName: v['cityName'],
-              value: v['value'],
-              isEdit: true,
-              description: v['description'],
-              isRequired: v['isRequired'],
-              id: v['id'] ? v['id'] : null,
-              stateId: v['stateId'],
-              stateName: v['stateName'],
-              zone: v['zone'],
-              zoneName: v['zoneName'],
-              reqBoolean : v['reqBoolean'],
-              isMale : v['isMale']
-            }
-          });
+          this.lovs = this.getLovMap(res['ProcessVariables']['valueDescription']);
+          // res['ProcessVariables']['valueDescription'].map((v, i) => {
+          //   return {
+          //     userId: parseInt(localStorage.getItem('userId')),
+          //     tableName: this.tableName,
+          //     cityId: v['cityId'],
+          //     cityName: v['cityName'],
+          //     value: v['value'],
+          //     isEdit: true,
+          //     description: v['description'],
+          //     isRequired: v['isRequired'],
+          //     id: v['id'] ? v['id'] : null,
+          //     stateId: v['stateId'],
+          //     stateName: v['stateName'],
+          //     zone: v['zone'],
+          //     zoneName: v['zoneName'],
+          //     reqBoolean : v['reqBoolean'],
+          //     isMale : v['isMale']
+          //   }
+          // });
           for(var i=0; i<this.lovs.length;i++){
             this.key[i]=((parseInt(this.perPage)*(parseInt(this.currentPage)-1))+i+ 1);
           }
@@ -278,22 +377,23 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
           this.currentPage = res['ProcessVariables']['currentPage'];
           this.totalPages = res['ProcessVariables']['totalPages'];
           this.totalItems = parseInt(this.perPage) * parseInt(this.totalPages);
-          this.tempLovs = this.lovs = res['ProcessVariables']['valueDescription'].map((v, i) => {
+          this.tempLovs = this.lovs = this.getLovMap(res['ProcessVariables']['valueDescription']);
+          // .map((v, i) => {
 
-            return {
-              userId: localStorage.getItem('userId'),
-              description: v['description'],
-              value: v['value'],
-              isEdit: true,
-              id: v['id'],
-              male: v['male'],
-              female: v['female'],
-              tableName: this.tableName,
-              isRequired: v['isRequired'],
-              reqBoolean : v['reqBoolean'],
-              isMale : v['isMale']
-            }
-          });
+          //   return {
+          //     userId: localStorage.getItem('userId'),
+          //     description: v['description'],
+          //     value: v['value'],
+          //     isEdit: true,
+          //     id: v['id'],
+          //     male: v['male'],
+          //     female: v['female'],
+          //     tableName: this.tableName,
+          //     isRequired: v['isRequired'],
+          //     reqBoolean : v['reqBoolean'],
+          //     isMale : v['isMale']
+          //   }
+          // });
           for(var i=0; i<this.lovs.length;i++){
             this.key[i]=((parseInt(this.perPage)*(parseInt(this.currentPage)-1))+i+ 1);
           }
@@ -318,21 +418,23 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
           this.currentPage = data;
           this.totalPages = res['ProcessVariables']['totalPages'];
           this.totalItems = parseInt(this.perPage) * parseInt(this.totalPages);
-          this.tempLovs = this.lovs = res['ProcessVariables']['valueDescription'].map((v, i) => {
-            return {
-              userId: localStorage.getItem('userId'),
-              description: v['description'],
-              value: v['value'],
-              isEdit: true,
-              id: v['id'],
-              male: v['male'],
-              female: v['female'],
-              tableName: this.tableName,
-              isRequired: v['isRequired'],
-              reqBoolean : v['reqBoolean'],
-              isMale : v['isMale']
-            }
-          });
+          this.tempLovs = this.lovs = this.getLovMap(res['ProcessVariables']['valueDescription'])
+          // .map((v, i) => {
+          //   return {
+          //     userId: localStorage.getItem('userId'),
+          //     description: v['description'],
+          //     value: v['value'],
+          //     isEdit: true,
+          //     id: v['id'],
+          //     male: v['male'],
+          //     female: v['female'],
+          //     tableName: this.tableName,
+          //     isRequired: v['isRequired'],
+          //     reqBoolean : v['reqBoolean'],
+          //     isMale : v['isMale']
+              
+          //   }
+          // });
           this.key=[];
           for(var i=0; i<this.lovs.length;i++){
             this.key[i]=((parseInt(this.perPage)*(data-1))+i+ 1);
@@ -345,4 +447,18 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
     let data =value;
     this.getData(data);
 }
+  onAddActivity(event,index){
+    if (event.length>0){  
+        this.selectedRoleActivity[index] =[]
+        let selectActivityList  = event; 
+        console.log("selected activity  ",event);
+        console.log("activity ",event[0]["key"]);
+        selectActivityList.forEach(obj => 
+          this.selectedRoleActivity[index].push( obj.key)
+          );
+        // this.selectedRoleActivity[index]= (event.id);
+        console.log("activity selected",this.selectedRoleActivity)
+      }
+
+  }
 }

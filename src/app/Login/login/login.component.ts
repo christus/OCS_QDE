@@ -10,6 +10,7 @@ import {CommonDataService} from 'src/app/services/common-data.service'
 import { EncryptService } from 'src/app/services/encrypt.service';
 import { CaptchaResolverService } from 'src/app/services/captcha-resolver.service';
 import { Observable } from 'rxjs';
+import { e } from '@angular/core/src/render3';
 
 
 
@@ -186,34 +187,59 @@ export class LoginComponent implements OnInit, AfterViewInit {
         let roleName = JSON.stringify(res["ProcessVariables"]["roleName"]);
         localStorage.setItem("userId", res["ProcessVariables"]["userId"]);
         localStorage.setItem('roles', roleName);
-
+        let userActivityList = res["ProcessVariables"]["userActivityList"];
+        // let userActivityArray :[] = userActivityList.split(",");
+      console.log("user Activity",userActivityList);
         if(roleName.includes("Admin")) {
           this.router.navigate(["/admin/lovs"]);
           //this.router.navigate(["/user-module"]);
           return;
-        } else if(roleName.includes("connector")){
-          this.commonDataService.changeCreateLead(true);
-          this.commonDataService.changeNewLogin(false);
-          this.commonDataService.changereAssign(false);
-        }else if(roleName.includes("SA") || roleName.includes("SM") || roleName.includes("DMA")){
-          this.commonDataService.changeCreateLead(true);
-          this.commonDataService.changeNewLogin(true);
-          this.commonDataService.changereAssign(false);
-        }else if(roleName.includes("TBM") || roleName.includes("TMA") || roleName.includes("ZBM") || roleName.includes("NBH")
-                  || roleName.includes("CRO") || roleName.includes("CEO")  || roleName.includes("COO")){
-          this.commonDataService.changeCreateLead(true);
-          this.commonDataService.changeNewLogin(true);
-          this.commonDataService.changereAssign(true);
-        }else if(roleName.includes("CSA")){
-          this.commonDataService.changeCreateLead(true);
-          this.commonDataService.changeNewLogin(true);          
-          this.commonDataService.changereAssign(false);
-        }        
-        else {
-          this.commonDataService.changeCreateLead(false);
-          this.commonDataService.changeNewLogin(false);
-          this.commonDataService.changereAssign(false);
-        }
+        }else{
+          let createLead = false;
+          let createLogin = false;
+          let applicatonreAssign = false;
+          let documetUpload = false;
+          let viewApplication = false;
+          userActivityList.forEach(uActivity => {
+            if (uActivity == "Lead"){
+              createLead = true;
+            } else if(uActivity == "Login"){
+              createLogin= true;
+            } else if(uActivity == "Reassign"){
+              applicatonreAssign= true;
+            } else if (uActivity == "Document Upload"){
+              documetUpload =true;
+            }
+            
+          });
+          this.commonDataService.changeCreateLead(createLead);
+          this.commonDataService.changeNewLogin(createLogin);
+          this.commonDataService.changereAssign(applicatonreAssign);
+        } 
+        
+        // else if(roleName.includes("connector")){
+        //   this.commonDataService.changeCreateLead(true);
+        //   this.commonDataService.changeNewLogin(false);
+        //   this.commonDataService.changereAssign(false);
+        // }else if(roleName.includes("SA") || roleName.includes("SM") || roleName.includes("DMA")){
+        //   this.commonDataService.changeCreateLead(true);
+        //   this.commonDataService.changeNewLogin(true);
+        //   this.commonDataService.changereAssign(false);
+        // }else if(roleName.includes("TBM") || roleName.includes("TMA") || roleName.includes("ZBM") || roleName.includes("NBH")
+        //           || roleName.includes("CRO") || roleName.includes("CEO")  || roleName.includes("COO")){
+        //   this.commonDataService.changeCreateLead(true);
+        //   this.commonDataService.changeNewLogin(true);
+        //   this.commonDataService.changereAssign(true);
+        // }else if(roleName.includes("CSA")){
+        //   this.commonDataService.changeCreateLead(true);
+        //   this.commonDataService.changeNewLogin(true);          
+        //   this.commonDataService.changereAssign(false);
+        // }        
+        // else {
+        //   this.commonDataService.changeCreateLead(false);
+        //   this.commonDataService.changeNewLogin(false);
+        //   this.commonDataService.changereAssign(false);
+        // }
 
         this.router.navigate(["/leads"]);
       },

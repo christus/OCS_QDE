@@ -3,6 +3,7 @@ import { CollateralComponent } from './applicant-dashboard/document-upload/colla
 import { BranchListComponent } from './admin/admin-panel/branch-list/branch-list.component';
 import { PmayListComponent } from './admin/admin-panel/pmay-list/pmay-list.component';
 import { AdminAddUserLovResolverService } from './services/admin-add-user-lov-resolver.service';
+import { AdminRoleLovsResolverService } from './services/admin-role-lov-resolver.service';
 import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -102,6 +103,7 @@ import { AddAdminUserComponent } from './admin/add-admin-user/add-admin-user.com
 import { EditAdminUserComponent } from './admin/edit-admin-user/edit-admin-user.component';
 import { AdminLovsResolverService } from './services/admin-lovs-resolver.service';
 import { AdminGetEachLovResolverService } from './services/admin-get-each-lov-resolver.service';
+
 import { AdminEachLovComponent } from './admin/admin-panel/admin-lovs/admin-each-lov/admin-each-lov.component';
 import { AdminFieldEditDirective } from './directives/admin-field-edit.directive';
 import { AdminZipCodeComponent } from './admin/admin-panel/admin-lovs/admin-zip-code/admin-zip-code.component';
@@ -556,6 +558,7 @@ const appRoutes: Routes = [
         component: AdminEachLovComponent,
         resolve: {
           eachLovs: AdminGetEachLovResolverService
+          // roleLovs: AdminRoleLovsResolverService
         }
       },
       {
@@ -691,6 +694,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   ],
   providers: [
     ListOfValuesResolverService,
+    // AdminGetRoleLovResolverService
     // BirthPlaceResolverService,
     GetQdeDataResolverService,
     {
@@ -712,6 +716,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     AdminLovsResolverService,
     AdminGetEachLovResolverService,
     AdminAddUserLovResolverService,
+    AdminRoleLovsResolverService,
     MasterLovResolverService,
     GeneralLovsService,
     ClssChecklistResolverService,

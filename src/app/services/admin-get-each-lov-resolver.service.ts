@@ -5,10 +5,11 @@ import { HttpParams, HttpClient } from '@angular/common/http';
 import RequestEntity from '../models/request-entity.model';
 import { environment } from 'src/environments/environment';
 import { QdeHttpService } from './qde-http.service';
+import { retry } from 'rxjs/operators';
 
 @Injectable()
 export class AdminGetEachLovResolverService implements Resolve<Observable<any>> {
-
+  activityList ;
   constructor(private http: HttpClient,
     private qdeHttp: QdeHttpService) { }
 
@@ -34,9 +35,14 @@ export class AdminGetEachLovResolverService implements Resolve<Observable<any>> 
       JSON.stringify(qdeRequestEntity)
     };
 
-    return this.qdeHttp.callPost(
-      workflowId, projectId,
-      body
-    );
+    return this.qdeHttp.callPost( workflowId, projectId,body);
   }
+
+  // getActivityList(){
+    
+  //   this.qdeHttp.adminGetLov().subscribe(res=>{
+  //     // console.log("adminGetLov",JSON.parse(res['ProcessVariables']['lovs']))
+  //     this.activityList["activityList"] = JSON.parse(res['ProcessVariables']['lovs']).LOVS["activity"];
+  //   })
+  // }
 }
