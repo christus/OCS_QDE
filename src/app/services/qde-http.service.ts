@@ -1657,24 +1657,24 @@ createOrUpdatePersonalDetails(qde) {
     let myActivitys
     console.log(lovs);
     
-    // let obj = this.qdeService.getFilteredJson({
-    //   userId: parseInt(lovs.userId),
-    //   tableName: lovs.tableName,
-    //   description: lovs.description,
-    //   value: lovs.value,
-    //   id: lovs.id!=null ? parseInt(lovs.id) : null,
-    //   male: lovs.male!=null ? lovs.male: null,
-    //   female: lovs.female!=null ? lovs.female: null,
-    //   stateId : lovs.stateId!=null ? lovs.stateId: null,
-    //   zone : lovs.zone != null ? lovs.zone: null,
-    //   cityId : lovs.cityId!=null ? lovs.cityId: null,
-    //   isRequired : lovs.isRequired!=null ? lovs.isRequired: null,
-    //   reqBoolean : lovs.reqBoolean,
-    //   isMale : lovs.isMale,
-      
-    // });
-
-    let obj = this.qdeService.getFilteredJson(lovs);
+    let obj = this.qdeService.getFilteredJson({
+      userId: parseInt(lovs.userId),
+      tableName: lovs.tableName,
+      description: lovs.description,
+      value: lovs.value,
+      id: lovs.id!=null ? parseInt(lovs.id) : null,
+      male: lovs.male!=null ? lovs.male: null,
+      female: lovs.female!=null ? lovs.female: null,
+      stateId : lovs.stateId!=null ? lovs.stateId: null,
+      zone : lovs.zone != null ? lovs.zone: null,
+      cityId : lovs.cityId!=null ? lovs.cityId: null,
+      isRequired : lovs.isRequired!=null ? lovs.isRequired: null,
+      reqBoolean : lovs.reqBoolean,
+      isMale : lovs.isMale
+     
+    });
+ // activityLists: lovs['activityLists']
+    // let obj = this.qdeService.getFilteredJson(lovs);
     if(lovs['activityLists']){
       myActivitys=this.qdeService.getOnlyKeyValues(lovs['activityLists'])
     console.log("my activity list",myActivitys)

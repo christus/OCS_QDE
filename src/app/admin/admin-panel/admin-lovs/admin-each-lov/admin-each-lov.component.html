@@ -80,7 +80,10 @@
         <!-- <ng-template kendoMultiSelectCustomItemTemplate let-customText>
             <strong>{{ customText }}</strong>
         </ng-template> -->
-        </kendo-multiselect>      
+        </kendo-multiselect> 
+        <!-- <div class="error-msg" *ngIf ="errorMsgShow">
+          <span>{{error-msg}}</span>
+      </div>  -->
     </td>
        <td [ngStyle]="{textAlign: 'center'}">
          <button type="button" class="deleteBtn" (click)="delete(i)" *ngIf="l.id != null">
@@ -106,7 +109,7 @@
   </div>
 </div>
 <div class="overlay" [ngClass]="{'active': isConfirmModal}">
-  <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isConfirmModal}">
+  <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isConfirmModal}" style="text-align: center;">
     <a class="modal-close" (click)="isConfirmModal = false"><span class="icon icon-close"></span></a>
     <div class="modal-body">
       <h1>Are you Sure?</h1>

@@ -40,8 +40,7 @@ responseData;
   public userActivityList: Array<any> ;
   public selectedRoleActivity = {};
   myCall: any;
-
-  
+  errorMsgShow:boolean = false;  
 
 
   constructor(private route: ActivatedRoute,
@@ -131,30 +130,31 @@ responseData;
         //alert("Please enter all values");
         //this.refresh();
       }else{
-        let data ;
-        if(this.tableName == "user_role"){
-          console.log("index Value ",this.lovs[index])
-          data = { 
-            userId: this.lovs[index].userId,
-              tableName: "user_role",             
-              value: this.lovs[index].value,
-              isEdit: true,
-              description: this.lovs[index].description,              
-              id: 13,
-              activityLists: this.selectedRoleActivity[index]
-          }
-        } else{
-          data = this.lovs[index];
-        }
-        // console.log("index Value ",this.lovs[index]);
-         console.log("index Value ",data);
+        // let data ;
+        // if(this.tableName == "user_role"){
+        //   console.log("index Value ",this.lovs[index])
+        //   data = { 
+        //     userId: this.lovs[index].userId,
+        //       tableName: "user_role",             
+        //       value: this.lovs[index].value,
+        //       isEdit: true,
+        //       description: this.lovs[index].description,              
+        //       id: 13,
+        //       activityLists: this.selectedRoleActivity[index]
+        //   }
+        // } else{
+        //   data = this.lovs[index];
+        // }
+        console.log("index Value ",this.lovs[index]);
+        //  console.log("index Value ",this.lovs[index]["id"]);
 
 
       this.qdeHttp.insertUpdateEachLovs(this.lovs[index]).subscribe(res => {
         if(res['ProcessVariables']['status'] == true) {
           console.log(this.lovs[index]);
           this.lovs[index].isEdit = true;
-          this.lovs[index].id = res['ProcessVariables']['id'];
+          // this.lovs[index].id = res['ProcessVariables']['id'];
+          this.refresh();
         } 
 		/* else if(res['ProcessVariables']['errorMessage'] != "") {
           //this.refresh();
@@ -217,6 +217,8 @@ responseData;
         description: v['description'],
         isRequired: v['isRequired'],
         id: v['id'] ? v['id'] : null,
+        male: v['male'],
+        female: v['female'],
         stateId: v['stateId'],
         stateName: v['stateName'],
         zone: v['zone'],
@@ -448,7 +450,14 @@ responseData;
     this.getData(data);
 }
   onAddActivity(event,index){
+    let beforeselectedRoleActivity = this.selectedRoleActivity[index]
     if (event.length>0){  
+      // let activityStatus = this.checkActivity(event);
+      let activityStatus = false;
+      if (activityStatus){        
+        this.isErrorModal = true;       
+        this.errorMsg = "User Activity can not add like Login-DocumentUpload/Login-Application view"
+      } else {
         this.selectedRoleActivity[index] =[]
         let selectActivityList  = event; 
         console.log("selected activity  ",event);
@@ -458,7 +467,22 @@ responseData;
           );
         // this.selectedRoleActivity[index]= (event.id);
         console.log("activity selected",this.selectedRoleActivity)
+        // this.errorMsgShow = false;
       }
+    }
+  }
+  checkActivity(sActivity):boolean{
 
+    let checkList = sActivity;
+    let dUpload = false;
+    let createLogin = false;
+    checkList.forEach(obj =>{
+      if(obj.value == "Login"){
+        createLogin = true
+      } else if(obj.value == "Document Upload" || obj.value == "Application view"){
+        dUpload = true;
+      }
+    });
+    return (dUpload && createLogin)
   }
 }
