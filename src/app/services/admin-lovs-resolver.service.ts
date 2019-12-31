@@ -8,7 +8,7 @@ import { QdeHttpService } from './qde-http.service';
 
 @Injectable()
 export class AdminLovsResolverService implements Resolve<Observable<any>> {
-
+activityList = {};
   constructor(private http: HttpClient,
     private qdeHttp: QdeHttpService) { }
 
@@ -30,10 +30,26 @@ export class AdminLovsResolverService implements Resolve<Observable<any>> {
       'processVariables':
       JSON.stringify(qdeRequestEntity)
     };
+    this.getActivityList()
+    console.log("activityList",this.activityList);
+    this.activityList = this.qdeHttp.callPost(
+        workflowId, projectId,
+        body
+      );
+    // return this.qdeHttp.callPost(
+    //   workflowId, projectId,
+    //   body
+    // );
+    // this.activityList["activityList"] = this.getActivityList();
+    // console.log("activityList",this.activityList);
+    return this.activityList;
+  }
 
-    return this.qdeHttp.callPost(
-      workflowId, projectId,
-      body
-    );
+  getActivityList(){
+    
+    this.qdeHttp.adminGetLov().subscribe(res=>{
+      // console.log("adminGetLov",JSON.parse(res['ProcessVariables']['lovs']))
+      this.activityList["activityList"] = res;
+    })
   }
 }

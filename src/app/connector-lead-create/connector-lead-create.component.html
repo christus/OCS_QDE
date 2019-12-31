@@ -25,13 +25,13 @@
                 <div class="search-wrap">
                     <!-- <a href="javascript:void(0);" class="search-btn"><span class="icon icon-search"></span></a> -->
                 </div>
-                <div class="profile-wrap hover-wrap">
-                    <div class="profile-btn hover-link" #optionsMenuDropdown [ngClass]="{'active': isOptionsMenuDropOpen}" (click)="openOptionsMenuDropdown(optionsMenuDropdownContent)">
+                <div class="profile-wrap hover-wrap" (click)="openOptionsMenuDropdown()">
+                    <div class="profile-btn hover-link" #optionsMenuDropdown [ngClass]="{'active': isOptionsMenuDropOpen}">
                         <!-- <img src="/assets/images/profile-thumb.png" alt="" class="profile-thumb"> -->
                         <span class="profile-name">{{firstName}}</span>
                         <span class="icon icon-down"></span>
                     </div>
-                    <div class="hover-content" #optionsMenuDropdownContent [ngClass]="{'active': isOptionsMenuDropOpen}" tabindex="0" (blur)="closeOptionsMenuDropdown(optionsMenuDropdownContent)">
+                    <div class="hover-content" #optionsMenuDropdownContent [ngClass]="{'active': isOptionsMenuDropOpen}" tabindex="0">
                         <nav class="user-menu">
                             <!-- <a class="user-link typ-two" href="">My Profile</a>
                             <a class="user-link typ-two" href="">App Settings</a>
@@ -52,6 +52,7 @@
 
 <nav class="bs-side-menu">
     <a [routerLink]="['/leads']" routerLinkActive="router-link-active"  class="nav-link active">
+        <br><br>
         <span class="icon icon-dashboard"></span>
         <span class="link-text">Dashboard</span>
     </a>

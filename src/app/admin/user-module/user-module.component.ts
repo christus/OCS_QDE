@@ -22,6 +22,7 @@ export class UserModuleComponent implements OnInit {
   searchKey: string="";
   isErrorModal: boolean = false;
   errorMessage: string;
+  uploadFileName : string;
 
   @ViewChild('uploadCSV') uploadCSV:ElementRef;
   uploadCSVString: string;
@@ -127,6 +128,7 @@ export class UserModuleComponent implements OnInit {
     this.selectedFile = event.target.files[0];
     if(this.selectedFile.size!=0){
       this.isFileSelected = true;
+      this.uploadFileName = this.selectedFile.name;
     }else{
       this.isErrorModal = true;
       this.errorMessage = "No File selected";
@@ -164,12 +166,14 @@ export class UserModuleComponent implements OnInit {
           this.isFileSelected = false;
           let el = this.uploadCSV.nativeElement;
           el.value = "";
+          this.uploadFileName = "";
         }else{
           //this.isErrorModal = true;
           //this.errorMessage = res['ProcessVariables']['errorMessage'];
           this.isFileSelected = false;
           let el = this.uploadCSV.nativeElement;
           el.value = "";
+          this.uploadFileName = "";
         }
       })
     }

@@ -20,14 +20,14 @@ export const errors: any = {
   personalDetails: {
     firstName: {
       required: "First Name is mandatory",
-      invalid: "Number and Special Characters not allowed"
+      invalid: "Special Characters not allowed"
     },
     middleName: {
-      invalid: "Number and Special Characters not allowed"
+      invalid: "Special Characters not allowed"
     },
     lastName: {
       required: "Last Name is mandatory",
-      invalid: "Number and Special Characters not allowed"
+      invalid: "Special Characters not allowed"
     },
     birthPlace:{
       required:"Birth Place is mandatory",
@@ -115,7 +115,7 @@ export const errors: any = {
   maritialStatus: {
     spouseName: {
       required: "Spouse Name is mandatory",
-      invalid: "Number and Special Characters not allowed"
+      invalid: "Special Characters not allowed"
     },
     salaryAmount: {
       required: "Salary Amount is mandatory",

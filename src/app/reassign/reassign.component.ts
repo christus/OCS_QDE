@@ -244,10 +244,10 @@ getUserList(data){
 
       this.isErrorModal = true;
       this.errorMessage = "Select Any From Assignee Name";
-    } else if (this.selectAllStatus = false) {
+    } else if (this.selectAllStatus == false) {
       if(this.applications.length == 0  || this.applications.length == undefined ){
         this.isErrorModal = true;
-        this.errorMessage = "Select Any Apllication to Assign Other";
+        this.errorMessage = "Select Any Application to Assign Other";
     }
 
     } else if( !this.effectFromDate){

@@ -37,6 +37,7 @@ export class DocumentAssessmentDoccatDoctypeComponent implements OnInit {
   data: Array<any> = [];
   delIndex: any;
   isConfirmModal: boolean;
+  uploadFileName: string;
 
   @ViewChild('uploadCSV') uploadCSV:ElementRef;
   uploadCSVString: string;
@@ -389,6 +390,7 @@ export class DocumentAssessmentDoccatDoctypeComponent implements OnInit {
   }
   startUpload(event){
     this.selectedFile = event.target.files[0];
+    this.uploadFileName = this.selectedFile.name;
     if(this.selectedFile.size!=0){
       this.isFileSelected = true;
     }else{
@@ -428,12 +430,14 @@ export class DocumentAssessmentDoccatDoctypeComponent implements OnInit {
           this.isFileSelected = false;
           let el = this.uploadCSV.nativeElement;
           el.value = "";
+          this.uploadFileName = "";
         }else{
           //this.isErrorModal = true;
           //this.errorMessage = res['ProcessVariables']['errorMessage'];
           this.isFileSelected = false;
           let el = this.uploadCSV.nativeElement;
           el.value = "";
+          this.uploadFileName = "";
         }
       })
     }

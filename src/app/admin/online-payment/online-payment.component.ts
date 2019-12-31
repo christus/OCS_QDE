@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
 
 @Component({
@@ -15,18 +15,24 @@ export class OnlinePaymentComponent implements OnInit {
   viewMode:string = 'onlineTab1';
 
   errorMsg:string;
-
+  isFileSelected : boolean = false;
   uploadFileName: string;
   isErrorModal: boolean;
 
-  constructor(private qdeHttp: QdeHttpService) { }
+  @ViewChild ("paymentUploadPic") paymentUploadPic : ElementRef;
+
+  constructor(private qdeHttp: QdeHttpService,
+    private renderer: Renderer2) { }
 
   ngOnInit() {}
 
   setUploadDoc(inputValue:any) {
     this.uploadDoc = inputValue.files[0];
-    this.uploadFileName = "";
+    if(this.uploadDoc["size"]!=0){
+    this.isFileSelected = true;
     this.uploadFileName = this.uploadDoc.name;
+    }
+    // this.uploadFileName = "";
     this.getBase64(this.uploadDoc);
     this.errorMsg = "";
 
@@ -138,18 +144,20 @@ export class OnlinePaymentComponent implements OnInit {
             this.isErrorModal = true;
             //alert("Uploaded Successfully!");
             this.errorMsg = "Uploaded Successfully";
+            this.clearFile();
         } 
-      //   else {
-      //     if (response["ErrorMessage"]) {
-      //       console.log("Response: " + response["ErrorMessage"]);
-      //     } else if (response["ProcessVariables"]["errorMessage"]) {
-      //       console.log(
-      //         "Response: " + response["ProcessVariables"]["errorMessage"]
-      //       );
-      //       this.errorMsg = response["ProcessVariables"]["errorMessage"];
-      //     }
-      //   }
-      // },
+        else {
+          if (response["ErrorMessage"]) {
+            console.log("Response: " + response["ErrorMessage"]);
+            this.clearFile();
+          } else if (response["ProcessVariables"]["errorMessage"]) {
+            console.log(
+              "Response: " + response["ProcessVariables"]["errorMessage"]
+            );
+            this.clearFile();
+            // this.errorMsg = response["ProcessVariables"]["errorMessage"];
+          }
+        }
       // error => {
       //   console.log("Error : ", error);
       //   this.errorMsg = error;
@@ -216,18 +224,20 @@ export class OnlinePaymentComponent implements OnInit {
             //alert("Uploaded Successfully!");
             this.isErrorModal = true;
             this.errorMsg = "Uploaded Successfully";
+            this.clearFile();
         } 
-      //   else {
-      //     if (response["ErrorMessage"]) {
-      //       console.log("Response: " + response["ErrorMessage"]);
-      //     } else if (response["ProcessVariables"]["errorMessage"]) {
-      //       console.log(
-      //         "Response: " + response["ProcessVariables"]["errorMessage"]
-      //       );
-      //       this.errorMsg = response["ProcessVariables"]["errorMessage"];
-      //     }
-      //   }
-      // },
+         else {
+           if (response["ErrorMessage"]) {
+             console.log("Response: " + response["ErrorMessage"]);
+	           this.clearFile();
+           } else if (response["ProcessVariables"]["errorMessage"]) {
+             console.log(
+               "Response: " + response["ProcessVariables"]["errorMessage"]
+              );
+	            this.clearFile();	
+             //this.errorMsg = response["ProcessVariables"]["errorMessage"];
+           }
+         }
       // error => {
       //   console.log("Error : ", error);
       //   this.errorMsg = error;
@@ -255,5 +265,11 @@ export class OnlinePaymentComponent implements OnInit {
       console.log("result base64", this.uploadCSVFile);
     }
     myReader.readAsDataURL(file);
+  }
+  
+  clearFile(){
+  this.uploadFileName = "";
+  this.isFileSelected = false;
+  this.renderer.setValue(this.paymentUploadPic.nativeElement, "");
   }
 }

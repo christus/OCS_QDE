@@ -351,8 +351,8 @@
                               [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.firstName"
                               name="firstName"  #firstName="ngModel" fieldFill required autocomplete="off"
                               tabindex="2"
-                              [maxlength]="minMaxValues['Name']?.maxLength" 
-                              [minlength]="minMaxValues['Name']?.minValue"
+                              [maxlength]="minMaxValues['Company_Name']?.maxLength" 
+                              [minlength]="minMaxValues['Company_Name']?.minValue"
                               pattern="{{regexPattern.name}}" />
                             <label for="firstName">First name</label>
 
@@ -365,7 +365,7 @@
                           </div>
                           <div class="form-group typ-optional">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="middleName" name="middleName" autocomplete="off" [maxlength]="minMaxValues['Name']?.maxLength"
+                              id="middleName" name="middleName" autocomplete="off" [maxlength]="minMaxValues['Company_Name']?.maxLength"
                               [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.middleName"
                               pattern="{{regexPattern.name}}" fieldFill #middleName="ngModel" tabindex="3" />
                             <label for="middleName">Middle name</label>
@@ -383,7 +383,7 @@
 
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                               [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.lastName"
-                              name="lastName" #lastName="ngModel" id="lastName" fieldFill autocomplete="off" [maxlength]="minMaxValues['Name']?.maxLength" [minlength]="minMaxValues['Name']?.minValue"
+                              name="lastName" #lastName="ngModel" id="lastName" fieldFill autocomplete="off" [maxlength]="minMaxValues['Company_Name']?.maxLength" [minlength]="minMaxValues['Name']?.minValue"
                               pattern="{{regexPattern.name}}" required tabindex="4" />
                             <label for="lastName">Last name</label>
 
@@ -717,7 +717,7 @@
                             <div class="form-group typ-optional">
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                                 id="res-no" [(ngModel)]="residenceNumberPhoneNumber"autocomplete="off"
-                                pattern="{{regexPattern.mobileNumber}}" maxlength="minMaxValues['Land_Line_Number']?.maxLength" #residenceNumber="ngModel"
+                                pattern="{{regexPattern.mobileNumber}}" [maxlength]="minMaxValues['Land_Line_Number']?.maxLength" #residenceNumber="ngModel"
                                 name="residenceNumber2" value="{{residenceNumber.phoneNumber}}"
                                 data-validation-attr="residenceno" fieldFill />
                               <label for="res-no" tabindex="10">Residence number</label>
@@ -1197,8 +1197,8 @@
                           <div class="form-group">
 
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              [(ngModel)]="qde.application.applicants[applicantIndex].maritalStatus.firstName" [maxlength]="minMaxValues['Name']?.maxLength" [minlength]="minMaxValues['Name']?.minValue"
-                              [minlength]="minMaxValues['Name']?.minValue"
+                              [(ngModel)]="qde.application.applicants[applicantIndex].maritalStatus.firstName" [maxlength]="minMaxValues['Name']?.maxLength" [minlength]="minMaxValues['Company_Name']?.minValue"
+                              [minlength]="minMaxValues['Company_Name']?.minValue"
                               #spouseName="ngModel" tabindex="2" name="firstName" pattern="{{regexPattern.name}}"
                               id="spouse-name" fieldFill required  autocomplete="off"/>
                             <label for="spouse-name">First name</label>
@@ -1603,7 +1603,7 @@
                             *ngIf="occupationRequired == true">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control" autocomplete="off"
                               required [(ngModel)]="qde.application.applicants[applicantIndex].occupation.companyName" [maxlength]="minMaxValues['Company_Name']?.maxLength"
-                              [minlength]="minMaxValues['Name']?.minValue" pattern="{{regexPattern.organizationName}}" tabindex="2" name="companyName" #companyName="ngModel"
+                              [minlength]="minMaxValues['Company_Name']?.minValue" pattern="{{regexPattern.organizationName}}" tabindex="2" name="companyName" #companyName="ngModel"
                               fieldFill id="companyName" />
                             <label for="companyName">Company name</label>
 
@@ -2837,7 +2837,7 @@
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                               id="revenue" autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].revenueDetails.revenue"
-                              #revenue="ngModel" name="revenue" maxlength="15" fieldFill tabindex="1"
+                              #revenue="ngModel" name="revenue" fieldFill tabindex="1"
                               pattern="{{regexPattern.revenue}}" 
                               required 
                               [maxlength]="minMaxValues['Receipt_Gross_turnover'].maxLength"
