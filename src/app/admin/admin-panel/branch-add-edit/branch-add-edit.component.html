@@ -14,7 +14,8 @@
     </div>
      <div class="inputBox form-field-el">
         <label for="branchCode" class="inputText">Branch code:</label>
-        <input type="text" id="branchCode" class="form-control" [(ngModel)]="branchCode" fieldFill formControlName="branchCode" autocomplete="off" required/>
+        <input type="text" id="branchCode" class="form-control" [(ngModel)]="branchCode" maxlength="3"
+        fieldFill formControlName="branchCode" autocomplete="off" required/>
         <div class="redalert" *ngIf="(formValue.branchCode.errors?.required && (formValue.branchCode.touched || formValue.branchCode.dirty))">Branch code is mandatory</div>
     </div>
     <div class="inputBox form-field-el">
