@@ -132,3 +132,7 @@ thead, tbody tr {
 .k-select {
     padding-right: 0px !important;
 }
+.hide-selected > li.k-state-selected {
+    display: none;
+}
+

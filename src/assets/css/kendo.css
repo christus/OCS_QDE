@@ -4895,7 +4895,7 @@ kendo-sortable {
 .k-list-optionlabel {
     cursor: pointer;
     outline: none;
-    font-size: 2.28em;
+    font-size: 2vw;
     /* myself */
 }
 

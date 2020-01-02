@@ -5797,6 +5797,10 @@ img {
 	.mobile .bottomright {
 		position: static !important;
 	}
+
+	.mobile .bs-modal{
+		min-height: 250px !important;
+	}
 }
 
 .with_datepicker .k-i-arrow-60-down::before,
@@ -5838,7 +5842,7 @@ img {
 }
 
 .date_dropdown_fontsize .k-input {
-    font-size: 31px !important;
+    font-size:31px !important;
 }
 
 .k-datepicker .k-select, .k-timepicker .k-select, .k-datetimepicker .k-select {
