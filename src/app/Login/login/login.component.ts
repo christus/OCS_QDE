@@ -187,6 +187,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
         let roleName = JSON.stringify(res["ProcessVariables"]["roleName"]);
         localStorage.setItem("userId", res["ProcessVariables"]["userId"]);
         localStorage.setItem('roles', roleName);
+        // localStorage.setItem("firstName", res["ProcessVariables"]["firstName"]);
         let userActivityList = res["ProcessVariables"]["userActivityList"];
         // let userActivityArray :[] = userActivityList.split(",");
       console.log("user Activity",userActivityList);
@@ -203,7 +204,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
           userActivityList.forEach(uActivity => {
             if (uActivity == "Lead"){
               createLead = true;
-            } else if(uActivity == "Login"){
+            } else if(uActivity == "New Login"){
               createLogin= true;
             } else if(uActivity == "Reassign"){
               applicatonreAssign= true;

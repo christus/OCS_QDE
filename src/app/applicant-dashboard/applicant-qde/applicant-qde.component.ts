@@ -1910,10 +1910,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
                       this.openDuplicateModal();
                     }
                   }
-                } else {
-                  this.isErrorModal = true;
-                  this.errorMessage = "Something went wrong, please try again later.";
-                }
+                } 
+                // else {
+                //   this.isErrorModal = true;
+                //   this.errorMessage = "Something went wrong, please try again later.";
+                // }
               }
               // , error => {
               //   this.isErrorModal = true;
@@ -1923,10 +1924,11 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           } else {
             this.closeDuplicateModal();
             }
-          } else {
-            this.isErrorModal = true;
-            this.errorMessage = "Something went wrong, please try again later.";
-        }
+          } 
+        //   else {
+        //     this.isErrorModal = true;
+        //     this.errorMessage = "Something went wrong, please try again later.";
+        // }
         // else {
         //   this.isErrorModal = true;
         //   this.errorMessage = "Something went wrong, please try again later.";
@@ -4208,6 +4210,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
           this.qde.application.applicants[this.applicantIndex].applicantId = tempApplicant.applicantId;
           this.qde.application.applicants[this.applicantIndex].isMainApplicant = tempApplicant.isMainApplicant;
           this.qde.application.applicants[this.applicantIndex].contactDetails.isMobileOTPverified = false;
+	        this.qde.application.applicants[this.applicantIndex].existingLoans.liveLoan = null;
+	        this.qde.application.applicants[this.applicantIndex].existingLoans.loanProvider = "";
+	        this.qde.application.applicants[this.applicantIndex].existingLoans.monthlyEmi = null;
+	        this.qde.application.applicants[this.applicantIndex].existingLoans.numberOfYears = "";
           // dedupe set done (disable dedupe) 
           this.qde.application.applicants[this.applicantIndex].dedupeDone = true;
           this.qdeService.setQde(this.qde);

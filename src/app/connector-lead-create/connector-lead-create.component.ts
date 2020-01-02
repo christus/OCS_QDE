@@ -159,7 +159,7 @@ export class ConnectorLeadCreateComponent implements OnInit {
         this.isSuccessfulRouteModal = true;
       }
       else{
-        this.sessionMessage = res['ProcessVariables']['errorMessage']
+        //this.sessionMessage = res['ProcessVariables']['errorMessage']
       }
     });
   }
@@ -225,6 +225,12 @@ export class ConnectorLeadCreateComponent implements OnInit {
   }
 
   loginName(){
+    // let userId = localStorage.getItem("userId");
+    // if(userId!=""){
+    //   this.firstName = localStorage.getItem("firstName");
+    // } else{
+    //   this.commonDataService.setDialogData(true);
+    //  }
     this.qdeHttp.roleLogin().subscribe(res => {
       this.firstName =  res['ProcessVariables']['firstName'];
       console.log("ROLE Name: ", this.firstName);

@@ -4,7 +4,7 @@
     <div class="lyt-home">
         <div class="lyt-tabs">
             <!-- Back Navigation to add routing  below-->
-            <a class="back-btn backbtn" (click)="backScreen()"></a> 
+            <a *ngIf="showBackButton" class="back-btn backbtn" [routerLink]="['/applicant/', applicationId]"></a> 
             
             <div class="lhs">
                 <div class="lhs-inner-wrap">
