@@ -133,6 +133,14 @@ export class ReviewApplicationFormComponent implements OnInit {
 
   applicantNameForLoanDetails: Array<string> = [];
 
+  selPropertyType:string;
+  selLoantype:string;
+  selLoanpurpose:string;
+  selReferenceOne:string;
+  selTiltle1:string;
+  selReferenceTwo:string;
+  selTiltle2:string;
+
   constructor(private qdeService: QdeService,
               private route: ActivatedRoute,
               private qdeHttp: QdeHttpService
@@ -291,6 +299,8 @@ export class ReviewApplicationFormComponent implements OnInit {
           //   this.loanpurposes[0].value;
           this.loanType = this.loanType.slice(0, 3);
           this.selectedLoanType = this.loanType.find(v => v.value == this.qde.application.loanDetails.loanAmount.loanType) || this.loanType[0];
+console.log("selectedLoanType",this.selectedLoanType)
+          this.selLoantype = this.selectedLoanType['key'];
 
           this.setLoanPurposes(this.selectedLoanType['value'], this.qde.application.loanDetails.loanAmount.loanPurpose);
 
@@ -301,6 +311,9 @@ export class ReviewApplicationFormComponent implements OnInit {
           this.selectedPropertyType =
             result.application.loanDetails.propertyType.propertyType ||
             this.propertyTypes[0].value;
+            console.log("selectedPropertyType:",result.application.loanDetails.propertyType.propertyType)
+const propertytype = (this.propertyTypes.find(v => v.value == this.selectedPropertyType)||'').key
+          this.selPropertyType = propertytype;
 
           this.isPropertyIdentified =
             result.application.loanDetails.propertyType.propertyIdentified ||
@@ -358,17 +371,22 @@ export class ReviewApplicationFormComponent implements OnInit {
             if (!result.application.references.referenceTwo || Object.keys(result.application.references.referenceTwo).length === 0) {
               result.application.references.referenceTwo = {};
             }
-  
+  const relationShipValueOne = result.application.references.referenceOne
             this.selectedReferenceOne =
-              result.application.references.referenceOne.relationShip ||
+            relationShipValueOne.relationShip ||
               this.relationships[0].value;
+              this.selReferenceOne = ( this.relationships.find(val => val.value === relationShipValueOne.relationShip) || '').key;
+  const relationShipValueTwo =  result.application.references.referenceTwo
             this.selectedReferenceTwo =
-              result.application.references.referenceTwo.relationShip ||
+            relationShipValueTwo.relationShip ||
               this.relationships[0].value;
-  
+              this.selReferenceTwo = (this.relationships.find(val => val.value === relationShipValueTwo.relationShip)||'').key;
+  const referenceoneTitle = result.application.references.referenceOne           
             this.selectedTiltle1 =
-              result.application.references.referenceOne.title ||
+              referenceoneTitle.title ||
               this.titles[0].value;
+              this.selTiltle1 = (this.titles.find(v => v.value === referenceoneTitle.title)||'').key;
+
             this.selectedName1 =
               result.application.references.referenceOne.fullName || "";
             this.selectedMobile1 =
@@ -378,9 +396,12 @@ export class ReviewApplicationFormComponent implements OnInit {
             this.selectedAddressLineTwo1 =
               result.application.references.referenceOne.addressLineTwo || "";
   
+  const referencetwoTitle = result.application.references.referenceTwo
             this.selectedTiltle2 =
-              result.application.references.referenceTwo.title ||
+            referencetwoTitle.title ||
               this.titles[0].value;
+              this.selTiltle2 = (this.titles.find(v => v.value === referencetwoTitle.title)||'').key;
+
             this.selectedName2 =
               result.application.references.referenceTwo.fullName || "";
             this.selectedMobile2 =
@@ -618,6 +639,7 @@ export class ReviewApplicationFormComponent implements OnInit {
       } else {
         this.selectedLoanPurpose = this.loanpurposes[0];
       }
+      this.selLoanpurpose = this.selectedLoanPurpose['key'];
       console.log("selectedLoanPurpose: ", this.selectedLoanPurpose);
     }, error => {
       // this.isErrorModal = true;

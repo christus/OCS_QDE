@@ -1076,9 +1076,12 @@
               </div>
           </div>
           <div class="row">
-              <!-- <div class="col-6"  *ngIf="officialCorrespondenceStdCode"> -->
+				<!-- <div class="col-6"  *ngIf="officialCorrespondenceStdCode"> -->
+                <div class="col-12">
                   <div class="residence-no" *ngIf="officialCorrespondenceStdCode">
-                      <div class="form-group" style="margin-left: 0.9vw;" *ngIf="officialCorrespondenceStdCode">
+
+                      <div class="form-group" *ngIf="officialCorrespondenceStdCode">
+
                             <input readonly="true"  type="text" class="form-control" id="std03"
                             required
                             fieldFill
@@ -1101,7 +1104,8 @@
                                     >Office number
                       </label>
                         </div>
-          </div>
+                    </div>
+                </div>
         </div>
           <div class="row">
               <div class="col-6"  *ngIf="qde.application.applicants[applicantIndex].officialCorrespondence.officeEmailId">
@@ -1253,7 +1257,7 @@
                               </div>
                   </div>
                   <div class="col-4">
-                          <div class="form-group typ-optional">
+                          <div class="form-group ">
                                   <input  type="text"
                                           class="form-control"
                                           id="regoffPincode"
