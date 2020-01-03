@@ -383,7 +383,7 @@
 
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                               [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.lastName"
-                              name="lastName" #lastName="ngModel" id="lastName" fieldFill autocomplete="off" [maxlength]="minMaxValues['Company_Name']?.maxLength" [minlength]="minMaxValues['Name']?.minValue"
+                              name="lastName" #lastName="ngModel" id="lastName" fieldFill autocomplete="off" [maxlength]="minMaxValues['Company_Name']?.maxLength" [minlength]="minMaxValues['Company_Name']?.minValue"
                               pattern="{{regexPattern.name}}" required tabindex="4" />
                             <label for="lastName">Last name</label>
 
@@ -1206,8 +1206,7 @@
                           <div class="form-group">
 
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              [(ngModel)]="qde.application.applicants[applicantIndex].maritalStatus.firstName" [maxlength]="minMaxValues['Name']?.maxLength" [minlength]="minMaxValues['Company_Name']?.minValue"
-                              [minlength]="minMaxValues['Company_Name']?.minValue"
+                              [(ngModel)]="qde.application.applicants[applicantIndex].maritalStatus.firstName" [maxlength]="minMaxValues['Company_Name']?.maxLength" [minlength]="minMaxValues['Company_Name']?.minValue"
                               #spouseName="ngModel" tabindex="2" name="firstName" pattern="{{regexPattern.name}}"
                               id="spouse-name" fieldFill required  autocomplete="off"/>
                             <label for="spouse-name">First name</label>
@@ -2478,7 +2477,7 @@
                         <div class="form-wrap">
                           <div class="form-group">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="org-name" tabindex="1" pattern="{{regexPattern.organizationName}}" autocomplete="off" [maxlength]="minMaxValues['Name']?.maxLength"
+                              id="org-name" tabindex="1" pattern="{{regexPattern.organizationName}}" autocomplete="off" [maxlength]="minMaxValues['Company_Name']?.maxLength"
                               [(ngModel)]="qde.application.applicants[applicantIndex].organizationDetails.nameOfOrganization"
                               #orgName="ngModel" name="orgName" fieldFill required />
                             <label for="org-name">Name of Organization</label>

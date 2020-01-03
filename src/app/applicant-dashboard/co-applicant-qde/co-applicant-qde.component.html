@@ -1,4 +1,4 @@
-﻿<main>
+<main>
     <div class="main">
         <div class="lyt-home">
             <div class="tabs">
@@ -455,7 +455,6 @@
                                                           id="middleName" 
                                                           name="middleName" 
                                                           [maxlength]="minMaxValues['Company_Name']?.maxLength"
-                                                          [minlength]="minMaxValues['Company_Name']?.minValue"
                                                           tabindex="3"
                                                           [(ngModel)]="qde.application.applicants[coApplicantIndex].personalDetails.middleName"
                                                           pattern="{{regexPattern.name}}"
@@ -2883,8 +2882,8 @@
                                                   #orgName="ngModel"
                                                   name="orgName"
                                                   fieldFill 
-                                                  [maxlength]="minMaxValues['Name']?.maxLength"
-                                                  [minlength]="minMaxValues['Name']?.minValue"
+                                                  [maxlength]="minMaxValues['Company_Name']?.maxLength"
+                                                  [minlength]="minMaxValues['Company_Name']?.minValue"
                                                   spellcheck="false"
                                                   required />
                                           <label for="org-name">Name of Organization</label>
