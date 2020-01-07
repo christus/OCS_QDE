@@ -212,7 +212,7 @@ export class ConnectorLeadCreateComponent implements OnInit {
       console.log("min ",minAmount);
       this.isLessAmount = true;
       this.requirMinAmout = minAmount;
-    } else if(n >= maxAmount && !maxAmount){
+    } else if(maxAmount!= undefined && n >= maxAmount){
       console.log("max ",maxAmount);
       this.isMaxAmount = true;
       this.requirMaxAmout = maxAmount;

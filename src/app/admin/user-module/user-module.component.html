@@ -11,6 +11,7 @@
       <input type="file" #uploadCSV accept=".csv" (change)="startUpload($event)" style="display: none;">
       <button type="button" class="btn btn-default" [ngClass]="{'disabled': (!isFileSelected)}"
           [disabled]="!isFileSelected" (click)="uploadCSVFile()"> Upload List</button>
+      <button class="btn btn-default" routerLink="/admin/add-user">Add user</button>
       <br>
       <span style="margin-left: 50vw;">{{uploadFileName}}</span>
     <br>
