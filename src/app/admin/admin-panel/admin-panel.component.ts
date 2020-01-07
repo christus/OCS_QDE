@@ -11,7 +11,12 @@ import { CommonDataService } from 'src/app/services/common-data.service';
 export class AdminPanelComponent implements OnInit {
 
   isLogoutVisible: boolean;
-
+  isAdmin: boolean;
+  userModule: boolean;
+  opsModule: boolean;
+  masterConfig: boolean;
+  navigationString:string;
+  showOCS: boolean;
   constructor(private utilService: UtilService, 
               private http: QdeHttpService,
               private cds: CommonDataService) {
@@ -19,6 +24,26 @@ export class AdminPanelComponent implements OnInit {
      this.cds.isLogoutVisible.subscribe((value) => {
       this.isLogoutVisible = value;
     });
+
+    this.cds.isAdmin$.subscribe((value) => {
+      this.isAdmin = value;
+    });
+    this.cds.userModule$.subscribe((value) => {
+      this.userModule = value;
+    });
+    this.cds.opsMoudule$.subscribe((value) => {
+      this.opsModule = value;
+    });
+    this.cds.masterConfig$.subscribe((value) => {
+      this.masterConfig = value;
+    });
+    this.cds.adminNagigation$.subscribe((value) => {
+      this.navigationString = value;
+    });
+    this.cds.showOCS$.subscribe(value=>{
+      this.showOCS = value;
+    })
+    
   }
   isloggedIn() {
     return this.utilService.isLoggedIn();
@@ -28,15 +53,16 @@ export class AdminPanelComponent implements OnInit {
     return this.utilService.clearCredentials();
   }
   logout() {
-    this.http.logout().subscribe(
-      res => {
-      },
-      error => {
-      }
-    );
+    // this.http.logout().subscribe(
+    //   res => {
+    //   },
+    //   error => {
+    //   }
+    // );
     this.utilService.clearCredentials();
   }
   ngOnInit() {
+    console.log("admin panale navigation string ",this.navigationString);
   }
   
 

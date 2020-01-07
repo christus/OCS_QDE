@@ -3463,5 +3463,24 @@ createOrUpdatePersonalDetails(qde) {
     return this.callPost(workflowId, projectId, body);
 
   }
+  userActivityMapping(data: object){
+    const processId = environment.api.userActivityMapping.processId;
+    const workflowId = environment.api.userActivityMapping.workflowId;
+    const projectId = environment.projectId;
 
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: data,
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = {
+      'processVariables':
+      JSON.stringify(requestEntity)
+    };
+
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
+  }
 }

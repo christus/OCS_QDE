@@ -202,7 +202,7 @@ export class CommonDataService {
     this.applicantName$.next(val);
   }
 
-  showCreateLead$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  showCreateLead$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public showCreateLead = this.showCreateLead$.asObservable();
 
   changeCreateLead(value: boolean) {
@@ -210,17 +210,147 @@ export class CommonDataService {
     console.log("change Change create lead ", this.showCreateLead)
   }
 
-  showNewLogin$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  showNewLogin$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public showNewLogin = this.showNewLogin$.asObservable();
 
   changeNewLogin(value: boolean) {
     this.showNewLogin$.next(value);
   }
-  reAssign$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  reAssign$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public reAssign = this.reAssign$.asObservable();
 
   changereAssign(value: boolean) {
     this.reAssign$.next(value);
   }
 
+  reportShow$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public reportShow = this.reportShow$.asObservable();
+  
+  changereReport(value: boolean) {
+    this.reportShow$.next(value);
+  }
+  documetUploadStatus$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public documetUploadStatus = this.documetUploadStatus$.asObservable();
+  
+  changedocumetUpload(value: boolean) {
+    this.documetUploadStatus$.next(value);
+  }
+
+  cdsStatus$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public cdsStatus = this.cdsStatus$.asObservable();
+  changeCdsStatus(value: boolean) {
+    this.cdsStatus$.next(value);
+  }
+  userFullName$: BehaviorSubject<string> = new BehaviorSubject<string>(null);
+  public userFullName = this.userFullName$.asObservable();
+  changeuserFullName(value: string) {
+    this.userFullName$.next(value);
+  }
+
+  isAdmin$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public isAdmin = this.isAdmin$.asObservable();
+  changeIsAdmin(value: boolean) {
+    this.isAdmin$.next(value);
+  }
+  userModule$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public userModule = this.userModule$.asObservable();
+  changeUserModule(value: boolean) {
+    this.userModule$.next(value);
+  }
+  opsMoudule$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
+  public opsMoudule = this.opsMoudule$.asObservable();
+  changeOpsMoudule(value: boolean) {
+    this.opsMoudule$.next(value);
+  }
+  masterConfig$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
+  public masterConfig = this.masterConfig$.asObservable();
+  changeMasterConfig(value: boolean) {
+    this.masterConfig$.next(value);
+  }
+  adminNagigation$: BehaviorSubject<string> = new BehaviorSubject<string>(null);
+  public adminNagigation = this.adminNagigation$.asObservable();
+  changeAdminNagigation(value: string) {
+    this.adminNagigation$.next(value);
+  }
+  showOCS$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public showOCS = this.showOCS$.asObservable();
+  changeShowOCS(value: boolean) {
+    this.showOCS$.next(value);
+  }
+
+checkUserMapping(userActivityList,userFullName){
+  let myServiceStatus= false;
+  console.log("user activity in cds",userActivityList,userFullName);
+          let createLead = false;
+          let createLogin = false;
+          let applicatonreAssign = false;
+          let documetUpload = false;
+          let reportShow = false;
+          let userModule =false;
+          let opsMoudule = false;
+          let masterConfig = false;
+          let showOCS = false;
+          userActivityList.forEach(uActivity => {
+            if (uActivity == "Lead"){
+              createLead = true;
+              showOCS = true;
+            } else if(uActivity == "New Login"){
+              createLogin= true;
+              showOCS = true;
+            } else if(uActivity == "Reassign"){
+              applicatonreAssign= true;
+              showOCS = true;
+            } else if (uActivity == "Document Upload"){
+              documetUpload =true;
+              showOCS = true;
+            }else if (uActivity == "Report"){
+              reportShow =true;
+              showOCS = true;
+            }else if (uActivity == "User Module"){
+              userModule =true;
+            }else if (uActivity == "OPS Module"){
+              opsMoudule =true;
+            }else if (uActivity == "Master Config"){
+              masterConfig =true;
+            }
+            myServiceStatus =true;
+          });
+          this.changeCreateLead(createLead);
+          this.changeNewLogin(createLogin);
+          this.changereAssign(applicatonreAssign);
+          this.changereReport(reportShow);
+          this.changedocumetUpload(documetUpload);
+          this.changeCdsStatus(myServiceStatus);
+          this.changeuserFullName(userFullName);
+          this.changeUserModule(userModule);
+          this.changeOpsMoudule(opsMoudule);
+          this.changeMasterConfig(masterConfig);
+          this.changeShowOCS(showOCS);
+          this.adminPageNavigation(userModule,opsMoudule,masterConfig);
+}       
+
+adminPageNavigation(userModule,opsMoudule,masterConfig){
+
+  // this.commonDataService.opsMoudule$.subscribe(val =>this.opsModule=val);
+  // this.commonDataService.userModule$.subscribe(val => this.userModule=val);
+  // this.commonDataService.masterConfig$.subscribe(val => this.masterModule =val);
+  if (opsMoudule && userModule && masterConfig){
+    this.changeAdminNagigation("/admin/lovs");
+  } else if(opsMoudule && !userModule && !masterConfig){
+    this.changeAdminNagigation("/admin/ops-module");
+  }else if(!opsMoudule && userModule && !masterConfig){
+    this.changeAdminNagigation("/admin/user-module");
+  }else if(!opsMoudule && !userModule && masterConfig){
+    this.changeAdminNagigation("/admin/lovs");
+  }else if(opsMoudule && userModule && !masterConfig){
+    this.changeAdminNagigation("/admin/ops-module");
+  }else if(opsMoudule && !userModule && masterConfig){
+    this.changeAdminNagigation("/admin/lovs");
+  }else if(!opsMoudule && userModule && masterConfig){
+    this.changeAdminNagigation("/admin/lovs");
+  }
+  
+  console.log("navgation string in cds", this.adminNagigation);
+
+}
 }

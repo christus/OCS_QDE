@@ -1,10 +1,10 @@
 export const environment = {
-  version: "1.9.6.1",
-  buildDate: "02-01-2020",
+  version: "1.9.7",
+  buildDate: "07-01-2020",
   production: true,
-  projectId: '5928d30eac7811e9a1670242ac110002', // developement
+  // projectId: '5928d30eac7811e9a1670242ac110002', // developement
 
-  // projectId: '3209f7ea7ba811e982270242ac110002', // production
+  projectId: '3209f7ea7ba811e982270242ac110002', // production
 
   //projectId: 'ff8e364e6fce11e98754782bcb8f3845', // UAT Development
 
@@ -447,6 +447,10 @@ export const environment = {
     "documentProfileUploadCsv": {
       'workflowId' : '26952466806211e982270242ac110002',
       'processId'  : 'fe06f728806a11e982270242ac110002'
+    }, 
+    "userActivityMapping": {
+      'workflowId' : 'c4791d1a305511eaba780242ac110002',
+      'processId'  : 'c496a7ea305511eabf630242ac110002'
     }
    
   },
@@ -454,9 +458,9 @@ export const environment = {
   appiyoDrive: "/d/drive/upload/",
   driveLocation: "/d/drive/docs/",
   ocsHost: "/ocs",
-  host: "http://192.168.1.108/appiyo",
+  // host: "http://192.168.1.108/appiyo",
   //host: "/ProcessStore",
-  // host:  "/appiyo",
+  host:  "/appiyo",
   pdfLocation: "/d/download/pdf?",
   csvLocation: "/d/download/csv?",
   isMobile: false,

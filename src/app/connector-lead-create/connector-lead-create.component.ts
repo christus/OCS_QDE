@@ -127,7 +127,9 @@ export class ConnectorLeadCreateComponent implements OnInit {
 
     this.version = environment.version;
     this.buildDate = environment.buildDate;
-    this.loginName()
+    // this.loginName()
+    this.commonDataService.userFullName$.subscribe(value =>
+      this.firstName = value)
   }
 
   openOptionsMenuDropdown() {

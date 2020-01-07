@@ -10,7 +10,7 @@
                     </h1>
                 </div>
                 <div class="right-panel">
-    
+                    <a [routerLink]="navigationString" *ngIf="isAdmin" class="space btn btn-default logout">Go to Admin</a>
                     <a (click)="logout()" *ngIf="isLogoutVisible" class="space btn btn-default logout">Logout</a>
                 
                 </div>

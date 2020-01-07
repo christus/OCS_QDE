@@ -6,6 +6,8 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 
 import { QdeHttpService } from 'src/app/services/qde-http.service';
 import { MobileService } from './mobile-constant.service';
+import { CommonDataService } from './common-data.service';
+import { Observable } from 'rxjs';
 
 
 
@@ -15,7 +17,8 @@ export class UtilService {
 
   constructor(private router: Router, private http: HttpClient,
     private qdehttpService: QdeHttpService,
-    private mobileService: MobileService) { 
+    private mobileService: MobileService,
+    private cds: CommonDataService) { 
     this.isMobile = this.mobileService.isMobile;
 
     console.log("isMobile-utils", this.isMobile);
@@ -24,11 +27,38 @@ export class UtilService {
 
   isLoggedIn() {
     let loggedIn = false;
-    if (localStorage.getItem('token')) {
+    if (localStorage.getItem('token')) {  
+      // let data = {"userId":localStorage.getItem("userId")}; 
+      // this.qdehttpService.userActivityMapping(data).subscribe(res => {
+      //   console.log("user mapping", res)
+      //   if(res["ProcessVariables"]["status"]){
+      //     this.cds.checkUserMapping(res["ProcessVariables"]["userActivityList"]);
+         
+      //   }
+        
+      // });  
+     
+      // this.cds.checkUserMapping(data);
       loggedIn = true;
-    }
+      //   return new Observable<boolean> (observer => {
+      //     let data = {"userId":localStorage.getItem("userId")}; 
+      // this.qdehttpService.userActivityMapping(data).subscribe(res => {
+      //   console.log("user mapping", res)
+      //   if(res["ProcessVariables"]["status"]){
+      //     this.cds.checkUserMapping(res["ProcessVariables"]["userActivityList"]);
+      //     observer.next(true);
+      //   }        
+      // });   
+      
+      
+      //   });
+      
 
+    }
     return loggedIn;
+  
+
+    
   }
 
   

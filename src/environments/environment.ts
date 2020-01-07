@@ -446,6 +446,10 @@ export const environment = {
     "documentProfileUploadCsv": {
       'workflowId' : '26952466806211e982270242ac110002',
       'processId'  : 'fe06f728806a11e982270242ac110002'
+    },
+    "userActivityMapping": {
+      'workflowId' : 'c4791d1a305511eaba780242ac110002',
+      'processId'  : 'c496a7ea305511eabf630242ac110002'
     }
     
   },

@@ -4,24 +4,27 @@
         <div class="sec-nav">
             <div class="logo">
                 <h1>
-                    <a routerLink="/admin/lovs">
+                    <!-- <a routerLink="/admin/lovs"> -->
+                        <a [routerLink]="navigationString">
                         <img src="assets/images/logo.svg" alt="logo" class="img-responsive" />
                     </a>
                 </h1>
             </div>
             <div class="right-panel">
-                <a (click)="logout()" *ngIf="isLogoutVisible" class="space btn btn-default logout">Logout</a>            
+                <a routerLink="/leads" *ngIf="showOCS" class="space btn btn-default logout">go to OCS</a> 
+                <a (click)="logout()" *ngIf="isLogoutVisible" class="space btn btn-default logout">Logout</a>  
+                  
             </div>
         </div>       
     <!-- header end -->    
     <!-- admin sidebar -->
         <div class="admin-sidebar">            
-            <a class="admin-sidebar-links" routerLink="/admin/lovs">LOVs</a>
-            <a class="admin-sidebar-links" routerLink="/admin/ops-module">Ops Module</a>
-            <a class="admin-sidebar-links" routerLink="/admin/user-module">User Module</a>
-            <a class="admin-sidebar-links" routerLink="/admin/errorHandle">Error Handling Message</a>
-            <a class="admin-sidebar-links" routerLink="/admin/auditTrail">Audit Trail</a>
-            <a class="admin-sidebar-links" routerLink="/admin/configMinMax">Configuration</a>
+            <a class="admin-sidebar-links" routerLink="/admin/lovs" *ngIf ="masterConfig">LOVs</a>
+            <a class="admin-sidebar-links" routerLink="/admin/ops-module" *ngIf ="opsModule"> Ops Module</a>
+            <a class="admin-sidebar-links" routerLink="/admin/user-module" *ngIf ="userModule">User Module</a>
+            <a class="admin-sidebar-links" routerLink="/admin/errorHandle" *ngIf ="masterConfig">Error Handling Message</a>
+            <a class="admin-sidebar-links" routerLink="/admin/auditTrail" *ngIf ="masterConfig">Audit Trail</a>
+            <a class="admin-sidebar-links" routerLink="/admin/configMinMax" *ngIf ="masterConfig">Configuration</a>
         </div>
         <!-- admin Dashboard -->
         <div class="admin-dashboard">           

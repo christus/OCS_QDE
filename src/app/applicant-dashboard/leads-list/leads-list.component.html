@@ -12,7 +12,7 @@
 
 </div>
 <tabs>
-    <tab tabTitle="ALL" class="tab" *ngIf="(newLogin && createLead)" >
+    <tab tabTitle="ALL" class="tab" *ngIf="(newLogin && createLead) || documentUpload" >
         <ul *ngFor="let detail of userDetails | paginate: {id: 'pagination1', itemsPerPage: perPage, currentPage: currentPage, totalItems: totalItems};">
             <li>
              <a [routerLink]="detail.url" [queryParams]="detail['queryParams']" class="lead-action">

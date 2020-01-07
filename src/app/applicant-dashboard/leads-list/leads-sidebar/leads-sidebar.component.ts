@@ -14,6 +14,7 @@ export class LeadsSidebarComponent implements OnInit {
   userRole: any = [];
   isTBMLoggedIn: boolean ;
   showReAssign: boolean;
+  reportShow: boolean;
   constructor(private router: Router,
               private cds: CommonDataService,
               private utilService: UtilService) {
@@ -34,6 +35,7 @@ export class LeadsSidebarComponent implements OnInit {
      console.log("userRole ", this.userRole);
     // this.viewMode = "tab2";
      this.cds.reAssign$.subscribe(value => this.showReAssign =value )
+     this.cds.reportShow$.subscribe(value => this.reportShow =value);
   }
   pageNavigation(pageValue) {
     console.log("page click call", pageValue);

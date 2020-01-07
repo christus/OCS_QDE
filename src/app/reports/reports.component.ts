@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { QdeHttpService } from '../services/qde-http.service';
 import { Item } from '../models/qde.model';
 import { environment } from 'src/environments/environment.prod';
+import { CommonDataService } from '../services/common-data.service';
 
 @Component({
   selector: 'app-reports',
@@ -25,12 +26,19 @@ export class ReportsComponent implements OnInit {
   selectedBranch: string;
   offset: number = 0;
   base64:string = "";
-
+  leadShow:boolean;
+  loginShow:boolean;
 
   
-  constructor(private qdeHttp: QdeHttpService) { }
+  constructor(private qdeHttp: QdeHttpService,
+              private cds: CommonDataService) { }
 
   ngOnInit() {
+    this.cds.showCreateLead$.subscribe(myValue => 
+                                        this.leadShow = myValue)
+
+    this.cds.showNewLogin$.subscribe(value => 
+                                this.loginShow = value);
     this.filterValues()
   }
   

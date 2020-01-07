@@ -244,11 +244,13 @@ getUserList(data){
 
       this.isErrorModal = true;
       this.errorMessage = "Select Any From Assignee Name";
-    } else if (this.selectAllStatus == false) {
-      if(this.applications.length == 0  || this.applications.length == undefined ){
+    } else if (this.selectAllStatus == false && this.applications.length == 0) {
+      // console.log("APPS",this.applications);
+      // if(this.applications.length == 0 ){
+      // if(this.applications.length == 0  || this.applications.length == undefined ){
         this.isErrorModal = true;
         this.errorMessage = "Select Any Application to Assign Other";
-    }
+    // }
 
     } else if( !this.effectFromDate){
       this.isErrorModal = true;

@@ -123,7 +123,6 @@ responseData;
   }
 
   save(index) {
-
     console.log(this.lovs[index].description);
     if(this.lovs[index].description != '' && this.lovs[index].value != '') {
 
@@ -133,39 +132,43 @@ responseData;
         //alert("Please enter all values");
         //this.refresh();
       }else{
-        // let data ;
-        // if(this.tableName == "user_role"){
-        //   console.log("index Value ",this.lovs[index])
-        //   data = { 
-        //     userId: this.lovs[index].userId,
-        //       tableName: "user_role",             
-        //       value: this.lovs[index].value,
-        //       isEdit: true,
-        //       description: this.lovs[index].description,              
-        //       id: 13,
-        //       activityLists: this.selectedRoleActivity[index]
-        //   }
-        // } else{
-        //   data = this.lovs[index];
-        // }
         console.log("index Value ",this.lovs[index]);
+        // let data ;
+        if(this.tableName == "user_role"){
+          if ( this.lovs[index]["activityLists"] != undefined && this.lovs[index]["activityLists"].length>0 ){       
+            this.qdeHttp.insertUpdateEachLovs(this.lovs[index]).subscribe(res => {
+              if(res['ProcessVariables']['status'] == true) {
+                console.log(this.lovs[index]);
+                this.lovs[index].isEdit = true;
+                // this.lovs[index].id = res['ProcessVariables']['id'];
+                this.refresh();
+              } });
+          } else{
+            this.errorMsg = "Select Any Activity";
+            this.isErrorModal = true;
+            return;
+          }
+        }else {
+          this.qdeHttp.insertUpdateEachLovs(this.lovs[index]).subscribe(res => {
+            if(res['ProcessVariables']['status'] == true) {
+              console.log(this.lovs[index]);
+              this.lovs[index].isEdit = true;
+              // this.lovs[index].id = res['ProcessVariables']['id'];
+              this.refresh();
+            } });
+        }
+       
         //  console.log("index Value ",this.lovs[index]["id"]);
 
 
-      this.qdeHttp.insertUpdateEachLovs(this.lovs[index]).subscribe(res => {
-        if(res['ProcessVariables']['status'] == true) {
-          console.log(this.lovs[index]);
-          this.lovs[index].isEdit = true;
-          // this.lovs[index].id = res['ProcessVariables']['id'];
-          this.refresh();
-        } 
+      
 		/* else if(res['ProcessVariables']['errorMessage'] != "") {
           //this.refresh();
           this.isErrorModal = true;
           this.errorMsg=res['ProcessVariables']['errorMessage'];
           //alert(res['ProcessVariables']['errorMessage']);
         } */
-      });
+      
     }
     } else {
       console.log(this.lovs[index]);
@@ -200,7 +203,8 @@ responseData;
           //     activityLists: v['activityId']
           //   }
           // });
-          this.lastKey = (parseInt(this.perPage)*(parseInt(this.totalPages)-1))+this.tempLovs.length+1;
+          // this.lastKey = (parseInt(this.perPage)*(parseInt(this.totalPages)-1))+this.tempLovs.length+1;
+          this.lastKey = (parseInt(this.perPage)*(parseInt(this.totalPages)-1))+this.key.length+1;
           console.log(this.lastKey);
           this.key.push(this.lastKey);
         }
@@ -455,8 +459,8 @@ responseData;
   onAddActivity(event,index){
     let beforeselectedRoleActivity =[];     
     if (event.length>0){  
-      let activityStatus = this.checkActivity(event);
-      // let activityStatus = false;
+      // let activityStatus = this.checkActivity(event);
+      let activityStatus = false;
       if (activityStatus){         
         // this.getActivityObject(stringArry); 
         console.log(this.lovs[index]["activityLists"]);        
@@ -472,7 +476,7 @@ responseData;
           // // this.tempLovs[index]["activityLists"] = tempArr;
           //   this.lovs[index]["activityLists"] = tempArr;
           // beforeselectedRoleActivity = this.tempLovs[index]["activityLists"].splice(this.tempLovs[index]["activityLists"].length-1,1);
-          beforeselectedRoleActivity = this.lovs[index]["activityLists"].pop();
+          // beforeselectedRoleActivity = this.lovs[index]["activityLists"].pop();
 
           }        
         console.log("berforse last role ",beforeselectedRoleActivity);       

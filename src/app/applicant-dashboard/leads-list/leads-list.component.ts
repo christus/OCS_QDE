@@ -79,6 +79,7 @@ export class LeadsListComponent implements OnInit {
   totalItemsPP: number;
   newLogin: boolean = false;
   createLead: boolean = false;
+  documentUpload: boolean = false;
 
   constructor(private service: QdeHttpService, private utilService: UtilService, 
     private cds: CommonDataService, 
@@ -96,11 +97,11 @@ export class LeadsListComponent implements OnInit {
     //   }  
     // }
     let roleName = localStorage.getItem("roles");
-    if(roleName.includes("Admin")) {
-      this.router.navigate(["/admin/lovs"]);
-      //this.router.navigate(["/user-module"]);
-      return;
-    }
+    // if(roleName.includes("Admin")) {
+    //   this.router.navigate(["/admin/lovs"]);
+    //   //this.router.navigate(["/user-module"]);
+    //   return;
+    // }
     this.cds.setactiveTab(screenPages["applicantDetails"]);
     this.cds.changeApplicationId(null);
  
@@ -166,24 +167,31 @@ export class LeadsListComponent implements OnInit {
   
 
 
-  ngOnInit() {
-    if (localStorage.getItem("token") && localStorage.getItem("userId") ) {
-      // this.getFilteredLeads();
-      this.getNewLeads();
-      this.getPendingApplication();
-      this.getPendingPayment();
-      } else {
-        this.utilService.clearCredentials();
-        return;
-      }
-
-      
+  ngOnInit() {      
         this.cds.showCreateLead$.subscribe(myValue => 
                       this.createLead = myValue)
     
         this.cds.showNewLogin$.subscribe(value => 
           this.newLogin = value)
-     
+        this.cds.documetUploadStatus$.subscribe(value => 
+          this.documentUpload = value)
+
+
+          // if (this.createLead ) {
+            // this.getFilteredLeads();
+            this.getNewLeads();            
+          // } else if (this.newLogin || this.documentUpload){
+            this.getPendingApplication();
+            this.getPendingPayment();
+          // }
+            
+            
+
+            //  else {
+            //   this.utilService.clearCredentials();
+            //   return;
+            // }
+    
   }
 
   filterLeads(event: any) {

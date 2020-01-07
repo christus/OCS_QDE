@@ -70,16 +70,18 @@
       <kendo-multiselect #kendoMult
             [data]="activityLists"  
             [textField]="'value'"
-            [valueField]="'key'"            
-            [allowCustom]="true"
+            [valueField]="'key'"        
+            
             (valueChange)="onAddActivity($event,i)"
             [disabled]="l.isEdit"            
             [(ngModel)]="l.activityLists"
+            
         >
         <!-- [value]="selectedSizes" -->
         <!-- <ng-template kendoMultiSelectCustomItemTemplate let-customText>
             <strong>{{ customText }}</strong>
         </ng-template> -->
+        
         </kendo-multiselect> 
         <!-- <div class="error-msg" *ngIf ="errorMsgShow">
           <span>{{error-msg}}</span>
@@ -95,6 +97,7 @@
 
    </tbody>
  </table> 
+ <pagination-controls  (pageChange)="pageChanged($event)" class="pagination" autoHide="true" ></pagination-controls>
 </div>
 <div #adminErrorDiv class="overlay" [ngClass]="{'active': isErrorModal}">
   <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isErrorModal}">
@@ -121,4 +124,3 @@
     </div>
   </div>
 </div>
-<pagination-controls  (pageChange)="pageChanged($event)" class="pagination" autoHide="true" ></pagination-controls>
