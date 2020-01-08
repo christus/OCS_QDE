@@ -44,7 +44,7 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
   CSVerrorMessage: string;
   regexPattern = {
     mobileNumber: "^[1-9][0-9]*$",
-    name: "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$",
+    name: "^[a-zA-Z ]+(([',. -][a-zA-Z ])?[a-zA-Z ]*)*$",
   }
 
 

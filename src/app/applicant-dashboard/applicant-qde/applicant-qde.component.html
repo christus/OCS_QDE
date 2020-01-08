@@ -383,7 +383,7 @@
 
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                               [(ngModel)]="qde.application.applicants[applicantIndex].personalDetails.lastName"
-                              name="lastName" #lastName="ngModel" id="lastName" fieldFill autocomplete="off" [maxlength]="minMaxValues['Company_Name']?.maxLength" [minlength]="minMaxValues['Name']?.minValue"
+                              name="lastName" #lastName="ngModel" id="lastName" fieldFill autocomplete="off" [maxlength]="minMaxValues['Company_Name']?.maxLength" [minlength]="minMaxValues['Company_Name']?.minValue"
                               pattern="{{regexPattern.name}}" required tabindex="4" />
                             <label for="lastName">Last name</label>
 
@@ -904,9 +904,12 @@
                           <div class="form-group">
 
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="address1" [maxlength]="minMaxValues['Address_Line']?.maxLength" [minlength]="minMaxValues['Address_Line']?.minValue"
+                              id="address1" [maxlength]="minMaxValues['Address_Line']?.maxLength"
+                              [minlength]="minMaxValues['Address_Line']?.minValue"
                               [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.addressLineOne"
-                              pattern="{{regexPattern.address}}" name="addressLineOne" #address1="ngModel" fieldFill
+                              pattern="{{regexPattern.address}}" 
+                              name="addressLineOne"
+                               #address1="ngModel" fieldFill
                               required autocomplete="off" />
 
                               <!-- <div *ngIf="(qde.application.applicants[applicantIndex].communicationAddress.addressLineOne)?.length == minMaxValues['Address_Line']?.maxLength" class="invalid-feedback">Maximum Character Exceeds</div> -->
@@ -924,7 +927,8 @@
                           <div class="form-group typ-optional">
                             <input [readonly]="isTBMLoggedIn" 
                               spellcheck="false" type="text" class="form-control"
-                              id="address2" autocomplete="off" [maxlength]="minMaxValues['Address_Line']?.maxLength"
+                              id="address2" autocomplete="off"
+                              [maxlength]="minMaxValues['Address_Line']?.maxLength"
                               [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.addressLineTwo"
                               pattern="{{regexPattern.address}}" name="addressLineTwo" #address2="ngModel" fieldFill />
 
@@ -944,7 +948,8 @@
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                               id="pincode" required autocomplete="off"
                               [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.zipcode"
-                              name="pinCode" #commPinCode="ngModel" [maxlength]="minMaxValues['Pincode']?.maxLength" fieldFill
+                              name="pinCode" #commPinCode="ngModel" 
+                              [maxlength]="minMaxValues['Pincode']?.maxLength" fieldFill
                               (input)="onPinCodeChange($event, 'communicationAddress')"
                               pattern="{{regexPattern.pinCode}}" />
                             <label for="pincode" tabindex="3">Pincode</label>
@@ -975,7 +980,8 @@
                           <div class="bs-checkbox typ-withForm" *ngIf="qde.application.applicants[applicantIndex].communicationAddress.addressLineOne != '' && qde.application.applicants[applicantIndex].communicationAddress.zipcode != '' && qde.application.applicants[applicantIndex].communicationAddress.cityState != ''">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="checkbox"
                               [(ngModel)]="qde.application.applicants[applicantIndex].communicationAddress.permanentAddress"
-                              name="permanentAddress" (ngModelChange)="makePermanentAddressSame($event)"
+                              name="permanentAddress" 
+                              (ngModelChange)="makePermanentAddressSame($event)"
                               [checked]="qde.application.applicants[applicantIndex].communicationAddress.permanentAddress == true"
                               id="permanentAddress" />
                             <label for="permanentAddress" tabindex="5"><span>Current Address is Permanent
@@ -985,7 +991,8 @@
                             <h1 class="sub-heading" style="text-align: left; margin-bottom: 32px">Permanent Address</h1>
                             <div class="form-group">
                               <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                                id="per-address1" name="pAddressLineOne" #pAddress1="ngModel" [maxlength]="minMaxValues['Address_Line']?.maxLength"
+                                id="per-address1" name="pAddressLineOne" #pAddress1="ngModel" 
+                                [maxlength]="minMaxValues['Address_Line']?.maxLength"
                                 [minlength]="minMaxValues['Address_Line']?.minValue"
                                 pattern="{{regexPattern.address}}" fieldFill autocomplete="off"
                                 [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.addressLineOne"
@@ -1026,7 +1033,9 @@
                                 id="per-pincode" name="pZipcode" #pZipcode="ngModel" autocomplete="off"
                                 (input)="onPinCodeChange($event, 'permanentAddress')" fieldFill
                                 [(ngModel)]="qde.application.applicants[applicantIndex].permanentAddress.zipcode"
-                                [minlength]="minMaxValues['Pincode']?.minValue" [maxlength]="minMaxValues['Pincode']?.maxLength" pattern="{{regexPattern.pinCode}}" required
+                                [minlength]="minMaxValues['Pincode']?.minValue"
+                                [maxlength]="minMaxValues['Pincode']?.maxLength" 
+                                pattern="{{regexPattern.pinCode}}" required
                                 [readOnly]="qde.application.applicants[applicantIndex].communicationAddress.permanentAddress" />
                               <label for="per-pincode" tabindex="8">Pincode</label>
 
@@ -1089,7 +1098,7 @@
                             [ngClass]="{'disabled': (!communicationForm.valid || selectedResidence.value == 0 || !qde.application.applicants[applicantIndex].communicationAddress.cityState) || !qde.application.applicants[applicantIndex].permanentAddress.cityState}"
                             [disabled]="(!communicationForm.valid || selectedResidence.value == 0 || !qde.application.applicants[applicantIndex].communicationAddress.cityState) || !qde.application.applicants[applicantIndex].permanentAddress.cityState">
                             Next
-                          </button>
+                          </button>                          
                         </div>
                       </form>
                     </div>
@@ -1197,8 +1206,7 @@
                           <div class="form-group">
 
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              [(ngModel)]="qde.application.applicants[applicantIndex].maritalStatus.firstName" [maxlength]="minMaxValues['Name']?.maxLength" [minlength]="minMaxValues['Company_Name']?.minValue"
-                              [minlength]="minMaxValues['Company_Name']?.minValue"
+                              [(ngModel)]="qde.application.applicants[applicantIndex].maritalStatus.firstName" [maxlength]="minMaxValues['Company_Name']?.maxLength" [minlength]="minMaxValues['Company_Name']?.minValue"
                               #spouseName="ngModel" tabindex="2" name="firstName" pattern="{{regexPattern.name}}"
                               id="spouse-name" fieldFill required  autocomplete="off"/>
                             <label for="spouse-name">First name</label>
@@ -2469,7 +2477,7 @@
                         <div class="form-wrap">
                           <div class="form-group">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                              id="org-name" tabindex="1" pattern="{{regexPattern.organizationName}}" autocomplete="off" [maxlength]="minMaxValues['Name']?.maxLength"
+                              id="org-name" tabindex="1" pattern="{{regexPattern.organizationName}}" autocomplete="off" [maxlength]="minMaxValues['Company_Name']?.maxLength"
                               [(ngModel)]="qde.application.applicants[applicantIndex].organizationDetails.nameOfOrganization"
                               #orgName="ngModel" name="orgName" fieldFill required />
                             <label for="org-name">Name of Organization</label>

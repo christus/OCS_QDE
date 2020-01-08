@@ -1027,7 +1027,7 @@
           </div>
           <div class="row" *ngIf="qde.application.applicants[applicantIndex].officialCorrespondence.landMark">
               <div class="col-12">
-                  <div class="form-group">
+                  <div class="form-group typ-optional">
                         <input readonly="true"   type="text"
                                 class="form-control"
                                 id="offLandmark"
@@ -1076,10 +1076,13 @@
               </div>
           </div>
           <div class="row">
-              <div class="col-6"  *ngIf="officialCorrespondenceStdCode">
-                  <div class="residence-no">
+				<!-- <div class="col-6"  *ngIf="officialCorrespondenceStdCode"> -->
+                <div class="col-12">
+                  <div class="residence-no" *ngIf="officialCorrespondenceStdCode">
+
                       <div class="form-group" *ngIf="officialCorrespondenceStdCode">
-                            <input readonly="true"  type="number" class="form-control" id="std03"
+
+                            <input readonly="true"  type="text" class="form-control" id="std03"
                             required
                             fieldFill
                             [(ngModel)]="officialCorrespondenceStdCode"
@@ -1087,8 +1090,8 @@
                             name="stdCode" />
                             <label for="std031">STD</label>
                           
-                      </div>
-                      <span class="seperator" *ngIf="officialCorrespondencePhoneNumber">-</span>
+                        </div>
+                        <span class="seperator" *ngIf="officialCorrespondencePhoneNumber">-</span> 
                       <div class="form-group" *ngIf="officialCorrespondencePhoneNumber">
                             <input readonly="true"   type="text" class="form-control" id="res-no03" data-validation-attr="residenceno"
                             required
@@ -1097,15 +1100,13 @@
                             name="offStdNumber"
                             [(ngModel)]="officialCorrespondencePhoneNumber" />
 
-                            <label  for="res-no031"
+                            <label  for="res-no03"
                                     >Office number
-                            </label>
-
-                            
-                      </div>
-                  </div>
-              </div>
-          </div>
+                      </label>
+                        </div>
+                    </div>
+                </div>
+        </div>
           <div class="row">
               <div class="col-6"  *ngIf="qde.application.applicants[applicantIndex].officialCorrespondence.officeEmailId">
                   <div class="form-group">
@@ -1256,7 +1257,7 @@
                               </div>
                   </div>
                   <div class="col-4">
-                          <div class="form-group typ-optional">
+                          <div class="form-group ">
                                   <input  type="text"
                                           class="form-control"
                                           id="regoffPincode"

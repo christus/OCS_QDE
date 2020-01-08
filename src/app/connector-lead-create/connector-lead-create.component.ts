@@ -127,7 +127,9 @@ export class ConnectorLeadCreateComponent implements OnInit {
 
     this.version = environment.version;
     this.buildDate = environment.buildDate;
-    this.loginName()
+    // this.loginName()
+    this.commonDataService.userFullName$.subscribe(value =>
+      this.firstName = value)
   }
 
   openOptionsMenuDropdown() {
@@ -159,7 +161,7 @@ export class ConnectorLeadCreateComponent implements OnInit {
         this.isSuccessfulRouteModal = true;
       }
       else{
-        this.sessionMessage = res['ProcessVariables']['errorMessage']
+        //this.sessionMessage = res['ProcessVariables']['errorMessage']
       }
     });
   }
@@ -212,7 +214,7 @@ export class ConnectorLeadCreateComponent implements OnInit {
       console.log("min ",minAmount);
       this.isLessAmount = true;
       this.requirMinAmout = minAmount;
-    } else if(n >= maxAmount && !maxAmount){
+    } else if(maxAmount!= undefined && n >= maxAmount){
       console.log("max ",maxAmount);
       this.isMaxAmount = true;
       this.requirMaxAmout = maxAmount;
@@ -225,6 +227,12 @@ export class ConnectorLeadCreateComponent implements OnInit {
   }
 
   loginName(){
+    // let userId = localStorage.getItem("userId");
+    // if(userId!=""){
+    //   this.firstName = localStorage.getItem("firstName");
+    // } else{
+    //   this.commonDataService.setDialogData(true);
+    //  }
     this.qdeHttp.roleLogin().subscribe(res => {
       this.firstName =  res['ProcessVariables']['firstName'];
       console.log("ROLE Name: ", this.firstName);

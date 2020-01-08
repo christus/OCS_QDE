@@ -2949,6 +2949,51 @@ createOrUpdatePersonalDetails(qde) {
             console.log("~~~***Response***~~~", data);
           }
 
+          if(data['Error']=="0"
+              && data['Error']!=undefined
+              && data['ProcessVariables']!=""
+              && data['ProcessVariables']!= undefined
+              && data['ProcessVariables']['status']==true
+              && data['ProcessVariables']['status']!=undefined
+              && data['ProcessVariables']['errorCode']==""
+              && data['ProcessVariables']['errorCode']!=undefined){
+              // console.log("There are no Errors");
+            }else if(data['Error']=="0"
+          && data['Error']!=undefined
+          && data['ProcessVariables']!=""
+          && data['ProcessVariables']!= undefined
+          && data['ProcessVariables']['status']==false
+          && data['ProcessVariables']['status']!=undefined
+          && data['ProcessVariables']['errorCode']!=""
+          && data['ProcessVariables']['errorCode']!=undefined){
+            let cdsData = data['ProcessVariables']['errorCode'];
+	    let msg = data['ProcessVariables']['errorMessage'];
+	  if(data['ProcessVariables']['errorMessage']!=undefined && data['ProcessVariables']['errroMessage']!=""){
+            this.cds.setErrorData(true, cdsData, msg);
+	  }else{
+	    this.cds.setErrorData(true,data);
+	  }
+          }else if(data['Error']=="0"
+          && data['Error']!=undefined
+          && data['ProcessVariables']!=""
+          && data['ProcessVariables']!= undefined
+          && data['ProcessVariables']['status']==false
+          && data['ProcessVariables']['status']!=undefined){
+            if(data['ProcessName']!="Required documents"){
+            let data = "DEF";
+            this.cds.setErrorData(true, data);
+          }
+          }else if((data['Error']=="1"
+          && data['Error']!=undefined) || (data['status']===false && data['status']!=undefined)){
+            let data = "APP001";
+            this.cds.setErrorData(true, data);
+          }
+        
+
+
+
+          
+
           observer.next(data);
           observer.complete();
           this.ngxService.stop();
@@ -2973,7 +3018,7 @@ createOrUpdatePersonalDetails(qde) {
        
         }).catch(error => {
 
-          console.log("~~~***Response error***~~~", error);
+          console.log("~~~***data error***~~~", error);
 
           if (error["headers"]["content-type"] == "text/plain") {
             console.log("text/plain");
@@ -3418,5 +3463,24 @@ createOrUpdatePersonalDetails(qde) {
     return this.callPost(workflowId, projectId, body);
 
   }
+  userActivityMapping(data: object){
+    const processId = environment.api.userActivityMapping.processId;
+    const workflowId = environment.api.userActivityMapping.workflowId;
+    const projectId = environment.projectId;
 
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: data,
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = {
+      'processVariables':
+      JSON.stringify(requestEntity)
+    };
+
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
+  }
 }

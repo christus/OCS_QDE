@@ -435,6 +435,7 @@ const appRoutes: Routes = [
   },
   {
     path:"admin", component: AdminPanelComponent,
+    canActivate: [AuthGuard],
     children:[
       {
         path: 'ops-module',

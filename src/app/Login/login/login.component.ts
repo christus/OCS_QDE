@@ -11,6 +11,7 @@ import { EncryptService } from 'src/app/services/encrypt.service';
 import { CaptchaResolverService } from 'src/app/services/captcha-resolver.service';
 import { Observable } from 'rxjs';
 import { e } from '@angular/core/src/render3';
+import { validateComplexValues } from '@progress/kendo-angular-dropdowns/dist/es2015/util';
 
 
 
@@ -36,6 +37,10 @@ export class LoginComponent implements OnInit, AfterViewInit {
   sharedKsy = "MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJ+GJdSSEeaNFBLqyfM3DIOgQgWCwJ0INfeZZV7ITsLeuA7Yd02rrkYGIix1IWvoebWVmzhncUepYxHwK1ARCdUCAwEAAQ==";
 
   @ViewChild('userNameField') userNameField: ElementRef;
+  userModule;
+  opsModule;
+  masterModule;
+  navigationString: string ="";
 
   constructor(
     private router: Router,
@@ -81,8 +86,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
         appId: "OCS",
         refId: this.oldRefId,
         captcha: this.captchaText,
-        useADAuth: false
-        //  useADAuth: userEmailId.startsWith("he")
+        // useADAuth: false
+         useADAuth: userEmailId.startsWith("he")
       };
       console.log("login Data: ",data);
       let token = localStorage.getItem("token");
@@ -187,34 +192,28 @@ export class LoginComponent implements OnInit, AfterViewInit {
         let roleName = JSON.stringify(res["ProcessVariables"]["roleName"]);
         localStorage.setItem("userId", res["ProcessVariables"]["userId"]);
         localStorage.setItem('roles', roleName);
+        // localStorage.setItem("firstName", res["ProcessVariables"]["firstName"]);
         let userActivityList = res["ProcessVariables"]["userActivityList"];
+        let userFullName = res["ProcessVariables"]["userName"];
+        let isAdmin = res["ProcessVariables"]["isAdmin"]
         // let userActivityArray :[] = userActivityList.split(",");
-      console.log("user Activity",userActivityList);
-        if(roleName.includes("Admin")) {
-          this.router.navigate(["/admin/lovs"]);
+       console.log("user Activity",userActivityList);
+      
+        // if(roleName.includes("Admin")) {
+          if(isAdmin){
+          this.commonDataService.changeIsAdmin(isAdmin)
+          this.setUserActivity(userActivityList,userFullName);
+          
+          this.commonDataService.adminNagigation$.subscribe(val => 
+                                    this.navigationString =val);
+         
+         console.log("nav string in login ",this.navigationString);
           //this.router.navigate(["/user-module"]);
+          this.router.navigate([this.navigationString]);
           return;
         }else{
-          let createLead = false;
-          let createLogin = false;
-          let applicatonreAssign = false;
-          let documetUpload = false;
-          let viewApplication = false;
-          userActivityList.forEach(uActivity => {
-            if (uActivity == "Lead"){
-              createLead = true;
-            } else if(uActivity == "Login"){
-              createLogin= true;
-            } else if(uActivity == "Reassign"){
-              applicatonreAssign= true;
-            } else if (uActivity == "Document Upload"){
-              documetUpload =true;
-            }
-            
-          });
-          this.commonDataService.changeCreateLead(createLead);
-          this.commonDataService.changeNewLogin(createLogin);
-          this.commonDataService.changereAssign(applicatonreAssign);
+          this.setUserActivity(userActivityList,userFullName);
+          // this.commonDataService.changeIsAdmin(isAdmin);
         } 
         
         // else if(roleName.includes("connector")){
@@ -248,7 +247,16 @@ export class LoginComponent implements OnInit, AfterViewInit {
       }
     );
   }
-
+setUserActivity(userActivityList,userFullName){
+  if( userActivityList != undefined  && userActivityList != null){
+    this.commonDataService.checkUserMapping(userActivityList,userFullName);
+  } else {
+    
+      this.commonDataService.setErrorData(true,"DYN001","User Activity Not Defined");
+      this.utilService.clearCredentials();
+      return
+    }
+  }
   // checkLogin() {
   //   let data = {
   //     'email': 'icici@icicibankltd.com',
@@ -313,4 +321,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     this.generateCatchaImage();
   }
  
+ 
+
+
 }

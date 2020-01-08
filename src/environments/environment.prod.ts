@@ -1,6 +1,6 @@
 export const environment = {
-  version: "1.9.6",
-  buildDate: "30-12-2019",
+  version: "1.9.7",
+  buildDate: "07-01-2020",
   production: true,
   // projectId: '5928d30eac7811e9a1670242ac110002', // developement
 
@@ -447,6 +447,10 @@ export const environment = {
     "documentProfileUploadCsv": {
       'workflowId' : '26952466806211e982270242ac110002',
       'processId'  : 'fe06f728806a11e982270242ac110002'
+    }, 
+    "userActivityMapping": {
+      'workflowId' : 'c4791d1a305511eaba780242ac110002',
+      'processId'  : 'c496a7ea305511eabf630242ac110002'
     }
    
   },
@@ -456,12 +460,12 @@ export const environment = {
   ocsHost: "/ocs",
   // host: "http://192.168.1.108/appiyo",
   //host: "/ProcessStore",
-  // host:  "/appiyo",
+  host:  "/appiyo",
   pdfLocation: "/d/download/pdf?",
   csvLocation: "/d/download/csv?",
   isMobile: false,
   mobileExtenstion: "@icicibankltd.com",
-  host: "https://ihfcmobileuat.icicihfc.com/appiyo",
+  // host: "https://ihfcmobileuat.icicihfc.com/appiyo",
   aesPublicKey: 'MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJ+GJdSSEeaNFBLqyfM3DIOgQgWCwJ0INfeZZV7ITsLeuA7Yd02rrkYGIix1IWvoebWVmzhncUepYxHwK1ARCdUCAwEAAQ==',
   encryptionType: true, //Ecryption
   captchFormat: "&width=250&height=80&bgr=255&bgg=255&bgb=255&bga=255&fontR=187&fontG=187&fontB=187&fontSize=50&captchaSize=5",

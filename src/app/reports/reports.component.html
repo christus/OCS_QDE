@@ -14,9 +14,9 @@
               <div class="col-4">
                   <select name="repType" id="repType" class="form-control" (change)="changeReport($event)">
                       <option [ngValue]="null" disabled>Choose type of report</option>
-                      <option [value]="1">Login</option>
-                      <option [value]="2">Lead</option>
-                      <option [value]="3">Dump</option>
+                      <option [value]="1" *ngIf="loginShow">Login</option>
+                      <option [value]="2" *ngIf="leadShow">Lead</option>
+                      <option [value]="3" *ngIf="loginShow">Dump</option>
                   </select>
               </div>
           </div>

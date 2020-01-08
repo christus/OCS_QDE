@@ -12,6 +12,7 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 import { MobileService } from './services/mobile-constant.service';
 import { AutoLogoutService } from './services/AutoLogoutService';
 import { QdeHttpService } from './services/qde-http.service';
+import { Router } from '@angular/router';
 
 
 
@@ -43,6 +44,9 @@ export class AppComponent implements OnInit{
   isEmpty : boolean;
   isMenuBarShown:boolean;
   noErrors : boolean;
+  isAdmin: boolean;
+  navigationString: string;
+  
 
 
 
@@ -54,17 +58,23 @@ export class AppComponent implements OnInit{
     private autoLogout: AutoLogoutService,
     private cds: CommonDataService,
     private mobileService: MobileService,
-    private qdeHttp: QdeHttpService) {
+    private qdeHttp: QdeHttpService,
+    private router: Router) {
       this.isMobile = this.mobileService.isMobile;
 
       if(this.isMobile){
         this.renderer.addClass(document.body, 'mobile');
       }
-
+      this.cds.isAdmin$.subscribe(val => this.isAdmin =val);
+      this.cds.adminNagigation$.subscribe(val => this.navigationString=val);
   }
 
   ngOnInit() {
 
+    //  if (this.isAdmin){
+    //   this.router.navigate([this.navigationString])
+    //   return;
+    // }
     var that = this;
 
     if(this.errorList!=undefined && this.errorList.length==0){
@@ -154,9 +164,10 @@ export class AppComponent implements OnInit{
         return;
       }
       if (this.isEmpty == true && token!=null) {
+        if (errorCode!="DYN001"){
         this.fillErrorList().then(()=>{
           if (this.noErrors == true) {
-	    if(errorCode!="DYN001"){
+	    // if(errorCode!="DYN001"){
             let result = this.errorList.find(v=> v.key == errorCode);
             if(result!=null && result!=undefined){
             this.errorCodeMessage = result.value;
@@ -166,32 +177,33 @@ export class AppComponent implements OnInit{
             this.errorCodeMessage = temp.value;
             this.isErrorCodeModal = status;
           }
-	}else{
-	          this.errorCodeMessage = errorMessage;
-            this.isErrorCodeModal = status;
-	}
+	
         }else{
           this.isErrorCodeModal = true;
           this.errorCodeMessage = "No internet detected. Please try again";
         }
       })
-      }else if (this.isEmpty == false) {
-	  if(errorCode!="DYN001"){
-          let result = this.errorList.find(v=> v.key == errorCode);
-          if(result!=null && result!=undefined){
-            this.errorCodeMessage = result.value;
-            this.isErrorCodeModal = status;
-          }else{
-            let temp = this.errorList.find(v=> v.key == "DEF");
-            this.errorCodeMessage = temp.value;
-            this.isErrorCodeModal = status;
+    } else{
+          this.errorCodeMessage = errorMessage;
+          this.isErrorCodeModal = status;
           }
-	}else{
-	   this.errorCodeMessage = errorMessage;
-           this.isErrorCodeModal = status;
-	}
+      }else if (this.isEmpty == false) {
+            if(errorCode!="DYN001"){
+                  let result = this.errorList.find(v=> v.key == errorCode);
+                  if(result!=null && result!=undefined){
+                    this.errorCodeMessage = result.value;
+                    this.isErrorCodeModal = status;
+                  }else{
+                    let temp = this.errorList.find(v=> v.key == "DEF");
+                    this.errorCodeMessage = temp.value;
+                    this.isErrorCodeModal = status;
+                  }
+              }else{
+                  this.errorCodeMessage = errorMessage;
+                  this.isErrorCodeModal = status;
+              }
+            }
       }
-    }
     });
   }
 

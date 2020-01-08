@@ -18,14 +18,14 @@
          <div class="inputBox form-field-el">
                 <label for="userName" class="inputText">Employee Id: *</label>
             <input type="text" id="userName" [(ngModel)]="userName"  class="form-control trans-lower-case" fieldFill formControlName="userName" 
-            autocomplete="nope" />
+            autocomplete="nope" [readonly]="updatebtn" />
 	    <div *ngIf="formValue.userName.errors && (formValue.userName.touched || formValue.userName.dirty)" >
                  <div class="redalert"  *ngIf="formValue.userName.errors.minlength"> Employee Id should be at least 6 characters </div> 
             </div>
         </div>
         <div class="inputBox form-field-el">
             <label for="password" class="inputText">Password: *</label>
-            <input type="password" id="password" [(ngModel)]="password" class="form-control" fieldFill formControlName="password" autocomplete="new-password" />
+            <input type="password" id="password" [(ngModel)]="password" class="form-control" fieldFill formControlName="password" autocomplete="new-password" [readonly]="updatebtn" />
             <div *ngIf="formValue.password.errors">
                     <!-- <div class="redalert" *ngIf="formValue.password.errors.required"> required</div> -->
                     <div class="redalert" *ngIf="formValue.password.errors.minlength"> Minimum 6 character required</div>

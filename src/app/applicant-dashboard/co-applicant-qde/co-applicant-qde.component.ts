@@ -4167,7 +4167,10 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
           this.qde.application.applicants[this.coApplicantIndex].contactDetails.isMobileOTPverified = false;
            // dedupe set done (disable dedupe) 
           this.qde.application.applicants[this.coApplicantIndex].dedupeDone = true;
-          
+          this.qde.application.applicants[this.coApplicantIndex].existingLoans.liveLoan = null;
+          this.qde.application.applicants[this.coApplicantIndex].existingLoans.numberOfYears = "";
+          this.qde.application.applicants[this.coApplicantIndex].existingLoans.monthlyEmi = null;
+          this.qde.application.applicants[this.coApplicantIndex].existingLoans.loanProvider = "";
           this.qdeService.setQde(this.qde);
           this.getSetQdeData(this.qde);
           let dataPara ={applicationId: applicationId,coApplicantIndex: this.coApplicantIndex}

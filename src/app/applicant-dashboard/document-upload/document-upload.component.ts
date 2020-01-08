@@ -586,7 +586,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
   setCustomerPhoto(files: any) {
     if(this.isMobile) {
       this.photoProofDoc[this.applicantIndex] = files;
-      this.photoProofFileName[this.applicantIndex] = (<any>window).Ionic.WebView.convertFileSrc(this.photoProofDoc[this.applicantIndex]);
+      this.photoProofFileName[this.applicantIndex] = (<any>window).Ionic.WebView.convertFileSrc(this.photoProofDoc[this.applicantIndex].toString().split("cache/")[1]);
       this.photoProofFileSize[this.applicantIndex] = "";
       return;
     }
@@ -673,7 +673,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
 
     if(this.isMobile) {
       this.idProofDoc[this.applicantIndex] = files;
-      this.idProofFileName[this.applicantIndex] = (<any>window).Ionic.WebView.convertFileSrc(this.idProofDoc[this.applicantIndex]);
+      this.idProofFileName[this.applicantIndex] = (<any>window).Ionic.WebView.convertFileSrc(this.idProofDoc[this.applicantIndex].toString().split("cache/")[1]);
       this.idProofFileSize[this.applicantIndex] = "";
       return;
     }
@@ -801,7 +801,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
 
     if(this.isMobile) {
       this.addressProofDoc[this.applicantIndex] = files;
-      this.addressProofFileName[this.applicantIndex] = (<any>window).Ionic.WebView.convertFileSrc(this.addressProofDoc[this.applicantIndex]);
+      this.addressProofFileName[this.applicantIndex] = (<any>window).Ionic.WebView.convertFileSrc(this.addressProofDoc[this.applicantIndex].toString().split("cache/")[1]);
       this.addressProofFileSize[this.applicantIndex] = "";
       return;
     }
@@ -882,7 +882,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
   setIncomeProof(files: any) {
      if(this.isMobile) {
       this.incomeProofDoc[this.applicantIndex] = files;
-      this.incomeProofFileName[this.applicantIndex] = (<any>window).Ionic.WebView.convertFileSrc(this.incomeProofDoc[this.applicantIndex]);
+      this.incomeProofFileName[this.applicantIndex] = (<any>window).Ionic.WebView.convertFileSrc(this.incomeProofDoc[this.applicantIndex].toString().split("cache/")[1]);
       this.incomeProofFileSize[this.applicantIndex] = "";
       return;
     }
@@ -973,7 +973,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
   setBankingProof(files: any) {
      if(this.isMobile) {
       this.bankingProofDoc[this.applicantIndex] = files;
-      this.bankProofFileName[this.applicantIndex] = (<any>window).Ionic.WebView.convertFileSrc(this.bankingProofDoc[this.applicantIndex]);
+      this.bankProofFileName[this.applicantIndex] = (<any>window).Ionic.WebView.convertFileSrc(this.bankingProofDoc[this.applicantIndex].toString().split("cache/")[1]);
       this.bankProofFileSize[this.applicantIndex] = "";
       return;
     }
@@ -1060,7 +1060,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
 
     if(this.isMobile) {
       this.collateralProofDoc[this.applicantIndex] = files;
-      this.collateralProofFileName[this.applicantIndex] = (<any>window).Ionic.WebView.convertFileSrc(this.collateralProofDoc[this.applicantIndex]);
+      this.collateralProofFileName[this.applicantIndex] = (<any>window).Ionic.WebView.convertFileSrc(this.collateralProofDoc[this.applicantIndex].toString().split("cache/")[1]);
       this.collateralProofFileSize[this.applicantIndex] = "";
       return;
     }
@@ -1313,6 +1313,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
     console.log("screenName", screenName);
     this.qdeHttp.takePicture().then((imageURI) => {
       console.log("imageData", imageURI + screenName);
+      
       this[screenName](imageURI);
       this.cameraImage = (<any>window).Ionic.WebView.convertFileSrc(imageURI);
      }, (err) => {
