@@ -1721,7 +1721,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   onPinCodeChange(event, screenName) {
-    if(event.target.value.length < 6) {
+    if(event.target.value.length < 6 || event.target.validity.valid == false) {
       return;
     }
 
