@@ -210,6 +210,10 @@ export class RelationshipMappingComponent implements OnInit {
 
   refresh() {
     this.searchKey="";
+    this.selectedApplicantTitle = this.applicantTitles[0];
+    this.selectedRelationship = this.relationships[0];
+    this.mainApplicant = "";
+    this.coApplicant = "";
     this.qdeHttp.adminApplicantRelationship().subscribe(res => {
       if(res['ProcessVariables']['status'] == true) {
         let response = res['ProcessVariables'];

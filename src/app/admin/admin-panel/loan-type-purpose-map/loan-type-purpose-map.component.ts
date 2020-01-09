@@ -196,6 +196,8 @@ export class LoanTypePurposeMapComponent implements OnInit {
 
   refresh() {
     this.searchKey="";
+    this.selectedLoanTypeData = this.loanTypeData[0];
+    this.selectedLoanPurposeData = this.loanPurposeData[0];
     this.qdeHttp.adminLoanTypePurposeMap().subscribe(res => {
       if(res['ProcessVariables']['loanTypePurposeList']) {
 

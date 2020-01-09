@@ -26,22 +26,27 @@ export class CheckPaymentComponent implements OnInit {
   isFileSelected : boolean = false;
   @ViewChild("paymentUploadPic") paymentUploadPic : ElementRef;
 
-  constructor(private qdeHttp: QdeHttpService) { }
+  constructor(private qdeHttp: QdeHttpService) {
+    let fromDate = new Date();
+    this.startDate = fromDate.toISOString().substr(0, 10);
+    let toDate = new Date();
+    this.endDate = toDate.toISOString().substr(0, 10);
+   }
 
   ngOnInit() {
-    let fromDate = new Date();
-    // this.startDate = new Date();
-    // fromDate.setDate(fromDate.getDate()- 7);
-    let month = fromDate.getUTCMonth()+1;
-    let date = fromDate.getDate()-7;
-    let year = fromDate.getFullYear();
-    this.startDate = year+"/"+month+"/"+date;
-    // this.endDate = new Date();
-    let toDate = new Date();
-    month = toDate.getUTCMonth()+1;
-    date = toDate.getDate();
-    year = toDate.getFullYear();
-    this.endDate = year+"/"+month+"/"+date;
+    // let fromDate = new Date();
+    // // this.startDate = new Date();
+    // // fromDate.setDate(fromDate.getDate()- 7);
+    // let month = fromDate.getUTCMonth()+1;
+    // let date = fromDate.getDate();
+    // let year = fromDate.getFullYear();
+    // this.startDate = year+"/"+month+"/"+date;
+    // // this.endDate = new Date();
+    // let toDate = new Date();
+    // month = toDate.getUTCMonth()+1;
+    // date = toDate.getDate();
+    // year = toDate.getFullYear();
+    // this.endDate = year+"/"+month+"/"+date;
   }
 
   setUploadDoc(inputValue:any) {

@@ -242,6 +242,9 @@ export class LoanMasterComponent implements OnInit {
   refresh() {
     if(this.isLoanMaster) {
       this.searchKey="";
+      this.rateOfInterest = "";
+      this.baseAmount = "";
+      this.selectedLoanTypeData = this.loanTypeData[0];
       this.qdeHttp.adminGetAllLoanMaster().subscribe(res => {
         // if(res['ProcessVariables']['loginFee']) {
         //   this.data = res['ProcessVariables']['loginFee'];
@@ -256,6 +259,10 @@ export class LoanMasterComponent implements OnInit {
       });
     } else if(this.isLoginFee) {
       this.searchKey="";
+      this.baseFee = null;
+      this.variableFee = null;
+      this.taxApplicable = null;
+      this.selectedLoanTypeData = this.loanTypeData[0];
       this.qdeHttp.adminGetAllLoginFee().subscribe(res => {
         // if(res['ProcessVariables']['loginFee']) {
         //   this.data = res['ProcessVariables']['loginFee'];
