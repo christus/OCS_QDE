@@ -40,6 +40,7 @@ export class AuthGuard implements CanActivate {
           console.log("user mapping", res)
           if(res["ProcessVariables"]["status"]){
             if (res["ProcessVariables"]["userActivityList"] && res["ProcessVariables"]["userActivityList"]!=null){
+            this.cds.changeIsAdmin(res["ProcessVariables"]["isAdmin"]);
             this.cds.checkUserMapping(res["ProcessVariables"]["userActivityList"],res["ProcessVariables"]["userName"]);
               }
               else{

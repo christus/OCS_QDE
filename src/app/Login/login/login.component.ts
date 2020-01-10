@@ -212,8 +212,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
           this.router.navigate([this.navigationString]);
           return;
         }else{
-          this.setUserActivity(userActivityList,userFullName);
-          // this.commonDataService.changeIsAdmin(isAdmin);
+          this.commonDataService.changeIsAdmin(isAdmin);
+          this.setUserActivity(userActivityList,userFullName);        
         } 
         
         // else if(roleName.includes("connector")){

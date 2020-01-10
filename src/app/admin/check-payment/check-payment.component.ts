@@ -100,6 +100,11 @@ export class CheckPaymentComponent implements OnInit {
   }
 
   downloadCSV() {
+    if(this.endDate<this.startDate){
+      this.isErrorModal = true;
+      this.errorMsgModal = "To Date cannot be before date of From Date";
+      return;
+    } else{
     const startDate = this.getFormattedDate(this.startDate);
     const endDate = this.getFormattedDate(this.endDate);
     var data = {
@@ -131,6 +136,7 @@ export class CheckPaymentComponent implements OnInit {
         // this.errorMsg = error;
       }
     );
+    }
   }
 
   uploadOfflinePayment(callback) {

@@ -15,7 +15,8 @@
     <tab tabTitle="ALL" class="tab" *ngIf="(newLogin && createLead) || documentUpload" >
         <ul *ngFor="let detail of userDetails | paginate: {id: 'pagination1', itemsPerPage: perPage, currentPage: currentPage, totalItems: totalItems};">
             <li>
-             <a [routerLink]="detail.url" [queryParams]="detail['queryParams']" class="lead-action">
+                <!-- [queryParams]="detail['queryParams']" -->
+             <a [routerLink]="detail.url"  class="lead-action">
 
               <ul class="bs-lead-card">
                   <li>
@@ -63,7 +64,8 @@
     <tab tabTitle="PENDING APPLICATION" *ngIf="(newLogin && createLead)">
       <ul *ngFor="let detail of newPendingApplicationDetails | paginate: {id: 'pagination3',itemsPerPage: perPagePA, currentPage: currentPagePA, totalItems: totalItemsPA};">
         <li>
-            <a [routerLink]="detail.url" [queryParams]="detail['queryParams']" class="lead-action">
+            <!-- [queryParams]="detail['queryParams']" -->
+            <a [routerLink]="detail.url" class="lead-action">
             <ul class="bs-lead-card">
                 <li>
                     <span class="initials">AK</span>
@@ -89,7 +91,8 @@
     <tab tabTitle="PENDING PAYMENT" *ngIf="(newLogin && createLead)">
       <ul *ngFor="let detail of newPendingPaymentDetails | paginate: {id: 'pagination4',itemsPerPage: perPagePP, currentPage: currentPagePP, totalItems: totalItemsPP};">
         <li>
-            <a [routerLink]="detail.url" [queryParams]="detail['queryParams']" class="lead-action">
+            <!-- [queryParams]="detail['queryParams']"  -->
+            <a [routerLink]="detail.url" class="lead-action">
             <ul class="bs-lead-card">
                 <li>
                     <span class="initials">AK</span>
