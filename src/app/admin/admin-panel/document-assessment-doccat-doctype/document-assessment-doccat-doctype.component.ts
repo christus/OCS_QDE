@@ -212,6 +212,12 @@ export class DocumentAssessmentDoccatDoctypeComponent implements OnInit {
 
   refresh() {
     this.searchKey="";
+    this.selectedAssessment = this.assessments[0];
+    this.selectedDocumentCategory = this.documentCategories[0];
+    this.selectedDocType = this.docTypes[0];
+    this.selectedProfile = this.profiles[0];
+    this.financialApplicant = "";
+    this.applicantType = "";
     this.qdeHttp.adminDocumentProfile().subscribe(res => {
       if(res['ProcessVariables']['status'] == true) {
         let response = res['ProcessVariables'];

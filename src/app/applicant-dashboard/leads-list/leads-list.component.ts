@@ -374,7 +374,8 @@ export class LeadsListComponent implements OnInit {
                     tabName : el["auditTrialTabPage"],
                     page : el["auditTrialPageNumber"],
                   }
-                } else {
+                } 
+                else {
                   el["queryParams"] = null;
                 }
               });

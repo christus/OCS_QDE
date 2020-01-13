@@ -2,7 +2,7 @@
  * Single Tab page
  */
 
-import { Component, Input, AfterViewInit, ChangeDetectorRef, AfterContentChecked } from '@angular/core';
+import { Component, Input, AfterViewInit, ChangeDetectorRef, AfterContentChecked, AfterViewChecked, OnInit, DoCheck, OnChanges } from '@angular/core';
 
 @Component({
     selector: 'tab',
@@ -10,22 +10,31 @@ import { Component, Input, AfterViewInit, ChangeDetectorRef, AfterContentChecked
     styleUrls: ['./tab.component.css']
 })
 
-export class TabComponent  implements AfterViewInit{
+export class TabComponent  implements  AfterViewInit{
     @Input('tabTitle') title: string;
     @Input() active;
     constructor(private cdr:  ChangeDetectorRef){} 
 
-    onChange(): void {
-        this.active = false;
-        this.cdr.detectChanges();
-      }
-    ngAfterViewInit() {
-        this.active = false;
-        this.cdr.detectChanges();
-    }
-    // ngAfterContentChecked() {
+    // onChange(): void {
     //     this.active = false;
     //     this.cdr.detectChanges();
-    // }	
+    //   }
+    //   ngDoCheck() {
+    //     this.active = false;
+    //     this.cdr.detectChanges();
+    // }
+// ngOnInit(){
+//     this.active = true;
+// }
 
+
+    ngAfterViewInit() {        
+        this.active = false;
+        this.cdr.detectChanges();
+       
+    }	
+   
+
+    
+   
 }

@@ -239,7 +239,7 @@ getUserList(data){
     if (this.toAssignId === null || this.toAssignId === undefined || this.reasonToChangeText == null ||
       this.reasonToChangeText == "" || this.reasonToChangeText == undefined) {
       this.isErrorModal = true;
-      this.errorMessage = "Mandatory fields are Require";
+      this.errorMessage = "Mandatory fields are Required";
     } else if ((this.fromAssignId === null || this.fromAssignId === undefined ) && (this.applictionList.length == 0) ){
 
       this.isErrorModal = true;
