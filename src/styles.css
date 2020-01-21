@@ -3993,8 +3993,8 @@ img {
 }
 
 .bs-form .form-group.typ-optional .form-control {
-	/* padding-right: 52px */
-	padding-right: 36%;
+	padding-right: 52px
+	/* padding-right: 36%; */
 }
 
 .bs-form .form-group.typ-optional .optional {
@@ -5862,5 +5862,9 @@ img {
 		line-height: 6px;
 		font-size: 5px;
 		top: -8px;
+	}
+	.bs-form .form-group.typ-optional .form-control {
+		/* padding-right: 52px */
+		padding-right: 36%;
 	}
 }

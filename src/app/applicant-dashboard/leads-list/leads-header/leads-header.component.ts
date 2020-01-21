@@ -17,6 +17,7 @@ export class LeadsHeaderComponent implements OnInit {
   isLogoutVisible: boolean;
   navigationString: string;
   isAdmin: boolean;
+  lastLoginDateTime: string;
 
   constructor(private utilService: UtilService,
               private http: QdeHttpService,
@@ -32,6 +33,7 @@ export class LeadsHeaderComponent implements OnInit {
     this.cds.isAdmin$.subscribe(value=>{
       this.isAdmin = value;
     })
+    this.cds.lastLoginDateTime$.subscribe(value => this.lastLoginDateTime = value );
     console.log("###",this.isAdmin);
   }
   isloggedIn() {

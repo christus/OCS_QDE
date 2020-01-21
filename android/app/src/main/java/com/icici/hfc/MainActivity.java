@@ -1,5 +1,6 @@
 package com.icici.hfc;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.getcapacitor.BridgeActivity;
@@ -17,5 +18,13 @@ public class MainActivity extends BridgeActivity {
       // Additional plugins you've installed go here
       // Ex: add(TotallyAwesomePlugin.class);
     }});
+
+    if(RootUtil.isDeviceRooted()) {
+      Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+      homeIntent.addCategory( Intent.CATEGORY_HOME );
+      homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+      startActivity(homeIntent);
+    }
+
   }
 }

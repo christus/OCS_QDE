@@ -277,8 +277,13 @@ export class CommonDataService {
   changeShowOCS(value: boolean) {
     this.showOCS$.next(value);
   }
+  lastLoginDateTime$: BehaviorSubject<string> = new BehaviorSubject<string>(null);
+  public lastLoginDateTime = this.lastLoginDateTime$.asObservable();
+  changelastLoginDateTime(value: string) {
+    this.lastLoginDateTime$.next(value);
+  }
 
-checkUserMapping(userActivityList,userFullName){
+checkUserMapping(userActivityList,userFullName,lastLoginDateTime?){
   let myServiceStatus= false;
   console.log("user activity in cds",userActivityList,userFullName);
           let createLead = false;
@@ -327,6 +332,7 @@ checkUserMapping(userActivityList,userFullName){
           this.changeMasterConfig(masterConfig);
           this.changeShowOCS(showOCS);
           this.adminPageNavigation(userModule,opsMoudule,masterConfig);
+          this.changelastLoginDateTime(lastLoginDateTime);
 }       
 
 adminPageNavigation(userModule,opsMoudule,masterConfig){

@@ -69,12 +69,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   isTabDisabled: boolean;
   docName: boolean;
-
+// name: "^[0-9A-Za-z ]{0,99}$"  // for only allow alpha
   regexPattern = {
     appRefNo: "^[A-Za-z0-9]+$",
     stdCode: "^[0][0-9]*$",
     mobileNumber: "^[1-9][0-9]*$",
-    name: "^[0-9A-Za-z ]{0,99}$",
+    name: "^[0-9A-Za-z, _&*#'/\\-@]{0,99}$",
     organizationName: "^[0-9A-Za-z, _&*#'/\\-@]{0,99}$",
     birthPlace: "^[A-Za-z ]{0,99}$",
     address: "^[0-9A-Za-z, _&*#'/\\-]{0,99}$",

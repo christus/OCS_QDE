@@ -63,11 +63,11 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                                      {pattern:'[0-9]{16}',hint:"	16 digit number"}]
 
   maxlength:Array<string> = ['2','8','15','10','12','18','14','16'];
-
+// name: "^[0-9A-Za-z ]{0,99}$" // for only allow alpha
   regexPattern = {
     mobileNumber: "^[1-9][0-9]*$",
     stdCode: "^[0][0-9]*$",
-    name: "^[0-9A-Za-z ]{0,99}$",
+    name: "^[0-9A-Za-z, _&*#'/\\-@]{0,99}$",
     organizationName: "^[0-9A-Za-z, _&*#'/\\-@]{0,99}$",
     birthPlace:"^[A-Za-z ]{0,99}$",
     address : "^[0-9A-Za-z, _&*#'/\\-]{0,99}$",
@@ -4536,7 +4536,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     }else if (age >  Number(this.minMaxValues["Age_Of_Incorporation"].maxValue)){     
       this.ageMaxError = true;   
       this.isErrorModal = true;
-      this.errorMessage = `Maximum age limit is.${this.minMaxValues["Age_Of_Incorporation"].maxValue}`;
+      this.errorMessage = `Maximum age limit is ${this.minMaxValues["Age_Of_Incorporation"].maxValue}`;
       
       this.ageError = false;
       return;

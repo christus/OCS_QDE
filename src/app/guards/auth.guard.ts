@@ -41,7 +41,7 @@ export class AuthGuard implements CanActivate {
           if(res["ProcessVariables"]["status"]){
             if (res["ProcessVariables"]["userActivityList"] && res["ProcessVariables"]["userActivityList"]!=null){
             this.cds.changeIsAdmin(res["ProcessVariables"]["isAdmin"]);
-            this.cds.checkUserMapping(res["ProcessVariables"]["userActivityList"],res["ProcessVariables"]["userName"]);
+            this.cds.checkUserMapping(res["ProcessVariables"]["userActivityList"],res["ProcessVariables"]["userName"],res["ProcessVariables"]["lastLoggedInDateTime"]);
               }
               else{
                 this.cds.setErrorData(true,"DYN001","User Activity Not Defined");

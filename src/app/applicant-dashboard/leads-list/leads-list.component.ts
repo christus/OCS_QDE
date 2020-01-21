@@ -435,6 +435,10 @@ export class LeadsListComponent implements OnInit {
       } else if(screenPages["documentUploads"] == el["auditTrialScreenPage"]) {
         el["queryParams"] = {tabName: "dashboard", page: 1};
         return "/document-uploads/"+applicationId;
+      } else{
+        // if adit trail not aviialble
+        return "/applicant/"+applicationId
+
       }     
     } 
     else if(statuses[status] == "5") {

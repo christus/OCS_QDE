@@ -11,6 +11,8 @@
        <th>Key</th>
        <th>Description</th>
        <th>Value</th>
+       <th *ngIf="documentType">Data Class</th>
+       <th *ngIf="documentType">Data Index</th>
        <th>Edit/Save</th>
       <th *ngIf="isApplicantTitle"><form>Male/Female</form></th>
       <th *ngIf="isDocumentCategory"><form>Is Mandatory</form></th>
@@ -18,7 +20,9 @@
       <th *ngIf="isFinancialApplicant"><form>Financial Applicant</form></th>
       <th *ngIf="isMale"><form>Male</form></th>
       <th *ngIf="isUserAtivity">Activity</th>
+      
       <th *ngIf="!isUserAtivity" [ngStyle]="{textAlign: 'center'}">Delete</th>
+
      </tr>
    </thead>
    <tbody>
@@ -29,6 +33,12 @@
        </td>
        <td>
         <input type="text" placeholder="Value" tabindex="2" [(ngModel)]="l.value" [disabled]="l.isEdit" />
+      </td>
+      <td *ngIf="documentType">
+        <input type="text" placeholder="Data Class" tabindex="3" [(ngModel)]="l.dataClass" [disabled]="l.isEdit" maxlength="100" />
+      </td>
+      <td *ngIf="documentType">
+        <input type="number" placeholder="Data Index" tabindex="4" [(ngModel)]="l.dataIndex" [disabled]="l.isEdit" maxlength="4" />
       </td>
       <td>
         <button type="button" class="editsavebtn" *ngIf="l.isEdit" (click)="edit(i)">Edit</button>
@@ -102,7 +112,7 @@
 <div #adminErrorDiv class="overlay" [ngClass]="{'active': isErrorModal}">
   <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isErrorModal}">
     <a class="modal-close" (click)="isErrorModal = false"><span class="icon icon-close"></span></a>
-    <div class="modal-body">
+    <div class="modal-body" style="text-align: center;">
       <h1>{{errorMsg}}</h1>
       <br><br>
       <div class="btn-wrap">

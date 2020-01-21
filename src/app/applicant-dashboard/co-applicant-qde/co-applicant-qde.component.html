@@ -434,8 +434,8 @@
                                                             name="firstName"
                                                             tabindex="2"
                                                             fieldFill 
-                                                            [maxlength]="minMaxValues['Company_Name']?.maxLength"
-                                                            [minlength]="minMaxValues['Company_Name']?.minValue"
+                                                            [maxlength]="minMaxValues['Name']?.maxLength"
+                                                            [minlength]="minMaxValues['Name']?.minValue"
                                                             spellcheck="false"
                                                             required
                                                             pattern="{{regexPattern.name}}"
@@ -454,7 +454,7 @@
                                                           class="form-control"
                                                           id="middleName" 
                                                           name="middleName" 
-                                                          [maxlength]="minMaxValues['Company_Name']?.maxLength"
+                                                          [maxlength]="minMaxValues['Name']?.maxLength"
                                                           tabindex="3"
                                                           [(ngModel)]="qde.application.applicants[coApplicantIndex].personalDetails.middleName"
                                                           pattern="{{regexPattern.name}}"
@@ -477,8 +477,8 @@
                                                               [(ngModel)]="qde.application.applicants[coApplicantIndex].personalDetails.lastName" 
                                                               name="lastName" 
                                                               #lastName="ngModel"  
-                                                              [maxlength]="minMaxValues['Company_Name']?.maxLength"
-                                                              [minlength]="minMaxValues['Company_Name']?.minValue"
+                                                              [maxlength]="minMaxValues['Name']?.maxLength"
+                                                              [minlength]="minMaxValues['Name']?.minValue"
                                                               id="lastName"
                                                               tabindex="4" autocomplete="off"
                                                               fieldFill
@@ -1487,8 +1487,8 @@
                                                       name="firstName"
                                                       pattern="{{regexPattern.name}}"
                                                       tabindex="2"                                                      
-                                                      [maxlength]="minMaxValues['Company_Name']?.maxLength"
-                                                      [minlength]="minMaxValues['Company_Name']?.minValue"
+                                                      [maxlength]="minMaxValues['Name']?.maxLength"
+                                                      [minlength]="minMaxValues['Name']?.minValue"
                                                       id="spouse-name"
                                                       fieldFill
                                                       spellcheck="false"
