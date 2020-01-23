@@ -206,25 +206,32 @@ getUserList(data){
   }
 
 
-  changeCheckbox(index?) {
+  changeCheckbox(event,index) { 
       console.log("index vlaue ");
-      if (!this.selectAllCheck && index > 0) {
+      if (!this.selectAllCheck && index >= 0) {
         const arrarLength = this.applictionList.length;
         if (index == null || undefined) {
           this.selectAllStatus = this.selectAllCheck;
           this.applications = [];
           console.log("select All Check Value ", this.selectAllCheck);
         } else {
+          if (event.target.checked ==true){
           this.selectAllStatus = this.selectAllCheck;
           this.applications.push(this.applictionList[index]["applicationId"]);
           console.log("aray lengh ", arrarLength , index, this.applictionList[index]["applicationId"] ,this.applications );
+          }else {
+            this.selectAllStatus = this.selectAllCheck;
+          this.applications= this.applications.filter(v => v!=this.applictionList[index]["applicationId"]);
+          console.log("aray lengh ", arrarLength , index, this.applictionList[index]["applicationId"] ,this.applications );
+          }
         }
       }
-      // else {
+      else {
+        this.selectAllStatus = this.selectAllCheck;
       //   this.isErrorModal = true;
       //   this.errorMessage = "Select Any From Assignee and Select Any Application";
       //   this.selectAllCheck = false;
-      // }
+      }
   }
   pageChanged(value) {
     // data["currentPage"] = value;

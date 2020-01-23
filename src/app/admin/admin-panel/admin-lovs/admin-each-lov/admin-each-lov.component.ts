@@ -527,12 +527,13 @@ console.log("check ac ",sActivity);
     checkList.forEach(obj =>{
       if(obj.value == "New Login"){
         createLogin = true
-      } else if(obj.value == "Document Upload" || obj.value == "View Form"){
+      } else if(obj.value == "Document Upload"){
         dUpload = true;
-      } else if (obj.value == "Admin"){
-        admin = true;
-        
       }
+      //  else if (obj.value == "Admin"){
+      //   admin = true;
+        
+      // }
     });
     return (dUpload && createLogin)
   }
