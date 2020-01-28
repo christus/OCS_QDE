@@ -282,6 +282,11 @@ export class CommonDataService {
   changelastLoginDateTime(value: string) {
     this.lastLoginDateTime$.next(value);
   }
+  eligibilityReview$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public eligibilityReview = this.eligibilityReview$.asObservable();
+  changeleligibilityReview(value: boolean) {
+    this.eligibilityReview$.next(value);
+  }
 
 checkUserMapping(userActivityList,userFullName,lastLoginDateTime?){
   let myServiceStatus= false;
@@ -295,6 +300,7 @@ checkUserMapping(userActivityList,userFullName,lastLoginDateTime?){
           let opsMoudule = false;
           let masterConfig = false;
           let showOCS = false;
+          let eligibilityReview = false;
           userActivityList.forEach(uActivity => {
             if (uActivity == "Lead"){
               createLead = true;
@@ -317,6 +323,8 @@ checkUserMapping(userActivityList,userFullName,lastLoginDateTime?){
               opsMoudule =true;
             }else if (uActivity == "Master Config"){
               masterConfig =true;
+            }else if(uActivity=="Eligibility Review"){
+              eligibilityReview = true;
             }
             myServiceStatus =true;
           });
@@ -331,8 +339,10 @@ checkUserMapping(userActivityList,userFullName,lastLoginDateTime?){
           this.changeOpsMoudule(opsMoudule);
           this.changeMasterConfig(masterConfig);
           this.changeShowOCS(showOCS);
-          this.adminPageNavigation(userModule,opsMoudule,masterConfig);
           this.changelastLoginDateTime(lastLoginDateTime);
+          this.changeleligibilityReview(eligibilityReview);
+          this.adminPageNavigation(userModule,opsMoudule,masterConfig);
+          
 }       
 
 adminPageNavigation(userModule,opsMoudule,masterConfig){

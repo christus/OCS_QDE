@@ -808,7 +808,7 @@
                                                   <div *ngIf="(mobileNumber.touched || mobileNumber.dirty) && mobileNumber.invalid" class="invalid-feedback">
                                                     <!-- <div *ngIf="mobileNumber.errors?.required">{{errors.contactDetails.prefferedMobile.required}}</div> -->
                                                     <div *ngIf="mobileNumber.errors?.pattern">{{errors.contactDetails.prefferedMobile.invalid}}</div>
-                                                    <div *ngIf="mobileNumber.errors?.minlength">{{errors.contactDetails.prefferedMobile.minlength}}</div>
+                                                    <div *ngIf="mobileNumber.errors?.minlength">{{errors.contactDetails.prefferedMobile.minlength}}{{" "+minMaxValues['Mobile_Number']?.minValue+" digits"}}</div>
                                                   </div>
                                               </div>
             

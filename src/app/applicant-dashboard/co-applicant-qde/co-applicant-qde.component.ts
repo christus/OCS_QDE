@@ -57,7 +57,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                                      {pattern:'[A-Z]{1}[0-9]{7}',hint:"V1234567"},
                                      {pattern:'^[A-Z]{2}[0-9]{13}$',hint:"AN0120100051926"},
                                      {pattern:'^[A-Z]{3}[0-9]{7}$',hint:"LWN5672084"},
-                                     {pattern:'[2-9]{1}[0-9]{11}',hint:"12 digit number, with first digit not 0 or 1"},
+                                     {pattern:'[2-9]{1}[0-9]{11}',hint:"12 digit number, with first digit shout not 0 or 1"},
                                      {pattern:'[0-9]{18}',hint:"	18 digit number"},
                                      {pattern:'[0-9]{14}',hint:"	14 digit number"},
                                      {pattern:'[0-9]{16}',hint:"	16 digit number"}]
