@@ -69,7 +69,8 @@ export class IciciTermsComponent implements OnInit {
     console.log("applicant ID  ", this.applicantId);
 
     const applicatonData = response.application.applicants.find(v => v.applicantId == this.applicantId);
-
+    
+    this.commonDataService.changeApplicantId(this.applicantId);
 
     console.log("async result:", appData);
 

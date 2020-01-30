@@ -110,6 +110,12 @@ export class CommonDataService {
   changeApplicationId(val: string) {
     this.applicationId$.next(val);
   }
+  applicantId$: BehaviorSubject<string> = new BehaviorSubject<string>(null);
+  public applicantId = this.applicantId$.asObservable();
+
+  changeApplicantId(val: string) {
+    this.applicantId$.next(val);
+  }
 
   coApplicantIndex$: BehaviorSubject<number> = new BehaviorSubject<number>(null);
   public coApplicantIndex = this.coApplicantIndex$.asObservable();
