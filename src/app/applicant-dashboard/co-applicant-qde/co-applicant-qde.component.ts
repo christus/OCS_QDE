@@ -636,6 +636,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
               this.cds.setactiveTab(screenPages['coApplicantDetails']);
               this.qdeService.setQde(result);
               let mainApplicant = this.qde.application.applicants.find(v => v.isMainApplicant == true);
+              
+              // get applicant name to set cds 
+              this.cds.changeApplicantId(mainApplicant.applicantId);
 
               if(params['coApplicantIndex'] == null) {
                 this.tabSwitch(0, 1);

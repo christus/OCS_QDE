@@ -389,6 +389,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   isNumberMoreThan100cr: boolean;
   minMaxValues: Array<MinMax>;
   tabHide: boolean;
+ 
   constructor(private renderer: Renderer2,
     private route: ActivatedRoute,
     private router: Router,
@@ -728,7 +729,10 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.applicantIndex = result.application.applicants.findIndex(v => v.isMainApplicant == true);
       this.cds.enableTabsIfStatus1(this.qde.application.status);
       this.tempOldPanNumber = result.application.applicants[this.applicantIndex].pan.panNumber;
-
+      
+      // get applicant name to set cds 
+      this.cds.changeApplicantId(result.application.applicants[this.applicantIndex].applicantId);
+      
       this.loadOccupationTypeLovs(this.qde.application.applicants[this.applicantIndex].occupation.occupationType);
       if (this.qde.application.auditTrailDetails.screenPage == screenPages['applicantDetails']) {
         this.goToExactPageAndTab(this.fragments.findIndex(v => v == this.qde.application.auditTrailDetails.tabPage), this.qde.application.auditTrailDetails.pageNumber);

@@ -122,10 +122,14 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
 
       this.applicantBtnStatus = (this.qde.application.status == parseInt(statuses['Login Fee Paid']) ? true: false) ;
 
-      let currentUrl: string = this._router.url;
-     
-      if (!currentUrl.startsWith('/static')){
-         // Find an applicant
+      // Find an applicant
+      // if (this.applicantId == null || this.applicantId == undefined || this.applicantId == ""){
+        console.log("current url ",this._router.url);
+
+        let currentUrl: string = this._router.url;
+
+        if (!currentUrl.startsWith('/static')){
+
         const applicants = this.qde.application.applicants;
         for (const applicant of applicants) {
           if (applicant["isMainApplicant"]) {
@@ -135,6 +139,7 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
           
         }
       }
+    
       
 
       // console.log("this.applicantName", this.qde.application.applicants[0].personalDetails.firstName);

@@ -52,16 +52,14 @@
             </li>
             <li [ngClass]="{'active': activeTab==screenPages['documentUploads']}">
                 <a *ngIf="applicationId == null"  [ngClass]="{'disabled': !isMainTabEnabled}">Document Uploads</a>
-                <a [routerLink]="['/document-uploads', applicationId]" *ngIf="applicationId != null  && applicantId != null" >Document Uploads</a>
+                <a [routerLink]="['/document-uploads', applicationId]" *ngIf="applicationId != null  && applicantId != null" [ngClass]="{'disabled': !isMainTabEnabled}" >Document Uploads</a>
             </li>
             <li [ngClass]="{'active': activeTab==screenPages['payments'], 'disabled': isPaymentsDisabled}">
                 <a *ngIf="applicationId == null" [ngClass]="{'disabled': (isFinalSubmitEnabled)}">Payments</a>
                 <a *ngIf="applicationId != null && !isPaymentsDisabled" [ngClass]="{'disabled': (!isFinalSubmitEnabled)}" [routerLink]="['/payments/offline-payments', applicationId]">Payments</a>
                 <a *ngIf="applicationId != null && isPaymentsDisabled">Payments</a>
             </li>
-            <!-- <li>
-                <a [routerLink]="['/payments/offline-payments', applicationId]">Payments</a>
-            </li> -->
+           
         </ul>
         <!-- header end -->
     </div>
