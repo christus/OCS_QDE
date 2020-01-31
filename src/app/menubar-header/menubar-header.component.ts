@@ -105,6 +105,9 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
       this.applicantName = val; 
       console.log("applicantName: ", this.applicantName); 
     }); 
+    
+    this.commonDataService.applicantId$.subscribe(val =>
+                 this.applicantId = val);
 
     // this.qde = qdeService.getQde();
 
@@ -119,19 +122,26 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
 
       this.applicantBtnStatus = (this.qde.application.status == parseInt(statuses['Login Fee Paid']) ? true: false) ;
 
-      // Find an applicant
-      const applicants = this.qde.application.applicants;
-      for (const applicant of applicants) {
-        if (applicant["isMainApplicant"]) {
-          this.applicantId = applicant["applicantId"];
-          break;
+      let currentUrl: string = this._router.url;
+     
+      if (!currentUrl.startsWith('/static')){
+         // Find an applicant
+        const applicants = this.qde.application.applicants;
+        for (const applicant of applicants) {
+          if (applicant["isMainApplicant"]) {
+            this.applicantId = applicant["applicantId"];
+            break;
+          }
+          
         }
       }
+      
 
       // console.log("this.applicantName", this.qde.application.applicants[0].personalDetails.firstName);
       
-      let index = v.application.applicants.findIndex(val => val.isMainApplicant == true);
-      
+      // let index = v.application.applicants.findIndex(val => val.isMainApplicant == true);
+      let index = v.application.applicants.findIndex(val => val.applicantId == this.applicantId);
+
       if(index == -1) {
         this.applicantName = "";
       } else {

@@ -55,7 +55,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
                                         { pattern: '[A-Z]{1}[0-9]{7}', hint: "V1234567" },
                                         { pattern: '^[A-Z]{2}[0-9]{13}$', hint: "AN0120100051926" },
                                         { pattern: '^[A-Z]{3}[0-9]{7}$', hint: "LWN5672084" },
-                                        { pattern: '[2-9]{1}[0-9]{11}', hint: "12 digit number, with first digit shout not 0 or 1" },
+                                        { pattern: '[2-9]{1}[0-9]{11}', hint: "12 digit number, with first digit should not 0 or 1" },
                                         { pattern: '[0-9]{18}', hint: "	18 digit number" },
                                         { pattern: '[0-9]{14}', hint: "	14 digit number" },
                                         { pattern: '[0-9]{16}', hint: "	16 digit number" }];
@@ -1829,7 +1829,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       }else if (age >  Number(this.minMaxValues["Age_limit"].maxValue)){
         
         this.isErrorModal = true;
-        this.errorMessage = `Maximum age limit is.${this.minMaxValues["Age_limit"].maxValue}`;
+        this.errorMessage = `Maximum age limit is ${this.minMaxValues["Age_limit"].maxValue}`;
         this.ageMaxError = true;
         this.ageError = false;
         return;
@@ -1869,7 +1869,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         return;
       }else if (age >  Number(this.minMaxValues["Age_limit"].maxValue)){
         this.isErrorModal = true;
-        this.errorMessage = `Maximum age limit is.${this.minMaxValues["Age_limit"].maxValue}`;
+        this.errorMessage = `Maximum age limit is ${this.minMaxValues["Age_limit"].maxValue}`;
         return;
       } else {
         this.ageError = false;
@@ -3559,7 +3559,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       return;
     }else if (age >  Number(this.minMaxValues["Age_Of_Incorporation"].maxValue)){
       this.isErrorModal = true;
-      this.errorMessage = `Maximum age limit is.${this.minMaxValues["Age_Of_Incorporation"].maxValue}`;
+      this.errorMessage = `Maximum age limit is ${this.minMaxValues["Age_Of_Incorporation"].maxValue}`;
       return;
     } else {
       this.ageError = false;

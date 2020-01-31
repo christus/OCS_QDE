@@ -3602,13 +3602,14 @@
             <form (ngSubmit)="submitDuplicateApplicant(duplicateApplicantForm)" #duplicateApplicantForm="ngForm">
                 <div class="duplicate-table">
                     <div class="duplicate-table-heading">
-                        <div class="duplicate-table-col">Applicant ID</div>
+                        <div class="duplicate-table-col">OCS Number</div>
                         <div class="duplicate-table-col">Name</div>
+                        <div class="duplicate-table-col">PAN Number</div>
                         <div class="duplicate-table-col">Select</div>
                     </div>
                     <div class="duplicate-table-data-wrapper">
                         <div class="duplicate-table-data" *ngFor="let d of duplicates;let i=index;">
-                            <div class="duplicate-table-col">{{d['applicantId']}}</div>
+                            <div class="duplicate-table-col">{{d['ocsNumber']}}</div>
                             <div class="duplicate-table-col" >
                                 {{d['personalDetails']['firstName']}}{{d['personalDetails']['middleName'] ? " "+d['personalDetails']['middleName'] : ""}}{{" "+d['personalDetails']['lastName']}}
                                 {{d['organizationDetails']['nameOfOrganization']}}
@@ -3617,6 +3618,8 @@
                             <!-- <div class="duplicate-table-col" *ngIf ="!qde.application.applicants[coApplicantIndex].isIndividual">
                                    
                                 </div> -->
+                            <div class="duplicate-table-col">{{d['pan']['panNumber']}} </div>                           
+                            
                             <div class="duplicate-table-col">
                                 <input type="radio" name="selectDuplicateApplicant" [value]="d['applicantId']" ngModel class="duplicate-radio" />
                             </div>

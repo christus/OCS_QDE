@@ -44,7 +44,7 @@ export class ConnectorLeadCreateComponent implements OnInit {
   requirMinAmout ;
   isMaxAmount: boolean;
   requirMaxAmout;
-
+  dnd: boolean = true;
 
   regexPattern={
     firstName: "[A-Za-z ]+$",
@@ -146,7 +146,7 @@ export class ConnectorLeadCreateComponent implements OnInit {
   // }
 
   leadSaveConnector(form: NgForm){
-    console.log(this.qde.application.leadCreate);
+    console.log("connector form ",form);
     this.qde.application.leadCreate.loanAmount = parseInt(this.qde.application.leadCreate.loanAmount+"");
     this.qde.application.leadCreate.mobileNumber = parseInt(this.qde.application.leadCreate.mobileNumber+"");
     this.qde.application.leadCreate.zipcode = parseInt(this.qde.application.leadCreate.zipcode+"");
@@ -154,6 +154,7 @@ export class ConnectorLeadCreateComponent implements OnInit {
     let data = Object.assign({}, this.qde.application.leadCreate);
     data['loanType'] = parseInt(this.selectedLoanType.value+"");
     data['userId'] = parseInt(localStorage.getItem('userId'));
+    data['dnd'] = this.dnd;
 
     this.qdeHttp.connectorLeadCreateSave(data).subscribe(res => {
       if(res['ProcessVariables']['status'] == true) {

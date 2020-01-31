@@ -57,7 +57,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                                      {pattern:'[A-Z]{1}[0-9]{7}',hint:"V1234567"},
                                      {pattern:'^[A-Z]{2}[0-9]{13}$',hint:"AN0120100051926"},
                                      {pattern:'^[A-Z]{3}[0-9]{7}$',hint:"LWN5672084"},
-                                     {pattern:'[2-9]{1}[0-9]{11}',hint:"12 digit number, with first digit shout not 0 or 1"},
+                                     {pattern:'[2-9]{1}[0-9]{11}',hint:"12 digit number, with first digit should not 0 or 1"},
                                      {pattern:'[0-9]{18}',hint:"	18 digit number"},
                                      {pattern:'[0-9]{14}',hint:"	14 digit number"},
                                      {pattern:'[0-9]{16}',hint:"	16 digit number"}]
@@ -2974,17 +2974,17 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
           this.officialCorrespondencePhoneNumber = "";
           this.officialCorrespondenceStdCode = "";
 
-        }else {
-          this.qde.application.applicants[this.coApplicantIndex].incomeDetails = {
-            incomeConsider: null,
-            monthlyIncome: "",
-            assessmentMethodology: "",
-          };
-        }
+        }else {          
+            this.qde.application.applicants[this.coApplicantIndex].incomeDetails = {
+              incomeConsider: null,
+              monthlyIncome: "",
+              assessmentMethodology: "",
+            };
+          }         
       }
 
       this.qde.application.applicants[this.coApplicantIndex].incomeDetails.incomeConsider = (value == 1) ? true : false;
-
+ 
 
       this.createOrUpdatePersonalDetailsSub23 = this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successfull
@@ -3006,7 +3006,15 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
 
           if(this.qde.application.applicants[this.coApplicantIndex].incomeDetails.incomeConsider) {
+            if(this.qde.application.applicants[this.coApplicantIndex].pan.panNumber == null || 
+              this.qde.application.applicants[this.coApplicantIndex].pan.panNumber == ""){
+                this.tabSwitch(1,1);
+                this.isErrorModal= true;
+                this.errorMessage="Pan Number Is Mandatory For Income Consider Applicant"        
+                
+          }else{
             this.tabSwitch(9, 1);
+            }
           } else {
             this.tabSwitch(10, 1);
           }
@@ -3014,11 +3022,13 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
           // Throw Invalid Pan Error
         }
       }
+    
       // , error => {
       //   this.isErrorModal = true;
       //   this.errorMessage = "Something went wrong, please try again later.";
       // }
     );
+    
     }
   }
 
@@ -3094,7 +3104,15 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
 
           if(value == 1) {
-            this.goToNextSlide(swiperInstance1, swiperInstance2);
+            if(this.qde.application.applicants[this.coApplicantIndex].pan.panNumber == null || 
+              this.qde.application.applicants[this.coApplicantIndex].pan.panNumber == ""){
+                this.tabSwitch(1,1);
+                this.isErrorModal= true;
+                this.errorMessage="Pan Number Is Mandatory For Income Consider Applicant"       
+                
+            }else{
+              this.goToNextSlide(swiperInstance1, swiperInstance2);
+              }
           }
           else if(value == 2) {
             this.isCoApplicantRouteModal = true;
@@ -4226,7 +4244,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
       this.qde.application.applicants[this.coApplicantIndex].communicationAddress.cityState = "";
       this.selectedResidence = this.defaultItem;
-      this.makePermanentAddressSame(false);
+      // this.makePermanentAddressSame(false);
     }
     // this.isCurrentAddressFromMainApplicant = false;
   }
@@ -4577,7 +4595,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       }else if (age >  Number(this.minMaxValues["Age_limit"].maxValue)){
         
         this.isErrorModal = true;
-        this.errorMessage = `Maximum age limit is.${this.minMaxValues["Age_limit"].maxValue}`;
+        this.errorMessage = `Maximum age limit is ${this.minMaxValues["Age_limit"].maxValue}`;
         this.ageMaxError = true;
         this.ageError = false;
         return;
