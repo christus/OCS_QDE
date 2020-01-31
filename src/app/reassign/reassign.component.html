@@ -89,10 +89,12 @@ $(function () {
                 <li>
                     <div class="bs-checkbox" style="top: -.5vw;">
                         <input   type="checkbox" id="termsCheck{{i}}" name="termsCheck{{i}}"
-                        (change)="changeCheckbox(i)"  #termsCheck{{i}}
+                        (change)="changeCheckbox($event,i)"  #termsCheck{{i}}
+                     
                         [ngClass]="{'disabled': (selectAllCheck)}"
                         [disabled]="selectAllCheck"
                         [checked]="selectAllCheck"
+                       
                         />
                         <label for="termsCheck{{i}}"></label>
                     </div>

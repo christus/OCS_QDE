@@ -34,6 +34,7 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
   isConfirmModal : boolean;
   isUserAtivity: boolean = false;
   delIndex;
+  documentType: boolean = false;
 responseData;
 
   @ViewChildren('lovsElements') lovsElements: QueryList<ElementRef>;
@@ -58,6 +59,7 @@ responseData;
       this.isFinancialApplicant = this.tableName == 'profile' ? true : false;
       this.isMale = this.tableName == 'profile' ? true : false;
       this.isUserAtivity = this.tableName == "user_role"? true : false;
+      this.documentType = this.tableName == "document_type"? true : false;
       if (this.tableName== "user_role"){
         
         console.log("resolve data", this.route.snapshot.data);     
@@ -118,7 +120,7 @@ responseData;
 
   ngOnInit() {
     
-    this.activityLists = this.activityLists.filter(v => v.value != "Admin");
+    // this.activityLists = this.activityLists.filter(v => v.value != "Admin");
 
   }
 
@@ -147,6 +149,26 @@ responseData;
             this.errorMsg = "Select Any Activity";
             this.isErrorModal = true;
             return;
+          }
+        }else if(this.tableName == "document_type"){
+          if (this.lovs[index]['dataClass'] == undefined || this.lovs[index]['dataClass'] == null || this.lovs[index]['dataClass'] == ""){
+            this.errorMsg = "Enter Any Data Class";
+            this.isErrorModal = true;
+            return;
+          } else if(this.lovs[index]['dataIndex'] == undefined || this.lovs[index]['dataIndex'] == null || this.lovs[index]['dataIndex'] <= 0){
+            this.errorMsg = "Enter Data Index Must More then Zero(0)";
+            this.isErrorModal = true;
+            return;
+
+          }
+          else{
+            this.qdeHttp.insertUpdateEachLovs(this.lovs[index]).subscribe(res => {
+              if(res['ProcessVariables']['status'] == true) {
+                console.log(this.lovs[index]);
+                this.lovs[index].isEdit = true;
+                // this.lovs[index].id = res['ProcessVariables']['id'];
+                this.refresh();
+              } });
           }
         }else {
           this.qdeHttp.insertUpdateEachLovs(this.lovs[index]).subscribe(res => {
@@ -232,7 +254,9 @@ responseData;
         zoneName: v['zoneName'],
         reqBoolean : v['reqBoolean'],
         isMale : v['isMale'],
-        activityLists: v['activityId']!= null? this.getActivityObject(v['activityId']):null 
+        activityLists: v['activityId']!= null? this.getActivityObject(v['activityId']):null,
+        dataClass: v['dataClass'],
+        dataIndex: v['dataIndex']
       }
     });
 
@@ -503,12 +527,13 @@ console.log("check ac ",sActivity);
     checkList.forEach(obj =>{
       if(obj.value == "New Login"){
         createLogin = true
-      } else if(obj.value == "Document Upload" || obj.value == "View Form"){
+      } else if(obj.value == "Document Upload"){
         dUpload = true;
-      } else if (obj.value == "Admin"){
-        admin = true;
-        
       }
+      //  else if (obj.value == "Admin"){
+      //   admin = true;
+        
+      // }
     });
     return (dUpload && createLogin)
   }

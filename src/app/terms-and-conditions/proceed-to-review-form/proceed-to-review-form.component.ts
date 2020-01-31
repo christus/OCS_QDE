@@ -38,7 +38,7 @@ export class ProceedToReviewFormComponent implements OnInit {
     this.applicationId = this.route.snapshot.params["applicationId"];
     console.log("applicant ID  ", this.applicantId);
     const applicatonData = this.qde.application.applicants.find(v => v.applicantId == this.applicantId);
-
+    this.commonDataService.changeApplicantId(this.applicantId);
     console.log("application qde values ", this.qde.application);
     if(status == statuses['Terms and conditions accepted']) {
       this.router.navigate(['static/terms-and-conditions/thankt&c', this.applicationId, this.applicantId]);

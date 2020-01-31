@@ -110,6 +110,12 @@ export class CommonDataService {
   changeApplicationId(val: string) {
     this.applicationId$.next(val);
   }
+  applicantId$: BehaviorSubject<string> = new BehaviorSubject<string>(null);
+  public applicantId = this.applicantId$.asObservable();
+
+  changeApplicantId(val: string) {
+    this.applicantId$.next(val);
+  }
 
   coApplicantIndex$: BehaviorSubject<number> = new BehaviorSubject<number>(null);
   public coApplicantIndex = this.coApplicantIndex$.asObservable();
@@ -277,8 +283,18 @@ export class CommonDataService {
   changeShowOCS(value: boolean) {
     this.showOCS$.next(value);
   }
+  lastLoginDateTime$: BehaviorSubject<string> = new BehaviorSubject<string>(null);
+  public lastLoginDateTime = this.lastLoginDateTime$.asObservable();
+  changelastLoginDateTime(value: string) {
+    this.lastLoginDateTime$.next(value);
+  }
+  eligibilityReview$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public eligibilityReview = this.eligibilityReview$.asObservable();
+  changeleligibilityReview(value: boolean) {
+    this.eligibilityReview$.next(value);
+  }
 
-checkUserMapping(userActivityList,userFullName){
+checkUserMapping(userActivityList,userFullName,lastLoginDateTime?){
   let myServiceStatus= false;
   console.log("user activity in cds",userActivityList,userFullName);
           let createLead = false;
@@ -290,6 +306,7 @@ checkUserMapping(userActivityList,userFullName){
           let opsMoudule = false;
           let masterConfig = false;
           let showOCS = false;
+          let eligibilityReview = false;
           userActivityList.forEach(uActivity => {
             if (uActivity == "Lead"){
               createLead = true;
@@ -312,6 +329,8 @@ checkUserMapping(userActivityList,userFullName){
               opsMoudule =true;
             }else if (uActivity == "Master Config"){
               masterConfig =true;
+            }else if(uActivity=="Eligibility Review"){
+              eligibilityReview = true;
             }
             myServiceStatus =true;
           });
@@ -326,7 +345,10 @@ checkUserMapping(userActivityList,userFullName){
           this.changeOpsMoudule(opsMoudule);
           this.changeMasterConfig(masterConfig);
           this.changeShowOCS(showOCS);
+          this.changelastLoginDateTime(lastLoginDateTime);
+          this.changeleligibilityReview(eligibilityReview);
           this.adminPageNavigation(userModule,opsMoudule,masterConfig);
+          
 }       
 
 adminPageNavigation(userModule,opsMoudule,masterConfig){

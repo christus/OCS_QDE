@@ -86,8 +86,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
         appId: "OCS",
         refId: this.oldRefId,
         captcha: this.captchaText,
-        // useADAuth: false
-         useADAuth: userEmailId.startsWith("he")
+        useADAuth: false
+        //  useADAuth: userEmailId.startsWith("he")
       };
       console.log("login Data: ",data);
       let token = localStorage.getItem("token");
@@ -195,14 +195,15 @@ export class LoginComponent implements OnInit, AfterViewInit {
         // localStorage.setItem("firstName", res["ProcessVariables"]["firstName"]);
         let userActivityList = res["ProcessVariables"]["userActivityList"];
         let userFullName = res["ProcessVariables"]["userName"];
-        let isAdmin = res["ProcessVariables"]["isAdmin"]
+        let isAdmin = res["ProcessVariables"]["isAdmin"];
+        let lastLoginDateTime = res["ProcessVariables"]["lastLoggedInDateTime"];
         // let userActivityArray :[] = userActivityList.split(",");
        console.log("user Activity",userActivityList);
       
         // if(roleName.includes("Admin")) {
           if(isAdmin){
           this.commonDataService.changeIsAdmin(isAdmin)
-          this.setUserActivity(userActivityList,userFullName);
+          this.setUserActivity(userActivityList,userFullName,lastLoginDateTime);
           
           this.commonDataService.adminNagigation$.subscribe(val => 
                                     this.navigationString =val);
@@ -213,7 +214,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
           return;
         }else{
           this.commonDataService.changeIsAdmin(isAdmin);
-          this.setUserActivity(userActivityList,userFullName);        
+          this.setUserActivity(userActivityList,userFullName,lastLoginDateTime);        
         } 
         
         // else if(roleName.includes("connector")){
@@ -247,9 +248,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
       }
     );
   }
-setUserActivity(userActivityList,userFullName){
+setUserActivity(userActivityList,userFullName,lastLoginDateTime?){
   if( userActivityList != undefined  && userActivityList != null){
-    this.commonDataService.checkUserMapping(userActivityList,userFullName);
+    this.commonDataService.checkUserMapping(userActivityList,userFullName,lastLoginDateTime);
   } else {
     
       this.commonDataService.setErrorData(true,"DYN001","User Activity Not Defined");

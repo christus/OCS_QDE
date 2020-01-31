@@ -15,8 +15,9 @@ export class AdminPanelComponent implements OnInit {
   userModule: boolean;
   opsModule: boolean;
   masterConfig: boolean;
-  navigationString:string;
+  navigationString: string;
   showOCS: boolean;
+  lastLoginDateTime: string;
   constructor(private utilService: UtilService, 
               private http: QdeHttpService,
               private cds: CommonDataService) {
@@ -43,6 +44,7 @@ export class AdminPanelComponent implements OnInit {
     this.cds.showOCS$.subscribe(value=>{
       this.showOCS = value;
     })
+    this.cds.lastLoginDateTime$.subscribe(value => this.lastLoginDateTime = value );
     
   }
   isloggedIn() {

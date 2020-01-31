@@ -57,17 +57,17 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                                      {pattern:'[A-Z]{1}[0-9]{7}',hint:"V1234567"},
                                      {pattern:'^[A-Z]{2}[0-9]{13}$',hint:"AN0120100051926"},
                                      {pattern:'^[A-Z]{3}[0-9]{7}$',hint:"LWN5672084"},
-                                     {pattern:'[2-9]{1}[0-9]{11}',hint:"12 digit number, with first digit not 0 or 1"},
+                                     {pattern:'[2-9]{1}[0-9]{11}',hint:"12 digit number, with first digit should not 0 or 1"},
                                      {pattern:'[0-9]{18}',hint:"	18 digit number"},
                                      {pattern:'[0-9]{14}',hint:"	14 digit number"},
                                      {pattern:'[0-9]{16}',hint:"	16 digit number"}]
 
   maxlength:Array<string> = ['2','8','15','10','12','18','14','16'];
-
+// name: "^[0-9A-Za-z ]{0,99}$" // for only allow alpha
   regexPattern = {
     mobileNumber: "^[1-9][0-9]*$",
     stdCode: "^[0][0-9]*$",
-    name: "^[0-9A-Za-z ]{0,99}$",
+    name: "^[0-9A-Za-z, _&*#'/\\-@]{0,99}$",
     organizationName: "^[0-9A-Za-z, _&*#'/\\-@]{0,99}$",
     birthPlace:"^[A-Za-z ]{0,99}$",
     address : "^[0-9A-Za-z, _&*#'/\\-]{0,99}$",
@@ -636,6 +636,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
               this.cds.setactiveTab(screenPages['coApplicantDetails']);
               this.qdeService.setQde(result);
               let mainApplicant = this.qde.application.applicants.find(v => v.isMainApplicant == true);
+              
+              // get applicant name to set cds 
+              this.cds.changeApplicantId(mainApplicant.applicantId);
 
               if(params['coApplicantIndex'] == null) {
                 this.tabSwitch(0, 1);
@@ -2974,17 +2977,17 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
           this.officialCorrespondencePhoneNumber = "";
           this.officialCorrespondenceStdCode = "";
 
-        }else {
-          this.qde.application.applicants[this.coApplicantIndex].incomeDetails = {
-            incomeConsider: null,
-            monthlyIncome: "",
-            assessmentMethodology: "",
-          };
-        }
+        }else {          
+            this.qde.application.applicants[this.coApplicantIndex].incomeDetails = {
+              incomeConsider: null,
+              monthlyIncome: "",
+              assessmentMethodology: "",
+            };
+          }         
       }
 
       this.qde.application.applicants[this.coApplicantIndex].incomeDetails.incomeConsider = (value == 1) ? true : false;
-
+ 
 
       this.createOrUpdatePersonalDetailsSub23 = this.qdeHttp.createOrUpdatePersonalDetails(this.qdeService.getFilteredJson(this.qde)).subscribe((response) => {
         // If successfull
@@ -4536,7 +4539,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     }else if (age >  Number(this.minMaxValues["Age_Of_Incorporation"].maxValue)){     
       this.ageMaxError = true;   
       this.isErrorModal = true;
-      this.errorMessage = `Maximum age limit is.${this.minMaxValues["Age_Of_Incorporation"].maxValue}`;
+      this.errorMessage = `Maximum age limit is ${this.minMaxValues["Age_Of_Incorporation"].maxValue}`;
       
       this.ageError = false;
       return;
@@ -4577,7 +4580,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       }else if (age >  Number(this.minMaxValues["Age_limit"].maxValue)){
         
         this.isErrorModal = true;
-        this.errorMessage = `Maximum age limit is.${this.minMaxValues["Age_limit"].maxValue}`;
+        this.errorMessage = `Maximum age limit is ${this.minMaxValues["Age_limit"].maxValue}`;
         this.ageMaxError = true;
         this.ageError = false;
         return;

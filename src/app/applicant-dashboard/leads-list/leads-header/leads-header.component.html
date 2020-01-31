@@ -10,9 +10,14 @@
                     </h1>
                 </div>
                 <div class="right-panel">
+                    <h2 style="color: #db6024;font-weight: bold;font-size: small;" ><span class="name">Last Login</span>
+                        <br>
+                        <h3><span class="name">{{lastLoginDateTime | date:'medium'  | uppercase}}</span></h3>
+                    </h2>
+                    
                     <a [routerLink]="navigationString" *ngIf="isAdmin" class="space btn btn-default logout">Go to Admin</a>
                     <a (click)="logout()" *ngIf="isLogoutVisible" class="space btn btn-default logout">Logout</a>
-                
+                    
                 </div>
             </div>
             

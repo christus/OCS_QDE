@@ -833,8 +833,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
         }            
         
       }
-    }
-    else if(myGetErrorObject["loanDetails"]){
+    } else if(myGetErrorObject["loanDetails"]){
 
       this.butMes =  myGetErrorObject["loanDetails"];
       this.routePageName = "/loan";

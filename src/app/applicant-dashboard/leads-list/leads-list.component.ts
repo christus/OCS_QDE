@@ -80,6 +80,7 @@ export class LeadsListComponent implements OnInit {
   newLogin: boolean = false;
   createLead: boolean = false;
   documentUpload: boolean = false;
+  eligibilityReview: boolean = false;
 
   constructor(private service: QdeHttpService, private utilService: UtilService, 
     private cds: CommonDataService, 
@@ -175,7 +176,8 @@ export class LeadsListComponent implements OnInit {
           this.newLogin = value)
         this.cds.documetUploadStatus$.subscribe(value => 
           this.documentUpload = value)
-
+        this.cds.eligibilityReview$.subscribe(value => 
+          this.eligibilityReview = value);
 
           // if (this.createLead ) {
             // this.getFilteredLeads();
@@ -435,6 +437,10 @@ export class LeadsListComponent implements OnInit {
       } else if(screenPages["documentUploads"] == el["auditTrialScreenPage"]) {
         el["queryParams"] = {tabName: "dashboard", page: 1};
         return "/document-uploads/"+applicationId;
+      } else{
+        // if adit trail not aviialble
+        return "/applicant/"+applicationId
+
       }     
     } 
     else if(statuses[status] == "5") {
@@ -477,7 +483,8 @@ export class LeadsListComponent implements OnInit {
     } 
     else if(statuses[status] == "26") {
 
-      if(roles.includes("TBM") || roles.includes("TMA")) {
+      // if(roles.includes("TBM") || roles.includes("TMA")) {
+      if(this.eligibilityReview) {
 
         this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: true});
         return "/review-eligibility/"+applicationId;

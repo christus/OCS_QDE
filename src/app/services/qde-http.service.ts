@@ -1670,7 +1670,9 @@ createOrUpdatePersonalDetails(qde) {
       cityId : lovs.cityId!=null ? lovs.cityId: null,
       isRequired : lovs.isRequired!=null ? lovs.isRequired: null,
       reqBoolean : lovs.reqBoolean,
-      isMale : lovs.isMale
+      isMale : lovs.isMale,
+      dataClass: lovs.dataClass,
+      dataIndex: lovs.dataIndex
      
     });
  // activityLists: lovs['activityLists']
