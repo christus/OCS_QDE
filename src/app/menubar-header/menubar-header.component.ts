@@ -122,14 +122,11 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
 
       this.applicantBtnStatus = (this.qde.application.status == parseInt(statuses['Login Fee Paid']) ? true: false) ;
 
-      // Find an applicant
-      // if (this.applicantId == null || this.applicantId == undefined || this.applicantId == ""){
-        console.log("current url ",this._router.url);
-
+      
+             console.log("current url ",this._router.url);
         let currentUrl: string = this._router.url;
-
         if (!currentUrl.startsWith('/static')){
-
+  	// Find an applicant
         const applicants = this.qde.application.applicants;
         for (const applicant of applicants) {
           if (applicant["isMainApplicant"]) {

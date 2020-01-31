@@ -177,13 +177,30 @@
                               <!-- [(ngModel)]="qde.application.leadCreate.loanType" -->
                             </kendo-dropdownlist>
                         </div>
+                        <!-- bs-checkbox -->
+                        <div class="container">
+                           
+                            <label >I Authorize ICICI Home Finance to Contact Me.
+                                <input type="checkbox"                                         
+                                        [checked]="dnd"
+                                       
+                                        [(ngModel)]="dnd"
+                                        name="contactMe"
+                                        id="contactMe"                       
+                                        />
+                                        
+                               <span class="checkmark"></span>
+                            </label>
+                            
+                      </div>
+                       
                         <div class="error-msg">
                             <span>{{sessionMessage}}</span>
                         </div>
                       <div class="btn-wrap">
                           <button class="btn btn-primary"
-                          [ngClass]="{'disabled': (!leadForm.valid)|| isNumberLessThan50k || isNumberMoreThan100cr || selectedLoanType.value ==0}"
-                          [disabled]="!leadForm.valid || isNumberLessThan50k || isNumberMoreThan100cr || selectedLoanType.value == 0"
+                          [ngClass]="{'disabled': (!leadForm.valid)|| isNumberLessThan50k || isNumberMoreThan100cr || selectedLoanType.value ==0 || !dnd}"
+                          [disabled]="!leadForm.valid || isNumberLessThan50k || isNumberMoreThan100cr || selectedLoanType.value == 0 "
                           >Submit</button>
                       </div>
                   </form>
