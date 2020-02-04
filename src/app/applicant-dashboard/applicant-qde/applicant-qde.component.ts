@@ -389,6 +389,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   isNumberMoreThan100cr: boolean;
   minMaxValues: Array<MinMax>;
   tabHide: boolean;
+ 
   constructor(private renderer: Renderer2,
     private route: ActivatedRoute,
     private router: Router,

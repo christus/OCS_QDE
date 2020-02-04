@@ -110,3 +110,10 @@ table { border-collapse: collapse; }
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+.invalid-feedback {
+	font-size: .94vw;
+	line-height: 1.09vw;
+	font-family: zurich-bold;
+    letter-spacing: .5px;
+    color:red;
+}

@@ -3013,7 +3013,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
               this.qde.application.applicants[this.coApplicantIndex].pan.panNumber == ""){
                 this.tabSwitch(1,1);
                 this.isErrorModal= true;
-                this.errorMessage="Pan Number Is Mandatory For Income Consider Applicant"        
+                this.errorMessage="Pan Is Mandatory For Income Considered Applicant"        
                 
           }else{
             this.tabSwitch(9, 1);
