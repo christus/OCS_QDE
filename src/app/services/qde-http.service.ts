@@ -987,7 +987,7 @@ createOrUpdatePersonalDetails(qde) {
       quality: 50,
       destinationType: this.camera.DestinationType.FILE_URI,
       sourceType: this.camera.PictureSourceType.CAMERA,
-      allowEdit: true,
+      allowEdit: false,
       encodingType: this.camera.EncodingType.PNG,
       targetWidth: 100,
       targetHeight: 100,

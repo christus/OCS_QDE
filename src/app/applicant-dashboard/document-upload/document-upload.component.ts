@@ -18,6 +18,16 @@ import { Subscription } from 'rxjs';
 import { screenPages } from '../../app.constants';
 import { UtilService } from '../../services/util.service';
 
+
+import { File } from '@ionic-native/file/ngx';
+
+
+export declare class writeOption {
+  replace?: boolean;
+  append?: boolean;
+  truncate?: number;
+}
+
 interface Item {
   key: string;
   value: string | number;
@@ -32,11 +42,15 @@ enum DocumentCategory {
   PHOTO_PROOF = "Photo"
 }
 
+const mobilePath = "file:///storage/emulated/0/OCS/data/";
+
+
 @Component({
   selector: "app-document-upload",
   templateUrl: "./document-upload.component.html",
   styleUrls: ["./document-upload.component.css"]
 })
+
 export class DocumentUploadComponent implements OnInit, AfterViewInit {
 
   isMobile:boolean;
@@ -129,37 +143,37 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
   photoProofFileName: Array<string> = [];
   photoProofFileSize: Array<string> = [];
   photoProofId: Array<string> = [];
-  photoProofDoc: Array<File> = [];
+  photoProofDoc: Array<any> = [];
 
   idProofDocumnetType: Array<Array<Item>> = [];
   idProofFileName: Array<string> = [];
   idProofFileSize: Array<string> = [];
   idProofId: Array<string> = [];
-  idProofDoc: Array<File> = [];
+  idProofDoc: Array<any> = [];
 
   addressProofDocumnetType: Array<Array<Item>> = [];
   addressProofFileName: Array<string> = [];
   addressProofFileSize: Array<string> = [];
   addressProofId: Array<string> = [];
-  addressProofDoc: Array<File> = [];
+  addressProofDoc: Array<any> = [];
 
   incomeProofDocumnetType: Array<Array<Item>> = [];
   incomeProofFileName: Array<string> = [];
   incomeProofFileSize: Array<string> = [];
   incomeProofId: Array<string> = [];
-  incomeProofDoc: Array<File> = [];
+  incomeProofDoc: Array<any> = [];
 
   bankProofDocumnetType: Array<Array<Item>> = [];
   bankProofFileName: Array<string> = [];
   bankProofFileSize: Array<string> = [];
   bankProofId: Array<string> = [];
-  bankingProofDoc: Array<File> = [];
+  bankingProofDoc: Array<any> = [];
 
   collateralProofDocumnetType: Array<Array<Item>> = [];
   collateralProofFileName: Array<string> = [];
   collateralProofFileSize: Array<string> = [];
   collateralProofId: Array<string> = [];
-  collateralProofDoc: Array<File> = [];
+  collateralProofDoc: Array<any> = [];
   isDocUploadRouteModal: boolean = false;
 
   qde: Qde;
@@ -205,6 +219,9 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
   isMainTabEnabled: boolean;
   public defaultItem = environment.defaultItem;
 
+  fileWriteOption: writeOption;
+
+
   constructor(
     private renderer: Renderer2,
     private route: ActivatedRoute,
@@ -214,7 +231,9 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
     private utilService: UtilService,
     private cds: CommonDataService,
     private mobileService: MobileService,
-    private ngxService: NgxUiLoaderService) {
+    private ngxService: NgxUiLoaderService,
+    private file: File
+    ) {
 
     this.qde = this.qdeService.defaultValue;
 
@@ -586,7 +605,8 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
   setCustomerPhoto(files: any) {
     if(this.isMobile) {
       this.photoProofDoc[this.applicantIndex] = files;
-      this.photoProofFileName[this.applicantIndex] = (<any>window).Ionic.WebView.convertFileSrc(this.photoProofDoc[this.applicantIndex].toString().split("cache/")[1]);
+      console.log("File Name", this.photoProofDoc[this.applicantIndex])
+      this.photoProofFileName[this.applicantIndex] = (<any>window).Ionic.WebView.convertFileSrc(this.photoProofDoc[this.applicantIndex].toString().split("caseName/")[1]);
       this.photoProofFileSize[this.applicantIndex] = "";
       return;
     }
@@ -673,7 +693,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
 
     if(this.isMobile) {
       this.idProofDoc[this.applicantIndex] = files;
-      this.idProofFileName[this.applicantIndex] = (<any>window).Ionic.WebView.convertFileSrc(this.idProofDoc[this.applicantIndex].toString().split("cache/")[1]);
+      this.idProofFileName[this.applicantIndex] = (<any>window).Ionic.WebView.convertFileSrc(this.idProofDoc[this.applicantIndex].toString().split("caseName/")[1]);
       this.idProofFileSize[this.applicantIndex] = "";
       return;
     }
@@ -770,6 +790,23 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
 
         console.log("imageId",imageId);
 
+        this.file.checkDir(mobilePath, 'caseName').then(_=> {
+
+          console.log('Directory Exist');
+
+          this.file.removeRecursively(mobilePath, 'OCS').then(_=> {
+            
+            console.log('Directory deleted success');
+
+          }).catch(err =>{
+
+            console.log('Directory not deleted');
+
+          })
+        }).catch(err =>{
+          console.log('Directory doesnt exist');
+        });
+
 
         const documentId = imageId;
 
@@ -801,7 +838,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
 
     if(this.isMobile) {
       this.addressProofDoc[this.applicantIndex] = files;
-      this.addressProofFileName[this.applicantIndex] = (<any>window).Ionic.WebView.convertFileSrc(this.addressProofDoc[this.applicantIndex].toString().split("cache/")[1]);
+      this.addressProofFileName[this.applicantIndex] = (<any>window).Ionic.WebView.convertFileSrc(this.addressProofDoc[this.applicantIndex].toString().split("caseName/")[1]);
       this.addressProofFileSize[this.applicantIndex] = "";
       return;
     }
@@ -882,7 +919,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
   setIncomeProof(files: any) {
      if(this.isMobile) {
       this.incomeProofDoc[this.applicantIndex] = files;
-      this.incomeProofFileName[this.applicantIndex] = (<any>window).Ionic.WebView.convertFileSrc(this.incomeProofDoc[this.applicantIndex].toString().split("cache/")[1]);
+      this.incomeProofFileName[this.applicantIndex] = (<any>window).Ionic.WebView.convertFileSrc(this.incomeProofDoc[this.applicantIndex].toString().split("caseName/")[1]);
       this.incomeProofFileSize[this.applicantIndex] = "";
       return;
     }
@@ -973,7 +1010,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
   setBankingProof(files: any) {
      if(this.isMobile) {
       this.bankingProofDoc[this.applicantIndex] = files;
-      this.bankProofFileName[this.applicantIndex] = (<any>window).Ionic.WebView.convertFileSrc(this.bankingProofDoc[this.applicantIndex].toString().split("cache/")[1]);
+      this.bankProofFileName[this.applicantIndex] = (<any>window).Ionic.WebView.convertFileSrc(this.bankingProofDoc[this.applicantIndex].toString().split("caseName/")[1]);
       this.bankProofFileSize[this.applicantIndex] = "";
       return;
     }
@@ -1060,7 +1097,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
 
     if(this.isMobile) {
       this.collateralProofDoc[this.applicantIndex] = files;
-      this.collateralProofFileName[this.applicantIndex] = (<any>window).Ionic.WebView.convertFileSrc(this.collateralProofDoc[this.applicantIndex].toString().split("cache/")[1]);
+      this.collateralProofFileName[this.applicantIndex] = (<any>window).Ionic.WebView.convertFileSrc(this.collateralProofDoc[this.applicantIndex].toString().split("caseName/")[1]);
       this.collateralProofFileSize[this.applicantIndex] = "";
       return;
     }
@@ -1147,7 +1184,7 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
     this.uploadToMongo(modifiedFile, callback);
   }
 
-  uploadToMongo(file: File, callback: any) {
+  uploadToMongo(file, callback: any) {
     this.qdeHttp.uploadToAppiyoDrive(file).subscribe(
       response => {
         if (response["ok"]) {
@@ -1318,7 +1355,36 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
       this.cameraImage = (<any>window).Ionic.WebView.convertFileSrc(imageURI);
      }, (err) => {
       // Handle error
+      console.log("camera error", err);
      });
+  }
+
+  storeBase64File(base64Data) {
+    this.file.createDir(mobilePath, 'caseName', true).then(_=> {
+
+      console.log('Directory Exist');
+
+      this.fileWriteOption = {
+        replace: true
+      }
+
+      this.file.writeFile(mobilePath+'caseName/', 'photo.pdf', base64Data, this.fileWriteOption).then((result)=>{
+        console.log("result", result);
+      }).catch(()=>{});
+
+      // this.file.removeRecursively(mobilePath, 'OCS').then(_=> {
+        
+      //   console.log('Directory deleted success');
+
+      // }).catch(err =>{
+
+      //   console.log('Directory not deleted');
+
+      // })
+
+    }).catch(err =>{
+      console.log('Directory doesnt exist');
+    });
   }
 
   ngOnDestroy() {
@@ -1468,4 +1534,8 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
     this.page = pageNumber;
     this.tabSwitch(index, fromQde);
   }
+
+
+
+
 }

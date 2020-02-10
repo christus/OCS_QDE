@@ -1,6 +1,6 @@
 export const environment = {
-  version: "2.0.1",
-  buildDate: "03-02-2020",
+  version: "2.0.4",
+  buildDate: "10-02-2020",
   production: true,
   // projectId: '5928d30eac7811e9a1670242ac110002', // developement
 
@@ -465,7 +465,8 @@ export const environment = {
   csvLocation: "/d/download/csv?",
   isMobile: false,
   mobileExtenstion: "@icicibankltd.com",
-  host: "https://ihfcmobileuat.icicihfc.com/appiyo",
+  // host: "https://ihfcmobileuat.icicihfc.com/appiyo", // for uat
+  host: "https://onlineapplication.icicihfc.com/appiyo", // for production
   aesPublicKey: 'MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJ+GJdSSEeaNFBLqyfM3DIOgQgWCwJ0INfeZZV7ITsLeuA7Yd02rrkYGIix1IWvoebWVmzhncUepYxHwK1ARCdUCAwEAAQ==',
   encryptionType: true, //Ecryption
   captchFormat: "&width=250&height=80&bgr=255&bgg=255&bgb=255&bga=255&fontR=187&fontG=187&fontB=187&fontSize=50&captchaSize=5",

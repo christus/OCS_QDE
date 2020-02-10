@@ -6,8 +6,8 @@ android {
         applicationId "com.icici.hfc"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 199
-        versionName "1.9.9"
+        versionCode 204
+        versionName "2.0.4"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [usesCleartextTraffic:true]
 
