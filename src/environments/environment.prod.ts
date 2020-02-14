@@ -451,6 +451,10 @@ export const environment = {
     "userActivityMapping": {
       'workflowId' : 'c4791d1a305511eaba780242ac110002',
       'processId'  : 'c496a7ea305511eabf630242ac110002'
+    },
+    cityStateZoneRegionFromZipCode: {
+      workflowId: '499ac7b4b76b11e985fd0242ac110002',
+      processId: '3fb4a1e24e3e11eab1a60242ac110002'
     }
    
   },

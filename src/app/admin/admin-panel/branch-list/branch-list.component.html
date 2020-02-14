@@ -1,28 +1,39 @@
 <a class="editsavebtn" routerLink="/admin/lovs">Go Back</a>
 <h1 class="lov-heading">Branch List</h1>
-<input type="text" class="lov-search" #searchInp placeholder="Search" tabindex="1" (input)="search($event)" [(ngModel)]="searchKey" />
+<input type="text" class="lov-search" #searchInp placeholder="Search" tabindex="1"  [(ngModel)]="searchKey" />
 <button type="button" class="editsavebtn" routerLink="/admin/lovs/branch_list/add">Add Branch</button>
 <button type="button" class="editsavebtn" (click)="refresh()">Refresh Data</button>
 
+
+      <!-- <button class="fileUpload" (click)="callFile()">Upload Branch Mapping List</button>
+      <input type="file" #uploadCSV accept=".csv" (change)="startUpload($event)" style="display: none;">
+      <button type="button" class="btn btn-default" [ngClass]="{'disabled': (!isFileSelected)}"
+          [disabled]="!isFileSelected" (click)="uploadCSVFile()"> Upload List</button> -->
 
 <div class="list">
     <table class="admin-table">
         <thead>
           <tr>
             <th>Branch code</th>
-            <th>Branch Id</th>
+            <!-- <th>Branch Id</th> -->
             <th>Branch name</th>
-            <th>Branch type</th>
+            <!-- <th>Branch type</th> -->
             <th>City name</th>
+            <th>State</th>
+            <th>Zone</th>
+            <th>Region</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let item of collection | paginate: { itemsPerPage: perPage, currentPage: currentPage, totalItems: totalItems  }">
             <td><a [routerLink]= "['/admin/lovs/branch_add', item.branchId]">{{item.branchCode}}</a></td>
-            <td>{{item.branchId}}</td>
+            <!-- <td>{{item.branchId}}</td> -->
             <td>{{item.branchName}}</td>
-            <td>{{item.branchType}}</td>
+            <!-- <td>{{item.branchType}}</td> -->
             <td>{{item.cityName}}</td>
+            <td>{{item.state}}</td>
+            <td>{{item.zone}}</td>
+            <td>{{item.region}}</td>
           </tr>											
         </tbody>
       </table>

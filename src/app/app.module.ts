@@ -136,6 +136,8 @@ import { from } from 'rxjs';
 import { RelationshipMappingComponent } from './admin/admin-panel/relationship-mapping/relationship-mapping.component';
 import { ApplicationRelationshipResolverService } from './services/application-relationship-resolver.service';
 import { ReportsComponent } from './reports/reports.component';
+import { AddtionalServiceComponent } from './addtional-service/addtional-service.component';
+import { ApplicationPrintComponent } from './addtional-service/application-print/application-print.component'
 
 import { HTTP } from '@ionic-native/http/ngx';
 import { QdeHttpService } from './services/qde-http.service';
@@ -146,10 +148,11 @@ import { CaptchaResolverService } from './services/captcha-resolver.service';
 import { DatePipe } from '@angular/common';
 import { MaxMinLimitsComponent } from './admin/admin-panel/max-min-limits/max-min-limits.component';
 import { MinMaxLimitsResolverService } from './services/min-max-limits-resolver.service';
-
-
-
-
+import { PrintApplicationComponent } from './applicant-dashboard/print-application/print-application.component';
+import { FormPrintComponent } from './addtional-service/form-print/form-print.component';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { BranchMappingComponent } from './admin/branch-mapping/branch-mapping.component';
+import { AddtionalServiceDashboardComponent } from './addtional-service/addtional-service-dashboard/addtional-service-dashboard.component';
 
 
 
@@ -182,6 +185,33 @@ const appRoutes: Routes = [
     component: ReassignComponent,
     canActivate: [AuthGuard],
     canDeactivate: [ConfirmDeactivateGuard]
+  },
+  {
+    path: "addtional-service",
+    component: AddtionalServiceComponent,
+    canActivate: [AuthGuard],
+    canDeactivate: [ConfirmDeactivateGuard],
+    children: [
+      {
+        path: "",
+        component: AddtionalServiceDashboardComponent
+      },
+     {
+      path: 'application-print',
+      component: ApplicationPrintComponent
+      // resolve: {
+      //   listOfValues: ListOfValuesResolverService
+      // }
+    },
+     {
+        path: 'form-print/:applicationId',
+        component: FormPrintComponent,
+        resolve: {
+          qde: GetQdeDataResolverService
+        }
+
+      }
+    ]
   },
   {
     path: "connector/lead-create",
@@ -580,6 +610,10 @@ const appRoutes: Routes = [
         resolve: {
           maxMinLimits: MinMaxLimitsResolverService
         }
+      },
+      {
+        path:'branchMapping',
+        component: BranchMappingComponent
       }
     ]
   },
@@ -670,7 +704,13 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     AdminAuditTrialComponent,
     ReportsComponent,
     ReassignComponent,
-    MaxMinLimitsComponent
+    MaxMinLimitsComponent,
+    PrintApplicationComponent,
+    FormPrintComponent,    
+    BranchMappingComponent,
+    AddtionalServiceComponent,
+    ApplicationPrintComponent,
+    AddtionalServiceDashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -685,6 +725,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     DateInputsModule,
     ImageUploadModule.forRoot(),
     DeviceDetectorModule.forRoot(),
+    NgMultiSelectDropDownModule.forRoot(),
     NgxUiLoaderModule,
     // NgxUiLoaderRouterModule,
     // NgxUiLoaderRouterModule.forRoot({showForeground:true}),

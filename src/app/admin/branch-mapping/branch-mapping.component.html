@@ -1,0 +1,71 @@
+<div class="selectBox form-field-el">
+  <label class="controltitle">Search By User Role</label>
+  <select class="form-control selectbox" (change)=changeRole($event.target.value)>
+    <!-- <option  [ngValue]="null" >Choose your branch</option> -->
+    <option *ngFor="let item of rolesList" [ngValue]="item" value={{item.roleId}}>
+      {{item.roleName}}
+    </option>
+
+  </select>
+  &nbsp; &nbsp; &nbsp;<input type="text" class="search" placeholder="Search" [(ngModel)]="searchKey"
+    (input)="search()" />
+  <!-- <button class="fileUpload" (click)="callFile()">Upload Connector / DMA List</button>
+    <input type="file" #uploadCSV accept=".csv" (change)="startUpload($event)" style="display: none;">
+    <button type="button" class="btn btn-default" [ngClass]="{'disabled': (!isFileSelected)}"
+        [disabled]="!isFileSelected" (click)="uploadCSVFile()"> Upload List</button> -->
+    <!-- <button class="btn btn-default map-btn-right" routerLink="/admin/add-user">Add user</button>  -->
+  <br>
+  <span style="margin-left: 50vw;">{{uploadFileName}}</span>
+  <br>
+</div>
+
+<div class="list">
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th class="tableHeader">User ID</th>
+        <th class="tableHeader">Name</th>
+        <th class="tableHeader">Region</th>
+        <th class="tableHeader">Zone</th>
+        <th class="tableHeader">State</th>
+        <th class="tableHeader">City</th>
+        <th class="tableHeader">Branch</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- <tr *ngFor="let item of collection | paginate: { itemsPerPage: perPage, currentPage: currentPage, totalItems: totalItems  }"> -->
+      <!-- <td style="width: 5%"><a [routerLink]= "['/admin/add-user', item.Id]">{{item.userName}}</a></td>
+        <td style="width: 10%">{{item.userFirstName}}</td>
+        <td style="width: 10%">{{item.userLastName}}</td>
+        <td style="width: 15%">{{item.userMail}}</td>
+        <td style="width: 10%">{{item.mobile}}</td>
+        <td style="width: 5%">{{item.userRole}}</td>
+        <td style="width: 10%">{{item.branchName}}</td>
+        <td style="width: 5%">{{item.reportingToId}}</td>
+        <td style="width: 5%">{{item.reportingToName}}</td> -->
+      <tr *ngFor="let item of collection | paginate: { itemsPerPage: perPage, currentPage: currentPage, totalItems: totalItems  }">
+        <td class="tableHeader">{{item.userName}}</td>
+        <td class="tableHeader">{{item.userFirstName+' '+item.userLastName}}</td>
+        <td class="tableHeader">{{item.region}}</td> 
+        <td class="tableHeader">{{item.zone}}</td>
+        <td class="tableHeader">{{item.state}}</td>
+        <td class="tableHeader">{{item.city}}</td>
+        <td class="tableHeader">{{(item.branchName)?(item.branchName+''):''}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="overlay" [ngClass]="{'active': isErrorModal}">
+  <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isErrorModal}" style="text-align: center;">
+    <!-- <a class="modal-close" href="javascript:void(0);" (click)="onBackOTP()"><span class="icon icon-close"></span></a> -->
+    <a class="modal-close" (click)="isErrorModal = false"><span class="icon icon-close"></span></a>
+    <div class="modal-body">
+      <h1>{{errorMessage}}</h1>
+      <br><br><br>
+      <div class="btn-wrap">
+        <button class="btn btn-border" (click)="isErrorModal = false">Okay</button>
+      </div>
+    </div>
+  </div>
+</div>
+<pagination-controls (pageChange)="pageChanged($event)" class="pagination" autoHide="true"></pagination-controls>

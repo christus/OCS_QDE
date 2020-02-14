@@ -1627,6 +1627,29 @@ createOrUpdatePersonalDetails(qde) {
     return this.callPost(workflowId, projectId, body);
   }
 
+  getCityStateZoneRegionFromZipCode(data) {
+    const processId = environment.api.cityStateZoneRegionFromZipCode.processId;
+    const workflowId = environment.api.cityStateZoneRegionFromZipCode.workflowId;
+    // const projectId = environment.projectId;
+    const projectId = 'ff8e364e6fce11e98754782bcb8f3845'
+
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables:  data,
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = {
+      'processVariables':
+      JSON.stringify(requestEntity)
+    };
+
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
+
+  }
+
   /** Repoting to - search by key */
 
   adminReportingTo(data){
@@ -1665,6 +1688,7 @@ createOrUpdatePersonalDetails(qde) {
       id: lovs.id!=null ? parseInt(lovs.id) : null,
       male: lovs.male!=null ? lovs.male: null,
       female: lovs.female!=null ? lovs.female: null,
+      region: lovs.region!=null ? lovs.region: null,
       stateId : lovs.stateId!=null ? lovs.stateId: null,
       zone : lovs.zone != null ? lovs.zone: null,
       cityId : lovs.cityId!=null ? lovs.cityId: null,
@@ -2840,7 +2864,7 @@ createOrUpdatePersonalDetails(qde) {
           'authentication-token':  localStorage.getItem('token') ? localStorage.getItem('token') : '',
         };
 
-        this.httpIonic.setServerTrustMode("nocheck");
+        this.httpIonic.setServerTrustMode("pinned");
 
         this.httpIonic.get(url, {}, headers).then(result => {
           const data = JSON.parse(result.data);

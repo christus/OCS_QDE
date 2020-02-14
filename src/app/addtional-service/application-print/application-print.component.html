@@ -1,0 +1,33 @@
+<div class="form-group">
+  <div class="row">
+    <div class="col-12">
+      <ul
+        *ngFor="let detail of newPendingPaymentDetails | paginate: {id: 'pagination4',itemsPerPage: perPagePP, currentPage: currentPagePP, totalItems: totalItemsPP};">
+        <li>
+          <a [routerLink]="['../form-print',detail.leadId]" class="lead-action">
+            <ul class="bs-lead-card">
+              <li>
+                <span class="initials">AK</span>
+                <span class="user-name">{{detail.firstName || detail.nameOfOrganization}}
+                  {{detail.lastName}}</span></li>
+              <li>
+                <span class="name">applied on</span>
+                <span class="value">{{detail.appliedOn | date:'dd-MM-yyyy HH:mm:ss'}}</span>
+              </li>
+              <li>
+                <span class="name">phone</span>
+                <span class="value">{{detail.mobileNumber}}</span>
+              </li>
+              <li>
+                <span class="name">Status</span>
+                <span class="value">{{detail.status}}</span>
+              </li>
+            </ul>
+          </a>
+        </li>
+      </ul>
+      <pagination-controls id="pagination4" (pageChange)="pageChangedPP($event)" class="pagination" autoHide="true">
+      </pagination-controls>
+    </div>
+  </div>
+</div>

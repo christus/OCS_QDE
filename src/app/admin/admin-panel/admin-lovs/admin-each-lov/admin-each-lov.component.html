@@ -79,8 +79,8 @@
     <td [ngStyle]="{textAlign: 'center'}"  *ngIf="isUserAtivity" >
       <kendo-multiselect #kendoMult
             [data]="activityLists"  
-            [textField]="'value'"
-            [valueField]="'key'"        
+            [textField]="'key'"
+            [valueField]="'value'"       
             
             (valueChange)="onAddActivity($event,i)"
             [disabled]="l.isEdit"            

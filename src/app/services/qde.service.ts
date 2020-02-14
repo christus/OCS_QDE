@@ -926,7 +926,7 @@ getOnlyKeyValues(arg){
   
     a.forEach((obj ,index) => {
       if(obj.key == 'ocsNumber' || obj.key == 'isMainApplicant' || obj.key == 'applicationId') {
-        newObj.push(obj.key);
+        newObj.push(obj.value);
       } else {
         if(obj.value == null || obj.value == undefined || obj.value == NaN) {
           delete obj.key;
@@ -936,7 +936,7 @@ getOnlyKeyValues(arg){
               delete obj.key;
               return;
           } else {
-            newObj.push(obj.key);
+            newObj.push(obj.value);
             return;
           }
         } else if(obj.value.constructor == Boolean) {
@@ -944,7 +944,7 @@ getOnlyKeyValues(arg){
             delete obj.key;
             return;
           } else {
-            newObj.push(obj.key);
+            newObj.push(obj.value);
             return;
           }
         }else if(obj.value.constructor == Number) {
@@ -952,7 +952,7 @@ getOnlyKeyValues(arg){
             delete obj.key;
             return;
           } else {
-            newObj.push(obj.key);
+            newObj.push(obj.value);
             return;
           }
         } else if(obj.value.constructor == Array) {
@@ -988,5 +988,4 @@ getOnlyKeyValues(arg){
     return newObj;
   }
 }
-
 }

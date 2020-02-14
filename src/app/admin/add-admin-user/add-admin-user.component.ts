@@ -7,6 +7,8 @@ import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
 
 import {ViewChild, ElementRef} from '@angular/core';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { QdeService } from 'src/app/services/qde.service';
 
 
 @Component({
@@ -17,6 +19,7 @@ import {ViewChild, ElementRef} from '@angular/core';
 export class AddAdminUserComponent implements OnInit, AfterViewInit {
 
   reportingToInp: any;
+  selectedBranches = [];
   defaultSelectBranch:string ="null";
   defaultSelectRole:string="null";
   ngAfterViewInit(): void {
@@ -30,6 +33,8 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
   
   userRoles: Array<any>;
   branches: Array<any>;
+  states: Array<any>;
+  zones: Array<any>;
   formdata;
   reportingTo: string;
   reportingToStr: string;
@@ -72,10 +77,18 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
   mobileNumber:string;OnInit
   userRoleId:string;
   branchId:string;
+  region;
+  zone: string;
+  state: string;
+  city: string;
+
+  dropdownSettings: IDropdownSettings = {};
+  singleDropdownSettings: IDropdownSettings = {};
 
   @ViewChildren("reportingTo") reportingToList: QueryList<ElementRef>;
   constructor(private qdeHttp: QdeHttpService,
     private formBuilder: FormBuilder,
+    private qdeService: QdeService,
     private route: ActivatedRoute,
     private router: Router,
     private renderer: Renderer2
@@ -116,6 +129,8 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
       var lov = JSON.parse(response['ProcessVariables'].lovs);
       this.userRoles = lov.LOVS.user_role;
       this.branches = lov.LOVS.branch;
+      this.states = lov.LOVS.state;
+      this.zones = lov.LOVS.zone;
       // this.selectedRoleType = this.userRoles[0].key;
 
       console.log("this.userRoles", this.userRoles);
@@ -152,6 +167,24 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+
+    this.dropdownSettings = {
+      singleSelection: false,
+      idField: 'value',
+      textField: 'key',
+      itemsShowLimit: 4,
+      enableCheckAll: false,
+      allowSearchFilter: true
+    };
+
+    this.singleDropdownSettings = {
+      singleSelection: true,
+      allowSearchFilter: true,
+      enableCheckAll: false,
+      idField: 'value',
+      textField: 'key',
+      closeDropDownOnSelection: true
+    }
     // this.registerUser = this.formBuilder.group({
     //   firstName: [''],
     //   lastName: [''],
@@ -170,8 +203,11 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
   onSubmit() {
 
 
-      console.log('data', this.formValue.reportingToInp.value);
-      console.log('data', this.formValue.reportingTo.value);
+      console.log('data', this.formValue.userBranchId);
+      console.log('branch Id', this.qdeService.getOnlyKeyValues(this.formValue.userBranchId.value));
+
+
+    
 
       if(this.updatebtn) {
         this.updateUserDetails();
@@ -186,9 +222,12 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
         "mobileNumber": this.formValue.mobileNumber.value,
         "mailId": this.formValue.mailId.value,
         "roleId": parseInt(this.changeUserRole()),
-        "branchId": parseInt(this.changeBranch()),
+        // "branchId": parseInt(this.changeBranch()),
+        "branchId": this.qdeService.getOnlyKeyValues(this.formValue.userBranchId.value),
         "reportingTo": parseInt(this.formValue.reportingToInp.value),
         "userId": parseInt(localStorage.getItem("userId"))
+        
+        
       }
       console.log(data);
 
@@ -337,7 +376,8 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
       "mobile": this.formValue.mobileNumber.value,
       "mailId": this.formValue.mailId.value,
       "roleId": parseInt(this.formValue.userRoleId.value),
-      "branchId":  parseInt(this.formValue.userBranchId.value),
+      // "branchId":  parseInt(this.formValue.userBranchId.value),
+      "branchId": this.qdeService.getOnlyKeyValues(this.formValue.userBranchId.value),
       "reportingTo": parseInt(this.formValue.reportingToInp.value)
 
     }
@@ -387,5 +427,26 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
       }
     }
     return null;
+  }
+
+  getBranchObject(aList){
+    let getStringList: string = aList
+    let selectActivity: Array<any> = getStringList.split(",");
+    let myList=[];
+    console.log("arry list length ",this.branches.length);
+    if (selectActivity.length>0 &&  this.branches.length >0 ){
+        selectActivity.forEach((d) => {
+          this.branches.forEach( (obj)=> {
+              if (d== obj.value){
+                  console.log("ddd",obj)
+                  myList.push(obj);
+                  }}
+              )});
+            }
+          
+
+    console.log('conveted Object',myList) ;
+          return myList;
+
   }
 }

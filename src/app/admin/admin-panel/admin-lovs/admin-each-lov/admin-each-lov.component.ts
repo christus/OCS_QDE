@@ -143,7 +143,9 @@ responseData;
                 console.log(this.lovs[index]);
                 this.lovs[index].isEdit = true;
                 // this.lovs[index].id = res['ProcessVariables']['id'];
+               
                 this.refresh();
+               
               } });
           } else{
             this.errorMsg = "Select Any Activity";
@@ -229,6 +231,7 @@ responseData;
           this.lastKey = (parseInt(this.perPage)*(parseInt(this.totalPages)-1))+this.key.length+1;
           console.log(this.lastKey);
           this.key.push(this.lastKey);
+      
         }
       }
     })
@@ -273,7 +276,7 @@ responseData;
     if (selectActivity.length>0 &&  this.activityLists.length >0 ){
         selectActivity.forEach((d) => {
           this.activityLists.forEach( (obj)=> {
-              if (d== obj.key){
+              if (d== obj.value){
                   console.log("ddd",obj)
                   myList.push(obj);
                   }}

@@ -10,6 +10,7 @@ import { TabsComponent } from "./tabs/tabs.component";
 import { EncryptService } from "src/app/services/encrypt.service";
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { THROW_IF_NOT_FOUND } from '@angular/core/src/di/injector';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 
 export interface UserDetails {
   "amountEligible": number;
@@ -34,7 +35,7 @@ export class LeadsListComponent implements OnInit {
   days: Array<Item>;
   months: Array<Item>;
   years: Array<Item>;
-  assignedToList: Array<Item> = [{key: "SA", value: "SA"}, {key: "SA", value: "SM"}];
+  assignedToList: Array<Item> = [{ key: "SA", value: "SA" }, { key: "SA", value: "SM" }];
 
   YYYY: number = new Date().getFullYear();
 
@@ -49,7 +50,7 @@ export class LeadsListComponent implements OnInit {
   show: boolean = false;
   isLogoutVisible: boolean;
   // Lead ID === Application ID
-  userDetails: Array<UserDetails>;  
+  userDetails: Array<UserDetails>;
   newLeadsDetails: Array<any>;
   newPendingApplicationDetails: Array<any>;
   newPendingPaymentDetails: Array<any>;
@@ -60,7 +61,7 @@ export class LeadsListComponent implements OnInit {
   newLeadsStatus: string = "5";
   pendingAppStatus: string = "pendingApplication";
   pendingPaymentStatus: string = "pendingPayment";
-  isMobile:boolean;
+  isMobile: boolean;
   perPage: number;
   currentPage: number;
   totalPages: string;
@@ -81,9 +82,26 @@ export class LeadsListComponent implements OnInit {
   createLead: boolean = false;
   documentUpload: boolean = false;
   eligibilityReview: boolean = false;
+  isMultipleBranch: boolean = true;
+  isMultipleBranchModal: boolean;
+  // multipleBranchesData: Array<Item>;
+  defaultItem: Item = { key: 'Select...', value: null };
 
-  constructor(private service: QdeHttpService, private utilService: UtilService, 
-    private cds: CommonDataService, 
+  multipleBranchesData: Array<Item> = [];
+  selectedItems = [];
+  // dropdownSettings = {};
+
+  dropdownSettings:IDropdownSettings = {
+    singleSelection: true,
+    idField: 'value',
+    textField: 'key',    
+    itemsShowLimit: 3,
+    allowSearchFilter: true,
+    closeDropDownOnSelection: true
+  };
+
+  constructor(private service: QdeHttpService, private utilService: UtilService,
+    private cds: CommonDataService,
     private mobileService: MobileService,
     private router: Router,
     private ngxService: NgxUiLoaderService) {
@@ -166,8 +184,6 @@ export class LeadsListComponent implements OnInit {
   }
 
   
-
-
   ngOnInit() {      
         this.cds.showCreateLead$.subscribe(myValue => 
                       this.createLead = myValue)
@@ -561,5 +577,21 @@ export class LeadsListComponent implements OnInit {
   pageChangedPP(value) {
     let data = value;
     this.getPendingPayment(data);
+  }
+
+  onMultipleBranch() {
+    if (this.isMultipleBranch) {
+      this.isMultipleBranchModal = true;
+      this.multipleBranchesData = [        
+        { key: 'Branch 1', value: '1' },
+        { key: 'Branch 2', value: '2' },
+        { key: 'Branch 3', value: '3' },
+        { key: 'Branch 2', value: '2' },
+        { key: 'Branch 2', value: '2' },
+      ];
+    }
+    else{
+      this.router.navigate(['/applicant']);
+    }
   }
 }

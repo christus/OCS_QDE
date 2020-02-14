@@ -1,0 +1,304 @@
+.btn-wrap .application{
+    color: white;
+    background: #f58220;
+    padding: 5px;
+    position: fixed;
+    bottom: 50px;
+    z-index: 1;
+    right: 50px;
+  }
+  .cur-pointer {
+    cursor: pointer
+  }
+  table{
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    line-height: 20px;
+  }
+  /*tr:nth-child(even) {
+    background-color: #dddddd;
+  }*/
+  th, td {
+    text-align: left;
+  }
+  .leadList table{
+    background: #fafafa;
+    line-height: 24px;
+    margin: 10px 1%;
+    width: 98%;
+    border: 1px solid #e5e5e5;
+    font-size: 14px;
+  }
+  .leadList table td {
+    text-indent: 10px;
+    width: 33.33%;
+  }
+  .leadList table span {
+    /*width: 50%;*/
+    display: inline-block;
+  }
+  .leadList li {
+    line-height: 36px;
+  }
+  .leadList li:first-child {
+    padding: 10px 0;
+    border-bottom: 1px solid #eaeaea;
+    font-size: 16px;
+  }
+  /*.leadList tr:last-child {
+      border-top: 1px solid #ccc;
+  }*/
+  .leadFilter {
+    width: 100%;
+    font-size: 16px;
+  }
+  .leadList td,
+  .leadSearch td {
+    width: 100%;
+  }
+  .leadLogin td {
+      width: 33.33%;
+      display: inline-block;
+      text-align: right;
+  }
+  #searchLead{
+    height: 60px;
+    margin: 0 1%;
+    width: 98%;
+    border: none;
+    border-bottom: 1px solid #eaeaea;
+  }
+  .leadSearch .bs-form .form-group {
+    width: 98%;
+    max-width: 98%;
+    margin-bottom: 0;
+    margin: 0 1%;
+  }
+  /* .leadSearch .bs-form .form-group .form-control,
+  .leadSearch .bs-form .form-group label {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+  } */
+  
+  .leadFilter td {
+      width: 20%;
+      display: inline-block;
+      text-align: right;
+  }
+  a, a:visited {
+    color: #000;
+  }
+  .btn.btn-default {
+    background: #004a80;
+    border-radius: 3.91vw;
+    color: #fff;
+    font-size: .94vw;
+    line-height: 2.73vw;
+    text-transform: uppercase;
+    padding: 0 1.56vw;
+    float: right;
+    margin: 1vw;
+    text-align: center;
+  }
+  
+  .leadLogin {
+    width: 66%;
+    position: fixed;
+  }
+  .leadSearch {
+      top: 4.69vw;
+      position: fixed;
+      width: 98%;
+      margin-left: 1%;
+      margin-top: 2%;
+  }
+  .leadSearch td {
+    width: 100%;
+    display: block;
+  }
+  .leadLogin,
+  .leadSearch {
+    background: #fff;
+  }
+  .leadList {
+    margin-top: 9.45vw;
+    display: flex;
+  }
+  
+  .fromToDateLbl {
+    
+  }
+  .leadLogin .bs-form .form-group {
+    width: auto;
+  }
+  .leadLogin .filters {
+    text-align: left;
+  }
+  .leadLogin .form-group {
+    margin: 0;
+  }
+  
+  .makeItScrollable {
+    display: block;
+    height: 98vh;
+    overflow-y: scroll;
+  }
+  
+  
+  .bs-lead-card {
+    box-shadow: 0 0 27px 0 rgba(68,68,68,.13);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.41vw 1.17vw;
+    margin: .78vw 1.56vw 0
+  }
+  
+  .bs-lead-card>li {
+    width: 22.5%
+  }
+  
+  .bs-lead-card>li:nth-child(5) {
+    width: 8%
+  }
+  
+  .bs-lead-card>li:last-child {
+    /* width: 2% */
+  }
+  
+  .bs-lead-card .initials {
+    width: 1.95vw;
+    height: 1.95vw;
+    text-transform: uppercase;
+    color: #fff;
+    background: #004a80;
+    border-radius: 50%;
+    font-size: .78vw;
+    line-height: 1.95vw;
+    display: inline-block;
+    text-align: center;
+    margin-right: 8px
+  }
+  
+  .bs-lead-card .user-name {
+    font-size: 1.09vw;
+    line-height: 1.95vw;
+    font-family: zurich-bold;
+    color: #444;
+    text-transform: capitalize
+  }
+  
+  .bs-lead-card li .name {
+    font-size: .94vw;
+    line-height: 1.41vw;
+    color: #999;
+    display: block;
+    text-transform: capitalize
+  }
+  
+  .bs-lead-card li .value {
+    font-size: .94vw;
+    line-height: 1.41vw;
+    color: #444;
+    display: block
+  }
+  
+  .bs-lead-card li .value .bs-progress-bar {
+    margin-left: .78vw
+  }
+  
+  .bs-lead-card .lead-action {
+    color: #f58220;
+    font-family: zurich-bold;
+    font-size: .94vw;
+    line-height: 1.95vw;
+    text-transform: uppercase
+  }
+  
+  .bs-lead-card .lead-details {
+    color: #444;
+    font-size: 1.25vw
+  }
+  
+  
+  
+  
+  .typ-dash .tabs-head {
+    justify-content: left;
+    border-bottom: 1px solid rgba(0,74,128,.2);
+    margin: 0 1.56vw;
+    padding: 0 3.91vw 0 0;
+  }
+  .typ-dash .tabs-head .tab-link a {
+    display: inline-block;
+    padding-bottom: 1.17vw;
+    font-size: 1.41vw;
+    text-transform: capitalize;
+    color: #004a80;
+    font-family: zurich-bold;
+    line-height: 1.88vw;
+    position: relative;
+  }
+  .add-lead-link,
+  .add-new-login {
+    line-height: 2.73vw;
+    font-size: 1.09vw;
+    text-align: center;
+    color: #f58220;
+    text-transform: uppercase;
+    border: 1px solid #f58220;
+    padding: 0 .78vw;
+    border-radius: 25px;
+    float: right;
+    margin: 1.2vh;
+  }
+  
+  .add-new-login {
+    
+  }
+  
+  
+  .typ-connector {
+    padding: 0 0 0 5.47vw;
+  }
+  .initials {
+    display: none!important;
+  }
+  
+  .pagination {
+    display: block;
+    clear: both;
+    text-align: center; 
+    margin-top: 1rem;
+    font-size: 1.09vw;
+    line-height: 1.95vw;
+    font-family: zurich-bold;
+    color: #444!important;
+  }
+  
+  .errorMessage{
+    text-align: left;
+    color: #f58220;
+    font-size: 1.5vW;
+    padding-bottom: 1.5vw;
+  }
+  
+  .control-title{
+    font-size: 0.85vw;
+  }
+  
+  .modal-body .form-group{
+    border: none;
+    border-bottom: 0.5px solid darkgrey;
+    border-radius: 3px;
+  }
+  
+  .modal-body .btn-wrap{
+    padding-top: 2vw;
+  }
+  .form-control{
+    font-size: 3rem;
+  }
+  

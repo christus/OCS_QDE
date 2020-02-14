@@ -1,4 +1,4 @@
-<button *ngIf="updatebtn" class="btn btn-default" routerLink="/admin/user-module">Go Back</button>
+<button  class="btn btn-default" routerLink="/admin/user-module">Go Back</button>
 <div class="app-admin-container">
     <form [formGroup]="registerUser" (ngSubmit)="onSubmit()"  autocomplete="off">
         <div class="inputBox form-field-el">
@@ -65,16 +65,21 @@
         </div>
         <div class="selectBox form-field-el">
             <label class="controltitle">User branch *</label>
-            <select class="form-control" formControlName="userBranchId" [(ngModel)]="defaultSelectBranch">
+            <ng-multiselect-dropdown [placeholder]="'Choose your branch'" 
+            [data]="branches" [(ngModel)]="branch" [settings]="dropdownSettings" formControlName="userBranchId">
+
+            </ng-multiselect-dropdown>
+            <!-- <select class="form-control" formControlName="userBranchId" [(ngModel)]="defaultSelectBranch">
                 <option  [ngValue]="null" value="null" disabled>Choose your branch</option>
                 <option *ngFor="let br of branches" value={{br.value}} >
                     {{br.key}}
                 </option>
             </select>
             <div *ngIf="formValue.userBranchId.errors" >
-                <!-- <div class="redalert" *ngIf="formValue.branchId.errors.required"> required</div> -->
-            </div>
+                
+            </div> -->
         </div>
+
     
         <div class="inputBox form-field-el reportingToBlock"  #selectBox>
             <label for="reportingTo" class="">Reporting to: *</label>

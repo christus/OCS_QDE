@@ -1,14 +1,14 @@
 .app-admin-container {
     padding-top: 2vh;
 }
-.reporting_to {
+/* .reporting_to {
     overflow-y: scroll;
     height: 100px;
     position: absolute;
     width: 17.75vw;
     background: #eee;
     border: 1px solid #ccc;
-}
+} */
 
 li .item:active { 
     background-color: yellow;
@@ -17,7 +17,6 @@ li .item:active {
 .selectBox {
     position: relative;
     margin-bottom: 2.08vw;
-    max-width: 35.55vw;
     text-align: left;
 }
 .inputBox label,
@@ -82,7 +81,8 @@ select:-webkit-autofill:focus {
 }
 .reporting_to {
     overflow-y: scroll;
-    height: 100px;
+    /* height: 100px; */
+    height: 15vw;
     position: absolute;
     width: 17.75vw;
     background: #eee;
@@ -94,6 +94,12 @@ select:-webkit-autofill:focus {
     font-size: 1.4vw;
     background: #fff;
     border-bottom: 1px solid #ddd;
+    color: #999;
+}
+.reporting_to li:hover{
+    background:#e66e23 !important;
+    cursor: pointer;
+    color: #fff;
 }
 
  .select{
@@ -138,8 +144,27 @@ select:-webkit-autofill:focus {
     font-size: .94vw;
     font-weight: bold;
     letter-spacing: 0.5px;
-    position: fixed;
+    /* position: fixed; */
 }
 .modal-body{
     word-wrap: break-word; 
+}
+
+.margin-left {
+    margin-left: 3% !important;
+}
+
+.flex-container {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 1rem 0;
+}
+
+.flex-child {
+    flex: 1;
+    margin: 1rem;
+}
+
+.flex-input {
+    margin-top: 3rem;
 }

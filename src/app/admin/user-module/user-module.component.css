@@ -91,11 +91,12 @@
 }
 .fileUpload {
     background: #f9f9f9;
-    padding: 15px;
-    border-radius: 5px;
+    padding: 0.6vw;
+    border-radius: 3.91vw;
+    border-color: darkgray;
     margin: 10px;
     cursor: pointer;
     font-family: zurich-light;
     font-size: 1.0vw;
-    margin-left: 15vw;
+    /* margin-left: 15vw; */
 }

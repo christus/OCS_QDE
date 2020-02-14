@@ -277,3 +277,27 @@ a, a:visited {
   font-family: zurich-bold;
   color: #444!important;
 }
+
+.errorMessage{
+  text-align: left;
+  color: #f58220;
+  font-size: 1.5vW;
+  padding-bottom: 1.5vw;
+}
+
+.control-title{
+  font-size: 0.85vw;
+}
+
+.modal-body .form-group{
+  border: none;
+  border-bottom: 0.5px solid darkgrey;
+  border-radius: 3px;
+}
+
+.modal-body .btn-wrap{
+  padding-top: 2vw;
+}
+.form-control{
+  font-size: 3rem;
+}

@@ -20,9 +20,11 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
   tableName: string;
   userId: number;
   isConfirmModal : boolean = false;
+  regions: Array<Item> = [];
   states: Array<Item> = [];
   zones: Array<Item> = [];
   cities: Array<Item> = [];
+  selectedRegion: Item;
   selectedState: Item;
   selectedZone: Item;
   selectedCity: Item;
@@ -75,6 +77,11 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
     this.userId = parseInt(localStorage.getItem('userId'));
     this.tableName = 'zipcode';
 
+    this.selectedRegion = {
+      key: 'Select...',
+      value:'0'
+    }
+
     if(this.route.snapshot.data['eachLovs']['ProcessVariables']['status'] == true) {
       if(this.route.snapshot.data['eachLovs']['ProcessVariables']['valueDescription']) {
 
@@ -115,9 +122,18 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
         //alert('No Data Present');
     } */
 
+    //Regions
+
+    this.regions = [
+      {key:'Northern',value:'1'},
+      {key:'Southern',value:'2'},
+      {key:'Eastern',value:'3'},
+      {key:'Western',value:'4'}
+    ]
     // States
     if(this.route.snapshot.data['generalLovs']['ProcessVariables']['status'] == true) {
       this.states = JSON.parse(this.route.snapshot.data['generalLovs']['ProcessVariables']['lovs'])['LOVS']['state'];
+      // this.regions = JSON.parse(this.route.snapshot.data['generalLovs']['ProcessVariables']['lovs'])['LOVS']['region'];
 
       this.selectedState = this.states[0];
 
@@ -297,6 +313,9 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
       this.selectedCity = result;
       console.log(result);
     }
+  }
+ regionChanged(event) {
+
   }
 
   edit(index) {

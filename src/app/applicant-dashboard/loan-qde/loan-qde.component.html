@@ -225,10 +225,12 @@
                                   name="propertyClssArea"
                                   #propertyClss="ngModel"
                                   [(ngModel)]="propertyClssValue"
-                                  pattern="^[a-zA-Z _'@$%!~^+,/*#&().-]+$"
+                                 
                                   (input)="clssSearchArea($event)"
                                   fieldFill
                                   required >
+                                  <!-- pattern="^[a-zA-Z _'@$%!~^+,/*#&().-]+$" -->
+
                                   <label for="propertyClssArea" >Property CLSS area</label>
                                   <span class="optional" style="font-size: 1vw">Type to search</span>
                                   <div *ngIf="(propertyClss.touched || propertyClss.dirty) && propertyClss.invalid" class="invalid-feedback">

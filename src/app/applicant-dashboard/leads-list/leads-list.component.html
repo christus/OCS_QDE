@@ -7,7 +7,7 @@
     <li class="tab-link active" data-target="leads-tab"><a> Dashboard </a></li>
     <!-- Logins -->
   </ul>
-  <button routerLink="/applicant" class="btn application add-new-login" *ngIf="newLogin">NEW LOGIN</button>
+  <button (click)="onMultipleBranch()" class="btn application add-new-login" *ngIf="newLogin">NEW LOGIN</button>
   <button routerLink="/connector/lead-create" class="btn application add-lead-link" *ngIf="createLead">CREATE LEAD</button>
 
 </div>
@@ -116,4 +116,33 @@
     <pagination-controls id="pagination4"  (pageChange)="pageChangedPP($event)" class="pagination" autoHide="true" ></pagination-controls>
 </tab>
 </tabs>
+</div>
+
+<div class="overlay" [ngClass]="{'active': isMultipleBranchModal}">
+    <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isMultipleBranchModal}">
+        <!-- <a class="modal-close" (click)="onCrossModal()"><span class="icon icon-close"></span></a> -->
+        <div class="modal-body">
+            <h1 class="errorMessage">Select Branch</h1>
+            <div class="form-group single-select">
+                <span class="control-title">Branch Name</span>
+                <!-- <kendo-dropdownlist [readonly]="isTBMLoggedIn"
+                  class="form-control"
+                  [defaultItem]="defaultItem"
+                  [data]="multipleBranchesData"
+                  [textField]="'key'"
+                  [valueField]="'value'">                  
+                </kendo-dropdownlist> -->
+                <ng-multiselect-dropdown 
+                    [placeholder]="'Search'" 
+                    [data]="multipleBranchesData"
+                    [settings]="dropdownSettings"                     
+                    >
+                </ng-multiselect-dropdown>
+            </div>
+            <div class="btn-wrap">
+                <button class="btn btn-border" routerLink="/applicant"
+                    (click)="isMultipleBranchModal = false">Submit</button>
+            </div>
+        </div>
+    </div>
 </div>
