@@ -1,4 +1,4 @@
-<a class="editsavebtn" routerLink="/admin/lovs">Go Back</a>
+<a class="editsavebtn" routerLink="/admin/lovs" #goBack>Go Back</a>
 <h1 class="lov-heading">{{tableName.split('_').join(' ') | titlecase }}</h1>
 <input type="text" class="lov-search" #searchInp placeholder="Search" tabindex="1" (input)="search($event)" [(ngModel)]="searchKey" />
 <button type="button" class="editsavebtn" (click)="add()">{{isAdd ? 'Close': 'Add New'}}</button>
@@ -12,36 +12,60 @@
       <!-- ZipCode -->
       <div *ngIf="tableName == 'zipcode'">
         <label for="region">Select Region</label>
-        <select id="region" name="region" [(ngModel)]="selectedRegion.value" (ngModelChange)="regionChanged($event)">
-          <option value="0" disabled>Select...</option>
+        <select class="space-margin-bottom" id="region" name="regionId" [(ngModel)]="selectedRegion.value" (ngModelChange)="regionChanged($event)">
+          <option value="0">Select</option>
           <option *ngFor="let r of regions;" [ngValue]="r.value">{{r.key}}</option>
         </select>
+        <span class="error-span" [ngClass]="{'errorMessage':true}">
+          Please select the region
+        </span>
 
-        <label for="state">Select State</label>
-        <select id="state" name="stateId" [(ngModel)]="selectedState.value" (ngModelChange)="stateChanged($event)">
+        <label for="state">*Select State</label>
+        <select class="space-margin-bottom" id="state" name="stateId" [(ngModel)]="selectedState.value" (ngModelChange)="stateChanged($event)">
+          <option value="0" disabled>Select</option>
           <option *ngFor="let s of states;" [ngValue]="s.value">{{s.key}}</option>
         </select>
+        <span class="error-span" [ngClass]="{'errorMessage': !isStateHidden}">
+          Please select the state
+        </span>
 
-        <label for="zone">Select Zone</label>
-        <select id="zone" name="zone" [(ngModel)]="selectedZone.value" (ngModelChange)="zoneChanged($event)">
+        <label for="zone">*Select Zone</label>
+        <select class="space-margin-bottom" id="zone" name="zone" [(ngModel)]="selectedZone.value" (ngModelChange)="zoneChanged($event)">
+          <option value="0" disabled>Select</option>
           <option *ngFor="let z of zones;" [ngValue]="z.value">{{z.key}}</option>
         </select>
+        <span class="error-span" [ngClass]="{'errorMessage':!isZoneHidden}">
+          Please select the zone
+        </span>
     
-        <label for="city" *ngIf="selectedCity ">Select City</label>
-        <select id="city" name="cityId" *ngIf="selectedCity " [(ngModel)]="selectedCity.value" (ngModelChange)="cityChanged($event)">
+        <label for="city">*Select City</label>
+       
+        <select id="city" class="space-margin-bottom" name="cityId" [(ngModel)]="selectedCity.value" (ngModelChange)="cityChanged($event)">
+          <option value="0" disabled>Select</option>
           <option *ngFor="let c of cities;" [ngValue]="c.value">{{c.key}}</option>
         </select>
+        <span class="error-span" [ngClass]="{'errorMessage':!isCityHidden}">
+          Please select the city
+        </span>
       </div>
 
 
     </div>
 
     <div class="admin-col-half">
-      <label for="description">Description</label>
-      <input type="text" class="descvalue" [(ngModel)]="description" id="description" name="description" ngModel />
-  
-      <label for="value">Value</label>
-      <input type="text" class="descvalue" [(ngModel)]="value" id="value" name="value" ngModel />
+
+      <label for="value">*Value</label>
+      <input type="text" class="descvalue" (ngModelChange)="valueChange($event)" [(ngModel)]="value" id="value" name="value" maxlength="6" ngModel />
+      <span class="error-span" [ngClass]="{'errorMessage':!isValueHidden}">
+        {{zipcodeErrMsg}}
+      </span>
+      
+      <label for="description">*Description</label>
+      <input type="text" class="descvalue space-margin-bottom" (ngModelChange)="descriptionChange($event)" [(ngModel)]="description" id="description" name="description" ngModel />
+      <span class="error-span" [ngClass]="{'errorMessage':!isDescriptionHidden}">
+        Please enter the description
+      </span>
+      
 
       <button type="submit" class="saveBtn">Save</button>
     </div>
@@ -69,14 +93,14 @@
     <tbody>
       <tr *ngFor="let d of data;let i=index;">
         <td>{{i+1}}</td>
-        <td></td>
+        <td>{{d.regionName}}</td>
         <td>{{d.stateName}}</td>
         <td>{{d.zoneName}}</td>
         <td>{{d.cityName}}</td>
         <td>{{d.description}}</td>
         <td>{{d.value}}</td>
         <td>
-          <button type="button" class="editsavebtn" (click)="edit(i)">Edit</button>
+          <button type="button" class="editsavebtn" (click)="edit(i);scroll(goBack)">Edit</button>
         </td>
         <td>
           <button type="button" class="editsavebtn" (click)="delete(i)">Delete</button>

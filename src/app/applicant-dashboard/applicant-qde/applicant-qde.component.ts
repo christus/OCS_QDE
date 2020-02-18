@@ -389,6 +389,8 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   isNumberMoreThan100cr: boolean;
   minMaxValues: Array<MinMax>;
   tabHide: boolean;
+  branchID: string = null;  
+    
   constructor(private renderer: Renderer2,
     private route: ActivatedRoute,
     private router: Router,
@@ -500,13 +502,15 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.cds.isTBMLoggedIn.subscribe(val => {
       this.isTBMLoggedIn = val;
-    });
+    });   
   }
 
   // panslide: boolean;
   // panslide2: boolean;
 
   ngOnInit() {
+   
+      console.log("selected Branch Id",this.branchID);
 
     console.log(">>", JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs));
     if (this.route.snapshot.data.listOfValues != null && this.route.snapshot.data.listOfValues != undefined) {
@@ -1199,8 +1203,9 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   //   return occupations[0];
 
   // }
-
+  
   submitPanNumber(form: NgForm, swiperInstance1: Swiper, swiperInstance2 : Swiper) {
+    
     try {
       this.ngxService.start();
     if (this.isTBMLoggedIn) {
@@ -1217,7 +1222,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.qde.application.applicants[this.applicantIndex].pan.panNumber = form.value.pan;
       this.qde.application.applicants[this.applicantIndex].pan.docType = form.value.docTypeindividual.value;
       this.qde.application.applicants[this.applicantIndex].pan.docNumber = form.value.docNumber;
-
+      this.qde.application.branch = this.getBranchId();
       // if(this.qde.application.applicants[this.applicantIndex].pan.panNumber) {
       //   this.panSlider2.setIndex(2);
       //   return;
@@ -1425,6 +1430,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.qde.application.applicants[this.applicantIndex].pan.panNumber = form.value.pan;
       // this.qde.application.applicants[this.applicantIndex].pan.docType = form.value.panDocType.value;
       // this.qde.application.applicants[this.applicantIndex].pan.docNumber = form.value.docNumber;
+      this.qde.application.branch = this.getBranchId();
 
       if (this.isValidPan == false || this.isValidPan == null) {
         this.checkPanValidSub2 = this.qdeHttp.checkPanValid(this.qdeService.getFilteredJson({ actualPanNumber: form.value.pan })).subscribe((response) => {
@@ -4521,4 +4527,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     // console.log("final Value "+ formattedDate);
     return formattedDate;
   }
+getBranchId(){
+  let branchID
+  this.cds.branchId$.subscribe( value =>
+   branchID = value
+    );
+    return branchID;
+}
+
 }

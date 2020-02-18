@@ -35,7 +35,7 @@ export class BranchMappingComponent implements OnInit {
     data["currentPage"] = 1;
     data["roleId"] = 1; // initial hardcoded to set filters/ SA is choosen as default
     this.filterData = 1;
-    this.getAdminUsers(data);
+    this.getUserMappingList(data);
     this.getRoleName();
   }
 
@@ -50,16 +50,17 @@ export class BranchMappingComponent implements OnInit {
   }
 
 
-  getAdminUsers(data) {
-    this.qdeHttp.getAdminUsers(data).subscribe((response) => {
-      if(response['ProcessVariables']['status'] && response['ProcessVariables']['userDetails']!=null){
-      this.collection = response['ProcessVariables'].userDetails;
+  getUserMappingList(data) {
+    this.qdeHttp.getUserBranchMapping(data).subscribe((response) => {
+      if(response['ProcessVariables']['status'] && response['ProcessVariables']['userBranchList']!=null){
+        // if(response['ProcessVariables']['userBranchList']!=null){
+      this.collection = response['ProcessVariables'].userBranchList;
       this.totalPages = response['ProcessVariables'].totalPages;
       this.from = response['ProcessVariables'].from;
       this.currentPage = response['ProcessVariables'].currentPage;
       this.perPage = response['ProcessVariables'].perPage;
       this.totalItems = parseInt(this.totalPages) * parseInt(this.perPage);
-      this.activityList = response['ProcessVariables'].activityList;
+      // this.activityList = response['ProcessVariables'].activityList;
       if(this.currentPage == this.totalPages) {
         this.enableLoadMore = false;
       }
@@ -77,7 +78,7 @@ export class BranchMappingComponent implements OnInit {
     let data = {};
     data["currentPage"] = value;
     data["roleId"] = this.filterData;
-    this.getAdminUsers(data);
+    this.getUserMappingList(data);
   }
 
   search(){
@@ -87,7 +88,7 @@ export class BranchMappingComponent implements OnInit {
       let data = {};
       data["roleId"] = this.filterData;
       data["searchKey"]= this.searchKey;
-      this.getAdminUsers(data);
+      this.getUserMappingList(data);
     }
   }
 
@@ -100,7 +101,7 @@ export class BranchMappingComponent implements OnInit {
     let data = {};
     data["currentPage"] = 1;
     data["roleId"] = this.filterData;
-    this.getAdminUsers(data);
+    this.getUserMappingList(data);
 
   }
 

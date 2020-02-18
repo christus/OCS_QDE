@@ -197,9 +197,12 @@ export class LoginComponent implements OnInit, AfterViewInit {
         let userFullName = res["ProcessVariables"]["userName"];
         let isAdmin = res["ProcessVariables"]["isAdmin"];
         let lastLoginDateTime = res["ProcessVariables"]["lastLoggedInDateTime"];
+        let isMultipleBranch = res["ProcessVariables"]["isMultipleBranch"];
+        let branchList = res["ProcessVariables"]["branchDetails"];
         // let userActivityArray :[] = userActivityList.split(",");
        console.log("user Activity",userActivityList);
-      
+        this.commonDataService.changeisMuultipleBranch(isMultipleBranch);
+        this.commonDataService.changebranchList(branchList);
         // if(roleName.includes("Admin")) {
           if(isAdmin){
           this.commonDataService.changeIsAdmin(isAdmin)

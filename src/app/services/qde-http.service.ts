@@ -1688,7 +1688,7 @@ createOrUpdatePersonalDetails(qde) {
       id: lovs.id!=null ? parseInt(lovs.id) : null,
       male: lovs.male!=null ? lovs.male: null,
       female: lovs.female!=null ? lovs.female: null,
-      region: lovs.region!=null ? lovs.region: null,
+      regionId: lovs.regionId!=null ? lovs.regionId: null,
       stateId : lovs.stateId!=null ? lovs.stateId: null,
       zone : lovs.zone != null ? lovs.zone: null,
       cityId : lovs.cityId!=null ? lovs.cityId: null,
@@ -3509,4 +3509,48 @@ createOrUpdatePersonalDetails(qde) {
     let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
     return this.callPost(workflowId, projectId, body);
   }
+
+  getStateListFromRegion(region: any) {
+    const processId = environment.api.getStateListFromRegion.processId;
+    const workflowId = environment.api.getStateListFromRegion.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: region,
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = {
+      'processVariables':
+      JSON.stringify(requestEntity)
+    };
+
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
+
+  }
+  getUserBranchMapping(data){
+    const processId = environment.api.adminGetUsersBranchMapping.processId;
+    const workflowId = environment.api.adminGetUsersBranchMapping.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: data,
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = {
+      'processVariables':
+      JSON.stringify(requestEntity)
+    };
+
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
+  }
+
+  
 }

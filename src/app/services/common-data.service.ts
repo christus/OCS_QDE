@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { screenPages } from '../app.constants';
+import { Item } from '../models/qde.model';
 
 @Injectable({
   providedIn: 'root'
@@ -292,6 +293,23 @@ export class CommonDataService {
   public eligibilityReview = this.eligibilityReview$.asObservable();
   changeleligibilityReview(value: boolean) {
     this.eligibilityReview$.next(value);
+  }
+
+  isMuultipleBranch$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public isMuultipleBranch = this.isMuultipleBranch$.asObservable();
+  changeisMuultipleBranch(value: boolean) {
+    this.isMuultipleBranch$.next(value);
+  }
+
+  branchList$: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+  public branchList = this.branchList$.asObservable();
+  changebranchList(value: any[]) {
+    this.branchList$.next(value);
+  }
+  branchId$: BehaviorSubject<string> = new BehaviorSubject<string>(null);
+  public branchId = this.branchId$.asObservable();
+  changebranchId(value: string) {
+    this.branchId$.next(value);
   }
 
 checkUserMapping(userActivityList,userFullName,lastLoginDateTime?){

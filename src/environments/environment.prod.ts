@@ -1,10 +1,10 @@
 export const environment = {
-  version: "2.0.4",
-  buildDate: "10-02-2020",
+  version: "2.0.4.1",
+  buildDate: "18-02-2020",
   production: true,
-  // projectId: '5928d30eac7811e9a1670242ac110002', // developement
+  projectId: '5928d30eac7811e9a1670242ac110002', // developement
 
-  projectId: '3209f7ea7ba811e982270242ac110002', // production
+  // projectId: '3209f7ea7ba811e982270242ac110002', // production
 
   //projectId: 'ff8e364e6fce11e98754782bcb8f3845', // UAT Development
 
@@ -452,9 +452,17 @@ export const environment = {
       'workflowId' : 'c4791d1a305511eaba780242ac110002',
       'processId'  : 'c496a7ea305511eabf630242ac110002'
     },
-    cityStateZoneRegionFromZipCode: {
-      workflowId: '499ac7b4b76b11e985fd0242ac110002',
-      processId: '3fb4a1e24e3e11eab1a60242ac110002'
+    "cityStateZoneRegionFromZipCode": {
+      "workflowId": '499ac7b4b76b11e985fd0242ac110002',
+      "processId": '3fb4a1e24e3e11eab1a60242ac110002'
+    },
+    "getStateListFromRegion": {
+      'workflowId' : 'e77f2900bcd111e9871a0242ac110002',
+      'processId'  : '1c0c29324ef611ea92930242ac110002'
+    },
+    "adminGetUsersBranchMapping": {
+      'workflowId': '0c082094515411ea9d1d0242ac110002',
+      'processId': '0c2b9e70515411ea95260242ac110002'
     }
    
   },
@@ -462,7 +470,7 @@ export const environment = {
   appiyoDrive: "/d/drive/upload/",
   driveLocation: "/d/drive/docs/",
   ocsHost: "/ocs",
-  // host: "http://192.168.1.108/appiyo",
+  host: "http://192.168.1.108/appiyo",
   //host: "/ProcessStore",
   // host:  "/appiyo",
   pdfLocation: "/d/download/pdf?",
@@ -470,7 +478,7 @@ export const environment = {
   isMobile: false,
   mobileExtenstion: "@icicibankltd.com",
   // host: "https://ihfcmobileuat.icicihfc.com/appiyo", // for uat
-  host: "https://onlineapplication.icicihfc.com/appiyo", // for production
+  // host: "https://onlineapplication.icicihfc.com/appiyo", // for production
   aesPublicKey: 'MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJ+GJdSSEeaNFBLqyfM3DIOgQgWCwJ0INfeZZV7ITsLeuA7Yd02rrkYGIix1IWvoebWVmzhncUepYxHwK1ARCdUCAwEAAQ==',
   encryptionType: true, //Ecryption
   captchFormat: "&width=250&height=80&bgr=255&bgg=255&bgb=255&bga=255&fontR=187&fontG=187&fontB=187&fontSize=50&captchaSize=5",

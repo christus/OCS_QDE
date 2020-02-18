@@ -10,7 +10,10 @@ import { TabsComponent } from "./tabs/tabs.component";
 import { EncryptService } from "src/app/services/encrypt.service";
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { THROW_IF_NOT_FOUND } from '@angular/core/src/di/injector';
-import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import {  } from 'ng-multiselect-dropdown';
+import { ValueTemplateDirective } from '@progress/kendo-angular-dropdowns';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormPrintComponent } from 'src/app/addtional-service/form-print/form-print.component';
 
 export interface UserDetails {
   "amountEligible": number;
@@ -91,7 +94,7 @@ export class LeadsListComponent implements OnInit {
   selectedItems = [];
   // dropdownSettings = {};
 
-  dropdownSettings:IDropdownSettings = {
+  dropdownSettings = {
     singleSelection: true,
     idField: 'value',
     textField: 'key',    
@@ -183,6 +186,7 @@ export class LeadsListComponent implements OnInit {
     this.utilService.clearCredentials();
   }
 
+  branchList: Array<Item> =[];
   
   ngOnInit() {      
         this.cds.showCreateLead$.subscribe(myValue => 
@@ -194,7 +198,11 @@ export class LeadsListComponent implements OnInit {
           this.documentUpload = value)
         this.cds.eligibilityReview$.subscribe(value => 
           this.eligibilityReview = value);
-
+        this.cds.isMuultipleBranch$.subscribe( value =>
+          this.isMultipleBranch = value
+            )
+        this.cds.branchList$.subscribe( value =>
+          this.branchList = value);    
           // if (this.createLead ) {
             // this.getFilteredLeads();
             this.getNewLeads();            
@@ -209,6 +217,7 @@ export class LeadsListComponent implements OnInit {
             //   this.utilService.clearCredentials();
             //   return;
             // }
+            this.branchListForm();
     
   }
 
@@ -578,20 +587,42 @@ export class LeadsListComponent implements OnInit {
     let data = value;
     this.getPendingPayment(data);
   }
-
-  onMultipleBranch() {
+  btnType: string;
+  onMultipleBranch(btnName) {    
+    this.btnType = btnName;
     if (this.isMultipleBranch) {
-      this.isMultipleBranchModal = true;
-      this.multipleBranchesData = [        
-        { key: 'Branch 1', value: '1' },
-        { key: 'Branch 2', value: '2' },
-        { key: 'Branch 3', value: '3' },
-        { key: 'Branch 2', value: '2' },
-        { key: 'Branch 2', value: '2' },
-      ];
+
+      this.isMultipleBranchModal = true;      
+      this.multipleBranchesData = this.branchList;
     }
     else{
+      if (this.btnType == 'login'){
+     
       this.router.navigate(['/applicant']);
+      } else if (this.btnType == 'lead'){
+        this.router.navigate(["/connector/lead-create"]);
+      }
     }
+    
+  }
+ myBranchForm: FormGroup;
+  branchListForm(): FormGroup{
+   this.myBranchForm = new FormGroup({
+    branchId: new FormControl(null,Validators.required)
+   })
+
+    return this.myBranchForm;
+  }
+
+  submitBranch(form)
+  {
+    console.log("branch form value ",form,form.value.branchId[0].value);
+    this.cds.changebranchId(form.value.branchId[0].value);
+    this.isMultipleBranchModal = false
+    if (this.btnType == 'login'){     
+      this.router.navigate(['/applicant']);
+      } else if (this.btnType == 'lead'){
+        this.router.navigate(["/connector/lead-create"]);
+      }
   }
 }

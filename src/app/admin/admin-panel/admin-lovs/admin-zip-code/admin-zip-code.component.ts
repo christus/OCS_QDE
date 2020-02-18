@@ -4,6 +4,7 @@ import { NgForm } from '@angular/forms';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
 import { QdeService } from 'src/app/services/qde.service';
 import { Subscription } from 'rxjs';
+import { ViewportScroller } from '@angular/common'
 
 interface Item {
   key: string;
@@ -59,13 +60,27 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
   totalPages: number;
   totalElements: number;
   // perPageCount: number = 5;
+  isRegionHidden:boolean;
+  isStateHidden: boolean;
+  isZoneHidden: boolean;
+  isCityHidden: boolean;
+  isSaveDisable: boolean;
+  isDescriptionHidden: boolean;
+  isValueHidden: boolean;
+  addEditFlag: boolean;
+  zipcodeErrMsg: string;
+  allStates: Array<Item>
 
   @ViewChild('searchInp') searchInp: ElementRef;
 
   subs: Array<Subscription> = [];
   delIndex: {};
 
-  constructor(private route: ActivatedRoute, private qdeHttp: QdeHttpService, private qdeService: QdeService, private router: Router) {
+  constructor(private route: ActivatedRoute, 
+              private qdeHttp: QdeHttpService, 
+              private qdeService: QdeService, 
+              private router: Router,
+              private viewportScroller: ViewportScroller) {
 
     this.route.queryParams.subscribe(val => {
       this.currentPage = val['currentPage'] ? val ['currentPage']: 1;
@@ -78,9 +93,10 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
     this.tableName = 'zipcode';
 
     this.selectedRegion = {
-      key: 'Select...',
+      key: 'Select',
       value:'0'
     }
+    this.zipcodeErrMsg  = 'Please enter the value';
 
     if(this.route.snapshot.data['eachLovs']['ProcessVariables']['status'] == true) {
       if(this.route.snapshot.data['eachLovs']['ProcessVariables']['valueDescription']) {
@@ -99,7 +115,9 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
             stateId: v['stateId'],
             stateName: v['stateName'],
             zone: v['zone'],
-            zoneName: v['zoneName']
+            zoneName: v['zoneName'],
+            regionId: v['regionId'],
+            regionName: v['regionName']
           }
         });
 
@@ -124,20 +142,26 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
 
     //Regions
 
-    this.regions = [
-      {key:'Northern',value:'1'},
-      {key:'Southern',value:'2'},
-      {key:'Eastern',value:'3'},
-      {key:'Western',value:'4'}
-    ]
+    // this.regions = [
+    //   {key:'Northern',value:'1'},
+    //   {key:'Southern',value:'2'},
+    //   {key:'Eastern',value:'3'},
+    //   {key:'Western',value:'4'}
+    // ]
     // States
     if(this.route.snapshot.data['generalLovs']['ProcessVariables']['status'] == true) {
       this.states = JSON.parse(this.route.snapshot.data['generalLovs']['ProcessVariables']['lovs'])['LOVS']['state'];
-      // this.regions = JSON.parse(this.route.snapshot.data['generalLovs']['ProcessVariables']['lovs'])['LOVS']['region'];
+      this.allStates = JSON.parse(this.route.snapshot.data['generalLovs']['ProcessVariables']['lovs'])['LOVS']['state'];
+      this.regions = JSON.parse(this.route.snapshot.data['generalLovs']['ProcessVariables']['aTableLov'])['regions'];
 
-      this.selectedState = this.states[0];
-
-      this.stateChanged(this.selectedState.value);
+      this.selectedState = {key:'Select',value:'0'};
+      // this.states = [];
+      this.zones = [];
+      this.selectedZone = {key:'Select',value:'0'}
+      this.cities = [];
+      this.selectedCity = {key:'Select',value:'0'}
+      // this.stateChanged(this.selectedState.value);
+      
       console.log(this.selectedState)
     } 
 	/* else {
@@ -153,10 +177,19 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
   add() {
     this.isAdd = !this.isAdd;
     this.selectedIndex = -1;
-    if(this.tableName == 'zipcode') {
-      this.selectedState = this.states[0];
-      this.stateChanged(this.selectedState.value);
-    }
+    // if(this.tableName == 'zipcode') {
+    //   this.selectedState = this.states[0];
+    //   this.stateChanged(this.selectedState.value);
+    // }
+
+    this.selectedRegion = {key:'Select',value:'0'};
+    this.selectedState = {key:'Select',value:'0'};
+    this.selectedZone = {key:'Select',value:'0'};
+    this.selectedCity = {key:'Select',value:'0'};
+
+    // this.states = [];
+    this.zones = [];
+    this.cities = [];
 
     this.description = '';
     this.value = '';
@@ -178,12 +211,17 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
       dude = this.qdeService.getFilteredJson(dude);
     }
 
+    if(this.selectedRegion.value === '0') {
+      dude.regionId = ''
+    }
+
     this.subs.push(this.qdeHttp.insertUpdateEachLovs(dude).subscribe(res => {
       if(res['ProcessVariables']['status'] == true) {
         this.isErrorModal = true;
         this.errorMsg = "ZipCode Saved Successfully!";
         //alert("ZipCode Saved Successfully!");
         this.isAdd = false;
+        this.refresh();
       } 
 	  /* else {
         this.isErrorModal = true;
@@ -193,6 +231,9 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
     }, err => {
 
     }));
+    
+    
+    
   }
 
   counter(n: number) {
@@ -215,7 +256,9 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
               stateId: v['stateId'],
               stateName: v['stateName'],
               zone: v['zone'],
-              zoneName: v['zoneName']
+              zoneName: v['zoneName'],
+              regionId: v['regionId'],
+            regionName: v['regionName']
             }
           }));
   
@@ -241,6 +284,16 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
 
   stateChanged(event) {
     //this.selectedState = this.states.find(v => v.value == event);
+
+    if(event) {
+      this.addEditFlag =false;
+    }else {
+      this.addEditFlag = true;
+    }
+
+    if(this.selectedState.value !== '0') {
+      this.isStateHidden = false;
+    }
     var result: Item = {'key':'','value':''};
       for(var x in this.states){
         if(this.states[x].value==event){
@@ -248,7 +301,7 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
           result.key=this.states[x].key;
         }
       }
-      this.selectedState = result;
+      // this.selectedState = result;
     this.qdeHttp.adminGetZoneFromState(this.selectedState.value).subscribe(res => {
       if(res['ProcessVariables']['status'] == true) {
         this.zones = res['ProcessVariables']['zoneList'];
@@ -257,9 +310,18 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
           this.zones = [{key:'No Zones Available', value: '-1'}];
           this.selectedZone = this.zones[0];
         } else {
-          this.selectedZone = this.zones[0];
+          if(!this.addEditFlag) {
+            this.selectedZone = {key:'Select',value:'0'};
+            this.selectedCity = {key:'Select',value:'0'};
+            this.cities = [];
+          }else {
+            if(this.selectedRegion.value === '0') {
+              this.states = this.allStates;
+
+            }
+          }
         }
-        this.zoneChanged(this.selectedZone.value);
+        // this.zoneChanged(this.selectedZone.value);
       } 
 	  /* else {
           this.isErrorModal = true;
@@ -270,13 +332,17 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
   }
 
   zoneChanged(event) {
-  
-    this.selectedZone = this.zones.find(v => v.value == event);
 
-    // if(this.selectedZone.value == "-1") {
-    //   this.cities = [{key:'No Cities Available', value: '-1'}];
-    //   this.selectedCity = this.cities[0];
-    // } else {
+    if(event) {
+      this.addEditFlag =false;
+    }else {
+      this.addEditFlag = true;
+    }
+
+    if(this.selectedZone.value !== '-1') {
+      this.isZoneHidden = false;
+    }
+  
       this.qdeHttp.adminGetCityFromZone(this.selectedZone.value,this.selectedState.value).subscribe(res => {
         if(res['ProcessVariables']['status'] == true) {
           this.cities = res['ProcessVariables']['cityList'];
@@ -285,48 +351,165 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
             this.cities = [{key:'No Cities Available', value: '-1'}];
             this.selectedCity = this.cities[0];
           } else {
-            this.selectedCity = this.cities[0];
+            if(!this.addEditFlag) {
+              this.selectedCity = {key:'Select',value:'0'}
+
+            }
           }
           console.log("selectedCity: ", this.selectedCity);
-          this.cityChanged(this.selectedCity.value);
+         
         } 
-		/* else {
-          this.isErrorModal = true;
-          this.errorMsg = "Something went wrong";
-        //alert('Something went wrong');
-        } */
+	
       });
    // }
   
   }
 
   cityChanged(event) {
-    if(this.selectedZone.value != "-1") {
-      var result: Item = {'key':'','value':''};
-      for(var x in this.cities){
-        if(this.cities[x].value==event){
-          result.value = this.cities[x].value;
-          result.key=this.cities[x].key;
-        }
-      }
-      //this.selectedCity = this.cities.find(v => v.value == event);
-      this.selectedCity = result;
-      console.log(result);
+
+    if(this.selectedCity.value != '-1') {
+      this.isCityHidden =false;
     }
+    if(this.selectedCity.value != '0') {
+      this.isCityHidden =false;
+    }
+    // if(this.selectedZone.value != "-1") {
+    //   var result: Item = {'key':'','value':''};
+    //   for(var x in this.cities){
+    //     if(this.cities[x].value==event){
+    //       result.value = this.cities[x].value;
+    //       result.key=this.cities[x].key;
+    //     }
+    //   }
+    //   //this.selectedCity = this.cities.find(v => v.value == event);
+    //   if(!this.addEditFlag) {
+    //     this.selectedCity = {key:'Select',value:'0'};
+
+    //   }
+    //   console.log(result);
+    // }
   }
- regionChanged(event) {
+
+  regionChanged(event) {
+
+    if(event) {
+      this.addEditFlag =false;
+    }else {
+      this.addEditFlag = true;
+    }
+
+    if(this.selectedRegion.value !== '0') {
+      this.isRegionHidden = false;
+    }
+    const region = {
+      regionId: this.selectedRegion.value
+    }
+
+    this.qdeHttp.getStateListFromRegion(region).subscribe(res => {
+      if(res['ProcessVariables']['status'] == true) {
+          const state = res['ProcessVariables']['stateList'];
+
+          if(!state) {
+            // this.states = [{key: 'No States Available',value: '0'}];
+            // this.selectedState = {key: 'No States Available', value: '0'}
+            this.states = this.allStates;
+            this.selectedState = {key: 'Select',value: '0'};
+            this.selectedZone = {key:'Select',value: '0'};
+            this.zones= []
+            this.selectedCity = {key:'Select',value: '0'};
+            this.cities = []
+          }else {
+            this.states = state.map((s)=>  {
+              return {key: s.stateDescription,value:String(s.stateId)}
+            })
+
+            if(!this.addEditFlag) {
+              this.selectedState = {key: 'Select',value: '0'};
+              this.selectedZone = {key:'Select',value: '0'};
+              this.zones= []
+              this.selectedCity = {key:'Select',value: '0'};
+              this.cities = []
+            }
+
+          }
+
+          
+      }
+
+    })
+
+
+
 
   }
 
   edit(index) {
+    this.selectedRegion = {key:'Select',value:'0'};
+    this.selectedState={key:'Select',value:'0'};
+    this.selectedZone = {key:'Select',value:'0'};
+
+    this.isRegionHidden = false;
+    this.isStateHidden = false;
+    this.isZoneHidden = false;
+    this.isCityHidden = false;
+    this.isValueHidden = false;
+    this.isDescriptionHidden = false;
+    
     this.isAdd = true;
     this.selectedIndex = index;
-    if(this.tableName == 'zipcode') {
-      this.stateChanged(this.data[index].stateId);
-    }
+    this.addEditFlag = true;
+
+
+    // this.viewportScroller.scrollToPosition([0,0]);
+
+    // window.scroll({
+    //   top: 0,
+    //   left: 0,
+    //   behavior: 'smooth'
+    // })
 
     this.description = this.data[index].description;
     this.value = this.data[index].value;
+
+    if(this.data[index].regionId) {
+      this.selectedRegion = {
+        key: this.data[index].regionName,
+        value: String(this.data[index].regionId)
+      }
+  
+    }else {
+      this.selectedRegion = {
+        key: 'Select',
+        value: '0'
+      }
+    }
+
+    if(this.tableName == 'zipcode') {
+      this.selectedState = {
+        key:this.data[index].stateName,
+        value:String(this.data[index].stateId)
+      }
+      this.selectedZone = {
+        key: this.data[index].zoneName,
+        value:String(this.data[index].zone)
+      }
+      this.selectedCity = {
+        key: this.data[index].cityName,
+        value: String(this.data[index].cityId)
+      }
+      if(this.data[index].regionId) {
+      this.regionChanged('')
+      }
+      
+      this.stateChanged('')
+
+      this.zoneChanged('')
+     
+      
+      // this.stateChanged(this.data[index].stateId);
+      // this.zoneChanged(String(this.data[index].zone));
+    }
+    
   }
 
   delete(index) {
@@ -381,7 +564,9 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
               stateId: v['stateId'],
               stateName: v['stateName'],
               zone: v['zone'],
-              zoneName: v['zoneName']
+              zoneName: v['zoneName'],
+              regionId: v['regionId'],
+              regionName: v['regionName']
             }
           });
 
@@ -435,7 +620,9 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
                 stateId: v['stateId'],
                 stateName: v['stateName'],
                 zone: v['zone'],
-                zoneName: v['zoneName']
+                zoneName: v['zoneName'],
+                regionId: v['regionId'],
+                regionName: v['regionName']
               }
             });
 
@@ -458,6 +645,34 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
     } else {
       this.data = this.tempData;
     }
+  }
+
+  descriptionChange(event) {
+
+    if(this.description) {
+      this.isDescriptionHidden = false;
+    }
+  }
+
+  valueChange(event) {
+
+    console.log(typeof event)
+
+    if(!Number(event) || String(event).length < 6) {
+      this.zipcodeErrMsg  = 'Please enter a valid zipcode';
+      this.isValueHidden = true;
+    }else if(this.value && Number(event)) {
+      this.isValueHidden = false;
+      this.zipcodeErrMsg = 'Please enter the value'
+    }
+  }
+
+  scroll(el: HTMLElement) {
+    el.scrollIntoView();
+    setTimeout(()=> {
+      this.viewportScroller.scrollToPosition([0,0]);
+
+    },250)
   }
 
   ngOnDestroy() {

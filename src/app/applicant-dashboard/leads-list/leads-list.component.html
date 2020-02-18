@@ -7,12 +7,12 @@
     <li class="tab-link active" data-target="leads-tab"><a> Dashboard </a></li>
     <!-- Logins -->
   </ul>
-  <button (click)="onMultipleBranch()" class="btn application add-new-login" *ngIf="newLogin">NEW LOGIN</button>
-  <button routerLink="/connector/lead-create" class="btn application add-lead-link" *ngIf="createLead">CREATE LEAD</button>
+  <button (click)="onMultipleBranch('login')" class="btn application add-new-login" *ngIf="newLogin">NEW LOGIN</button>
+  <button (click)="onMultipleBranch('lead')" class="btn application add-lead-link" *ngIf="createLead">CREATE LEAD</button>
 
 </div>
 <tabs>
-    <tab tabTitle="ALL" class="tab" *ngIf="(newLogin && createLead) || documentUpload" >
+    <tab tabTitle="ALL" class="tab" *ngIf="(newLogin) || documentUpload" >
         <ul *ngFor="let detail of userDetails | paginate: {id: 'pagination1', itemsPerPage: perPage, currentPage: currentPage, totalItems: totalItems};">
             <li>
                 <!-- [queryParams]="detail['queryParams']" -->
@@ -61,7 +61,7 @@
     </ul>
     <pagination-controls id="pagination2" (pageChange)="pageChangedNL($event)" class="pagination" autoHide="true" ></pagination-controls>
     </tab>
-    <tab tabTitle="PENDING APPLICATION" *ngIf="(newLogin && createLead)">
+    <tab tabTitle="PENDING APPLICATION" *ngIf="(newLogin)">
       <ul *ngFor="let detail of newPendingApplicationDetails | paginate: {id: 'pagination3',itemsPerPage: perPagePA, currentPage: currentPagePA, totalItems: totalItemsPA};">
         <li>
             <!-- [queryParams]="detail['queryParams']" -->
@@ -88,7 +88,7 @@
     </ul>
     <pagination-controls id="pagination3"  (pageChange)="pageChangedPA($event)" class="pagination" autoHide="true" ></pagination-controls>
     </tab>
-    <tab tabTitle="PENDING PAYMENT" *ngIf="(newLogin && createLead)">
+    <tab tabTitle="PENDING PAYMENT" *ngIf="(newLogin)">
       <ul *ngFor="let detail of newPendingPaymentDetails | paginate: {id: 'pagination4',itemsPerPage: perPagePP, currentPage: currentPagePP, totalItems: totalItemsPP};">
         <li>
             <!-- [queryParams]="detail['queryParams']"  -->
@@ -122,6 +122,7 @@
     <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isMultipleBranchModal}">
         <!-- <a class="modal-close" (click)="onCrossModal()"><span class="icon icon-close"></span></a> -->
         <div class="modal-body">
+            <form [formGroup]="myBranchForm">
             <h1 class="errorMessage">Select Branch</h1>
             <div class="form-group single-select">
                 <span class="control-title">Branch Name</span>
@@ -135,14 +136,17 @@
                 <ng-multiselect-dropdown 
                     [placeholder]="'Search'" 
                     [data]="multipleBranchesData"
-                    [settings]="dropdownSettings"                     
+                    [settings]="dropdownSettings"
+                    formControlName="branchId"                  
                     >
                 </ng-multiselect-dropdown>
             </div>
             <div class="btn-wrap">
-                <button class="btn btn-border" routerLink="/applicant"
-                    (click)="isMultipleBranchModal = false">Submit</button>
+                <button class="btn btn-border"  [ngClass]="{'disabled': (!myBranchForm.valid)}"
+                [disabled]="!myBranchForm.valid" 
+                (click)="submitBranch(myBranchForm)">Submit</button>
             </div>
+            </form>
         </div>
     </div>
 </div>

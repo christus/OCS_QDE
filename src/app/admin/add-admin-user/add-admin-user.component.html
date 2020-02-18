@@ -66,9 +66,10 @@
         <div class="selectBox form-field-el">
             <label class="controltitle">User branch *</label>
             <ng-multiselect-dropdown [placeholder]="'Choose your branch'" 
-            [data]="branches" [(ngModel)]="branch" [settings]="dropdownSettings" formControlName="userBranchId">
+            [data]="branches" [settings]="dropdownSettings" formControlName="userBranchId">
 
             </ng-multiselect-dropdown>
+            <!-- [(ngModel)]="branch" -->
             <!-- <select class="form-control" formControlName="userBranchId" [(ngModel)]="defaultSelectBranch">
                 <option  [ngValue]="null" value="null" disabled>Choose your branch</option>
                 <option *ngFor="let br of branches" value={{br.value}} >

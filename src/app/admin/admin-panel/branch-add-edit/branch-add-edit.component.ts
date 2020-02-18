@@ -18,7 +18,7 @@ import {
   FormControl,
   Validators
 } from '@angular/forms';
-import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { } from 'ng-multiselect-dropdown';
 
 @Component({
   selector: 'app-branch-add-edit',
@@ -67,8 +67,8 @@ export class BranchAddEditComponent implements OnInit, OnDestroy {
   region: any;
   zone: any;
   state: any;
-  dropdownSettings: IDropdownSettings = {};
-  singleDropdownSettings: IDropdownSettings = {};
+  dropdownSettings = {};
+  singleDropdownSettings = {};
 
   registerUser = new FormGroup({
     Value: new FormControl(''),

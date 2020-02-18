@@ -7,7 +7,7 @@ import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
 
 import {ViewChild, ElementRef} from '@angular/core';
-import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { } from 'ng-multiselect-dropdown';
 import { QdeService } from 'src/app/services/qde.service';
 
 
@@ -82,8 +82,8 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
   state: string;
   city: string;
 
-  dropdownSettings: IDropdownSettings = {};
-  singleDropdownSettings: IDropdownSettings = {};
+  dropdownSettings = {};
+  singleDropdownSettings = {};
 
   @ViewChildren("reportingTo") reportingToList: QueryList<ElementRef>;
   constructor(private qdeHttp: QdeHttpService,

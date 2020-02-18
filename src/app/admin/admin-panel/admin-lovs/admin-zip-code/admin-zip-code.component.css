@@ -141,3 +141,23 @@ thead, tbody tr {
     display: inline-block;
     vertical-align: middle;
 }
+
+.error-span {
+    display: block;
+    font-size: 0.8vw;
+    color: red;
+    margin-bottom: 9px !important;
+    padding-left: 5px;
+}
+
+.space-margin-bottom {
+    margin-bottom: 4px !important;
+}
+
+.errorMessage{
+    visibility: hidden;
+}
+.disable-save{
+    pointer-events: none;
+    opacity: 0.5;
+}

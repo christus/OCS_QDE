@@ -17,6 +17,7 @@ export interface Application {
     auditTrailDetails?: AuditTrailDetails;
     leadCreate?: LeadCreate;
     offlinePayments?: ChequeDetails;
+    branch?:string;
 }
 
 export interface Document {
