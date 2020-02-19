@@ -8,7 +8,7 @@
     <!-- Logins -->
   </ul>
   <button (click)="onMultipleBranch('login')" class="btn application add-new-login" *ngIf="newLogin">NEW LOGIN</button>
-  <button (click)="onMultipleBranch('lead')" class="btn application add-lead-link" *ngIf="createLead">CREATE LEAD</button>
+  <button routerLink="/connector/lead-create" class="btn application add-lead-link" *ngIf="createLead">CREATE LEAD</button>
 
 </div>
 <tabs>
@@ -120,7 +120,7 @@
 
 <div class="overlay" [ngClass]="{'active': isMultipleBranchModal}">
     <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isMultipleBranchModal}">
-        <!-- <a class="modal-close" (click)="onCrossModal()"><span class="icon icon-close"></span></a> -->
+        <a class="modal-close" (click)="isMultipleBranchModal = false"><span class="icon icon-close"></span></a>
         <div class="modal-body">
             <form [formGroup]="myBranchForm">
             <h1 class="errorMessage">Select Branch</h1>

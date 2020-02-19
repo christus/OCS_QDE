@@ -234,9 +234,11 @@ getUserList(data){
       }
   }
   pageChanged(value) {
+    const userID = this.source.find(mysearchValue => mysearchValue.key === this.fromAssign).value;
     // data["currentPage"] = value;
-    console.log("index value ", value);
-    this.getApplications(this.selectedAssign, value);
+    console.log("index value ", value,userID);
+    
+    this.getApplications(userID, value);
   }
 
   changeApllication(resonTochange, effectFromDate) {

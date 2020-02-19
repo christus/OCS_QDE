@@ -4,8 +4,14 @@
   <div class="fixed-top">
     <div class="typ-dash">
       <ul class="tabs-head">
-        <li class="tab-link active" data-target="leads-tab"><a>Addtional Service </a></li>
-      </ul>      
+        <button (click)="printPage()" class="btn">Print</button>  
+        <li class="tab-link active" data-target="leads-tab"><a>Addtional Service </a></li>        
+       
+          <!-- <button (click)="onMultipleBranch('lead')" class="btn application add-lead-link" *ngIf="createLead">CREATE LEAD</button> -->
+        
+       
+      </ul>   
+       
       <router-outlet></router-outlet>
     </div>
   </div>

@@ -90,7 +90,17 @@ export class ConnectorLeadCreateComponent implements OnInit {
       }
     }
   };
-
+  
+  dropdownSettings = {
+    singleSelection: true,
+    idField: 'value',
+    textField: 'key',    
+    itemsShowLimit: 3,
+    allowSearchFilter: true,
+    closeDropDownOnSelection: true
+  };
+  branchList:Array<Item>;
+  branchId: Item;
   public defaultItem = environment.defaultItem
   
   constructor(private route: ActivatedRoute,
@@ -113,6 +123,9 @@ export class ConnectorLeadCreateComponent implements OnInit {
       console.log("VALVE: ", val);
       this.qde = val;
     });
+
+    this.commonDataService.branchList$.subscribe( value =>
+      this.branchList = value);
   }
 
   ngOnInit() {
@@ -122,6 +135,7 @@ export class ConnectorLeadCreateComponent implements OnInit {
       this.preferredEmail = lov.LOVS.preferred_mails;
       // this.loanType[0]
       this.selectedLoanType = this.defaultItem ;
+      this.branchId = this.defaultItem;
       this.minMaxValues = lov.LOVS.min_max_values;
     }
 
@@ -130,6 +144,7 @@ export class ConnectorLeadCreateComponent implements OnInit {
     // this.loginName()
     this.commonDataService.userFullName$.subscribe(value =>
       this.firstName = value)
+       
   }
 
   openOptionsMenuDropdown() {
@@ -150,11 +165,12 @@ export class ConnectorLeadCreateComponent implements OnInit {
     this.qde.application.leadCreate.loanAmount = parseInt(this.qde.application.leadCreate.loanAmount+"");
     this.qde.application.leadCreate.mobileNumber = parseInt(this.qde.application.leadCreate.mobileNumber+"");
     this.qde.application.leadCreate.zipcode = parseInt(this.qde.application.leadCreate.zipcode+"");
-
+   
     let data = Object.assign({}, this.qde.application.leadCreate);
     data['loanType'] = parseInt(this.selectedLoanType.value+"");
     data['userId'] = parseInt(localStorage.getItem('userId'));
     data['dnd'] = this.dnd;
+    data['branch'] =this.branchId.value;
 
     this.qdeHttp.connectorLeadCreateSave(data).subscribe(res => {
       if(res['ProcessVariables']['status'] == true) {

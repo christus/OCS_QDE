@@ -177,6 +177,21 @@
                               <!-- [(ngModel)]="qde.application.leadCreate.loanType" -->
                             </kendo-dropdownlist>
                         </div>
+
+                        <div class="form-group">
+                            <span class="control-title">Branch Name</span>
+                            <kendo-dropdownlist
+                              [defaultItem]="defaultItem"
+                              class="form-control"
+                              name="branchList"
+                              [data]="branchList" 
+                              textField="key"
+                              valueField="value"
+                              [(ngModel)]="branchId">selectedLoanType
+                              <!-- [(ngModel)]="qde.application.leadCreate.loanType" -->
+                            </kendo-dropdownlist>
+                        </div>
+                        
                         <!-- bs-checkbox -->
                         <div class="container">
                            
@@ -199,8 +214,8 @@
                         </div>
                       <div class="btn-wrap">
                           <button class="btn btn-primary"
-                          [ngClass]="{'disabled': (!leadForm.valid)|| isNumberLessThan50k || isNumberMoreThan100cr || selectedLoanType.value ==0 || !dnd}"
-                          [disabled]="!leadForm.valid || isNumberLessThan50k || isNumberMoreThan100cr || selectedLoanType.value == 0 "
+                          [ngClass]="{'disabled': (!leadForm.valid)|| isNumberLessThan50k || isNumberMoreThan100cr || selectedLoanType.value ==0 || !dnd || branchId.value ==0}"
+                          [disabled]="!leadForm.valid || isNumberLessThan50k || isNumberMoreThan100cr || selectedLoanType.value == 0 || !dnd || branchId.value ==0 "
                           >Submit</button>
                       </div>
                   </form>

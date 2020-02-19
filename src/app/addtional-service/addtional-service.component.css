@@ -255,6 +255,26 @@ top: 0; */
   {
     display: none;
   } */
+
+  .typ-connector {
+    padding: 0;
   }
-  
+  }
+
+  .btn {
+    line-height: 2.73vw;
+    font-size: 1.09vw;
+    text-align: center;
+    color: #f58220;
+    text-transform: uppercase;
+    border: 1px solid #f58220;
+    padding: 0 .78vw;
+    border-radius: 25px;
+    float: right;
+    margin: 1.2vh;
+  }
+
+  .tab-link{
+  padding-top: 20px;
+  }
   

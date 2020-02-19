@@ -153,6 +153,7 @@ import { FormPrintComponent } from './addtional-service/form-print/form-print.co
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { BranchMappingComponent } from './admin/branch-mapping/branch-mapping.component';
 import { AddtionalServiceDashboardComponent } from './addtional-service/addtional-service-dashboard/addtional-service-dashboard.component';
+import { GetApplicationPrintResolverService } from './services/get-application-print-resolver.service';
 
 
 
@@ -207,7 +208,7 @@ const appRoutes: Routes = [
         path: 'form-print/:applicationId',
         component: FormPrintComponent,
         resolve: {
-          qde: GetQdeDataResolverService
+          qde: GetApplicationPrintResolverService
         }
 
       }
@@ -737,6 +738,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   providers: [
     ListOfValuesResolverService,
     // AdminGetRoleLovResolverService
+    GetApplicationPrintResolverService,
     // BirthPlaceResolverService,
     GetQdeDataResolverService,
     {

@@ -596,8 +596,8 @@ export class LeadsListComponent implements OnInit {
       this.multipleBranchesData = this.branchList;
     }
     else{
-      if (this.btnType == 'login'){
-     
+      this.cds.changebranchId(this.branchList[0].value);
+      if (this.btnType == 'login'){     
       this.router.navigate(['/applicant']);
       } else if (this.btnType == 'lead'){
         this.router.navigate(["/connector/lead-create"]);
@@ -625,4 +625,5 @@ export class LeadsListComponent implements OnInit {
         this.router.navigate(["/connector/lead-create"]);
       }
   }
+
 }

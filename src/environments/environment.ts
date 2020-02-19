@@ -462,6 +462,10 @@ export const environment = {
     "adminGetUsersBranchMapping": {
       'workflowId': '0c082094515411ea9d1d0242ac110002',
       'processId': '0c2b9e70515411ea95260242ac110002'
+    },
+    "getApplicationPrint": {
+      'workflowId': '3189bc1eb50611e982a40242ac110002',
+      'processId': '69124626c57b11e992780242ac110002'
     }
     
   },

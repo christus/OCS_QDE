@@ -238,7 +238,8 @@ export class AuthInterceptor implements HttpInterceptor {
         processId == environment.api.offlinePaymentUpload.processId || 
         processId == environment.api.leadSave.processId || 
         processId == environment.api.userActivityMapping || 
-        processId == environment.api.omniDocs.processId) {
+        processId == environment.api.omniDocs.processId || 
+        processId == environment.api.getApplicationPrint.processId) {
         return true;
     }
   }

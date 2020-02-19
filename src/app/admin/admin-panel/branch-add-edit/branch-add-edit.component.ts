@@ -41,7 +41,7 @@ export class BranchAddEditComponent implements OnInit, OnDestroy {
   isErrorModal: boolean = false;
   // regEx = { value: '^[0-9]*$' };
   regEx = { value: "^[0-9A-Za-z, _&*#'/\\-@]{0,99}$"}
-
+myFormValid: boolean = false;
 
   Value: string;
   description: string;
@@ -168,6 +168,8 @@ export class BranchAddEditComponent implements OnInit, OnDestroy {
         console.log('event', event.target.value);
         this.filteredZipItems(event);
       });
+
+
   }
 
   disableFormControl(controlName: string) {
@@ -267,6 +269,7 @@ export class BranchAddEditComponent implements OnInit, OnDestroy {
   }
 
   filteredZipItems(event) {
+    this.myFormValid = true;
     this._timeout = null;
 
     this.selectBoxRef2.nativeElement
@@ -325,6 +328,7 @@ export class BranchAddEditComponent implements OnInit, OnDestroy {
   }
 
   selectedzipCode(index, data) {
+    this.myFormValid = false
     this.registerUser.patchValue({ zipCode: data.zipcodeValue });
     this.registerUser.patchValue({ zipCodeInp: data.zipcodeId });
 
@@ -396,7 +400,8 @@ export class BranchAddEditComponent implements OnInit, OnDestroy {
     let data = {
       id: this.userId || 0,
       value: this.formValue.Value.value,
-      description: this.formValue.description.value,
+      // description: this.formValue.description.value,
+      branchName: this.formValue.Value.value,
       address: this.formValue.address.value,
       branchType: this.formValue.branchType.value,
       branchCode: this.formValue.branchCode.value,
@@ -442,6 +447,12 @@ export class BranchAddEditComponent implements OnInit, OnDestroy {
       });
 
 
+  }
+  hideList(){
+    this.selectBoxRef2.nativeElement            
+            .querySelector('.reporting_to')            
+            .classList.add('hide');
+            
   }
 
   ngOnDestroy() {

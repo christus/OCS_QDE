@@ -5,14 +5,14 @@
                 <label for="firstname" class="inputText">First name: *</label>
                 <input type="text" id="firstname" class="form-control" [(ngModel)]="firstName" formControlName="firstName" fieldFill autocomplete="nope" pattern={{regexPattern.name}}/>
                 <div *ngIf="formValue.firstName.errors" >
-                    <div class="redalert" *ngIf="formValue.firstName.errors.pattern"> Name cannot contain numbers / special characters </div>
+                    <div class="redalert" *ngIf="formValue.firstName.errors.pattern"> Name cannot contain  special characters </div>
                 </div>
         </div>
         <div class="inputBox form-field-el">
                 <label for="lastName" class="inputText">Last name: *</label>
                 <input type="text" id="lastName"  [(ngModel)]="lastName"  class="form-control" fieldFill formControlName="lastName" autocomplete="nope" pattern={{regexPattern.name}}/>
                 <div *ngIf="formValue.lastName.errors" >
-                        <div class="redalert" *ngIf="formValue.lastName.errors.pattern"> Name cannot contain numbers / special characters </div>
+                        <div class="redalert" *ngIf="formValue.lastName.errors.pattern"> Name cannot contain special characters </div>
                 </div>
         </div>
          <div class="inputBox form-field-el">
