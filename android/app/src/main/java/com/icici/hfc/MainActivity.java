@@ -16,6 +16,8 @@ public class MainActivity extends BridgeActivity {
   public void onResume() {
     super.onResume();
 
+    /** Check device rooted or not **/
+
     if(RootUtil.isDeviceRooted()) {
       Intent homeIntent = new Intent(Intent.ACTION_MAIN);
       homeIntent.addCategory( Intent.CATEGORY_HOME );
@@ -23,6 +25,8 @@ public class MainActivity extends BridgeActivity {
       startActivity(homeIntent);
     }
 
+    /** Check Airwatch installed or not **/
+//
     if (appInstalledOrNot("com.airwatch.lockdown.launcher")) {
 
     }else {

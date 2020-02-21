@@ -4,13 +4,15 @@
 
     <div class="flex-container">
         <div class="inputBox flex-child">
-            <label for="branchCode" class="inputText">Branch code:</label>
+            <label for="branchCode" class="inputText">Branch code: *</label>
             <input type="text" id="branchCode" class="form-control" [(ngModel)]="branchCode" maxlength="10"
-            fieldFill formControlName="branchCode" autocomplete="off" required/>
+            fieldFill formControlName="branchCode" autocomplete="off" required pattern={{regexPattern.number}}/>
             <div class="redalert" *ngIf="(formValue.branchCode.errors?.required && (formValue.branchCode.touched || formValue.branchCode.dirty))">Branch code is mandatory</div>
+            <div class="redalert" *ngIf="formValue.branchCode.errors?.pattern"> Branch Code  can contain  Only Numeric</div>                
+           
         </div>
         <div class="inputBox flex-child">
-            <label for="Value" class="inputText">Branch Name:</label>
+            <label for="Value" class="inputText">Branch Name: *</label>
         <input type="text" id="Value" [(ngModel)]="Value" class="form-control" formControlName="Value" fieldFill autocomplete="off" required pattern={{regEx.value}}/>
                 <div class="redalert" *ngIf="(formValue.Value.errors?.required && (formValue.Value.touched || formValue.Value.dirty))">Value is mandatory</div>
                 <div class="redalert" *ngIf="(formValue.Value.errors?.pattern && (formValue.Value.touched || formValue.Value.dirty))">Value cannot contain characters</div>
@@ -23,12 +25,12 @@
 
        
         <div class="inputBox flex-child">
-            <label for="address" class="inputText">Address </label>
+            <label for="address" class="inputText">Address *</label>
             <input type="text" id="address"  class="form-control" [(ngModel)]="address" fieldFill formControlName="address" autocomplete="off" required />
             <div class="redalert" *ngIf="(formValue.address.errors?.required && (formValue.address.touched || formValue.address.dirty))">Address is mandatory</div>
         </div>
         <div class="selectBox flex-child">
-            <label class="controltitle">Branch type</label>
+            <label class="controltitle">Branch type *</label>
             <select class="form-control" formControlName="branchType" [ngModel]="defaultBranchType" required>
                 <option  [ngValue]="null" disabled>Choose branch type</option>
                 <option value="Single Branch">Single Branch</option>
@@ -43,13 +45,13 @@
     
     
         <div class="inputBox flex-child">
-            <label for="newFinnOneCode" class="inputText" >NewFinnOne code:</label>
+            <label for="newFinnOneCode" class="inputText" >NewFinnOne code: *</label>
             <input type="text" id="newFinnOneCode"  [(ngModel)]="newFinnOneCode" class="form-control" fieldFill formControlName="newFinnOneCode" autocomplete="off" required />
             <div class="redalert" *ngIf="(formValue.newFinnOneCode.errors?.required && (formValue.newFinnOneCode.touched || formValue.newFinnOneCode.dirty))">NewFinnoneCode is mandatory</div>
         </div>
         <div class="inputBox flex-child" #selectBox2 >
-            <label for="zipCode" class="">Zip code:</label>
-            <input #zipCodeInput type="text" id="zipCode"   [(ngModel)]="zipCode"  class="form-control"  formControlName="zipCode" fieldFill  autocomplete="off" required/>
+            <label for="zipCode" class="">Zip code: *</label>
+            <input #zipCodeInput type="text" id="zipCode"   [(ngModel)]="zipCode"  class="form-control" [maxlength]="6"  formControlName="zipCode" fieldFill  autocomplete="off" required/>
             <div class="redalert" *ngIf="(formValue.zipCode.errors?.required && (formValue.zipCode.touched || formValue.zipCode.dirty))">ZipCode is mandatory</div>
             <input type="hidden" class="form-control" hidden  [(ngModel)]="zipCodeInp" formControlName="zipCodeInp" #zipCodeEl  autocomplete="off"/>
             
@@ -98,7 +100,7 @@
             </ng-multiselect-dropdown>
         </div>
         <div class="inputBox flex-child flex-input" #selectBox>
-            <label for="city" class="">City:</label>
+            <label for="city" class="">City *</label>
             <input type="text" id="city"   [(ngModel)]="city" (input)="filterLeads($event)" class="form-control"  formControlName="city" fieldFill  autocomplete="off" required/>
             <div class="redalert" *ngIf="(formValue.city.errors?.required && (formValue.city.touched || formValue.city.dirty))">City is mandatory</div>
             <input type="hidden" class="form-control" hidden   [(ngModel)]="cityInp"  formControlName="cityInp" #cityEl  autocomplete="off"/>

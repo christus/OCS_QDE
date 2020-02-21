@@ -28,12 +28,12 @@ export class UserModuleComponent implements OnInit {
   uploadCSVString: string;
   selectedFile: File;
   isFileSelected: boolean = false;
-
+  listItems:any[] = ['User List','User Branch List'];
   // paginationConfig =  {
   //   itemsPerPage: 2,
   //   totalItems: total
   // }
-
+  csvType: string;
 
   constructor(private qdeHttp: QdeHttpService) {
 
@@ -48,6 +48,7 @@ export class UserModuleComponent implements OnInit {
     this.getAdminUsers(data);
 
     this.getRoleName();
+    this.csvType = "Select CSV Type..";
   }
 
   getRoleName() {
@@ -146,6 +147,11 @@ export class UserModuleComponent implements OnInit {
     myReader.readAsDataURL(file);
   }
   uploadCSVFile(){
+    if (this.csvType == "Select CSV Type..")
+    {
+      this.isErrorModal =true;
+      this.errorMessage ="Select Any CSV Type.."
+    } else {
     let name = this.selectedFile.name;
     let size = this.selectedFile.size;
     if(size!=0){
@@ -158,25 +164,47 @@ export class UserModuleComponent implements OnInit {
           "mime": "text/csv",
           "size": size
         }
-      }
-      this.qdeHttp.uploadCSV(documentInfo).subscribe(res=>{
-        if(res['ProcessVariables']['status'] && res['ProcessVariables']['errorMessage']==''){
-          this.isErrorModal = true;
-          this.errorMessage = "File Uploaded successfully";
-          this.isFileSelected = false;
-          let el = this.uploadCSV.nativeElement;
-          el.value = "";
-          this.uploadFileName = "";
-        }else{
-          //this.isErrorModal = true;
-          //this.errorMessage = res['ProcessVariables']['errorMessage'];
-          this.isFileSelected = false;
-          let el = this.uploadCSV.nativeElement;
-          el.value = "";
-          this.uploadFileName = "";
-        }
-      })
+      } 
+      if (this.csvType == "User List"){
+        this.qdeHttp.uploadCSV(documentInfo).subscribe(res=>{
+          if(res['ProcessVariables']['status'] && res['ProcessVariables']['errorMessage']==''){
+            this.isErrorModal = true;
+            this.errorMessage = "File Uploaded successfully";
+            this.isFileSelected = false;
+            let el = this.uploadCSV.nativeElement;
+            el.value = "";
+            this.uploadFileName = "";
+          }else{
+            //this.isErrorModal = true;
+            //this.errorMessage = res['ProcessVariables']['errorMessage'];
+            this.isFileSelected = false;
+            let el = this.uploadCSV.nativeElement;
+            el.value = "";
+            this.uploadFileName = "";
+          }
+        });
+       }
+       else if(this.csvType == "User Branch List"){
+        this.qdeHttp.uploadUserBranchCSV(documentInfo).subscribe(res=>{
+          if(res['ProcessVariables']['status'] && res['ProcessVariables']['errorMessage']==''){
+            this.isErrorModal = true;
+            this.errorMessage = "File Uploaded successfully";
+            this.isFileSelected = false;
+            let el = this.uploadCSV.nativeElement;
+            el.value = "";
+            this.uploadFileName = "";
+          }else{
+            //this.isErrorModal = true;
+            //this.errorMessage = res['ProcessVariables']['errorMessage'];
+            this.isFileSelected = false;
+            let el = this.uploadCSV.nativeElement;
+            el.value = "";
+            this.uploadFileName = "";
+          }
+        });
+       }
     }
+  }
   }
   callFile(){
     let el = this.uploadCSV.nativeElement;

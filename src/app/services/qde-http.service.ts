@@ -3573,5 +3573,47 @@ createOrUpdatePersonalDetails(qde) {
     let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
     return this.callPost(workflowId, projectId, body);
   }
+  uploadBranchCSV(data){
+    const processId = environment.api.uploadBranchCSV.processId;
+    const workflowId = environment.api.uploadBranchCSV.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      ProcessVariables: data,
+      processId: processId,
+      workflowId: workflowId,
+      projectId: projectId,
+    };
+
+    const body = {
+      "processVariables":
+      JSON.stringify(requestEntity)
+    };
+
+    let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
+
   
+    }
+    uploadUserBranchCSV(data){
+      const processId = environment.api.uploadUserBranchCSV.processId;
+      const workflowId = environment.api.uploadUserBranchCSV.workflowId;
+      const projectId = environment.projectId;
+  
+      const requestEntity: RequestEntity = {
+        ProcessVariables: data,
+        processId: processId,
+        workflowId: workflowId,
+        projectId: projectId,
+      };
+  
+      const body = {
+        "processVariables":
+        JSON.stringify(requestEntity)
+      };
+  
+      let uri = environment.host + '/d/workflows/' + workflowId + '/'+environment.apiVersion.api+'execute?projectId=' + projectId;
+      return this.callPost(workflowId, projectId, body);
+  
+    }
 }

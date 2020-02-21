@@ -1,6 +1,7 @@
 
 	.bs-lead-card{
 		margin: 1vw;
+		
 	}
 @media print{
 
@@ -18,7 +19,18 @@
 		margin: 10cm;
 		}
 *  {-webkit-print-color-adjust: exact;}
-	
+
+}
+
+.appImage{
+	border: solid;
+    /* padding-top: 1vw;
+    padding-left: 1vw;
+    padding-bottom: 1vw; */
+	border-color: rgba(187, 187, 187, 1);
+	border-width: thin;
+	height:10vw;
+	width: 8vw;
 }
 
 

@@ -7,7 +7,13 @@
         </option>
     </select>
     &nbsp; &nbsp; &nbsp;<input type="text" class="search" placeholder="Search" [(ngModel)]="searchKey" (input)="search()" />
-      <button class="fileUpload" (click)="callFile()">Upload Connector / DMA List</button>
+    &nbsp; &nbsp; <kendo-dropdownlist 
+      [data]="listItems" style="border:none;border-bottom: 1px solid; font-size: 1.2vw; height: 2.2vw;"
+      defaultItem ="Select CSV Type.."
+      [(ngModel)]= "csvType"
+      >
+      </kendo-dropdownlist>
+      <button class="fileUpload" (click)="callFile()">Browse.. CSV</button><!--Upload Connector / DMA List-->
       <input type="file" #uploadCSV accept=".csv" (change)="startUpload($event)" style="display: none;">
       <button type="button" class="btn btn-default" [ngClass]="{'disabled': (!isFileSelected)}"
           [disabled]="!isFileSelected" (click)="uploadCSVFile()"> Upload List</button>

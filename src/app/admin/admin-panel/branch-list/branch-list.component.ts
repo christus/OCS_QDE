@@ -167,7 +167,7 @@ export class BranchListComponent implements OnInit {
           "size": size
         }
       }
-      this.qdeHttp.uploadCSV(documentInfo).subscribe(res=>{
+      this.qdeHttp.uploadBranchCSV(documentInfo).subscribe(res=>{
         if(res['ProcessVariables']['status'] && res['ProcessVariables']['errorMessage']==''){
           this.isErrorModal = true;
           this.errorMsg = "File Uploaded successfully";

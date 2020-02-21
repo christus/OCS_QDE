@@ -9,7 +9,7 @@
       <input type="file" #uploadCSV accept=".csv" (change)="startUpload($event)" style="display: none;">
       <button type="button" class="btn btn-default" [ngClass]="{'disabled': (!isFileSelected)}"
           [disabled]="!isFileSelected" (click)="uploadCSVFile()"> Upload List</button>
-
+          <span style="margin-left: 50vw;">{{uploadFileName}}</span>
 <div class="list">
     <table class="admin-table">
         <thead>
@@ -31,9 +31,9 @@
             <td>{{item.branchName}}</td>
             <!-- <td>{{item.branchType}}</td> -->
             <td>{{item.cityName}}</td>
-            <td>{{item.state}}</td>
-            <td>{{item.zone}}</td>
-            <td>{{item.region}}</td>
+            <td>{{item.stateName}}</td>
+            <td>{{item.zoneName}}</td>
+            <td>{{item.regionName}}</td>
           </tr>											
         </tbody>
       </table>

@@ -78,6 +78,7 @@ export class BranchMappingComponent implements OnInit {
     let data = {};
     data["currentPage"] = value;
     data["roleId"] = this.filterData;
+    data["searchKey"] = this.searchKey;
     this.getUserMappingList(data);
   }
 

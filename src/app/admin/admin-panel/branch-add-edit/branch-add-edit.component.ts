@@ -87,6 +87,12 @@ myFormValid: boolean = false;
     branch: new FormControl('')
   });
 
+  regexPattern = {
+    number: "^[0-9]*$",
+    // name: "^[a-zA-Z ]+(([',. -][a-zA-Z ])?[a-zA-Z ]*)*$", 
+    name: "^[a-zA-Z0-9 ]+(([',. -][a-zA-Z ])?[a-zA-Z ]*)*$"
+  }
+
   constructor(private qdeHttp: QdeHttpService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
@@ -153,11 +159,11 @@ myFormValid: boolean = false;
       closeDropDownOnSelection: true
     }
 
-    this.qdeHttp.adminGetUserLov({}).subscribe((response) => {
-      const lov = JSON.parse(response['ProcessVariables'].lovs);
-      this.states = lov.LOVS.state;
-      this.zones = lov.LOVS.zone;
-    });
+    // this.qdeHttp.adminGetUserLov({}).subscribe((response) => {
+    //   const lov = JSON.parse(response['ProcessVariables'].lovs);
+    //   // this.states = lov.LOVS.state;
+    //   // this.zones = lov.LOVS.zone;
+    // });
 
     this.zipcodeSubscription = fromEvent(
       this.zipCodeInputRef.nativeElement,
@@ -369,6 +375,9 @@ myFormValid: boolean = false;
               }
             ];
             this.zone = [response.zoneName];
+          }else{
+            this.zone ='';
+            this.zones = [];
           }
 
           if (response.stateId) {
@@ -380,6 +389,10 @@ myFormValid: boolean = false;
             ];
             this.state = [response.stateName];
             this.city = response.cityName;
+            this.cityInp = response.cityId;
+          }else {
+            this.state = '';
+            this.states = [];
           }
 
           if (response.regionId) {
@@ -391,6 +404,9 @@ myFormValid: boolean = false;
             ];
 
             this.region = [response.regionName];
+          } else {
+            this.region= '';
+            this.regions=[];
           }
         }
       });
@@ -404,7 +420,7 @@ myFormValid: boolean = false;
       branchName: this.formValue.Value.value,
       address: this.formValue.address.value,
       branchType: this.formValue.branchType.value,
-      branchCode: this.formValue.branchCode.value,
+      branchCode: Number(this.formValue.branchCode.value),
       newFinnOneCode: this.formValue.newFinnOneCode.value,
       city: this.formValue.cityInp.value,
       cityInp: this.formValue.city.value,

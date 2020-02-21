@@ -127,7 +127,8 @@
               </div>
               <div class="space-6">
                 <br>
-                <img src="https://picsum.photos/150/150">
+             <!-- <img src="https://picsum.photos/150/150"> this.catchaImage = "data:image/png;base64," + this.base64Data; -->
+             <img [src]="applicantImage" class="appImage">
               </div>
               <div class="space-3">
                 
@@ -373,12 +374,12 @@
             
             <div class="space-lg-12 space-md-12 space-sm-12 space-xs-12 ">
               <div class="main_div">
+                <div class="space-12 border_bottom">{{applicant.permanentAddress.addressLineOne}}&nbsp;</div>
+                <div class="space-12 border_bottom">{{applicant.permanentAddress.addressLineTwo}}&nbsp;</div>
+                <div class="space-12 border_bottom">{{applicant.permanentAddress.city}}&nbsp;</div>
                 <div class="space-12 border_bottom">&nbsp;</div>
-                <div class="space-12 border_bottom">&nbsp;</div>
-                <div class="space-12 border_bottom">District</div>
-                <div class="space-12 border_bottom">&nbsp;</div>
-                <div class="space-12 border_bottom">&nbsp;</div>
-                <div class="space-12 ">Pincode</div>
+                <div class="space-12 border_bottom">{{applicant.permanentAddress.state}}&nbsp;</div>
+                <div class="space-12 ">{{applicant.permanentAddress.zipcode}}&nbsp;</div>
               </div>
   
                         
@@ -418,12 +419,20 @@
           </div>
   
         </div>
-        <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right"></div>
+       
+      <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
+        <div class="main_div">
+          <div class="space-12 border_bottom">  {{applicant.contactDetails.preferredEmailId}}&nbsp;</div>
+          <div class="space-12 ">{{applicant.officialCorrespondence.officeEmailId}}&nbsp;</div>              
+          </div>
+        </div>      
+        
       </div>
       <div class="main_div  main_main_div top-border">
         <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">18.</div>
         <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Total Monthly Income</div>
-        <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right"></div>
+        <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
+          {{applicant.incomeDetails.monthlyIncome}}</div>
       </div>
       <div class="main_div  main_main_div top-border">
         <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">19.</div>
@@ -446,12 +455,16 @@
       <div class="main_div  main_main_div top-border">
         <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">2.1.</div>
         <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Occupation</div>
-        <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">Salaried Self Employed Professional Self Employed Non-Professional</div>
+        <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
+          {{applicant.occupation.occupationType}}
+          <!-- Salaried Self Employed Professional Self Employed Non-Professional -->
+        </div>
       </div>
       <div class="main_div main_main_div top-border">
         <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">2.2.</div>
         <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Organisation Name</div>
-        <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right"></div>
+        <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
+          {{applicant.occupation.companyName}}</div>
       </div>
       <div class="main_div main_main_div top-border">
         <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">2.3.1</div>
@@ -471,7 +484,7 @@
       <div class="main_div  main_main_div top-border">
         <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">2.3.4</div>
         <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Total Work Exprience</div>
-        <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">Years Months</div>
+        <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">{{applicant.occupation.totalWorkExperience}} Years </div>
       </div>
       <div class="main_div  main_main_div top-border">
         <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">2.3.5</div>
@@ -495,12 +508,12 @@
         </div>
         <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
           <div class="main_div">
-                <div class="space-12 border_bottom">&nbsp;</div>
-                <div class="space-12 border_bottom">&nbsp;</div>
-                <div class="space-12 border_bottom">District</div>
-                <div class="space-12 border_bottom">&nbsp;</div>
-                <div class="space-12 border_bottom">&nbsp;</div>
-                <div class="space-12 ">Pincode</div>
+                <div class="space-12 border_bottom">{{applicant.officialCorrespondence.addressLineOne}}&nbsp;</div>
+                <div class="space-12 border_bottom">{{applicant.officialCorrespondence.addressLineTwo}}&nbsp;</div>
+                <div class="space-12 border_bottom">{{applicant.officialCorrespondence.city}}&nbsp;</div>
+                <div class="space-12 border_bottom">{{applicant.officialCorrespondence.landMark}}&nbsp;</div>
+                <div class="space-12 border_bottom">{{applicant.officialCorrespondence.state}}&nbsp;</div>
+                <div class="space-12 ">{{applicant.officialCorrespondence.zipcode}}&nbsp;</div>
               </div>
             </div>
       </div>
@@ -508,7 +521,7 @@
         <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">2.4</div>
         <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Land Line</div>
         <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right"><div class="main_div">
-                <div class="space-12 ">Std Code Resi.</div>
+                <div class="space-12 ">{{applicant.officialCorrespondence.officeNumber}} &nbsp;</div>
                 
             </div></div>
       </div>
@@ -524,8 +537,13 @@
       </div>
       <div class="main_div  main_main_div top-border">
         <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">2.7</div>
-        <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Spouse Working</div>
-        <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">Yes No (If yes, Monthly income )</div>
+        <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Spouse Working (If yes, Monthly income )</div>
+        <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
+          <!-- <span *ngIf="{{applicant.maritalStatus.earning}}"> Yes</span>
+          <span *ngIf="!{{applicant.maritalStatus.earning}}"> No</span> -->
+          {{(applicant.maritalStatus.earning)? 'Yes-'+(applicant.maritalStatus.amount):'No' }} 
+          <!-- (If yes, Monthly income ) -->
+          </div>
       </div>
       <div class="main_div  main_main_div top-border">
         <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">2.8</div>
