@@ -14,6 +14,10 @@ import { AutoLogoutService } from './services/AutoLogoutService';
 import { QdeHttpService } from './services/qde-http.service';
 import { Router } from '@angular/router';
 
+declare var window: any;
+
+const API_Key = "AIzaSyCc9UhVSnToz-1sG9Nxn2WF_mcThqUhCyI";
+
 
 
 @Component({
@@ -76,6 +80,43 @@ export class AppComponent implements OnInit{
     //   return;
     // }
     var that = this;
+
+    if(this.isMobile) {
+      var randomString = function(length) {
+        var text = "";
+        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        for(var i = 0; i < length; i++) {
+            text += possible.charAt(Math.floor(Math.random() * possible.length));
+        }
+        return text;
+      }
+      let nonse = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+  
+  
+      window.safetynet.attest(nonse
+      ,API_Key ,function(result){
+        console.log("RESULT", result);
+        let jsonResult = JSON.parse(result);
+        console.log("jsonResult", jsonResult);
+        let ctsProfileMatch = jsonResult.ctsProfileMatch;
+        let basicIntegrity = jsonResult.basicIntegrity;
+        let apkCertificateDigestSha256 = jsonResult.apkCertificateDigestSha256;
+  
+        console.log("ctsProfileMatch", ctsProfileMatch);
+        console.log("basicIntegrity", basicIntegrity);
+        console.log("apkCertificateDigestSha256", apkCertificateDigestSha256);
+  
+        if(!ctsProfileMatch || !basicIntegrity && apkCertificateDigestSha256 != environment.apkCertDig256) {
+          alert("Application integrity breach");
+          navigator["app"].exitApp();
+        }
+  
+      } ,function(error){
+          console.log("error RESULT", error);
+          alert("Application integrity breach");
+          navigator["app"].exitApp();
+      });
+    }
 
     if(this.errorList!=undefined && this.errorList.length==0){
       this.isEmpty = true;
@@ -141,6 +182,7 @@ export class AppComponent implements OnInit{
         this.isErrorModal = this.showErrDialog;
 
         this.errorMessage = "Your session expired...";
+        // this.utilService.clearCredentials();
         console.log("reqesut", "ngAfterview not active");
 
       }

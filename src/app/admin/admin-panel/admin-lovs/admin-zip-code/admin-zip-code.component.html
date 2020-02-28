@@ -55,7 +55,8 @@
     <div class="admin-col-half">
 
       <label for="value">*Value</label>
-      <input type="text" class="descvalue" (ngModelChange)="valueChange($event)" [(ngModel)]="value" id="value" name="value" maxlength="6" ngModel />
+      <input type="text" class="descvalue" (ngModelChange)="valueChange($event)" pattern={{regexPattern.mobileNumber}} 
+      [(ngModel)]="value" id="value" name="value" maxlength="6" ngModel />
       <span class="error-span" [ngClass]="{'errorMessage':!isValueHidden}">
         {{zipcodeErrMsg}}
       </span>
@@ -67,7 +68,7 @@
       </span>
       
 
-      <button type="submit" class="saveBtn">Save</button>
+      <button type="submit" class="saveBtn" >Save</button>
     </div>
 
   </form>

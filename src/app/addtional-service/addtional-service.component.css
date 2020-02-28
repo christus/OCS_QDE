@@ -244,6 +244,9 @@ top: 0; */
     position: fixed;
     overflow: hidden;
   } */
+  @page {
+		margin: 0.5px;
+		}
 
   @media print{
     app-leads-header , app-leads-sidebar, .tabs-head {

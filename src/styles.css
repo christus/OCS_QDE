@@ -5989,7 +5989,28 @@ multi select drop down css
   }
   
   /* .dropdown-list[_ngcontent-c4] .filter-textbox[_ngcontent-c4] */
+  /* for Page Aligin in print */
+  @media all {
+	/*.page-break {
+		display: none;
+	}  */
+  }
+  /* @media print {
+	 .page-break{
+	  display: inline-block;
+	  page-break-before: auto;
+	  float:none;
+	  margin-top:10px;
   
-
-
-
+	  
+	  }
+	  
+	  .page-breaktest {
+		  display: inline-block;
+		  page-break-before: always;
+		  float:none;
+		  margin-top:10px;
+  
+	  }
+	
+	} */

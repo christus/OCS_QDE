@@ -18,6 +18,7 @@ export interface Application {
     leadCreate?: LeadCreate;
     offlinePayments?: ChequeDetails;
     branch?:string;
+    paymentDetails?:PaymentDetails;
 }
 
 export interface Document {
@@ -27,6 +28,12 @@ export interface Document {
   documentName: string;
   documentSize: number;
 
+}
+export interface PaymentDetails{
+    paymentDate?: string;
+    referenceNo?: string;
+    loginFee?: string;
+    paymentMode?: string;
 }
 
 export interface Applicant {

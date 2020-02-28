@@ -6,90 +6,92 @@
 
 
       <!-- form gruop -->
-      <div class="container_box" style="">
-			
+      <div class="container_box">
+
         <div class="main_div">
           <div class="space-lg-6 space-6">
             <img style="padding-top: 6px;" src="assets/images/logo.svg">
           </div>
           <div class="space-lg-6 space-6 app_type_container">
-            <div class="main_div">	
-              <div class="space-lg-3 space-3"><b>Application Type:</b> 
+            <div class="main_div">
+              <div class="space-lg-3 space-3"><b>Application Type:</b>
               </div>
-              <div class="space-lg-9 space-9"><span class="ind">Individual</span> <br/><span class="non_ind">Non Individual</span><br/>(For Pvt Ltd, Ltd, LLP, Partnership, Trusts, Firms, Association, Societies & Clubs)
-              </div>						
-            </div>			
-          </div>											
-        </div>
-  
-  
-        <div class="main_div id_top_min">	
-          <div class="space-lg-6 space-6">
-            <div class="bar_div_align ">
-                <div class="bar_div ">
-                  <!-- <p class="bar_p pos_abs title_bg">Application Form for Resident Indian</p>					 -->
-                </div>		
+              <div class="space-lg-9 space-9"><span class="ind">Individual</span> <br /><span class="non_ind">Non
+                  Individual</span><br />(For Pvt Ltd, Ltd, LLP, Partnership, Trusts, Firms, Association, Societies &
+                Clubs)
+              </div>
             </div>
           </div>
-  
-          <div class="space-lg-6 space-6 fill_box lead_container">	
-            
+        </div>
+
+
+        <div class="main_div id_top_min">
+          <div class="space-lg-6 space-6">
+            <div class="bar_div_align ">
+              <div class="bar_div ">
+                <!-- <p class="bar_p pos_abs title_bg">Application Form for Resident Indian</p>					 -->
+              </div>
+            </div>
+          </div>
+
+          <div class="space-lg-6 space-6 fill_box lead_container">
+
             <div class="main_div">
-              <ul class="">					
+              <ul class="">
                 <li class="field_height">
                   <!-- <div class="main_div rows"> -->
-                    <span class="lead_id_label">Lead ID </span>
-                     <input type="text" id="lead_id" name="lead_id" class="" />
-                     <span class=""></span>
-                   <!-- </div> -->
+                  <span class="lead_id_label">Lead ID </span>
+                  <input type="text" id="lead_id" name="lead_id" class="" disabled />
+                  <span class=""></span>
+                  <!-- </div> -->
                 </li>
                 <li class="field_height">
                   <!-- <div class="main_div"> -->
-                    <span class="rm_id_label">RM ID</span>
-                    <input type="text" id="rm_id" name="rm_id" class="" />
+                  <span class="rm_id_label">RM ID</span>
+                  <input type="text" id="rm_id" name="rm_id" class="" disabled/>
                   <!-- </div> -->
                 </li>
               </ul>
               <ul class="">
                 <li class="field_height">
                   <!-- <div class="main_div"> -->
-                    <span class="label">Broker ID</span>
-                    <input type="text" id="borker_id" name="borker_id" class="" />
+                  <span class="label">Broker ID</span>
+                  <input type="text" id="borker_id" name="borker_id" class="" disabled/>
                   <!-- </div> -->
                 </li>
                 <li class="field_height">
                   <!-- <div class="main_div"> -->
-                    <span class="label">Bank Branch Sol ID</span>
-                    <input type="text" id="bank_branch_id" name="bank_branch_id" class="" />
+                  <span class="label">Bank Branch Sol ID</span>
+                  <input type="text" id="bank_branch_id" name="bank_branch_id" class="" disabled/>
                   <!-- </div> -->
                 </li>
                 <li class="field_height">
                   <!-- <div class="main_div"> -->
-                    <span class="label">Bank Employee ID</span>
-                    <input type="text" id="employee_id" name="employee_id" class="" />
-                    <span class=""></span>
+                  <span class="label">Bank Employee ID</span>
+                  <input type="text" id="employee_id" name="employee_id" class="" disabled />
+                  <span class=""></span>
                   <!-- </div> -->
                 </li>
               </ul>
             </div>
-  
-  <!-- 					<div class="main_div">
+
+            <!-- 					<div class="main_div">
               <div class="space-lg-6 space-6 border_right">&nbsp;</div>
               <div class="space-lg-6 space-6 field_height"> -->
-                <!-- <div class="main_div"> -->
-                  <!-- <span class="label">Bank Employee ID</span>
+            <!-- <div class="main_div"> -->
+            <!-- <span class="label">Bank Employee ID</span>
                   <input type="text" id="employee_id" name="employee_id" class="" />
                   <span class=""></span> -->
-                <!-- </div> -->
-  <!-- 						</div>
+            <!-- </div> -->
+            <!-- 						</div>
             </div> -->
           </div>
         </div>
         <div class="main_div clear">
           <div class="space-lg-12 space-12 bar_div_align">
-              <div class="bar_div app">
-                <p class="bar_p pos_abs title_bg res_indian">Application Form for Resident Indian</p>					
-              </div>		
+            <div class="bar_div app">
+              <p class="bar_p pos_abs title_bg res_indian">Application Form for Resident Indian</p>
+            </div>
           </div>
         </div>
         <div class="main_div ul_style">
@@ -98,65 +100,70 @@
               <li class="li_style"> Please pick which ever is applicable</li>
               <li class="li_style"> All * fileds mandatory</li>
               <li class="li_style"> Please use BLOCK letters</li>
-              <li class="li_style"> Any incomplete / incorrect application is liable to be rejected by ICICI Home Finance Company Ltd.</li>
-  
+              <li class="li_style"> Any incomplete / incorrect application is liable to be rejected by ICICI Home
+                Finance Company Ltd.</li>
+
             </ul>
-            <textarea id="w3mission" style="width: 300px;">					
+            <textarea id="w3mission" style="width: fit-content; resize: none; text-align: center; padding-top: 1.4vw;
+            font-size: 1vw;" [ngModel]="application.application.applicationFormNumber" disabled  >
             </textarea>
           </div>
           <div class="space-lg-6 space-6">
-  
+
             <div class="main_div">
               <div class="space-lg-6 space-6 head-top-p">
                 Sourcing Branch
               </div>
               <div class="space-lg-6 space-6 head-top-p">
-                Servicing Branch <input type="text" id="branch" name="branch">
+                Servicing Branch <input type="text" id="branch" name="branch" disabled>
               </div>
             </div>
             <div class="main_div">
               <div class="space-12">
                 <div class="bar_div ">
-                  <p class="bar_p pos_abs title_bg">Applicant</p>					
+                  <p class="bar_p pos_abs title_bg">Applicant / Co-Applicant</p>
                 </div>
               </div>
             </div>
-            <div class="main_div">
-              <div class="space-3">
-                
-              </div>
-              <div class="space-6">
+            <div class="main_div">              
+              <div class="space-12">
                 <br>
-             <!-- <img src="https://picsum.photos/150/150"> this.catchaImage = "data:image/png;base64," + this.base64Data; -->
-             <img [src]="applicantImage" class="appImage">
+                <div class="main_div">                
+                <!-- <img src="https://picsum.photos/150/150"> this.catchaImage = "data:image/png;base64," + this.base64Data; -->
+                <div class="space-2-5" *ngFor="let applicantImage of applicantImage">
+                <img [src]="applicantImage" class="appImage">
+                </div>
+                </div>
               </div>
-              <div class="space-3">
-                
-              </div>
-            </div>				
+              
+            </div>
           </div>
-          
+
         </div>
         <div class="main_div">
-  
+
           <div class="space-lg-12 space-12 bar_div_align title_bg">
             <!-- <div class="bar_div"> -->
-              <!-- <p class="bar_p ">Applicant</p>				 -->
+            <!-- <p class="bar_p ">Applicant</p>				 -->
           </div>
           <!-- </div> -->
         </div>
-          
-    </div>
-  
-    <div class="container_box" *ngFor="let applicant of applicants; index as i;">
-    <div class="main_div_content_2 page-1">
-      <div class="main_div  main_main_div top-border">
-        <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right bg_color">1.</div>
-        <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right bg_color">Personal Details</div>
-        <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 border_right bg_color" *ngIf= "i==0">Applicant</div>
-        <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 border_right bg_color"*ngIf= "i>0" >Co-Applicant</div>
+
       </div>
-      <!-- <div class="main_div  main_main_div top-border">
+
+      <div class="container_box" *ngFor="let applicant of applicants; index as i;">
+        <div style="page-break-inside: avoid; margin-top: 10px;">
+          <div class="main_div_content_2 page-1">
+            <div class="main_div  main_main_div top-border">
+              <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right bg_color">1.</div>
+              <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right bg_color">Personal Details</div>
+              <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 border_right bg_color" *ngIf="i==0">Applicant
+              </div>
+              <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 border_right bg_color" *ngIf="i>0">Co-Applicant -
+                {{i}}
+              </div>
+            </div>
+            <!-- <div class="main_div  main_main_div top-border">
         <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right "></div>
         <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right "></div>
         
@@ -164,542 +171,659 @@
         </div>
   
       </div> -->
-      <div class="main_div main_main_div top-border">
-        <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">1.</div>
-        <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Full Name</div>
-        <div class="space-lg-2 space-md-2 space-sm-2 space-xs-2 back_color ">	{{applicant.personalDetails.title}}
-          {{applicant.personalDetails.firstName}}
-          {{applicant.personalDetails.middleName}} 
-          {{applicant.personalDetails.lastName}}
-        </div>
-        <div class="space-lg-2 space-md-2 space-sm-2 space-xs-2  back_color">				
-        </div>	
-        <div class="space-1-6 back_color border_right ">				
-        </div>				
-      </div>	
-      <div class="main_div  main_main_div ">
-        <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right top-border">2.1</div>
-        <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right top-border">Father's Name</div>
-        <div class="space-lg-2 space-md-2 space-sm-2 space-xs-2 back_color top-border ">{{applicant.familyDetails.fatherTitle}}
-          {{applicant.familyDetails.fatherName}}			
-        </div>
-        <div class="space-lg-2 space-md-2 space-sm-2 space-xs-2 back_color top-border">				
-        </div>	
-        <div class="space-1-6 back_color border_right top-border ">				
-        </div>
-      </div>
-      <div class="main_div  main_main_div ">
-        <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right top-border">2.2</div>
-        <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right top-border">Mother's Name</div>
-        <div class="space-lg-2 space-md-2 space-sm-2 space-xs-2 back_color top-border ">{{applicant.familyDetails.motherTitle}}
-          {{applicant.familyDetails.motherName}}				
-        </div>
-        <div class="space-lg-2 space-md-2 space-sm-2 space-xs-2  back_color top-border">				
-        </div>	
-        <div class="space-1-6 back_color border_right top-border back_color top-border">				
-        </div>
-      </div>
-      <div class="main_div  main_main_div ">
-        <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right top-border">2.3</div>
-        <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right top-border" >Spouse Name</div>
-        <div class="space-lg-2 space-md-2 space-sm-2 space-xs-2 back_color top-border ">	{{applicant.maritalStatus.spouseTitle}}
-          {{applicant.maritalStatus.firstName}}				
-        </div>
-        <div class="space-lg-2 space-md-2 space-sm-2 space-xs-2  back_color top-border">				
-        </div>	
-        <div class="space-1-6 back_color border_right top-border ">				
-        </div>
-      </div>
-      <div class="main_div main_main_div ">
-        <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right top-border">3.</div>
-        <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right top-border">Date of Birth</div>
-        <div class="space-lg-2 space-md-2 space-sm-2 space-xs-2 back_color top-border ">	{{applicant.personalDetails.dob}}				
-        </div>
-        <div class="space-lg-2 space-md-2 space-sm-2 space-xs-2  back_color top-border">				
-        </div>	
-        <div class="space-1-6 back_color border_right top-border ">				
-        </div>
-      </div>
-      <div class="main_div  main_main_div ">
-        <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right top-border">4.</div>
-        <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right top-border">Gender</div>
-        
-        <div class="space-lg-2 space-md-2 space-sm-2 space-xs-2 back_color top-border ">	
-          <!-- Male/ Female/ Transgender			 -->{{applicant.personalDetails.gender}}	
-        </div>
-        <div class="space-lg-2 space-md-2 space-sm-2 space-xs-2  back_color top-border">				
-        </div>	
-        <div class="space-1-6 back_color border_right top-border ">				
-        </div>
-  
-      </div>
-      <div class="main_div  main_main_div top-border">
-        <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">5.</div>
-        <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Number of Dependents</div>
-        <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
-          {{applicant.familyDetails.numberOfDependents}} (Children + Others)</div>
-      </div>
-      <div class="main_div  main_main_div top-border">
-        <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">6.</div>
-        <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Marital Status</div>
-        <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right"> 
-          <!-- Single Married Others -->	{{applicant.maritalStatus.status}}
+            <div class="main_div main_main_div top-border">
+              <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">1.</div>
+              <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Full Name</div>
+              <div class="space-lg-2 space-md-2 space-sm-2 space-xs-2 back_color "> {{applicant.personalDetails.title}}
+                {{applicant.personalDetails.firstName}}
+                {{applicant.personalDetails.middleName}}
+                {{applicant.personalDetails.lastName}}
+              </div>
+              <div class="space-lg-2 space-md-2 space-sm-2 space-xs-2  back_color">
+              </div>
+              <div class="space-1-6 back_color border_right ">
+              </div>
+            </div>
+            <div class="main_div  main_main_div ">
+              <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right top-border">2.1</div>
+              <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right top-border">Father's Name</div>
+              <div class="space-lg-2 space-md-2 space-sm-2 space-xs-2 back_color top-border ">
+                {{applicant.familyDetails.fatherTitle}}
+                {{applicant.familyDetails.fatherName}}
+              </div>
+              <div class="space-lg-2 space-md-2 space-sm-2 space-xs-2 back_color top-border">
+              </div>
+              <div class="space-1-6 back_color border_right top-border ">
+              </div>
+            </div>
+            <div class="main_div  main_main_div ">
+              <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right top-border">2.2</div>
+              <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right top-border">Mother's Name</div>
+              <div class="space-lg-2 space-md-2 space-sm-2 space-xs-2 back_color top-border ">
+                {{applicant.familyDetails.motherTitle}}
+                {{applicant.familyDetails.motherName}}
+              </div>
+              <div class="space-lg-2 space-md-2 space-sm-2 space-xs-2  back_color top-border">
+              </div>
+              <div class="space-1-6 back_color border_right top-border back_color top-border">
+              </div>
+            </div>
+            <div class="main_div  main_main_div ">
+              <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right top-border">2.3</div>
+              <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right top-border">Spouse Name</div>
+              <div class="space-lg-2 space-md-2 space-sm-2 space-xs-2 back_color top-border ">
+                {{applicant.maritalStatus.spouseTitle}}
+                {{applicant.maritalStatus.firstName}}
+              </div>
+              <div class="space-lg-2 space-md-2 space-sm-2 space-xs-2  back_color top-border">
+              </div>
+              <div class="space-1-6 back_color border_right top-border ">
+              </div>
+            </div>
+            <div class="main_div main_main_div ">
+              <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right top-border">3.</div>
+              <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right top-border">Date of Birth</div>
+              <div class="space-lg-2 space-md-2 space-sm-2 space-xs-2 back_color top-border ">
+                {{applicant.personalDetails.dob}}
+              </div>
+              <div class="space-lg-2 space-md-2 space-sm-2 space-xs-2  back_color top-border">
+              </div>
+              <div class="space-1-6 back_color border_right top-border ">
+              </div>
+            </div>
+            <div class="main_div  main_main_div ">
+              <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right top-border">4.</div>
+              <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right top-border">Gender</div>
 
-        </div>
-      </div>
-      <div class="main_div  main_main_div top-border">
-        <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">7.</div>
-        <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Category</div>
-        <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
-          <!-- General SC ST OBC MBC Others -->{{applicant.other.category}}
-          <br/>
-          (Provide SC/ST/OBC certoficate if applicable)</div>
-      </div>
-      <div class="main_div  main_main_div top-border">
-        <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">8.</div>
-        <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Qualification</div>
-        <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">{{applicant.personalDetails.qualification}}
-          (SSC & Below Under Graduate Gradute Post Graduate Professional)</div>
-      </div>
-      <div class="main_div  main_main_div top-border">
-        <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">9.</div>
-        <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">PAN</div>
-        <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
-          {{applicant.pan.panNumber}}
-        </div>
-      </div>
-      <div class="main_div  main_main_div top-border">
-        <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">10.</div>
-        <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Religion</div>
-        <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
-          <!-- Hindu Muslim Christian Buddhist Sikh Others -->{{applicant.other.religion}}
-        </div>
-      </div>
-      <div class="main_div  main_main_div top-border">
-        <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">11.</div>
-        <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Current Residence</div>
-        <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">{{applicant.communicationAddress.residentialStatusName}}
-        <br/>
-          (Owned/ Rented/ Company Provided)
-        </div>
-      </div>
-  
-      <div class="main_div  main_main_div top-border">
-        <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">12.</div>
-        <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Number of years at current Residence</div>
-        <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
-          {{applicant.communicationAddress.numberOfYearsInCurrentResidence}} Years </div>
-          <!-- Months -->
-      </div>
-      
-      <div class="main_div  main_main_div top-border">
-        <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">13.</div>
-        <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">
-          <div class="main_div">
-            <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Current Residential Address</div>
-            <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 ">
-              <div class="main_div">
-                <div class="space-12 border_bottom">Flat No. / Building Name</div>  
-                <div class="space-12 border_bottom">Road No. / Road Name</div>
-                <div class="space-12 border_bottom">Area/ Locality</div>
-                <div class="space-12 border_bottom">Landmark</div>
-                <div class="space-12 border_bottom">City</div>
-                <div class="space-12 ">State</div>
+              <div class="space-lg-2 space-md-2 space-sm-2 space-xs-2 back_color top-border ">
+                <!-- Male/ Female/ Transgender			 -->{{applicant.personalDetails.gender}}
               </div>
-                        
-            </div>
-          </div>
-  
-        </div>
-        <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right"><div class="main_div">
-            
-            <div class="space-lg-12 space-md-12 space-sm-12 space-xs-12 ">
-              <div class="main_div">
-                <div class="space-12 border_bottom">{{applicant.communicationAddress.addressLineOne}}&nbsp;</div>
-                <!-- &nbsp; -->
-                <div class="space-12 border_bottom">{{applicant.communicationAddress.addressLineTwo}}&nbsp;</div>
-                <div class="space-12 border_bottom">{{applicant.communicationAddress.city}}&nbsp;</div>
-                <div class="space-12 border_bottom">&nbsp;</div>
-                <div class="space-12 border_bottom">{{applicant.communicationAddress.state}}&nbsp;</div>
-                <div class="space-12 ">{{applicant.communicationAddress.zipcode}}&nbsp;</div>
+              <div class="space-lg-2 space-md-2 space-sm-2 space-xs-2  back_color top-border">
               </div>
-  
-                        
-            </div>
-          </div></div>
-      </div>
-      <div class="main_div  main_main_div top-border">
-        <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">14.</div>
-        <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">
-          <div class="main_div">
-            <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Telephone</div>
-            <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 ">
-              <div class="main_div">
-                <div class="space-12 border_bottom">Land Line</div>
-                <div class="space-12 ">Mobile</div>
-              </div>			
-            </div>
-          </div>
-  
-        </div>
-        <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
-              <div class="main_div">
-                <div class="space-12 border_bottom"> {{applicant.contactDetails.residenceNumber}}&nbsp;</div>
-                <div class="space-12 ">{{applicant.contactDetails.mobileNumber}}&nbsp;</div>
-                    
-            </div></div>
-      </div>
-      
-      <div class="main_div  main_main_div top-border">
-        <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">15.</div>
-        <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">
-          <div class="main_div">
-            <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Premanent Residential Address</div>
-            <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 ">
-              <div class="main_div">
-                <div class="space-12 border_bottom">Flat No. / Building Name</div>
-                <div class="space-12 border_bottom">Road No. / Road Name</div>
-                <div class="space-12 border_bottom">Area/ Locality</div>
-                <div class="space-12 border_bottom">Landmark</div>
-                <div class="space-12 border_bottom">City</div>
-                <div class="space-12 ">State</div>
+              <div class="space-1-6 back_color border_right top-border ">
               </div>
-  
-                        
+
             </div>
-          </div>
-  
-        </div>
-        <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right"><div class="main_div">
-            
-            <div class="space-lg-12 space-md-12 space-sm-12 space-xs-12 ">
-              <div class="main_div">
-                <div class="space-12 border_bottom">{{applicant.permanentAddress.addressLineOne}}&nbsp;</div>
-                <div class="space-12 border_bottom">{{applicant.permanentAddress.addressLineTwo}}&nbsp;</div>
-                <div class="space-12 border_bottom">{{applicant.permanentAddress.city}}&nbsp;</div>
-                <div class="space-12 border_bottom">&nbsp;</div>
-                <div class="space-12 border_bottom">{{applicant.permanentAddress.state}}&nbsp;</div>
-                <div class="space-12 ">{{applicant.permanentAddress.zipcode}}&nbsp;</div>
+            <div class="main_div  main_main_div top-border">
+              <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">5.</div>
+              <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Number of Dependents</div>
+              <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
+                {{applicant.familyDetails.numberOfDependents}} 
+                <!-- (Children + Others) -->
               </div>
-  
-                        
             </div>
-          </div></div>
-      </div>
-      <div class="main_div  main_main_div top-border">
-        <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">16.</div>
-        <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">
-          <div class="main_div">
-            <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Telephone</div>
-            <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 ">
-              <div class="main_div">
-                <div class="space-12 ">Land Line</div>
-              </div>			
-            </div>
-          </div>
-  
-        </div>
-        <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right"><div class="main_div">
-                <div class="space-12 ">Std Code Resi.</div>
-                
-            </div>
-          </div>
-      </div>
-      <div class="main_div  main_main_div top-border">
-        <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">17.</div>
-        <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">
-          <div class="main_div">
-            <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Email ID (Personal)</div>
-            <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 ">
-              <div class="main_div">
-                <div class="space-12 border_bottom">Personal</div>
-                <div class="space-12 ">Official</div>
-              </div>			
-            </div>
-          </div>
-  
-        </div>
-       
-      <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
-        <div class="main_div">
-          <div class="space-12 border_bottom">  {{applicant.contactDetails.preferredEmailId}}&nbsp;</div>
-          <div class="space-12 ">{{applicant.officialCorrespondence.officeEmailId}}&nbsp;</div>              
-          </div>
-        </div>      
-        
-      </div>
-      <div class="main_div  main_main_div top-border">
-        <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">18.</div>
-        <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Total Monthly Income</div>
-        <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
-          {{applicant.incomeDetails.monthlyIncome}}</div>
-      </div>
-      <div class="main_div  main_main_div top-border">
-        <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">19.</div>
-        <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Company's registration number/CIN Company's PAN Number <br/>Date of Incorporation</div>
-        <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right"></div>
-      </div>
-      <div class="main_div  main_main_div top-border">
-        <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right border_bottom">20.</div>
-        <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right border_bottom">GST applicable<br/>GSTIN No if applicable<br/>Status of GST<br/>
-          if the status is Embassy/Govt.dept. Then provide ** UIN<br/>(Unique identification Number)</div>
-        <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right border_bottom">Yes No</div>
-      </div>
-      <div class="main_div  main_main_div">&nbsp;</div>
-      <div class="main_div  main_main_div top-border">
-        <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right bg_color">2.</div>
-        <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right bg_color">Occupation</div>
-        <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 border_right bg_color" *ngIf= "i==0">Applicant</div>
-        <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 border_right bg_color" *ngIf= "i>0" >Co-Applicant</div>
-      </div>
-      <div class="main_div  main_main_div top-border">
-        <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">2.1.</div>
-        <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Occupation</div>
-        <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
-          {{applicant.occupation.occupationType}}
-          <!-- Salaried Self Employed Professional Self Employed Non-Professional -->
-        </div>
-      </div>
-      <div class="main_div main_main_div top-border">
-        <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">2.2.</div>
-        <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Organisation Name</div>
-        <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
-          {{applicant.occupation.companyName}}</div>
-      </div>
-      <div class="main_div main_main_div top-border">
-        <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">2.3.1</div>
-        <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Industry</div>
-        <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">Manufacturing Service Others</div>
-      </div>
-      <div class="main_div  main_main_div top-border">
-        <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">2.3.2</div>
-        <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Date of Incorporation</div>
-        <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right"></div>
-      </div>
-      <div class="main_div  main_main_div top-border">
-        <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">2.3.3</div>
-        <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Constitution Type</div>
-        <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">Proprietorship Firm Partnership Firm Pvt Ltd.Co. Public Ltd.Co. Trust HUF</div>
-      </div>
-      <div class="main_div  main_main_div top-border">
-        <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">2.3.4</div>
-        <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Total Work Exprience</div>
-        <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">{{applicant.occupation.totalWorkExperience}} Years </div>
-      </div>
-      <div class="main_div  main_main_div top-border">
-        <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">2.3.5</div>
-        <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">
-          <div class="main_div">
-            <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Office Address</div>
-            <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 ">
-              <div class="main_div">
-                <div class="space-12 border_bottom">Flat No. / Building Name</div>
-                <div class="space-12 border_bottom">Road No. / Road Name</div>
-                <div class="space-12 border_bottom">Area/ Locality</div>
-                <div class="space-12 border_bottom">Landmark</div>
-                <div class="space-12 border_bottom">City</div>
-                <div class="space-12 ">State</div>
+            <div class="main_div  main_main_div top-border">
+              <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">6.</div>
+              <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Marital Status</div>
+              <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
+                <!-- Single Married Others --> {{applicant.maritalStatus.status}}
+
               </div>
-  
-                        
+            </div>
+            <div class="main_div  main_main_div top-border">
+              <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">7.</div>
+              <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Category</div>
+              <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
+                <!-- General SC ST OBC MBC Others -->{{applicant.other.category}}
+                <br />
+                (Provide SC/ST/OBC certoficate if applicable)</div>
+            </div>
+            <div class="main_div  main_main_div top-border">
+              <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">8.</div>
+              <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Qualification</div>
+              <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
+                {{applicant.personalDetails.qualification}}
+                <!-- (SSC & Below Under Graduate Gradute Post Graduate Professional) -->
+              </div>
+            </div>
+            <div class="main_div  main_main_div top-border">
+              <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">9.</div>
+              <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">PAN</div>
+              <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
+                {{applicant.pan.panNumber}}
+              </div>
+            </div>
+            <div class="main_div  main_main_div top-border">
+              <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">10.</div>
+              <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Religion</div>
+              <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
+                <!-- Hindu Muslim Christian Buddhist Sikh Others -->{{applicant.other.religion}}
+              </div>
+            </div>
+            <div class="main_div  main_main_div top-border">
+              <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">11.</div>
+              <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Current Residence</div>
+              <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
+                {{applicant.communicationAddress.residentialStatusName}}
+                <!-- <br />
+                (Owned/ Rented/ Company Provided) -->
+              </div>
+            </div>
+
+            <div class="main_div  main_main_div top-border">
+              <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">12.</div>
+              <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Number of years at current Residence
+              </div>
+              <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
+                {{applicant.communicationAddress.numberOfYearsInCurrentResidence}} Years </div>
+              <!-- Months -->
+            </div>
+
+            <div class="main_div  main_main_div top-border">
+              <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">13.</div>
+              <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">
+                <div class="main_div">
+                  <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Current Residential Address
+                  </div>
+                  <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 ">
+                    <div class="main_div">
+                      <div class="space-12 border_bottom">Flat No. / Building Name</div>
+                      <div class="space-12 border_bottom">Road No. / Road Name</div>
+                      <div class="space-12 border_bottom">Area/ Locality</div>
+                      <div class="space-12 border_bottom">Landmark</div>
+                      <div class="space-12 border_bottom">City</div>
+                      <div class="space-12 ">State</div>
+                    </div>
+
+                  </div>
+                </div>
+
+              </div>
+              <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
+                <div class="main_div">
+
+                  <div class="space-lg-12 space-md-12 space-sm-12 space-xs-12 ">
+                    <div class="main_div">
+                      <div class="space-12 border_bottom">{{applicant.communicationAddress.addressLineOne}}&nbsp;</div>
+                      <!-- &nbsp; -->
+                      <div class="space-12 border_bottom">{{applicant.communicationAddress.addressLineTwo}}&nbsp;</div>
+                      <div class="space-12 border_bottom">&nbsp;</div>
+                      <div class="space-12 border_bottom">&nbsp;</div>
+                      <div class="space-12 border_bottom">{{applicant.communicationAddress.city}}&nbsp;</div>
+                      <div class="space-12 ">{{applicant.communicationAddress.state}} -
+                        {{applicant.communicationAddress.zipcode}}&nbsp;</div>
+                    </div>
+
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="main_div  main_main_div top-border">
+              <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">14.</div>
+              <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">
+                <div class="main_div">
+                  <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Telephone</div>
+                  <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 ">
+                    <div class="main_div">
+                      <div class="space-12 border_bottom">Land Line</div>
+                      <div class="space-12 ">Mobile</div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
+                <div class="main_div">
+                  <div class="space-12 border_bottom"> {{applicant.contactDetails.residenceNumber}}&nbsp;</div>
+                  <div class="space-12 ">{{applicant.contactDetails.mobileNumber}}&nbsp;</div>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="main_div  main_main_div top-border">
+              <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">15.</div>
+              <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">
+                <div class="main_div">
+                  <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Permanent Residential Address
+                  </div>
+                  <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 ">
+                    <div class="main_div">
+                      <div class="space-12 border_bottom">Flat No. / Building Name</div>
+                      <div class="space-12 border_bottom">Road No. / Road Name</div>
+                      <div class="space-12 border_bottom">Area/ Locality</div>
+                      <div class="space-12 border_bottom">Landmark</div>
+                      <div class="space-12 border_bottom">City</div>
+                      <div class="space-12 ">State</div>
+                    </div>
+
+
+                  </div>
+                </div>
+
+              </div>
+              <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
+                <div class="main_div">
+
+                  <div class="space-lg-12 space-md-12 space-sm-12 space-xs-12 ">
+                    <div class="main_div">
+                      <div class="space-12 border_bottom">{{applicant.permanentAddress.addressLineOne}}&nbsp;</div>
+                      <div class="space-12 border_bottom">{{applicant.permanentAddress.addressLineTwo}}&nbsp;</div>
+                      <div class="space-12 border_bottom">&nbsp;</div>
+                      <div class="space-12 border_bottom">&nbsp;</div>
+                      <div class="space-12 border_bottom">{{applicant.permanentAddress.city}}&nbsp;</div>
+                      <div class="space-12 ">{{applicant.permanentAddress.state}} -
+                        {{applicant.permanentAddress.zipcode}}&nbsp;</div>
+                    </div>
+
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="main_div  main_main_div top-border">
+              <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">16.</div>
+              <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">
+                <div class="main_div">
+                  <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Telephone</div>
+                  <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 ">
+                    <div class="main_div">
+                      <div class="space-12 ">Land Line</div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
+                <div class="main_div">
+                  <div class="space-12 ">{{applicant.contactDetails.residenceNumber}}&nbsp;</div>
+
+                </div>
+              </div>
+            </div>
+            <div class="main_div  main_main_div top-border">
+              <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">17.</div>
+              <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">
+                <div class="main_div">
+                  <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Email ID (Personal)</div>
+                  <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 ">
+                    <div class="main_div">
+                      <div class="space-12 border_bottom">Personal</div>
+                      <div class="space-12 ">Official</div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
+                <div class="main_div">
+                  <div class="space-12 border_bottom"> {{applicant.contactDetails.preferredEmailId}}&nbsp;</div>
+                  <div class="space-12 ">{{applicant.officialCorrespondence.officeEmailId}}&nbsp;</div>
+                </div>
+              </div>
+
+            </div>
+            <div class="main_div  main_main_div top-border">
+              <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">18.</div>
+              <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Total Monthly Income</div>
+              <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">&#x20B9; 
+                {{(applicant.isIndividual)? applicant.incomeDetails.monthlyIncome:''}}</div>
+            </div>
+            <div class="main_div  main_main_div top-border">
+              <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">19.</div>
+              <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Company's registration number/CIN
+                Company's PAN Number <br />Date of Incorporation</div>
+              <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
+                {{(applicant.isIndividual)?'': (applicant.pan.panNumber)}}<br />
+                {{applicant.organizationDetails.dateOfIncorporation}}
+              </div>
+            </div>
+            <div class="main_div  main_main_div top-border">
+              <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right border_bottom">20.</div>
+              <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right border_bottom">GST
+                applicable<br />GSTIN No if applicable<br />Status of GST<br />
+                if the status is Embassy/Govt.dept. Then provide ** UIN<br />(Unique identification Number)</div>
+              <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right border_bottom">&nbsp;
+                <!-- Yes No -->
+              </div>
+            </div>
+            <div class="main_div  main_main_div">&nbsp;</div>
+          </div>
+        </div>
+        <div class="page-break">
+          <div class="main_div  main_main_div top-border">
+            <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right bg_color">2.</div>
+            <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right bg_color">Occupation</div>
+            <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 border_right bg_color" *ngIf="i==0">Applicant</div>
+            <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 border_right bg_color" *ngIf="i>0">Co-Applicant -
+              {{i}}
             </div>
           </div>
-  
-        </div>
-        <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
-          <div class="main_div">
+          <div class="main_div  main_main_div top-border">
+            <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">2.1.</div>
+            <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Occupation</div>
+            <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
+              {{applicant.occupation.occupationType}}&nbsp;
+              <!-- Salaried Self Employed Professional Self Employed Non-Professional -->
+            </div>
+          </div>
+          <div class="main_div main_main_div top-border">
+            <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">2.2.</div>
+            <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Organisation Name</div>
+            <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
+              {{(applicant.isIndividual)?applicant.occupation.companyName:applicant.organizationDetails.nameOfOrganization}}
+            </div>
+          </div>
+          <div class="main_div main_main_div top-border">
+            <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">2.3.1</div>
+            <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Industry</div>
+            <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
+              <!-- Manufacturing Service Others -->&nbsp;
+            </div>
+          </div>
+          <div class="main_div  main_main_div top-border">
+            <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">2.3.2</div>
+            <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Date of Incorporation</div>
+            <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
+              {{applicant.organizationDetails.dateOfIncorporation}}</div>
+          </div>
+          <div class="main_div  main_main_div top-border">
+            <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">2.3.3</div>
+            <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Constitution Type</div>
+            <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
+              <!-- Proprietorship Firm Partnership Firm Pvt Ltd.Co. Public Ltd.Co. Trust HUF -->
+              {{applicant.organizationDetails.constitution}}&nbsp;
+            </div>
+          </div>
+          <div class="main_div  main_main_div top-border">
+            <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">2.3.4</div>
+            <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Total Work Exprience</div>
+            <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
+              {{applicant.occupation.totalWorkExperience}} Years </div>
+          </div>
+          <div class="main_div  main_main_div top-border">
+            <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">2.3.5</div>
+            <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">
+              <div class="main_div">
+                <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Office Address</div>
+                <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 ">
+                  <div class="main_div">
+                    <div class="space-12 border_bottom">Flat No. / Building Name</div>
+                    <div class="space-12 border_bottom">Road No. / Road Name</div>
+                    <div class="space-12 border_bottom">Area/ Locality</div>
+                    <div class="space-12 border_bottom">Landmark</div>
+                    <div class="space-12 border_bottom">City</div>
+                    <div class="space-12 ">State</div>
+                  </div>
+
+
+                </div>
+              </div>
+
+            </div>
+            <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
+              <div class="main_div">
                 <div class="space-12 border_bottom">{{applicant.officialCorrespondence.addressLineOne}}&nbsp;</div>
                 <div class="space-12 border_bottom">{{applicant.officialCorrespondence.addressLineTwo}}&nbsp;</div>
                 <div class="space-12 border_bottom">{{applicant.officialCorrespondence.city}}&nbsp;</div>
                 <div class="space-12 border_bottom">{{applicant.officialCorrespondence.landMark}}&nbsp;</div>
-                <div class="space-12 border_bottom">{{applicant.officialCorrespondence.state}}&nbsp;</div>
-                <div class="space-12 ">{{applicant.officialCorrespondence.zipcode}}&nbsp;</div>
+                <div class="space-12 border_bottom">&nbsp;</div>
+                <div class="space-12 ">
+                  {{applicant.officialCorrespondence.state}}-{{applicant.officialCorrespondence.zipcode}}&nbsp;</div>
               </div>
             </div>
-      </div>
-      <div class="main_div main_main_div top-border">
-        <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">2.4</div>
-        <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Land Line</div>
-        <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right"><div class="main_div">
+          </div>
+          <div class="main_div main_main_div top-border">
+            <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">2.4</div>
+            <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Land Line</div>
+            <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
+              <div class="main_div">
                 <div class="space-12 ">{{applicant.officialCorrespondence.officeNumber}} &nbsp;</div>
-                
-            </div></div>
-      </div>
-      <div class="main_div  main_main_div top-border">
-        <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">2.5</div>
-        <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Designation</div>
-        <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right"></div>
-      </div>
-      <div class="main_div  main_main_div top-border">
-        <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">2.6</div>
-        <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Employee Number</div>
-        <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right"></div>
-      </div>
-      <div class="main_div  main_main_div top-border">
-        <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">2.7</div>
-        <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Spouse Working (If yes, Monthly income )</div>
-        <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
-          <!-- <span *ngIf="{{applicant.maritalStatus.earning}}"> Yes</span>
-          <span *ngIf="!{{applicant.maritalStatus.earning}}"> No</span> -->
-          {{(applicant.maritalStatus.earning)? 'Yes-'+(applicant.maritalStatus.amount):'No' }} 
-          <!-- (If yes, Monthly income ) -->
-          </div>
-      </div>
-      <div class="main_div  main_main_div top-border">
-        <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">2.8</div>
-        <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Preferred Mailing Address</div>
-        <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">Office Current Address Premanent Address</div>
-      </div>
-      <div class="main_div main_main_div top-border ">
-        <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right border_bottom">2.9</div>
-        <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right border_bottom">Relationship with Applicant</div>
-        <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right border_bottom"></div>
-      </div>
-      <div class="main_div  main_main_div">&nbsp;</div>
-      <div class="main_div  main_main_div top-border">
-        <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right bg_color">3.</div>
-        <div class="space-lg-11 space-md-11 space-sm-11 space-xs-11 border_right bg_color">Details of Bank Account</div>
-        
-      </div>
-      <div class="main_div  main_main_div top-border">
-        <div class="space-lg-3 space-md-3 space-sm-3 space-xs-3 border_left border_right ">Account</div>
-        <div class="space-lg-3 space-md-3 space-sm-3 space-xs-3 border_left border_right ">IFCS Code</div>
-        <div class="space-lg-2 space-md-2 space-sm-2 space-xs-2 border_left border_right ">Name of Bank</div>
-        <div class="space-lg-2 space-md-2 space-sm-2 space-xs-2 border_left border_right ">Branch</div>
-        <div class="space-1-5 border_left border_right ">CA/SA*</div>
-        <div class="space-1-5 border_left border_right ">Banking Since</div>
-        
-      </div>
-      <div class="main_div  main_main_div top-border">
-        <div class="space-lg-3 space-md-3 space-sm-3 space-xs-3 border_left border_right ">&nbsp;</div>
-        <div class="space-lg-3 space-md-3 space-sm-3 space-xs-3 border_left border_right ">&nbsp;</div>
-        <div class="space-lg-2 space-md-2 space-sm-2 space-xs-2 border_left border_right ">&nbsp;</div>
-        <div class="space-lg-2 space-md-2 space-sm-2 space-xs-2 border_left border_right ">&nbsp;</div>
-        <div class="space-1-5 border_left border_right ">&nbsp;</div>
-        <div class="space-1-5 border_left border_right ">&nbsp;</div>
-        
-      </div>
-      <div class="main_div  main_main_div top-border">
-        <div class="space-lg-3 space-md-3 space-sm-3 space-xs-3 border_left border_right ">&nbsp;</div>
-        <div class="space-lg-3 space-md-3 space-sm-3 space-xs-3 border_left border_right ">&nbsp;</div>
-        <div class="space-lg-2 space-md-2 space-sm-2 space-xs-2 border_left border_right ">&nbsp;</div>
-        <div class="space-lg-2 space-md-2 space-sm-2 space-xs-2 border_left border_right ">&nbsp;</div>
-        <div class="space-1-5 border_left border_right ">&nbsp;</div>
-        <div class="space-1-5 border_left border_right ">&nbsp;</div>
-        
-      </div>
-      <div class="main_div  main_main_div top-border">
-        <div class="space-lg-3 space-md-3 space-sm-3 space-xs-3 border_left border_right border_bottom ">&nbsp;</div>
-        <div class="space-lg-3 space-md-3 space-sm-3 space-xs-3 border_left border_right border_bottom ">&nbsp;</div>
-        <div class="space-lg-2 space-md-2 space-sm-2 space-xs-2 border_left border_right border_bottom">&nbsp;</div>
-        <div class="space-lg-2 space-md-2 space-sm-2 space-xs-2 border_left border_right border_bottom ">&nbsp;</div>
-        <div class="space-1-5 border_left border_right border_bottom ">&nbsp;</div>
-        <div class="space-1-5 border_left border_right border_bottom ">&nbsp;</div>
-        
-      </div>
-      <div class="main_div  main_main_div">&nbsp;</div>
-      <div class="main_div  main_main_div top-border">
-        <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right bg_color">4.</div>
-        <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right bg_color border_bottom">UPI Handle</div>
-        <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 border_right bg_color border_bottom">&nbsp;</div>
-      </div>
-      <div class="main_div  main_main_div">&nbsp;</div>
-      <div class="main_div  main_main_div top-border">
-        <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right bg_color">5.</div>
-        <div class="space-lg-11 space-md-11 space-sm-11 space-xs-11 border_right bg_color">LIG SARAL (Applicable only if annual household income is between 3.0 to 6.0 lakhs)</div>
-        
-      </div>
-      <div class="main_div main_main_div">
-          <div class="space-lg-4 space-md-4 space-sm-4 space-xs-4 border_left border_right ">Annual Family Income
-          </div>
-          <div class="space-lg-4 space-md-4 space-sm-4 space-xs-4 border_left border_right ">Employer Category - Proprietor Partnership Trust
-          </div>
-          <div class="space-lg-4 space-md-4 space-sm-4 space-xs-4 border_right ">Loan Amount 6.00 to 25.00 Lakhs
-          </div>
-          <div class="space-lg-4 space-md-4 space-sm-4 space-xs-4 border_left border_right ">Bank Credit Salary Yes No
-          </div>
-          <div class="space-lg-4 space-md-4 space-sm-4 space-xs-4 border_left border_right ">Pvt.Ltd.Co. Public Ltd.Co HUF
-          </div>
-          <div class="space-lg-4 space-md-4 space-sm-4 space-xs-4 border_right ">Property Location Urban Rural
-          </div>
-          <div class="space-lg-4 space-md-4 space-sm-4 space-xs-4 border_left border_right border_bottom">Property Ready to move in Under Construction
-          </div>
-          <div class="space-lg-4 space-md-4 space-sm-4 space-xs-4 border_left border_right border_bottom">Property Area
-          </div>
-          <div class="space-lg-4 space-md-4 space-sm-4 space-xs-4 border_right border_bottom">&nbsp;
-          </div>
-      </div>
-      <div class="main_div  main_main_div">&nbsp;</div>
-      <div class="main_div  main_main_div top-border">
-        <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right bg_color">6.</div>
-        <div class="space-lg-11 space-md-11 space-sm-11 space-xs-11 border_right bg_color">Property Details</div>
-  
-      </div>
-      <div class="main_div main_main_div">
-          <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_left border_right">Details of Propert to be purchased/ Constructed/ Extended/ Improved/ Mortgaged
-            <br/>(if not selected, mention intended location)
-          </div>
-          <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Property status whether its identified : Yes No
-          </div>
-      </div>
-      <div class="main_div main_main_div">
-          <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right border_left">Address
-          </div>
-          <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Builder Society DEvp.Authority/Hsb.Board Resale Self Construction
-          </div>
-      </div>
-      <div class="main_div main_main_div">
-          <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right border_left">&nbsp;
-            
-          </div>
-          <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Construction Stage: Ready To commence
-          </div>
-      </div>
-      <div class="main_div main_main_div">
-          <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_left border_right">&nbsp;
-  
-          </div>
-          <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Under Construction: Specify stage%
-          </div>
-      </div>
-      <div class="main_div main_main_div">
-          <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right border_left">Distict&nbsp;&nbsp;Pincode
-          </div>
-          <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Buildup Area
-          </div>
-      </div>
-      <div class="main_div main_main_div">
-          <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_left border_right">State&nbsp;&nbsp;Nearest Landmark
-          </div>
-          <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Expected time of completion Years
-          </div>
-      </div>
-      <div class="main_div main_main_div">
-          <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_left border_right">LAP(Loan against Property) - Property Type Residential Commercial
-          </div>
-          <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Title of the property will be in the name of
-          </div>
-      </div>
-      <div class="main_div main_main_div">
-          <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_left border_right">Property Age (in Years): Property Status: Self Occupied Rented Vacant
-          </div>
-          <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">&nbsp;
-          </div>
-      </div>
-      <div class="main_div main_main_div">
-          <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_left border_right border_bottom">Title of property in the name of
-          </div>
-          <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right border_bottom">Property Value
-          </div>
-      </div>
-        
-  
-    </div>
-    <br/>
-    </div>
 
+              </div>
+            </div>
+          </div>
+          <div class="main_div  main_main_div top-border">
+            <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">2.5</div>
+            <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Designation</div>
+            <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right"></div>
+          </div>
+          <div class="main_div  main_main_div top-border">
+            <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">2.6</div>
+            <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Employee Number</div>
+            <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right"></div>
+          </div>
+          <div class="main_div  main_main_div top-border">
+            <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">2.7</div>
+            <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Spouse Working (If yes, Monthly income
+              )</div>
+            <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
+              <!-- <span *ngIf="{{applicant.maritalStatus.earning}}"> Yes</span>
+          <span *ngIf="!{{applicant.maritalStatus.earning}}"> No</span> -->
+              {{(applicant.maritalStatus.earning)? 'Yes -&#x20B9; '+(applicant.maritalStatus.amount):'No' }}
+              <!-- (If yes, Monthly income ) -->
+            </div>
+          </div>
+          <div class="main_div  main_main_div top-border">
+            <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right">2.8</div>
+            <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Preferred Mailing Address</div>
+            <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
+              {{(applicant.communicationAddress.preferedMailingAddress)?'Current Address':'Permanent Address'}}
+              <!-- Office Current Address Permanent Address -->
+            </div>
+          </div>
+          <div class="main_div main_main_div top-border ">
+            <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right border_bottom">2.9</div>
+            <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right border_bottom">Relationship with
+              Applicant</div>
+            <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right border_bottom"></div>
+          </div>
+          <div class="main_div  main_main_div">&nbsp;</div>
+        </div>
+
+
+        <!-- <div class=" page-1 page-break" style="page-break-inside: avoid;">            -->
+
+        <!-- </div> -->
+
+
+
+
+      </div>
+      <div class="container_box">
+        <div style="page-break-inside: avoid;">
+          <div class="main_div  main_main_div top-border">
+            <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right bg_color">3.</div>
+            <div class="space-lg-11 space-md-11 space-sm-11 space-xs-11 border_right bg_color">Details of Bank Account
+            </div>
+
+          </div>
+          <div class="main_div  main_main_div top-border">
+            <div class="space-lg-3 space-md-3 space-sm-3 space-xs-3 border_left border_right ">Account</div>
+            <div class="space-lg-3 space-md-3 space-sm-3 space-xs-3 border_left border_right ">IFCS Code</div>
+            <div class="space-lg-2 space-md-2 space-sm-2 space-xs-2 border_left border_right ">Name of Bank</div>
+            <div class="space-lg-2 space-md-2 space-sm-2 space-xs-2 border_left border_right ">Branch</div>
+            <div class="space-1-5 border_left border_right ">CA/SA*</div>
+            <div class="space-1-5 border_left border_right ">Banking Since</div>
+
+          </div>
+          <div class="main_div  main_main_div top-border">
+            <div class="space-lg-3 space-md-3 space-sm-3 space-xs-3 border_left border_right ">&nbsp;</div>
+            <div class="space-lg-3 space-md-3 space-sm-3 space-xs-3 border_left border_right ">&nbsp;</div>
+            <div class="space-lg-2 space-md-2 space-sm-2 space-xs-2 border_left border_right ">&nbsp;</div>
+            <div class="space-lg-2 space-md-2 space-sm-2 space-xs-2 border_left border_right ">&nbsp;</div>
+            <div class="space-1-5 border_left border_right ">&nbsp;</div>
+            <div class="space-1-5 border_left border_right ">&nbsp;</div>
+
+          </div>
+          <div class="main_div  main_main_div top-border">
+            <div class="space-lg-3 space-md-3 space-sm-3 space-xs-3 border_left border_right ">&nbsp;</div>
+            <div class="space-lg-3 space-md-3 space-sm-3 space-xs-3 border_left border_right ">&nbsp;</div>
+            <div class="space-lg-2 space-md-2 space-sm-2 space-xs-2 border_left border_right ">&nbsp;</div>
+            <div class="space-lg-2 space-md-2 space-sm-2 space-xs-2 border_left border_right ">&nbsp;</div>
+            <div class="space-1-5 border_left border_right ">&nbsp;</div>
+            <div class="space-1-5 border_left border_right ">&nbsp;</div>
+
+          </div>
+          <div class="main_div  main_main_div top-border">
+            <div class="space-lg-3 space-md-3 space-sm-3 space-xs-3 border_left border_right border_bottom ">&nbsp;
+            </div>
+            <div class="space-lg-3 space-md-3 space-sm-3 space-xs-3 border_left border_right border_bottom ">&nbsp;
+            </div>
+            <div class="space-lg-2 space-md-2 space-sm-2 space-xs-2 border_left border_right border_bottom">&nbsp;</div>
+            <div class="space-lg-2 space-md-2 space-sm-2 space-xs-2 border_left border_right border_bottom ">&nbsp;
+            </div>
+            <div class="space-1-5 border_left border_right border_bottom ">&nbsp;</div>
+            <div class="space-1-5 border_left border_right border_bottom ">&nbsp;</div>
+
+          </div>
+        </div>
+      </div>
+      <div class="main_div  main_main_div">&nbsp;</div>
+      <!-- <div class="page-break">       -->
+      <div class="container_box">
+        <div style="page-break-inside: avoid;">
+          <div class="main_div  main_main_div top-border">
+            <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right bg_color">4.</div>
+            <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right bg_color border_bottom">UPI Handle
+            </div>
+            <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 border_right bg_color border_bottom">&nbsp;</div>
+          </div>
+        </div>
+      </div>
+      <!-- </div> -->
+      <div class="container_box">
+        <div style="page-break-inside: avoid;">
+          <div class=" page-1">
+            <div class="main_div  main_main_div">&nbsp;</div>
+            <div class="main_div  main_main_div top-border">
+              <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right bg_color">5.</div>
+              <div class="space-lg-11 space-md-11 space-sm-11 space-xs-11 border_right bg_color">LIG SARAL (Applicable
+                only if annual household income is between 3.0 to 6.0 lakhs)</div>
+
+            </div>
+            <div class="main_div main_main_div">
+              <div class="space-lg-4 space-md-4 space-sm-4 space-xs-4 border_left border_right ">Annual Family Income &#x20B9;
+                <!-- {{(applicant.incomeDetails.annualFamilyIncome)?(applicant.incomeDetails.annualFamilyIncome)*12:'0'}} -->
+                {{application.application.applicants[0].incomeDetails.annualFamilyIncome?
+                  (application.application.applicants[0].incomeDetails.annualFamilyIncome)*12:'0'}}
+              </div>
+              <div class="space-lg-4 space-md-4 space-sm-4 space-xs-4 border_left border_right ">Employer Category -
+                Proprietor Partnership Trust
+              </div>
+              <div class="space-lg-4 space-md-4 space-sm-4 space-xs-4 border_right ">Loan Amount 6.00 to 25.00 Lakhs
+              </div>
+              <div class="space-lg-4 space-md-4 space-sm-4 space-xs-4 border_left border_right ">Bank Credit Salary Yes
+                No
+              </div>
+              <div class="space-lg-4 space-md-4 space-sm-4 space-xs-4 border_left border_right ">Pvt.Ltd.Co. Public
+                Ltd.Co
+                HUF
+              </div>
+              <div class="space-lg-4 space-md-4 space-sm-4 space-xs-4 border_right ">Property Location Urban Rural
+              </div>
+              <div class="space-lg-4 space-md-4 space-sm-4 space-xs-4 border_left border_right border_bottom">Property
+                Ready to move in Under Construction
+              </div>
+              <div class="space-lg-4 space-md-4 space-sm-4 space-xs-4 border_left border_right border_bottom">Property
+                Area: {{application.application.loanDetails.propertyType.propertyArea}}
+              </div>
+              <div class="space-lg-4 space-md-4 space-sm-4 space-xs-4 border_right border_bottom">
+                &nbsp;
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="main_div  main_main_div">&nbsp;</div>
+
+      <br />
+      <div class="container_box">
+        <div style="page-break-inside: avoid;">
+          <div class="  page-1">
+            <div class="main_div  main_main_div top-border">
+              <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right bg_color">6.</div>
+              <div class="space-lg-11 space-md-11 space-sm-11 space-xs-11 border_right bg_color">Property Details</div>
+
+            </div>
+            <div class="main_div main_main_div">
+              <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_left border_right">Details of Propert to be
+                purchased/ Constructed/ Extended/ Improved/ Mortgaged
+                <br />(if not selected, mention intended location)
+              </div>
+              <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Property status whether its
+                identified: {{(application.application.loanDetails.propertyType.propertyIdentified)?'Yes': 'No'}}
+              </div>
+            </div>
+            <div class="main_div main_main_div">
+              <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right border_left">Address
+              </div>
+              <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Builder Society
+                DEvp.Authority/Hsb.Board Resale Self Construction
+              </div>
+            </div>
+            <div class="main_div main_main_div">
+              <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right border_left">
+                {{application.application.loanDetails.property.addressLineOne}} 
+                &nbsp;
+
+              </div>
+              <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Construction Stage: Ready To
+                commence
+              </div>
+            </div>
+            <div class="main_div main_main_div">
+              <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_left border_right">
+                {{application.application.loanDetails.property.addressLineTwo}}&nbsp;
+              </div>
+              <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Under Construction: Specify stage%
+              </div>
+            </div>
+            <div class="main_div main_main_div">
+              <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right border_left">
+                <!-- Distict&nbsp;&nbsp;Pincode -->
+                {{application.application.loanDetails.property.city}}
+               
+              </div>
+              <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Buildup Area
+              </div>
+            </div>
+            <div class="main_div main_main_div">
+              <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_left border_right"> 
+                {{application.application.loanDetails.property.state}} - {{application.application.loanDetails.property.zipcode}}
+                <!-- Landmark -->
+              </div>
+              <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Expected time of completion Years
+              </div>
+            </div>
+            <div class="main_div main_main_div">
+              <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_left border_right">LAP(Loan against
+                Property)
+                - Property Type Residential Commercial
+              </div>
+              <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Title of the property will be in the
+                name of
+              </div>
+            </div>
+            <div class="main_div main_main_div">
+              <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_left border_right">Property Age (in Years):
+                Property Status: Self Occupied Rented Vacant
+              </div>
+              <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">&nbsp;
+              </div>
+            </div>
+            <div class="main_div main_main_div">
+              <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_left border_right border_bottom">Title of
+                property in the name of
+              </div>
+              <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right border_bottom">Property Value
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
 <!-- </div> -->
+<app-ckyc-form  class="page-breaktest"></app-ckyc-form>
+<app-declaration-form class="page-breaktest" style="page-break-inside: avoid;"></app-declaration-form>
+<app-document-check-list class="page-breaktest" style="page-break-inside: avoid;"></app-document-check-list>
+<app-additional-pmay-clss-form class="page-breaktest" style="page-break-inside: avoid;"></app-additional-pmay-clss-form>
+<app-tear-form class="page-breaktest"></app-tear-form >

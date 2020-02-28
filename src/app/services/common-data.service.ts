@@ -311,6 +311,11 @@ export class CommonDataService {
   changebranchId(value: string) {
     this.branchId$.next(value);
   }
+  showPrint$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public showPrint = this.showPrint$.asObservable();
+  changeshowPrint(value: boolean) {
+    this.showPrint$.next(value);
+  }
 
 checkUserMapping(userActivityList,userFullName,lastLoginDateTime?){
   let myServiceStatus= false;

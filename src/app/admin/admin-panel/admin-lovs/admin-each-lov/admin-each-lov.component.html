@@ -29,10 +29,10 @@
      <tr *ngFor="let l of lovs | paginate: { itemsPerPage: perPage, currentPage: currentPage, totalItems: totalItems  };let i=index;">
        <td>{{key[i]}}</td>
        <td>
-         <input type="text" #lovsElements placeholder="Description" [(ngModel)]="l.description" tabindex="1" [disabled]="l.isEdit" />
+         <input type="text" #lovsElements placeholder="Description" [(ngModel)]="l.description" tabindex="1" [disabled]="l.isEdit || l.disabaleRole" />
        </td>
        <td>
-        <input type="text" placeholder="Value" tabindex="2" [(ngModel)]="l.value" [disabled]="l.isEdit" />
+        <input type="text" placeholder="Value" tabindex="2" [(ngModel)]="l.value" [disabled]="l.isEdit || l.disabaleRole" />
       </td>
       <td *ngIf="documentType">
         <input type="text" placeholder="Data Class" tabindex="3" [(ngModel)]="l.dataClass" [disabled]="l.isEdit" maxlength="100" />

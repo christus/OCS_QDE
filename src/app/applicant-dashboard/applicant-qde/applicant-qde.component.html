@@ -124,37 +124,41 @@
                       </form>
                     </div>
                     <div class="swiper-slide">
+                      <!-- *ngIf="qde.application.applicationFormNumber != '' || qde.application.applicationFormNumber == undefined" -->
                       <form class="bs-form" id="pan-form" #panNumberForm="ngForm" autocomplete="off"
                         (ngSubmit)="submitPanNumber(panNumberForm, panSlider2, panSlider1)">
                         <div class="form-wrap">
-                            <div class="form-group last" style="margin-bottom: 60px;">
-                                <input [readonly]="isTBMLoggedIn" spellcheck="false"
+                            <div class="form-group last" style="margin-bottom: 60px;" 
+                                *ngIf="qde.application.applicationFormNumber != ''">
+                                <input [readonly]="isTBMLoggedIn" spellcheck="false"                                        
                                         type="text"
                                         class="form-control"
                                         [(ngModel)]="qde.application.applicationFormNumber"
                                         id="ref-no"
-                                        pattern="{{regexPattern.appRefNo}}"
+                                       
                                         [minlength]="minMaxValues['Application_Form_No']?.minValue"
                                         [maxlength]="minMaxValues['Application_Form_No']?.maxLength"
                                         name="applicationFormNo"
                                         (keyup)="keyUpPanNumber($event)"
                                         #applicationRefNo="ngModel"
                                         fieldFill autocomplete="off"
-                                        required />
+                                        required disabled />
+                                        <!-- pattern="{{regexPattern.appRefNo}}" -->
                                         <label for="ref-no" tabindex="0">Application Form No</label>
                                         <!-- <div class="redalert" *ngIf="RegExp(regexPattern.sameDigit).test(applicationRefNo.value)">
                                             {{errors.applicationReferenceNo.wrong}}</div> -->
-                                        <div *ngIf="applicationRefNo.touched && applicationRefNo.invalid " class="invalid-feedback">
+                                        <!-- <div *ngIf="applicationRefNo.touched && applicationRefNo.invalid " class="invalid-feedback">
 
                                             <div *ngIf="applicationRefNo.errors?.pattern">{{errors.applicationReferenceNo.invalid}}</div>
                                             <div *ngIf="applicationRefNo.errors?.minlength">{{errors.applicationReferenceNo.minlength}}{{" "+minMaxValues['Application_Form_No']?.minValue+" characters"}}</div>
-                                            </div>
+                                            </div> -->
                             </div>
                           <div class="form-group last typ-optional" style="margin-bottom: 40px;">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                               [(ngModel)]="qde.application.applicants[applicantIndex].pan.panNumber"
                               (ngModelChange)="qde.application.applicants[applicantIndex].pan.panNumber = $event.toUpperCase()"
-                              id="pan-inpt" [minlength]="minMaxValues['PAN']?.minValue" [maxlength]="minMaxValues['PAN']?.maxLength" pattern="{{regexPattern.panInd}}" name="pan"
+                              id="pan-inpt" [minlength]="minMaxValues['PAN']?.minValue" [maxlength]="minMaxValues['PAN']?.maxLength" 
+                              pattern="{{regexPattern.panInd}}" name="pan"
                               (keyup)="keyUpPanNumber($event)" #panNumber="ngModel" fieldFill autocomplete="off" required/>
                             <label for="pan-inpt" tabindex="1">Enter PAN</label>
                             <!-- <span class="optional">optional</span> -->
@@ -2312,7 +2316,8 @@
                       <form class="bs-form" #panNumberForm2="ngForm" autocomplete="off"
                         (ngSubmit)="submitOrgPanNumber(panNumberForm2, panSlider4, panSlider3)">
                         <div class="form-wrap" style="overflow: hidden;">
-                            <div class="form-group last" style="margin-bottom: 60px;">
+                            <div class="form-group last" style="margin-bottom: 60px;" 
+                                  >
                                 <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                         type="text"  autocomplete="off"
                                         class="form-control"

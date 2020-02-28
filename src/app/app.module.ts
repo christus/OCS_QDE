@@ -154,6 +154,11 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { BranchMappingComponent } from './admin/branch-mapping/branch-mapping.component';
 import { AddtionalServiceDashboardComponent } from './addtional-service/addtional-service-dashboard/addtional-service-dashboard.component';
 import { GetApplicationPrintResolverService } from './services/get-application-print-resolver.service';
+import { CkycFormComponent } from './addtional-service/ckyc-form/ckyc-form.component';
+import { DocumentCheckListComponent } from './addtional-service/document-check-list/document-check-list.component';
+import { AdditionalPmayClssFormComponent } from './addtional-service/additional-pmay-clss-form/additional-pmay-clss-form.component';
+import { DeclarationFormComponent } from './addtional-service/declaration-form/declaration-form.component';
+import { TearFormComponent } from './addtional-service/tear-form/tear-form.component';
 
 
 
@@ -711,7 +716,10 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     BranchMappingComponent,
     AddtionalServiceComponent,
     ApplicationPrintComponent,
-    AddtionalServiceDashboardComponent
+    AddtionalServiceDashboardComponent,
+    CkycFormComponent,
+    DocumentCheckListComponent,    
+    AdditionalPmayClssFormComponent, DeclarationFormComponent, TearFormComponent
   ],
   imports: [
     BrowserModule,

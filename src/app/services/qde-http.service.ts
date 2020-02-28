@@ -204,6 +204,7 @@ createOrUpdatePersonalDetails(qde) {
 
     let processVariables = {
       userId: localStorage.getItem("userId"),
+      outputUsers:localStorage.getItem("outputUsers"),
       firstName: (search != null) ? search : "",
       fromDate: (fromDay != 'DD' || fromMonth != 'MM' || fromYear != 'YYYY') ? new Date(fromYear+""+"-"+fromMonth+"-"+fromDay).toJSON(): "",
       toDate: (toDay != 'DD' || toMonth != 'MM' || toYear != 'YYYY') ? new Date(toYear+""+"-"+toMonth+"-"+toDay).toJSON(): "",
@@ -234,6 +235,7 @@ createOrUpdatePersonalDetails(qde) {
 
     let processVariables = {
       userId: parseInt(localStorage.getItem("userId")),
+      outputUsers:localStorage.getItem("outputUsers"),
       firstName: (search != null) ? search : "",
       fromDate: (fromDay != 'DD' || fromMonth != 'MM' || fromYear != 'YYYY') ? new Date(fromYear+""+"-"+fromMonth+"-"+fromDay).toJSON(): "",
       toDate: (toDay != 'DD' || toMonth != 'MM' || toYear != 'YYYY') ? new Date(toYear+""+"-"+toMonth+"-"+toDay).toJSON(): "",

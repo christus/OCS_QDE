@@ -1813,10 +1813,11 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
       if(this.qde.application.applicants[this.coApplicantIndex].permanentAddress.preferedMailingAddress == undefined ||
         this.qde.application.applicants[this.coApplicantIndex].permanentAddress.preferedMailingAddress == null){
-        this.qde.application.applicants[this.coApplicantIndex].permanentAddress.preferedMailingAddress = true;
+        this.qde.application.applicants[this.coApplicantIndex].permanentAddress.preferedMailingAddress = false;
+        this.qde.application.applicants[this.coApplicantIndex].communicationAddress.preferedMailingAddress = true;
       }
       // else{
-      //   this.qde.application.applicants[this.applicantIndex].permanentAddress.preferedMailingAddress =  this.preferedMailingAddress;
+        // this.qde.application.applicants[this.applicantIndex].permanentAddress.preferedMailingAddress =  this.preferedMailingAddress;
       // }
 
       console.log(this.qde.application.applicants[this.coApplicantIndex].communicationAddress);
@@ -3711,7 +3712,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   selectPreferedMailingAddress(value) {
-    this.qde.application.applicants[this.coApplicantIndex].permanentAddress.preferedMailingAddress = (value == 1) ? true: false;
+    this.qde.application.applicants[this.coApplicantIndex].communicationAddress.preferedMailingAddress =  (value == 1) ? true: false;
+    this.qde.application.applicants[this.coApplicantIndex].permanentAddress.preferedMailingAddress = (value == 2) ? true: false;
+
   }
 
   expError =false;

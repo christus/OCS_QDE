@@ -37,10 +37,12 @@ export class LoginComponent implements OnInit, AfterViewInit {
   sharedKsy = "MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJ+GJdSSEeaNFBLqyfM3DIOgQgWCwJ0INfeZZV7ITsLeuA7Yd02rrkYGIix1IWvoebWVmzhncUepYxHwK1ARCdUCAwEAAQ==";
 
   @ViewChild('userNameField') userNameField: ElementRef;
+  @ViewChild('passwordField') passwordField: ElementRef;
   userModule;
   opsModule;
   masterModule;
   navigationString: string ="";
+  altrPaswrd:string;
 
   constructor(
     private router: Router,
@@ -76,18 +78,24 @@ export class LoginComponent implements OnInit, AfterViewInit {
     } else if ( !this.captchaText) {
       this.sessionMessage = "Enter Captcha Text";
     } else {
+
+      this.altrPaswrd = this.password;
+      let nonse = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+      // this.password = nonse;
+      this.passwordField.nativeElement.value = nonse;
+      
       const startDate = new Date();
       const userEmailId: string = this.userName.toLocaleLowerCase();
       console.log("Login Api Call: User Id ", this.userName, " Start Date & Time ", startDate, startDate.getMilliseconds());
       const data = {
         email: this.userName.trim().toLowerCase()+ "@icicibankltd.com",
-        password: this.password.trim(),
+        password: this.altrPaswrd.trim(),
         removeExistingSession: false,
         appId: "OCS",
         refId: this.oldRefId,
         captcha: this.captchaText,
         useADAuth: false
-        //  useADAuth: userEmailId.startsWith("he")
+        // useADAuth: userEmailId.startsWith("he")
       };
       console.log("login Data: ",data);
       let token = localStorage.getItem("token");
@@ -108,6 +116,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
       },
       error => {
+
+        this.password = "";
 
         let getTypeOfError = error.length;
           if (!getTypeOfError) {
@@ -163,7 +173,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   removeExisitingSession() {
     const data = {
       email: this.userName.trim().toLowerCase()+ "@icicibankltd.com",
-      password: this.password.trim(),
+      password: this.altrPaswrd.trim(),
       removeExistingSession: true,
       appId: "OCS",
       refId: this.oldRefId,
@@ -192,6 +202,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
         let roleName = JSON.stringify(res["ProcessVariables"]["roleName"]);
         localStorage.setItem("userId", res["ProcessVariables"]["userId"]);
         localStorage.setItem('roles', roleName);
+        localStorage.setItem("outputUsers",res["ProcessVariables"]["outputUsers"]);
         // localStorage.setItem("firstName", res["ProcessVariables"]["firstName"]);
         let userActivityList = res["ProcessVariables"]["userActivityList"];
         let userFullName = res["ProcessVariables"]["userName"];

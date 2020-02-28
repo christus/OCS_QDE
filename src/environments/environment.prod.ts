@@ -1,10 +1,10 @@
 export const environment = {
-  version: "2.0.6",
-  buildDate: "20-02-2020",
+  version: "2.0.7",
+  buildDate: "27-02-2020",
   production: true,
   projectId: '5928d30eac7811e9a1670242ac110002', // developement
 
-  // projectId: '3209f7ea7ba811e982270242ac110002', // production
+  //  projectId: '3209f7ea7ba811e982270242ac110002', // production
 
   //projectId: 'ff8e364e6fce11e98754782bcb8f3845', // UAT Development
 
@@ -483,19 +483,20 @@ export const environment = {
   appiyoDrive: "/d/drive/upload/",
   driveLocation: "/d/drive/docs/",
   ocsHost: "/ocs",
-  host: "http://192.168.1.108/appiyo",
+ host: "http://192.168.1.108/appiyo",
   //host: "/ProcessStore",
   // host:  "/appiyo",
   pdfLocation: "/d/download/pdf?",
   csvLocation: "/d/download/csv?",
   isMobile: false,
   mobileExtenstion: "@icicibankltd.com",
-  // host: "https://ihfcmobileuat.icicihfc.com/appiyo", // for uat
+  //host: "https://ihfcmobileuat.icicihfc.com/appiyo", // for uat
   // host: "https://onlineapplication.icicihfc.com/appiyo", // for production
   aesPublicKey: 'MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJ+GJdSSEeaNFBLqyfM3DIOgQgWCwJ0INfeZZV7ITsLeuA7Yd02rrkYGIix1IWvoebWVmzhncUepYxHwK1ARCdUCAwEAAQ==',
   encryptionType: true, //Ecryption
   captchFormat: "&width=250&height=80&bgr=255&bgg=255&bgb=255&bga=255&fontR=187&fontG=187&fontB=187&fontSize=50&captchaSize=5",
-  defaultItem: {key: "Select...", value: "0"}
+  defaultItem: {key: "Select...", value: "0"},
+  apkCertDig256: "pAZCmkIZDRoqGwjYf3gzYwJ8J85VZANj7gm/E7VQ84Q="
   // host: "https://ihfcmobileuat.icicihfc.com/appiyo"
   //csvhost: "http://192.168.1.108/appiyo",
   //host: "https://103.87.42.117/appiyo"

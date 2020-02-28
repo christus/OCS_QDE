@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { CommonDataService } from '../services/common-data.service';
 
 @Component({
   selector: 'app-addtional-service',
@@ -7,7 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddtionalServiceComponent implements OnInit {
   isHide: boolean;
-  constructor() { }
+  showPrint: boolean;
+  // applicationId;
+  constructor(private activatedRoute: ActivatedRoute,
+              private cds: CommonDataService) { 
+    // this.applicationId = this.activatedRoute.params["applicationId"];
+    this.cds.showPrint$.subscribe(value => this.showPrint = value);
+  }
 
   ngOnInit() {
   }

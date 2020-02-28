@@ -13,11 +13,11 @@
       <form class="bs-form margin_top" autocomplete="off">
           <div class="form-wrap">
               <div class="form-group">
-                <input type="text" #userNameField [(ngModel)]="userName" class="form-control" name="userName" id="emp-id" fieldFill  />
+                <input type="text" #userNameField [(ngModel)]="userName" class="form-control" name="userName" id="emp-id" fieldFill autocomplete="off"  />
                 <label for="emp-id">Employee ID</label>
               </div>
               <div class="form-group">
-                <input type="password" [(ngModel)]="password" class="form-control" name="password" id="password" fieldFill  />
+                <input type="password" [(ngModel)]="password" class="form-control"  #passwordField name="password" id="password" fieldFill autocomplete="new-password"  />
                 <label for="password" >Password</label>
               </div>  
               <!-- last             -->

@@ -13,7 +13,7 @@ dependencies {
     implementation "com.squareup.okhttp3:okhttp-urlconnection:3.10.0"
     implementation "com.android.support:support-v4:27.+"
 }
-
+apply from: "../../node_modules/cordova-plugin-android-safetynet-decodejws/src/android/build-extras.gradle"
 
 if (hasProperty('postBuildExtras')) {
   postBuildExtras()

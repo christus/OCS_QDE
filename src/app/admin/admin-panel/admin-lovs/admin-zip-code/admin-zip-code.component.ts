@@ -75,7 +75,11 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
 
   subs: Array<Subscription> = [];
   delIndex: {};
-
+  regexPattern = {
+    mobileNumber: "^[1-9][0-9]*$",
+    // name: "^[a-zA-Z ]+(([',. -][a-zA-Z ])?[a-zA-Z ]*)*$", 
+    name: "^[a-zA-Z0-9 ]+(([',. -][a-zA-Z ])?[a-zA-Z ]*)*$"
+  }
   constructor(private route: ActivatedRoute, 
               private qdeHttp: QdeHttpService, 
               private qdeService: QdeService, 
@@ -196,6 +200,25 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
   }
 
   submitForm(form: NgForm) {
+    if(this.value === '' || this.zipcodeErrMsg == 'Please enter a valid zipcode') {
+      this.isValueHidden = true;
+    }else if(this.description === '') {
+      this.isDescriptionHidden = true;
+    }else if(this.selectedState.value === '0') {
+      this.isStateHidden = true;
+    }else if(this.selectedZone.value === '-1'  || this.selectedZone.value === '0') {
+      this.isZoneHidden = true;
+    }else if(this.selectedCity.value === '-1'  || this.selectedCity.value === '0') {
+      this.isCityHidden = true;
+    }else {
+      this.isRegionHidden = false;
+      this.isZoneHidden = false;
+      this.isDescriptionHidden = false;
+      this.isValueHidden = false;
+      this.isStateHidden = false;
+      this.isCityHidden = false;
+
+      
     let dude;
 
     console.log("selectedIndex: " ,this.selectedIndex);
@@ -233,7 +256,7 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
     }));
     
     
-    
+  }
   }
 
   counter(n: number) {

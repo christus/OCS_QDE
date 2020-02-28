@@ -99,8 +99,9 @@
     
             </ng-multiselect-dropdown>
         </div>
-        <div class="inputBox flex-child flex-input" #selectBox>
-            <label for="city" class="">City *</label>
+        
+        <div class="inputBox flex-child flex-input" #selectBox>            
+            <label for="city" class="">Select City*</label>
             <input type="text" id="city"   [(ngModel)]="city" (input)="filterLeads($event)" class="form-control"  formControlName="city" fieldFill  autocomplete="off" required/>
             <div class="redalert" *ngIf="(formValue.city.errors?.required && (formValue.city.touched || formValue.city.dirty))">City is mandatory</div>
             <input type="hidden" class="form-control" hidden   [(ngModel)]="cityInp"  formControlName="cityInp" #cityEl  autocomplete="off"/>

@@ -1323,7 +1323,7 @@
                                                                     [value]="1"
                                                                     tabindex="11"
                                                                     name="preferedMailingAddress"
-                                                                    [checked]="qde.application.applicants[coApplicantIndex].permanentAddress.preferedMailingAddress == 'true' || 
+                                                                    [checked]="qde.application.applicants[coApplicantIndex].permanentAddress.preferedMailingAddress == 'false' || 
                                                                                 qde.application.applicants[coApplicantIndex].permanentAddress.preferedMailingAddress == null"
                                                                     (click)="selectPreferedMailingAddress(1)"
                                                                     id="current-add-mail" />
@@ -1336,7 +1336,7 @@
                                                                     [value]="2"
                                                                     tabindex="12"
                                                                     name="preferedMailingAddress"
-                                                                    [checked]="qde.application.applicants[coApplicantIndex].permanentAddress.preferedMailingAddress == 'false'"
+                                                                    [checked]="qde.application.applicants[coApplicantIndex].permanentAddress.preferedMailingAddress == 'true'"
                                                                     (click)="selectPreferedMailingAddress(2)"
                                                                     id="permanent-add-mail" />
                                                           <label for="permanent-add-mail">

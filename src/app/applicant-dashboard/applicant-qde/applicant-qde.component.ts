@@ -1218,7 +1218,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         return;
       }
 
-      this.qde.application.applicationFormNumber = form.value.applicationFormNo;
+      // this.qde.application.applicationFormNumber = form.value.applicationFormNo;
       this.qde.application.applicants[this.applicantIndex].pan.panNumber = form.value.pan;
       this.qde.application.applicants[this.applicantIndex].pan.docType = form.value.docTypeindividual.value;
       this.qde.application.applicants[this.applicantIndex].pan.docNumber = form.value.docNumber;
@@ -1260,8 +1260,13 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
                 // this.qde.application.applicationId = result["application"]["applicationId"];
 
                 this.qde.application.applicationId = result['application']['applicationId'];
+                this.qde.application.applicationFormNumber = result['application']['applicationFormNumber'];
 
                 // let isApplicantPresent:boolean = false;
+                if (this.qde.application.applicationFormNumber){
+                this.isErrorModal = true;
+                this.errorMessage = "Application Form No is "+this.qde.application.applicationFormNumber;
+                }
 
                 this.tempOldPanNumber = this.qde.application.applicants[this.applicantIndex].pan.panNumber;
 
@@ -1331,8 +1336,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
             // this.qde.application.applicationId = result["application"]["applicationId"];
 
             this.qde.application.applicationId = result['application']['applicationId'];
+            this.qde.application.applicationFormNumber = result['application']['applicationFormNumber'];
 
-            // let isApplicantPresent:boolean = false;
+            // // let isApplicantPresent:boolean = false;
+            // this.isErrorModal = true;
+            // this.errorMessage = "Applicaiton Form No is "+this.qde.application.applicationFormNumber;
+           
 
             if ((result["application"]["applicants"]).length > 0) {
               // isApplicantPresent = applicants[this.applicantIndex].hasOwnProperty('applicantId');
@@ -2112,11 +2121,13 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.qde.application.applicants[this.applicantIndex].communicationAddress.numberOfYearsInCurrentResidence = form.value.numberOfYearsInCurrentResidence;
       this.qde.application.applicants[this.applicantIndex].communicationAddress.permanentAddress = form.value.permanentAddress;
       if (this.preferedMailingAddress == undefined || this.preferedMailingAddress == null) {
-        this.preferedMailingAddress = true
+        this.preferedMailingAddress = true;
         this.qde.application.applicants[this.applicantIndex].communicationAddress.preferedMailingAddress = this.preferedMailingAddress;
+        this.qde.application.applicants[this.applicantIndex].permanentAddress.preferedMailingAddress = this.preferedMailingAddress != true;
       }
       else {
-        this.qde.application.applicants[this.applicantIndex].communicationAddress.preferedMailingAddress = this.preferedMailingAddress;
+        this.qde.application.applicants[this.applicantIndex].communicationAddress.preferedMailingAddress = this.preferedMailingAddress;        
+        this.qde.application.applicants[this.applicantIndex].permanentAddress.preferedMailingAddress = this.preferedMailingAddress != true;
       }
 
       this.qde.application.applicants[this.applicantIndex].permanentAddress.addressLineOne = form.value.pAddressLineOne;
@@ -2167,6 +2178,14 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   submitPreferedMail(flag) {
     this.preferedMailingAddress = flag;
+    if ( flag){   
+    this.qde.application.applicants[this.applicantIndex].communicationAddress.preferedMailingAddress = true;
+    this.qde.application.applicants[this.applicantIndex].permanentAddress.preferedMailingAddress = false
+    } else{      
+      this.qde.application.applicants[this.applicantIndex].permanentAddress.preferedMailingAddress = true;
+      this.qde.application.applicants[this.applicantIndex].communicationAddress.preferedMailingAddress = false;
+    }
+   
   }
 
 
