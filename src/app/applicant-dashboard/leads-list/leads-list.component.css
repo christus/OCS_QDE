@@ -301,3 +301,29 @@ a, a:visited {
 .form-control{
   font-size: 3rem;
 }
+
+
+.icon-close:before {
+  margin-left: -1vw;
+  border: solid;
+  content: "\63";
+  /* border: black; */
+  border-radius: 1.91vw;
+  border-color: #f58220;
+  padding: -0.vw;
+  color: #f58220;
+  font-size: 1vw;
+  padding: .5vw;
+  margin-right: 6vw;
+  cursor: pointer;
+}
+.lead-detals-lable{
+color: #f58220;
+
+}
+.lead-lable{
+  font-size: 1.5vw;
+}
+.modal-body-content{
+padding-top: 1vw;
+}

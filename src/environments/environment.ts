@@ -482,7 +482,8 @@ export const environment = {
   iciciDomainExt: "@icicibankltd.com",
   ocsHost: "http://192.168.1.108/ocs",
   // host: "http://182.156.249.170/appiyo",
-  //host: "https://ihfcmobileuat.icicihfc.com/appiyo",
+  // host: "https://ihfcmobileuat.icicihfc.com/appiyo",
+
   driveLocation: "/d/drive/docs/",
   csvLocation: "/d/download/csv?",
   isMobile: false,

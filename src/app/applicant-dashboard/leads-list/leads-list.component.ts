@@ -22,7 +22,20 @@ export interface UserDetails {
   "ocsNumber": number;
   "url": string;
 }
-
+interface leadData {
+  name: string,
+  loanType: string,
+  leadId: string,
+  assignedTo: string,
+  loanAmount: string,
+  createdBy: string,
+  createdOn: string,
+  emailId: string,
+  mobileNumber: string,
+  zipcode: string,
+  url: string,
+queryParams: string,
+}  
 interface Item {
   key: string,
   value: string
@@ -39,7 +52,7 @@ export class LeadsListComponent implements OnInit {
   months: Array<Item>;
   years: Array<Item>;
   assignedToList: Array<Item> = [{ key: "SA", value: "SA" }, { key: "SA", value: "SM" }];
-
+  leadDetail: leadData ;
   YYYY: number = new Date().getFullYear();
 
   fromDay: Item;
@@ -624,6 +637,31 @@ export class LeadsListComponent implements OnInit {
       } else if (this.btnType == 'lead'){
         this.router.navigate(["/connector/lead-create"]);
       }
+  }
+
+
+
+
+isLeadDetail: Boolean= false;
+  getLeadDetails(leadId){
+    this.isLeadDetail = true;
+    let leadValue =  this.newLeadsDetails.filter(v => v.leadId == leadId)[0];
+    this.leadDetail = {
+      name: leadValue['name'],
+      loanType: leadValue['loanType'],
+      leadId: leadValue['leadId'],
+      assignedTo: leadValue['assignedTo'],
+      loanAmount:leadValue['loanAmount'],
+      createdBy: leadValue['createdBy'],
+      createdOn: leadValue['createdOn'],
+      emailId: leadValue['emailId'],
+      mobileNumber: leadValue['mobileNumber'],
+      zipcode: leadValue['zipcode'],
+      url: leadValue['url'],
+      queryParams: leadValue['queryParams'],
+    } 
+    
+
   }
 
 }

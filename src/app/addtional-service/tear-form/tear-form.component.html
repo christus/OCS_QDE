@@ -55,11 +55,14 @@
 
         <div class="icicibg row-1">
           <p>Dear Sir / Madam,<br />
-            <p>Thank you, We acknowledge that we have received the application form no.<br />
+            <p>Thank you, We acknowledge that we have received the application form no.
+              <!-- <br /> -->
               <u>{{qde.application.applicationFormNumber}} </u>  and the non refundable login fees vide 
-              {{(qde.application.paymentDetails?.paymentMode)=='OFFLINE'? 'Cheques No. ':'Online Payment'}}<br />
+              {{(qde.application.paymentDetails?.paymentMode)=='OFFLINE'? 'Cheques No. ':'Online Payment'}}
+              <!-- <br /> -->
               No.  <u>{{qde.application.paymentDetails?.referenceNo}}</u> dated <u> {{qde.application.paymentDetails?.paymentDate}}</u> for 
-              <u>    {{qde.application.paymentDetails?.loginFee}}    </u> If considered,<br />
+              <u>    {{qde.application.paymentDetails?.loginFee}}    </u> If considered,
+              <!-- <br /> -->
               our representative shall get in touch with you for this matter.<br />
             </p>
             <p class="mt-2">Date: ____________ Channel Signature ___________<br />

@@ -2,120 +2,135 @@
 <app-leads-sidebar></app-leads-sidebar>
 <div class="typ-connector">
 
-<div class="typ-dash">
-  <ul class="tabs-head">
-    <li class="tab-link active" data-target="leads-tab"><a> Dashboard </a></li>
-    <!-- Logins -->
-  </ul>
-  <button (click)="onMultipleBranch('login')" class="btn application add-new-login" *ngIf="newLogin">NEW LOGIN</button>
-  <button routerLink="/connector/lead-create" class="btn application add-lead-link" *ngIf="createLead">CREATE LEAD</button>
+    <div class="typ-dash">
+        <ul class="tabs-head">
+            <li class="tab-link active" data-target="leads-tab"><a> Dashboard </a></li>
+            <!-- Logins -->
+        </ul>
+        <button (click)="onMultipleBranch('login')" class="btn application add-new-login" *ngIf="newLogin">NEW
+            LOGIN</button>
+        <button routerLink="/connector/lead-create" class="btn application add-lead-link" *ngIf="createLead">CREATE
+            LEAD</button>
 
-</div>
-<tabs>
-    <tab tabTitle="ALL" class="tab" *ngIf="(newLogin) || documentUpload" >
-        <ul *ngFor="let detail of userDetails | paginate: {id: 'pagination1', itemsPerPage: perPage, currentPage: currentPage, totalItems: totalItems};">
-            <li>
-                <!-- [queryParams]="detail['queryParams']" -->
-             <a [routerLink]="detail.url"  class="lead-action">
+    </div>
+    <tabs>
+        <tab tabTitle="ALL" class="tab" *ngIf="(newLogin) || documentUpload">
+            <ul
+                *ngFor="let detail of userDetails | paginate: {id: 'pagination1', itemsPerPage: perPage, currentPage: currentPage, totalItems: totalItems};">
+                <li>
+                    <!-- [queryParams]="detail['queryParams']" -->
+                    <a [routerLink]="detail.url" class="lead-action">
 
-              <ul class="bs-lead-card">
-                  <li>
-                      <span class="initials">AK</span>
-                      <span class="user-name">{{detail.firstName || detail.nameOfOrganization}} {{detail.lastName}}</span></li>
-                  <li>
-                      <span class="name">applied on</span>
-                      <span class="value">{{detail.appliedOn | date:'dd-MM-yyyy HH:mm:ss'}}</span>
-                  </li>
-                  <li>
-                      <span class="name">phone</span>
-                      <span class="value">{{detail.mobileNumber}}</span>
-                  </li>
-                  <li>
-                      <span class="name">Status</span>
-                      <span class="value">{{detail.status}}</span>
-                  </li>
-                  
-              </ul>
-            </a>
-          </li>
-      </ul>
-      <pagination-controls id="pagination1" (pageChange)="pageChanged($event)" class="pagination" autoHide="true" ></pagination-controls>
-    </tab>
-    <tab tabTitle="NEW LEADS" *ngIf="createLead">
-      <ul *ngFor="let detail of newLeadsDetails | paginate: {id: 'pagination2', itemsPerPage: perPageNL, currentPage: currentPageNL, totalItems: totalItemsNL};">
-        <li>
-            <ul class="bs-lead-card">
-                <li>
-                    <span class="initials">AK</span>
-                    <span class="user-name">{{detail.name}}</span></li>
-                <li>
-                    <span class="name">applied on</span>
-                    <span class="value">{{detail.createdOn | date:'dd-MM-yyyy HH:mm:ss'}}</span>
-                </li>
-                <li>
-                    <span class="name">phone</span>
-                    <span class="value">{{detail.mobileNumber}}</span>
+                        <ul class="bs-lead-card">
+                            <li>
+                                <span class="initials">AK</span>
+                                <span class="user-name">{{detail.firstName || detail.nameOfOrganization}}
+                                    {{detail.lastName}}</span></li>
+                            <li>
+                                <span class="name">applied on</span>
+                                <span class="value">{{detail.appliedOn | date:'dd-MM-yyyy HH:mm:ss'}}</span>
+                            </li>
+                            <li>
+                                <span class="name">phone</span>
+                                <span class="value">{{detail.mobileNumber}}</span>
+                            </li>
+                            <li>
+                                <span class="name">Status</span>
+                                <span class="value">{{detail.status}}</span>
+                            </li>
+
+                        </ul>
+                    </a>
                 </li>
             </ul>
-        </li>
-    </ul>
-    <pagination-controls id="pagination2" (pageChange)="pageChangedNL($event)" class="pagination" autoHide="true" ></pagination-controls>
-    </tab>
-    <tab tabTitle="PENDING APPLICATION" *ngIf="(newLogin)">
-      <ul *ngFor="let detail of newPendingApplicationDetails | paginate: {id: 'pagination3',itemsPerPage: perPagePA, currentPage: currentPagePA, totalItems: totalItemsPA};">
-        <li>
-            <!-- [queryParams]="detail['queryParams']" -->
-            <a [routerLink]="detail.url" class="lead-action">
-            <ul class="bs-lead-card">
+            <pagination-controls id="pagination1" (pageChange)="pageChanged($event)" class="pagination" autoHide="true">
+            </pagination-controls>
+        </tab>
+        <tab tabTitle="NEW LEADS" *ngIf="createLead">
+            <ul
+                *ngFor="let detail of newLeadsDetails | paginate: {id: 'pagination2', itemsPerPage: perPageNL, currentPage: currentPageNL, totalItems: totalItemsNL};">
                 <li>
-                    <span class="initials">AK</span>
-                    <span class="user-name">{{detail.firstName || detail.nameOfOrganization}} {{detail.lastName}}</span></li>
-                <li>
-                    <span class="name">applied on</span>
-                    <span class="value">{{detail.appliedOn | date:'dd-MM-yyyy HH:mm:ss'}}</span>
-                </li>
-                <li>
-                    <span class="name">phone</span>
-                    <span class="value">{{detail.mobileNumber}}</span>
-                </li>
-                <li>
-                    <span class="name">Status</span>
-                    <span class="value">{{detail.status}}</span>
+                    <a class="cur-pointer" (click)= "getLeadDetails(detail.leadId)">
+                        <ul class="bs-lead-card">
+                            <li>
+                                <span class="initials">AK</span>
+                                <span class="user-name">{{detail.name}}</span></li>
+                            <li>
+                                <span class="name">applied on</span>
+                                <span class="value">{{detail.createdOn | date:'dd-MM-yyyy HH:mm:ss'}}</span>
+                            </li>
+                            <li>
+                                <span class="name">phone</span>
+                                <span class="value">{{detail.mobileNumber}}</span>
+                            </li>
+                        </ul>
+                    </a>
                 </li>
             </ul>
-          </a>
-        </li>
-    </ul>
-    <pagination-controls id="pagination3"  (pageChange)="pageChangedPA($event)" class="pagination" autoHide="true" ></pagination-controls>
-    </tab>
-    <tab tabTitle="PENDING PAYMENT" *ngIf="(newLogin)">
-      <ul *ngFor="let detail of newPendingPaymentDetails | paginate: {id: 'pagination4',itemsPerPage: perPagePP, currentPage: currentPagePP, totalItems: totalItemsPP};">
-        <li>
-            <!-- [queryParams]="detail['queryParams']"  -->
-            <a [routerLink]="detail.url" class="lead-action">
-            <ul class="bs-lead-card">
+            <pagination-controls id="pagination2" (pageChange)="pageChangedNL($event)" class="pagination"
+                autoHide="true"></pagination-controls>
+        </tab>
+        <tab tabTitle="PENDING APPLICATION" *ngIf="(newLogin)">
+            <ul
+                *ngFor="let detail of newPendingApplicationDetails | paginate: {id: 'pagination3',itemsPerPage: perPagePA, currentPage: currentPagePA, totalItems: totalItemsPA};">
                 <li>
-                    <span class="initials">AK</span>
-                    <span class="user-name">{{detail.firstName || detail.nameOfOrganization}} {{detail.lastName}}</span></li>
-                <li>
-                    <span class="name">applied on</span>
-                    <span class="value">{{detail.appliedOn | date:'dd-MM-yyyy HH:mm:ss'}}</span>
-                </li>
-                <li>
-                    <span class="name">phone</span>
-                    <span class="value">{{detail.mobileNumber}}</span>
-                </li>
-                <li>
-                    <span class="name">Status</span>
-                    <span class="value">{{detail.status}}</span>
+                    <!-- [queryParams]="detail['queryParams']" -->
+                    <a [routerLink]="detail.url" class="lead-action">
+                        <ul class="bs-lead-card">
+                            <li>
+                                <span class="initials">AK</span>
+                                <span class="user-name">{{detail.firstName || detail.nameOfOrganization}}
+                                    {{detail.lastName}}</span></li>
+                            <li>
+                                <span class="name">applied on</span>
+                                <span class="value">{{detail.appliedOn | date:'dd-MM-yyyy HH:mm:ss'}}</span>
+                            </li>
+                            <li>
+                                <span class="name">phone</span>
+                                <span class="value">{{detail.mobileNumber}}</span>
+                            </li>
+                            <li>
+                                <span class="name">Status</span>
+                                <span class="value">{{detail.status}}</span>
+                            </li>
+                        </ul>
+                    </a>
                 </li>
             </ul>
-          </a>
-        </li>
-    </ul>
-    <pagination-controls id="pagination4"  (pageChange)="pageChangedPP($event)" class="pagination" autoHide="true" ></pagination-controls>
-</tab>
-</tabs>
+            <pagination-controls id="pagination3" (pageChange)="pageChangedPA($event)" class="pagination"
+                autoHide="true"></pagination-controls>
+        </tab>
+        <tab tabTitle="PENDING PAYMENT" *ngIf="(newLogin)">
+            <ul
+                *ngFor="let detail of newPendingPaymentDetails | paginate: {id: 'pagination4',itemsPerPage: perPagePP, currentPage: currentPagePP, totalItems: totalItemsPP};">
+                <li>
+                    <!-- [queryParams]="detail['queryParams']"  -->
+                    <a [routerLink]="detail.url" class="lead-action">
+                        <ul class="bs-lead-card">
+                            <li>
+                                <span class="initials">AK</span>
+                                <span class="user-name">{{detail.firstName || detail.nameOfOrganization}}
+                                    {{detail.lastName}}</span></li>
+                            <li>
+                                <span class="name">applied on</span>
+                                <span class="value">{{detail.appliedOn | date:'dd-MM-yyyy HH:mm:ss'}}</span>
+                            </li>
+                            <li>
+                                <span class="name">phone</span>
+                                <span class="value">{{detail.mobileNumber}}</span>
+                            </li>
+                            <li>
+                                <span class="name">Status</span>
+                                <span class="value">{{detail.status}}</span>
+                            </li>
+                        </ul>
+                    </a>
+                </li>
+            </ul>
+            <pagination-controls id="pagination4" (pageChange)="pageChangedPP($event)" class="pagination"
+                autoHide="true"></pagination-controls>
+        </tab>
+    </tabs>
 </div>
 
 <div class="overlay" [ngClass]="{'active': isMultipleBranchModal}">
@@ -123,30 +138,66 @@
         <a class="modal-close" (click)="isMultipleBranchModal = false"><span class="icon icon-close"></span></a>
         <div class="modal-body">
             <form [formGroup]="myBranchForm">
-            <h1 class="errorMessage">Select Branch</h1>
-            <div class="form-group single-select">
-                <span class="control-title">Branch Name</span>
-                <!-- <kendo-dropdownlist [readonly]="isTBMLoggedIn"
+                <h1 class="errorMessage">Select Branch</h1>
+                <div class="form-group single-select">
+                    <span class="control-title">Branch Name</span>
+                    <!-- <kendo-dropdownlist [readonly]="isTBMLoggedIn"
                   class="form-control"
                   [defaultItem]="defaultItem"
                   [data]="multipleBranchesData"
                   [textField]="'key'"
                   [valueField]="'value'">                  
                 </kendo-dropdownlist> -->
-                <ng-multiselect-dropdown 
-                    [placeholder]="'Search'" 
-                    [data]="multipleBranchesData"
-                    [settings]="dropdownSettings"
-                    formControlName="branchId"                  
-                    >
-                </ng-multiselect-dropdown>
-            </div>
-            <div class="btn-wrap">
-                <button class="btn btn-border"  [ngClass]="{'disabled': (!myBranchForm.valid)}"
-                [disabled]="!myBranchForm.valid" 
-                (click)="submitBranch(myBranchForm)">Submit</button>
-            </div>
+                    <ng-multiselect-dropdown [placeholder]="'Search'" [data]="multipleBranchesData"
+                        [settings]="dropdownSettings" formControlName="branchId">
+                    </ng-multiselect-dropdown>
+                </div>
+                <div class="btn-wrap">
+                    <button class="btn btn-border" [ngClass]="{'disabled': (!myBranchForm.valid)}"
+                        [disabled]="!myBranchForm.valid" (click)="submitBranch(myBranchForm)">Submit</button>
+                </div>
             </form>
+        </div>
+    </div>
+</div>
+
+<div class="overlay" [ngClass]="{'active': isLeadDetail}">
+    <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isLeadDetail}" style="padding-top: 1vw; height: 40%;">
+        <a class="modal-close" (click)="isLeadDetail = false"><span class="icon icon-close"></span></a>
+        <div class="modal-body" style="padding-top: 1vw;">    
+               
+                <div >
+                    <h1 class="lead-detals-lable" >CUSTOMER NAME</h1>
+                    <div style="font-size: 2.5vw; border-bottom: 1px solid gainsboro;padding-bottom: 1vw;">
+                        {{leadDetail?.name || null}}
+                    </div>                   
+                </div>                
+                <div class="row modal-body-content" style="padding-top: 1vw;">                                   
+                   <div class="col-12">
+                       <div class="col-6">
+                        <h1 class="lead-detals-lable" >LEAD ID</h1>
+                        <label class="lead-lable">{{leadDetail?.leadId || null}}</label>
+                       </div>
+                       <div class="col-6">
+                        <h1 class="lead-detals-lable" >LOAN AMOUNT</h1>
+                        <label class="lead-lable">{{leadDetail?.loanAmount || null}}</label>
+                    </div>
+                   </div>
+                </div>
+                <div class="row modal-body-content" style="padding-top: 1vw;">                                   
+                    <div class="col-12">
+                        <div class="col-6">
+                         <h1 class="lead-detals-lable" >PRODUCT</h1>
+                         <label class="lead-lable">{{leadDetail?.loanType || null}}</label>
+                        </div>
+                        <div class="col-6">
+                         <h1 class="lead-detals-lable" >ASSIGNED TO</h1>
+                         <label class="lead-lable">{{leadDetail?.assignedTo || null}}</label>
+                     </div>
+                    </div>
+                 </div>
+                
+           
         </div>
     </div>
 </div>

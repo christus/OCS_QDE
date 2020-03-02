@@ -1591,6 +1591,7 @@ p.align-right {
    .page-break{
     display: inline-block;
     page-break-before: always;
+    page-break-inside: avoid;
     float:none;
     margin-top:10px;
 
