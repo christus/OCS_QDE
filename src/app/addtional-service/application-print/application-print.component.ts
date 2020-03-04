@@ -3,6 +3,7 @@ import { QdeHttpService } from "src/app/services/qde-http.service";
 import { UtilService } from "src/app/services/util.service";
 import { Router } from '@angular/router';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { CommonDataService } from 'src/app/services/common-data.service';
 
 export interface UserDetails {
   "amountEligible": number;
@@ -48,8 +49,9 @@ export class ApplicationPrintComponent implements OnInit {
   constructor(
     private service: QdeHttpService,
     private utilService: UtilService,
-    private router: Router,
-    private ngxService: NgxUiLoaderService
+    // private router: Router,
+    // private ngxService: NgxUiLoaderService
+    private cds: CommonDataService
   ) {
     
    
@@ -59,10 +61,11 @@ export class ApplicationPrintComponent implements OnInit {
     this.toDay = { key: "DD", value: "DD" };
     this.toMonth = { key: "MM", value: "MM" };
     this.toYear = { key: "YYYY", value: "YYYY" };
-
+    this.cds.changeshowPrint(false);
    }
 
   ngOnInit() {
+  
     this.getApplicationPrint();
   }
 

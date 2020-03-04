@@ -128,7 +128,7 @@
                       <form class="bs-form" id="pan-form" #panNumberForm="ngForm" autocomplete="off"
                         (ngSubmit)="submitPanNumber(panNumberForm, panSlider2, panSlider1)">
                         <div class="form-wrap">
-                            <div class="form-group last" style="margin-bottom: 60px;" 
+                            <!-- <div class="form-group last" style="margin-bottom: 60px;" 
                                 *ngIf="qde.application.applicationFormNumber != ''">
                                 <input [readonly]="isTBMLoggedIn" spellcheck="false"                                        
                                         type="text"
@@ -143,16 +143,16 @@
                                         #applicationRefNo="ngModel"
                                         fieldFill autocomplete="off"
                                         required disabled />
-                                        <!-- pattern="{{regexPattern.appRefNo}}" -->
+                                        pattern="{{regexPattern.appRefNo}}" 
                                         <label for="ref-no" tabindex="0">Application Form No</label>
-                                        <!-- <div class="redalert" *ngIf="RegExp(regexPattern.sameDigit).test(applicationRefNo.value)">
+                                       <div class="redalert" *ngIf="RegExp(regexPattern.sameDigit).test(applicationRefNo.value)">
                                             {{errors.applicationReferenceNo.wrong}}</div> -->
                                         <!-- <div *ngIf="applicationRefNo.touched && applicationRefNo.invalid " class="invalid-feedback">
 
                                             <div *ngIf="applicationRefNo.errors?.pattern">{{errors.applicationReferenceNo.invalid}}</div>
                                             <div *ngIf="applicationRefNo.errors?.minlength">{{errors.applicationReferenceNo.minlength}}{{" "+minMaxValues['Application_Form_No']?.minValue+" characters"}}</div>
-                                            </div> -->
-                            </div>
+                                            </div> 
+                            </div> -->
                           <div class="form-group last typ-optional" style="margin-bottom: 40px;">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                               [(ngModel)]="qde.application.applicants[applicantIndex].pan.panNumber"
@@ -2316,7 +2316,7 @@
                       <form class="bs-form" #panNumberForm2="ngForm" autocomplete="off"
                         (ngSubmit)="submitOrgPanNumber(panNumberForm2, panSlider4, panSlider3)">
                         <div class="form-wrap" style="overflow: hidden;">
-                            <div class="form-group last" style="margin-bottom: 60px;" 
+                            <!-- <div class="form-group last" style="margin-bottom: 60px;" 
                                   >
                                 <input [readonly]="isTBMLoggedIn" spellcheck="false"
                                         type="text"  autocomplete="off"
@@ -2333,14 +2333,14 @@
                                         fieldFill
                                         required />
                                         <label for="ref-no-nonind">Application Form No</label>
-                                        <!-- <div class="redalert" *ngIf="RegExp(regexPattern.sameDigit).test(applicationRefNoNonInd.value)">
-                                            {{errors.applicationReferenceNo.wrong}}</div> -->
+                                        <div class="redalert" *ngIf="RegExp(regexPattern.sameDigit).test(applicationRefNoNonInd.value)">
+                                            {{errors.applicationReferenceNo.wrong}}</div> 
                                             <div *ngIf="applicationRefNoNonInd.touched && applicationRefNoNonInd.invalid " class="invalid-feedback">
 
                                                 <div *ngIf="applicationRefNoNonInd.errors?.pattern">{{errors.applicationReferenceNo.invalid}}</div>
                                                 <div *ngIf="applicationRefNoNonInd.errors?.minlength">{{errors.applicationReferenceNo.minlength}}{{" "+minMaxValues['Application_Form_No']?.minValue+" characters"}} </div>
                                                 </div>
-                            </div>
+                            </div> -->
                           <div class="form-group last typ-optional">
                             <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
                               [(ngModel)]="qde.application.applicants[applicantIndex].pan.panNumber" tabindex="1"

@@ -47,6 +47,7 @@ myFormValid: boolean = false;
   description: string;
   address: string;
   branchCode: string;
+  hfcBranchCode:string;
   newFinnOneCode: string;
   cityInp: string;
   zipCodeInp: string;
@@ -75,6 +76,7 @@ myFormValid: boolean = false;
     description: new FormControl(''),
     address: new FormControl(''),
     branchCode: new FormControl(''),
+    hfcBranchCode: new FormControl(''),
     branchType: new FormControl(''),
     newFinnOneCode: new FormControl(''),
     city: new FormControl(''),
@@ -120,6 +122,7 @@ myFormValid: boolean = false;
             description: pmayList.description || "",
             address: pmayList.address || "",
             branchCode: pmayList.branchCode || "",
+            hfcBranchCode: pmayList.hfcBranchCode || "",
             branchType: pmayList.branchType || "",
             newFinnOneCode: pmayList.newFinnOneCode || "",
             city: pmayList.cityDescription,
@@ -421,6 +424,7 @@ myFormValid: boolean = false;
       address: this.formValue.address.value,
       branchType: this.formValue.branchType.value,
       branchCode: Number(this.formValue.branchCode.value),
+      hfcBranchCode: this.formValue.hfcBranchCode.value,
       newFinnOneCode: this.formValue.newFinnOneCode.value,
       city: this.formValue.cityInp.value,
       cityInp: this.formValue.city.value,

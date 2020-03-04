@@ -14,8 +14,8 @@
     <table class="admin-table">
         <thead>
           <tr>
-            <th>Branch code</th>
-            <!-- <th>Branch Id</th> -->
+            <th>APS Branch code</th>
+            <th>HFC Branch code</th>
             <th>Branch name</th>
             <!-- <th>Branch type</th> -->
             <th>City name</th>
@@ -27,7 +27,7 @@
         <tbody>
           <tr *ngFor="let item of collection | paginate: { itemsPerPage: perPage, currentPage: currentPage, totalItems: totalItems  }">
             <td><a [routerLink]= "['/admin/lovs/branch_add', item.branchId]">{{item.branchCode}}</a></td>
-            <!-- <td>{{item.branchId}}</td> -->
+            <td>{{item.hfcBranchCode}}</td>
             <td>{{item.branchName}}</td>
             <!-- <td>{{item.branchType}}</td> -->
             <td>{{item.cityName}}</td>

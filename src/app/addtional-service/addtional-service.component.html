@@ -1,19 +1,19 @@
 <app-leads-header></app-leads-header>
 <app-leads-sidebar></app-leads-sidebar>
 <div class="typ-connector">
-  <div class="fixed-top">
-    <div class="typ-dash">
-      <ul class="tabs-head">
-        <button (click)="printPage()" class="btn" *ngIf="showPrint">Print</button>  
-        <li class="tab-link active" data-target="leads-tab"><a>Addtional Service </a></li>        
-       
-          <!-- <button (click)="onMultipleBranch('lead')" class="btn application add-lead-link" *ngIf="createLead">CREATE LEAD</button> -->
-        
-       
-      </ul>   
-       
-      <router-outlet></router-outlet>
-      <button (click)="printPage()" class="btn" *ngIf="showPrint">Print</button> 
+    <div class="fixed-top">
+        <div class="typ-dash">
+            <ul class="tabs-head">
+                <button (click)="printPage()" class="btn" *ngIf="showPrint">Print</button>
+                <li class="tab-link active" routerLink="/addtional-service" data-target="leads-tab" *ngIf="!showPrint"><a>Addtional Service </a></li>
+                <li class="tab-link active" routerLink="/addtional-service/application-print" data-target="leads-tab" *ngIf="showPrint"><a>Dashboard</a></li>
+                <!-- <button (click)="onMultipleBranch('lead')" class="btn application add-lead-link" *ngIf="createLead">CREATE LEAD</button> -->
+
+
+            </ul>
+
+            <router-outlet></router-outlet>
+            <button (click)="printPage()" class="btn" *ngIf="showPrint">Print</button>
+        </div>
     </div>
-  </div>
 </div>

@@ -31,6 +31,7 @@ export class AddtionalServiceComponent implements OnInit {
 
 printPage() {
   window.print();
+  return false;
 }
 
 }

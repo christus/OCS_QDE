@@ -4,7 +4,7 @@
 
     <div class="flex-container">
         <div class="inputBox flex-child">
-            <label for="branchCode" class="inputText">Branch code: *</label>
+            <label for="branchCode" class="inputText">APS Branch code: *</label>
             <input type="text" id="branchCode" class="form-control" [(ngModel)]="branchCode" maxlength="10"
             fieldFill formControlName="branchCode" autocomplete="off" required pattern={{regexPattern.number}}/>
             <div class="redalert" *ngIf="(formValue.branchCode.errors?.required && (formValue.branchCode.touched || formValue.branchCode.dirty))">Branch code is mandatory</div>
@@ -20,14 +20,13 @@
     
     
     </div>
-
     <div class="flex-container">
-
-       
         <div class="inputBox flex-child">
-            <label for="address" class="inputText">Address *</label>
-            <input type="text" id="address"  class="form-control" [(ngModel)]="address" fieldFill formControlName="address" autocomplete="off" required />
-            <div class="redalert" *ngIf="(formValue.address.errors?.required && (formValue.address.touched || formValue.address.dirty))">Address is mandatory</div>
+            <label for="hfcBranchCode" class="inputText">HFC Branch code: *</label>
+            <input type="text" id="hfcBranchCode" class="form-control" [(ngModel)]="hfcBranchCode" maxlength="10"
+            fieldFill formControlName="hfcBranchCode" autocomplete="off" required pattern={{regexPattern.number}}/>
+            <div class="redalert" *ngIf="(formValue.hfcBranchCode.errors?.required && (formValue.hfcBranchCode.touched || formValue.hfcBranchCode.dirty))">HFC Branch code is mandatory</div>
+            <div class="redalert" *ngIf="formValue.hfcBranchCode.errors?.pattern">HFC Branch Code  can contain  Only Numeric</div>  
         </div>
         <div class="selectBox flex-child">
             <label class="controltitle">Branch type *</label>
@@ -38,6 +37,17 @@
             </select>
             <div class="redalert" *ngIf="(formValue.branchType.errors?.required && (formValue.branchType.touched || formValue.branchType.dirty))">Branch Type is mandatory</div>
         </div>
+    </div>
+
+    <div class="flex-container">
+
+       
+        <div class="inputBox flex-child">
+            <label for="address" class="inputText">Address *</label>
+            <input type="text" id="address"  class="form-control" [(ngModel)]="address" fieldFill formControlName="address" autocomplete="off" required />
+            <div class="redalert" *ngIf="(formValue.address.errors?.required && (formValue.address.touched || formValue.address.dirty))">Address is mandatory</div>
+        </div>
+        
     </div>
 
     <div class="flex-container">

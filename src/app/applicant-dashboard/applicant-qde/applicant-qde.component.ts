@@ -1260,13 +1260,13 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
                 // this.qde.application.applicationId = result["application"]["applicationId"];
 
                 this.qde.application.applicationId = result['application']['applicationId'];
-                this.qde.application.applicationFormNumber = result['application']['applicationFormNumber'];
+                // this.qde.application.applicationFormNumber = result['application']['applicationFormNumber'];
 
                 // let isApplicantPresent:boolean = false;
-                if (this.qde.application.applicationFormNumber){
-                this.isErrorModal = true;
-                this.errorMessage = "Application Form No is "+this.qde.application.applicationFormNumber;
-                }
+                // if (this.qde.application.applicationFormNumber){
+                // this.isErrorModal = true;
+                // this.errorMessage = "Application Form No is "+this.qde.application.applicationFormNumber;
+                // }
 
                 this.tempOldPanNumber = this.qde.application.applicants[this.applicantIndex].pan.panNumber;
 
@@ -1435,7 +1435,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         return;
       }
 
-      this.qde.application.applicationFormNumber = form.value.applicationFormNo;
+      // this.qde.application.applicationFormNumber = form.value.applicationFormNo;
       this.qde.application.applicants[this.applicantIndex].pan.panNumber = form.value.pan;
       // this.qde.application.applicants[this.applicantIndex].pan.docType = form.value.panDocType.value;
       // this.qde.application.applicants[this.applicantIndex].pan.docNumber = form.value.docNumber;

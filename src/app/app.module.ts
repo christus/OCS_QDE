@@ -520,16 +520,16 @@ const appRoutes: Routes = [
       {
         path: 'lovs/pmay_list/add',
         component: PmayAddDetailsComponent,
-        resolve: {
-          eachLovs: MasterLovResolverService
-        }
+        // resolve: {
+        //   eachLovs: MasterLovResolverService
+        // }
       },
       {
         path: 'lovs/pmay_list/:userId',
         component: PmayAddDetailsComponent,
-        resolve: {
-          eachLovs: MasterLovResolverService
-        }
+        // resolve: {
+        //   eachLovs: MasterLovResolverService
+        // }
       },
       {
         path: 'lovs/branch_list',
