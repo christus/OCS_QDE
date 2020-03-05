@@ -94,7 +94,15 @@ myFormValid: boolean = false;
     // name: "^[a-zA-Z ]+(([',. -][a-zA-Z ])?[a-zA-Z ]*)*$", 
     name: "^[a-zA-Z0-9 ]+(([',. -][a-zA-Z ])?[a-zA-Z ]*)*$"
   }
-
+  minMaxValues;
+  isLessAmount: boolean;
+  requirMinAmout: any;
+  isMaxAmount: boolean;
+  requirMaxAmout: any;
+  isLessBCode: boolean;
+  requirMinBCode: any;
+  isMaxBCode: boolean;
+  requirMaxBCode: any;
   constructor(private qdeHttp: QdeHttpService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
@@ -108,7 +116,8 @@ myFormValid: boolean = false;
     //   this.city = response['ProcessVariables'].cityList;
     //   console.log("Lov", this.city);
     // });
-
+    let lovs = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs);
+    this.minMaxValues =lovs.LOVS.min_max_values;
     this.route.params.subscribe(val => {
       if (val['userId'] != null) {
         this.userId = parseInt(val['userId']);
@@ -473,6 +482,45 @@ myFormValid: boolean = false;
             .querySelector('.reporting_to')            
             .classList.add('hide');
             
+  }
+  checkAmountLimit(event,minAmount?,maxAmount?) {
+    console.log("event ",event);
+    let n = parseInt(this.getNumberWithoutCommaFormat(event.target.value));
+    console.log("event ",n);
+    if(minAmount != undefined && n < minAmount ){
+      console.log("min ",minAmount);
+     
+      if(event.target.name == "branchCode"){
+        this.isLessBCode = true;
+        // this.isLessAmount = false;
+        this.requirMinBCode = minAmount;
+      }else{
+        this.isLessAmount = true
+        // this.isLessBCode = false;
+        this.requirMinBCode ="";
+      }
+    } else if(n > Number(maxAmount) && maxAmount != undefined){
+      if(event.target.name == "branchCode"){
+        this.isMaxBCode = true;
+        // this.isMaxAmount = false;
+        this.requirMaxBCode = maxAmount;
+      }else{
+      console.log("max ",maxAmount);
+      this.isMaxAmount = true;
+      // this.isMaxBCode = false;
+      this.requirMaxAmout = maxAmount;
+      }
+    } else {
+      this.isLessAmount = false;
+      this.requirMinAmout="";
+      this.isMaxAmount = false;
+      this.requirMaxAmout="";
+      this.isMaxBCode = false;
+      this.isLessBCode = false;
+    }
+  }
+  getNumberWithoutCommaFormat(x: string) : string {
+    return x ? x+"".split(',').join(''): '';
   }
 
   ngOnDestroy() {

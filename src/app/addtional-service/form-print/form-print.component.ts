@@ -29,7 +29,11 @@ export class FormPrintComponent implements OnInit {
   application
   applicantImage = []
   applicationNo;
-  printData
+  printData;
+  leadId;
+  brokerId ="";
+  rmId = "";
+  bankEmployeeId = "";
   ngOnInit() {
     this.printData = this.activateRoute.snapshot.data['qde']["ProcessVariables"];
     if (this.printData['status']) {
@@ -44,6 +48,8 @@ export class FormPrintComponent implements OnInit {
       this.applicants = this.application["application"]["applicants"];
       console.log("my Applicats Data", this.applicants);
       //  this.applicantImage = "data:image/png;base64,"+ this.applicants["documents"][0]["documentData"];documentName
+
+     
       this.applicants.forEach(element => {
         if (element["documents"].length > 0) {
           this.applicantImage.push(this.domSanitizer.bypassSecurityTrustUrl(
@@ -53,6 +59,8 @@ export class FormPrintComponent implements OnInit {
       // this.applicantImage =  "data:image/png;base64,"+  this.applicants[0]["documents"][0]["documentData"];
       // this.applicantImage =this.domSanitizer.bypassSecurityTrustUrl(this.applicantImage);
       console.log("my Applicats photo", this.applicantImage);
+
+
     }
   }
 

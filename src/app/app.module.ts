@@ -550,7 +550,8 @@ const appRoutes: Routes = [
         path: 'lovs/branch_add/:userId',
         component: BranchAddEditComponent,
         resolve: {
-          eachLovs: MasterLovResolverService
+          eachLovs: MasterLovResolverService,
+          listOfValues: ListOfValuesResolverService
         }
       },
       {

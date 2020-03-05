@@ -47,7 +47,7 @@
                                 <li class="field_height">
                                     <!-- <div class="main_div"> -->
                                     <span class="rm_id_label">RM ID</span>
-                                    <input type="text" id="rm_id" name="rm_id" class="" disabled/>
+                                    <input type="text" id="rm_id" name="rm_id" [ngModel]="rmId" class="" disabled/>
                                     <!-- </div> -->
                                 </li>
                             </ul>
@@ -55,13 +55,13 @@
                                 <li class="field_height">
                                     <!-- <div class="main_div"> -->
                                     <span class="label">Broker ID</span>
-                                    <input type="text" id="borker_id" name="borker_id" class="" disabled/>
+                                    <input type="text" id="borker_id" name="borker_id" [ngModel]="brokerId" class="" disabled/>
                                     <!-- </div> -->
                                 </li>
                                 <li class="field_height">
                                     <!-- <div class="main_div"> -->
                                     <span class="label">Bank Branch Sol ID</span>
-                                    <input type="text" id="bank_branch_id" name="bank_branch_id" class="" disabled/>
+                                    <input type="text" id="bank_branch_id" name="bank_branch_id" [ngModel]="application.application.branchCode" class="" disabled/>
                                     <!-- </div> -->
                                 </li>
                                 <li class="field_height">

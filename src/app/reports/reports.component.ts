@@ -86,7 +86,7 @@ export class ReportsComponent implements OnInit {
               environment.csvLocation + 
               '&content_var=attachmentContent&filename=leads.csv&more_flag_var=more&processVariables={"processId":"'
               + environment.api.downloadLeads.processId + '"'
-              + ',"ProcessVariables":{"fromDate":"' + "" + startDate + '","toDate":"' + "" + endDate + '","userId":"' + "" + this.userId + '"}'
+              + ',"ProcessVariables":{"fromDate":"' + "" + startDate + '","toDate":"' + "" + endDate + '","userId":"' + "" + this.userId + '","outputUsers":"'+ localStorage.getItem("outputUsers")+'"}'
               + ',"workflowId":"' + environment.api.downloadLeads.workflowId + '"'
               + ',"projectId":"' + environment.api.downloadLeads.projectId + '"}';
     window.open(url,'_blank');
@@ -104,7 +104,7 @@ export class ReportsComponent implements OnInit {
             environment.csvLocation + 
             '&content_var=attachmentContent&filename=login.csv&more_flag_var=more&processVariables={"processId":"'
             + environment.api.downloadLogin.processId + '"'
-            + ',"ProcessVariables":{"fromDate":"' + "" + startDate + '","toDate":"' + "" + endDate + '","userId":"' + "" + this.userId + '"}'
+            + ',"ProcessVariables":{"fromDate":"' + "" + startDate + '","toDate":"' + "" + endDate + '","userId":"' + "" + this.userId + '","outputUsers":"'+ localStorage.getItem("outputUsers")+'"}'
             + ',"workflowId":"' + environment.api.downloadLogin.workflowId + '"'
             + ',"projectId":"' + environment.api.downloadLogin.projectId + '"}';
       window.open(url,'_blank');
@@ -120,7 +120,7 @@ export class ReportsComponent implements OnInit {
             environment.csvLocation + 
             '&content_var=attachmentContent&filename=applicationDump.csv&more_flag_var=more&processVariables={"processId":"'
             + environment.api.downloadDump.processId + '"'
-            + ',"ProcessVariables":{"fromDate":"' + "" + startDate + '","toDate":"' + "" + endDate + '","applicationStatus":' + "" + Number(this.statusId) + ',"userId":"' + "" + this.userId + '"}'
+            + ',"ProcessVariables":{"fromDate":"' + "" + startDate + '","toDate":"' + "" + endDate + '","applicationStatus":' + "" + Number(this.statusId) + ',"userId":"' + "" + this.userId + '","outputUsers":"'+ localStorage.getItem("outputUsers")+'"}'
             + ',"workflowId":"' + environment.api.downloadDump.workflowId + '"'
             + ',"projectId":"' + environment.api.downloadDump.projectId + '"}';
       window.open(url,'_blank');

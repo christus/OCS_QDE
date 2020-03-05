@@ -2893,16 +2893,21 @@ export class QdeHttpService {
     let processVar = {};
     let requestEntity = requestData
     processVar = requestData
-    if (serviceType != 'login') {
+    // if (serviceType != 'login') {
+    if (requestData["processVariables"]) {
       processVar = JSON.parse(requestData["processVariables"]);
       // console.log("call post bef ",processVar);
       // processVar["processVariables"] = processVar     
       processVar["ProcessVariables"]["outputUsers"] = localStorage.getItem("outputUsers")
       // console.log("call post ",processVar);
       requestEntity["processVariables"] = JSON.stringify(processVar);
-    } else {
+    }
+    else {
       requestEntity = requestData;
     }
+    // } else {
+    //   requestEntity = requestData;
+    // }
 
 
 
