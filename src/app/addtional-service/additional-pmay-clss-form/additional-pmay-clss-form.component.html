@@ -1,21 +1,26 @@
-<div class="space-10 container_box ul_align pmay">
-  <div class="main_div">
-      <div class="space-12">
-          <h3 class="PMAY">Additional Application Form PMAY CLSS <span class="mandatory">* </span></h3>
-      </div>
-  </div>
-  <div class="main_div">
-          <div class="space-6">ELIGIBLE PRODUCT - Construction/ Prochase of House Flat/ Resale Purchase/ Extension<br>Improvement / Plot + Construction</div>
-          <div class="space-6 space-6 text-right"><span class="mandatory">*</span> All Fields Mandatory</div>
-  </div>
-  <div class="main_div">
-      <div class="space-6">
-          <div class="fields icici-col-high">
-              1. Applicant Name <span class="font-color">(HEAD OF FAMILY)</span>
-          </div>
+<div class="space-10 container_box ul_align pmay add_app">
+    <div class="main_div">
+        <div class="space-12">
+            <h3 class="PMAY">Additional Application Form PMAY CLSS <span class="mandatory">* </span></h3>
+        </div>
+    </div>
+    <div class="main_div">
+        <div class="space-6">
+            <div class="space-12 d-f">
+                <div class="space-4">ELIGIBLE PRODUCT -</div>
+                <div class="space-8">Construction/ Prochase of House Flat/ Resale Purchase/ Extension Improvement / Plot + Construction</div>
+            </div>
+        </div>
+        <div class="space-6 space-6 text-right"><span class="mandatory">*</span> All Fields Mandatory</div>
+    </div>
+    <div class="main_div">
+        <div class="space-4">
+            <div class="fields icici-col-high">
+                1. Applicant Name <span class="font-color">(HEAD OF FAMILY)</span>
+            </div>
 
       </div>
-      <div class="space-6">
+      <div class="space-8">
 
           <div class="values">
 {{qde.application.applicants[0].personalDetails.title}}
@@ -27,13 +32,13 @@
   </div>
 
   <div class="main_div">
-      <div class="space-6">
+      <div class="space-4">
           <div class="fields icici-col-high">
               2. Father's Name
           </div>
 
       </div>
-      <div class="space-6">
+      <div class="space-8">
 
           <div class="values">
             {{qde.application.applicants[0].familyDetails.fatherTitle}}
@@ -44,7 +49,7 @@
   </div>
 
   <div class="main_div">
-      <div class="space-6">
+      <div class="space-4">
           <div class="fields icici-col-high">
               3. Whether the family owns any house ?
           </div>
@@ -56,129 +61,139 @@
            </ol>
 
       </div>
-      <div class="space-6">
+      <div class="space-8">
 
-          <div class="values">
-            {{(qde.application.applicants[0].communicationAddress.residentialStatus == 'Owned')?'Yes':'No'}}<br/>
-            <div *ngIf="qde.application.applicants[0].communicationAddress.residentialStatus == 'Owned'">
-                {{qde.application.applicants[0].communicationAddress.addressLineOne}}<br/>
-                {{qde.application.applicants[0].communicationAddress.city}}<br/>
-                {{qde.application.applicants[0].communicationAddress.state}} - {{qde.application.applicants[0].communicationAddress.zipcode}} <br/>
+            <div class="values">
+                {{(qde.application.applicants[0].communicationAddress.residentialStatus == 'Owned')?'Yes':'No'}}<br/>
+                <div *ngIf="qde.application.applicants[0].communicationAddress.residentialStatus == 'Owned'">
+                    {{qde.application.applicants[0].communicationAddress.addressLineOne}}<br/> {{qde.application.applicants[0].communicationAddress.city}}
+                    <br/> {{qde.application.applicants[0].communicationAddress.state}} - {{qde.application.applicants[0].communicationAddress.zipcode}} <br/>
+                </div>
             </div>
-          </div>
-      </div>
+        </div>
 
-  </div>
+    </div>
+
+    <div class="main_div">
+        <div class="space-4">
+            <div class="fields icici-col-high">
+                4. Whether the family owns any residential land
+            </div>
+            <P class="m-0 pr-2">If yes , then extent of land in Sq. Mtrs</P>
+        </div>
+        <div class="space-8">
+            <ul class="m-0">
+                <li>yes&nbsp;<input class="click" value="" disabled/> &nbsp;&nbsp;No &nbsp;<input class="click" value="" disabled/></li>
+
+            </ul>
+        </div>
+    </div>
+
+    <div class="main_div">
+        <div class="space-4">
+            <div class="fields icici-col-high">
+                5. Ownership details of existing house
+            </div>
+        </div>
+        <div class="space-8">
+            <ul class="m-0">
+                <li>Own &nbsp;<input class="click" value="" disabled/> &nbsp;&nbsp;&nbsp; Rented &nbsp;<input class="click" value="" disabled/> &nbsp;&nbsp;&nbsp; Otherwise&nbsp;<input class="click" value="" disabled/> &nbsp;&nbsp;(if owned provide below
+                    details)
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="main_div">
+        <div class="space-4">
+            <div class="fields icici-col-high">
+                6. Type of the existing house based on roof type
+            </div>
+        </div>
+        <div class="space-8">
+            <ul class="m-0">
+                <li>Pucca (CC & Stone Slab) &nbsp;<input class="click" value="" disabled/> &nbsp;&nbsp;&nbsp;<br />Semi Pucca (Asbestos / Steel Sheet, Tiled)&nbsp;&nbsp;&nbsp;<input class="click" value="" disabled/> &nbsp;<br /> Katcha (Grass / Thatched /
+                    Tarpaulin / Wooden)&nbsp;<input class="click" value="" disabled/> &nbsp;</li>
+            </ul>
+        </div>
+
+	</div>
+
 
   <div class="main_div">
-      <div class="space-6">
-          <div class="fields icici-col-high">
-              4. Whether the family owns any residential land
-          </div>
-          <P class="m-0 pr-2">If yes , then extent of land in Sq. Mtrs</P>
-      </div>
-      <div class="space-6">
-           <ul class="m-0">
-              <li>yes&nbsp; No</li>
- 
-          </ul>
-      </div>
-  </div>
-
-  <div class="main_div">
-      <div class="space-6">
-          <div class="fields icici-col-high">
-              5. Ownership details of existing house
-          </div>
-      </div>
-      <div class="space-6">
-         <ul class="m-0">
-          <li>Own &nbsp;&nbsp; Rented &nbsp;&nbsp; Otherwise &nbsp;&nbsp;(if owned provide below details)</li>
-          </ul>
-      </div>
-  </div>
-
-  <div class="main_div">
-      <div class="space-6">
-          <div class="fields icici-col-high">
-              6. Type of the existing house based on roof type
-          </div>
-      </div>
-      <div class="space-6">
-          <ul class="m-0">
-              <li>Pucca (CC & Stone Slab) &nbsp;&nbsp;Semi Pucca (Asbestos / Steel Sheet, Tiled)&nbsp;&nbsp;Katcha (Grass / Thatched / Tarpaulin / Wooden)</li>
-          </ul>
-      </div>
-  
-  </div>
-
-
-  <div class="main_div">
-      <div class="space-6">
+      <div class="space-4">
           <div class="fields icici-col-high">
               7. Purpose of housing loan
           </div>
        </div>
-      <div class="space-6">
+      <div class="space-8">
           <ul class="m-0">
-              <li>New House&nbsp;&nbsp;Construction&nbsp;&nbsp;Extension&nbsp;&nbsp;Improvement</li>
+             <li>New House&nbsp;<input class="click" value="" disabled/> &nbsp;&nbsp;&nbsp;Construction&nbsp;<input class="click" value="" disabled/> &nbsp;&nbsp;&nbsp;Extension&nbsp;<input class="click" value="" disabled/> &nbsp;&nbsp;&nbsp;Improvement&nbsp;<input
+                        class="click" value="" disabled/> &nbsp;</li>
           </ul>
       </div>
-     
+
   </div>
 
   <div class="main_div">
-      <div class="space-6">
+      <div class="space-4">
           <div class="fields icici-col-high">
               8. Extension / Improvement (if applicable) required for
           </div>
       </div>
-      <div class="space-6">
+      <div class="space-8">
           <ul class="m-0">
-              <li>One room&nbsp;&nbsp;Kitchen&nbsp;&nbsp;Bath&nbsp;&nbsp;Toilet</li>
+              <li>One room&nbsp;<input class="click" value="" disabled/> &nbsp;&nbsp;&nbsp;Kitchen&nbsp;<input class="click" value="" disabled/> &nbsp;&nbsp;&nbsp;Bath&nbsp;<input class="click" value="" disabled/> &nbsp;&nbsp;&nbsp;Toilet&nbsp;<input class="click"
+                        value="" disabled/> &nbsp;</li>
           </ul>
       </div>
   </div>
 
   <div class="main_div">
-      <div class="space-6">
+      <div class="space-4">
           <div class="fields icici-col-high">
               9. Size of new dwelling unit (Carpet area in sq.mtrs.)
           </div>
       </div>
-          <div class="space-6">
-
+          <div class="space-8">
+ 		<hr>
           </div>
       </div>
 
 
-  <div class="main_div">
-      <div class="space-6">
-          <div class="fields icici-col-high">
-              10.Aadhar Card - Applicant
-          </div>
-          <div class="values">
+    <div class="main_div">
+        <div class="space-6 d-f">
+            <div class="space-5 p-0 fields icici-col-high">
+                10.Aadhar Card - Applicant
+            </div>
+            <div class="space-7 p-0 values">
+                <hr>
+            </div>
+        </div>
+        <div class="space-6 d-f">
+            <div class="space-6 p-0 fields icici-col-high">
+                Pan Card - Applicant
+            </div>
+            <div class="space-6 p-0 values">
+                <hr>
+            </div>
+        </div>
+    </div>
 
-          </div>
-      </div>
-      <div class="space-6">
-          <div class="fields icici-col-high">
-              Pan Card - Applicant
-          </div>
-      </div>
-  </div>
-
-  <div class="main_div">
-      <div class="space-6">
-          <div class="fields icici-col-high">
+    <div class="main_div">
+    	<div class="space-6 d-f">
+            <div class="space-5 p-0 fields icici-col-high">
               Aadhar Card - Co-Applicant
-          </div>
-          <div class="values">
-
-          </div>
-      </div>
-      <div class="space-6">
-          <div class="fields icici-col-high">Pan Card - Co-Applicant</div>
+            </div>
+           <div class="space-7 p-0 values">
+  		<hr>
+           </div>
+       </div>
+        <div class="space-6 d-f">
+          <div class="space-6 p-0 fields icici-col-high">Pan Card - Co-Applicant</div>
+	  <div class="space-6 p-0 values">
+                <hr>
+            </div>
       </div>
   </div>
 
@@ -257,18 +272,22 @@
       <div class="space-12 fields icici-col-high">
           12. Preferred component of Mission under which beneficiary needs assistance under PMAY – CLSS (U)
       </div>
-      <div class="space-6">
-          Gross Household Annual Family Income:
+      <div class="space-3">
+          Gross Household Annual Family Income:₹:
       </div>
-      
+       <div class="space-9">
+            <hr>
+        </div>
+
   </div>
    <div class="main_div">
-      <div class="space-6">
+      <div class="space-2">
           Credit linked subsidy Category
       </div>
-      <div class="space-6">
+      <div class="space-10">
           <ul class="m-0">
-          <li>EWS &nbsp;&nbsp; UG &nbsp;&nbsp; MIG – I &nbsp;&nbsp;MIG – II</li>
+        <li>EWS&nbsp;<input class="click" value="" disabled/> &nbsp; &nbsp;&nbsp; UG&nbsp;<input class="click" value="" disabled/> &nbsp; &nbsp;&nbsp; MIG – I &nbsp;<input class="click" value="" disabled/> &nbsp;&nbsp;&nbsp;MIG – II&nbsp;<input class="click"
+                        value="" disabled/> &nbsp;</li>
           </ul>
       </div>
   </div>
@@ -284,8 +303,10 @@
       <div class="space-6">
           <strong>Signature / Thumb Impression of Applicant/Head of Household</strong>
       </div>
-      <div class="space-6 text-right">
-          ______________________<br>Signature
+      <div class="space-6 text-center">
+          ______________________<br>Signature<br />
+            <input class="click" value="D" disabled><input class="click" value="D" disabled>-<input class="click" value="M" disabled><input class="click" value="M" disabled>-<input class="click" value="Y" disabled>
+            <input class="click" value="Y" disabled><input class="click" value="Y" disabled><input class="click" value="Y" disabled>
       </div>
   </div>
   <div class="main_div">

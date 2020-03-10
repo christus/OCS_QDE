@@ -15,6 +15,8 @@ import { errors } from '../../services/errors';
 import { Subscription } from 'rxjs';
 import { statuses } from '../../app.constants';
 import { environment } from 'src/environments/environment.prod';
+import { MobileService } from 'src/app/services/mobile-constant.service';
+import { HTTP } from '@ionic-native/http/ngx';
 
 interface Item {
   key: string,
@@ -233,11 +235,21 @@ export class ViewFormComponent implements OnInit, OnDestroy {
   selReferenceTwo:string;
   selTiltle2:string;
 
+  isMobile:boolean;
+
+  downloadPDF:boolean;
+
+  downloadMsg: string;
+
   constructor(private route: ActivatedRoute,
               private router: Router,
               private qdeHttp: QdeHttpService,
               private commonDataService: CommonDataService,
+              private mobileService: MobileService,
+              private httpIonic: HTTP,
               private qdeService: QdeService) {
+
+    this.isMobile = this.mobileService.isMobile;
 
     this.qde = this.qdeService.defaultValue;
 
@@ -667,6 +679,19 @@ export class ViewFormComponent implements OnInit, OnDestroy {
               '.pdf&content_var=jsonResponse&template_var=htmlData&timezoneOffset=-330&processVariables={"processId":"'
               + environment.api.downloadPdf.processId + '","projectId":"' + environment.api.downloadPdf.projectId 
               + '","ProcessVariables":{"applicationId":"' + "" + this.applicationId + '"}}';
+
+    if(this.isMobile){
+      let header = { 'authentication-token': localStorage.getItem('token') ? localStorage.getItem('token'): '' };
+      this.httpIonic.downloadFile(uri, {}, header, 'file:///storage/emulated/0/OCS/data/caseName/viewform.pdf').then((response)=>{
+        console.log("Download file", response);
+        this.downloadPDF = true;
+        this.downloadMsg = "Downloaded successfully, please check in /OCS/data/caseName/viewform.pdf"
+      }).catch((response) => {
+        console.log(" error Download file", response);
+        this.downloadMsg = "Download failed";
+      });
+      return;
+    }
     window.open(uri, '_blank');
   }
 

@@ -1,9 +1,11 @@
 package com.icici.hfc;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 
 import com.getcapacitor.BridgeActivity;
@@ -11,7 +13,13 @@ import com.getcapacitor.Plugin;
 
 import java.util.ArrayList;
 
+import android.support.v4.content.ContextCompat;
+
+
 public class MainActivity extends BridgeActivity {
+
+    private static final int REQUEST_WRITE_PERMISSION = 786;
+
   @Override
   public void onResume() {
     super.onResume();
@@ -23,6 +31,12 @@ public class MainActivity extends BridgeActivity {
       homeIntent.addCategory( Intent.CATEGORY_HOME );
       homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
       startActivity(homeIntent);
+    }
+
+    if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
+            != PackageManager.PERMISSION_GRANTED) {
+      // Permission is not granted
+      requestPermission();
     }
 
     /** Check Airwatch installed or not **/
@@ -74,4 +88,28 @@ public class MainActivity extends BridgeActivity {
     }});
 
   }
+
+  private void requestPermission() {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+      requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_PERMISSION);
+    }else {
+      new AlertDialog.Builder(this)
+              .setTitle("Info")
+              .setMessage("Storage permission nor provided")
+
+              // Specifying a listener allows you to take an action before dismissing the dialog.
+              // The dialog is automatically dismissed when a dialog button is clicked.
+              .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                  // Continue with delete operation
+
+                }
+              })
+
+              // A null listener allows the button to dismiss the dialog and take no further action.
+              .setIcon(android.R.drawable.ic_dialog_alert)
+              .show();
+    }
+  }
+
 }

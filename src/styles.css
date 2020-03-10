@@ -6014,23 +6014,34 @@ multi select drop down css
 	}  */
 }
 
-
-/* @media print {
-	 .page-break{
-	  display: inline-block;
-	  page-break-before: auto;
-	  float:none;
-	  margin-top:10px;
-  
-	  
-	  }
-	  
-	  .page-breaktest {
-		  display: inline-block;
-		  page-break-before: always;
-		  float:none;
-		  margin-top:10px;
-  
-	  }
-	
-	} */
+@media print {
+    .page-break {
+        display: block;
+        page-break-before: auto;
+        page-break-inside: avoid;
+        float: none;
+        margin-top: 10px;
+    }
+    .page-breaktest {
+        display: inline-block;
+        page-break-before: always;
+        page-break-inside: avoid;
+        float: none;
+        margin-top: 10px;
+    }
+    .pagebreak {
+        /* page-break: avoid; */
+        /* display: inline; */
+        page-break-inside: avoid !important;
+        page-break-before: auto !important;
+        /* -webkit-column-break-inside: avoid; */
+        /* page-break-inside: avoid; */
+        /* break-inside: avoid; */
+        border-bottom: 1px solid black;
+    }
+    .row {
+        display: block;
+        page-break-inside: avoid !important;
+        break-inside: avoid;
+    }
+}

@@ -2,6 +2,7 @@
     background: #f3f3f3;
     padding-top: 5.08vw;
 }
+
 .bs-modal .modal-body .thumb-icon {
     width: 60px;
     height: 60px;
@@ -10,20 +11,25 @@
     left: 50%;
     transform: translateX(-50%);
 }
+
 .center {
     text-align: center;
 }
-.center.typ2{
+
+.center.typ2 {
     margin-top: 1vw
 }
+
 .bs-modal p {
     margin-top: 3vw;
     font-size: 1vw
 }
+
 .bs-modal .modal-body {
     padding: 1vw 0;
     margin-top: 3vw;
 }
+
 .center {
     text-align: center;
 }
@@ -35,6 +41,7 @@
     text-align: right;
     z-index: 1;
 }
+
 .back-btn-wrap {
     position: fixed;
     top: 4vw;
@@ -42,22 +49,25 @@
     text-align: left;
     z-index: 1;
 }
+
 .back-btn {
-	position: absolute;
-	left: 1vw;
+    position: absolute;
+    left: 1vw;
     /* top: 1.95vw; */
     top: 4vw;
-	background: url(/assets/images/slide-back.png) no-repeat;
-	background-size: contain;
-	width: 2.73vw;
-	height: 2.73vw;
-	display: block;
-	z-index: 2
+    background: url(/assets/images/slide-back.png) no-repeat;
+    background-size: contain;
+    width: 2.73vw;
+    height: 2.73vw;
+    display: block;
+    z-index: 2
 }
+
 .bs-card .bs-form .form-group .form-control {
     font-size: 1.64vw;
     height: 3.13vw;
 }
+
 .bs-card .bs-form .form-group .control-title1 {
     font-size: .78vw;
     line-height: 0.17vw;
@@ -65,6 +75,7 @@
     top: -.2vw;
     left: 0;
 }
+
 .bs-card[_ngcontent-c1] .bs-form[_ngcontent-c1] .form-group[_ngcontent-c1] .form-controlfn[_ngcontent-c1] {
     font-size: 1.64vw;
     height: 3.13vw;
@@ -139,19 +150,22 @@
 }
 
 .marginBot15 {
-    margin-bottom: 15px;    
+    margin-bottom: 15px;
 }
+
 @media screen and (max-width: 800px) {
-   
     .k-dropdown .k-dropdown-wrap .k-select {
         display: none;
     }
-	.bs-modal{
-		max-width:55.25vw;
+    .bs-modal {
+        max-width: 55.25vw;
     }
-    .modal_btn{
+    .modal_btn {
         height: 23px;
         width: 50px;
+        font-size: 3vw;
+    }
+    .m_font_size {
         font-size: 3vw;
     }
 }

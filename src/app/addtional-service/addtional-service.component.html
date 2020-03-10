@@ -5,8 +5,8 @@
         <div class="typ-dash">
             <ul class="tabs-head">
                 <button (click)="printPage()" class="btn" *ngIf="showPrint">Print</button>
-                <li class="tab-link active" routerLink="/addtional-service" data-target="leads-tab" *ngIf="!showPrint"><a>Addtional Service </a></li>
-                <li class="tab-link active" routerLink="/addtional-service/application-print" data-target="leads-tab" *ngIf="showPrint"><a>Dashboard</a></li>
+                <li class="tab-link active my-tab" routerLink="/addtional-service" data-target="leads-tab" *ngIf="!showPrint"><a>Addtional Service </a></li>
+                <li class="tab-link active my-tab" routerLink="/addtional-service/application-print" data-target="leads-tab" *ngIf="showPrint"><a>Dashboard</a></li>
                 <!-- <button (click)="onMultipleBranch('lead')" class="btn application add-lead-link" *ngIf="createLead">CREATE LEAD</button> -->
 
 

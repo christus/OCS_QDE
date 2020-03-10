@@ -1,5 +1,3 @@
-
-
 html {
     /*overflow-y: scroll;*/
 }
@@ -1120,7 +1118,9 @@ h5.icici-col-high.head-small.text-center.font-weight-bold {
 .mb-2 {
     margin-bottom: 20px;
 }
-.text-center{text-align: center;}
+.text-center {
+    text-align: center;
+}
 .disc_bulletin {
     margin-top: 0px;
     list-style: none;
@@ -1560,11 +1560,6 @@ p.align-right {
     margin-bottom: 20px;
 }
 
-@media all {
-  /*.page-break {
-      display: none;
-  }  */
-}
 @media print {
    .page-break{
     display: inline-block;
@@ -1572,29 +1567,14 @@ p.align-right {
     page-break-inside: avoid;
     float:none;
     margin-top:10px;
-
-    
-    }
-    /*.page-break {
-        display: inline-block;
-        page-break-before: always;
-        float:none;
-
-    }*/
+   }
     .page-breaktest {
         display: inline-block;
         page-break-before: always;
         page-break-inside: avoid;
         float:none;
         margin-top:10px;
-
     }
-    /*.pagebreak {
-        page-break-inside: avoid;
-
-    }*/
-   
-    
 }
 
 .rotate90 {
@@ -1603,4 +1583,26 @@ p.align-right {
     -o-transform: rotate(90deg);
     -ms-transform: rotate(90deg);
     transform: rotate(90deg);
+}
+
+
+/*print issue fix */
+
+.icici-table-header1 {
+    background: #ad252b;
+    margin: 0;
+    font-size: 14px;
+    color: #fff;
+    padding: 5px;
+    font-weight: bold;
+}
+
+@media print and (-webkit-min-device-pixel-ratio:0) and (min-resolution:.001dpcm) {
+    .document_list_container {
+        line-height: 11px;
+        font-size: 11px;
+    }
+    .doc_check {
+        margin-top: 10px;
+    }
 }

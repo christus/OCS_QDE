@@ -1,228 +1,123 @@
 <app-menubar-header></app-menubar-header>
 <main class="grey-bg">
-  <div class="main">
-      <div class="lyt-sidebar tabs">
-          <ul class="sidebar tabs-head main-nav">
-              <li class="tab-link" [ngClass]="{'active': activeTab == 0}">
-                  <a href="javascript:void(0);" (click)="tabSwitch(0)">Applicant Details</a>
-                  <span class="complete-sign"><span class="icon icon-tick"></span></span>
-              </li>
-              <!-- <li class="completed tab-link" data-target="coapplicant-tab" [ngClass]="{'active': activeTab == 1}"> -->
+    <div class="main">
+        <div class="lyt-sidebar tabs">
+            <ul class="sidebar tabs-head main-nav">
+                <li class="tab-link" [ngClass]="{'active': activeTab == 0}">
+                    <a href="javascript:void(0);" (click)="tabSwitch(0)">Applicant Details</a>
+                    <span class="complete-sign"><span class="icon icon-tick"></span></span>
+                </li>
+                <!-- <li class="completed tab-link" data-target="coapplicant-tab" [ngClass]="{'active': activeTab == 1}"> -->
                 <li class="tab-link" [ngClass]="{'active': activeTab == 1}">
-                  <a href="javascript:void(0);" (click)="tabSwitch(1)">Co-Applicant Details</a>
-                  <span class="complete-sign"><span class="icon icon-tick"></span></span>
-              </li>
-              <li class="tab-link" [ngClass]="{'active': activeTab == 2}">
-                  <a href="javascript:void(0);" (click)="tabSwitch(2)">Loan Details</a>
-                  <span class="complete-sign"><span class="icon icon-tick"></span></span>
-              </li>
-              <!-- <li class="incomplete tab-link" data-target="reference-tab" [ngClass]="{'active': activeTab == 3}"> -->
+                    <a href="javascript:void(0);" (click)="tabSwitch(1)">Co-Applicant Details</a>
+                    <span class="complete-sign"><span class="icon icon-tick"></span></span>
+                </li>
+                <li class="tab-link" [ngClass]="{'active': activeTab == 2}">
+                    <a href="javascript:void(0);" (click)="tabSwitch(2)">Loan Details</a>
+                    <span class="complete-sign"><span class="icon icon-tick"></span></span>
+                </li>
+                <!-- <li class="incomplete tab-link" data-target="reference-tab" [ngClass]="{'active': activeTab == 3}"> -->
                 <li class="tab-link" [ngClass]="{'active': activeTab == 3}">
-                  <a href="javascript:void(0);" (click)="tabSwitch(3)">References</a>
-                  <!-- <span class="incomplete-count">3</span> -->
-                  <span class="complete-sign"><span class="icon icon-tick"></span></span>
-              </li>
-              <!-- <li class="tab-link" [ngClass]="{'active': activeTab == 4}">
+                    <a href="javascript:void(0);" (click)="tabSwitch(3)">References</a>
+                    <!-- <span class="incomplete-count">3</span> -->
+                    <span class="complete-sign"><span class="icon icon-tick"></span></span>
+                </li>
+                <!-- <li class="tab-link" [ngClass]="{'active': activeTab == 4}">
                   <a href="javascript:void(0);" (click)="tabSwitch(4)">Document Uploads</a>
                   <span class="complete-sign"><span class="icon icon-tick"></span></span>
               </li> -->
 
-          </ul>
-          <div class="content tabs-contents">
-            <div class="btn-wrap back-btn-wrap" *ngIf="disableEdit">
-                 <!-- <button (click)="onBackButtonClick()" class="btn btn-default back">back</button> -->
-                 
-                 <a href="javascript:void(0);"  class="back-btn" [routerLink]="['/applicant', applicationId]" ></a>
-            </div>
-              <div class="tab-content active" [ngClass]="{'active': (activeTab == 0)}">
-                  <h2 class="title">Enter applicant details</h2>
+            </ul>
+            <div class="content tabs-contents">
+                <div class="btn-wrap back-btn-wrap" *ngIf="disableEdit">
+                    <!-- <button (click)="onBackButtonClick()" class="btn btn-default back">back</button> -->
+
+                    <a href="javascript:void(0);" class="back-btn" [routerLink]="['/applicant', applicationId]"></a>
+                </div>
+                <div class="tab-content active" [ngClass]="{'active': (activeTab == 0)}">
+                    <h2 class="title">Enter applicant details</h2>
 
                     <!-- *ngIf="qde.application.applicants[applicantIndex].isIndividual == true" -->
-                    
+
                     <div class="btn-wrap edit-btn-wrap">
-                        <button [routerLink]="['/applicant', applicationId]" class="btn btn-default edit"  [ngClass]="{'disabled': (!disableEdit)}">Edit</button>
+                        <button [routerLink]="['/applicant', applicationId]" class="btn btn-default edit" [ngClass]="{'disabled': (!disableEdit)}">Edit</button>
                         <button (click)="downloadPdf()" class="btn btn-default download">Download</button>
                     </div>
 
-                    <form  #applicantIndividualForm="ngForm">
-                        <app-view-form-applicant
-                        [showEdit]="false"
-                        [isCoApplicant]="false"
-                        [qde]="qde"
-                        [applicantIndex]="applicantIndex"
-                        [dob]="dob[applicantIndex]"
-                        [residenceNumberStdCode]="residenceNumberStdCode[applicantIndex]"
-                        [residenceNumberPhoneNumber]="residenceNumberPhoneNumber[applicantIndex]"
-                        [alternateResidenceNumberStdCode]="alternateResidenceNumberStdCode[applicantIndex]"
-                        [alternateResidenceNumberPhoneNumber]="alternateResidenceNumberPhoneNumber[applicantIndex]"
-                        [addressCityState]="addressCityState[applicantIndex]"
-                        [permAddressCityState]="permAddressCityState[applicantIndex]"
-                        [otherReligion]="otherReligion[applicantIndex]"
-                        [organizationDetails]="organizationDetails[applicantIndex]"
-                        [registeredAddressCityState]="registeredAddressCityState[applicantIndex]"
-                        [corporateAddressCityState]="corporateAddressCityState[applicantIndex]"
-                        [corporateAddressStdCode]="corporateAddressStdCode[applicantIndex]"
-                        [corporateAddressPhoneNumber]="corporateAddressPhoneNumber[applicantIndex]"
-                        [coApplicantsForDashboard]="coApplicantsForDashboard[applicantIndex]"
-                        [officialCorrespondenceStdCode]="officialCorrespondenceStdCode[applicantIndex]"
-                        [officialCorrespondencePhoneNumber]="officialCorrespondencePhoneNumber[applicantIndex]"
-                        [officialCorrespondenceCityState]="officialCorrespondenceCityState[applicantIndex]"
-                        [religions]="religions"
-                        [qualifications]="qualifications"
-                        [occupations]="occupations"
-                        [residences]="residences"
-                        [titles]="titles"
-                        [maleTitles]="maleTitles"
-                        [femaleTitles]="femaleTitles"
-                        [maritals]="maritals"
-                        [relationships]="relationships"
-                        [loanpurposes]="loanpurposes"
-                        [categories]="categories"
-                        [genders]="genders"
-                        [constitutions]="constitutions"
-                        [days]="days"
-                        [months]="months"
-                        [years]="years"
-                        [assessmentMethodology]="assessmentMethodology"
-                        [selectedTitle]="selectedTitle[applicantIndex]"
-                        [selectedReligion]="selectedReligion[applicantIndex]"
-                        [selectedMaritialStatus]="selectedMaritialStatus[applicantIndex]"
-                        [selectedCategory]="selectedCategory[applicantIndex]"
-                        [selectedOccupation]="selectedOccupation[applicantIndex]"
-                        [selectedResidence]="selectedResidence[applicantIndex]"
-                        [selectedSpouseTitle]="selectedSpouseTitle[applicantIndex]"
-                        [selectedFatherTitle]="selectedFatherTitle[applicantIndex]"
-                        [selectedMotherTitle]="selectedMotherTitle[applicantIndex]"
-                        [selectedQualification]="selectedQualification[applicantIndex]"
-                        [selectedGender]="selectedGender[applicantIndex]"
-                        [selectedConstitution]="selectedConstitution[applicantIndex]"
-                        [selectedDocType]="selectedDocType[applicantIndex]"
-                        [docType]="docType"
-                        [selectedAssesmentMethodology]="selectedAssesmentMethodology[applicantIndex]"
-                        [isIncomplete]="isIncomplete">
+                    <form #applicantIndividualForm="ngForm">
+                        <app-view-form-applicant [showEdit]="false" [isCoApplicant]="false" [qde]="qde" [applicantIndex]="applicantIndex" [dob]="dob[applicantIndex]" [residenceNumberStdCode]="residenceNumberStdCode[applicantIndex]" [residenceNumberPhoneNumber]="residenceNumberPhoneNumber[applicantIndex]"
+                            [alternateResidenceNumberStdCode]="alternateResidenceNumberStdCode[applicantIndex]" [alternateResidenceNumberPhoneNumber]="alternateResidenceNumberPhoneNumber[applicantIndex]" [addressCityState]="addressCityState[applicantIndex]"
+                            [permAddressCityState]="permAddressCityState[applicantIndex]" [otherReligion]="otherReligion[applicantIndex]" [organizationDetails]="organizationDetails[applicantIndex]" [registeredAddressCityState]="registeredAddressCityState[applicantIndex]"
+                            [corporateAddressCityState]="corporateAddressCityState[applicantIndex]" [corporateAddressStdCode]="corporateAddressStdCode[applicantIndex]" [corporateAddressPhoneNumber]="corporateAddressPhoneNumber[applicantIndex]" [coApplicantsForDashboard]="coApplicantsForDashboard[applicantIndex]"
+                            [officialCorrespondenceStdCode]="officialCorrespondenceStdCode[applicantIndex]" [officialCorrespondencePhoneNumber]="officialCorrespondencePhoneNumber[applicantIndex]" [officialCorrespondenceCityState]="officialCorrespondenceCityState[applicantIndex]"
+                            [religions]="religions" [qualifications]="qualifications" [occupations]="occupations" [residences]="residences" [titles]="titles" [maleTitles]="maleTitles" [femaleTitles]="femaleTitles" [maritals]="maritals" [relationships]="relationships"
+                            [loanpurposes]="loanpurposes" [categories]="categories" [genders]="genders" [constitutions]="constitutions" [days]="days" [months]="months" [years]="years" [assessmentMethodology]="assessmentMethodology" [selectedTitle]="selectedTitle[applicantIndex]"
+                            [selectedReligion]="selectedReligion[applicantIndex]" [selectedMaritialStatus]="selectedMaritialStatus[applicantIndex]" [selectedCategory]="selectedCategory[applicantIndex]" [selectedOccupation]="selectedOccupation[applicantIndex]"
+                            [selectedResidence]="selectedResidence[applicantIndex]" [selectedSpouseTitle]="selectedSpouseTitle[applicantIndex]" [selectedFatherTitle]="selectedFatherTitle[applicantIndex]" [selectedMotherTitle]="selectedMotherTitle[applicantIndex]"
+                            [selectedQualification]="selectedQualification[applicantIndex]" [selectedGender]="selectedGender[applicantIndex]" [selectedConstitution]="selectedConstitution[applicantIndex]" [selectedDocType]="selectedDocType[applicantIndex]"
+                            [docType]="docType" [selectedAssesmentMethodology]="selectedAssesmentMethodology[applicantIndex]" [isIncomplete]="isIncomplete">
                         </app-view-form-applicant>
                         <div class="btn-wrap">
                             <button type="submit" class="btn btn-primary" (click)="tabSwitch(1)">Continue</button>
                         </div>
                     </form>
-              </div>
+                </div>
 
-              <!-- Co-Applicant -->
-              <div class="tab-content" [ngClass]="{'active': (activeTab == 1)}">
-                  <h2 class="title">Enter co-applicant details</h2>
-                  
-                  <div class="btn-wrap edit-btn-wrap">
-                    <button [routerLink]="['/applicant', applicationId, 'co-applicant']"   class="btn btn-default edit" [ngClass]="{'disabled': (!disableEdit)}">Edit</button>
-                  </div>
-                  <form   #coApplicantIndividualForm="ngForm">
+                <!-- Co-Applicant -->
+                <div class="tab-content" [ngClass]="{'active': (activeTab == 1)}">
+                    <h2 class="title">Enter co-applicant details</h2>
 
-                  <app-view-form-applicant
-                  *ngFor="let c of coApplicantIndexes"
-                  [applicationId]="applicationId"
-                  [showEdit]="false"
-                  [isCoApplicant]="true"
-                  [qde]="qde"
-                  [applicantIndex]="c"
-                  [dob]="dob[c]"
-                  [residenceNumberStdCode]="residenceNumberStdCode[c]"
-                  [residenceNumberPhoneNumber]="residenceNumberPhoneNumber[c]"
-                  [alternateResidenceNumberStdCode]="alternateResidenceNumberStdCode[c]"
-                  [alternateResidenceNumberPhoneNumber]="alternateResidenceNumberPhoneNumber[c]"
-                  [addressCityState]="addressCityState[c]"
-                  [permAddressCityState]="permAddressCityState[c]"
-                  [otherReligion]="otherReligion[c]"
-                  [organizationDetails]="organizationDetails[c]"
-                  [registeredAddressCityState]="registeredAddressCityState[c]"
-                  [corporateAddressCityState]="corporateAddressCityState[c]"
-                  [corporateAddressStdCode]="corporateAddressStdCode[c]"
-                  [corporateAddressPhoneNumber]="corporateAddressPhoneNumber[c]"
-                  [coApplicantsForDashboard]="coApplicantsForDashboard[c]"
-                  [officialCorrespondenceStdCode]="officialCorrespondenceStdCode[c]"
-                  [officialCorrespondencePhoneNumber]="officialCorrespondencePhoneNumber[c]"
-                  [officialCorrespondenceCityState]="officialCorrespondenceCityState[c]"
-                  [religions]="religions"
-                  [qualifications]="qualifications"
-                  [occupations]="occupations"
-                  [residences]="residences"
-                  [titles]="titles"
-                  [maleTitles]="maleTitles"
-                  [femaleTitles]="femaleTitles"
-                  [maritals]="maritals"
-                  [relationships]="relationships"
-                  [loanpurposes]="loanpurposes"
-                  [categories]="categories"
-                  [genders]="genders"
-                  [constitutions]="constitutions"
-                  [days]="days"
-                  [months]="months"
-                  [years]="years"
-                  [assessmentMethodology]="assessmentMethodology"
-                  [selectedTitle]="selectedTitle[c]"
-                  [selectedReligion]="selectedReligion[c]"
-                  [selectedMaritialStatus]="selectedMaritialStatus[c]"
-                  [selectedCategory]="selectedCategory[c]"
-                  [selectedOccupation]="selectedOccupation[c]"
-                  [selectedResidence]="selectedResidence[c]"
-                  [selectedSpouseTitle]="selectedSpouseTitle[c]"
-                  [selectedFatherTitle]="selectedFatherTitle[c]"
-                  [selectedMotherTitle]="selectedMotherTitle[c]"
-                  [selectedQualification]="selectedQualification[c]"
-                  [selectedGender]="selectedGender[c]"
-                  [selectedConstitution]="selectedConstitution[c]"
-                  [selectedDocType]="selectedDocType[c]"
-                  [docType]="docType"
-                  [selectedAssesmentMethodology]="selectedAssesmentMethodology[c]"
-                  [isIncomplete]="isIncomplete">
-                </app-view-form-applicant>
-                </form>
+                    <div class="btn-wrap edit-btn-wrap">
+                        <button [routerLink]="['/applicant', applicationId, 'co-applicant']" class="btn btn-default edit" [ngClass]="{'disabled': (!disableEdit)}">Edit</button>
+                    </div>
+                    <form #coApplicantIndividualForm="ngForm">
 
-                  <div class="btn-wrap">
-                      <button class="btn btn-primary" (click)="tabSwitch(2)">Continue</button>
-                  </div>
-              </div>
+                        <app-view-form-applicant *ngFor="let c of coApplicantIndexes" [applicationId]="applicationId" [showEdit]="false" [isCoApplicant]="true" [qde]="qde" [applicantIndex]="c" [dob]="dob[c]" [residenceNumberStdCode]="residenceNumberStdCode[c]" [residenceNumberPhoneNumber]="residenceNumberPhoneNumber[c]"
+                            [alternateResidenceNumberStdCode]="alternateResidenceNumberStdCode[c]" [alternateResidenceNumberPhoneNumber]="alternateResidenceNumberPhoneNumber[c]" [addressCityState]="addressCityState[c]" [permAddressCityState]="permAddressCityState[c]"
+                            [otherReligion]="otherReligion[c]" [organizationDetails]="organizationDetails[c]" [registeredAddressCityState]="registeredAddressCityState[c]" [corporateAddressCityState]="corporateAddressCityState[c]" [corporateAddressStdCode]="corporateAddressStdCode[c]"
+                            [corporateAddressPhoneNumber]="corporateAddressPhoneNumber[c]" [coApplicantsForDashboard]="coApplicantsForDashboard[c]" [officialCorrespondenceStdCode]="officialCorrespondenceStdCode[c]" [officialCorrespondencePhoneNumber]="officialCorrespondencePhoneNumber[c]"
+                            [officialCorrespondenceCityState]="officialCorrespondenceCityState[c]" [religions]="religions" [qualifications]="qualifications" [occupations]="occupations" [residences]="residences" [titles]="titles" [maleTitles]="maleTitles"
+                            [femaleTitles]="femaleTitles" [maritals]="maritals" [relationships]="relationships" [loanpurposes]="loanpurposes" [categories]="categories" [genders]="genders" [constitutions]="constitutions" [days]="days" [months]="months" [years]="years"
+                            [assessmentMethodology]="assessmentMethodology" [selectedTitle]="selectedTitle[c]" [selectedReligion]="selectedReligion[c]" [selectedMaritialStatus]="selectedMaritialStatus[c]" [selectedCategory]="selectedCategory[c]" [selectedOccupation]="selectedOccupation[c]"
+                            [selectedResidence]="selectedResidence[c]" [selectedSpouseTitle]="selectedSpouseTitle[c]" [selectedFatherTitle]="selectedFatherTitle[c]" [selectedMotherTitle]="selectedMotherTitle[c]" [selectedQualification]="selectedQualification[c]"
+                            [selectedGender]="selectedGender[c]" [selectedConstitution]="selectedConstitution[c]" [selectedDocType]="selectedDocType[c]" [docType]="docType" [selectedAssesmentMethodology]="selectedAssesmentMethodology[c]" [isIncomplete]="isIncomplete">
+                        </app-view-form-applicant>
+                    </form>
 
-              <!-- Loan Details -->
-             
-              <div class="tab-content" [ngClass]="{'active': (activeTab == 2)}">
-                 
-                <div class="btn-wrap edit-btn-wrap">
-                    <button [routerLink]="['/loan', applicationId]" class="btn btn-default edit"  [ngClass]="{'disabled': (!disableEdit)}">Edit</button>
-                  </div>  
-                <h2 class="title">Enter loan details</h2>
-                  <div class="bs-card">
-                      <h3 class="card-title">Loan amount</h3>
-                      <form action="" class="bs-form">
-                          <div class="row">
-                              <div class="col-12">
-                                  <div class="form-group inr filled">
-                                        <input type="text" class="form-control" id="amt-require" readonly="true"
-                                        required
-                                        ngModel
-                                        pattern="^[A-Za-z]*$"
-                                        [(ngModel)]="qde?.application.loanDetails.loanAmount.amountRequired"    
-                                        #amountRequired = "ngModel"
-                                        name="amountRequired"
-                                        fieldFill>
-                                      <label for="amt-requir">Amount required</label>
-                                      <span class="addon">
+                    <div class="btn-wrap">
+                        <button class="btn btn-primary" (click)="tabSwitch(2)">Continue</button>
+                    </div>
+                </div>
+
+                <!-- Loan Details -->
+
+                <div class="tab-content" [ngClass]="{'active': (activeTab == 2)}">
+
+                    <div class="btn-wrap edit-btn-wrap">
+                        <button [routerLink]="['/loan', applicationId]" class="btn btn-default edit" [ngClass]="{'disabled': (!disableEdit)}">Edit</button>
+                    </div>
+                    <h2 class="title">Enter loan details</h2>
+                    <div class="bs-card">
+                        <h3 class="card-title">Loan amount</h3>
+                        <form action="" class="bs-form">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group inr filled">
+                                        <input type="text" class="form-control" id="amt-require" readonly="true" required ngModel pattern="^[A-Za-z]*$" [(ngModel)]="qde?.application.loanDetails.loanAmount.amountRequired" #amountRequired="ngModel" name="amountRequired" fieldFill>
+                                        <label for="amt-requir">Amount required</label>
+                                        <span class="addon">
                                           <span class="icon icon-inr"></span>
-                                      </span>
-                                      <span class="in-word"></span>
-                                  </div>
-                              </div>
+                                        </span>
+                                        <span class="in-word"></span>
+                                    </div>
+                                </div>
                             </div>
                             <div class="row">
-                              <div class="col-12">
-                                  <div class="form-group filled">
-                                    <span class="control-title">Type of Loan</span>
-                                    <input type="text" class="form-control" 
-                            
-                                    [(ngModel)]="selLoantype"
-                                    name="dob"
-                                    fieldFill
-                                    spellcheck="false"
-                                    required />
-                                    <!-- <kendo-dropdownlist 
+                                <div class="col-12">
+                                    <div class="form-group filled">
+                                        <span class="control-title">Type of Loan</span>
+                                        <input type="text" class="form-control" [(ngModel)]="selLoantype" name="dob" fieldFill spellcheck="false" required />
+                                        <!-- <kendo-dropdownlist 
                                         class="form-control"
                                         name="loanType"
                                         [data]="loanType" 
@@ -230,21 +125,15 @@
                                         valueField="value"
                                         [(ngModel)]="selectedLoanType">
                                         </kendo-dropdownlist> -->
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="row">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-12">
                                     <div class="form-group filled">
-                                      <span class="control-title">Loan Purpose</span>
-                                      <input type="text" class="form-control" 
-                            
-                                    [(ngModel)]="selLoanpurpose"
-                                    name="loanPurpose"
-                                    fieldFill
-                                    spellcheck="false"
-                                    required />
-                                      <!-- <kendo-dropdownlist 
+                                        <span class="control-title">Loan Purpose</span>
+                                        <input type="text" class="form-control" [(ngModel)]="selLoanpurpose" name="loanPurpose" fieldFill spellcheck="false" required />
+                                        <!-- <kendo-dropdownlist 
                                         class="form-control"
                                         name="loanPurpose"
                                         [data]="loanpurposes" 
@@ -255,53 +144,40 @@
                                     </div>
                                 </div>
                             </div>
-                          <div class="row">
-                              <div class="col-12">
-                                  <div class="form-group inr filled">
-                                      <input type="text" class="form-control" id="no-yrs" readonly="true"
-                                      required
-                                      ngModel
-                                      pattern="^[A-Za-z]*$"
-                                      [(ngModel)]="qde?.application.tenure"
-                                      #amountRequired = "ngModel"
-                                      name="loanTenure"
-                                      fieldFill>
-                                    <label for="loan-tenure">Loan Tenure(in Years)</label>
-                                  </div>
-                              </div>
-                          </div>
-                      </form>
-                  </div>
-                  <div class="bs-card">
-                      <h3 class="card-title">Property</h3>
-                      <form action="" class="bs-form">
-                          <div class="row">
-                              <div class="col-12">
-                                  <h5 class="subtitle">Have you identified property?</h5>
-                                  <div class="bs-radio">
-                                      <input disabled="true" class="disabled" readonly="true" id="pro-ye" type="radio" name="pro-id" [value]=true [(ngModel)]="isPropertyIdentified">
-                                     <label for="pro-yes"><span>Yes</span></label>
-                                  </div>
-                                  <div class="bs-radio">
-                                      <input disabled="true" class="disabled" readonly="true" id="pro-n" type="radio" name="pro-id" [value]=false [(ngModel)]="isPropertyIdentified">
-                                      <label for="pro-no"><span>No</span></label>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="inner-card" *ngIf="isPropertyIdentified == true">
-                              <h4 class="inner-title">Property address</h4>
-                              <div class="row" *ngIf="selectedPropertyType">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group inr filled">
+                                        <input type="text" class="form-control" id="no-yrs" readonly="true" required ngModel pattern="^[A-Za-z]*$" [(ngModel)]="qde?.application.tenure" #amountRequired="ngModel" name="loanTenure" fieldFill>
+                                        <label for="loan-tenure">Loan Tenure(in Years)</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="bs-card">
+                        <h3 class="card-title">Property</h3>
+                        <form action="" class="bs-form">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h5 class="subtitle">Have you identified property?</h5>
+                                    <div class="bs-radio">
+                                        <input disabled="true" class="disabled" readonly="true" id="pro-ye" type="radio" name="pro-id" [value]=true [(ngModel)]="isPropertyIdentified">
+                                        <label for="pro-yes"><span>Yes</span></label>
+                                    </div>
+                                    <div class="bs-radio">
+                                        <input disabled="true" class="disabled" readonly="true" id="pro-n" type="radio" name="pro-id" [value]=false [(ngModel)]="isPropertyIdentified">
+                                        <label for="pro-no"><span>No</span></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="inner-card" *ngIf="isPropertyIdentified == true">
+                                <h4 class="inner-title">Property address</h4>
+                                <div class="row" *ngIf="selectedPropertyType">
                                     <div class="col-12">
                                         <div class="form-group">
-                                                <span class="control-title">Property type</span>
-                                                <input type="text" class="form-control" 
-                            
-                                                [(ngModel)]="selPropertyType"
-                                                name="propertyTypes1"
-                                                fieldFill
-                                                spellcheck="false"
-                                                required />
-                                                <!-- <kendo-dropdownlist 
+                                            <span class="control-title">Property type</span>
+                                            <input type="text" class="form-control" [(ngModel)]="selPropertyType" name="propertyTypes1" fieldFill spellcheck="false" required />
+                                            <!-- <kendo-dropdownlist 
                                                   class="form-control" 
                                                   name="propertyTypes1" 
                                                   [data]="propertyTypes" 
@@ -311,100 +187,58 @@
                                                 </kendo-dropdownlist> -->
                                         </div>
                                     </div>
-                                </div> 
-                                <div class="row">
-                                        <div class="col-12">
-                                            <div class="form-group" *ngIf="propertyClssValue">
-                                                <input ngModel 
-                                                    type="text" 
-                                                    class="form-control" 
-                                                    id="pro-add-line1" 
-                                                    name="propertyArea"
-                                                    #propertyClss="ngModel"
-                                                    [(ngModel)]="propertyClssValue"
-                                                    fieldFill
-                                                    required>
-                                                <label for="prop-add12">Property CLSS Area</label>
-                                            </div>
-                                        </div>
-                                </div> 
-                                <div class="row">
-                                            <div class="col-12">
-                                                <div class="form-group" *ngIf="propertyAreaValue">
-                                                        <input ngModel type="number" class="form-control" id="pro-add-line2" 
-                                                        name="propertyAreaInSqFeets"
-                                                        #propertyArea="ngModel"
-                                                        [(ngModel)]="propertyAreaValue"
-                                                        fieldFill
-                                                        required/>
-                                                    <label for="prop-add13">Property area in sq. fts.</label>
-                                                </div>
-                                            </div>
                                 </div>
-                              <div class="row">
-                                  <div class="col-12">
-                                      <div class="form-group" *ngIf="addressLineOneValue">
-                                            <input type="text" class="form-control"
-                                            id="add-line1"
-                                            required
-                                            ngModel
-                                            #proaddressLineOne="ngModel"
-                                            [(ngModel)]="addressLineOneValue"
-                                            name="proaddressLineOne"
-                                            fieldFill/>
-                                          <label for="prop-add14">Property address 1</label>
-                                      </div>
-                                  </div>
-                              </div>
-                              <div class="row">
-                                  <div class="col-12">
-                                      <div class="form-group typ-optional" *ngIf="addressLineTwoValue">
-                                            <input type="text" class="form-control" id="add-line2"
-                                            required
-                                            ngModel
-                                            #addressLineTwo = "ngModel"
-                                            fieldFill
-                                            [(ngModel)]="addressLineTwoValue"
-                                            name="addressLineTwo"/>
-                                          <label for="prop-add21">Property address 2</label>
-                                          <span class="optional">optional</span>
-                                      </div>
-                                  </div>
-                              </div>
-                              <div class="row"  *ngIf="propertyPincodeValue">
-                                  <div class="col-6">
-                                      <div class="form-group filled" *ngIf="propertyPincodeValue">
-                                            <input type="text" class="form-control" id="proprty-pin"
-                                            required
-                                            ngModel
-                                            #propertyPincode = "ngModel"
-                                            [(ngModel)]="propertyPincodeValue"
-                                            minlength="6"
-                                            maxlength="6"
-                                            name="propertyPincode"
-                                            fieldFill
-                                            (change)="onPinCodeChange($event)">
-                                          <label for="prop-pin2">Property pincode</label>
-                                      </div>
-                                  </div>
-                                  <div class="col-6" *ngIf="cityState">
-                                      <div class="form-group">
-                                            <input type="text" class="form-control" id="pro-city2"
-                                            required
-                                            ngModel
-                                            #cityOrState = "ngModel"
-                                            [(ngModel)] = "cityState"
-                                            fieldFill
-                                            disabled
-                                            name="cityOrState" />
-                                          <label for="prop-city">Property City/State</label>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                      </form>
-                  </div>
-                  <!-- <div class="bs-card">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group" *ngIf="propertyClssValue">
+                                            <input ngModel type="text" class="form-control" id="pro-add-line1" name="propertyArea" #propertyClss="ngModel" [(ngModel)]="propertyClssValue" fieldFill required>
+                                            <label for="prop-add12">Property CLSS Area</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group" *ngIf="propertyAreaValue">
+                                            <input ngModel type="number" class="form-control" id="pro-add-line2" name="propertyAreaInSqFeets" #propertyArea="ngModel" [(ngModel)]="propertyAreaValue" fieldFill required/>
+                                            <label for="prop-add13">Property area in sq. fts.</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group" *ngIf="addressLineOneValue">
+                                            <input type="text" class="form-control" id="add-line1" required ngModel #proaddressLineOne="ngModel" [(ngModel)]="addressLineOneValue" name="proaddressLineOne" fieldFill/>
+                                            <label for="prop-add14">Property address 1</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group typ-optional" *ngIf="addressLineTwoValue">
+                                            <input type="text" class="form-control" id="add-line2" required ngModel #addressLineTwo="ngModel" fieldFill [(ngModel)]="addressLineTwoValue" name="addressLineTwo" />
+                                            <label for="prop-add21">Property address 2</label>
+                                            <span class="optional">optional</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="propertyPincodeValue">
+                                    <div class="col-6">
+                                        <div class="form-group filled" *ngIf="propertyPincodeValue">
+                                            <input type="text" class="form-control" id="proprty-pin" required ngModel #propertyPincode="ngModel" [(ngModel)]="propertyPincodeValue" minlength="6" maxlength="6" name="propertyPincode" fieldFill (change)="onPinCodeChange($event)">
+                                            <label for="prop-pin2">Property pincode</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6" *ngIf="cityState">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" id="pro-city2" required ngModel #cityOrState="ngModel" [(ngModel)]="cityState" fieldFill disabled name="cityOrState" />
+                                            <label for="prop-city">Property City/State</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- <div class="bs-card">
                       <h3 class="card-title">Existing Loan</h3>
                       <form action="" class="bs-form">
                           <div class="row">
@@ -419,10 +253,10 @@
                           </div>
                       </form>
                   </div> -->
-                  <div class="bs-card">
-                      <h3 class="card-title">Existing Loan Obligations</h3>
-                      <form action="" class="bs-form" *ngFor="let q of qde.application.applicants;let i=index;">
-                          <!-- <div class="row">
+                    <div class="bs-card">
+                        <h3 class="card-title">Existing Loan Obligations</h3>
+                        <form action="" class="bs-form" *ngFor="let q of qde.application.applicants;let i=index;">
+                            <!-- <div class="row">
                               <div class="col-12">
                                   <div class="form-group">
                                       <span class="control-title">Existing loan type</span>
@@ -435,39 +269,29 @@
                                   </div>
                               </div>
                           </div> -->
-                          
-                          <div class="row">
-                              <div class="col-12">
-                                  <div class="form-group typ-range">
-                                      <span class="subtitle">Existing live loans of {{applicantNameForLoanDetails[i]}}</span>
-                                      <input type="text" class="form-control"
-                                        required
-                                        [(ngModel)]="q['existingLoans']['liveLoan']"
-                                        fieldFill
-                                        name="liveLoan">
-                                      <span class="yr-text">Live Loans</span>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="inner-card" *ngIf="selectedLoanPurpose && ['16', '17'].includes(selectedLoanPurpose.value) || q['existingLoans']['liveLoan'] != 0 && q['existingLoans']['monthlyEmi']">
-                              <div class="row" *ngIf="selectedLoanPurpose && ['16', '17'].includes(selectedLoanPurpose.value)">
-                                  <div class="col-12">
-                                      <div class="form-group">
-                                          <span class="control-title">Existing loan provider</span>
-                                          <kendo-dropdownlist 
-                                          class="form-control" 
-                                          name="propertyTypes1jk" 
-                                          [data]="loanProviderList" 
-                                          textField="key" 
-                                          valueField="value"
-                                          [(ngModel)]="selectedLoanProvider[i]">
-                                        </kendo-dropdownlist>
-                                          <!-- <input type="text" [(ngModel)]="q['existingLoans']['loanProvider']" class="form-control" /> -->
-                                      </div>
-                                  </div>
-                              </div>
-                              <div class="row" *ngIf="q['existingLoans']['liveLoan'] != 0 && q['existingLoans']['monthlyEmi']">
-                                  <!-- <div class="col-6">
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group typ-range">
+                                        <span class="subtitle">Existing live loans of {{applicantNameForLoanDetails[i]}}</span>
+                                        <input type="text" class="form-control" required [(ngModel)]="q['existingLoans']['liveLoan']" fieldFill name="liveLoan">
+                                        <span class="yr-text">Live Loans</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="inner-card" *ngIf="selectedLoanPurpose && ['16', '17'].includes(selectedLoanPurpose.value) || q['existingLoans']['liveLoan'] != 0 && q['existingLoans']['monthlyEmi']">
+                                <div class="row" *ngIf="selectedLoanPurpose && ['16', '17'].includes(selectedLoanPurpose.value)">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <span class="control-title">Existing loan provider</span>
+                                            <kendo-dropdownlist class="form-control" name="propertyTypes1jk" [data]="loanProviderList" textField="key" valueField="value" [(ngModel)]="selectedLoanProvider[i]">
+                                            </kendo-dropdownlist>
+                                            <!-- <input type="text" [(ngModel)]="q['existingLoans']['loanProvider']" class="form-control" /> -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="q['existingLoans']['liveLoan'] != 0 && q['existingLoans']['monthlyEmi']">
+                                    <!-- <div class="col-6">
                                       <div class="form-group inr filled">
                                           <input readonly="true"  type="text" class="form-control" id="ex-loan-amt" value="12,45,604">
                                           <label for="ex-loan-amt">Existing loan amount</label>
@@ -477,56 +301,46 @@
                                           <span class="in-word"></span>
                                       </div>
                                   </div> -->
-                                  <div class="col-6">
-                                      <div class="form-group inr filled typ-optional">
-                                            <input type="text" class="form-control" id="monthly-emi"
-                                            required
-                                            [(ngModel)]="q['existingLoans']['monthlyEmi']"
-                                            fieldFill
-                                            name="monthlyEmi">                                          
+                                    <div class="col-6">
+                                        <div class="form-group inr filled typ-optional">
+                                            <input type="text" class="form-control" id="monthly-emi" required [(ngModel)]="q['existingLoans']['monthlyEmi']" fieldFill name="monthlyEmi">
                                             <label for="ex-emi">Existing monthly EMI</label>
                                             <!-- <span class="optional">optional</span> -->
-                                          <span class="addon">
+                                            <span class="addon">
                                               <span class="icon icon-inr"></span>
-                                          </span>
-                                          <span class="in-word"></span>
-                                      </div>
-                                  </div>
+                                            </span>
+                                            <span class="in-word"></span>
+                                        </div>
+                                    </div>
 
-                              </div>
-                          </div>
-                      </form>
-                  </div>
-                  <div class="btn-wrap">
-                      <button class="btn btn-primary" (click)="tabSwitch(3)">Continue</button>
-                  </div>
-              </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="btn-wrap">
+                        <button class="btn btn-primary" (click)="tabSwitch(3)">Continue</button>
+                    </div>
+                </div>
 
-              <!-- References -->
-             
-              <div class="tab-content" [ngClass]="{'active': (activeTab == 3)}">
+                <!-- References -->
 
-               
-                <div class="btn-wrap edit-btn-wrap">
-                    <button [routerLink]="['/references', applicationId]" class="btn btn-default edit"  [ngClass]="{'disabled': (!disableEdit)}">Edit</button>
-                  </div>  
-                <h2 class="title">Enter reference details</h2>
-                  <div class="bs-card">
-                      <h3 class="card-title">Reference 1</h3>
-                      <form action="" class="bs-form">
-                          <div class="inner-card">
-                              <div class="row">
-                                  <div class="col-12">
-                                      <div class="form-group">
-                                          <span class="control-title">Relationship with the applicant</span>
-                                          <input type="text" class="form-control" 
-                            
-                                          [(ngModel)]="selReferenceOne"
-                                          name="relationShip"
-                                          fieldFill
-                                          spellcheck="false"
-                                          required />
-                                          <!-- <kendo-dropdownlist class="form-control"
+                <div class="tab-content" [ngClass]="{'active': (activeTab == 3)}">
+
+
+                    <div class="btn-wrap edit-btn-wrap">
+                        <button [routerLink]="['/references', applicationId]" class="btn btn-default edit" [ngClass]="{'disabled': (!disableEdit)}">Edit</button>
+                    </div>
+                    <h2 class="title">Enter reference details</h2>
+                    <div class="bs-card">
+                        <h3 class="card-title">Reference 1</h3>
+                        <form action="" class="bs-form">
+                            <div class="inner-card">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <span class="control-title">Relationship with the applicant</span>
+                                            <input type="text" class="form-control" [(ngModel)]="selReferenceOne" name="relationShip" fieldFill spellcheck="false" required />
+                                            <!-- <kendo-dropdownlist class="form-control"
                                           [data]="relationships" 
                                           textField="key"
                                           valueField="value"
@@ -534,15 +348,15 @@
                                           [valuePrimitive]="true"     
                                           [(ngModel)]="selectedReferenceOne">
                                         </kendo-dropdownlist> -->
-                                        <!-- [valuePrimitive]="true" -->
-                                      </div>
-                                  </div>
-                              </div>
-                              <div class="row">
-                                <div class="col-6">
-                                    <div class="form-group">
-                                        <span class="control-title">Title</span>
-                                        <!-- <kendo-dropdownlist 
+                                            <!-- [valuePrimitive]="true" -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <span class="control-title">Title</span>
+                                            <!-- <kendo-dropdownlist 
                                           class="form-control" 
                                           [data]="titles" 
                                           textField="key" 
@@ -551,87 +365,53 @@
                                           
                                           [(ngModel)]="selectedTiltle1">
                                         </kendo-dropdownlist> -->
-                                        <input type="text" class="form-control" 
-                            
-                                          [(ngModel)]="selTiltle1"
-                                          name="titles"
-                                          fieldFill
-                                          spellcheck="false"
-                                          required />
+                                            <input type="text" class="form-control" [(ngModel)]="selTiltle1" name="titles" fieldFill spellcheck="false" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" required ngModel name="fullName" id="ref1-name" #refOneFullName="ngModel" fieldFill [(ngModel)]="selectedName1">
+                                            <label for="ref1-name12">Name</label>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-6">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control"
-                                        required
-                                        ngModel
-                                        name="fullName" 
-                                        id="ref1-name"
-                                        #refOneFullName="ngModel"
-                                        fieldFill
-                                        [(ngModel)]="selectedName1">
-                                        <label for="ref1-name12">Name</label>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" required ngModel id="ref1-mobile1" name="mobileNumber" minlength="10" maxlength="10" fieldFill #refOneMobileNumber="ngModel" [(ngModel)]="selectedMobile1">
+                                            <label for="ref1-mob12">Mobile</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" id="ref1-add1" required ngModel name="addressLineOne" fieldFill #refOneAddressLineOne="ngModel" [(ngModel)]="selectedAddressLineOne1">
+                                            <label for="ref1-add12">Address line 1</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group typ-optional">
+                                            <input type="text" class="form-control" id="ref1-add2" required ngModel name="addressLineTwo" fieldFill #refOneAddressLineTwo="ngModel" [(ngModel)]="selectedAddressLineTwo1">
+                                            <label for="ref1-add22">Address line 2</label>
+                                            <span class="optional">Optional</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                              <div class="row">
-                                  <div class="col-12">
-                                      <div class="form-group">
-                                        <input type="text" class="form-control"
-                                        required 
-                                        ngModel
-                                        id="ref1-mobile1"  
-                                        name="mobileNumber"
-                                        minlength="10"
-                                        maxlength="10"
-                                        fieldFill 
-                                        #refOneMobileNumber="ngModel"
-                                        [(ngModel)]="selectedMobile1">
-                                          <label for="ref1-mob12">Mobile</label>
-                                      </div>
-                                  </div>
-                              </div>
-                              <div class="row">
-                                  <div class="col-12">
-                                      <div class="form-group">
-                                        <input type="text" class="form-control" id="ref1-add1"  
-                                        required
-                                        ngModel
-                                        name="addressLineOne" 
-                                        fieldFill
-                                        #refOneAddressLineOne="ngModel"
-                                        [(ngModel)]="selectedAddressLineOne1">
-                                          <label for="ref1-add12">Address line 1</label>
-                                      </div>
-                                  </div>
-                              </div>
-                              <div class="row">
-                                  <div class="col-12">
-                                      <div class="form-group typ-optional">
-                                        <input type="text" class="form-control" id="ref1-add2" 
-                                        required
-                                        ngModel
-                                        name="addressLineTwo" 
-                                        fieldFill
-                                        #refOneAddressLineTwo="ngModel"
-                                        [(ngModel)]="selectedAddressLineTwo1">
-                                          <label for="ref1-add22">Address line 2</label>
-                                          <span class="optional">Optional</span>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                      </form>
-                  </div>
-                  <div class="bs-card">
-                      <h3 class="card-title">Reference 2</h3>
-                      <form action="" class="bs-form">
-                          <div class="inner-card">
-                              <div class="row">
-                                  <div class="col-12">
-                                      <div class="form-group">
-                                          <span class="control-title">Relationship with the applicant</span>
-                                          <!-- <kendo-dropdownlist 
+                        </form>
+                    </div>
+                    <div class="bs-card">
+                        <h3 class="card-title">Reference 2</h3>
+                        <form action="" class="bs-form">
+                            <div class="inner-card">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <span class="control-title">Relationship with the applicant</span>
+                                            <!-- <kendo-dropdownlist 
                                           class="form-control"
                                           [data]="relationships" 
                                           textField="key"
@@ -640,20 +420,14 @@
                                           
                                           [(ngModel)]="selectedReferenceTwo">
                                         </kendo-dropdownlist> -->
-                                        <input type="text" class="form-control" 
-                            
-                                          [(ngModel)]="selReferenceTwo"
-                                          name="relationShip"
-                                          fieldFill
-                                          spellcheck="false"
-                                          required />
-                                      </div>
-                                  </div>
-                              </div>
-                              <div class="row">
-                                  <div class="col-6">
+                                            <input type="text" class="form-control" [(ngModel)]="selReferenceTwo" name="relationShip" fieldFill spellcheck="false" required />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
                                         <div class="form-group">
-                                        <span class="control-title">Title</span>
+                                            <span class="control-title">Title</span>
                                             <!-- <kendo-dropdownlist 
                                             class="form-control" 
                                             [data]="titles" 
@@ -663,89 +437,56 @@
                                             [valuePrimitive]="true"
                                             [(ngModel)]="selectedTiltle2">
                                             </kendo-dropdownlist> -->
-                                            <input type="text" class="form-control" 
-                            
-                                            [(ngModel)]="selTiltle2"
-                                            name="titles"
-                                            fieldFill
-                                            spellcheck="false"
-                                            required />
+                                            <input type="text" class="form-control" [(ngModel)]="selTiltle2" name="titles" fieldFill spellcheck="false" required />
                                         </div>
-                                  </div>
-                                  <div class="col-6">
+                                    </div>
+                                    <div class="col-6">
                                         <div class="form-group">
-                                          <input type="text" class="form-control"
-                                          ngModel
-                                          name="fullName" 
-                                          id="ref2-name"
-                                          #refTwoFullName="ngModel"
-                                          required
-                                          fieldFill
-                                          [(ngModel)]="selectedName2">
+                                            <input type="text" class="form-control" ngModel name="fullName" id="ref2-name" #refTwoFullName="ngModel" required fieldFill [(ngModel)]="selectedName2">
                                             <label for="ref2-name21">Name</label>
                                         </div>
                                     </div>
-  
-                              </div>
-                              <div class="row">
-                                  <div class="col-12">
-                                      <div class="form-group">
-                                            <input type="text" class="form-control" id="ref2-mobile" 
-                                            name="mobileNumber"  
-                                            ngModel 
-                                            minlength="10"
-                                            maxlength="10"
-                                            #refTwoMobileNumber="ngModel"
-                                            fieldFill
-                                            required
-                                            [(ngModel)]="selectedMobile2">
-                                          <label for="ref2-mob23">Mobile</label>
-                                      </div>
-                                  </div>
-                              </div>
-                              <div class="row">
-                                  <div class="col-12">
-                                      <div class="form-group">
-                                            <input type="text" class="form-control" id="ref2-add1"
-                                            name="addressLineOne"
-                                            ngModel
-                                            #refTwoAddressLineOne="ngModel"
-                                            required
-                                            fieldFill
-                                            [(ngModel)]="selectedAddressLineOne2">
-                                          <label for="ref2-add671">Address line 1</label>
-                                      </div>
-                                  </div>
-                              </div>
-                              <div class="row">
-                                  <div class="col-12">
-                                      <div class="form-group typ-optional">
-                                            <input type="text" class="form-control" id="ref2-add2"
-                                            name="addressLineTwo"
-                                            ngModel 
-                                            #refTwoAddressLineTwo="ngModel"
-                                            required
-                                            fieldFill
-                                            [(ngModel)]="selectedAddressLineTwo2">
-                                          <label for="ref2-add2jm">Address line 2</label>
-                                          <span class="optional">Optional</span>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                      </form>
-                  </div>
-                  <div class="btn-wrap" *ngIf="isQdeSubmitButton">
-                      <!-- <button class="btn btn-primary" (click)="tabSwitch(4)">Continue</button> -->
-                      <button class="btn btn-primary" [ngClass]="{'disabled': (!isQdeSubmitEnabled)}" (click)="setStatus()">QDE Submit</button>
-                  </div>
-                  <div class="btn-wrap" *ngIf="isFinalSubmitButton">
-                    <button class="btn btn-primary" [ngClass]="{'disabled': (!isFinalSubmitEnabled)}" (click)="setAps()">Final Submit</button>
-                </div>
-              </div>
 
-              <!-- Document Upload -->
-              <!-- <div class="tab-content" [ngClass]="{'active': (activeTab == 4)}">
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" id="ref2-mobile" name="mobileNumber" ngModel minlength="10" maxlength="10" #refTwoMobileNumber="ngModel" fieldFill required [(ngModel)]="selectedMobile2">
+                                            <label for="ref2-mob23">Mobile</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" id="ref2-add1" name="addressLineOne" ngModel #refTwoAddressLineOne="ngModel" required fieldFill [(ngModel)]="selectedAddressLineOne2">
+                                            <label for="ref2-add671">Address line 1</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group typ-optional">
+                                            <input type="text" class="form-control" id="ref2-add2" name="addressLineTwo" ngModel #refTwoAddressLineTwo="ngModel" required fieldFill [(ngModel)]="selectedAddressLineTwo2">
+                                            <label for="ref2-add2jm">Address line 2</label>
+                                            <span class="optional">Optional</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="btn-wrap" *ngIf="isQdeSubmitButton">
+                        <!-- <button class="btn btn-primary" (click)="tabSwitch(4)">Continue</button> -->
+                        <button class="btn btn-primary" [ngClass]="{'disabled': (!isQdeSubmitEnabled)}" (click)="setStatus()">QDE Submit</button>
+                    </div>
+                    <div class="btn-wrap" *ngIf="isFinalSubmitButton">
+                        <button class="btn btn-primary" [ngClass]="{'disabled': (!isFinalSubmitEnabled)}" (click)="setAps()">Final Submit</button>
+                    </div>
+                </div>
+
+                <!-- Document Upload -->
+                <!-- <div class="tab-content" [ngClass]="{'active': (activeTab == 4)}">
                     <div class="btn-wrap edit-btn-wrap">
                             <button [routerLink]="['/document-uploads', applicationId, 'applicant', applicantId]" class="btn btn-default edit">Edit</button>
                           </div>  
@@ -986,9 +727,9 @@
                   </form>
               </div> -->
 
-          </div>
-      </div>
-  </div>
+            </div>
+        </div>
+    </div>
 
     <!-- <div class="overlay" [ngClass]="{'active': isEligible}"></div>
     <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isEligible}">
@@ -1020,41 +761,52 @@
         </div>
     </div> -->
     <div class="overlay" [ngClass]="{'active': isViewFormModal}"></div>
-      <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isViewFormModal}">
-          <a class="modal-close" (click)="onCrossModal()"><span class="icon icon-close"></span></a>
-          <div class="modal-body">
-              <h1 class="center">Qde Submitted Successfully!</h1>
-              <p class="body">Click Proceed to continue</p>
-                  <div class="btn-wrap">
-                      <button class="btn btn-border" routerLink="/leads">Proceed</button>
-                  </div>
-          </div>
-      </div>
-      <div class="overlay" [ngClass]="{'active': isDocNotUploadModal}"></div>
-      <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isDocNotUploadModal}">
-          <!-- <a class="modal-close" (click)="onCrossModal()"><span class="icon icon-close"></span></a> -->
-          <div class="modal-body">
-              <h1 class="center">{{butMes}}</h1>
-              <!-- <p class="body">Do you like to upload documents?</p> -->
-              <br><br>
-                  <div class="btn-wrap">
-                      <!-- <button class="btn btn-border" [routerLink]="['/document-uploads', applicationId]">Yes</button> -->
-                      <button class="btn btn-border modal_btn" *ngIf= "isCoApplicant" [routerLink]="[routePageName, applicationId]">OK</button>
-                      <button class="btn btn-border modal_btn" *ngIf= "!isCoApplicant" [routerLink]="[routePageName]"
-                            [queryParams]="{'tabName':'dashboard','page':'1'}">OK</button>
-                  </div>
-          </div>
-      </div>
-      <div class="overlay" [ngClass]="{'active': isErrorModal}">
-        <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isErrorModal}">
-          <a class="modal-close" (click)="isErrorModal = false"><span class="icon icon-close"></span></a>
-          <div class="modal-body">
-            <h1>{{errorMsg}}</h1>
+    <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isViewFormModal}">
+        <a class="modal-close" (click)="onCrossModal()"><span class="icon icon-close"></span></a>
+        <div class="modal-body">
+            <h1 class="center">Qde Submitted Successfully!</h1>
+            <p class="body">Click Proceed to continue</p>
+            <div class="btn-wrap">
+                <button class="btn btn-border" routerLink="/leads">Proceed</button>
+            </div>
+        </div>
+    </div>
+    <div class="overlay" [ngClass]="{'active': isDocNotUploadModal}"></div>
+    <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isDocNotUploadModal}">
+        <!-- <a class="modal-close" (click)="onCrossModal()"><span class="icon icon-close"></span></a> -->
+        <div class="modal-body">
+            <h1 class="m_font_size center">{{butMes}}</h1>
+            <!-- <p class="body">Do you like to upload documents?</p> -->
             <br><br>
             <div class="btn-wrap">
-              <button class="btn btn-border" routerLink="/leads" (click)="isErrorModal = false">Close</button>
+                <!-- <button class="btn btn-border" [routerLink]="['/document-uploads', applicationId]">Yes</button> -->
+                <button class="btn btn-border modal_btn" *ngIf="isCoApplicant" [routerLink]="[routePageName, applicationId]">OK</button>
+                <button class="btn btn-border modal_btn" *ngIf="!isCoApplicant" [routerLink]="[routePageName]" [queryParams]="{'tabName':'dashboard','page':'1'}">OK</button>
             </div>
-          </div>
         </div>
-      </div>
+    </div>
+    <div class="overlay" [ngClass]="{'active': isErrorModal}">
+        <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isErrorModal}">
+            <a class="modal-close" (click)="isErrorModal = false"><span class="icon icon-close"></span></a>
+            <div class="modal-body">
+                <h1>{{errorMsg}}</h1>
+                <br><br>
+                <div class="btn-wrap">
+                    <button class="btn btn-border" routerLink="/leads" (click)="isErrorModal = false">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="overlay" [ngClass]="{'active': downloadPDF}">
+        <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': downloadPDF}">
+            <a class="modal-close" (click)="downloadPDF = false"><span class="icon icon-close"></span></a>
+            <div class="modal-body">
+                <h1>{{downloadMsg}}</h1>
+                <br><br>
+                <div class="btn-wrap">
+                    <button class="btn btn-border" routerLink="/leads" (click)="downloadPDF = false">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
