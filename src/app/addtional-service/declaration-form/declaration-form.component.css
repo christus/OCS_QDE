@@ -1667,6 +1667,9 @@
 	    border: 1px solid;
 	    height: 12px;
 	    vertical-align: middle;
+	    font-size: 10px;
+	    padding-top: 2px;
+	    padding-left: 1px;
 	}
 	
 	.page9 hr {

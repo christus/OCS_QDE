@@ -19,52 +19,48 @@
                 1. Applicant Name <span class="font-color">(HEAD OF FAMILY)</span>
             </div>
 
-      </div>
-      <div class="space-8">
-
-          <div class="values">
-{{qde.application.applicants[0].personalDetails.title}}
-{{qde.application.applicants[0].personalDetails.firstName}}
-{{qde.application.applicants[0].personalDetails.middleName}}
-{{qde.application.applicants[0].personalDetails.lastName}}
-          </div>
-      </div>
-  </div>
-
-  <div class="main_div">
-      <div class="space-4">
-          <div class="fields icici-col-high">
-              2. Father's Name
-          </div>
-
-      </div>
-      <div class="space-8">
-
-          <div class="values">
-            {{qde.application.applicants[0].familyDetails.fatherTitle}}
-            {{qde.application.applicants[0].familyDetails.fatherName}}
-          </div>
-      </div>
-
-  </div>
-
-  <div class="main_div">
-      <div class="space-4">
-          <div class="fields icici-col-high">
-              3. Whether the family owns any house ?
-          </div>
-          <P class="m-0">a. If yes, then location details</P>
-          <ol class="upper-roman">
-          <li>Locality</li>
-          <li>City</li>
-          <li>State</li>
-           </ol>
-
-      </div>
-      <div class="space-8">
+        </div>
+        <div class="space-8">
 
             <div class="values">
-                {{(qde.application.applicants[0].communicationAddress.residentialStatus == 'Owned')?'Yes':'No'}}<br/>
+                {{qde.application.applicants[0].personalDetails.title}} {{qde.application.applicants[0].personalDetails.firstName}} {{qde.application.applicants[0].personalDetails.middleName}} {{qde.application.applicants[0].personalDetails.lastName}}
+            </div>
+        </div>
+    </div>
+
+    <div class="main_div">
+        <div class="space-4">
+            <div class="fields icici-col-high">
+                2. Father's Name
+            </div>
+
+        </div>
+        <div class="space-8">
+
+            <div class="values">
+                {{qde.application.applicants[0].familyDetails.fatherTitle}} {{qde.application.applicants[0].familyDetails.fatherName}}
+            </div>
+        </div>
+
+    </div>
+
+    <div class="main_div">
+        <div class="space-4">
+            <div class="fields icici-col-high">
+                3. Whether the family owns any house ?
+            </div>
+            <P class="m-0">a. If yes, then location details</P>
+            <ol class="upper-roman">
+                <li>Locality</li>
+                <li>City</li>
+                <li>State</li>
+            </ol>
+
+        </div>
+        <div class="space-8">
+
+            <div class="values">
+                {{(qde.application.applicants[0].communicationAddress.residentialStatus == 'Owned')?'Yes':'No'}}<br/><br/>
                 <div *ngIf="qde.application.applicants[0].communicationAddress.residentialStatus == 'Owned'">
                     {{qde.application.applicants[0].communicationAddress.addressLineOne}}<br/> {{qde.application.applicants[0].communicationAddress.city}}
                     <br/> {{qde.application.applicants[0].communicationAddress.state}} - {{qde.application.applicants[0].communicationAddress.zipcode}} <br/>
@@ -83,7 +79,7 @@
         </div>
         <div class="space-8">
             <ul class="m-0">
-                <li>yes&nbsp;<input class="click" value="" disabled/> &nbsp;&nbsp;No &nbsp;<input class="click" value="" disabled/></li>
+                <li>Yes&nbsp;<input class="click" value="" disabled/> &nbsp;&nbsp;No &nbsp;<input class="click" value="" disabled/></li>
 
             </ul>
         </div>
@@ -117,48 +113,48 @@
             </ul>
         </div>
 
-	</div>
+    </div>
 
 
-  <div class="main_div">
-      <div class="space-4">
-          <div class="fields icici-col-high">
-              7. Purpose of housing loan
-          </div>
-       </div>
-      <div class="space-8">
-          <ul class="m-0">
-             <li>New House&nbsp;<input class="click" value="" disabled/> &nbsp;&nbsp;&nbsp;Construction&nbsp;<input class="click" value="" disabled/> &nbsp;&nbsp;&nbsp;Extension&nbsp;<input class="click" value="" disabled/> &nbsp;&nbsp;&nbsp;Improvement&nbsp;<input
+    <div class="main_div">
+        <div class="space-4">
+            <div class="fields icici-col-high">
+                7. Purpose of housing loan
+            </div>
+        </div>
+        <div class="space-8">
+            <ul class="m-0">
+                <li>New House&nbsp;<input class="click" value="" disabled/> &nbsp;&nbsp;&nbsp;Construction&nbsp;<input class="click" value="" disabled/> &nbsp;&nbsp;&nbsp;Extension&nbsp;<input class="click" value="" disabled/> &nbsp;&nbsp;&nbsp;Improvement&nbsp;<input
                         class="click" value="" disabled/> &nbsp;</li>
-          </ul>
-      </div>
+            </ul>
+        </div>
 
-  </div>
+    </div>
 
-  <div class="main_div">
-      <div class="space-4">
-          <div class="fields icici-col-high">
-              8. Extension / Improvement (if applicable) required for
-          </div>
-      </div>
-      <div class="space-8">
-          <ul class="m-0">
-              <li>One room&nbsp;<input class="click" value="" disabled/> &nbsp;&nbsp;&nbsp;Kitchen&nbsp;<input class="click" value="" disabled/> &nbsp;&nbsp;&nbsp;Bath&nbsp;<input class="click" value="" disabled/> &nbsp;&nbsp;&nbsp;Toilet&nbsp;<input class="click"
+    <div class="main_div">
+        <div class="space-4">
+            <div class="fields icici-col-high">
+                8. Extension / Improvement (if applicable) required for
+            </div>
+        </div>
+        <div class="space-8">
+            <ul class="m-0">
+                <li>One room&nbsp;<input class="click" value="" disabled/> &nbsp;&nbsp;&nbsp;Kitchen&nbsp;<input class="click" value="" disabled/> &nbsp;&nbsp;&nbsp;Bath&nbsp;<input class="click" value="" disabled/> &nbsp;&nbsp;&nbsp;Toilet&nbsp;<input class="click"
                         value="" disabled/> &nbsp;</li>
-          </ul>
-      </div>
-  </div>
+            </ul>
+        </div>
+    </div>
 
-  <div class="main_div">
-      <div class="space-4">
-          <div class="fields icici-col-high">
-              9. Size of new dwelling unit (Carpet area in sq.mtrs.)
-          </div>
-      </div>
-          <div class="space-8">
- 		<hr>
-          </div>
-      </div>
+    <div class="main_div">
+        <div class="space-4">
+            <div class="fields icici-col-high">
+                9. Size of new dwelling unit (Carpet area in sq.mtrs.)
+            </div>
+        </div>
+        <div class="space-8">
+            <hr>
+        </div>
+    </div>
 
 
     <div class="main_div">
@@ -181,138 +177,138 @@
     </div>
 
     <div class="main_div">
-    	<div class="space-6 d-f">
-            <div class="space-5 p-0 fields icici-col-high">
-              Aadhar Card - Co-Applicant
-            </div>
-           <div class="space-7 p-0 values">
-  		<hr>
-           </div>
-       </div>
         <div class="space-6 d-f">
-          <div class="space-6 p-0 fields icici-col-high">Pan Card - Co-Applicant</div>
-	  <div class="space-6 p-0 values">
+            <div class="space-5 p-0 fields icici-col-high">
+                Aadhar Card - Co-Applicant
+            </div>
+            <div class="space-7 p-0 values">
                 <hr>
             </div>
-      </div>
-  </div>
+        </div>
+        <div class="space-6 d-f">
+            <div class="space-6 p-0 fields icici-col-high">Pan Card - Co-Applicant</div>
+            <div class="space-6 p-0 values">
+                <hr>
+            </div>
+        </div>
+    </div>
 
-  <div class="main_div">
-      <div class="space-12">
-          <div class="fields icici-col-high">
-              11. Beneficiary Family Details (Spouse & Unmarried children of applicant & Co-applicant)
-          </div>
-          <div class="values">
+    <div class="main_div">
+        <div class="space-12">
+            <div class="fields icici-col-high">
+                11. Beneficiary Family Details (Spouse & Unmarried children of applicant & Co-applicant)
+            </div>
+            <div class="values">
 
-          </div>
-      </div>
-  </div>
-  <div class="main_div">
-       <div class="space-12">
-      <table class="pmay_table">
-          <thead>
-              <tr>
-                  <th>Name</th>
-                  <th>Relationship with <br>Applicant</th>
-                  <th>Gender <br><span class="font-color">(Male, Female, Third Gender)</span></th>
-                  <th>Date of Birth <br><span class="font-color">(DD-MM-YYYY)</span></th>
-                  <th>Aadhar UID</th>
-              </tr>
-          </thead>
-          <tbody>
-              <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-              </tr>
-              <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-              </tr>
-              <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-              </tr>
-              <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-              </tr>
-              <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-              </tr>
-              <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-              </tr>
+            </div>
+        </div>
+    </div>
+    <div class="main_div">
+        <div class="space-12">
+            <table class="pmay_table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Relationship with <br>Applicant</th>
+                        <th>Gender <br><span class="font-color">(Male, Female, Third Gender)</span></th>
+                        <th>Date of Birth <br><span class="font-color">(DD-MM-YYYY)</span></th>
+                        <th>Aadhar UID</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
 
-          </tbody>
-      </table>
-      </div>
-  </div>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-  <div class="main_div">
-      <div class="space-12 fields icici-col-high">
-          12. Preferred component of Mission under which beneficiary needs assistance under PMAY – CLSS (U)
-      </div>
-      <div class="space-3">
-          Gross Household Annual Family Income:₹:
-      </div>
-       <div class="space-9">
+    <div class="main_div">
+        <div class="space-12 fields icici-col-high">
+            12. Preferred component of Mission under which beneficiary needs assistance under PMAY – CLSS (U)
+        </div>
+        <div class="space-3">
+            Gross Household Annual Family Income:₹:
+        </div>
+        <div class="space-9">
             <hr>
         </div>
 
-  </div>
-   <div class="main_div">
-      <div class="space-2">
-          Credit linked subsidy Category
-      </div>
-      <div class="space-10">
-          <ul class="m-0">
-        <li>EWS&nbsp;<input class="click" value="" disabled/> &nbsp; &nbsp;&nbsp; UG&nbsp;<input class="click" value="" disabled/> &nbsp; &nbsp;&nbsp; MIG – I &nbsp;<input class="click" value="" disabled/> &nbsp;&nbsp;&nbsp;MIG – II&nbsp;<input class="click"
+    </div>
+    <div class="main_div">
+        <div class="space-2">
+            Credit linked subsidy Category
+        </div>
+        <div class="space-10">
+            <ul class="m-0">
+                <li>EWS&nbsp;<input class="click" value="" disabled/> &nbsp; &nbsp;&nbsp; UG&nbsp;<input class="click" value="" disabled/> &nbsp; &nbsp;&nbsp; MIG – I &nbsp;<input class="click" value="" disabled/> &nbsp;&nbsp;&nbsp;MIG – II&nbsp;<input class="click"
                         value="" disabled/> &nbsp;</li>
-          </ul>
-      </div>
-  </div>
+            </ul>
+        </div>
+    </div>
 
-  <div class="main_div">
-      <div class="space-12 mt-2 mb-2">
-          Declaration: I/We hereby confirm and declare that the information mentioned herein above is true and correct. I/We hereby confirm that I have read and understood the PMAY (U) CLSS scheme guidelines, further I am aware that only by executing this declaration
-          the PMAY Scheme shall not be applicable to me. The benefit of the scheme shall be applicable only if the conditions stipulated in the scheme guideline is duely complied by me and on satisfactory compliance, approval by the Nodal agency
-          the subsidy under the scheme shall be credited in my home loan account by ICICI HFC. I/we also agree that in case of rejection due to misrepresentation of the facts, I/We shall be solely responsible for the same.
-      </div>
-  </div>
-  <div class="main_div">
-      <div class="space-6">
-          <strong>Signature / Thumb Impression of Applicant/Head of Household</strong>
-      </div>
-      <div class="space-6 text-center">
-          ______________________<br>Signature<br />
+    <div class="main_div">
+        <div class="space-12 mt-2 mb-2">
+            Declaration: I/We hereby confirm and declare that the information mentioned herein above is true and correct. I/We hereby confirm that I have read and understood the PMAY (U) CLSS scheme guidelines, further I am aware that only by executing this declaration
+            the PMAY Scheme shall not be applicable to me. The benefit of the scheme shall be applicable only if the conditions stipulated in the scheme guideline is duely complied by me and on satisfactory compliance, approval by the Nodal agency the
+            subsidy under the scheme shall be credited in my home loan account by ICICI HFC. I/we also agree that in case of rejection due to misrepresentation of the facts, I/We shall be solely responsible for the same.
+        </div>
+    </div>
+    <div class="main_div">
+        <div class="space-6">
+            <strong>Signature / Thumb Impression of Applicant/Head of Household</strong>
+        </div>
+        <div class="space-6 text-center">
+            ______________________<br>Signature<br />
             <input class="click" value="D" disabled><input class="click" value="D" disabled>-<input class="click" value="M" disabled><input class="click" value="M" disabled>-<input class="click" value="Y" disabled>
             <input class="click" value="Y" disabled><input class="click" value="Y" disabled><input class="click" value="Y" disabled>
-      </div>
-  </div>
-  <div class="main_div">
-      <div class="space-12">
-          <p class="align-right"><span class="mandatory">*</span>Mandatory Fields</p>
-      </div>
-  </div>
-  
+        </div>
+    </div>
+    <div class="main_div">
+        <div class="space-12">
+            <p class="align-right"><span class="mandatory">*</span>Mandatory Fields</p>
+        </div>
+    </div>
+
 </div>

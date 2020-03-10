@@ -18,15 +18,15 @@
                                     <!--  <li>Home Equity Residential&nbsp;&nbsp;
                  Home Equity Commercial</li>
                 <li>Balance Transfer&nbsp;&nbsp;Others</li> -->
-                                    <li>Monthly Expenditure &#x20B9;:&nbsp; {{qde.application.applicants[0].incomeDetails.monthlyExpenditure}}
-                                    </li>
-                                    <!-- Preferred EMI amount&nbsp;&nbsp;p.m</li> -->
+                                    <li>Monthly Expenditure &#x20B9;:&nbsp; {{(qde.application.applicants[0].incomeDetails.monthlyExpenditure)? qde.application.applicants[0].incomeDetails.monthlyExpenditure : '_________________________________' }}
+                                        <!-- </li> -->
+                                        &nbsp; Preferred EMI amount&nbsp;_______________&nbsp;p.m</li>
                                 </ul>
                             </div>
                             <div class="space-6">
                                 <ul>
-                                    <li><strong>Purpose of Loan:</strong></li>
-                                    <li>{{qde.application.loanDetails.loanAmount.loanPurpose}}</li>
+                                    <li><strong>Purpose of Loan:</strong> &nbsp;{{qde.application.loanDetails.loanAmount.loanPurpose}}</li>
+                                    <!-- <li></li> -->
                                     <!-- <li>
                   Purchase&nbsp;&nbsp;Construction&nbsp;&nbsp;Extension&nbsp;&nbsp;Improvement</li>
                 <li>Purchase+Construction/ Extension&nbsp;Others(Specify)</li>
@@ -174,8 +174,8 @@
                                 <li> &nbsp; I/We (IHFC) its group companies, agents/representatives) would like to keep our customers updated on various products and services related information and special offer from IHFC/group companies and other entities.
                                     <br>Please help us to serve you better by giving your consent to receive such information (please tick appropriately):
                                     <br>a. I/We wish to receive such information through Email alerts - &nbsp;<input class="click" value="" disabled/>&nbsp;Yes &nbsp;<input class="click" value="" disabled/>&nbsp;No
-                                    <br>b. I/We wish to receive such information through SMS alerts - &nbsp;<input class="click" value="" disabled/>&nbsp;Yes &nbsp;<input class="click" value="" disabled/>&nbsp;No
-                                    <br>c. I/We wish to receive such information through Phone Call - &nbsp;<input class="click" value="" disabled/>&nbsp;Yes &nbsp;<input class="click" value="" disabled/>&nbsp;No</li>
+                                    <br>b. I/We Wish to receive such information through SMS alerts.- &nbsp;<input class="click" value="" disabled/>&nbsp;Yes &nbsp;<input class="click" value="" disabled/>&nbsp;No
+                                    <br>c. I/We wish to receive such information through Phone Call &nbsp;- &nbsp;<input class="click" value="" disabled/>&nbsp;Yes &nbsp;<input class="click" value="" disabled/>&nbsp;No</li>
                                 <li> &nbsp; I/We authorize IHFC to exchange, share or part with all information / data provided herein including personal and business information with ICICI group companies/other institutions/such other person as may be necessary/
                                     required for the purpose of including but not limited to, marketing, cross selling of various products and services etc to me/us, use or process the aforesaid information / data by such person/s, or furnishing or the
                                     processed information / data / product thereof to ICICI Group Companies / other Banks / Institutions / other persons as may be necessary, and I/We shall not hold IHFC liable in connection with the use of such information
@@ -197,10 +197,10 @@
                         </div>
                         <div class="space-6 p-0">
                             <div class="space_content p-0">
-                                <div class="space-6 p-0">__________________
+                                <div class="space-6 p-0">_____________________________
                                     <!-- <br>Signature of Applicant -->
                                 </div>
-                                <div class="space-6 p-0">__________________
+                                <div class="space-6 p-0">_____________________________
                                     <!-- <br>Signature of Co-Applicant -->
                                 </div>
                             </div>
@@ -241,7 +241,7 @@
                                         </li>
                                         <li>Address:</li>
                                         <li>{{qde.application.references.referenceOne.addressLineOne? qde.application.references.referenceOne.addressLineOne: '_______________________'}}&nbsp;</li>
-                                        <li>{{qde.application.references.referenceOne.addressLineTwo? qde.application.references.referenceOne.addressLineTwo: '_______________________'}}&nbsp;</li>
+                                        <li>{{qde.application.references.referenceOne.addressLineOne? qde.application.references.referenceOne.addressLineTwo: '_______________________'}}&nbsp;</li>
                                         <li>&nbsp;&nbsp;</li>
                                         <li>Mobile: {{qde.application.references.referenceOne.mobileNumber? qde.application.references.referenceOne.mobileNumber: '_______________________'}}</li>
                                         <li>Relationship:&nbsp;{{qde.application.references.referenceOne.relationShip? qde.application.references.referenceOne.relationShip: '_______________________'}}</li>
@@ -256,7 +256,7 @@
                                         </li>
                                         <li>Address:</li>
                                         <li>{{qde.application.references.referenceTwo.addressLineOne? qde.application.references.referenceTwo.addressLineOne: '_______________________'}}&nbsp;</li>
-                                        <li>{{qde.application.references.referenceTwo.addressLineTwo? qde.application.references.referenceTwo.addressLineTwo: '_______________________'}}&nbsp;</li>
+                                        <li>{{qde.application.references.referenceTwo.addressLineOne? qde.application.references.referenceTwo.addressLineTwo: '_______________________'}}&nbsp;</li>
                                         <li>&nbsp;&nbsp;</li>
                                         <li>Mobile: {{qde.application.references.referenceTwo.mobileNumber? qde.application.references.referenceTwo.mobileNumber: '_______________________'}}</li>
                                         <li>Relationship:&nbsp;{{qde.application.references.referenceTwo.relationShip? qde.application.references.referenceTwo.relationShip: '_______________________'}}</li>

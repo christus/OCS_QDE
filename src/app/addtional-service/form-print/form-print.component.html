@@ -214,7 +214,7 @@
                         <div class="space-lg-1 space-md-1 space-sm-1 space-xs-1 border_left border_right top-border">3.</div>
                         <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right top-border">Date of Birth</div>
                         <div class="space-lg-2 space-md-2 space-sm-2 space-xs-2 back_color top-border ">
-                            {{applicant.personalDetails.dob}}
+                            {{applicant.personalDetails.dob | date: 'dd/MM/yyyy'}}
                         </div>
                         <div class="space-lg-2 space-md-2 space-sm-2 space-xs-2  back_color top-border">
                         </div>
@@ -465,9 +465,9 @@
                             <br />GSTIN No if applicable<br />Status of GST<br /> if the status is Embassy/Govt.dept. Then provide ** UIN<br />(Unique identification Number)</div>
                         <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right border_bottom">&nbsp;
                             <label for="yes"> Yes</label>
-                            <input type="checkbox" value="Yes" disabled>
+                            <input class="click" disabled>
                             <label for="no"> No</label>
-                            <input type="checkbox" value="No" disabled><br /><br />
+                            <input class="click" disabled><br /><br />
                             <hr><br />
                             <hr>
                         </div>
@@ -568,9 +568,9 @@
                             <div class="main_div">
                                 <div class="space-12 border_bottom">{{applicant.officialCorrespondence.addressLineOne}}&nbsp;</div>
                                 <div class="space-12 border_bottom">{{applicant.officialCorrespondence.addressLineTwo}}&nbsp;</div>
-                                <div class="space-12 border_bottom">{{applicant.officialCorrespondence.city}}&nbsp;</div>
-                                <div class="space-12 border_bottom">{{applicant.officialCorrespondence.landMark}}&nbsp;</div>
                                 <div class="space-12 border_bottom">&nbsp;</div>
+                                <div class="space-12 border_bottom">{{applicant.officialCorrespondence.landMark}}&nbsp;</div>
+                                <div class="space-12 border_bottom">{{applicant.officialCorrespondence.city}}&nbsp;</div>
                                 <div class="space-12 ">
                                     {{applicant.officialCorrespondence.state}}-{{applicant.officialCorrespondence.zipcode}}&nbsp;</div>
                             </div>
@@ -603,7 +603,7 @@
                         <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
                             <!-- <span *ngIf="{{applicant.maritalStatus.earning}}"> Yes</span>
           <span *ngIf="!{{applicant.maritalStatus.earning}}"> No</span> -->
-                            {{(applicant.maritalStatus.earning)? 'Yes -&#x20B9; '+(applicant.maritalStatus.amount):'No' }}
+                            {{(applicant.maritalStatus.earning)? 'Yes &nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&#x20B9; '+(applicant.maritalStatus.amount):'No' }}
                             <!-- (If yes, Monthly income ) -->
                         </div>
                     </div>
@@ -620,7 +620,9 @@
                         <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right border_bottom">Relationship with Applicant
                         </div>
                         <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right border_bottom">
-                            <hr>
+                            <!-- {{(applicant.relationshipName != null)? (applicant.relationshipName) :'
+                            <hr>'}} -->
+                            {{(applicant.personalDetails.relationShipName)? (applicant.personalDetails.relationShipName):'-----------'}}
                         </div>
                     </div>
                     <div class="main_div  main_main_div">&nbsp;</div>
@@ -715,7 +717,7 @@
                                 <!-- {{(applicant.incomeDetails.annualFamilyIncome)?(applicant.incomeDetails.annualFamilyIncome)*12:'0'}} -->
                                 {{application.application.applicants[0].incomeDetails.annualFamilyIncome? (application.application.applicants[0].incomeDetails.annualFamilyIncome)*12:'0'}}
                             </div>
-                            <div class="space-lg-4 space-md-4 space-sm-4 space-xs-4 border_left border_right ">Employer Category - Proprietor&nbsp;<input class="click" value="" disabled>&nbsp;Partnership&nbsp;<input class="click" value="" disabled>&nbsp;&nbsp; Trust&nbsp;<input class="click" value="" disabled>
+                            <div class="space-lg-4 space-md-4 space-sm-4 space-xs-4 border_left border_right ">Employer Category - Proprietor&nbsp;<input class="click" value="" disabled>&nbsp;Partnership&nbsp;<input class="click" value="" disabled>&nbsp; Trust&nbsp;<input class="click" value="" disabled>
                             </div>
                             <div class="space-lg-4 space-md-4 space-sm-4 space-xs-4 border_right ">Loan Amount - ₹&nbsp;6.00 to ₹&nbsp;25.00 Lakhs&nbsp;<input class="click" value="" disabled>
                             </div>
@@ -751,8 +753,9 @@
                             <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_left border_right">Details of Propert to be purchased/ Constructed/ Extended/ Improved/ Mortgaged
                                 <br />(if not selected, mention intended location)
                             </div>
-                            <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Property status whether its identified: Yes&nbsp;<input class="click" value="" disabled> No&nbsp;<input class="click" value="" disabled>
-                                <!-- {{(application.application.loanDetails.propertyType.propertyIdentified)?'Yes': 'No'}} -->
+                            <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Property status whether its identified:
+                                <!-- Yes&nbsp;<input class="click" value="" disabled> No&nbsp;<input class="click" value="" disabled> -->
+                                {{(application.application.loanDetails.propertyType.propertyIdentified)?'Yes': 'No'}}
                             </div>
                         </div>
                         <div class="main_div main_main_div">
@@ -794,7 +797,7 @@
                                 '_______________'}}
                                 <!-- Landmark -->
                             </div>
-                            <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Expected time of completion &nbsp;<input class="click1" value="" disabled>&nbsp;<input class="click1" value="" disabled> &nbsp;<input class="click1" value="" disabled>&nbsp; Years
+                            <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">Expected time of completion &nbsp;<input class="click change-size" value="" disabled>&nbsp;<input class="click change-size" value="" disabled> &nbsp;<input class="click change-size" value="" disabled>&nbsp; Years
                             </div>
                         </div>
                         <div class="main_div main_main_div">
@@ -805,8 +808,9 @@
                             </div>
                         </div>
                         <div class="main_div main_main_div">
-                            <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_left border_right">Property Age (in Years):&nbsp;<input class="click1" value="" disabled>&nbsp;<input class="click1" value="" disabled>&nbsp;<input class="click1" value="" disabled>&nbsp; Property Status: Self Occupied&nbsp;<input class="click"
-                                    value="" disabled> Rented&nbsp;<input class="click" value="" disabled> Vacant&nbsp;<input class="click" value="" disabled>
+                            <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_left border_right">Property Age (in Years):&nbsp;<input class="click change-size" value="" disabled>&nbsp;<input class="click change-size" value="" disabled>&nbsp;<input class="click change-size" value="" disabled>&nbsp; Property Status: Self
+                                Occupied&nbsp;
+                                <input class="click" value="" disabled> Rented&nbsp;<input class="click" value="" disabled> Vacant&nbsp;<input class="click" value="" disabled>
                             </div>
                             <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">&nbsp;
                             </div>

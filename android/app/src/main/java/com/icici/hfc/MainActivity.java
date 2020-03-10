@@ -15,6 +15,10 @@ import java.util.ArrayList;
 
 import android.support.v4.content.ContextCompat;
 
+import java.io.File;
+import java.util.ArrayList;	
+import java.util.ArrayList;
+
 
 public class MainActivity extends BridgeActivity {
 
@@ -38,6 +42,9 @@ public class MainActivity extends BridgeActivity {
       // Permission is not granted
       requestPermission();
     }
+
+    getTempDirectoryPath();
+
 
     /** Check Airwatch installed or not **/
 //
@@ -111,5 +118,21 @@ public class MainActivity extends BridgeActivity {
               .show();
     }
   }
+
+  private String getTempDirectoryPath() {
+    File cache = null;
+
+   
+    String sdCardPath = android.os.Environment.getExternalStorageDirectory().getPath();
+    String caseFolderName = "caseName";
+    String encrImgPath = sdCardPath+ File.separator + "OCS" + File.separator + "data" + File.separator + caseFolderName;
+
+    if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+      cache = new File(encrImgPath);
+    }
+    // Create the cache directory if it doesn't exist
+    cache.mkdirs();
+    return cache.getAbsolutePath();
+}
 
 }
