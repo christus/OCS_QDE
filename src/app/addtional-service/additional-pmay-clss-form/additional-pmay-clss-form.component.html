@@ -5,13 +5,14 @@
         </div>
     </div>
     <div class="main_div">
-        <div class="space-6">
+        <div class="space-9">
             <div class="space-12 d-f">
-                <div class="space-4">ELIGIBLE PRODUCT -</div>
+                <div class="space-4">ELIGIBLE PRODUCT - </div>
+                <!-- Construction/ Prochase of House Flat/ Resale Purchase/ Extension Improvement / Plot + Construction -->
                 <div class="space-8">Construction/ Prochase of House Flat/ Resale Purchase/ Extension Improvement / Plot + Construction</div>
             </div>
         </div>
-        <div class="space-6 space-6 text-right"><span class="mandatory">*</span> All Fields Mandatory</div>
+        <div class="space-3 text-right"><span class="mandatory">*</span> All Fields Mandatory</div>
     </div>
     <div class="main_div">
         <div class="space-4">
@@ -80,7 +81,7 @@
         <div class="space-8">
             <ul class="m-0">
                 <li>Yes&nbsp;<input class="click" value="" disabled/> &nbsp;&nbsp;No &nbsp;<input class="click" value="" disabled/></li>
-
+                <li class="m-t-15">_________________________________________</li>
             </ul>
         </div>
     </div>
@@ -93,9 +94,10 @@
         </div>
         <div class="space-8">
             <ul class="m-0">
-                <li>Own &nbsp;<input class="click" value="" disabled/> &nbsp;&nbsp;&nbsp; Rented &nbsp;<input class="click" value="" disabled/> &nbsp;&nbsp;&nbsp; Otherwise&nbsp;<input class="click" value="" disabled/> &nbsp;&nbsp;(if owned provide below
+                <!-- <li>Own &nbsp;<input class="click" value="" disabled/> &nbsp;&nbsp;&nbsp; Rented &nbsp;<input class="click" value="" disabled/> &nbsp;&nbsp;&nbsp; Otherwise&nbsp;<input class="click" value="" disabled/> &nbsp;&nbsp;(if owned provide below
                     details)
-                </li>
+                </li> -->
+                {{qde.application.applicants[0].communicationAddress.residentialStatus}}
             </ul>
         </div>
     </div>
@@ -124,8 +126,9 @@
         </div>
         <div class="space-8">
             <ul class="m-0">
-                <li>New House&nbsp;<input class="click" value="" disabled/> &nbsp;&nbsp;&nbsp;Construction&nbsp;<input class="click" value="" disabled/> &nbsp;&nbsp;&nbsp;Extension&nbsp;<input class="click" value="" disabled/> &nbsp;&nbsp;&nbsp;Improvement&nbsp;<input
-                        class="click" value="" disabled/> &nbsp;</li>
+                <!-- <li>New House&nbsp;<input class="click" value="" disabled/> &nbsp;&nbsp;&nbsp;Construction&nbsp;<input class="click" value="" disabled/> &nbsp;&nbsp;&nbsp;Extension&nbsp;<input class="click" value="" disabled/> &nbsp;&nbsp;&nbsp;Improvement&nbsp;<input
+                        class="click" value="" disabled/> &nbsp;</li> -->
+                {{qde.application.loanDetails.loanAmount.loanPurpose}}
             </ul>
         </div>
 
@@ -152,17 +155,18 @@
             </div>
         </div>
         <div class="space-8">
-            <hr>
+            {{(qde.application.loanDetails.propertyType.propertyIdentified)? (qde.application.loanDetails.propertyType.propertyArea): '_______________'}}
+            <!-- <hr> -->
         </div>
     </div>
 
 
     <div class="main_div">
         <div class="space-6 d-f">
-            <div class="space-5 p-0 fields icici-col-high">
-                10.Aadhar Card - Applicant
+            <div class="space-6 p-0 fields icici-col-high">
+                10.Aadhar Card - Applicant&nbsp;
             </div>
-            <div class="space-7 p-0 values">
+            <div class="space-6 p-0 values">
                 <hr>
             </div>
         </div>
@@ -171,17 +175,19 @@
                 Pan Card - Applicant
             </div>
             <div class="space-6 p-0 values">
-                <hr>
+                <!-- <hr> -->
+                {{qde.application.applicants[0].pan.panNumber}}
             </div>
         </div>
     </div>
 
     <div class="main_div">
         <div class="space-6 d-f">
-            <div class="space-5 p-0 fields icici-col-high">
-                Aadhar Card - Co-Applicant
+            <div class="space-6 p-0 fields icici-col-high" style="padding-left: 5px;">
+
+                &nbsp;&nbsp;Aadhar Card - Co-Applicant&nbsp;
             </div>
-            <div class="space-7 p-0 values">
+            <div class="space-6 p-0 values">
                 <hr>
             </div>
         </div>
@@ -268,12 +274,13 @@
         <div class="space-12 fields icici-col-high">
             12. Preferred component of Mission under which beneficiary needs assistance under PMAY – CLSS (U)
         </div>
-        <div class="space-3">
-            Gross Household Annual Family Income:₹:
+        <div class="space-12">
+            Gross Household Annual Family Income:&nbsp; ₹{{familIncome}}
+            <!-- ₹{{(qde.application.applicants[0].incomeDetails.annualFamilyIncome)*12}} -->
         </div>
-        <div class="space-9">
+        <!-- <div class="space-6">
             <hr>
-        </div>
+        </div> -->
 
     </div>
     <div class="main_div">
@@ -295,8 +302,8 @@
             subsidy under the scheme shall be credited in my home loan account by ICICI HFC. I/we also agree that in case of rejection due to misrepresentation of the facts, I/We shall be solely responsible for the same.
         </div>
     </div>
-    <div class="main_div">
-        <div class="space-6">
+    <div class="main_div mt-15">
+        <div class="space-6 mt-5">
             <strong>Signature / Thumb Impression of Applicant/Head of Household</strong>
         </div>
         <div class="space-6 text-center">

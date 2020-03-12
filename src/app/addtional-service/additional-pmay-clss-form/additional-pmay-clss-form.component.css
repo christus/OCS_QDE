@@ -1284,6 +1284,7 @@ ul.space-8.float-right {
 .font-color {
     color: #333;
     font-weight: normal;
+    /* font-size: ; */
 }
 
 .mb-0 {
@@ -1664,9 +1665,9 @@ hr {
 }
 
 .text-center .click {
-    width: 12px;
+    width: 15px;
     border: 1px solid;
-    height: 12px;
+    height: 15px;
     vertical-align: middle;
     margin: 0 1px;
     padding: 1px;
@@ -1680,23 +1681,13 @@ hr {
     margin-top: auto;
 }
 
+.mt-15 {
+    margin-top: 15px;
+}
 
-/* @media print {
-    .page-break {
-        display: inline-block;
-        page-break-before: always;
-        float: none;
-        margin-top: 10px;
-    }
-  
-    .page-breaktest {
-        display: inline-block;
-        page-break-before: always;
-        float: none;
-        margin-top: 10px;
-    }
-  
-} */
+.mt-5 {
+    margin-top: 5vw;
+}
 
 @media print and (-webkit-min-device-pixel-ratio:0) and (min-resolution:.001dpcm) {
     .main_div {
@@ -1707,5 +1698,8 @@ hr {
     }
     .add_app {
         margin-top: 20px;
+    }
+    .m-t-15 {
+        margin-top: 15px;
     }
 }

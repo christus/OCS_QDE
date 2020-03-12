@@ -1234,7 +1234,7 @@ h5.icici-col-high.head-small.text-center.font-weight-bold {
 }
 
 .customise_header {
-    font-size: 10px;
+    font-size: 12px;
     font-weight: lighter;
 }
 
@@ -1540,20 +1540,17 @@ ul.pr-1 {
     html {
         margin: 0;
     }
-    body {
+    /* body {
         margin: 2% 2%;
         width: 96%
-    }
+    } */
     * {
         -webkit-print-color-adjust: exact;
     }
-    .print_space {
-        padding-bottom: 20px;
-    }
-    .ISO_print {
+    /* .ISO_print {
         padding-top: 30px;
         margin-top: 30px;
-    }
+    } */
     th {
         line-height: 14px;
     }
@@ -1640,31 +1637,6 @@ p.align-right {
     margin-bottom: 20px;
 }
 
-@media print {
-    /* .page-break {
-        
-        page-break-inside: avoid;
-        float: none;
-        margin-top: 10px;
-    } */
-    /*.page-break {
-        display: inline-block;
-        page-break-before: always;
-        float:none;
-
-    }*/
-    /* .page-breaktest {
-        display: block;
-        page-break-before: always;
-        float: none;
-        margin-top: 10px;
-    } */
-    /*.pagebreak {
-        page-break-inside: avoid;
-
-    }*/
-}
-
 
 /* Print Issues */
 
@@ -1724,6 +1696,42 @@ p.align-right {
     display: inline-block;
 }
 
+.p-0 {
+    padding: 0;
+}
+
+.tick span {
+    font-size: 10px;
+    padding-left: 12vw;
+}
+
+.kyc-name {
+    text-align: center;
+    margin: 0px;
+}
+
+.kyc-name p {
+    padding: 0;
+    margin: 0;
+    font-size: 12px;
+}
+
+.t-end {
+    text-align: end;
+}
+
+.t-end span {
+    font-size: 11px;
+}
+
+.mt-5 {
+    margin-top: 5px;
+}
+
+.mt-4 {
+    margin-top: -4px;
+}
+
 @media print and (-webkit-min-device-pixel-ratio:0) and (min-resolution:.001dpcm) {
     @page {
         size: A4;
@@ -1738,7 +1746,7 @@ p.align-right {
         vertical-align: middle;
     }
     .page-7 hr {
-        margin: 25px 0 -7px 0;
+        margin: 28px 0 -7px 0;
     }
     .proof .click {
         margin: 10px 0;
@@ -1750,7 +1758,15 @@ p.align-right {
         margin: -4px 0;
     }
     .braces_content {
-        font-size: 1.2vw;
+        font-size: 9px;
+        font-weight: lighter;
+    }
+    .braces_content_2 {
+        font-size: 8px;
+        font-weight: lighter;
+    }
+    .braces_content_residence {
+        font-size: 9px;
         font-weight: lighter;
     }
     .display {
@@ -1776,10 +1792,10 @@ p.align-right {
         margin: 20px 0 0px 0;
     }
     .related_content hr {
-        margin: 20px 0 5px 0;
+        margin: 15px 0 5px 0;
     }
     .related_details {
-        font-size: 12px;
+        font-size: 11px;
     }
     .page-7 {
         margin-top: 10px;
@@ -1787,6 +1803,45 @@ p.align-right {
     .add-head {
         font-size: 12px;
     }
+    .identity ul {
+        font-size: 11px;
+        padding-left: 1px;
+    }
+    .identity ul li {
+        line-height: 21px;
+    }
+    .identity1 li {
+        line-height: 22.5px;
+    }
+    .proof1 ul {
+        margin: 0;
+    }
+    .print_space {
+        margin: 5vw 0 0;
+    }
+    .m-t-3 {
+        margin-top: 3vw;
+    }
+    .m-t-5 {
+        margin-top: 5px;
+    }
+    .iso_print {
+        margin: 4vw 0 0;
+    }
+    .page-8 {
+        font-size: 12px;
+        margin-top: -10px;
+    }
+    .l-h {
+        line-height: 9px;
+    }
+    .l-h-none {
+        line-height: 15px;
+    }
+}
+
+.proof1 ul {
+    margin: 0;
 }
 
 .related_details {

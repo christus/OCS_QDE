@@ -1,42 +1,45 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { QdeHttpService } from 'src/app/services/qde-http.service';
-import { ActivatedRoute } from '@angular/router';
-import { json } from 'sjcl';
-import { DomSanitizer } from '@angular/platform-browser';
-import Qde from 'src/app/models/qde.model';
-import { QdeService } from 'src/app/services/qde.service';
-import { CommonDataService } from 'src/app/services/common-data.service';
+import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { QdeHttpService } from "src/app/services/qde-http.service";
+import { ActivatedRoute } from "@angular/router";
+import { json } from "sjcl";
+import { DomSanitizer } from "@angular/platform-browser";
+import Qde from "src/app/models/qde.model";
+import { QdeService } from "src/app/services/qde.service";
+import { CommonDataService } from "src/app/services/common-data.service";
 
 @Component({
-  selector: 'app-form-print',
-  templateUrl: './form-print.component.html',
-  styleUrls: ['./form-print.component.css'],
+  selector: "app-form-print",
+  templateUrl: "./form-print.component.html",
+  styleUrls: ["./form-print.component.css"],
   encapsulation: ViewEncapsulation.ShadowDom
 })
 export class FormPrintComponent implements OnInit {
-
-  constructor(private qdeHttpService: QdeHttpService,
+  constructor(
+    private qdeHttpService: QdeHttpService,
     private activateRoute: ActivatedRoute,
     private domSanitizer: DomSanitizer,
     private qdeService: QdeService,
-    private cds: CommonDataService) {
+    private cds: CommonDataService
+  ) {
     this.qde = this.qdeService.defaultValue;
   }
 
   myApplicationData;
-  qde: Qde
+  qde: Qde;
   applicants;
-  application
-  applicantImage = []
+  application;
+  applicantImage = [];
   applicationNo;
   printData;
   leadId;
-  brokerId ="";
+  brokerId = "";
   rmId = "";
   bankEmployeeId = "";
   ngOnInit() {
-    this.printData = this.activateRoute.snapshot.data['qde']["ProcessVariables"];
-    if (this.printData['status']) {
+    this.printData = this.activateRoute.snapshot.data["qde"][
+      "ProcessVariables"
+    ];
+    if (this.printData["status"]) {
       this.cds.changeshowPrint(true);
       // this.myApplicationData = this.activateRoute.snapshot.data['qde']["ProcessVariables"]["response"];
       this.myApplicationData = this.printData["response"];
@@ -48,19 +51,28 @@ export class FormPrintComponent implements OnInit {
       this.applicants = this.application["application"]["applicants"];
       console.log("my Applicats Data", this.applicants);
       //  this.applicantImage = "data:image/png;base64,"+ this.applicants["documents"][0]["documentData"];documentName
+      if (this.application.application.roleName == "DMA") {
+        this.brokerId = this.application.application.userId;
+        this.rmId = this.application.application.reportingToId;
+        this.bankEmployeeId = "";
+      } else {
+        this.brokerId = "";
+        this.bankEmployeeId = this.application.application.userId;
+        this.rmId = this.application.application.reportingToId;
+      }
 
-     
       this.applicants.forEach(element => {
         if (element["documents"].length > 0) {
-          this.applicantImage.push(this.domSanitizer.bypassSecurityTrustUrl(
-            "data:image/png;base64," + element["documents"][0]["documentData"]));
+          this.applicantImage.push(
+            this.domSanitizer.bypassSecurityTrustUrl(
+              "data:image/png;base64," + element["documents"][0]["documentData"]
+            )
+          );
         }
       });
       // this.applicantImage =  "data:image/png;base64,"+  this.applicants[0]["documents"][0]["documentData"];
       // this.applicantImage =this.domSanitizer.bypassSecurityTrustUrl(this.applicantImage);
       console.log("my Applicats photo", this.applicantImage);
-
-
     }
   }
 
@@ -82,12 +94,11 @@ export class FormPrintComponent implements OnInit {
     let dateFormat: Date = date;
     let year = dateFormat.getFullYear();
     let month = dateFormat.getMonth() + 1;
-    let month1 = month < 10 ? '0' + month.toString() : '' + month.toString(); // ('' + month) for string result
+    let month1 = month < 10 ? "0" + month.toString() : "" + month.toString(); // ('' + month) for string result
     let day = date.getDate();
-    day = day < 10 ? '0' + day : '' + day; // ('' + month) for string result
-    let formattedDate = year + '-' + month1 + '-' + day;
+    day = day < 10 ? "0" + day : "" + day; // ('' + month) for string result
+    let formattedDate = year + "-" + month1 + "-" + day;
     // console.log("final Value "+ formattedDate);
     return formattedDate;
   }
-
 }

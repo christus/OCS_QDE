@@ -9,6 +9,7 @@ import Qde from 'src/app/models/qde.model';
 })
 export class AdditionalPmayClssFormComponent implements OnInit {
 qde:Qde
+familIncome;
   constructor(private qdeService: QdeService) { 
     // this.qde = this.qdeService.getQde();
     this.qdeService.qdeSource.subscribe(
@@ -18,6 +19,7 @@ qde:Qde
   }
 
   ngOnInit() {
+    this.familIncome = Number(this.qde.application.applicants[0].incomeDetails.annualFamilyIncome)*12
   }
 
 }
