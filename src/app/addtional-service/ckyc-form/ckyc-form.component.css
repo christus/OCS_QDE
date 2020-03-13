@@ -1547,10 +1547,6 @@ ul.pr-1 {
     * {
         -webkit-print-color-adjust: exact;
     }
-    /* .ISO_print {
-        padding-top: 30px;
-        margin-top: 30px;
-    } */
     th {
         line-height: 14px;
     }
@@ -1826,7 +1822,7 @@ p.align-right {
         margin-top: 5px;
     }
     .iso_print {
-        margin: 4vw 0 0;
+        margin: 6vw 0 0;
     }
     .page-8 {
         font-size: 12px;
@@ -1836,6 +1832,9 @@ p.align-right {
         line-height: 9px;
     }
     .l-h-none {
+        line-height: 15px;
+    }
+    .tick li {
         line-height: 15px;
     }
 }

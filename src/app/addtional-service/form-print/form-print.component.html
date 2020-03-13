@@ -551,13 +551,14 @@
                             <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">
                                 Company's registration number/CIN<br /> Company's PAN Number <br />Date of Incorporation
                             </div>
-                            <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
-                                <br /> {{ applicant.isIndividual ? "" : applicant.pan.panNumber }}
-                                <hr />
-                                <br />{{ applicant.organizationDetails.dateOfIncorporation }}
-                                <hr />
+                            <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right" style="padding-bottom: 5px;">
+                                _____________________
+                                <br/> {{ applicant.isIndividual ? '_____________________' : applicant.pan.panNumber }}
+                                <!-- <hr /> -->
+                                <br />{{ (applicant.isIndividual) ?'_____________________' :applicant.organizationDetails.dateOfIncorporation }}
+                                <!-- <hr /> -->
                                 <br />
-                                <hr />
+
                             </div>
                         </div>
                         <div class="main_div  top-border">
@@ -573,16 +574,18 @@
                                 <input class="click" disabled />
                                 <label for="no"> No</label>
                                 <input class="click" disabled /><br /><br />
-                                <hr />
+                                <!-- <hr /> -->
+                                _____________________
                                 <br />
-                                <hr />
+                                <!-- <hr /> -->
+                                _____________________
                             </div>
                         </div>
                         <div class="main_div  ">&nbsp;</div>
                     </div>
                     <!-- </div> -->
                     <!-- <div class="page-break"> -->
-                    <div class="page-2" style="page-break-inside: avoid; margin-top: 10px;">
+                    <div class="page-2" style="page-break-inside: avoid;margin-top: 15px;">
                         <div class="main_div   top-border title">
                             <div class="space-lg-1-2 space-md-1-2 space-sm-1-2 space-xs-1 border_left border_right bg_color">
                                 2.
@@ -893,7 +896,7 @@
                     </div>
                 </div>
                 <div class="page-3">
-                    <p><sup>#</sup>CA = Current a/c / SA = Saving Bank a/c</p>
+                    <p> <sup>#</sup>CA = Current a/c / SA = Saving Bank a/c</p>
                 </div>
 
                 <!-- <div class="page-break">       -->

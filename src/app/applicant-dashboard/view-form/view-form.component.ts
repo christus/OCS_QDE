@@ -686,9 +686,11 @@ export class ViewFormComponent implements OnInit, OnDestroy {
         console.log("Download file", response);
         this.downloadPDF = true;
         this.downloadMsg = "Downloaded successfully, please check in /OCS/data/caseName/viewform.pdf"
-      }).catch((response) => {
-        console.log(" error Download file", response);
-        this.downloadMsg = "Download failed";
+      }, err => {   
+        console.log(err);
+        this.isErrorModal = true;
+  
+        this.errorMsg = err.error;
       });
       return;
     }

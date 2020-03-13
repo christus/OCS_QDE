@@ -1284,7 +1284,7 @@ ul.space-8.float-right {
 .font-color {
     color: #333;
     font-weight: normal;
-    /* font-size: ; */
+    font-size: 10px;
 }
 
 .mb-0 {

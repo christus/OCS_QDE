@@ -2968,7 +2968,7 @@ export class QdeHttpService {
 
         let data;
 
-        this.httpIonic.setServerTrustMode("nocheck");
+        this.httpIonic.setServerTrustMode("pinned");
 
         console.log("post requestEntity********", reqEntity);
 

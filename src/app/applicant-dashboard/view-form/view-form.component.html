@@ -789,7 +789,7 @@
         <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isErrorModal}">
             <a class="modal-close" (click)="isErrorModal = false"><span class="icon icon-close"></span></a>
             <div class="modal-body">
-                <h1>{{errorMsg}}</h1>
+                <h1 class="m_font_size center">{{errorMsg}}</h1>
                 <br><br>
                 <div class="btn-wrap">
                     <button class="btn btn-border" routerLink="/leads" (click)="isErrorModal = false">Close</button>
@@ -801,7 +801,7 @@
         <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': downloadPDF}">
             <a class="modal-close" (click)="downloadPDF = false"><span class="icon icon-close"></span></a>
             <div class="modal-body">
-                <h1>{{downloadMsg}}</h1>
+                <h1 class="m_font_size center">{{downloadMsg}}</h1>
                 <br><br>
                 <div class="btn-wrap">
                     <button class="btn btn-border" routerLink="/leads" (click)="downloadPDF = false">Close</button>

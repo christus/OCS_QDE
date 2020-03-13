@@ -1805,9 +1805,10 @@ p.align-right {
     float: right;
 }
 
-.page-2 hr {
+
+/* .page-2 hr {
     margin-top: 13px;
-}
+} */
 
 .page-3 div {
     text-align: center;
@@ -1824,7 +1825,7 @@ p.align-right {
 
 .page-3 p {
     text-align: end;
-    font-size: 12px;
+    font-size: 10px;
     margin: 0;
 }
 
@@ -1901,7 +1902,7 @@ p.align-right {
         font-size: 14px;
     }
     .c_type .click {
-        margin: 1px 0;
+        margin: 5px 0 0;
     }
     .page-5 .main_div {
         font-size: 9px;
@@ -1923,8 +1924,19 @@ p.align-right {
         width: 18px;
         height: 18px;
     }
-    .page-2 {
+    /* .page-2 {
         margin-top: 50vw;
+    } */
+    .page-2 .click {
+        width: 8px;
+        border: 1px solid;
+        height: 8px;
+        margin-left: 2px;
+    }
+    .page-3 p {
+        text-align: end;
+        font-size: 8px;
+        margin: 0;
     }
 }
 
