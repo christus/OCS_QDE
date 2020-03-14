@@ -73,6 +73,7 @@ export class UserModuleComponent implements OnInit {
   getAdminUsers(data) {
     this.qdeHttp.getAdminUsers(data).subscribe((response) => {
       if(response['ProcessVariables']['status'] && response['ProcessVariables']['userDetails']!=null){
+      this.isErrorModal = false;
       this.collection = response['ProcessVariables'].userDetails;
       this.totalPages = response['ProcessVariables'].totalPages;
       this.from = response['ProcessVariables'].from;
@@ -84,6 +85,7 @@ export class UserModuleComponent implements OnInit {
         this.enableLoadMore = false;
       }
       console.log(this.collection);
+     
      }else if (response['ProcessVariables']['status'] && response['ProcessVariables']['userDetails']==null){
        this.isErrorModal = true;
        this.errorMessage = "No data present further";
@@ -112,6 +114,9 @@ export class UserModuleComponent implements OnInit {
     let data = {};
     data["currentPage"] = value;
     data["roleId"] = this.filterData;
+    if (this.searchKey !=''){
+    data["searchKey"]= this.searchKey;
+    }
     this.getAdminUsers(data);
   }
   search(){

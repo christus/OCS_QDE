@@ -316,6 +316,11 @@ export class CommonDataService {
   changeshowPrint(value: boolean) {
     this.showPrint$.next(value);
   }
+  additionalServices$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public additionalServices = this.additionalServices$.asObservable();
+  changeadditionalServices(value: boolean) {
+    this.additionalServices$.next(value);
+  }
 
 checkUserMapping(userActivityList,userFullName,lastLoginDateTime?){
   let myServiceStatus= false;
@@ -330,6 +335,7 @@ checkUserMapping(userActivityList,userFullName,lastLoginDateTime?){
           let masterConfig = false;
           let showOCS = false;
           let eligibilityReview = false;
+          let additionalServices =false;
           userActivityList.forEach(uActivity => {
             if (uActivity == "Lead"){
               createLead = true;
@@ -354,6 +360,8 @@ checkUserMapping(userActivityList,userFullName,lastLoginDateTime?){
               masterConfig =true;
             }else if(uActivity=="Eligibility Review"){
               eligibilityReview = true;
+            }else if(uActivity=="Additional Services"){
+              additionalServices = true;
             }
             myServiceStatus =true;
           });
@@ -371,6 +379,7 @@ checkUserMapping(userActivityList,userFullName,lastLoginDateTime?){
           this.changelastLoginDateTime(lastLoginDateTime);
           this.changeleligibilityReview(eligibilityReview);
           this.adminPageNavigation(userModule,opsMoudule,masterConfig);
+          this.changeadditionalServices(additionalServices);
           
 }       
 

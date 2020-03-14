@@ -274,6 +274,7 @@ export class ClssChecklistComponent implements OnInit {
       for(var x in this.lovs){
         this.lovs[x].isEdit=true;
       }
+      this.isErrorModal = false;
     }
 	  else if(response['ProcessVariables']['status'] && response['ProcessVariables']['clssDetailsList']==null){
       this.isErrorModal = true;

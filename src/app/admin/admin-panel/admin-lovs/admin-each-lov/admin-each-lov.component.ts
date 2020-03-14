@@ -211,7 +211,8 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
     this.qdeHttp.adminLoadMoreLovs(this.tableName, parseInt(this.totalPages), parseInt(this.perPage), this.searchKey).subscribe(res => {
       if (res['ProcessVariables']['status'] == true) {
         if (res['ProcessVariables']['valueDescription'] && res['ProcessVariables']['valueDescription'].length > 0) {
-          this.lovs.push({ tableName: this.tableName, userId: localStorage.getItem('userId'), description: '', value: '', isEdit: false, male: false, female: false, disabaleRole: false});
+          this.lovs.push({ tableName: this.tableName, userId: localStorage.getItem('userId'), description: '',
+                         value: '', isEdit: false, male: false, female: false, disabaleRole: false, isRequired: "0"});
           this.tempLovs = this.getLovMap(res['ProcessVariables']['valueDescription']);
 
           // res['ProcessVariables']['valueDescription'].map((v, i) => {
@@ -337,6 +338,7 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
           this.totalPages = res['ProcessVariables']['totalPages'];
           this.totalItems = parseInt(this.perPage) * parseInt(this.totalPages);
           this.lovs = this.getLovMap(res['ProcessVariables']['valueDescription']);
+          this.isErrorModal = false;
           // res['ProcessVariables']['valueDescription'].map((v, i) => {
           //   return {
           //     userId: parseInt(localStorage.getItem('userId')),

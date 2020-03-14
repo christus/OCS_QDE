@@ -166,6 +166,7 @@ export class LoanTypePurposeMapComponent implements OnInit {
     this.qdeHttp.adminLoanTypeSearch(event.target.value).subscribe(response => {
       // console.log("mamam",v)
       if(response['ProcessVariables']['status'] && response['ProcessVariables']['loanTypePurposeList']!=null){
+        this.isErrorModal = false;
         this.data = response['ProcessVariables']['loanTypePurposeList'].map(v => {
           return {
             userId: this.userId,

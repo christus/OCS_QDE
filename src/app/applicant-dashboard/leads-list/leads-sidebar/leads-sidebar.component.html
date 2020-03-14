@@ -1,31 +1,31 @@
 <nav class="bs-side-menu">
-    
-        <a   class="nav-link active"  routerLink="/leads" > 
-            <span class="icon icon-dashboard"></span>
-            <span class="link-text">Dashboard</span>
-        </a>
-    
-  
-  <!-- <a href="leads-reduced.html" class="nav-link">
+
+    <a class="nav-link active" routerLink="/leads">
+        <span class="icon icon-dashboard"></span>
+        <span class="link-text">Dashboard</span>
+    </a>
+
+
+    <!-- <a href="leads-reduced.html" class="nav-link">
       <span class="icon icon-leads"></span>
       <span class="link-text">Leads</span>
   </a> -->
 
-  <a  class="nav-link  active"  routerLink="/reports" *ngIf ="reportShow">
-      <span class="icon icon-performance"></span>
-      <span class="link-text">Reports</span>    
-  </a>
-  
+    <a class="nav-link  active" routerLink="/reports" *ngIf="reportShow">
+        <span class="icon icon-performance"></span>
+        <span class="link-text">Reports</span>
+    </a>
 
-<a  class="nav-link  active"  routerLink="/re-assign" *ngIf="showReAssign" >
-    <span class="icon icon-user"></span>
-    <span class="link-text">Re-Assign</span>    
-</a>
 
-<a  class="nav-link  active"  routerLink="/addtional-service">
-    <span class="icon icon-doc"></span>
-    <span class="link-text">Addtional Service</span>    
-</a>
+    <a class="nav-link  active" routerLink="/re-assign" *ngIf="showReAssign">
+        <span class="icon icon-user"></span>
+        <span class="link-text">Re-Assign</span>
+    </a>
+
+    <a class="nav-link  active" routerLink="/addtional-service" *ngIf="showAdditionalServices">
+        <span class="icon icon-doc"></span>
+        <span class="link-text">Addtional Service</span>
+    </a>
 </nav>
 
 <!-- [class.active]="viewMode == 'tab1'" -->

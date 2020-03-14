@@ -15,6 +15,7 @@ export class LeadsSidebarComponent implements OnInit {
   isTBMLoggedIn: boolean ;
   showReAssign: boolean;
   reportShow: boolean;
+  showAdditionalServices: boolean;
   constructor(private router: Router,
               private cds: CommonDataService,
               private utilService: UtilService) {
@@ -36,6 +37,7 @@ export class LeadsSidebarComponent implements OnInit {
     // this.viewMode = "tab2";
      this.cds.reAssign$.subscribe(value => this.showReAssign =value )
      this.cds.reportShow$.subscribe(value => this.reportShow =value);
+     this.cds.additionalServices$.subscribe(value => this.showAdditionalServices = value)
   }
   pageNavigation(pageValue) {
     console.log("page click call", pageValue);

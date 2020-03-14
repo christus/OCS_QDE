@@ -1,60 +1,60 @@
 <div class="container">
     <div class="tabs">
-      <ul class="tabs-head">
-        <li class="tab-link" [class.active]="viewMode == 'onlineTab1'" rel="onlineTab1" (click)="viewMode ='onlineTab1'"><a href="javascript:void(0);">Upload Payment</a></li>
-        <li class="tab-link" [class.active]="viewMode == 'onlineTab2'" rel="onlineTab2" (click)="viewMode ='onlineTab2'"><a href="javascript:void(0);">Download reconcile</a></li>
-        <li class="tab-link" [class.active]="viewMode == 'onlineTab3'" rel="onlineTab3" (click)="viewMode ='onlineTab3'"><a href="javascript:void(0);">Download non reconcile</a></li>
+        <ul class="tabs-head">
+            <li class="tab-link" [class.active]="viewMode == 'onlineTab1'" rel="onlineTab1" (click)="viewMode ='onlineTab1'"><a href="javascript:void(0);">Upload Payment</a></li>
+            <li class="tab-link" [class.active]="viewMode == 'onlineTab2'" rel="onlineTab2" (click)="viewMode ='onlineTab2'"><a href="javascript:void(0);">Download reconcile</a></li>
+            <li class="tab-link" [class.active]="viewMode == 'onlineTab3'" rel="onlineTab3" (click)="viewMode ='onlineTab3'"><a href="javascript:void(0);">Download non reconcile</a></li>
 
-      </ul>
+        </ul>
     </div>
     <div class="tab-slider--container" [ngSwitch]="viewMode">
-  
-      <!--Tabs 1 Upload cheque payment starts-->
-      <div id="onlineTab1" class="tab-slider--body" *ngSwitchCase="'onlineTab1'">
-        <h2>UPLOAD PAYMENT</h2>
-  
-        <div class="bs-file paymentUploadPicContainer">
-            <input name="myFile" #paymentUploadPic id="paymentUploadPic" type="file" class="form-control" (change)="setUploadDoc($event.target)" >
-            <label for="paymentUploadPic"><span>Upload Payment</span></label>
-        </div>
-        <!-- <input type="submit" (click)="startUploadDoc()" class="btn btn-default"> -->
-  
-        <div class="btn-wrap">
-            <!-- <button type=ops-module"submit"  class="btn btn-primary">Next</button> -->
-            <button class="btn btn-primary" (click)="startUploadDoc()" [disabled]="!isFileSelected" [ngClass]="{'disabled': !isFileSelected}">SUBMIT</button>
-          </div>
-  
-        <div class="file-name">{{uploadFileName}}</div>
-        <!-- <div class="error-msg">{{errorMsg}}</div> -->
-      </div>
-      <!--Tabs 1 Upload cheque payment starts-->
-  
-      <!--Tabs 2 Download reconciled records starts-->
-      <div id="onlineTab2" class="tab-slider--body" *ngSwitchCase="'onlineTab2'">
-        <h2>Download Reconcile Report</h2>
-        <input type="submit" (click)="downloadCSV('recon')" class="btn btn-default">
-      </div>
-      <!--Tabs 2 Download reconciled records ends-->  
-  
 
-      <!--Tabs 3 Download non-reconciled records starts-->
-      <div id="onlineTab3" class="tab-slider--body" *ngSwitchCase="'onlineTab3'">
-        <h2>Download Non Reconcile Report</h2>
-        <input type="submit" (click)="downloadCSV('nonRecon')" class="btn btn-default">
-      </div>
-      <!--Tabs 3 Download non-reconciled records ends-->  
+        <!--Tabs 1 Upload cheque payment starts-->
+        <div id="onlineTab1" class="tab-slider--body" *ngSwitchCase="'onlineTab1'">
+            <h2>UPLOAD PAYMENT</h2>
+
+            <div class="bs-file paymentUploadPicContainer">
+                <input name="myFile" #paymentUploadPic id="paymentUploadPic" type="file" class="form-control" (change)="setUploadDoc($event.target)">
+                <label for="paymentUploadPic"><span>Upload Payment</span></label>
+            </div>
+            <!-- <input type="submit" (click)="startUploadDoc()" class="btn btn-default"> -->
+
+            <div class="btn-wrap">
+                <!-- <button type=ops-module"submit"  class="btn btn-primary">Next</button> -->
+                <button class="btn btn-primary" (click)="startUploadDoc()" [disabled]="!isFileSelected" [ngClass]="{'disabled': !isFileSelected}">SUBMIT</button>
+            </div>
+
+            <div class="file-name">{{uploadFileName}}</div>
+            <!-- <div class="error-msg">{{errorMsg}}</div> -->
+        </div>
+        <!--Tabs 1 Upload cheque payment starts-->
+
+        <!--Tabs 2 Download reconciled records starts-->
+        <div id="onlineTab2" class="tab-slider--body" *ngSwitchCase="'onlineTab2'">
+            <h2>Download Reconcile Report</h2>
+            <input type="submit" (click)="downloadCSV('recon')" class="btn btn-default">
+        </div>
+        <!--Tabs 2 Download reconciled records ends-->
+
+
+        <!--Tabs 3 Download non-reconciled records starts-->
+        <div id="onlineTab3" class="tab-slider--body" *ngSwitchCase="'onlineTab3'">
+            <h2>Download Non Reconcile Report</h2>
+            <input type="submit" (click)="downloadCSV('nonRecon')" class="btn btn-default">
+        </div>
+        <!--Tabs 3 Download non-reconciled records ends-->
 
     </div>
-  </div>
-  <div class="overlay" [ngClass]="{'active': isErrorModal}">
-    <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isErrorModal}">
-      <a class="modal-close" (click)="isErrorModal = false"><span class="icon icon-close"></span></a>
-      <div class="modal-body">
-        <h1>{{errorMsg}}</h1>
-        <br><br>
-        <div class="btn-wrap">
-          <button class="btn btn-border" (click)="isErrorModal = false">Close</button>
+</div>
+<div class="overlay" [ngClass]="{'active': isErrorModal}">
+    <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isErrorModal}" style="text-align: center;">
+        <a class="modal-close" (click)="isErrorModal = false"><span class="icon icon-close"></span></a>
+        <div class="modal-body">
+            <h1>{{errorMsg}}</h1>
+            <br><br>
+            <div class="btn-wrap">
+                <button class="btn btn-border" (click)="isErrorModal = false">Close</button>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
+</div>

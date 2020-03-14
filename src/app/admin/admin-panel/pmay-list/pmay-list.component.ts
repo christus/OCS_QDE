@@ -79,6 +79,7 @@ export class PmayListComponent implements OnInit {
         this.errorMsg = "No data present further";
         //alert("No data present further");
       }else if(response['ProcessVariables']['status'] && response['ProcessVariables']['pmayList']!=null){
+        this.isErrorModal = false;
       this.collection = response['ProcessVariables'].pmayList;
       this.totalPages = response['ProcessVariables'].totalPages;
       this.from = response['ProcessVariables'].from;

@@ -53,6 +53,7 @@ export class BranchMappingComponent implements OnInit {
   getUserMappingList(data) {
     this.qdeHttp.getUserBranchMapping(data).subscribe((response) => {
       if(response['ProcessVariables']['status'] && response['ProcessVariables']['userBranchList']!=null){
+        this.isErrorModal = false;
         // if(response['ProcessVariables']['userBranchList']!=null){
       this.collection = response['ProcessVariables'].userBranchList;
       this.totalPages = response['ProcessVariables'].totalPages;

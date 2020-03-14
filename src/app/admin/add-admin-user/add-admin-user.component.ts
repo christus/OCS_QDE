@@ -9,6 +9,8 @@ import { Validators } from '@angular/forms';
 import {ViewChild, ElementRef} from '@angular/core';
 import { } from 'ng-multiselect-dropdown';
 import { QdeService } from 'src/app/services/qde.service';
+import { e } from '@angular/core/src/render3';
+import { StaticInjector } from '@angular/core/src/di/injector';
 
 
 @Component({
@@ -22,6 +24,10 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
   selectedBranches = [];
   defaultSelectBranch:string ="null";
   defaultSelectRole:string="null";
+  isLessAmount: boolean;
+  requirMinAmout: any;
+  isMaxAmount: boolean;
+  requirMaxAmout: any;
   ngAfterViewInit(): void {
     console.log("After view init");
   }
@@ -57,7 +63,7 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
 
 
   selectedItem: number;
-  registerUser = new FormGroup({
+  registerUser= new FormGroup({
     firstName: new FormControl('', Validators.required),
     lastName: new FormControl('', Validators.required),
     userName: new FormControl('', [Validators.required, Validators.minLength(6)]),
@@ -68,24 +74,28 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
     userBranchId: new FormControl('', [Validators.required]),
     reportingTo: new FormControl('', [Validators.required]),
     reportingToInp: new FormControl(''),
+    rmId:new FormControl('')
   });
+   
 
   firstName:string;
   lastName:string;
   userName:string;
   password:string;
   mailId:string;
-  mobileNumber:string;OnInit
+  mobileNumber:string;
+  // OnInit
   userRoleId:string;
   branchId:string;
   region;
   zone: string;
   state: string;
   city: string;
-
+  rmId: string;
   dropdownSettings = {};
   singleDropdownSettings = {};
-
+  lov;
+  minMaxValues;
   @ViewChildren("reportingTo") reportingToList: QueryList<ElementRef>;
   constructor(private qdeHttp: QdeHttpService,
     private formBuilder: FormBuilder,
@@ -108,7 +118,7 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
       this.userBranchId = val['userBranchId']; 
       this.reportingToInp = val['reportingToInp']; 
       this.reportingTo = val['reportingTo']; 
-      
+      this.rmId = val['rmId'];
     })
 
     // if(this.route.snapshot.data['userBranchLovs']) {
@@ -126,19 +136,26 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
     //   alert('Could not Load Data.');
     // }
 
-    this.qdeHttp.adminGetUserLov({}).subscribe((response) => {
-      var lov = JSON.parse(response['ProcessVariables'].lovs);
-      this.userRoles = lov.LOVS.user_role;
-      this.branches = lov.LOVS.branch;
-      this.states = lov.LOVS.state;
-      this.zones = lov.LOVS.zone;
-      // this.selectedRoleType = this.userRoles[0].key;
+    // this.qdeHttp.adminGetUserLov({}).subscribe((response) => {
+    //   var lov = JSON.parse(response['ProcessVariables'].lovs);
+    //   this.userRoles = lov.LOVS.user_role;
+    //   this.branches = lov.LOVS.branch;
+    //   this.states = lov.LOVS.state;
+    //   this.zones = lov.LOVS.zone;
+    //   // this.selectedRoleType = this.userRoles[0].key;
 
-      console.log("this.userRoles", this.userRoles);
-      console.log("this.branch", this.branches);
-      // console.log("Selected role",this.selectedRoleType)
-    });
-
+    //   console.log("this.userRoles", this.userRoles);
+    //   console.log("this.branch", this.branches);
+    //   // console.log("Selected role",this.selectedRoleType)
+    // });
+    
+    this.lov = JSON.parse(this.route.snapshot.data['userBranchLovs']['ProcessVariables'].lovs);
+    console.log("LOVS", this.lov);
+    this.userRoles = this.lov.LOVS.user_role;
+      this.branches = this.lov.LOVS.branch;
+      this.states = this.lov.LOVS.state;
+      this.zones = this.lov.LOVS.zone;
+      this.minMaxValues = this.lov.LOVS.min_max_values;
     this.route.params.subscribe(val => {
       if (val['userId'] != null) {
         this.userId = parseInt(val['userId']);
@@ -159,7 +176,8 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
             reportingTo: response['ProcessVariables']['reportingToUser'] || "",
             userBranchId: response['ProcessVariables']['branchId'] || "",
             userRoleId: parseInt(response['ProcessVariables']['roleId']) || "",
-            reportingToInp: response['ProcessVariables']['reportingTo'] || ""
+            reportingToInp: response['ProcessVariables']['reportingTo'] || "",
+            rmId: response['ProcessVariables']['rmId'] || ""
           });
         });
       }
@@ -226,8 +244,8 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
         // "branchId": parseInt(this.changeBranch()),
         "branchId": this.qdeService.getOnlyKeyValues(this.formValue.userBranchId.value),
         "reportingTo": parseInt(this.formValue.reportingToInp.value),
-        "userId": parseInt(localStorage.getItem("userId"))
-        
+        "userId": parseInt(localStorage.getItem("userId")),
+        "rmId":this.formValue.rmId.value
         
       }
       console.log(data);
@@ -379,8 +397,8 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
       "roleId": parseInt(this.formValue.userRoleId.value),
       // "branchId":  parseInt(this.formValue.userBranchId.value),
       "branchId": this.qdeService.getOnlyKeyValues(this.formValue.userBranchId.value),
-      "reportingTo": parseInt(this.formValue.reportingToInp.value)
-
+      "reportingTo": parseInt(this.formValue.reportingToInp.value),
+      "rmId": this.formValue.rmId.value
     }
     console.log(data);
 
@@ -450,4 +468,55 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
           return myList;
 
   }
+buildForm(registorUserData?): FormGroup{
+  this.registerUser= new FormGroup({
+    firstName: new FormControl(registorUserData.firstName, Validators.required),
+    lastName: new FormControl('', Validators.required),
+    userName: new FormControl('', [Validators.required, Validators.minLength(6)]),
+    password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+    mailId: new FormControl('', [Validators.required, Validators.email, Validators.pattern("[^ @]*@[^ @]*")]),
+    mobileNumber: new FormControl('', [Validators.required, Validators.maxLength(10), Validators.pattern('[6-9]\\d{9}')]),
+    userRoleId: new FormControl('', [Validators.required]),
+    userBranchId: new FormControl('', [Validators.required]),
+    reportingTo: new FormControl('', [Validators.required]),
+    reportingToInp: new FormControl(''),
+    rmId:new FormControl('')
+  });
+  return this.registerUser;
+}
+
+checkAmountLimit(event,minAmount?,maxAmount?) {
+  // console.log("checkAmountLimit call ",event,minAmount,maxAmount);
+  let n = parseInt(this.getNumberWithoutCommaFormat(event.target.value));
+  if(minAmount != undefined && n < minAmount ){
+    console.log("min ",event,minAmount,maxAmount);
+    this.isLessAmount = true;
+    this.requirMinAmout = minAmount;   
+  } else if(maxAmount != undefined && n >= maxAmount){
+    console.log("max ",event,minAmount,maxAmount);
+    this.isMaxAmount = true;
+    this.requirMaxAmout = maxAmount;
+  } else {
+    this.isLessAmount = false;
+    this.requirMinAmout="";
+    this.isMaxAmount = false;
+    this.requirMaxAmout="";
+  }
+}
+getNumberWithoutCommaFormat(x: string) : string {
+  return x ? x+"".split(',').join(''): '';
+}
+}
+export class registorUserData{
+  firstName: string;
+  lastName: string;
+  userName: string;
+  password: string;
+  mailId: string;
+  mobileNumber:string;
+  userRoleId:string;
+  userBranchId:string;
+  reportingTo: string;
+  reportingToInp:string;
+  rmId:string;
 }

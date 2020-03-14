@@ -190,6 +190,7 @@ export class RelationshipMappingComponent implements OnInit {
     this.qdeHttp.adminApplicantRelationshipSearch(event.target.value).subscribe(response => {
       console.log("mama",response)
       if(response['ProcessVariables']['status'] && response['ProcessVariables']['mappingList']!=null){
+        this.isErrorModal = false;
       this.data = response['ProcessVariables']['mappingList'];
       this.currentPage=response['ProcessVariables']['currentPage'];
       this.perPage=response['ProcessVariables']['perPage'];

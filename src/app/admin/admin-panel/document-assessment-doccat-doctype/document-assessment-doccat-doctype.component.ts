@@ -336,6 +336,7 @@ export class DocumentAssessmentDoccatDoctypeComponent implements OnInit {
 
         console.log("currentPage: ", this.currentPage);
         console.log("totalPages: ", this.totalPages);
+        this.isErrorModal = false;
         if (response['documentMapping']) {
           this.data = response['documentMapping'];
           for (var i = 0; i < this.data.length; i++) {

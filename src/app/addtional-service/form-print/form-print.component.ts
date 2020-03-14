@@ -58,7 +58,7 @@ export class FormPrintComponent implements OnInit {
       } else {
         this.brokerId = "";
         this.bankEmployeeId = this.application.application.userId;
-        this.rmId = this.application.application.reportingToId;
+        this.rmId = this.application.application.rmId;
       }
 
       this.applicants.forEach(element => {

@@ -94,6 +94,7 @@ export class BranchListComponent implements OnInit {
       if(this.currentPage == this.totalPages) {
         this.enableLoadMore = false;
       }
+      this.isErrorModal = false;
       console.log(this.collection);
     }else if(response['ProcessVariables']['status'] && response['ProcessVariables']['branchDetails']==null){
       this.isErrorModal = true;

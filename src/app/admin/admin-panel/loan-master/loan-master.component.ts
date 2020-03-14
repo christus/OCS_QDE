@@ -209,6 +209,7 @@ export class LoanMasterComponent implements OnInit {
     if(this.isLoanMaster) {
       this.qdeHttp.adminSearchAllLoanMaster(event.target.value).subscribe(res => {
         if(res["ProcessVariables"]["status"] && res["ProcessVariables"]["loanMaster"]!=null){
+          this.isErrorModal = false;
         this.data = res['ProcessVariables']['loanMaster'];
         this.currentPage = parseInt(res['ProcessVariables']['currentPage']);
         this.totalPages = parseInt(res['ProcessVariables']['totalPages']);

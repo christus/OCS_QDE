@@ -156,7 +156,8 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
     if(this.route.snapshot.data['generalLovs']['ProcessVariables']['status'] == true) {
       this.states = JSON.parse(this.route.snapshot.data['generalLovs']['ProcessVariables']['lovs'])['LOVS']['state'];
       this.allStates = JSON.parse(this.route.snapshot.data['generalLovs']['ProcessVariables']['lovs'])['LOVS']['state'];
-      this.regions = JSON.parse(this.route.snapshot.data['generalLovs']['ProcessVariables']['aTableLov'])['regions'];
+      // this.regions = JSON.parse(this.route.snapshot.data['generalLovs']['ProcessVariables']['aTableLov'])['regions'];
+      this.regions = JSON.parse(this.route.snapshot.data['generalLovs']['ProcessVariables']['lovs'])['LOVS']['regions'];
 
       this.selectedState = {key:'Select',value:'0'};
       // this.states = [];
@@ -653,6 +654,7 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
             this.totalPages = parseInt(res['ProcessVariables']['totalPages']);
             this.perPage = parseInt(res['ProcessVariables']['perPage']);
             this.totalElements = res['ProcessVariables']['totalPages'] * this.perPage;
+            this.isErrorModal = false;
           } else {
             this.isErrorModal = true;
             this.errorMsg = "No Data Present Further";

@@ -497,11 +497,17 @@ const appRoutes: Routes = [
       },
       {
         path: 'add-user/:userId',
-        component: AddAdminUserComponent
+        component: AddAdminUserComponent,
+        resolve: {
+          userBranchLovs: AdminAddUserLovResolverService
+        }
       },
       {
         path: 'edit-user/:userId',
-        component: EditAdminUserComponent
+        component: EditAdminUserComponent,
+        resolve: {
+          userBranchLovs: AdminAddUserLovResolverService
+        }
       },
       {
         path: 'lovs/clss_checklist',

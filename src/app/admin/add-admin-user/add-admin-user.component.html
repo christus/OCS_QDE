@@ -1,72 +1,67 @@
-<button  class="btn btn-default" routerLink="/admin/user-module">Go Back</button>
+<button class="btn btn-default" routerLink="/admin/user-module">Go Back</button>
 <div class="app-admin-container">
-    <form [formGroup]="registerUser" (ngSubmit)="onSubmit()"  autocomplete="off">
+    <form [formGroup]="registerUser" (ngSubmit)="onSubmit()" autocomplete="off">
         <div class="inputBox form-field-el">
-                <label for="firstname" class="inputText">First name: *</label>
-                <input type="text" id="firstname" class="form-control" [(ngModel)]="firstName" formControlName="firstName" fieldFill autocomplete="nope" pattern={{regexPattern.name}}/>
-                <div *ngIf="formValue.firstName.errors" >
-                    <div class="redalert" *ngIf="formValue.firstName.errors.pattern"> Name cannot contain  special characters </div>
-                </div>
+            <label for="firstname" class="inputText">First name: *</label>
+            <input type="text" id="firstname" class="form-control" [(ngModel)]="firstName" formControlName="firstName" fieldFill autocomplete="nope" pattern={{regexPattern.name}}/>
+            <div *ngIf="formValue.firstName.errors">
+                <div class="redalert" *ngIf="formValue.firstName.errors.pattern"> Name cannot contain special characters </div>
+            </div>
         </div>
         <div class="inputBox form-field-el">
-                <label for="lastName" class="inputText">Last name: *</label>
-                <input type="text" id="lastName"  [(ngModel)]="lastName"  class="form-control" fieldFill formControlName="lastName" autocomplete="nope" pattern={{regexPattern.name}}/>
-                <div *ngIf="formValue.lastName.errors" >
-                        <div class="redalert" *ngIf="formValue.lastName.errors.pattern"> Name cannot contain special characters </div>
-                </div>
+            <label for="lastName" class="inputText">Last name: *</label>
+            <input type="text" id="lastName" [(ngModel)]="lastName" class="form-control" fieldFill formControlName="lastName" autocomplete="nope" pattern={{regexPattern.name}}/>
+            <div *ngIf="formValue.lastName.errors">
+                <div class="redalert" *ngIf="formValue.lastName.errors.pattern"> Name cannot contain special characters </div>
+            </div>
         </div>
-         <div class="inputBox form-field-el">
-                <label for="userName" class="inputText">Employee Id: *</label>
-            <input type="text" id="userName" [(ngModel)]="userName"  class="form-control trans-lower-case" fieldFill formControlName="userName" 
-            autocomplete="nope" [readonly]="updatebtn" />
-	    <div *ngIf="formValue.userName.errors && (formValue.userName.touched || formValue.userName.dirty)" >
-                 <div class="redalert"  *ngIf="formValue.userName.errors.minlength"> Employee Id should be at least 6 characters </div> 
+        <div class="inputBox form-field-el">
+            <label for="userName" class="inputText">Employee Id: *</label>
+            <input type="text" id="userName" [(ngModel)]="userName" class="form-control trans-lower-case" fieldFill formControlName="userName" autocomplete="nope" [readonly]="updatebtn" />
+            <div *ngIf="formValue.userName.errors && (formValue.userName.touched || formValue.userName.dirty)">
+                <div class="redalert" *ngIf="formValue.userName.errors.minlength"> Employee Id should be at least 6 characters </div>
             </div>
         </div>
         <div class="inputBox form-field-el">
             <label for="password" class="inputText">Password: *</label>
             <input type="password" id="password" [(ngModel)]="password" class="form-control" fieldFill formControlName="password" autocomplete="new-password" [readonly]="updatebtn" />
             <div *ngIf="formValue.password.errors">
-                    <!-- <div class="redalert" *ngIf="formValue.password.errors.required"> required</div> -->
-                    <div class="redalert" *ngIf="formValue.password.errors.minlength"> Minimum 6 character required</div>
-                </div>
+                <!-- <div class="redalert" *ngIf="formValue.password.errors.required"> required</div> -->
+                <div class="redalert" *ngIf="formValue.password.errors.minlength"> Minimum 6 character required</div>
+            </div>
         </div>
-       <div class="inputBox form-field-el">
+        <div class="inputBox form-field-el">
             <label for="mailId" class="inputText">Email: *</label>
-            <input type="text" id="mailId" [(ngModel)]="mailId"  class="form-control" fieldFill formControlName="mailId" autocomplete="nope"/>
-            <div *ngIf="formValue.mailId.errors" >
-                    <!-- <div class="redalert"  *ngIf="formValue.mailId.errors.required"> required</div> -->
-                    <div class="redalert" *ngIf="formValue.mailId.errors?.email"> Invalid email</div>
-                    <!-- <div *ngIf="formValue.mailId.errors.emailDomain" class="redalert">Email must be on the icicihfc.com domain</div> -->
-                </div>
+            <input type="text" id="mailId" [(ngModel)]="mailId" class="form-control" fieldFill formControlName="mailId" autocomplete="nope" />
+            <div *ngIf="formValue.mailId.errors">
+                <!-- <div class="redalert"  *ngIf="formValue.mailId.errors.required"> required</div> -->
+                <div class="redalert" *ngIf="formValue.mailId.errors?.email"> Invalid email</div>
+                <!-- <div *ngIf="formValue.mailId.errors.emailDomain" class="redalert">Email must be on the icicihfc.com domain</div> -->
+            </div>
         </div>
         <div class="inputBox form-field-el">
             <label for="mobileNumber" class="inputText">Mobile number: *</label>
-            <input type="text"  [(ngModel)]="mobileNumber"  class="form-control"  fieldFill
-            maxlength="10"
-            (keypress)=_keyPress($event)
-            formControlName="mobileNumber" id="mobileNumber" pattern={{regexPattern.mobileNumber}} />
-            <div *ngIf="formValue.mobileNumber.errors" >
+            <input type="text" [(ngModel)]="mobileNumber" class="form-control" fieldFill [maxlength]="minMaxValues['Mobile_Number']?.maxLength" (keypress)=_keyPress($event) formControlName="mobileNumber" id="mobileNumber" pattern={{regexPattern.mobileNumber}} />
+            <div *ngIf="formValue.mobileNumber.errors">
                 <!-- <div class="redalert"  *ngIf="formValue.mobileNumber.errors.required"> required</div> -->
-                <div class="redalert"  *ngIf="registerUser.get('mobileNumber').hasError('pattern')"> Invalid mobileNumber</div>
+                <div class="redalert" *ngIf="registerUser.get('mobileNumber').hasError('pattern')"> Invalid mobileNumber</div>
             </div>
         </div>
         <div class="selectBox form-field-el">
             <label class="controltitle">User role *</label>
-            <select class="form-control" formControlName="userRoleId" [(ngModel)]="defaultSelectRole" >
+            <select class="form-control" formControlName="userRoleId" [(ngModel)]="defaultSelectRole">
                 <option [ngValue]="null" value="null" disabled>Choose your role</option>
                 <option *ngFor="let userRole of userRoles" value={{userRole.value}}>
                     {{userRole.key}}
                 </option>
             </select>
-            <div *ngIf="formValue.userRoleId.errors" >
+            <div *ngIf="formValue.userRoleId.errors">
                 <!-- <div class="redalert" *ngIf="formValue.userRoleId.errors.required"> required</div> -->
             </div>
         </div>
         <div class="selectBox form-field-el">
             <label class="controltitle">User branch *</label>
-            <ng-multiselect-dropdown [placeholder]="'Choose your branch'" 
-            [data]="branches" [settings]="dropdownSettings" formControlName="userBranchId">
+            <ng-multiselect-dropdown [placeholder]="'Choose your branch'" [data]="branches" [settings]="dropdownSettings" formControlName="userBranchId">
 
             </ng-multiselect-dropdown>
             <!-- [(ngModel)]="branch" -->
@@ -81,44 +76,54 @@
             </div> -->
         </div>
 
-    
-        <div class="inputBox form-field-el reportingToBlock"  #selectBox>
+
+        <div class="inputBox form-field-el reportingToBlock" #selectBox>
             <label for="reportingTo" class="">Reporting to: *</label>
-            <input type="text" id="reportingTo" [(ngModel)]="reportingToStr"  (input)="filterLeads($event)" class="form-control"  formControlName="reportingTo" fieldFill/>
-            <input type="hidden" class="form-control"  [(ngModel)]="reportingToInp" hidden  formControlName="reportingToInp" #reportingTo/>
+            <input type="text" id="reportingTo" [(ngModel)]="reportingToStr" (input)="filterLeads($event)" class="form-control" formControlName="reportingTo" fieldFill/>
+            <input type="hidden" class="form-control" [(ngModel)]="reportingToInp" hidden formControlName="reportingToInp" #reportingTo/>
             <div class="reporting_to hide">
                 <ul>
-                    <li #reportingTo class="item" id="{{i.userId}}"  (click)="selectedReportedTo(in, i)" *ngFor="let i of filteredItems;let in=index;">
+                    <li #reportingTo class="item" id="{{i.userId}}" (click)="selectedReportedTo(in, i)" *ngFor="let i of filteredItems;let in=index;">
                         {{i.userName}}
                     </li>
-                </ul>                
+                </ul>
             </div>
-            <div *ngIf="formValue.reportingTo.errors" >
+            <div *ngIf="formValue.reportingTo.errors">
                 <!-- <div class="redalert" *ngIf="formValue.reportingTo.errors.required"> required</div> -->
-            </div>          
+            </div>
         </div>
-        
         <div class="inputBox form-field-el">
-            <button type="submit" class="btn btn-default"   [ngClass]="{'disabled': (!registerUser.valid)}"
-            [disabled]="!registerUser.valid" > Submit   </button>
+            <label for="rmId" class="inputText">RM ID: </label>
+            <input type="text" [(ngModel)]="rmId" class="form-control" fieldFill [maxlength]="minMaxValues['RM_ID']?.maxLength" (input)="checkAmountLimit($event,minMaxValues['RM_ID']?.minValue,minMaxValues['RM_ID']?.maxValue)" (keypress)=_keyPress($event) formControlName="rmId"
+                id="rmId" pattern={{regexPattern.mobileNumber}} />
+            <div *ngIf="formValue.rmId.errors">
+                <!-- <div class="redalert"  *ngIf="formValue.rmId.errors.required"> required</div> -->
+                <div class="redalert" *ngIf="registerUser.get('rmId').hasError('pattern')"> Invalid RM</div>
+            </div>
+            <div class="redalert" *ngIf="isLessAmount">RM ID should be greater than or equal to {{requirMinAmout}}</div>
+            <div class="redalert" *ngIf="isMaxAmount">RM ID should be less than {{requirMaxAmout}}</div>
+        </div>
+
+        <div class="inputBox form-field-el">
+            <button type="submit" class="btn btn-default" [ngClass]="{'disabled': (!registerUser.valid)|| isLessAmount || isMaxAmount}" [disabled]="!registerUser.valid || isLessAmount || isMaxAmount"> Submit   </button>
             <p class="redalert user-hint" *ngIf="!registerUser.valid">*All Fields are Mandatory</p>
-        </div> 
+        </div>
 
-       <!-- <div class="redalert error-msg">{{errorMsg}}</div> -->
+        <!-- <div class="redalert error-msg">{{errorMsg}}</div> -->
 
-    
-    </form> 
+
+    </form>
 </div>
 
-    <div class="overlay" [ngClass]="{'active': isErrorModal}">
-        <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isErrorModal}">
-            <a class="modal-close" (click)="isErrorModal = false"><span class="icon icon-close"></span></a>
-            <div class="modal-body">
-                <h1>{{errorMsg}}</h1>
-                <br><br>
-                <div class="btn-wrap">
-                    <button class="btn btn-border" (click)="isErrorModal = false">Close</button>
-                </div>
+<div class="overlay" [ngClass]="{'active': isErrorModal}">
+    <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isErrorModal}">
+        <a class="modal-close" (click)="isErrorModal = false"><span class="icon icon-close"></span></a>
+        <div class="modal-body">
+            <h1>{{errorMsg}}</h1>
+            <br><br>
+            <div class="btn-wrap">
+                <button class="btn btn-border" (click)="isErrorModal = false">Close</button>
             </div>
         </div>
     </div>
+</div>
