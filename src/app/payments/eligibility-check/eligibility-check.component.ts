@@ -81,7 +81,7 @@ export class EligibilityCheckComponent implements OnInit {
   applicationId: string;
   applicationStatusYes: string = "27";
   applicationStatusNo: string = "28";
-
+  applicationStatus: number;
 
   fragments = ["eligibility1", "eligibility2"];
 
@@ -106,6 +106,7 @@ export class EligibilityCheckComponent implements OnInit {
         this.applicationId = value.application.applicationId;
         this.ocsNumber = value.application.ocsNumber;
         this.commonDataService.changeApplicationId(this.applicationId);
+        this.applicationStatus = value.application.status;
       });
       console.log(this.route.snapshot.data);
       // this.applicationId
@@ -121,7 +122,12 @@ export class EligibilityCheckComponent implements OnInit {
 
   ngOnInit() {
     // this.renderer.addClass(this.select2.selector.nativeElement, 'js-select');
-    this.submitEligibility();
+    if (this.applicationStatus == 30){    
+      this.showNotEligible = true;
+      this.commonDataService.setIsMainTabEnabled(false);
+    }else {
+      this.submitEligibility();
+    }
     this.route.fragment.subscribe(fragment => {
       let localFragment = fragment;
 

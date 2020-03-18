@@ -86,6 +86,7 @@ export class ViewFormApplicantComponent implements OnInit, OnChanges {
   @Input() isCoApplicant: boolean;
   @Input() applicationId: any;
   @Input() showEdit: boolean;
+  @Input() selectedRelationships: any;
   occupationRequired: boolean;
   orgDetails: any;
   _dob: any;
@@ -144,6 +145,9 @@ export class ViewFormApplicantComponent implements OnInit, OnChanges {
     }
     if('selectedAssesmentMethodology' in simpleChanges){
       this.selectedAssesmentMethodology = this.selectedAssesmentMethodology ? this.selectedAssesmentMethodology.key : '';
+    }
+    if('selectedRelationships' in simpleChanges){
+      this.selectedRelationships = this.selectedRelationships ?  this.selectedRelationships.key:'';
     }
   }
 

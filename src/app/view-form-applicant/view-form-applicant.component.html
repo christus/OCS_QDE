@@ -28,26 +28,47 @@
       <h3 class="card-title">Personal details</h3>
       <div class="bs-form">
           <div class="row">
-              <div class="col-3">
-                  <div class="form-group">
-                      <span class="control-title">Title</span>
-                      <!-- <kendo-dropdownlist class="form-control"
-                                      [data]="titles" 
-                                      textField="key"
-                                      valueField="value"
-                                      name="title"
-                                      [(ngModel)]="selectedTitle">
-                      </kendo-dropdownlist> -->
-                      <input type="text"
-                                      class="form-control" 
-                                      
-                                      [(ngModel)]="selectedTitle"
-                                      name="title"
-                                      fieldFill
-                                      spellcheck="false"
-                                      required />
-                  </div>
-              </div>
+            
+              <div class="col-6" *ngIf="!qde.application.applicants[applicantIndex].isMainApplicant">
+                <div class="form-group">
+                    <span class="control-title"> Relationship with Applicant </span>
+                    <!-- <kendo-dropdownlist class="form-control"
+                                    [data]="titles" 
+                                    textField="key"
+                                    valueField="value"
+                                    name="title"
+                                    [(ngModel)]="selectedTitle">
+                    </kendo-dropdownlist> -->
+                    <input type="text"
+                                    class="form-control" 
+                                    
+                                    [(ngModel)]="selectedRelationships"
+                                    name="relationships"
+                                    fieldFill
+                                    spellcheck="false"
+                                    required />
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-group">
+                    <span class="control-title">Title</span>
+                    <!-- <kendo-dropdownlist class="form-control"
+                                    [data]="titles" 
+                                    textField="key"
+                                    valueField="value"
+                                    name="title"
+                                    [(ngModel)]="selectedTitle">
+                    </kendo-dropdownlist> -->
+                    <input type="text"
+                                    class="form-control" 
+                                    
+                                    [(ngModel)]="selectedTitle"
+                                    name="title"
+                                    fieldFill
+                                    spellcheck="false"
+                                    required />
+                </div>
+            </div>
           </div>
           <div class="row">
               <div class="col-4">

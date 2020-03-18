@@ -95,10 +95,10 @@
         <div class="inputBox form-field-el">
             <label for="rmId" class="inputText">RM ID: </label>
             <input type="text" [(ngModel)]="rmId" class="form-control" fieldFill [maxlength]="minMaxValues['RM_ID']?.maxLength" (input)="checkAmountLimit($event,minMaxValues['RM_ID']?.minValue,minMaxValues['RM_ID']?.maxValue)" (keypress)=_keyPress($event) formControlName="rmId"
-                id="rmId" pattern={{regexPattern.mobileNumber}} />
+                id="rmId" pattern={{regexPattern.rmId}} />
             <div *ngIf="formValue.rmId.errors">
                 <!-- <div class="redalert"  *ngIf="formValue.rmId.errors.required"> required</div> -->
-                <div class="redalert" *ngIf="registerUser.get('rmId').hasError('pattern')"> Invalid RM</div>
+                <div class="redalert" *ngIf="registerUser.get('rmId').hasError('pattern')"> Invalid RM</div><br/>
             </div>
             <div class="redalert" *ngIf="isLessAmount">RM ID should be greater than or equal to {{requirMinAmout}}</div>
             <div class="redalert" *ngIf="isMaxAmount">RM ID should be less than {{requirMaxAmout}}</div>

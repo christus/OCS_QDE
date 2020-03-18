@@ -127,7 +127,8 @@
                                             <div class="image-wrapper-container">
                                                 <div class="bs-file">
                                                     <div *ngIf="!isMobile">
-                                                        <input  [readonly]="isTBMLoggedIn" id="clickCustomerPhoto1" type="file" class="form-control" (change)="setCustomerPhoto($event.target.files)" >
+                                                        <input  [readonly]="isTBMLoggedIn" id="clickCustomerPhoto1" type="file" class="form-control" (change)="setCustomerPhoto($event.target.files)"
+                                                        accept=".jpg, .png, .jpeg|image/*" >
                                                         <label for="clickCustomerPhoto1"><span>Click to photo / Upload document</span></label>
                                                     </div>
                                                     <div *ngIf="isMobile && !isTBMLoggedIn" (click)="openCamera('setCustomerPhoto')"  (change)="setCustomerPhoto($event.target.files)">

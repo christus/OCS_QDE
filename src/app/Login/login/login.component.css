@@ -1,33 +1,49 @@
 .lyt-login {
-	position: absolute;
+    position: absolute;
 }
+
 .bottomright {
-	position: absolute;
-	bottom: 8px;
-	right: 16px;
-	font-size: 18px;
-	color: #bdacac;
+    position: absolute;
+    bottom: 8px;
+    right: 16px;
+    font-size: 18px;
+    color: #bdacac;
 }
 
 .login_modal {
-	height: 280px;
+    height: 280px;
     padding-top: 2px;
 }
 
 .margin_right {
-	margin-right: 15px;
+    margin-right: 15px;
 }
+
 .bs-form .form-group {
-margin-bottom: 2.08vw;
+    margin-bottom: 2.08vw;
 }
-.captch{
-	border: solid;
+
+.captch {
+    border: solid;
     /* padding-top: 1vw; */
     padding-left: 1vw;
     padding-bottom: 1vw;
-	border-color: rgba(187, 187, 187, 1);
-	border-width: thin;
+    border-color: rgba(187, 187, 187, 1);
+    border-width: thin;
 }
-.captch-group{
-	height: 6vw
+
+.captch-group {
+    height: 6vw
+}
+
+@font-face {
+    font-family: "icicihfc";
+    src: url("/assets/fonts/pwd.ttf");
+    font-family: 'password';
+    font-style: normal;
+    font-weight: 400;
+}
+
+.passd {
+    font-family: 'password' !important;
 }

@@ -1,5 +1,5 @@
-.create-co-app-btn {
-}
+.create-co-app-btn {}
+
 .rounded-radio .bs-radio label {
     display: block;
     background: 0 0;
@@ -12,6 +12,7 @@
     text-align: left;
     padding-left: 3.13vw;
 }
+
 .rounded-radio .bs-radio label:before {
     content: '';
     display: inline-block;
@@ -24,34 +25,38 @@
     left: -1px;
     top: 0;
 }
+
 .rounded-radio .bs-radio input[type=radio]:checked+label:after {
-	content: '';
-	font-family: icicihfc;
-	position: absolute;
-	left: .63vw;
-	top: .63vw;
-	bottom: .63vw;
-	right: .63vw;
-	background: #fff;
-	border-radius: 50%;
-	width: 1.17vw;
-	height: 1.17vw;
+    content: '';
+    font-family: icicihfc;
+    position: absolute;
+    left: .63vw;
+    top: .63vw;
+    bottom: .63vw;
+    right: .63vw;
+    background: #fff;
+    border-radius: 50%;
+    width: 1.17vw;
+    height: 1.17vw;
 }
+
 .rounded-radio .bs-radio input[type=radio]:checked+label:before {
-	border-color: #f58220;
-	background: #f58220;
+    border-color: #f58220;
+    background: #f58220;
 }
+
 .rounded-radio .bs-radio input[type=radio]:checked+label {
-	border-color: #f58220;
-	color: #f58220;
-	box-shadow: none;
+    border-color: #f58220;
+    color: #f58220;
+    box-shadow: none;
 }
+
 .invalid-feedback {
-	font-size: .94vw;
-	line-height: 1.09vw;
-	font-family: zurich-bold;
+    font-size: .94vw;
+    line-height: 1.09vw;
+    font-family: zurich-bold;
     letter-spacing: .5px;
-    color:red;
+    color: red;
 }
 
 .create-co-app-btn {
@@ -71,17 +76,21 @@
     text-align: center;
     margin: 0 auto;
     background: #ccc;
-  }
-.otp_input_len{
+}
+
+.otp_input_len {
     width: 28.55vw;
 }
-.pull-right{
+
+.pull-right {
     float: right;
 }
 
 .resend_otp_size {
-  font-size: 15px;  
+    font-size: 15px;
 }
+
+
 /* .swiper-slide {
     visibility: hidden;
 }
@@ -91,8 +100,8 @@
 } */
 
 [readonly="true"] {
-	cursor: not-allowed;
-	pointer-events: none;
+    cursor: not-allowed;
+    pointer-events: none;
 }
 
 .currentAddressFromMainApplicantBtnWrapper {
@@ -103,11 +112,10 @@
     text-align: left;
 }
 
-.currentAddressFromMainApplicantBtnWrapper > button {
+.currentAddressFromMainApplicantBtnWrapper>button {
     background: transparent;
     border: none;
 }
-
 
 .transOpacity500ms {
     -webkit-transition: all 500ms ease-out 300ms;
@@ -127,6 +135,7 @@
 .typ-range {
     overflow: visible;
 }
+
 .rounded-radio .bs-radio label {
     display: block;
     background: 0 0;
@@ -139,6 +148,7 @@
     text-align: left;
     padding-left: 3.13vw;
 }
+
 .rounded-radio .bs-radio label:before {
     content: '';
     display: inline-block;
@@ -151,34 +161,38 @@
     left: -1px;
     top: 0;
 }
+
 .rounded-radio .bs-radio input[type=radio]:checked+label:after {
-	content: '';
-	font-family: icicihfc;
-	position: absolute;
+    content: '';
+    font-family: icicihfc;
+    position: absolute;
     left: 0.61vw;
     top: .65vw;
-	background: #fff;
-	border-radius: 50%;
-	width: 1.17vw;
-	height: 1.17vw;
+    background: #fff;
+    border-radius: 50%;
+    width: 1.17vw;
+    height: 1.17vw;
 }
+
 .rounded-radio .bs-radio input[type=radio]:checked+label:before {
-	border-color: #f58220;
-	background: #f58220;
+    border-color: #f58220;
+    background: #f58220;
 }
+
 .rounded-radio .bs-radio input[type=radio]:checked+label {
-	border-color: #f58220;
-	color: #f58220;
-	box-shadow: none;
+    border-color: #f58220;
+    color: #f58220;
+    box-shadow: none;
 }
 
 .invalid-feedback {
-	font-size: .94vw;
-	line-height: 1.09vw;
-	font-family: zurich-bold;
+    font-size: .94vw;
+    line-height: 1.09vw;
+    font-family: zurich-bold;
     letter-spacing: .5px;
-    color:red;
+    color: red;
 }
+
 .center[_ngcontent-c2] {
     font-family: zurich-bold;
     font-size: 1.88vw;
@@ -187,20 +201,24 @@
     padding: 1.56vw 0;
     margin-top: 6vw;
 }
+
 .bs-modal p {
     margin-top: 1vw;
     font-size: 1vw
 }
+
 .center {
     text-align: center;
     margin-top: 0vw
 }
+
 .bs-modal .btn-wrap {
     display: block;
     text-align: center;
     padding: 0;
     margin-top: 45px;
 }
+
 .btn.btn-border {
     border-radius: 3.91vw;
     color: #f58220;
@@ -212,6 +230,7 @@
     border: 1px solid #f58220;
     /* margin-top: 4vw */
 }
+
 .bs-modal .modal-body .or {
     font-size: 1.41vw;
     line-height: 7.28vw;
@@ -223,6 +242,7 @@
     width: 50%
 }
 
+
 /* .swiper-slide {
 visibility: hidden;
 }
@@ -232,13 +252,14 @@ visibility: visible;
 } */
 
 [readonly="true"] {
-	cursor: not-allowed;
-	pointer-events: none;   
+    cursor: not-allowed;
+    pointer-events: none;
 }
 
 .duplicate-modal-body {
     padding: 1vw 0;
 }
+
 
 /* .duplicate-table {
     width: 100%;
@@ -247,6 +268,8 @@ visibility: visible;
     outline: 1px solid #333;
     overflow: scroll;
 } */
+
+
 /* 
 .duplicate-table tr {
     outline: 1px solid #333;
@@ -263,6 +286,7 @@ visibility: visible;
     margin-top: 1vw;
     margin-bottom: 1vw;
 }
+
 
 /* .duplicate-table td {
     vertical-align: middle;
@@ -335,13 +359,10 @@ visibility: visible;
 .duplicate-table-data .duplicate-table-col {
     font-size: 1.2vw;
 }
-input[type="text"]:invalid
- {
-    
+
+input[type="text"]:invalid {
     /* font-size: 0.8vh; */
-  }
-
-
+}
 
 .redalert {
     color: red;
@@ -358,7 +379,8 @@ input[type="text"]:invalid
     margin-bottom: -10px;
     width: 82%;
 }
-.kendo_date_picker{
+
+.kendo_date_picker {
     width: 2.1vw;
     border: none;
     margin-bottom: 30px;
@@ -373,7 +395,10 @@ input[type="text"]:invalid
 .margin_zero {
     margin-bottom: 0px !important;
 }
-.k-datepicker .k-dateinput, .k-datetimepicker .k-dateinput, .k-timepicker .k-dateinput {
+
+.k-datepicker .k-dateinput,
+.k-datetimepicker .k-dateinput,
+.k-timepicker .k-dateinput {
     width: 1%;
     border-left: 1px solid #e6e6e6;
 }
@@ -382,6 +407,17 @@ input[type="text"]:invalid
     font-size: 31px !important;
 }
 
-.with_datepicker .k-i-arrow-60-down::before, .with_datepicker .k-i-arrow-s::before, .with_datepicker .k-i-sarrow-s::before, .with_datepicker .k-i-collapse::before, .with_datepicker .k-i-expand-s::before {
+.with_datepicker .k-i-arrow-60-down::before,
+.with_datepicker .k-i-arrow-s::before,
+.with_datepicker .k-i-sarrow-s::before,
+.with_datepicker .k-i-collapse::before,
+.with_datepicker .k-i-expand-s::before {
     font-size: 60px !important;
+}
+
+.dash-boad-text {
+    /* font-size: calc(.5vw + .5vh + 1.1vmin); */
+    line-height: calc(.5vw + .5vh + 1.1vmin);
+    overflow-wrap: break-word;
+    padding: .5vw;
 }

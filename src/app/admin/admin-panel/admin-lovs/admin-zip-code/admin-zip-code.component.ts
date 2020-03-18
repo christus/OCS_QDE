@@ -58,7 +58,8 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
   currentPage: number;
   perPage: number;
   totalPages: number;
-  totalElements: number;
+  // totalElements: number;
+  totalItems:number;
   // perPageCount: number = 5;
   isRegionHidden:boolean;
   isStateHidden: boolean;
@@ -130,7 +131,8 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
         this.currentPage = parseInt(this.route.snapshot.data['eachLovs']['ProcessVariables']['currentPage']);
         this.totalPages = parseInt(this.route.snapshot.data['eachLovs']['ProcessVariables']['totalPages']);
         this.perPage = parseInt(this.route.snapshot.data['eachLovs']['ProcessVariables']['perPage']);
-        this.totalElements = this.route.snapshot.data['eachLovs']['ProcessVariables']['totalPages'] * this.perPage;
+        // this.totalElements = this.route.snapshot.data['eachLovs']['ProcessVariables']['totalPages'] * this.perPage;
+        this.totalItems = this.route.snapshot.data['eachLovs']['ProcessVariables']['totalPages'] * this.perPage;
         // this.perPageCount = Math.ceil(this.totalElements/this.perPage);
       } else {
         this.isErrorModal = true;
@@ -264,11 +266,13 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
     return new Array(n);
   }
 
-  loadMore() {
-    this.qdeHttp.adminLoadMoreLovs(this.tableName, (this.currentPage+1), this.perPage,this.searchKey).subscribe(res => {
+  loadMore(event) {
+    this.qdeHttp.adminLoadMoreLovs(this.tableName, event, this.perPage,this.searchKey).subscribe(res => {
+      // (this.currentPage+1)
       if(res['ProcessVariables']['status'] == true) {
         if(res['ProcessVariables']['valueDescription']) {
-          this.data = this.data.concat(res['ProcessVariables']['valueDescription'].map(v => {
+          // this.data = this.data.concat(res['ProcessVariables']['valueDescription'].map(v => {
+            this.data = res['ProcessVariables']['valueDescription'].map(v =>{
             return {
               userId: parseInt(localStorage.getItem('userId')),
               tableName: this.tableName,
@@ -282,16 +286,18 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
               zone: v['zone'],
               zoneName: v['zoneName'],
               regionId: v['regionId'],
-            regionName: v['regionName']
+              regionName: v['regionName']
             }
-          }));
+          // }));
+            });
   
           this.tempData = this.data;
   
           this.currentPage = parseInt(res['ProcessVariables']['currentPage']);
           this.totalPages = parseInt(res['ProcessVariables']['totalPages']);
           this.perPage = parseInt(res['ProcessVariables']['perPage']);
-          this.totalElements = res['ProcessVariables']['totalPages'] * this.perPage;
+          // this.totalElements = res['ProcessVariables']['totalPages'] * this.perPage;
+          this.totalItems = res['ProcessVariables']['totalPages'] * this.perPage;
         } else {
           this.isErrorModal = true;
           this.errorMsg = "No Data Present Further";
@@ -597,7 +603,8 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
           this.currentPage = parseInt(res['ProcessVariables']['currentPage']);
           this.totalPages = parseInt(res['ProcessVariables']['totalPages']);
           this.perPage = parseInt(res['ProcessVariables']['perPage']);
-          this.totalElements = res['ProcessVariables']['totalPages'] * this.perPage;
+          // this.totalElements = res['ProcessVariables']['totalPages'] * this.perPage;
+          this.totalItems = res['ProcessVariables']['totalPages'] * this.perPage;
           // this.perPageCount = Math.ceil(this.totalElements/this.perPage);
         } else {
           this.isErrorModal = true;
@@ -653,7 +660,8 @@ export class AdminZipCodeComponent implements OnInit, OnDestroy {
             this.currentPage = parseInt(res['ProcessVariables']['currentPage']);
             this.totalPages = parseInt(res['ProcessVariables']['totalPages']);
             this.perPage = parseInt(res['ProcessVariables']['perPage']);
-            this.totalElements = res['ProcessVariables']['totalPages'] * this.perPage;
+            // this.totalElements = res['ProcessVariables']['totalPages'] * this.perPage;
+            this.totalItems = res['ProcessVariables']['totalPages'] * this.perPage;
             this.isErrorModal = false;
           } else {
             this.isErrorModal = true;

@@ -610,9 +610,9 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
       this.photoProofFileSize[this.applicantIndex] = "";
       return;
     }
-
+    if(files.item(0).type =='image/jpeg' || files.item(0).type =='image/png'|| files.item(0).type =='image/jpg'){
     this.photoProofDoc[this.applicantIndex] = files.item(0);
-
+    console.log('file type',files.item(0).type);
     let size = this.getFileSize(this.photoProofDoc[this.applicantIndex]["size"]);
 
     if(size) {
@@ -633,6 +633,10 @@ export class DocumentUploadComponent implements OnInit, AfterViewInit {
     //   this.errorMessage = "Something went wrong, please try again later.";
     // }
   );
+  } else {
+    this.isErrorModal = true;
+    this.errorMessage =" Selected File Type Not Supported"
+  }
 
   }
 

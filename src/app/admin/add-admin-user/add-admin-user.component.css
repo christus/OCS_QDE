@@ -145,11 +145,12 @@
   }
   .reporting_to {
     overflow-y: scroll;
-    height: 100px;
+    height: 150px;
     position: absolute;
     width: 17.75vw;
     background: #eee;
     border: 1px solid #ccc;
+    z-index: 1;
   }
   .reporting_to li {
     padding: 0.5vw;

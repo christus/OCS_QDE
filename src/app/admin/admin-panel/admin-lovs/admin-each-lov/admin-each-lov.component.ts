@@ -112,6 +112,7 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
           this.key[i] = ((parseInt(this.perPage) * (parseInt(this.currentPage) - 1)) + i + 1);
         }
       } else {
+        this.lovs = [];
         this.isErrorModal = true;
         this.errorMsg = 'No Data Found';
       }
@@ -235,6 +236,14 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
           this.lastKey = (parseInt(this.perPage) * (parseInt(this.totalPages) - 1)) + this.key.length + 1;
           console.log(this.lastKey);
           this.key.push(this.lastKey);
+
+        }else {
+          this.lovs.push({ tableName: this.tableName, userId: localStorage.getItem('userId'), description: '',
+                         value: '', isEdit: false, male: false, female: false, disabaleRole: false, isRequired: "0"});
+                         this.lastKey = (parseInt(this.perPage) * (parseInt(this.totalPages) - 1)) + this.key.length + 1;
+          console.log(this.lastKey);
+          // this.key.push(this.lastKey);
+          this.key.push(this.lovs.length)
 
         }
       }
@@ -448,6 +457,7 @@ export class AdminEachLovComponent implements OnInit, AfterViewInit {
             this.key[i] = ((parseInt(this.perPage) * (parseInt(this.currentPage) - 1)) + i + 1);
           }
         } else {
+          this.lovs = [];
           this.isErrorModal = true;
           this.errorMsg = 'No Data Found';
           //alert("No Data Found");

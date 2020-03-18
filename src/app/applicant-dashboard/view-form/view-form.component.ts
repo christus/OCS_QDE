@@ -113,7 +113,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
   categories: Array<any>;
   genders: Array<any>;
   constitutions: Array<any>;
-
+  
   // loanProviders: Array<any>;
   loanType: Array<any>;
   loanpurposes: Array<any> = [];
@@ -180,7 +180,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
   allApplicantsItem: Array<Item> = [];
   liveLoan: Array<string>;
   // occupationRequired: boolean;
-
+  selectedRelationships: Array<Item>=[];
   docType: Array<any> = [];
   selectedAssesmentMethodology: Array<Item> = [];
   isViewFormModal:boolean = false;
@@ -917,7 +917,7 @@ export class ViewFormComponent implements OnInit, OnDestroy {
       this.selectedConstitution.push(this.constitutions[0]);
       this.selectedDocType.push(this.docType[0]);
       this.selectedAssesmentMethodology.push(this.assessmentMethodology[0]);
-
+     
       
       // Personal Details Title
       // alert(eachApplicant.personalDetails.title);
@@ -1027,7 +1027,9 @@ export class ViewFormComponent implements OnInit, OnDestroy {
       if( ! isNaN(parseInt(eachApplicant.incomeDetails.assessmentMethodology)) ) {
         this.selectedAssesmentMethodology[i] = (this.assessmentMethodology.find(v => v.value == eachApplicant.incomeDetails.assessmentMethodology));
       }
-
+      if( ! isNaN(parseInt(eachApplicant.personalDetails.relationShip)) ) {
+        this.selectedRelationships[i] = this.relationships.find(v => v.value == eachApplicant.personalDetails.relationShip);
+      }
       this.initializeVariables(eachApplicant);
       // this.selectValueChangedOccupation(this.selectedOccupation[i])
     });

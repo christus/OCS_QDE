@@ -3022,7 +3022,7 @@ export class QdeHttpService {
             if (data['ProcessVariables']['errorMessage'] != undefined && data['ProcessVariables']['errroMessage'] != "") {
               this.cds.setErrorData(true, cdsData, msg);
             } else {
-              this.cds.setErrorData(true, data);
+              this.cds.setErrorData(true, cdsData);
             }
           } else if (data['Error'] == "0"
             && data['Error'] != undefined

@@ -92,7 +92,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let d of data;let i=index;">
+      <tr *ngFor="let d of data | paginate: { itemsPerPage: perPage, currentPage: currentPage, totalItems: totalItems  };let i=index;">
         <td>{{i+1}}</td>
         <td>{{d.regionName}}</td>
         <td>{{d.stateName}}</td>
@@ -107,12 +107,12 @@
           <button type="button" class="editsavebtn" (click)="delete(i)">Delete</button>
         </td>
       </tr>
-      <tr>
+      <!-- <tr>
         <td><button type="button" class="editsavebtn" *ngIf="currentPage != totalPages" (click)="loadMore()">Load More</button></td>
-      </tr>
+      </tr> -->
     </tbody>
   </table>
-
+  <pagination-controls  (pageChange)="loadMore($event)" autoHide="true" class="pagination" >fdsdfsd</pagination-controls>
   
 
   <div class="pagination-wrapper">

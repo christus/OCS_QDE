@@ -1,59 +1,59 @@
 <div class="lyt-login lyt-absolute">
-  <div class="lhs">
-      <h1 class="logo">
-          <a href="#">
-              <img src="assets/images/logo-white.svg" alt="logo">
-          </a>
-      </h1>
-      <div class="title-wrap">
-          <h2 class="title">Enter login <span class="cm-line-break"></span> details</h2>
-      </div>
-  </div>
-  <div class="rhs">
-      <form class="bs-form margin_top" autocomplete="off">
-          <div class="form-wrap">
-              <div class="form-group">
-                <input type="text" #userNameField [(ngModel)]="userName" class="form-control" name="userName" id="emp-id" fieldFill autocomplete="off"  />
-                <label for="emp-id">Employee ID</label>
-              </div>
-              <div class="form-group">
-                <input type="password" [(ngModel)]="password" class="form-control"  #passwordField name="password" id="password" fieldFill autocomplete="new-password"  />
-                <label for="password" >Password</label>
-              </div>  
-              <!-- last             -->
-              <div class="form-group last" >
-               <img src = {{catchaImage}} class="captch captch-group"  >
-               <img src="assets/images/refresh.png" class="captch-group" (click)="generateCatchaImage()" >
-              </div>
-              <div class="form-group last">
-                <input type="text"  #captchaImageText [(ngModel)]="captchaText" class="form-control" name="captchaText" id="catText" fieldFill  />
-                <label for="catText">Captcha Text</label>
-              </div>
-              <div class="error-msg">
-                <span>{{sessionMessage}}</span>
-            </div>
-          </div>
-          <div class="btn-wrap">
-            <button class="btn btn-primary" (click)="login()">LOGIN</button>
-          </div>
-      </form>
-  </div>
-  <div class="container version_container">
-    <div class="bottomright version_container" title="{{buildDate}}">V - {{version}}</div>
-  </div>
-
-  <div class="overlay" [ngClass]="{'active': activeSessionExists}"></div>
-  <div class="bs-modal login_modal" id="biomatric-modal" [ngClass]="{'active': activeSessionExists}">
-    <!-- <a class="modal-close" href="javascript:void(0);" (click)="onBackOTP()"><span class="icon icon-close"></span></a> -->
-    <div class="modal-body">
-      <h1 class="center">{{sessionMessage}}</h1>
-      <p>Click Proceed to continue</p>
-      <div class="btn-wrap">
-        <button class="btn btn-border margin_right" (click)="removeExisitingSession()">Proceed</button>
-        <button class="btn btn-border" (click)="cancelProcess()">Cancel</button>
-      </div>
+    <div class="lhs">
+        <h1 class="logo">
+            <a href="#">
+                <img src="assets/images/logo-white.svg" alt="logo">
+            </a>
+        </h1>
+        <div class="title-wrap">
+            <h2 class="title">Enter login <span class="cm-line-break"></span> details</h2>
+        </div>
     </div>
-  </div>
+    <div class="rhs">
+        <form class="bs-form margin_top" autocomplete="off">
+            <div class="form-wrap">
+                <div class="form-group">
+                    <input type="text" #userNameField [(ngModel)]="userName" class="form-control" name="userName" id="emp-id" fieldFill autocomplete="off" />
+                    <label for="emp-id">Employee ID</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" [(ngModel)]="password" class="form-control passd" #passwordField name="password" id="password" fieldFill autocomplete="off" />
+                    <label for="password">Password</label>
+                </div>
+                <!-- last             -->
+                <div class="form-group last">
+                    <img src={{catchaImage}} class="captch captch-group">
+                    <img src="assets/images/refresh.png" class="captch-group" (click)="generateCatchaImage()">
+                </div>
+                <div class="form-group last">
+                    <input type="text" #captchaImageText [(ngModel)]="captchaText" class="form-control" name="captchaText" id="catText" fieldFill />
+                    <label for="catText">Captcha Text</label>
+                </div>
+                <div class="error-msg">
+                    <span>{{sessionMessage}}</span>
+                </div>
+            </div>
+            <div class="btn-wrap">
+                <button class="btn btn-primary" (click)="login()">LOGIN</button>
+            </div>
+        </form>
+    </div>
+    <div class="container version_container">
+        <div class="bottomright version_container" title="{{buildDate}}">V - {{version}}</div>
+    </div>
 
-  
+    <div class="overlay" [ngClass]="{'active': activeSessionExists}"></div>
+    <div class="bs-modal login_modal" id="biomatric-modal" [ngClass]="{'active': activeSessionExists}">
+        <!-- <a class="modal-close" href="javascript:void(0);" (click)="onBackOTP()"><span class="icon icon-close"></span></a> -->
+        <div class="modal-body">
+            <h1 class="center">{{sessionMessage}}</h1>
+            <p>Click Proceed to continue</p>
+            <div class="btn-wrap">
+                <button class="btn btn-border margin_right" (click)="removeExisitingSession()">Proceed</button>
+                <button class="btn btn-border" (click)="cancelProcess()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+
 </div>

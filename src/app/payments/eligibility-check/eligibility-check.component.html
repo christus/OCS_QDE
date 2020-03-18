@@ -3,9 +3,9 @@
     <div class="main">
         <div class="lyt-home">
             <div class="tabs">
-  
+
                 <div class="tabs-contents" #tabContents>
-<!--                  <div class="tab-content" [ngClass]="{'active': (activeTab == 0)}">
+                    <!--                  <div class="tab-content" [ngClass]="{'active': (activeTab == 0)}">
                       <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(panSlider2)"></a>
                       <div class="lyt-tabs">
                           <div class="lhs">
@@ -49,43 +49,37 @@
                               </div>
                       </div>
                   </div> -->
-  
-                <!-- Aadhar Card -->
-  
+
+                    <!-- Aadhar Card -->
+
                     <div class="tab-content" [ngClass]="{'active': showEligible}">
-                      <!-- <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(panSlider2)"></a> -->
-                      <div class="lyt-tabs">
-                          <div class="lhs">
-                              <div  class="swiper-container form-swiper"
-                                    [swiper]="lhsConfig"
-                                    #aadharSlider1="ngxSwiper">
-                                  <div class="swiper-wrapper">
-                                      <div class="swiper-slide">
-                                          <div class="title-wrap">
+                        <!-- <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(panSlider2)"></a> -->
+                        <div class="lyt-tabs">
+                            <div class="lhs">
+                                <div class="swiper-container form-swiper" [swiper]="lhsConfig" #aadharSlider1="ngxSwiper">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide">
+                                            <div class="title-wrap">
                                                 <!-- <img class="thumb" src="/assets/images/thumb.png" alt="logo"> -->
                                                 <h4 class="title">Loan<span class="cm-line-break">Eligibility:</span></h4>
                                                 <p class="note"><b>Accept</b> or <b>Reject</b> your eligibilty:</p>
-                                          </div>
-                                      </div>
-                                      <!-- <div class="swiper-slide">
+                                            </div>
+                                        </div>
+                                        <!-- <div class="swiper-slide">
                                           <div class="title-wrap">
                                               <h4 class="title">Verify<span class="cm-line-break"></span>Aadhar Card</h4>
                                           </div>
                                       </div> -->
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="rhs">
-                              <div  class="swiper-container form-swiper"
-                                    [swiper]="rhsConfig"
-                                    (slidePrevTransitionStart)="slidePrevTransitionStart(aadharSlider1)"
-                                    (slideNextTransitionStart)="slideNextTransitionStart(aadharSlider1)"
-                                    #aadharSlider2="ngxSwiper">
-                                  <div class="swiper-wrapper">
-                                      <div class="swiper-slide">
-                                        <form class="bs-form" id="spouse-form">
-                                          <div class="form-wrap">
-                                                <!-- <p class="para">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rhs">
+                                <div class="swiper-container form-swiper" [swiper]="rhsConfig" (slidePrevTransitionStart)="slidePrevTransitionStart(aadharSlider1)" (slideNextTransitionStart)="slideNextTransitionStart(aadharSlider1)" #aadharSlider2="ngxSwiper">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide">
+                                            <form class="bs-form" id="spouse-form">
+                                                <div class="form-wrap">
+                                                    <!-- <p class="para">
                                                         <span class="cm-bold">{{firstname}}</span> is eligible for a loan with
                                                         <span class="cm-bold">ICICI HOME FINANCE!</span>
 
@@ -109,20 +103,20 @@
                                                             </span>
                                                         </div>
                                                     </div>
-                                          </div>
-                                          <div class="rhs eligibility-check">
-                                                <div class="btn btn-default yes" (click)="statusYes()">Accept Eligibility</div>
-                                                <div class="btn btn-default no" (click)="statusNo()">Reject Eligibility</div>
-                                         </div>
-                                      </form>
-                                
-                                      </div>                              
-                                  </div>
-                              </div>
-                          </div>
-                          <br>
-                          
-                      </div>
+                                                </div>
+                                                <div class="rhs eligibility-check">
+                                                    <div class="btn btn-default yes" (click)="statusYes()">Accept Eligibility</div>
+                                                    <div class="btn btn-default no" (click)="statusNo()">Reject Eligibility</div>
+                                                </div>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+
+                        </div>
                     </div>
 
 
@@ -130,14 +124,12 @@
                         <!-- <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(panSlider2)"></a> -->
                         <div class="lyt-tabs">
                             <div class="lhs">
-                                <div  class="swiper-container form-swiper"
-                                      [swiper]="lhsConfig"
-                                      #aadharSlider1="ngxSwiper">
+                                <div class="swiper-container form-swiper" [swiper]="lhsConfig" #aadharSlider1="ngxSwiper">
                                     <div class="swiper-wrapper">
                                         <div class="swiper-slide">
                                             <div class="title-wrap">
-                                                  <!-- <img class="thumb" src="/assets/images/thumb.png" alt="logo"> -->
-                                                  <h4 class="title">Loan<span class="cm-line-break">Eligibility:</span></h4>
+                                                <!-- <img class="thumb" src="/assets/images/thumb.png" alt="logo"> -->
+                                                <h4 class="title">Loan<span class="cm-line-break">Eligibility:</span></h4>
                                             </div>
                                         </div>
                                         <!-- <div class="swiper-slide">
@@ -149,40 +141,34 @@
                                 </div>
                             </div>
                             <div class="rhs">
-                                <div  class="swiper-container form-swiper"
-                                      [swiper]="rhsConfig"
-                                      (slidePrevTransitionStart)="slidePrevTransitionStart(aadharSlider1)"
-                                      (slideNextTransitionStart)="slideNextTransitionStart(aadharSlider1)"
-                                      #aadharSlider2="ngxSwiper">
+                                <div class="swiper-container form-swiper" [swiper]="rhsConfig" (slidePrevTransitionStart)="slidePrevTransitionStart(aadharSlider1)" (slideNextTransitionStart)="slideNextTransitionStart(aadharSlider1)" #aadharSlider2="ngxSwiper">
                                     <div class="swiper-wrapper">
                                         <div class="swiper-slide">
-                                          <form class="bs-form" id="spouse-form">
-                                            <div class="form-wrap">
-                                                 <h5>We will get back to you soon!</h5>
-                                            </div>
-                                        </form>
-                                  
-                                        </div>                              
+                                            <form class="bs-form" id="spouse-form">
+                                                <div class="form-wrap">
+                                                    <h5>We will get back to you soon!</h5>
+                                                </div>
+                                            </form>
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <br>
-                            
-                        </div>
-                      </div>
 
-                      <div class="tab-content" [ngClass]="{'active': showReview}">
+                        </div>
+                    </div>
+
+                    <div class="tab-content" [ngClass]="{'active': showReview}">
                         <!-- <a href="javascript:void(0);" class="back-btn" (click)="onBackButtonClick(panSlider2)"></a> -->
                         <div class="lyt-tabs">
                             <div class="lhs">
-                                <div  class="swiper-container form-swiper"
-                                      [swiper]="lhsConfig"
-                                      #aadharSlider1="ngxSwiper">
+                                <div class="swiper-container form-swiper" [swiper]="lhsConfig" #aadharSlider1="ngxSwiper">
                                     <div class="swiper-wrapper">
                                         <div class="swiper-slide">
                                             <div class="title-wrap">
-                                                  <!-- <img class="thumb" src="/assets/images/thumb.png" alt="logo"> -->
-                                                  <h4 class="title">Loan<span class="cm-line-break">Eligibility:</span></h4>
+                                                <!-- <img class="thumb" src="/assets/images/thumb.png" alt="logo"> -->
+                                                <h4 class="title">Loan<span class="cm-line-break">Eligibility:</span></h4>
                                             </div>
                                         </div>
                                         <!-- <div class="swiper-slide">
@@ -194,58 +180,53 @@
                                 </div>
                             </div>
                             <div class="rhs">
-                                <div  class="swiper-container form-swiper"
-                                      [swiper]="rhsConfig"
-                                      (slidePrevTransitionStart)="slidePrevTransitionStart(aadharSlider1)"
-                                      (slideNextTransitionStart)="slideNextTransitionStart(aadharSlider1)"
-                                      #aadharSlider2="ngxSwiper">
+                                <div class="swiper-container form-swiper" [swiper]="rhsConfig" (slidePrevTransitionStart)="slidePrevTransitionStart(aadharSlider1)" (slideNextTransitionStart)="slideNextTransitionStart(aadharSlider1)" #aadharSlider2="ngxSwiper">
                                     <div class="swiper-wrapper">
                                         <div class="swiper-slide">
-                                          <form class="bs-form" id="spouse-form">
-                                            <div class="form-wrap">
-                                                 <h5>Your Application is under Review!</h5>
-                                            </div>
-                                        </form>
-                                  
-                                        </div>                              
+                                            <form class="bs-form" id="spouse-form">
+                                                <div class="form-wrap">
+                                                    <h5>Your Application is under Review!</h5>
+                                                </div>
+                                            </form>
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <br>
-                            
-                        </div>
-                      </div>
 
-
-                  </div>
-                </div>
-                </div>
-              </div>
-
-              <div class="overlay" [ngClass]="{'active': isConfirmRejectionModal}"></div>
-                <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isConfirmRejectionModal}">
-                    <div class="modal-body">
-                        <h1 class="center">Do you want to reject you eligibility?</h1>
-                        <form class="bs-form" id="spouse-form">
-                            <div class="btn-wrap">
-                                <button class="btn btn-border yes" (click)="rejectProceed()" >Yes</button>
-                                <button class="btn btn-border no" (click)="goBackEligibility()" >No</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
-                <div class="overlay" [ngClass]="{'active': isProceedModal}"></div>
-                <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isProceedModal}">
-                    <!-- <a class="modal-close" href="javascript:void(0);" (click)="onBackOTP()"><span class="icon icon-close"></span></a> -->
-                    <div class="modal-body">
-                        <p class="center">You have rejected your eligibility</p>
-                        <h1 class="pr-text">Click Proceed to continue</h1>
-                        <div class="btn-wrap">
-                            <button class="btn btn-border"  [routerLink]="['/leads']">Proceed</button>
                         </div>
                     </div>
+
+
                 </div>
-   
-      </main>
-  
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay" [ngClass]="{'active': isConfirmRejectionModal}"></div>
+    <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isConfirmRejectionModal}">
+        <div class="modal-body">
+            <h1 class="center">Do you want to reject your eligibility?</h1>
+            <form class="bs-form" id="spouse-form">
+                <div class="btn-wrap">
+                    <button class="btn btn-border yes" (click)="rejectProceed()">Yes</button>
+                    <button class="btn btn-border no" (click)="goBackEligibility()">No</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="overlay" [ngClass]="{'active': isProceedModal}"></div>
+    <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isProceedModal}">
+        <!-- <a class="modal-close" href="javascript:void(0);" (click)="onBackOTP()"><span class="icon icon-close"></span></a> -->
+        <div class="modal-body">
+            <p class="center">You have rejected your eligibility</p>
+            <h1 class="pr-text">Click Proceed to continue</h1>
+            <div class="btn-wrap">
+                <button class="btn btn-border" [routerLink]="['/leads']">Proceed</button>
+            </div>
+        </div>
+    </div>
+
+</main>

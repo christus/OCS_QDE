@@ -21,7 +21,8 @@
       <th *ngIf="isMale"><form>Male</form></th>
       <th *ngIf="isUserAtivity">Activity</th>
       
-      <th *ngIf="!isUserAtivity" [ngStyle]="{textAlign: 'center'}">Delete</th>
+      <th *ngIf="!isUserAtivity && tableName != 'resident_type'" [ngStyle]="{textAlign: 'center'}">Delete</th>
+      
 
      </tr>
    </thead>
@@ -97,7 +98,7 @@
           <span>{{error-msg}}</span>
       </div>  -->
     </td>
-       <td *ngIf="!isUserAtivity" [ngStyle]="{textAlign: 'center'}">
+       <td *ngIf="(!isUserAtivity && tableName != 'resident_type')" [ngStyle]="{textAlign: 'center'}">
          <button type="button" class="deleteBtn" (click)="delete(i)" *ngIf="l.id != null">
            <img src="assets/images/delete.svg" class="img-responsive deleteImg" alt="Delete" />
          </button>

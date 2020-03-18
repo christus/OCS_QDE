@@ -56,7 +56,8 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
   regexPattern = {
     mobileNumber: "^[1-9][0-9]*$",
     // name: "^[a-zA-Z ]+(([',. -][a-zA-Z ])?[a-zA-Z ]*)*$", 
-    name: "^[a-zA-Z0-9 ]+(([',. -][a-zA-Z ])?[a-zA-Z ]*)*$"
+    name: "^[a-zA-Z0-9 ]+(([',. -][a-zA-Z ])?[a-zA-Z ]*)*$",
+    rmId: "^[0-9]*$",
   }
 
 
@@ -366,6 +367,7 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
        this.qdeHttp.adminReportingTo(input).subscribe((response) => {
          console.log("Reporting", response);
          if(response['ProcessVariables']['status'] && response['ProcessVariables']['userList']!=null){
+          this.isErrorModal = false;
          let usersList = response['ProcessVariables']['userList'];
          this.filteredItems = usersList;
          }else if(response['ProcessVariables']['status'] && response['ProcessVariables']['userList']==null){
