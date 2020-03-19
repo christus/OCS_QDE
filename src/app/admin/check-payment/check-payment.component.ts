@@ -144,7 +144,8 @@ export class CheckPaymentComponent implements OnInit {
       userId: localStorage.getItem("userId"),
       "attachment": {
         "content": this.uploadCSVFile,
-        "mime": "text/csv",
+        // "mime": "text/csv",
+        "mime": this.uploadDoc.type,
         "name": this.uploadDoc["name"],
         "size": this.uploadDoc["size"],
         "operation": "upload"

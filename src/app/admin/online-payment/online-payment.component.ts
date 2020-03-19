@@ -130,7 +130,8 @@ export class OnlinePaymentComponent implements OnInit {
       userId: parseInt(localStorage.getItem("userId")),
       "attachment": {
         "content": this.uploadCSVFile,
-        "mime": "text/csv",
+        // "mime": "text/csv",
+        "mime": this.uploadDoc.type,
         "name": this.uploadDoc["name"],
         "size": this.uploadDoc["size"],
         "operation": "upload"

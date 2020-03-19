@@ -12,7 +12,7 @@
       <h2>UPLOAD PAYMENT</h2>
 
       <div class="bs-file paymentUploadPicContainer">
-          <input name="myFile" #paymentUploadPic id="paymentUploadPic" type="file" class="form-control" (change)="setUploadDoc($event.target)" >
+          <input name="myFile" #paymentUploadPic id="paymentUploadPic" type="file" accept=".csv"  class="form-control" (change)="setUploadDoc($event.target)" >
           <label for="paymentUploadPic"><span>Upload Payment</span></label>
       </div>
       <!-- <input type="submit" (click)="startUploadDoc()" class="btn btn-default"> -->
