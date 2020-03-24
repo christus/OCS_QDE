@@ -189,3 +189,6 @@
   .hide {
     display: none;
   }
+  .passd {
+    font-family: 'password' !important;
+}

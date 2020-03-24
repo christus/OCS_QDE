@@ -478,11 +478,13 @@ export const environment = {
     
   },
   appiyoDrive: "/d/drive/upload/",
-  host: "http://192.168.1.108/appiyo",
+  // host: "http://192.168.1.108/appiyo",
   iciciDomainExt: "@icicibankltd.com",
   ocsHost: "http://192.168.1.108/ocs",
   // host: "http://182.156.249.170/appiyo",
   // host: "https://ihfcmobileuat.icicihfc.com/appiyo",
+  // host:"http://twixor.in/appiyo/",
+  host:"http://128.199.165.230/appiyo/",
 
   driveLocation: "/d/drive/docs/",
   csvLocation: "/d/download/csv?",

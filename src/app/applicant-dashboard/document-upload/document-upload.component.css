@@ -117,3 +117,9 @@ table { border-collapse: collapse; }
     letter-spacing: .5px;
     color:red;
 }
+.dash-boad-text {
+    /* font-size: calc(.5vw + .5vh + 1.1vmin); */
+    line-height: calc(1.1vw + 1.1vh + 1.1vmin) !important;
+    overflow-wrap: break-word;
+    padding: .5vw;
+}

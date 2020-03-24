@@ -24,7 +24,16 @@
         </div>
         <div class="inputBox form-field-el">
             <label for="password" class="inputText">Password: *</label>
-            <input type="password" id="password" [(ngModel)]="password" class="form-control" fieldFill formControlName="password" autocomplete="new-password" [readonly]="updatebtn" />
+            <!-- <input type="text" [(ngModel)]="password" 
+            class="form-control passd" #passwordField name="password" id="password"
+             fieldFill autocomplete="off" /> -->
+             <input type="text" id="password" [(ngModel)]="password" name="password"
+             class="form-control passd" fieldFill formControlName="password" 
+             autocomplete="new-password" [readonly]="updatebtn" autocomplete="off"/>
+
+            <!-- <input type="password" id="password" [(ngModel)]="password"
+             class="form-control" fieldFill formControlName="password" 
+             autocomplete="new-password" [readonly]="updatebtn" /> -->
             <div *ngIf="formValue.password.errors">
                 <!-- <div class="redalert" *ngIf="formValue.password.errors.required"> required</div> -->
                 <div class="redalert" *ngIf="formValue.password.errors.minlength"> Minimum 6 character required</div>
@@ -50,11 +59,11 @@
         <div class="selectBox form-field-el">
             <label class="controltitle">User role *</label>
             <select class="form-control" formControlName="userRoleId" [(ngModel)]="defaultSelectRole">
-                <option [ngValue]="null" value="null" disabled>Choose your role</option>
+                <option [ngValue]="0" value="0" disabled>Choose your role</option>
                 <option *ngFor="let userRole of userRoles" value={{userRole.value}}>
                     {{userRole.key}}
                 </option>
-            </select>
+            </select>           
             <div *ngIf="formValue.userRoleId.errors">
                 <!-- <div class="redalert" *ngIf="formValue.userRoleId.errors.required"> required</div> -->
             </div>
@@ -105,7 +114,9 @@
         </div>
 
         <div class="inputBox form-field-el">
-            <button type="submit" class="btn btn-default" [ngClass]="{'disabled': (!registerUser.valid)|| isLessAmount || isMaxAmount}" [disabled]="!registerUser.valid || isLessAmount || isMaxAmount"> Submit   </button>
+            <button type="submit" class="btn btn-default" 
+            [ngClass]="{'disabled': (!registerUser.valid) || defaultSelectRole == '0'|| isLessAmount || isMaxAmount}" 
+            [disabled]="!registerUser.valid || defaultSelectRole == '0' || isLessAmount || isMaxAmount"> Submit   </button>
             <p class="redalert user-hint" *ngIf="!registerUser.valid">*All Fields are Mandatory</p>
         </div>
 

@@ -23,7 +23,8 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
   reportingToInp: any;
   selectedBranches = [];
   defaultSelectBranch:string ="null";
-  defaultSelectRole:string="null";
+  // defaultSelectRole:string="null";
+  defaultSelectRole = "0";
   isLessAmount: boolean;
   requirMinAmout: any;
   isMaxAmount: boolean;
