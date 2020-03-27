@@ -11,7 +11,7 @@ import { NgModule, Component } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DropDownsModule } from "@progress/kendo-angular-dropdowns";
 import { DateInputsModule } from "@progress/kendo-angular-dateinputs";
-
+import { AdminUserLovsResolverService } from './services/admin-user-lovs-resolver.service';
 // Plugins
 import { SwiperModule } from 'ngx-swiper-wrapper';
 import { SWIPER_CONFIG } from 'ngx-swiper-wrapper';
@@ -548,16 +548,18 @@ const appRoutes: Routes = [
         path: 'lovs/branch_list/add',
         component: BranchAddEditComponent,
         resolve: {
-          eachLovs: MasterLovResolverService,
-          listOfValues: ListOfValuesResolverService
+          // eachLovs: MasterLovResolverService,
+          // listOfValues: ListOfValuesResolverService
+          listOfAdminValues: AdminUserLovsResolverService
         }
       },
       {
         path: 'lovs/branch_add/:userId',
         component: BranchAddEditComponent,
         resolve: {
-          eachLovs: MasterLovResolverService,
-          listOfValues: ListOfValuesResolverService
+          // eachLovs: MasterLovResolverService,
+          // listOfValues: ListOfValuesResolverService
+          listOfAdminValues: AdminUserLovsResolverService
         }
       },
       {
@@ -788,7 +790,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     CaptchaResolverService,
     DatePipe,
     AutoLogoutService,
-    MinMaxLimitsResolverService
+    MinMaxLimitsResolverService,
+    AdminUserLovsResolverService
   ],
   bootstrap: [AppComponent]
 })

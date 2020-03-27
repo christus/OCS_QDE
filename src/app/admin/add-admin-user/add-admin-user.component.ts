@@ -97,6 +97,7 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
   dropdownSettings = {};
   singleDropdownSettings = {};
   lov;
+  isActive: boolean;
   minMaxValues;
   @ViewChildren("reportingTo") reportingToList: QueryList<ElementRef>;
   constructor(private qdeHttp: QdeHttpService,
@@ -158,6 +159,7 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
       this.states = this.lov.LOVS.state;
       this.zones = this.lov.LOVS.zone;
       this.minMaxValues = this.lov.LOVS.min_max_values;
+      this.isActive = false;
     this.route.params.subscribe(val => {
       if (val['userId'] != null) {
         this.userId = parseInt(val['userId']);
@@ -182,6 +184,7 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
             rmId: response['ProcessVariables']['rmId'] || ""
           });
         });
+        this.isActive = true;
       }
     });
 
@@ -509,6 +512,32 @@ checkAmountLimit(event,minAmount?,maxAmount?) {
 getNumberWithoutCommaFormat(x: string) : string {
   return x ? x+"".split(',').join(''): '';
 }
+onDeactivateUser(){
+  let formData = {
+    "id": this.userId,   
+    "userId": parseInt(localStorage.getItem("userId"))
+  }
+  this.qdeHttp.deactivateUser(formData).subscribe(
+    response => {
+    
+      if (
+        response['Error'] === '0' &&
+        response['ProcessVariables']['status']
+      ) {
+        this.isActive = false;
+       this.isErrorModal = true;
+        this.errorMsg = "User Deactivated Successfully";
+      //alert("Uploaded Successfully!");
+        this.registerUser.reset();
+        this.router.navigate(['admin/user-module']);
+      }     
+  },
+    error => {
+      console.log("Error : ", error);
+    });
+
+}
+
 }
 export class registorUserData{
   firstName: string;

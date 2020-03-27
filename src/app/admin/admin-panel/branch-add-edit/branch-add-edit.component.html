@@ -5,8 +5,13 @@
     <div class="flex-container">
         <div class="inputBox flex-child">
             <label for="branchCode" class="inputText">APS Branch code: *</label>
-            <input type="text" name="branchCode" id="branchCode" class="form-control" [(ngModel)]="branchCode" [maxlength]="minMaxValues['APS_Branch_Code']?.maxLength" [max]="minMaxValues['APS_Branch_Code']?.maxValue" [min]="minMaxValues['APS_Branch_Code']?.minValue"
-                (input)="checkAmountLimit($event,minMaxValues['APS_Branch_Code']?.minValue,minMaxValues['APS_Branch_Code']?.maxValue)" fieldFill formControlName="branchCode" autocomplete="off" required pattern={{regexPattern.number}}/>
+            <input type="text" name="branchCode" id="branchCode" class="form-control" 
+                [(ngModel)]="branchCode" 
+                [maxlength]="minMaxValues['APS_Branch_Code']?.maxLength" 
+                [max]="minMaxValues['APS_Branch_Code']?.maxValue" 
+                [min]="minMaxValues['APS_Branch_Code']?.minValue"
+                (input)="checkAmountLimit($event,minMaxValues['APS_Branch_Code']?.minValue,minMaxValues['APS_Branch_Code']?.maxValue)" 
+                fieldFill formControlName="branchCode" autocomplete="off" required pattern={{regexPattern.number}}/>
             <div class="redalert" *ngIf="(formValue.branchCode.errors?.required && (formValue.branchCode.touched || formValue.branchCode.dirty))">Branch code is mandatory</div>
             <div class="redalert" *ngIf="formValue.branchCode.errors?.pattern"> Branch Code can contain Only Numeric</div>
             <div class="redalert" *ngIf="isLessBCode"> Branch Code Required Minimum {{minMaxValues['APS_Branch_Code']?.minValue}} and above</div>
@@ -14,7 +19,9 @@
         </div>
         <div class="inputBox flex-child">
             <label for="Value" class="inputText">Branch Name: *</label>
-            <input type="text" id="Value" [(ngModel)]="Value" class="form-control" formControlName="Value" fieldFill autocomplete="off" required pattern={{regEx.value}}/>
+            <input type="text" id="Value" [(ngModel)]="Value"
+             class="form-control" formControlName="Value" 
+             fieldFill autocomplete="off" required pattern={{regEx.value}}/>
             <div class="redalert" *ngIf="(formValue.Value.errors?.required && (formValue.Value.touched || formValue.Value.dirty))">Value is mandatory</div>
             <div class="redalert" *ngIf="(formValue.Value.errors?.pattern && (formValue.Value.touched || formValue.Value.dirty))">Value cannot contain characters</div>
         </div>
@@ -33,7 +40,8 @@
         </div>
         <div class="selectBox flex-child">
             <label class="controltitle">Branch type *</label>
-            <select class="form-control" formControlName="branchType" [ngModel]="defaultBranchType" required>
+            <select class="form-control" formControlName="branchType"
+                [ngModel]="defaultBranchType" required>
                 <option  [ngValue]="null" disabled>Choose branch type</option>
                 <option value="Single Branch">Single Branch</option>
                 <option value="Multi Branch">Multi Branch</option>
@@ -59,23 +67,31 @@
 
         <div class="inputBox flex-child">
             <label for="newFinnOneCode" class="inputText">NewFinnOne code: *</label>
-            <input type="text" id="newFinnOneCode" [(ngModel)]="newFinnOneCode" class="form-control" fieldFill formControlName="newFinnOneCode" autocomplete="off" required />
+            <input type="text" id="newFinnOneCode" [(ngModel)]="newFinnOneCode" 
+            class="form-control" fieldFill 
+            formControlName="newFinnOneCode" autocomplete="off" required />
             <div class="redalert" *ngIf="(formValue.newFinnOneCode.errors?.required && (formValue.newFinnOneCode.touched || formValue.newFinnOneCode.dirty))">NewFinnoneCode is mandatory</div>
         </div>
         <div class="inputBox flex-child" #selectBox2>
             <label for="zipCode" class="">Zip code: *</label>
-            <input #zipCodeInput type="text" id="zipCode" [(ngModel)]="zipCode" class="form-control" [maxlength]="6" formControlName="zipCode" fieldFill autocomplete="off" required/>
+            <input #zipCodeInput type="text" id="zipCode" 
+                [(ngModel)]="zipCode" class="form-control" 
+                [maxlength]="6" formControlName="zipCode" 
+                fieldFill autocomplete="off" required/>
             <div class="redalert" *ngIf="(formValue.zipCode.errors?.required && (formValue.zipCode.touched || formValue.zipCode.dirty))">ZipCode is mandatory</div>
             <input type="hidden" class="form-control" hidden [(ngModel)]="zipCodeInp" formControlName="zipCodeInp" #zipCodeEl autocomplete="off" />
 
             <div style="position: absolute;z-index: 999;">
                 <span class="reporting_to hide" #zipDropDown>
                 <ul>
-                    <li #zipCode class="item" id="{{i.zipcodeId}}"   (click)="selectedzipCode(in, i)" *ngFor="let i of filteredZipCodeItems;let in=index;">
+                    <li #zipCode class="item" id="{{i.zipcodeId}}"    
+                    *ngFor="let i of filteredZipCodeItems;let in=index;"
+                    (click)="selectedzipCode(in, i)">
                         {{i.zipcodeValue}}
                     </li>
                 </ul>                
             </span>
+            <!-- (click)="selectedzipCode(in, i)" -->
             </div>
 
         </div>
@@ -84,15 +100,23 @@
     <div class="flex-container">
 
         <div class="single-select flex-child">
-            <label class="controltitle">Region </label>
-            <ng-multiselect-dropdown [placeholder]="'Select Region'" [data]="regions" [(ngModel)]="region" [settings]="singleDropdownSettings" formControlName="region" [disabled]="true">
+            <label class="controltitle">Region * </label>
+            <ng-multiselect-dropdown [placeholder]="'Select Region'" 
+            [data]="regions" [(ngModel)]="region"
+             [settings]="singleDropdownSettings" 
+             formControlName="region"
+             id="region" required >
 
             </ng-multiselect-dropdown>
         </div>
 
         <div class="single-select flex-child">
             <label class="controltitle">Zone *</label>
-            <ng-multiselect-dropdown [placeholder]="'Select Zone'" [data]="zones" [(ngModel)]="zone" [settings]="singleDropdownSettings" formControlName="zone" [disabled]="true">
+            <ng-multiselect-dropdown [placeholder]="'Select Zone'" 
+            [data]="zones" [(ngModel)]="zone" 
+            [settings]="singleDropdownSettings" 
+            formControlName="zone"
+            id="zone" required>
 
             </ng-multiselect-dropdown>
         </div>
@@ -105,16 +129,33 @@
 
         <div class="single-select flex-child">
             <label class="controltitle">State *</label>
-            <ng-multiselect-dropdown [placeholder]="'Select State'" [data]="states" [(ngModel)]="state" [settings]="singleDropdownSettings" formControlName="state" [disabled]="true">
-
+            <ng-multiselect-dropdown [placeholder]="'Select State'" 
+            [data]="states" [(ngModel)]="state" 
+            [settings]="singleDropdownSettings" 
+            formControlName="state" 
+            id="state" required>
             </ng-multiselect-dropdown>
         </div>
 
-        <div class="inputBox flex-child flex-input" #selectBox>
-            <label for="city" class="">Select City*</label>
-            <input type="text" id="city" [(ngModel)]="city" (input)="filterLeads($event)" class="form-control" formControlName="city" fieldFill autocomplete="off" required/>
-            <div class="redalert" *ngIf="(formValue.city.errors?.required && (formValue.city.touched || formValue.city.dirty))">City is mandatory</div>
-            <input type="hidden" class="form-control" hidden [(ngModel)]="cityInp" formControlName="cityInp" #cityEl autocomplete="off" />
+        <!-- <div class="inputBox flex-child flex-input" #selectBox> -->
+        <div class="single-select flex-child">
+            <label class="controltitle">Select City *</label>
+            <ng-multiselect-dropdown [placeholder]="'Select City'" 
+            [data]="citys" [(ngModel)]="city" 
+            [settings]="singleDropdownSettings" 
+            formControlName="city" 
+            id="city" required>
+            </ng-multiselect-dropdown>
+            <!-- <input type="text" id="city" [(ngModel)]="city" 
+            (input)="filterLeads($event)" 
+            class="form-control" 
+            formControlName="city" 
+            fieldFill autocomplete="off" required/>
+            <div class="redalert" 
+            *ngIf="(formValue.city.errors?.required && (formValue.city.touched || formValue.city.dirty))">City is mandatory</div>
+            <input type="hidden" class="form-control" hidden 
+            [(ngModel)]="cityInp" formControlName="cityInp"
+             #cityEl autocomplete="off" />
             <div style="position: absolute;z-index: 999">
                 <span class="reporting_to hide" #cityDropDown>
                     <ul>
@@ -123,15 +164,21 @@
                         </li>
                     </ul>                
                 </span>
-            </div>
+            </div> -->
 
         </div>
 
 
 
     </div>
-    <div class="inputBox">
-        <button type="submit" class="btn btn-default" [ngClass]="{'disabled': (!registerUser.valid || myFormValid || isLessAmount || isMaxAmount || isLessBCode)}" [disabled]="!registerUser.valid || myFormValid || isLessAmount || isMaxAmount || isLessBCode || isMaxBCode"> Submit   </button>
+        <div class="flex-container">
+        <div class="inputBox">
+            <button type="submit" class="btn btn-default" 
+            [ngClass]="{'disabled': (!registerUser.valid || myFormValid || isLessAmount || isMaxAmount || isLessBCode)}" 
+            [disabled]="!registerUser.valid || myFormValid || isLessAmount || isMaxAmount || isLessBCode || isMaxBCode"> Submit   </button>
+            <button type="button" class="btn btn-default" 
+            *ngIf="isActive" (click)="onDeactivateBranch()"> Deactivate  </button>
+        </div>     
     </div>
 </form>
 

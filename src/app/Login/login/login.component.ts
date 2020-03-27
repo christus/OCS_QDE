@@ -198,6 +198,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   roleLogin() {
     this.qdeService.roleLogin().subscribe(
       res => {
+        if(res["ProcessVariables"]['status']){
         console.log("ROLE Name: ", res);
         let roleName = JSON.stringify(res["ProcessVariables"]["roleName"]);
         localStorage.setItem("userId", res["ProcessVariables"]["userId"]);
@@ -256,6 +257,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
         // }
 
         this.router.navigate(["/leads"]);
+      }else {
+        this.utilService.clearCredentials();
+      }
       },
       error => {
         console.log(error);

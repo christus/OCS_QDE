@@ -1,6 +1,6 @@
 export const environment = {
-  version: "2.1.1",
-  buildDate: "24-03-2020",
+  version: "2.1.2",
+  buildDate: "27-03-2020",
   production: true,
   // projectId: "5928d30eac7811e9a1670242ac110002", // developement
 
@@ -474,6 +474,14 @@ export const environment = {
     uploadUserBranchCSV: {
       workflowId: "65fba710ca6311e990770242ac110002",
       processId: "3d486908525711ea9f5b0242ac110002"
+    },
+    deactivateBranch:{
+      workflowId: '900c5bdcb82811e98dac0242ac110002',
+      processId : '895bcb406eaa11eab3280242ac110002'
+    },
+    deactivateUser:{
+      workflowId: '30d9085ead3311e9a3ae0242ac110002',
+      processId : 'c16073406eb111ea81c90242ac110002'
     }
   },
   iciciDomainExt: "@icicibankltd.com",
@@ -487,8 +495,8 @@ export const environment = {
   csvLocation: "/d/download/csv?",
   isMobile: false,
   mobileExtenstion: "@icicibankltd.com",
-  // host: "https://ihfcmobileuat.icicihfc.com/appiyo", // for uat
-  host: "https://onlineapplication.icicihfc.com/appiyo", // for production
+  host: "https://ihfcmobileuat.icicihfc.com/appiyo", // for uat
+  // host: "https://onlineapplication.icicihfc.com/appiyo", // for production
   aesPublicKey:
     "MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJ+GJdSSEeaNFBLqyfM3DIOgQgWCwJ0INfeZZV7ITsLeuA7Yd02rrkYGIix1IWvoebWVmzhncUepYxHwK1ARCdUCAwEAAQ==",
   encryptionType: true, //Ecryption

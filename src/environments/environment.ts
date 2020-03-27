@@ -474,6 +474,14 @@ export const environment = {
     "uploadUserBranchCSV":{
       'workflowId': '65fba710ca6311e990770242ac110002',
       'processId' : '3d486908525711ea9f5b0242ac110002'
+    },
+    "deactivateBranch":{
+      'workflowId': '900c5bdcb82811e98dac0242ac110002',
+      'processId' : '895bcb406eaa11eab3280242ac110002'
+    },
+    deactivateUser:{
+      workflowId: '30d9085ead3311e9a3ae0242ac110002',
+      processId : 'c16073406eb111ea81c90242ac110002'
     }
     
   },

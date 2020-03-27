@@ -31,8 +31,7 @@ export class BranchAddEditComponent implements OnInit, OnDestroy {
   userId: number;
   errorMsg: string;
   updatebtn: boolean = false;
-  city: Array<any>;
-  zipcode: Array<any>;
+  
   filteredItems: Array<string>;
   filteredZipCodeItems: Array<string>;
   branchType: string;
@@ -65,27 +64,31 @@ myFormValid: boolean = false;
   regions: Array<any>;
   states: Array<any>;
   zones: Array<any>;
+  citys: Array<any>;
   region: any;
   zone: any;
   state: any;
+  city: any;
+  zipcode: Array<any>;
   dropdownSettings = {};
   singleDropdownSettings = {};
+  isActive: boolean ;
 
   registerUser = new FormGroup({
-    Value: new FormControl(''),
+    Value: new FormControl('',[Validators.required]),
     description: new FormControl(''),
-    address: new FormControl(''),
-    branchCode: new FormControl(''),
-    hfcBranchCode: new FormControl(''),
+    address: new FormControl('',[Validators.required]),
+    branchCode: new FormControl('',[Validators.required]),
+    hfcBranchCode: new FormControl('',[Validators.required]),
     branchType: new FormControl(''),
-    newFinnOneCode: new FormControl(''),
-    city: new FormControl(''),
+    newFinnOneCode: new FormControl('',[Validators.required]),
+    city: new FormControl({value: ''},[Validators.required]),
     cityInp: new FormControl(''),
-    zipCode: new FormControl(''),
+    zipCode: new FormControl('',[Validators.required]),
     zipCodeInp: new FormControl(''),
-    region: new FormControl({value: '', disabled: true}),
-    zone: new FormControl({value: '', disabled: true}),
-    state: new FormControl({value: '', disabled: true}),
+    region: new FormControl('',[Validators.required]),
+    zone: new FormControl('',[Validators.required]),
+    state: new FormControl('',[Validators.required]),
     branch: new FormControl('')
   });
 
@@ -108,7 +111,7 @@ myFormValid: boolean = false;
     private route: ActivatedRoute,
     private router: Router,
     private renderer: Renderer2) {
-
+      
     this.filteredItems = this.city;
     this.selectedItem = 0;
 
@@ -116,8 +119,13 @@ myFormValid: boolean = false;
     //   this.city = response['ProcessVariables'].cityList;
     //   console.log("Lov", this.city);
     // });
-    let lovs = JSON.parse(this.route.snapshot.data.listOfValues['ProcessVariables'].lovs);
+    let lovs = JSON.parse(this.route.snapshot.data.listOfAdminValues['ProcessVariables'].lovs);
     this.minMaxValues =lovs.LOVS.min_max_values;
+    this.states = lovs.LOVS.state;
+    this.zones = lovs.LOVS.zone;
+    this.regions = lovs.LOVS.regions
+    this.citys = lovs.LOVS.city;
+    this.isActive = false;
     this.route.params.subscribe(val => {
       if (val['userId'] != null) {
         this.userId = parseInt(val['userId']);
@@ -134,13 +142,17 @@ myFormValid: boolean = false;
             hfcBranchCode: pmayList.hfcBranchCode || "",
             branchType: pmayList.branchType || "",
             newFinnOneCode: pmayList.newFinnOneCode || "",
-            city: pmayList.cityDescription,
+            city: [{"key":pmayList.cityDescription,"value":pmayList.cityId}] || "",
             cityInp: pmayList.city,
-            zipCode: pmayList.zipcodeValue,
+            zipCode: pmayList.zipcodeValue || "",
             zipCodeInp: pmayList.zipcode,
-
+            region: [{"key":pmayList.region,"value":pmayList.regionId}] || "",
+            zone: [{"key":pmayList.zone,"value":pmayList.zoneId}] || "",
+            state: [{"key":pmayList.state,"value":pmayList.stateId}] || ""
+            
           });
-          this.getCityStateZoneRegionFromZipCode(pmayList.zipcode);
+          this.isActive = true;
+          // this.getCityStateZoneRegionFromZipCode(pmayList.zipcode);
         });
       }
     });
@@ -153,7 +165,7 @@ myFormValid: boolean = false;
   items: Array<string> = [''];
 
   ngOnInit() {
-    this.disableFormControl('city');
+    // this.disableFormControl('city');
     this.dropdownSettings = {
       singleSelection: false,
       idField: 'value',
@@ -173,8 +185,11 @@ myFormValid: boolean = false;
 
     // this.qdeHttp.adminGetUserLov({}).subscribe((response) => {
     //   const lov = JSON.parse(response['ProcessVariables'].lovs);
-    //   // this.states = lov.LOVS.state;
-    //   // this.zones = lov.LOVS.zone;
+    //   this.states = lov.LOVS.state;
+    //   this.zones = lov.LOVS.zone;
+    //   this.regions = lov.LOVS.regions
+    //   this.citys = lov.LOVS.city;
+    //   this.minMaxValues =lov.LOVS.min_max_values;
     // });
 
     this.zipcodeSubscription = fromEvent(
@@ -346,11 +361,11 @@ myFormValid: boolean = false;
   }
 
   selectedzipCode(index, data) {
-    this.myFormValid = false
+    this.myFormValid = false;
     this.registerUser.patchValue({ zipCode: data.zipcodeValue });
     this.registerUser.patchValue({ zipCodeInp: data.zipcodeId });
 
-    this.getCityStateZoneRegionFromZipCode(data.zipcodeId);
+    // this.getCityStateZoneRegionFromZipCode(data.zipcodeId);
 
     // this.renderer.removeClass(this.reportingRef.nativeElement, 'active');
     console.log("cityList", this.zipCodeList);
@@ -380,45 +395,54 @@ myFormValid: boolean = false;
         const response = res.ProcessVariables;
         if (response.status) {
           if (response.zoneName) {
-            this.zones = [
-              {
-                value: response.zoneId,
-                key: response.zoneName
-              }
-            ];
+            // this.zone = 
+            //   {
+            //     value: response.zoneId,
+            //     key: response.zoneName
+            //   }
+            // ;
             this.zone = [response.zoneName];
           }else{
             this.zone ='';
-            this.zones = [];
+            // this.zones = [];
           }
 
           if (response.stateId) {
-            this.states = [
-              {
-                value: response.stateId,
-                key: response.stateName
-              }
-            ];
+            // this.state = 
+            //   {
+            //     value: response.stateId,
+            //     key: response.stateName
+            //   }
+            // ;
             this.state = [response.stateName];
-            this.city = response.cityName;
-            this.cityInp = response.cityId;
+            // this.city = response.cityName;
+            // this.cityInp = response.cityId;
           }else {
             this.state = '';
-            this.states = [];
+            // this.states = [];
+          }
+          if(response.cityId){
+            // this.city = {
+            //   value: response.cityId,
+            //   key: response.cityName
+            // };
+            this.city = [response.cityName];
+          } else {
+            this.city='';
           }
 
           if (response.regionId) {
-            this.regions = [
-              {
-                value: response.regionId,
-                key: response.regionName
-              }
-            ];
+            // this.region = 
+            //   {
+            //     value: response.regionId,
+            //     key: response.regionName
+            //   }
+            // ;
 
             this.region = [response.regionName];
           } else {
             this.region= '';
-            this.regions=[];
+            // this.regions=[];
           }
         }
       });
@@ -435,11 +459,16 @@ myFormValid: boolean = false;
       branchCode: Number(this.formValue.branchCode.value),
       hfcBranchCode: this.formValue.hfcBranchCode.value,
       newFinnOneCode: this.formValue.newFinnOneCode.value,
-      city: this.formValue.cityInp.value,
-      cityInp: this.formValue.city.value,
+      city: this.city[0].value,
+      cityInp:this.city[0].value,
+      // city: this.formValue.cityInp.value,
+      // cityInp: this.formValue.city.value,
       zipcode: this.formValue.zipCodeInp.value,
       zipCodeInp: this.formValue.zipCode.value,
-      userId: parseInt(localStorage.getItem('userId'))
+      userId: parseInt(localStorage.getItem('userId')),
+      region: this.region[0].value,
+      zone: this.zone[0].value,
+      state: this.state[0].value
     };
     console.log(data);
 
@@ -527,5 +556,31 @@ myFormValid: boolean = false;
     if (this.zipcodeSubscription) {
       this.zipcodeSubscription.unsubscribe();
     }
+  }
+  onDeactivateBranch(){
+    let formData ={
+      userId: parseInt(localStorage.getItem('userId')),
+      id: this.userId 
+    }
+    this.qdeHttp.deactivateBranch(formData).subscribe(
+      response => {
+      
+        if (
+          response['Error'] === '0' &&
+          response['ProcessVariables']['status']
+        ) {
+          this.isActive = false;
+          this.isErrorModal = true;
+          this.errorMsg = 'Branch Deactivated Successfully!';
+          //alert("Branch created Successfully!");
+          this.registerUser.reset();
+          this.router.navigate(['admin/lovs/branch_list']);
+        }
+       
+    },
+      error => {
+        console.log("Error : ", error);
+      });
+
   }
 }
