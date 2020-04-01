@@ -211,7 +211,9 @@
                             <ul class="pr-1">
                                 <li>
                                     <strong>Note:</strong> No payments should be made in cash.<br> The cheque should be filled and signed by applicant and co-applicant.</li>
+                                <li><strong>Application Date:&nbsp;</strong>{{qde.application.createdDate | date: "dd/MM/yyyy"}}</li>    
                             </ul>
+                        
                         </div>
                         <div class="space-6 p-0">
                             <div class="space_content p-0">
@@ -239,8 +241,8 @@
                                     <ul class="space-6">
                                         <li>Name: {{qde.application.references.referenceOne.title}} {{qde.application.references.referenceOne.fullName? qde.application.references.referenceOne.fullName: '__________________________'}}
                                         </li>
-                                        <li>Address:</li>
-                                        <li>{{qde.application.references.referenceOne.addressLineOne? qde.application.references.referenceOne.addressLineOne: '_______________________'}}&nbsp;</li>
+                                        <!-- <li>Address:</li> -->
+                                        <li>Address:&nbsp;{{qde.application.references.referenceOne.addressLineOne? qde.application.references.referenceOne.addressLineOne: '_______________________'}}&nbsp;</li>
                                         <li>{{qde.application.references.referenceOne.addressLineOne? qde.application.references.referenceOne.addressLineTwo: '_______________________'}}&nbsp;</li>
                                         <li>&nbsp;&nbsp;</li>
                                         <li>Mobile: {{qde.application.references.referenceOne.mobileNumber? qde.application.references.referenceOne.mobileNumber: '_______________________'}}</li>
@@ -254,8 +256,8 @@
                                     <ul class="space-6">
                                         <li>Name: {{qde.application.references.referenceTwo.title}} {{qde.application.references.referenceTwo.fullName? qde.application.references.referenceTwo.fullName: '_______________________'}}
                                         </li>
-                                        <li>Address:</li>
-                                        <li>{{qde.application.references.referenceTwo.addressLineOne? qde.application.references.referenceTwo.addressLineOne: '_______________________'}}&nbsp;</li>
+                                        <!-- <li>Address:</li> -->
+                                        <li>Address:&nbsp;{{qde.application.references.referenceTwo.addressLineOne? qde.application.references.referenceTwo.addressLineOne: '_______________________'}}&nbsp;</li>
                                         <li>{{qde.application.references.referenceTwo.addressLineOne? qde.application.references.referenceTwo.addressLineTwo: '_______________________'}}&nbsp;</li>
                                         <li>&nbsp;&nbsp;</li>
                                         <li>Mobile: {{qde.application.references.referenceTwo.mobileNumber? qde.application.references.referenceTwo.mobileNumber: '_______________________'}}</li>

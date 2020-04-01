@@ -48,7 +48,7 @@ public class MainActivity extends BridgeActivity {
 
 
     /** Check Airwatch installed or not **/
-//
+////
 //    if (appInstalledOrNot("com.airwatch.lockdown.launcher")) {
 //
 //    }else {

@@ -19,6 +19,7 @@ export interface Application {
     offlinePayments?: ChequeDetails;
     branch?:string;
     paymentDetails?:PaymentDetails;
+    createdDate?:string;
 }
 
 export interface Document {

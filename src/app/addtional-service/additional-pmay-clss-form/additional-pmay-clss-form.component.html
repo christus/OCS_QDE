@@ -63,8 +63,14 @@
             <div class="values">
                 {{(qde.application.applicants[0].communicationAddress.residentialStatus == 'Owned')?'Yes':'No'}}<br/><br/>
                 <div *ngIf="qde.application.applicants[0].communicationAddress.residentialStatus == 'Owned'">
-                    {{qde.application.applicants[0].communicationAddress.addressLineOne}}<br/> {{qde.application.applicants[0].communicationAddress.city}}
+                    {{qde.application.applicants[0].communicationAddress.addressLineOne}}
+                    <br/> 
+                    {{qde.application.applicants[0].communicationAddress.city}}
                     <br/> {{qde.application.applicants[0].communicationAddress.state}} - {{qde.application.applicants[0].communicationAddress.zipcode}} <br/>
+                </div>
+                <div *ngIf="qde.application.applicants[0].communicationAddress.residentialStatus != 'Owned'">
+                    ______________________
+                    <br/>______________________<br/>______________________
                 </div>
             </div>
         </div>
