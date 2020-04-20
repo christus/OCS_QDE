@@ -187,7 +187,10 @@
                                 Full Name
                             </div>
                             <div class="space-lg-2 space-md-2 space-sm-2 space-xs-2 back_color ">
-                                {{ applicant.personalDetails.title }} {{ applicant.personalDetails.firstName }} {{ applicant.personalDetails.middleName }} {{ applicant.personalDetails.lastName }}
+                                {{(applicant.isIndividual) ? 
+                                    (applicant.personalDetails.title)+applicant.personalDetails.firstName+applicant.personalDetails.middleName+applicant.personalDetails.lastName 
+                                    : applicant.organizationDetails.nameOfOrganization}}
+                                <!-- {{ applicant.personalDetails.title }} {{ applicant.personalDetails.firstName }} {{ applicant.personalDetails.middleName }} {{ applicant.personalDetails.lastName }} -->
                             </div>
                             <div class="space-lg-2 space-md-2 space-sm-2 space-xs-2  back_color"></div>
                             <div class="space-1-6 back_color border_right "></div>
@@ -349,7 +352,7 @@
                                 Number of years at current Residence
                             </div>
                             <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
-                                {{ applicant.communicationAddress.numberOfYearsInCurrentResidence }} Years
+                                {{ (applicant.isIndividual) ? applicant.communicationAddress.numberOfYearsInCurrentResidence+ ' Years': '' }} &nbsp;
                             </div>
                             <!-- Months -->
                         </div>
@@ -423,7 +426,8 @@
                             <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
                                 <div class="main_div">
                                     <div class="space-12 border_bottom">
-                                        {{ applicant.contactDetails.residenceNumber }}&nbsp;
+                                        {{  applicant.isIndividual ? applicant.contactDetails.residenceNumber : 
+                                            applicant.corporateAddress.stdNumber }}&nbsp;
                                     </div>
                                     <div class="space-12 ">
                                         {{ applicant.contactDetails.mobileNumber }}&nbsp;
@@ -462,18 +466,21 @@
                                     <div class="space-lg-12 space-md-12 space-sm-12 space-xs-12 ">
                                         <div class="main_div">
                                             <div class="space-12 border_bottom">
-                                                {{ applicant.permanentAddress.addressLineOne }}&nbsp;
+                                                {{ (applicant.isIndividual) ? applicant.permanentAddress.addressLineOne : applicant.registeredAddress.registeredAddress}}&nbsp;
                                             </div>
                                             <div class="space-12 border_bottom">
-                                                {{ applicant.permanentAddress.addressLineTwo }}&nbsp;
+                                                {{ (applicant.isIndividual) ? applicant.permanentAddress.addressLineTwo : '' }}&nbsp;
                                             </div>
                                             <div class="space-12 border_bottom">&nbsp;</div>
-                                            <div class="space-12 border_bottom">&nbsp;</div>
+                                            <div class="space-12 border_bottom">{{(applicant.isIndividual)? '': applicant.registeredAddress.landMark}}&nbsp;</div>
                                             <div class="space-12 border_bottom">
-                                                {{ applicant.permanentAddress.city }}&nbsp;
+                                                {{ (applicant.isIndividual) ? applicant.permanentAddress.city:applicant.registeredAddress.city}}&nbsp;
                                             </div>
-                                            <div class="space-12 ">
+                                            <div class="space-12 " *ngIf="applicant.isIndividual">
                                                 {{ applicant.permanentAddress.state }} - {{ applicant.permanentAddress.zipcode }}&nbsp;
+                                            </div>
+                                            <div class="space-12 " *ngIf="!applicant.isIndividual">
+                                                {{ applicant.registeredAddress.state }} - {{ applicant.registeredAddress.zipcode }}&nbsp;
                                             </div>
                                         </div>
                                     </div>
@@ -528,7 +535,9 @@
                                         {{ applicant.contactDetails.preferredEmailId }}&nbsp;
                                     </div>
                                     <div class="space-12 ">
-                                        {{ applicant.officialCorrespondence.officeEmailId }}&nbsp;
+                                        {{ applicant.isIndividual ? 
+                                            applicant.officialCorrespondence.officeEmailId : 
+                                            applicant.corporateAddress.officeEmailId}}&nbsp;
                                     </div>
                                 </div>
                             </div>
@@ -541,7 +550,7 @@
                                 Total Monthly Income
                             </div>
                             <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
-                                &#x20B9; {{ applicant.isIndividual ? applicant.incomeDetails.monthlyIncome : "" }}
+                                &#x20B9; {{  applicant.incomeDetails.monthlyIncome }}
                             </div>
                         </div>
                         <div class="main_div   top-border">
@@ -652,7 +661,8 @@
                                 2.3.3
                             </div>
                             <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">
-                                Constitution Type
+                                Constitution Type 
+                                <!-- {{(applicant.organizationDetails.constitution == 'Partnership')}} -->
                             </div>
                             <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
                                 <!-- Proprietorship Firm Partnership Firm Pvt Ltd.Co. Public Ltd.Co. Trust HUF -->
@@ -660,7 +670,8 @@
                                 <div class="s-row c_type">
                                     <div class="space-lg-6 space-md-6 space-sm-6">
                                         <label>Proprietorship firm</label>
-                                        <input class="click" type="" value="" disabled /><br />
+                                        <input class="click" type=""  disabled 
+                                        [checked]= "applicant.organizationDetails.constitution == 'Proprietership'"/><br />
                                         <label>Pvt Ltd. Co.</label>
                                         <input class="click" type="" value="" disabled /><br />
                                         <label>Trust</label>
@@ -668,7 +679,8 @@
                                     </div>
                                     <div class="space-lg-6 space-md-6 space-sm-6">
                                         <label>Partnership firm</label>
-                                        <input class="click" type="" value="" disabled /><br />
+                                        <input class="click" type=""  disabled 
+                                        [checked]= "applicant.organizationDetails.constitution == 'Partnership'"/><br />
                                         <label>Public Ltd. Co.</label>
                                         <input class="click" type="" value="" disabled /><br />
                                         <label>HUF</label>
@@ -685,7 +697,7 @@
                                 Total Work Exprience
                             </div>
                             <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
-                                {{ applicant.occupation.totalWorkExperience }} Years
+                                {{(applicant.isIndividual)? applicant.occupation.totalWorkExperience + ' Years' : ''}} &nbsp;
                             </div>
                         </div>
                         <div class="main_div   top-border">
@@ -716,20 +728,23 @@
                             <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
                                 <div class="main_div">
                                     <div class="space-12 border_bottom">
-                                        {{ applicant.officialCorrespondence.addressLineOne }}&nbsp;
+                                        {{ applicant.isIndividual ? applicant.officialCorrespondence.addressLineOne : applicant.corporateAddress.corporateAddress }}&nbsp;
                                     </div>
                                     <div class="space-12 border_bottom">
-                                        {{ applicant.officialCorrespondence.addressLineTwo }}&nbsp;
+                                        {{ applicant.isIndividual ? applicant.officialCorrespondence.addressLineTwo : '' }}&nbsp;
                                     </div>
                                     <div class="space-12 border_bottom">&nbsp;</div>
                                     <div class="space-12 border_bottom">
-                                        {{ applicant.officialCorrespondence.landMark }}&nbsp;
+                                        {{ applicant.isIndividual ? applicant.officialCorrespondence.landMark : applicant.corporateAddress.landMark}}&nbsp;
                                     </div>
                                     <div class="space-12 border_bottom">
-                                        {{ applicant.officialCorrespondence.city }}&nbsp;
+                                        {{ applicant.isIndividual ? applicant.officialCorrespondence.city : applicant.corporateAddress. city }}&nbsp;
                                     </div>
-                                    <div class="space-12 ">
+                                    <div class="space-12 " *ngIf="applicant.isIndividual">
                                         {{ applicant.officialCorrespondence.state }}-{{ applicant.officialCorrespondence.zipcode }}&nbsp;
+                                    </div>
+                                    <div class="space-12 " *ngIf="!applicant.isIndividual">
+                                        {{ applicant.corporateAddress.state }}-{{ applicant.corporateAddress.zipcode }}&nbsp;
                                     </div>
                                 </div>
                             </div>

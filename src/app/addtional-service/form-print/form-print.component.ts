@@ -51,7 +51,7 @@ export class FormPrintComponent implements OnInit {
       this.applicants = this.application["application"]["applicants"];
       console.log("my Applicats Data", this.applicants);
       //  this.applicantImage = "data:image/png;base64,"+ this.applicants["documents"][0]["documentData"];documentName
-      if (this.application.application.roleName == "DMA") {
+      if (this.application.application.roleName == "DMA" || this.application.application.roleName == "Direct Marketing Agenices") {
         this.brokerId = this.application.application.userId;
         this.rmId = this.application.application.reportingToId;
         this.bankEmployeeId = "";

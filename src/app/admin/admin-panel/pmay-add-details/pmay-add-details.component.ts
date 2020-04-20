@@ -1,7 +1,7 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
 import { Component, OnInit, Renderer2 } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 
 
 @Component({
@@ -19,13 +19,13 @@ export class PmayAddDetailsComponent implements OnInit {
 
    
   registerUser = new FormGroup({
-    stateCode: new FormControl(''),
-    distCode: new FormControl(''),
-    stateName: new FormControl(''),
-    distName: new FormControl(''),
-    townName: new FormControl(''),
-    townCode: new FormControl(''),
-    subDistCode: new FormControl('')
+    stateCode: new FormControl('',Validators.required),
+    distCode: new FormControl('',Validators.required),
+    stateName: new FormControl('',Validators.required),
+    distName: new FormControl('',Validators.required),
+    townName: new FormControl('',Validators.required),
+    townCode: new FormControl('',Validators.required),
+    subDistCode: new FormControl('',Validators.required)
   });
   stateCode: string;
   distCode: string;
@@ -88,6 +88,7 @@ export class PmayAddDetailsComponent implements OnInit {
 
   
         let data = {
+          "id": this.userId,
           "stateCode": this.formValue.stateCode.value,
           "stateName": this.formValue.stateName.value,
           "distCode": this.formValue.distCode.value,
