@@ -35,6 +35,8 @@ export class FormPrintComponent implements OnInit {
   brokerId = "";
   rmId = "";
   bankEmployeeId = "";
+  isIndividualApplicant:boolean = false;
+  isNonIndividualApplicant:boolean = false;
   ngOnInit() {
     this.printData = this.activateRoute.snapshot.data["qde"][
       "ProcessVariables"
@@ -69,6 +71,12 @@ export class FormPrintComponent implements OnInit {
             )
           );
         }
+        if (element.isIndividual){
+          this.isIndividualApplicant = true;
+        }else{
+          this.isNonIndividualApplicant = true;
+        }
+
       });
       // this.applicantImage =  "data:image/png;base64,"+  this.applicants[0]["documents"][0]["documentData"];
       // this.applicantImage =this.domSanitizer.bypassSecurityTrustUrl(this.applicantImage);

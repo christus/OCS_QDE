@@ -1962,3 +1962,49 @@ hr {
 .change-color {
     color: #de6f3e;
 }
+
+.bs-checkbox{
+    /* height: 1.5vw; */
+    /* margin-top: -3.8vw; */
+    text-align: center;
+    outline: 1px solid;
+  }
+  /* .bs-checkbox input[type=checkbox]:checked+label:after {
+    height: 2.34vw;
+    width: 2.34vw;
+    margin-top: 0;
+    margin-left: 0;
+    line-height: 2.34vw;
+    left: 0;
+    top: 0;
+    position: absolute;
+}
+.bs-checkbox input[type=checkbox]:checked+label {
+  color: #f58220;
+  width: 2.34vw;
+  height: 2.34vw;
+  display: inline-block;
+  position: relative;
+}
+.bs-checkbox label {
+  width: 2.34vw;
+  height: 2.34vw;
+  display: inline-block;
+  background: 0 0;
+  font-size: 1.09vw;
+  line-height: 8.34vw;
+  color: #999;
+  position: relative;
+}
+.bs-checkbox label:before {
+  content: '';
+  display: inline-block;
+  vertical-align: middle;
+  width: 2.34vw;
+  height: 2.34vw;
+  border: 1px solid #bbb;
+  border-radius: 2px;
+  top: 0;
+  left: 0;
+  position: absolute;
+} */

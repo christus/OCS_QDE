@@ -13,12 +13,13 @@
                     <div class="space-lg-6 space-6 app_type_container">
                         <div class="main_div">
                             <div class="space-lg-3 space-3"><b>Application Type:</b></div>
-                            <div class="space-lg-9 space-9">
+                            <div class="space-lg-9 space-9 ">
                                 <span class="ind">
-                  <input class="click" value="" disabled /> Individual</span
-                >
+                  <input class="bs-checkbox"  type="checkbox" disabled
+                   [checked]="isIndividualApplicant"/> Individual</span>
                 <br /><span class="non_ind"
-                  ><input class="click" value="" disabled /> Non
+                  ><input class="bs-checkbox"   type="checkbox" disabled
+                  [checked]="isNonIndividualApplicant" /> Non
                   Individual</span
                 ><br />(For Pvt Ltd, Ltd, LLP, Partnership, Trusts, Firms,
                 Association, Societies & Clubs)
@@ -269,7 +270,7 @@
                                 Number of Dependents
                             </div>
                             <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
-                                {{ applicant.familyDetails.numberOfDependents }}
+                                {{ (applicant.isIndividual) ? applicant.familyDetails.numberOfDependents :''}}
                                 <!-- (Children + Others) -->
                             </div>
                         </div>
@@ -670,21 +671,25 @@
                                 <div class="s-row c_type">
                                     <div class="space-lg-6 space-md-6 space-sm-6">
                                         <label>Proprietorship firm</label>
-                                        <input class="click" type=""  disabled 
-                                        [checked]= "applicant.organizationDetails.constitution == 'Proprietership'"/><br />
+                                        <input class="bs-checkbox click" type="checkbox"  disabled 
+                                        [checked]= "(applicant.organizationDetails.constitution == 'Proprietership')"/><br />
                                         <label>Pvt Ltd. Co.</label>
-                                        <input class="click" type="" value="" disabled /><br />
+                                        <input class="bs-checkbox click" type="checkbox"  disabled 
+                                        [checked]= "applicant.organizationDetails.constitution == 'Private LTd Company'"/><br />
                                         <label>Trust</label>
-                                        <input class="click" type="" value="" disabled />
+                                        <input class="bs-checkbox click" type="checkbox"  disabled 
+                                        [checked]= "applicant.organizationDetails.constitution == 'Trust'"/>
                                     </div>
                                     <div class="space-lg-6 space-md-6 space-sm-6">
                                         <label>Partnership firm</label>
-                                        <input class="click" type=""  disabled 
-                                        [checked]= "applicant.organizationDetails.constitution == 'Partnership'"/><br />
+                                        <input class="bs-checkbox click" type="checkbox"  disabled 
+                                        [checked]= "(applicant.organizationDetails.constitution == 'Partnership')"/><br />
                                         <label>Public Ltd. Co.</label>
-                                        <input class="click" type="" value="" disabled /><br />
+                                        <input class="bs-checkbox click" type="checkbox"  disabled 
+                                        [checked]= "applicant.organizationDetails.constitution == 'Public Ltd Company'"/><br />
                                         <label>HUF</label>
-                                        <input class="click" type="" value="" disabled />
+                                        <input class="bs-checkbox click" type="checkbox"  disabled 
+                                        [checked]= "applicant.organizationDetails.constitution == 'HUF'" />
                                     </div>
                                 </div>
                             </div>
@@ -800,12 +805,17 @@
                             <div class="space-lg-1-2 space-md-1-2 space-sm-1-2 space-xs-1 border_left border_right">
                                 2.8
                             </div>
-                            <div class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">
+                            <div  class="space-lg-6 space-md-6 space-sm-6 space-xs-6 border_right">
                                 Preferred Mailing Address
                             </div>
-                            <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
+                            <div *ngIf="applicant.isIndividual" class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
                                 {{ applicant.communicationAddress.preferedMailingAddress ? "Current Address" : "Permanent Address" }}
                                 <!-- Office Current Address Permanent Address -->
+                            </div>
+                            <div *ngIf="!applicant.isIndividual" class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
+                                <!-- {{ applicant.communicationAddress.preferedMailingAddress ? "Current Address" : "Permanent Address" }} -->
+                                <!-- Office Current Address Permanent Address -->
+                                &nbsp;
                             </div>
                         </div>
                         <div class="main_div  top-border ">
