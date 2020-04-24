@@ -1,0 +1,161 @@
+<header>
+  <div class="bs-header typ-dashboard" data-nav="applicant">
+    <!-- header start -->
+    <div class="sec-nav">
+      <div class="logo">
+        <h1>
+          <a routerLink="/leads">
+            <img src="assets/images/logo.svg" alt="logo" class="img-responsive">
+          </a>
+        </h1>
+      </div>
+
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="main">
+    <div class="lyt-dashboard">
+      <div class="main-area">
+        <div class="lyt-lead-gen">
+          <h4 class="title">Registration Form</h4>
+
+          <p class="desc">Fill up the form to register</p>
+          <form #regForm="ngForm" class="bs-form" autocomplete="off" (ngSubmit)="registrationSave(regForm)">
+
+            <div class="form-group">
+              <input spellcheck="false" type="text" class="form-control" id="name" minlength="2" autocomplete="off"
+                name="name" [(ngModel)]="registration.name" #fName="ngModel" pattern="{{regexPattern.name}}" fieldFill required />
+              <label for="name">Name</label>
+              <div *ngIf="(fName.touched || fName.dirty) && fName.invalid" class="invalid-feedback">
+                <div *ngIf="fName.errors?.required">{{errors.createRegister.name.required}}</div>
+                <div *ngIf="fName.errors?.pattern">{{errors.createRegister.name.invalid}}</div>
+                <div *ngIf="fName.errors?.minlength">{{errors.createRegister.name.length}}</div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <input spellcheck="false" type="text" class="form-control" id="mobileNo" minlength="10" maxlength="10" autocomplete="off"
+                name="mobileNo" [(ngModel)]="registration.mobileNo" #mobileNo="ngModel" pattern="{{regexPattern.mobileNumber}}" fieldFill required />
+              <label for="mobileNo">Mobile Number</label>
+              <button class="btn btn-border" style="position:absolute" (click)="sendOTP()">Send OTP</button>
+              <div *ngIf="(mobileNo.touched || mobileNo.dirty) && mobileNo.invalid" class="invalid-feedback">
+                <div *ngIf="mobileNo.errors?.required">{{errors.createRegister.mobileNo.required}}</div>
+                <div *ngIf="mobileNo.errors?.pattern">{{errors.createRegister.mobileNo.invalid}}</div>
+                <div *ngIf="mobileNo.errors?.minlength">{{errors.createRegister.mobileNo.minlength}}</div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <input spellcheck="false" type="text" class="form-control" id="address" minlength="2" autocomplete="off"
+                name="address" [(ngModel)]="registration.address" #address="ngModel" pattern="{{regexPattern.address}}" fieldFill required />
+              <label for="address">Address</label>
+              <div *ngIf="(address.touched || address.dirty) && address.invalid" class="invalid-feedback">
+                <div *ngIf="address.errors?.required">{{errors.createRegister.address.required}}</div>
+                <div *ngIf="address.errors?.pattern">{{errors.createRegister.address.invalid}}</div>
+                <div *ngIf="address.errors?.minlength">{{errors.createRegister.address.length}}</div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <input spellcheck="false" type="text" class="form-control" id="pincode"  maxlength="6" minlength="6" autocomplete="off"
+                name="pincode" [(ngModel)]="registration.pincode" #pincode="ngModel" pattern="{{regexPattern.pincode}}" fieldFill required />
+              <label for="pincode">Pincode</label>
+              <div *ngIf="(pincode.touched || pincode.dirty) && pincode.invalid" class="invalid-feedback">
+                <div *ngIf="pincode.errors?.required">{{errors.createRegister.pincode.required}}</div>
+                <div *ngIf="pincode.errors?.pattern">{{errors.createRegister.pincode.invalid}}</div>
+                <div *ngIf="pincode.errors?.minlength">{{errors.createRegister.pincode.length}}</div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <input spellcheck="false" type="text" class="form-control" id="emailId"  autocomplete="off"
+                name="email" [(ngModel)]="registration.email" #email="ngModel" pattern="{{regexPattern.email}}" (ngModelChange)="onPreferredEmailChange($event, email)" fieldFill required />
+              <label for="emailId">Email Id</label>
+              <div *ngIf="(email.touched || email.dirty) && email.invalid" class="invalid-feedback">
+                <div *ngIf="email.errors?.required">{{errors.createRegister.email.required}}</div>
+                <div *ngIf="email.errors?.pattern">{{errors.createRegister.email.invalid}}</div>
+                <div *ngIf="email.errors.invalidDomain">{{errors.createRegister.email.invalid}}</div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <input spellcheck="false" type="text" class="form-control" id="loanAmount" maxlength="12"
+                autocomplete="off" name="loanAmount" [(ngModel)]="registration.amount" #loanAmount="ngModel" pattern="{{regexPattern.amount}}" (input)="checkAmountLimit($event,Loan_amount.minValue,Loan_amount.maxValue)" fieldFill required />
+              <label for="loanAmount">Loan Amount</label>
+              <div class="invalid-feedback" *ngIf="isLessAmount">{{errors.createRegister.amount.minamount}}{{requirMinAmout}}</div>
+              <div class="invalid-feedback" *ngIf="isMaxAmount">{{errors.createRegister.amount.maxamount}}{{requirMaxAmout}}</div>
+              <div class="invalid-feedback" *ngIf="loanAmount.touched && loanAmount.errors?.required">{{errors.createRegister.amount.required}}</div>
+              <div class="invalid-feedback" *ngIf="loanAmount.errors?.pattern">{{errors.createRegister.amount.invalid}}</div>
+            </div>
+
+            <div class="form-group">
+              <input spellcheck="false" type="text" class="form-control passd" id="newPassword" minlength="6" autocomplete="off"
+                name="newPassword" [(ngModel)]="registration.newPassword" #newPassword="ngModel"  fieldFill required />
+              <label for="newPassword">New Password</label>
+              <div *ngIf="(newPassword.touched || newPassword.dirty) && newPassword.invalid" class="invalid-feedback">
+                <div *ngIf="newPassword.errors?.required">{{errors.createRegister.password.required}}</div>
+                <div *ngIf="newPassword.errors?.minlength">{{errors.createRegister.password.length}}</div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <input spellcheck="false" type="text" class="form-control passd" id="confirmPassword" minlength="6" autocomplete="off"
+                name="confirmPassword" [(ngModel)]="registration.confirmPassword" #confirmPassword="ngModel"  fieldFill required />
+              <label for="confirmPassword">Confirm Password</label>
+              <div *ngIf="(confirmPassword.touched || confirmPassword.dirty) && confirmPassword.invalid" class="invalid-feedback">
+                <div *ngIf="confirmPassword.errors?.required">{{errors.createRegister.password.required}}</div>
+                <div *ngIf="confirmPassword.errors?.minlength">{{errors.createRegister.password.length}}</div>
+              </div>
+            </div>
+
+            <div class="btn-wrap">
+              <button class="btn btn-primary"  [ngClass]="{'disabled': (!regForm.valid || isLessAmount || isMaxAmount)}"
+              [disabled]="!regForm.valid || isLessAmount || isMaxAmount"
+             >Next</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div class="overlay" [ngClass]="{'active': registerOTP}"></div>
+<div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': registerOTP}">
+  <div class="modal-body">
+    <h1 class="center">Verify OTP to continue</h1>
+    <form class="bs-form" id="spouse-form" autocomplete="off" #isValidOTP="ngForm">
+      <div class="form-wrap1">
+        <div class="form-group otp_input_len">
+          <input  type="text" class="form-control" id="otp" name="otp" autocomplete="off"
+            [(ngModel)]="otp" maxlength="4" #otpValue="ngModel" pattern="{{regexPattern.otp}}" fieldFill (input)="checkOTPEmpty()">
+          <label for="otp">OTP</label>
+          <div *ngIf="(otpValue.touched || otpValue.dirty) && otpValue.invalid"
+          class="invalid-feedback">
+          <div *ngIf="otpValue.errors?.pattern">{{errors.createRegister.otp.invalid}}</div>
+        </div>
+          <span><b>{{timeLeft}} Seconds Left...</b></span>
+          <span *ngIf="isDisabled">
+            <a href="javascript:void(0);" (click)="resendOTP()">
+              <div class="pull-right resend_otp_size">Resend OTP</div>
+            </a>
+          </span>
+          <br><br>
+          <span *ngIf="isOTPExpired" class="invalid-feedback">OTP Expired. Kindly resend
+          OTP</span>
+        </div>
+      </div>
+      <div class="btn-wrap">
+        <button class="btn btn-border" style='margin-right:16px' [disabled]="isOTPEmpty"
+        [ngClass]="{'disabled': isOTPEmpty}" [disabled]="isOTPExpired"
+        [ngClass]="{'disabled': isOTPExpired}" 
+         (click)="validateOTP(isValidOTP)">Verify</button>
+        <button class="btn btn-border" style='margin-right:16px'
+          (click)="onBackOTP()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+

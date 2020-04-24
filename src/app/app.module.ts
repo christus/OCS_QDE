@@ -159,6 +159,8 @@ import { DocumentCheckListComponent } from './addtional-service/document-check-l
 import { AdditionalPmayClssFormComponent } from './addtional-service/additional-pmay-clss-form/additional-pmay-clss-form.component';
 import { DeclarationFormComponent } from './addtional-service/declaration-form/declaration-form.component';
 import { TearFormComponent } from './addtional-service/tear-form/tear-form.component';
+import { RegistrationFormComponent } from './registration-form/registration-form.component';
+
 
 
 
@@ -632,6 +634,10 @@ const appRoutes: Routes = [
       }
     ]
   },
+  {
+    path: 'registration',
+    component: RegistrationFormComponent,
+  },
   { path: "**", component: PageNotFoundComponent }
 ];
  
@@ -728,7 +734,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     AddtionalServiceDashboardComponent,
     CkycFormComponent,
     DocumentCheckListComponent,    
-    AdditionalPmayClssFormComponent, DeclarationFormComponent, TearFormComponent
+    AdditionalPmayClssFormComponent, DeclarationFormComponent, TearFormComponent, RegistrationFormComponent,
   ],
   imports: [
     BrowserModule,

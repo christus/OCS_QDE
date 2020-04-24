@@ -1,0 +1,433 @@
+.bs-header.typ-dashboard {
+    box-shadow: 0 0 28.75px 0.25px rgba(0,0,0,.1);
+}
+.bs-header .sec-nav {
+    padding: 1.17vw 2.34vw;
+    display: inline-block;
+    width: 100%;
+}
+.bs-header.typ-dashboard .right-panel.of-dashboard {
+    display: flex;
+}
+.bs-header.typ-dashboard .right-panel .search-wrap {
+    padding-right: 3.13vw;
+}
+.bs-header.typ-dashboard .right-panel .search-wrap .search-btn {
+    display: inline-block;
+    color: #444;
+}
+.bs-header.typ-dashboard .right-panel .search-wrap .icon-search {
+    font-size: 1.95vw;
+    line-height: 3.13vw;
+}
+.bs-header.typ-dashboard .right-panel .notification-wrap {
+    margin-right: 1.56vw;
+}
+.bs-header.typ-dashboard .right-panel .hover-wrap {
+    position: relative;
+}
+.bs-header.typ-dashboard .right-panel .profile-wrap .profile-btn {
+    display: flex;
+    align-items: center;
+}
+.bs-header.typ-dashboard .right-panel .profile-wrap .profile-btn .profile-name {
+    font-size: 1.41vw;
+    line-height: 1.95vw;
+    font-family: zurich-bold;
+    color: #004a80;
+    margin-left: 14vw
+}
+.bs-header.typ-dashboard .right-panel .profile-wrap .profile-btn .icon-down {
+    font-size: 1.25vw;
+}
+.lyt-lead-gen .title {
+    font-size: 2.34vw;
+    line-height: 3.52vw;
+    font-family: zurich-bold;
+}
+.lyt-lead-gen .desc {
+    padding-bottom: 1.95vw;
+    font-size: 1.41vw;
+    line-height: 1.95vw;
+}
+.lyt-dashboard {
+    padding: 2.34vw 1.56vw 1.56vw 5.47vw;
+    display: inline-block;
+    width: 100%;
+}
+.lyt-dashboard .main-area {
+    width: 75%;
+    float: left;
+    height: calc(100vh - 9.53vw);
+    position: relative;
+}
+.lyt-lead-gen {
+    position: absolute;
+    left: 0;
+    height: 100%;
+    overflow-y: auto;
+    width: 100%;
+    padding: 0 0 0 14.06vw;
+}
+.bs-header.typ-dashboard .right-panel .hover-wrap .hover-content {
+    position: absolute;
+    left: 0;
+    top: calc(100% + 15px);
+    background: #fff;
+    z-index: 5;
+    box-shadow: 0 0 27px 0 rgba(68,68,68,.13);
+    border-radius: 0 1.17vw 1.17vw;
+    max-height: 0;
+    min-width: 19.53vw;
+    overflow: hidden;
+    transition: min-height .7s ease-in-out;
+}
+.bs-header.typ-dashboard .right-panel .profile-wrap .user-menu .user-link.typ-two {
+    font-size: 1.09vw;
+    color: #444;
+}
+.bs-header.typ-dashboard .right-panel .profile-wrap .user-menu .user-link.not-link {
+    color: #444;
+}
+.bs-header.typ-dashboard .right-panel .profile-wrap .user-menu .user-link {
+    display: block;
+    font-size: .94vw;
+    line-height: 1.95vw;
+    color: #999;
+    padding: 1.56vw 2.34vw;
+    position: relative;
+}
+.bs-side-menu {
+    position: fixed;
+    width: 5.47vw;
+    height: calc(100vh - 5.63vw);
+    background: #ed7722;
+    background: -moz-linear-gradient(top,#ed7722 0,#c1402c 100%);
+    background: -webkit-gradient(left top,left bottom,color-stop(0,#ed7722),color-stop(100%,#c1402c));
+    background: -webkit-linear-gradient(top,#ed7722 0,#c1402c 100%);
+    background: -o-linear-gradient(top,#ed7722 0,#c1402c 100%);
+    background: -ms-linear-gradient(top,#ed7722 0,#c1402c 100%);
+    background: linear-gradient(to bottom,#ed7722 0,#c1402c 100%);
+    text-align: center;
+}
+.bs-side-menu .nav-link.active {
+    opacity: 1;
+}
+.bs-side-menu .nav-link .icon {
+    color: #fff;
+    font-size: 1.95vw;
+}
+.bs-side-menu .nav-link .link-text {
+    font-size: .78vw;
+    line-height: .94vw;
+    color: #fff;
+    display: block;
+    margin-bottom: 1vw;
+}
+.bs-side-menu .nav-link:not(:last-child):after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background: rgba(250,250,250,.5);
+}
+.lyt-dashboard .sidebar {
+    width: 25%;
+    float: left;
+    height: calc(100vh - 9.53vw);
+}
+.lyt-dashboard .sidebar .card {
+    box-shadow: 0 0 27px 0 rgba(68,68,68,.13);
+    border-radius: 15px;
+    height: 100%;
+    width: 95%;
+    margin-left: 5%;
+}
+.lyt-alerts .title {
+    font-size: 1.64vw;
+    line-height: 2.19vw;
+    color: #444;
+    font-family: zurich-bold;
+    padding: 2.34vw 1.56vw 0;
+}
+.lyt-alerts .date {
+    font-size: .94vw;
+    line-height: 1.09vw;
+    color: #999;
+    padding: 0 1.56vw 1.56vw;
+}
+.lyt-alerts .alerts-list li.alert-msg {
+    padding: 2.34vw 1.56vw;
+    position: relative;
+}
+.lyt-alerts .alerts-list li.alert-msg .num {
+    font-size: 2.11vw;
+    line-height: 2.34vw;
+    color: #b02a30;
+    font-family: zurich-bold;
+    margin-right: 1.17vw;
+}
+.lyt-alerts .alerts-list li.alert-msg .msg {
+    font-size: 1.09vw;
+    line-height: 1.25vw;
+    color: #444;
+}
+.lyt-alerts .alerts-list li.alert-msg>span {
+    display: inline-block;
+    vertical-align: middle;
+}
+.lyt-alerts .alerts-list li.alert-msg .icon-angle-right {
+    font-size: 1.88vw;
+    float: right;
+}
+.lyt-alerts .alerts-list li.alert-msg .alert-link {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+.lyt-perform-sidebar .title {
+    font-size: 1.64vw;
+    line-height: 2.19vw;
+    color: #444;
+    font-family: zurich-bold;
+    padding: 2.34vw 1.56vw 0;
+}
+.lyt-perform-sidebar .date {
+    font-size: .94vw;
+    line-height: 1.09vw;
+    color: #999;
+    padding: 0 1.56vw 1.56vw;
+}
+.lyt-perform-sidebar .pie-wrap .pie-title {
+    font-family: zurich-bold;
+    font-size: 1.09vw;
+    line-height: 1.41vw;
+    color: #999;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 2.34vw 0;
+}
+.lyt-perform-sidebar .performance-pie {
+    width: 12.97vw;
+    height: 12.97vw;
+    border-radius: 50%;
+    background: #ececec;
+    position: relative;
+    margin: 0 auto;
+}
+.lyt-perform-sidebar .performance-pie .val-wrap {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    right: 0;
+    transform: translate(-50%,-50%);
+    text-align: center;
+    background: #fff;
+    border-radius: 50%;
+    width: 9.84vw;
+    height: 9.84vw;
+    box-shadow: 2px 6px 5px rgba(0,0,0,.25);
+    font-size: 1.88vw;
+    line-height: 9.84vw;
+}
+.lyt-perform-sidebar .performance-state {
+    padding: 3.13vw 0;
+}
+.lyt-perform-sidebar .performance-state li {
+    text-align: center;
+    padding: 1.56vw 0;
+    position: relative;
+}
+.lyt-perform-sidebar .performance-state li .name {
+    display: block;
+    font-size: 1.25vw;
+    line-height: 1.72vw;
+    color: #444;
+}
+.lyt-perform-sidebar .performance-state li .value {
+    display: block;
+    font-family: zurich-bold;
+    font-size: 2.11vw;
+    line-height: 2.73vw;
+    color: #b02a30;
+}
+.lyt-perform-sidebar .performance-state li .value .rupee {
+    font-family: zurich;
+}
+
+.bs-header.typ-dashboard .right-panel .hover-wrap .hover-content.active {
+    max-height: 42.97vw;
+    overflow: auto;
+}
+
+[class^="icon-"]:before, [class*=" icon-"]:before {
+    font-family: "icicihfc" !important;
+    font-style: normal !important;
+    font-weight: normal !important;
+    font-variant: normal !important;
+    text-transform: none !important;
+    speak: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-dashboard:before {
+    content: "\70";
+}
+
+.icon-performance:before {
+    content: "\71";
+}
+
+.bs-header.typ-dashboard .right-panel .profile-wrap .user-menu .user-link {
+    display: block;
+    font-size: .94vw;
+    line-height: 1.95vw;
+    color: #999;
+    padding: 1.56vw 2.34vw;
+    position: relative;
+}
+.invalid-feedback {
+	font-size: .94vw;
+	line-height: 1.09vw;
+	font-family: zurich-bold;
+    letter-spacing: .5px;
+    color:red;
+}
+.redalert {
+    color: red;
+    font-size: .94vw;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+.bs-checkbox{
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    margin: 0 1.95vw;
+    width: auto;
+    text-align: left;
+}
+.bs-checkbox input[type=checkbox]:checked+label {
+    color: #f58220;
+   
+    
+  }
+  /* width: 2.34vw;
+  height: 2.34vw;
+  display: inline-block;
+    position: relative; */
+    .container {
+        display: block;
+        position: relative;
+        padding-left: 4vw;
+        /* margin-bottom: 12px; */
+        cursor: pointer;
+        font-size: 2vw;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        padding-top: 0.3vw;
+        color: #656565;
+      }
+      
+      /* Hide the browser's default checkbox */
+      .container input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+      }
+      
+      /* Create a custom checkbox */
+      .checkmark {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 3vw;
+        width: 3vw;
+        background-color: #d6d6d6;
+      }
+      
+      /* On mouse-over, add a grey background color */
+      .container:hover input ~ .checkmark {
+        background-color: #ccc;
+    
+      }
+      
+      /* When the checkbox is checked, add a blue background */
+      .container input:checked ~ .checkmark {
+        background-color: #f58220;
+      }
+      
+      /* Create the checkmark/indicator (hidden when not checked) */
+      .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+      }
+      
+      /* Show the checkmark when checked */
+      .container input:checked ~ .checkmark:after {
+        display: block;
+      }
+      
+      /* Style the checkmark/indicator */
+      .container .checkmark:after {
+        left: 1.1vw;
+        top: 0.05vw;
+        width: .7vw;
+        height: 2vw;
+        border: solid white;
+        border-width: 0 3px 3px 0;
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg);
+      }
+
+
+    .bs-modal p {
+        margin-top: 1vw;
+        font-size: 1vw
+    }
+    .center {
+        text-align: center;
+        margin-top: 0vw
+    }
+    .bs-modal .btn-wrap {
+        display: block;
+        text-align: center;
+        padding: 0;
+        margin-top: 45px;
+    }
+
+    bs-modal .modal-body .or {
+        font-size: 1.41vw;
+        line-height: 7.28vw;
+        color: #444;
+        opacity: .5;
+        text-transform: uppercase;
+        margin-left: 13vw;
+        margin-top: 2vw;
+        width: 50%
+    }
+
+    @font-face {
+        font-family: "icicihfc";
+        src: url("/assets/fonts/pwd.ttf");
+        font-family: 'password';
+        font-style: normal;
+        font-weight: 400;
+    }
+    
+    .passd {
+    font-family: 'password' !important;
+    }
