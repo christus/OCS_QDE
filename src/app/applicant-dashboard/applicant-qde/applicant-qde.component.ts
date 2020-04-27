@@ -4478,7 +4478,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
         }
         return true;
   }
-
+  familyIncomevalid: boolean = false;
   checkAmountLimit(event,minAmount?,maxAmount?) {
     console.log("event ",event);
     let n = parseInt(this.getNumberWithoutCommaFormat(event.target.value));
@@ -4497,10 +4497,16 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.isMaxAmount = false;
       this.requirMaxAmout="";
     }
+    if(event.name ="annualFamilyIncome" &&
+    Number(this.qde.application.applicants[this.applicantIndex].incomeDetails.monthlyIncome) > n){
+      this.familyIncomevalid = true;
+    }else{
+      this.familyIncomevalid = false;
+    }
   }
   requirMaxAmout1;
   requirMinAmout1;
-
+  expenditureValid: boolean = false;
   checkAmountLimitMonthlyIncome(event,minAmount?,maxAmount?) {
     let n = parseInt(this.getNumberWithoutCommaFormat(event.target.value));
     if(n < minAmount && minAmount != undefined ) {
@@ -4516,6 +4522,12 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.requirMaxAmout1 = "";
       this.requirMinAmout1= "";
     }
+    if(event.target.name =="monthlyExpenditure" && Number(this.qde.application.applicants[this.applicantIndex].incomeDetails.annualFamilyIncome) < n){
+      this.expenditureValid = true;
+    } else {
+      this.expenditureValid = false;
+    }
+
   }
 
   getNumberWithoutCommaFormat(x: string) : string {

@@ -192,7 +192,9 @@ export const errors: any = {
     phoneNumber: {
       required: "Phone Number is mandatory",
       invalid: "Invalid Phone Number",
-      minlength: "Phone Number cannot be less than"
+      minlength: "Phone Number cannot be less than",
+      wrong: "Please provide valid Phone number"
+
     },
     email: {
       required: "Office Email Id is mandatory",
@@ -207,6 +209,7 @@ export const errors: any = {
       invalid:"Invalid Family Income / Alphabets and Special characters are not allowed",
       minamount: "Amount should be greater than or equal to Rs.",
       maxamount: "Amount should be less than to Rs.",
+      familyIncomevalid: "Monthly Family Income is greater than or equal Monthly Income"
     },
     pensionIncome:{
       required: "Annual Pension is mandatory",
@@ -214,7 +217,8 @@ export const errors: any = {
     },
     monthlyExpenditure:{
       required:"Monthly Expenditure is mandatory",
-      invalid:"Invalid Monthly Expenditure / Alphabets and Special characters are not allowed"
+      invalid:"Invalid Monthly Expenditure / Alphabets and Special characters are not allowed",
+      expenditureValid: "Monthly Expenditure is Less than or equal to Monthly Family Income"
     },
     monthlyIncome:{
       required:"Monthly Income is mandatory",

@@ -1894,11 +1894,16 @@
                                 {{errors.officialCorrespondence.stateOrCity.invalid}}</div>
                             </div>
                           </div>
-                          <div class="residence-no">
+                          <div class="residence-no ">
                             <div class="form-group">
-                              <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                                id="std03" required [(ngModel)]="officialCorrespondenceStdCode" #stdCode="ngModel"
-                                tabindex="6" name="stdCode" [minlength]="minMaxValues['STD_Code']?.minValue" [maxlength]="minMaxValues['STD_Code']?.maxLength" pattern="{{regexPattern.stdCode}}"
+                              <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" 
+                                class="form-control"
+                                id="std03"  [(ngModel)]="officialCorrespondenceStdCode" 
+                                #stdCode="ngModel"
+                                tabindex="6" name="stdCode"
+                                [minlength]="minMaxValues['STD_Code']?.minValue" 
+                                [maxlength]="minMaxValues['STD_Code']?.maxLength" 
+                                pattern="{{regexPattern.stdCode}}"
                                 fieldFill autocomplete="off"/>
                               <label for="std03">STD</label>
                               <div class="redalert" *ngIf="RegExp(regexPattern.sameDigitStd).test(stdCode.value)">{{errors.contactDetails.stdCode.wrong}}</div>
@@ -1909,14 +1914,19 @@
                               </div>
                             </div>
                             <span class="seperator">-</span>
-                            <div class="form-group">
-                              <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" class="form-control"
-                                id="res-no03" data-validation-attr="residenceno" required #offStdNumber="ngModel"
-                                name="offStdNumber" fieldFill tabindex="7" [minlength]="minMaxValues['Land_Line_Number']?.minValue" [maxlength]="minMaxValues['Land_Line_Number']?.maxLength" autocomplete="off"
+                            <div class="form-group typ-optional">
+                              <input [readonly]="isTBMLoggedIn" spellcheck="false" type="text" 
+                                class="form-control"
+                                id="res-no03" data-validation-attr="residenceno" 
+                                 #offStdNumber="ngModel"
+                                name="offStdNumber" fieldFill tabindex="7" 
+                                [minlength]="minMaxValues['Land_Line_Number']?.minValue" 
+                                [maxlength]="minMaxValues['Land_Line_Number']?.maxLength" autocomplete="off"
                                 pattern="{{regexPattern.mobileNumber}}"
                                 [(ngModel)]="officialCorrespondencePhoneNumber" />
                               <label for="res-no03">Office number</label>
-                              <div class="redalert" *ngIf="RegExp(regexPattern.sameDigit).test(offStdNumber.value)">{{errors.contactDetails.residenceNumber.wrong}}</div>
+                              <span class="optional">optional</span>
+                              <div class="redalert" *ngIf="RegExp(regexPattern.sameDigit).test(offStdNumber.value)">{{errors.officialCorrespondence.phoneNumber.wrong}}</div>
                               <div *ngIf="offStdNumber.touched && offStdNumber.invalid" class="invalid-feedback">
                                 <!-- <div *ngIf="offStdNumber.errors?.required">{{errors.officialCorrespondence.phoneNumber.required}}</div> -->
                                 <div *ngIf="offStdNumber.errors?.pattern">
@@ -2077,6 +2087,7 @@
                               <div *ngIf="annualFamilyIncome1.errors?.pattern">{{errors.incomeDetails.familyIncome.invalid}}</div>
                               <div *ngIf="isLessAmount">{{errors.incomeDetails.familyIncome.minamount}}{{requirMinAmout}}</div>
                               <div *ngIf="isMaxAmount">{{errors.incomeDetails.familyIncome.maxamount}}{{requirMaxAmout}}</div>
+                              <div *ngIf="familyIncomevalid">{{errors.incomeDetails.familyIncome.familyIncomevalid}}</div>
                             </div>
                           </div>
                           <div class="form-group inr">
@@ -2097,6 +2108,7 @@
 
                             <div class="invalid-feedback" *ngIf="isNumberLessThan1k">{{errors.incomeDetails.monthlyIncome.minamount}}{{requirMinAmout1}}</div>
                             <div class="invalid-feedback" *ngIf="isNumberMoreThan100cr">{{errors.incomeDetails.monthlyIncome.maxamount}}{{requirMaxAmout1}}</div>
+                            <div class="invalid-feedback" *ngIf="expenditureValid">{{errors.incomeDetails.monthlyExpenditure.expenditureValid}}</div>
                             <div *ngIf="monthlyExpenditure1.touched || monthlyExpenditure1.invalid"
                               class="invalid-feedback">
                               <!-- <div *ngIf="monthlyExpenditure1.errors?.required">{{errors.incomeDetails.monthlyExpenditure.required}}</div> -->
@@ -2139,8 +2151,8 @@
                         </div> -->
                         <div class="btn-wrap">
                           <button type="submit" class="btn btn-primary"
-                            [ngClass]="{'disabled': !annualFamilyIncomeForm.valid || qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == null || isLessAmount || isMaxAmount || isNumberLessThan1k || isNumberMoreThan100cr}"
-                            [disabled]="!annualFamilyIncomeForm.valid || qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == null || isLessAmount || isMaxAmount || isNumberLessThan1k || isNumberMoreThan100cr">
+                            [ngClass]="{'disabled': !annualFamilyIncomeForm.valid || qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == null || isLessAmount || isMaxAmount || isNumberLessThan1k || isNumberMoreThan100cr || familyIncomevalid || expenditureValid}"
+                            [disabled]="!annualFamilyIncomeForm.valid || qde.application.applicants[applicantIndex].incomeDetails.puccaHouse == null || isLessAmount || isMaxAmount || isNumberLessThan1k || isNumberMoreThan100cr || familyIncomevalid || expenditureValid">
                             Save
                           </button>
                         </div>

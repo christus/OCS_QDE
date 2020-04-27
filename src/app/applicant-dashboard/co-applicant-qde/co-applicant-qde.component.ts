@@ -3503,13 +3503,21 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
 
   // New CoApplicant Index for New CoApplicant
   createCoApplicant() {
+    this.checkApplicant();
     this.addNewCoApplicant();
     this.coApplicantIndex = this.qde.application.applicants.length - 1;
     this.isTabDisabled = false;
     this.initializeVariables();
     this.tabSwitch(1, 1);
   }
-
+ checkApplicant (){
+    for (let l = 0; l < this.qde.application.applicants.length; l++){
+        if(this.qde.application.applicants[l].applicantId == ""){
+        this.qde.application.applicants.splice(l, 1);
+      }
+    }
+    return this.qde.application.applicants;
+}
   addNewCoApplicant() {
     this.qde.application.applicants.push({
       applicantId: "",

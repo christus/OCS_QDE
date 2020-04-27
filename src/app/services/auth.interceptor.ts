@@ -137,7 +137,7 @@ export class AuthInterceptor implements HttpInterceptor {
             if(response['ProcessName']!="Required documents"){
             let data = "DEF";
             this.cds.setErrorData(true, data);
-          }
+          } 
           }else if((response['Error']=="1"
           && response['Error']!=undefined) || (response['status']===false && response['status']!=undefined)){
             let data = "APP001";
@@ -158,6 +158,10 @@ export class AuthInterceptor implements HttpInterceptor {
               this.utilService.clearCredentials();
               this.ngxService.stop();
               this.isNgxRunning= false;
+            } // for Captcha loader
+            else if (response && response["catchaImage"]){
+              this.totalRequests--;
+              this.ngxService.stop();
             }
 
             this.decreaseRequests(response['ProcessId']);
@@ -208,6 +212,13 @@ export class AuthInterceptor implements HttpInterceptor {
           this.ngxService.start();
           this.isNgxRunning = true;
         }
+      } 
+    } // for Captcha loader
+    else if(req.body == null && req.method == "GET" && req.url.includes("account/captcha") ){
+      this.totalRequests++;
+      if(!this.isNgxRunning){
+        this.ngxService.start();
+        this.isNgxRunning = true;
       }
     }
   }

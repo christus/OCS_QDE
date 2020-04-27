@@ -1095,6 +1095,7 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
             } else {
               // Throw Invalid Pan Error
             }
+            // this.router.navigate([], {queryParams: { tabName: this.fragments[2], page: 1 }});
           }
           // , error => {
           //   this.isErrorModal = true;
@@ -1292,10 +1293,11 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.qdeHttp.clssProbabilityCheck(this.applicationId).subscribe(
       response => {
         if (response["Error"] === "0" && response["ProcessVariables"]["isClssEligible"]) {
-          this.isClssEligibleModal = true;
+          // this.isClssEligibleModal = true;
         } else {
-          this.isClssNotEligibleModal = true;
+          // this.isClssNotEligibleModal = true;
         }
+        this.router.navigate([], {queryParams: { tabName: this.fragments[2], page: 1 }});
       }
       // , error => {
       //   this.isErrorModal = true;

@@ -138,6 +138,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
               // this.generateCatchaImage();
             } else {
             this.sessionMessage = getError["message"];
+            if (this.sessionMessage =="Login failed! wrong email id and password combination"){
+              this.sessionMessage ="Login failed!  Invalid User id and Password combination";
+            }
             this.activeSessionExists = getError["activeSessionExists"];
           }
           } else {
