@@ -1,7 +1,7 @@
 import { MobileService } from './../../services/mobile-constant.service';
 import { AutoLogoutService } from './../../services/AutoLogoutService';
 import { environment } from 'src/environments/environment';
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UtilService } from 'src/app/services/util.service';
@@ -9,7 +9,7 @@ import { UtilService } from 'src/app/services/util.service';
 import {CommonDataService} from 'src/app/services/common-data.service'
 import { EncryptService } from 'src/app/services/encrypt.service';
 import { CaptchaResolverService } from 'src/app/services/captcha-resolver.service';
-import { Observable } from 'rxjs';
+import { Observable,interval} from 'rxjs';
 import { e } from '@angular/core/src/render3';
 import { validateComplexValues } from '@progress/kendo-angular-dropdowns/dist/es2015/util';
 
@@ -20,7 +20,7 @@ import { validateComplexValues } from '@progress/kendo-angular-dropdowns/dist/es
   templateUrl: "./login.component.html",
   styleUrls: ["./login.component.css"]
 })
-export class LoginComponent implements OnInit, AfterViewInit {
+export class LoginComponent implements OnInit, AfterViewInit,OnDestroy {
 
   isMobile: any;
   userName = "";
@@ -43,7 +43,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
   masterModule;
   navigationString: string ="";
   altrPaswrd:string;
-
+  private catchaTimer
+  private catchaTimerSubcrition
+  private timeInMin: number = 55
   constructor(
     private router: Router,
     private qdeService: QdeHttpService,
@@ -60,8 +62,19 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.catchaTimer = interval(this.timeInMin*1000);
     this.version = environment.version;
     this.buildDate = environment.buildDate;
+    this.catchaTimerSubcrition = this.catchaTimer.subscribe(x => {
+        console.log('catchaTimer',this.catchaTimer);
+          this.generateCatchaImage();
+        
+      });
+  //   interval(50000).subscribe(x => {
+  //     this.generateCatchaImage();
+  //     console.log('timer stared');
+  // });
+    
     // this.catchaImage = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAAAyCAYAAAC+jCIaAAABc0lEQVR42u3bwRHCIBAFUOuxCbuw/xZSgTagkRBWdsk7/IOOyWSWl0BAbtu2vURG56YIApaAtVruj+fHqA1YQ0GBVQhWxsYDqzisrI0HElhgZYU1s4iZupxf1wJaEVjZGhCsRWF9a1ywwDrViJnGNyAtAitbo4IVCCuyCzgCa0bDghUEK3KM0XI+sBaEFT2AbTkPWAvDiuqe/g0ZrESwoordiwqsC8HqKfgZWLPn2CRouuFsQ/cc33ttGWBF1DX7ZC1YE2CN6AmyP0mndIU9x/5z/JcJVta35XSD916U1Qs+ElaFNcup0w1XGmz3YFkeVqUV/iqw9m7YT5+rvalOXdIBqw1WxsX59IvQV5p3OgJr76lVDtaK27UqXFvL99VucrASdIdggRUO6+iY1/YvsJqw7P0eLLBCYFV6iQIr+ZZ9sMAK2fFddesZWGCBtcof845CAQsssMASsAQsEbAELAFLBCwBS8ASsBRBwBKwBCyR0XkDjNqPBC5GlaIAAAAASUVORK5CYII=";
     this.catchaImage = "data:image/png;base64," + this.base64Data;
     this.oldRefId = this.catchaImageData["catchaImage"]["refId"];
@@ -94,8 +107,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
         appId: "OCS",
         refId: this.oldRefId,
         captcha: this.captchaText,
-        // useADAuth: false
-        useADAuth: userEmailId.startsWith("he")
+        useADAuth: false
+        // useADAuth: userEmailId.startsWith("he")
       };
       console.log("login Data: ",data);
       let token = localStorage.getItem("token");
@@ -326,6 +339,7 @@ setUserActivity(userActivityList,userFullName,lastLoginDateTime?){
 
   }
   generateCatchaImage() {
+          
     let catchaImageData;
     this.qdeService.generateCatchaImage(this.oldRefId).subscribe(res => {
       // console.log("get catch response ", res);
@@ -335,7 +349,9 @@ setUserActivity(userActivityList,userFullName,lastLoginDateTime?){
 
       this.catchaImage = "data:image/png;base64," + this.base64Data;
       // console.log("cat data in  ", this.catchaImage);
+      this.timeInMin = 55;
     });
+
     
   }
   cancelProcess() {
@@ -343,7 +359,10 @@ setUserActivity(userActivityList,userFullName,lastLoginDateTime?){
     this.generateCatchaImage();
   }
  
- 
+ ngOnDestroy(){
+  this.catchaTimerSubcrition.unsubscribe();
+  console.log('timer stoped');
+ }
 
 
 }

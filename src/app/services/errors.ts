@@ -276,7 +276,8 @@ export const errors: any = {
     phoneNumber:{
       required:"Phone number is mandatory",
       invalid:"Invalid Phone number",
-      minlength: "Phone number should have at least"
+      minlength: "Phone number should have at least",
+      wrong: "Please provide valid Phone number"
     },
 
     ofcEmail:{

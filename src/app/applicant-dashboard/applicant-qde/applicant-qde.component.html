@@ -1926,14 +1926,17 @@
                                 [(ngModel)]="officialCorrespondencePhoneNumber" />
                               <label for="res-no03">Office number</label>
                               <span class="optional">optional</span>
-                              <div class="redalert" *ngIf="RegExp(regexPattern.sameDigit).test(offStdNumber.value)">{{errors.officialCorrespondence.phoneNumber.wrong}}</div>
+                              <div class="redalert" 
+                              *ngIf="RegExp(regexPattern.sameDigit).test(offStdNumber.value)">
+                              {{errors.officialCorrespondence.phoneNumber.wrong}}</div>
+                              <div class="invalid-feedback"  *ngIf="offStdNumber.errors?.minlength">{{errors.officialCorrespondence.phoneNumber.minlength}}{{" "+minMaxValues['Land_Line_Number']?.minValue+" digits"}}   </div>
                               <div *ngIf="offStdNumber.touched && offStdNumber.invalid" class="invalid-feedback">
                                 <!-- <div *ngIf="offStdNumber.errors?.required">{{errors.officialCorrespondence.phoneNumber.required}}</div> -->
                                 <div *ngIf="offStdNumber.errors?.pattern">
                                   {{errors.officialCorrespondence.phoneNumber.invalid}}</div>
                                 <!-- <div *ngIf="offStdNumber.errors?.required">
                                   {{errors.officialCorrespondence.phoneNumber.required}}</div> -->
-                                <div *ngIf="offStdNumber.errors?.minlength">{{errors.officialCorrespondence.phoneNumber.minlength}}{{" "+minMaxValues['Land_Line_Number']?.minValue+" digits"}}   </div>
+                                
                               </div>
                             </div>
                           </div>
@@ -1960,7 +1963,11 @@
 
                         <div class="btn-wrap">
                           <button type="submit" class="btn btn-primary"
-                            [ngClass]="{'disabled': (!officialCorrespondenceForm.valid) || RegExp(regexPattern.sameDigit).test(offStdNumber.value) || RegExp(regexPattern.sameDigitStd).test(stdCode.value) || (qde.application.applicants[applicantIndex].officialCorrespondence.officeEmailId)?.length == 100 || !qde.application.applicants[applicantIndex].officialCorrespondence.cityState}"
+                            [ngClass]="{'disabled': (!officialCorrespondenceForm.valid) || 
+                            RegExp(regexPattern.sameDigit).test(offStdNumber.value) || 
+                            RegExp(regexPattern.sameDigitStd).test(stdCode.value) || 
+                            (qde.application.applicants[applicantIndex].officialCorrespondence.officeEmailId)?.length == 100 || 
+                            !qde.application.applicants[applicantIndex].officialCorrespondence.cityState}"
                             [disabled]="!officialCorrespondenceForm.valid || RegExp(regexPattern.sameDigit).test(offStdNumber.value) || RegExp(regexPattern.sameDigitStd).test(stdCode.value) || (qde.application.applicants[applicantIndex].officialCorrespondence.officeEmailId)?.length == 100 || !qde.application.applicants[applicantIndex].officialCorrespondence.cityState ">Next
                           </button>
                         </div>
@@ -2087,7 +2094,7 @@
                               <div *ngIf="annualFamilyIncome1.errors?.pattern">{{errors.incomeDetails.familyIncome.invalid}}</div>
                               <div *ngIf="isLessAmount">{{errors.incomeDetails.familyIncome.minamount}}{{requirMinAmout}}</div>
                               <div *ngIf="isMaxAmount">{{errors.incomeDetails.familyIncome.maxamount}}{{requirMaxAmout}}</div>
-                              <div *ngIf="familyIncomevalid">{{errors.incomeDetails.familyIncome.familyIncomevalid}}</div>
+                              <!-- <div *ngIf="familyIncomevalid">{{errors.incomeDetails.familyIncome.familyIncomevalid}}</div> -->
                             </div>
                           </div>
                           <div class="form-group inr">
@@ -2108,7 +2115,7 @@
 
                             <div class="invalid-feedback" *ngIf="isNumberLessThan1k">{{errors.incomeDetails.monthlyIncome.minamount}}{{requirMinAmout1}}</div>
                             <div class="invalid-feedback" *ngIf="isNumberMoreThan100cr">{{errors.incomeDetails.monthlyIncome.maxamount}}{{requirMaxAmout1}}</div>
-                            <div class="invalid-feedback" *ngIf="expenditureValid">{{errors.incomeDetails.monthlyExpenditure.expenditureValid}}</div>
+                            <!-- <div class="invalid-feedback" *ngIf="expenditureValid">{{errors.incomeDetails.monthlyExpenditure.expenditureValid}}</div> -->
                             <div *ngIf="monthlyExpenditure1.touched || monthlyExpenditure1.invalid"
                               class="invalid-feedback">
                               <!-- <div *ngIf="monthlyExpenditure1.errors?.required">{{errors.incomeDetails.monthlyExpenditure.required}}</div> -->
@@ -2795,11 +2802,12 @@
                                 data-validation-attr="residenceno" required />
                               <label for="ca-res-no">Office number</label>
                               <div class="invalid-feedback" *ngIf="RegExp(regexPattern.sameDigit).test(phoneNumber.value)">
-                                {{errors.corporateAddress.phoneNumber.invalid}}</div>
+                                {{errors.corporateAddress.phoneNumber.wrong}}</div>
+                                <div class="invalid-feedback"  *ngIf="phoneNumber.errors?.minlength">{{errors.corporateAddress.phoneNumber.minlength}} {{" "+minMaxValues['Land_Line_Number']?.minValue+" digits"}}</div>
                               <div *ngIf="phoneNumber.touched  && phoneNumber.invalid" class="invalid-feedback">
                                 <!-- <div *ngIf="phoneNumber.errors?.required">{{errors.corporateAddress.phoneNumber.required}}</div> -->
                                 <div *ngIf="phoneNumber.errors?.pattern">{{errors.corporateAddress.phoneNumber.invalid}}</div>
-                                <div *ngIf="phoneNumber.errors?.minlength">{{errors.corporateAddress.phoneNumber.minlength}} {{" "+minMaxValues['Land_Line_Number']?.minValue+" digits"}}</div>
+                                
                               </div>
                             </div>
                           </div>

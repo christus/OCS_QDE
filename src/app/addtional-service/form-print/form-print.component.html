@@ -243,7 +243,7 @@
                                 Date of Birth
                             </div>
                             <div class="space-lg-2 space-md-2 space-sm-2 space-xs-2 back_color top-border ">
-                                {{ applicant.personalDetails.dob | date: "dd/MM/yyyy" }}
+                                {{ applicant.personalDetails.dob | date: "dd-MM-yyyy" }}
                             </div>
                             <div class="space-lg-2 space-md-2 space-sm-2 space-xs-2  back_color top-border"></div>
                             <div class="space-1-6 back_color border_right top-border "></div>
@@ -565,7 +565,7 @@
                                 _____________________
                                 <br/> {{ applicant.isIndividual ? '_____________________' : applicant.pan.panNumber }}
                                 <!-- <hr /> -->
-                                <br />{{ (applicant.isIndividual) ?'_____________________' :applicant.organizationDetails.dateOfIncorporation }}
+                                <br />{{ (applicant.isIndividual) ?'_____________________' :applicant.organizationDetails.dateOfIncorporation | date: "dd-MM-yyyy" }}
                                 <!-- <hr /> -->
                                 <br />
 
@@ -654,7 +654,7 @@
                                 Date of Incorporation
                             </div>
                             <div class="space-lg-5 space-md-5 space-sm-5 space-xs-5 back_color border_right">
-                                {{ applicant.organizationDetails.dateOfIncorporation }}
+                                {{ applicant.organizationDetails.dateOfIncorporation | date: "dd-MM-yyyy"}}
                             </div>
                         </div>
                         <div class="main_div   top-border">

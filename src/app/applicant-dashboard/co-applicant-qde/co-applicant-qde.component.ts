@@ -2863,6 +2863,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
           };
 
           //flash exiting dataresetIn
+          if(applicantId != null && applicantId != "" && Number(applicantId) !=  0){
           this.qdeHttp.flashExitingData(data).subscribe(
             data => {
               if (data["Error"] ==0) {
@@ -2877,6 +2878,11 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
           );
 
           this.setRelationship(this.qde.application.applicants.find(v => v.isMainApplicant == true), this.coApplicantIndex);
+          }else{
+            this.tabSwitch(11, 1);
+            this.qde.application.applicants[this.coApplicantIndex].isIndividual = false;
+            this.setRelationship(this.qde.application.applicants.find(v => v.isMainApplicant == true), this.coApplicantIndex);
+          }
     } else if (btnValue=="yes" && currentPanValue == false){
       console.log("inside no click and ", btnValue);
 
@@ -2888,7 +2894,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         };
 
         //flash exiting dataresetIn
-
+        if(applicantId != null && applicantId != "" && Number(applicantId) !=  0){
         this.qdeHttp.flashExitingData(data).subscribe(
           data => {
             if (data["Error"] ==0) {
@@ -2902,9 +2908,15 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
         );
 
         this.setRelationship(this.qde.application.applicants.find(v => v.isMainApplicant == true), this.coApplicantIndex);
+        }else {
+          this.goToNextSlide(swiperInstance1, swiperInstance2);
+            this.qde.application.applicants[this.coApplicantIndex].isIndividual = true;
+            this.setRelationship(this.qde.application.applicants.find(v => v.isMainApplicant == true), this.coApplicantIndex);
+        }
+
     } else if ( btnValue=="no" && currentPanValue==false){
 
-        this.auditTrial(applicationId,applicantId,1,"pan1",screenPages['coApplicantDetails']);
+        // this.auditTrial(applicationId,applicantId,1,"pan1",screenPages['coApplicantDetails']);
         this.tabSwitch(11, 1);
         this.qde.application.applicants[this.coApplicantIndex].isIndividual = false;
     }
@@ -2912,7 +2924,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     {
 
         this.qde.application.applicants[this.coApplicantIndex].isIndividual = true;
-        this.auditTrial(applicationId,applicantId,2,"pan1",screenPages['coApplicantDetails']);
+        // this.auditTrial(applicationId,applicantId,2,"pan1",screenPages['coApplicantDetails']);
         this.goToNextSlide(swiperInstance1, swiperInstance2);
     }
 
@@ -2927,6 +2939,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
       this.qde.application.auditTrailDetails.pageNumber = auditRes['ProcessVariables']['pageNumber'];
     }
   });
+  
 }
 
   changeResidentialNon(value, swiperInstance ?: Swiper) {
@@ -3012,9 +3025,9 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
           if(this.qde.application.applicants[this.coApplicantIndex].incomeDetails.incomeConsider) {
             if(this.qde.application.applicants[this.coApplicantIndex].pan.panNumber == null || 
               this.qde.application.applicants[this.coApplicantIndex].pan.panNumber == ""){
-                this.tabSwitch(1,1);
+                this.tabSwitch(1,2);
                 this.isErrorModal= true;
-                this.errorMessage="Pan Is Mandatory For Income Considered Applicant"        
+                this.errorMessage="Pan Number Is Mandatory For Income Considered Applicant"        
                 
           }else{
             this.tabSwitch(9, 1);
@@ -3110,7 +3123,7 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
           if(value == 1) {
             if(this.qde.application.applicants[this.coApplicantIndex].pan.panNumber == null || 
               this.qde.application.applicants[this.coApplicantIndex].pan.panNumber == ""){
-                this.tabSwitch(1,1);
+                this.tabSwitch(11,1);
                 this.isErrorModal= true;
                 this.errorMessage="Pan Number Is Mandatory For Income Consider Applicant"       
                 

@@ -594,7 +594,8 @@
                                                         </div>
                                                         <span class="seperator">-</span>
                                                         <div class="form-group typ-optional">
-                                                            <input [readonly]="isReadOnly" type="text" autocomplete="off" class="form-control" id="res-no" [(ngModel)]="residenceNumberPhoneNumber" pattern="{{regexPattern.mobileNumber}}" [minlength]="minMaxValues['Land_Line_Number']?.minValue" [maxlength]="minMaxValues['Land_Line_Number']?.maxLength"
+                                                            <input [readonly]="isReadOnly" type="text" autocomplete="off" class="form-control" id="res-no" [(ngModel)]="residenceNumberPhoneNumber" pattern="{{regexPattern.mobileNumber}}" [minlength]="minMaxValues['Land_Line_Number']?.minValue" 
+                                                                [maxlength]="minMaxValues['Land_Line_Number']?.maxLength"
                                                                 #residenceNumber="ngModel" name="residenceNumber2" value="{{residenceNumber.phoneNumber}}" data-validation-attr="residenceno" fieldFill tabindex="10" spellcheck="false" />
                                                             <label for="res-no">Residence number</label>
                                                             <span class="optional">Optional</span>
@@ -1395,7 +1396,10 @@
                                             <form class="bs-form" *ngIf="!isTabDisabled">
                                                 <div class="form-wrap" pika>
                                                     <div class="bs-radio">
-                                                        <input [readonly]="isTBMLoggedIn" spellcheck="false" type="radio" name="income-consider" id="incomeConsiderYes2" [value]="1" tabindex="1" [checked]="qde.application.applicants[coApplicantIndex].incomeDetails.incomeConsider == true" (click)="incomeConsiderYesNoIndividual(1, occupationSlider2)"
+                                                        <input [readonly]="isTBMLoggedIn" spellcheck="false" type="radio" 
+                                                            name="income-consider" id="incomeConsiderYes2" [value]="1" tabindex="1" 
+                                                            [checked]="qde.application.applicants[coApplicantIndex].incomeDetails.incomeConsider == true" 
+                                                            (click)="incomeConsiderYesNoIndividual(1, occupationSlider2)"
                                                             class="not-usual" />
                                                         <label for="incomeConsiderYes2"><span>Yes</span></label>
                                                     </div>
@@ -1505,26 +1509,44 @@
                                                     </div>
                                                     <div class="residence-no">
                                                         <div class="form-group">
-                                                            <input [readonly]="isReadOnly" type="text" class="form-control" id="std03" required autocomplete="off" [(ngModel)]="officialCorrespondenceStdCode" #stdCode="ngModel" name="stdCode" [minlength]="minMaxValues['STD_Code']?.minValue" [maxlength]="minMaxValues['STD_Code']?.maxLength"
-                                                                tabindex="6" spellcheck="false" pattern="{{regexPattern.stdCode}}" fieldFill />
+                                                            <input [readonly]="isReadOnly" type="text" class="form-control" 
+                                                                id="std03" autocomplete="off" 
+                                                                [(ngModel)]="officialCorrespondenceStdCode" 
+                                                                #stdCode="ngModel" name="stdCode" 
+                                                                [minlength]="minMaxValues['STD_Code']?.minValue" 
+                                                                [maxlength]="minMaxValues['STD_Code']?.maxLength"
+                                                                tabindex="6" spellcheck="false" 
+                                                                pattern="{{regexPattern.stdCode}}" 
+                                                                fieldFill />
                                                             <label for="std03">STD</label>
-                                                            <div class="redalert" *ngIf="RegExp(regexPattern.sameDigitStd).test(stdCode.value)">{{errors.contactDetails.stdCode.wrong}}</div>
+                                                            <div class="redalert" *ngIf="RegExp(regexPattern.sameDigitStd).test(stdCode.value)">{{errors.officialCorrespondence.stdCode.wrong}}</div>
                                                             <div *ngIf="stdCode.touched && stdCode.invalid" class="invalid-feedback">
                                                                 <!-- <div *ngIf="stdCode.errors?.required">{{errors.officialCorrespondence.stdCode.required}}</div> -->
                                                                 <div *ngIf="stdCode.errors?.pattern || stdCode.errors?.minlength">{{errors.officialCorrespondence.stdCode.invalid}}</div>
                                                             </div>
                                                         </div>
                                                         <span class="seperator">-</span>
-                                                        <div class="form-group">
-                                                            <input [readonly]="isReadOnly" type="text" class="form-control" id="res-no03" data-validation-attr="residenceno" required autocomplete="off" #offStdNumber="ngModel" name="offStdNumber" fieldFill tabindex="7" [minlength]="minMaxValues['Land_Line_Number']?.maxValue"
-                                                                [maxlength]="minMaxValues['Land_Line_Number']?.maxLength" spellcheck="false" pattern="{{regexPattern.mobileNumber}}" [(ngModel)]="officialCorrespondencePhoneNumber" />
+                                                        <div class="form-group typ-optional">
+                                                            <input [readonly]="isReadOnly" type="text" 
+                                                                class="form-control" id="res-no03" 
+                                                                data-validation-attr="residenceno" 
+                                                                autocomplete="off" #offStdNumber="ngModel" 
+                                                                name="offStdNumber" fieldFill tabindex="7" 
+                                                                [minlength]="minMaxValues['Land_Line_Number']?.minValue"
+                                                                [maxlength]="minMaxValues['Land_Line_Number']?.maxLength" 
+                                                                spellcheck="false" pattern="{{regexPattern.mobileNumber}}" 
+                                                                [(ngModel)]="officialCorrespondencePhoneNumber" />
                                                             <label for="res-no03">Office number</label>
-                                                            <div class="invalid-feedback" *ngIf="RegExp(regexPattern.sameDigit).test(offStdNumber.value)">
-                                                                {{errors.corporateAddress.phoneNumber.invalid}}</div>
+                                                            <span class="optional">optional</span>
+                                                            <div class="invalid-feedback" 
+                                                            *ngIf="RegExp(regexPattern.sameDigit).test(offStdNumber.value)">
+                                                            {{errors.officialCorrespondence.phoneNumber.wrong}}</div>
+                                                            <div class="invalid-feedback" *ngIf="offStdNumber.errors?.minlength">{{errors.officialCorrespondence.phoneNumber.minlength}} {{" "+minMaxValues['Land_Line_Number']?.minValue+" digits"}}</div>
                                                             <div *ngIf="offStdNumber.touched && offStdNumber.invalid" class="invalid-feedback">
                                                                 <!-- <div *ngIf="offStdNumber.errors?.required">{{errors.officialCorrespondence.phoneNumber.required}}</div> -->
-                                                                <div *ngIf="offStdNumber.errors?.pattern || offStdNumber.errors?.minlength">
+                                                                <div *ngIf="offStdNumber.errors?.pattern">
                                                                     {{errors.officialCorrespondence.phoneNumber.invalid}}</div>
+                                                                    
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1545,10 +1567,16 @@
                                                 </div>
 
                                                 <div class="btn-wrap">
-                                                    <button type="submit" class="btn btn-primary" [ngClass]="{'disabled': (!officialCorrespondenceForm.valid) ||
-                                                      (qde.application.applicants[coApplicantIndex].officialCorrespondence.officeEmailId)?.length == 100 || !qde.application.applicants[coApplicantIndex].officialCorrespondence.cityState} || RegExp(regexPattern.sameDigitStd).test(offStdNumber.value) || RegExp(regexPattern.sameDigitStd).test(stdCode.value)"
-                                                        [disabled]="!officialCorrespondenceForm.valid || 
-                                                      (qde.application.applicants[coApplicantIndex].officialCorrespondence.officeEmailId)?.length == 100 || !qde.application.applicants[coApplicantIndex].officialCorrespondence.cityState || RegExp(regexPattern.sameDigitStd).test(offStdNumber.value) || RegExp(regexPattern.sameDigitStd).test(stdCode.value)">Next
+                                                    <button type="submit" class="btn btn-primary" 
+                                                    [ngClass]="{'disabled': (!officialCorrespondenceForm.valid) ||
+                                                      (qde.application.applicants[coApplicantIndex].officialCorrespondence.officeEmailId)?.length == 100 || 
+                                                      !qde.application.applicants[coApplicantIndex].officialCorrespondence.cityState || 
+                                                      RegExp(regexPattern.sameDigit).test(offStdNumber.value) ||
+                                                      RegExp(regexPattern.sameDigitStd).test(stdCode.value)}"
+                                                      [disabled]="!officialCorrespondenceForm.valid || 
+                                                      (qde.application.applicants[coApplicantIndex].officialCorrespondence.officeEmailId)?.length == 100 || 
+                                                      !qde.application.applicants[coApplicantIndex].officialCorrespondence.cityState || 
+                                                      RegExp(regexPattern.sameDigit).test(offStdNumber.value) || RegExp(regexPattern.sameDigit).test(stdCode.value)">Next
                                               </button>
                                                 </div>
                                             </form>
@@ -2170,8 +2198,12 @@
                                                     </div>
                                                     <div class="residence-no">
                                                         <div class="form-group">
-                                                            <input [readonly]="isReadOnly" type="text" autocomplete="off" [(ngModel)]="corporateAddressStdCode" name="stdNumber" class="form-control" #stdNumber="ngModel" fieldFill tabindex="6" spellcheck="false" [minlength]="minMaxValues['STD_Code']?.minValue" [maxlength]="minMaxValues['STD_Code']?.maxLength"
-                                                                required id="caStd" pattern="{{regexPattern.stdCode}}" required/>
+                                                            <input [readonly]="isReadOnly" type="text" autocomplete="off" 
+                                                                [(ngModel)]="corporateAddressStdCode" name="stdNumber" 
+                                                                class="form-control" #stdNumber="ngModel" fieldFill tabindex="6" 
+                                                                spellcheck="false" [minlength]="minMaxValues['STD_Code']?.minValue" 
+                                                                [maxlength]="minMaxValues['STD_Code']?.maxLength"
+                                                                id="caStd" pattern="{{regexPattern.stdCode}}" />
                                                             <label for="caStd">STD</label>
                                                             <div class="redalert" *ngIf="RegExp(regexPattern.sameDigitStd).test(stdNumber.value)">{{errors.contactDetails.stdCode.wrong}}</div>
                                                             <div *ngIf="stdNumber.touched  && stdNumber.invalid" class="invalid-feedback">
@@ -2181,15 +2213,23 @@
                                                             </div>
                                                         </div>
                                                         <span class="seperator">-</span>
-                                                        <div class="form-group">
-                                                            <input [readonly]="isReadOnly" type="text" autocomplete="off" class="form-control" [(ngModel)]="corporateAddressPhoneNumber" name="phoneNumber" id="ca-res-no" tabindex="7" fieldFill spellcheck="false" #phoneNumber="ngModel" pattern="{{regexPattern.mobileNumber}}"
-                                                                [minlength]="minMaxValues['Land_Line_Number']?.minValue" [maxlength]="minMaxValues['Land_Line_Number']?.maxLength" data-validation-attr="residenceno" required/>
+                                                        <div class="form-group typ-optional">
+                                                            <input [readonly]="isReadOnly" type="text" autocomplete="off" 
+                                                                class="form-control" [(ngModel)]="corporateAddressPhoneNumber" 
+                                                                name="phoneNumber" id="ca-res-no" tabindex="7" fieldFill 
+                                                                spellcheck="false" #phoneNumber="ngModel" 
+                                                                pattern="{{regexPattern.mobileNumber}}"
+                                                                [minlength]="minMaxValues['Land_Line_Number']?.minValue" 
+                                                                [maxlength]="minMaxValues['Land_Line_Number']?.maxLength" 
+                                                                data-validation-attr="residenceno"/>
                                                             <label for="ca-res-no">Office number</label>
+                                                            <span class="optional">optional</span>
                                                             <div class="invalid-feedback" *ngIf="RegExp(regexPattern.sameDigit).test(phoneNumber.value)">
                                                                 {{errors.corporateAddress.phoneNumber.invalid}}</div>
+                                                                <div class="invalid-feedback" *ngIf="phoneNumber.errors?.minlength">{{errors.corporateAddress.phoneNumber.minlength}} {{" "+minMaxValues['Land_Line_Number']?.minValue+" digits"}}</div>
                                                             <div *ngIf="phoneNumber.touched  && phoneNumber.invalid" class="invalid-feedback">
                                                                 <!-- <div *ngIf="phoneNumber.errors?.required">{{errors.corporateAddress.phoneNumber.required}}</div> -->
-                                                                <div *ngIf="phoneNumber.errors?.pattern || phoneNumber.errors?.minlength">{{errors.corporateAddress.phoneNumber.invalid}}</div>
+                                                                <div *ngIf="phoneNumber.errors?.pattern">{{errors.corporateAddress.phoneNumber.invalid}}</div>
                                                             </div>
                                                         </div>
                                                     </div>
