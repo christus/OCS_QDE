@@ -1,8 +1,9 @@
 /node_modules
 package-lock.json
 /dist
-/www
+
 /icici
 /ocs.tar.gz
+/ocs.tar.xz
 /ocs
 /android/.idea
