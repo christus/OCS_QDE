@@ -482,6 +482,22 @@ export const environment = {
     deactivateUser:{
       workflowId: '30d9085ead3311e9a3ae0242ac110002',
       processId : 'c16073406eb111ea81c90242ac110002'
+    },
+    ocsNumberAutoFill: {
+      workflowId: '1b7e6300713211eaa8f80242ac110002',
+      processId: '1b7e6300713211eaa8f80242ac110002'
+    },
+    getApplicationListForArchive: {
+      workflowId: "f4880d8c7a1e11eaa4210242ac110002",
+      processId: "df4238f8891411ea948e0242ac110002"
+    },
+    archiveDataFromMainTable: {
+      workflowId: "f4880d8c7a1e11eaa4210242ac110002",
+      processId: "f77610347b2711ea97770242ac110002"
+    },
+    uploadOcsToArchive: {
+      workflowId: "f5712174806911ea80370242ac110002",
+      processId: "f5712174806911ea80370242ac110002"
     }
   },
   iciciDomainExt: "@icicibankltd.com",

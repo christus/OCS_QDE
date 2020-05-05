@@ -1,0 +1,124 @@
+<div class="form-wrap">
+  <div class="form-group">
+    <div class="row">
+      <div class="col-6" style="padding-bottom:2vw">
+        <span class="control-title">OCS Number</span>
+        <form [formGroup]="myForm">
+        <ng-multiselect-dropdown [placeholder]="'Choose your ocs number'" [data]="ocsdata" [settings]="dropdownSettings" formControlName="ocsNumber" (onSelect)="onItemSelect($event)">
+
+        </ng-multiselect-dropdown>
+      </form>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="row">
+
+      <div class="col-4">
+        <span class="control-title">From Date</span>
+        <!-- <input type="date" class="form-control"  style="margin-top: 1.1vw;" id="effectFrom" name="effectFrom" [(ngModel)]="effectFromDate"> -->
+        <kendo-datepicker class="form-control kendo-list kendo-date" style="font-size: 1.28vw;" [min]="min"
+          [(ngModel)]="effectFromDate" [format]="'dd/MM/yyyy'" #effectFrom="ngModel">
+        </kendo-datepicker>
+        <div *ngIf="!effectFrom.valid" class="invalid-feedback">
+          Select Valid Date
+        </div>
+      </div>
+      <div class="col-4">
+        <span class="control-title">To Date</span>
+        <!-- <input type="date" class="form-control"  style="margin-top: 1.1vw;" id="effectFrom" name="effectFrom" [(ngModel)]="effectFromDate"> -->
+        <kendo-datepicker class="form-control kendo-list kendo-date" style="font-size: 1.28vw;" [min]="min"
+          [(ngModel)]="effectToDate" [format]="'dd/MM/yyyy'" #effectTo="ngModel">
+        </kendo-datepicker>
+        <div *ngIf="!effectTo.valid" class="invalid-feedback">
+          Select Valid Date
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="isErrorMsg" class="invalid-feedback">
+    <div>
+      Please select any one of the above fields to search..
+    </div>
+  </div>
+
+  <div class="right-panel" style="padding: 2vw;padding-bottom: 4vw;">
+    <button type="button" class="btn btn-default" (click)="onSearch()"> Search</button>
+  </div>
+
+
+  <div class="form-group">
+      
+    <ul *ngFor="let detail of ocsList | paginate: { itemsPerPage: perPage, currentPage: currentPage, totalItems: totalItems }; let i=index">
+            <li>
+             <a class="lead-action">
+
+              <ul class="bs-lead-card">
+                  <li>
+                      <span class="name">Ocs Number</span>
+                      <span class="value">{{detail.ocsNumber}}</span></li>
+                  <li>
+                      <span class="name">Status</span>
+                      <span class="value">{{detail.status}} </span>
+                  </li>
+                <li>
+                    <div class="bs-checkbox" style="top: -.5vw;">
+                        <input type="checkbox" id="termsCheck{{i}}" name="termsCheck{{i}}"
+                        (change)="changeCheckbox($event,i,detail)"  #termsCheck{{i}}
+                     
+                        [ngClass]="{'disabled': (selectAllCheck)}"
+                        [disabled]="selectAllCheck"
+                        [checked]="detail.checked"
+                       
+                        />
+                        <label for="termsCheck{{i}}"></label>
+                    </div>
+                </li>
+              </ul>
+            </a>
+          </li>
+      </ul>
+      <pagination-controls  (pageChange)="pageChanged($event)" class="pagination" *ngIf="totalItems>0"></pagination-controls>
+    
+    
+    </div>
+
+
+  
+
+
+  <div class="form-group">
+    <div class="row">
+      <div class="col-4 inputBox form-field-el" style="padding-bottom:2vw">
+        <span class="control-title">Archive Reason*</span>
+        <textarea class="form-control" id="reasonToChange" [(ngModel)]="reasonToChangeText" name="reasonToChange"
+          autocomplete="nope" #reasonToChange="ngModel" required></textarea>
+      </div>
+      <div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="right-panel" style="padding: 2vw" [ngClass]="{'submit-disabled': (applicationIdList.length == 0) || !reasonToChangeText}">
+    <button type="button" class="btn btn-default" (click)="onSubmit()"> Submit</button>
+  </div>
+
+</div>
+
+
+<div class="overlay" [ngClass]="{'active': isSuccessModal}">
+  <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isSuccessModal}">
+      <a class="modal-close" (click)="isSuccessModal = false"><span class="icon icon-close"></span></a>
+      <div class="modal-body">
+          <h1>{{successMsg}}</h1>
+          <br><br>
+          <div class="btn-wrap">
+              <button class="btn btn-border" (click)="success()">OK</button>
+          </div>
+      </div>
+  </div>
+</div>

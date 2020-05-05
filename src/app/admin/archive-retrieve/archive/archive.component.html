@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="tabs">
+    <ul class="tabs-head" style="padding: 2vw;float:left">
+      <li class="tab-link" [class.active]="viewMode == 'tab1'"  rel="tab1" (click)="viewMode ='tab1'"><a href="javascript:void(0);">Archive Ocs Number</a></li>
+      <li class="tab-link" [class.active]="viewMode == 'tab2'"  rel="tab2" (click)="viewMode ='tab2'"><a href="javascript:void(0);">Archive File Upload</a></li>
+    </ul>
+  </div>
+
+  <div class="tab-slider--container" [ngSwitch]="viewMode">
+  
+    <div id="tab1" class="tab-slider--body" *ngSwitchCase="'tab1'">
+     <app-archive-ocs-number></app-archive-ocs-number>
+    </div>
+
+    <div id="tab2" class="tab-slider--body" *ngSwitchCase="'tab2'">
+      <app-archive-file-upload></app-archive-file-upload>
+    </div>
+
+  </div>
+  
+
+
+</div>

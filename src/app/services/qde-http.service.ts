@@ -3681,4 +3681,93 @@ export class QdeHttpService {
     let uri = environment.host + '/d/workflows/' + workflowId + '/' + environment.apiVersion.api + 'execute?projectId=' + projectId;
     return this.callPost(workflowId, projectId, body);
   }
+
+  getOcsNumberAutoFill() {
+
+    const processId = environment.api.ocsNumberAutoFill.processId;
+    const workflowId = environment.api.ocsNumberAutoFill.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: {"ocsNumber":"oc"},
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = {
+      'processVariables':
+        JSON.stringify(requestEntity)
+    };
+
+    let uri = environment.host + '/d/workflows/' + workflowId + '/' + environment.apiVersion.api + 'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
+  }
+
+  getApplicationListForArchive(data) {
+    const processId = environment.api.getApplicationListForArchive.processId;
+    const workflowId = environment.api.getApplicationListForArchive.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: data,
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = {
+      'processVariables':
+        JSON.stringify(requestEntity)
+    };
+
+    let uri = environment.host + '/d/workflows/' + workflowId + '/' + environment.apiVersion.api + 'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
+  }
+
+  archiveDataFromMainTable(data) {
+
+    const processId = environment.api.archiveDataFromMainTable.processId;
+    const workflowId = environment.api.archiveDataFromMainTable.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: data,
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = {
+      'processVariables':
+        JSON.stringify(requestEntity)
+    };
+
+    let uri = environment.host + '/d/workflows/' + workflowId + '/' + environment.apiVersion.api + 'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
+
+  }
+
+  uploadOcsToArchive(data) {
+
+    const processId = environment.api.uploadOcsToArchive.processId;
+    const workflowId = environment.api.uploadOcsToArchive.workflowId;
+    const projectId = environment.projectId;
+
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: data,
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = {
+      'processVariables':
+        JSON.stringify(requestEntity)
+    };
+
+    let uri = environment.host + '/d/workflows/' + workflowId + '/' + environment.apiVersion.api + 'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
+
+  }
 }

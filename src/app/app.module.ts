@@ -160,6 +160,11 @@ import { AdditionalPmayClssFormComponent } from './addtional-service/additional-
 import { DeclarationFormComponent } from './addtional-service/declaration-form/declaration-form.component';
 import { TearFormComponent } from './addtional-service/tear-form/tear-form.component';
 import { RegistrationFormComponent } from './registration-form/registration-form.component';
+import { ArchiveRetrieveComponent } from './admin/archive-retrieve/archive-retrieve.component';
+import { ArchiveComponent } from './admin/archive-retrieve/archive/archive.component';
+import { RetrieveComponent } from './admin/archive-retrieve/retrieve/retrieve.component';
+import { ArchiveOcsNumberComponent } from './admin/archive-retrieve/archive/archive-ocs-number/archive-ocs-number.component';
+import { ArchiveFileUploadComponent } from './admin/archive-retrieve/archive/archive-file-upload/archive-file-upload.component';
 
 
 
@@ -631,6 +636,14 @@ const appRoutes: Routes = [
       {
         path:'branchMapping',
         component: BranchMappingComponent
+      },
+      {
+        path:'archive',
+        component:  ArchiveRetrieveComponent
+      },
+      {
+        path:'retrieve',
+        component:  ArchiveRetrieveComponent
       }
     ]
   },
@@ -734,7 +747,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     AddtionalServiceDashboardComponent,
     CkycFormComponent,
     DocumentCheckListComponent,    
-    AdditionalPmayClssFormComponent, DeclarationFormComponent, TearFormComponent, RegistrationFormComponent,
+    AdditionalPmayClssFormComponent, DeclarationFormComponent, TearFormComponent, RegistrationFormComponent, ArchiveRetrieveComponent, ArchiveComponent, RetrieveComponent, ArchiveOcsNumberComponent, ArchiveFileUploadComponent,
   ],
   imports: [
     BrowserModule,

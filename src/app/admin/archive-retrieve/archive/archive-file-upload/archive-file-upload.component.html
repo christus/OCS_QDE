@@ -1,0 +1,62 @@
+<div class="form-wrap">
+  <div class="form-group">
+    <div class="row">
+      <div class="image-wrapper-container">
+        <div class="bs-file">
+          <div>
+            <input id="ocsNumber" type="file" accept=".csv"  (change)="setOcsNumber($event)" class="form-control">
+            <label for="ocsNumber"><span>Click to Upload Ocs Number</span></label>
+          </div>
+        </div>
+        <div *ngIf="fileName" class="doc_file_name_size" style="padding-bottom:2vw;width:40%;text-align: center;">
+          <div>
+            <span class="ellipsis">{{fileName}} </span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="form-group">
+    <div class="row">
+      <div class="col-4 inputBox form-field-el" style="padding-bottom:2vw">
+        <span class="control-title">Archive By*</span>
+        <input type="text" class="form-control" id="archiveById" [(ngModel)]="archiveBy" name="archiveById" #archiveById="ngModel" required>
+      </div>
+      <div>
+
+      </div>
+    </div>
+  </div> -->
+
+  <div class="form-group">
+    <div class="row">
+      <div class="col-4 inputBox form-field-el" style="padding-bottom:2vw">
+        <span class="control-title">Archive Reason*</span>
+        <textarea class="form-control" id="reasonToChange" [(ngModel)]="reasonToChangeText" name="reasonToChange"
+          autocomplete="nope" #reasonToChange="ngModel" required></textarea>
+      </div>
+      <div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="right-panel" style="padding: 2vw" [ngClass]="{'submit-disabled': !fileName || !reasonToChangeText}">
+    <button type="button" class="btn btn-default" (click)="onSubmit()"> Submit</button>
+  </div>
+</div>
+
+<div class="overlay" [ngClass]="{'active': isSuccessModal}">
+  <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isSuccessModal}">
+      <a class="modal-close" (click)="isSuccessModal = false"><span class="icon icon-close"></span></a>
+      <div class="modal-body">
+          <h1>{{successMsg}}</h1>
+          <br><br>
+          <div class="btn-wrap">
+              <button class="btn btn-border" (click)="success()">OK</button>
+          </div>
+      </div>
+  </div>
+</div>

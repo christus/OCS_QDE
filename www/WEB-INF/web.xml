@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">  <display-name>ocs</display-name>
+  <listener>
+    <listener-class>
+           com.redirect.payment.HelperContextListener
+   	</listener-class>
+  </listener>
+  <context-param>
+    <param-name>configFileLocation</param-name>
+    <param-value>WEB-INF/Config.json</param-value>
+  </context-param>
+
+<filter>
+   <filter-name>CorsFilter</filter-name>
+   <filter-class>org.apache.catalina.filters.CorsFilter</filter-class>
+ <init-param>
+    <param-name>cors.exposed.headers</param-name>
+    <param-value>Access-Control-Allow-Origin,Access-Control-Allow-Credentials,authentication-token,Cookie</param-value>
+  </init-param>
+ <init-param>
+    <param-name>cors.allowed.headers</param-name>
+    <param-value>Content-Type,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers,authentication-token,Cookie</param-value>
+  </init-param>
+<init-param>
+    <param-name>cors.allowed.methods</param-name>
+    <param-value>GET,POST,HEAD,OPTIONS,PUT</param-value>
+  </init-param>
+
+<init-param>
+    <param-name>cors.allowed.origins</param-name>
+    <param-value>*</param-value>
+  </init-param>
+
+ </filter>
+ <filter-mapping>
+   <filter-name>CorsFilter</filter-name>
+   <url-pattern>/*</url-pattern>
+ </filter-mapping>
+
+ <!--<filter-mapping>
+   <filter-name>CorsFilter</filter-name>
+   <url-pattern>/account/*</url-pattern>
+ </filter-mapping>-->
+
+  <servlet>
+    <servlet-name>Public</servlet-name>
+    <servlet-class>
+			com.sun.jersey.spi.container.servlet.ServletContainer
+	</servlet-class>
+    <init-param>
+      <param-name>com.sun.jersey.config.property.packages</param-name>
+      <param-value>com.redirect.payment</param-value>
+    </init-param>
+    <init-param>
+      <param-name>com.sun.jersey.config.property.JSPTemplatesBasePath</param-name>
+      <param-value>/</param-value>
+    </init-param>
+    <load-on-startup>2</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Public</servlet-name>
+    <url-pattern>/payments/*</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>Static</servlet-name>
+    <servlet-class>
+      com.sun.jersey.spi.container.servlet.ServletContainer
+    </servlet-class>
+    <init-param>
+      <param-name>com.sun.jersey.config.property.packages</param-name>
+      <param-value>com.redirect.st</param-value>
+    </init-param>
+    <init-param>
+      <param-name>com.sun.jersey.config.property.JSPTemplatesBasePath</param-name>
+      <param-value>/</param-value>
+    </init-param>
+    <load-on-startup>2</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Static</servlet-name>
+    <url-pattern>/static/*</url-pattern>
+  </servlet-mapping>
+
+</web-app>
