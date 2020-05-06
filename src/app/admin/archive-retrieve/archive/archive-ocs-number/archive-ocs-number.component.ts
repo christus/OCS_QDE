@@ -39,6 +39,7 @@ export class ArchiveOcsNumberComponent implements OnInit {
   isBtnDisable: boolean = true;
   reasonToChangeText: string;
   isErrorMsg: boolean;
+  noRecordsFound: boolean;
 
   constructor(private qdeHttp: QdeHttpService,private router: Router) { }
 
@@ -52,13 +53,22 @@ export class ArchiveOcsNumberComponent implements OnInit {
     this.myForm = new FormGroup({
       ocsNumber: new FormControl('')
     })
+    // this.dropdownSettings = {
+    //   singleSelection: true,
+    //   idField: 'value',
+    //   textField: 'key',
+    //   itemsShowLimit: 4,
+    //   enableCheckAll: false,
+    //   allowSearchFilter: true
+    // };
+
     this.dropdownSettings = {
       singleSelection: true,
       idField: 'value',
-      textField: 'key',
-      itemsShowLimit: 4,
-      enableCheckAll: false,
-      allowSearchFilter: true
+      textField: 'key',    
+      itemsShowLimit: 3,
+      allowSearchFilter: true,
+      closeDropDownOnSelection: true
     };
 
     this.ocsdata = []
@@ -172,7 +182,11 @@ export class ArchiveOcsNumberComponent implements OnInit {
     this.qdeHttp.getApplicationListForArchive(reqObject).subscribe((response) => {
       console.log('Response', response)
       if (response['ProcessVariables']['status']) {
+        this.noRecordsFound = false;
         this.ocsList = response['ProcessVariables']['getApplication'] || [];
+        if(this.ocsList.length == 0) {
+          this.noRecordsFound = true;
+        }
         this.totalPages = response["ProcessVariables"].totalPages;
         this.perPage = response['ProcessVariables']['perPage'];
         this.currentPage = response['ProcessVariables']['currentPage'];
@@ -186,6 +200,8 @@ export class ArchiveOcsNumberComponent implements OnInit {
                 }
               })
         }
+      } else {
+        this.noRecordsFound = true;
       }
     })
   }

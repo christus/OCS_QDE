@@ -259,3 +259,63 @@ top: 0; */
       pointer-events: none;
   }
   
+
+  :host ::ng-deep .multiselect-dropdown .dropdown-list .item1 .filter-textbox input {
+    text-transform: uppercase;
+  }
+  
+  :host ::ng-deep .multiselect-dropdown .multiselect-item-checkbox input[type=checkbox]+div:before {
+    display: none !important;
+}
+
+:host ::ng-deep .multiselect-dropdown .multiselect-item-checkbox input[type=checkbox]+div {
+    padding-left: 5px !important;
+}
+
+
+:host ::ng-deep .multiselect-dropdown .multiselect-item-checkbox input[type=checkbox]+div:before {
+    display: none !important;
+}
+
+:host ::ng-deep .multiselect-dropdown .multiselect-item-checkbox input[type=checkbox]:checked+div:after {
+    transform: none !important;
+    border: none !important;
+}
+
+:host ::ng-deep .multiselect-dropdown .dropdown-list .filter-textbox input {
+    color: #999;
+}
+
+:host ::ng-deep .multiselect-dropdown .dropdown-list .filter-textbox input {
+    padding-left: 5px !important;
+}
+
+:host ::ng-deep .multiselect-dropdown .multiselect-dropdown .dropdown-btn .selected-item {
+    border: none !important;
+}
+
+:host ::ng-deep .multiselect-dropdown .multiselect-dropdown .dropdown-btn .selected-item a {
+    display: none !important;
+}
+
+:host ::ng-deep .multiselect-dropdown .dropdown-list .item2 .multiselect-item-checkbox:hover {
+    background-color: #e66e24 !important;
+}
+
+:host ::ng-deep .multiselect-dropdown .dropdown-list .item2 .multiselect-item-checkbox div:hover {
+    color: #fff !important;
+}
+
+
+
+
+
+
+
+  textarea {
+    height: 2.5vw;
+  }
+
+
+  
+  

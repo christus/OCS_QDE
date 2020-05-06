@@ -8,7 +8,7 @@
             <label for="ocsNumber"><span>Click to Upload Ocs Number</span></label>
           </div>
         </div>
-        <div *ngIf="fileName" class="doc_file_name_size" style="padding-bottom:2vw;width:40%;text-align: center;">
+        <div *ngIf="fileName" class="doc_file_name_size doc-file-class">
           <div>
             <span class="ellipsis">{{fileName}} </span>
           </div>
@@ -32,7 +32,7 @@
 
   <div class="form-group">
     <div class="row">
-      <div class="col-4 inputBox form-field-el" style="padding-bottom:2vw">
+      <div class="col-3 inputBox form-field-el" style="padding-top:2vw">
         <span class="control-title">Archive Reason*</span>
         <textarea class="form-control" id="reasonToChange" [(ngModel)]="reasonToChangeText" name="reasonToChange"
           autocomplete="nope" #reasonToChange="ngModel" required></textarea>

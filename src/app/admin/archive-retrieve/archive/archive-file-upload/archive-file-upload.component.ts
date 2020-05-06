@@ -23,7 +23,7 @@ export class ArchiveFileUploadComponent implements OnInit {
   ngOnInit() {
     this.fileName = '';
     this.reasonToChangeText = '';
-    this.successMsg = 'Ocs Nuber Archived Successfully'
+    this.successMsg = 'Applications Archived Successfully'
   }
 
   setOcsNumber(event) {

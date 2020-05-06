@@ -4,8 +4,7 @@
       <div class="col-6" style="padding-bottom:2vw">
         <span class="control-title">OCS Number</span>
         <form [formGroup]="myForm">
-        <ng-multiselect-dropdown [placeholder]="'Choose your ocs number'" [data]="ocsdata" [settings]="dropdownSettings" formControlName="ocsNumber" (onSelect)="onItemSelect($event)">
-
+        <ng-multiselect-dropdown [placeholder]="'Choose your ocs number'" [data]="ocsdata" [settings]="dropdownSettings" formControlName="ocsNumber">
         </ng-multiselect-dropdown>
       </form>
 
@@ -36,18 +35,23 @@
           Select Valid Date
         </div>
       </div>
+      <div class="col-3">
+
+        <div *ngIf="isErrorMsg" class="invalid-feedback" style="padding:0.3vw">
+          <div>
+            Please select the fields
+          </div>
+        </div>
+      
+        <div class="right-panel">
+          <button type="button" class="btn btn-default" (click)="onSearch()"> Search</button>
+        </div>
+
+      </div>
     </div>
   </div>
 
-  <div *ngIf="isErrorMsg" class="invalid-feedback">
-    <div>
-      Please select any one of the above fields to search..
-    </div>
-  </div>
-
-  <div class="right-panel" style="padding: 2vw;padding-bottom: 4vw;">
-    <button type="button" class="btn btn-default" (click)="onSearch()"> Search</button>
-  </div>
+ 
 
 
   <div class="form-group">
@@ -81,6 +85,18 @@
             </a>
           </li>
       </ul>
+      <ul *ngIf="noRecordsFound">
+        <li>
+          <a class="lead-action">
+
+            <ul class="bs-lead-card">
+                <li>
+                    <span class="value">No Records Found</span>
+                  </li>
+              </ul>
+          </a>
+        </li>
+      </ul>
       <pagination-controls  (pageChange)="pageChanged($event)" class="pagination" *ngIf="totalItems>0"></pagination-controls>
     
     
@@ -92,7 +108,7 @@
 
   <div class="form-group">
     <div class="row">
-      <div class="col-4 inputBox form-field-el" style="padding-bottom:2vw">
+      <div class="col-3 inputBox form-field-el" style="padding-bottom:2vw;padding-top:1vw">
         <span class="control-title">Archive Reason*</span>
         <textarea class="form-control" id="reasonToChange" [(ngModel)]="reasonToChangeText" name="reasonToChange"
           autocomplete="nope" #reasonToChange="ngModel" required></textarea>
@@ -103,7 +119,7 @@
     </div>
   </div>
 
-  <div class="right-panel" style="padding: 2vw" [ngClass]="{'submit-disabled': (applicationIdList.length == 0) || !reasonToChangeText}">
+  <div class="right-panel" [ngClass]="{'submit-disabled': (applicationIdList.length == 0) || !reasonToChangeText}">
     <button type="button" class="btn btn-default" (click)="onSubmit()"> Submit</button>
   </div>
 

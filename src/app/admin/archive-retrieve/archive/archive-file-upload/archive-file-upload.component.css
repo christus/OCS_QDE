@@ -243,7 +243,7 @@ kendo-datepicker{
     margin-left: 0 !important;
 }
 .bs-file label {
-    height: 27.25vw !important;
+    height: 18.25vw !important;
 }
 
 /* left: 0;
@@ -259,3 +259,75 @@ top: 0; */
     pointer-events: none;
 } 
   
+textarea {
+    height: 2.5vw;
+  }
+
+
+/** upload csss **/
+
+  .bs-file[_ngcontent-c7] label[_ngcontent-c7] {
+    height: 18.25vw !important;
+}
+
+.bs-file {
+    position: relative;
+    width: 31.25vw;
+    height: 18.25vw !important;
+    margin: 0 auto;
+}
+
+.bs-file label {
+    display: block;
+    width: 75%;
+    height: 18.25vw;
+    background: 0 0;
+    border: 1px solid #bbb;
+    border-radius: .78vw;
+    text-align: center;
+    font-family: zurich-bold;
+    font-size: 1.25vw;
+    color: #999;
+}
+
+.bs-file label:after {
+    content: '';
+    left: 0;
+    right: 0;
+    top: 30%;
+    width: 9.38vw;
+    height: 9.38vw;
+    /* margin: 0 auto; */
+    margin-left: 7vw;
+    display: block;
+
+}
+
+.bs-file label span {
+    position: absolute;
+    line-height: 2.81vw;
+    left: auto; 
+    bottom: auto;
+    padding-bottom: 2vw;
+    transform: translateX(-50%);
+    border: 1px solid #bbb;
+    border-radius: 3.91vw;
+    padding: 0 20px;
+    min-width: 65%;
+    margin-top: 12vw;
+}
+
+
+
+.doc-file-class {
+    padding-bottom: 1vw;
+    width: 40%;
+    text-align: center;
+    padding-top: 1vw;
+    padding-right: 10vw;
+}
+
+
+
+
+
