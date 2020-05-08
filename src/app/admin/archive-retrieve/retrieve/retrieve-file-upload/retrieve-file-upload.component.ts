@@ -23,7 +23,7 @@ export class RetrieveFileUploadComponent implements OnInit {
   ngOnInit() {
     this.fileName = '';
     this.reasonToChangeText = '';
-    this.successMsg = 'Applications Archived Successfully'
+    this.successMsg = 'Applications Retrieved Successfully'
   }
 
   setOcsNumber(event) {

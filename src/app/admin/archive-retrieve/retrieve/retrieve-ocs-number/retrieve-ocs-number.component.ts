@@ -40,6 +40,10 @@ export class RetrieveOcsNumberComponent implements OnInit {
   isErrorMsg: boolean;
   noRecordsFound: boolean;
 
+  isErrorModal: boolean;
+  errorMessage: string;
+  textErrMsg: string;
+
   constructor(private qdeHttp: QdeHttpService,private router: Router) { }
 
   ngOnInit() {
@@ -47,7 +51,9 @@ export class RetrieveOcsNumberComponent implements OnInit {
     this.applicationIdList = [];
     this.fileName = '';
     this.successMsg = '';
-    this.reasonToChangeText = ''
+    this.reasonToChangeText = '';
+    this.errorMessage = '';
+    this.textErrMsg = ''
 
     this.myForm = new FormGroup({
       ocsNumber: new FormControl('')
@@ -153,6 +159,12 @@ export class RetrieveOcsNumberComponent implements OnInit {
         if(response['ProcessVariables']['status']) {
             this.isSuccessModal = true;
             this.successMsg = 'Applications Retrieved Successfully'
+        }else if (response["ProcessVariables"]["errorMessage"]) {
+          console.log(
+            "Response: " + response["ProcessVariables"]["errorMessage"]
+          );
+          this.errorMessage = response["ProcessVariables"]["errorMessage"];
+          this.isErrorModal = true;
         }
       })
   }
@@ -167,7 +179,7 @@ export class RetrieveOcsNumberComponent implements OnInit {
 
   onSearch() {
 
-
+    this.textErrMsg = 'Please select the fields'
     if(!this.effectFromDate && !this.effectToDate  &&  this.myForm.value.ocsNumber.length == 0 ) {
       this.isErrorMsg = true;
       return;
@@ -188,6 +200,21 @@ export class RetrieveOcsNumberComponent implements OnInit {
      this.fromDate = (this.effectFromDate) ? this.getFormattedDate(this.effectFromDate).toString() : '';
      this.toDate = (this.effectToDate) ? this.getFormattedDate(this.effectToDate).toString() : '';
 
+     if(this.fromDate && this.toDate) {
+      const fromTimestamp = new Date(this.fromDate).getTime() / 1000
+      const toTimestamp = new Date(this.toDate).getTime() / 1000
+ 
+      console.log(fromTimestamp,toTimestamp)
+ 
+      if(toTimestamp < fromTimestamp) {
+        this.isErrorMsg = true;
+        this.textErrMsg = 'Invalid date, fromdate is greater than todate'
+        return;
+      }else {
+        this.isErrorMsg = false;
+      }
+
+     }
 
      this.applicationId = (this.myForm.value.ocsNumber.length != 0) ? this.myForm.value.ocsNumber[0].key : "";
     const reqObject = {
@@ -228,6 +255,13 @@ export class RetrieveOcsNumberComponent implements OnInit {
         }
       } else {
         this.noRecordsFound = true;
+        if(response["ProcessVariables"]["errorMessage"]) {
+          console.log(
+            "Response: " + response["ProcessVariables"]["errorMessage"]
+          );
+          this.errorMessage = response["ProcessVariables"]["errorMessage"];
+          this.isErrorModal = true;
+        }
       }
     })
   }
