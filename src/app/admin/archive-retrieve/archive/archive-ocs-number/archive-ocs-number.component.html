@@ -1,10 +1,10 @@
 <div class="form-wrap">
   <div class="form-group">
     <div class="row">
-      <div class="col-6" style="padding-bottom:2vw">
+      <div class="col-6" style="padding-bottom:1vw">
         <span class="control-title">OCS Number</span>
         <form [formGroup]="myForm">
-        <ng-multiselect-dropdown [placeholder]="'Choose your ocs number'" [data]="ocsdata" [settings]="dropdownSettings" formControlName="ocsNumber">
+        <ng-multiselect-dropdown [placeholder]="'Choose your ocs number'" [data]="ocsdata" [settings]="dropdownSettings" (onFilterChange)="onFilterChange($event)" formControlName="ocsNumber">
         </ng-multiselect-dropdown>
       </form>
 
@@ -18,7 +18,7 @@
       <div class="col-4">
         <span class="control-title">From Date</span>
         <!-- <input type="date" class="form-control"  style="margin-top: 1.1vw;" id="effectFrom" name="effectFrom" [(ngModel)]="effectFromDate"> -->
-        <kendo-datepicker class="form-control kendo-list kendo-date" style="font-size: 1.28vw;" [min]="min"
+        <kendo-datepicker class="form-control kendo-list kendo-date" style="font-size: 1.28vw;margin-top:0.5vw" [min]="min"
           [(ngModel)]="effectFromDate" [format]="'dd/MM/yyyy'" #effectFrom="ngModel">
         </kendo-datepicker>
         <div *ngIf="!effectFrom.valid" class="invalid-feedback">
@@ -28,25 +28,22 @@
       <div class="col-4">
         <span class="control-title">To Date</span>
         <!-- <input type="date" class="form-control"  style="margin-top: 1.1vw;" id="effectFrom" name="effectFrom" [(ngModel)]="effectFromDate"> -->
-        <kendo-datepicker class="form-control kendo-list kendo-date" style="font-size: 1.28vw;" [min]="min"
+        <kendo-datepicker class="form-control kendo-list kendo-date" style="font-size: 1.28vw;margin-top:0.5vw" [min]="min"
           [(ngModel)]="effectToDate" [format]="'dd/MM/yyyy'" #effectTo="ngModel">
         </kendo-datepicker>
         <div *ngIf="!effectTo.valid" class="invalid-feedback">
           Select Valid Date
         </div>
       </div>
-      <div class="col-3">
-
+      <div class="col-4">
         <div *ngIf="isErrorMsg" class="invalid-feedback" style="padding:0.3vw">
           <div>
             Please select the fields
           </div>
         </div>
-      
         <div class="right-panel">
           <button type="button" class="btn btn-default" (click)="onSearch()"> Search</button>
         </div>
-
       </div>
     </div>
   </div>
@@ -108,7 +105,7 @@
 
   <div class="form-group">
     <div class="row">
-      <div class="col-3 inputBox form-field-el" style="padding-bottom:2vw;padding-top:1vw">
+      <div class="col-3 inputBox form-field-el" style="padding-bottom:1vw;">
         <span class="control-title">Archive Reason*</span>
         <textarea class="form-control" id="reasonToChange" [(ngModel)]="reasonToChangeText" name="reasonToChange"
           autocomplete="nope" #reasonToChange="ngModel" required></textarea>

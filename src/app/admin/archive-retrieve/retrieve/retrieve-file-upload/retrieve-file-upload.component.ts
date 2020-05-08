@@ -3,11 +3,11 @@ import { QdeHttpService } from 'src/app/services/qde-http.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-archive-file-upload',
-  templateUrl: './archive-file-upload.component.html',
-  styleUrls: ['./archive-file-upload.component.css']
+  selector: 'app-retrieve-file-upload',
+  templateUrl: './retrieve-file-upload.component.html',
+  styleUrls: ['./retrieve-file-upload.component.css']
 })
-export class ArchiveFileUploadComponent implements OnInit {
+export class RetrieveFileUploadComponent implements OnInit {
 
   fileName: string;
   archiveBy: any;
@@ -52,7 +52,7 @@ export class ArchiveFileUploadComponent implements OnInit {
 
     let documentInfo = {
       userId: parseInt(localStorage.getItem("userId")),
-      "archiveReason" : this.reasonToChangeText,
+      "retrieveReason" : this.reasonToChangeText,
       "attachment": {
         "name": name,
         "operation": "upload",
@@ -62,7 +62,7 @@ export class ArchiveFileUploadComponent implements OnInit {
       }
     }
 
-    this.qdeHttp.uploadOcsToArchive(documentInfo).subscribe((response)=> {
+    this.qdeHttp.uploadOcsRetrieve(documentInfo).subscribe((response)=> {
       console.log('Response',response)
 
       if(response['ProcessVariables']['status']) {
@@ -78,7 +78,7 @@ export class ArchiveFileUploadComponent implements OnInit {
 
   success() {
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
-      this.router.navigate(['/admin/archive']);
+      this.router.navigate(['/admin/retrieve']);
       // this.removeApplicantPage();
     }
     

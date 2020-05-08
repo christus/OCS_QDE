@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RetrieveComponent implements OnInit {
 
+  viewMode:string = 'tab1';
   constructor() { }
 
   ngOnInit() {

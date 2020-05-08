@@ -498,6 +498,18 @@ export const environment = {
     uploadOcsToArchive: {
       workflowId: "f5712174806911ea80370242ac110002",
       processId: "f5712174806911ea80370242ac110002"
+    },
+    ocsNumberRetrieveAutoFill: {
+      workflowId: '10d983e6886e11eab1900242ac110002',
+      processId: '7cebf0ce902e11eaacc70242ac110002'
+    },
+    retrieveFromArchiveTable: {
+      workflowId: "10d983e6886e11eab1900242ac110002",
+      processId: "11b3b9f8886e11ea970d0242ac110002"
+    },
+    uploadOcsRetrieve: {
+      workflowId: "10d983e6886e11eab1900242ac110002",
+      processId: "18ed99ae8f9f11ea9d160242ac110002"
     }
   },
   iciciDomainExt: "@icicibankltd.com",

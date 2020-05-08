@@ -5,19 +5,18 @@ import { FormGroup, FormControl } from '@angular/forms'
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-archive-ocs-number',
-  templateUrl: './archive-ocs-number.component.html',
-  styleUrls: ['./archive-ocs-number.component.css']
+  selector: 'app-retrieve-ocs-number',
+  templateUrl: './retrieve-ocs-number.component.html',
+  styleUrls: ['./retrieve-ocs-number.component.css']
 })
-export class ArchiveOcsNumberComponent implements OnInit {
-
+export class RetrieveOcsNumberComponent implements OnInit {
 
   ocsdata: Array<UserDetails>;
   source: Array<UserDetails>;
   effectFromDate: Date;
   effectToDate: Date;
-  archiveReason: any;
-  archiveBy: any;
+  retrieveReason: any;
+  retrieveBy: any;
   dropdownSettings = {};
   myForm: FormGroup;
   fileName: string;
@@ -73,7 +72,7 @@ export class ArchiveOcsNumberComponent implements OnInit {
 
     this.ocsdata = []
 
-    this.qdeHttp.getOcsNumberAutoFill('oc').subscribe((response) => {
+    this.qdeHttp.getOcsNumberRetrieveAutoFill('oc').subscribe((response) => {
 
       console.log(response)
       this.ocsdata = response['ProcessVariables']['ocsNumbers']
@@ -100,7 +99,7 @@ export class ArchiveOcsNumberComponent implements OnInit {
         return;
       }
       setTimeout(()=> {
-        this.qdeHttp.getOcsNumberAutoFill(ocsNumber).subscribe((response) => {
+        this.qdeHttp.getOcsNumberRetrieveAutoFill(ocsNumber).subscribe((response) => {
 
           console.log(response)
           if(response['ProcessVariables']['ocsNumbers']) {
@@ -135,25 +134,25 @@ export class ArchiveOcsNumberComponent implements OnInit {
 
     const ocsNumber = (this.myForm.value.ocsNumber) ? (this.myForm.value.ocsNumber) : []
     const applicationIds = (this.applicationIdList)?this.applicationIdList.join(','):'';
-    const archivedByData = localStorage.getItem('userId');
-    const archivedBy = (archivedByData)?(parseInt(archivedByData)):''
+    const retrievedByData = localStorage.getItem('userId');
+    const retrievedBy = (retrievedByData)?(parseInt(retrievedByData)):''
     const ocsReqObject = {
       "applicationId": applicationIds,
-      "archiveBy": archivedBy,
-      "archiveReason": this.reasonToChangeText,
+      "retrieveBy": retrievedBy,
+      "retrieveReason": this.reasonToChangeText,
       "fromDate": this.fromDate,
       "toDate": this.toDate
     }
 
     console.log(ocsReqObject)
 
-      this.qdeHttp.archiveDataFromMainTable(ocsReqObject).subscribe((response)=> {
+      this.qdeHttp.retrieveFromArchiveTable(ocsReqObject).subscribe((response)=> {
 
         console.log('Response', response)
 
         if(response['ProcessVariables']['status']) {
             this.isSuccessModal = true;
-            this.successMsg = 'Applications Archived Successfully'
+            this.successMsg = 'Applications Retrieved Successfully'
         }
       })
   }
@@ -193,7 +192,7 @@ export class ArchiveOcsNumberComponent implements OnInit {
      this.applicationId = (this.myForm.value.ocsNumber.length != 0) ? this.myForm.value.ocsNumber[0].key : "";
     const reqObject = {
       "ocsNumber": this.applicationId,
-      "type": "archive",
+      "type": "retrieve",
       "fromDate": this.fromDate,
       "toDate": this.toDate
     }
@@ -237,7 +236,7 @@ export class ArchiveOcsNumberComponent implements OnInit {
 
     const reqObject = {
       applicationId: this.applicationId,
-      type: 'archive',
+      type: 'retrieve',
       fromDate: this.fromDate,
       toDate: this.toDate,
       currentPage: pageNo
@@ -271,7 +270,7 @@ export class ArchiveOcsNumberComponent implements OnInit {
 
   success() {
     this.router.navigateByUrl('/', {skipLocationChange: true}).then(() => {
-      this.router.navigate(['/admin/archive']);
+      this.router.navigate(['/admin/retrieve']);
       // this.removeApplicantPage();
     }
     
@@ -286,6 +285,3 @@ export interface UserDetails {
   "key": string;
   "value": number;
 }
-
-
-
