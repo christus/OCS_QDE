@@ -36,13 +36,14 @@
           </div>
         </div>
         <div class="col-4">
-          <div *ngIf="isErrorMsg" class="invalid-feedback" style="padding:0.3vw">
-            <div>
-              {{textErrMsg}}
-            </div>
-          </div>
           <div class="right-panel">
-            <button type="button" class="btn btn-default" (click)="onSearch()"> Search</button>
+            <button type="button" class="btn btn-default btn-margin-top" (click)="onSearch()"> Search</button>
+          </div>
+        </div>
+
+        <div *ngIf="isErrorMsg" class="invalid-feedback" style="padding:0.3vw">
+          <div>
+            {{textErrMsg}}
           </div>
         </div>
       </div>
