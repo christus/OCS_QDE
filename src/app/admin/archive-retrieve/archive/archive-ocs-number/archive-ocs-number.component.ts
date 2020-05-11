@@ -222,7 +222,7 @@ export class ArchiveOcsNumberComponent implements OnInit {
  
       if(toTimestamp < fromTimestamp) {
         this.isErrorMsg = true;
-        this.textErrMsg = 'Invalid date, fromdate is greater than todate'
+        this.textErrMsg = 'Invalid date, From date is greater than To date'
         return;
       }else {
         this.isErrorMsg = false;
