@@ -45,6 +45,9 @@ export class ArchiveOcsNumberComponent implements OnInit {
   errorMessage: string;
   textErrMsg: string;
 
+  itemSelect: boolean;
+  maxDate: Date = new Date();
+
   constructor(private qdeHttp: QdeHttpService,private router: Router) { }
 
   ngOnInit() {
@@ -92,9 +95,17 @@ export class ArchiveOcsNumberComponent implements OnInit {
   }
 
   onItemSelect(ocsNo: any) {
-
-    console.log(ocsNo)
+    this.itemSelect = true;
+    this.effectFromDate = null;
+    this.effectToDate = null;
+    this.isErrorMsg = false;
   }
+
+  onItemDeSelect(ocsNo: any) {
+    this.itemSelect = false;
+    this.isErrorMsg = false
+  }
+
 
   onFilterChange(event) {
 
@@ -202,7 +213,7 @@ export class ArchiveOcsNumberComponent implements OnInit {
      this.fromDate = (this.effectFromDate) ? this.getFormattedDate(this.effectFromDate).toString() : '';
      this.toDate = (this.effectToDate) ? this.getFormattedDate(this.effectToDate).toString() : '';
 
-
+    
      if(this.fromDate && this.toDate) {
       const fromTimestamp = new Date(this.fromDate).getTime() / 1000
       const toTimestamp = new Date(this.toDate).getTime() / 1000

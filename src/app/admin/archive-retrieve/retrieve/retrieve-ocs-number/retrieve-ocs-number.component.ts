@@ -44,6 +44,9 @@ export class RetrieveOcsNumberComponent implements OnInit {
   errorMessage: string;
   textErrMsg: string;
 
+  itemSelect: boolean;
+  maxDate: Date = new Date();
+
   constructor(private qdeHttp: QdeHttpService,private router: Router) { }
 
   ngOnInit() {
@@ -90,10 +93,6 @@ export class RetrieveOcsNumberComponent implements OnInit {
     this.ocsdata = this.source.filter((s) => s.key.toLowerCase().indexOf(value.toLowerCase()) !== -1);
   }
 
-  onItemSelect(ocsNo: any) {
-
-    console.log(ocsNo)
-  }
 
   onFilterChange(event) {
 
@@ -120,6 +119,18 @@ export class RetrieveOcsNumberComponent implements OnInit {
     }
 
 
+  }
+
+  onItemSelect(ocsNo: any) {
+    this.itemSelect = true;
+    this.effectFromDate = null;
+    this.effectToDate = null;
+    this.isErrorMsg = false;
+  }
+
+  onItemDeSelect(ocsNo: any) {
+    this.itemSelect = false;
+    this.isErrorMsg = false
   }
 
   getFormattedDate(date) {
