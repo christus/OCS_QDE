@@ -207,6 +207,8 @@ export class RetrieveOcsNumberComponent implements OnInit {
     }else {
       this.isErrorMsg = false;
     }
+
+    const no_of_days = this.monthDiff(this.effectFromDate,this.effectToDate);
     
      this.fromDate = (this.effectFromDate) ? this.getFormattedDate(this.effectFromDate).toString() : '';
      this.toDate = (this.effectToDate) ? this.getFormattedDate(this.effectToDate).toString() : '';
@@ -224,6 +226,14 @@ export class RetrieveOcsNumberComponent implements OnInit {
       }else {
         this.isErrorMsg = false;
       }
+
+      if(no_of_days >= 31) {
+        this.isErrorMsg = true;
+         this.textErrMsg = 'Start and end date should have difference of one month'
+         return;
+       }else {
+         this.isErrorMsg = false;
+       }
 
      }
 
@@ -320,6 +330,13 @@ export class RetrieveOcsNumberComponent implements OnInit {
     }
     
     );
+  }
+
+  monthDiff(d1, d2) {
+    const diffTime = Math.abs(Date.parse((d2)) - Date.parse(d1));
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+    console.log(diffDays);
+    return diffDays;
   }
 
 
