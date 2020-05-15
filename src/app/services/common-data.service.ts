@@ -322,6 +322,11 @@ export class CommonDataService {
     this.additionalServices$.next(value);
   }
 
+  archive$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public archive = this.archive$.asObservable();
+  changeArchive(value: boolean) {
+    this.archive$.next(value);
+  }
 checkUserMapping(userActivityList,userFullName,lastLoginDateTime?){
   let myServiceStatus= false;
   console.log("user activity in cds",userActivityList,userFullName);
@@ -336,6 +341,7 @@ checkUserMapping(userActivityList,userFullName,lastLoginDateTime?){
           let showOCS = false;
           let eligibilityReview = false;
           let additionalServices =false;
+          let showArchive = false;
           userActivityList.forEach(uActivity => {
             if (uActivity == "Lead"){
               createLead = true;
@@ -362,6 +368,8 @@ checkUserMapping(userActivityList,userFullName,lastLoginDateTime?){
               eligibilityReview = true;
             }else if(uActivity=="Additional Services"){
               additionalServices = true;
+            }else if (uActivity == 'Archive'){
+              showArchive = true;              
             }
             myServiceStatus =true;
           });
@@ -380,6 +388,7 @@ checkUserMapping(userActivityList,userFullName,lastLoginDateTime?){
           this.changeleligibilityReview(eligibilityReview);
           this.adminPageNavigation(userModule,opsMoudule,masterConfig);
           this.changeadditionalServices(additionalServices);
+          this.changeArchive(showArchive);
           
 }       
 
