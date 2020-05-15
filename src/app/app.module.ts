@@ -228,6 +228,7 @@ const appRoutes: Routes = [
       }
     ]
   },
+ 
   {
     path: "connector/lead-create",
     component: ConnectorLeadCreateComponent,
