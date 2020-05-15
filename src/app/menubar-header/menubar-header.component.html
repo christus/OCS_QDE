@@ -13,6 +13,11 @@
                 </h1>
             </div>
             <div class="right-panel">
+                <h3 class="for-user" (click)="sourceOverlay()"><span class="user-name">SOURCE ID</span>
+                <br>
+                <h5 class="for-user header_reference_no" ><span class="user-name">{{sourceId}}</span></h5>
+                </h3>
+
                 <h3 class="for-user" *ngIf="isViewFormNameShown"><span class="user-name">{{applicantName}}</span>
                 <br>
                 <h5 class="for-user header_reference_no" ><span class="user-name">{{referenceNumber}}</span></h5>
@@ -63,4 +68,45 @@
         </ul>
         <!-- header end -->
     </div>
+
+    <div class="overlay" [ngClass]="{'active': isSourceModal}"></div>
+    <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isSourceModal}">
+
+      <div class="modal-body">
+
+        <form class="bs-form" autocomplete="off">
+        <div class="form-group">
+            <input 
+            type="text"
+            autocomplete="off"
+            class="form-control"
+            id="smsaId" 
+            name="smsaData"
+            #searchSMSA ="ngModel"
+            [(ngModel)]="valueSMSA"
+           
+            (input)="searchSMSAId($event)"
+            fieldFill
+            required >
+
+            <label for="smsaId" >SM/SA -ID</label>
+            <!-- <span class="optional" style="font-size: 1vw">Type to search</span> -->
+            <div *ngIf="(searchSMSA.touched || searchSMSA.dirty) && searchSMSA.invalid" class="invalid-feedback">
+              <div *ngIf="searchSMSA.errors?.pattern">Invalid SM/SA -ID</div>
+            </div>
+
+            <ul class="sm-sa-list">
+              <li *ngFor="let c of allSMSAData;let i=index;" (click)="selectSMSA(c)">
+                {{c.key}}
+              </li>
+            </ul>
+          </div>
+
+          </form>
+
+        <div class="btn-wrap">
+          <button class="btn btn-border" [ngClass]="{'disabled': !isSelectsaSmId}" [disabled]="!isSelectsaSmId" (click)="onSourceSubmit()">Submit</button>
+        </div>
+      </div>
+    </div> 
 </header>

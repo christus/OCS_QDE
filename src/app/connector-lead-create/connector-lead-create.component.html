@@ -191,6 +191,36 @@
                               <!-- [(ngModel)]="qde.application.leadCreate.loanType" -->
                             </kendo-dropdownlist>
                         </div>
+
+                        <div class="form-group">
+                            <input 
+                            type="text"
+                            autocomplete="off"
+                            class="form-control"
+                            id="smsaId" 
+                            name="smsaData"
+                            #searchSMSA ="ngModel"
+                            [(ngModel)]="valueSMSA"
+                            (input)="searchSMSAId($event)"
+                            fieldFill
+                            required >
+
+                            <label for="smsaId" >SM/SA -ID</label>
+                            <!-- <span class="optional" style="font-size: 1vw">Type to search</span> -->
+                            <div *ngIf="(searchSMSA.touched || searchSMSA.dirty) && searchSMSA.invalid" class="invalid-feedback">
+                              <div *ngIf="searchSMSA.errors?.pattern">Invalid SM/SA -ID</div>
+                            </div>
+                            <!-- <div *ngIf="(searchSMSA.touched || searchSMSA.dirty)" class="invalid-feedback">
+                                <div *ngIf="branchId.value == 0">Please select branchId</div> 
+                            </div> -->
+
+                            <ul class="sm-sa-list">
+                              <li *ngFor="let c of allSMSAData;let i=index;" (click)="selectSMSA(c)">
+                                {{c.key}}
+                              </li>
+                            </ul>
+                          </div>
+
                         
                         <!-- bs-checkbox -->
                         <div class="container">
@@ -214,8 +244,8 @@
                         </div>
                       <div class="btn-wrap">
                           <button class="btn btn-primary"
-                          [ngClass]="{'disabled': (!leadForm.valid)|| isNumberLessThan50k || isNumberMoreThan100cr || selectedLoanType.value ==0 || !dnd || branchId.value ==0}"
-                          [disabled]="!leadForm.valid || isNumberLessThan50k || isNumberMoreThan100cr || selectedLoanType.value == 0 || !dnd || branchId.value ==0 "
+                          [ngClass]="{'disabled': (!leadForm.valid)|| isNumberLessThan50k || isNumberMoreThan100cr || selectedLoanType.value ==0 || !dnd || branchId.value ==0 || !selectSASMId}"
+                          [disabled]="!leadForm.valid || isNumberLessThan50k || isNumberMoreThan100cr || selectedLoanType.value == 0 || !dnd || branchId.value ==0 || !selectSASMId"
                           >Submit</button>
                       </div>
                   </form>

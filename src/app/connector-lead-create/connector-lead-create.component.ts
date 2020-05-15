@@ -46,6 +46,13 @@ export class ConnectorLeadCreateComponent implements OnInit {
   requirMaxAmout;
   dnd: boolean = true;
 
+  valueSMSA: any;
+
+  allSMSAData: any;
+  tempSMSAData: any;
+  saSmId: string;
+  selectSASMId: boolean;
+
   regexPattern={
     firstName: "[A-Za-z ]+$",
     mobileNumber:"[1-9][0-9]+",
@@ -124,6 +131,9 @@ export class ConnectorLeadCreateComponent implements OnInit {
       this.qde = val;
     });
 
+    this.allSMSAData = [];
+    this.tempSMSAData = [];
+
     this.commonDataService.branchList$.subscribe( value =>
       this.branchList = value);
   }
@@ -171,6 +181,7 @@ export class ConnectorLeadCreateComponent implements OnInit {
     data['userId'] = parseInt(localStorage.getItem('userId'));
     data['dnd'] = this.dnd;
     data['branch'] =this.branchId.value;
+    // data['saSmId'] = this.saSmId;
 
     this.qdeHttp.connectorLeadCreateSave(data).subscribe(res => {
       if(res['ProcessVariables']['status'] == true) {
@@ -271,5 +282,40 @@ export class ConnectorLeadCreateComponent implements OnInit {
       }
     }
   }
+
+  searchSMSAId(event) {
+
+
+    this.selectSASMId = false;
+    let data = {
+      userId: localStorage.getItem('userId')
+    }
+
+    if(this.tempSMSAData.length > 0) {
+      this.allSMSAData = this.tempSMSAData;
+      return;
+    }
+
+    this.qdeHttp.getSASMID(data).subscribe(res => {
+
+      console.log('Response',res)
+      // if(res['ProcessVariables']['status'] == true) {
+
+      // }
+      this.allSMSAData = res['ProcessVariables']['sa_sm_id'];
+      this.tempSMSAData = res['ProcessVariables']['sa_sm_id'];
+
+      })
+   
+
+  }
+  selectSMSA(data) {
+
+    this.valueSMSA = data.key;
+    this.saSmId = data.value;
+    this.selectSASMId = true;
+    this.allSMSAData = []
+  }
+
 
 }

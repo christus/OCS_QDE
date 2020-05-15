@@ -21,3 +21,33 @@
     font-size: 2vw;
     }
 }
+
+
+
+.sm-sa-list {
+    box-shadow: 0 0 48.06px 5.94px rgba(0, 0, 0, .16);
+    max-height: 10vw;
+    font-size: 1vw;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    position: absolute;
+    background-color: #fff;
+    z-index: 10;
+    width: 50%;
+}
+
+.sm-sa-list li {
+    display: block;
+    padding: 8px;
+    cursor: pointer;
+}
+
+.sm-sa-list li:hover,
+.sm-sa-list li:focus {
+    background: #f58220;
+    color: #fff;
+}
+
+.text-upper-case {
+    text-transform: uppercase;
+}

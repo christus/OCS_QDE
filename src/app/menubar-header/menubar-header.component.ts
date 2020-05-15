@@ -54,6 +54,14 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
   lastName: string;
   nameOfOrganization:string;
   ocsNumber:string;
+  valueSMSA: any;
+  allSMSAData: any = [];
+  isSourceModal: boolean;
+  sourceId: string;
+  tempSMSAData: any;
+
+  isSelectsaSmId: boolean;
+  saSmId: string;
 
   constructor(private utilService: UtilService,
               private commonDataService: CommonDataService,
@@ -62,6 +70,8 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
               private route: ActivatedRoute,
               private qdehttp: QdeHttpService) {
 
+                this.sourceId = '';
+                this.tempSMSAData = []
     this.route.params.subscribe(val => {
       this.applicationId = val.applicationId;
       // this.applicantId = this.qde.application.applicants.find(v => v.applicantId == val.applicantId).applicantId;
@@ -270,6 +280,48 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
     //   }
     // );
   }
+
+  sourceOverlay() {
+    this.isSourceModal= true;
+  }
+
+  searchSMSAId(event) {
+    this.isSelectsaSmId = false;
+    let data = {
+      userId: localStorage.getItem('userId')
+    }
+
+    if(this.tempSMSAData.length > 0) {
+      this.allSMSAData = this.tempSMSAData;
+      return;
+    }
+
+    this.qdehttp.getSASMID(data).subscribe(res => {
+
+      console.log('Response',res)
+      // if(res['ProcessVariables']['status'] == true) {
+
+      // }
+      this.allSMSAData = res['ProcessVariables']['sa_sm_id'];
+      this.tempSMSAData = res['ProcessVariables']['sa_sm_id'];
+
+      })
+   
+ 
+   }
+   selectSMSA(val) {
+ 
+     this.valueSMSA = val.key;
+     this.isSelectsaSmId = true;
+     this.saSmId = val.value;
+     this.allSMSAData = []
+   }
+
+   onSourceSubmit() {
+     this.isSourceModal = false;
+     this.sourceId = this.valueSMSA;
+   }
+
 
   ngOnDestroy() {
     if(this.isEligibilityForReviewsSub != null) {

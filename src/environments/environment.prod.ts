@@ -510,6 +510,10 @@ export const environment = {
     uploadOcsRetrieve: {
       workflowId: "10d983e6886e11eab1900242ac110002",
       processId: "18ed99ae8f9f11ea9d160242ac110002"
+    },
+    getSASMId: {
+      workflowId: "9167380095a211eab85a0242ac110002",
+      processId: "9197ef4a95a211ea95c00242ac110002"
     }
   },
   iciciDomainExt: "@icicibankltd.com",

@@ -306,6 +306,7 @@ export interface LeadCreate {
     emailId ?: string;
     loanAmount ?: number;
     loanType ?: number;
+    saSmId ?: string;
 }
 
 export interface ChequeDetails {
