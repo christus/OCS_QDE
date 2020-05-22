@@ -4290,7 +4290,7 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
   RegExp(param) {
     return RegExp(param);
   }
-
+  isExistPan: boolean;
   keyUpPanNumber(event: Event) {
     console.log("TEMPLD", this.tempOldPanNumber);
     if (event['target']['value'].trim() != '' && event['target']['value'] == this.tempOldPanNumber) {
@@ -4298,6 +4298,19 @@ export class ApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       this.isValidPan = null;
     }
+    for(let i=0;i< this.qde.application.applicants.length;i++){
+      console.log("pan ",i,this.qde.application.applicants[i].pan.panNumber,
+      event['target']['value'],this.applicantIndex);
+      if (this.qde.application.applicants[i].pan.panNumber === event['target']['value'] &&
+      this.applicantIndex != i && this.qde.application.applicants[i].pan.panNumber !="")
+      {       
+          this.isExistPan = true;
+          return;
+          }else{
+            this.isExistPan = false;
+          }
+      }    
+    console.log("pan status",this.isExistPan);
   }
 
   ngAfterViewInit() {

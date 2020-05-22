@@ -3115,7 +3115,7 @@ export class QdeHttpService {
         body = requestEntity["processVariables"];
       } else if (addParameter.includes("login?")) {
         body = JSON.stringify(requestEntity);
-      }
+      } 
       // let httpData = this.http.post(addParameter, body);
       // let decritedData = this.encrytionService.decryptResponse(httpData);
       return this.http.post(addParameter, body);

@@ -10,7 +10,8 @@ export const errors: any = {
     length: "PAN must be at least",
     invalid: "Invalid PAN, valid PAN format - AAAPA1111A",
     invalidNonInd: "Invalid PAN, valid PAN format - AAAAA1111A",
-    after3Attemps: "Please check and enter your correct PAN"
+    after3Attemps: "Please check and enter your correct PAN",
+    isExistPan:"Entered PAN already exist"
   },
   panDocumentNo: {
     required: "Document number is mandatory",

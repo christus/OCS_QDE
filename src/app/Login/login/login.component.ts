@@ -107,8 +107,8 @@ export class LoginComponent implements OnInit, AfterViewInit,OnDestroy {
         appId: "OCS",
         refId: this.oldRefId,
         captcha: this.captchaText,
-        useADAuth: false
-        // useADAuth: userEmailId.startsWith("he")
+        // useADAuth: false
+        useADAuth: userEmailId.startsWith("he")
       };
       console.log("login Data: ",data);
       let token = localStorage.getItem("token");

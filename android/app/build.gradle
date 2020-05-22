@@ -6,8 +6,8 @@ android {
         applicationId "com.icici.hfc"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 215
-        versionName "2.1.5"
+        versionCode 217
+        versionName "2.1.7"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [usesCleartextTraffic:true]
 
@@ -36,7 +36,7 @@ repositories {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:appcompat-v7:27.0.0'
     implementation project(':capacitor-android')
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'

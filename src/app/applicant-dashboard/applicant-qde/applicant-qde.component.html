@@ -174,6 +174,7 @@
                             <div class="redalert"
                               *ngIf="panNumber.touched && panNumber.valid && RegExp(regexPattern.panInd).test(panNumber.value) && isValidPan == false">
                               Invalid PAN</div>
+                              <div class="redalert" *ngIf="isExistPan">{{errors.pan.isExistPan}}</div>
                           </div>
                           <div class="form-group">
                             <span class="control-title">Document Type</span>
@@ -208,8 +209,9 @@
                         </div>
 
                         <div class="btn-wrap">
-                          <button type="submit" class="btn btn-primary" [ngClass]="{'disabled': (!panNumberForm.valid) || selectedDocType?.value == 0 }"
-                            [disabled]="!panNumberForm.valid || selectedDocType?.value == 0">Next
+                          <button type="submit" class="btn btn-primary" 
+                            [ngClass]="{'disabled': (!panNumberForm.valid) || selectedDocType?.value == 0 || isExistPan}"
+                            [disabled]="!panNumberForm.valid || selectedDocType?.value == 0 || isExistPan">Next
                           </button>
                         </div>
                       </form>
@@ -2380,6 +2382,7 @@
                               *ngIf="panNumber2.touched && panNumber2.valid && RegExp(regexPattern.panNonInd).test(panNumber2.value) && isValidPan == false">
                               Invalid PAN</div>
                             <div *ngIf="panNumber2.errors?.minlength">{{errors.pan.length}}{{" "+minMaxValues['PAN']?.minValue+" characters"}}</div>
+                            <div class="redalert" *ngIf="isExistPan">{{errors.pan.isExistPan}}</div>
                           </div>
                           <!-- <div class="form-group">
                                                 <span class="control-title">Document Type</span>
@@ -2423,7 +2426,8 @@
                         </div>
                         <div class="btn-wrap">
                           <button type="submit" class="btn btn-primary"
-                            [ngClass]="{'disabled': (!panNumberForm2.valid)}" [disabled]="!panNumberForm2.valid">Next
+                            [ngClass]="{'disabled': (!panNumberForm2.valid || isExistPan)}" 
+                            [disabled]="!panNumberForm2.valid || isExistPan">Next
                           </button>
                         </div>
 

@@ -4327,14 +4327,27 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
     this.isCoApplicantRouteModal = false;
     this.isCoApplicantPinModal = false;
   }
-
+  isExistPan: boolean = false;
   keyUpPanNumber(event: Event) {
     console.log("TEMPLD", this.tempOldPanNumber);
     if(event['target']['value'].trim() != '' && event['target']['value'] == this.tempOldPanNumber) {
       this.isValidPan = true;
     } else {
       this.isValidPan = null;
-    }
+    }    
+    for(let i=0;i< this.qde.application.applicants.length;i++){
+      console.log("pan ",i,this.qde.application.applicants[i].pan.panNumber,
+      event['target']['value'],this.coApplicantIndex);
+      if (this.qde.application.applicants[i].pan.panNumber === event['target']['value'] &&
+      this.coApplicantIndex != i && this.qde.application.applicants[i].pan.panNumber !="")
+      {       
+          this.isExistPan = true;
+          return;
+          }else{
+            this.isExistPan = false;
+          }
+      }    
+    console.log("pan status",this.isExistPan);
   }
 
   ngAfterViewInit() {
