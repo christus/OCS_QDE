@@ -175,7 +175,7 @@ export class ConnectorLeadCreateComponent implements OnInit {
     this.qde.application.leadCreate.loanAmount = parseInt(this.qde.application.leadCreate.loanAmount+"");
     this.qde.application.leadCreate.mobileNumber = parseInt(this.qde.application.leadCreate.mobileNumber+"");
     this.qde.application.leadCreate.zipcode = parseInt(this.qde.application.leadCreate.zipcode+"");
-    this.qde.application.leadCreate.saSmId = this.saSmId;
+    // this.qde.application.leadCreate.saSmId = '';
     
     let data = Object.assign({}, this.qde.application.leadCreate);
     data['loanType'] = parseInt(this.selectedLoanType.value+"");

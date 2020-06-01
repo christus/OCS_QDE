@@ -527,8 +527,8 @@ export const environment = {
   csvLocation: "/d/download/csv?",
   isMobile: false,
   mobileExtenstion: "@icicibankltd.com",
-  // host: "https://ihfcmobileuat.icicihfc.com/appiyo", // for uat
-  host: "https://onlineapplication.icicihfc.com/appiyo", // for production
+  host: "https://ihfcmobileuat.icicihfc.com/appiyo", // for uat
+  // host: "https://onlineapplication.icicihfc.com/appiyo", // for production
   aesPublicKey:
     "MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJ+GJdSSEeaNFBLqyfM3DIOgQgWCwJ0INfeZZV7ITsLeuA7Yd02rrkYGIix1IWvoebWVmzhncUepYxHwK1ARCdUCAwEAAQ==",
   encryptionType: true, //Ecryption
