@@ -21,7 +21,8 @@ export const statuses = {
     "Eligibility Failed": "30",
     "Eligibility Review Rejected": "31",
     "Mandatory Document Uploaded": "35",
-    "DDE Submitted": "40"
+    "DDE Submitted": "40",
+    "Lead Assigned": "2"
 }
 
 export const screenPages = {

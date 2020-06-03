@@ -192,7 +192,7 @@
                             </kendo-dropdownlist>
                         </div>
 
-                        <!-- <div class="form-group">
+                        <div class="form-group">
                             <input 
                             type="text"
                             autocomplete="off"
@@ -216,7 +216,7 @@
                                 {{c.key}}
                               </li>
                             </ul>
-                          </div> -->
+                          </div>
 
                         
                         <!-- bs-checkbox -->
@@ -241,8 +241,8 @@
                         </div>
                       <div class="btn-wrap">
                           <button class="btn btn-primary"
-                          [ngClass]="{'disabled': (!leadForm.valid)|| isNumberLessThan50k || isNumberMoreThan100cr || selectedLoanType.value ==0 || !dnd || branchId.value ==0}"
-                          [disabled]="!leadForm.valid || isNumberLessThan50k || isNumberMoreThan100cr || selectedLoanType.value == 0 || !dnd || branchId.value ==0"
+                          [ngClass]="{'disabled': (!leadForm.valid)|| isNumberLessThan50k || isNumberMoreThan100cr || selectedLoanType.value ==0 || !dnd || branchId.value ==0 || !selectSASMId}"
+                          [disabled]="!leadForm.valid || isNumberLessThan50k || isNumberMoreThan100cr || selectedLoanType.value == 0 || !dnd || branchId.value ==0 || !selectSASMId"
                           >Submit</button>
                       </div>
                   </form>
