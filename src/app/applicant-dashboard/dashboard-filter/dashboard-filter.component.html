@@ -1,0 +1,87 @@
+<div class="filter-body flex-container">
+  <label for="startDate" class="head-label">Filter Options</label>
+  <form (ngSubmit)="submitFilter(filterForm)" #filterForm="ngForm">
+    <div class="flex">
+      <div class="flex-container-data  selectBox">
+        <label for="startDate" class="controltitle">From date</label>
+        <kendo-datepicker class="form-control kendo-list kendo-date reports" style="font-size: 1.28vw;"
+          placeholder="From date" name="startDate" [max]="minDate" [(ngModel)]="startDate"
+          (ngModelChange)="endDateMonthDiff(startDate)" [format]="'dd/MM/yyyy'">
+        </kendo-datepicker>
+      </div>
+      <div class="flex-container-data  selectBox">
+        <label for="endDate" class="controltitle">To date</label>
+        <kendo-datepicker class="form-control kendo-list kendo-date" style="font-size: 1.28vw;" placeholder="To date"
+          [(ngModel)]="endDate" [max]="minDate" [min]="startDate" (ngModelChange)="endDateMonthDiff(endDate)"
+          [format]="'dd/MM/yyyy'" [required]="startDate === null || startDate === undefined ? false : true"
+          name="endDate" #endDates="ngModel" [disabled]="startDate === null">
+        </kendo-datepicker>
+        <div [hidden]="endDates.valid || (!endDates.touched && !filterForm.submitted) || startDate === null"
+          class="redalert" style="color: red">
+          End date is required
+        </div>
+      </div>
+
+      <div *ngIf="dateError.isError" class="msg-error" style="color: red">
+        {{ dateError.errorMessage }}
+      </div>
+    </div>
+
+    <div class="flex">
+      <div class="flex-container-data selectBox">
+        <label class="controltitle">Branch </label>
+        <ng-multiselect-dropdown [placeholder]="'Choose your branch'" [data]="userBranch" [settings]="dropdownSettings"
+          [(ngModel)]="filterBranch" name="filterBranch"  (onDropDownClose)="onDropDownClose(filterBranch)">
+        </ng-multiselect-dropdown>
+      </div>
+
+      <div class="flex-container-data selectBox">
+        <label class="controltitle">Zone </label>
+        <ng-multiselect-dropdown [placeholder]="'Choose your Zone'" [data]="userZone" [settings]="dropdownSettings"
+          [(ngModel)]="filterZone" name="filterZone">
+        </ng-multiselect-dropdown>
+      </div>
+
+      <div class="flex-container-data selectBox">
+        <label class="controltitle">Region </label>
+        <ng-multiselect-dropdown [placeholder]="'Choose your Region'" [data]="userRegion"
+          [settings]="dropdownSettings" [(ngModel)]="filterRegion" name="filterRegion">
+        </ng-multiselect-dropdown>
+      </div>
+
+      <div class="flex-container-data selectBox">
+        <label class="controltitle">State </label>
+        <ng-multiselect-dropdown [placeholder]="'Choose your State'" [data]="userState" [settings]="dropdownSettings"
+          [(ngModel)]="filterState" name="filterState">
+        </ng-multiselect-dropdown>
+      </div>
+    </div>
+
+    <div class="flex">
+      <div class="flex-container-data selectBox">
+        <label class="controltitle">Employee </label>
+        <ng-multiselect-dropdown [placeholder]="'Choose your Employee'" [data]="userEmployee"
+          [settings]="dropdownSettings" [(ngModel)]="filterEmployee" name="filterEmployee">
+        </ng-multiselect-dropdown>
+      </div>
+
+      <div class="flex-container-data selectBox">
+        <label class="controltitle">Application Status </label>
+        <ng-multiselect-dropdown [placeholder]="'Choose your Application Status'" [data]="userStatus"
+          [settings]="dropdownSettings" [(ngModel)]="filterStatus"
+          name="filterStatus">
+        </ng-multiselect-dropdown>
+      </div>
+    </div>
+
+    <div class="btn-section">
+      <div class="right-panel">
+        <button type="button" class="btn btn-default-border" (click)="clearData(filterForm)">Clear</button>
+      </div>
+      <div class="right-panel">
+        <button type="submit" class="btn btn-default" [class.disabled]="isFilterSubmit" [disabled]="isFilterSubmit">
+          Filters </button>
+      </div>
+    </div>
+  </form>
+</div>

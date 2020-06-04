@@ -229,6 +229,62 @@ export class QdeHttpService {
     return this.callPost(workflowId, projectId, body);
   }
 
+
+
+  getFilteredLeads(
+    search?: string,
+    fromDay?: string,
+    fromMonth?: string,
+    fromYear?: string,
+    toDay?: string,
+    toMonth?: string,
+    toYear?: string,
+    assignedTo?: string,
+    status?: string,
+    currentPage?: string,
+    filterBranch?: string,
+    filterZone?: string,
+    filterRegion?: string,
+    filterState?: string,
+    filterEm?: string,
+    filterAppStatus?: string
+  ) {
+    const processId = environment.api.dashboard.processId;
+    const workflowId = environment.api.dashboard.workflowId;
+    const projectId = environment.projectId;
+
+    let processVariables = {
+      userId: localStorage.getItem("userId"),
+      // outputUsers: localStorage.getItem("outputUsers"),
+      firstName: (search != null) ? search : "",
+      fromDate: (fromDay != 'DD' || fromMonth != 'MM' || fromYear != 'YYYY') ? new Date(fromYear + "" + "-" + fromMonth + "-" + fromDay).toJSON() : "",
+      toDate: (toDay != 'DD' || toMonth != 'MM' || toYear != 'YYYY') ? new Date(toYear + "" + "-" + toMonth + "-" + toDay).toJSON() : "",
+      applicationStatus: status,
+      currentPage: currentPage != "" ? currentPage : "1",
+      branchId: filterBranch,
+      outputUsers: filterEm,
+      statusFilter: filterAppStatus,
+    };
+
+   
+
+    const requestEntity: RequestEntity = {
+      processId: processId,
+      ProcessVariables: processVariables,
+      workflowId: workflowId,
+      projectId: projectId
+    };
+
+    const body = {
+      'processVariables':
+        JSON.stringify(requestEntity)
+    }
+
+    console.log('Befoure Post Request', processVariables.branchId)
+    let uri = environment.host + '/d/workflows/' + workflowId + '/' + environment.apiVersion.api + 'execute?projectId=' + projectId;
+    return this.callPost(workflowId, projectId, body);
+  }
+
   getNewLeads(search?: string, fromDay?: string, fromMonth?: string, fromYear?: string, toDay?: string, toMonth?: string, toYear?: string, assignedTo?: string, status?: string, currentPage?: string) {
     const processId = environment.api.newLeads.processId;
     const workflowId = environment.api.newLeads.workflowId;
@@ -2889,6 +2945,8 @@ export class QdeHttpService {
 
 
   callPost(workflowId: string, projectId: string, requestData: any, options?: any, serviceType?: any) {
+    // debugger;
+    console.log('requestData~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~', requestData)
     var that = this;
     let processVar = {};
     let requestEntity = requestData
@@ -3118,6 +3176,7 @@ export class QdeHttpService {
       }
       // let httpData = this.http.post(addParameter, body);
       // let decritedData = this.encrytionService.decryptResponse(httpData);
+      console.log('addParameter', addParameter + '     ' + body);
       return this.http.post(addParameter, body);
       // return httpData;
     }
@@ -3690,7 +3749,7 @@ export class QdeHttpService {
 
     const requestEntity: RequestEntity = {
       processId: processId,
-      ProcessVariables: {"ocsNumber":ocsNo},
+      ProcessVariables: { "ocsNumber": ocsNo },
       workflowId: workflowId,
       projectId: projectId
     };
@@ -3770,8 +3829,8 @@ export class QdeHttpService {
     return this.callPost(workflowId, projectId, body);
 
   }
-  
-   getOcsNumberRetrieveAutoFill(ocsNo) {
+
+  getOcsNumberRetrieveAutoFill(ocsNo) {
 
     const processId = environment.api.ocsNumberRetrieveAutoFill.processId;
     const workflowId = environment.api.ocsNumberRetrieveAutoFill.workflowId;
@@ -3779,7 +3838,7 @@ export class QdeHttpService {
 
     const requestEntity: RequestEntity = {
       processId: processId,
-      ProcessVariables: {"ocsNumber":ocsNo},
+      ProcessVariables: { "ocsNumber": ocsNo },
       workflowId: workflowId,
       projectId: projectId
     };
@@ -3816,7 +3875,7 @@ export class QdeHttpService {
 
   }
 
-  
+
   uploadOcsRetrieve(data) {
 
     const processId = environment.api.uploadOcsRetrieve.processId;
@@ -3861,6 +3920,56 @@ export class QdeHttpService {
     let uri = environment.host + '/d/workflows/' + workflowId + '/' + environment.apiVersion.api + 'execute?projectId=' + projectId;
     return this.callPost(workflowId, projectId, body);
 
+  }
+
+  getBranchDetails(data) {
+    const processId = environment.api.filterBranach.processId;
+    const projectId = environment.api.filterBranach.projectId;
+    const workflowId = environment.api.filterBranach.processId;
+
+
+    const requestEntity: RequestEntity = {
+      ProcessVariables: data,
+      processId: processId,
+      workflowId: workflowId,
+      projectId: projectId,
+    };
+
+
+    const body = {
+      'processVariables':
+        JSON.stringify(requestEntity)
+    };
+
+    let uri = environment.host + '/d/workflows/' + workflowId + '/' + environment.apiVersion.api + 'execute?projectId=' + projectId;
+    console.log('Final value', uri + ' test ~~~~~~~~~~~~~~~~~~~~~~~' + JSON.stringify(data));
+    return this.callPost(workflowId, projectId, body);
+  }
+
+
+
+  getUserEmpDetails(data) {
+    const processId = environment.api.userEmployee.processId;
+    const projectId = environment.api.userEmployee.projectId;
+    const workflowId = environment.api.userEmployee.processId;
+
+
+    const requestEntity: RequestEntity = {
+      ProcessVariables: data,
+      processId: processId,
+      workflowId: workflowId,
+      projectId: projectId,
+    };
+
+
+    const body = {
+      'processVariables':
+        JSON.stringify(requestEntity)
+    };
+
+    let uri = environment.host + '/d/workflows/' + workflowId + '/' + environment.apiVersion.api + 'execute?projectId=' + projectId;
+    console.log('Final value', uri + ' test ~~~~~~~~~~~~~~~~~~~~~~~' + JSON.stringify(data));
+    return this.callPost(workflowId, projectId, body);
   }
 
 }

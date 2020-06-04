@@ -1,0 +1,148 @@
+.filter-body {
+  background: #fff;
+  padding: 10px 10px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  animation-name: showFilter;
+  animation-duration: 0.5s;
+}
+
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  margin: 5vw 2vw 2vw 2vw;
+}
+
+.flex-container-data {
+  width: 20vw;
+  margin: 1vw;
+  text-align: center;
+  font-size: 1.09vw;
+}
+
+.head-label {
+  font-family: zurich-light;
+  font-size: 1.09vw;
+  line-height: 2.35vw;
+}
+
+.inputBox,
+.selectBox {
+  position: relative;
+  margin-bottom: 1%;
+  width: 22%;
+  text-align: left;
+}
+.inputBox label,
+.selectBox label {
+  /* position: absolute; */
+  left: 0;
+  top: 0;
+  bottom: 0;
+  -webkit-transform: translateY(0);
+  transform: translateY(0);
+  /* color: rgba(153, 153, 153, 0.4); */
+  font-family: zurich-light;
+  font-size: 1.09vw;
+  line-height: 2.35vw;
+  transition: -webkit-transform 0.4s ease-in;
+  transition: transform 0.4s ease-in;
+  transition: transform 0.4s ease-in, -webkit-transform 0.4s ease-in;
+  -webkit-transform-origin: left;
+  transform-origin: left;
+  width: 100%;
+  right: 0;
+  display: block;
+}
+
+.form-control {
+  background: 0 0;
+  border: 0;
+  border-bottom: 1px solid #bbb;
+  border-radius: 0;
+  width: 100%;
+  font-size: 1.28vw;
+  line-height: 1.3vw;
+  color: #999;
+  font-family: zurich-light;
+  padding: 4px 0px !important;
+}
+.k-widget.form-control .k-input {
+  padding: 4px 0px !important;
+  height: calc(8px + 1.4285714286em) !important;
+  font-size: 1.2vw;
+}
+
+.controltitleDate {
+  transform: translateY(-1.64vw) scale(0.8);
+  color: #444;
+  font-family: zurich-bold;
+  font-size: 1.17vw;
+  position: absolute;
+}
+
+.btn.btn-default-border {
+  /* background: #004a80; */
+  border-radius: 3.91vw;
+  color: #004a80;
+  font-size: 0.94vw;
+  line-height: 2.73vw;
+  text-transform: uppercase;
+  padding: 0 1.56vw;
+  margin-left: 1vw;
+  border: 1px solid #004a80;
+}
+
+.btn-section {
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 15px;
+  padding-right: 15px;
+}
+
+.msg-error {
+  color: red;
+  position: absolute;
+  left: 9.2%;
+  bottom: 13px;
+  font-family: zurich;
+  font-size: 180%;
+}
+
+@keyframes showFilter {
+  0% {
+    width: 75%;
+    /* height: 387px; */
+    /* display: none; */
+  }
+  /* 50% {
+    width: 50%;
+  } */
+  100% {
+    width: 96%;
+  }
+}
+
+.filterClose {
+  background-color: red;
+  animation-direction: reverse;
+}
+
+::ng-deep .multiselect-item-checkbox input[type="checkbox"] + div {
+  font-size: 1vw !important;
+}
+
+::ng-deep .dropdown-list .filter-textbox input {
+  font-size: 1vw !important;
+}
+
+::ng-deep .multiselect-dropdown .dropdown-btn {
+  font-size: 1vw !important;
+}

@@ -134,7 +134,7 @@ export const environment = {
       'workflowId': '83ab8a8ca16911e9b1900242ac110003',
       'processId': '315870bad84111e99d440242ac110002'
     },
-    "paymentNonReconDownload" : {
+    "paymentNonReconDownload": {
       'workflowId': '83ab8a8ca16911e9b1900242ac110003',
       'processId': '7230e902a21b11e9b52d0242ac110002'
     },
@@ -146,7 +146,7 @@ export const environment = {
       'workflowId': '83ab8a8ca16911e9b1900242ac110003',
       'processId': '83c3fd7ea16911e99a8f0242ac110003'
     },
-    "offlinePaymentUpload" : { 
+    "offlinePaymentUpload": {
       'workflowId': 'f144eee2927f11e982270242ac110002',
       'processId': 'f17089c6927f11e982270242ac110002'
     },
@@ -266,7 +266,7 @@ export const environment = {
     },
     "adminInsertUpdateLoanTypePurposeMap": {
       'workflowId': '923cb878b8d411e9a42f0242ac110002',
-      'processId': 'cb3957bab8d611e989900242ac110002' 
+      'processId': 'cb3957bab8d611e989900242ac110002'
     },
     "adminDocumentProfile": {
       'workflowId': '2565d5f4b8e311e996d50242ac110002',
@@ -316,47 +316,47 @@ export const environment = {
       'workflowId': '197cc83ec7c411e9bb0c0242ac110002',
       'processId': '1995b4cac7c411e985c10242ac110002'
     },
-    "roleName" : {
+    "roleName": {
       'workflowId': '8fdf0f40ca5911e9a0280242ac110002',
       'processId': '90003788ca5911e992030242ac110002'
     },
-    "omniDocs" : {
+    "omniDocs": {
       'workflowId': 'd9e7a808926f11e982270242ac110002',
       'processId': '605aa9d6b74a11e983250242ac110002'
     },
-    "chequeDetails" : {
+    "chequeDetails": {
       'workflowId': 'b969b1908dd111e982270242ac110002',
       'processId': 'b981f6928dd111e982270242ac110002'
     },
-    "getApplicationStatus" : {
+    "getApplicationStatus": {
       'workflowId': '1d41cd0a8c4311e982270242ac110002',
       'processId': '653e21a6d48e11e981c20242ac110002'
     },
-    "getApplications" : {
+    "getApplications": {
       'workflowId': 'acd78f24cf0311e991e50242ac110002',
       'processId': '9747382ce5aa11e9910c0242ac110002'
-    },  
-    "reAssignApplications" : {
+    },
+    "reAssignApplications": {
       'workflowId': 'acd78f24cf0311e991e50242ac110002',
       'processId': 'aceffe2ecf0311e9829f0242ac110002'
-    },   
-    "getUsers" : {
+    },
+    "getUsers": {
       'workflowId': '46111230e45011e9935a0242ac110002',
       'processId': '462cc00ce45011e9abed0242ac110002'
     },
-    "getErrorIdMessage" :{
+    "getErrorIdMessage": {
       'workflowId': 'a6a43e0ccfc311e9a3b50242ac110002',
       'processId': 'cec4fac0d46411e9bed10242ac110002'
     },
-    "getErrorMessage" : {
+    "getErrorMessage": {
       'workflowId': 'a6a43e0ccfc311e9a3b50242ac110002',
       'processId': 'be09a9cad08f11e99b810242ac110002'
     },
-    "updateErrorMessage" :{
+    "updateErrorMessage": {
       'workflowId': 'a6a43e0ccfc311e9a3b50242ac110002',
       'processId': 'a6c2d402cfc311e99a490242ac110002'
     },
-    "flashExitingData" :{
+    "flashExitingData": {
       'workflowId': '99cad862dac211e9a4f70242ac110002',
       'processId': '99e5af3edac211e9929c0242ac110002'
     },
@@ -376,7 +376,7 @@ export const environment = {
       'workflowId': '0705a6c4810311e982270242ac110002',
       'processId': '29a0c746e11511e995dc0242ac110002'
     },
-    "checkOccupationType" :{
+    "checkOccupationType": {
       'workflowId': '82ce648ae10c11e9b7730242ac110002',
       'processId': '82ed99d6e10c11e9b3d00242ac110002'
     },
@@ -388,76 +388,76 @@ export const environment = {
       'workflowId': '1afeb32ab8dd11e9a7520242ac110002',
       'processId': '1b175d3ab8dd11e988a00242ac110002'
     },
-    "downloadLeads" : { 
+    "downloadLeads": {
       'workflowId': '6f9d4872e37811e991630242ac110002',
       'processId': '6fbc9484e37811e9b0470242ac110002',
       'projectId': 'ff8e364e6fce11e98754782bcb8f3845'
     },
-    "downloadLogin" : {
+    "downloadLogin": {
       'workflowId': '4b639b98e41611e99a460242ac110002',
       'processId': '4b702584e41611e9b36c0242ac110002',
       'projectId': 'ff8e364e6fce11e98754782bcb8f3845'
     },
-    "downloadDump" : {
+    "downloadDump": {
       'workflowId': '154273f0e44c11e9abed0242ac110002',
       'processId': '155b02bce44c11e987550242ac110002',
       'projectId': 'ff8e364e6fce11e98754782bcb8f3845'
     },
-    "filtersForDownload": { 
+    "filtersForDownload": {
       'workflowId': '46111230e45011e9935a0242ac110002',
       'processId': '462cc00ce45011e9abed0242ac110002'
     },
-    "getOccupationLov": { 
+    "getOccupationLov": {
       'workflowId': 'd6a7a3d8ee6711e99c870242ac110002',
       'processId': 'd6c0505eee6711e98e850242ac110002'
     },
-    "adminGetLov":{
+    "adminGetLov": {
       'workflowId': '412f2232faff11e9b71e0242ac110002',
-      'processId' : '41481940faff11e9b5560242ac110002'
+      'processId': '41481940faff11e9b5560242ac110002'
     },
-    "uploadCSV":{
+    "uploadCSV": {
       'workflowId': 'f17089c6927f11e982270242ac110002',
-      'processId' : '66145102ca6311e9bd540242ac110002'
+      'processId': '66145102ca6311e9bd540242ac110002'
     },
-    "checkCompanyDetails":{
+    "checkCompanyDetails": {
       'workflowId': '16c6f24efbaa11e9b4290242ac110002',
-      'processId' : '16e1cefcfbaa11e9949c0242ac110002'
+      'processId': '16e1cefcfbaa11e9949c0242ac110002'
     },
     "validateAuth": {
       'workflowId': '597050620f7e11ea962c0242ac110002',
-      'processId' : '598e78a80f7e11ea82920242ac110002'
+      'processId': '598e78a80f7e11ea82920242ac110002'
     },
-    "getPropIdentified":{
+    "getPropIdentified": {
       'workflowId': '107260700f7511eab9480242ac110002',
-      'processId' : '108f10300f7511eabb200242ac110002'
+      'processId': '108f10300f7511eabb200242ac110002'
     },
-    "getOfflinePaymentAmount":{
+    "getOfflinePaymentAmount": {
       'workflowId': 'f512f03a8ea311e982270242ac110002',
-      'processId' : 'f53166328ea311e982270242ac110002'
+      'processId': 'f53166328ea311e982270242ac110002'
     },
-    "adminGetMinMax":{
+    "adminGetMinMax": {
       'workflowId': '30ab0550167c11ea86b50242ac110002',
-      'processId' : '30c350ba167c11ea88870242ac110002'
+      'processId': '30c350ba167c11ea88870242ac110002'
     },
-    "adminUpdateMinMax":{
+    "adminUpdateMinMax": {
       'workflowId': '30ab0550167c11ea86b50242ac110002',
-      'processId' : '30b91f82167c11eaadae0242ac110002'
+      'processId': '30b91f82167c11eaadae0242ac110002'
     },
     "documentProfileUploadCsv": {
-      'workflowId' : '26952466806211e982270242ac110002',
-      'processId'  : 'fe06f728806a11e982270242ac110002'
+      'workflowId': '26952466806211e982270242ac110002',
+      'processId': 'fe06f728806a11e982270242ac110002'
     },
     "userActivityMapping": {
-      'workflowId' : 'c4791d1a305511eaba780242ac110002',
-      'processId'  : 'c496a7ea305511eabf630242ac110002'
+      'workflowId': 'c4791d1a305511eaba780242ac110002',
+      'processId': 'c496a7ea305511eabf630242ac110002'
     },
     "cityStateZoneRegionFromZipCode": {
       "workflowId": '499ac7b4b76b11e985fd0242ac110002',
       "processId": '3fb4a1e24e3e11eab1a60242ac110002'
     },
     "getStateListFromRegion": {
-      'workflowId' : 'e77f2900bcd111e9871a0242ac110002',
-      'processId'  : '1c0c29324ef611ea92930242ac110002'
+      'workflowId': 'e77f2900bcd111e9871a0242ac110002',
+      'processId': '1c0c29324ef611ea92930242ac110002'
     },
     "adminGetUsersBranchMapping": {
       'workflowId': '0c082094515411ea9d1d0242ac110002',
@@ -467,21 +467,21 @@ export const environment = {
       'workflowId': '3189bc1eb50611e982a40242ac110002',
       'processId': '69124626c57b11e992780242ac110002'
     },
-    "uploadBranchCSV":{
+    "uploadBranchCSV": {
       'workflowId': '95b2b3ceb74211e99c130242ac110002',
-      'processId' : '95b2b3ceb74211e99c130242ac110002'
+      'processId': '95b2b3ceb74211e99c130242ac110002'
     },
-    "uploadUserBranchCSV":{
+    "uploadUserBranchCSV": {
       'workflowId': '65fba710ca6311e990770242ac110002',
-      'processId' : '3d486908525711ea9f5b0242ac110002'
+      'processId': '3d486908525711ea9f5b0242ac110002'
     },
-    "deactivateBranch":{
+    "deactivateBranch": {
       'workflowId': '900c5bdcb82811e98dac0242ac110002',
-      'processId' : '895bcb406eaa11eab3280242ac110002'
+      'processId': '895bcb406eaa11eab3280242ac110002'
     },
-    deactivateUser:{
+    deactivateUser: {
       workflowId: '30d9085ead3311e9a3ae0242ac110002',
-      processId : 'c16073406eb111ea81c90242ac110002'
+      processId: 'c16073406eb111ea81c90242ac110002'
     },
     ocsNumberAutoFill: {
       workflowId: '1b7e6300713211eaa8f80242ac110002',
@@ -514,8 +514,16 @@ export const environment = {
     getSASMId: {
       workflowId: "9167380095a211eab85a0242ac110002",
       processId: "9197ef4a95a211ea95c00242ac110002"
+    },
+    filterBranach: {
+      processId: "455e48289f1011ea96780242ac110002",
+      projectId: "ff8e364e6fce11e98754782bcb8f3845"
+    },
+    userEmployee: {
+      processId: "6e94dfea9ff611ea95f40242ac110002",
+      projectId: "ff8e364e6fce11e98754782bcb8f3845"
     }
-    
+
   },
   appiyoDrive: "/d/drive/upload/",
   // host: "http://192.168.1.108/appiyo",
@@ -524,7 +532,7 @@ export const environment = {
   // host: "http://182.156.249.170/appiyo",
   // host: "https://ihfcmobileuat.icicihfc.com/appiyo",
   // host:"http://twixor.in/appiyo/",
-  host:"http://128.199.165.230/appiyo/",
+  host: "http://128.199.165.230/appiyo/",
 
   driveLocation: "/d/drive/docs/",
   csvLocation: "/d/download/csv?",
@@ -537,7 +545,7 @@ export const environment = {
   encryptionType: true, // Ecryption
   // host: ""
   captchFormat: "&width=250&height=80&bgr=255&bgg=255&bgb=255&bga=255&fontR=187&fontG=187&fontB=187&fontSize=50&captchaSize=5",
-  defaultItem : { key: "Select...", value: "0" },
+  defaultItem: { key: "Select...", value: "0" },
   apkCertDig256: "pAZCmkIZDRoqGwjYf3gzYwJ8J85VZANj7gm/E7VQ84Q="
 };
 
