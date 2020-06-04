@@ -1095,7 +1095,13 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                 // this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant/'+this.coApplicantIndex]);
 
                 let applicationId = result['application']['applicationId'];
-                this.setStatusApiSub = this.qdeHttp.setStatusApi( applicationId, environment['status']['QDECREATED']).subscribe((response) => {
+                const getQdeStatus = this.qde.application.status;
+
+                let evnQDE = environment['status']['QDECREATED'];
+                if(getQdeStatus == 2) {
+                  evnQDE = environment['status']['QDELEADASSIGNED'];
+                }
+                this.setStatusApiSub = this.qdeHttp.setStatusApi( applicationId, evnQDE).subscribe((response) => {
                   if(response["ProcessVariables"]["status"] == true) {
                     // this.cds.changePanSlide(true);
                     this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant/'+this.coApplicantIndex], { queryParams: { tabName: this.fragments[2], page: 1 }});
@@ -1169,7 +1175,15 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
               // this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant/'+this.coApplicantIndex]);
 
               let applicationId = result['application']['applicationId'];
-              this.setStatusApiSub = this.qdeHttp.setStatusApi( applicationId, environment['status']['QDECREATED']).subscribe((response) => {
+
+              const getQdeStatus = this.qde.application.status;
+
+                let evnQDE = environment['status']['QDECREATED'];
+                if(getQdeStatus == 2) {
+                  evnQDE = environment['status']['QDELEADASSIGNED'];
+                }
+
+              this.setStatusApiSub = this.qdeHttp.setStatusApi( applicationId, evnQDE).subscribe((response) => {
                 if(response["ProcessVariables"]["status"] == true) {
                   // this.cds.changePanSlide(true);
                   this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant/'+this.coApplicantIndex], { queryParams: { tabName: this.fragments[2], page: 1 }});
@@ -1274,7 +1288,13 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
                   // isApplicantPresent = applicants[this.applicantIndex].hasOwnProperty('applicantId');
                   // this.qde.application.applicants[this.coApplicantIndex].applicantId =  applicants[this.coApplicantIndex]["applicantId"];
                   let applicationId = result['application']['applicationId'];
-                  this.setStatusApiSub2 = this.qdeHttp.setStatusApi( applicationId, environment.status.QDECREATED).subscribe((response) => {
+                  const getQdeStatus = this.qde.application.status;
+
+                let evnQDE = environment['status']['QDECREATED'];
+                if(getQdeStatus == 2) {
+                  evnQDE = environment['status']['QDELEADASSIGNED'];
+                }
+                  this.setStatusApiSub2 = this.qdeHttp.setStatusApi( applicationId, evnQDE).subscribe((response) => {
                     if(response["ProcessVariables"]["status"] == true) {
                       // this.cds.changePanSlide2(true);
                       this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant/'+this.coApplicantIndex], { queryParams: { tabName: this.fragments[12], page: 1 }});
@@ -1335,7 +1355,13 @@ export class CoApplicantQdeComponent implements OnInit, OnDestroy, AfterViewInit
               // isApplicantPresent = applicants[this.applicantIndex].hasOwnProperty('applicantId');
               // this.qde.application.applicants[this.coApplicantIndex].applicantId =  applicants[this.coApplicantIndex]["applicantId"];
               let applicationId = result['application']['applicationId'];
-              this.setStatusApiSub2 = this.qdeHttp.setStatusApi( applicationId, environment.status.QDECREATED).subscribe((response) => {
+              const getQdeStatus = this.qde.application.status;
+
+              let evnQDE = environment['status']['QDECREATED'];
+              if(getQdeStatus == 2) {
+                evnQDE = environment['status']['QDELEADASSIGNED'];
+              }
+              this.setStatusApiSub2 = this.qdeHttp.setStatusApi( applicationId, evnQDE).subscribe((response) => {
                 if(response["ProcessVariables"]["status"] == true) {
                   // this.cds.changePanSlide2(true);
                   this.router.navigate(['/applicant/'+this.qde.application.applicationId+'/co-applicant/'+this.coApplicantIndex], { queryParams: { tabName: this.fragments[11], page: 1 }});

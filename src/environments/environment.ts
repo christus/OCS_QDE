@@ -8,7 +8,8 @@ export const environment = {
   buildDate: "",
   production: false,
   status: {
-    QDECREATED: "1"
+    QDECREATED: "1",
+    QDELEADASSIGNED: "2"
   },
   projectId: '5928d30eac7811e9a1670242ac110002', //developement
 

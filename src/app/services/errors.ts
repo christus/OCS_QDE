@@ -250,6 +250,18 @@ export const errors: any = {
     stateOrCity: {
       required: "State Name / City Name is mandatory",
       invalid: "State Name / City Name is not valid"
+    },
+    contactPersonName: {
+      required: "Contact PersonName is mandatory",
+      invalid: "Contact PersonName is not valid"
+    },
+    contactPersonMobileNo: {
+      required: "Contact MobileNo is mandatory",
+      invalid: "Contact MobileNo is not valid"
+    },
+    contactPersonEmailId: {
+      required: "Contact EmailId is mandatory",
+      invalid: "Contact EmailId is not valid"
     }
   },
   corporateAddress: {

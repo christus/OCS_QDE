@@ -9,7 +9,8 @@ export const environment = {
   //projectId: 'ff8e364e6fce11e98754782bcb8f3845', // UAT Development
 
   status: {
-    QDECREATED: "1"
+    QDECREATED: "1",
+    QDELEADASSIGNED: "2"
   },
 
   apiVersion: {
