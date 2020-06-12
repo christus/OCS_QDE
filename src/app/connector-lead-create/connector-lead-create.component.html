@@ -206,14 +206,11 @@
                             required >
 
                             <label for="smsaId" >SM/SA -ID</label>
-                            <!-- <span class="optional" style="font-size: 1vw">Type to search</span> -->
+                           
                             <div *ngIf="(searchSMSA.touched || searchSMSA.dirty) && searchSMSA.invalid" class="invalid-feedback">
                               <div *ngIf="searchSMSA.errors?.pattern">Invalid SM/SA -ID</div>
                             </div>
-                            <!-- <div *ngIf="(searchSMSA.touched || searchSMSA.dirty)" class="invalid-feedback">
-                                <div *ngIf="branchId.value == 0">Please select branchId</div> 
-                            </div> -->
-
+                          
                             <ul class="sm-sa-list">
                               <li *ngFor="let c of allSMSAData;let i=index;" (click)="selectSMSA(c)">
                                 {{c.key}}

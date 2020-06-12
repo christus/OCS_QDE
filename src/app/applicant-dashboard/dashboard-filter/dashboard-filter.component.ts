@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, DoCheck, Output, EventEmitter } from '@angular/core';
 import { multiSelectStatus } from "../../app.constants";
 import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { environment } from 'src/environments/environment';
 
 import { UtilService } from "src/app/services/util.service";
 
@@ -36,7 +37,7 @@ export class DashboardFilterComponent implements OnInit, DoCheck {
   isActiveFilter: boolean = true;
   isFilterSubmit: boolean = false;
   tempBranch: number = 0;
-  @Input() userBranch: Array<any>;
+  userBranch: Array<any>;
   @Input() filterPrefill: any;
   @Output() filterData = new EventEmitter<any>();
   requestData: any;
@@ -77,7 +78,11 @@ export class DashboardFilterComponent implements OnInit, DoCheck {
         const startDate = new Date();
         console.log("FilteredLeads Api Call: Start Date & Time ", startDate, startDate.getMilliseconds());
         this.requestData = {
-          "userId": localStorage.getItem('userId')
+          "processId": environment.api.userEmployee.processId,
+          "ProcessVariables": {
+            "userId": localStorage.getItem('userId')
+          },
+          "projectId": environment.api.userEmployee.projectId
         }
         this.qdeHttp.getUserEmpDetails(this.requestData).subscribe((res: any) => {
           const endDate = new Date();
@@ -85,7 +90,10 @@ export class DashboardFilterComponent implements OnInit, DoCheck {
 
           if (res["Error"] && res["Error"] == 0) {
             // console.log("res['ProcessVariables'] dataNew", res.ProcessVariables);
-            this.userEmployee = res.ProcessVariables.employeeId;
+            const result = res.ProcessVariables.outputUsers;
+            console.log("res['ProcessVariables'] dataNew", result);
+            this.getFilterUserBranchDetails(result);
+            this.userEmployee = Array.from(result.split(","));
           } else if (res["login_required"] && res["login_required"] === true) {
             this.utilService.clearCredentials();
           } else {
@@ -111,31 +119,35 @@ export class DashboardFilterComponent implements OnInit, DoCheck {
     }
   }
 
-  getFilterBranchDetails(reqData: any) {
-    // this.qdeHttp.getBranchDetails(this.requestData).subscribe((res: any) => {
-    //   console.log('Response', res)
-    // })
+
+
+  getFilterUserBranchDetails(outputUsers: string) {
     try {
       this.ngxService.start();
       if (localStorage.getItem("token") && localStorage.getItem("userId")) {
         const startDate = new Date();
         console.log("FilteredLeads Api Call: Start Date & Time ", startDate, startDate.getMilliseconds());
         this.requestData = {
-          "branch": reqData
+          "userId": localStorage.getItem('userId'),
+          "outputUsers": outputUsers
         }
         this.qdeHttp.getBranchDetails(this.requestData).subscribe((res: any) => {
           const endDate = new Date();
           console.log("FilteredLeads Api Call: End Date & Time ", endDate, endDate.getMilliseconds());
 
           if (res["Error"] && res["Error"] == 0) {
-            if (res.ProcessVariables) {
-              this.userState = res.ProcessVariables.stateList;
+            // console.log("res['ProcessVariables'] dataNew", res.ProcessVariables);
+            this.userBranch = res.ProcessVariables.branchList;
+            // console.log('this.userBranch', res.ProcessVariables);
+            this.userState = res.ProcessVariables.stateList;
+            this.userZone = res.ProcessVariables.zoneList;
+            this.userRegion = res.ProcessVariables.regionList;
+            this.tempBranch = this.filterEmployee.length;
+
+            if (this.filterEmployee.length !== this.tempBranch) {
               this.filterState = this.filterState.length ? this.userState.filter(val => !this.filterState.includes(val.value)) : [];
-              this.userZone = res.ProcessVariables.zoneList;
               this.filterZone = this.filterZone.length ? this.userZone.filter(val => !this.filterZone.includes(val.value)) : [];
-              this.userRegion = res.ProcessVariables.regionList;
               this.filterRegion = this.filterRegion.length ? this.userRegion.filter(val => !this.filterRegion.includes(val.value)) : [];
-              this.tempBranch = this.filterBranch.length;
             }
 
           } else if (res["login_required"] && res["login_required"] === true) {
@@ -187,20 +199,25 @@ export class DashboardFilterComponent implements OnInit, DoCheck {
 
     if (this.startDate !== null && (this.endDate === null || this.dateError.isError === true)) {
       this.isFilterSubmit = true;
+    } else if (this.isFilterSubmit) {
+      const data = {
+        submitted: false
+      }
+      this.filterData.emit(data);
     }
-
   }
 
-  onDropDownClose(branch: any) {
+  onDropDownClose() {
     this.requestData = [];
-    console.log('this.filterBranch', branch, ' this.filterBranch.length', this.filterBranch.length, 'this.tempBranch', this.tempBranch);
-    if (this.filterBranch.length === 0) {
-      this.filterState = [];
-      this.filterRegion = [];
-      this.filterZone = [];
-    } else if (this.filterBranch.length !== this.tempBranch) {
-      this.filterBranch.map((item) => this.requestData.push(item.key));
-      this.getFilterBranchDetails(this.requestData);
+    console.log(' this.filterEmployee.length', this.filterEmployee.length, 'this.tempBranch', this.tempBranch);
+    if (this.filterEmployee.length !== this.tempBranch) {
+      const data = {
+        value: this.filterEmployee.toString()
+      }
+      console.log('this.filterEmployee.map', data)
+      // this.filterEmployee.map((item) => this.requestData.push(item.key));
+      // this.getFilterBranchDetails(this.requestData);
+      this.getFilterUserBranchDetails(this.filterEmployee.toString());
     }
   }
 
@@ -274,20 +291,23 @@ export class DashboardFilterComponent implements OnInit, DoCheck {
 
     // this.filterBranch.map((item) => this.requestData.push((item.value).toString()));
     // const dataNew = this.requestData.toString()
-    const filterDetais = {
-      filterZone: this.filterZone,
-      filterBranch: this.filterBranch,
-      filterState: this.filterState,
-      filterRegion: this.filterRegion,
-      filterAppStatus: this.filterStatus,
-      filterEmp: this.filterEmployee,
-      from: this.startDate,
-      to: this.endDate,
-      submitted: filterForm.submitted
-    }
+    // filterForm.form.value.startDate = this.getFormattedDate(this.startDate);
+    // filterForm.form.value.endDate = this.getFormattedDate(this.endDate);
+    // console.log("endDate", this.endDate)
+    // const filterDetais = {
+    //   filterZone: this.filterZone,
+    //   filterBranch: this.filterBranch,
+    //   filterState: this.filterState,
+    //   filterRegion: this.filterRegion,
+    //   filterAppStatus: this.filterStatus,
+    //   filterEmp: this.filterEmployee,
+    //   from: this.startDate,
+    //   to: this.endDate,
+    //   submitted: filterForm.submitted
+    // }
     // const finalData = filterForm
     this.filterData.emit(filterForm);
-    console.log('filterForm', filterForm, 'filterDetais', filterDetais);
+    // console.log('filterForm', filterForm);
   }
 
 }

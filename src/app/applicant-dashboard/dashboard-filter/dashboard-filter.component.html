@@ -20,10 +20,27 @@
           class="redalert" style="color: red">
           End date is required
         </div>
+        <div
+          *ngIf="dateError.isError && (endDates.valid || (!endDates.touched && !filterForm.submitted) || startDate === null)"
+          class="redalert" style="color: red">
+          {{ dateError.errorMessage }}
+        </div>
+      </div>
+    </div>
+
+    <div class="flex">
+      <div class="flex-container-data selectBox">
+        <label class="controltitle">Employee </label>
+        <ng-multiselect-dropdown [placeholder]="'Choose your Employee'" [data]="userEmployee"
+          [settings]="dropdownSettings" [(ngModel)]="filterEmployee" name="filterEmployee" (onDropDownClose)="onDropDownClose()">
+        </ng-multiselect-dropdown>
       </div>
 
-      <div *ngIf="dateError.isError" class="msg-error" style="color: red">
-        {{ dateError.errorMessage }}
+      <div class="flex-container-data selectBox">
+        <label class="controltitle">Application Status </label>
+        <ng-multiselect-dropdown [placeholder]="'Choose your Application Status'" [data]="userStatus"
+          [settings]="dropdownSettings" [(ngModel)]="filterStatus" name="filterStatus">
+        </ng-multiselect-dropdown>
       </div>
     </div>
 
@@ -31,7 +48,7 @@
       <div class="flex-container-data selectBox">
         <label class="controltitle">Branch </label>
         <ng-multiselect-dropdown [placeholder]="'Choose your branch'" [data]="userBranch" [settings]="dropdownSettings"
-          [(ngModel)]="filterBranch" name="filterBranch"  (onDropDownClose)="onDropDownClose(filterBranch)">
+          [(ngModel)]="filterBranch" name="filterBranch">
         </ng-multiselect-dropdown>
       </div>
 
@@ -44,8 +61,8 @@
 
       <div class="flex-container-data selectBox">
         <label class="controltitle">Region </label>
-        <ng-multiselect-dropdown [placeholder]="'Choose your Region'" [data]="userRegion"
-          [settings]="dropdownSettings" [(ngModel)]="filterRegion" name="filterRegion">
+        <ng-multiselect-dropdown [placeholder]="'Choose your Region'" [data]="userRegion" [settings]="dropdownSettings"
+          [(ngModel)]="filterRegion" name="filterRegion">
         </ng-multiselect-dropdown>
       </div>
 
@@ -53,23 +70,6 @@
         <label class="controltitle">State </label>
         <ng-multiselect-dropdown [placeholder]="'Choose your State'" [data]="userState" [settings]="dropdownSettings"
           [(ngModel)]="filterState" name="filterState">
-        </ng-multiselect-dropdown>
-      </div>
-    </div>
-
-    <div class="flex">
-      <div class="flex-container-data selectBox">
-        <label class="controltitle">Employee </label>
-        <ng-multiselect-dropdown [placeholder]="'Choose your Employee'" [data]="userEmployee"
-          [settings]="dropdownSettings" [(ngModel)]="filterEmployee" name="filterEmployee">
-        </ng-multiselect-dropdown>
-      </div>
-
-      <div class="flex-container-data selectBox">
-        <label class="controltitle">Application Status </label>
-        <ng-multiselect-dropdown [placeholder]="'Choose your Application Status'" [data]="userStatus"
-          [settings]="dropdownSettings" [(ngModel)]="filterStatus"
-          name="filterStatus">
         </ng-multiselect-dropdown>
       </div>
     </div>

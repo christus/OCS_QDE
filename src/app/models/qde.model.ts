@@ -20,6 +20,9 @@ export interface Application {
     branch?:string;
     paymentDetails?:PaymentDetails;
     createdDate?:string;
+    sa_sm_id?:string;
+    brokerId?:string;
+    brokerName?:string;
 }
 
 export interface Document {

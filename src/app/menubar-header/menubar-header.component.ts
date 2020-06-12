@@ -11,6 +11,7 @@ import { QdeHttpService } from '../services/qde-http.service';
 import { screenPages, statuses } from '../app.constants';
 
 
+
 @Component({
   selector: 'app-menubar-header',
   templateUrl: './menubar-header.component.html',
@@ -62,6 +63,9 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
 
   isSelectsaSmId: boolean;
   saSmId: string;
+  createOrUpdatePersonalDetailsBrokerId: Subscription;
+  enableSourceId: boolean;
+  
 
   constructor(private utilService: UtilService,
               private commonDataService: CommonDataService,
@@ -71,7 +75,24 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
               private qdehttp: QdeHttpService) {
 
                 this.sourceId = '';
-                this.tempSMSAData = []
+                this.tempSMSAData = [];
+
+        let data = {
+          userId: localStorage.getItem('userId')
+        }
+
+        this.qdehttp.getSASMID(data).subscribe(res => {
+
+          console.log('Response',res)
+          // if(res['ProcessVariables']['status'] == true) {
+    
+          // }
+          
+          this.tempSMSAData = res['ProcessVariables']['sa_sm_id'];
+    
+          })
+
+
     this.route.params.subscribe(val => {
       this.applicationId = val.applicationId;
       // this.applicantId = this.qde.application.applicants.find(v => v.applicantId == val.applicantId).applicantId;
@@ -129,6 +150,24 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
 
       // console.log("Apllication status", this.qde);
 
+      if(this.qde.application.status == 2) {
+        this.enableSourceId = true;
+        const saSMId = this.qde.application.brokerId;
+
+        const filterData = this.tempSMSAData.filter((sasmId)=> {
+
+          if(sasmId.value === saSMId) {
+            return sasmId;
+          }
+        })
+
+
+        this.sourceId = (filterData.length>0)?(filterData[0].key):''
+      } else {
+        this.enableSourceId = false;
+      }
+
+      
 
       this.applicantBtnStatus = (this.qde.application.status == parseInt(statuses['Login Fee Paid']) ? true: false) ;
 
@@ -320,12 +359,32 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
    onSourceSubmit() {
      this.isSourceModal = false;
      this.sourceId = this.valueSMSA;
+     this.qde.application.brokerId = this.saSmId;
+
+     if(this.qde.application.applicants.length > 0) {
+       const isIndividual = this.qde.application.applicants[0].isIndividual;
+
+       if(isIndividual === null) {
+        this.qde.application.applicants[0].isIndividual = true;
+       }
+     }
+
+    // const filterData = this.qdeService.getFilteredJson(this.qde);
+    const filterData = this.qde;
+     this.createOrUpdatePersonalDetailsBrokerId = this.qdehttp.createOrUpdatePersonalDetails(filterData).subscribe((response) => {
+      console.log("SourceId Response",response)
+
+     })
+
    }
 
 
   ngOnDestroy() {
     if(this.isEligibilityForReviewsSub != null) {
       this.isEligibilityForReviewsSub.unsubscribe();
+    }
+    if(this.createOrUpdatePersonalDetailsBrokerId != null) {
+      this.createOrUpdatePersonalDetailsBrokerId.unsubscribe()
     }
   }
 

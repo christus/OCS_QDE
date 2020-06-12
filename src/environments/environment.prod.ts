@@ -1,15 +1,16 @@
 export const environment = {
-  version: "2.1.6.4",
-  buildDate: "14-05-2020",
+  version: "2.1.7",
+  buildDate: "22-05-2020",
   production: true,
-  projectId: "5928d30eac7811e9a1670242ac110002", // developement
+  // projectId: "5928d30eac7811e9a1670242ac110002", // developement
 
-  //  projectId: '3209f7ea7ba811e982270242ac110002', // production
+   projectId: '3209f7ea7ba811e982270242ac110002', // production
 
   //projectId: 'ff8e364e6fce11e98754782bcb8f3845', // UAT Development
 
   status: {
-    QDECREATED: "1"
+    QDECREATED: "1",
+    QDELEADASSIGNED: "2"
   },
 
   apiVersion: {
@@ -515,12 +516,14 @@ export const environment = {
       workflowId: "9167380095a211eab85a0242ac110002",
       processId: "9197ef4a95a211ea95c00242ac110002"
     },
-    filterBranach: {
-      processId: "455e48289f1011ea96780242ac110002",
-      projectId: "ff8e364e6fce11e98754782bcb8f3845"
-    },
     userEmployee: {
-      processId: "6e94dfea9ff611ea95f40242ac110002",
+      processId: "12b2c0a4928a11e982270242ac110002",
+      projectId: "ff8e364e6fce11e98754782bcb8f3845",
+      processId_1: "9197ef4a95a211ea95c00242ac110002",
+    },
+    userBranchByEmp: {
+      processId: "676d6082a72811ea81760242ac110002",
+      workflowId: "4504e6349f1011ea93f40242ac110002",
       projectId: "ff8e364e6fce11e98754782bcb8f3845"
     }
   },

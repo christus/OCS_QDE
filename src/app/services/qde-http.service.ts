@@ -246,8 +246,10 @@ export class QdeHttpService {
     filterZone?: string,
     filterRegion?: string,
     filterState?: string,
-    filterEm?: string,
-    filterAppStatus?: string
+    filterEmp?: string,
+    filterAppStatus?: string,
+    filterStartDate?: string,
+    filterEndDate?: string
   ) {
     const processId = environment.api.dashboard.processId;
     const workflowId = environment.api.dashboard.workflowId;
@@ -255,18 +257,15 @@ export class QdeHttpService {
 
     let processVariables = {
       userId: localStorage.getItem("userId"),
-      // outputUsers: localStorage.getItem("outputUsers"),
       firstName: (search != null) ? search : "",
-      fromDate: (fromDay != 'DD' || fromMonth != 'MM' || fromYear != 'YYYY') ? new Date(fromYear + "" + "-" + fromMonth + "-" + fromDay).toJSON() : "",
-      toDate: (toDay != 'DD' || toMonth != 'MM' || toYear != 'YYYY') ? new Date(toYear + "" + "-" + toMonth + "-" + toDay).toJSON() : "",
+      fromDate: filterStartDate,
+      toDate: filterEndDate,
       applicationStatus: status,
-      currentPage: currentPage != "" ? currentPage : "1",
       branchId: filterBranch,
-      outputUsers: filterEm,
+      outputUsers: filterEmp,
       statusFilter: filterAppStatus,
+      currentPage: currentPage != "" ? currentPage : "1"
     };
-
-   
 
     const requestEntity: RequestEntity = {
       processId: processId,
@@ -279,8 +278,6 @@ export class QdeHttpService {
       'processVariables':
         JSON.stringify(requestEntity)
     }
-
-    console.log('Befoure Post Request', processVariables.branchId)
     let uri = environment.host + '/d/workflows/' + workflowId + '/' + environment.apiVersion.api + 'execute?projectId=' + projectId;
     return this.callPost(workflowId, projectId, body);
   }
@@ -1497,7 +1494,6 @@ export class QdeHttpService {
       'processVariables':
         JSON.stringify(requestEntity)
     };
-
     let uri = environment.host + '/d/workflows/' + workflowId + '/' + environment.apiVersion.api + 'execute?projectId=' + projectId;
     return this.callPost(workflowId, projectId, body);
   }
@@ -3173,7 +3169,7 @@ export class QdeHttpService {
         body = requestEntity["processVariables"];
       } else if (addParameter.includes("login?")) {
         body = JSON.stringify(requestEntity);
-      }
+      } 
       // let httpData = this.http.post(addParameter, body);
       // let decritedData = this.encrytionService.decryptResponse(httpData);
       console.log('addParameter', addParameter + '     ' + body);
@@ -3923,9 +3919,9 @@ export class QdeHttpService {
   }
 
   getBranchDetails(data) {
-    const processId = environment.api.filterBranach.processId;
-    const projectId = environment.api.filterBranach.projectId;
-    const workflowId = environment.api.filterBranach.processId;
+    const processId = environment.api.userBranchByEmp.processId;
+    const projectId = environment.api.userBranchByEmp.projectId;
+    const workflowId = environment.api.userBranchByEmp.workflowId;
 
 
     const requestEntity: RequestEntity = {
@@ -3942,16 +3938,16 @@ export class QdeHttpService {
     };
 
     let uri = environment.host + '/d/workflows/' + workflowId + '/' + environment.apiVersion.api + 'execute?projectId=' + projectId;
-    console.log('Final value', uri + ' test ~~~~~~~~~~~~~~~~~~~~~~~' + JSON.stringify(data));
+    
     return this.callPost(workflowId, projectId, body);
   }
 
 
 
   getUserEmpDetails(data) {
-    const processId = environment.api.userEmployee.processId;
+    const processId = environment.api.userEmployee.processId_1;
     const projectId = environment.api.userEmployee.projectId;
-    const workflowId = environment.api.userEmployee.processId;
+    const workflowId = environment.api.userEmployee.processId_1;
 
 
     const requestEntity: RequestEntity = {
@@ -3968,7 +3964,6 @@ export class QdeHttpService {
     };
 
     let uri = environment.host + '/d/workflows/' + workflowId + '/' + environment.apiVersion.api + 'execute?projectId=' + projectId;
-    console.log('Final value', uri + ' test ~~~~~~~~~~~~~~~~~~~~~~~' + JSON.stringify(data));
     return this.callPost(workflowId, projectId, body);
   }
 

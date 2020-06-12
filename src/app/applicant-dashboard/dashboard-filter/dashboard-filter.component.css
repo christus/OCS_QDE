@@ -105,15 +105,15 @@
   justify-content: flex-end;
   padding-bottom: 15px;
   padding-right: 15px;
+  padding-top: 30px;
 }
 
 .msg-error {
   color: red;
-  position: absolute;
-  left: 9.2%;
-  bottom: 13px;
+  position: relative;
+  left: 1.2%;
   font-family: zurich;
-  font-size: 180%;
+  font-size: 1.09vw;
 }
 
 @keyframes showFilter {

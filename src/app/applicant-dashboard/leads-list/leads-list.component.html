@@ -11,8 +11,8 @@
             LOGIN</button>
         <button routerLink="/connector/lead-create" class="btn application add-lead-link" *ngIf="createLead">CREATE
             LEAD</button>
-        <button class="btn application add-lead-link"  [ngStyle]="{'width': '3.5vw'}" [style.border]="isFilterApply ? '' : '1px solid gray'"
-            (click)="isShowFilter = !isShowFilter">
+        <button class="btn application add-lead-link" [ngStyle]="{'width': '3.5vw'}"
+            [style.border]="isFilterApply ? '' : '1px solid gray'" (click)="isShowFilter = !isShowFilter">
 
             <!-- <label for="startDate" class="head-label">FILTER</label> -->
             <span class="icon-filter">
@@ -22,14 +22,24 @@
         </button>
     </div>
 
-    <app-dashboard-filter *ngIf="isShowFilter" [filterPrefill]="filterData" [userBranch]="branchList"
-        (filterData)="filterDatas($event)">
+    <app-dashboard-filter *ngIf="isShowFilter" [filterPrefill]="filterData" (filterData)="filterDatas($event)">
     </app-dashboard-filter>
 
     <tabs>
-        <tab tabTitle="ALL" class="tab" *ngIf="(newLogin) || documentUpload">
-            <ul
-                *ngFor="let detail of userDetails | paginate: {id: 'pagination1', itemsPerPage: perPage, currentPage: currentPage, totalItems: totalItems};">
+        <tab tabTitle="ALL" [isFilter]="isFilterApply" class="tab" *ngIf="(newLogin) || documentUpload">
+            <ul *ngFor="let detail of isFilterApply ? (userFilterDetails | paginate: 
+                {
+                    id:  'pagination5', 
+                    itemsPerPage: perPageFL , 
+                    currentPage: currentPageFL , 
+                    totalItems: totalItemsFL }
+                    )  : (userDetails | paginate: 
+                {
+                    id: 'pagination1', 
+                    itemsPerPage: perPage, 
+                    currentPage: currentPage, 
+                    totalItems: totalItems});
+                    ">
                 <li>
                     <!-- [queryParams]="detail['queryParams']" -->
                     <a [routerLink]="detail.url" class="lead-action">
@@ -56,10 +66,20 @@
                     </a>
                 </li>
             </ul>
-            <pagination-controls id="pagination1" (pageChange)="pageChanged($event)" class="pagination" autoHide="true">
+
+            <!-- <div class="data-not-found-block" *ngIf="isFilterApply && userFilterDetails.length === 0">
+                <span class="user-name">Data not Found</span>
+            </div> -->
+
+            <pagination-controls *ngIf="!isFilterApply" id="pagination1" (pageChange)="pageChanged($event)"
+                class="pagination" autoHide="true">
+            </pagination-controls>
+
+            <pagination-controls *ngIf="isFilterApply" id="pagination5" (pageChange)="pageChangedFL($event)"
+                class="pagination" autoHide="true">
             </pagination-controls>
         </tab>
-        <tab tabTitle="NEW LEADS" *ngIf="createLead">
+        <tab tabTitle="NEW LEADS" *ngIf="createLead" [isFilter]="isFilterApply">
             <ul
                 *ngFor="let detail of newLeadsDetails | paginate: {id: 'pagination2', itemsPerPage: perPageNL, currentPage: currentPageNL, totalItems: totalItemsNL};">
                 <li>
@@ -83,7 +103,7 @@
             <pagination-controls id="pagination2" (pageChange)="pageChangedNL($event)" class="pagination"
                 autoHide="true"></pagination-controls>
         </tab>
-        <tab tabTitle="PENDING APPLICATION" *ngIf="(newLogin)">
+        <tab tabTitle="PENDING APPLICATION" *ngIf="(newLogin)" [isFilter]="isFilterApply">
             <ul
                 *ngFor="let detail of newPendingApplicationDetails | paginate: {id: 'pagination3',itemsPerPage: perPagePA, currentPage: currentPagePA, totalItems: totalItemsPA};">
                 <li>
@@ -113,7 +133,7 @@
             <pagination-controls id="pagination3" (pageChange)="pageChangedPA($event)" class="pagination"
                 autoHide="true"></pagination-controls>
         </tab>
-        <tab tabTitle="PENDING PAYMENT" *ngIf="(newLogin)">
+        <tab tabTitle="PENDING PAYMENT" *ngIf="(newLogin)" [isFilter]="isFilterApply">
             <ul
                 *ngFor="let detail of newPendingPaymentDetails | paginate: {id: 'pagination4',itemsPerPage: perPagePP, currentPage: currentPagePP, totalItems: totalItemsPP};">
                 <li>
@@ -212,6 +232,22 @@
             </div>
 
 
+        </div>
+    </div>
+</div>
+<!-- [class.active]="isDataNotFound"
+[class.active]="isDataNotFound" -->
+<div class="overlay" [ngClass]="{'active': isDataNotFound}">
+    <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isDataNotFound}"
+        style="padding-top: 1vw; height: 25%;">
+        <a class="modal-close" (click)="isDataNotFound = false;  isFilterApply = false; filterData = null"><span
+                class="icon icon-close"></span></a>
+        <div class="modal-body" style="padding-top: 1vw;">
+            <div class="row modal-body-content" style="padding-top: 3.5vw;text-align: center;">
+                <div class="col-12">
+                    <h1 class="lead-detals-lable">DATA NOT FOUND</h1>
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -10,7 +10,8 @@ export const errors: any = {
     length: "PAN must be at least",
     invalid: "Invalid PAN, valid PAN format - AAAPA1111A",
     invalidNonInd: "Invalid PAN, valid PAN format - AAAAA1111A",
-    after3Attemps: "Please check and enter your correct PAN"
+    after3Attemps: "Please check and enter your correct PAN",
+    isExistPan:"Entered PAN already exist"
   },
   panDocumentNo: {
     required: "Document number is mandatory",
@@ -249,6 +250,18 @@ export const errors: any = {
     stateOrCity: {
       required: "State Name / City Name is mandatory",
       invalid: "State Name / City Name is not valid"
+    },
+    contactPersonName: {
+      required: "Contact PersonName is mandatory",
+      invalid: "Contact PersonName is not valid"
+    },
+    contactPersonMobileNo: {
+      required: "Contact MobileNo is mandatory",
+      invalid: "Contact MobileNo is not valid"
+    },
+    contactPersonEmailId: {
+      required: "Contact EmailId is mandatory",
+      invalid: "Contact EmailId is not valid"
     }
   },
   corporateAddress: {

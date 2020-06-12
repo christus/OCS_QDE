@@ -331,3 +331,14 @@ a:visited {
   top: 0.5vw;
 }
 
+.data-not-found-block {
+  padding: 3vw;
+  text-align: center;
+  display: block;
+  font-size: 51px;
+  font: inherit;
+  margin: 3vw 1.56vw;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  font-size: 20px;
+}

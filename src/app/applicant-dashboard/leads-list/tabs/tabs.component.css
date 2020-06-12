@@ -1,68 +1,72 @@
 .tab-close {
-    color: gray;
-    text-align: right;
-    cursor: pointer;
-  }
-  .tabs-head {
-    border-bottom: 0;
-    padding: 1.56vw 0;
-    justify-content: left;
-    margin: 0 1.56vw;
-    display: flex;
-  }
+  color: gray;
+  text-align: right;
+  cursor: pointer;
+}
+.tabs-head {
+  border-bottom: 0;
+  padding: 1.56vw 0;
+  justify-content: left;
+  margin: 0 1.56vw;
+  display: flex;
+}
 .tabs-head .tab-link {
-    padding: 0 1.17vw;
-    text-align: center;
+  padding: 0 1.17vw;
+  text-align: center;
 }
 .tabs-head .tab-link.active a {
-    color: #f58220;
-    position: relative;
+  color: #f58220;
+  position: relative;
 }
 .tabs-head .tab-link a {
-    display: inline-block;
-    padding-bottom: 1.17vw;
-    font-size: 1.41vw;
-    text-transform: capitalize;
+  display: inline-block;
+  padding-bottom: 1.17vw;
+  font-size: 1.41vw;
+  text-transform: capitalize;
 }
 .tabs-head .tab-link a {
-    padding-bottom: 0;
-    font-size: 1.09vw;
-    line-height: 1.25vw;
-    text-transform: uppercase;
-    color: #444;
+  padding-bottom: 0;
+  font-size: 1.09vw;
+  line-height: 1.25vw;
+  text-transform: uppercase;
+  color: #444;
 }
 .tabs-head .tab-link a {
-    padding-bottom: 0;
-    font-size: 1.09vw;
-    line-height: 1.25vw;
-    text-transform: uppercase;
-    color: #444;
-    cursor: pointer;
-    font-family: zurich-bold;
+  padding-bottom: 0;
+  font-size: 1.09vw;
+  line-height: 1.25vw;
+  text-transform: uppercase;
+  color: #444;
+  cursor: pointer;
+  font-family: zurich-bold;
 }
 .tabs-head .tab-link.active a:after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -2px;
-    width: 100%;
-    height: 2px;
-    background: #004a80;
-    z-index: 2;
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 2px;
+  background: #004a80;
+  z-index: 2;
 }
 .tabs-head .tab-link.active a:after {
-    background: #f58220;
+  background: #f58220;
 }
 .typ-dash .tabs-head .tab-link.active a:before {
-    content: '';
-    position: absolute;
-    left: 50%;
-    bottom: -7px;
-    transform: translateX(-50%);
-    width: 0;
-    height: 0;
-    border-left: 7px solid transparent;
-    border-right: 7px solid transparent;
-    border-top: 7px solid #004a80;
-    z-index: 2;
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -7px;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 7px solid #004a80;
+  z-index: 2;
+}
+.tab-disabled {
+  pointer-events: none;
+  opacity: 0.5;
 }

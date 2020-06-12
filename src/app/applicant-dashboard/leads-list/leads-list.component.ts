@@ -67,6 +67,7 @@ export class LeadsListComponent implements OnInit {
   isLogoutVisible: boolean;
   // Lead ID === Application ID
   userDetails: Array<UserDetails>;
+  userFilterDetails: Array<UserDetails>;
   newLeadsDetails: Array<any>;
   newPendingApplicationDetails: Array<any>;
   newPendingPaymentDetails: Array<any>;
@@ -82,6 +83,10 @@ export class LeadsListComponent implements OnInit {
   currentPage: number;
   totalPages: string;
   totalItems: number;
+  perPageFL: number;
+  currentPageFL: number;
+  totalPagesFL: string;
+  totalItemsFL: number;
   perPageNL: number;
   currentPageNL: number;
   totalPagesNL: string;
@@ -118,6 +123,7 @@ export class LeadsListComponent implements OnInit {
     closeDropDownOnSelection: true
   };
   requestData: any;
+  isDataNotFound: boolean = false;
 
   constructor(private service: QdeHttpService, private utilService: UtilService,
     private cds: CommonDataService,
@@ -408,7 +414,7 @@ export class LeadsListComponent implements OnInit {
                 this.currentPage = res['ProcessVariables']['currentPage'];
                 let totalPages = res['ProcessVariables']['totalPages'];
                 this.totalItems = parseInt(totalPages) * this.perPage;
-                console.log("???" + this.perPage + this.currentPage + this.totalItems);
+                console.log("???" + this.perPage + "this.currentPage" + this.currentPage + "this.totalItems" + this.totalItems);
                 this.userDetails = res["ProcessVariables"].userDetails || [];
 
                 this.userDetails.forEach(el => {
@@ -481,23 +487,25 @@ export class LeadsListComponent implements OnInit {
         return "/document-uploads/" + applicationId;
       } else {
         // if adit trail not aviialble
-        return "/applicant/" + applicationId
+        return "/applicant/"+applicationId
 
-      }
+      }     
+    } else if(statuses[status] == "2") {
+      return "/applicant/"+applicationId;
     }
-    else if (statuses[status] == "5") {
-      this.isEligibilityForReviews.push({ applicationId: applicationId, isEligibilityForReview: false });
-
-      return "/document-uploads/" + applicationId;
-    }
-    else if (statuses[status] == "10") {
-      this.isEligibilityForReviews.push({ applicationId: applicationId, isEligibilityForReview: false });
-
-      return "/document-uploads/" + applicationId;
-    }
-    else if (statuses[status] == "15") {
-      this.isEligibilityForReviews.push({ applicationId: applicationId, isEligibilityForReview: false });
-
+    else if(statuses[status] == "5") {
+      this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
+          
+      return "/document-uploads/"+applicationId;
+    } 
+    else if(statuses[status] == "10") {
+      this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
+          
+      return "/document-uploads/"+applicationId;
+    } 
+    else if(statuses[status] == "15") {
+      this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
+      
       // return "/payments/online-summary/"+applicationId;
       return "/payments/offline-payments/" + applicationId;
     }
@@ -588,10 +596,17 @@ export class LeadsListComponent implements OnInit {
   getRoles(): Array<string> {
     return JSON.parse(localStorage.getItem("roles"));
   }
+
   pageChanged(value) {
     let data = value;
     this.getFilteredLeads(data);
   }
+
+  pageChangedFL(value) {
+    let data = value;
+    this.getFilterDetails(data)
+  }
+
   pageChangedNL(value) {
     let data = value;
     this.getNewLeads(data);
@@ -668,21 +683,19 @@ export class LeadsListComponent implements OnInit {
   filterDatas(data: any) {
 
     if (data.submitted === true) {
-      console.log('data555555555555555555555555555555', data.form.value.filterBranch)
+      // console.log('data555555555555555555555555555555', data.form.value)
       this.filterData = data.form.value;
-      // this.requestData = data.form.value;
-
-      // this.requestData: { qty: number } = { qty: 0 };
-
       this.requestData = {
         filterBranch: '',
         filterStatus: '',
         filterRegion: '',
         filterZone: '',
         filterState: '',
-        filterEmployee: ''
+        filterEmployee: '',
+        startDate: null,
+        endDate: null
       }
-      console.log('data555555555555555555555555555555', this.requestData)
+      // console.log('data555555555555555555555555555555', this.requestData)
 
       let tempValue = [];
 
@@ -728,24 +741,38 @@ export class LeadsListComponent implements OnInit {
       this.requestData.filterState = tempValue.toString();
       tempValue = [];
 
-      this.filterData.filterEmployee.map((item) => {
-        if (item !== null) {
-          tempValue.push(item.value)
-        }
-      });
-      this.requestData.filterEmployee = tempValue.toString();
-      // tempValue = [];
-      console.log('tempValuetempValuetempValuetempValue', this.requestData, 'this.filterData', this.filterData)
+      // this.filterData.filterEmployee.map((item) => {
+      //   if (item !== null) {
+      //     tempValue.push(item.value)
+      //   }
+      // });
+      this.requestData.filterEmployee = this.filterData.filterEmployee.toString();
+      this.requestData.startDate = this.filterData.startDate !== null ? this.getFormattedDate(this.filterData.startDate) : null;
+      this.requestData.endDate = this.filterData.endDate !== null && this.filterData.endDate !== undefined ? this.getFormattedDate(this.filterData.endDate) : null;
+    
+      // console.log('tempValuetempValuetempValuetempValue', this.requestData, 'this.filterData', this.filterData)
       this.isShowFilter = !this.isShowFilter;
       this.isFilterApply = true;
 
-      // console
       this.getFilterDetails();
-      console.log('data555555555555555555555555555555', data)
+      // console.log('data555555555555555555555555555555', data)
     } else {
       this.isFilterApply = false;
       this.filterData = null;
     }
+  }
+
+  getFormattedDate(date) {
+    console.log("in date conversion " + date);
+    let dateFormat = date;
+    let year = dateFormat.getFullYear();
+    let month = dateFormat.getMonth() + 1;
+    let month1 = month < 10 ? '0' + month.toString() : '' + month.toString();
+    let day = date.getDate();
+    day = day < 10 ? '0' + day : '' + day;
+    let formattedDate = year + '-' + month1 + '-' + day;
+    console.log("final Value " + formattedDate);
+    return formattedDate;
   }
 
   getFilterDetails(currentPage?: string) {
@@ -763,27 +790,33 @@ export class LeadsListComponent implements OnInit {
           this.fromYear.value,
           this.toDay.value,
           this.toMonth.value,
-          this.toYear.value, "",
+          this.toYear.value,
+          "",
           this.allStatus,
           currentPage,
           this.requestData.filterBranch,
           this.requestData.filterZone,
           this.requestData.filterRegion,
           this.requestData.filterState,
-          this.requestData.filterEmp,
-          this.requestData.filterAppStatus
+          this.requestData.filterEmployee,
+          this.requestData.filterStatus,
+          this.requestData.startDate,
+          this.requestData.endDate
         ).subscribe(res => {
           console.log("dectypt ", res);
 
           if (res["Error"] && res["Error"] == 0) {
-            this.perPage = res['ProcessVariables']['perPage'];
-            this.currentPage = res['ProcessVariables']['currentPage'];
+            this.perPageFL = res['ProcessVariables']['perPage'];
+            this.currentPageFL = res['ProcessVariables']['currentPage'];
             let totalPages = res['ProcessVariables']['totalPages'];
-            this.totalItems = parseInt(totalPages) * this.perPage;
-            console.log("???" + this.perPage + this.currentPage + this.totalItems);
-            this.userDetails = res["ProcessVariables"].userDetails || [];
-
-            this.userDetails.forEach(el => {
+            this.totalItemsFL = parseInt(totalPages) * this.perPage;
+            console.log("???" + "this.perPage" + this.perPageFL + "this.currentPage" + this.currentPageFL + "this.totalItems" + this.totalItemsFL);
+            this.userFilterDetails = res["ProcessVariables"].userDetails || [];
+            // debugger;
+            if(this.userFilterDetails.length === 0){
+              this.isDataNotFound = true
+            }
+            this.userFilterDetails.forEach(el => {
               el.url = this.getUrl(el["status"], el["leadId"], el["applicantId"], this.getRoles(), el);
               if (el["auditTrialTabPage"] != null && el["auditTrialPageNumber"] != null) {
                 el["queryParams"] = {

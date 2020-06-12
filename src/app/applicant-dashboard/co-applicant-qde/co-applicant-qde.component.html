@@ -157,18 +157,25 @@
                                             <form class="bs-form" *ngIf="!isTabDisabled" autocomplete="off" id="pan-form" #panNumberForm="ngForm" (ngSubmit)="submitPanNumber(panNumberForm, panSlider2, panSlider1)">
                                                 <div class="form-wrap">
                                                     <div class="form-group last typ-optional" style="margin-bottom: 40px; ">
-                                                        <input [readonly]="isReadOnly" type="text" class="form-control" autocomplete="off" [(ngModel)]="qde.application.applicants[coApplicantIndex].pan.panNumber" id="pan-inpt" [maxlength]="minMaxValues['PAN']?.maxLength" [minlength]="minMaxValues['PAN']?.minValue"
-                                                            pattern="{{regexPattern.panInd}}" (ngModelChange)="qde.application.applicants[coApplicantIndex].pan.panNumber = $event.toUpperCase()" name="pan" (keyup)="keyUpPanNumber($event)" #panNumber="ngModel"
+                                                        <input [readonly]="isReadOnly" type="text" class="form-control" 
+                                                            autocomplete="off" [(ngModel)]="qde.application.applicants[coApplicantIndex].pan.panNumber" 
+                                                            id="pan-inpt" [maxlength]="minMaxValues['PAN']?.maxLength" 
+                                                            [minlength]="minMaxValues['PAN']?.minValue"
+                                                            pattern="{{regexPattern.panInd}}" 
+                                                            (ngModelChange)="qde.application.applicants[coApplicantIndex].pan.panNumber = $event.toUpperCase()" 
+                                                            name="pan" (keyup)="keyUpPanNumber($event)" 
+                                                            #panNumber="ngModel"
                                                             fieldFill spellcheck="false" />
                                                         <label for="pan-inpt" tabindex="1">Enter PAN</label>
                                                         <span class="optional">optional</span>
                                                         <div *ngIf="panNumber.touched && panNumber.invalid && panErrorCount < 3" class="invalid-feedback">
                                                             <!-- <div *ngIf="panNumber.errors?.required">{{errors.panNumber.required}}</div> -->
                                                             <div *ngIf="panNumber.errors?.pattern ? true : false">{{errors.pan.invalid}}</div>
-                                                            <div *ngIf="panNumber.errors?.minlength || panNumber.errors?.maxlength">{{errors.pan.length}}</div>
+                                                            <!-- <div *ngIf="panNumber.errors?.minlength || panNumber.errors?.maxlength">{{errors.pan.length }} </div> -->
                                                         </div>
                                                         <div *ngIf="panErrorCount >= 3" class="invalid-feedback">{{errors.pan.after3Attemps}}</div>
                                                         <div class="redalert" *ngIf="panNumber.touched && panNumber.valid && RegExp(regexPattern.panInd).test(panNumber.value) && isValidPan == false">Invalid PAN</div>
+                                                        <div class="redalert" *ngIf="isExistPan">{{errors.pan.isExistPan}}</div>
                                                     </div>
                                                     <div class="form-group">
 
@@ -192,7 +199,9 @@
                                                 </div>
 
                                                 <div class="btn-wrap">
-                                                    <button type="submit" class="btn btn-primary" [ngClass]="{'disabled': (!panNumberForm.valid || selectedDocType?.value == 0)}" [disabled]="!panNumberForm.valid || selectedDocType?.value == '0'">Next
+                                                    <button type="submit" class="btn btn-primary" 
+                                                    [ngClass]="{'disabled': (!panNumberForm.valid || selectedDocType?.value == 0 || isExistPan)}"
+                                                     [disabled]="!panNumberForm.valid || selectedDocType?.value == '0' || isExistPan">Next
                                                 </button>
                                                 </div>
                                             </form>
@@ -1840,18 +1849,26 @@
                                             <form class="bs-form" *ngIf="!isTabDisabled" autocomplete="off" #panNumberForm2="ngForm" (ngSubmit)="submitOrgPanNumber(panNumberForm2, panSlider4, panSlider3)">
                                                 <div class="form-wrap" style="overflow: hidden;">
                                                     <div class="form-group last typ-optional">
-                                                        <input [readonly]="isReadOnly" type="text" class="form-control" autocomplete="off" [(ngModel)]="qde.application.applicants[coApplicantIndex].pan.panNumber" id="pan-inpt2" tabindex="1" [maxlength]="minMaxValues['PAN']?.maxLength" [minlength]="minMaxValues['PAN']?.minValue"
-                                                            pattern="{{regexPattern.panNonInd}}" name="pan" (ngModelChange)="qde.application.applicants[coApplicantIndex].pan.panNumber = $event.toUpperCase()" #panNumber2="ngModel" fieldFill (keyup)="keyUpPanNumber($event)"
+                                                        <input [readonly]="isReadOnly" type="text" class="form-control"
+                                                            autocomplete="off" [(ngModel)]="qde.application.applicants[coApplicantIndex].pan.panNumber" 
+                                                            id="pan-inpt2" tabindex="1" [maxlength]="minMaxValues['PAN']?.maxLength" 
+                                                            [minlength]="minMaxValues['PAN']?.minValue"
+                                                            pattern="{{regexPattern.panNonInd}}" 
+                                                            name="pan" 
+                                                            (ngModelChange)="qde.application.applicants[coApplicantIndex].pan.panNumber = $event.toUpperCase()" 
+                                                            #panNumber2="ngModel" fieldFill 
+                                                            (keyup)="keyUpPanNumber($event)"
                                                             spellcheck="false" />
                                                         <label for="pan-inpt2">Enter PAN</label>
                                                         <span class="optional">optional</span>
                                                         <div *ngIf="panNumber2.touched && panNumber2.invalid && panErrorCount < 3" class="invalid-feedback">
                                                             <!-- <div *ngIf="panNumber2.errors?.required">{{errors.pan.required}}</div> -->
                                                             <div *ngIf="panNumber2.errors?.pattern ? true : false">{{errors.pan.invalidNonInd}}</div>
-                                                            <div *ngIf="panNumber2.errors?.minlength || panNumber2.errors?.maxlength">{{errors.pan.length}}</div>
+                                                            <!-- <div *ngIf="panNumber2.errors?.minlength || panNumber2.errors?.maxlength">{{errors.pan.length}}</div> -->
                                                         </div>
                                                         <div *ngIf="panErrorCount >= 3" class="invalid-feedback">{{errors.pan.after3Attemps}}</div>
                                                         <div class="redalert" *ngIf="panNumber2.touched && panNumber2.valid && RegExp(regexPattern.panNonInd).test(panNumber2.value) && isValidPan == false">Invalid PAN</div>
+                                                        <div class="redalert" *ngIf="isExistPan">{{errors.pan.isExistPan}}</div>
                                                     </div>
                                                     <!-- <div class="form-group">
                                                 <span class="control-title">Document Type</span>
@@ -1890,7 +1907,9 @@
                                               </div> -->
                                                 </div>
                                                 <div class="btn-wrap">
-                                                    <button type="submit" class="btn btn-primary" [ngClass]="{'disabled': (!panNumberForm2.valid)}" [disabled]="!panNumberForm2.valid">Next
+                                                    <button type="submit" class="btn btn-primary" 
+                                                    [ngClass]="{'disabled': (!panNumberForm2.valid || isExistPan)}"
+                                                     [disabled]="!panNumberForm2.valid || isExistPan">Next
                                                 </button>
                                                 </div>
 
