@@ -12,7 +12,9 @@ import { Component, Input, AfterViewInit, ChangeDetectorRef, AfterContentChecked
 
 export class TabComponent  implements  AfterViewInit{
     @Input('tabTitle') title: string;
-    @Input() active;
+    @Input ('isFilter') showFilter: boolean;
+    @Input() active; 
+
     constructor(private cdr:  ChangeDetectorRef){} 
 
     // onChange(): void {

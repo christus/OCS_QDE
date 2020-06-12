@@ -1,4 +1,4 @@
-.btn-wrap .application{
+.btn-wrap .application {
   color: white;
   background: #f58220;
   padding: 5px;
@@ -8,9 +8,9 @@
   right: 50px;
 }
 .cur-pointer {
-  cursor: pointer
+  cursor: pointer;
 }
-table{
+table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
   width: 100%;
@@ -19,10 +19,11 @@ table{
 /*tr:nth-child(even) {
   background-color: #dddddd;
 }*/
-th, td {
+th,
+td {
   text-align: left;
 }
-.leadList table{
+.leadList table {
   background: #fafafa;
   line-height: 24px;
   margin: 10px 1%;
@@ -58,11 +59,11 @@ th, td {
   width: 100%;
 }
 .leadLogin td {
-    width: 33.33%;
-    display: inline-block;
-    text-align: right;
+  width: 33.33%;
+  display: inline-block;
+  text-align: right;
 }
-#searchLead{
+#searchLead {
   height: 60px;
   margin: 0 1%;
   width: 98%;
@@ -83,18 +84,19 @@ th, td {
 } */
 
 .leadFilter td {
-    width: 20%;
-    display: inline-block;
-    text-align: right;
+  width: 20%;
+  display: inline-block;
+  text-align: right;
 }
-a, a:visited {
+a,
+a:visited {
   color: #000;
 }
 .btn.btn-default {
   background: #004a80;
   border-radius: 3.91vw;
   color: #fff;
-  font-size: .94vw;
+  font-size: 0.94vw;
   line-height: 2.73vw;
   text-transform: uppercase;
   padding: 0 1.56vw;
@@ -108,11 +110,11 @@ a, a:visited {
   position: fixed;
 }
 .leadSearch {
-    top: 4.69vw;
-    position: fixed;
-    width: 98%;
-    margin-left: 1%;
-    margin-top: 2%;
+  top: 4.69vw;
+  position: fixed;
+  width: 98%;
+  margin-left: 1%;
+  margin-top: 2%;
 }
 .leadSearch td {
   width: 100%;
@@ -128,7 +130,6 @@ a, a:visited {
 }
 
 .fromToDateLbl {
-  
 }
 .leadLogin .bs-form .form-group {
   width: auto;
@@ -146,25 +147,24 @@ a, a:visited {
   overflow-y: scroll;
 }
 
-
 .bs-lead-card {
-  box-shadow: 0 0 27px 0 rgba(68,68,68,.13);
+  box-shadow: 0 0 27px 0 rgba(68, 68, 68, 0.13);
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1.41vw 1.17vw;
-  margin: .78vw 1.56vw 0
+  margin: 0.78vw 1.56vw 0;
 }
 
-.bs-lead-card>li {
-  width: 22.5%
+.bs-lead-card > li {
+  width: 22.5%;
 }
 
-.bs-lead-card>li:nth-child(5) {
-  width: 8%
+.bs-lead-card > li:nth-child(5) {
+  width: 8%;
 }
 
-.bs-lead-card>li:last-child {
+.bs-lead-card > li:last-child {
   /* width: 2% */
 }
 
@@ -175,11 +175,11 @@ a, a:visited {
   color: #fff;
   background: #004a80;
   border-radius: 50%;
-  font-size: .78vw;
+  font-size: 0.78vw;
   line-height: 1.95vw;
   display: inline-block;
   text-align: center;
-  margin-right: 8px
+  margin-right: 8px;
 }
 
 .bs-lead-card .user-name {
@@ -187,47 +187,44 @@ a, a:visited {
   line-height: 1.95vw;
   font-family: zurich-bold;
   color: #444;
-  text-transform: capitalize
+  text-transform: capitalize;
 }
 
 .bs-lead-card li .name {
-  font-size: .94vw;
+  font-size: 0.94vw;
   line-height: 1.41vw;
   color: #999;
   display: block;
-  text-transform: capitalize
+  text-transform: capitalize;
 }
 
 .bs-lead-card li .value {
-  font-size: .94vw;
+  font-size: 0.94vw;
   line-height: 1.41vw;
   color: #444;
-  display: block
+  display: block;
 }
 
 .bs-lead-card li .value .bs-progress-bar {
-  margin-left: .78vw
+  margin-left: 0.78vw;
 }
 
 .bs-lead-card .lead-action {
   color: #f58220;
   font-family: zurich-bold;
-  font-size: .94vw;
+  font-size: 0.94vw;
   line-height: 1.95vw;
-  text-transform: uppercase
+  text-transform: uppercase;
 }
 
 .bs-lead-card .lead-details {
   color: #444;
-  font-size: 1.25vw
+  font-size: 1.25vw;
 }
-
-
-
 
 .typ-dash .tabs-head {
   justify-content: left;
-  border-bottom: 1px solid rgba(0,74,128,.2);
+  border-bottom: 1px solid rgba(0, 74, 128, 0.2);
   margin: 0 1.56vw;
   padding: 0 3.91vw 0 0;
 }
@@ -249,59 +246,56 @@ a, a:visited {
   color: #f58220;
   text-transform: uppercase;
   border: 1px solid #f58220;
-  padding: 0 .78vw;
+  padding: 0 0.78vw;
   border-radius: 25px;
   float: right;
   margin: 1.2vh;
 }
 
 .add-new-login {
-  
 }
-
 
 .typ-connector {
   padding: 0 0 0 5.47vw;
 }
 .initials {
-  display: none!important;
+  display: none !important;
 }
 
 .pagination {
   display: block;
   clear: both;
-  text-align: center; 
+  text-align: center;
   margin-top: 1rem;
   font-size: 1.09vw;
   line-height: 1.95vw;
   font-family: zurich-bold;
-  color: #444!important;
+  color: #444 !important;
 }
 
-.errorMessage{
+.errorMessage {
   text-align: left;
   color: #f58220;
-  font-size: 1.5vW;
+  font-size: 1.5vw;
   padding-bottom: 1.5vw;
 }
 
-.control-title{
+.control-title {
   font-size: 0.85vw;
 }
 
-.modal-body .form-group{
+.modal-body .form-group {
   border: none;
   border-bottom: 0.5px solid darkgrey;
   border-radius: 3px;
 }
 
-.modal-body .btn-wrap{
+.modal-body .btn-wrap {
   padding-top: 2vw;
 }
-.form-control{
+.form-control {
   font-size: 3rem;
 }
-
 
 .icon-close:before {
   margin-left: -1vw;
@@ -310,20 +304,41 @@ a, a:visited {
   /* border: black; */
   border-radius: 1.91vw;
   border-color: #f58220;
-  padding: -0.vw;
+  padding: -0vw;
   color: #f58220;
   font-size: 1vw;
-  padding: .5vw;
+  padding: 0.5vw;
   margin-right: 6vw;
   cursor: pointer;
 }
-.lead-detals-lable{
-color: #f58220;
-
+.lead-detals-lable {
+  color: #f58220;
 }
-.lead-lable{
+.lead-lable {
   font-size: 1.5vw;
 }
-.modal-body-content{
-padding-top: 1vw;
+.modal-body-content {
+  padding-top: 1vw;
+}
+
+/* .btn-fill-orange {
+  background: #f58220;
+  color: #fff;
+} */
+
+.icon-filter {
+  position: relative;
+  top: 0.5vw;
+}
+
+.data-not-found-block {
+  padding: 3vw;
+  text-align: center;
+  display: block;
+  font-size: 51px;
+  font: inherit;
+  margin: 3vw 1.56vw;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  font-size: 20px;
 }

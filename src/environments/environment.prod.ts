@@ -476,13 +476,13 @@ export const environment = {
       workflowId: "65fba710ca6311e990770242ac110002",
       processId: "3d486908525711ea9f5b0242ac110002"
     },
-    deactivateBranch:{
+    deactivateBranch: {
       workflowId: '900c5bdcb82811e98dac0242ac110002',
-      processId : '895bcb406eaa11eab3280242ac110002'
+      processId: '895bcb406eaa11eab3280242ac110002'
     },
-    deactivateUser:{
+    deactivateUser: {
       workflowId: '30d9085ead3311e9a3ae0242ac110002',
-      processId : 'c16073406eb111ea81c90242ac110002'
+      processId: 'c16073406eb111ea81c90242ac110002'
     },
     ocsNumberAutoFill: {
       workflowId: '1b7e6300713211eaa8f80242ac110002',
@@ -515,6 +515,16 @@ export const environment = {
     getSASMId: {
       workflowId: "9167380095a211eab85a0242ac110002",
       processId: "9197ef4a95a211ea95c00242ac110002"
+    },
+    userEmployee: {
+      processId: "12b2c0a4928a11e982270242ac110002",
+      projectId: "ff8e364e6fce11e98754782bcb8f3845",
+      processId_1: "9197ef4a95a211ea95c00242ac110002",
+    },
+    userBranchByEmp: {
+      processId: "676d6082a72811ea81760242ac110002",
+      workflowId: "4504e6349f1011ea93f40242ac110002",
+      projectId: "ff8e364e6fce11e98754782bcb8f3845"
     }
   },
   iciciDomainExt: "@icicibankltd.com",
@@ -523,12 +533,12 @@ export const environment = {
   ocsHost: "/ocs",
   // host: "http://192.168.1.108/appiyo",
   //host: "/ProcessStore",
-  // host:  "/appiyo",
+  host: "/appiyo",
   pdfLocation: "/d/download/pdf?",
   csvLocation: "/d/download/csv?",
   isMobile: false,
   mobileExtenstion: "@icicibankltd.com",
-  host: "https://ihfcmobileuat.icicihfc.com/appiyo", // for uat
+  // host: "https://ihfcmobileuat.icicihfc.com/appiyo", // for uat
   // host: "https://onlineapplication.icicihfc.com/appiyo", // for production
   aesPublicKey:
     "MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJ+GJdSSEeaNFBLqyfM3DIOgQgWCwJ0INfeZZV7ITsLeuA7Yd02rrkYGIix1IWvoebWVmzhncUepYxHwK1ARCdUCAwEAAQ==",

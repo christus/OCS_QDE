@@ -167,6 +167,7 @@ import { ArchiveOcsNumberComponent } from './admin/archive-retrieve/archive/arch
 import { ArchiveFileUploadComponent } from './admin/archive-retrieve/archive/archive-file-upload/archive-file-upload.component';
 import { RetrieveOcsNumberComponent } from './admin/archive-retrieve/retrieve/retrieve-ocs-number/retrieve-ocs-number.component';
 import { RetrieveFileUploadComponent } from './admin/archive-retrieve/retrieve/retrieve-file-upload/retrieve-file-upload.component';
+import { DashboardFilterComponent } from './applicant-dashboard/dashboard-filter/dashboard-filter.component';
 
 
 
@@ -750,7 +751,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     AddtionalServiceDashboardComponent,
     CkycFormComponent,
     DocumentCheckListComponent,    
-    AdditionalPmayClssFormComponent, DeclarationFormComponent, TearFormComponent, RegistrationFormComponent, ArchiveRetrieveComponent, ArchiveComponent, RetrieveComponent, ArchiveOcsNumberComponent, ArchiveFileUploadComponent, RetrieveOcsNumberComponent, RetrieveFileUploadComponent,
+    AdditionalPmayClssFormComponent, DeclarationFormComponent, TearFormComponent, RegistrationFormComponent, ArchiveRetrieveComponent, ArchiveComponent, RetrieveComponent, ArchiveOcsNumberComponent, ArchiveFileUploadComponent, RetrieveOcsNumberComponent, RetrieveFileUploadComponent, DashboardFilterComponent,
   ],
   imports: [
     BrowserModule,
