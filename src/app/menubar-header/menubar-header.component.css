@@ -27,13 +27,13 @@
 .sm-sa-list {
     box-shadow: 0 0 48.06px 5.94px rgba(0, 0, 0, .16);
     max-height: 10vw;
-    font-size: 1vw;
+    font-size: 1.5vw;
     overflow-y: scroll;
     overflow-x: hidden;
     position: absolute;
     background-color: #fff;
     z-index: 10;
-    width: 50%;
+    width: 75%;
 }
 
 .sm-sa-list li {
@@ -50,4 +50,8 @@
 
 .text-upper-case {
     text-transform: uppercase;
+}
+
+.source-id-pointer{
+    cursor: pointer;
 }

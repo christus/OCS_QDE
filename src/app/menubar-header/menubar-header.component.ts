@@ -325,6 +325,15 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
   }
 
   searchSMSAId(event) {
+
+    const enterValue = event.target.value;
+    if(enterValue.length == 0) {
+      this.allSMSAData = [];
+      return;
+    }else {
+      this.allSMSAData = this.tempSMSAData;
+    }
+
     this.isSelectsaSmId = false;
     let data = {
       userId: localStorage.getItem('userId')

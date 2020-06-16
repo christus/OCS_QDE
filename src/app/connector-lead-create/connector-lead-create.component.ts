@@ -288,6 +288,14 @@ export class ConnectorLeadCreateComponent implements OnInit {
 
   searchSMSAId(event) {
 
+    const enterValue = event.target.value;
+    if(enterValue.length == 0) {
+      this.allSMSAData = [];
+      return;
+    }else {
+      this.allSMSAData = this.tempSMSAData;
+    }
+
 
     this.selectSASMId = false;
     let data = {
