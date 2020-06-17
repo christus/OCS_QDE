@@ -72,7 +72,7 @@
     <div class="overlay" [ngClass]="{'active': isSourceModal}"></div>
     <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isSourceModal}">
 
-        <a class="modal-close" (click)="isSourceModal = false"><span class="icon icon-close"></span></a>
+        <a class="modal-close" (click)="isSourceModal = false;valueSMSA = ''"><span class="icon icon-close"></span></a>
       <div class="modal-body">
 
         <form class="bs-form" autocomplete="off">
