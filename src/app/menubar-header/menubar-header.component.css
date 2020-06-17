@@ -62,7 +62,7 @@
     border: 0;
     border-bottom: 1px solid #bbb;
     border-radius: 0;
-    width: 100%;
+    width: 28vw;
     font-size: 2.28vw;
     line-height: 4.69vw;
     color: #999;
@@ -70,32 +70,4 @@
     padding: 0;
 }
 
-/* .bs-form .form-group label {
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    transform: translateY(0);
-    color: rgba(153, 153, 153, .4);
-    font-family: zurich-light;
-    font-size: 2.28vw;
-    line-height: 4.69vw;
-    transition: transform .4s ease-in;
-    transform-origin: left;
-    width: 100%;
-    right: 0;
-    display: block;
-} */
 
-.bs-form[_ngcontent-c3] .form-group[_ngcontent-c3] .form-control[_ngcontent-c3] {
-    background: 0 0;
-    border: 0;
-    border-bottom: 1px solid #bbb;
-    border-radius: 0;
-    width: 80%;
-    font-size: 2.28vw;
-    line-height: 4.69vw;
-    color: #999;
-    font-family: zurich-light;
-    padding: 0;
-}
