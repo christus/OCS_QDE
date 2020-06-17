@@ -77,30 +77,31 @@
 
         <form class="bs-form" autocomplete="off">
         <div class="form-group">
-            <input 
-            type="text"
-            autocomplete="off"
-            class="form-control"
-            id="smsaId" 
-            name="smsaData"
-            #searchSMSA ="ngModel"
-            [(ngModel)]="valueSMSA"
-           
-            (input)="searchSMSAId($event)"
-            fieldFill
-            required >
+            <div class="inputBox form-field-el">
+                <input 
+                type="text"
+                autocomplete="off"
+                class="form-control"
+                id="smsaId" 
+                name="smsaData"
+                #searchSMSA ="ngModel"
+                [(ngModel)]="valueSMSA"           
+                (input)="searchSMSAId($event)"
+                fieldFill
+                required >
+                <label class="inputText" for="smsaId" >SM/SA - ID</label>
+                <!-- <span class="optional" style="font-size: 1vw">Type to search</span> -->
+                <div *ngIf="(searchSMSA.touched || searchSMSA.dirty) && searchSMSA.invalid" class="invalid-feedback">
+                <div *ngIf="searchSMSA.errors?.pattern">Invalid SM/SA -ID</div>
+                </div>
 
-            <label for="smsaId" >SM/SA -ID</label>
-            <!-- <span class="optional" style="font-size: 1vw">Type to search</span> -->
-            <div *ngIf="(searchSMSA.touched || searchSMSA.dirty) && searchSMSA.invalid" class="invalid-feedback">
-              <div *ngIf="searchSMSA.errors?.pattern">Invalid SM/SA -ID</div>
+                <ul class="sm-sa-list">
+                <li *ngFor="let c of allSMSAData;let i=index;" 
+                    (click)="selectSMSA(c)">
+                    {{c.key}}
+                </li>
+                </ul>
             </div>
-
-            <ul class="sm-sa-list">
-              <li *ngFor="let c of allSMSAData;let i=index;" (click)="selectSMSA(c)">
-                {{c.key}}
-              </li>
-            </ul>
           </div>
 
           </form>

@@ -88,11 +88,17 @@
 
         <div class="inputBox form-field-el reportingToBlock" #selectBox>
             <label for="reportingTo" class="">Reporting to: *</label>
-            <input type="text" id="reportingTo" [(ngModel)]="reportingToStr" (input)="filterLeads($event)" class="form-control" formControlName="reportingTo" fieldFill/>
-            <input type="hidden" class="form-control" [(ngModel)]="reportingToInp" hidden formControlName="reportingToInp" #reportingTo/>
+            <input type="text" id="reportingTo" [(ngModel)]="reportingToStr" 
+                (input)="filterLeads($event)" class="form-control" 
+                formControlName="reportingTo" fieldFill/>
+            <input type="hidden" class="form-control" 
+                [(ngModel)]="reportingToInp" hidden formControlName="reportingToInp" 
+                #reportingTo/>
             <div class="reporting_to hide">
                 <ul>
-                    <li #reportingTo class="item" id="{{i.userId}}" (click)="selectedReportedTo(in, i)" *ngFor="let i of filteredItems;let in=index;">
+                    <li #reportingTo class="item" id="{{i.userId}}" 
+                        (click)="selectedReportedTo(in, i)" 
+                        *ngFor="let i of filteredItems;let in=index;">
                         {{i.userName}}
                     </li>
                 </ul>
