@@ -108,6 +108,7 @@ export class ConnectorLeadCreateComponent implements OnInit {
   };
   branchList:Array<Item>;
   branchId: Item;
+  enableSASMId: boolean;
   public defaultItem = environment.defaultItem
   
   constructor(private route: ActivatedRoute,
@@ -133,6 +134,19 @@ export class ConnectorLeadCreateComponent implements OnInit {
 
     this.allSMSAData = [];
     this.tempSMSAData = [];
+
+            const roles = localStorage.getItem('roles');
+            const checkRoleName = (roles)?roles.toLocaleLowerCase():'';
+
+            if(checkRoleName.includes('connector') || checkRoleName.includes('rp')) {
+              this.enableSASMId = true;
+            } else {
+              this.saSmId = ''
+              this.enableSASMId = false;
+            }
+
+            
+        
 
     this.commonDataService.branchList$.subscribe( value =>
       this.branchList = value);

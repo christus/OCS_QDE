@@ -77,20 +77,15 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
                 this.sourceId = '';
                 this.tempSMSAData = [];
 
-        let data = {
-          userId: localStorage.getItem('userId')
-        }
-
-        this.qdehttp.getSASMID(data).subscribe(res => {
-
-          console.log('Response',res)
-          // if(res['ProcessVariables']['status'] == true) {
-    
-          // }
-          
-          this.tempSMSAData = res['ProcessVariables']['sa_sm_id'];
-    
-          })
+        // let data = {
+        //   userId: localStorage.getItem('userId'),
+        // }
+        // this.qdehttp.getSASMID(data).subscribe(res => {
+        //   console.log('Response',res)
+        //   // if(res['ProcessVariables']['status'] == true) {
+        //   // }
+        //   this.tempSMSAData = res['ProcessVariables']['sa_sm_id'];
+        //   })
 
 
     this.route.params.subscribe(val => {
@@ -150,8 +145,9 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
 
       // console.log("Apllication status", this.qde);
 
-      if(this.qde.application.status == 2) {
-        this.enableSourceId = true;
+      // if(this.qde.application.status == 2) {
+        // this.enableSourceId = true;
+        this.tempSMSAData.push({key: this.qde.application.brokerName,value: this.qde.application.brokerId})
         const saSMId = this.qde.application.brokerId;
 
         const filterData = this.tempSMSAData.filter((sasmId)=> {
@@ -163,9 +159,9 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
 
 
         this.sourceId = (filterData.length>0)?(filterData[0].key):''
-      } else {
-        this.enableSourceId = false;
-      }
+      // } else {
+      //   this.enableSourceId = false;
+      // }
 
       
 
@@ -330,33 +326,33 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
     if(enterValue.length == 0) {
       this.allSMSAData = [];
       return;
-    }else {
-      this.allSMSAData = this.tempSMSAData;
     }
+
+    const qdeBrokerArr = [{
+      key: `${this.qde.application.brokerName}-${this.qde.application.brokerId}`,
+      value: this.qde.application.brokerId
+    }]
+    this.allSMSAData  = []
 
     this.isSelectsaSmId = false;
+
     let data = {
-      userId: localStorage.getItem('userId')
+      userName: enterValue
     }
-
-    if(this.tempSMSAData.length > 0) {
-      this.allSMSAData = this.tempSMSAData;
-      return;
-    }
-
-    this.qdehttp.getSASMID(data).subscribe(res => {
+  
+    this.qdehttp.getConnectorRP(data).subscribe(res => {
 
       console.log('Response',res)
-      // if(res['ProcessVariables']['status'] == true) {
-
-      // }
-      this.allSMSAData = res['ProcessVariables']['sa_sm_id'];
-      this.tempSMSAData = res['ProcessVariables']['sa_sm_id'];
-
+     
+      const resultData = res['ProcessVariables']['brokerList'];
+      this.allSMSAData = resultData;
+     
       })
-   
  
    }
+
+
+   
    selectSMSA(val) {
  
      this.valueSMSA = val.key;
@@ -368,6 +364,7 @@ export class MenubarHeaderComponent implements OnInit, OnDestroy {
    onSourceSubmit() {
      this.isSourceModal = false;
      this.sourceId = this.valueSMSA;
+     this.qde.application.brokerName = this.valueSMSA;
      this.qde.application.brokerId = this.saSmId;
 
      if(this.qde.application.applicants.length > 0) {

@@ -13,7 +13,7 @@
                 </h1>
             </div>
             <div class="right-panel">
-                <h3 class="for-user source-id-pointer" *ngIf="enableSourceId" (click)="sourceOverlay()"><span class="user-name">SOURCE ID</span>
+                <h3 class="for-user source-id-pointer" (click)="sourceOverlay()"><span class="user-name">Source Id</span>
                 <br>
                 <h5 class="for-user header_reference_no" ><span class="user-name">{{sourceId}}</span></h5>
                 </h3>
@@ -72,7 +72,7 @@
     <div class="overlay" [ngClass]="{'active': isSourceModal}"></div>
     <div class="bs-modal" id="biomatric-modal" [ngClass]="{'active': isSourceModal}">
 
-        <a class="modal-close" (click)="isSourceModal = false;valueSMSA = ''"><span class="icon icon-close"></span></a>
+        <a class="modal-close" (click)="isSourceModal = false;valueSMSA = '';allSMSAData = []"><span class="icon icon-close"></span></a>
       <div class="modal-body">
 
         <form class="bs-form" autocomplete="off">

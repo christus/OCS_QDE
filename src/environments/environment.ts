@@ -525,6 +525,10 @@ export const environment = {
       processId: "676d6082a72811ea81760242ac110002",
       workflowId: "4504e6349f1011ea93f40242ac110002",
       projectId: "ff8e364e6fce11e98754782bcb8f3845"
+    },
+    getConnectorRP: {
+      workflowId:"958f1efeb15711eab7620242ac110002",
+      processId: "95e0909ab15711eab36d0242ac110002"
     }
 
   },
