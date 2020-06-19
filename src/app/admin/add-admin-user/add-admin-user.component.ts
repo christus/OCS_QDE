@@ -347,6 +347,9 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
   }
 
   filterLeads(event) {
+
+
+
     this._timeout = null;
     
     this.selectBoxRef.nativeElement.querySelector('.reporting_to').classList.remove('hide');
@@ -367,7 +370,16 @@ export class AddAdminUserComponent implements OnInit, AfterViewInit {
 	//}
     //}, 1000);
     if(event.target.value!=""){
-		let input = { "userName": event.target.value.toLowerCase() };
+    let input;
+    
+    if(this.updatebtn) {
+      input = {
+        userId:this.userId,
+        userName:event.target.value.toLowerCase()
+      }
+    }else {
+      input = { "userName": event.target.value.toLowerCase() }
+    }
        this.qdeHttp.adminReportingTo(input).subscribe((response) => {
          console.log("Reporting", response);
          if(response['ProcessVariables']['status'] && response['ProcessVariables']['userList']!=null){
