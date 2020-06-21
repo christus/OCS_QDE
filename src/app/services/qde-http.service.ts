@@ -3945,9 +3945,9 @@ export class QdeHttpService {
 
 
   getUserEmpDetails(data) {
-    const processId = environment.api.userEmployee.processId_1;
+    const processId = environment.api.userEmployee.processId;
     const projectId = environment.api.userEmployee.projectId;
-    const workflowId = environment.api.userEmployee.processId_1;
+    const workflowId = environment.api.userEmployee.processId;
 
 
     const requestEntity: RequestEntity = {

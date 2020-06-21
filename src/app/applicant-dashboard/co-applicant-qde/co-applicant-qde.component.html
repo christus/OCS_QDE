@@ -1997,6 +1997,52 @@
                                                             <div *ngIf="orgName.errors?.pattern">{{errors.organizationDetails.orgName.invalid}}</div>
                                                         </div>
                                                     </div>
+                                                    <div class="form-group">
+                                                        <input [readonly]="isReadOnly" type="text" autocomplete="off" class="form-control" id="cp-name" [maxlength]="minMaxValues['Name']?.maxLength" [minlength]="minMaxValues['Name']?.minValue" required [(ngModel)]="qde.application.applicants[coApplicantIndex].organizationDetails.contactPersonName"
+                                                            #contactPersonName="ngModel" tabindex="6" name="contactPersonName" fieldFill spellcheck="false" pattern="{{regexPattern.name}}" />
+                                                        <label for="cp-name">Contact Person Name</label>
+
+                                                        <!-- <div *ngIf="(qde.application.applicants[coApplicantIndex].organizationDetails.contactName)?.length == 50" class="invalid-feedback">Maximum Character Exceeds</div> -->
+
+                                                        <div *ngIf="contactPersonName.touched && contactPersonName.invalid" class="invalid-feedback">
+                                                            <!-- <div *ngIf="contactPersonName.errors?.required">{{errors.organizationDetails.contactName.required}}</div> -->
+                                                            <div *ngIf="contactPersonName.errors?.pattern">{{errors.organizationDetails.contactName.invalid}}</div>
+                                                        </div>
+                                                    </div>
+
+
+
+                                                    <div class="form-group typ-mob">
+                                                        <input [readonly]="isReadOnly" type="tel" class="form-control" id="cp-mob-no" [maxlength]="minMaxValues['Mobile_Number']?.maxLength" [minlength]="minMaxValues['Mobile_Number']?.minValue"
+                                                            im-insert="true" tabindex="6" [(ngModel)]="qde.application.applicants[coApplicantIndex].organizationDetails.contactPersonMobileNumber" autocomplete="off" name="cpMobileNumber" #cpMobileNumber="ngModel" pattern="{{regexPattern.mobileNumber}}"
+                                                            fieldFill spellcheck="false" required />
+
+                                                        <label for="cp-mob-no">Contact Person Mobile No</label>
+                                                        <span class="optional">10 digit</span>
+
+                                                        <div class="redalert" *ngIf="RegExp(regexPattern.sameDigit).test(cpMobileNumber.value)">{{errors.contactDetails.prefferedMobile.wrong}}</div>
+
+                                                        <div *ngIf="(cpMobileNumber.touched || cpMobileNumber.dirty) && cpMobileNumber.invalid" class="invalid-feedback">
+                                                            <!-- <div *ngIf="cpMobileNumber.errors?.required">{{errors.organizationDetails.contactMobile.required}}</div> -->
+                                                            <div *ngIf="cpMobileNumber.errors?.pattern">{{errors.organizationDetails.contactMobile.invalid}}</div>
+                                                            <div *ngIf="cpMobileNumber.errors?.minlength">{{errors.organizationDetails.contactMobile.minlength}}{{" "+minMaxValues['Mobile_Number']?.minValue+" digits"}}</div>
+                                                        </div>
+                                                    </div>
+
+
+
+                                                    <div class="form-group">
+                                                        <input [readonly]="isReadOnly" type="email" class="form-control" id="contactPerson-email" required autocomplete="off" [(ngModel)]="qde.application.applicants[coApplicantIndex].organizationDetails.contactPersonEmailId" pattern="{{regexPattern.email}}" maxlength="100"
+                                                            #contactPersonEmail="ngModel" tabindex="8" fieldFill spellcheck="false" (ngModelChange)="onOfficialCorsEmailChange($event, contactPersonEmail)" name="contactPersonEmail" />
+                                                        <label for="contactPerson-email">Contact Person Email ID</label>
+
+            
+
+                                                        <div *ngIf="(contactPersonEmail.untouched || contactPersonEmail.touched) && contactPersonEmail.invalid" class="invalid-feedback">
+                                                            <div *ngIf="contactPersonEmail.errors?.pattern">{{errors.organizationDetails.contactEmail.invalid}}</div>
+                                                            <div *ngIf="contactPersonEmail.errors?.invalidDomain">{{errors.organizationDetails.contactEmail.invalidDomain}}</div>
+                                                        </div>
+                                                    </div> 
                                                     <div class="form-group typ-select">
                                                         <span class="control-title">Date of Incorporation</span>
                                                         <div class="row with_datepicker margin_zero">

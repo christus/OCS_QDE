@@ -213,7 +213,6 @@ export class LeadsListComponent implements OnInit {
   ngOnInit() {
     this.cds.showCreateLead$.subscribe(myValue =>
       this.createLead = myValue)
-
     this.cds.showNewLogin$.subscribe(value =>
       this.newLogin = value)
     this.cds.documetUploadStatus$.subscribe(value =>
@@ -487,25 +486,25 @@ export class LeadsListComponent implements OnInit {
         return "/document-uploads/" + applicationId;
       } else {
         // if adit trail not aviialble
-        return "/applicant/"+applicationId
+        return "/applicant/" + applicationId
 
-      }     
-    } else if(statuses[status] == "2") {
-      return "/applicant/"+applicationId;
+      }
+    } else if (statuses[status] == "2") {
+      return "/applicant/" + applicationId;
     }
-    else if(statuses[status] == "5") {
-      this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
-          
-      return "/document-uploads/"+applicationId;
-    } 
-    else if(statuses[status] == "10") {
-      this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
-          
-      return "/document-uploads/"+applicationId;
-    } 
-    else if(statuses[status] == "15") {
-      this.isEligibilityForReviews.push({applicationId: applicationId, isEligibilityForReview: false});
-      
+    else if (statuses[status] == "5") {
+      this.isEligibilityForReviews.push({ applicationId: applicationId, isEligibilityForReview: false });
+
+      return "/document-uploads/" + applicationId;
+    }
+    else if (statuses[status] == "10") {
+      this.isEligibilityForReviews.push({ applicationId: applicationId, isEligibilityForReview: false });
+
+      return "/document-uploads/" + applicationId;
+    }
+    else if (statuses[status] == "15") {
+      this.isEligibilityForReviews.push({ applicationId: applicationId, isEligibilityForReview: false });
+
       // return "/payments/online-summary/"+applicationId;
       return "/payments/offline-payments/" + applicationId;
     }
@@ -749,11 +748,10 @@ export class LeadsListComponent implements OnInit {
       this.requestData.filterEmployee = this.filterData.filterEmployee.toString();
       this.requestData.startDate = this.filterData.startDate !== null ? this.getFormattedDate(this.filterData.startDate) : null;
       this.requestData.endDate = this.filterData.endDate !== null && this.filterData.endDate !== undefined ? this.getFormattedDate(this.filterData.endDate) : null;
-    
       // console.log('tempValuetempValuetempValuetempValue', this.requestData, 'this.filterData', this.filterData)
       this.isShowFilter = !this.isShowFilter;
       this.isFilterApply = true;
-
+      // this.newLogin = false;
       this.getFilterDetails();
       // console.log('data555555555555555555555555555555', data)
     } else {
@@ -761,6 +759,10 @@ export class LeadsListComponent implements OnInit {
       this.filterData = null;
     }
   }
+
+  // handleChange(event) {
+  //   console.log('event!!!!!!!!!!!!', event)
+  // }
 
   getFormattedDate(date) {
     console.log("in date conversion " + date);
@@ -813,7 +815,7 @@ export class LeadsListComponent implements OnInit {
             console.log("???" + "this.perPage" + this.perPageFL + "this.currentPage" + this.currentPageFL + "this.totalItems" + this.totalItemsFL);
             this.userFilterDetails = res["ProcessVariables"].userDetails || [];
             // debugger;
-            if(this.userFilterDetails.length === 0){
+            if (this.userFilterDetails.length === 0) {
               this.isDataNotFound = true
             }
             this.userFilterDetails.forEach(el => {

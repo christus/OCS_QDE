@@ -78,12 +78,12 @@ export class DashboardFilterComponent implements OnInit, DoCheck {
         const startDate = new Date();
         console.log("FilteredLeads Api Call: Start Date & Time ", startDate, startDate.getMilliseconds());
         this.requestData = {
-          "processId": environment.api.userEmployee.processId,
-          "ProcessVariables": {
             "userId": localStorage.getItem('userId')
-          },
-          "projectId": environment.api.userEmployee.projectId
         }
+      //   "processId": environment.api.userEmployee.processId,
+      //   "ProcessVariables": {
+      // },
+      // "projectId": environment.api.userEmployee.projectId
         this.qdeHttp.getUserEmpDetails(this.requestData).subscribe((res: any) => {
           const endDate = new Date();
           console.log("FilteredLeads Api Call: End Date & Time ", endDate, endDate.getMilliseconds());

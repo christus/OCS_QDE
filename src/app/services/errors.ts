@@ -227,12 +227,27 @@ export const errors: any = {
       minamount: "Amount should be greater than or equal to Rs.",
       maxamount: "Amount should be less than or equal to Rs.",
     }
-  },
-  organizationDetails: {
+  }, 
+  organizationDetails: { 
     orgName: {
       required: "Organization Name is mandatory",
       invalid: "Invalid Organization Name"
-    }
+    },
+    contactEmail: {
+      required: "Email Id is mandatory",
+      invalid: "Invalid Email ID",
+      invalidDomain: "Invalid Domain"
+    },
+    contactName:{
+      required: "Contact Person Name is mandatory",
+      invalid: "Number and Special Characters not allowed"
+    },
+    contactMobile: {
+      required: "10 digit mobile number is mandatory",
+      invalid: "Invalid mobile number/Alphabets and Special Characters not allowed",
+      minlength: "Mobile number must be",
+      wrong: "Please provide valid mobile number"
+    },
   },
   registeredAddress: {
     address : {

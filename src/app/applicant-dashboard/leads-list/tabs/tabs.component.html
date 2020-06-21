@@ -1,6 +1,8 @@
 <ul class="nav nav-tabs tabs-head">
-  <li *ngFor="let tab of tabs" (click)="selectTab(tab)" [class.active]="tab.showFilter ? '' : tab.active"
-    class="tab-link" [class.tab-disabled]="tab.showFilter">
+  <li *ngFor="let tab of tabs" (click)="selectTab(tab)" [class.tab-hide]="tab.title === 'Filter'" [class.active]="tab.active" class="tab-link">
+    <!-- [class.tab-disabled]="tab.showFilter"  [class.tab-filter]="tab.title === 'Filter'" -->
+    <!-- <div *ngIf="tab.showFilter ? selectTab(tab) : ''"></div>    tab.showFilter ? '' : -->
+    <div *ngIf="tab.title === 'Filter' && tab.showFilter && tabTitle1 ? selectTab(tab) : ''"></div>
     <a>{{tab.title}}</a>
   </li>
 </ul>
