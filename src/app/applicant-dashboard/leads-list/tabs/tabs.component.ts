@@ -23,7 +23,6 @@ import { TabComponent } from './tab.component';
 export class TabsComponent implements AfterContentInit {
 
 
-  public tabTitle1: boolean = true;
 
 
   @ContentChildren(TabComponent) tabs: QueryList<TabComponent>;
@@ -48,12 +47,5 @@ export class TabsComponent implements AfterContentInit {
       tab.active = true;
     }
 
-    if (tab.title === 'Filter' && tab.showFilter) {
-      this.tabTitle1 = false;
-    } 
-    
-    // else if (tab.title !== 'Filter'){
-    //   this.tabTitle1 = true;
-    // }
   }
 }

@@ -66,19 +66,4 @@
   border-top: 7px solid #004a80;
   z-index: 2;
 }
-.tab-disabled {
-  pointer-events: none;
-  opacity: 0.5;
-}
-.tab-filter {
-  position: absolute;
-  right: 15vw;
-  pointer-events: none;
-  /* opacity: 0; */
-  height: 30px;
-}
 
-.tab-hide {
-  pointer-events: none;
-  opacity: 0;
-}

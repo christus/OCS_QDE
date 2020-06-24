@@ -813,11 +813,20 @@ export class LeadsListComponent implements OnInit {
             let totalPages = res['ProcessVariables']['totalPages'];
             this.totalItemsFL = parseInt(totalPages) * this.perPage;
             console.log("???" + "this.perPage" + this.perPageFL + "this.currentPage" + this.currentPageFL + "this.totalItems" + this.totalItemsFL);
-            this.userFilterDetails = res["ProcessVariables"].userDetails || [];
+            // Need to Assign all tab values to respected variables  
+            
+            // this.userFilterDetails = []; // res["ProcessVariables"].userDetails ||
+            this.userDetails = [];
+            this.totalItems = 0;
+            // this.newLeadsDetails
+            // this.newPendingApplicationDetails
+            // this.newPendingPaymentDetails
+
             // debugger;
-            if (this.userFilterDetails.length === 0) {
-              this.isDataNotFound = true
-            }
+            // if (this.userFilterDetails.length === 0) {
+            //   this.isDataNotFound = true
+            // }
+            return;
             this.userFilterDetails.forEach(el => {
               el.url = this.getUrl(el["status"], el["leadId"], el["applicantId"], this.getRoles(), el);
               if (el["auditTrialTabPage"] != null && el["auditTrialPageNumber"] != null) {
@@ -856,5 +865,8 @@ export class LeadsListComponent implements OnInit {
     } finally {
       this.ngxService.stop();
     }
+  }
+  setDataNotFound(Val: boolean){
+    this.isDataNotFound = Val;
   }
 }

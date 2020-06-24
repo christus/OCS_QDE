@@ -12,10 +12,7 @@ import { Component, Input, AfterViewInit, ChangeDetectorRef, AfterContentChecked
 
 export class TabComponent implements AfterViewInit {
     @Input('tabTitle') title: string;
-    @Input('isFilter') showFilter: boolean;
     @Input() active;
-    // @Output() onChange = new EventEmitter();
-    // isFilterN: boolean = true;
 
     constructor(private cdr: ChangeDetectorRef) { }
 
@@ -23,25 +20,12 @@ export class TabComponent implements AfterViewInit {
     //     this.active = false;
     //     this.cdr.detectChanges();
     //   }
-    //   ngDoCheck() {
-    //     this.active = false;
-    //     this.cdr.detectChanges();
-    // }
-    // ngOnInit(){
-    //     this.active = true;
-    // }
-
-    // handleChange(event) {
-    //     // if(event !== this.title){
-    //     console.log('event`', event)
-    //     this.isFilterN = event !== this.title ? false : true;
-    //     this.onChange.emit(event)
-    //     // }
-    //     // this.title === event
-    // }
-
     ngAfterViewInit() {
         this.active = false;
         this.cdr.detectChanges();
     }
+    // ngAfterContentChecked() {
+    //     this.active = false;
+    //     this.cdr.detectChanges();
+    // }
 }

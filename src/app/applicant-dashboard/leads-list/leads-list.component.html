@@ -14,7 +14,6 @@
         <button class="btn application add-lead-link" [ngStyle]="{'width': '3.5vw'}"
             [style.border]="isFilterApply ? '' : '1px solid gray'" (click)="isShowFilter = !isShowFilter">
 
-          
             <span class="icon-filter">
                 <img [src]="!isFilterApply ? 'assets/images/Filled-icon-gray.svg' : 'assets/images/Filled-icon-orang.svg'"
                     width="30px" />
@@ -25,50 +24,40 @@
     <app-dashboard-filter *ngIf="isShowFilter" [filterPrefill]="filterData" (filterData)="filterDatas($event)">
     </app-dashboard-filter>
 
-<!-- (onChange)="handleChange($event)" -->
     <tabs>
-        <tab tabTitle="ALL" [isFilter]="isFilterApply" class="tab" *ngIf="(newLogin) || documentUpload">
-            <ul
-                *ngFor="let detail of userDetails | paginate: { id: 'pagination1', itemsPerPage: perPage, currentPage: currentPage,totalItems: totalItems};">
-                <li>
-                    <!-- [queryParams]="detail['queryParams']" -->
-                    <a [routerLink]="detail.url" class="lead-action">
+        <tab tabTitle="ALL" class="tab" *ngIf="(newLogin) || documentUpload">
+                <ul
+                    *ngFor="let detail of userDetails | paginate: { id: 'pagination1', itemsPerPage: perPage, currentPage: currentPage,totalItems: totalItems};">
+                    <li>
+                        <a [routerLink]="detail.url" class="lead-action">
 
-                        <ul class="bs-lead-card">
-                            <li>
-                                <span class="initials">AK</span>
-                                <span class="user-name">{{detail.firstName || detail.nameOfOrganization}}
-                                    {{detail.lastName}}</span></li>
-                            <li>
-                                <span class="name">applied on</span>
-                                <span class="value">{{detail.appliedOn | date:'dd-MM-yyyy HH:mm:ss'}}</span>
-                            </li>
-                            <li>
-                                <span class="name">phone</span>
-                                <span class="value">{{detail.mobileNumber}}</span>
-                            </li>
-                            <li>
-                                <span class="name">Status</span>
-                                <span class="value">{{detail.status}}</span>
-                            </li>
+                            <ul class="bs-lead-card">
+                                <li>
+                                    <span class="initials">AK</span>
+                                    <span class="user-name">{{detail.firstName || detail.nameOfOrganization}}
+                                        {{detail.lastName}}</span></li>
+                                <li>
+                                    <span class="name">applied on</span>
+                                    <span class="value">{{detail.appliedOn | date:'dd-MM-yyyy HH:mm:ss'}}</span>
+                                </li>
+                                <li>
+                                    <span class="name">phone</span>
+                                    <span class="value">{{detail.mobileNumber}}</span>
+                                </li>
+                                <li>
+                                    <span class="name">Status</span>
+                                    <span class="value">{{detail.status}}</span>
+                                </li>
 
-                        </ul>
-                    </a>
-                </li>
-            </ul>
-
-            <!-- <div class="data-not-found-block" *ngIf="isFilterApply && userFilterDetails.length === 0">
-                <span class="user-name">Data not Found</span>
-            </div> -->
-            <!-- *ngIf="!isFilterApply" -->
-            <pagination-controls id="pagination1" (pageChange)="pageChanged($event)" class="pagination" autoHide="true">
-            </pagination-controls>
-
-            <!-- <pagination-controls *ngIf="isFilterApply" id="pagination5" (pageChange)="pageChangedFL($event)"
-                class="pagination" autoHide="true">
-            </pagination-controls> (onChange)="handleChange($event)" -->
+                            </ul>
+                        </a>
+                    </li>
+                </ul>
+                <pagination-controls id="pagination1" (pageChange)="pageChanged($event)" class="pagination test {{isDataNotFound}}"
+                    autoHide="true">
+                </pagination-controls>
         </tab>
-        <tab tabTitle="NEW LEADS" *ngIf="createLead" [isFilter]="false">  
+        <tab tabTitle="NEW LEADS" *ngIf="createLead">
             <ul
                 *ngFor="let detail of newLeadsDetails | paginate: {id: 'pagination2', itemsPerPage: perPageNL, currentPage: currentPageNL, totalItems: totalItemsNL};">
                 <li>
@@ -92,8 +81,7 @@
             <pagination-controls id="pagination2" (pageChange)="pageChangedNL($event)" class="pagination"
                 autoHide="true"></pagination-controls>
         </tab>
-        <!-- (onChange)="handleChange($event)" -->
-        <tab tabTitle="PENDING APPLICATION" *ngIf="(newLogin)" [isFilter]="false">
+        <tab tabTitle="PENDING APPLICATION" *ngIf="(newLogin)">
             <ul
                 *ngFor="let detail of newPendingApplicationDetails | paginate: {id: 'pagination3',itemsPerPage: perPagePA, currentPage: currentPagePA, totalItems: totalItemsPA};">
                 <li>
@@ -123,8 +111,7 @@
             <pagination-controls id="pagination3" (pageChange)="pageChangedPA($event)" class="pagination"
                 autoHide="true"></pagination-controls>
         </tab>
-        <!-- (onChange)="handleChange($event)" -->
-        <tab tabTitle="PENDING PAYMENT" *ngIf="(newLogin)" [isFilter]="false">
+        <tab tabTitle="PENDING PAYMENT" *ngIf="(newLogin)">
             <ul
                 *ngFor="let detail of newPendingPaymentDetails | paginate: {id: 'pagination4',itemsPerPage: perPagePP, currentPage: currentPagePP, totalItems: totalItemsPP};">
                 <li>
@@ -153,38 +140,6 @@
             </ul>
             <pagination-controls id="pagination4" (pageChange)="pageChangedPP($event)" class="pagination"
                 autoHide="true"></pagination-controls>
-        </tab>
-        <!-- tab.showFilter ? '' :  -->
-        <tab tabTitle="Filter" [isFilter]="isFilterApply">
-            <ul
-                *ngFor="let detail of userFilterDetails | paginate: {id: 'pagination5', itemsPerPage: perPageFL, currentPage: currentPageFL, totalItems: totalItemsFL};">
-                <li>
-                    <a [routerLink]="detail.url" class="lead-action">
-                        <ul class="bs-lead-card">
-                            <li>
-                                <span class="initials">AK</span>
-                                <span class="user-name">{{detail.firstName || detail.nameOfOrganization}}
-                                    {{detail.lastName}}</span></li>
-                            <li>
-                                <span class="name">applied on</span>
-                                <span class="value">{{detail.appliedOn | date:'dd-MM-yyyy HH:mm:ss'}}</span>
-                            </li>
-                            <li>
-                                <span class="name">phone</span>
-                                <span class="value">{{detail.mobileNumber}}</span>
-                            </li>
-                            <li>
-                                <span class="name">Status</span>
-                                <span class="value">{{detail.status}}</span>
-                            </li>
-
-                        </ul>
-                    </a>
-                </li>
-            </ul>
-            <pagination-controls *ngIf="isFilterApply" id="pagination5" (pageChange)="pageChangedFL($event)"
-                class="pagination" autoHide="true">
-            </pagination-controls>
         </tab>
     </tabs>
 </div>
