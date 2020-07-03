@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild,ElementRef } from '@angular/core';
 import { QdeHttpService } from 'src/app/services/qde-http.service';
 import { Router } from '@angular/router';
 
@@ -17,6 +17,8 @@ export class RetrieveFileUploadComponent implements OnInit {
 
   isSuccessModal: boolean;
   successMsg: string;
+
+  @ViewChild("retrieveOcsFile") retrieveOcsFile : ElementRef;
 
   constructor( private qdeHttp: QdeHttpService, private router: Router ) { }
 
@@ -64,6 +66,7 @@ export class RetrieveFileUploadComponent implements OnInit {
 
     this.qdeHttp.uploadOcsRetrieve(documentInfo).subscribe((response)=> {
       console.log('Response',response)
+      this.retrieveOcsFile.nativeElement.value = "";
 
       if(response['ProcessVariables']['status']) {
         this.isSuccessModal = true;
