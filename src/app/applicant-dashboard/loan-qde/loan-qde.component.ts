@@ -297,6 +297,8 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
   tempClssArea: string;
   minMaxValues: Array<MinMax>;
 
+  disableClss: boolean;
+
   public defaultItem = environment.defaultItem;
   loanTenureMin: any;
   loanTenureMax: any;
@@ -471,6 +473,10 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
             this.selectedLoanPurpose = this.defaultItem;
             // this.loanpurposes[0]
           }
+
+          if(this.selectedLoanPurpose == '16' || this.selectedLoanPurpose == '17' || this.selectedLoanPurpose == '18') {
+            this.disableClss = true;
+        }
 
 
           if (!result.application.loanDetails.propertyType) {
@@ -911,8 +917,32 @@ export class LoanQdeComponent implements OnInit, AfterViewInit, OnDestroy {
               //   this.errorMessage = "Something went wrong, please try again later.";
               // }
             );
-                this.goToExactPageAndTab(1,1);
-            } else {
+            const loanPurpose = form.value.loanPurpose;
+            if(loanPurpose == '16' || loanPurpose == '17' || loanPurpose == '18') {
+              this.disableClss = true;
+              this.qde.application.loanDetails.propertyType = {
+                propertyArea: 0,
+                propertyClss:'',
+                propertyType:'',
+                propertyIdentified: false
+              }
+              this.qde.application.loanDetails.property = {
+                zipcodeId: 0,
+                zipcode: 0,
+                addressLineOne: '',
+                addressLineTwo: '',
+                cityId: 0,
+                city: '',
+                stateId: 0,
+                state: ''
+              };
+        
+                this.goToExactPageAndTab(2,1);
+            }else {
+              this.disableClss = false;
+              this.goToExactPageAndTab(1,1);
+            }
+           } else {
               // Throw Invalid Pan Error
             }
           }

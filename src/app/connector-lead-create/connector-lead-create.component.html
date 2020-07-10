@@ -120,7 +120,7 @@
                         <input spellcheck="false" type="text" class="form-control"
                           id="zipcode" autocomplete="off"
                           [(ngModel)]="qde.application.leadCreate.zipcode"
-                          pattern="{{regexPattern.pincode}}" maxlength="6" minlength="6"
+                          pattern="{{regexPattern.pincode}}" (input)="onPinCodeChange($event)" maxlength="6" minlength="6"
                           name="pincode" #pincode="ngModel" fieldFill required/>
                         <label for="zipcode">Pin Code</label>    
                             <div *ngIf="(pincode.touched || pincode.dirty) && pincode.invalid"
@@ -128,6 +128,7 @@
                              <div *ngIf="pincode.errors?.required">{{errors.leadCreate.pincode.required}}</div>
                               <div *ngIf="pincode.errors?.pattern">{{errors.leadCreate.pincode.invalid}}</div>
                             </div>
+                            <div *ngIf="isValidPincode" class="invalid-feedback">Please enter a valid pincode</div>
                     </div>
                     <div class="form-group">
                         <input spellcheck="false" type="text" class="form-control"
@@ -202,6 +203,7 @@
                             #searchSMSA ="ngModel"
                             [(ngModel)]="valueSMSA"
                             (input)="searchSMSAId($event)"
+                            (click)="getSASMIDData()"
                             fieldFill
                              >
 
@@ -241,14 +243,14 @@
                         </div>
                       <div class="btn-wrap" *ngIf="enableSASMId">
                           <button class="btn btn-primary"
-                          [ngClass]="{'disabled': (!leadForm.valid)|| isNumberLessThan50k || isNumberMoreThan100cr || selectedLoanType.value ==0 || !dnd || branchId.value ==0 || !selectSASMId}"
-                          [disabled]="!leadForm.valid || isNumberLessThan50k || isNumberMoreThan100cr || selectedLoanType.value == 0 || !dnd || branchId.value ==0 || !selectSASMId"
+                          [ngClass]="{'disabled': (!leadForm.valid)|| isNumberLessThan50k || isNumberMoreThan100cr || selectedLoanType.value ==0 || !dnd || branchId.value ==0 || !selectSASMId || isValidPincode}"
+                          [disabled]="!leadForm.valid || isNumberLessThan50k || isNumberMoreThan100cr || selectedLoanType.value == 0 || !dnd || branchId.value ==0 || !selectSASMId || isValidPincode"
                           >Submit</button>
                       </div>
                       <div class="btn-wrap" *ngIf="!enableSASMId">
                         <button class="btn btn-primary"
-                        [ngClass]="{'disabled': (!leadForm.valid)|| isNumberLessThan50k || isNumberMoreThan100cr || selectedLoanType.value ==0 || !dnd || branchId.value ==0}"
-                        [disabled]="!leadForm.valid || isNumberLessThan50k || isNumberMoreThan100cr || selectedLoanType.value == 0 || !dnd || branchId.value ==0"
+                        [ngClass]="{'disabled': (!leadForm.valid)|| isNumberLessThan50k || isNumberMoreThan100cr || selectedLoanType.value ==0 || !dnd || branchId.value ==0 || isValidPincode}"
+                        [disabled]="!leadForm.valid || isNumberLessThan50k || isNumberMoreThan100cr || selectedLoanType.value == 0 || !dnd || branchId.value ==0 || isValidPincode"
                         >Submit</button>
                     </div>
                   </form>

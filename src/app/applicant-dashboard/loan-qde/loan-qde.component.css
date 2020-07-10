@@ -626,3 +626,7 @@ visibility: visible;
     font-weight: bold;
     letter-spacing: 0.5px;
 }
+
+.pointerEventsNone {
+    pointer-events: none;
+}

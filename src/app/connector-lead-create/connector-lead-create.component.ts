@@ -52,6 +52,7 @@ export class ConnectorLeadCreateComponent implements OnInit {
   tempSMSAData: any;
   saSmId: string;
   selectSASMId: boolean;
+  isValidPincode: boolean;
 
   regexPattern={
     firstName: "[A-Za-z ]+$",
@@ -300,6 +301,26 @@ export class ConnectorLeadCreateComponent implements OnInit {
     }
   }
 
+  getSASMIDData() {
+
+    let data = {
+      userId: localStorage.getItem('userId')
+    }
+
+    this.qdeHttp.getSASMID(data).subscribe(res => {
+
+      console.log('Response',res)
+      // if(res['ProcessVariables']['status'] == true) {
+
+      // }
+      this.allSMSAData = res['ProcessVariables']['sa_sm_id'];
+      this.tempSMSAData = res['ProcessVariables']['sa_sm_id'];
+
+      })
+
+
+  }
+
   searchSMSAId(event) {
 
     const enterValue = event.target.value;
@@ -340,6 +361,32 @@ export class ConnectorLeadCreateComponent implements OnInit {
     this.saSmId = data.value;
     this.selectSASMId = true;
     this.allSMSAData = []
+  }
+
+  onPinCodeChange(event) {
+    if(event.target.value.length < 6 || event.target.validity.valid == false) {
+      return;
+    }
+    console.log(event.target.value);
+    let zipCode = event.target.value
+
+    if (zipCode.length != 0) {
+         this.qdeHttp.getCityAndState(zipCode).subscribe((response) => {
+
+            console.log(response)
+
+            if (response['Error'] == '0') {
+              var result = JSON.parse(response["ProcessVariables"]["response"]);
+
+              if(result.zipcodeId != 0) {
+                this.isValidPincode = false;
+              }else {
+                this.isValidPincode = true;
+              }
+            }
+      })
+    }
+
   }
 
 
